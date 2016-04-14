@@ -142,14 +142,59 @@ public class PortletItemWrapper implements PortletItem,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new PortletItemWrapper((PortletItem)_portletItem.clone());
+	public CacheModel<com.liferay.portal.kernel.model.PortletItem> toCacheModel() {
+		return _portletItem.toCacheModel();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _portletItem.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _portletItem.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _portletItem.isNew();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _portletItem.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PortletItem toEscapedModel() {
+		return new PortletItemWrapper(_portletItem.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PortletItem toUnescapedModel() {
+		return new PortletItemWrapper(_portletItem.toUnescapedModel());
 	}
 
 	@Override
 	public int compareTo(
 		com.liferay.portal.kernel.model.PortletItem portletItem) {
 		return _portletItem.compareTo(portletItem);
+	}
+
+	@Override
+	public int hashCode() {
+		return _portletItem.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _portletItem.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new PortletItemWrapper((PortletItem)_portletItem.clone());
 	}
 
 	/**
@@ -160,71 +205,6 @@ public class PortletItemWrapper implements PortletItem,
 	@Override
 	public java.lang.String getClassName() {
 		return _portletItem.getClassName();
-	}
-
-	/**
-	* Returns the class name ID of this portlet item.
-	*
-	* @return the class name ID of this portlet item
-	*/
-	@Override
-	public long getClassNameId() {
-		return _portletItem.getClassNameId();
-	}
-
-	/**
-	* Returns the company ID of this portlet item.
-	*
-	* @return the company ID of this portlet item
-	*/
-	@Override
-	public long getCompanyId() {
-		return _portletItem.getCompanyId();
-	}
-
-	/**
-	* Returns the create date of this portlet item.
-	*
-	* @return the create date of this portlet item
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _portletItem.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _portletItem.getExpandoBridge();
-	}
-
-	/**
-	* Returns the group ID of this portlet item.
-	*
-	* @return the group ID of this portlet item
-	*/
-	@Override
-	public long getGroupId() {
-		return _portletItem.getGroupId();
-	}
-
-	/**
-	* Returns the modified date of this portlet item.
-	*
-	* @return the modified date of this portlet item
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _portletItem.getModifiedDate();
-	}
-
-	/**
-	* Returns the mvcc version of this portlet item.
-	*
-	* @return the mvcc version of this portlet item
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _portletItem.getMvccVersion();
 	}
 
 	/**
@@ -248,41 +228,6 @@ public class PortletItemWrapper implements PortletItem,
 	}
 
 	/**
-	* Returns the portlet item ID of this portlet item.
-	*
-	* @return the portlet item ID of this portlet item
-	*/
-	@Override
-	public long getPortletItemId() {
-		return _portletItem.getPortletItemId();
-	}
-
-	/**
-	* Returns the primary key of this portlet item.
-	*
-	* @return the primary key of this portlet item
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _portletItem.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _portletItem.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the user ID of this portlet item.
-	*
-	* @return the user ID of this portlet item
-	*/
-	@Override
-	public long getUserId() {
-		return _portletItem.getUserId();
-	}
-
-	/**
 	* Returns the user name of this portlet item.
 	*
 	* @return the user name of this portlet item
@@ -303,23 +248,103 @@ public class PortletItemWrapper implements PortletItem,
 	}
 
 	@Override
-	public int hashCode() {
-		return _portletItem.hashCode();
+	public java.lang.String toString() {
+		return _portletItem.toString();
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _portletItem.isCachedModel();
+	public java.lang.String toXmlString() {
+		return _portletItem.toXmlString();
 	}
 
+	/**
+	* Returns the create date of this portlet item.
+	*
+	* @return the create date of this portlet item
+	*/
 	@Override
-	public boolean isEscapedModel() {
-		return _portletItem.isEscapedModel();
+	public Date getCreateDate() {
+		return _portletItem.getCreateDate();
 	}
 
+	/**
+	* Returns the modified date of this portlet item.
+	*
+	* @return the modified date of this portlet item
+	*/
 	@Override
-	public boolean isNew() {
-		return _portletItem.isNew();
+	public Date getModifiedDate() {
+		return _portletItem.getModifiedDate();
+	}
+
+	/**
+	* Returns the class name ID of this portlet item.
+	*
+	* @return the class name ID of this portlet item
+	*/
+	@Override
+	public long getClassNameId() {
+		return _portletItem.getClassNameId();
+	}
+
+	/**
+	* Returns the company ID of this portlet item.
+	*
+	* @return the company ID of this portlet item
+	*/
+	@Override
+	public long getCompanyId() {
+		return _portletItem.getCompanyId();
+	}
+
+	/**
+	* Returns the group ID of this portlet item.
+	*
+	* @return the group ID of this portlet item
+	*/
+	@Override
+	public long getGroupId() {
+		return _portletItem.getGroupId();
+	}
+
+	/**
+	* Returns the mvcc version of this portlet item.
+	*
+	* @return the mvcc version of this portlet item
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _portletItem.getMvccVersion();
+	}
+
+	/**
+	* Returns the portlet item ID of this portlet item.
+	*
+	* @return the portlet item ID of this portlet item
+	*/
+	@Override
+	public long getPortletItemId() {
+		return _portletItem.getPortletItemId();
+	}
+
+	/**
+	* Returns the primary key of this portlet item.
+	*
+	* @return the primary key of this portlet item
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _portletItem.getPrimaryKey();
+	}
+
+	/**
+	* Returns the user ID of this portlet item.
+	*
+	* @return the user ID of this portlet item
+	*/
+	@Override
+	public long getUserId() {
+		return _portletItem.getUserId();
 	}
 
 	@Override
@@ -490,31 +515,6 @@ public class PortletItemWrapper implements PortletItem,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_portletItem.setUserUuid(userUuid);
-	}
-
-	@Override
-	public CacheModel<com.liferay.portal.kernel.model.PortletItem> toCacheModel() {
-		return _portletItem.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PortletItem toEscapedModel() {
-		return new PortletItemWrapper(_portletItem.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _portletItem.toString();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PortletItem toUnescapedModel() {
-		return new PortletItemWrapper(_portletItem.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _portletItem.toXmlString();
 	}
 
 	@Override

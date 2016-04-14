@@ -87,20 +87,95 @@ public class DLFileEntryMetadataLocalServiceUtil {
 		return getService().deleteDLFileEntryMetadata(fileEntryMetadataId);
 	}
 
-	public static void deleteFileEntryMetadata(long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFileEntryMetadata(fileEntryId);
+	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata fetchDLFileEntryMetadata(
+		long fileEntryMetadataId) {
+		return getService().fetchDLFileEntryMetadata(fileEntryMetadataId);
 	}
 
-	public static void deleteFileEntryMetadata(
-		com.liferay.document.library.kernel.model.DLFileEntryMetadata fileEntryMetadata)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFileEntryMetadata(fileEntryMetadata);
+	/**
+	* Returns the document library file entry metadata with the matching UUID and company.
+	*
+	* @param uuid the document library file entry metadata's UUID
+	* @param companyId the primary key of the company
+	* @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	*/
+	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata fetchDLFileEntryMetadataByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService()
+				   .fetchDLFileEntryMetadataByUuidAndCompanyId(uuid, companyId);
 	}
 
-	public static void deleteFileVersionFileEntryMetadata(long fileVersionId)
+	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata fetchFileEntryMetadata(
+		long ddmStructureId, long fileVersionId) {
+		return getService().fetchFileEntryMetadata(ddmStructureId, fileVersionId);
+	}
+
+	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata fetchFileEntryMetadata(
+		long fileEntryMetadataId) {
+		return getService().fetchFileEntryMetadata(fileEntryMetadataId);
+	}
+
+	/**
+	* Returns the document library file entry metadata with the primary key.
+	*
+	* @param fileEntryMetadataId the primary key of the document library file entry metadata
+	* @return the document library file entry metadata
+	* @throws PortalException if a document library file entry metadata with the primary key could not be found
+	*/
+	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata getDLFileEntryMetadata(
+		long fileEntryMetadataId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFileVersionFileEntryMetadata(fileVersionId);
+		return getService().getDLFileEntryMetadata(fileEntryMetadataId);
+	}
+
+	/**
+	* Returns the document library file entry metadata with the matching UUID and company.
+	*
+	* @param uuid the document library file entry metadata's UUID
+	* @param companyId the primary key of the company
+	* @return the matching document library file entry metadata
+	* @throws PortalException if a matching document library file entry metadata could not be found
+	*/
+	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata getDLFileEntryMetadataByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getDLFileEntryMetadataByUuidAndCompanyId(uuid, companyId);
+	}
+
+	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata getFileEntryMetadata(
+		long ddmStructureId, long fileVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFileEntryMetadata(ddmStructureId, fileVersionId);
+	}
+
+	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata getFileEntryMetadata(
+		long fileEntryMetadataId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFileEntryMetadata(fileEntryMetadataId);
+	}
+
+	/**
+	* Updates the document library file entry metadata in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileEntryMetadata the document library file entry metadata
+	* @return the document library file entry metadata that was updated
+	*/
+	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata updateDLFileEntryMetadata(
+		com.liferay.document.library.kernel.model.DLFileEntryMetadata dlFileEntryMetadata) {
+		return getService().updateDLFileEntryMetadata(dlFileEntryMetadata);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -112,8 +187,28 @@ public class DLFileEntryMetadataLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the number of document library file entry metadatas.
+	*
+	* @return the number of document library file entry metadatas
+	*/
+	public static int getDLFileEntryMetadatasCount() {
+		return getService().getDLFileEntryMetadatasCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -167,6 +262,35 @@ public class DLFileEntryMetadataLocalServiceUtil {
 	}
 
 	/**
+	* Returns a range of all the document library file entry metadatas.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of document library file entry metadatas
+	* @param end the upper bound of the range of document library file entry metadatas (not inclusive)
+	* @return the range of document library file entry metadatas
+	*/
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntryMetadata> getDLFileEntryMetadatas(
+		int start, int end) {
+		return getService().getDLFileEntryMetadatas(start, end);
+	}
+
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntryMetadata> getFileVersionFileEntryMetadatas(
+		long fileVersionId) {
+		return getService().getFileVersionFileEntryMetadatas(fileVersionId);
+	}
+
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntryMetadata> getMismatchedCompanyIdFileEntryMetadatas() {
+		return getService().getMismatchedCompanyIdFileEntryMetadatas();
+	}
+
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntryMetadata> getNoStructuresFileEntryMetadatas() {
+		return getService().getNoStructuresFileEntryMetadatas();
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -190,148 +314,24 @@ public class DLFileEntryMetadataLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata fetchDLFileEntryMetadata(
-		long fileEntryMetadataId) {
-		return getService().fetchDLFileEntryMetadata(fileEntryMetadataId);
-	}
-
-	/**
-	* Returns the document library file entry metadata with the matching UUID and company.
-	*
-	* @param uuid the document library file entry metadata's UUID
-	* @param companyId the primary key of the company
-	* @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
-	*/
-	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata fetchDLFileEntryMetadataByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService()
-				   .fetchDLFileEntryMetadataByUuidAndCompanyId(uuid, companyId);
-	}
-
-	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata fetchFileEntryMetadata(
-		long ddmStructureId, long fileVersionId) {
-		return getService().fetchFileEntryMetadata(ddmStructureId, fileVersionId);
-	}
-
-	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata fetchFileEntryMetadata(
-		long fileEntryMetadataId) {
-		return getService().fetchFileEntryMetadata(fileEntryMetadataId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the document library file entry metadata with the primary key.
-	*
-	* @param fileEntryMetadataId the primary key of the document library file entry metadata
-	* @return the document library file entry metadata
-	* @throws PortalException if a document library file entry metadata with the primary key could not be found
-	*/
-	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata getDLFileEntryMetadata(
-		long fileEntryMetadataId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDLFileEntryMetadata(fileEntryMetadataId);
-	}
-
-	/**
-	* Returns the document library file entry metadata with the matching UUID and company.
-	*
-	* @param uuid the document library file entry metadata's UUID
-	* @param companyId the primary key of the company
-	* @return the matching document library file entry metadata
-	* @throws PortalException if a matching document library file entry metadata could not be found
-	*/
-	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata getDLFileEntryMetadataByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getDLFileEntryMetadataByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Returns a range of all the document library file entry metadatas.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of document library file entry metadatas
-	* @param end the upper bound of the range of document library file entry metadatas (not inclusive)
-	* @return the range of document library file entry metadatas
-	*/
-	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntryMetadata> getDLFileEntryMetadatas(
-		int start, int end) {
-		return getService().getDLFileEntryMetadatas(start, end);
-	}
-
-	/**
-	* Returns the number of document library file entry metadatas.
-	*
-	* @return the number of document library file entry metadatas
-	*/
-	public static int getDLFileEntryMetadatasCount() {
-		return getService().getDLFileEntryMetadatasCount();
-	}
-
-	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata getFileEntryMetadata(
-		long ddmStructureId, long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getFileEntryMetadata(ddmStructureId, fileVersionId);
-	}
-
-	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata getFileEntryMetadata(
-		long fileEntryMetadataId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getFileEntryMetadata(fileEntryMetadataId);
-	}
-
-	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntryMetadata> getFileVersionFileEntryMetadatas(
-		long fileVersionId) {
-		return getService().getFileVersionFileEntryMetadatas(fileVersionId);
-	}
-
 	public static long getFileVersionFileEntryMetadatasCount(long fileVersionId) {
 		return getService().getFileVersionFileEntryMetadatasCount(fileVersionId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntryMetadata> getMismatchedCompanyIdFileEntryMetadatas() {
-		return getService().getMismatchedCompanyIdFileEntryMetadatas();
-	}
-
-	public static java.util.List<com.liferay.document.library.kernel.model.DLFileEntryMetadata> getNoStructuresFileEntryMetadatas() {
-		return getService().getNoStructuresFileEntryMetadatas();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	public static void deleteFileEntryMetadata(
+		com.liferay.document.library.kernel.model.DLFileEntryMetadata fileEntryMetadata)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
+		getService().deleteFileEntryMetadata(fileEntryMetadata);
 	}
 
-	/**
-	* Updates the document library file entry metadata in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileEntryMetadata the document library file entry metadata
-	* @return the document library file entry metadata that was updated
-	*/
-	public static com.liferay.document.library.kernel.model.DLFileEntryMetadata updateDLFileEntryMetadata(
-		com.liferay.document.library.kernel.model.DLFileEntryMetadata dlFileEntryMetadata) {
-		return getService().updateDLFileEntryMetadata(dlFileEntryMetadata);
+	public static void deleteFileEntryMetadata(long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFileEntryMetadata(fileEntryId);
+	}
+
+	public static void deleteFileVersionFileEntryMetadata(long fileVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFileVersionFileEntryMetadata(fileVersionId);
 	}
 
 	public static void updateFileEntryMetadata(long companyId,

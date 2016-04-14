@@ -179,8 +179,43 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new MDRActionWrapper((MDRAction)_mdrAction.clone());
+	public boolean isCachedModel() {
+		return _mdrAction.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _mdrAction.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _mdrAction.isNew();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _mdrAction.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRAction toEscapedModel() {
+		return new MDRActionWrapper(_mdrAction.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.mobile.device.rules.model.MDRAction toUnescapedModel() {
+		return new MDRActionWrapper(_mdrAction.toUnescapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.mobile.device.rules.model.MDRAction> toCacheModel() {
+		return _mdrAction.toCacheModel();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
+		return _mdrAction.getTypeSettingsProperties();
 	}
 
 	@Override
@@ -189,19 +224,19 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 		return _mdrAction.compareTo(mdrAction);
 	}
 
-	/**
-	* Returns the action ID of this m d r action.
-	*
-	* @return the action ID of this m d r action
-	*/
 	@Override
-	public long getActionId() {
-		return _mdrAction.getActionId();
+	public int hashCode() {
+		return _mdrAction.hashCode();
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _mdrAction.getAvailableLanguageIds();
+	public Serializable getPrimaryKeyObj() {
+		return _mdrAction.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new MDRActionWrapper((MDRAction)_mdrAction.clone());
 	}
 
 	/**
@@ -212,46 +247,6 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	@Override
 	public java.lang.String getClassName() {
 		return _mdrAction.getClassName();
-	}
-
-	/**
-	* Returns the class name ID of this m d r action.
-	*
-	* @return the class name ID of this m d r action
-	*/
-	@Override
-	public long getClassNameId() {
-		return _mdrAction.getClassNameId();
-	}
-
-	/**
-	* Returns the class p k of this m d r action.
-	*
-	* @return the class p k of this m d r action
-	*/
-	@Override
-	public long getClassPK() {
-		return _mdrAction.getClassPK();
-	}
-
-	/**
-	* Returns the company ID of this m d r action.
-	*
-	* @return the company ID of this m d r action
-	*/
-	@Override
-	public long getCompanyId() {
-		return _mdrAction.getCompanyId();
-	}
-
-	/**
-	* Returns the create date of this m d r action.
-	*
-	* @return the create date of this m d r action
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _mdrAction.getCreateDate();
 	}
 
 	@Override
@@ -328,51 +323,6 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	}
 
 	/**
-	* Returns a map of the locales and localized descriptions of this m d r action.
-	*
-	* @return the locales and localized descriptions of this m d r action
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _mdrAction.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _mdrAction.getExpandoBridge();
-	}
-
-	/**
-	* Returns the group ID of this m d r action.
-	*
-	* @return the group ID of this m d r action
-	*/
-	@Override
-	public long getGroupId() {
-		return _mdrAction.getGroupId();
-	}
-
-	/**
-	* Returns the last publish date of this m d r action.
-	*
-	* @return the last publish date of this m d r action
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _mdrAction.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this m d r action.
-	*
-	* @return the modified date of this m d r action
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _mdrAction.getModifiedDate();
-	}
-
-	/**
 	* Returns the name of this m d r action.
 	*
 	* @return the name of this m d r action
@@ -440,41 +390,6 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	}
 
 	/**
-	* Returns a map of the locales and localized names of this m d r action.
-	*
-	* @return the locales and localized names of this m d r action
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
-		return _mdrAction.getNameMap();
-	}
-
-	/**
-	* Returns the primary key of this m d r action.
-	*
-	* @return the primary key of this m d r action
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _mdrAction.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _mdrAction.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the rule group instance ID of this m d r action.
-	*
-	* @return the rule group instance ID of this m d r action
-	*/
-	@Override
-	public long getRuleGroupInstanceId() {
-		return _mdrAction.getRuleGroupInstanceId();
-	}
-
-	/**
 	* Returns the type of this m d r action.
 	*
 	* @return the type of this m d r action
@@ -492,21 +407,6 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	@Override
 	public java.lang.String getTypeSettings() {
 		return _mdrAction.getTypeSettings();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
-		return _mdrAction.getTypeSettingsProperties();
-	}
-
-	/**
-	* Returns the user ID of this m d r action.
-	*
-	* @return the user ID of this m d r action
-	*/
-	@Override
-	public long getUserId() {
-		return _mdrAction.getUserId();
 	}
 
 	/**
@@ -540,23 +440,148 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	}
 
 	@Override
-	public int hashCode() {
-		return _mdrAction.hashCode();
+	public java.lang.String toString() {
+		return _mdrAction.toString();
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _mdrAction.isCachedModel();
+	public java.lang.String toXmlString() {
+		return _mdrAction.toXmlString();
 	}
 
 	@Override
-	public boolean isEscapedModel() {
-		return _mdrAction.isEscapedModel();
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _mdrAction.getAvailableLanguageIds();
 	}
 
+	/**
+	* Returns the create date of this m d r action.
+	*
+	* @return the create date of this m d r action
+	*/
 	@Override
-	public boolean isNew() {
-		return _mdrAction.isNew();
+	public Date getCreateDate() {
+		return _mdrAction.getCreateDate();
+	}
+
+	/**
+	* Returns the last publish date of this m d r action.
+	*
+	* @return the last publish date of this m d r action
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _mdrAction.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this m d r action.
+	*
+	* @return the modified date of this m d r action
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _mdrAction.getModifiedDate();
+	}
+
+	/**
+	* Returns a map of the locales and localized descriptions of this m d r action.
+	*
+	* @return the locales and localized descriptions of this m d r action
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _mdrAction.getDescriptionMap();
+	}
+
+	/**
+	* Returns a map of the locales and localized names of this m d r action.
+	*
+	* @return the locales and localized names of this m d r action
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
+		return _mdrAction.getNameMap();
+	}
+
+	/**
+	* Returns the action ID of this m d r action.
+	*
+	* @return the action ID of this m d r action
+	*/
+	@Override
+	public long getActionId() {
+		return _mdrAction.getActionId();
+	}
+
+	/**
+	* Returns the class name ID of this m d r action.
+	*
+	* @return the class name ID of this m d r action
+	*/
+	@Override
+	public long getClassNameId() {
+		return _mdrAction.getClassNameId();
+	}
+
+	/**
+	* Returns the class p k of this m d r action.
+	*
+	* @return the class p k of this m d r action
+	*/
+	@Override
+	public long getClassPK() {
+		return _mdrAction.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this m d r action.
+	*
+	* @return the company ID of this m d r action
+	*/
+	@Override
+	public long getCompanyId() {
+		return _mdrAction.getCompanyId();
+	}
+
+	/**
+	* Returns the group ID of this m d r action.
+	*
+	* @return the group ID of this m d r action
+	*/
+	@Override
+	public long getGroupId() {
+		return _mdrAction.getGroupId();
+	}
+
+	/**
+	* Returns the primary key of this m d r action.
+	*
+	* @return the primary key of this m d r action
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _mdrAction.getPrimaryKey();
+	}
+
+	/**
+	* Returns the rule group instance ID of this m d r action.
+	*
+	* @return the rule group instance ID of this m d r action
+	*/
+	@Override
+	public long getRuleGroupInstanceId() {
+		return _mdrAction.getRuleGroupInstanceId();
+	}
+
+	/**
+	* Returns the user ID of this m d r action.
+	*
+	* @return the user ID of this m d r action
+	*/
+	@Override
+	public long getUserId() {
+		return _mdrAction.getUserId();
 	}
 
 	@Override
@@ -702,14 +727,14 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_mdrAction.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_mdrAction.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_mdrAction.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_mdrAction.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -902,31 +927,6 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_mdrAction.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.mobile.device.rules.model.MDRAction> toCacheModel() {
-		return _mdrAction.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRAction toEscapedModel() {
-		return new MDRActionWrapper(_mdrAction.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _mdrAction.toString();
-	}
-
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRAction toUnescapedModel() {
-		return new MDRActionWrapper(_mdrAction.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _mdrAction.toXmlString();
 	}
 
 	@Override

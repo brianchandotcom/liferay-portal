@@ -64,40 +64,18 @@ public interface MicroblogsEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MicroblogsEntry> getMicroblogsEntries(
-		java.lang.String assetTagName, int start, int end)
+	public MicroblogsEntry getMicroblogsEntry(long microblogsEntryId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MicroblogsEntry> getMicroblogsEntries(int start, int end)
-		throws PortalException;
+	public MicroblogsEntry updateMicroblogsEntry(long microblogsEntryId,
+		java.lang.String content, int socialRelationType,
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMicroblogsEntriesCount() throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMicroblogsEntriesCount(java.lang.String assetTagName)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MicroblogsEntry getMicroblogsEntry(long microblogsEntryId)
-		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MicroblogsEntry> getUserMicroblogsEntries(
-		long microblogsEntryUserId, int start, int end)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MicroblogsEntry> getUserMicroblogsEntries(
-		long microblogsEntryUserId, int type, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -108,7 +86,29 @@ public interface MicroblogsEntryService extends BaseService {
 	public int getUserMicroblogsEntriesCount(long microblogsEntryUserId,
 		int type) throws PortalException;
 
-	public MicroblogsEntry updateMicroblogsEntry(long microblogsEntryId,
-		java.lang.String content, int socialRelationType,
-		ServiceContext serviceContext) throws PortalException;
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MicroblogsEntry> getMicroblogsEntries(int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MicroblogsEntry> getMicroblogsEntries(
+		java.lang.String assetTagName, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MicroblogsEntry> getUserMicroblogsEntries(
+		long microblogsEntryUserId, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MicroblogsEntry> getUserMicroblogsEntries(
+		long microblogsEntryUserId, int type, int start, int end)
+		throws PortalException;
 }

@@ -52,30 +52,10 @@ public class OrgLaborServiceUtil {
 			thuClose, friOpen, friClose, satOpen, satClose);
 	}
 
-	public static void deleteOrgLabor(long orgLaborId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteOrgLabor(orgLaborId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
 	public static com.liferay.portal.kernel.model.OrgLabor getOrgLabor(
 		long orgLaborId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getOrgLabor(orgLaborId);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.OrgLabor> getOrgLabors(
-		long organizationId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getOrgLabors(organizationId);
 	}
 
 	public static com.liferay.portal.kernel.model.OrgLabor updateOrgLabor(
@@ -88,6 +68,26 @@ public class OrgLaborServiceUtil {
 				   .updateOrgLabor(orgLaborId, typeId, sunOpen, sunClose,
 			monOpen, monClose, tueOpen, tueClose, wedOpen, wedClose, thuOpen,
 			thuClose, friOpen, friClose, satOpen, satClose);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.OrgLabor> getOrgLabors(
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getOrgLabors(organizationId);
+	}
+
+	public static void deleteOrgLabor(long orgLaborId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteOrgLabor(orgLaborId);
 	}
 
 	public static OrgLaborService getService() {

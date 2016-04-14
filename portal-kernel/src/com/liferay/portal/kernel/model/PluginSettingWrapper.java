@@ -112,23 +112,9 @@ public class PluginSettingWrapper implements PluginSetting,
 		}
 	}
 
-	/**
-	* Adds a role to the list of roles.
-	*/
 	@Override
-	public void addRole(java.lang.String role) {
-		_pluginSetting.addRole(role);
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new PluginSettingWrapper((PluginSetting)_pluginSetting.clone());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.PluginSetting pluginSetting) {
-		return _pluginSetting.compareTo(pluginSetting);
+	public CacheModel<com.liferay.portal.kernel.model.PluginSetting> toCacheModel() {
+		return _pluginSetting.toCacheModel();
 	}
 
 	/**
@@ -139,96 +125,6 @@ public class PluginSettingWrapper implements PluginSetting,
 	@Override
 	public boolean getActive() {
 		return _pluginSetting.getActive();
-	}
-
-	/**
-	* Returns the company ID of this plugin setting.
-	*
-	* @return the company ID of this plugin setting
-	*/
-	@Override
-	public long getCompanyId() {
-		return _pluginSetting.getCompanyId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _pluginSetting.getExpandoBridge();
-	}
-
-	/**
-	* Returns the mvcc version of this plugin setting.
-	*
-	* @return the mvcc version of this plugin setting
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _pluginSetting.getMvccVersion();
-	}
-
-	/**
-	* Returns the plugin ID of this plugin setting.
-	*
-	* @return the plugin ID of this plugin setting
-	*/
-	@Override
-	public java.lang.String getPluginId() {
-		return _pluginSetting.getPluginId();
-	}
-
-	/**
-	* Returns the plugin setting ID of this plugin setting.
-	*
-	* @return the plugin setting ID of this plugin setting
-	*/
-	@Override
-	public long getPluginSettingId() {
-		return _pluginSetting.getPluginSettingId();
-	}
-
-	/**
-	* Returns the plugin type of this plugin setting.
-	*
-	* @return the plugin type of this plugin setting
-	*/
-	@Override
-	public java.lang.String getPluginType() {
-		return _pluginSetting.getPluginType();
-	}
-
-	/**
-	* Returns the primary key of this plugin setting.
-	*
-	* @return the primary key of this plugin setting
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _pluginSetting.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _pluginSetting.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the roles of this plugin setting.
-	*
-	* @return the roles of this plugin setting
-	*/
-	@Override
-	public java.lang.String getRoles() {
-		return _pluginSetting.getRoles();
-	}
-
-	/**
-	* Returns an array of required roles of the plugin.
-	*
-	* @return an array of required roles of the plugin
-	*/
-	@Override
-	public java.lang.String[] getRolesArray() {
-		return _pluginSetting.getRolesArray();
 	}
 
 	/**
@@ -255,11 +151,6 @@ public class PluginSettingWrapper implements PluginSetting,
 		return _pluginSetting.hasRoleWithName(roleName);
 	}
 
-	@Override
-	public int hashCode() {
-		return _pluginSetting.hashCode();
-	}
-
 	/**
 	* Returns <code>true</code> if this plugin setting is active.
 	*
@@ -283,6 +174,140 @@ public class PluginSettingWrapper implements PluginSetting,
 	@Override
 	public boolean isNew() {
 		return _pluginSetting.isNew();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _pluginSetting.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PluginSetting toEscapedModel() {
+		return new PluginSettingWrapper(_pluginSetting.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PluginSetting toUnescapedModel() {
+		return new PluginSettingWrapper(_pluginSetting.toUnescapedModel());
+	}
+
+	@Override
+	public int compareTo(
+		com.liferay.portal.kernel.model.PluginSetting pluginSetting) {
+		return _pluginSetting.compareTo(pluginSetting);
+	}
+
+	@Override
+	public int hashCode() {
+		return _pluginSetting.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _pluginSetting.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new PluginSettingWrapper((PluginSetting)_pluginSetting.clone());
+	}
+
+	/**
+	* Returns the plugin ID of this plugin setting.
+	*
+	* @return the plugin ID of this plugin setting
+	*/
+	@Override
+	public java.lang.String getPluginId() {
+		return _pluginSetting.getPluginId();
+	}
+
+	/**
+	* Returns the plugin type of this plugin setting.
+	*
+	* @return the plugin type of this plugin setting
+	*/
+	@Override
+	public java.lang.String getPluginType() {
+		return _pluginSetting.getPluginType();
+	}
+
+	/**
+	* Returns the roles of this plugin setting.
+	*
+	* @return the roles of this plugin setting
+	*/
+	@Override
+	public java.lang.String getRoles() {
+		return _pluginSetting.getRoles();
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _pluginSetting.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _pluginSetting.toXmlString();
+	}
+
+	/**
+	* Returns an array of required roles of the plugin.
+	*
+	* @return an array of required roles of the plugin
+	*/
+	@Override
+	public java.lang.String[] getRolesArray() {
+		return _pluginSetting.getRolesArray();
+	}
+
+	/**
+	* Returns the company ID of this plugin setting.
+	*
+	* @return the company ID of this plugin setting
+	*/
+	@Override
+	public long getCompanyId() {
+		return _pluginSetting.getCompanyId();
+	}
+
+	/**
+	* Returns the mvcc version of this plugin setting.
+	*
+	* @return the mvcc version of this plugin setting
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _pluginSetting.getMvccVersion();
+	}
+
+	/**
+	* Returns the plugin setting ID of this plugin setting.
+	*
+	* @return the plugin setting ID of this plugin setting
+	*/
+	@Override
+	public long getPluginSettingId() {
+		return _pluginSetting.getPluginSettingId();
+	}
+
+	/**
+	* Returns the primary key of this plugin setting.
+	*
+	* @return the primary key of this plugin setting
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _pluginSetting.getPrimaryKey();
+	}
+
+	/**
+	* Adds a role to the list of roles.
+	*/
+	@Override
+	public void addRole(java.lang.String role) {
+		_pluginSetting.addRole(role);
 	}
 
 	@Override
@@ -406,31 +431,6 @@ public class PluginSettingWrapper implements PluginSetting,
 	@Override
 	public void setRolesArray(java.lang.String[] rolesArray) {
 		_pluginSetting.setRolesArray(rolesArray);
-	}
-
-	@Override
-	public CacheModel<com.liferay.portal.kernel.model.PluginSetting> toCacheModel() {
-		return _pluginSetting.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PluginSetting toEscapedModel() {
-		return new PluginSettingWrapper(_pluginSetting.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _pluginSetting.toString();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PluginSetting toUnescapedModel() {
-		return new PluginSettingWrapper(_pluginSetting.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _pluginSetting.toXmlString();
 	}
 
 	@Override

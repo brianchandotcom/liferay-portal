@@ -46,15 +46,6 @@ public class ContactServiceUtil {
 		return getService().getContact(contactId);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Contact> getContacts(
-		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Contact> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getContacts(classNameId, classPK, start, end,
-			orderByComparator);
-	}
-
 	public static int getContactsCount(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getContactsCount(classNameId, classPK);
@@ -67,6 +58,15 @@ public class ContactServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.Contact> getContacts(
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Contact> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getContacts(classNameId, classPK, start, end,
+			orderByComparator);
 	}
 
 	public static ContactService getService() {

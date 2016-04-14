@@ -40,6 +40,22 @@ public class LayoutFriendlyURLLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutFriendlyURLLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
 
 	/**
 	* Adds the layout friendly u r l to the database. Also notifies the appropriate model listeners.
@@ -61,17 +77,6 @@ public class LayoutFriendlyURLLocalServiceUtil {
 		return getService()
 				   .addLayoutFriendlyURL(userId, companyId, groupId, plid,
 			privateLayout, friendlyURL, languageId, serviceContext);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL> addLayoutFriendlyURLs(
-		long userId, long companyId, long groupId, long plid,
-		boolean privateLayout,
-		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addLayoutFriendlyURLs(userId, companyId, groupId, plid,
-			privateLayout, friendlyURLMap, serviceContext);
 	}
 
 	/**
@@ -109,13 +114,107 @@ public class LayoutFriendlyURLLocalServiceUtil {
 		return getService().deleteLayoutFriendlyURL(layoutFriendlyURLId);
 	}
 
-	public static void deleteLayoutFriendlyURL(long plid,
-		java.lang.String languageId) {
-		getService().deleteLayoutFriendlyURL(plid, languageId);
+	public static com.liferay.portal.kernel.model.LayoutFriendlyURL fetchFirstLayoutFriendlyURL(
+		long groupId, boolean privateLayout, java.lang.String friendlyURL) {
+		return getService()
+				   .fetchFirstLayoutFriendlyURL(groupId, privateLayout,
+			friendlyURL);
 	}
 
-	public static void deleteLayoutFriendlyURLs(long plid) {
-		getService().deleteLayoutFriendlyURLs(plid);
+	public static com.liferay.portal.kernel.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
+		long groupId, boolean privateLayout, java.lang.String friendlyURL,
+		java.lang.String languageId) {
+		return getService()
+				   .fetchLayoutFriendlyURL(groupId, privateLayout, friendlyURL,
+			languageId);
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
+		long layoutFriendlyURLId) {
+		return getService().fetchLayoutFriendlyURL(layoutFriendlyURLId);
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
+		long plid, java.lang.String languageId) {
+		return getService().fetchLayoutFriendlyURL(plid, languageId);
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
+		long plid, java.lang.String languageId, boolean useDefault) {
+		return getService().fetchLayoutFriendlyURL(plid, languageId, useDefault);
+	}
+
+	/**
+	* Returns the layout friendly u r l matching the UUID and group.
+	*
+	* @param uuid the layout friendly u r l's UUID
+	* @param groupId the primary key of the group
+	* @return the matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	*/
+	public static com.liferay.portal.kernel.model.LayoutFriendlyURL fetchLayoutFriendlyURLByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchLayoutFriendlyURLByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
+	* Returns the layout friendly u r l with the primary key.
+	*
+	* @param layoutFriendlyURLId the primary key of the layout friendly u r l
+	* @return the layout friendly u r l
+	* @throws PortalException if a layout friendly u r l with the primary key could not be found
+	*/
+	public static com.liferay.portal.kernel.model.LayoutFriendlyURL getLayoutFriendlyURL(
+		long layoutFriendlyURLId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLayoutFriendlyURL(layoutFriendlyURLId);
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutFriendlyURL getLayoutFriendlyURL(
+		long plid, java.lang.String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLayoutFriendlyURL(plid, languageId);
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutFriendlyURL getLayoutFriendlyURL(
+		long plid, java.lang.String languageId, boolean useDefault)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLayoutFriendlyURL(plid, languageId, useDefault);
+	}
+
+	/**
+	* Returns the layout friendly u r l matching the UUID and group.
+	*
+	* @param uuid the layout friendly u r l's UUID
+	* @param groupId the primary key of the group
+	* @return the matching layout friendly u r l
+	* @throws PortalException if a matching layout friendly u r l could not be found
+	*/
+	public static com.liferay.portal.kernel.model.LayoutFriendlyURL getLayoutFriendlyURLByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLayoutFriendlyURLByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
+	* Updates the layout friendly u r l in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param layoutFriendlyURL the layout friendly u r l
+	* @return the layout friendly u r l that was updated
+	*/
+	public static com.liferay.portal.kernel.model.LayoutFriendlyURL updateLayoutFriendlyURL(
+		com.liferay.portal.kernel.model.LayoutFriendlyURL layoutFriendlyURL) {
+		return getService().updateLayoutFriendlyURL(layoutFriendlyURL);
+	}
+
+	public static com.liferay.portal.kernel.model.LayoutFriendlyURL updateLayoutFriendlyURL(
+		long userId, long companyId, long groupId, long plid,
+		boolean privateLayout, java.lang.String friendlyURL,
+		java.lang.String languageId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateLayoutFriendlyURL(userId, companyId, groupId, plid,
+			privateLayout, friendlyURL, languageId, serviceContext);
 	}
 
 	/**
@@ -127,8 +226,39 @@ public class LayoutFriendlyURLLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the number of layout friendly u r ls.
+	*
+	* @return the number of layout friendly u r ls
+	*/
+	public static int getLayoutFriendlyURLsCount() {
+		return getService().getLayoutFriendlyURLsCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL> addLayoutFriendlyURLs(
+		long userId, long companyId, long groupId, long plid,
+		boolean privateLayout,
+		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLayoutFriendlyURLs(userId, companyId, groupId, plid,
+			privateLayout, friendlyURLMap, serviceContext);
 	}
 
 	/**
@@ -182,134 +312,6 @@ public class LayoutFriendlyURLLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.portal.kernel.model.LayoutFriendlyURL fetchFirstLayoutFriendlyURL(
-		long groupId, boolean privateLayout, java.lang.String friendlyURL) {
-		return getService()
-				   .fetchFirstLayoutFriendlyURL(groupId, privateLayout,
-			friendlyURL);
-	}
-
-	public static com.liferay.portal.kernel.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
-		long groupId, boolean privateLayout, java.lang.String friendlyURL,
-		java.lang.String languageId) {
-		return getService()
-				   .fetchLayoutFriendlyURL(groupId, privateLayout, friendlyURL,
-			languageId);
-	}
-
-	public static com.liferay.portal.kernel.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
-		long layoutFriendlyURLId) {
-		return getService().fetchLayoutFriendlyURL(layoutFriendlyURLId);
-	}
-
-	public static com.liferay.portal.kernel.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
-		long plid, java.lang.String languageId) {
-		return getService().fetchLayoutFriendlyURL(plid, languageId);
-	}
-
-	public static com.liferay.portal.kernel.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
-		long plid, java.lang.String languageId, boolean useDefault) {
-		return getService().fetchLayoutFriendlyURL(plid, languageId, useDefault);
-	}
-
-	/**
-	* Returns the layout friendly u r l matching the UUID and group.
-	*
-	* @param uuid the layout friendly u r l's UUID
-	* @param groupId the primary key of the group
-	* @return the matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
-	*/
-	public static com.liferay.portal.kernel.model.LayoutFriendlyURL fetchLayoutFriendlyURLByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchLayoutFriendlyURLByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the layout friendly u r l with the primary key.
-	*
-	* @param layoutFriendlyURLId the primary key of the layout friendly u r l
-	* @return the layout friendly u r l
-	* @throws PortalException if a layout friendly u r l with the primary key could not be found
-	*/
-	public static com.liferay.portal.kernel.model.LayoutFriendlyURL getLayoutFriendlyURL(
-		long layoutFriendlyURLId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLayoutFriendlyURL(layoutFriendlyURLId);
-	}
-
-	public static com.liferay.portal.kernel.model.LayoutFriendlyURL getLayoutFriendlyURL(
-		long plid, java.lang.String languageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLayoutFriendlyURL(plid, languageId);
-	}
-
-	public static com.liferay.portal.kernel.model.LayoutFriendlyURL getLayoutFriendlyURL(
-		long plid, java.lang.String languageId, boolean useDefault)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLayoutFriendlyURL(plid, languageId, useDefault);
-	}
-
-	/**
-	* Returns the layout friendly u r l matching the UUID and group.
-	*
-	* @param uuid the layout friendly u r l's UUID
-	* @param groupId the primary key of the group
-	* @return the matching layout friendly u r l
-	* @throws PortalException if a matching layout friendly u r l could not be found
-	*/
-	public static com.liferay.portal.kernel.model.LayoutFriendlyURL getLayoutFriendlyURLByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLayoutFriendlyURLByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL> getLayoutFriendlyURLs(
-		long plid) {
-		return getService().getLayoutFriendlyURLs(plid);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL> getLayoutFriendlyURLs(
-		long plid, java.lang.String friendlyURL, int start, int end) {
-		return getService().getLayoutFriendlyURLs(plid, friendlyURL, start, end);
-	}
-
-	/**
 	* Returns a range of all the layout friendly u r ls.
 	*
 	* <p>
@@ -323,6 +325,16 @@ public class LayoutFriendlyURLLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL> getLayoutFriendlyURLs(
 		int start, int end) {
 		return getService().getLayoutFriendlyURLs(start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL> getLayoutFriendlyURLs(
+		long plid) {
+		return getService().getLayoutFriendlyURLs(plid);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL> getLayoutFriendlyURLs(
+		long plid, java.lang.String friendlyURL, int start, int end) {
+		return getService().getLayoutFriendlyURLs(plid, friendlyURL, start, end);
 	}
 
 	/**
@@ -356,52 +368,6 @@ public class LayoutFriendlyURLLocalServiceUtil {
 			start, end, orderByComparator);
 	}
 
-	/**
-	* Returns the number of layout friendly u r ls.
-	*
-	* @return the number of layout friendly u r ls
-	*/
-	public static int getLayoutFriendlyURLsCount() {
-		return getService().getLayoutFriendlyURLsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Updates the layout friendly u r l in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param layoutFriendlyURL the layout friendly u r l
-	* @return the layout friendly u r l that was updated
-	*/
-	public static com.liferay.portal.kernel.model.LayoutFriendlyURL updateLayoutFriendlyURL(
-		com.liferay.portal.kernel.model.LayoutFriendlyURL layoutFriendlyURL) {
-		return getService().updateLayoutFriendlyURL(layoutFriendlyURL);
-	}
-
-	public static com.liferay.portal.kernel.model.LayoutFriendlyURL updateLayoutFriendlyURL(
-		long userId, long companyId, long groupId, long plid,
-		boolean privateLayout, java.lang.String friendlyURL,
-		java.lang.String languageId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateLayoutFriendlyURL(userId, companyId, groupId, plid,
-			privateLayout, friendlyURL, languageId, serviceContext);
-	}
-
 	public static java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL> updateLayoutFriendlyURLs(
 		long userId, long companyId, long groupId, long plid,
 		boolean privateLayout,
@@ -411,6 +377,39 @@ public class LayoutFriendlyURLLocalServiceUtil {
 		return getService()
 				   .updateLayoutFriendlyURLs(userId, companyId, groupId, plid,
 			privateLayout, friendlyURLMap, serviceContext);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void deleteLayoutFriendlyURL(long plid,
+		java.lang.String languageId) {
+		getService().deleteLayoutFriendlyURL(plid, languageId);
+	}
+
+	public static void deleteLayoutFriendlyURLs(long plid) {
+		getService().deleteLayoutFriendlyURLs(plid);
 	}
 
 	public static LayoutFriendlyURLLocalService getService() {

@@ -127,107 +127,6 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 		}
 	}
 
-	@Override
-	public java.lang.Object clone() {
-		return new JournalArticleImageWrapper((JournalArticleImage)_journalArticleImage.clone());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.journal.model.JournalArticleImage journalArticleImage) {
-		return _journalArticleImage.compareTo(journalArticleImage);
-	}
-
-	/**
-	* Returns the article ID of this journal article image.
-	*
-	* @return the article ID of this journal article image
-	*/
-	@Override
-	public java.lang.String getArticleId() {
-		return _journalArticleImage.getArticleId();
-	}
-
-	/**
-	* Returns the article image ID of this journal article image.
-	*
-	* @return the article image ID of this journal article image
-	*/
-	@Override
-	public long getArticleImageId() {
-		return _journalArticleImage.getArticleImageId();
-	}
-
-	/**
-	* Returns the company ID of this journal article image.
-	*
-	* @return the company ID of this journal article image
-	*/
-	@Override
-	public long getCompanyId() {
-		return _journalArticleImage.getCompanyId();
-	}
-
-	/**
-	* Returns the el instance ID of this journal article image.
-	*
-	* @return the el instance ID of this journal article image
-	*/
-	@Override
-	public java.lang.String getElInstanceId() {
-		return _journalArticleImage.getElInstanceId();
-	}
-
-	/**
-	* Returns the el name of this journal article image.
-	*
-	* @return the el name of this journal article image
-	*/
-	@Override
-	public java.lang.String getElName() {
-		return _journalArticleImage.getElName();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _journalArticleImage.getExpandoBridge();
-	}
-
-	/**
-	* Returns the group ID of this journal article image.
-	*
-	* @return the group ID of this journal article image
-	*/
-	@Override
-	public long getGroupId() {
-		return _journalArticleImage.getGroupId();
-	}
-
-	/**
-	* Returns the language ID of this journal article image.
-	*
-	* @return the language ID of this journal article image
-	*/
-	@Override
-	public java.lang.String getLanguageId() {
-		return _journalArticleImage.getLanguageId();
-	}
-
-	/**
-	* Returns the primary key of this journal article image.
-	*
-	* @return the primary key of this journal article image
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _journalArticleImage.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _journalArticleImage.getPrimaryKeyObj();
-	}
-
 	/**
 	* Returns the temp image of this journal article image.
 	*
@@ -236,21 +135,6 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	@Override
 	public boolean getTempImage() {
 		return _journalArticleImage.getTempImage();
-	}
-
-	/**
-	* Returns the version of this journal article image.
-	*
-	* @return the version of this journal article image
-	*/
-	@Override
-	public double getVersion() {
-		return _journalArticleImage.getVersion();
-	}
-
-	@Override
-	public int hashCode() {
-		return _journalArticleImage.hashCode();
 	}
 
 	@Override
@@ -276,6 +160,147 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	@Override
 	public boolean isTempImage() {
 		return _journalArticleImage.isTempImage();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _journalArticleImage.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.journal.model.JournalArticleImage toEscapedModel() {
+		return new JournalArticleImageWrapper(_journalArticleImage.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.journal.model.JournalArticleImage toUnescapedModel() {
+		return new JournalArticleImageWrapper(_journalArticleImage.toUnescapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.journal.model.JournalArticleImage> toCacheModel() {
+		return _journalArticleImage.toCacheModel();
+	}
+
+	/**
+	* Returns the version of this journal article image.
+	*
+	* @return the version of this journal article image
+	*/
+	@Override
+	public double getVersion() {
+		return _journalArticleImage.getVersion();
+	}
+
+	@Override
+	public int compareTo(
+		com.liferay.journal.model.JournalArticleImage journalArticleImage) {
+		return _journalArticleImage.compareTo(journalArticleImage);
+	}
+
+	@Override
+	public int hashCode() {
+		return _journalArticleImage.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _journalArticleImage.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new JournalArticleImageWrapper((JournalArticleImage)_journalArticleImage.clone());
+	}
+
+	/**
+	* Returns the article ID of this journal article image.
+	*
+	* @return the article ID of this journal article image
+	*/
+	@Override
+	public java.lang.String getArticleId() {
+		return _journalArticleImage.getArticleId();
+	}
+
+	/**
+	* Returns the el instance ID of this journal article image.
+	*
+	* @return the el instance ID of this journal article image
+	*/
+	@Override
+	public java.lang.String getElInstanceId() {
+		return _journalArticleImage.getElInstanceId();
+	}
+
+	/**
+	* Returns the el name of this journal article image.
+	*
+	* @return the el name of this journal article image
+	*/
+	@Override
+	public java.lang.String getElName() {
+		return _journalArticleImage.getElName();
+	}
+
+	/**
+	* Returns the language ID of this journal article image.
+	*
+	* @return the language ID of this journal article image
+	*/
+	@Override
+	public java.lang.String getLanguageId() {
+		return _journalArticleImage.getLanguageId();
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _journalArticleImage.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _journalArticleImage.toXmlString();
+	}
+
+	/**
+	* Returns the article image ID of this journal article image.
+	*
+	* @return the article image ID of this journal article image
+	*/
+	@Override
+	public long getArticleImageId() {
+		return _journalArticleImage.getArticleImageId();
+	}
+
+	/**
+	* Returns the company ID of this journal article image.
+	*
+	* @return the company ID of this journal article image
+	*/
+	@Override
+	public long getCompanyId() {
+		return _journalArticleImage.getCompanyId();
+	}
+
+	/**
+	* Returns the group ID of this journal article image.
+	*
+	* @return the group ID of this journal article image
+	*/
+	@Override
+	public long getGroupId() {
+		return _journalArticleImage.getGroupId();
+	}
+
+	/**
+	* Returns the primary key of this journal article image.
+	*
+	* @return the primary key of this journal article image
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _journalArticleImage.getPrimaryKey();
 	}
 
 	@Override
@@ -339,14 +364,14 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_journalArticleImage.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_journalArticleImage.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_journalArticleImage.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_journalArticleImage.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -412,31 +437,6 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	@Override
 	public void setVersion(double version) {
 		_journalArticleImage.setVersion(version);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.journal.model.JournalArticleImage> toCacheModel() {
-		return _journalArticleImage.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.journal.model.JournalArticleImage toEscapedModel() {
-		return new JournalArticleImageWrapper(_journalArticleImage.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _journalArticleImage.toString();
-	}
-
-	@Override
-	public com.liferay.journal.model.JournalArticleImage toUnescapedModel() {
-		return new JournalArticleImageWrapper(_journalArticleImage.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _journalArticleImage.toXmlString();
 	}
 
 	@Override

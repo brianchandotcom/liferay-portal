@@ -98,17 +98,6 @@ public class BookmarksEntryLocalServiceUtil {
 		return getService().deleteBookmarksEntry(entryId);
 	}
 
-	public static void deleteEntries(long groupId, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteEntries(groupId, folderId);
-	}
-
-	public static void deleteEntries(long groupId, long folderId,
-		boolean includeTrashedEntries)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteEntries(groupId, folderId, includeTrashedEntries);
-	}
-
 	public static com.liferay.bookmarks.model.BookmarksEntry deleteEntry(
 		com.liferay.bookmarks.model.BookmarksEntry entry)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -121,6 +110,142 @@ public class BookmarksEntryLocalServiceUtil {
 		return getService().deleteEntry(entryId);
 	}
 
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchBookmarksEntry(
+		long entryId) {
+		return getService().fetchBookmarksEntry(entryId);
+	}
+
+	/**
+	* Returns the bookmarks entry matching the UUID and group.
+	*
+	* @param uuid the bookmarks entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
+	*/
+	public static com.liferay.bookmarks.model.BookmarksEntry fetchBookmarksEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchBookmarksEntryByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
+	* Returns the bookmarks entry with the primary key.
+	*
+	* @param entryId the primary key of the bookmarks entry
+	* @return the bookmarks entry
+	* @throws PortalException if a bookmarks entry with the primary key could not be found
+	*/
+	public static com.liferay.bookmarks.model.BookmarksEntry getBookmarksEntry(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getBookmarksEntry(entryId);
+	}
+
+	/**
+	* Returns the bookmarks entry matching the UUID and group.
+	*
+	* @param uuid the bookmarks entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching bookmarks entry
+	* @throws PortalException if a matching bookmarks entry could not be found
+	*/
+	public static com.liferay.bookmarks.model.BookmarksEntry getBookmarksEntryByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getBookmarksEntryByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.bookmarks.model.BookmarksEntry getEntry(
+		long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getEntry(entryId);
+	}
+
+	public static com.liferay.bookmarks.model.BookmarksEntry moveEntry(
+		long entryId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().moveEntry(entryId, parentFolderId);
+	}
+
+	public static com.liferay.bookmarks.model.BookmarksEntry moveEntryFromTrash(
+		long userId, long entryId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().moveEntryFromTrash(userId, entryId, parentFolderId);
+	}
+
+	public static com.liferay.bookmarks.model.BookmarksEntry moveEntryToTrash(
+		long userId, com.liferay.bookmarks.model.BookmarksEntry entry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().moveEntryToTrash(userId, entry);
+	}
+
+	public static com.liferay.bookmarks.model.BookmarksEntry moveEntryToTrash(
+		long userId, long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().moveEntryToTrash(userId, entryId);
+	}
+
+	public static com.liferay.bookmarks.model.BookmarksEntry openEntry(
+		long userId, com.liferay.bookmarks.model.BookmarksEntry entry) {
+		return getService().openEntry(userId, entry);
+	}
+
+	public static com.liferay.bookmarks.model.BookmarksEntry openEntry(
+		long userId, long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().openEntry(userId, entryId);
+	}
+
+	public static com.liferay.bookmarks.model.BookmarksEntry restoreEntryFromTrash(
+		long userId, long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().restoreEntryFromTrash(userId, entryId);
+	}
+
+	/**
+	* Updates the bookmarks entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param bookmarksEntry the bookmarks entry
+	* @return the bookmarks entry that was updated
+	*/
+	public static com.liferay.bookmarks.model.BookmarksEntry updateBookmarksEntry(
+		com.liferay.bookmarks.model.BookmarksEntry bookmarksEntry) {
+		return getService().updateBookmarksEntry(bookmarksEntry);
+	}
+
+	public static com.liferay.bookmarks.model.BookmarksEntry updateEntry(
+		long userId, long entryId, long groupId, long folderId,
+		java.lang.String name, java.lang.String url,
+		java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateEntry(userId, entryId, groupId, folderId, name, url,
+			description, serviceContext);
+	}
+
+	public static com.liferay.bookmarks.model.BookmarksEntry updateStatus(
+		long userId, com.liferay.bookmarks.model.BookmarksEntry entry,
+		int status) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateStatus(userId, entry, status);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -130,8 +255,56 @@ public class BookmarksEntryLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(long groupId,
+		long userId, long creatorUserId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .search(groupId, userId, creatorUserId, status, start, end);
+	}
+
+	/**
+	* Returns the number of bookmarks entries.
+	*
+	* @return the number of bookmarks entries
+	*/
+	public static int getBookmarksEntriesCount() {
+		return getService().getBookmarksEntriesCount();
+	}
+
+	public static int getEntriesCount(long groupId, long folderId) {
+		return getService().getEntriesCount(groupId, folderId);
+	}
+
+	public static int getEntriesCount(long groupId, long folderId, int status) {
+		return getService().getEntriesCount(groupId, folderId, status);
+	}
+
+	public static int getFoldersEntriesCount(long groupId,
+		java.util.List<java.lang.Long> folderIds) {
+		return getService().getFoldersEntriesCount(groupId, folderIds);
+	}
+
+	public static int getGroupEntriesCount(long groupId) {
+		return getService().getGroupEntriesCount(groupId);
+	}
+
+	public static int getGroupEntriesCount(long groupId, long userId) {
+		return getService().getGroupEntriesCount(groupId, userId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -185,51 +358,6 @@ public class BookmarksEntryLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.bookmarks.model.BookmarksEntry fetchBookmarksEntry(
-		long entryId) {
-		return getService().fetchBookmarksEntry(entryId);
-	}
-
-	/**
-	* Returns the bookmarks entry matching the UUID and group.
-	*
-	* @param uuid the bookmarks entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
-	*/
-	public static com.liferay.bookmarks.model.BookmarksEntry fetchBookmarksEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchBookmarksEntryByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
 	* Returns a range of all the bookmarks entries.
 	*
 	* <p>
@@ -276,42 +404,6 @@ public class BookmarksEntryLocalServiceUtil {
 			start, end, orderByComparator);
 	}
 
-	/**
-	* Returns the number of bookmarks entries.
-	*
-	* @return the number of bookmarks entries
-	*/
-	public static int getBookmarksEntriesCount() {
-		return getService().getBookmarksEntriesCount();
-	}
-
-	/**
-	* Returns the bookmarks entry with the primary key.
-	*
-	* @param entryId the primary key of the bookmarks entry
-	* @return the bookmarks entry
-	* @throws PortalException if a bookmarks entry with the primary key could not be found
-	*/
-	public static com.liferay.bookmarks.model.BookmarksEntry getBookmarksEntry(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getBookmarksEntry(entryId);
-	}
-
-	/**
-	* Returns the bookmarks entry matching the UUID and group.
-	*
-	* @param uuid the bookmarks entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching bookmarks entry
-	* @throws PortalException if a matching bookmarks entry could not be found
-	*/
-	public static com.liferay.bookmarks.model.BookmarksEntry getBookmarksEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getBookmarksEntryByUuidAndGroupId(uuid, groupId);
-	}
-
 	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getEntries(
 		long groupId, long folderId, int start, int end) {
 		return getService().getEntries(groupId, folderId, start, end);
@@ -337,30 +429,6 @@ public class BookmarksEntryLocalServiceUtil {
 			orderByComparator);
 	}
 
-	public static int getEntriesCount(long groupId, long folderId) {
-		return getService().getEntriesCount(groupId, folderId);
-	}
-
-	public static int getEntriesCount(long groupId, long folderId, int status) {
-		return getService().getEntriesCount(groupId, folderId, status);
-	}
-
-	public static com.liferay.bookmarks.model.BookmarksEntry getEntry(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getEntry(entryId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static int getFoldersEntriesCount(long groupId,
-		java.util.List<java.lang.Long> folderIds) {
-		return getService().getFoldersEntriesCount(groupId, folderIds);
-	}
-
 	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getGroupEntries(
 		long groupId, int start, int end) {
 		return getService().getGroupEntries(groupId, start, end);
@@ -371,88 +439,48 @@ public class BookmarksEntryLocalServiceUtil {
 		return getService().getGroupEntries(groupId, userId, start, end);
 	}
 
-	public static int getGroupEntriesCount(long groupId) {
-		return getService().getGroupEntriesCount(groupId);
-	}
-
-	public static int getGroupEntriesCount(long groupId, long userId) {
-		return getService().getGroupEntriesCount(groupId, userId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
 	public static java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getNoAssetEntries() {
 		return getService().getNoAssetEntries();
 	}
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void deleteEntries(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
+		getService().deleteEntries(groupId, folderId);
 	}
 
-	public static com.liferay.bookmarks.model.BookmarksEntry moveEntry(
-		long entryId, long parentFolderId)
+	public static void deleteEntries(long groupId, long folderId,
+		boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().moveEntry(entryId, parentFolderId);
-	}
-
-	public static com.liferay.bookmarks.model.BookmarksEntry moveEntryFromTrash(
-		long userId, long entryId, long parentFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().moveEntryFromTrash(userId, entryId, parentFolderId);
-	}
-
-	public static com.liferay.bookmarks.model.BookmarksEntry moveEntryToTrash(
-		long userId, com.liferay.bookmarks.model.BookmarksEntry entry)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().moveEntryToTrash(userId, entry);
-	}
-
-	public static com.liferay.bookmarks.model.BookmarksEntry moveEntryToTrash(
-		long userId, long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().moveEntryToTrash(userId, entryId);
-	}
-
-	public static com.liferay.bookmarks.model.BookmarksEntry openEntry(
-		long userId, com.liferay.bookmarks.model.BookmarksEntry entry) {
-		return getService().openEntry(userId, entry);
-	}
-
-	public static com.liferay.bookmarks.model.BookmarksEntry openEntry(
-		long userId, long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().openEntry(userId, entryId);
+		getService().deleteEntries(groupId, folderId, includeTrashedEntries);
 	}
 
 	public static void rebuildTree(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().rebuildTree(companyId);
-	}
-
-	public static com.liferay.bookmarks.model.BookmarksEntry restoreEntryFromTrash(
-		long userId, long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().restoreEntryFromTrash(userId, entryId);
-	}
-
-	public static com.liferay.portal.kernel.search.Hits search(long groupId,
-		long userId, long creatorUserId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .search(groupId, userId, creatorUserId, status, start, end);
 	}
 
 	public static void setTreePaths(long folderId, java.lang.String treePath,
@@ -479,34 +507,6 @@ public class BookmarksEntryLocalServiceUtil {
 		getService()
 			.updateAsset(userId, entry, assetCategoryIds, assetTagNames,
 			assetLinkEntryIds, priority);
-	}
-
-	/**
-	* Updates the bookmarks entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param bookmarksEntry the bookmarks entry
-	* @return the bookmarks entry that was updated
-	*/
-	public static com.liferay.bookmarks.model.BookmarksEntry updateBookmarksEntry(
-		com.liferay.bookmarks.model.BookmarksEntry bookmarksEntry) {
-		return getService().updateBookmarksEntry(bookmarksEntry);
-	}
-
-	public static com.liferay.bookmarks.model.BookmarksEntry updateEntry(
-		long userId, long entryId, long groupId, long folderId,
-		java.lang.String name, java.lang.String url,
-		java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateEntry(userId, entryId, groupId, folderId, name, url,
-			description, serviceContext);
-	}
-
-	public static com.liferay.bookmarks.model.BookmarksEntry updateStatus(
-		long userId, com.liferay.bookmarks.model.BookmarksEntry entry,
-		int status) throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateStatus(userId, entry, status);
 	}
 
 	public static BookmarksEntryLocalService getService() {

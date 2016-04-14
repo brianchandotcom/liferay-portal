@@ -158,14 +158,85 @@ public class EmailAddressWrapper implements EmailAddress,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new EmailAddressWrapper((EmailAddress)_emailAddress.clone());
+	public CacheModel<com.liferay.portal.kernel.model.EmailAddress> toCacheModel() {
+		return _emailAddress.toCacheModel();
+	}
+
+	/**
+	* Returns the primary of this email address.
+	*
+	* @return the primary of this email address
+	*/
+	@Override
+	public boolean getPrimary() {
+		return _emailAddress.getPrimary();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _emailAddress.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _emailAddress.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _emailAddress.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this email address is primary.
+	*
+	* @return <code>true</code> if this email address is primary; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isPrimary() {
+		return _emailAddress.isPrimary();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _emailAddress.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.EmailAddress toEscapedModel() {
+		return new EmailAddressWrapper(_emailAddress.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.EmailAddress toUnescapedModel() {
+		return new EmailAddressWrapper(_emailAddress.toUnescapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.ListType getType()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _emailAddress.getType();
 	}
 
 	@Override
 	public int compareTo(
 		com.liferay.portal.kernel.model.EmailAddress emailAddress) {
 		return _emailAddress.compareTo(emailAddress);
+	}
+
+	@Override
+	public int hashCode() {
+		return _emailAddress.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _emailAddress.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new EmailAddressWrapper((EmailAddress)_emailAddress.clone());
 	}
 
 	/**
@@ -186,132 +257,6 @@ public class EmailAddressWrapper implements EmailAddress,
 	@Override
 	public java.lang.String getClassName() {
 		return _emailAddress.getClassName();
-	}
-
-	/**
-	* Returns the class name ID of this email address.
-	*
-	* @return the class name ID of this email address
-	*/
-	@Override
-	public long getClassNameId() {
-		return _emailAddress.getClassNameId();
-	}
-
-	/**
-	* Returns the class p k of this email address.
-	*
-	* @return the class p k of this email address
-	*/
-	@Override
-	public long getClassPK() {
-		return _emailAddress.getClassPK();
-	}
-
-	/**
-	* Returns the company ID of this email address.
-	*
-	* @return the company ID of this email address
-	*/
-	@Override
-	public long getCompanyId() {
-		return _emailAddress.getCompanyId();
-	}
-
-	/**
-	* Returns the create date of this email address.
-	*
-	* @return the create date of this email address
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _emailAddress.getCreateDate();
-	}
-
-	/**
-	* Returns the email address ID of this email address.
-	*
-	* @return the email address ID of this email address
-	*/
-	@Override
-	public long getEmailAddressId() {
-		return _emailAddress.getEmailAddressId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _emailAddress.getExpandoBridge();
-	}
-
-	/**
-	* Returns the modified date of this email address.
-	*
-	* @return the modified date of this email address
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _emailAddress.getModifiedDate();
-	}
-
-	/**
-	* Returns the mvcc version of this email address.
-	*
-	* @return the mvcc version of this email address
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _emailAddress.getMvccVersion();
-	}
-
-	/**
-	* Returns the primary of this email address.
-	*
-	* @return the primary of this email address
-	*/
-	@Override
-	public boolean getPrimary() {
-		return _emailAddress.getPrimary();
-	}
-
-	/**
-	* Returns the primary key of this email address.
-	*
-	* @return the primary key of this email address
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _emailAddress.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _emailAddress.getPrimaryKeyObj();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.ListType getType()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _emailAddress.getType();
-	}
-
-	/**
-	* Returns the type ID of this email address.
-	*
-	* @return the type ID of this email address
-	*/
-	@Override
-	public long getTypeId() {
-		return _emailAddress.getTypeId();
-	}
-
-	/**
-	* Returns the user ID of this email address.
-	*
-	* @return the user ID of this email address
-	*/
-	@Override
-	public long getUserId() {
-		return _emailAddress.getUserId();
 	}
 
 	/**
@@ -345,33 +290,113 @@ public class EmailAddressWrapper implements EmailAddress,
 	}
 
 	@Override
-	public int hashCode() {
-		return _emailAddress.hashCode();
+	public java.lang.String toString() {
+		return _emailAddress.toString();
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _emailAddress.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _emailAddress.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _emailAddress.isNew();
+	public java.lang.String toXmlString() {
+		return _emailAddress.toXmlString();
 	}
 
 	/**
-	* Returns <code>true</code> if this email address is primary.
+	* Returns the create date of this email address.
 	*
-	* @return <code>true</code> if this email address is primary; <code>false</code> otherwise
+	* @return the create date of this email address
 	*/
 	@Override
-	public boolean isPrimary() {
-		return _emailAddress.isPrimary();
+	public Date getCreateDate() {
+		return _emailAddress.getCreateDate();
+	}
+
+	/**
+	* Returns the modified date of this email address.
+	*
+	* @return the modified date of this email address
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _emailAddress.getModifiedDate();
+	}
+
+	/**
+	* Returns the class name ID of this email address.
+	*
+	* @return the class name ID of this email address
+	*/
+	@Override
+	public long getClassNameId() {
+		return _emailAddress.getClassNameId();
+	}
+
+	/**
+	* Returns the class p k of this email address.
+	*
+	* @return the class p k of this email address
+	*/
+	@Override
+	public long getClassPK() {
+		return _emailAddress.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this email address.
+	*
+	* @return the company ID of this email address
+	*/
+	@Override
+	public long getCompanyId() {
+		return _emailAddress.getCompanyId();
+	}
+
+	/**
+	* Returns the email address ID of this email address.
+	*
+	* @return the email address ID of this email address
+	*/
+	@Override
+	public long getEmailAddressId() {
+		return _emailAddress.getEmailAddressId();
+	}
+
+	/**
+	* Returns the mvcc version of this email address.
+	*
+	* @return the mvcc version of this email address
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _emailAddress.getMvccVersion();
+	}
+
+	/**
+	* Returns the primary key of this email address.
+	*
+	* @return the primary key of this email address
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _emailAddress.getPrimaryKey();
+	}
+
+	/**
+	* Returns the type ID of this email address.
+	*
+	* @return the type ID of this email address
+	*/
+	@Override
+	public long getTypeId() {
+		return _emailAddress.getTypeId();
+	}
+
+	/**
+	* Returns the user ID of this email address.
+	*
+	* @return the user ID of this email address
+	*/
+	@Override
+	public long getUserId() {
+		return _emailAddress.getUserId();
 	}
 
 	@Override
@@ -562,31 +587,6 @@ public class EmailAddressWrapper implements EmailAddress,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_emailAddress.setUuid(uuid);
-	}
-
-	@Override
-	public CacheModel<com.liferay.portal.kernel.model.EmailAddress> toCacheModel() {
-		return _emailAddress.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.EmailAddress toEscapedModel() {
-		return new EmailAddressWrapper(_emailAddress.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _emailAddress.toString();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.EmailAddress toUnescapedModel() {
-		return new EmailAddressWrapper(_emailAddress.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _emailAddress.toXmlString();
 	}
 
 	@Override

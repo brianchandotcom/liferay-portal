@@ -60,10 +60,6 @@ public class DLFileRankLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static void checkFileRanks() {
-		getService().checkFileRanks();
-	}
-
 	/**
 	* Creates a new document library file rank with the primary key. Does not add the document library file rank to the database.
 	*
@@ -99,22 +95,53 @@ public class DLFileRankLocalServiceUtil {
 		return getService().deleteDLFileRank(fileRankId);
 	}
 
-	public static void deleteFileRank(
-		com.liferay.document.library.kernel.model.DLFileRank dlFileRank) {
-		getService().deleteFileRank(dlFileRank);
+	public static com.liferay.document.library.kernel.model.DLFileRank fetchDLFileRank(
+		long fileRankId) {
+		return getService().fetchDLFileRank(fileRankId);
 	}
 
-	public static void deleteFileRank(long fileRankId)
+	/**
+	* Returns the document library file rank with the primary key.
+	*
+	* @param fileRankId the primary key of the document library file rank
+	* @return the document library file rank
+	* @throws PortalException if a document library file rank with the primary key could not be found
+	*/
+	public static com.liferay.document.library.kernel.model.DLFileRank getDLFileRank(
+		long fileRankId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFileRank(fileRankId);
+		return getService().getDLFileRank(fileRankId);
 	}
 
-	public static void deleteFileRanksByFileEntryId(long fileEntryId) {
-		getService().deleteFileRanksByFileEntryId(fileEntryId);
+	/**
+	* Updates the document library file rank in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileRank the document library file rank
+	* @return the document library file rank that was updated
+	*/
+	public static com.liferay.document.library.kernel.model.DLFileRank updateDLFileRank(
+		com.liferay.document.library.kernel.model.DLFileRank dlFileRank) {
+		return getService().updateDLFileRank(dlFileRank);
 	}
 
-	public static void deleteFileRanksByUserId(long userId) {
-		getService().deleteFileRanksByUserId(userId);
+	public static com.liferay.document.library.kernel.model.DLFileRank updateFileRank(
+		long groupId, long companyId, long userId, long fileEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return getService()
+				   .updateFileRank(groupId, companyId, userId, fileEntryId,
+			serviceContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -126,17 +153,28 @@ public class DLFileRankLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static void disableFileRanks(long fileEntryId) {
-		getService().disableFileRanks(fileEntryId);
-	}
-
-	public static void disableFileRanksByFolderId(long folderId)
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().disableFileRanksByFolderId(folderId);
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	/**
+	* Returns the number of document library file ranks.
+	*
+	* @return the number of document library file ranks
+	*/
+	public static int getDLFileRanksCount() {
+		return getService().getDLFileRanksCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -190,6 +228,27 @@ public class DLFileRankLocalServiceUtil {
 	}
 
 	/**
+	* Returns a range of all the document library file ranks.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of document library file ranks
+	* @param end the upper bound of the range of document library file ranks (not inclusive)
+	* @return the range of document library file ranks
+	*/
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileRank> getDLFileRanks(
+		int start, int end) {
+		return getService().getDLFileRanks(start, end);
+	}
+
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileRank> getFileRanks(
+		long groupId, long userId) {
+		return getService().getFileRanks(groupId, userId);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -213,6 +272,37 @@ public class DLFileRankLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static void checkFileRanks() {
+		getService().checkFileRanks();
+	}
+
+	public static void deleteFileRank(
+		com.liferay.document.library.kernel.model.DLFileRank dlFileRank) {
+		getService().deleteFileRank(dlFileRank);
+	}
+
+	public static void deleteFileRank(long fileRankId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFileRank(fileRankId);
+	}
+
+	public static void deleteFileRanksByFileEntryId(long fileEntryId) {
+		getService().deleteFileRanksByFileEntryId(fileEntryId);
+	}
+
+	public static void deleteFileRanksByUserId(long userId) {
+		getService().deleteFileRanksByUserId(userId);
+	}
+
+	public static void disableFileRanks(long fileEntryId) {
+		getService().disableFileRanks(fileEntryId);
+	}
+
+	public static void disableFileRanksByFolderId(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().disableFileRanksByFolderId(folderId);
+	}
+
 	public static void enableFileRanks(long fileEntryId) {
 		getService().enableFileRanks(fileEntryId);
 	}
@@ -220,96 +310,6 @@ public class DLFileRankLocalServiceUtil {
 	public static void enableFileRanksByFolderId(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().enableFileRanksByFolderId(folderId);
-	}
-
-	public static com.liferay.document.library.kernel.model.DLFileRank fetchDLFileRank(
-		long fileRankId) {
-		return getService().fetchDLFileRank(fileRankId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the document library file rank with the primary key.
-	*
-	* @param fileRankId the primary key of the document library file rank
-	* @return the document library file rank
-	* @throws PortalException if a document library file rank with the primary key could not be found
-	*/
-	public static com.liferay.document.library.kernel.model.DLFileRank getDLFileRank(
-		long fileRankId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDLFileRank(fileRankId);
-	}
-
-	/**
-	* Returns a range of all the document library file ranks.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileRankModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of document library file ranks
-	* @param end the upper bound of the range of document library file ranks (not inclusive)
-	* @return the range of document library file ranks
-	*/
-	public static java.util.List<com.liferay.document.library.kernel.model.DLFileRank> getDLFileRanks(
-		int start, int end) {
-		return getService().getDLFileRanks(start, end);
-	}
-
-	/**
-	* Returns the number of document library file ranks.
-	*
-	* @return the number of document library file ranks
-	*/
-	public static int getDLFileRanksCount() {
-		return getService().getDLFileRanksCount();
-	}
-
-	public static java.util.List<com.liferay.document.library.kernel.model.DLFileRank> getFileRanks(
-		long groupId, long userId) {
-		return getService().getFileRanks(groupId, userId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Updates the document library file rank in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileRank the document library file rank
-	* @return the document library file rank that was updated
-	*/
-	public static com.liferay.document.library.kernel.model.DLFileRank updateDLFileRank(
-		com.liferay.document.library.kernel.model.DLFileRank dlFileRank) {
-		return getService().updateDLFileRank(dlFileRank);
-	}
-
-	public static com.liferay.document.library.kernel.model.DLFileRank updateFileRank(
-		long groupId, long companyId, long userId, long fileEntryId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return getService()
-				   .updateFileRank(groupId, companyId, userId, fileEntryId,
-			serviceContext);
 	}
 
 	public static DLFileRankLocalService getService() {

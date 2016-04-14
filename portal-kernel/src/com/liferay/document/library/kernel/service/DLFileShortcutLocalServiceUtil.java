@@ -62,36 +62,6 @@ public class DLFileShortcutLocalServiceUtil {
 			toFileEntryId, serviceContext);
 	}
 
-	public static void addFileShortcutResources(
-		com.liferay.document.library.kernel.model.DLFileShortcut fileShortcut,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addFileShortcutResources(fileShortcut, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	public static void addFileShortcutResources(
-		com.liferay.document.library.kernel.model.DLFileShortcut fileShortcut,
-		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addFileShortcutResources(fileShortcut, modelPermissions);
-	}
-
-	public static void addFileShortcutResources(long fileShortcutId,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addFileShortcutResources(fileShortcutId, addGroupPermissions,
-			addGuestPermissions);
-	}
-
-	public static void addFileShortcutResources(long fileShortcutId,
-		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addFileShortcutResources(fileShortcutId, modelPermissions);
-	}
-
 	/**
 	* Creates a new document library file shortcut with the primary key. Does not add the document library file shortcut to the database.
 	*
@@ -127,32 +97,92 @@ public class DLFileShortcutLocalServiceUtil {
 		return getService().deleteDLFileShortcut(fileShortcutId);
 	}
 
-	public static void deleteFileShortcut(
-		com.liferay.document.library.kernel.model.DLFileShortcut fileShortcut)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFileShortcut(fileShortcut);
+	public static com.liferay.document.library.kernel.model.DLFileShortcut fetchDLFileShortcut(
+		long fileShortcutId) {
+		return getService().fetchDLFileShortcut(fileShortcutId);
 	}
 
-	public static void deleteFileShortcut(long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFileShortcut(fileShortcutId);
+	/**
+	* Returns the document library file shortcut matching the UUID and group.
+	*
+	* @param uuid the document library file shortcut's UUID
+	* @param groupId the primary key of the group
+	* @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
+	*/
+	public static com.liferay.document.library.kernel.model.DLFileShortcut fetchDLFileShortcutByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchDLFileShortcutByUuidAndGroupId(uuid, groupId);
 	}
 
-	public static void deleteFileShortcuts(long groupId, long folderId)
+	/**
+	* Returns the document library file shortcut with the primary key.
+	*
+	* @param fileShortcutId the primary key of the document library file shortcut
+	* @return the document library file shortcut
+	* @throws PortalException if a document library file shortcut with the primary key could not be found
+	*/
+	public static com.liferay.document.library.kernel.model.DLFileShortcut getDLFileShortcut(
+		long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFileShortcuts(groupId, folderId);
+		return getService().getDLFileShortcut(fileShortcutId);
 	}
 
-	public static void deleteFileShortcuts(long groupId, long folderId,
-		boolean includeTrashedEntries)
+	/**
+	* Returns the document library file shortcut matching the UUID and group.
+	*
+	* @param uuid the document library file shortcut's UUID
+	* @param groupId the primary key of the group
+	* @return the matching document library file shortcut
+	* @throws PortalException if a matching document library file shortcut could not be found
+	*/
+	public static com.liferay.document.library.kernel.model.DLFileShortcut getDLFileShortcutByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.deleteFileShortcuts(groupId, folderId, includeTrashedEntries);
+		return getService().getDLFileShortcutByUuidAndGroupId(uuid, groupId);
 	}
 
-	public static void deleteFileShortcuts(long toFileEntryId)
+	public static com.liferay.document.library.kernel.model.DLFileShortcut getFileShortcut(
+		long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFileShortcuts(toFileEntryId);
+		return getService().getFileShortcut(fileShortcutId);
+	}
+
+	/**
+	* Updates the document library file shortcut in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param dlFileShortcut the document library file shortcut
+	* @return the document library file shortcut that was updated
+	*/
+	public static com.liferay.document.library.kernel.model.DLFileShortcut updateDLFileShortcut(
+		com.liferay.document.library.kernel.model.DLFileShortcut dlFileShortcut) {
+		return getService().updateDLFileShortcut(dlFileShortcut);
+	}
+
+	public static com.liferay.document.library.kernel.model.DLFileShortcut updateFileShortcut(
+		long userId, long fileShortcutId, long repositoryId, long folderId,
+		long toFileEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateFileShortcut(userId, fileShortcutId, repositoryId,
+			folderId, toFileEntryId, serviceContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -164,12 +194,34 @@ public class DLFileShortcutLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static void disableFileShortcuts(long toFileEntryId) {
-		getService().disableFileShortcuts(toFileEntryId);
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	/**
+	* Returns the number of document library file shortcuts.
+	*
+	* @return the number of document library file shortcuts
+	*/
+	public static int getDLFileShortcutsCount() {
+		return getService().getDLFileShortcutsCount();
+	}
+
+	public static int getFileShortcutsCount(long groupId, long folderId,
+		boolean active, int status) {
+		return getService()
+				   .getFileShortcutsCount(groupId, folderId, active, status);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -223,82 +275,6 @@ public class DLFileShortcutLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static void enableFileShortcuts(long toFileEntryId) {
-		getService().enableFileShortcuts(toFileEntryId);
-	}
-
-	public static com.liferay.document.library.kernel.model.DLFileShortcut fetchDLFileShortcut(
-		long fileShortcutId) {
-		return getService().fetchDLFileShortcut(fileShortcutId);
-	}
-
-	/**
-	* Returns the document library file shortcut matching the UUID and group.
-	*
-	* @param uuid the document library file shortcut's UUID
-	* @param groupId the primary key of the group
-	* @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
-	*/
-	public static com.liferay.document.library.kernel.model.DLFileShortcut fetchDLFileShortcutByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchDLFileShortcutByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the document library file shortcut with the primary key.
-	*
-	* @param fileShortcutId the primary key of the document library file shortcut
-	* @return the document library file shortcut
-	* @throws PortalException if a document library file shortcut with the primary key could not be found
-	*/
-	public static com.liferay.document.library.kernel.model.DLFileShortcut getDLFileShortcut(
-		long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDLFileShortcut(fileShortcutId);
-	}
-
-	/**
-	* Returns the document library file shortcut matching the UUID and group.
-	*
-	* @param uuid the document library file shortcut's UUID
-	* @param groupId the primary key of the group
-	* @return the matching document library file shortcut
-	* @throws PortalException if a matching document library file shortcut could not be found
-	*/
-	public static com.liferay.document.library.kernel.model.DLFileShortcut getDLFileShortcutByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDLFileShortcutByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
 	* Returns a range of all the document library file shortcuts.
 	*
 	* <p>
@@ -344,26 +320,6 @@ public class DLFileShortcutLocalServiceUtil {
 			start, end, orderByComparator);
 	}
 
-	/**
-	* Returns the number of document library file shortcuts.
-	*
-	* @return the number of document library file shortcuts
-	*/
-	public static int getDLFileShortcutsCount() {
-		return getService().getDLFileShortcutsCount();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.document.library.kernel.model.DLFileShortcut getFileShortcut(
-		long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getFileShortcut(fileShortcutId);
-	}
-
 	public static java.util.List<com.liferay.document.library.kernel.model.DLFileShortcut> getFileShortcuts(
 		long groupId, long folderId, boolean active, int status, int start,
 		int end) {
@@ -377,29 +333,94 @@ public class DLFileShortcutLocalServiceUtil {
 		return getService().getFileShortcuts(toFileEntryId);
 	}
 
-	public static int getFileShortcutsCount(long groupId, long folderId,
-		boolean active, int status) {
-		return getService()
-				   .getFileShortcutsCount(groupId, folderId, active, status);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	public static void addFileShortcutResources(
+		com.liferay.document.library.kernel.model.DLFileShortcut fileShortcut,
+		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
+		getService()
+			.addFileShortcutResources(fileShortcut, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	public static void addFileShortcutResources(
+		com.liferay.document.library.kernel.model.DLFileShortcut fileShortcut,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addFileShortcutResources(fileShortcut, modelPermissions);
+	}
+
+	public static void addFileShortcutResources(long fileShortcutId,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addFileShortcutResources(fileShortcutId, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	public static void addFileShortcutResources(long fileShortcutId,
+		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addFileShortcutResources(fileShortcutId, modelPermissions);
+	}
+
+	public static void deleteFileShortcut(
+		com.liferay.document.library.kernel.model.DLFileShortcut fileShortcut)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFileShortcut(fileShortcut);
+	}
+
+	public static void deleteFileShortcut(long fileShortcutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFileShortcut(fileShortcutId);
+	}
+
+	public static void deleteFileShortcuts(long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFileShortcuts(groupId, folderId);
+	}
+
+	public static void deleteFileShortcuts(long groupId, long folderId,
+		boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.deleteFileShortcuts(groupId, folderId, includeTrashedEntries);
+	}
+
+	public static void deleteFileShortcuts(long toFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFileShortcuts(toFileEntryId);
+	}
+
+	public static void disableFileShortcuts(long toFileEntryId) {
+		getService().disableFileShortcuts(toFileEntryId);
+	}
+
+	public static void enableFileShortcuts(long toFileEntryId) {
+		getService().enableFileShortcuts(toFileEntryId);
 	}
 
 	public static void rebuildTree(long companyId)
@@ -418,27 +439,6 @@ public class DLFileShortcutLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateAsset(userId, fileShortcut, assetCategoryIds, assetTagNames);
-	}
-
-	/**
-	* Updates the document library file shortcut in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlFileShortcut the document library file shortcut
-	* @return the document library file shortcut that was updated
-	*/
-	public static com.liferay.document.library.kernel.model.DLFileShortcut updateDLFileShortcut(
-		com.liferay.document.library.kernel.model.DLFileShortcut dlFileShortcut) {
-		return getService().updateDLFileShortcut(dlFileShortcut);
-	}
-
-	public static com.liferay.document.library.kernel.model.DLFileShortcut updateFileShortcut(
-		long userId, long fileShortcutId, long repositoryId, long folderId,
-		long toFileEntryId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateFileShortcut(userId, fileShortcutId, repositoryId,
-			folderId, toFileEntryId, serviceContext);
 	}
 
 	public static void updateFileShortcuts(long oldToFileEntryId,

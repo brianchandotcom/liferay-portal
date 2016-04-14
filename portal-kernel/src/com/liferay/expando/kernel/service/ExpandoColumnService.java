@@ -55,18 +55,9 @@ public interface ExpandoColumnService extends BaseService {
 	public ExpandoColumn addColumn(long tableId, java.lang.String name,
 		int type, java.lang.Object defaultData) throws PortalException;
 
-	public void deleteColumn(long columnId) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExpandoColumn fetchExpandoColumn(long columnId)
 		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
 
 	public ExpandoColumn updateColumn(long columnId, java.lang.String name,
 		int type) throws PortalException;
@@ -76,4 +67,13 @@ public interface ExpandoColumnService extends BaseService {
 
 	public ExpandoColumn updateTypeSettings(long columnId,
 		java.lang.String typeSettings) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	public void deleteColumn(long columnId) throws PortalException;
 }

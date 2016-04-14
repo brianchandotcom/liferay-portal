@@ -57,15 +57,6 @@ public class RegionServiceUtil {
 		return getService().fetchRegion(regionId);
 	}
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
 	public static com.liferay.portal.kernel.model.Region getRegion(
 		long countryId, java.lang.String regionCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -76,6 +67,15 @@ public class RegionServiceUtil {
 		long regionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRegion(regionId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Region> getRegions() {

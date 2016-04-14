@@ -33,6 +33,15 @@ public class SocialRequestServiceWrapper implements SocialRequestService,
 		_socialRequestService = socialRequestService;
 	}
 
+	@Override
+	public com.liferay.social.kernel.model.SocialRequest updateRequest(
+		long requestId, int status,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _socialRequestService.updateRequest(requestId, status,
+			themeDisplay);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -41,15 +50,6 @@ public class SocialRequestServiceWrapper implements SocialRequestService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _socialRequestService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.social.kernel.model.SocialRequest updateRequest(
-		long requestId, int status,
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _socialRequestService.updateRequest(requestId, status,
-			themeDisplay);
 	}
 
 	@Override

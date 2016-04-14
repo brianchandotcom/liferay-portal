@@ -59,16 +59,6 @@ public class JournalFeedServiceUtil {
 			contentField, feedType, feedVersion, serviceContext);
 	}
 
-	public static void deleteFeed(long feedId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFeed(feedId);
-	}
-
-	public static void deleteFeed(long groupId, java.lang.String feedId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFeed(groupId, feedId);
-	}
-
 	public static com.liferay.journal.model.JournalFeed getFeed(long feedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFeed(feedId);
@@ -78,15 +68,6 @@ public class JournalFeedServiceUtil {
 		java.lang.String feedId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFeed(groupId, feedId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.journal.model.JournalFeed updateFeed(
@@ -105,6 +86,25 @@ public class JournalFeedServiceUtil {
 			ddmStructureKey, ddmTemplateKey, ddmRendererTemplateKey, delta,
 			orderByCol, orderByType, targetLayoutFriendlyUrl, targetPortletId,
 			contentField, feedType, feedVersion, serviceContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static void deleteFeed(long feedId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFeed(feedId);
+	}
+
+	public static void deleteFeed(long groupId, java.lang.String feedId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFeed(groupId, feedId);
 	}
 
 	public static JournalFeedService getService() {

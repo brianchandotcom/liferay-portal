@@ -66,13 +66,15 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	}
 
 	/**
-	* @throws PortalException
+	* Deletes the polls choice from the database. Also notifies the appropriate model listeners.
+	*
+	* @param pollsChoice the polls choice
+	* @return the polls choice that was removed
 	*/
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsChoiceLocalService.deletePersistedModel(persistedModel);
+	public com.liferay.polls.model.PollsChoice deletePollsChoice(
+		com.liferay.polls.model.PollsChoice pollsChoice) {
+		return _pollsChoiceLocalService.deletePollsChoice(pollsChoice);
 	}
 
 	/**
@@ -88,21 +90,142 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 		return _pollsChoiceLocalService.deletePollsChoice(choiceId);
 	}
 
+	@Override
+	public com.liferay.polls.model.PollsChoice fetchPollsChoice(long choiceId) {
+		return _pollsChoiceLocalService.fetchPollsChoice(choiceId);
+	}
+
 	/**
-	* Deletes the polls choice from the database. Also notifies the appropriate model listeners.
+	* Returns the polls choice matching the UUID and group.
 	*
-	* @param pollsChoice the polls choice
-	* @return the polls choice that was removed
+	* @param uuid the polls choice's UUID
+	* @param groupId the primary key of the group
+	* @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
 	*/
 	@Override
-	public com.liferay.polls.model.PollsChoice deletePollsChoice(
+	public com.liferay.polls.model.PollsChoice fetchPollsChoiceByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _pollsChoiceLocalService.fetchPollsChoiceByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	@Override
+	public com.liferay.polls.model.PollsChoice getChoice(long choiceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pollsChoiceLocalService.getChoice(choiceId);
+	}
+
+	/**
+	* Returns the polls choice with the primary key.
+	*
+	* @param choiceId the primary key of the polls choice
+	* @return the polls choice
+	* @throws PortalException if a polls choice with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.polls.model.PollsChoice getPollsChoice(long choiceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pollsChoiceLocalService.getPollsChoice(choiceId);
+	}
+
+	/**
+	* Returns the polls choice matching the UUID and group.
+	*
+	* @param uuid the polls choice's UUID
+	* @param groupId the primary key of the group
+	* @return the matching polls choice
+	* @throws PortalException if a matching polls choice could not be found
+	*/
+	@Override
+	public com.liferay.polls.model.PollsChoice getPollsChoiceByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pollsChoiceLocalService.getPollsChoiceByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	@Override
+	public com.liferay.polls.model.PollsChoice updateChoice(long choiceId,
+		long questionId, java.lang.String name, java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pollsChoiceLocalService.updateChoice(choiceId, questionId,
+			name, description, serviceContext);
+	}
+
+	/**
+	* Updates the polls choice in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param pollsChoice the polls choice
+	* @return the polls choice that was updated
+	*/
+	@Override
+	public com.liferay.polls.model.PollsChoice updatePollsChoice(
 		com.liferay.polls.model.PollsChoice pollsChoice) {
-		return _pollsChoiceLocalService.deletePollsChoice(pollsChoice);
+		return _pollsChoiceLocalService.updatePollsChoice(pollsChoice);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _pollsChoiceLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _pollsChoiceLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _pollsChoiceLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _pollsChoiceLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pollsChoiceLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pollsChoiceLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public int getChoicesCount(long questionId) {
+		return _pollsChoiceLocalService.getChoicesCount(questionId);
+	}
+
+	/**
+	* Returns the number of polls choices.
+	*
+	* @return the number of polls choices
+	*/
+	@Override
+	public int getPollsChoicesCount() {
+		return _pollsChoiceLocalService.getPollsChoicesCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _pollsChoiceLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -158,129 +281,10 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 			orderByComparator);
 	}
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _pollsChoiceLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _pollsChoiceLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public com.liferay.polls.model.PollsChoice fetchPollsChoice(long choiceId) {
-		return _pollsChoiceLocalService.fetchPollsChoice(choiceId);
-	}
-
-	/**
-	* Returns the polls choice matching the UUID and group.
-	*
-	* @param uuid the polls choice's UUID
-	* @param groupId the primary key of the group
-	* @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
-	*/
-	@Override
-	public com.liferay.polls.model.PollsChoice fetchPollsChoiceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _pollsChoiceLocalService.fetchPollsChoiceByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _pollsChoiceLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.polls.model.PollsChoice getChoice(long choiceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsChoiceLocalService.getChoice(choiceId);
-	}
-
 	@Override
 	public java.util.List<com.liferay.polls.model.PollsChoice> getChoices(
 		long questionId) {
 		return _pollsChoiceLocalService.getChoices(questionId);
-	}
-
-	@Override
-	public int getChoicesCount(long questionId) {
-		return _pollsChoiceLocalService.getChoicesCount(questionId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _pollsChoiceLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _pollsChoiceLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _pollsChoiceLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsChoiceLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the polls choice with the primary key.
-	*
-	* @param choiceId the primary key of the polls choice
-	* @return the polls choice
-	* @throws PortalException if a polls choice with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.polls.model.PollsChoice getPollsChoice(long choiceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsChoiceLocalService.getPollsChoice(choiceId);
-	}
-
-	/**
-	* Returns the polls choice matching the UUID and group.
-	*
-	* @param uuid the polls choice's UUID
-	* @param groupId the primary key of the group
-	* @return the matching polls choice
-	* @throws PortalException if a matching polls choice could not be found
-	*/
-	@Override
-	public com.liferay.polls.model.PollsChoice getPollsChoiceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsChoiceLocalService.getPollsChoiceByUuidAndGroupId(uuid,
-			groupId);
 	}
 
 	/**
@@ -333,34 +337,30 @@ public class PollsChoiceLocalServiceWrapper implements PollsChoiceLocalService,
 	}
 
 	/**
-	* Returns the number of polls choices.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of polls choices
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
-	public int getPollsChoicesCount() {
-		return _pollsChoiceLocalService.getPollsChoicesCount();
-	}
-
-	@Override
-	public com.liferay.polls.model.PollsChoice updateChoice(long choiceId,
-		long questionId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pollsChoiceLocalService.updateChoice(choiceId, questionId,
-			name, description, serviceContext);
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _pollsChoiceLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Updates the polls choice in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param pollsChoice the polls choice
-	* @return the polls choice that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
-	public com.liferay.polls.model.PollsChoice updatePollsChoice(
-		com.liferay.polls.model.PollsChoice pollsChoice) {
-		return _pollsChoiceLocalService.updatePollsChoice(pollsChoice);
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _pollsChoiceLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
 	}
 
 	@Override

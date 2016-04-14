@@ -73,8 +73,6 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BlogsEntryLocalServiceUtil} to access the blogs entry local service. Add custom service methods to {@link com.liferay.portlet.blogs.service.impl.BlogsEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Folder addAttachmentsFolder(long userId, long groupId)
-		throws PortalException;
 
 	/**
 	* Adds the blogs entry to the database. Also notifies the appropriate model listeners.
@@ -85,16 +83,13 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public BlogsEntry addBlogsEntry(BlogsEntry blogsEntry);
 
-	public void addCoverImage(long entryId, ImageSelector imageSelector)
+	public BlogsEntry addEntry(long userId, java.lang.String title,
+		java.lang.String content, ServiceContext serviceContext)
 		throws PortalException;
 
 	public BlogsEntry addEntry(long userId, java.lang.String title,
 		java.lang.String content, Date displayDate,
 		ServiceContext serviceContext) throws PortalException;
-
-	public BlogsEntry addEntry(long userId, java.lang.String title,
-		java.lang.String content, ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, String,
@@ -112,16 +107,6 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		java.lang.String smallImageFileName, InputStream smallImageInputStream,
 		ServiceContext serviceContext) throws PortalException;
 
-	@Indexable(type = IndexableType.REINDEX)
-	public BlogsEntry addEntry(long userId, java.lang.String title,
-		java.lang.String subtitle, java.lang.String description,
-		java.lang.String content, Date displayDate, boolean allowPingbacks,
-		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		java.lang.String coverImageCaption,
-		ImageSelector coverImageImageSelector,
-		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
-		throws PortalException;
-
 	public BlogsEntry addEntry(long userId, java.lang.String title,
 		java.lang.String subtitle, java.lang.String description,
 		java.lang.String content, int displayDateMonth, int displayDateDay,
@@ -132,26 +117,15 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void addEntryResources(BlogsEntry entry,
-		boolean addGroupPermissions, boolean addGuestPermissions)
+	@Indexable(type = IndexableType.REINDEX)
+	public BlogsEntry addEntry(long userId, java.lang.String title,
+		java.lang.String subtitle, java.lang.String description,
+		java.lang.String content, Date displayDate, boolean allowPingbacks,
+		boolean allowTrackbacks, java.lang.String[] trackbacks,
+		java.lang.String coverImageCaption,
+		ImageSelector coverImageImageSelector,
+		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
-
-	public void addEntryResources(BlogsEntry entry,
-		ModelPermissions modelPermissions) throws PortalException;
-
-	public void addEntryResources(long entryId, boolean addGroupPermissions,
-		boolean addGuestPermissions) throws PortalException;
-
-	public void addEntryResources(long entryId,
-		ModelPermissions modelPermissions) throws PortalException;
-
-	public long addOriginalImageFileEntry(long userId, long groupId,
-		long entryId, ImageSelector imageSelector) throws PortalException;
-
-	public void addSmallImage(long entryId, ImageSelector imageSelector)
-		throws PortalException;
-
-	public void checkEntries() throws PortalException;
 
 	/**
 	* Creates a new blogs entry with the primary key. Does not add the blogs entry to the database.
@@ -180,13 +154,167 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public BlogsEntry deleteBlogsEntry(long entryId) throws PortalException;
 
-	public void deleteEntries(long groupId) throws PortalException;
-
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public BlogsEntry deleteEntry(BlogsEntry entry) throws PortalException;
 
-	public void deleteEntry(long entryId) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BlogsEntry fetchBlogsEntry(long entryId);
+
+	/**
+	* Returns the blogs entry matching the UUID and group.
+	*
+	* @param uuid the blogs entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BlogsEntry fetchBlogsEntryByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
+
+	/**
+	* Returns the blogs entry with the primary key.
+	*
+	* @param entryId the primary key of the blogs entry
+	* @return the blogs entry
+	* @throws PortalException if a blogs entry with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BlogsEntry getBlogsEntry(long entryId) throws PortalException;
+
+	/**
+	* Returns the blogs entry matching the UUID and group.
+	*
+	* @param uuid the blogs entry's UUID
+	* @param groupId the primary key of the group
+	* @return the matching blogs entry
+	* @throws PortalException if a matching blogs entry could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BlogsEntry getBlogsEntryByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BlogsEntry getEntry(long entryId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BlogsEntry getEntry(long groupId, java.lang.String urlTitle)
+		throws PortalException;
+
+	/**
+	* Moves the blogs entry to the recycle bin. Social activity counters for
+	* this entry get disabled.
+	*
+	* @param userId the primary key of the user moving the blogs entry
+	* @param entry the blogs entry to be moved
+	* @return the moved blogs entry
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public BlogsEntry moveEntryToTrash(long userId, BlogsEntry entry)
+		throws PortalException;
+
+	/**
+	* Moves the blogs entry with the ID to the recycle bin.
+	*
+	* @param userId the primary key of the user moving the blogs entry
+	* @param entryId the primary key of the blogs entry to be moved
+	* @return the moved blogs entry
+	*/
+	public BlogsEntry moveEntryToTrash(long userId, long entryId)
+		throws PortalException;
+
+	/**
+	* Restores the blogs entry with the ID from the recycle bin. Social
+	* activity counters for this entry get activated.
+	*
+	* @param userId the primary key of the user restoring the blogs entry
+	* @param entryId the primary key of the blogs entry to be restored
+	* @return the restored blogs entry from the recycle bin
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public BlogsEntry restoreEntryFromTrash(long userId, long entryId)
+		throws PortalException;
+
+	/**
+	* Updates the blogs entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param blogsEntry the blogs entry
+	* @return the blogs entry that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public BlogsEntry updateBlogsEntry(BlogsEntry blogsEntry);
+
+	public BlogsEntry updateEntry(long userId, long entryId,
+		java.lang.String title, java.lang.String content,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
+	String, String, String, String, int, int, int, int, int,
+	boolean, boolean, String[], String, ImageSelector,
+	ImageSelector, ServiceContext)}
+	*/
+	@java.lang.Deprecated
+	public BlogsEntry updateEntry(long userId, long entryId,
+		java.lang.String title, java.lang.String description,
+		java.lang.String content, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		boolean allowPingbacks, boolean allowTrackbacks,
+		java.lang.String[] trackbacks, boolean smallImage,
+		java.lang.String smallImageURL, java.lang.String smallImageFileName,
+		InputStream smallImageInputStream, ServiceContext serviceContext)
+		throws PortalException;
+
+	public BlogsEntry updateEntry(long userId, long entryId,
+		java.lang.String title, java.lang.String subtitle,
+		java.lang.String description, java.lang.String content,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
+		boolean allowTrackbacks, java.lang.String[] trackbacks,
+		java.lang.String coverImageCaption,
+		ImageSelector coverImageImageSelector,
+		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public BlogsEntry updateEntry(long userId, long entryId,
+		java.lang.String title, java.lang.String subtitle,
+		java.lang.String description, java.lang.String content,
+		Date displayDate, boolean allowPingbacks, boolean allowTrackbacks,
+		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
+		ImageSelector coverImageImageSelector,
+		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
+	int, ServiceContext, Map)}
+	*/
+	@java.lang.Deprecated
+	public BlogsEntry updateStatus(long userId, long entryId, int status,
+		ServiceContext serviceContext) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public BlogsEntry updateStatus(long userId, long entryId, int status,
+		ServiceContext serviceContext,
+		Map<java.lang.String, Serializable> workflowContext)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BlogsEntry[] getEntriesPrevAndNext(long entryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* @throws PortalException
@@ -195,7 +323,51 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	public Folder addAttachmentsFolder(long userId, long groupId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Folder fetchAttachmentsFolder(long userId, long groupId);
+
+	/**
+	* Returns the number of blogs entries.
+	*
+	* @return the number of blogs entries
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getBlogsEntriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyEntriesCount(long companyId, Date displayDate,
+		QueryDefinition<BlogsEntry> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupEntriesCount(long groupId,
+		QueryDefinition<BlogsEntry> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupEntriesCount(long groupId, Date displayDate,
+		QueryDefinition<BlogsEntry> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupUserEntriesCount(long groupId, long userId,
+		Date displayDate, QueryDefinition<BlogsEntry> queryDefinition);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getOrganizationEntriesCount(long organizationId,
+		Date displayDate, QueryDefinition<BlogsEntry> queryDefinition);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -237,44 +409,6 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Folder fetchAttachmentsFolder(long userId, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BlogsEntry fetchBlogsEntry(long entryId);
-
-	/**
-	* Returns the blogs entry matching the UUID and group.
-	*
-	* @param uuid the blogs entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching blogs entry, or <code>null</code> if a matching blogs entry could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BlogsEntry fetchBlogsEntryByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
 	* Returns a range of all the blogs entries.
 	*
 	* <p>
@@ -314,61 +448,8 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator);
 
-	/**
-	* Returns the number of blogs entries.
-	*
-	* @return the number of blogs entries
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getBlogsEntriesCount();
-
-	/**
-	* Returns the blogs entry with the primary key.
-	*
-	* @param entryId the primary key of the blogs entry
-	* @return the blogs entry
-	* @throws PortalException if a blogs entry with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BlogsEntry getBlogsEntry(long entryId) throws PortalException;
-
-	/**
-	* Returns the blogs entry matching the UUID and group.
-	*
-	* @param uuid the blogs entry's UUID
-	* @param groupId the primary key of the group
-	* @return the matching blogs entry
-	* @throws PortalException if a matching blogs entry could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BlogsEntry getBlogsEntryByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BlogsEntry> getCompanyEntries(long companyId, Date displayDate,
-		QueryDefinition<BlogsEntry> queryDefinition);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCompanyEntriesCount(long companyId, Date displayDate,
-		QueryDefinition<BlogsEntry> queryDefinition);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BlogsEntry[] getEntriesPrevAndNext(long entryId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BlogsEntry getEntry(long entryId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public BlogsEntry getEntry(long groupId, java.lang.String urlTitle)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<BlogsEntry> getGroupEntries(long groupId, Date displayDate,
 		QueryDefinition<BlogsEntry> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -376,11 +457,7 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		QueryDefinition<BlogsEntry> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupEntriesCount(long groupId, Date displayDate,
-		QueryDefinition<BlogsEntry> queryDefinition);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupEntriesCount(long groupId,
+	public List<BlogsEntry> getGroupEntries(long groupId, Date displayDate,
 		QueryDefinition<BlogsEntry> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -388,74 +465,63 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		Date displayDate, QueryDefinition<BlogsEntry> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupUserEntriesCount(long groupId, long userId,
-		Date displayDate, QueryDefinition<BlogsEntry> queryDefinition);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BlogsEntry> getGroupsEntries(long companyId, long groupId,
 		Date displayDate, QueryDefinition<BlogsEntry> queryDefinition);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BlogsEntry> getNoAssetEntries();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BlogsEntry> getOrganizationEntries(long organizationId,
 		Date displayDate, QueryDefinition<BlogsEntry> queryDefinition);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getOrganizationEntriesCount(long organizationId,
-		Date displayDate, QueryDefinition<BlogsEntry> queryDefinition);
+	public long addOriginalImageFileEntry(long userId, long groupId,
+		long entryId, ImageSelector imageSelector) throws PortalException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	public void addCoverImage(long entryId, ImageSelector imageSelector)
 		throws PortalException;
+
+	public void addEntryResources(BlogsEntry entry,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws PortalException;
+
+	public void addEntryResources(BlogsEntry entry,
+		ModelPermissions modelPermissions) throws PortalException;
+
+	public void addEntryResources(long entryId, boolean addGroupPermissions,
+		boolean addGuestPermissions) throws PortalException;
+
+	public void addEntryResources(long entryId,
+		ModelPermissions modelPermissions) throws PortalException;
+
+	public void addSmallImage(long entryId, ImageSelector imageSelector)
+		throws PortalException;
+
+	public void checkEntries() throws PortalException;
+
+	public void deleteEntries(long groupId) throws PortalException;
+
+	public void deleteEntry(long entryId) throws PortalException;
 
 	public void moveEntriesToTrash(long groupId, long userId)
-		throws PortalException;
-
-	/**
-	* Moves the blogs entry to the recycle bin. Social activity counters for
-	* this entry get disabled.
-	*
-	* @param userId the primary key of the user moving the blogs entry
-	* @param entry the blogs entry to be moved
-	* @return the moved blogs entry
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public BlogsEntry moveEntryToTrash(long userId, BlogsEntry entry)
-		throws PortalException;
-
-	/**
-	* Moves the blogs entry with the ID to the recycle bin.
-	*
-	* @param userId the primary key of the user moving the blogs entry
-	* @param entryId the primary key of the blogs entry to be moved
-	* @return the moved blogs entry
-	*/
-	public BlogsEntry moveEntryToTrash(long userId, long entryId)
-		throws PortalException;
-
-	/**
-	* Restores the blogs entry with the ID from the recycle bin. Social
-	* activity counters for this entry get activated.
-	*
-	* @param userId the primary key of the user restoring the blogs entry
-	* @param entryId the primary key of the blogs entry to be restored
-	* @return the restored blogs entry from the recycle bin
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public BlogsEntry restoreEntryFromTrash(long userId, long entryId)
 		throws PortalException;
 
 	public void subscribe(long userId, long groupId) throws PortalException;
@@ -468,75 +534,10 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		long[] assetLinkEntryIds, java.lang.Double priority)
 		throws PortalException;
 
-	/**
-	* Updates the blogs entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param blogsEntry the blogs entry
-	* @return the blogs entry that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public BlogsEntry updateBlogsEntry(BlogsEntry blogsEntry);
-
-	public BlogsEntry updateEntry(long userId, long entryId,
-		java.lang.String title, java.lang.String content,
-		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
-	String, String, String, String, int, int, int, int, int,
-	boolean, boolean, String[], String, ImageSelector,
-	ImageSelector, ServiceContext)}
-	*/
-	@java.lang.Deprecated
-	public BlogsEntry updateEntry(long userId, long entryId,
-		java.lang.String title, java.lang.String description,
-		java.lang.String content, int displayDateMonth, int displayDateDay,
-		int displayDateYear, int displayDateHour, int displayDateMinute,
-		boolean allowPingbacks, boolean allowTrackbacks,
-		java.lang.String[] trackbacks, boolean smallImage,
-		java.lang.String smallImageURL, java.lang.String smallImageFileName,
-		InputStream smallImageInputStream, ServiceContext serviceContext)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public BlogsEntry updateEntry(long userId, long entryId,
-		java.lang.String title, java.lang.String subtitle,
-		java.lang.String description, java.lang.String content,
-		Date displayDate, boolean allowPingbacks, boolean allowTrackbacks,
-		java.lang.String[] trackbacks, java.lang.String coverImageCaption,
-		ImageSelector coverImageImageSelector,
-		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
-		throws PortalException;
-
-	public BlogsEntry updateEntry(long userId, long entryId,
-		java.lang.String title, java.lang.String subtitle,
-		java.lang.String description, java.lang.String content,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, boolean allowPingbacks,
-		boolean allowTrackbacks, java.lang.String[] trackbacks,
-		java.lang.String coverImageCaption,
-		ImageSelector coverImageImageSelector,
-		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
-		throws PortalException;
-
-	public void updateEntryResources(BlogsEntry entry,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws PortalException;
-
 	public void updateEntryResources(BlogsEntry entry,
 		ModelPermissions modelPermissions) throws PortalException;
 
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
-	int, ServiceContext, Map)}
-	*/
-	@java.lang.Deprecated
-	public BlogsEntry updateStatus(long userId, long entryId, int status,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public BlogsEntry updateStatus(long userId, long entryId, int status,
-		ServiceContext serviceContext,
-		Map<java.lang.String, Serializable> workflowContext)
+	public void updateEntryResources(BlogsEntry entry,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws PortalException;
 }

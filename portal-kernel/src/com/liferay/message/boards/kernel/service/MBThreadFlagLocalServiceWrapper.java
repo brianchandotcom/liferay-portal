@@ -33,6 +33,13 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 		_mbThreadFlagLocalService = mbThreadFlagLocalService;
 	}
 
+	@Override
+	public boolean hasThreadFlag(long userId,
+		com.liferay.message.boards.kernel.model.MBThread thread)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbThreadFlagLocalService.hasThreadFlag(userId, thread);
+	}
+
 	/**
 	* Adds the message boards thread flag to the database. Also notifies the appropriate model listeners.
 	*
@@ -92,6 +99,96 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 		return _mbThreadFlagLocalService.deleteMBThreadFlag(threadFlagId);
 	}
 
+	@Override
+	public com.liferay.message.boards.kernel.model.MBThreadFlag fetchMBThreadFlag(
+		long threadFlagId) {
+		return _mbThreadFlagLocalService.fetchMBThreadFlag(threadFlagId);
+	}
+
+	/**
+	* Returns the message boards thread flag matching the UUID and group.
+	*
+	* @param uuid the message boards thread flag's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
+	*/
+	@Override
+	public com.liferay.message.boards.kernel.model.MBThreadFlag fetchMBThreadFlagByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return _mbThreadFlagLocalService.fetchMBThreadFlagByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	/**
+	* Returns the message boards thread flag with the primary key.
+	*
+	* @param threadFlagId the primary key of the message boards thread flag
+	* @return the message boards thread flag
+	* @throws PortalException if a message boards thread flag with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.message.boards.kernel.model.MBThreadFlag getMBThreadFlag(
+		long threadFlagId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbThreadFlagLocalService.getMBThreadFlag(threadFlagId);
+	}
+
+	/**
+	* Returns the message boards thread flag matching the UUID and group.
+	*
+	* @param uuid the message boards thread flag's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message boards thread flag
+	* @throws PortalException if a matching message boards thread flag could not be found
+	*/
+	@Override
+	public com.liferay.message.boards.kernel.model.MBThreadFlag getMBThreadFlagByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbThreadFlagLocalService.getMBThreadFlagByUuidAndGroupId(uuid,
+			groupId);
+	}
+
+	@Override
+	public com.liferay.message.boards.kernel.model.MBThreadFlag getThreadFlag(
+		long userId, com.liferay.message.boards.kernel.model.MBThread thread)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbThreadFlagLocalService.getThreadFlag(userId, thread);
+	}
+
+	/**
+	* Updates the message boards thread flag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param mbThreadFlag the message boards thread flag
+	* @return the message boards thread flag that was updated
+	*/
+	@Override
+	public com.liferay.message.boards.kernel.model.MBThreadFlag updateMBThreadFlag(
+		com.liferay.message.boards.kernel.model.MBThreadFlag mbThreadFlag) {
+		return _mbThreadFlagLocalService.updateMBThreadFlag(mbThreadFlag);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _mbThreadFlagLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _mbThreadFlagLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _mbThreadFlagLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _mbThreadFlagLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -103,30 +200,30 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 	}
 
 	@Override
-	public void deleteThreadFlag(
-		com.liferay.message.boards.kernel.model.MBThreadFlag threadFlag) {
-		_mbThreadFlagLocalService.deleteThreadFlag(threadFlag);
-	}
-
-	@Override
-	public void deleteThreadFlag(long threadFlagId)
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbThreadFlagLocalService.deleteThreadFlag(threadFlagId);
+		return _mbThreadFlagLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	* Returns the number of message boards thread flags.
+	*
+	* @return the number of message boards thread flags
+	*/
 	@Override
-	public void deleteThreadFlagsByThreadId(long threadId) {
-		_mbThreadFlagLocalService.deleteThreadFlagsByThreadId(threadId);
+	public int getMBThreadFlagsCount() {
+		return _mbThreadFlagLocalService.getMBThreadFlagsCount();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
-	public void deleteThreadFlagsByUserId(long userId) {
-		_mbThreadFlagLocalService.deleteThreadFlagsByUserId(userId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _mbThreadFlagLocalService.dynamicQuery();
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _mbThreadFlagLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -183,99 +280,6 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _mbThreadFlagLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _mbThreadFlagLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public com.liferay.message.boards.kernel.model.MBThreadFlag fetchMBThreadFlag(
-		long threadFlagId) {
-		return _mbThreadFlagLocalService.fetchMBThreadFlag(threadFlagId);
-	}
-
-	/**
-	* Returns the message boards thread flag matching the UUID and group.
-	*
-	* @param uuid the message boards thread flag's UUID
-	* @param groupId the primary key of the group
-	* @return the matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
-	*/
-	@Override
-	public com.liferay.message.boards.kernel.model.MBThreadFlag fetchMBThreadFlagByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _mbThreadFlagLocalService.fetchMBThreadFlagByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _mbThreadFlagLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _mbThreadFlagLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _mbThreadFlagLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the message boards thread flag with the primary key.
-	*
-	* @param threadFlagId the primary key of the message boards thread flag
-	* @return the message boards thread flag
-	* @throws PortalException if a message boards thread flag with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.message.boards.kernel.model.MBThreadFlag getMBThreadFlag(
-		long threadFlagId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbThreadFlagLocalService.getMBThreadFlag(threadFlagId);
-	}
-
-	/**
-	* Returns the message boards thread flag matching the UUID and group.
-	*
-	* @param uuid the message boards thread flag's UUID
-	* @param groupId the primary key of the group
-	* @return the matching message boards thread flag
-	* @throws PortalException if a matching message boards thread flag could not be found
-	*/
-	@Override
-	public com.liferay.message.boards.kernel.model.MBThreadFlag getMBThreadFlagByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbThreadFlagLocalService.getMBThreadFlagByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
 	* Returns a range of all the message boards thread flags.
 	*
 	* <p>
@@ -325,56 +329,52 @@ public class MBThreadFlagLocalServiceWrapper implements MBThreadFlagLocalService
 	}
 
 	/**
-	* Returns the number of message boards thread flags.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of message boards thread flags
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
-	public int getMBThreadFlagsCount() {
-		return _mbThreadFlagLocalService.getMBThreadFlagsCount();
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _mbThreadFlagLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _mbThreadFlagLocalService.getOSGiServiceIdentifier();
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _mbThreadFlagLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	public void deleteThreadFlag(
+		com.liferay.message.boards.kernel.model.MBThreadFlag threadFlag) {
+		_mbThreadFlagLocalService.deleteThreadFlag(threadFlag);
+	}
+
+	@Override
+	public void deleteThreadFlag(long threadFlagId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbThreadFlagLocalService.getPersistedModel(primaryKeyObj);
+		_mbThreadFlagLocalService.deleteThreadFlag(threadFlagId);
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBThreadFlag getThreadFlag(
-		long userId, com.liferay.message.boards.kernel.model.MBThread thread)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbThreadFlagLocalService.getThreadFlag(userId, thread);
+	public void deleteThreadFlagsByThreadId(long threadId) {
+		_mbThreadFlagLocalService.deleteThreadFlagsByThreadId(threadId);
 	}
 
 	@Override
-	public boolean hasThreadFlag(long userId,
-		com.liferay.message.boards.kernel.model.MBThread thread)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbThreadFlagLocalService.hasThreadFlag(userId, thread);
-	}
-
-	/**
-	* Updates the message boards thread flag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mbThreadFlag the message boards thread flag
-	* @return the message boards thread flag that was updated
-	*/
-	@Override
-	public com.liferay.message.boards.kernel.model.MBThreadFlag updateMBThreadFlag(
-		com.liferay.message.boards.kernel.model.MBThreadFlag mbThreadFlag) {
-		return _mbThreadFlagLocalService.updateMBThreadFlag(mbThreadFlag);
+	public void deleteThreadFlagsByUserId(long userId) {
+		_mbThreadFlagLocalService.deleteThreadFlagsByUserId(userId);
 	}
 
 	@Override

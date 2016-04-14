@@ -54,15 +54,13 @@ public interface AssetCategoryPropertyService extends BaseService {
 	public AssetCategoryProperty addCategoryProperty(long entryId,
 		java.lang.String key, java.lang.String value) throws PortalException;
 
-	public void deleteCategoryProperty(long categoryPropertyId)
+	public AssetCategoryProperty updateCategoryProperty(
+		long categoryPropertyId, java.lang.String key, java.lang.String value)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetCategoryProperty> getCategoryProperties(long entryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<AssetCategoryProperty> getCategoryPropertyValues(
-		long companyId, java.lang.String key);
+	public AssetCategoryProperty updateCategoryProperty(long userId,
+		long categoryPropertyId, java.lang.String key, java.lang.String value)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -71,11 +69,13 @@ public interface AssetCategoryPropertyService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public AssetCategoryProperty updateCategoryProperty(
-		long categoryPropertyId, java.lang.String key, java.lang.String value)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetCategoryProperty> getCategoryProperties(long entryId);
 
-	public AssetCategoryProperty updateCategoryProperty(long userId,
-		long categoryPropertyId, java.lang.String key, java.lang.String value)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetCategoryProperty> getCategoryPropertyValues(
+		long companyId, java.lang.String key);
+
+	public void deleteCategoryProperty(long categoryPropertyId)
 		throws PortalException;
 }

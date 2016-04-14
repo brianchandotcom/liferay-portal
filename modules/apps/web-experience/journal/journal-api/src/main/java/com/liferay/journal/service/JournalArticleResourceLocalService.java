@@ -80,9 +80,6 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	public JournalArticleResource createJournalArticleResource(
 		long resourcePrimKey);
 
-	public void deleteArticleResource(long groupId, java.lang.String articleId)
-		throws PortalException;
-
 	/**
 	* Deletes the journal article resource from the database. Also notifies the appropriate model listeners.
 	*
@@ -104,6 +101,74 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	public JournalArticleResource deleteJournalArticleResource(
 		long resourcePrimKey) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalArticleResource fetchArticleResource(java.lang.String uuid,
+		long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalArticleResource fetchArticleResource(long groupId,
+		java.lang.String articleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalArticleResource fetchJournalArticleResource(
+		long resourcePrimKey);
+
+	/**
+	* Returns the journal article resource matching the UUID and group.
+	*
+	* @param uuid the journal article resource's UUID
+	* @param groupId the primary key of the group
+	* @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalArticleResource fetchJournalArticleResourceByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalArticleResource getArticleResource(
+		long articleResourcePrimKey) throws PortalException;
+
+	/**
+	* Returns the journal article resource with the primary key.
+	*
+	* @param resourcePrimKey the primary key of the journal article resource
+	* @return the journal article resource
+	* @throws PortalException if a journal article resource with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalArticleResource getJournalArticleResource(
+		long resourcePrimKey) throws PortalException;
+
+	/**
+	* Returns the journal article resource matching the UUID and group.
+	*
+	* @param uuid the journal article resource's UUID
+	* @param groupId the primary key of the group
+	* @return the matching journal article resource
+	* @throws PortalException if a matching journal article resource could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalArticleResource getJournalArticleResourceByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
+
+	/**
+	* Updates the journal article resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param journalArticleResource the journal article resource
+	* @return the journal article resource that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalArticleResource updateJournalArticleResource(
+		JournalArticleResource journalArticleResource);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* @throws PortalException
 	*/
@@ -111,7 +176,25 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the number of journal article resources.
+	*
+	* @return the number of journal article resources
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getJournalArticleResourcesCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -152,90 +235,8 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalArticleResource fetchArticleResource(long groupId,
-		java.lang.String articleId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalArticleResource fetchArticleResource(java.lang.String uuid,
-		long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalArticleResource fetchJournalArticleResource(
-		long resourcePrimKey);
-
-	/**
-	* Returns the journal article resource matching the UUID and group.
-	*
-	* @param uuid the journal article resource's UUID
-	* @param groupId the primary key of the group
-	* @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalArticleResource fetchJournalArticleResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalArticleResource getArticleResource(
-		long articleResourcePrimKey) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getArticleResourcePrimKey(long groupId,
-		java.lang.String articleId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getArticleResourcePrimKey(java.lang.String uuid, long groupId,
-		java.lang.String articleId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticleResource> getArticleResources(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the journal article resource with the primary key.
-	*
-	* @param resourcePrimKey the primary key of the journal article resource
-	* @return the journal article resource
-	* @throws PortalException if a journal article resource with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalArticleResource getJournalArticleResource(
-		long resourcePrimKey) throws PortalException;
-
-	/**
-	* Returns the journal article resource matching the UUID and group.
-	*
-	* @param uuid the journal article resource's UUID
-	* @param groupId the primary key of the group
-	* @return the matching journal article resource
-	* @throws PortalException if a matching journal article resource could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalArticleResource getJournalArticleResourceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the journal article resources.
@@ -279,32 +280,31 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 		OrderByComparator<JournalArticleResource> orderByComparator);
 
 	/**
-	* Returns the number of journal article resources.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of journal article resources
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getJournalArticleResourcesCount();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
-	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+	public long getArticleResourcePrimKey(java.lang.String uuid, long groupId,
+		java.lang.String articleId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getArticleResourcePrimKey(long groupId,
+		java.lang.String articleId);
+
+	public void deleteArticleResource(long groupId, java.lang.String articleId)
 		throws PortalException;
-
-	/**
-	* Updates the journal article resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param journalArticleResource the journal article resource
-	* @return the journal article resource that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public JournalArticleResource updateJournalArticleResource(
-		JournalArticleResource journalArticleResource);
 }

@@ -60,6 +60,25 @@ public interface ShoppingItemPriceLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ShoppingItemPriceLocalServiceUtil} to access the shopping item price local service. Add custom service methods to {@link com.liferay.shopping.service.impl.ShoppingItemPriceLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Adds the shopping item price to the database. Also notifies the appropriate model listeners.
@@ -80,11 +99,14 @@ public interface ShoppingItemPriceLocalService extends BaseLocalService,
 	public ShoppingItemPrice createShoppingItemPrice(long itemPriceId);
 
 	/**
-	* @throws PortalException
+	* Deletes the shopping item price from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingItemPrice the shopping item price
+	* @return the shopping item price that was removed
 	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingItemPrice deleteShoppingItemPrice(
+		ShoppingItemPrice shoppingItemPrice);
 
 	/**
 	* Deletes the shopping item price with the primary key from the database. Also notifies the appropriate model listeners.
@@ -97,17 +119,44 @@ public interface ShoppingItemPriceLocalService extends BaseLocalService,
 	public ShoppingItemPrice deleteShoppingItemPrice(long itemPriceId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ShoppingItemPrice fetchShoppingItemPrice(long itemPriceId);
+
 	/**
-	* Deletes the shopping item price from the database. Also notifies the appropriate model listeners.
+	* Returns the shopping item price with the primary key.
+	*
+	* @param itemPriceId the primary key of the shopping item price
+	* @return the shopping item price
+	* @throws PortalException if a shopping item price with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ShoppingItemPrice getShoppingItemPrice(long itemPriceId)
+		throws PortalException;
+
+	/**
+	* Updates the shopping item price in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param shoppingItemPrice the shopping item price
-	* @return the shopping item price that was removed
+	* @return the shopping item price that was updated
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public ShoppingItemPrice deleteShoppingItemPrice(
+	@Indexable(type = IndexableType.REINDEX)
+	public ShoppingItemPrice updateShoppingItemPrice(
 		ShoppingItemPrice shoppingItemPrice);
 
-	public DynamicQuery dynamicQuery();
+	/**
+	* Returns the number of shopping item prices.
+	*
+	* @return the number of shopping item prices
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getShoppingItemPricesCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -148,58 +197,8 @@ public interface ShoppingItemPriceLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ShoppingItemPrice fetchShoppingItemPrice(long itemPriceId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ShoppingItemPrice> getItemPrices(long itemId)
-		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the shopping item price with the primary key.
-	*
-	* @param itemPriceId the primary key of the shopping item price
-	* @return the shopping item price
-	* @throws PortalException if a shopping item price with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ShoppingItemPrice getShoppingItemPrice(long itemPriceId)
 		throws PortalException;
 
 	/**
@@ -217,20 +216,20 @@ public interface ShoppingItemPriceLocalService extends BaseLocalService,
 	public List<ShoppingItemPrice> getShoppingItemPrices(int start, int end);
 
 	/**
-	* Returns the number of shopping item prices.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of shopping item prices
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getShoppingItemPricesCount();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Updates the shopping item price in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param shoppingItemPrice the shopping item price
-	* @return the shopping item price that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public ShoppingItemPrice updateShoppingItemPrice(
-		ShoppingItemPrice shoppingItemPrice);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 }

@@ -108,7 +108,14 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	public JournalFolder deleteFolder(long folderId,
 		boolean includeTrashedEntries) throws PortalException;
 
-	public void deleteFolders(long groupId) throws PortalException;
+	/**
+	* Deletes the journal folder from the database. Also notifies the appropriate model listeners.
+	*
+	* @param journalFolder the journal folder
+	* @return the journal folder that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public JournalFolder deleteJournalFolder(JournalFolder journalFolder);
 
 	/**
 	* Deletes the journal folder with the primary key from the database. Also notifies the appropriate model listeners.
@@ -121,14 +128,103 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	public JournalFolder deleteJournalFolder(long folderId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFolder fetchFolder(long folderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFolder fetchFolder(long groupId, java.lang.String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFolder fetchFolder(long groupId, long parentFolderId,
+		java.lang.String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFolder fetchJournalFolder(long folderId);
+
 	/**
-	* Deletes the journal folder from the database. Also notifies the appropriate model listeners.
+	* Returns the journal folder matching the UUID and group.
+	*
+	* @param uuid the journal folder's UUID
+	* @param groupId the primary key of the group
+	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFolder fetchJournalFolderByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFolder getFolder(long folderId) throws PortalException;
+
+	/**
+	* Returns the journal folder with the primary key.
+	*
+	* @param folderId the primary key of the journal folder
+	* @return the journal folder
+	* @throws PortalException if a journal folder with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFolder getJournalFolder(long folderId)
+		throws PortalException;
+
+	/**
+	* Returns the journal folder matching the UUID and group.
+	*
+	* @param uuid the journal folder's UUID
+	* @param groupId the primary key of the group
+	* @return the matching journal folder
+	* @throws PortalException if a matching journal folder could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public JournalFolder getJournalFolderByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalFolder moveFolder(long folderId, long parentFolderId,
+		ServiceContext serviceContext) throws PortalException;
+
+	public JournalFolder moveFolderFromTrash(long userId, long folderId,
+		long parentFolderId, ServiceContext serviceContext)
+		throws PortalException;
+
+	public JournalFolder moveFolderToTrash(long userId, long folderId)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalFolder updateFolder(long userId, long groupId, long folderId,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description, boolean mergeWithParentFolder,
+		ServiceContext serviceContext) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalFolder updateFolder(long userId, long groupId, long folderId,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description, long[] ddmStructureIds,
+		int restrictionType, boolean mergeWithParentFolder,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* Updates the journal folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param journalFolder the journal folder
-	* @return the journal folder that was removed
+	* @return the journal folder that was updated
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public JournalFolder deleteJournalFolder(JournalFolder journalFolder);
+	@Indexable(type = IndexableType.REINDEX)
+	public JournalFolder updateJournalFolder(JournalFolder journalFolder);
+
+	public JournalFolder updateStatus(long userId, JournalFolder folder,
+		int status) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* @throws PortalException
@@ -137,7 +233,45 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyFoldersCount(long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersAndArticlesCount(long groupId,
+		List<java.lang.Long> folderIds, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersAndArticlesCount(long groupId, long folderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersAndArticlesCount(long groupId, long folderId,
+		int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersCount(long groupId, long parentFolderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFoldersCount(long groupId, long parentFolderId, int status);
+
+	/**
+	* Returns the number of journal folders.
+	*
+	* @return the number of journal folders
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getJournalFoldersCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -178,68 +312,13 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFolder fetchFolder(long folderId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFolder fetchFolder(long groupId, java.lang.String name);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFolder fetchFolder(long groupId, long parentFolderId,
-		java.lang.String name);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFolder fetchJournalFolder(long folderId);
-
-	/**
-	* Returns the journal folder matching the UUID and group.
-	*
-	* @param uuid the journal folder's UUID
-	* @param groupId the primary key of the group
-	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFolder fetchJournalFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalFolder> getCompanyFolders(long companyId, int start,
 		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCompanyFoldersCount(long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructure> getDDMStructures(long[] groupIds, long folderId,
 		int restrictionType) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFolder getFolder(long folderId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalFolder> getFolders(long groupId);
@@ -274,53 +353,6 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<java.lang.Object> getFoldersAndArticles(long groupId,
 		long folderId, int status, int start, int end, OrderByComparator<?> obc);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersAndArticlesCount(long groupId, long folderId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersAndArticlesCount(long groupId, long folderId,
-		int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersAndArticlesCount(long groupId,
-		List<java.lang.Long> folderIds, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersCount(long groupId, long parentFolderId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFoldersCount(long groupId, long parentFolderId, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getInheritedWorkflowFolderId(long folderId)
-		throws NoSuchFolderException;
-
-	/**
-	* Returns the journal folder with the primary key.
-	*
-	* @param folderId the primary key of the journal folder
-	* @return the journal folder
-	* @throws PortalException if a journal folder with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFolder getJournalFolder(long folderId)
-		throws PortalException;
-
-	/**
-	* Returns the journal folder matching the UUID and group.
-	*
-	* @param uuid the journal folder's UUID
-	* @param groupId the primary key of the group
-	* @return the matching journal folder
-	* @throws PortalException if a matching journal folder could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public JournalFolder getJournalFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the journal folders.
@@ -362,47 +394,40 @@ public interface JournalFolderLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<JournalFolder> orderByComparator);
 
-	/**
-	* Returns the number of journal folders.
-	*
-	* @return the number of journal folders
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getJournalFoldersCount();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalFolder> getNoAssetFolders();
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getInheritedWorkflowFolderId(long folderId)
+		throws NoSuchFolderException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getOverridedDDMStructuresFolderId(long folderId)
 		throws NoSuchFolderException;
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
+	public void deleteFolders(long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void getSubfolderIds(List<java.lang.Long> folderIds, long groupId,
 		long folderId);
-
-	@Indexable(type = IndexableType.REINDEX)
-	public JournalFolder moveFolder(long folderId, long parentFolderId,
-		ServiceContext serviceContext) throws PortalException;
-
-	public JournalFolder moveFolderFromTrash(long userId, long folderId,
-		long parentFolderId, ServiceContext serviceContext)
-		throws PortalException;
-
-	public JournalFolder moveFolderToTrash(long userId, long folderId)
-		throws PortalException;
 
 	public void rebuildTree(long companyId) throws PortalException;
 
@@ -424,33 +449,8 @@ public interface JournalFolderLocalService extends BaseLocalService,
 		long[] assetLinkEntryIds, java.lang.Double priority)
 		throws PortalException;
 
-	@Indexable(type = IndexableType.REINDEX)
-	public JournalFolder updateFolder(long userId, long groupId, long folderId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, long[] ddmStructureIds,
-		int restrictionType, boolean mergeWithParentFolder,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public JournalFolder updateFolder(long userId, long groupId, long folderId,
-		long parentFolderId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentFolder,
-		ServiceContext serviceContext) throws PortalException;
-
 	public void updateFolderDDMStructures(JournalFolder folder,
 		long[] ddmStructureIdsArray) throws PortalException;
-
-	/**
-	* Updates the journal folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param journalFolder the journal folder
-	* @return the journal folder that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public JournalFolder updateJournalFolder(JournalFolder journalFolder);
-
-	public JournalFolder updateStatus(long userId, JournalFolder folder,
-		int status) throws PortalException;
 
 	public void validateFolderDDMStructures(long folderId, long parentFolderId)
 		throws PortalException;

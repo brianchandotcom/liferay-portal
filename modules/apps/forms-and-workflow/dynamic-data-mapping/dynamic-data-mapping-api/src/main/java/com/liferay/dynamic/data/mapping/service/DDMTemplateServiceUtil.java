@@ -43,44 +43,6 @@ public class DDMTemplateServiceUtil {
 	 */
 
 	/**
-	* Adds a template.
-	*
-	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the class name for template's
-	related model
-	* @param classPK the primary key of the template's related entity
-	* @param resourceClassNameId the primary key of the class name for
-	template's resource model
-	* @param nameMap the template's locales and localized names
-	* @param descriptionMap the template's locales and localized descriptions
-	* @param type the template's type. For more information, see
-	DDMTemplateConstants in the dynamic-data-mapping-api module.
-	* @param mode the template's mode. For more information, see
-	DDMTemplateConstants in the dynamic-data-mapping-api module.
-	* @param language the template's script language. For more information,
-	see DDMTemplateConstants in the dynamic-data-mapping-api module.
-	* @param script the template's script
-	* @param serviceContext the service context to be applied. Must have the
-	<code>ddmResource</code> attribute to check permissions. Can set
-	the UUID, creation date, modification date, guest permissions,
-	and group permissions for the template.
-	* @return the template
-	*/
-	public static com.liferay.dynamic.data.mapping.model.DDMTemplate addTemplate(
-		long groupId, long classNameId, long classPK, long resourceClassNameId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String mode,
-		java.lang.String language, java.lang.String script,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addTemplate(groupId, classNameId, classPK,
-			resourceClassNameId, nameMap, descriptionMap, type, mode, language,
-			script, serviceContext);
-	}
-
-	/**
 	* Adds a template with additional parameters.
 	*
 	* @param groupId the primary key of the group
@@ -131,6 +93,51 @@ public class DDMTemplateServiceUtil {
 	}
 
 	/**
+	* Adds a template.
+	*
+	* @param groupId the primary key of the group
+	* @param classNameId the primary key of the class name for template's
+	related model
+	* @param classPK the primary key of the template's related entity
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
+	* @param nameMap the template's locales and localized names
+	* @param descriptionMap the template's locales and localized descriptions
+	* @param type the template's type. For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
+	* @param mode the template's mode. For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
+	* @param language the template's script language. For more information,
+	see DDMTemplateConstants in the dynamic-data-mapping-api module.
+	* @param script the template's script
+	* @param serviceContext the service context to be applied. Must have the
+	<code>ddmResource</code> attribute to check permissions. Can set
+	the UUID, creation date, modification date, guest permissions,
+	and group permissions for the template.
+	* @return the template
+	*/
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplate addTemplate(
+		long groupId, long classNameId, long classPK, long resourceClassNameId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, java.lang.String script,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addTemplate(groupId, classNameId, classPK,
+			resourceClassNameId, nameMap, descriptionMap, type, mode, language,
+			script, serviceContext);
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplate copyTemplate(
+		long templateId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().copyTemplate(templateId, serviceContext);
+	}
+
+	/**
 	* Copies the template, creating a new template with all the values
 	* extracted from the original one. This method supports defining a new name
 	* and description.
@@ -156,52 +163,6 @@ public class DDMTemplateServiceUtil {
 			serviceContext);
 	}
 
-	public static com.liferay.dynamic.data.mapping.model.DDMTemplate copyTemplate(
-		long templateId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().copyTemplate(templateId, serviceContext);
-	}
-
-	/**
-	* Copies all the templates matching the class name ID, class PK, and type.
-	* This method creates new templates, extracting all the values from the old
-	* ones and updating their class PKs.
-	*
-	* @param classNameId the primary key of the class name for template's
-	related model
-	* @param oldClassPK the primary key of the old template's related entity
-	* @param resourceClassNameId the primary key of the class name for
-	template's resource model
-	* @param newClassPK the primary key of the new template's related entity
-	* @param type the template's type. For more information, see
-	DDMTemplateConstants in the dynamic-data-mapping-api module.
-	* @param serviceContext the service context to be applied. Must have the
-	<code>ddmResource</code> attribute to check permissions. Can set
-	the UUID, creation date, modification date, guest permissions,
-	and group permissions for the template.
-	* @return the new template
-	*/
-	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> copyTemplates(
-		long classNameId, long oldClassPK, long resourceClassNameId,
-		long newClassPK, java.lang.String type,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .copyTemplates(classNameId, oldClassPK, resourceClassNameId,
-			newClassPK, type, serviceContext);
-	}
-
-	/**
-	* Deletes the template and its resources.
-	*
-	* @param templateId the primary key of the template to be deleted
-	*/
-	public static void deleteTemplate(long templateId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteTemplate(templateId);
-	}
-
 	/**
 	* Returns the template matching the group and template key.
 	*
@@ -216,15 +177,6 @@ public class DDMTemplateServiceUtil {
 		long groupId, long classNameId, java.lang.String templateKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().fetchTemplate(groupId, classNameId, templateKey);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -284,6 +236,275 @@ public class DDMTemplateServiceUtil {
 		return getService().getTemplate(templateId);
 	}
 
+	/**
+	* Updates the template matching the ID.
+	*
+	* @param templateId the primary key of the template
+	* @param classPK the primary key of the template's related entity
+	* @param nameMap the template's new locales and localized names
+	* @param descriptionMap the template's new locales and localized
+	description
+	* @param type the template's type. For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
+	* @param mode the template's mode. For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
+	* @param language the template's script language. For more information,
+	see DDMTemplateConstants in the dynamic-data-mapping-api module.
+	* @param script the template's script
+	* @param cacheable whether the template is cacheable
+	* @param smallImage whether the template has a small image
+	* @param smallImageURL the template's small image URL (optionally
+	<code>null</code>)
+	* @param smallImageFile the template's small image file (optionally
+	<code>null</code>)
+	* @param serviceContext the service context to be applied. Can set the
+	modification date.
+	* @return the updated template
+	*/
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplate updateTemplate(
+		long templateId, long classPK,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, java.lang.String script, boolean cacheable,
+		boolean smallImage, java.lang.String smallImageURL,
+		java.io.File smallImageFile,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateTemplate(templateId, classPK, nameMap,
+			descriptionMap, type, mode, language, script, cacheable,
+			smallImage, smallImageURL, smallImageFile, serviceContext);
+	}
+
+	/**
+	* Updates the template matching the ID.
+	*
+	* @param templateId the primary key of the template
+	* @param classPK the primary key of the template's related entity
+	* @param nameMap the template's new locales and localized names
+	* @param descriptionMap the template's new locales and localized
+	description
+	* @param type the template's type. For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
+	* @param mode the template's mode. For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
+	* @param language the template's script language. For more information,
+	see DDMTemplateConstants in the dynamic-data-mapping-api module.
+	* @param script the template's script
+	* @param cacheable whether the template is cacheable
+	* @param serviceContext the service context to be applied. Can set the
+	modification date.
+	* @return the updated template
+	*/
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplate updateTemplate(
+		long templateId, long classPK,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, java.lang.String script, boolean cacheable,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateTemplate(templateId, classPK, nameMap,
+			descriptionMap, type, mode, language, script, cacheable,
+			serviceContext);
+	}
+
+	/**
+	* Returns the number of templates matching the group and structure class
+	* name ID plus the number of generic templates matching the group.
+	*
+	* @param groupId the primary key of the group
+	* @param structureClassNameId the primary key of the class name for the
+	template's related structure (optionally <code>0</code>). Specify
+	<code>0</code> to count generic templates only.
+	* @return the number of matching templates plus the number of matching
+	generic templates
+	*/
+	public static int getTemplatesByStructureClassNameIdCount(long groupId,
+		long structureClassNameId, int status) {
+		return getService()
+				   .getTemplatesByStructureClassNameIdCount(groupId,
+			structureClassNameId, status);
+	}
+
+	/**
+	* Returns the number of templates matching the group, class name ID, class
+	* PK, type, and mode, and matching the keywords in the template names and
+	* descriptions.
+	*
+	* @param companyId the primary key of the template's company
+	* @param groupId the primary key of the group
+	* @param classNameId the primary key of the class name for template's
+	related model
+	* @param classPK the primary key of the template's related entity
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
+	* @param keywords the keywords (space separated), which may occur in the
+	template's name or description (optionally <code>null</code>)
+	* @param type the template's type (optionally <code>null</code>). For more
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
+	* @param mode the template's mode (optionally <code>null</code>). For more
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
+	* @return the number of matching templates
+	*/
+	public static int searchCount(long companyId, long groupId,
+		long classNameId, long classPK, long resourceClassNameId,
+		java.lang.String keywords, java.lang.String type,
+		java.lang.String mode, int status) {
+		return getService()
+				   .searchCount(companyId, groupId, classNameId, classPK,
+			resourceClassNameId, keywords, type, mode, status);
+	}
+
+	/**
+	* Returns the number of templates matching the group, class name ID, class
+	* PK, name keyword, description keyword, type, mode, and language.
+	*
+	* @param companyId the primary key of the template's company
+	* @param groupId the primary key of the group
+	* @param classNameId the primary key of the class name for template's
+	related model
+	* @param classPK the primary key of the template's related entity
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
+	* @param name the name keywords (optionally <code>null</code>)
+	* @param description the description keywords (optionally
+	<code>null</code>)
+	* @param type the template's type (optionally <code>null</code>). For more
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
+	* @param mode the template's mode (optionally <code>null</code>). For more
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
+	* @param language the template's script language (optionally
+	<code>null</code>). For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
+	* @param andOperator whether every field must match its keywords, or just
+	one field.
+	* @return the number of matching templates
+	*/
+	public static int searchCount(long companyId, long groupId,
+		long classNameId, long classPK, long resourceClassNameId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, int status, boolean andOperator) {
+		return getService()
+				   .searchCount(companyId, groupId, classNameId, classPK,
+			resourceClassNameId, name, description, type, mode, language,
+			status, andOperator);
+	}
+
+	/**
+	* Returns the number of templates matching the group IDs, class name IDs,
+	* class PK, type, and mode, and matching the keywords in the template names
+	* and descriptions.
+	*
+	* @param companyId the primary key of the template's company
+	* @param groupIds the primary keys of the groups
+	* @param classNameIds the primary keys of the entity's instances the
+	templates are related to
+	* @param classPKs the primary keys of the template's related entities
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
+	* @param keywords the keywords (space separated), which may occur in the
+	template's name or description (optionally <code>null</code>)
+	* @param type the template's type (optionally <code>null</code>). For more
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
+	* @param mode the template's mode (optionally <code>null</code>). For more
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
+	* @return the number of matching templates
+	*/
+	public static int searchCount(long companyId, long[] groupIds,
+		long[] classNameIds, long[] classPKs, long resourceClassNameId,
+		java.lang.String keywords, java.lang.String type,
+		java.lang.String mode, int status) {
+		return getService()
+				   .searchCount(companyId, groupIds, classNameIds, classPKs,
+			resourceClassNameId, keywords, type, mode, status);
+	}
+
+	/**
+	* Returns the number of templates matching the group IDs, class name IDs,
+	* class PK, name keyword, description keyword, type, mode, and language.
+	*
+	* @param companyId the primary key of the template's company
+	* @param groupIds the primary keys of the groups
+	* @param classNameIds the primary keys of the entity's instances the
+	templates are related to
+	* @param classPKs the primary keys of the template's related entities
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
+	* @param name the name keywords (optionally <code>null</code>)
+	* @param description the description keywords (optionally
+	<code>null</code>)
+	* @param type the template's type (optionally <code>null</code>). For more
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
+	* @param mode the template's mode (optionally <code>null</code>). For more
+	information, see DDMTemplateConstants in the
+	dynamic-data-mapping-api module.
+	* @param language the template's script language (optionally
+	<code>null</code>). For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
+	* @param andOperator whether every field must match its keywords, or just
+	one field.
+	* @return the number of matching templates
+	*/
+	public static int searchCount(long companyId, long[] groupIds,
+		long[] classNameIds, long[] classPKs, long resourceClassNameId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String type, java.lang.String mode,
+		java.lang.String language, int status, boolean andOperator) {
+		return getService()
+				   .searchCount(companyId, groupIds, classNameIds, classPKs,
+			resourceClassNameId, name, description, type, mode, language,
+			status, andOperator);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	/**
+	* Copies all the templates matching the class name ID, class PK, and type.
+	* This method creates new templates, extracting all the values from the old
+	* ones and updating their class PKs.
+	*
+	* @param classNameId the primary key of the class name for template's
+	related model
+	* @param oldClassPK the primary key of the old template's related entity
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
+	* @param newClassPK the primary key of the new template's related entity
+	* @param type the template's type. For more information, see
+	DDMTemplateConstants in the dynamic-data-mapping-api module.
+	* @param serviceContext the service context to be applied. Must have the
+	<code>ddmResource</code> attribute to check permissions. Can set
+	the UUID, creation date, modification date, guest permissions,
+	and group permissions for the template.
+	* @return the new template
+	*/
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> copyTemplates(
+		long classNameId, long oldClassPK, long resourceClassNameId,
+		long newClassPK, java.lang.String type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .copyTemplates(classNameId, oldClassPK, resourceClassNameId,
+			newClassPK, type, serviceContext);
+	}
+
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, boolean includeAncestorTemplates, int status)
@@ -299,15 +520,6 @@ public class DDMTemplateServiceUtil {
 		return getService()
 				   .getTemplates(companyId, groupId, classNameId, classPK,
 			resourceClassNameId, status);
-	}
-
-	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
-		long companyId, long groupId, long classNameId, long classPK,
-		long resourceClassNameId, java.lang.String type, java.lang.String mode,
-		int status) {
-		return getService()
-				   .getTemplates(companyId, groupId, classNameId, classPK,
-			resourceClassNameId, type, mode, status);
 	}
 
 	/**
@@ -331,6 +543,15 @@ public class DDMTemplateServiceUtil {
 		return getService()
 				   .getTemplates(companyId, groupId, classNameId, classPK,
 			resourceClassNameId, type, status);
+	}
+
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
+		long companyId, long groupId, long classNameId, long classPK,
+		long resourceClassNameId, java.lang.String type, java.lang.String mode,
+		int status) {
+		return getService()
+				   .getTemplates(companyId, groupId, classNameId, classPK,
+			resourceClassNameId, type, mode, status);
 	}
 
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
@@ -391,31 +612,6 @@ public class DDMTemplateServiceUtil {
 		return getService()
 				   .getTemplatesByStructureClassNameId(groupId,
 			structureClassNameId, status, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the number of templates matching the group and structure class
-	* name ID plus the number of generic templates matching the group.
-	*
-	* @param groupId the primary key of the group
-	* @param structureClassNameId the primary key of the class name for the
-	template's related structure (optionally <code>0</code>). Specify
-	<code>0</code> to count generic templates only.
-	* @return the number of matching templates plus the number of matching
-	generic templates
-	*/
-	public static int getTemplatesByStructureClassNameIdCount(long groupId,
-		long structureClassNameId, int status) {
-		return getService()
-				   .getTemplatesByStructureClassNameIdCount(groupId,
-			structureClassNameId, status);
-	}
-
-	public static void revertTemplate(long templateId,
-		java.lang.String version,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().revertTemplate(templateId, version, serviceContext);
 	}
 
 	/**
@@ -625,216 +821,20 @@ public class DDMTemplateServiceUtil {
 	}
 
 	/**
-	* Returns the number of templates matching the group, class name ID, class
-	* PK, type, and mode, and matching the keywords in the template names and
-	* descriptions.
+	* Deletes the template and its resources.
 	*
-	* @param companyId the primary key of the template's company
-	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the class name for template's
-	related model
-	* @param classPK the primary key of the template's related entity
-	* @param resourceClassNameId the primary key of the class name for
-	template's resource model
-	* @param keywords the keywords (space separated), which may occur in the
-	template's name or description (optionally <code>null</code>)
-	* @param type the template's type (optionally <code>null</code>). For more
-	information, see DDMTemplateConstants in the
-	dynamic-data-mapping-api module.
-	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see DDMTemplateConstants in the
-	dynamic-data-mapping-api module.
-	* @return the number of matching templates
+	* @param templateId the primary key of the template to be deleted
 	*/
-	public static int searchCount(long companyId, long groupId,
-		long classNameId, long classPK, long resourceClassNameId,
-		java.lang.String keywords, java.lang.String type,
-		java.lang.String mode, int status) {
-		return getService()
-				   .searchCount(companyId, groupId, classNameId, classPK,
-			resourceClassNameId, keywords, type, mode, status);
+	public static void deleteTemplate(long templateId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteTemplate(templateId);
 	}
 
-	/**
-	* Returns the number of templates matching the group, class name ID, class
-	* PK, name keyword, description keyword, type, mode, and language.
-	*
-	* @param companyId the primary key of the template's company
-	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the class name for template's
-	related model
-	* @param classPK the primary key of the template's related entity
-	* @param resourceClassNameId the primary key of the class name for
-	template's resource model
-	* @param name the name keywords (optionally <code>null</code>)
-	* @param description the description keywords (optionally
-	<code>null</code>)
-	* @param type the template's type (optionally <code>null</code>). For more
-	information, see DDMTemplateConstants in the
-	dynamic-data-mapping-api module.
-	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see DDMTemplateConstants in the
-	dynamic-data-mapping-api module.
-	* @param language the template's script language (optionally
-	<code>null</code>). For more information, see
-	DDMTemplateConstants in the dynamic-data-mapping-api module.
-	* @param andOperator whether every field must match its keywords, or just
-	one field.
-	* @return the number of matching templates
-	*/
-	public static int searchCount(long companyId, long groupId,
-		long classNameId, long classPK, long resourceClassNameId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String type, java.lang.String mode,
-		java.lang.String language, int status, boolean andOperator) {
-		return getService()
-				   .searchCount(companyId, groupId, classNameId, classPK,
-			resourceClassNameId, name, description, type, mode, language,
-			status, andOperator);
-	}
-
-	/**
-	* Returns the number of templates matching the group IDs, class name IDs,
-	* class PK, type, and mode, and matching the keywords in the template names
-	* and descriptions.
-	*
-	* @param companyId the primary key of the template's company
-	* @param groupIds the primary keys of the groups
-	* @param classNameIds the primary keys of the entity's instances the
-	templates are related to
-	* @param classPKs the primary keys of the template's related entities
-	* @param resourceClassNameId the primary key of the class name for
-	template's resource model
-	* @param keywords the keywords (space separated), which may occur in the
-	template's name or description (optionally <code>null</code>)
-	* @param type the template's type (optionally <code>null</code>). For more
-	information, see DDMTemplateConstants in the
-	dynamic-data-mapping-api module.
-	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see DDMTemplateConstants in the
-	dynamic-data-mapping-api module.
-	* @return the number of matching templates
-	*/
-	public static int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, long[] classPKs, long resourceClassNameId,
-		java.lang.String keywords, java.lang.String type,
-		java.lang.String mode, int status) {
-		return getService()
-				   .searchCount(companyId, groupIds, classNameIds, classPKs,
-			resourceClassNameId, keywords, type, mode, status);
-	}
-
-	/**
-	* Returns the number of templates matching the group IDs, class name IDs,
-	* class PK, name keyword, description keyword, type, mode, and language.
-	*
-	* @param companyId the primary key of the template's company
-	* @param groupIds the primary keys of the groups
-	* @param classNameIds the primary keys of the entity's instances the
-	templates are related to
-	* @param classPKs the primary keys of the template's related entities
-	* @param resourceClassNameId the primary key of the class name for
-	template's resource model
-	* @param name the name keywords (optionally <code>null</code>)
-	* @param description the description keywords (optionally
-	<code>null</code>)
-	* @param type the template's type (optionally <code>null</code>). For more
-	information, see DDMTemplateConstants in the
-	dynamic-data-mapping-api module.
-	* @param mode the template's mode (optionally <code>null</code>). For more
-	information, see DDMTemplateConstants in the
-	dynamic-data-mapping-api module.
-	* @param language the template's script language (optionally
-	<code>null</code>). For more information, see
-	DDMTemplateConstants in the dynamic-data-mapping-api module.
-	* @param andOperator whether every field must match its keywords, or just
-	one field.
-	* @return the number of matching templates
-	*/
-	public static int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, long[] classPKs, long resourceClassNameId,
-		java.lang.String name, java.lang.String description,
-		java.lang.String type, java.lang.String mode,
-		java.lang.String language, int status, boolean andOperator) {
-		return getService()
-				   .searchCount(companyId, groupIds, classNameIds, classPKs,
-			resourceClassNameId, name, description, type, mode, language,
-			status, andOperator);
-	}
-
-	/**
-	* Updates the template matching the ID.
-	*
-	* @param templateId the primary key of the template
-	* @param classPK the primary key of the template's related entity
-	* @param nameMap the template's new locales and localized names
-	* @param descriptionMap the template's new locales and localized
-	description
-	* @param type the template's type. For more information, see
-	DDMTemplateConstants in the dynamic-data-mapping-api module.
-	* @param mode the template's mode. For more information, see
-	DDMTemplateConstants in the dynamic-data-mapping-api module.
-	* @param language the template's script language. For more information,
-	see DDMTemplateConstants in the dynamic-data-mapping-api module.
-	* @param script the template's script
-	* @param cacheable whether the template is cacheable
-	* @param serviceContext the service context to be applied. Can set the
-	modification date.
-	* @return the updated template
-	*/
-	public static com.liferay.dynamic.data.mapping.model.DDMTemplate updateTemplate(
-		long templateId, long classPK,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String mode,
-		java.lang.String language, java.lang.String script, boolean cacheable,
+	public static void revertTemplate(long templateId,
+		java.lang.String version,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateTemplate(templateId, classPK, nameMap,
-			descriptionMap, type, mode, language, script, cacheable,
-			serviceContext);
-	}
-
-	/**
-	* Updates the template matching the ID.
-	*
-	* @param templateId the primary key of the template
-	* @param classPK the primary key of the template's related entity
-	* @param nameMap the template's new locales and localized names
-	* @param descriptionMap the template's new locales and localized
-	description
-	* @param type the template's type. For more information, see
-	DDMTemplateConstants in the dynamic-data-mapping-api module.
-	* @param mode the template's mode. For more information, see
-	DDMTemplateConstants in the dynamic-data-mapping-api module.
-	* @param language the template's script language. For more information,
-	see DDMTemplateConstants in the dynamic-data-mapping-api module.
-	* @param script the template's script
-	* @param cacheable whether the template is cacheable
-	* @param smallImage whether the template has a small image
-	* @param smallImageURL the template's small image URL (optionally
-	<code>null</code>)
-	* @param smallImageFile the template's small image file (optionally
-	<code>null</code>)
-	* @param serviceContext the service context to be applied. Can set the
-	modification date.
-	* @return the updated template
-	*/
-	public static com.liferay.dynamic.data.mapping.model.DDMTemplate updateTemplate(
-		long templateId, long classPK,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String mode,
-		java.lang.String language, java.lang.String script, boolean cacheable,
-		boolean smallImage, java.lang.String smallImageURL,
-		java.io.File smallImageFile,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateTemplate(templateId, classPK, nameMap,
-			descriptionMap, type, mode, language, script, cacheable,
-			smallImage, smallImageURL, smallImageFile, serviceContext);
+		getService().revertTemplate(templateId, version, serviceContext);
 	}
 
 	public static DDMTemplateService getService() {

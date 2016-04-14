@@ -48,11 +48,6 @@ public class MembershipRequestServiceUtil {
 				   .addMembershipRequest(groupId, comments, serviceContext);
 	}
 
-	public static void deleteMembershipRequests(long groupId, long statusId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteMembershipRequests(groupId, statusId);
-	}
-
 	public static com.liferay.portal.kernel.model.MembershipRequest getMembershipRequest(
 		long membershipRequestId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -66,6 +61,11 @@ public class MembershipRequestServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static void deleteMembershipRequests(long groupId, long statusId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteMembershipRequests(groupId, statusId);
 	}
 
 	public static void updateStatus(long membershipRequestId,

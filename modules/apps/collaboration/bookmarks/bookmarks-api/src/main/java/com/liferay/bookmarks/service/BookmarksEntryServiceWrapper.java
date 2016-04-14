@@ -44,97 +44,9 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
 	}
 
 	@Override
-	public void deleteEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_bookmarksEntryService.deleteEntry(entryId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getEntries(
-		long groupId, long folderId, int start, int end) {
-		return _bookmarksEntryService.getEntries(groupId, folderId, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getEntries(
-		long groupId, long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
-		return _bookmarksEntryService.getEntries(groupId, folderId, start, end,
-			orderByComparator);
-	}
-
-	@Override
-	public int getEntriesCount(long groupId, long folderId) {
-		return _bookmarksEntryService.getEntriesCount(groupId, folderId);
-	}
-
-	@Override
-	public int getEntriesCount(long groupId, long folderId, int status) {
-		return _bookmarksEntryService.getEntriesCount(groupId, folderId, status);
-	}
-
-	@Override
 	public com.liferay.bookmarks.model.BookmarksEntry getEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksEntryService.getEntry(entryId);
-	}
-
-	@Override
-	public int getFoldersEntriesCount(long groupId,
-		java.util.List<java.lang.Long> folderIds) {
-		return _bookmarksEntryService.getFoldersEntriesCount(groupId, folderIds);
-	}
-
-	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getGroupEntries(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _bookmarksEntryService.getGroupEntries(groupId, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getGroupEntries(
-		long groupId, long userId, long rootFolderId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _bookmarksEntryService.getGroupEntries(groupId, userId,
-			rootFolderId, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getGroupEntries(
-		long groupId, long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _bookmarksEntryService.getGroupEntries(groupId, userId, start,
-			end);
-	}
-
-	@Override
-	public int getGroupEntriesCount(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _bookmarksEntryService.getGroupEntriesCount(groupId);
-	}
-
-	@Override
-	public int getGroupEntriesCount(long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _bookmarksEntryService.getGroupEntriesCount(groupId, userId);
-	}
-
-	@Override
-	public int getGroupEntriesCount(long groupId, long userId, long rootFolderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _bookmarksEntryService.getGroupEntriesCount(groupId, userId,
-			rootFolderId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _bookmarksEntryService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -172,9 +84,13 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
 	}
 
 	@Override
-	public void restoreEntryFromTrash(long entryId)
+	public com.liferay.bookmarks.model.BookmarksEntry updateEntry(
+		long entryId, long groupId, long folderId, java.lang.String name,
+		java.lang.String url, java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_bookmarksEntryService.restoreEntryFromTrash(entryId);
+		return _bookmarksEntryService.updateEntry(entryId, groupId, folderId,
+			name, url, description, serviceContext);
 	}
 
 	@Override
@@ -183,6 +99,100 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksEntryService.search(groupId, creatorUserId, status,
 			start, end);
+	}
+
+	@Override
+	public int getEntriesCount(long groupId, long folderId) {
+		return _bookmarksEntryService.getEntriesCount(groupId, folderId);
+	}
+
+	@Override
+	public int getEntriesCount(long groupId, long folderId, int status) {
+		return _bookmarksEntryService.getEntriesCount(groupId, folderId, status);
+	}
+
+	@Override
+	public int getFoldersEntriesCount(long groupId,
+		java.util.List<java.lang.Long> folderIds) {
+		return _bookmarksEntryService.getFoldersEntriesCount(groupId, folderIds);
+	}
+
+	@Override
+	public int getGroupEntriesCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _bookmarksEntryService.getGroupEntriesCount(groupId);
+	}
+
+	@Override
+	public int getGroupEntriesCount(long groupId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _bookmarksEntryService.getGroupEntriesCount(groupId, userId);
+	}
+
+	@Override
+	public int getGroupEntriesCount(long groupId, long userId, long rootFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _bookmarksEntryService.getGroupEntriesCount(groupId, userId,
+			rootFolderId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _bookmarksEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getEntries(
+		long groupId, long folderId, int start, int end) {
+		return _bookmarksEntryService.getEntries(groupId, folderId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getEntries(
+		long groupId, long folderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.bookmarks.model.BookmarksEntry> orderByComparator) {
+		return _bookmarksEntryService.getEntries(groupId, folderId, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getGroupEntries(
+		long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _bookmarksEntryService.getGroupEntries(groupId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getGroupEntries(
+		long groupId, long userId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _bookmarksEntryService.getGroupEntries(groupId, userId, start,
+			end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.bookmarks.model.BookmarksEntry> getGroupEntries(
+		long groupId, long userId, long rootFolderId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _bookmarksEntryService.getGroupEntries(groupId, userId,
+			rootFolderId, start, end);
+	}
+
+	@Override
+	public void deleteEntry(long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_bookmarksEntryService.deleteEntry(entryId);
+	}
+
+	@Override
+	public void restoreEntryFromTrash(long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_bookmarksEntryService.restoreEntryFromTrash(entryId);
 	}
 
 	@Override
@@ -195,16 +205,6 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
 	public void unsubscribeEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_bookmarksEntryService.unsubscribeEntry(entryId);
-	}
-
-	@Override
-	public com.liferay.bookmarks.model.BookmarksEntry updateEntry(
-		long entryId, long groupId, long folderId, java.lang.String name,
-		java.lang.String url, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _bookmarksEntryService.updateEntry(entryId, groupId, folderId,
-			name, url, description, serviceContext);
 	}
 
 	@Override

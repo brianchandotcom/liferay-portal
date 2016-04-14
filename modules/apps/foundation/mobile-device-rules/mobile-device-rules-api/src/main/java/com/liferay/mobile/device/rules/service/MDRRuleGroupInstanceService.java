@@ -58,14 +58,18 @@ public interface MDRRuleGroupInstanceService extends BaseService {
 	 */
 	public MDRRuleGroupInstance addRuleGroupInstance(long groupId,
 		java.lang.String className, long classPK, long ruleGroupId,
-		int priority, ServiceContext serviceContext) throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	public MDRRuleGroupInstance addRuleGroupInstance(long groupId,
 		java.lang.String className, long classPK, long ruleGroupId,
-		ServiceContext serviceContext) throws PortalException;
+		int priority, ServiceContext serviceContext) throws PortalException;
 
-	public void deleteRuleGroupInstance(long ruleGroupInstanceId)
-		throws PortalException;
+	public MDRRuleGroupInstance updateRuleGroupInstance(
+		long ruleGroupInstanceId, int priority) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRuleGroupInstancesCount(java.lang.String className,
+		long classPK);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -79,10 +83,6 @@ public interface MDRRuleGroupInstanceService extends BaseService {
 		java.lang.String className, long classPK, int start, int end,
 		OrderByComparator<MDRRuleGroupInstance> orderByComparator);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRuleGroupInstancesCount(java.lang.String className,
-		long classPK);
-
-	public MDRRuleGroupInstance updateRuleGroupInstance(
-		long ruleGroupInstanceId, int priority) throws PortalException;
+	public void deleteRuleGroupInstance(long ruleGroupInstanceId)
+		throws PortalException;
 }

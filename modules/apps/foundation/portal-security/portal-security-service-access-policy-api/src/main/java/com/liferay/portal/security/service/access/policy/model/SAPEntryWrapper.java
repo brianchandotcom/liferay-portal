@@ -151,62 +151,6 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 		}
 	}
 
-	@Override
-	public java.lang.Object clone() {
-		return new SAPEntryWrapper((SAPEntry)_sapEntry.clone());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.security.service.access.policy.model.SAPEntry sapEntry) {
-		return _sapEntry.compareTo(sapEntry);
-	}
-
-	/**
-	* Returns the allowed service signatures of this s a p entry.
-	*
-	* @return the allowed service signatures of this s a p entry
-	*/
-	@Override
-	public java.lang.String getAllowedServiceSignatures() {
-		return _sapEntry.getAllowedServiceSignatures();
-	}
-
-	@Override
-	public java.util.List<java.lang.String> getAllowedServiceSignaturesList() {
-		return _sapEntry.getAllowedServiceSignaturesList();
-	}
-
-	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _sapEntry.getAvailableLanguageIds();
-	}
-
-	/**
-	* Returns the company ID of this s a p entry.
-	*
-	* @return the company ID of this s a p entry
-	*/
-	@Override
-	public long getCompanyId() {
-		return _sapEntry.getCompanyId();
-	}
-
-	/**
-	* Returns the create date of this s a p entry.
-	*
-	* @return the create date of this s a p entry
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _sapEntry.getCreateDate();
-	}
-
-	@Override
-	public java.lang.String getDefaultLanguageId() {
-		return _sapEntry.getDefaultLanguageId();
-	}
-
 	/**
 	* Returns the default s a p entry of this s a p entry.
 	*
@@ -228,18 +172,100 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	}
 
 	@Override
+	public boolean isCachedModel() {
+		return _sapEntry.isCachedModel();
+	}
+
+	/**
+	* Returns <code>true</code> if this s a p entry is default s a p entry.
+	*
+	* @return <code>true</code> if this s a p entry is default s a p entry; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDefaultSAPEntry() {
+		return _sapEntry.isDefaultSAPEntry();
+	}
+
+	/**
+	* Returns <code>true</code> if this s a p entry is enabled.
+	*
+	* @return <code>true</code> if this s a p entry is enabled; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isEnabled() {
+		return _sapEntry.isEnabled();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _sapEntry.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _sapEntry.isNew();
+	}
+
+	@Override
+	public boolean isSystem()
+		throws com.liferay.portal.kernel.module.configuration.ConfigurationException {
+		return _sapEntry.isSystem();
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _sapEntry.getExpandoBridge();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.security.service.access.policy.model.SAPEntry> toCacheModel() {
+		return _sapEntry.toCacheModel();
+	}
+
+	@Override
+	public com.liferay.portal.security.service.access.policy.model.SAPEntry toEscapedModel() {
+		return new SAPEntryWrapper(_sapEntry.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.security.service.access.policy.model.SAPEntry toUnescapedModel() {
+		return new SAPEntryWrapper(_sapEntry.toUnescapedModel());
+	}
+
+	@Override
+	public int compareTo(
+		com.liferay.portal.security.service.access.policy.model.SAPEntry sapEntry) {
+		return _sapEntry.compareTo(sapEntry);
+	}
+
+	@Override
+	public int hashCode() {
+		return _sapEntry.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _sapEntry.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new SAPEntryWrapper((SAPEntry)_sapEntry.clone());
+	}
+
 	/**
-	* Returns the modified date of this s a p entry.
+	* Returns the allowed service signatures of this s a p entry.
 	*
-	* @return the modified date of this s a p entry
+	* @return the allowed service signatures of this s a p entry
 	*/
 	@Override
-	public Date getModifiedDate() {
-		return _sapEntry.getModifiedDate();
+	public java.lang.String getAllowedServiceSignatures() {
+		return _sapEntry.getAllowedServiceSignatures();
+	}
+
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _sapEntry.getDefaultLanguageId();
 	}
 
 	/**
@@ -250,31 +276,6 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	@Override
 	public java.lang.String getName() {
 		return _sapEntry.getName();
-	}
-
-	/**
-	* Returns the primary key of this s a p entry.
-	*
-	* @return the primary key of this s a p entry
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _sapEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _sapEntry.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the sap entry ID of this s a p entry.
-	*
-	* @return the sap entry ID of this s a p entry
-	*/
-	@Override
-	public long getSapEntryId() {
-		return _sapEntry.getSapEntryId();
 	}
 
 	/**
@@ -345,26 +346,6 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	}
 
 	/**
-	* Returns a map of the locales and localized titles of this s a p entry.
-	*
-	* @return the locales and localized titles of this s a p entry
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
-		return _sapEntry.getTitleMap();
-	}
-
-	/**
-	* Returns the user ID of this s a p entry.
-	*
-	* @return the user ID of this s a p entry
-	*/
-	@Override
-	public long getUserId() {
-		return _sapEntry.getUserId();
-	}
-
-	/**
 	* Returns the user name of this s a p entry.
 	*
 	* @return the user name of this s a p entry
@@ -395,49 +376,93 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	}
 
 	@Override
-	public int hashCode() {
-		return _sapEntry.hashCode();
+	public java.lang.String toString() {
+		return _sapEntry.toString();
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _sapEntry.isCachedModel();
+	public java.lang.String toXmlString() {
+		return _sapEntry.toXmlString();
 	}
 
-	/**
-	* Returns <code>true</code> if this s a p entry is default s a p entry.
-	*
-	* @return <code>true</code> if this s a p entry is default s a p entry; <code>false</code> otherwise
-	*/
 	@Override
-	public boolean isDefaultSAPEntry() {
-		return _sapEntry.isDefaultSAPEntry();
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _sapEntry.getAvailableLanguageIds();
 	}
 
 	/**
-	* Returns <code>true</code> if this s a p entry is enabled.
+	* Returns the create date of this s a p entry.
 	*
-	* @return <code>true</code> if this s a p entry is enabled; <code>false</code> otherwise
+	* @return the create date of this s a p entry
 	*/
 	@Override
-	public boolean isEnabled() {
-		return _sapEntry.isEnabled();
+	public Date getCreateDate() {
+		return _sapEntry.getCreateDate();
+	}
+
+	/**
+	* Returns the modified date of this s a p entry.
+	*
+	* @return the modified date of this s a p entry
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _sapEntry.getModifiedDate();
 	}
 
 	@Override
-	public boolean isEscapedModel() {
-		return _sapEntry.isEscapedModel();
+	public java.util.List<java.lang.String> getAllowedServiceSignaturesList() {
+		return _sapEntry.getAllowedServiceSignaturesList();
 	}
 
+	/**
+	* Returns a map of the locales and localized titles of this s a p entry.
+	*
+	* @return the locales and localized titles of this s a p entry
+	*/
 	@Override
-	public boolean isNew() {
-		return _sapEntry.isNew();
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _sapEntry.getTitleMap();
 	}
 
+	/**
+	* Returns the company ID of this s a p entry.
+	*
+	* @return the company ID of this s a p entry
+	*/
 	@Override
-	public boolean isSystem()
-		throws com.liferay.portal.kernel.module.configuration.ConfigurationException {
-		return _sapEntry.isSystem();
+	public long getCompanyId() {
+		return _sapEntry.getCompanyId();
+	}
+
+	/**
+	* Returns the primary key of this s a p entry.
+	*
+	* @return the primary key of this s a p entry
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _sapEntry.getPrimaryKey();
+	}
+
+	/**
+	* Returns the sap entry ID of this s a p entry.
+	*
+	* @return the sap entry ID of this s a p entry
+	*/
+	@Override
+	public long getSapEntryId() {
+		return _sapEntry.getSapEntryId();
+	}
+
+	/**
+	* Returns the user ID of this s a p entry.
+	*
+	* @return the user ID of this s a p entry
+	*/
+	@Override
+	public long getUserId() {
+		return _sapEntry.getUserId();
 	}
 
 	@Override
@@ -515,14 +540,14 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_sapEntry.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_sapEntry.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_sapEntry.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_sapEntry.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -679,31 +704,6 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_sapEntry.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.security.service.access.policy.model.SAPEntry> toCacheModel() {
-		return _sapEntry.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.security.service.access.policy.model.SAPEntry toEscapedModel() {
-		return new SAPEntryWrapper(_sapEntry.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _sapEntry.toString();
-	}
-
-	@Override
-	public com.liferay.portal.security.service.access.policy.model.SAPEntry toUnescapedModel() {
-		return new SAPEntryWrapper(_sapEntry.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _sapEntry.toXmlString();
 	}
 
 	@Override

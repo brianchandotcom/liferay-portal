@@ -54,11 +54,6 @@ public class DDMDataProviderInstanceServiceUtil {
 			ddmFormValues, type, serviceContext);
 	}
 
-	public static void deleteDataProviderInstance(long dataProviderInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteDataProviderInstance(dataProviderInstanceId);
-	}
-
 	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance fetchDataProviderInstance(
 		long dataProviderInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -69,6 +64,30 @@ public class DDMDataProviderInstanceServiceUtil {
 		long dataProviderInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDataProviderInstance(dataProviderInstanceId);
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance updateDataProviderInstance(
+		long dataProviderInstanceId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateDataProviderInstance(dataProviderInstanceId, nameMap,
+			descriptionMap, ddmFormValues, serviceContext);
+	}
+
+	public static int searchCount(long companyId, long[] groupIds,
+		java.lang.String keywords) {
+		return getService().searchCount(companyId, groupIds, keywords);
+	}
+
+	public static int searchCount(long companyId, long[] groupIds,
+		java.lang.String name, java.lang.String description, boolean andOperator) {
+		return getService()
+				   .searchCount(companyId, groupIds, name, description,
+			andOperator);
 	}
 
 	/**
@@ -98,28 +117,9 @@ public class DDMDataProviderInstanceServiceUtil {
 			start, end, orderByComparator);
 	}
 
-	public static int searchCount(long companyId, long[] groupIds,
-		java.lang.String keywords) {
-		return getService().searchCount(companyId, groupIds, keywords);
-	}
-
-	public static int searchCount(long companyId, long[] groupIds,
-		java.lang.String name, java.lang.String description, boolean andOperator) {
-		return getService()
-				   .searchCount(companyId, groupIds, name, description,
-			andOperator);
-	}
-
-	public static com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance updateDataProviderInstance(
-		long dataProviderInstanceId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static void deleteDataProviderInstance(long dataProviderInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateDataProviderInstance(dataProviderInstanceId, nameMap,
-			descriptionMap, ddmFormValues, serviceContext);
+		getService().deleteDataProviderInstance(dataProviderInstanceId);
 	}
 
 	public static DDMDataProviderInstanceService getService() {

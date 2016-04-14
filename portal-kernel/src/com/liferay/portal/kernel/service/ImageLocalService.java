@@ -59,6 +59,13 @@ public interface ImageLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ImageLocalServiceUtil} to access the image local service. Add custom service methods to {@link com.liferay.portal.service.impl.ImageLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Adds the image to the database. Also notifies the appropriate model listeners.
@@ -96,6 +103,51 @@ public interface ImageLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public Image deleteImage(long imageId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Image fetchImage(long imageId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Image getCompanyLogo(long imageId);
+
+	/**
+	* Returns the image with the primary key.
+	*
+	* @param imageId the primary key of the image
+	* @return the image
+	* @throws PortalException if a image with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Image getImage(long imageId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Image getImageOrDefault(long imageId);
+
+	public Image moveImage(long imageId, byte[] bytes)
+		throws PortalException;
+
+	/**
+	* Updates the image in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param image the image
+	* @return the image that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public Image updateImage(Image image);
+
+	public Image updateImage(long imageId, byte[] bytes)
+		throws PortalException;
+
+	public Image updateImage(long imageId, byte[] bytes, java.lang.String type,
+		int height, int width, int size) throws PortalException;
+
+	public Image updateImage(long imageId, File file) throws PortalException;
+
+	public Image updateImage(long imageId, InputStream is)
+		throws PortalException;
+
+	public Image updateImage(long imageId, InputStream is, boolean cleanUpStream)
+		throws PortalException;
+
 	/**
 	* @throws PortalException
 	*/
@@ -103,7 +155,25 @@ public interface ImageLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the number of images.
+	*
+	* @return the number of images
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getImagesCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -144,46 +214,6 @@ public interface ImageLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Image fetchImage(long imageId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Image getCompanyLogo(long imageId);
-
-	/**
-	* Returns the image with the primary key.
-	*
-	* @param imageId the primary key of the image
-	* @return the image
-	* @throws PortalException if a image with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Image getImage(long imageId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Image getImageOrDefault(long imageId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Image> getImages();
 
@@ -205,51 +235,20 @@ public interface ImageLocalService extends BaseLocalService,
 	public List<Image> getImagesBySize(int size);
 
 	/**
-	* Returns the number of images.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of images
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getImagesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	public Image moveImage(long imageId, byte[] bytes)
-		throws PortalException;
-
-	/**
-	* Updates the image in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param image the image
-	* @return the image that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Image updateImage(Image image);
-
-	public Image updateImage(long imageId, byte[] bytes)
-		throws PortalException;
-
-	public Image updateImage(long imageId, byte[] bytes, java.lang.String type,
-		int height, int width, int size) throws PortalException;
-
-	public Image updateImage(long imageId, File file) throws PortalException;
-
-	public Image updateImage(long imageId, InputStream is)
-		throws PortalException;
-
-	public Image updateImage(long imageId, InputStream is, boolean cleanUpStream)
-		throws PortalException;
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 }

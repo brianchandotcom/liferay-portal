@@ -137,8 +137,38 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new MBBanWrapper((MBBan)_mbBan.clone());
+	public boolean isCachedModel() {
+		return _mbBan.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _mbBan.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _mbBan.isNew();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _mbBan.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.message.boards.kernel.model.MBBan toEscapedModel() {
+		return new MBBanWrapper(_mbBan.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.message.boards.kernel.model.MBBan toUnescapedModel() {
+		return new MBBanWrapper(_mbBan.toUnescapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.message.boards.kernel.model.MBBan> toCacheModel() {
+		return _mbBan.toCacheModel();
 	}
 
 	@Override
@@ -146,24 +176,19 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 		return _mbBan.compareTo(mbBan);
 	}
 
-	/**
-	* Returns the ban ID of this message boards ban.
-	*
-	* @return the ban ID of this message boards ban
-	*/
 	@Override
-	public long getBanId() {
-		return _mbBan.getBanId();
+	public int hashCode() {
+		return _mbBan.hashCode();
 	}
 
-	/**
-	* Returns the ban user ID of this message boards ban.
-	*
-	* @return the ban user ID of this message boards ban
-	*/
 	@Override
-	public long getBanUserId() {
-		return _mbBan.getBanUserId();
+	public Serializable getPrimaryKeyObj() {
+		return _mbBan.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new MBBanWrapper((MBBan)_mbBan.clone());
 	}
 
 	/**
@@ -174,86 +199,6 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	@Override
 	public java.lang.String getBanUserUuid() {
 		return _mbBan.getBanUserUuid();
-	}
-
-	/**
-	* Returns the company ID of this message boards ban.
-	*
-	* @return the company ID of this message boards ban
-	*/
-	@Override
-	public long getCompanyId() {
-		return _mbBan.getCompanyId();
-	}
-
-	/**
-	* Returns the create date of this message boards ban.
-	*
-	* @return the create date of this message boards ban
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _mbBan.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _mbBan.getExpandoBridge();
-	}
-
-	/**
-	* Returns the group ID of this message boards ban.
-	*
-	* @return the group ID of this message boards ban
-	*/
-	@Override
-	public long getGroupId() {
-		return _mbBan.getGroupId();
-	}
-
-	/**
-	* Returns the last publish date of this message boards ban.
-	*
-	* @return the last publish date of this message boards ban
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _mbBan.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this message boards ban.
-	*
-	* @return the modified date of this message boards ban
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _mbBan.getModifiedDate();
-	}
-
-	/**
-	* Returns the primary key of this message boards ban.
-	*
-	* @return the primary key of this message boards ban
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _mbBan.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _mbBan.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the user ID of this message boards ban.
-	*
-	* @return the user ID of this message boards ban
-	*/
-	@Override
-	public long getUserId() {
-		return _mbBan.getUserId();
 	}
 
 	/**
@@ -287,23 +232,103 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	}
 
 	@Override
-	public int hashCode() {
-		return _mbBan.hashCode();
+	public java.lang.String toString() {
+		return _mbBan.toString();
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _mbBan.isCachedModel();
+	public java.lang.String toXmlString() {
+		return _mbBan.toXmlString();
 	}
 
+	/**
+	* Returns the create date of this message boards ban.
+	*
+	* @return the create date of this message boards ban
+	*/
 	@Override
-	public boolean isEscapedModel() {
-		return _mbBan.isEscapedModel();
+	public Date getCreateDate() {
+		return _mbBan.getCreateDate();
 	}
 
+	/**
+	* Returns the last publish date of this message boards ban.
+	*
+	* @return the last publish date of this message boards ban
+	*/
 	@Override
-	public boolean isNew() {
-		return _mbBan.isNew();
+	public Date getLastPublishDate() {
+		return _mbBan.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this message boards ban.
+	*
+	* @return the modified date of this message boards ban
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _mbBan.getModifiedDate();
+	}
+
+	/**
+	* Returns the ban ID of this message boards ban.
+	*
+	* @return the ban ID of this message boards ban
+	*/
+	@Override
+	public long getBanId() {
+		return _mbBan.getBanId();
+	}
+
+	/**
+	* Returns the ban user ID of this message boards ban.
+	*
+	* @return the ban user ID of this message boards ban
+	*/
+	@Override
+	public long getBanUserId() {
+		return _mbBan.getBanUserId();
+	}
+
+	/**
+	* Returns the company ID of this message boards ban.
+	*
+	* @return the company ID of this message boards ban
+	*/
+	@Override
+	public long getCompanyId() {
+		return _mbBan.getCompanyId();
+	}
+
+	/**
+	* Returns the group ID of this message boards ban.
+	*
+	* @return the group ID of this message boards ban
+	*/
+	@Override
+	public long getGroupId() {
+		return _mbBan.getGroupId();
+	}
+
+	/**
+	* Returns the primary key of this message boards ban.
+	*
+	* @return the primary key of this message boards ban
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _mbBan.getPrimaryKey();
+	}
+
+	/**
+	* Returns the user ID of this message boards ban.
+	*
+	* @return the user ID of this message boards ban
+	*/
+	@Override
+	public long getUserId() {
+		return _mbBan.getUserId();
 	}
 
 	@Override
@@ -367,14 +392,14 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_mbBan.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_mbBan.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_mbBan.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_mbBan.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -470,31 +495,6 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_mbBan.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.message.boards.kernel.model.MBBan> toCacheModel() {
-		return _mbBan.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.message.boards.kernel.model.MBBan toEscapedModel() {
-		return new MBBanWrapper(_mbBan.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _mbBan.toString();
-	}
-
-	@Override
-	public com.liferay.message.boards.kernel.model.MBBan toUnescapedModel() {
-		return new MBBanWrapper(_mbBan.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _mbBan.toXmlString();
 	}
 
 	@Override

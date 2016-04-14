@@ -117,7 +117,76 @@ public interface CalendarNotificationTemplateLocalService
 	public CalendarNotificationTemplate deleteCalendarNotificationTemplate(
 		long calendarNotificationTemplateId) throws PortalException;
 
-	public void deleteCalendarNotificationTemplates(long calendarId);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CalendarNotificationTemplate fetchCalendarNotificationTemplate(
+		long calendarId, NotificationType notificationType,
+		NotificationTemplateType notificationTemplateType);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CalendarNotificationTemplate fetchCalendarNotificationTemplate(
+		long calendarNotificationTemplateId);
+
+	/**
+	* Returns the calendar notification template matching the UUID and group.
+	*
+	* @param uuid the calendar notification template's UUID
+	* @param groupId the primary key of the group
+	* @return the matching calendar notification template, or <code>null</code> if a matching calendar notification template could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CalendarNotificationTemplate fetchCalendarNotificationTemplateByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	/**
+	* Returns the calendar notification template with the primary key.
+	*
+	* @param calendarNotificationTemplateId the primary key of the calendar notification template
+	* @return the calendar notification template
+	* @throws PortalException if a calendar notification template with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CalendarNotificationTemplate getCalendarNotificationTemplate(
+		long calendarNotificationTemplateId) throws PortalException;
+
+	/**
+	* Returns the calendar notification template matching the UUID and group.
+	*
+	* @param uuid the calendar notification template's UUID
+	* @param groupId the primary key of the group
+	* @return the matching calendar notification template
+	* @throws PortalException if a matching calendar notification template could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CalendarNotificationTemplate getCalendarNotificationTemplateByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
+
+	/**
+	* Updates the calendar notification template in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param calendarNotificationTemplate the calendar notification template
+	* @return the calendar notification template that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CalendarNotificationTemplate updateCalendarNotificationTemplate(
+		CalendarNotificationTemplate calendarNotificationTemplate);
+
+	public CalendarNotificationTemplate updateCalendarNotificationTemplate(
+		long calendarNotificationTemplateId,
+		java.lang.String notificationTypeSettings, java.lang.String subject,
+		java.lang.String body, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* @throws PortalException
@@ -126,7 +195,25 @@ public interface CalendarNotificationTemplateLocalService
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the number of calendar notification templates.
+	*
+	* @return the number of calendar notification templates
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCalendarNotificationTemplatesCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -166,70 +253,6 @@ public interface CalendarNotificationTemplateLocalService
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CalendarNotificationTemplate fetchCalendarNotificationTemplate(
-		long calendarId, NotificationType notificationType,
-		NotificationTemplateType notificationTemplateType);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CalendarNotificationTemplate fetchCalendarNotificationTemplate(
-		long calendarNotificationTemplateId);
-
-	/**
-	* Returns the calendar notification template matching the UUID and group.
-	*
-	* @param uuid the calendar notification template's UUID
-	* @param groupId the primary key of the group
-	* @return the matching calendar notification template, or <code>null</code> if a matching calendar notification template could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CalendarNotificationTemplate fetchCalendarNotificationTemplateByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the calendar notification template with the primary key.
-	*
-	* @param calendarNotificationTemplateId the primary key of the calendar notification template
-	* @return the calendar notification template
-	* @throws PortalException if a calendar notification template with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CalendarNotificationTemplate getCalendarNotificationTemplate(
-		long calendarNotificationTemplateId) throws PortalException;
-
-	/**
-	* Returns the calendar notification template matching the UUID and group.
-	*
-	* @param uuid the calendar notification template's UUID
-	* @param groupId the primary key of the group
-	* @return the matching calendar notification template
-	* @throws PortalException if a matching calendar notification template could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CalendarNotificationTemplate getCalendarNotificationTemplateByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the calendar notification templates.
@@ -273,45 +296,22 @@ public interface CalendarNotificationTemplateLocalService
 		OrderByComparator<CalendarNotificationTemplate> orderByComparator);
 
 	/**
-	* Returns the number of calendar notification templates.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of calendar notification templates
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCalendarNotificationTemplatesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Updates the calendar notification template in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param calendarNotificationTemplate the calendar notification template
-	* @return the calendar notification template that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CalendarNotificationTemplate updateCalendarNotificationTemplate(
-		CalendarNotificationTemplate calendarNotificationTemplate);
-
-	public CalendarNotificationTemplate updateCalendarNotificationTemplate(
-		long calendarNotificationTemplateId,
-		java.lang.String notificationTypeSettings, java.lang.String subject,
-		java.lang.String body, ServiceContext serviceContext)
-		throws PortalException;
+	public void deleteCalendarNotificationTemplates(long calendarId);
 }

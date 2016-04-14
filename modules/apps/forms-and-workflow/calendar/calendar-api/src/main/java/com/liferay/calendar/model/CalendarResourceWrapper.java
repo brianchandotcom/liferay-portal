@@ -186,17 +186,6 @@ public class CalendarResourceWrapper implements CalendarResource,
 		}
 	}
 
-	@Override
-	public java.lang.Object clone() {
-		return new CalendarResourceWrapper((CalendarResource)_calendarResource.clone());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.calendar.model.CalendarResource calendarResource) {
-		return _calendarResource.compareTo(calendarResource);
-	}
-
 	/**
 	* Returns the active of this calendar resource.
 	*
@@ -207,24 +196,85 @@ public class CalendarResourceWrapper implements CalendarResource,
 		return _calendarResource.getActive();
 	}
 
-	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _calendarResource.getAvailableLanguageIds();
-	}
-
 	/**
-	* Returns the calendar resource ID of this calendar resource.
+	* Returns <code>true</code> if this calendar resource is active.
 	*
-	* @return the calendar resource ID of this calendar resource
+	* @return <code>true</code> if this calendar resource is active; <code>false</code> otherwise
 	*/
 	@Override
-	public long getCalendarResourceId() {
-		return _calendarResource.getCalendarResourceId();
+	public boolean isActive() {
+		return _calendarResource.isActive();
 	}
 
 	@Override
-	public java.util.List<com.liferay.calendar.model.Calendar> getCalendars() {
-		return _calendarResource.getCalendars();
+	public boolean isCachedModel() {
+		return _calendarResource.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _calendarResource.isEscapedModel();
+	}
+
+	@Override
+	public boolean isGroup() {
+		return _calendarResource.isGroup();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _calendarResource.isNew();
+	}
+
+	@Override
+	public boolean isUser() {
+		return _calendarResource.isUser();
+	}
+
+	@Override
+	public com.liferay.calendar.model.Calendar getDefaultCalendar() {
+		return _calendarResource.getDefaultCalendar();
+	}
+
+	@Override
+	public com.liferay.calendar.model.CalendarResource toEscapedModel() {
+		return new CalendarResourceWrapper(_calendarResource.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.calendar.model.CalendarResource toUnescapedModel() {
+		return new CalendarResourceWrapper(_calendarResource.toUnescapedModel());
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _calendarResource.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.calendar.model.CalendarResource> toCacheModel() {
+		return _calendarResource.toCacheModel();
+	}
+
+	@Override
+	public int compareTo(
+		com.liferay.calendar.model.CalendarResource calendarResource) {
+		return _calendarResource.compareTo(calendarResource);
+	}
+
+	@Override
+	public int hashCode() {
+		return _calendarResource.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _calendarResource.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new CalendarResourceWrapper((CalendarResource)_calendarResource.clone());
 	}
 
 	/**
@@ -235,26 +285,6 @@ public class CalendarResourceWrapper implements CalendarResource,
 	@Override
 	public java.lang.String getClassName() {
 		return _calendarResource.getClassName();
-	}
-
-	/**
-	* Returns the class name ID of this calendar resource.
-	*
-	* @return the class name ID of this calendar resource
-	*/
-	@Override
-	public long getClassNameId() {
-		return _calendarResource.getClassNameId();
-	}
-
-	/**
-	* Returns the class p k of this calendar resource.
-	*
-	* @return the class p k of this calendar resource
-	*/
-	@Override
-	public long getClassPK() {
-		return _calendarResource.getClassPK();
 	}
 
 	/**
@@ -275,36 +305,6 @@ public class CalendarResourceWrapper implements CalendarResource,
 	@Override
 	public java.lang.String getCode() {
 		return _calendarResource.getCode();
-	}
-
-	/**
-	* Returns the company ID of this calendar resource.
-	*
-	* @return the company ID of this calendar resource
-	*/
-	@Override
-	public long getCompanyId() {
-		return _calendarResource.getCompanyId();
-	}
-
-	/**
-	* Returns the create date of this calendar resource.
-	*
-	* @return the create date of this calendar resource
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _calendarResource.getCreateDate();
-	}
-
-	@Override
-	public com.liferay.calendar.model.Calendar getDefaultCalendar() {
-		return _calendarResource.getDefaultCalendar();
-	}
-
-	@Override
-	public long getDefaultCalendarId() {
-		return _calendarResource.getDefaultCalendarId();
 	}
 
 	@Override
@@ -381,51 +381,6 @@ public class CalendarResourceWrapper implements CalendarResource,
 	}
 
 	/**
-	* Returns a map of the locales and localized descriptions of this calendar resource.
-	*
-	* @return the locales and localized descriptions of this calendar resource
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _calendarResource.getDescriptionMap();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _calendarResource.getExpandoBridge();
-	}
-
-	/**
-	* Returns the group ID of this calendar resource.
-	*
-	* @return the group ID of this calendar resource
-	*/
-	@Override
-	public long getGroupId() {
-		return _calendarResource.getGroupId();
-	}
-
-	/**
-	* Returns the last publish date of this calendar resource.
-	*
-	* @return the last publish date of this calendar resource
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _calendarResource.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this calendar resource.
-	*
-	* @return the modified date of this calendar resource
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _calendarResource.getModifiedDate();
-	}
-
-	/**
 	* Returns the name of this calendar resource.
 	*
 	* @return the name of this calendar resource
@@ -492,61 +447,10 @@ public class CalendarResourceWrapper implements CalendarResource,
 		return _calendarResource.getNameCurrentValue();
 	}
 
-	/**
-	* Returns a map of the locales and localized names of this calendar resource.
-	*
-	* @return the locales and localized names of this calendar resource
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getNameMap() {
-		return _calendarResource.getNameMap();
-	}
-
-	/**
-	* Returns the primary key of this calendar resource.
-	*
-	* @return the primary key of this calendar resource
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _calendarResource.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _calendarResource.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the resource block ID of this calendar resource.
-	*
-	* @return the resource block ID of this calendar resource
-	*/
-	@Override
-	public long getResourceBlockId() {
-		return _calendarResource.getResourceBlockId();
-	}
-
-	@Override
-	public java.util.TimeZone getTimeZone()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _calendarResource.getTimeZone();
-	}
-
 	@Override
 	public java.lang.String getTimeZoneId()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarResource.getTimeZoneId();
-	}
-
-	/**
-	* Returns the user ID of this calendar resource.
-	*
-	* @return the user ID of this calendar resource
-	*/
-	@Override
-	public long getUserId() {
-		return _calendarResource.getUserId();
 	}
 
 	/**
@@ -580,43 +484,164 @@ public class CalendarResourceWrapper implements CalendarResource,
 	}
 
 	@Override
-	public int hashCode() {
-		return _calendarResource.hashCode();
+	public java.lang.String toString() {
+		return _calendarResource.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _calendarResource.toXmlString();
+	}
+
+	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _calendarResource.getAvailableLanguageIds();
 	}
 
 	/**
-	* Returns <code>true</code> if this calendar resource is active.
+	* Returns the create date of this calendar resource.
 	*
-	* @return <code>true</code> if this calendar resource is active; <code>false</code> otherwise
+	* @return the create date of this calendar resource
 	*/
 	@Override
-	public boolean isActive() {
-		return _calendarResource.isActive();
+	public Date getCreateDate() {
+		return _calendarResource.getCreateDate();
+	}
+
+	/**
+	* Returns the last publish date of this calendar resource.
+	*
+	* @return the last publish date of this calendar resource
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _calendarResource.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this calendar resource.
+	*
+	* @return the modified date of this calendar resource
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _calendarResource.getModifiedDate();
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _calendarResource.isCachedModel();
+	public java.util.List<com.liferay.calendar.model.Calendar> getCalendars() {
+		return _calendarResource.getCalendars();
+	}
+
+	/**
+	* Returns a map of the locales and localized descriptions of this calendar resource.
+	*
+	* @return the locales and localized descriptions of this calendar resource
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _calendarResource.getDescriptionMap();
+	}
+
+	/**
+	* Returns a map of the locales and localized names of this calendar resource.
+	*
+	* @return the locales and localized names of this calendar resource
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getNameMap() {
+		return _calendarResource.getNameMap();
 	}
 
 	@Override
-	public boolean isEscapedModel() {
-		return _calendarResource.isEscapedModel();
+	public java.util.TimeZone getTimeZone()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _calendarResource.getTimeZone();
+	}
+
+	/**
+	* Returns the calendar resource ID of this calendar resource.
+	*
+	* @return the calendar resource ID of this calendar resource
+	*/
+	@Override
+	public long getCalendarResourceId() {
+		return _calendarResource.getCalendarResourceId();
+	}
+
+	/**
+	* Returns the class name ID of this calendar resource.
+	*
+	* @return the class name ID of this calendar resource
+	*/
+	@Override
+	public long getClassNameId() {
+		return _calendarResource.getClassNameId();
+	}
+
+	/**
+	* Returns the class p k of this calendar resource.
+	*
+	* @return the class p k of this calendar resource
+	*/
+	@Override
+	public long getClassPK() {
+		return _calendarResource.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this calendar resource.
+	*
+	* @return the company ID of this calendar resource
+	*/
+	@Override
+	public long getCompanyId() {
+		return _calendarResource.getCompanyId();
 	}
 
 	@Override
-	public boolean isGroup() {
-		return _calendarResource.isGroup();
+	public long getDefaultCalendarId() {
+		return _calendarResource.getDefaultCalendarId();
 	}
 
+	/**
+	* Returns the group ID of this calendar resource.
+	*
+	* @return the group ID of this calendar resource
+	*/
 	@Override
-	public boolean isNew() {
-		return _calendarResource.isNew();
+	public long getGroupId() {
+		return _calendarResource.getGroupId();
 	}
 
+	/**
+	* Returns the primary key of this calendar resource.
+	*
+	* @return the primary key of this calendar resource
+	*/
 	@Override
-	public boolean isUser() {
-		return _calendarResource.isUser();
+	public long getPrimaryKey() {
+		return _calendarResource.getPrimaryKey();
+	}
+
+	/**
+	* Returns the resource block ID of this calendar resource.
+	*
+	* @return the resource block ID of this calendar resource
+	*/
+	@Override
+	public long getResourceBlockId() {
+		return _calendarResource.getResourceBlockId();
+	}
+
+	/**
+	* Returns the user ID of this calendar resource.
+	*
+	* @return the user ID of this calendar resource
+	*/
+	@Override
+	public long getUserId() {
+		return _calendarResource.getUserId();
 	}
 
 	@Override
@@ -792,14 +817,14 @@ public class CalendarResourceWrapper implements CalendarResource,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_calendarResource.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_calendarResource.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_calendarResource.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_calendarResource.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -966,31 +991,6 @@ public class CalendarResourceWrapper implements CalendarResource,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_calendarResource.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.calendar.model.CalendarResource> toCacheModel() {
-		return _calendarResource.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.calendar.model.CalendarResource toEscapedModel() {
-		return new CalendarResourceWrapper(_calendarResource.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _calendarResource.toString();
-	}
-
-	@Override
-	public com.liferay.calendar.model.CalendarResource toUnescapedModel() {
-		return new CalendarResourceWrapper(_calendarResource.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _calendarResource.toXmlString();
 	}
 
 	@Override

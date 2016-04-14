@@ -48,6 +48,14 @@ public interface ResourceBlockService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ResourceBlockServiceUtil} to access the resource block remote service. Add custom service methods to {@link com.liferay.portal.service.impl.ResourceBlockServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
 	public void addCompanyScopePermission(long scopeGroupId, long companyId,
 		java.lang.String name, long roleId, java.lang.String actionId)
 		throws PortalException;
@@ -59,13 +67,6 @@ public interface ResourceBlockService extends BaseService {
 	public void addIndividualScopePermission(long companyId, long groupId,
 		java.lang.String name, long primKey, long roleId,
 		java.lang.String actionId) throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
 
 	public void removeAllGroupScopePermissions(long scopeGroupId,
 		long companyId, java.lang.String name, long roleId,
@@ -92,11 +93,11 @@ public interface ResourceBlockService extends BaseService {
 		List<java.lang.String> actionIds) throws PortalException;
 
 	public void setIndividualScopePermissions(long companyId, long groupId,
-		java.lang.String name, long primKey, long roleId,
-		List<java.lang.String> actionIds) throws PortalException;
-
-	public void setIndividualScopePermissions(long companyId, long groupId,
 		java.lang.String name, long primKey,
 		Map<java.lang.Long, java.lang.String[]> roleIdsToActionIds)
 		throws PortalException;
+
+	public void setIndividualScopePermissions(long companyId, long groupId,
+		java.lang.String name, long primKey, long roleId,
+		List<java.lang.String> actionIds) throws PortalException;
 }

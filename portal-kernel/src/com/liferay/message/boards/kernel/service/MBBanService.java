@@ -52,13 +52,13 @@ public interface MBBanService extends BaseService {
 	public MBBan addBan(long banUserId, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteBan(long banUserId, ServiceContext serviceContext)
-		throws PortalException;
-
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public void deleteBan(long banUserId, ServiceContext serviceContext)
+		throws PortalException;
 }

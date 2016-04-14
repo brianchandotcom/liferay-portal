@@ -124,17 +124,6 @@ public class DDLRecordServiceUtil {
 	}
 
 	/**
-	* Deletes the record and its resources.
-	*
-	* @param recordId the primary key of the record to be deleted
-	* @throws PortalException
-	*/
-	public static void deleteRecord(long recordId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRecord(recordId);
-	}
-
-	/**
 	* Disassociates the locale from the record.
 	*
 	* @param recordId the primary key of the record
@@ -155,15 +144,6 @@ public class DDLRecordServiceUtil {
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	/**
 	* Returns the record with the ID.
 	*
 	* @param recordId the primary key of the record
@@ -174,62 +154,6 @@ public class DDLRecordServiceUtil {
 		long recordId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRecord(recordId);
-	}
-
-	/**
-	* Reverts the record to a given version.
-	*
-	* @param recordId the primary key of the record
-	* @param version the version to be reverted
-	* @param serviceContext the service context to be applied. This can set
-	the record modified date.
-	* @throws PortalException if a portal exception occurred
-	*/
-	public static void revertRecord(long recordId, java.lang.String version,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().revertRecord(recordId, version, serviceContext);
-	}
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link #revertRecord(long, String,
-	ServiceContext)}
-	*/
-	@Deprecated
-	public static void revertRecordVersion(long recordId,
-		java.lang.String version,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().revertRecordVersion(recordId, version, serviceContext);
-	}
-
-	/**
-	* Updates a record, replacing its display index and values.
-	*
-	* @param recordId the primary key of the record
-	* @param displayIndex the index position in which the record is
-	displayed in the spreadsheet view
-	* @param fieldsMap the record values. The fieldsMap is a map of field
-	names and its Serializable values.
-	* @param mergeFields whether to merge the new fields with the existing
-	ones; otherwise replace the existing fields
-	* @param serviceContext the service context to be applied. This can
-	set the record modified date.
-	* @return the record
-	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
-	int, DDMFormValues, ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
-		long recordId, int displayIndex,
-		java.util.Map<java.lang.String, java.io.Serializable> fieldsMap,
-		boolean mergeFields,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateRecord(recordId, displayIndex, fieldsMap,
-			mergeFields, serviceContext);
 	}
 
 	/**
@@ -286,6 +210,82 @@ public class DDLRecordServiceUtil {
 		return getService()
 				   .updateRecord(recordId, majorVersion, displayIndex, fields,
 			mergeFields, serviceContext);
+	}
+
+	/**
+	* Updates a record, replacing its display index and values.
+	*
+	* @param recordId the primary key of the record
+	* @param displayIndex the index position in which the record is
+	displayed in the spreadsheet view
+	* @param fieldsMap the record values. The fieldsMap is a map of field
+	names and its Serializable values.
+	* @param mergeFields whether to merge the new fields with the existing
+	ones; otherwise replace the existing fields
+	* @param serviceContext the service context to be applied. This can
+	set the record modified date.
+	* @return the record
+	* @throws PortalException if a portal exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #updateRecord(long, boolean,
+	int, DDMFormValues, ServiceContext)}
+	*/
+	@Deprecated
+	public static com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
+		long recordId, int displayIndex,
+		java.util.Map<java.lang.String, java.io.Serializable> fieldsMap,
+		boolean mergeFields,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateRecord(recordId, displayIndex, fieldsMap,
+			mergeFields, serviceContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	/**
+	* Deletes the record and its resources.
+	*
+	* @param recordId the primary key of the record to be deleted
+	* @throws PortalException
+	*/
+	public static void deleteRecord(long recordId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRecord(recordId);
+	}
+
+	/**
+	* Reverts the record to a given version.
+	*
+	* @param recordId the primary key of the record
+	* @param version the version to be reverted
+	* @param serviceContext the service context to be applied. This can set
+	the record modified date.
+	* @throws PortalException if a portal exception occurred
+	*/
+	public static void revertRecord(long recordId, java.lang.String version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().revertRecord(recordId, version, serviceContext);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #revertRecord(long, String,
+	ServiceContext)}
+	*/
+	@Deprecated
+	public static void revertRecordVersion(long recordId,
+		java.lang.String version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().revertRecordVersion(recordId, version, serviceContext);
 	}
 
 	public static DDLRecordService getService() {

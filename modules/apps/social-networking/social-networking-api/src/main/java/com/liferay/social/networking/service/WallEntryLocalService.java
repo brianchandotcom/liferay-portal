@@ -61,8 +61,24 @@ public interface WallEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link WallEntryLocalServiceUtil} to access the wall entry local service. Add custom service methods to {@link com.liferay.social.networking.service.impl.WallEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public WallEntry addWallEntry(long groupId, long userId,
-		java.lang.String comments, ThemeDisplay themeDisplay)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
 	/**
@@ -74,6 +90,10 @@ public interface WallEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public WallEntry addWallEntry(WallEntry wallEntry);
 
+	public WallEntry addWallEntry(long groupId, long userId,
+		java.lang.String comments, ThemeDisplay themeDisplay)
+		throws PortalException;
+
 	/**
 	* Creates a new wall entry with the primary key. Does not add the wall entry to the database.
 	*
@@ -81,15 +101,6 @@ public interface WallEntryLocalService extends BaseLocalService,
 	* @return the new wall entry
 	*/
 	public WallEntry createWallEntry(long wallEntryId);
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	public void deleteWallEntries(long groupId) throws PortalException;
 
 	/**
 	* Deletes the wall entry from the database. Also notifies the appropriate model listeners.
@@ -113,7 +124,52 @@ public interface WallEntryLocalService extends BaseLocalService,
 	public WallEntry deleteWallEntry(long wallEntryId)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WallEntry fetchWallEntry(long wallEntryId);
+
+	/**
+	* Returns the wall entry with the primary key.
+	*
+	* @param wallEntryId the primary key of the wall entry
+	* @return the wall entry
+	* @throws PortalException if a wall entry with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WallEntry getWallEntry(long wallEntryId) throws PortalException;
+
+	/**
+	* Updates the wall entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param wallEntry the wall entry
+	* @return the wall entry that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public WallEntry updateWallEntry(WallEntry wallEntry);
+
+	public WallEntry updateWallEntry(long wallEntryId, java.lang.String comments)
+		throws PortalException;
+
+	/**
+	* Returns the number of wall entries.
+	*
+	* @return the number of wall entries
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getWallEntriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getWallEntriesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getWallToWallEntriesCount(long groupId1, long groupId2,
+		long userId1, long userId2);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -155,6 +211,27 @@ public interface WallEntryLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns a range of all the wall entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of wall entries
+	* @param end the upper bound of the range of wall entries (not inclusive)
+	* @return the range of wall entries
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WallEntry> getWallEntries(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WallEntry> getWallEntries(long groupId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WallEntry> getWallToWallEntries(long groupId1, long groupId2,
+		long userId1, long userId2, int start, int end);
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -172,82 +249,5 @@ public interface WallEntryLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WallEntry fetchWallEntry(long wallEntryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<WallEntry> getWallEntries(long groupId, int start, int end);
-
-	/**
-	* Returns a range of all the wall entries.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of wall entries
-	* @param end the upper bound of the range of wall entries (not inclusive)
-	* @return the range of wall entries
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<WallEntry> getWallEntries(int start, int end);
-
-	/**
-	* Returns the number of wall entries.
-	*
-	* @return the number of wall entries
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getWallEntriesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getWallEntriesCount(long groupId);
-
-	/**
-	* Returns the wall entry with the primary key.
-	*
-	* @param wallEntryId the primary key of the wall entry
-	* @return the wall entry
-	* @throws PortalException if a wall entry with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public WallEntry getWallEntry(long wallEntryId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<WallEntry> getWallToWallEntries(long groupId1, long groupId2,
-		long userId1, long userId2, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getWallToWallEntriesCount(long groupId1, long groupId2,
-		long userId1, long userId2);
-
-	/**
-	* Updates the wall entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param wallEntry the wall entry
-	* @return the wall entry that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public WallEntry updateWallEntry(WallEntry wallEntry);
-
-	public WallEntry updateWallEntry(long wallEntryId, java.lang.String comments)
-		throws PortalException;
+	public void deleteWallEntries(long groupId) throws PortalException;
 }

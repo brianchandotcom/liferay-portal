@@ -57,6 +57,16 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MembershipRequestLocalServiceUtil} to access the membership request local service. Add custom service methods to {@link com.liferay.portal.service.impl.MembershipRequestLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasMembershipRequest(long userId, long groupId, long statusId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Adds the membership request to the database. Also notifies the appropriate model listeners.
@@ -102,11 +112,29 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	public MembershipRequest deleteMembershipRequest(long membershipRequestId)
 		throws PortalException;
 
-	public void deleteMembershipRequests(long groupId);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MembershipRequest fetchMembershipRequest(long membershipRequestId);
 
-	public void deleteMembershipRequests(long groupId, long statusId);
+	/**
+	* Returns the membership request with the primary key.
+	*
+	* @param membershipRequestId the primary key of the membership request
+	* @return the membership request
+	* @throws PortalException if a membership request with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MembershipRequest getMembershipRequest(long membershipRequestId)
+		throws PortalException;
 
-	public void deleteMembershipRequestsByUserId(long userId);
+	/**
+	* Updates the membership request in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param membershipRequest the membership request
+	* @return the membership request that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public MembershipRequest updateMembershipRequest(
+		MembershipRequest membershipRequest);
 
 	/**
 	* @throws PortalException
@@ -115,7 +143,28 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the number of membership requests.
+	*
+	* @return the number of membership requests
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMembershipRequestsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long groupId, int status);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -157,44 +206,6 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MembershipRequest fetchMembershipRequest(long membershipRequestId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the membership request with the primary key.
-	*
-	* @param membershipRequestId the primary key of the membership request
-	* @return the membership request
-	* @throws PortalException if a membership request with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MembershipRequest getMembershipRequest(long membershipRequestId)
-		throws PortalException;
-
-	/**
 	* Returns a range of all the membership requests.
 	*
 	* <p>
@@ -212,29 +223,6 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	public List<MembershipRequest> getMembershipRequests(long userId,
 		long groupId, long statusId);
 
-	/**
-	* Returns the number of membership requests.
-	*
-	* @return the number of membership requests
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMembershipRequestsCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasMembershipRequest(long userId, long groupId, long statusId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MembershipRequest> search(long groupId, int status, int start,
 		int end);
@@ -243,18 +231,29 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 	public List<MembershipRequest> search(long groupId, int status, int start,
 		int end, OrderByComparator<MembershipRequest> obc);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long groupId, int status);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Updates the membership request in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param membershipRequest the membership request
-	* @return the membership request that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public MembershipRequest updateMembershipRequest(
-		MembershipRequest membershipRequest);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	public void deleteMembershipRequests(long groupId);
+
+	public void deleteMembershipRequests(long groupId, long statusId);
+
+	public void deleteMembershipRequestsByUserId(long userId);
 
 	public void updateStatus(long replierUserId, long membershipRequestId,
 		java.lang.String replyComments, long statusId, boolean addUserToGroup,

@@ -162,68 +162,6 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 		}
 	}
 
-	@Override
-	public java.lang.Object clone() {
-		return new KaleoNodeWrapper((KaleoNode)_kaleoNode.clone());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.workflow.kaleo.model.KaleoNode kaleoNode) {
-		return _kaleoNode.compareTo(kaleoNode);
-	}
-
-	/**
-	* Returns the company ID of this kaleo node.
-	*
-	* @return the company ID of this kaleo node
-	*/
-	@Override
-	public long getCompanyId() {
-		return _kaleoNode.getCompanyId();
-	}
-
-	/**
-	* Returns the create date of this kaleo node.
-	*
-	* @return the create date of this kaleo node
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _kaleoNode.getCreateDate();
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTransition getDefaultKaleoTransition()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoNode.getDefaultKaleoTransition();
-	}
-
-	/**
-	* Returns the description of this kaleo node.
-	*
-	* @return the description of this kaleo node
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _kaleoNode.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _kaleoNode.getExpandoBridge();
-	}
-
-	/**
-	* Returns the group ID of this kaleo node.
-	*
-	* @return the group ID of this kaleo node
-	*/
-	@Override
-	public long getGroupId() {
-		return _kaleoNode.getGroupId();
-	}
-
 	/**
 	* Returns the initial of this kaleo node.
 	*
@@ -232,83 +170,6 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	@Override
 	public boolean getInitial() {
 		return _kaleoNode.getInitial();
-	}
-
-	/**
-	* Returns the kaleo definition ID of this kaleo node.
-	*
-	* @return the kaleo definition ID of this kaleo node
-	*/
-	@Override
-	public long getKaleoDefinitionId() {
-		return _kaleoNode.getKaleoDefinitionId();
-	}
-
-	/**
-	* Returns the kaleo node ID of this kaleo node.
-	*
-	* @return the kaleo node ID of this kaleo node
-	*/
-	@Override
-	public long getKaleoNodeId() {
-		return _kaleoNode.getKaleoNodeId();
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTransition getKaleoTransition(
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoNode.getKaleoTransition(name);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTransition> getKaleoTransitions() {
-		return _kaleoNode.getKaleoTransitions();
-	}
-
-	/**
-	* Returns the metadata of this kaleo node.
-	*
-	* @return the metadata of this kaleo node
-	*/
-	@Override
-	public java.lang.String getMetadata() {
-		return _kaleoNode.getMetadata();
-	}
-
-	/**
-	* Returns the modified date of this kaleo node.
-	*
-	* @return the modified date of this kaleo node
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _kaleoNode.getModifiedDate();
-	}
-
-	/**
-	* Returns the name of this kaleo node.
-	*
-	* @return the name of this kaleo node
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _kaleoNode.getName();
-	}
-
-	/**
-	* Returns the primary key of this kaleo node.
-	*
-	* @return the primary key of this kaleo node
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _kaleoNode.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _kaleoNode.getPrimaryKeyObj();
 	}
 
 	/**
@@ -321,54 +182,9 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 		return _kaleoNode.getTerminal();
 	}
 
-	/**
-	* Returns the type of this kaleo node.
-	*
-	* @return the type of this kaleo node
-	*/
-	@Override
-	public java.lang.String getType() {
-		return _kaleoNode.getType();
-	}
-
-	/**
-	* Returns the user ID of this kaleo node.
-	*
-	* @return the user ID of this kaleo node
-	*/
-	@Override
-	public long getUserId() {
-		return _kaleoNode.getUserId();
-	}
-
-	/**
-	* Returns the user name of this kaleo node.
-	*
-	* @return the user name of this kaleo node
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _kaleoNode.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this kaleo node.
-	*
-	* @return the user uuid of this kaleo node
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _kaleoNode.getUserUuid();
-	}
-
 	@Override
 	public boolean hasKaleoTransition() {
 		return _kaleoNode.hasKaleoTransition();
-	}
-
-	@Override
-	public int hashCode() {
-		return _kaleoNode.hashCode();
 	}
 
 	@Override
@@ -404,6 +220,215 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	@Override
 	public boolean isTerminal() {
 		return _kaleoNode.isTerminal();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _kaleoNode.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.workflow.kaleo.model.KaleoNode> toCacheModel() {
+		return _kaleoNode.toCacheModel();
+	}
+
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoNode toEscapedModel() {
+		return new KaleoNodeWrapper(_kaleoNode.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoNode toUnescapedModel() {
+		return new KaleoNodeWrapper(_kaleoNode.toUnescapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoTransition getDefaultKaleoTransition()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoNode.getDefaultKaleoTransition();
+	}
+
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoTransition getKaleoTransition(
+		java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoNode.getKaleoTransition(name);
+	}
+
+	@Override
+	public int compareTo(
+		com.liferay.portal.workflow.kaleo.model.KaleoNode kaleoNode) {
+		return _kaleoNode.compareTo(kaleoNode);
+	}
+
+	@Override
+	public int hashCode() {
+		return _kaleoNode.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _kaleoNode.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new KaleoNodeWrapper((KaleoNode)_kaleoNode.clone());
+	}
+
+	/**
+	* Returns the description of this kaleo node.
+	*
+	* @return the description of this kaleo node
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _kaleoNode.getDescription();
+	}
+
+	/**
+	* Returns the metadata of this kaleo node.
+	*
+	* @return the metadata of this kaleo node
+	*/
+	@Override
+	public java.lang.String getMetadata() {
+		return _kaleoNode.getMetadata();
+	}
+
+	/**
+	* Returns the name of this kaleo node.
+	*
+	* @return the name of this kaleo node
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _kaleoNode.getName();
+	}
+
+	/**
+	* Returns the type of this kaleo node.
+	*
+	* @return the type of this kaleo node
+	*/
+	@Override
+	public java.lang.String getType() {
+		return _kaleoNode.getType();
+	}
+
+	/**
+	* Returns the user name of this kaleo node.
+	*
+	* @return the user name of this kaleo node
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _kaleoNode.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this kaleo node.
+	*
+	* @return the user uuid of this kaleo node
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _kaleoNode.getUserUuid();
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _kaleoNode.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _kaleoNode.toXmlString();
+	}
+
+	/**
+	* Returns the create date of this kaleo node.
+	*
+	* @return the create date of this kaleo node
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _kaleoNode.getCreateDate();
+	}
+
+	/**
+	* Returns the modified date of this kaleo node.
+	*
+	* @return the modified date of this kaleo node
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _kaleoNode.getModifiedDate();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTransition> getKaleoTransitions() {
+		return _kaleoNode.getKaleoTransitions();
+	}
+
+	/**
+	* Returns the company ID of this kaleo node.
+	*
+	* @return the company ID of this kaleo node
+	*/
+	@Override
+	public long getCompanyId() {
+		return _kaleoNode.getCompanyId();
+	}
+
+	/**
+	* Returns the group ID of this kaleo node.
+	*
+	* @return the group ID of this kaleo node
+	*/
+	@Override
+	public long getGroupId() {
+		return _kaleoNode.getGroupId();
+	}
+
+	/**
+	* Returns the kaleo definition ID of this kaleo node.
+	*
+	* @return the kaleo definition ID of this kaleo node
+	*/
+	@Override
+	public long getKaleoDefinitionId() {
+		return _kaleoNode.getKaleoDefinitionId();
+	}
+
+	/**
+	* Returns the kaleo node ID of this kaleo node.
+	*
+	* @return the kaleo node ID of this kaleo node
+	*/
+	@Override
+	public long getKaleoNodeId() {
+		return _kaleoNode.getKaleoNodeId();
+	}
+
+	/**
+	* Returns the primary key of this kaleo node.
+	*
+	* @return the primary key of this kaleo node
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _kaleoNode.getPrimaryKey();
+	}
+
+	/**
+	* Returns the user ID of this kaleo node.
+	*
+	* @return the user ID of this kaleo node
+	*/
+	@Override
+	public long getUserId() {
+		return _kaleoNode.getUserId();
 	}
 
 	@Override
@@ -447,14 +472,14 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_kaleoNode.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_kaleoNode.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_kaleoNode.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_kaleoNode.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -600,31 +625,6 @@ public class KaleoNodeWrapper implements KaleoNode, ModelWrapper<KaleoNode> {
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_kaleoNode.setUserUuid(userUuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.workflow.kaleo.model.KaleoNode> toCacheModel() {
-		return _kaleoNode.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoNode toEscapedModel() {
-		return new KaleoNodeWrapper(_kaleoNode.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _kaleoNode.toString();
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoNode toUnescapedModel() {
-		return new KaleoNodeWrapper(_kaleoNode.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _kaleoNode.toXmlString();
 	}
 
 	@Override

@@ -63,14 +63,31 @@ public interface WikiNodeService extends BaseService {
 		java.lang.String description, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteNode(long nodeId) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiNode getNode(long groupId, java.lang.String name)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiNode getNode(long nodeId) throws PortalException;
+
+	public WikiNode moveNodeToTrash(long nodeId) throws PortalException;
+
+	public WikiNode updateNode(long nodeId, java.lang.String name,
+		java.lang.String description, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getNodesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getNodesCount(long groupId, int status);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<WikiNode> getNodes(long groupId) throws PortalException;
@@ -89,33 +106,16 @@ public interface WikiNodeService extends BaseService {
 	public List<WikiNode> getNodes(long groupId, int status, int start,
 		int end, OrderByComparator<WikiNode> obc);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getNodesCount(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getNodesCount(long groupId, int status);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public void deleteNode(long nodeId) throws PortalException;
 
 	public void importPages(long nodeId, java.lang.String importer,
 		InputStream[] inputStreams,
 		Map<java.lang.String, java.lang.String[]> options)
 		throws PortalException;
 
-	public WikiNode moveNodeToTrash(long nodeId) throws PortalException;
-
 	public void restoreNodeFromTrash(long nodeId) throws PortalException;
 
 	public void subscribeNode(long nodeId) throws PortalException;
 
 	public void unsubscribeNode(long nodeId) throws PortalException;
-
-	public WikiNode updateNode(long nodeId, java.lang.String name,
-		java.lang.String description, ServiceContext serviceContext)
-		throws PortalException;
 }

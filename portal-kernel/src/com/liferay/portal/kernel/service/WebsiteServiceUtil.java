@@ -50,9 +50,16 @@ public class WebsiteServiceUtil {
 			serviceContext);
 	}
 
-	public static void deleteWebsite(long websiteId)
+	public static com.liferay.portal.kernel.model.Website getWebsite(
+		long websiteId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteWebsite(websiteId);
+		return getService().getWebsite(websiteId);
+	}
+
+	public static com.liferay.portal.kernel.model.Website updateWebsite(
+		long websiteId, java.lang.String url, long typeId, boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateWebsite(websiteId, url, typeId, primary);
 	}
 
 	/**
@@ -64,22 +71,15 @@ public class WebsiteServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.kernel.model.Website getWebsite(
-		long websiteId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getWebsite(websiteId);
-	}
-
 	public static java.util.List<com.liferay.portal.kernel.model.Website> getWebsites(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getWebsites(className, classPK);
 	}
 
-	public static com.liferay.portal.kernel.model.Website updateWebsite(
-		long websiteId, java.lang.String url, long typeId, boolean primary)
+	public static void deleteWebsite(long websiteId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateWebsite(websiteId, url, typeId, primary);
+		getService().deleteWebsite(websiteId);
 	}
 
 	public static WebsiteService getService() {

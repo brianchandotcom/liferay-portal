@@ -32,37 +32,6 @@ public class StagingServiceWrapper implements StagingService,
 		_stagingService = stagingService;
 	}
 
-	@Override
-	public void cleanUpStagingRequest(long stagingRequestId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_stagingService.cleanUpStagingRequest(stagingRequestId);
-	}
-
-	@Override
-	public long createStagingRequest(long groupId, java.lang.String checksum)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _stagingService.createStagingRequest(groupId, checksum);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _stagingService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.exportimport.kernel.lar.MissingReferences publishStagingRequest(
-		long stagingRequestId,
-		com.liferay.exportimport.kernel.model.ExportImportConfiguration exportImportConfiguration)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _stagingService.publishStagingRequest(stagingRequestId,
-			exportImportConfiguration);
-	}
-
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
@@ -77,10 +46,12 @@ public class StagingServiceWrapper implements StagingService,
 	}
 
 	@Override
-	public void updateStagingRequest(long stagingRequestId,
-		java.lang.String fileName, byte[] bytes)
+	public com.liferay.exportimport.kernel.lar.MissingReferences publishStagingRequest(
+		long stagingRequestId,
+		com.liferay.exportimport.kernel.model.ExportImportConfiguration exportImportConfiguration)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_stagingService.updateStagingRequest(stagingRequestId, fileName, bytes);
+		return _stagingService.publishStagingRequest(stagingRequestId,
+			exportImportConfiguration);
 	}
 
 	/**
@@ -95,6 +66,35 @@ public class StagingServiceWrapper implements StagingService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _stagingService.validateStagingRequest(stagingRequestId,
 			privateLayout, parameterMap);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _stagingService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public long createStagingRequest(long groupId, java.lang.String checksum)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _stagingService.createStagingRequest(groupId, checksum);
+	}
+
+	@Override
+	public void cleanUpStagingRequest(long stagingRequestId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_stagingService.cleanUpStagingRequest(stagingRequestId);
+	}
+
+	@Override
+	public void updateStagingRequest(long stagingRequestId,
+		java.lang.String fileName, byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_stagingService.updateStagingRequest(stagingRequestId, fileName, bytes);
 	}
 
 	@Override

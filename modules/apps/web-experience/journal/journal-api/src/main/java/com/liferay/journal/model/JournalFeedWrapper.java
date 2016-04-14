@@ -231,8 +231,48 @@ public class JournalFeedWrapper implements JournalFeed,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new JournalFeedWrapper((JournalFeed)_journalFeed.clone());
+	public boolean isCachedModel() {
+		return _journalFeed.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _journalFeed.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _journalFeed.isNew();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _journalFeed.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.journal.model.JournalFeed toEscapedModel() {
+		return new JournalFeedWrapper(_journalFeed.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.journal.model.JournalFeed toUnescapedModel() {
+		return new JournalFeedWrapper(_journalFeed.toUnescapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.journal.model.JournalFeed> toCacheModel() {
+		return _journalFeed.toCacheModel();
+	}
+
+	/**
+	* Returns the feed version of this journal feed.
+	*
+	* @return the feed version of this journal feed
+	*/
+	@Override
+	public double getFeedVersion() {
+		return _journalFeed.getFeedVersion();
 	}
 
 	@Override
@@ -241,13 +281,28 @@ public class JournalFeedWrapper implements JournalFeed,
 	}
 
 	/**
-	* Returns the company ID of this journal feed.
+	* Returns the delta of this journal feed.
 	*
-	* @return the company ID of this journal feed
+	* @return the delta of this journal feed
 	*/
 	@Override
-	public long getCompanyId() {
-		return _journalFeed.getCompanyId();
+	public int getDelta() {
+		return _journalFeed.getDelta();
+	}
+
+	@Override
+	public int hashCode() {
+		return _journalFeed.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _journalFeed.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new JournalFeedWrapper((JournalFeed)_journalFeed.clone());
 	}
 
 	/**
@@ -258,16 +313,6 @@ public class JournalFeedWrapper implements JournalFeed,
 	@Override
 	public java.lang.String getContentField() {
 		return _journalFeed.getContentField();
-	}
-
-	/**
-	* Returns the create date of this journal feed.
-	*
-	* @return the create date of this journal feed
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _journalFeed.getCreateDate();
 	}
 
 	/**
@@ -301,16 +346,6 @@ public class JournalFeedWrapper implements JournalFeed,
 	}
 
 	/**
-	* Returns the delta of this journal feed.
-	*
-	* @return the delta of this journal feed
-	*/
-	@Override
-	public int getDelta() {
-		return _journalFeed.getDelta();
-	}
-
-	/**
 	* Returns the description of this journal feed.
 	*
 	* @return the description of this journal feed
@@ -318,11 +353,6 @@ public class JournalFeedWrapper implements JournalFeed,
 	@Override
 	public java.lang.String getDescription() {
 		return _journalFeed.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _journalFeed.getExpandoBridge();
 	}
 
 	/**
@@ -343,56 +373,6 @@ public class JournalFeedWrapper implements JournalFeed,
 	@Override
 	public java.lang.String getFeedId() {
 		return _journalFeed.getFeedId();
-	}
-
-	/**
-	* Returns the feed version of this journal feed.
-	*
-	* @return the feed version of this journal feed
-	*/
-	@Override
-	public double getFeedVersion() {
-		return _journalFeed.getFeedVersion();
-	}
-
-	/**
-	* Returns the group ID of this journal feed.
-	*
-	* @return the group ID of this journal feed
-	*/
-	@Override
-	public long getGroupId() {
-		return _journalFeed.getGroupId();
-	}
-
-	/**
-	* Returns the ID of this journal feed.
-	*
-	* @return the ID of this journal feed
-	*/
-	@Override
-	public long getId() {
-		return _journalFeed.getId();
-	}
-
-	/**
-	* Returns the last publish date of this journal feed.
-	*
-	* @return the last publish date of this journal feed
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _journalFeed.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this journal feed.
-	*
-	* @return the modified date of this journal feed
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _journalFeed.getModifiedDate();
 	}
 
 	/**
@@ -423,21 +403,6 @@ public class JournalFeedWrapper implements JournalFeed,
 	@Override
 	public java.lang.String getOrderByType() {
 		return _journalFeed.getOrderByType();
-	}
-
-	/**
-	* Returns the primary key of this journal feed.
-	*
-	* @return the primary key of this journal feed
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _journalFeed.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _journalFeed.getPrimaryKeyObj();
 	}
 
 	/**
@@ -488,16 +453,6 @@ public class JournalFeedWrapper implements JournalFeed,
 	}
 
 	/**
-	* Returns the user ID of this journal feed.
-	*
-	* @return the user ID of this journal feed
-	*/
-	@Override
-	public long getUserId() {
-		return _journalFeed.getUserId();
-	}
-
-	/**
 	* Returns the user name of this journal feed.
 	*
 	* @return the user name of this journal feed
@@ -528,23 +483,93 @@ public class JournalFeedWrapper implements JournalFeed,
 	}
 
 	@Override
-	public int hashCode() {
-		return _journalFeed.hashCode();
+	public java.lang.String toString() {
+		return _journalFeed.toString();
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _journalFeed.isCachedModel();
+	public java.lang.String toXmlString() {
+		return _journalFeed.toXmlString();
 	}
 
+	/**
+	* Returns the create date of this journal feed.
+	*
+	* @return the create date of this journal feed
+	*/
 	@Override
-	public boolean isEscapedModel() {
-		return _journalFeed.isEscapedModel();
+	public Date getCreateDate() {
+		return _journalFeed.getCreateDate();
 	}
 
+	/**
+	* Returns the last publish date of this journal feed.
+	*
+	* @return the last publish date of this journal feed
+	*/
 	@Override
-	public boolean isNew() {
-		return _journalFeed.isNew();
+	public Date getLastPublishDate() {
+		return _journalFeed.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this journal feed.
+	*
+	* @return the modified date of this journal feed
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _journalFeed.getModifiedDate();
+	}
+
+	/**
+	* Returns the company ID of this journal feed.
+	*
+	* @return the company ID of this journal feed
+	*/
+	@Override
+	public long getCompanyId() {
+		return _journalFeed.getCompanyId();
+	}
+
+	/**
+	* Returns the group ID of this journal feed.
+	*
+	* @return the group ID of this journal feed
+	*/
+	@Override
+	public long getGroupId() {
+		return _journalFeed.getGroupId();
+	}
+
+	/**
+	* Returns the ID of this journal feed.
+	*
+	* @return the ID of this journal feed
+	*/
+	@Override
+	public long getId() {
+		return _journalFeed.getId();
+	}
+
+	/**
+	* Returns the primary key of this journal feed.
+	*
+	* @return the primary key of this journal feed
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _journalFeed.getPrimaryKey();
+	}
+
+	/**
+	* Returns the user ID of this journal feed.
+	*
+	* @return the user ID of this journal feed
+	*/
+	@Override
+	public long getUserId() {
+		return _journalFeed.getUserId();
 	}
 
 	@Override
@@ -639,14 +664,14 @@ public class JournalFeedWrapper implements JournalFeed,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_journalFeed.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_journalFeed.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_journalFeed.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_journalFeed.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -861,31 +886,6 @@ public class JournalFeedWrapper implements JournalFeed,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_journalFeed.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.journal.model.JournalFeed> toCacheModel() {
-		return _journalFeed.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.journal.model.JournalFeed toEscapedModel() {
-		return new JournalFeedWrapper(_journalFeed.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _journalFeed.toString();
-	}
-
-	@Override
-	public com.liferay.journal.model.JournalFeed toUnescapedModel() {
-		return new JournalFeedWrapper(_journalFeed.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _journalFeed.toXmlString();
 	}
 
 	@Override

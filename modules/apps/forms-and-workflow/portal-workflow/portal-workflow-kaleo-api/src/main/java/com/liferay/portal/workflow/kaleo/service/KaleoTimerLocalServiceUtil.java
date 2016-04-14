@@ -41,15 +41,31 @@ public class KaleoTimerLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.service.impl.KaleoTimerLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.workflow.kaleo.model.KaleoTimer addKaleoTimer(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		long kaleoDefinitionId,
-		com.liferay.portal.workflow.kaleo.definition.Timer timer,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addKaleoTimer(kaleoClassName, kaleoClassPK,
-			kaleoDefinitionId, timer, serviceContext);
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -61,6 +77,17 @@ public class KaleoTimerLocalServiceUtil {
 	public static com.liferay.portal.workflow.kaleo.model.KaleoTimer addKaleoTimer(
 		com.liferay.portal.workflow.kaleo.model.KaleoTimer kaleoTimer) {
 		return getService().addKaleoTimer(kaleoTimer);
+	}
+
+	public static com.liferay.portal.workflow.kaleo.model.KaleoTimer addKaleoTimer(
+		java.lang.String kaleoClassName, long kaleoClassPK,
+		long kaleoDefinitionId,
+		com.liferay.portal.workflow.kaleo.definition.Timer timer,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addKaleoTimer(kaleoClassName, kaleoClassPK,
+			kaleoDefinitionId, timer, serviceContext);
 	}
 
 	/**
@@ -98,17 +125,51 @@ public class KaleoTimerLocalServiceUtil {
 		return getService().deleteKaleoTimer(kaleoTimerId);
 	}
 
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
+	public static com.liferay.portal.workflow.kaleo.model.KaleoTimer fetchKaleoTimer(
+		long kaleoTimerId) {
+		return getService().fetchKaleoTimer(kaleoTimerId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	/**
+	* Returns the kaleo timer with the primary key.
+	*
+	* @param kaleoTimerId the primary key of the kaleo timer
+	* @return the kaleo timer
+	* @throws PortalException if a kaleo timer with the primary key could not be found
+	*/
+	public static com.liferay.portal.workflow.kaleo.model.KaleoTimer getKaleoTimer(
+		long kaleoTimerId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getKaleoTimer(kaleoTimerId);
+	}
+
+	/**
+	* Updates the kaleo timer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoTimer the kaleo timer
+	* @return the kaleo timer that was updated
+	*/
+	public static com.liferay.portal.workflow.kaleo.model.KaleoTimer updateKaleoTimer(
+		com.liferay.portal.workflow.kaleo.model.KaleoTimer kaleoTimer) {
+		return getService().updateKaleoTimer(kaleoTimer);
+	}
+
+	/**
+	* Returns the number of kaleo timers.
+	*
+	* @return the number of kaleo timers
+	*/
+	public static int getKaleoTimersCount() {
+		return getService().getKaleoTimersCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -162,6 +223,33 @@ public class KaleoTimerLocalServiceUtil {
 	}
 
 	/**
+	* Returns a range of all the kaleo timers.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of kaleo timers
+	* @param end the upper bound of the range of kaleo timers (not inclusive)
+	* @return the range of kaleo timers
+	*/
+	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTimer> getKaleoTimers(
+		int start, int end) {
+		return getService().getKaleoTimers(start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTimer> getKaleoTimers(
+		java.lang.String kaleoClassName, long kaleoClassPK) {
+		return getService().getKaleoTimers(kaleoClassName, kaleoClassPK);
+	}
+
+	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTimer> getKaleoTimers(
+		java.lang.String kaleoClassName, long kaleoClassPK, boolean blocking) {
+		return getService()
+				   .getKaleoTimers(kaleoClassName, kaleoClassPK, blocking);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -183,94 +271,6 @@ public class KaleoTimerLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.portal.workflow.kaleo.model.KaleoTimer fetchKaleoTimer(
-		long kaleoTimerId) {
-		return getService().fetchKaleoTimer(kaleoTimerId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the kaleo timer with the primary key.
-	*
-	* @param kaleoTimerId the primary key of the kaleo timer
-	* @return the kaleo timer
-	* @throws PortalException if a kaleo timer with the primary key could not be found
-	*/
-	public static com.liferay.portal.workflow.kaleo.model.KaleoTimer getKaleoTimer(
-		long kaleoTimerId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getKaleoTimer(kaleoTimerId);
-	}
-
-	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTimer> getKaleoTimers(
-		java.lang.String kaleoClassName, long kaleoClassPK) {
-		return getService().getKaleoTimers(kaleoClassName, kaleoClassPK);
-	}
-
-	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTimer> getKaleoTimers(
-		java.lang.String kaleoClassName, long kaleoClassPK, boolean blocking) {
-		return getService()
-				   .getKaleoTimers(kaleoClassName, kaleoClassPK, blocking);
-	}
-
-	/**
-	* Returns a range of all the kaleo timers.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of kaleo timers
-	* @param end the upper bound of the range of kaleo timers (not inclusive)
-	* @return the range of kaleo timers
-	*/
-	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTimer> getKaleoTimers(
-		int start, int end) {
-		return getService().getKaleoTimers(start, end);
-	}
-
-	/**
-	* Returns the number of kaleo timers.
-	*
-	* @return the number of kaleo timers
-	*/
-	public static int getKaleoTimersCount() {
-		return getService().getKaleoTimersCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Updates the kaleo timer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoTimer the kaleo timer
-	* @return the kaleo timer that was updated
-	*/
-	public static com.liferay.portal.workflow.kaleo.model.KaleoTimer updateKaleoTimer(
-		com.liferay.portal.workflow.kaleo.model.KaleoTimer kaleoTimer) {
-		return getService().updateKaleoTimer(kaleoTimer);
 	}
 
 	public static KaleoTimerLocalService getService() {

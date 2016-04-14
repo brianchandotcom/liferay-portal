@@ -53,30 +53,10 @@ public class AddressServiceUtil {
 			serviceContext);
 	}
 
-	public static void deleteAddress(long addressId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteAddress(addressId);
-	}
-
 	public static com.liferay.portal.kernel.model.Address getAddress(
 		long addressId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAddress(addressId);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.Address> getAddresses(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getAddresses(className, classPK);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.portal.kernel.model.Address updateAddress(
@@ -88,6 +68,26 @@ public class AddressServiceUtil {
 		return getService()
 				   .updateAddress(addressId, street1, street2, street3, city,
 			zip, regionId, countryId, typeId, mailing, primary);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.Address> getAddresses(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAddresses(className, classPK);
+	}
+
+	public static void deleteAddress(long addressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteAddress(addressId);
 	}
 
 	public static AddressService getService() {

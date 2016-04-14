@@ -40,6 +40,33 @@ public class SocialActivityLimitLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.social.service.impl.SocialActivityLimitLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	public static com.liferay.social.kernel.model.SocialActivityLimit addActivityLimit(
 		long userId, long groupId, long classNameId, long classPK,
 		int activityType, java.lang.String activityCounterName, int limitPeriod)
@@ -72,12 +99,14 @@ public class SocialActivityLimitLocalServiceUtil {
 	}
 
 	/**
-	* @throws PortalException
+	* Deletes the social activity limit from the database. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivityLimit the social activity limit
+	* @return the social activity limit that was removed
 	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
+	public static com.liferay.social.kernel.model.SocialActivityLimit deleteSocialActivityLimit(
+		com.liferay.social.kernel.model.SocialActivityLimit socialActivityLimit) {
+		return getService().deleteSocialActivityLimit(socialActivityLimit);
 	}
 
 	/**
@@ -93,19 +122,59 @@ public class SocialActivityLimitLocalServiceUtil {
 		return getService().deleteSocialActivityLimit(activityLimitId);
 	}
 
-	/**
-	* Deletes the social activity limit from the database. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivityLimit the social activity limit
-	* @return the social activity limit that was removed
-	*/
-	public static com.liferay.social.kernel.model.SocialActivityLimit deleteSocialActivityLimit(
-		com.liferay.social.kernel.model.SocialActivityLimit socialActivityLimit) {
-		return getService().deleteSocialActivityLimit(socialActivityLimit);
+	public static com.liferay.social.kernel.model.SocialActivityLimit fetchActivityLimit(
+		long groupId, long userId, long classNameId, long classPK,
+		int activityType, java.lang.String activityCounterName) {
+		return getService()
+				   .fetchActivityLimit(groupId, userId, classNameId, classPK,
+			activityType, activityCounterName);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static com.liferay.social.kernel.model.SocialActivityLimit fetchSocialActivityLimit(
+		long activityLimitId) {
+		return getService().fetchSocialActivityLimit(activityLimitId);
+	}
+
+	/**
+	* Returns the social activity limit with the primary key.
+	*
+	* @param activityLimitId the primary key of the social activity limit
+	* @return the social activity limit
+	* @throws PortalException if a social activity limit with the primary key could not be found
+	*/
+	public static com.liferay.social.kernel.model.SocialActivityLimit getSocialActivityLimit(
+		long activityLimitId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getSocialActivityLimit(activityLimitId);
+	}
+
+	/**
+	* Updates the social activity limit in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param socialActivityLimit the social activity limit
+	* @return the social activity limit that was updated
+	*/
+	public static com.liferay.social.kernel.model.SocialActivityLimit updateSocialActivityLimit(
+		com.liferay.social.kernel.model.SocialActivityLimit socialActivityLimit) {
+		return getService().updateSocialActivityLimit(socialActivityLimit);
+	}
+
+	/**
+	* Returns the number of social activity limits.
+	*
+	* @return the number of social activity limits
+	*/
+	public static int getSocialActivityLimitsCount() {
+		return getService().getSocialActivityLimitsCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -159,6 +228,22 @@ public class SocialActivityLimitLocalServiceUtil {
 	}
 
 	/**
+	* Returns a range of all the social activity limits.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityLimitModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of social activity limits
+	* @param end the upper bound of the range of social activity limits (not inclusive)
+	* @return the range of social activity limits
+	*/
+	public static java.util.List<com.liferay.social.kernel.model.SocialActivityLimit> getSocialActivityLimits(
+		int start, int end) {
+		return getService().getSocialActivityLimits(start, end);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -180,91 +265,6 @@ public class SocialActivityLimitLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.social.kernel.model.SocialActivityLimit fetchActivityLimit(
-		long groupId, long userId, long classNameId, long classPK,
-		int activityType, java.lang.String activityCounterName) {
-		return getService()
-				   .fetchActivityLimit(groupId, userId, classNameId, classPK,
-			activityType, activityCounterName);
-	}
-
-	public static com.liferay.social.kernel.model.SocialActivityLimit fetchSocialActivityLimit(
-		long activityLimitId) {
-		return getService().fetchSocialActivityLimit(activityLimitId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the social activity limit with the primary key.
-	*
-	* @param activityLimitId the primary key of the social activity limit
-	* @return the social activity limit
-	* @throws PortalException if a social activity limit with the primary key could not be found
-	*/
-	public static com.liferay.social.kernel.model.SocialActivityLimit getSocialActivityLimit(
-		long activityLimitId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getSocialActivityLimit(activityLimitId);
-	}
-
-	/**
-	* Returns a range of all the social activity limits.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.social.model.impl.SocialActivityLimitModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of social activity limits
-	* @param end the upper bound of the range of social activity limits (not inclusive)
-	* @return the range of social activity limits
-	*/
-	public static java.util.List<com.liferay.social.kernel.model.SocialActivityLimit> getSocialActivityLimits(
-		int start, int end) {
-		return getService().getSocialActivityLimits(start, end);
-	}
-
-	/**
-	* Returns the number of social activity limits.
-	*
-	* @return the number of social activity limits
-	*/
-	public static int getSocialActivityLimitsCount() {
-		return getService().getSocialActivityLimitsCount();
-	}
-
-	/**
-	* Updates the social activity limit in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param socialActivityLimit the social activity limit
-	* @return the social activity limit that was updated
-	*/
-	public static com.liferay.social.kernel.model.SocialActivityLimit updateSocialActivityLimit(
-		com.liferay.social.kernel.model.SocialActivityLimit socialActivityLimit) {
-		return getService().updateSocialActivityLimit(socialActivityLimit);
 	}
 
 	public static SocialActivityLimitLocalService getService() {

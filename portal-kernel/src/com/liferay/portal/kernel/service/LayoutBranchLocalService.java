@@ -57,6 +57,13 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutBranchLocalServiceUtil} to access the layout branch local service. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutBranchLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Adds the layout branch to the database. Also notifies the appropriate model listeners.
@@ -105,7 +112,42 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 	public LayoutBranch deleteLayoutBranch(long layoutBranchId)
 		throws PortalException;
 
-	public void deleteLayoutSetBranchLayoutBranches(long layoutSetBranchId)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutBranch fetchLayoutBranch(long layoutBranchId);
+
+	/**
+	* Returns the layout branch with the primary key.
+	*
+	* @param layoutBranchId the primary key of the layout branch
+	* @return the layout branch
+	* @throws PortalException if a layout branch with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutBranch getLayoutBranch(long layoutBranchId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutBranch getMasterLayoutBranch(long layoutSetBranchId, long plid)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutBranch getMasterLayoutBranch(long layoutSetBranchId,
+		long plid,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	* Updates the layout branch in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param layoutBranch the layout branch
+	* @return the layout branch that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public LayoutBranch updateLayoutBranch(LayoutBranch layoutBranch);
+
+	public LayoutBranch updateLayoutBranch(long layoutBranchId,
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -115,7 +157,25 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the number of layout branchs.
+	*
+	* @return the number of layout branchs
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutBranchsCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -156,44 +216,6 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutBranch fetchLayoutBranch(long layoutBranchId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the layout branch with the primary key.
-	*
-	* @param layoutBranchId the primary key of the layout branch
-	* @return the layout branch
-	* @throws PortalException if a layout branch with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutBranch getLayoutBranch(long layoutBranchId)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutBranch> getLayoutBranches(long layoutSetBranchId,
 		long plid, int start, int end,
@@ -213,51 +235,28 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutBranch> getLayoutBranchs(int start, int end);
 
-	/**
-	* Returns the number of layout branchs.
-	*
-	* @return the number of layout branchs
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getLayoutBranchsCount();
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutBranch> getLayoutSetBranchLayoutBranches(
 		long layoutSetBranchId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutBranch getMasterLayoutBranch(long layoutSetBranchId, long plid)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutBranch getMasterLayoutBranch(long layoutSetBranchId,
-		long plid,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Updates the layout branch in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param layoutBranch the layout branch
-	* @return the layout branch that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public LayoutBranch updateLayoutBranch(LayoutBranch layoutBranch);
-
-	public LayoutBranch updateLayoutBranch(long layoutBranchId,
-		java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public void deleteLayoutSetBranchLayoutBranches(long layoutSetBranchId)
 		throws PortalException;
 }

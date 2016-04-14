@@ -34,6 +34,38 @@ public class KaleoInstanceTokenLocalServiceWrapper
 		_kaleoInstanceTokenLocalService = kaleoInstanceTokenLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _kaleoInstanceTokenLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _kaleoInstanceTokenLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _kaleoInstanceTokenLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoInstanceTokenLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoInstanceTokenLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Adds the kaleo instance token to the database. Also notifies the appropriate model listeners.
 	*
@@ -75,21 +107,6 @@ public class KaleoInstanceTokenLocalServiceWrapper
 		return _kaleoInstanceTokenLocalService.createKaleoInstanceToken(kaleoInstanceTokenId);
 	}
 
-	@Override
-	public void deleteCompanyKaleoInstanceTokens(long companyId) {
-		_kaleoInstanceTokenLocalService.deleteCompanyKaleoInstanceTokens(companyId);
-	}
-
-	@Override
-	public void deleteKaleoDefinitionKaleoInstanceTokens(long kaleoDefinitionId) {
-		_kaleoInstanceTokenLocalService.deleteKaleoDefinitionKaleoInstanceTokens(kaleoDefinitionId);
-	}
-
-	@Override
-	public void deleteKaleoInstanceKaleoInstanceTokens(long kaleoInstanceId) {
-		_kaleoInstanceTokenLocalService.deleteKaleoInstanceKaleoInstanceTokens(kaleoInstanceId);
-	}
-
 	/**
 	* Deletes the kaleo instance token from the database. Also notifies the appropriate model listeners.
 	*
@@ -116,19 +133,89 @@ public class KaleoInstanceTokenLocalServiceWrapper
 		return _kaleoInstanceTokenLocalService.deleteKaleoInstanceToken(kaleoInstanceTokenId);
 	}
 
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken fetchKaleoInstanceToken(
+		long kaleoInstanceTokenId) {
+		return _kaleoInstanceTokenLocalService.fetchKaleoInstanceToken(kaleoInstanceTokenId);
+	}
+
 	/**
-	* @throws PortalException
+	* Returns the kaleo instance token with the primary key.
+	*
+	* @param kaleoInstanceTokenId the primary key of the kaleo instance token
+	* @return the kaleo instance token
+	* @throws PortalException if a kaleo instance token with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken getKaleoInstanceToken(
+		long kaleoInstanceTokenId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoInstanceTokenLocalService.deletePersistedModel(persistedModel);
+		return _kaleoInstanceTokenLocalService.getKaleoInstanceToken(kaleoInstanceTokenId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _kaleoInstanceTokenLocalService.dynamicQuery();
+	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken getRootKaleoInstanceToken(
+		long kaleoInstanceId,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoInstanceTokenLocalService.getRootKaleoInstanceToken(kaleoInstanceId,
+			workflowContext, serviceContext);
+	}
+
+	/**
+	* Updates the kaleo instance token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoInstanceToken the kaleo instance token
+	* @return the kaleo instance token that was updated
+	*/
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken updateKaleoInstanceToken(
+		com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken kaleoInstanceToken) {
+		return _kaleoInstanceTokenLocalService.updateKaleoInstanceToken(kaleoInstanceToken);
+	}
+
+	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken updateKaleoInstanceToken(
+		long kaleoInstanceTokenId, long currentKaleoNodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoInstanceTokenLocalService.updateKaleoInstanceToken(kaleoInstanceTokenId,
+			currentKaleoNodeId);
+	}
+
+	/**
+	* Returns the number of kaleo instance tokens.
+	*
+	* @return the number of kaleo instance tokens
+	*/
+	@Override
+	public int getKaleoInstanceTokensCount() {
+		return _kaleoInstanceTokenLocalService.getKaleoInstanceTokensCount();
+	}
+
+	@Override
+	public int getKaleoInstanceTokensCount(long parentKaleoInstanceTokenId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _kaleoInstanceTokenLocalService.getKaleoInstanceTokensCount(parentKaleoInstanceTokenId,
+			serviceContext);
+	}
+
+	@Override
+	public int getKaleoInstanceTokensCount(long parentKaleoInstanceTokenId,
+		java.util.Date completionDate,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _kaleoInstanceTokenLocalService.getKaleoInstanceTokensCount(parentKaleoInstanceTokenId,
+			completionDate, serviceContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _kaleoInstanceTokenLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -186,6 +273,39 @@ public class KaleoInstanceTokenLocalServiceWrapper
 	}
 
 	/**
+	* Returns a range of all the kaleo instance tokens.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoInstanceTokenModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of kaleo instance tokens
+	* @param end the upper bound of the range of kaleo instance tokens (not inclusive)
+	* @return the range of kaleo instance tokens
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken> getKaleoInstanceTokens(
+		int start, int end) {
+		return _kaleoInstanceTokenLocalService.getKaleoInstanceTokens(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken> getKaleoInstanceTokens(
+		long parentKaleoInstanceTokenId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _kaleoInstanceTokenLocalService.getKaleoInstanceTokens(parentKaleoInstanceTokenId,
+			serviceContext);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken> getKaleoInstanceTokens(
+		long parentKaleoInstanceTokenId, java.util.Date completionDate,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _kaleoInstanceTokenLocalService.getKaleoInstanceTokens(parentKaleoInstanceTokenId,
+			completionDate, serviceContext);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -213,138 +333,18 @@ public class KaleoInstanceTokenLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken fetchKaleoInstanceToken(
-		long kaleoInstanceTokenId) {
-		return _kaleoInstanceTokenLocalService.fetchKaleoInstanceToken(kaleoInstanceTokenId);
+	public void deleteCompanyKaleoInstanceTokens(long companyId) {
+		_kaleoInstanceTokenLocalService.deleteCompanyKaleoInstanceTokens(companyId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _kaleoInstanceTokenLocalService.getActionableDynamicQuery();
+	public void deleteKaleoDefinitionKaleoInstanceTokens(long kaleoDefinitionId) {
+		_kaleoInstanceTokenLocalService.deleteKaleoDefinitionKaleoInstanceTokens(kaleoDefinitionId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _kaleoInstanceTokenLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the kaleo instance token with the primary key.
-	*
-	* @param kaleoInstanceTokenId the primary key of the kaleo instance token
-	* @return the kaleo instance token
-	* @throws PortalException if a kaleo instance token with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken getKaleoInstanceToken(
-		long kaleoInstanceTokenId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoInstanceTokenLocalService.getKaleoInstanceToken(kaleoInstanceTokenId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken> getKaleoInstanceTokens(
-		long parentKaleoInstanceTokenId, java.util.Date completionDate,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return _kaleoInstanceTokenLocalService.getKaleoInstanceTokens(parentKaleoInstanceTokenId,
-			completionDate, serviceContext);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken> getKaleoInstanceTokens(
-		long parentKaleoInstanceTokenId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return _kaleoInstanceTokenLocalService.getKaleoInstanceTokens(parentKaleoInstanceTokenId,
-			serviceContext);
-	}
-
-	/**
-	* Returns a range of all the kaleo instance tokens.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoInstanceTokenModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of kaleo instance tokens
-	* @param end the upper bound of the range of kaleo instance tokens (not inclusive)
-	* @return the range of kaleo instance tokens
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken> getKaleoInstanceTokens(
-		int start, int end) {
-		return _kaleoInstanceTokenLocalService.getKaleoInstanceTokens(start, end);
-	}
-
-	/**
-	* Returns the number of kaleo instance tokens.
-	*
-	* @return the number of kaleo instance tokens
-	*/
-	@Override
-	public int getKaleoInstanceTokensCount() {
-		return _kaleoInstanceTokenLocalService.getKaleoInstanceTokensCount();
-	}
-
-	@Override
-	public int getKaleoInstanceTokensCount(long parentKaleoInstanceTokenId,
-		java.util.Date completionDate,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return _kaleoInstanceTokenLocalService.getKaleoInstanceTokensCount(parentKaleoInstanceTokenId,
-			completionDate, serviceContext);
-	}
-
-	@Override
-	public int getKaleoInstanceTokensCount(long parentKaleoInstanceTokenId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return _kaleoInstanceTokenLocalService.getKaleoInstanceTokensCount(parentKaleoInstanceTokenId,
-			serviceContext);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _kaleoInstanceTokenLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoInstanceTokenLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken getRootKaleoInstanceToken(
-		long kaleoInstanceId,
-		java.util.Map<java.lang.String, java.io.Serializable> workflowContext,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoInstanceTokenLocalService.getRootKaleoInstanceToken(kaleoInstanceId,
-			workflowContext, serviceContext);
-	}
-
-	/**
-	* Updates the kaleo instance token in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoInstanceToken the kaleo instance token
-	* @return the kaleo instance token that was updated
-	*/
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken updateKaleoInstanceToken(
-		com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken kaleoInstanceToken) {
-		return _kaleoInstanceTokenLocalService.updateKaleoInstanceToken(kaleoInstanceToken);
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken updateKaleoInstanceToken(
-		long kaleoInstanceTokenId, long currentKaleoNodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoInstanceTokenLocalService.updateKaleoInstanceToken(kaleoInstanceTokenId,
-			currentKaleoNodeId);
+	public void deleteKaleoInstanceKaleoInstanceTokens(long kaleoInstanceId) {
+		_kaleoInstanceTokenLocalService.deleteKaleoInstanceKaleoInstanceTokens(kaleoInstanceId);
 	}
 
 	@Override

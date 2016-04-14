@@ -44,9 +44,43 @@ public class ShoppingCategoryServiceWrapper implements ShoppingCategoryService,
 	}
 
 	@Override
-	public void deleteCategory(long categoryId)
+	public com.liferay.shopping.model.ShoppingCategory getCategory(
+		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_shoppingCategoryService.deleteCategory(categoryId);
+		return _shoppingCategoryService.getCategory(categoryId);
+	}
+
+	@Override
+	public com.liferay.shopping.model.ShoppingCategory updateCategory(
+		long categoryId, long parentCategoryId, java.lang.String name,
+		java.lang.String description, boolean mergeWithParentCategory,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingCategoryService.updateCategory(categoryId,
+			parentCategoryId, name, description, mergeWithParentCategory,
+			serviceContext);
+	}
+
+	@Override
+	public int getCategoriesAndItemsCount(long groupId, long categoryId) {
+		return _shoppingCategoryService.getCategoriesAndItemsCount(groupId,
+			categoryId);
+	}
+
+	@Override
+	public int getCategoriesCount(long groupId, long parentCategoryId) {
+		return _shoppingCategoryService.getCategoriesCount(groupId,
+			parentCategoryId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _shoppingCategoryService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -71,32 +105,9 @@ public class ShoppingCategoryServiceWrapper implements ShoppingCategoryService,
 	}
 
 	@Override
-	public int getCategoriesAndItemsCount(long groupId, long categoryId) {
-		return _shoppingCategoryService.getCategoriesAndItemsCount(groupId,
-			categoryId);
-	}
-
-	@Override
-	public int getCategoriesCount(long groupId, long parentCategoryId) {
-		return _shoppingCategoryService.getCategoriesCount(groupId,
-			parentCategoryId);
-	}
-
-	@Override
-	public com.liferay.shopping.model.ShoppingCategory getCategory(
-		long categoryId)
+	public void deleteCategory(long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingCategoryService.getCategory(categoryId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _shoppingCategoryService.getOSGiServiceIdentifier();
+		_shoppingCategoryService.deleteCategory(categoryId);
 	}
 
 	@Override
@@ -104,17 +115,6 @@ public class ShoppingCategoryServiceWrapper implements ShoppingCategoryService,
 		long groupId, long categoryId) {
 		_shoppingCategoryService.getSubcategoryIds(categoryIds, groupId,
 			categoryId);
-	}
-
-	@Override
-	public com.liferay.shopping.model.ShoppingCategory updateCategory(
-		long categoryId, long parentCategoryId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentCategory,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingCategoryService.updateCategory(categoryId,
-			parentCategoryId, name, description, mergeWithParentCategory,
-			serviceContext);
 	}
 
 	@Override

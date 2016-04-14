@@ -94,6 +94,16 @@ public interface DDMDataProviderInstanceLocalService extends BaseLocalService,
 		long dataProviderInstanceId);
 
 	/**
+	* Deletes the d d m data provider instance from the database. Also notifies the appropriate model listeners.
+	*
+	* @param ddmDataProviderInstance the d d m data provider instance
+	* @return the d d m data provider instance that was removed
+	*/
+	@Indexable(type = IndexableType.DELETE)
+	public DDMDataProviderInstance deleteDDMDataProviderInstance(
+		DDMDataProviderInstance ddmDataProviderInstance);
+
+	/**
 	* Deletes the d d m data provider instance with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param dataProviderInstanceId the primary key of the d d m data provider instance
@@ -104,24 +114,79 @@ public interface DDMDataProviderInstanceLocalService extends BaseLocalService,
 	public DDMDataProviderInstance deleteDDMDataProviderInstance(
 		long dataProviderInstanceId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMDataProviderInstance fetchDDMDataProviderInstance(
+		long dataProviderInstanceId);
+
 	/**
-	* Deletes the d d m data provider instance from the database. Also notifies the appropriate model listeners.
+	* Returns the d d m data provider instance matching the UUID and group.
+	*
+	* @param uuid the d d m data provider instance's UUID
+	* @param groupId the primary key of the group
+	* @return the matching d d m data provider instance, or <code>null</code> if a matching d d m data provider instance could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMDataProviderInstance fetchDDMDataProviderInstanceByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMDataProviderInstance fetchDataProviderInstance(
+		long dataProviderInstanceId);
+
+	/**
+	* Returns the d d m data provider instance with the primary key.
+	*
+	* @param dataProviderInstanceId the primary key of the d d m data provider instance
+	* @return the d d m data provider instance
+	* @throws PortalException if a d d m data provider instance with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMDataProviderInstance getDDMDataProviderInstance(
+		long dataProviderInstanceId) throws PortalException;
+
+	/**
+	* Returns the d d m data provider instance matching the UUID and group.
+	*
+	* @param uuid the d d m data provider instance's UUID
+	* @param groupId the primary key of the group
+	* @return the matching d d m data provider instance
+	* @throws PortalException if a matching d d m data provider instance could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMDataProviderInstance getDDMDataProviderInstanceByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMDataProviderInstance getDataProviderInstance(
+		long dataProviderInstanceId) throws PortalException;
+
+	/**
+	* Updates the d d m data provider instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param ddmDataProviderInstance the d d m data provider instance
-	* @return the d d m data provider instance that was removed
+	* @return the d d m data provider instance that was updated
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public DDMDataProviderInstance deleteDDMDataProviderInstance(
+	@Indexable(type = IndexableType.REINDEX)
+	public DDMDataProviderInstance updateDDMDataProviderInstance(
 		DDMDataProviderInstance ddmDataProviderInstance);
 
-	public void deleteDataProviderInstance(
-		DDMDataProviderInstance dataProviderInstance) throws PortalException;
-
-	public void deleteDataProviderInstance(long dataProviderInstanceId)
+	public DDMDataProviderInstance updateDataProviderInstance(long userId,
+		long dataProviderInstanceId, Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		DDMFormValues ddmFormValues, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteDataProviderInstances(long companyId, long groupId)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* @throws PortalException
@@ -130,7 +195,33 @@ public interface DDMDataProviderInstanceLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the number of d d m data provider instances.
+	*
+	* @return the number of d d m data provider instances
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDDMDataProviderInstancesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long[] groupIds,
+		java.lang.String keywords);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long[] groupIds,
+		java.lang.String name, java.lang.String description, boolean andOperator);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -170,69 +261,6 @@ public interface DDMDataProviderInstanceLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDMDataProviderInstance fetchDDMDataProviderInstance(
-		long dataProviderInstanceId);
-
-	/**
-	* Returns the d d m data provider instance matching the UUID and group.
-	*
-	* @param uuid the d d m data provider instance's UUID
-	* @param groupId the primary key of the group
-	* @return the matching d d m data provider instance, or <code>null</code> if a matching d d m data provider instance could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDMDataProviderInstance fetchDDMDataProviderInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDMDataProviderInstance fetchDataProviderInstance(
-		long dataProviderInstanceId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the d d m data provider instance with the primary key.
-	*
-	* @param dataProviderInstanceId the primary key of the d d m data provider instance
-	* @return the d d m data provider instance
-	* @throws PortalException if a d d m data provider instance with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDMDataProviderInstance getDDMDataProviderInstance(
-		long dataProviderInstanceId) throws PortalException;
-
-	/**
-	* Returns the d d m data provider instance matching the UUID and group.
-	*
-	* @param uuid the d d m data provider instance's UUID
-	* @param groupId the primary key of the group
-	* @return the matching d d m data provider instance
-	* @throws PortalException if a matching d d m data provider instance could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDMDataProviderInstance getDDMDataProviderInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the d d m data provider instances.
@@ -275,40 +303,9 @@ public interface DDMDataProviderInstanceLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<DDMDataProviderInstance> orderByComparator);
 
-	/**
-	* Returns the number of d d m data provider instances.
-	*
-	* @return the number of d d m data provider instances
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDDMDataProviderInstancesCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDMDataProviderInstance getDataProviderInstance(
-		long dataProviderInstanceId) throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMDataProviderInstance> getDataProviderInstances(
 		long[] groupIds);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMDataProviderInstance> search(long companyId,
@@ -321,27 +318,30 @@ public interface DDMDataProviderInstanceLocalService extends BaseLocalService,
 		boolean andOperator, int start, int end,
 		OrderByComparator<DDMDataProviderInstance> orderByComparator);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds,
-		java.lang.String keywords);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds,
-		java.lang.String name, java.lang.String description, boolean andOperator);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Updates the d d m data provider instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param ddmDataProviderInstance the d d m data provider instance
-	* @return the d d m data provider instance that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public DDMDataProviderInstance updateDDMDataProviderInstance(
-		DDMDataProviderInstance ddmDataProviderInstance);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
-	public DDMDataProviderInstance updateDataProviderInstance(long userId,
-		long dataProviderInstanceId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		DDMFormValues ddmFormValues, ServiceContext serviceContext)
+	public void deleteDataProviderInstance(
+		DDMDataProviderInstance dataProviderInstance) throws PortalException;
+
+	public void deleteDataProviderInstance(long dataProviderInstanceId)
+		throws PortalException;
+
+	public void deleteDataProviderInstances(long companyId, long groupId)
 		throws PortalException;
 }

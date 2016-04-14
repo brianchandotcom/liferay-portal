@@ -100,6 +100,72 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 	public DDLRecordVersion deleteDDLRecordVersion(long recordVersionId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordVersion fetchDDLRecordVersion(long recordVersionId);
+
+	/**
+	* Returns the d d l record version with the primary key.
+	*
+	* @param recordVersionId the primary key of the d d l record version
+	* @return the d d l record version
+	* @throws PortalException if a d d l record version with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordVersion getDDLRecordVersion(long recordVersionId)
+		throws PortalException;
+
+	/**
+	* Returns the record's latest record version.
+	*
+	* @param recordId the primary key of the record
+	* @return the latest record version for the given record
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordVersion getLatestRecordVersion(long recordId)
+		throws PortalException;
+
+	/**
+	* Returns the record version matching the record and version.
+	*
+	* @param recordId the primary key of the record
+	* @param version the record version
+	* @return the record version matching the record primary key and version
+	* @throws PortalException if a matching record set could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordVersion getRecordVersion(long recordId,
+		java.lang.String version) throws PortalException;
+
+	/**
+	* Returns the record version by its ID.
+	*
+	* @param recordVersionId the primary key of the record version
+	* @return the record version with the ID
+	* @throws PortalException if a matching record set could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDLRecordVersion getRecordVersion(long recordVersionId)
+		throws PortalException;
+
+	/**
+	* Updates the d d l record version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param ddlRecordVersion the d d l record version
+	* @return the d d l record version that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public DDLRecordVersion updateDDLRecordVersion(
+		DDLRecordVersion ddlRecordVersion);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* @throws PortalException
 	*/
@@ -107,7 +173,34 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the number of d d l record versions.
+	*
+	* @return the number of d d l record versions
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDDLRecordVersionsCount();
+
+	/**
+	* Returns the number of record versions matching the record ID.
+	*
+	* @param recordId the primary key of the record
+	* @return the number of matching record versions
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRecordVersionsCount(long recordId);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -149,41 +242,6 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDLRecordVersion fetchDDLRecordVersion(long recordVersionId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the d d l record version with the primary key.
-	*
-	* @param recordVersionId the primary key of the d d l record version
-	* @return the d d l record version
-	* @throws PortalException if a d d l record version with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDLRecordVersion getDDLRecordVersion(long recordVersionId)
-		throws PortalException;
-
-	/**
 	* Returns a range of all the d d l record versions.
 	*
 	* <p>
@@ -196,63 +254,6 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDLRecordVersion> getDDLRecordVersions(int start, int end);
-
-	/**
-	* Returns the number of d d l record versions.
-	*
-	* @return the number of d d l record versions
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDDLRecordVersionsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the record's latest record version.
-	*
-	* @param recordId the primary key of the record
-	* @return the latest record version for the given record
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDLRecordVersion getLatestRecordVersion(long recordId)
-		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the record version matching the record and version.
-	*
-	* @param recordId the primary key of the record
-	* @param version the record version
-	* @return the record version matching the record primary key and version
-	* @throws PortalException if a matching record set could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDLRecordVersion getRecordVersion(long recordId,
-		java.lang.String version) throws PortalException;
-
-	/**
-	* Returns the record version by its ID.
-	*
-	* @param recordVersionId the primary key of the record version
-	* @return the record version with the ID
-	* @throws PortalException if a matching record set could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDLRecordVersion getRecordVersion(long recordVersionId)
-		throws PortalException;
 
 	/**
 	* Returns an ordered range of record versions matching the record's ID.
@@ -279,21 +280,20 @@ public interface DDLRecordVersionLocalService extends BaseLocalService,
 		int end, OrderByComparator<DDLRecordVersion> orderByComparator);
 
 	/**
-	* Returns the number of record versions matching the record ID.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param recordId the primary key of the record
-	* @return the number of matching record versions
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRecordVersionsCount(long recordId);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Updates the d d l record version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param ddlRecordVersion the d d l record version
-	* @return the d d l record version that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public DDLRecordVersion updateDDLRecordVersion(
-		DDLRecordVersion ddlRecordVersion);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 }

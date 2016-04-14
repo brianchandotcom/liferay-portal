@@ -107,8 +107,38 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new ShoppingItemFieldWrapper((ShoppingItemField)_shoppingItemField.clone());
+	public boolean isCachedModel() {
+		return _shoppingItemField.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _shoppingItemField.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _shoppingItemField.isNew();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _shoppingItemField.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.shopping.model.ShoppingItemField> toCacheModel() {
+		return _shoppingItemField.toCacheModel();
+	}
+
+	@Override
+	public com.liferay.shopping.model.ShoppingItemField toEscapedModel() {
+		return new ShoppingItemFieldWrapper(_shoppingItemField.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.shopping.model.ShoppingItemField toUnescapedModel() {
+		return new ShoppingItemFieldWrapper(_shoppingItemField.toUnescapedModel());
 	}
 
 	@Override
@@ -117,14 +147,19 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 		return _shoppingItemField.compareTo(shoppingItemField);
 	}
 
-	/**
-	* Returns the company ID of this shopping item field.
-	*
-	* @return the company ID of this shopping item field
-	*/
 	@Override
-	public long getCompanyId() {
-		return _shoppingItemField.getCompanyId();
+	public int hashCode() {
+		return _shoppingItemField.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _shoppingItemField.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new ShoppingItemFieldWrapper((ShoppingItemField)_shoppingItemField.clone());
 	}
 
 	/**
@@ -137,9 +172,49 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 		return _shoppingItemField.getDescription();
 	}
 
+	/**
+	* Returns the name of this shopping item field.
+	*
+	* @return the name of this shopping item field
+	*/
 	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _shoppingItemField.getExpandoBridge();
+	public java.lang.String getName() {
+		return _shoppingItemField.getName();
+	}
+
+	/**
+	* Returns the values of this shopping item field.
+	*
+	* @return the values of this shopping item field
+	*/
+	@Override
+	public java.lang.String getValues() {
+		return _shoppingItemField.getValues();
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _shoppingItemField.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _shoppingItemField.toXmlString();
+	}
+
+	@Override
+	public java.lang.String[] getValuesArray() {
+		return _shoppingItemField.getValuesArray();
+	}
+
+	/**
+	* Returns the company ID of this shopping item field.
+	*
+	* @return the company ID of this shopping item field
+	*/
+	@Override
+	public long getCompanyId() {
+		return _shoppingItemField.getCompanyId();
 	}
 
 	/**
@@ -163,16 +238,6 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 	}
 
 	/**
-	* Returns the name of this shopping item field.
-	*
-	* @return the name of this shopping item field
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _shoppingItemField.getName();
-	}
-
-	/**
 	* Returns the primary key of this shopping item field.
 	*
 	* @return the primary key of this shopping item field
@@ -180,46 +245,6 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 	@Override
 	public long getPrimaryKey() {
 		return _shoppingItemField.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _shoppingItemField.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the values of this shopping item field.
-	*
-	* @return the values of this shopping item field
-	*/
-	@Override
-	public java.lang.String getValues() {
-		return _shoppingItemField.getValues();
-	}
-
-	@Override
-	public java.lang.String[] getValuesArray() {
-		return _shoppingItemField.getValuesArray();
-	}
-
-	@Override
-	public int hashCode() {
-		return _shoppingItemField.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _shoppingItemField.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _shoppingItemField.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _shoppingItemField.isNew();
 	}
 
 	@Override
@@ -253,14 +278,14 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_shoppingItemField.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_shoppingItemField.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_shoppingItemField.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_shoppingItemField.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -331,31 +356,6 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 	@Override
 	public void setValuesArray(java.lang.String[] valuesArray) {
 		_shoppingItemField.setValuesArray(valuesArray);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.shopping.model.ShoppingItemField> toCacheModel() {
-		return _shoppingItemField.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.shopping.model.ShoppingItemField toEscapedModel() {
-		return new ShoppingItemFieldWrapper(_shoppingItemField.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _shoppingItemField.toString();
-	}
-
-	@Override
-	public com.liferay.shopping.model.ShoppingItemField toUnescapedModel() {
-		return new ShoppingItemFieldWrapper(_shoppingItemField.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _shoppingItemField.toXmlString();
 	}
 
 	@Override

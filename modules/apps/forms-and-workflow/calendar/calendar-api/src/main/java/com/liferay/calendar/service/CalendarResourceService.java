@@ -75,6 +75,20 @@ public interface CalendarResourceService extends BaseService {
 	public CalendarResource getCalendarResource(long calendarResourceId)
 		throws PortalException;
 
+	public CalendarResource updateCalendarResource(long calendarResourceId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, boolean active,
+		ServiceContext serviceContext) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long[] groupIds,
+		long[] classNameIds, java.lang.String code, java.lang.String name,
+		java.lang.String description, boolean active, boolean andOperator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long[] groupIds,
+		long[] classNameIds, java.lang.String keywords, boolean active);
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -94,18 +108,4 @@ public interface CalendarResourceService extends BaseService {
 		long[] classNameIds, java.lang.String keywords, boolean active,
 		boolean andOperator, int start, int end,
 		OrderByComparator<CalendarResource> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, java.lang.String code, java.lang.String name,
-		java.lang.String description, boolean active, boolean andOperator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, java.lang.String keywords, boolean active);
-
-	public CalendarResource updateCalendarResource(long calendarResourceId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, boolean active,
-		ServiceContext serviceContext) throws PortalException;
 }

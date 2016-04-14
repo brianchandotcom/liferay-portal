@@ -89,14 +89,6 @@ public interface DDLRecordSetService extends BaseService {
 		int scope, ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* Deletes a record set and its resources.
-	*
-	* @param recordSetId the primary key of the record set
-	* @throws PortalException if a portal exception occurred
-	*/
-	public void deleteRecordSet(long recordSetId) throws PortalException;
-
-	/**
 	* Returns a record set with the ID.
 	*
 	* @param recordSetId the primary key of the record set
@@ -107,13 +99,6 @@ public interface DDLRecordSetService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordSet fetchRecordSet(long recordSetId)
 		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Returns a record set with the ID.
@@ -127,6 +112,136 @@ public interface DDLRecordSetService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordSet getRecordSet(long recordSetId)
 		throws PortalException;
+
+	/**
+	* Updates the number of minimum rows to display for the record set. Useful
+	* when the record set is being displayed in spreadsheet.
+	*
+	* @param recordSetId the primary key of the record set
+	* @param minDisplayRows the record set's minimum number of rows to be
+	displayed in spreadsheet view
+	* @param serviceContext the service context to be applied. This can set
+	the record set modified date.
+	* @return the record set
+	* @throws PortalException if a portal exception occurred
+	*/
+	public DDLRecordSet updateMinDisplayRows(long recordSetId,
+		int minDisplayRows, ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	* Updates the DDM structure, name, description, and minimum number of
+	* display rows for the record set matching the group ID and record set key.
+	*
+	* @param groupId the primary key of the record set's group
+	* @param ddmStructureId the primary key of the record set's DDM structure
+	* @param recordSetKey the record set's mnemonic primary key
+	* @param nameMap the record set's locales and localized names
+	* @param descriptionMap the record set's locales and localized
+	descriptions
+	* @param minDisplayRows the record set's minimum number of rows to be
+	displayed in spreadsheet view
+	* @param serviceContext the service context to be applied. This can set
+	the record set modified date.
+	* @return the record set
+	* @throws PortalException if a portal exception occurred
+	*/
+	public DDLRecordSet updateRecordSet(long groupId, long ddmStructureId,
+		java.lang.String recordSetKey, Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, int minDisplayRows,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* Updates the the record set's settings.
+	*
+	* @param recordSetId the primary key of the record set
+	* @param settingsDDMFormValues the record set's settings. For more
+	information see <code>DDMFormValues</code> in the
+	<code>dynamic.data.mapping.api</code> module.
+	* @return the record set
+	* @throws PortalException if a portal exception occurred
+	*/
+	public DDLRecordSet updateRecordSet(long recordSetId,
+		DDMFormValues settingsDDMFormValues) throws PortalException;
+
+	/**
+	* Updates the DDM structure, name, description, and minimum number of
+	* display rows for the record set matching the record set ID.
+	*
+	* @param recordSetId the primary key of the record set
+	* @param ddmStructureId the primary key of the record set's DDM structure
+	* @param nameMap the record set's locales and localized names
+	* @param descriptionMap the record set's locales and localized
+	descriptions
+	* @param minDisplayRows the record set's minimum number of rows to be
+	displayed in spreadsheet view.
+	* @param serviceContext the service context to be applied. Can set the
+	record set modified date.
+	* @return the record set
+	* @throws PortalException if a portal exception occurred
+	*/
+	public DDLRecordSet updateRecordSet(long recordSetId, long ddmStructureId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, int minDisplayRows,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* Returns the number of record sets matching the parameters, filtered by
+	* the user's <code>VIEW</code> permission. The keywords parameter is used
+	* for matching record set names or descriptions.
+	*
+	* @param companyId the primary key of the record set's company
+	* @param groupId the primary key of the record set's group.
+	* @param keywords the keywords (space separated) to look for and match in
+	the record set name or description (optionally
+	<code>null</code>). If the keywords value is not
+	<code>null</code>, the OR operator is used in connecting query
+	criteria; otherwise it uses the AND operator.
+	* @param scope the record set's scope. A constant used to scope the record
+	set's data. For more information search the
+	<code>dynamic.data.lists.api</code> module's
+	<code>DDLRecordSetConstants</code> class for constants prefixed
+	with "SCOPE_".
+	* @return the number of matching record sets
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long groupId,
+		java.lang.String keywords, int scope);
+
+	/**
+	* Returns the number of all record sets matching the parameters, filtered
+	* by the user's <code>VIEW</code> permission. If the and operator is set to
+	* <code>true</code>, only record sets with a matching name, description,
+	* and scope are counted. If the and operator is set to <code>false</code>,
+	* only one parameter of name, description, and scope is needed to count
+	* matching record sets.
+	*
+	* @param companyId the primary key of the record set's company
+	* @param groupId the primary key of the record set's group
+	* @param name the name keywords (space separated). This can be
+	<code>null</code>.
+	* @param description the description keywords (space separated). Can be
+	<code>null</code>.
+	* @param scope the record set's scope. A constant used to scope the record
+	set's data. For more information search the
+	<code>dynamic.data.lists.api</code> module's
+	<code>DDLRecordSetConstants</code> class for constants prefixed
+	with "SCOPE_".
+	* @param andOperator whether every field must match its value or keywords,
+	or just one field must match. Company and group must match their
+	values.
+	* @return the number of matching record sets
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long groupId, java.lang.String name,
+		java.lang.String description, int scope, boolean andOperator);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Returns all the record sets matching the groups, filtered by the user's
@@ -219,125 +334,10 @@ public interface DDLRecordSetService extends BaseService {
 		OrderByComparator<DDLRecordSet> orderByComparator);
 
 	/**
-	* Returns the number of record sets matching the parameters, filtered by
-	* the user's <code>VIEW</code> permission. The keywords parameter is used
-	* for matching record set names or descriptions.
-	*
-	* @param companyId the primary key of the record set's company
-	* @param groupId the primary key of the record set's group.
-	* @param keywords the keywords (space separated) to look for and match in
-	the record set name or description (optionally
-	<code>null</code>). If the keywords value is not
-	<code>null</code>, the OR operator is used in connecting query
-	criteria; otherwise it uses the AND operator.
-	* @param scope the record set's scope. A constant used to scope the record
-	set's data. For more information search the
-	<code>dynamic.data.lists.api</code> module's
-	<code>DDLRecordSetConstants</code> class for constants prefixed
-	with "SCOPE_".
-	* @return the number of matching record sets
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long groupId,
-		java.lang.String keywords, int scope);
-
-	/**
-	* Returns the number of all record sets matching the parameters, filtered
-	* by the user's <code>VIEW</code> permission. If the and operator is set to
-	* <code>true</code>, only record sets with a matching name, description,
-	* and scope are counted. If the and operator is set to <code>false</code>,
-	* only one parameter of name, description, and scope is needed to count
-	* matching record sets.
-	*
-	* @param companyId the primary key of the record set's company
-	* @param groupId the primary key of the record set's group
-	* @param name the name keywords (space separated). This can be
-	<code>null</code>.
-	* @param description the description keywords (space separated). Can be
-	<code>null</code>.
-	* @param scope the record set's scope. A constant used to scope the record
-	set's data. For more information search the
-	<code>dynamic.data.lists.api</code> module's
-	<code>DDLRecordSetConstants</code> class for constants prefixed
-	with "SCOPE_".
-	* @param andOperator whether every field must match its value or keywords,
-	or just one field must match. Company and group must match their
-	values.
-	* @return the number of matching record sets
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long groupId, java.lang.String name,
-		java.lang.String description, int scope, boolean andOperator);
-
-	/**
-	* Updates the number of minimum rows to display for the record set. Useful
-	* when the record set is being displayed in spreadsheet.
+	* Deletes a record set and its resources.
 	*
 	* @param recordSetId the primary key of the record set
-	* @param minDisplayRows the record set's minimum number of rows to be
-	displayed in spreadsheet view
-	* @param serviceContext the service context to be applied. This can set
-	the record set modified date.
-	* @return the record set
 	* @throws PortalException if a portal exception occurred
 	*/
-	public DDLRecordSet updateMinDisplayRows(long recordSetId,
-		int minDisplayRows, ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	* Updates the DDM structure, name, description, and minimum number of
-	* display rows for the record set matching the group ID and record set key.
-	*
-	* @param groupId the primary key of the record set's group
-	* @param ddmStructureId the primary key of the record set's DDM structure
-	* @param recordSetKey the record set's mnemonic primary key
-	* @param nameMap the record set's locales and localized names
-	* @param descriptionMap the record set's locales and localized
-	descriptions
-	* @param minDisplayRows the record set's minimum number of rows to be
-	displayed in spreadsheet view
-	* @param serviceContext the service context to be applied. This can set
-	the record set modified date.
-	* @return the record set
-	* @throws PortalException if a portal exception occurred
-	*/
-	public DDLRecordSet updateRecordSet(long groupId, long ddmStructureId,
-		java.lang.String recordSetKey, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, int minDisplayRows,
-		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* Updates the DDM structure, name, description, and minimum number of
-	* display rows for the record set matching the record set ID.
-	*
-	* @param recordSetId the primary key of the record set
-	* @param ddmStructureId the primary key of the record set's DDM structure
-	* @param nameMap the record set's locales and localized names
-	* @param descriptionMap the record set's locales and localized
-	descriptions
-	* @param minDisplayRows the record set's minimum number of rows to be
-	displayed in spreadsheet view.
-	* @param serviceContext the service context to be applied. Can set the
-	record set modified date.
-	* @return the record set
-	* @throws PortalException if a portal exception occurred
-	*/
-	public DDLRecordSet updateRecordSet(long recordSetId, long ddmStructureId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, int minDisplayRows,
-		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* Updates the the record set's settings.
-	*
-	* @param recordSetId the primary key of the record set
-	* @param settingsDDMFormValues the record set's settings. For more
-	information see <code>DDMFormValues</code> in the
-	<code>dynamic.data.mapping.api</code> module.
-	* @return the record set
-	* @throws PortalException if a portal exception occurred
-	*/
-	public DDLRecordSet updateRecordSet(long recordSetId,
-		DDMFormValues settingsDDMFormValues) throws PortalException;
+	public void deleteRecordSet(long recordSetId) throws PortalException;
 }

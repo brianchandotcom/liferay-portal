@@ -50,11 +50,6 @@ public class EmailAddressServiceUtil {
 			primary, serviceContext);
 	}
 
-	public static void deleteEmailAddress(long emailAddressId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteEmailAddress(emailAddressId);
-	}
-
 	/**
 	* Returns the email address with the primary key.
 	*
@@ -75,10 +70,12 @@ public class EmailAddressServiceUtil {
 		return getService().getEmailAddress(emailAddressId);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.EmailAddress> getEmailAddresses(
-		java.lang.String className, long classPK)
+	public static com.liferay.portal.kernel.model.EmailAddress updateEmailAddress(
+		long emailAddressId, java.lang.String address, long typeId,
+		boolean primary)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getEmailAddresses(className, classPK);
+		return getService()
+				   .updateEmailAddress(emailAddressId, address, typeId, primary);
 	}
 
 	/**
@@ -90,12 +87,15 @@ public class EmailAddressServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.kernel.model.EmailAddress updateEmailAddress(
-		long emailAddressId, java.lang.String address, long typeId,
-		boolean primary)
+	public static java.util.List<com.liferay.portal.kernel.model.EmailAddress> getEmailAddresses(
+		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateEmailAddress(emailAddressId, address, typeId, primary);
+		return getService().getEmailAddresses(className, classPK);
+	}
+
+	public static void deleteEmailAddress(long emailAddressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteEmailAddress(emailAddressId);
 	}
 
 	public static EmailAddressService getService() {

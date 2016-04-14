@@ -57,18 +57,6 @@ public class MDRRuleLocalServiceUtil {
 		long ruleGroupId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String typeSettings,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addRule(ruleGroupId, nameMap, descriptionMap, type,
-			typeSettings, serviceContext);
-	}
-
-	public static com.liferay.mobile.device.rules.model.MDRRule addRule(
-		long ruleGroupId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -76,6 +64,18 @@ public class MDRRuleLocalServiceUtil {
 		return getService()
 				   .addRule(ruleGroupId, nameMap, descriptionMap, type,
 			typeSettingsProperties, serviceContext);
+	}
+
+	public static com.liferay.mobile.device.rules.model.MDRRule addRule(
+		long ruleGroupId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addRule(ruleGroupId, nameMap, descriptionMap, type,
+			typeSettings, serviceContext);
 	}
 
 	public static com.liferay.mobile.device.rules.model.MDRRule copyRule(
@@ -126,6 +126,110 @@ public class MDRRuleLocalServiceUtil {
 		return getService().deleteMDRRule(ruleId);
 	}
 
+	public static com.liferay.mobile.device.rules.model.MDRRule fetchMDRRule(
+		long ruleId) {
+		return getService().fetchMDRRule(ruleId);
+	}
+
+	/**
+	* Returns the m d r rule matching the UUID and group.
+	*
+	* @param uuid the m d r rule's UUID
+	* @param groupId the primary key of the group
+	* @return the matching m d r rule, or <code>null</code> if a matching m d r rule could not be found
+	*/
+	public static com.liferay.mobile.device.rules.model.MDRRule fetchMDRRuleByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchMDRRuleByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.mobile.device.rules.model.MDRRule fetchRule(
+		long ruleId) {
+		return getService().fetchRule(ruleId);
+	}
+
+	/**
+	* Returns the m d r rule with the primary key.
+	*
+	* @param ruleId the primary key of the m d r rule
+	* @return the m d r rule
+	* @throws PortalException if a m d r rule with the primary key could not be found
+	*/
+	public static com.liferay.mobile.device.rules.model.MDRRule getMDRRule(
+		long ruleId) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getMDRRule(ruleId);
+	}
+
+	/**
+	* Returns the m d r rule matching the UUID and group.
+	*
+	* @param uuid the m d r rule's UUID
+	* @param groupId the primary key of the group
+	* @return the matching m d r rule
+	* @throws PortalException if a matching m d r rule could not be found
+	*/
+	public static com.liferay.mobile.device.rules.model.MDRRule getMDRRuleByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getMDRRuleByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.mobile.device.rules.model.MDRRule getRule(
+		long ruleId) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getRule(ruleId);
+	}
+
+	/**
+	* Updates the m d r rule in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param mdrRule the m d r rule
+	* @return the m d r rule that was updated
+	*/
+	public static com.liferay.mobile.device.rules.model.MDRRule updateMDRRule(
+		com.liferay.mobile.device.rules.model.MDRRule mdrRule) {
+		return getService().updateMDRRule(mdrRule);
+	}
+
+	public static com.liferay.mobile.device.rules.model.MDRRule updateRule(
+		long ruleId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type,
+		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateRule(ruleId, nameMap, descriptionMap, type,
+			typeSettingsProperties, serviceContext);
+	}
+
+	public static com.liferay.mobile.device.rules.model.MDRRule updateRule(
+		long ruleId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateRule(ruleId, nameMap, descriptionMap, type,
+			typeSettings, serviceContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -135,21 +239,32 @@ public class MDRRuleLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static void deleteRule(
-		com.liferay.mobile.device.rules.model.MDRRule rule) {
-		getService().deleteRule(rule);
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static void deleteRule(long ruleId) {
-		getService().deleteRule(ruleId);
+	/**
+	* Returns the number of m d r rules.
+	*
+	* @return the number of m d r rules
+	*/
+	public static int getMDRRulesCount() {
+		return getService().getMDRRulesCount();
 	}
 
-	public static void deleteRules(long ruleGroupId) {
-		getService().deleteRules(ruleGroupId);
+	public static int getRulesCount(long ruleGroupId) {
+		return getService().getRulesCount(ruleGroupId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -203,91 +318,6 @@ public class MDRRuleLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.mobile.device.rules.model.MDRRule fetchMDRRule(
-		long ruleId) {
-		return getService().fetchMDRRule(ruleId);
-	}
-
-	/**
-	* Returns the m d r rule matching the UUID and group.
-	*
-	* @param uuid the m d r rule's UUID
-	* @param groupId the primary key of the group
-	* @return the matching m d r rule, or <code>null</code> if a matching m d r rule could not be found
-	*/
-	public static com.liferay.mobile.device.rules.model.MDRRule fetchMDRRuleByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchMDRRuleByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static com.liferay.mobile.device.rules.model.MDRRule fetchRule(
-		long ruleId) {
-		return getService().fetchRule(ruleId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the m d r rule with the primary key.
-	*
-	* @param ruleId the primary key of the m d r rule
-	* @return the m d r rule
-	* @throws PortalException if a m d r rule with the primary key could not be found
-	*/
-	public static com.liferay.mobile.device.rules.model.MDRRule getMDRRule(
-		long ruleId) throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getMDRRule(ruleId);
-	}
-
-	/**
-	* Returns the m d r rule matching the UUID and group.
-	*
-	* @param uuid the m d r rule's UUID
-	* @param groupId the primary key of the group
-	* @return the matching m d r rule
-	* @throws PortalException if a matching m d r rule could not be found
-	*/
-	public static com.liferay.mobile.device.rules.model.MDRRule getMDRRuleByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getMDRRuleByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
 	* Returns a range of all the m d r rules.
 	*
 	* <p>
@@ -333,35 +363,6 @@ public class MDRRuleLocalServiceUtil {
 			orderByComparator);
 	}
 
-	/**
-	* Returns the number of m d r rules.
-	*
-	* @return the number of m d r rules
-	*/
-	public static int getMDRRulesCount() {
-		return getService().getMDRRulesCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static com.liferay.mobile.device.rules.model.MDRRule getRule(
-		long ruleId) throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRule(ruleId);
-	}
-
 	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRule> getRules(
 		long ruleGroupId) {
 		return getService().getRules(ruleGroupId);
@@ -378,42 +379,41 @@ public class MDRRuleLocalServiceUtil {
 		return getService().getRules(ruleGroupId, start, end, obc);
 	}
 
-	public static int getRulesCount(long ruleGroupId) {
-		return getService().getRulesCount(ruleGroupId);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Updates the m d r rule in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param mdrRule the m d r rule
-	* @return the m d r rule that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public static com.liferay.mobile.device.rules.model.MDRRule updateMDRRule(
-		com.liferay.mobile.device.rules.model.MDRRule mdrRule) {
-		return getService().updateMDRRule(mdrRule);
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.mobile.device.rules.model.MDRRule updateRule(
-		long ruleId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type, java.lang.String typeSettings,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateRule(ruleId, nameMap, descriptionMap, type,
-			typeSettings, serviceContext);
+	public static void deleteRule(
+		com.liferay.mobile.device.rules.model.MDRRule rule) {
+		getService().deleteRule(rule);
 	}
 
-	public static com.liferay.mobile.device.rules.model.MDRRule updateRule(
-		long ruleId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String type,
-		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateRule(ruleId, nameMap, descriptionMap, type,
-			typeSettingsProperties, serviceContext);
+	public static void deleteRule(long ruleId) {
+		getService().deleteRule(ruleId);
+	}
+
+	public static void deleteRules(long ruleGroupId) {
+		getService().deleteRules(ruleGroupId);
 	}
 
 	public static MDRRuleLocalService getService() {

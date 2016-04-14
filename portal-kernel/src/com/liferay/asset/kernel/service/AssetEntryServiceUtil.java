@@ -46,40 +46,10 @@ public class AssetEntryServiceUtil {
 		return getService().fetchEntry(entryId);
 	}
 
-	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry> getCompanyEntries(
-		long companyId, int start, int end) {
-		return getService().getCompanyEntries(companyId, start, end);
-	}
-
-	public static int getCompanyEntriesCount(long companyId) {
-		return getService().getCompanyEntriesCount(companyId);
-	}
-
-	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry> getEntries(
-		com.liferay.asset.kernel.service.persistence.AssetEntryQuery entryQuery)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getEntries(entryQuery);
-	}
-
-	public static int getEntriesCount(
-		com.liferay.asset.kernel.service.persistence.AssetEntryQuery entryQuery)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getEntriesCount(entryQuery);
-	}
-
 	public static com.liferay.asset.kernel.model.AssetEntry getEntry(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getEntry(entryId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.asset.kernel.model.AssetEntry incrementViewCounter(
@@ -129,6 +99,36 @@ public class AssetEntryServiceUtil {
 			classPK, classUuid, classTypeId, categoryIds, tagNames, visible,
 			startDate, endDate, expirationDate, mimeType, title, description,
 			summary, url, layoutUuid, height, width, priority, sync);
+	}
+
+	public static int getCompanyEntriesCount(long companyId) {
+		return getService().getCompanyEntriesCount(companyId);
+	}
+
+	public static int getEntriesCount(
+		com.liferay.asset.kernel.service.persistence.AssetEntryQuery entryQuery)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getEntriesCount(entryQuery);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry> getCompanyEntries(
+		long companyId, int start, int end) {
+		return getService().getCompanyEntries(companyId, start, end);
+	}
+
+	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry> getEntries(
+		com.liferay.asset.kernel.service.persistence.AssetEntryQuery entryQuery)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getEntries(entryQuery);
 	}
 
 	public static AssetEntryService getService() {

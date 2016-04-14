@@ -52,13 +52,6 @@ public interface DLTrashService extends BaseService {
 	 */
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	/**
 	* Moves the file entry from a trashed folder to the new folder.
 	*
 	* @param fileEntryId the primary key of the file entry
@@ -118,6 +111,13 @@ public interface DLTrashService extends BaseService {
 	* @return the file entry
 	*/
 	public Folder moveFolderToTrash(long folderId) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Restores the file entry with the primary key from the trash portlet.

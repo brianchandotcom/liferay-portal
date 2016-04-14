@@ -57,6 +57,25 @@ public interface UserIdMapperLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserIdMapperLocalServiceUtil} to access the user ID mapper local service. Add custom service methods to {@link com.liferay.portal.service.impl.UserIdMapperLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Adds the user ID mapper to the database. Also notifies the appropriate model listeners.
@@ -74,13 +93,6 @@ public interface UserIdMapperLocalService extends BaseLocalService,
 	* @return the new user ID mapper
 	*/
 	public UserIdMapper createUserIdMapper(long userIdMapperId);
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
 
 	/**
 	* Deletes the user ID mapper from the database. Also notifies the appropriate model listeners.
@@ -102,9 +114,54 @@ public interface UserIdMapperLocalService extends BaseLocalService,
 	public UserIdMapper deleteUserIdMapper(long userIdMapperId)
 		throws PortalException;
 
-	public void deleteUserIdMappers(long userId);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UserIdMapper fetchUserIdMapper(long userIdMapperId);
 
-	public DynamicQuery dynamicQuery();
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UserIdMapper getUserIdMapper(long userId, java.lang.String type)
+		throws PortalException;
+
+	/**
+	* Returns the user ID mapper with the primary key.
+	*
+	* @param userIdMapperId the primary key of the user ID mapper
+	* @return the user ID mapper
+	* @throws PortalException if a user ID mapper with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UserIdMapper getUserIdMapper(long userIdMapperId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UserIdMapper getUserIdMapperByExternalUserId(java.lang.String type,
+		java.lang.String externalUserId) throws PortalException;
+
+	/**
+	* Updates the user ID mapper in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param userIdMapper the user ID mapper
+	* @return the user ID mapper that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public UserIdMapper updateUserIdMapper(UserIdMapper userIdMapper);
+
+	public UserIdMapper updateUserIdMapper(long userId, java.lang.String type,
+		java.lang.String description, java.lang.String externalUserId);
+
+	/**
+	* Returns the number of user ID mappers.
+	*
+	* @return the number of user ID mappers
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserIdMappersCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -146,64 +203,6 @@ public interface UserIdMapperLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserIdMapper fetchUserIdMapper(long userIdMapperId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserIdMapper getUserIdMapper(long userId, java.lang.String type)
-		throws PortalException;
-
-	/**
-	* Returns the user ID mapper with the primary key.
-	*
-	* @param userIdMapperId the primary key of the user ID mapper
-	* @return the user ID mapper
-	* @throws PortalException if a user ID mapper with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserIdMapper getUserIdMapper(long userIdMapperId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserIdMapper getUserIdMapperByExternalUserId(java.lang.String type,
-		java.lang.String externalUserId) throws PortalException;
-
-	/**
 	* Returns a range of all the user ID mappers.
 	*
 	* <p>
@@ -221,22 +220,22 @@ public interface UserIdMapperLocalService extends BaseLocalService,
 	public List<UserIdMapper> getUserIdMappers(long userId);
 
 	/**
-	* Returns the number of user ID mappers.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of user ID mappers
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserIdMappersCount();
-
-	public UserIdMapper updateUserIdMapper(long userId, java.lang.String type,
-		java.lang.String description, java.lang.String externalUserId);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Updates the user ID mapper in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param userIdMapper the user ID mapper
-	* @return the user ID mapper that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public UserIdMapper updateUserIdMapper(UserIdMapper userIdMapper);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	public void deleteUserIdMappers(long userId);
 }

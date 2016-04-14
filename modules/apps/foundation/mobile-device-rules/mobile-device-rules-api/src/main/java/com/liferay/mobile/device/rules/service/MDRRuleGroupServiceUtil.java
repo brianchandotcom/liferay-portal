@@ -59,39 +59,16 @@ public class MDRRuleGroupServiceUtil {
 		return getService().copyRuleGroup(ruleGroupId, groupId, serviceContext);
 	}
 
-	public static void deleteRuleGroup(long ruleGroupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRuleGroup(ruleGroupId);
-	}
-
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroup fetchRuleGroup(
 		long ruleGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().fetchRuleGroup(ruleGroupId);
 	}
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroup getRuleGroup(
 		long ruleGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRuleGroup(ruleGroupId);
-	}
-
-	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
-		long[] groupIds, int start, int end) {
-		return getService().getRuleGroups(groupIds, start, end);
-	}
-
-	public static int getRuleGroupsCount(long[] groupIds) {
-		return getService().getRuleGroupsCount(groupIds);
 	}
 
 	public static com.liferay.mobile.device.rules.model.MDRRuleGroup updateRuleGroup(
@@ -103,6 +80,29 @@ public class MDRRuleGroupServiceUtil {
 		return getService()
 				   .updateRuleGroup(ruleGroupId, nameMap, descriptionMap,
 			serviceContext);
+	}
+
+	public static int getRuleGroupsCount(long[] groupIds) {
+		return getService().getRuleGroupsCount(groupIds);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.mobile.device.rules.model.MDRRuleGroup> getRuleGroups(
+		long[] groupIds, int start, int end) {
+		return getService().getRuleGroups(groupIds, start, end);
+	}
+
+	public static void deleteRuleGroup(long ruleGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRuleGroup(ruleGroupId);
 	}
 
 	public static MDRRuleGroupService getService() {

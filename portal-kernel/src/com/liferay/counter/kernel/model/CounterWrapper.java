@@ -78,8 +78,38 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new CounterWrapper((Counter)_counter.clone());
+	public boolean isCachedModel() {
+		return _counter.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _counter.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _counter.isNew();
+	}
+
+	@Override
+	public com.liferay.counter.kernel.model.Counter toEscapedModel() {
+		return new CounterWrapper(_counter.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.counter.kernel.model.Counter toUnescapedModel() {
+		return new CounterWrapper(_counter.toUnescapedModel());
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _counter.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.counter.kernel.model.Counter> toCacheModel() {
+		return _counter.toCacheModel();
 	}
 
 	@Override
@@ -87,19 +117,19 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 		return _counter.compareTo(counter);
 	}
 
-	/**
-	* Returns the current ID of this counter.
-	*
-	* @return the current ID of this counter
-	*/
 	@Override
-	public long getCurrentId() {
-		return _counter.getCurrentId();
+	public int hashCode() {
+		return _counter.hashCode();
 	}
 
 	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _counter.getExpandoBridge();
+	public Serializable getPrimaryKeyObj() {
+		return _counter.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new CounterWrapper((Counter)_counter.clone());
 	}
 
 	/**
@@ -123,28 +153,23 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	}
 
 	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _counter.getPrimaryKeyObj();
+	public java.lang.String toString() {
+		return _counter.toString();
 	}
 
 	@Override
-	public int hashCode() {
-		return _counter.hashCode();
+	public java.lang.String toXmlString() {
+		return _counter.toXmlString();
 	}
 
+	/**
+	* Returns the current ID of this counter.
+	*
+	* @return the current ID of this counter
+	*/
 	@Override
-	public boolean isCachedModel() {
-		return _counter.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _counter.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _counter.isNew();
+	public long getCurrentId() {
+		return _counter.getCurrentId();
 	}
 
 	@Override
@@ -168,14 +193,14 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_counter.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_counter.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_counter.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_counter.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -211,31 +236,6 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_counter.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.counter.kernel.model.Counter> toCacheModel() {
-		return _counter.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.counter.kernel.model.Counter toEscapedModel() {
-		return new CounterWrapper(_counter.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _counter.toString();
-	}
-
-	@Override
-	public com.liferay.counter.kernel.model.Counter toUnescapedModel() {
-		return new CounterWrapper(_counter.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _counter.toXmlString();
 	}
 
 	@Override

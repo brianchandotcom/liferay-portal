@@ -68,6 +68,12 @@ public interface CalendarLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CalendarLocalServiceUtil} to access the calendar local service. Add custom service methods to {@link com.liferay.calendar.service.impl.CalendarLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasStagingCalendar(Calendar calendar)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isStagingCalendar(Calendar calendar);
 
 	/**
 	* Adds the calendar to the database. Also notifies the appropriate model listeners.
@@ -115,6 +121,79 @@ public interface CalendarLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public Calendar deleteCalendar(long calendarId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Calendar fetchCalendar(long calendarId);
+
+	/**
+	* Returns the calendar matching the UUID and group.
+	*
+	* @param uuid the calendar's UUID
+	* @param groupId the primary key of the group
+	* @return the matching calendar, or <code>null</code> if a matching calendar could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Calendar fetchCalendarByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
+
+	/**
+	* Returns the calendar with the primary key.
+	*
+	* @param calendarId the primary key of the calendar
+	* @return the calendar
+	* @throws PortalException if a calendar with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Calendar getCalendar(long calendarId) throws PortalException;
+
+	/**
+	* Returns the calendar matching the UUID and group.
+	*
+	* @param uuid the calendar's UUID
+	* @param groupId the primary key of the group
+	* @return the matching calendar
+	* @throws PortalException if a matching calendar could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Calendar getCalendarByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
+
+	/**
+	* Updates the calendar in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param calendar the calendar
+	* @return the calendar that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public Calendar updateCalendar(Calendar calendar);
+
+	public Calendar updateCalendar(long calendarId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap, int color,
+		ServiceContext serviceContext) throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public Calendar updateCalendar(long calendarId,
+		Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		java.lang.String timeZoneId, int color, boolean defaultCalendar,
+		boolean enableComments, boolean enableRatings,
+		ServiceContext serviceContext) throws PortalException;
+
+	public Calendar updateColor(long calendarId, int color,
+		ServiceContext serviceContext) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* @throws PortalException
 	*/
@@ -122,7 +201,38 @@ public interface CalendarLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the number of calendars.
+	*
+	* @return the number of calendars
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCalendarsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long[] groupIds,
+		long[] calendarResourceIds, java.lang.String keywords,
+		boolean andOperator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long companyId, long[] groupIds,
+		long[] calendarResourceIds, java.lang.String name,
+		java.lang.String description, boolean andOperator);
+
+	public java.lang.String exportCalendar(long calendarId,
+		java.lang.String type) throws java.lang.Exception;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -162,66 +272,6 @@ public interface CalendarLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	public java.lang.String exportCalendar(long calendarId,
-		java.lang.String type) throws java.lang.Exception;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Calendar fetchCalendar(long calendarId);
-
-	/**
-	* Returns the calendar matching the UUID and group.
-	*
-	* @param uuid the calendar's UUID
-	* @param groupId the primary key of the group
-	* @return the matching calendar, or <code>null</code> if a matching calendar could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Calendar fetchCalendarByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the calendar with the primary key.
-	*
-	* @param calendarId the primary key of the calendar
-	* @return the calendar
-	* @throws PortalException if a calendar with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Calendar getCalendar(long calendarId) throws PortalException;
-
-	/**
-	* Returns the calendar matching the UUID and group.
-	*
-	* @param uuid the calendar's UUID
-	* @param groupId the primary key of the group
-	* @return the matching calendar
-	* @throws PortalException if a matching calendar could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Calendar getCalendarByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Calendar> getCalendarResourceCalendars(long groupId,
@@ -271,43 +321,6 @@ public interface CalendarLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<Calendar> orderByComparator);
 
-	/**
-	* Returns the number of calendars.
-	*
-	* @return the number of calendars
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCalendarsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasStagingCalendar(Calendar calendar)
-		throws PortalException;
-
-	public void importCalendar(long calendarId, java.lang.String data,
-		java.lang.String type) throws java.lang.Exception;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isStagingCalendar(Calendar calendar);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Calendar> search(long companyId, long[] groupIds,
 		long[] calendarResourceIds, java.lang.String keywords,
@@ -320,41 +333,27 @@ public interface CalendarLocalService extends BaseLocalService,
 		java.lang.String description, boolean andOperator, int start, int end,
 		OrderByComparator<Calendar> orderByComparator);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds,
-		long[] calendarResourceIds, java.lang.String keywords,
-		boolean andOperator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int searchCount(long companyId, long[] groupIds,
-		long[] calendarResourceIds, java.lang.String name,
-		java.lang.String description, boolean andOperator);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Updates the calendar in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param calendar the calendar
-	* @return the calendar that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Calendar updateCalendar(Calendar calendar);
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	public void importCalendar(long calendarId, java.lang.String data,
+		java.lang.String type) throws java.lang.Exception;
 
 	public void updateCalendar(long calendarId, boolean defaultCalendar)
 		throws PortalException;
-
-	public Calendar updateCalendar(long calendarId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap, int color,
-		ServiceContext serviceContext) throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public Calendar updateCalendar(long calendarId,
-		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
-		java.lang.String timeZoneId, int color, boolean defaultCalendar,
-		boolean enableComments, boolean enableRatings,
-		ServiceContext serviceContext) throws PortalException;
-
-	public Calendar updateColor(long calendarId, int color,
-		ServiceContext serviceContext) throws PortalException;
 }

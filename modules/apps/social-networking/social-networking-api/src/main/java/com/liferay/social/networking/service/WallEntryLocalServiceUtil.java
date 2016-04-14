@@ -41,11 +41,31 @@ public class WallEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.social.networking.service.impl.WallEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.social.networking.model.WallEntry addWallEntry(
-		long groupId, long userId, java.lang.String comments,
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addWallEntry(groupId, userId, comments, themeDisplay);
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	/**
@@ -59,6 +79,13 @@ public class WallEntryLocalServiceUtil {
 		return getService().addWallEntry(wallEntry);
 	}
 
+	public static com.liferay.social.networking.model.WallEntry addWallEntry(
+		long groupId, long userId, java.lang.String comments,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addWallEntry(groupId, userId, comments, themeDisplay);
+	}
+
 	/**
 	* Creates a new wall entry with the primary key. Does not add the wall entry to the database.
 	*
@@ -68,20 +95,6 @@ public class WallEntryLocalServiceUtil {
 	public static com.liferay.social.networking.model.WallEntry createWallEntry(
 		long wallEntryId) {
 		return getService().createWallEntry(wallEntryId);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static void deleteWallEntries(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteWallEntries(groupId);
 	}
 
 	/**
@@ -110,8 +123,68 @@ public class WallEntryLocalServiceUtil {
 		return getService().deleteWallEntry(wallEntryId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static com.liferay.social.networking.model.WallEntry fetchWallEntry(
+		long wallEntryId) {
+		return getService().fetchWallEntry(wallEntryId);
+	}
+
+	/**
+	* Returns the wall entry with the primary key.
+	*
+	* @param wallEntryId the primary key of the wall entry
+	* @return the wall entry
+	* @throws PortalException if a wall entry with the primary key could not be found
+	*/
+	public static com.liferay.social.networking.model.WallEntry getWallEntry(
+		long wallEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getWallEntry(wallEntryId);
+	}
+
+	/**
+	* Updates the wall entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param wallEntry the wall entry
+	* @return the wall entry that was updated
+	*/
+	public static com.liferay.social.networking.model.WallEntry updateWallEntry(
+		com.liferay.social.networking.model.WallEntry wallEntry) {
+		return getService().updateWallEntry(wallEntry);
+	}
+
+	public static com.liferay.social.networking.model.WallEntry updateWallEntry(
+		long wallEntryId, java.lang.String comments)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateWallEntry(wallEntryId, comments);
+	}
+
+	/**
+	* Returns the number of wall entries.
+	*
+	* @return the number of wall entries
+	*/
+	public static int getWallEntriesCount() {
+		return getService().getWallEntriesCount();
+	}
+
+	public static int getWallEntriesCount(long groupId) {
+		return getService().getWallEntriesCount(groupId);
+	}
+
+	public static int getWallToWallEntriesCount(long groupId1, long groupId2,
+		long userId1, long userId2) {
+		return getService()
+				   .getWallToWallEntriesCount(groupId1, groupId2, userId1,
+			userId2);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -165,6 +238,35 @@ public class WallEntryLocalServiceUtil {
 	}
 
 	/**
+	* Returns a range of all the wall entries.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of wall entries
+	* @param end the upper bound of the range of wall entries (not inclusive)
+	* @return the range of wall entries
+	*/
+	public static java.util.List<com.liferay.social.networking.model.WallEntry> getWallEntries(
+		int start, int end) {
+		return getService().getWallEntries(start, end);
+	}
+
+	public static java.util.List<com.liferay.social.networking.model.WallEntry> getWallEntries(
+		long groupId, int start, int end) {
+		return getService().getWallEntries(groupId, start, end);
+	}
+
+	public static java.util.List<com.liferay.social.networking.model.WallEntry> getWallToWallEntries(
+		long groupId1, long groupId2, long userId1, long userId2, int start,
+		int end) {
+		return getService()
+				   .getWallToWallEntries(groupId1, groupId2, userId1, userId2,
+			start, end);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -188,111 +290,9 @@ public class WallEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.social.networking.model.WallEntry fetchWallEntry(
-		long wallEntryId) {
-		return getService().fetchWallEntry(wallEntryId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	public static void deleteWallEntries(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static java.util.List<com.liferay.social.networking.model.WallEntry> getWallEntries(
-		long groupId, int start, int end) {
-		return getService().getWallEntries(groupId, start, end);
-	}
-
-	/**
-	* Returns a range of all the wall entries.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.social.networking.model.impl.WallEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of wall entries
-	* @param end the upper bound of the range of wall entries (not inclusive)
-	* @return the range of wall entries
-	*/
-	public static java.util.List<com.liferay.social.networking.model.WallEntry> getWallEntries(
-		int start, int end) {
-		return getService().getWallEntries(start, end);
-	}
-
-	/**
-	* Returns the number of wall entries.
-	*
-	* @return the number of wall entries
-	*/
-	public static int getWallEntriesCount() {
-		return getService().getWallEntriesCount();
-	}
-
-	public static int getWallEntriesCount(long groupId) {
-		return getService().getWallEntriesCount(groupId);
-	}
-
-	/**
-	* Returns the wall entry with the primary key.
-	*
-	* @param wallEntryId the primary key of the wall entry
-	* @return the wall entry
-	* @throws PortalException if a wall entry with the primary key could not be found
-	*/
-	public static com.liferay.social.networking.model.WallEntry getWallEntry(
-		long wallEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getWallEntry(wallEntryId);
-	}
-
-	public static java.util.List<com.liferay.social.networking.model.WallEntry> getWallToWallEntries(
-		long groupId1, long groupId2, long userId1, long userId2, int start,
-		int end) {
-		return getService()
-				   .getWallToWallEntries(groupId1, groupId2, userId1, userId2,
-			start, end);
-	}
-
-	public static int getWallToWallEntriesCount(long groupId1, long groupId2,
-		long userId1, long userId2) {
-		return getService()
-				   .getWallToWallEntriesCount(groupId1, groupId2, userId1,
-			userId2);
-	}
-
-	/**
-	* Updates the wall entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param wallEntry the wall entry
-	* @return the wall entry that was updated
-	*/
-	public static com.liferay.social.networking.model.WallEntry updateWallEntry(
-		com.liferay.social.networking.model.WallEntry wallEntry) {
-		return getService().updateWallEntry(wallEntry);
-	}
-
-	public static com.liferay.social.networking.model.WallEntry updateWallEntry(
-		long wallEntryId, java.lang.String comments)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateWallEntry(wallEntryId, comments);
+		getService().deleteWallEntries(groupId);
 	}
 
 	public static WallEntryLocalService getService() {

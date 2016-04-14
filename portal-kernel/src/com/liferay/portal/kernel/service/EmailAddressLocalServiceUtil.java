@@ -40,6 +40,22 @@ public class EmailAddressLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.EmailAddressLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
 
 	/**
 	* Adds the email address to the database. Also notifies the appropriate model listeners.
@@ -97,9 +113,67 @@ public class EmailAddressLocalServiceUtil {
 		return getService().deleteEmailAddress(emailAddressId);
 	}
 
-	public static void deleteEmailAddresses(long companyId,
-		java.lang.String className, long classPK) {
-		getService().deleteEmailAddresses(companyId, className, classPK);
+	public static com.liferay.portal.kernel.model.EmailAddress fetchEmailAddress(
+		long emailAddressId) {
+		return getService().fetchEmailAddress(emailAddressId);
+	}
+
+	/**
+	* Returns the email address with the matching UUID and company.
+	*
+	* @param uuid the email address's UUID
+	* @param companyId the primary key of the company
+	* @return the matching email address, or <code>null</code> if a matching email address could not be found
+	*/
+	public static com.liferay.portal.kernel.model.EmailAddress fetchEmailAddressByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().fetchEmailAddressByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns the email address with the primary key.
+	*
+	* @param emailAddressId the primary key of the email address
+	* @return the email address
+	* @throws PortalException if a email address with the primary key could not be found
+	*/
+	public static com.liferay.portal.kernel.model.EmailAddress getEmailAddress(
+		long emailAddressId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getEmailAddress(emailAddressId);
+	}
+
+	/**
+	* Returns the email address with the matching UUID and company.
+	*
+	* @param uuid the email address's UUID
+	* @param companyId the primary key of the company
+	* @return the matching email address
+	* @throws PortalException if a matching email address could not be found
+	*/
+	public static com.liferay.portal.kernel.model.EmailAddress getEmailAddressByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getEmailAddressByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Updates the email address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param emailAddress the email address
+	* @return the email address that was updated
+	*/
+	public static com.liferay.portal.kernel.model.EmailAddress updateEmailAddress(
+		com.liferay.portal.kernel.model.EmailAddress emailAddress) {
+		return getService().updateEmailAddress(emailAddress);
+	}
+
+	public static com.liferay.portal.kernel.model.EmailAddress updateEmailAddress(
+		long emailAddressId, java.lang.String address, long typeId,
+		boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateEmailAddress(emailAddressId, address, typeId, primary);
 	}
 
 	/**
@@ -111,8 +185,28 @@ public class EmailAddressLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the number of email addresses.
+	*
+	* @return the number of email addresses
+	*/
+	public static int getEmailAddressesCount() {
+		return getService().getEmailAddressesCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -165,6 +259,31 @@ public class EmailAddressLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.model.EmailAddress> getEmailAddresses() {
+		return getService().getEmailAddresses();
+	}
+
+	/**
+	* Returns a range of all the email addresses.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.EmailAddressModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of email addresses
+	* @param end the upper bound of the range of email addresses (not inclusive)
+	* @return the range of email addresses
+	*/
+	public static java.util.List<com.liferay.portal.kernel.model.EmailAddress> getEmailAddresses(
+		int start, int end) {
+		return getService().getEmailAddresses(start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.EmailAddress> getEmailAddresses(
+		long companyId, java.lang.String className, long classPK) {
+		return getService().getEmailAddresses(companyId, className, classPK);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -189,129 +308,9 @@ public class EmailAddressLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.kernel.model.EmailAddress fetchEmailAddress(
-		long emailAddressId) {
-		return getService().fetchEmailAddress(emailAddressId);
-	}
-
-	/**
-	* Returns the email address with the matching UUID and company.
-	*
-	* @param uuid the email address's UUID
-	* @param companyId the primary key of the company
-	* @return the matching email address, or <code>null</code> if a matching email address could not be found
-	*/
-	public static com.liferay.portal.kernel.model.EmailAddress fetchEmailAddressByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return getService().fetchEmailAddressByUuidAndCompanyId(uuid, companyId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the email address with the primary key.
-	*
-	* @param emailAddressId the primary key of the email address
-	* @return the email address
-	* @throws PortalException if a email address with the primary key could not be found
-	*/
-	public static com.liferay.portal.kernel.model.EmailAddress getEmailAddress(
-		long emailAddressId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getEmailAddress(emailAddressId);
-	}
-
-	/**
-	* Returns the email address with the matching UUID and company.
-	*
-	* @param uuid the email address's UUID
-	* @param companyId the primary key of the company
-	* @return the matching email address
-	* @throws PortalException if a matching email address could not be found
-	*/
-	public static com.liferay.portal.kernel.model.EmailAddress getEmailAddressByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getEmailAddressByUuidAndCompanyId(uuid, companyId);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.EmailAddress> getEmailAddresses() {
-		return getService().getEmailAddresses();
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.EmailAddress> getEmailAddresses(
-		long companyId, java.lang.String className, long classPK) {
-		return getService().getEmailAddresses(companyId, className, classPK);
-	}
-
-	/**
-	* Returns a range of all the email addresses.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.EmailAddressModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of email addresses
-	* @param end the upper bound of the range of email addresses (not inclusive)
-	* @return the range of email addresses
-	*/
-	public static java.util.List<com.liferay.portal.kernel.model.EmailAddress> getEmailAddresses(
-		int start, int end) {
-		return getService().getEmailAddresses(start, end);
-	}
-
-	/**
-	* Returns the number of email addresses.
-	*
-	* @return the number of email addresses
-	*/
-	public static int getEmailAddressesCount() {
-		return getService().getEmailAddressesCount();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Updates the email address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param emailAddress the email address
-	* @return the email address that was updated
-	*/
-	public static com.liferay.portal.kernel.model.EmailAddress updateEmailAddress(
-		com.liferay.portal.kernel.model.EmailAddress emailAddress) {
-		return getService().updateEmailAddress(emailAddress);
-	}
-
-	public static com.liferay.portal.kernel.model.EmailAddress updateEmailAddress(
-		long emailAddressId, java.lang.String address, long typeId,
-		boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateEmailAddress(emailAddressId, address, typeId, primary);
+	public static void deleteEmailAddresses(long companyId,
+		java.lang.String className, long classPK) {
+		getService().deleteEmailAddresses(companyId, className, classPK);
 	}
 
 	public static EmailAddressLocalService getService() {

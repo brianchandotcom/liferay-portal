@@ -51,9 +51,37 @@ public class ShoppingCategoryServiceUtil {
 			serviceContext);
 	}
 
-	public static void deleteCategory(long categoryId)
+	public static com.liferay.shopping.model.ShoppingCategory getCategory(
+		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCategory(categoryId);
+		return getService().getCategory(categoryId);
+	}
+
+	public static com.liferay.shopping.model.ShoppingCategory updateCategory(
+		long categoryId, long parentCategoryId, java.lang.String name,
+		java.lang.String description, boolean mergeWithParentCategory,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCategory(categoryId, parentCategoryId, name,
+			description, mergeWithParentCategory, serviceContext);
+	}
+
+	public static int getCategoriesAndItemsCount(long groupId, long categoryId) {
+		return getService().getCategoriesAndItemsCount(groupId, categoryId);
+	}
+
+	public static int getCategoriesCount(long groupId, long parentCategoryId) {
+		return getService().getCategoriesCount(groupId, parentCategoryId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static java.util.List<com.liferay.shopping.model.ShoppingCategory> getCategories(
@@ -73,43 +101,15 @@ public class ShoppingCategoryServiceUtil {
 				   .getCategoriesAndItems(groupId, categoryId, start, end, obc);
 	}
 
-	public static int getCategoriesAndItemsCount(long groupId, long categoryId) {
-		return getService().getCategoriesAndItemsCount(groupId, categoryId);
-	}
-
-	public static int getCategoriesCount(long groupId, long parentCategoryId) {
-		return getService().getCategoriesCount(groupId, parentCategoryId);
-	}
-
-	public static com.liferay.shopping.model.ShoppingCategory getCategory(
-		long categoryId)
+	public static void deleteCategory(long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCategory(categoryId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+		getService().deleteCategory(categoryId);
 	}
 
 	public static void getSubcategoryIds(
 		java.util.List<java.lang.Long> categoryIds, long groupId,
 		long categoryId) {
 		getService().getSubcategoryIds(categoryIds, groupId, categoryId);
-	}
-
-	public static com.liferay.shopping.model.ShoppingCategory updateCategory(
-		long categoryId, long parentCategoryId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentCategory,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateCategory(categoryId, parentCategoryId, name,
-			description, mergeWithParentCategory, serviceContext);
 	}
 
 	public static ShoppingCategoryService getService() {

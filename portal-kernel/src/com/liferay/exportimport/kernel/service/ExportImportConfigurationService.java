@@ -48,7 +48,10 @@ public interface ExportImportConfigurationService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ExportImportConfigurationServiceUtil} to access the export import configuration remote service. Add custom service methods to {@link com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void deleteExportImportConfiguration(
+	public ExportImportConfiguration moveExportImportConfigurationToTrash(
+		long exportImportConfigurationId) throws PortalException;
+
+	public ExportImportConfiguration restoreExportImportConfigurationFromTrash(
 		long exportImportConfigurationId) throws PortalException;
 
 	/**
@@ -58,9 +61,6 @@ public interface ExportImportConfigurationService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public ExportImportConfiguration moveExportImportConfigurationToTrash(
-		long exportImportConfigurationId) throws PortalException;
-
-	public ExportImportConfiguration restoreExportImportConfigurationFromTrash(
+	public void deleteExportImportConfiguration(
 		long exportImportConfigurationId) throws PortalException;
 }

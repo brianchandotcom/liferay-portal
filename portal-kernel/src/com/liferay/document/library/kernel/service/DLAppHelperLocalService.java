@@ -59,57 +59,17 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link DLAppHelperLocalServiceUtil} to access the d l app helper local service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLAppHelperLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public void addFolder(long userId, Folder folder,
-		ServiceContext serviceContext) throws PortalException;
+	public AssetEntry updateAsset(long userId, FileEntry fileEntry,
+		FileVersion fileVersion, long assetClassPk) throws PortalException;
 
-	public void cancelCheckOut(long userId, FileEntry fileEntry,
-		FileVersion sourceFileVersion, FileVersion destinationFileVersion,
-		FileVersion draftFileVersion, ServiceContext serviceContext)
+	public AssetEntry updateAsset(long userId, FileEntry fileEntry,
+		FileVersion fileVersion, long[] assetCategoryIds,
+		java.lang.String[] assetTagNames, long[] assetLinkEntryIds)
 		throws PortalException;
 
-	public void checkAssetEntry(long userId, FileEntry fileEntry,
-		FileVersion fileVersion) throws PortalException;
-
-	public void deleteFileEntry(FileEntry fileEntry) throws PortalException;
-
-	public void deleteFolder(Folder folder) throws PortalException;
-
-	public void deleteRepositoryFileEntries(long repositoryId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getFileAsStream(long userId, FileEntry fileEntry,
-		boolean incrementCounter);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLFileShortcut> getFileShortcuts(long groupId, long folderId,
-		boolean active, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getFileShortcutsCount(long groupId, long folderId,
-		boolean active, int status);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<FileEntry> getNoAssetFileEntries();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#moveDependentsToTrash(DLFolder)}
-	*/
-	@java.lang.Deprecated
-	public void moveDependentsToTrash(
-		List<java.lang.Object> dlFileEntriesAndDLFolders, long trashEntryId)
-		throws PortalException;
-
-	public void moveDependentsToTrash(DLFolder dlFolder)
-		throws PortalException;
+	public AssetEntry updateAsset(long userId, Folder folder,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetLinkEntryIds) throws PortalException;
 
 	public FileEntry moveFileEntryFromTrash(long userId, FileEntry fileEntry,
 		long newFolderId, ServiceContext serviceContext)
@@ -153,6 +113,61 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	public Folder moveFolderToTrash(long userId, Folder folder)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFileShortcutsCount(long groupId, long folderId,
+		boolean active, int status);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLFileShortcut> getFileShortcuts(long groupId, long folderId,
+		boolean active, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FileEntry> getNoAssetFileEntries();
+
+	public void addFolder(long userId, Folder folder,
+		ServiceContext serviceContext) throws PortalException;
+
+	public void cancelCheckOut(long userId, FileEntry fileEntry,
+		FileVersion sourceFileVersion, FileVersion destinationFileVersion,
+		FileVersion draftFileVersion, ServiceContext serviceContext)
+		throws PortalException;
+
+	public void checkAssetEntry(long userId, FileEntry fileEntry,
+		FileVersion fileVersion) throws PortalException;
+
+	public void deleteFileEntry(FileEntry fileEntry) throws PortalException;
+
+	public void deleteFolder(Folder folder) throws PortalException;
+
+	public void deleteRepositoryFileEntries(long repositoryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public void getFileAsStream(long userId, FileEntry fileEntry,
+		boolean incrementCounter);
+
+	public void moveDependentsToTrash(DLFolder dlFolder)
+		throws PortalException;
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#moveDependentsToTrash(DLFolder)}
+	*/
+	@java.lang.Deprecated
+	public void moveDependentsToTrash(
+		List<java.lang.Object> dlFileEntriesAndDLFolders, long trashEntryId)
+		throws PortalException;
+
+	public void restoreDependentsFromTrash(DLFolder dlFolder)
+		throws PortalException;
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
 	#restoreDependentsFromTrash(DLFolder)}
@@ -171,9 +186,6 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		List<java.lang.Object> dlFileEntriesAndDLFolders, long trashEntryId)
 		throws PortalException;
 
-	public void restoreDependentsFromTrash(DLFolder dlFolder)
-		throws PortalException;
-
 	public void restoreFileEntryFromTrash(long userId, FileEntry fileEntry)
 		throws PortalException;
 
@@ -183,25 +195,13 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	public void restoreFolderFromTrash(long userId, Folder folder)
 		throws PortalException;
 
-	public AssetEntry updateAsset(long userId, FileEntry fileEntry,
-		FileVersion fileVersion, long[] assetCategoryIds,
-		java.lang.String[] assetTagNames, long[] assetLinkEntryIds)
-		throws PortalException;
-
-	public AssetEntry updateAsset(long userId, FileEntry fileEntry,
-		FileVersion fileVersion, long assetClassPk) throws PortalException;
-
-	public AssetEntry updateAsset(long userId, Folder folder,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds) throws PortalException;
+	public void updateFileEntry(long userId, FileEntry fileEntry,
+		FileVersion sourceFileVersion, FileVersion destinationFileVersion,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void updateFileEntry(long userId, FileEntry fileEntry,
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion,
 		long assetClassPk) throws PortalException;
-
-	public void updateFileEntry(long userId, FileEntry fileEntry,
-		FileVersion sourceFileVersion, FileVersion destinationFileVersion,
-		ServiceContext serviceContext) throws PortalException;
 
 	public void updateFolder(long userId, Folder folder,
 		ServiceContext serviceContext) throws PortalException;

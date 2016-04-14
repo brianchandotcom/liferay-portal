@@ -150,8 +150,38 @@ public class MemberRequestWrapper implements MemberRequest,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new MemberRequestWrapper((MemberRequest)_memberRequest.clone());
+	public boolean isCachedModel() {
+		return _memberRequest.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _memberRequest.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _memberRequest.isNew();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _memberRequest.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.invitation.invite.members.model.MemberRequest toEscapedModel() {
+		return new MemberRequestWrapper(_memberRequest.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.invitation.invite.members.model.MemberRequest toUnescapedModel() {
+		return new MemberRequestWrapper(_memberRequest.toUnescapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.invitation.invite.members.model.MemberRequest> toCacheModel() {
+		return _memberRequest.toCacheModel();
 	}
 
 	@Override
@@ -161,13 +191,78 @@ public class MemberRequestWrapper implements MemberRequest,
 	}
 
 	/**
-	* Returns the company ID of this member request.
+	* Returns the status of this member request.
 	*
-	* @return the company ID of this member request
+	* @return the status of this member request
 	*/
 	@Override
-	public long getCompanyId() {
-		return _memberRequest.getCompanyId();
+	public int getStatus() {
+		return _memberRequest.getStatus();
+	}
+
+	@Override
+	public int hashCode() {
+		return _memberRequest.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _memberRequest.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new MemberRequestWrapper((MemberRequest)_memberRequest.clone());
+	}
+
+	/**
+	* Returns the key of this member request.
+	*
+	* @return the key of this member request
+	*/
+	@Override
+	public java.lang.String getKey() {
+		return _memberRequest.getKey();
+	}
+
+	/**
+	* Returns the receiver user uuid of this member request.
+	*
+	* @return the receiver user uuid of this member request
+	*/
+	@Override
+	public java.lang.String getReceiverUserUuid() {
+		return _memberRequest.getReceiverUserUuid();
+	}
+
+	/**
+	* Returns the user name of this member request.
+	*
+	* @return the user name of this member request
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _memberRequest.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this member request.
+	*
+	* @return the user uuid of this member request
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _memberRequest.getUserUuid();
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _memberRequest.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _memberRequest.toXmlString();
 	}
 
 	/**
@@ -180,9 +275,24 @@ public class MemberRequestWrapper implements MemberRequest,
 		return _memberRequest.getCreateDate();
 	}
 
+	/**
+	* Returns the modified date of this member request.
+	*
+	* @return the modified date of this member request
+	*/
 	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _memberRequest.getExpandoBridge();
+	public Date getModifiedDate() {
+		return _memberRequest.getModifiedDate();
+	}
+
+	/**
+	* Returns the company ID of this member request.
+	*
+	* @return the company ID of this member request
+	*/
+	@Override
+	public long getCompanyId() {
+		return _memberRequest.getCompanyId();
 	}
 
 	/**
@@ -216,16 +326,6 @@ public class MemberRequestWrapper implements MemberRequest,
 	}
 
 	/**
-	* Returns the key of this member request.
-	*
-	* @return the key of this member request
-	*/
-	@Override
-	public java.lang.String getKey() {
-		return _memberRequest.getKey();
-	}
-
-	/**
 	* Returns the member request ID of this member request.
 	*
 	* @return the member request ID of this member request
@@ -236,16 +336,6 @@ public class MemberRequestWrapper implements MemberRequest,
 	}
 
 	/**
-	* Returns the modified date of this member request.
-	*
-	* @return the modified date of this member request
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _memberRequest.getModifiedDate();
-	}
-
-	/**
 	* Returns the primary key of this member request.
 	*
 	* @return the primary key of this member request
@@ -253,11 +343,6 @@ public class MemberRequestWrapper implements MemberRequest,
 	@Override
 	public long getPrimaryKey() {
 		return _memberRequest.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _memberRequest.getPrimaryKeyObj();
 	}
 
 	/**
@@ -271,26 +356,6 @@ public class MemberRequestWrapper implements MemberRequest,
 	}
 
 	/**
-	* Returns the receiver user uuid of this member request.
-	*
-	* @return the receiver user uuid of this member request
-	*/
-	@Override
-	public java.lang.String getReceiverUserUuid() {
-		return _memberRequest.getReceiverUserUuid();
-	}
-
-	/**
-	* Returns the status of this member request.
-	*
-	* @return the status of this member request
-	*/
-	@Override
-	public int getStatus() {
-		return _memberRequest.getStatus();
-	}
-
-	/**
 	* Returns the user ID of this member request.
 	*
 	* @return the user ID of this member request
@@ -298,46 +363,6 @@ public class MemberRequestWrapper implements MemberRequest,
 	@Override
 	public long getUserId() {
 		return _memberRequest.getUserId();
-	}
-
-	/**
-	* Returns the user name of this member request.
-	*
-	* @return the user name of this member request
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _memberRequest.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this member request.
-	*
-	* @return the user uuid of this member request
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _memberRequest.getUserUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _memberRequest.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _memberRequest.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _memberRequest.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _memberRequest.isNew();
 	}
 
 	@Override
@@ -371,14 +396,14 @@ public class MemberRequestWrapper implements MemberRequest,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_memberRequest.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_memberRequest.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_memberRequest.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_memberRequest.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -524,31 +549,6 @@ public class MemberRequestWrapper implements MemberRequest,
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
 		_memberRequest.setUserUuid(userUuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.invitation.invite.members.model.MemberRequest> toCacheModel() {
-		return _memberRequest.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.invitation.invite.members.model.MemberRequest toEscapedModel() {
-		return new MemberRequestWrapper(_memberRequest.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _memberRequest.toString();
-	}
-
-	@Override
-	public com.liferay.invitation.invite.members.model.MemberRequest toUnescapedModel() {
-		return new MemberRequestWrapper(_memberRequest.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _memberRequest.toXmlString();
 	}
 
 	@Override

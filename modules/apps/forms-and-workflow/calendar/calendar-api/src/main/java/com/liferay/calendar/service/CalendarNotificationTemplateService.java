@@ -61,16 +61,16 @@ public interface CalendarNotificationTemplateService extends BaseService {
 		java.lang.String subject, java.lang.String body,
 		ServiceContext serviceContext) throws PortalException;
 
+	public CalendarNotificationTemplate updateCalendarNotificationTemplate(
+		long calendarNotificationTemplateId,
+		java.lang.String notificationTypeSettings, java.lang.String subject,
+		java.lang.String body, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
-
-	public CalendarNotificationTemplate updateCalendarNotificationTemplate(
-		long calendarNotificationTemplateId,
-		java.lang.String notificationTypeSettings, java.lang.String subject,
-		java.lang.String body, ServiceContext serviceContext)
-		throws PortalException;
 }

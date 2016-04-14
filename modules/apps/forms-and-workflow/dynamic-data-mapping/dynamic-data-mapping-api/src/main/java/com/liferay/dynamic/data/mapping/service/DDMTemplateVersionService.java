@@ -59,6 +59,14 @@ public interface DDMTemplateVersionService extends BaseService {
 	public DDMTemplateVersion getLatestTemplateVersion(long templateId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMTemplateVersion getTemplateVersion(long templateVersionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getTemplateVersionsCount(long templateId)
+		throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -67,16 +75,8 @@ public interface DDMTemplateVersionService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDMTemplateVersion getTemplateVersion(long templateVersionId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMTemplateVersion> getTemplateVersions(long templateId,
 		int start, int end,
 		OrderByComparator<DDMTemplateVersion> orderByComparator)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getTemplateVersionsCount(long templateId)
 		throws PortalException;
 }

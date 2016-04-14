@@ -33,6 +33,38 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 		_meetupsEntryLocalService = meetupsEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _meetupsEntryLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _meetupsEntryLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _meetupsEntryLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _meetupsEntryLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _meetupsEntryLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Adds the meetups entry to the database. Also notifies the appropriate model listeners.
 	*
@@ -98,19 +130,72 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 		return _meetupsEntryLocalService.deleteMeetupsEntry(meetupsEntryId);
 	}
 
+	@Override
+	public com.liferay.social.networking.model.MeetupsEntry fetchMeetupsEntry(
+		long meetupsEntryId) {
+		return _meetupsEntryLocalService.fetchMeetupsEntry(meetupsEntryId);
+	}
+
 	/**
-	* @throws PortalException
+	* Returns the meetups entry with the primary key.
+	*
+	* @param meetupsEntryId the primary key of the meetups entry
+	* @return the meetups entry
+	* @throws PortalException if a meetups entry with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+	public com.liferay.social.networking.model.MeetupsEntry getMeetupsEntry(
+		long meetupsEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _meetupsEntryLocalService.deletePersistedModel(persistedModel);
+		return _meetupsEntryLocalService.getMeetupsEntry(meetupsEntryId);
+	}
+
+	/**
+	* Updates the meetups entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param meetupsEntry the meetups entry
+	* @return the meetups entry that was updated
+	*/
+	@Override
+	public com.liferay.social.networking.model.MeetupsEntry updateMeetupsEntry(
+		com.liferay.social.networking.model.MeetupsEntry meetupsEntry) {
+		return _meetupsEntryLocalService.updateMeetupsEntry(meetupsEntry);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _meetupsEntryLocalService.dynamicQuery();
+	public com.liferay.social.networking.model.MeetupsEntry updateMeetupsEntry(
+		long userId, long meetupsEntryId, java.lang.String title,
+		java.lang.String description, int startDateMonth, int startDateDay,
+		int startDateYear, int startDateHour, int startDateMinute,
+		int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
+		int endDateMinute, int totalAttendees, int maxAttendees, double price,
+		byte[] thumbnail)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _meetupsEntryLocalService.updateMeetupsEntry(userId,
+			meetupsEntryId, title, description, startDateMonth, startDateDay,
+			startDateYear, startDateHour, startDateMinute, endDateMonth,
+			endDateDay, endDateYear, endDateHour, endDateMinute,
+			totalAttendees, maxAttendees, price, thumbnail);
+	}
+
+	/**
+	* Returns the number of meetups entries.
+	*
+	* @return the number of meetups entries
+	*/
+	@Override
+	public int getMeetupsEntriesCount() {
+		return _meetupsEntryLocalService.getMeetupsEntriesCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _meetupsEntryLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -167,49 +252,6 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _meetupsEntryLocalService.dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _meetupsEntryLocalService.dynamicQueryCount(dynamicQuery,
-			projection);
-	}
-
-	@Override
-	public com.liferay.social.networking.model.MeetupsEntry fetchMeetupsEntry(
-		long meetupsEntryId) {
-		return _meetupsEntryLocalService.fetchMeetupsEntry(meetupsEntryId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _meetupsEntryLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _meetupsEntryLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
 	* Returns a range of all the meetups entries.
 	*
 	* <p>
@@ -239,72 +281,30 @@ public class MeetupsEntryLocalServiceWrapper implements MeetupsEntryLocalService
 	}
 
 	/**
-	* Returns the number of meetups entries.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of meetups entries
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
-	public int getMeetupsEntriesCount() {
-		return _meetupsEntryLocalService.getMeetupsEntriesCount();
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _meetupsEntryLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the meetups entry with the primary key.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param meetupsEntryId the primary key of the meetups entry
-	* @return the meetups entry
-	* @throws PortalException if a meetups entry with the primary key could not be found
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
-	public com.liferay.social.networking.model.MeetupsEntry getMeetupsEntry(
-		long meetupsEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _meetupsEntryLocalService.getMeetupsEntry(meetupsEntryId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _meetupsEntryLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _meetupsEntryLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Updates the meetups entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param meetupsEntry the meetups entry
-	* @return the meetups entry that was updated
-	*/
-	@Override
-	public com.liferay.social.networking.model.MeetupsEntry updateMeetupsEntry(
-		com.liferay.social.networking.model.MeetupsEntry meetupsEntry) {
-		return _meetupsEntryLocalService.updateMeetupsEntry(meetupsEntry);
-	}
-
-	@Override
-	public com.liferay.social.networking.model.MeetupsEntry updateMeetupsEntry(
-		long userId, long meetupsEntryId, java.lang.String title,
-		java.lang.String description, int startDateMonth, int startDateDay,
-		int startDateYear, int startDateHour, int startDateMinute,
-		int endDateMonth, int endDateDay, int endDateYear, int endDateHour,
-		int endDateMinute, int totalAttendees, int maxAttendees, double price,
-		byte[] thumbnail)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _meetupsEntryLocalService.updateMeetupsEntry(userId,
-			meetupsEntryId, title, description, startDateMonth, startDateDay,
-			startDateYear, startDateHour, startDateMinute, endDateMonth,
-			endDateDay, endDateYear, endDateHour, endDateMinute,
-			totalAttendees, maxAttendees, price, thumbnail);
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _meetupsEntryLocalService.dynamicQueryCount(dynamicQuery,
+			projection);
 	}
 
 	@Override

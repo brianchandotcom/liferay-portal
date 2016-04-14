@@ -193,326 +193,6 @@ public class JournalFolderWrapper implements JournalFolder,
 		}
 	}
 
-	@Override
-	public java.lang.String buildTreePath()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalFolder.buildTreePath();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new JournalFolderWrapper((JournalFolder)_journalFolder.clone());
-	}
-
-	@Override
-	public int compareTo(com.liferay.journal.model.JournalFolder journalFolder) {
-		return _journalFolder.compareTo(journalFolder);
-	}
-
-	@Override
-	public java.util.List<java.lang.Long> getAncestorFolderIds()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalFolder.getAncestorFolderIds();
-	}
-
-	@Override
-	public java.util.List<com.liferay.journal.model.JournalFolder> getAncestors()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalFolder.getAncestors();
-	}
-
-	/**
-	* Returns the company ID of this journal folder.
-	*
-	* @return the company ID of this journal folder
-	*/
-	@Override
-	public long getCompanyId() {
-		return _journalFolder.getCompanyId();
-	}
-
-	/**
-	* Returns the container model ID of this journal folder.
-	*
-	* @return the container model ID of this journal folder
-	*/
-	@Override
-	public long getContainerModelId() {
-		return _journalFolder.getContainerModelId();
-	}
-
-	/**
-	* Returns the container name of this journal folder.
-	*
-	* @return the container name of this journal folder
-	*/
-	@Override
-	public java.lang.String getContainerModelName() {
-		return _journalFolder.getContainerModelName();
-	}
-
-	/**
-	* Returns the create date of this journal folder.
-	*
-	* @return the create date of this journal folder
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _journalFolder.getCreateDate();
-	}
-
-	/**
-	* Returns the description of this journal folder.
-	*
-	* @return the description of this journal folder
-	*/
-	@Override
-	public java.lang.String getDescription() {
-		return _journalFolder.getDescription();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _journalFolder.getExpandoBridge();
-	}
-
-	/**
-	* Returns the folder ID of this journal folder.
-	*
-	* @return the folder ID of this journal folder
-	*/
-	@Override
-	public long getFolderId() {
-		return _journalFolder.getFolderId();
-	}
-
-	/**
-	* Returns the group ID of this journal folder.
-	*
-	* @return the group ID of this journal folder
-	*/
-	@Override
-	public long getGroupId() {
-		return _journalFolder.getGroupId();
-	}
-
-	/**
-	* Returns the last publish date of this journal folder.
-	*
-	* @return the last publish date of this journal folder
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _journalFolder.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this journal folder.
-	*
-	* @return the modified date of this journal folder
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _journalFolder.getModifiedDate();
-	}
-
-	/**
-	* Returns the name of this journal folder.
-	*
-	* @return the name of this journal folder
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _journalFolder.getName();
-	}
-
-	/**
-	* Returns the parent container model ID of this journal folder.
-	*
-	* @return the parent container model ID of this journal folder
-	*/
-	@Override
-	public long getParentContainerModelId() {
-		return _journalFolder.getParentContainerModelId();
-	}
-
-	@Override
-	public com.liferay.journal.model.JournalFolder getParentFolder()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalFolder.getParentFolder();
-	}
-
-	/**
-	* Returns the parent folder ID of this journal folder.
-	*
-	* @return the parent folder ID of this journal folder
-	*/
-	@Override
-	public long getParentFolderId() {
-		return _journalFolder.getParentFolderId();
-	}
-
-	/**
-	* Returns the primary key of this journal folder.
-	*
-	* @return the primary key of this journal folder
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _journalFolder.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _journalFolder.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the restriction type of this journal folder.
-	*
-	* @return the restriction type of this journal folder
-	*/
-	@Override
-	public int getRestrictionType() {
-		return _journalFolder.getRestrictionType();
-	}
-
-	/**
-	* Returns the status of this journal folder.
-	*
-	* @return the status of this journal folder
-	*/
-	@Override
-	public int getStatus() {
-		return _journalFolder.getStatus();
-	}
-
-	/**
-	* Returns the status by user ID of this journal folder.
-	*
-	* @return the status by user ID of this journal folder
-	*/
-	@Override
-	public long getStatusByUserId() {
-		return _journalFolder.getStatusByUserId();
-	}
-
-	/**
-	* Returns the status by user name of this journal folder.
-	*
-	* @return the status by user name of this journal folder
-	*/
-	@Override
-	public java.lang.String getStatusByUserName() {
-		return _journalFolder.getStatusByUserName();
-	}
-
-	/**
-	* Returns the status by user uuid of this journal folder.
-	*
-	* @return the status by user uuid of this journal folder
-	*/
-	@Override
-	public java.lang.String getStatusByUserUuid() {
-		return _journalFolder.getStatusByUserUuid();
-	}
-
-	/**
-	* Returns the status date of this journal folder.
-	*
-	* @return the status date of this journal folder
-	*/
-	@Override
-	public Date getStatusDate() {
-		return _journalFolder.getStatusDate();
-	}
-
-	/**
-	* Returns the trash entry created when this journal folder was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this journal folder.
-	*
-	* @return the trash entry created when this journal folder was moved to the Recycle Bin
-	*/
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _journalFolder.getTrashEntry();
-	}
-
-	/**
-	* Returns the class primary key of the trash entry for this journal folder.
-	*
-	* @return the class primary key of the trash entry for this journal folder
-	*/
-	@Override
-	public long getTrashEntryClassPK() {
-		return _journalFolder.getTrashEntryClassPK();
-	}
-
-	/**
-	* Returns the trash handler for this journal folder.
-	*
-	* @return the trash handler for this journal folder
-	*/
-	@Override
-	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
-		return _journalFolder.getTrashHandler();
-	}
-
-	/**
-	* Returns the tree path of this journal folder.
-	*
-	* @return the tree path of this journal folder
-	*/
-	@Override
-	public java.lang.String getTreePath() {
-		return _journalFolder.getTreePath();
-	}
-
-	/**
-	* Returns the user ID of this journal folder.
-	*
-	* @return the user ID of this journal folder
-	*/
-	@Override
-	public long getUserId() {
-		return _journalFolder.getUserId();
-	}
-
-	/**
-	* Returns the user name of this journal folder.
-	*
-	* @return the user name of this journal folder
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _journalFolder.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this journal folder.
-	*
-	* @return the user uuid of this journal folder
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _journalFolder.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this journal folder.
-	*
-	* @return the uuid of this journal folder
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _journalFolder.getUuid();
-	}
-
-	@Override
-	public int hashCode() {
-		return _journalFolder.hashCode();
-	}
-
 	/**
 	* Returns <code>true</code> if this journal folder is approved.
 	*
@@ -644,6 +324,351 @@ public class JournalFolderWrapper implements JournalFolder,
 	}
 
 	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _journalFolder.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.journal.model.JournalFolder getParentFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalFolder.getParentFolder();
+	}
+
+	@Override
+	public com.liferay.journal.model.JournalFolder toEscapedModel() {
+		return new JournalFolderWrapper(_journalFolder.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.journal.model.JournalFolder toUnescapedModel() {
+		return new JournalFolderWrapper(_journalFolder.toUnescapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.journal.model.JournalFolder> toCacheModel() {
+		return _journalFolder.toCacheModel();
+	}
+
+	/**
+	* Returns the trash handler for this journal folder.
+	*
+	* @return the trash handler for this journal folder
+	*/
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _journalFolder.getTrashHandler();
+	}
+
+	/**
+	* Returns the trash entry created when this journal folder was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this journal folder.
+	*
+	* @return the trash entry created when this journal folder was moved to the Recycle Bin
+	*/
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalFolder.getTrashEntry();
+	}
+
+	@Override
+	public int compareTo(com.liferay.journal.model.JournalFolder journalFolder) {
+		return _journalFolder.compareTo(journalFolder);
+	}
+
+	/**
+	* Returns the restriction type of this journal folder.
+	*
+	* @return the restriction type of this journal folder
+	*/
+	@Override
+	public int getRestrictionType() {
+		return _journalFolder.getRestrictionType();
+	}
+
+	/**
+	* Returns the status of this journal folder.
+	*
+	* @return the status of this journal folder
+	*/
+	@Override
+	public int getStatus() {
+		return _journalFolder.getStatus();
+	}
+
+	@Override
+	public int hashCode() {
+		return _journalFolder.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _journalFolder.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new JournalFolderWrapper((JournalFolder)_journalFolder.clone());
+	}
+
+	@Override
+	public java.lang.String buildTreePath()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalFolder.buildTreePath();
+	}
+
+	/**
+	* Returns the container name of this journal folder.
+	*
+	* @return the container name of this journal folder
+	*/
+	@Override
+	public java.lang.String getContainerModelName() {
+		return _journalFolder.getContainerModelName();
+	}
+
+	/**
+	* Returns the description of this journal folder.
+	*
+	* @return the description of this journal folder
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _journalFolder.getDescription();
+	}
+
+	/**
+	* Returns the name of this journal folder.
+	*
+	* @return the name of this journal folder
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _journalFolder.getName();
+	}
+
+	/**
+	* Returns the status by user name of this journal folder.
+	*
+	* @return the status by user name of this journal folder
+	*/
+	@Override
+	public java.lang.String getStatusByUserName() {
+		return _journalFolder.getStatusByUserName();
+	}
+
+	/**
+	* Returns the status by user uuid of this journal folder.
+	*
+	* @return the status by user uuid of this journal folder
+	*/
+	@Override
+	public java.lang.String getStatusByUserUuid() {
+		return _journalFolder.getStatusByUserUuid();
+	}
+
+	/**
+	* Returns the tree path of this journal folder.
+	*
+	* @return the tree path of this journal folder
+	*/
+	@Override
+	public java.lang.String getTreePath() {
+		return _journalFolder.getTreePath();
+	}
+
+	/**
+	* Returns the user name of this journal folder.
+	*
+	* @return the user name of this journal folder
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _journalFolder.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this journal folder.
+	*
+	* @return the user uuid of this journal folder
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _journalFolder.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this journal folder.
+	*
+	* @return the uuid of this journal folder
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _journalFolder.getUuid();
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _journalFolder.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _journalFolder.toXmlString();
+	}
+
+	/**
+	* Returns the create date of this journal folder.
+	*
+	* @return the create date of this journal folder
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _journalFolder.getCreateDate();
+	}
+
+	/**
+	* Returns the last publish date of this journal folder.
+	*
+	* @return the last publish date of this journal folder
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _journalFolder.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this journal folder.
+	*
+	* @return the modified date of this journal folder
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _journalFolder.getModifiedDate();
+	}
+
+	/**
+	* Returns the status date of this journal folder.
+	*
+	* @return the status date of this journal folder
+	*/
+	@Override
+	public Date getStatusDate() {
+		return _journalFolder.getStatusDate();
+	}
+
+	@Override
+	public java.util.List<java.lang.Long> getAncestorFolderIds()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalFolder.getAncestorFolderIds();
+	}
+
+	@Override
+	public java.util.List<com.liferay.journal.model.JournalFolder> getAncestors()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _journalFolder.getAncestors();
+	}
+
+	/**
+	* Returns the company ID of this journal folder.
+	*
+	* @return the company ID of this journal folder
+	*/
+	@Override
+	public long getCompanyId() {
+		return _journalFolder.getCompanyId();
+	}
+
+	/**
+	* Returns the container model ID of this journal folder.
+	*
+	* @return the container model ID of this journal folder
+	*/
+	@Override
+	public long getContainerModelId() {
+		return _journalFolder.getContainerModelId();
+	}
+
+	/**
+	* Returns the folder ID of this journal folder.
+	*
+	* @return the folder ID of this journal folder
+	*/
+	@Override
+	public long getFolderId() {
+		return _journalFolder.getFolderId();
+	}
+
+	/**
+	* Returns the group ID of this journal folder.
+	*
+	* @return the group ID of this journal folder
+	*/
+	@Override
+	public long getGroupId() {
+		return _journalFolder.getGroupId();
+	}
+
+	/**
+	* Returns the parent container model ID of this journal folder.
+	*
+	* @return the parent container model ID of this journal folder
+	*/
+	@Override
+	public long getParentContainerModelId() {
+		return _journalFolder.getParentContainerModelId();
+	}
+
+	/**
+	* Returns the parent folder ID of this journal folder.
+	*
+	* @return the parent folder ID of this journal folder
+	*/
+	@Override
+	public long getParentFolderId() {
+		return _journalFolder.getParentFolderId();
+	}
+
+	/**
+	* Returns the primary key of this journal folder.
+	*
+	* @return the primary key of this journal folder
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _journalFolder.getPrimaryKey();
+	}
+
+	/**
+	* Returns the status by user ID of this journal folder.
+	*
+	* @return the status by user ID of this journal folder
+	*/
+	@Override
+	public long getStatusByUserId() {
+		return _journalFolder.getStatusByUserId();
+	}
+
+	/**
+	* Returns the class primary key of the trash entry for this journal folder.
+	*
+	* @return the class primary key of the trash entry for this journal folder
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _journalFolder.getTrashEntryClassPK();
+	}
+
+	/**
+	* Returns the user ID of this journal folder.
+	*
+	* @return the user ID of this journal folder
+	*/
+	@Override
+	public long getUserId() {
+		return _journalFolder.getUserId();
+	}
+
+	@Override
 	public void persist() {
 		_journalFolder.persist();
 	}
@@ -694,14 +719,14 @@ public class JournalFolderWrapper implements JournalFolder,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_journalFolder.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_journalFolder.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_journalFolder.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_journalFolder.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -907,31 +932,6 @@ public class JournalFolderWrapper implements JournalFolder,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_journalFolder.setUuid(uuid);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.journal.model.JournalFolder> toCacheModel() {
-		return _journalFolder.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.journal.model.JournalFolder toEscapedModel() {
-		return new JournalFolderWrapper(_journalFolder.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _journalFolder.toString();
-	}
-
-	@Override
-	public com.liferay.journal.model.JournalFolder toUnescapedModel() {
-		return new JournalFolderWrapper(_journalFolder.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _journalFolder.toXmlString();
 	}
 
 	@Override

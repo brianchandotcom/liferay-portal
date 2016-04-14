@@ -128,53 +128,28 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new AssetLinkWrapper((AssetLink)_assetLink.clone());
+	public boolean isCachedModel() {
+		return _assetLink.isCachedModel();
 	}
 
 	@Override
-	public int compareTo(com.liferay.asset.kernel.model.AssetLink assetLink) {
-		return _assetLink.compareTo(assetLink);
+	public boolean isEscapedModel() {
+		return _assetLink.isEscapedModel();
 	}
 
-	/**
-	* Returns the company ID of this asset link.
-	*
-	* @return the company ID of this asset link
-	*/
 	@Override
-	public long getCompanyId() {
-		return _assetLink.getCompanyId();
+	public boolean isNew() {
+		return _assetLink.isNew();
 	}
 
-	/**
-	* Returns the create date of this asset link.
-	*
-	* @return the create date of this asset link
-	*/
 	@Override
-	public Date getCreateDate() {
-		return _assetLink.getCreateDate();
+	public com.liferay.asset.kernel.model.AssetLink toEscapedModel() {
+		return new AssetLinkWrapper(_assetLink.toEscapedModel());
 	}
 
-	/**
-	* Returns the entry id1 of this asset link.
-	*
-	* @return the entry id1 of this asset link
-	*/
 	@Override
-	public long getEntryId1() {
-		return _assetLink.getEntryId1();
-	}
-
-	/**
-	* Returns the entry id2 of this asset link.
-	*
-	* @return the entry id2 of this asset link
-	*/
-	@Override
-	public long getEntryId2() {
-		return _assetLink.getEntryId2();
+	public com.liferay.asset.kernel.model.AssetLink toUnescapedModel() {
+		return new AssetLinkWrapper(_assetLink.toUnescapedModel());
 	}
 
 	@Override
@@ -182,29 +157,14 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 		return _assetLink.getExpandoBridge();
 	}
 
-	/**
-	* Returns the link ID of this asset link.
-	*
-	* @return the link ID of this asset link
-	*/
 	@Override
-	public long getLinkId() {
-		return _assetLink.getLinkId();
-	}
-
-	/**
-	* Returns the primary key of this asset link.
-	*
-	* @return the primary key of this asset link
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _assetLink.getPrimaryKey();
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.asset.kernel.model.AssetLink> toCacheModel() {
+		return _assetLink.toCacheModel();
 	}
 
 	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _assetLink.getPrimaryKeyObj();
+	public int compareTo(com.liferay.asset.kernel.model.AssetLink assetLink) {
+		return _assetLink.compareTo(assetLink);
 	}
 
 	/**
@@ -218,13 +178,28 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	}
 
 	/**
-	* Returns the user ID of this asset link.
+	* Returns the weight of this asset link.
 	*
-	* @return the user ID of this asset link
+	* @return the weight of this asset link
 	*/
 	@Override
-	public long getUserId() {
-		return _assetLink.getUserId();
+	public int getWeight() {
+		return _assetLink.getWeight();
+	}
+
+	@Override
+	public int hashCode() {
+		return _assetLink.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _assetLink.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new AssetLinkWrapper((AssetLink)_assetLink.clone());
 	}
 
 	/**
@@ -247,34 +222,84 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 		return _assetLink.getUserUuid();
 	}
 
+	@Override
+	public java.lang.String toString() {
+		return _assetLink.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _assetLink.toXmlString();
+	}
+
 	/**
-	* Returns the weight of this asset link.
+	* Returns the create date of this asset link.
 	*
-	* @return the weight of this asset link
+	* @return the create date of this asset link
 	*/
 	@Override
-	public int getWeight() {
-		return _assetLink.getWeight();
+	public Date getCreateDate() {
+		return _assetLink.getCreateDate();
 	}
 
+	/**
+	* Returns the company ID of this asset link.
+	*
+	* @return the company ID of this asset link
+	*/
 	@Override
-	public int hashCode() {
-		return _assetLink.hashCode();
+	public long getCompanyId() {
+		return _assetLink.getCompanyId();
 	}
 
+	/**
+	* Returns the entry id1 of this asset link.
+	*
+	* @return the entry id1 of this asset link
+	*/
 	@Override
-	public boolean isCachedModel() {
-		return _assetLink.isCachedModel();
+	public long getEntryId1() {
+		return _assetLink.getEntryId1();
 	}
 
+	/**
+	* Returns the entry id2 of this asset link.
+	*
+	* @return the entry id2 of this asset link
+	*/
 	@Override
-	public boolean isEscapedModel() {
-		return _assetLink.isEscapedModel();
+	public long getEntryId2() {
+		return _assetLink.getEntryId2();
 	}
 
+	/**
+	* Returns the link ID of this asset link.
+	*
+	* @return the link ID of this asset link
+	*/
 	@Override
-	public boolean isNew() {
-		return _assetLink.isNew();
+	public long getLinkId() {
+		return _assetLink.getLinkId();
+	}
+
+	/**
+	* Returns the primary key of this asset link.
+	*
+	* @return the primary key of this asset link
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _assetLink.getPrimaryKey();
+	}
+
+	/**
+	* Returns the user ID of this asset link.
+	*
+	* @return the user ID of this asset link
+	*/
+	@Override
+	public long getUserId() {
+		return _assetLink.getUserId();
 	}
 
 	@Override
@@ -328,14 +353,14 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_assetLink.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_assetLink.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_assetLink.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_assetLink.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -421,31 +446,6 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	@Override
 	public void setWeight(int weight) {
 		_assetLink.setWeight(weight);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.asset.kernel.model.AssetLink> toCacheModel() {
-		return _assetLink.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.asset.kernel.model.AssetLink toEscapedModel() {
-		return new AssetLinkWrapper(_assetLink.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _assetLink.toString();
-	}
-
-	@Override
-	public com.liferay.asset.kernel.model.AssetLink toUnescapedModel() {
-		return new AssetLinkWrapper(_assetLink.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _assetLink.toXmlString();
 	}
 
 	@Override

@@ -51,25 +51,6 @@ public class LayoutSetBranchServiceUtil {
 			description, master, copyLayoutSetBranchId, serviceContext);
 	}
 
-	public static void deleteLayoutSetBranch(long layoutSetBranchId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteLayoutSetBranch(layoutSetBranchId);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.LayoutSetBranch> getLayoutSetBranches(
-		long groupId, boolean privateLayout) {
-		return getService().getLayoutSetBranches(groupId, privateLayout);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
 	public static com.liferay.portal.kernel.model.LayoutSetBranch mergeLayoutSetBranch(
 		long layoutSetBranchId, long mergeLayoutSetBranchId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -87,6 +68,25 @@ public class LayoutSetBranchServiceUtil {
 		return getService()
 				   .updateLayoutSetBranch(groupId, layoutSetBranchId, name,
 			description, serviceContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.LayoutSetBranch> getLayoutSetBranches(
+		long groupId, boolean privateLayout) {
+		return getService().getLayoutSetBranches(groupId, privateLayout);
+	}
+
+	public static void deleteLayoutSetBranch(long layoutSetBranchId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteLayoutSetBranch(layoutSetBranchId);
 	}
 
 	public static LayoutSetBranchService getService() {

@@ -31,17 +31,13 @@ public class PermissionServiceWrapper implements PermissionService,
 	}
 
 	/**
-	* Checks to see if the group has permission to the service.
+	* Returns the OSGi service identifier.
 	*
-	* @param groupId the primary key of the group
-	* @param name the service name
-	* @param primKey the primary key of the service
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public void checkPermission(long groupId, java.lang.String name,
-		long primKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_permissionService.checkPermission(groupId, name, primKey);
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _permissionService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -59,13 +55,17 @@ public class PermissionServiceWrapper implements PermissionService,
 	}
 
 	/**
-	* Returns the OSGi service identifier.
+	* Checks to see if the group has permission to the service.
 	*
-	* @return the OSGi service identifier
+	* @param groupId the primary key of the group
+	* @param name the service name
+	* @param primKey the primary key of the service
 	*/
 	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _permissionService.getOSGiServiceIdentifier();
+	public void checkPermission(long groupId, java.lang.String name,
+		long primKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_permissionService.checkPermission(groupId, name, primKey);
 	}
 
 	@Override

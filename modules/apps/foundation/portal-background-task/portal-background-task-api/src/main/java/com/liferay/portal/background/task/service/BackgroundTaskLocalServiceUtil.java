@@ -55,19 +55,6 @@ public class BackgroundTaskLocalServiceUtil {
 
 	public static com.liferay.portal.background.task.model.BackgroundTask addBackgroundTask(
 		long userId, long groupId, java.lang.String name,
-		java.lang.String[] servletContextNames,
-		java.lang.Class<?> taskExecutorClass,
-		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addBackgroundTask(userId, groupId, name,
-			servletContextNames, taskExecutorClass, taskContextMap,
-			serviceContext);
-	}
-
-	public static com.liferay.portal.background.task.model.BackgroundTask addBackgroundTask(
-		long userId, long groupId, java.lang.String name,
 		java.lang.String taskExecutorClassName,
 		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -77,21 +64,17 @@ public class BackgroundTaskLocalServiceUtil {
 			taskExecutorClassName, taskContextMap, serviceContext);
 	}
 
-	public static void addBackgroundTaskAttachment(long userId,
-		long backgroundTaskId, java.lang.String fileName, java.io.File file)
+	public static com.liferay.portal.background.task.model.BackgroundTask addBackgroundTask(
+		long userId, long groupId, java.lang.String name,
+		java.lang.String[] servletContextNames,
+		java.lang.Class<?> taskExecutorClass,
+		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addBackgroundTaskAttachment(userId, backgroundTaskId, fileName,
-			file);
-	}
-
-	public static void addBackgroundTaskAttachment(long userId,
-		long backgroundTaskId, java.lang.String fileName,
-		java.io.InputStream inputStream)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.addBackgroundTaskAttachment(userId, backgroundTaskId, fileName,
-			inputStream);
+		return getService()
+				   .addBackgroundTask(userId, groupId, name,
+			servletContextNames, taskExecutorClass, taskContextMap,
+			serviceContext);
 	}
 
 	public static com.liferay.portal.background.task.model.BackgroundTask amendBackgroundTask(
@@ -112,14 +95,6 @@ public class BackgroundTaskLocalServiceUtil {
 		return getService()
 				   .amendBackgroundTask(backgroundTaskId, taskContextMap,
 			status, statusMessage, serviceContext);
-	}
-
-	public static void cleanUpBackgroundTask(long backgroundTaskId, int status) {
-		getService().cleanUpBackgroundTask(backgroundTaskId, status);
-	}
-
-	public static void cleanUpBackgroundTasks() {
-		getService().cleanUpBackgroundTasks();
 	}
 
 	/**
@@ -159,21 +134,68 @@ public class BackgroundTaskLocalServiceUtil {
 		return getService().deleteBackgroundTask(backgroundTaskId);
 	}
 
-	public static void deleteCompanyBackgroundTasks(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCompanyBackgroundTasks(companyId);
+	public static com.liferay.portal.background.task.model.BackgroundTask fetchBackgroundTask(
+		long backgroundTaskId) {
+		return getService().fetchBackgroundTask(backgroundTaskId);
 	}
 
-	public static void deleteGroupBackgroundTasks(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteGroupBackgroundTasks(groupId);
+	public static com.liferay.portal.background.task.model.BackgroundTask fetchFirstBackgroundTask(
+		java.lang.String taskExecutorClassName, int status) {
+		return getService()
+				   .fetchFirstBackgroundTask(taskExecutorClassName, status);
 	}
 
-	public static void deleteGroupBackgroundTasks(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName)
+	public static com.liferay.portal.background.task.model.BackgroundTask fetchFirstBackgroundTask(
+		java.lang.String taskExecutorClassName, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
+		return getService()
+				   .fetchFirstBackgroundTask(taskExecutorClassName, status,
+			orderByComparator);
+	}
+
+	public static com.liferay.portal.background.task.model.BackgroundTask fetchFirstBackgroundTask(
+		long groupId, java.lang.String taskExecutorClassName,
+		boolean completed,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
+		return getService()
+				   .fetchFirstBackgroundTask(groupId, taskExecutorClassName,
+			completed, orderByComparator);
+	}
+
+	/**
+	* Returns the background task with the primary key.
+	*
+	* @param backgroundTaskId the primary key of the background task
+	* @return the background task
+	* @throws PortalException if a background task with the primary key could not be found
+	*/
+	public static com.liferay.portal.background.task.model.BackgroundTask getBackgroundTask(
+		long backgroundTaskId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.deleteGroupBackgroundTasks(groupId, name, taskExecutorClassName);
+		return getService().getBackgroundTask(backgroundTaskId);
+	}
+
+	/**
+	* Updates the background task in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param backgroundTask the background task
+	* @return the background task that was updated
+	*/
+	public static com.liferay.portal.background.task.model.BackgroundTask updateBackgroundTask(
+		com.liferay.portal.background.task.model.BackgroundTask backgroundTask) {
+		return getService().updateBackgroundTask(backgroundTask);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -185,8 +207,88 @@ public class BackgroundTaskLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the number of background tasks.
+	*
+	* @return the number of background tasks
+	*/
+	public static int getBackgroundTasksCount() {
+		return getService().getBackgroundTasksCount();
+	}
+
+	public static int getBackgroundTasksCount(long groupId,
+		java.lang.String name, java.lang.String taskExecutorClassName) {
+		return getService()
+				   .getBackgroundTasksCount(groupId, name, taskExecutorClassName);
+	}
+
+	public static int getBackgroundTasksCount(long groupId,
+		java.lang.String name, java.lang.String taskExecutorClassName,
+		boolean completed) {
+		return getService()
+				   .getBackgroundTasksCount(groupId, name,
+			taskExecutorClassName, completed);
+	}
+
+	public static int getBackgroundTasksCount(long groupId,
+		java.lang.String taskExecutorClassName) {
+		return getService()
+				   .getBackgroundTasksCount(groupId, taskExecutorClassName);
+	}
+
+	public static int getBackgroundTasksCount(long groupId,
+		java.lang.String taskExecutorClassName, boolean completed) {
+		return getService()
+				   .getBackgroundTasksCount(groupId, taskExecutorClassName,
+			completed);
+	}
+
+	public static int getBackgroundTasksCount(long[] groupIds,
+		java.lang.String name, java.lang.String taskExecutorClassName) {
+		return getService()
+				   .getBackgroundTasksCount(groupIds, name,
+			taskExecutorClassName);
+	}
+
+	public static int getBackgroundTasksCount(long[] groupIds,
+		java.lang.String name, java.lang.String taskExecutorClassName,
+		boolean completed) {
+		return getService()
+				   .getBackgroundTasksCount(groupIds, name,
+			taskExecutorClassName, completed);
+	}
+
+	public static int getBackgroundTasksCount(long[] groupIds,
+		java.lang.String[] taskExecutorClassNames) {
+		return getService()
+				   .getBackgroundTasksCount(groupIds, taskExecutorClassNames);
+	}
+
+	public static int getBackgroundTasksCount(long[] groupIds,
+		java.lang.String[] taskExecutorClassNames, boolean completed) {
+		return getService()
+				   .getBackgroundTasksCount(groupIds, taskExecutorClassNames,
+			completed);
+	}
+
+	public static java.lang.String getBackgroundTaskStatusJSON(
+		long backgroundTaskId) {
+		return getService().getBackgroundTaskStatusJSON(backgroundTaskId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -240,77 +342,51 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns a range of all the background tasks.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.background.task.model.impl.BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param start the lower bound of the range of background tasks
+	* @param end the upper bound of the range of background tasks (not inclusive)
+	* @return the range of background tasks
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
+		int start, int end) {
+		return getService().getBackgroundTasks(start, end);
 	}
 
-	public static com.liferay.portal.background.task.model.BackgroundTask fetchBackgroundTask(
-		long backgroundTaskId) {
-		return getService().fetchBackgroundTask(backgroundTaskId);
-	}
-
-	public static com.liferay.portal.background.task.model.BackgroundTask fetchFirstBackgroundTask(
-		long groupId, java.lang.String taskExecutorClassName,
-		boolean completed,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
-		return getService()
-				   .fetchFirstBackgroundTask(groupId, taskExecutorClassName,
-			completed, orderByComparator);
-	}
-
-	public static com.liferay.portal.background.task.model.BackgroundTask fetchFirstBackgroundTask(
+	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
 		java.lang.String taskExecutorClassName, int status) {
-		return getService()
-				   .fetchFirstBackgroundTask(taskExecutorClassName, status);
+		return getService().getBackgroundTasks(taskExecutorClassName, status);
 	}
 
-	public static com.liferay.portal.background.task.model.BackgroundTask fetchFirstBackgroundTask(
-		java.lang.String taskExecutorClassName, int status,
+	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
+		java.lang.String taskExecutorClassName, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
 		return getService()
-				   .fetchFirstBackgroundTask(taskExecutorClassName, status,
-			orderByComparator);
+				   .getBackgroundTasks(taskExecutorClassName, status, start,
+			end, orderByComparator);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
+	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
+		java.lang.String[] taskExecutorClassNames, int status) {
+		return getService().getBackgroundTasks(taskExecutorClassNames, status);
 	}
 
-	/**
-	* Returns the background task with the primary key.
-	*
-	* @param backgroundTaskId the primary key of the background task
-	* @return the background task
-	* @throws PortalException if a background task with the primary key could not be found
-	*/
-	public static com.liferay.portal.background.task.model.BackgroundTask getBackgroundTask(
-		long backgroundTaskId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getBackgroundTask(backgroundTaskId);
+	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
+		java.lang.String[] taskExecutorClassNames, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
+		return getService()
+				   .getBackgroundTasks(taskExecutorClassNames, status, start,
+			end, orderByComparator);
 	}
 
-	public static java.lang.String getBackgroundTaskStatusJSON(
-		long backgroundTaskId) {
-		return getService().getBackgroundTaskStatusJSON(backgroundTaskId);
+	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
+		long groupId, int status) {
+		return getService().getBackgroundTasks(groupId, status);
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
@@ -320,11 +396,6 @@ public class BackgroundTaskLocalServiceUtil {
 		return getService()
 				   .getBackgroundTasks(groupId, name, taskExecutorClassName,
 			start, end, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		long groupId, int status) {
-		return getService().getBackgroundTasks(groupId, status);
 	}
 
 	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
@@ -403,129 +474,69 @@ public class BackgroundTaskLocalServiceUtil {
 	}
 
 	/**
-	* Returns a range of all the background tasks.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.background.task.model.impl.BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of background tasks
-	* @param end the upper bound of the range of background tasks (not inclusive)
-	* @return the range of background tasks
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		int start, int end) {
-		return getService().getBackgroundTasks(start, end);
-	}
-
-	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		java.lang.String taskExecutorClassName, int status) {
-		return getService().getBackgroundTasks(taskExecutorClassName, status);
-	}
-
-	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		java.lang.String taskExecutorClassName, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
-		return getService()
-				   .getBackgroundTasks(taskExecutorClassName, status, start,
-			end, orderByComparator);
-	}
-
-	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		java.lang.String[] taskExecutorClassNames, int status) {
-		return getService().getBackgroundTasks(taskExecutorClassNames, status);
-	}
-
-	public static java.util.List<com.liferay.portal.background.task.model.BackgroundTask> getBackgroundTasks(
-		java.lang.String[] taskExecutorClassNames, int status, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.background.task.model.BackgroundTask> orderByComparator) {
-		return getService()
-				   .getBackgroundTasks(taskExecutorClassNames, status, start,
-			end, orderByComparator);
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the number of background tasks.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of background tasks
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public static int getBackgroundTasksCount() {
-		return getService().getBackgroundTasksCount();
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static int getBackgroundTasksCount(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName) {
-		return getService()
-				   .getBackgroundTasksCount(groupId, name, taskExecutorClassName);
-	}
-
-	public static int getBackgroundTasksCount(long groupId,
-		java.lang.String name, java.lang.String taskExecutorClassName,
-		boolean completed) {
-		return getService()
-				   .getBackgroundTasksCount(groupId, name,
-			taskExecutorClassName, completed);
-	}
-
-	public static int getBackgroundTasksCount(long groupId,
-		java.lang.String taskExecutorClassName) {
-		return getService()
-				   .getBackgroundTasksCount(groupId, taskExecutorClassName);
-	}
-
-	public static int getBackgroundTasksCount(long groupId,
-		java.lang.String taskExecutorClassName, boolean completed) {
-		return getService()
-				   .getBackgroundTasksCount(groupId, taskExecutorClassName,
-			completed);
-	}
-
-	public static int getBackgroundTasksCount(long[] groupIds,
-		java.lang.String name, java.lang.String taskExecutorClassName) {
-		return getService()
-				   .getBackgroundTasksCount(groupIds, name,
-			taskExecutorClassName);
-	}
-
-	public static int getBackgroundTasksCount(long[] groupIds,
-		java.lang.String name, java.lang.String taskExecutorClassName,
-		boolean completed) {
-		return getService()
-				   .getBackgroundTasksCount(groupIds, name,
-			taskExecutorClassName, completed);
-	}
-
-	public static int getBackgroundTasksCount(long[] groupIds,
-		java.lang.String[] taskExecutorClassNames) {
-		return getService()
-				   .getBackgroundTasksCount(groupIds, taskExecutorClassNames);
-	}
-
-	public static int getBackgroundTasksCount(long[] groupIds,
-		java.lang.String[] taskExecutorClassNames, boolean completed) {
-		return getService()
-				   .getBackgroundTasksCount(groupIds, taskExecutorClassNames,
-			completed);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+	public static void addBackgroundTaskAttachment(long userId,
+		long backgroundTaskId, java.lang.String fileName, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
+		getService()
+			.addBackgroundTaskAttachment(userId, backgroundTaskId, fileName,
+			file);
+	}
+
+	public static void addBackgroundTaskAttachment(long userId,
+		long backgroundTaskId, java.lang.String fileName,
+		java.io.InputStream inputStream)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addBackgroundTaskAttachment(userId, backgroundTaskId, fileName,
+			inputStream);
+	}
+
+	public static void cleanUpBackgroundTask(long backgroundTaskId, int status) {
+		getService().cleanUpBackgroundTask(backgroundTaskId, status);
+	}
+
+	public static void cleanUpBackgroundTasks() {
+		getService().cleanUpBackgroundTasks();
+	}
+
+	public static void deleteCompanyBackgroundTasks(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCompanyBackgroundTasks(companyId);
+	}
+
+	public static void deleteGroupBackgroundTasks(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteGroupBackgroundTasks(groupId);
+	}
+
+	public static void deleteGroupBackgroundTasks(long groupId,
+		java.lang.String name, java.lang.String taskExecutorClassName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.deleteGroupBackgroundTasks(groupId, name, taskExecutorClassName);
 	}
 
 	public static void resumeBackgroundTask(long backgroundTaskId) {
@@ -534,17 +545,6 @@ public class BackgroundTaskLocalServiceUtil {
 
 	public static void triggerBackgroundTask(long backgroundTaskId) {
 		getService().triggerBackgroundTask(backgroundTaskId);
-	}
-
-	/**
-	* Updates the background task in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param backgroundTask the background task
-	* @return the background task that was updated
-	*/
-	public static com.liferay.portal.background.task.model.BackgroundTask updateBackgroundTask(
-		com.liferay.portal.background.task.model.BackgroundTask backgroundTask) {
-		return getService().updateBackgroundTask(backgroundTask);
 	}
 
 	public static BackgroundTaskLocalService getService() {

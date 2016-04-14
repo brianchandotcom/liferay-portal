@@ -85,29 +85,6 @@ public class BlogsEntryServiceUtil {
 			smallImageImageSelector, serviceContext);
 	}
 
-	public static void deleteEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteEntry(entryId);
-	}
-
-	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getCompanyEntries(
-		long companyId, java.util.Date displayDate, int status, int max)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getCompanyEntries(companyId, displayDate, status, max);
-	}
-
-	public static java.lang.String getCompanyEntriesRSS(long companyId,
-		java.util.Date displayDate, int status, int max, java.lang.String type,
-		double version, java.lang.String displayStyle,
-		java.lang.String feedURL, java.lang.String entryURL,
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getCompanyEntriesRSS(companyId, displayDate, status, max,
-			type, version, displayStyle, feedURL, entryURL, themeDisplay);
-	}
-
 	public static com.liferay.blogs.kernel.model.BlogsEntry getEntry(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -120,134 +97,10 @@ public class BlogsEntryServiceUtil {
 		return getService().getEntry(groupId, urlTitle);
 	}
 
-	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getGroupEntries(
-		long groupId, java.util.Date displayDate, int status, int max) {
-		return getService().getGroupEntries(groupId, displayDate, status, max);
-	}
-
-	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getGroupEntries(
-		long groupId, java.util.Date displayDate, int status, int start, int end) {
-		return getService()
-				   .getGroupEntries(groupId, displayDate, status, start, end);
-	}
-
-	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getGroupEntries(
-		long groupId, int status, int max) {
-		return getService().getGroupEntries(groupId, status, max);
-	}
-
-	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getGroupEntries(
-		long groupId, int status, int start, int end) {
-		return getService().getGroupEntries(groupId, status, start, end);
-	}
-
-	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getGroupEntries(
-		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.blogs.kernel.model.BlogsEntry> obc) {
-		return getService().getGroupEntries(groupId, status, start, end, obc);
-	}
-
-	public static int getGroupEntriesCount(long groupId,
-		java.util.Date displayDate, int status) {
-		return getService().getGroupEntriesCount(groupId, displayDate, status);
-	}
-
-	public static int getGroupEntriesCount(long groupId, int status) {
-		return getService().getGroupEntriesCount(groupId, status);
-	}
-
-	public static java.lang.String getGroupEntriesRSS(long groupId,
-		java.util.Date displayDate, int status, int max, java.lang.String type,
-		double version, java.lang.String displayStyle,
-		java.lang.String feedURL, java.lang.String entryURL,
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getGroupEntriesRSS(groupId, displayDate, status, max, type,
-			version, displayStyle, feedURL, entryURL, themeDisplay);
-	}
-
-	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getGroupUserEntries(
-		long groupId, long userId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.blogs.kernel.model.BlogsEntry> obc) {
-		return getService()
-				   .getGroupUserEntries(groupId, userId, status, start, end, obc);
-	}
-
-	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getGroupUserEntries(
-		long groupId, long userId, int[] statuses, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.blogs.kernel.model.BlogsEntry> obc) {
-		return getService()
-				   .getGroupUserEntries(groupId, userId, statuses, start, end,
-			obc);
-	}
-
-	public static int getGroupUserEntriesCount(long groupId, long userId,
-		int status) {
-		return getService().getGroupUserEntriesCount(groupId, userId, status);
-	}
-
-	public static int getGroupUserEntriesCount(long groupId, long userId,
-		int[] statuses) {
-		return getService().getGroupUserEntriesCount(groupId, userId, statuses);
-	}
-
-	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getGroupsEntries(
-		long companyId, long groupId, java.util.Date displayDate, int status,
-		int max) throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getGroupsEntries(companyId, groupId, displayDate, status,
-			max);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getOrganizationEntries(
-		long organizationId, java.util.Date displayDate, int status, int max)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getOrganizationEntries(organizationId, displayDate, status,
-			max);
-	}
-
-	public static java.lang.String getOrganizationEntriesRSS(
-		long organizationId, java.util.Date displayDate, int status, int max,
-		java.lang.String type, double version, java.lang.String displayStyle,
-		java.lang.String feedURL, java.lang.String entryURL,
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getOrganizationEntriesRSS(organizationId, displayDate,
-			status, max, type, version, displayStyle, feedURL, entryURL,
-			themeDisplay);
-	}
-
 	public static com.liferay.blogs.kernel.model.BlogsEntry moveEntryToTrash(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().moveEntryToTrash(entryId);
-	}
-
-	public static void restoreEntryFromTrash(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().restoreEntryFromTrash(entryId);
-	}
-
-	public static void subscribe(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().subscribe(groupId);
-	}
-
-	public static void unsubscribe(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().unsubscribe(groupId);
 	}
 
 	/**
@@ -292,6 +145,153 @@ public class BlogsEntryServiceUtil {
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
 			coverImageCaption, coverImageImageSelector,
 			smallImageImageSelector, serviceContext);
+	}
+
+	public static int getGroupEntriesCount(long groupId, int status) {
+		return getService().getGroupEntriesCount(groupId, status);
+	}
+
+	public static int getGroupEntriesCount(long groupId,
+		java.util.Date displayDate, int status) {
+		return getService().getGroupEntriesCount(groupId, displayDate, status);
+	}
+
+	public static int getGroupUserEntriesCount(long groupId, long userId,
+		int status) {
+		return getService().getGroupUserEntriesCount(groupId, userId, status);
+	}
+
+	public static int getGroupUserEntriesCount(long groupId, long userId,
+		int[] statuses) {
+		return getService().getGroupUserEntriesCount(groupId, userId, statuses);
+	}
+
+	public static java.lang.String getCompanyEntriesRSS(long companyId,
+		java.util.Date displayDate, int status, int max, java.lang.String type,
+		double version, java.lang.String displayStyle,
+		java.lang.String feedURL, java.lang.String entryURL,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCompanyEntriesRSS(companyId, displayDate, status, max,
+			type, version, displayStyle, feedURL, entryURL, themeDisplay);
+	}
+
+	public static java.lang.String getGroupEntriesRSS(long groupId,
+		java.util.Date displayDate, int status, int max, java.lang.String type,
+		double version, java.lang.String displayStyle,
+		java.lang.String feedURL, java.lang.String entryURL,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getGroupEntriesRSS(groupId, displayDate, status, max, type,
+			version, displayStyle, feedURL, entryURL, themeDisplay);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.lang.String getOrganizationEntriesRSS(
+		long organizationId, java.util.Date displayDate, int status, int max,
+		java.lang.String type, double version, java.lang.String displayStyle,
+		java.lang.String feedURL, java.lang.String entryURL,
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getOrganizationEntriesRSS(organizationId, displayDate,
+			status, max, type, version, displayStyle, feedURL, entryURL,
+			themeDisplay);
+	}
+
+	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getCompanyEntries(
+		long companyId, java.util.Date displayDate, int status, int max)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCompanyEntries(companyId, displayDate, status, max);
+	}
+
+	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getGroupEntries(
+		long groupId, int status, int max) {
+		return getService().getGroupEntries(groupId, status, max);
+	}
+
+	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getGroupEntries(
+		long groupId, int status, int start, int end) {
+		return getService().getGroupEntries(groupId, status, start, end);
+	}
+
+	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getGroupEntries(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.blogs.kernel.model.BlogsEntry> obc) {
+		return getService().getGroupEntries(groupId, status, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getGroupEntries(
+		long groupId, java.util.Date displayDate, int status, int max) {
+		return getService().getGroupEntries(groupId, displayDate, status, max);
+	}
+
+	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getGroupEntries(
+		long groupId, java.util.Date displayDate, int status, int start, int end) {
+		return getService()
+				   .getGroupEntries(groupId, displayDate, status, start, end);
+	}
+
+	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getGroupUserEntries(
+		long groupId, long userId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.blogs.kernel.model.BlogsEntry> obc) {
+		return getService()
+				   .getGroupUserEntries(groupId, userId, status, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getGroupUserEntries(
+		long groupId, long userId, int[] statuses, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.blogs.kernel.model.BlogsEntry> obc) {
+		return getService()
+				   .getGroupUserEntries(groupId, userId, statuses, start, end,
+			obc);
+	}
+
+	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getGroupsEntries(
+		long companyId, long groupId, java.util.Date displayDate, int status,
+		int max) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getGroupsEntries(companyId, groupId, displayDate, status,
+			max);
+	}
+
+	public static java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getOrganizationEntries(
+		long organizationId, java.util.Date displayDate, int status, int max)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getOrganizationEntries(organizationId, displayDate, status,
+			max);
+	}
+
+	public static void deleteEntry(long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteEntry(entryId);
+	}
+
+	public static void restoreEntryFromTrash(long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().restoreEntryFromTrash(entryId);
+	}
+
+	public static void subscribe(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().subscribe(groupId);
+	}
+
+	public static void unsubscribe(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().unsubscribe(groupId);
 	}
 
 	public static BlogsEntryService getService() {

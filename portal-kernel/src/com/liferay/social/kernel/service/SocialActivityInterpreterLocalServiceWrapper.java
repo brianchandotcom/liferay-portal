@@ -35,49 +35,6 @@ public class SocialActivityInterpreterLocalServiceWrapper
 	}
 
 	/**
-	* Adds the activity interpreter to the list of available interpreters.
-	*
-	* @param activityInterpreter the activity interpreter
-	*/
-	@Override
-	public void addActivityInterpreter(
-		com.liferay.social.kernel.model.SocialActivityInterpreter activityInterpreter) {
-		_socialActivityInterpreterLocalService.addActivityInterpreter(activityInterpreter);
-	}
-
-	/**
-	* Removes the activity interpreter from the list of available interpreters.
-	*
-	* @param activityInterpreter the activity interpreter
-	*/
-	@Override
-	public void deleteActivityInterpreter(
-		com.liferay.social.kernel.model.SocialActivityInterpreter activityInterpreter) {
-		_socialActivityInterpreterLocalService.deleteActivityInterpreter(activityInterpreter);
-	}
-
-	@Override
-	public java.util.Map<java.lang.String, java.util.List<com.liferay.social.kernel.model.SocialActivityInterpreter>> getActivityInterpreters() {
-		return _socialActivityInterpreterLocalService.getActivityInterpreters();
-	}
-
-	@Override
-	public java.util.List<com.liferay.social.kernel.model.SocialActivityInterpreter> getActivityInterpreters(
-		java.lang.String selector) {
-		return _socialActivityInterpreterLocalService.getActivityInterpreters(selector);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _socialActivityInterpreterLocalService.getOSGiServiceIdentifier();
-	}
-
-	/**
 	* Creates a human readable activity feed entry for the activity using an
 	* available compatible activity interpreter.
 	*
@@ -110,6 +67,49 @@ public class SocialActivityInterpreterLocalServiceWrapper
 		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return _socialActivityInterpreterLocalService.interpret(selector,
 			activitySet, serviceContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _socialActivityInterpreterLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.social.kernel.model.SocialActivityInterpreter> getActivityInterpreters(
+		java.lang.String selector) {
+		return _socialActivityInterpreterLocalService.getActivityInterpreters(selector);
+	}
+
+	@Override
+	public java.util.Map<java.lang.String, java.util.List<com.liferay.social.kernel.model.SocialActivityInterpreter>> getActivityInterpreters() {
+		return _socialActivityInterpreterLocalService.getActivityInterpreters();
+	}
+
+	/**
+	* Adds the activity interpreter to the list of available interpreters.
+	*
+	* @param activityInterpreter the activity interpreter
+	*/
+	@Override
+	public void addActivityInterpreter(
+		com.liferay.social.kernel.model.SocialActivityInterpreter activityInterpreter) {
+		_socialActivityInterpreterLocalService.addActivityInterpreter(activityInterpreter);
+	}
+
+	/**
+	* Removes the activity interpreter from the list of available interpreters.
+	*
+	* @param activityInterpreter the activity interpreter
+	*/
+	@Override
+	public void deleteActivityInterpreter(
+		com.liferay.social.kernel.model.SocialActivityInterpreter activityInterpreter) {
+		_socialActivityInterpreterLocalService.deleteActivityInterpreter(activityInterpreter);
 	}
 
 	@Override

@@ -91,18 +91,50 @@ public class AnnouncementsFlagLocalServiceUtil {
 		return getService().deleteAnnouncementsFlag(flagId);
 	}
 
-	public static void deleteFlag(
-		com.liferay.announcements.kernel.model.AnnouncementsFlag flag) {
-		getService().deleteFlag(flag);
+	public static com.liferay.announcements.kernel.model.AnnouncementsFlag fetchAnnouncementsFlag(
+		long flagId) {
+		return getService().fetchAnnouncementsFlag(flagId);
 	}
 
-	public static void deleteFlag(long flagId)
+	/**
+	* Returns the announcements flag with the primary key.
+	*
+	* @param flagId the primary key of the announcements flag
+	* @return the announcements flag
+	* @throws PortalException if a announcements flag with the primary key could not be found
+	*/
+	public static com.liferay.announcements.kernel.model.AnnouncementsFlag getAnnouncementsFlag(
+		long flagId) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAnnouncementsFlag(flagId);
+	}
+
+	public static com.liferay.announcements.kernel.model.AnnouncementsFlag getFlag(
+		long userId, long entryId, int value)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFlag(flagId);
+		return getService().getFlag(userId, entryId, value);
 	}
 
-	public static void deleteFlags(long entryId) {
-		getService().deleteFlags(entryId);
+	/**
+	* Updates the announcements flag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param announcementsFlag the announcements flag
+	* @return the announcements flag that was updated
+	*/
+	public static com.liferay.announcements.kernel.model.AnnouncementsFlag updateAnnouncementsFlag(
+		com.liferay.announcements.kernel.model.AnnouncementsFlag announcementsFlag) {
+		return getService().updateAnnouncementsFlag(announcementsFlag);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -114,8 +146,28 @@ public class AnnouncementsFlagLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the number of announcements flags.
+	*
+	* @return the number of announcements flags
+	*/
+	public static int getAnnouncementsFlagsCount() {
+		return getService().getAnnouncementsFlagsCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -169,6 +221,22 @@ public class AnnouncementsFlagLocalServiceUtil {
 	}
 
 	/**
+	* Returns a range of all the announcements flags.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.announcements.model.impl.AnnouncementsFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of announcements flags
+	* @param end the upper bound of the range of announcements flags (not inclusive)
+	* @return the range of announcements flags
+	*/
+	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsFlag> getAnnouncementsFlags(
+		int start, int end) {
+		return getService().getAnnouncementsFlags(start, end);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -192,86 +260,18 @@ public class AnnouncementsFlagLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.announcements.kernel.model.AnnouncementsFlag fetchAnnouncementsFlag(
-		long flagId) {
-		return getService().fetchAnnouncementsFlag(flagId);
+	public static void deleteFlag(
+		com.liferay.announcements.kernel.model.AnnouncementsFlag flag) {
+		getService().deleteFlag(flag);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the announcements flag with the primary key.
-	*
-	* @param flagId the primary key of the announcements flag
-	* @return the announcements flag
-	* @throws PortalException if a announcements flag with the primary key could not be found
-	*/
-	public static com.liferay.announcements.kernel.model.AnnouncementsFlag getAnnouncementsFlag(
-		long flagId) throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getAnnouncementsFlag(flagId);
-	}
-
-	/**
-	* Returns a range of all the announcements flags.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.announcements.model.impl.AnnouncementsFlagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of announcements flags
-	* @param end the upper bound of the range of announcements flags (not inclusive)
-	* @return the range of announcements flags
-	*/
-	public static java.util.List<com.liferay.announcements.kernel.model.AnnouncementsFlag> getAnnouncementsFlags(
-		int start, int end) {
-		return getService().getAnnouncementsFlags(start, end);
-	}
-
-	/**
-	* Returns the number of announcements flags.
-	*
-	* @return the number of announcements flags
-	*/
-	public static int getAnnouncementsFlagsCount() {
-		return getService().getAnnouncementsFlagsCount();
-	}
-
-	public static com.liferay.announcements.kernel.model.AnnouncementsFlag getFlag(
-		long userId, long entryId, int value)
+	public static void deleteFlag(long flagId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getFlag(userId, entryId, value);
+		getService().deleteFlag(flagId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Updates the announcements flag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param announcementsFlag the announcements flag
-	* @return the announcements flag that was updated
-	*/
-	public static com.liferay.announcements.kernel.model.AnnouncementsFlag updateAnnouncementsFlag(
-		com.liferay.announcements.kernel.model.AnnouncementsFlag announcementsFlag) {
-		return getService().updateAnnouncementsFlag(announcementsFlag);
+	public static void deleteFlags(long entryId) {
+		getService().deleteFlags(entryId);
 	}
 
 	public static AnnouncementsFlagLocalService getService() {

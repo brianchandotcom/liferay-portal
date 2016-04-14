@@ -54,7 +54,13 @@ public interface OrgLaborService extends BaseService {
 		int wedOpen, int wedClose, int thuOpen, int thuClose, int friOpen,
 		int friClose, int satOpen, int satClose) throws PortalException;
 
-	public void deleteOrgLabor(long orgLaborId) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OrgLabor getOrgLabor(long orgLaborId) throws PortalException;
+
+	public OrgLabor updateOrgLabor(long orgLaborId, long typeId, int sunOpen,
+		int sunClose, int monOpen, int monClose, int tueOpen, int tueClose,
+		int wedOpen, int wedClose, int thuOpen, int thuClose, int friOpen,
+		int friClose, int satOpen, int satClose) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -64,14 +70,8 @@ public interface OrgLaborService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public OrgLabor getOrgLabor(long orgLaborId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<OrgLabor> getOrgLabors(long organizationId)
 		throws PortalException;
 
-	public OrgLabor updateOrgLabor(long orgLaborId, long typeId, int sunOpen,
-		int sunClose, int monOpen, int monClose, int tueOpen, int tueClose,
-		int wedOpen, int wedClose, int thuOpen, int thuClose, int friOpen,
-		int friClose, int satOpen, int satClose) throws PortalException;
+	public void deleteOrgLabor(long orgLaborId) throws PortalException;
 }

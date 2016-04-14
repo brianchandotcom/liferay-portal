@@ -32,152 +32,6 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 		_trashEntryService = trashEntryService;
 	}
 
-	/**
-	* Deletes the trash entries with the primary keys.
-	*
-	* @param entryIds the primary keys of the trash entries
-	*/
-	@Override
-	public void deleteEntries(long[] entryIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_trashEntryService.deleteEntries(entryIds);
-	}
-
-	/**
-	* Deletes the trash entries with the matching group ID considering
-	* permissions.
-	*
-	* @param groupId the primary key of the group
-	*/
-	@Override
-	public void deleteEntries(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_trashEntryService.deleteEntries(groupId);
-	}
-
-	/**
-	* Deletes the trash entry with the entity class name and class primary key.
-	*
-	* <p>
-	* This method throws a {@link TrashPermissionException} with type {@link
-	* TrashPermissionException#DELETE} if the user did not have permission to
-	* delete the trash entry.
-	* </p>
-	*
-	* @param className the class name of the entity
-	* @param classPK the primary key of the entity
-	*/
-	@Override
-	public void deleteEntry(java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_trashEntryService.deleteEntry(className, classPK);
-	}
-
-	/**
-	* Deletes the trash entry with the primary key.
-	*
-	* <p>
-	* This method throws a {@link TrashPermissionException} with type {@link
-	* TrashPermissionException#DELETE} if the user did not have permission to
-	* delete the trash entry.
-	* </p>
-	*
-	* @param entryId the primary key of the trash entry
-	*/
-	@Override
-	public void deleteEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_trashEntryService.deleteEntry(entryId);
-	}
-
-	/**
-	* Returns the trash entries with the matching group ID.
-	*
-	* @param groupId the primary key of the group
-	* @return the matching trash entries
-	*/
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntryList getEntries(
-		long groupId)
-		throws com.liferay.portal.kernel.security.auth.PrincipalException {
-		return _trashEntryService.getEntries(groupId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.trash.kernel.model.TrashEntry> getEntries(
-		long groupId, java.lang.String className)
-		throws com.liferay.portal.kernel.security.auth.PrincipalException {
-		return _trashEntryService.getEntries(groupId, className);
-	}
-
-	/**
-	* Returns a range of all the trash entries matching the group ID.
-	*
-	* @param groupId the primary key of the group
-	* @param start the lower bound of the range of trash entries to return
-	* @param end the upper bound of the range of trash entries to return (not
-	inclusive)
-	* @param obc the comparator to order the trash entries (optionally
-	<code>null</code>)
-	* @return the range of matching trash entries ordered by comparator
-	<code>obc</code>
-	*/
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntryList getEntries(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.trash.kernel.model.TrashEntry> obc)
-		throws com.liferay.portal.kernel.security.auth.PrincipalException {
-		return _trashEntryService.getEntries(groupId, start, end, obc);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _trashEntryService.getOSGiServiceIdentifier();
-	}
-
-	/**
-	* Moves the trash entry with the entity class name and primary key,
-	* restoring it to a new location identified by the destination container
-	* model ID.
-	*
-	* <p>
-	* This method throws a {@link TrashPermissionException} if the user did not
-	* have the permission to perform one of the necessary operations. The
-	* exception is created with a type specific to the operation:
-	* </p>
-	*
-	* <ul>
-	* <li>
-	* {@link TrashPermissionException#MOVE} - if the user did not have
-	* permission to move the trash entry to the new
-	* destination
-	* </li>
-	* <li>
-	* {@link TrashPermissionException#RESTORE} - if the user did not have
-	* permission to restore the trash entry
-	* </li>
-	* </ul>
-	*
-	* @param className the class name of the entity
-	* @param classPK the primary key of the entity
-	* @param destinationContainerModelId the primary key of the new location
-	* @param serviceContext the service context to be applied (optionally
-	<code>null</code>)
-	*/
-	@Override
-	public void moveEntry(java.lang.String className, long classPK,
-		long destinationContainerModelId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_trashEntryService.moveEntry(className, classPK,
-			destinationContainerModelId, serviceContext);
-	}
-
 	@Override
 	public com.liferay.trash.kernel.model.TrashEntry restoreEntry(
 		java.lang.String className, long classPK)
@@ -239,6 +93,152 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 		long entryId, long overrideClassPK, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _trashEntryService.restoreEntry(entryId, overrideClassPK, name);
+	}
+
+	/**
+	* Returns the trash entries with the matching group ID.
+	*
+	* @param groupId the primary key of the group
+	* @return the matching trash entries
+	*/
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntryList getEntries(
+		long groupId)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
+		return _trashEntryService.getEntries(groupId);
+	}
+
+	/**
+	* Returns a range of all the trash entries matching the group ID.
+	*
+	* @param groupId the primary key of the group
+	* @param start the lower bound of the range of trash entries to return
+	* @param end the upper bound of the range of trash entries to return (not
+	inclusive)
+	* @param obc the comparator to order the trash entries (optionally
+	<code>null</code>)
+	* @return the range of matching trash entries ordered by comparator
+	<code>obc</code>
+	*/
+	@Override
+	public com.liferay.trash.kernel.model.TrashEntryList getEntries(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.trash.kernel.model.TrashEntry> obc)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
+		return _trashEntryService.getEntries(groupId, start, end, obc);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _trashEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.trash.kernel.model.TrashEntry> getEntries(
+		long groupId, java.lang.String className)
+		throws com.liferay.portal.kernel.security.auth.PrincipalException {
+		return _trashEntryService.getEntries(groupId, className);
+	}
+
+	/**
+	* Deletes the trash entries with the matching group ID considering
+	* permissions.
+	*
+	* @param groupId the primary key of the group
+	*/
+	@Override
+	public void deleteEntries(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_trashEntryService.deleteEntries(groupId);
+	}
+
+	/**
+	* Deletes the trash entries with the primary keys.
+	*
+	* @param entryIds the primary keys of the trash entries
+	*/
+	@Override
+	public void deleteEntries(long[] entryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_trashEntryService.deleteEntries(entryIds);
+	}
+
+	/**
+	* Deletes the trash entry with the entity class name and class primary key.
+	*
+	* <p>
+	* This method throws a {@link TrashPermissionException} with type {@link
+	* TrashPermissionException#DELETE} if the user did not have permission to
+	* delete the trash entry.
+	* </p>
+	*
+	* @param className the class name of the entity
+	* @param classPK the primary key of the entity
+	*/
+	@Override
+	public void deleteEntry(java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_trashEntryService.deleteEntry(className, classPK);
+	}
+
+	/**
+	* Deletes the trash entry with the primary key.
+	*
+	* <p>
+	* This method throws a {@link TrashPermissionException} with type {@link
+	* TrashPermissionException#DELETE} if the user did not have permission to
+	* delete the trash entry.
+	* </p>
+	*
+	* @param entryId the primary key of the trash entry
+	*/
+	@Override
+	public void deleteEntry(long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_trashEntryService.deleteEntry(entryId);
+	}
+
+	/**
+	* Moves the trash entry with the entity class name and primary key,
+	* restoring it to a new location identified by the destination container
+	* model ID.
+	*
+	* <p>
+	* This method throws a {@link TrashPermissionException} if the user did not
+	* have the permission to perform one of the necessary operations. The
+	* exception is created with a type specific to the operation:
+	* </p>
+	*
+	* <ul>
+	* <li>
+	* {@link TrashPermissionException#MOVE} - if the user did not have
+	* permission to move the trash entry to the new
+	* destination
+	* </li>
+	* <li>
+	* {@link TrashPermissionException#RESTORE} - if the user did not have
+	* permission to restore the trash entry
+	* </li>
+	* </ul>
+	*
+	* @param className the class name of the entity
+	* @param classPK the primary key of the entity
+	* @param destinationContainerModelId the primary key of the new location
+	* @param serviceContext the service context to be applied (optionally
+	<code>null</code>)
+	*/
+	@Override
+	public void moveEntry(java.lang.String className, long classPK,
+		long destinationContainerModelId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_trashEntryService.moveEntry(className, classPK,
+			destinationContainerModelId, serviceContext);
 	}
 
 	@Override

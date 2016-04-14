@@ -57,13 +57,6 @@ public interface DDLRecordVersionService extends BaseService {
 	 */
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	/**
 	* Returns a record version matching the record and version.
 	*
 	* @param recordId the primary key of the record
@@ -88,6 +81,23 @@ public interface DDLRecordVersionService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecordVersion getRecordVersion(long recordVersionId)
 		throws PortalException;
+
+	/**
+	* Returns the number of record versions matching the record.
+	*
+	* @param recordId the primary key of the record
+	* @return the number of matching record versions
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRecordVersionsCount(long recordId) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Returns all the record versions matching the record.
@@ -125,14 +135,4 @@ public interface DDLRecordVersionService extends BaseService {
 	public List<DDLRecordVersion> getRecordVersions(long recordId, int start,
 		int end, OrderByComparator<DDLRecordVersion> orderByComparator)
 		throws PortalException;
-
-	/**
-	* Returns the number of record versions matching the record.
-	*
-	* @param recordId the primary key of the record
-	* @return the number of matching record versions
-	* @throws PortalException if a portal exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRecordVersionsCount(long recordId) throws PortalException;
 }

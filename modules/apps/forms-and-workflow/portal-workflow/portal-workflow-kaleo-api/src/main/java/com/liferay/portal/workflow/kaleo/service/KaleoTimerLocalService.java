@@ -61,9 +61,25 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoTimerLocalServiceUtil} to access the kaleo timer local service. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.service.impl.KaleoTimerLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public KaleoTimer addKaleoTimer(java.lang.String kaleoClassName,
-		long kaleoClassPK, long kaleoDefinitionId, Timer timer,
-		ServiceContext serviceContext) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Adds the kaleo timer to the database. Also notifies the appropriate model listeners.
@@ -73,6 +89,10 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public KaleoTimer addKaleoTimer(KaleoTimer kaleoTimer);
+
+	public KaleoTimer addKaleoTimer(java.lang.String kaleoClassName,
+		long kaleoClassPK, long kaleoDefinitionId, Timer timer,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new kaleo timer with the primary key. Does not add the kaleo timer to the database.
@@ -102,14 +122,43 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 	public KaleoTimer deleteKaleoTimer(long kaleoTimerId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoTimer fetchKaleoTimer(long kaleoTimerId);
+
 	/**
-	* @throws PortalException
+	* Returns the kaleo timer with the primary key.
+	*
+	* @param kaleoTimerId the primary key of the kaleo timer
+	* @return the kaleo timer
+	* @throws PortalException if a kaleo timer with the primary key could not be found
 	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoTimer getKaleoTimer(long kaleoTimerId)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	/**
+	* Updates the kaleo timer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoTimer the kaleo timer
+	* @return the kaleo timer that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoTimer updateKaleoTimer(KaleoTimer kaleoTimer);
+
+	/**
+	* Returns the number of kaleo timers.
+	*
+	* @return the number of kaleo timers
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKaleoTimersCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -151,6 +200,28 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns a range of all the kaleo timers.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of kaleo timers
+	* @param end the upper bound of the range of kaleo timers (not inclusive)
+	* @return the range of kaleo timers
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoTimer> getKaleoTimers(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoTimer> getKaleoTimers(java.lang.String kaleoClassName,
+		long kaleoClassPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoTimer> getKaleoTimers(java.lang.String kaleoClassName,
+		long kaleoClassPK, boolean blocking);
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -167,75 +238,4 @@ public interface KaleoTimerLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoTimer fetchKaleoTimer(long kaleoTimerId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the kaleo timer with the primary key.
-	*
-	* @param kaleoTimerId the primary key of the kaleo timer
-	* @return the kaleo timer
-	* @throws PortalException if a kaleo timer with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoTimer getKaleoTimer(long kaleoTimerId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoTimer> getKaleoTimers(java.lang.String kaleoClassName,
-		long kaleoClassPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoTimer> getKaleoTimers(java.lang.String kaleoClassName,
-		long kaleoClassPK, boolean blocking);
-
-	/**
-	* Returns a range of all the kaleo timers.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoTimerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of kaleo timers
-	* @param end the upper bound of the range of kaleo timers (not inclusive)
-	* @return the range of kaleo timers
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoTimer> getKaleoTimers(int start, int end);
-
-	/**
-	* Returns the number of kaleo timers.
-	*
-	* @return the number of kaleo timers
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoTimersCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Updates the kaleo timer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoTimer the kaleo timer
-	* @return the kaleo timer that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public KaleoTimer updateKaleoTimer(KaleoTimer kaleoTimer);
 }

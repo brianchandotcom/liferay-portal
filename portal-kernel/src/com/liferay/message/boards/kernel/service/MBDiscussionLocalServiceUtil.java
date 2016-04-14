@@ -88,6 +88,17 @@ public class MBDiscussionLocalServiceUtil {
 	}
 
 	/**
+	* Deletes the message boards discussion from the database. Also notifies the appropriate model listeners.
+	*
+	* @param mbDiscussion the message boards discussion
+	* @return the message boards discussion that was removed
+	*/
+	public static com.liferay.message.boards.kernel.model.MBDiscussion deleteMBDiscussion(
+		com.liferay.message.boards.kernel.model.MBDiscussion mbDiscussion) {
+		return getService().deleteMBDiscussion(mbDiscussion);
+	}
+
+	/**
 	* Deletes the message boards discussion with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param discussionId the primary key of the message boards discussion
@@ -100,15 +111,109 @@ public class MBDiscussionLocalServiceUtil {
 		return getService().deleteMBDiscussion(discussionId);
 	}
 
+	public static com.liferay.message.boards.kernel.model.MBDiscussion fetchDiscussion(
+		java.lang.String className, long classPK) {
+		return getService().fetchDiscussion(className, classPK);
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBDiscussion fetchDiscussion(
+		long discussionId) {
+		return getService().fetchDiscussion(discussionId);
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBDiscussion fetchMBDiscussion(
+		long discussionId) {
+		return getService().fetchMBDiscussion(discussionId);
+	}
+
 	/**
-	* Deletes the message boards discussion from the database. Also notifies the appropriate model listeners.
+	* Returns the message boards discussion matching the UUID and group.
+	*
+	* @param uuid the message boards discussion's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
+	*/
+	public static com.liferay.message.boards.kernel.model.MBDiscussion fetchMBDiscussionByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchMBDiscussionByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBDiscussion fetchThreadDiscussion(
+		long threadId) {
+		return getService().fetchThreadDiscussion(threadId);
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBDiscussion getDiscussion(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDiscussion(className, classPK);
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBDiscussion getDiscussion(
+		long discussionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDiscussion(discussionId);
+	}
+
+	/**
+	* Returns the message boards discussion with the primary key.
+	*
+	* @param discussionId the primary key of the message boards discussion
+	* @return the message boards discussion
+	* @throws PortalException if a message boards discussion with the primary key could not be found
+	*/
+	public static com.liferay.message.boards.kernel.model.MBDiscussion getMBDiscussion(
+		long discussionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getMBDiscussion(discussionId);
+	}
+
+	/**
+	* Returns the message boards discussion matching the UUID and group.
+	*
+	* @param uuid the message boards discussion's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message boards discussion
+	* @throws PortalException if a matching message boards discussion could not be found
+	*/
+	public static com.liferay.message.boards.kernel.model.MBDiscussion getMBDiscussionByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getMBDiscussionByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static com.liferay.message.boards.kernel.model.MBDiscussion getThreadDiscussion(
+		long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getThreadDiscussion(threadId);
+	}
+
+	/**
+	* Updates the message boards discussion in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param mbDiscussion the message boards discussion
-	* @return the message boards discussion that was removed
+	* @return the message boards discussion that was updated
 	*/
-	public static com.liferay.message.boards.kernel.model.MBDiscussion deleteMBDiscussion(
+	public static com.liferay.message.boards.kernel.model.MBDiscussion updateMBDiscussion(
 		com.liferay.message.boards.kernel.model.MBDiscussion mbDiscussion) {
-		return getService().deleteMBDiscussion(mbDiscussion);
+		return getService().updateMBDiscussion(mbDiscussion);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
@@ -120,8 +225,28 @@ public class MBDiscussionLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the number of message boards discussions.
+	*
+	* @return the number of message boards discussions
+	*/
+	public static int getMBDiscussionsCount() {
+		return getService().getMBDiscussionsCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -175,114 +300,6 @@ public class MBDiscussionLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.message.boards.kernel.model.MBDiscussion fetchDiscussion(
-		java.lang.String className, long classPK) {
-		return getService().fetchDiscussion(className, classPK);
-	}
-
-	public static com.liferay.message.boards.kernel.model.MBDiscussion fetchDiscussion(
-		long discussionId) {
-		return getService().fetchDiscussion(discussionId);
-	}
-
-	public static com.liferay.message.boards.kernel.model.MBDiscussion fetchMBDiscussion(
-		long discussionId) {
-		return getService().fetchMBDiscussion(discussionId);
-	}
-
-	/**
-	* Returns the message boards discussion matching the UUID and group.
-	*
-	* @param uuid the message boards discussion's UUID
-	* @param groupId the primary key of the group
-	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	*/
-	public static com.liferay.message.boards.kernel.model.MBDiscussion fetchMBDiscussionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchMBDiscussionByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static com.liferay.message.boards.kernel.model.MBDiscussion fetchThreadDiscussion(
-		long threadId) {
-		return getService().fetchThreadDiscussion(threadId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.message.boards.kernel.model.MBDiscussion getDiscussion(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDiscussion(className, classPK);
-	}
-
-	public static com.liferay.message.boards.kernel.model.MBDiscussion getDiscussion(
-		long discussionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDiscussion(discussionId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the message boards discussion with the primary key.
-	*
-	* @param discussionId the primary key of the message boards discussion
-	* @return the message boards discussion
-	* @throws PortalException if a message boards discussion with the primary key could not be found
-	*/
-	public static com.liferay.message.boards.kernel.model.MBDiscussion getMBDiscussion(
-		long discussionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getMBDiscussion(discussionId);
-	}
-
-	/**
-	* Returns the message boards discussion matching the UUID and group.
-	*
-	* @param uuid the message boards discussion's UUID
-	* @param groupId the primary key of the group
-	* @return the matching message boards discussion
-	* @throws PortalException if a matching message boards discussion could not be found
-	*/
-	public static com.liferay.message.boards.kernel.model.MBDiscussion getMBDiscussionByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getMBDiscussionByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
 	* Returns a range of all the message boards discussions.
 	*
 	* <p>
@@ -329,33 +346,27 @@ public class MBDiscussionLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of message boards discussions.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of message boards discussions
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	public static int getMBDiscussionsCount() {
-		return getService().getMBDiscussionsCount();
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static com.liferay.message.boards.kernel.model.MBDiscussion getThreadDiscussion(
-		long threadId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getThreadDiscussion(threadId);
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static void subscribeDiscussion(long userId, long groupId,
@@ -368,17 +379,6 @@ public class MBDiscussionLocalServiceUtil {
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unsubscribeDiscussion(userId, className, classPK);
-	}
-
-	/**
-	* Updates the message boards discussion in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mbDiscussion the message boards discussion
-	* @return the message boards discussion that was updated
-	*/
-	public static com.liferay.message.boards.kernel.model.MBDiscussion updateMBDiscussion(
-		com.liferay.message.boards.kernel.model.MBDiscussion mbDiscussion) {
-		return getService().updateMBDiscussion(mbDiscussion);
 	}
 
 	public static MBDiscussionLocalService getService() {

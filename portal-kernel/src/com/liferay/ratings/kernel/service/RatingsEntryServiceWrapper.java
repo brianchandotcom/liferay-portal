@@ -33,9 +33,10 @@ public class RatingsEntryServiceWrapper implements RatingsEntryService,
 	}
 
 	@Override
-	public void deleteEntry(java.lang.String className, long classPK)
+	public com.liferay.ratings.kernel.model.RatingsEntry updateEntry(
+		java.lang.String className, long classPK, double score)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_ratingsEntryService.deleteEntry(className, classPK);
+		return _ratingsEntryService.updateEntry(className, classPK, score);
 	}
 
 	/**
@@ -49,10 +50,9 @@ public class RatingsEntryServiceWrapper implements RatingsEntryService,
 	}
 
 	@Override
-	public com.liferay.ratings.kernel.model.RatingsEntry updateEntry(
-		java.lang.String className, long classPK, double score)
+	public void deleteEntry(java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ratingsEntryService.updateEntry(className, classPK, score);
+		_ratingsEntryService.deleteEntry(className, classPK);
 	}
 
 	@Override

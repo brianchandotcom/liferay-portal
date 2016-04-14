@@ -40,6 +40,16 @@ public class UserGroupGroupRoleServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.UserGroupGroupRoleServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
 	public static void addUserGroupGroupRoles(long userGroupId, long groupId,
 		long[] roleIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -62,15 +72,6 @@ public class UserGroupGroupRoleServiceUtil {
 		long groupId, long roleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteUserGroupGroupRoles(userGroupIds, groupId, roleId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static UserGroupGroupRoleService getService() {

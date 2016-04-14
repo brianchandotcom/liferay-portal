@@ -71,9 +71,6 @@ public interface LayoutSetPrototypeService extends BaseService {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteLayoutSetPrototype(long layoutSetPrototypeId)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutSetPrototype fetchLayoutSetPrototype(long layoutSetPrototypeId)
 		throws PortalException;
@@ -82,16 +79,8 @@ public interface LayoutSetPrototypeService extends BaseService {
 	public LayoutSetPrototype getLayoutSetPrototype(long layoutSetPrototypeId)
 		throws PortalException;
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<LayoutSetPrototype> search(long companyId,
-		java.lang.Boolean active, OrderByComparator<LayoutSetPrototype> obc)
+	public LayoutSetPrototype updateLayoutSetPrototype(
+		long layoutSetPrototypeId, java.lang.String settings)
 		throws PortalException;
 
 	/**
@@ -114,7 +103,18 @@ public interface LayoutSetPrototypeService extends BaseService {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public LayoutSetPrototype updateLayoutSetPrototype(
-		long layoutSetPrototypeId, java.lang.String settings)
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutSetPrototype> search(long companyId,
+		java.lang.Boolean active, OrderByComparator<LayoutSetPrototype> obc)
+		throws PortalException;
+
+	public void deleteLayoutSetPrototype(long layoutSetPrototypeId)
 		throws PortalException;
 }

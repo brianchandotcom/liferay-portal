@@ -62,23 +62,29 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ShoppingCategoryLocalServiceUtil} to access the shopping category local service. Add custom service methods to {@link com.liferay.shopping.service.impl.ShoppingCategoryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
 	public ShoppingCategory addCategory(long userId, long parentCategoryId,
 		java.lang.String name, java.lang.String description,
 		ServiceContext serviceContext) throws PortalException;
-
-	public void addCategoryResources(ShoppingCategory category,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws PortalException;
-
-	public void addCategoryResources(ShoppingCategory category,
-		ModelPermissions modelPermissions) throws PortalException;
-
-	public void addCategoryResources(long categoryId,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws PortalException;
-
-	public void addCategoryResources(long categoryId,
-		ModelPermissions modelPermissions) throws PortalException;
 
 	/**
 	* Adds the shopping category to the database. Also notifies the appropriate model listeners.
@@ -98,19 +104,15 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 	*/
 	public ShoppingCategory createShoppingCategory(long categoryId);
 
-	public void deleteCategories(long groupId) throws PortalException;
-
-	public void deleteCategory(ShoppingCategory category)
-		throws PortalException;
-
-	public void deleteCategory(long categoryId) throws PortalException;
-
 	/**
-	* @throws PortalException
+	* Deletes the shopping category from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingCategory the shopping category
+	* @return the shopping category that was removed
 	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public ShoppingCategory deleteShoppingCategory(
+		ShoppingCategory shoppingCategory);
 
 	/**
 	* Deletes the shopping category with the primary key from the database. Also notifies the appropriate model listeners.
@@ -123,17 +125,64 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 	public ShoppingCategory deleteShoppingCategory(long categoryId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ShoppingCategory fetchShoppingCategory(long categoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ShoppingCategory getCategory(long categoryId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ShoppingCategory getCategory(long groupId,
+		java.lang.String categoryName);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ShoppingCategory getParentCategory(ShoppingCategory category)
+		throws PortalException;
+
 	/**
-	* Deletes the shopping category from the database. Also notifies the appropriate model listeners.
+	* Returns the shopping category with the primary key.
+	*
+	* @param categoryId the primary key of the shopping category
+	* @return the shopping category
+	* @throws PortalException if a shopping category with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ShoppingCategory getShoppingCategory(long categoryId)
+		throws PortalException;
+
+	public ShoppingCategory updateCategory(long categoryId,
+		long parentCategoryId, java.lang.String name,
+		java.lang.String description, boolean mergeWithParentCategory,
+		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* Updates the shopping category in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param shoppingCategory the shopping category
-	* @return the shopping category that was removed
+	* @return the shopping category that was updated
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public ShoppingCategory deleteShoppingCategory(
+	@Indexable(type = IndexableType.REINDEX)
+	public ShoppingCategory updateShoppingCategory(
 		ShoppingCategory shoppingCategory);
 
-	public DynamicQuery dynamicQuery();
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCategoriesCount(long groupId, long parentCategoryId);
+
+	/**
+	* Returns the number of shopping categories.
+	*
+	* @return the number of shopping categories
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getShoppingCategoriesCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -174,6 +223,35 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ShoppingCategory> getCategories(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ShoppingCategory> getCategories(long groupId,
+		long parentCategoryId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ShoppingCategory> getParentCategories(ShoppingCategory category)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ShoppingCategory> getParentCategories(long categoryId)
+		throws PortalException;
+
+	/**
+	* Returns a range of all the shopping categories.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.shopping.model.impl.ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of shopping categories
+	* @param end the upper bound of the range of shopping categories (not inclusive)
+	* @return the range of shopping categories
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ShoppingCategory> getShoppingCategories(int start, int end);
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -192,106 +270,28 @@ public interface ShoppingCategoryLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ShoppingCategory fetchShoppingCategory(long categoryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ShoppingCategory> getCategories(long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ShoppingCategory> getCategories(long groupId,
-		long parentCategoryId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCategoriesCount(long groupId, long parentCategoryId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ShoppingCategory getCategory(long categoryId)
+	public void addCategoryResources(ShoppingCategory category,
+		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ShoppingCategory getCategory(long groupId,
-		java.lang.String categoryName);
+	public void addCategoryResources(ShoppingCategory category,
+		ModelPermissions modelPermissions) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ShoppingCategory> getParentCategories(ShoppingCategory category)
+	public void addCategoryResources(long categoryId,
+		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ShoppingCategory> getParentCategories(long categoryId)
+	public void addCategoryResources(long categoryId,
+		ModelPermissions modelPermissions) throws PortalException;
+
+	public void deleteCategories(long groupId) throws PortalException;
+
+	public void deleteCategory(ShoppingCategory category)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ShoppingCategory getParentCategory(ShoppingCategory category)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns a range of all the shopping categories.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.shopping.model.impl.ShoppingCategoryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of shopping categories
-	* @param end the upper bound of the range of shopping categories (not inclusive)
-	* @return the range of shopping categories
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ShoppingCategory> getShoppingCategories(int start, int end);
-
-	/**
-	* Returns the number of shopping categories.
-	*
-	* @return the number of shopping categories
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getShoppingCategoriesCount();
-
-	/**
-	* Returns the shopping category with the primary key.
-	*
-	* @param categoryId the primary key of the shopping category
-	* @return the shopping category
-	* @throws PortalException if a shopping category with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ShoppingCategory getShoppingCategory(long categoryId)
-		throws PortalException;
+	public void deleteCategory(long categoryId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void getSubcategoryIds(List<java.lang.Long> categoryIds,
 		long groupId, long categoryId);
-
-	public ShoppingCategory updateCategory(long categoryId,
-		long parentCategoryId, java.lang.String name,
-		java.lang.String description, boolean mergeWithParentCategory,
-		ServiceContext serviceContext) throws PortalException;
-
-	/**
-	* Updates the shopping category in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingCategory the shopping category
-	* @return the shopping category that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public ShoppingCategory updateShoppingCategory(
-		ShoppingCategory shoppingCategory);
 }

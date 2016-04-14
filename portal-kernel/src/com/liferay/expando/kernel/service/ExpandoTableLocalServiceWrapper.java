@@ -111,6 +111,113 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 		return _expandoTableLocalService.deleteExpandoTable(tableId);
 	}
 
+	@Override
+	public com.liferay.expando.kernel.model.ExpandoTable fetchDefaultTable(
+		long companyId, java.lang.String className) {
+		return _expandoTableLocalService.fetchDefaultTable(companyId, className);
+	}
+
+	@Override
+	public com.liferay.expando.kernel.model.ExpandoTable fetchDefaultTable(
+		long companyId, long classNameId) {
+		return _expandoTableLocalService.fetchDefaultTable(companyId,
+			classNameId);
+	}
+
+	@Override
+	public com.liferay.expando.kernel.model.ExpandoTable fetchExpandoTable(
+		long tableId) {
+		return _expandoTableLocalService.fetchExpandoTable(tableId);
+	}
+
+	@Override
+	public com.liferay.expando.kernel.model.ExpandoTable fetchTable(
+		long companyId, long classNameId, java.lang.String name) {
+		return _expandoTableLocalService.fetchTable(companyId, classNameId, name);
+	}
+
+	@Override
+	public com.liferay.expando.kernel.model.ExpandoTable getDefaultTable(
+		long companyId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _expandoTableLocalService.getDefaultTable(companyId, className);
+	}
+
+	@Override
+	public com.liferay.expando.kernel.model.ExpandoTable getDefaultTable(
+		long companyId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _expandoTableLocalService.getDefaultTable(companyId, classNameId);
+	}
+
+	/**
+	* Returns the expando table with the primary key.
+	*
+	* @param tableId the primary key of the expando table
+	* @return the expando table
+	* @throws PortalException if a expando table with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.expando.kernel.model.ExpandoTable getExpandoTable(
+		long tableId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _expandoTableLocalService.getExpandoTable(tableId);
+	}
+
+	@Override
+	public com.liferay.expando.kernel.model.ExpandoTable getTable(
+		long companyId, java.lang.String className, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _expandoTableLocalService.getTable(companyId, className, name);
+	}
+
+	@Override
+	public com.liferay.expando.kernel.model.ExpandoTable getTable(
+		long companyId, long classNameId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _expandoTableLocalService.getTable(companyId, classNameId, name);
+	}
+
+	@Override
+	public com.liferay.expando.kernel.model.ExpandoTable getTable(long tableId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _expandoTableLocalService.getTable(tableId);
+	}
+
+	/**
+	* Updates the expando table in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param expandoTable the expando table
+	* @return the expando table that was updated
+	*/
+	@Override
+	public com.liferay.expando.kernel.model.ExpandoTable updateExpandoTable(
+		com.liferay.expando.kernel.model.ExpandoTable expandoTable) {
+		return _expandoTableLocalService.updateExpandoTable(expandoTable);
+	}
+
+	@Override
+	public com.liferay.expando.kernel.model.ExpandoTable updateTable(
+		long tableId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _expandoTableLocalService.updateTable(tableId, name);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _expandoTableLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _expandoTableLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _expandoTableLocalService.getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -122,43 +229,30 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 	}
 
 	@Override
-	public void deleteTable(long companyId, java.lang.String className,
-		java.lang.String name)
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_expandoTableLocalService.deleteTable(companyId, className, name);
+		return _expandoTableLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	* Returns the number of expando tables.
+	*
+	* @return the number of expando tables
+	*/
 	@Override
-	public void deleteTable(long companyId, long classNameId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_expandoTableLocalService.deleteTable(companyId, classNameId, name);
+	public int getExpandoTablesCount() {
+		return _expandoTableLocalService.getExpandoTablesCount();
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
 	@Override
-	public void deleteTable(com.liferay.expando.kernel.model.ExpandoTable table) {
-		_expandoTableLocalService.deleteTable(table);
-	}
-
-	@Override
-	public void deleteTable(long tableId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_expandoTableLocalService.deleteTable(tableId);
-	}
-
-	@Override
-	public void deleteTables(long companyId, java.lang.String className) {
-		_expandoTableLocalService.deleteTables(companyId, className);
-	}
-
-	@Override
-	public void deleteTables(long companyId, long classNameId) {
-		_expandoTableLocalService.deleteTables(companyId, classNameId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _expandoTableLocalService.dynamicQuery();
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _expandoTableLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -215,6 +309,35 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 	}
 
 	/**
+	* Returns a range of all the expando tables.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.expando.model.impl.ExpandoTableModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of expando tables
+	* @param end the upper bound of the range of expando tables (not inclusive)
+	* @return the range of expando tables
+	*/
+	@Override
+	public java.util.List<com.liferay.expando.kernel.model.ExpandoTable> getExpandoTables(
+		int start, int end) {
+		return _expandoTableLocalService.getExpandoTables(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.expando.kernel.model.ExpandoTable> getTables(
+		long companyId, java.lang.String className) {
+		return _expandoTableLocalService.getTables(companyId, className);
+	}
+
+	@Override
+	public java.util.List<com.liferay.expando.kernel.model.ExpandoTable> getTables(
+		long companyId, long classNameId) {
+		return _expandoTableLocalService.getTables(companyId, classNameId);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -242,161 +365,38 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoTable fetchDefaultTable(
-		long companyId, java.lang.String className) {
-		return _expandoTableLocalService.fetchDefaultTable(companyId, className);
+	public void deleteTable(com.liferay.expando.kernel.model.ExpandoTable table) {
+		_expandoTableLocalService.deleteTable(table);
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoTable fetchDefaultTable(
-		long companyId, long classNameId) {
-		return _expandoTableLocalService.fetchDefaultTable(companyId,
-			classNameId);
-	}
-
-	@Override
-	public com.liferay.expando.kernel.model.ExpandoTable fetchExpandoTable(
-		long tableId) {
-		return _expandoTableLocalService.fetchExpandoTable(tableId);
-	}
-
-	@Override
-	public com.liferay.expando.kernel.model.ExpandoTable fetchTable(
-		long companyId, long classNameId, java.lang.String name) {
-		return _expandoTableLocalService.fetchTable(companyId, classNameId, name);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _expandoTableLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.expando.kernel.model.ExpandoTable getDefaultTable(
-		long companyId, java.lang.String className)
+	public void deleteTable(long companyId, java.lang.String className,
+		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoTableLocalService.getDefaultTable(companyId, className);
+		_expandoTableLocalService.deleteTable(companyId, className, name);
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoTable getDefaultTable(
-		long companyId, long classNameId)
+	public void deleteTable(long companyId, long classNameId,
+		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoTableLocalService.getDefaultTable(companyId, classNameId);
+		_expandoTableLocalService.deleteTable(companyId, classNameId, name);
 	}
 
-	/**
-	* Returns the expando table with the primary key.
-	*
-	* @param tableId the primary key of the expando table
-	* @return the expando table
-	* @throws PortalException if a expando table with the primary key could not be found
-	*/
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoTable getExpandoTable(
-		long tableId)
+	public void deleteTable(long tableId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoTableLocalService.getExpandoTable(tableId);
-	}
-
-	/**
-	* Returns a range of all the expando tables.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.expando.model.impl.ExpandoTableModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of expando tables
-	* @param end the upper bound of the range of expando tables (not inclusive)
-	* @return the range of expando tables
-	*/
-	@Override
-	public java.util.List<com.liferay.expando.kernel.model.ExpandoTable> getExpandoTables(
-		int start, int end) {
-		return _expandoTableLocalService.getExpandoTables(start, end);
-	}
-
-	/**
-	* Returns the number of expando tables.
-	*
-	* @return the number of expando tables
-	*/
-	@Override
-	public int getExpandoTablesCount() {
-		return _expandoTableLocalService.getExpandoTablesCount();
+		_expandoTableLocalService.deleteTable(tableId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _expandoTableLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _expandoTableLocalService.getOSGiServiceIdentifier();
+	public void deleteTables(long companyId, java.lang.String className) {
+		_expandoTableLocalService.deleteTables(companyId, className);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoTableLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.expando.kernel.model.ExpandoTable getTable(
-		long companyId, java.lang.String className, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoTableLocalService.getTable(companyId, className, name);
-	}
-
-	@Override
-	public com.liferay.expando.kernel.model.ExpandoTable getTable(
-		long companyId, long classNameId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoTableLocalService.getTable(companyId, classNameId, name);
-	}
-
-	@Override
-	public com.liferay.expando.kernel.model.ExpandoTable getTable(long tableId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoTableLocalService.getTable(tableId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.expando.kernel.model.ExpandoTable> getTables(
-		long companyId, java.lang.String className) {
-		return _expandoTableLocalService.getTables(companyId, className);
-	}
-
-	@Override
-	public java.util.List<com.liferay.expando.kernel.model.ExpandoTable> getTables(
-		long companyId, long classNameId) {
-		return _expandoTableLocalService.getTables(companyId, classNameId);
-	}
-
-	/**
-	* Updates the expando table in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param expandoTable the expando table
-	* @return the expando table that was updated
-	*/
-	@Override
-	public com.liferay.expando.kernel.model.ExpandoTable updateExpandoTable(
-		com.liferay.expando.kernel.model.ExpandoTable expandoTable) {
-		return _expandoTableLocalService.updateExpandoTable(expandoTable);
-	}
-
-	@Override
-	public com.liferay.expando.kernel.model.ExpandoTable updateTable(
-		long tableId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoTableLocalService.updateTable(tableId, name);
+	public void deleteTables(long companyId, long classNameId) {
+		_expandoTableLocalService.deleteTables(companyId, classNameId);
 	}
 
 	@Override

@@ -32,6 +32,44 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 		_dlAppLocalService = dlAppLocalService;
 	}
 
+	/**
+	* Adds the file rank to the existing file entry. This method is only
+	* supported by the Liferay repository.
+	*
+	* @param repositoryId the primary key of the repository
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the file rank's creator/owner
+	* @param fileEntryId the primary key of the file entry
+	* @param serviceContext the service context to be applied
+	* @return the file rank
+	*/
+	@Override
+	public com.liferay.document.library.kernel.model.DLFileRank addFileRank(
+		long repositoryId, long companyId, long userId, long fileEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _dlAppLocalService.addFileRank(repositoryId, companyId, userId,
+			fileEntryId, serviceContext);
+	}
+
+	/**
+	* Updates a file rank to the existing file entry. This method is only
+	* supported by the Liferay repository.
+	*
+	* @param repositoryId the primary key of the file rank's repository
+	* @param companyId the primary key of the file rank's company
+	* @param userId the primary key of the file rank's creator/owner
+	* @param fileEntryId the primary key of the file rank's file entry
+	* @param serviceContext the service context to be applied
+	* @return the file rank
+	*/
+	@Override
+	public com.liferay.document.library.kernel.model.DLFileRank updateFileRank(
+		long repositoryId, long companyId, long userId, long fileEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _dlAppLocalService.updateFileRank(repositoryId, companyId,
+			userId, fileEntryId, serviceContext);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
 		long userId, long repositoryId, long folderId,
@@ -175,170 +213,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	}
 
 	/**
-	* Adds the file rank to the existing file entry. This method is only
-	* supported by the Liferay repository.
-	*
-	* @param repositoryId the primary key of the repository
-	* @param companyId the primary key of the company
-	* @param userId the primary key of the file rank's creator/owner
-	* @param fileEntryId the primary key of the file entry
-	* @param serviceContext the service context to be applied
-	* @return the file rank
-	*/
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileRank addFileRank(
-		long repositoryId, long companyId, long userId, long fileEntryId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return _dlAppLocalService.addFileRank(repositoryId, companyId, userId,
-			fileEntryId, serviceContext);
-	}
-
-	/**
-	* Adds the file shortcut to the existing file entry. This method is only
-	* supported by the Liferay repository.
-	*
-	* @param userId the primary key of the file shortcut's creator/owner
-	* @param repositoryId the primary key of the repository
-	* @param folderId the primary key of the file shortcut's parent folder
-	* @param toFileEntryId the primary key of the file entry to point to
-	* @param serviceContext the service context to be applied. Can set the
-	asset category IDs, asset tag names, and expando bridge
-	attributes for the file entry.
-	* @return the file shortcut
-	*/
-	@Override
-	public com.liferay.portal.kernel.repository.model.FileShortcut addFileShortcut(
-		long userId, long repositoryId, long folderId, long toFileEntryId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlAppLocalService.addFileShortcut(userId, repositoryId,
-			folderId, toFileEntryId, serviceContext);
-	}
-
-	/**
-	* Adds a folder.
-	*
-	* @param userId the primary key of the folder's creator/owner
-	* @param repositoryId the primary key of the repository
-	* @param parentFolderId the primary key of the folder's parent folder
-	* @param name the folder's name
-	* @param description the folder's description
-	* @param serviceContext the service context to be applied. In a Liferay
-	repository, it may include mountPoint which is a boolean
-	specifying whether the folder is a facade for mounting a
-	third-party repository
-	* @return the folder
-	*/
-	@Override
-	public com.liferay.portal.kernel.repository.model.Folder addFolder(
-		long userId, long repositoryId, long parentFolderId,
-		java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlAppLocalService.addFolder(userId, repositoryId,
-			parentFolderId, name, description, serviceContext);
-	}
-
-	/**
-	* Delete all data associated to the given repository. This method is only
-	* supported by the Liferay repository.
-	*
-	* @param repositoryId the primary key of the data's repository
-	*/
-	@Override
-	public void deleteAll(long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppLocalService.deleteAll(repositoryId);
-	}
-
-	@Override
-	public void deleteAllRepositories(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppLocalService.deleteAllRepositories(groupId);
-	}
-
-	/**
-	* Deletes the file entry.
-	*
-	* @param fileEntryId the primary key of the file entry
-	*/
-	@Override
-	public void deleteFileEntry(long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppLocalService.deleteFileEntry(fileEntryId);
-	}
-
-	/**
-	* Deletes the file ranks associated to a given file entry. This method is
-	* only supported by the Liferay repository.
-	*
-	* @param fileEntryId the primary key of the file entry
-	*/
-	@Override
-	public void deleteFileRanksByFileEntryId(long fileEntryId) {
-		_dlAppLocalService.deleteFileRanksByFileEntryId(fileEntryId);
-	}
-
-	/**
-	* Deletes the file ranks associated to a given user. This method is only
-	* supported by the Liferay repository.
-	*
-	* @param userId the primary key of the user
-	*/
-	@Override
-	public void deleteFileRanksByUserId(long userId) {
-		_dlAppLocalService.deleteFileRanksByUserId(userId);
-	}
-
-	/**
-	* Deletes the file shortcut. This method is only supported by the Liferay
-	* repository.
-	*
-	* @param fileShortcut the file shortcut
-	*/
-	@Override
-	public void deleteFileShortcut(
-		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppLocalService.deleteFileShortcut(fileShortcut);
-	}
-
-	/**
-	* Deletes the file shortcut. This method is only supported by the Liferay
-	* repository.
-	*
-	* @param fileShortcutId the primary key of the file shortcut
-	*/
-	@Override
-	public void deleteFileShortcut(long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppLocalService.deleteFileShortcut(fileShortcutId);
-	}
-
-	/**
-	* Deletes all file shortcuts associated to the file entry. This method is
-	* only supported by the Liferay repository.
-	*
-	* @param toFileEntryId the primary key of the associated file entry
-	*/
-	@Override
-	public void deleteFileShortcuts(long toFileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppLocalService.deleteFileShortcuts(toFileEntryId);
-	}
-
-	/**
-	* Deletes the folder and all of its subfolders and file entries.
-	*
-	* @param folderId the primary key of the folder
-	*/
-	@Override
-	public void deleteFolder(long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppLocalService.deleteFolder(folderId);
-	}
-
-	/**
 	* Returns the file entry with the primary key.
 	*
 	* @param fileEntryId the primary key of the file entry
@@ -381,99 +255,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	}
 
 	/**
-	* Returns the file ranks from the user. This method is only supported by
-	* the Liferay repository.
-	*
-	* @param repositoryId the primary key of the repository
-	* @param userId the primary key of the user
-	* @return the file ranks from the user
-	*/
-	@Override
-	public java.util.List<com.liferay.document.library.kernel.model.DLFileRank> getFileRanks(
-		long repositoryId, long userId) {
-		return _dlAppLocalService.getFileRanks(repositoryId, userId);
-	}
-
-	/**
-	* Returns the file shortcut with the primary key. This method is only
-	* supported by the Liferay repository.
-	*
-	* @param fileShortcutId the primary key of the file shortcut
-	* @return the file shortcut with the primary key
-	*/
-	@Override
-	public com.liferay.portal.kernel.repository.model.FileShortcut getFileShortcut(
-		long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlAppLocalService.getFileShortcut(fileShortcutId);
-	}
-
-	/**
-	* Returns the file version with the primary key.
-	*
-	* @param fileVersionId the primary key of the file version
-	* @return the file version with the primary key
-	*/
-	@Override
-	public com.liferay.portal.kernel.repository.model.FileVersion getFileVersion(
-		long fileVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlAppLocalService.getFileVersion(fileVersionId);
-	}
-
-	/**
-	* Returns the folder with the primary key.
-	*
-	* @param folderId the primary key of the folder
-	* @return the folder with the primary key
-	*/
-	@Override
-	public com.liferay.portal.kernel.repository.model.Folder getFolder(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlAppLocalService.getFolder(folderId);
-	}
-
-	/**
-	* Returns the folder with the name in the parent folder.
-	*
-	* @param repositoryId the primary key of the folder's repository
-	* @param parentFolderId the primary key of the folder's parent folder
-	* @param name the folder's name
-	* @return the folder with the name in the parent folder
-	*/
-	@Override
-	public com.liferay.portal.kernel.repository.model.Folder getFolder(
-		long repositoryId, long parentFolderId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlAppLocalService.getFolder(repositoryId, parentFolderId, name);
-	}
-
-	/**
-	* Returns the mount folder of the repository with the primary key. This
-	* method is only supported by the Liferay repository.
-	*
-	* @param repositoryId the primary key of the repository
-	* @return the folder used for mounting third-party repositories
-	*/
-	@Override
-	public com.liferay.portal.kernel.repository.model.Folder getMountFolder(
-		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlAppLocalService.getMountFolder(repositoryId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _dlAppLocalService.getOSGiServiceIdentifier();
-	}
-
-	/**
 	* Moves the file entry to the new folder.
 	*
 	* @param userId the primary key of the user
@@ -489,97 +270,6 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppLocalService.moveFileEntry(userId, fileEntryId,
 			newFolderId, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.model.Folder moveFolder(
-		long userId, long folderId, long parentFolderId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlAppLocalService.moveFolder(userId, folderId, parentFolderId,
-			serviceContext);
-	}
-
-	/**
-	* Subscribe the user to changes in documents of the file entry type. This
-	* method is only supported by the Liferay repository.
-	*
-	* @param userId the primary key of the user
-	* @param groupId the primary key of the file entry type's group
-	* @param fileEntryTypeId the primary key of the file entry type
-	*/
-	@Override
-	public void subscribeFileEntryType(long userId, long groupId,
-		long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppLocalService.subscribeFileEntryType(userId, groupId,
-			fileEntryTypeId);
-	}
-
-	/**
-	* Subscribe the user to document changes in the folder. This method is only
-	* supported by the Liferay repository.
-	*
-	* @param userId the primary key of the user
-	* @param groupId the primary key of the folder's group
-	* @param folderId the primary key of the folder
-	*/
-	@Override
-	public void subscribeFolder(long userId, long groupId, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppLocalService.subscribeFolder(userId, groupId, folderId);
-	}
-
-	/**
-	* Unsubscribe the user from changes in documents of the file entry type.
-	* This method is only supported by the Liferay repository.
-	*
-	* @param userId the primary key of the user
-	* @param groupId the primary key of the file entry type's group
-	* @param fileEntryTypeId the primary key of the file entry type
-	*/
-	@Override
-	public void unsubscribeFileEntryType(long userId, long groupId,
-		long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppLocalService.unsubscribeFileEntryType(userId, groupId,
-			fileEntryTypeId);
-	}
-
-	/**
-	* Unsubscribe the user from document changes in the folder. This method is
-	* only supported by the Liferay repository.
-	*
-	* @param userId the primary key of the user
-	* @param groupId the primary key of the folder's group
-	* @param folderId the primary key of the folder
-	*/
-	@Override
-	public void unsubscribeFolder(long userId, long groupId, long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppLocalService.unsubscribeFolder(userId, groupId, folderId);
-	}
-
-	/**
-	* Updates the file entry's asset replacing its asset categories, tags, and
-	* links.
-	*
-	* @param userId the primary key of the user
-	* @param fileEntry the file entry to update
-	* @param fileVersion the file version to update
-	* @param assetCategoryIds the primary keys of the new asset categories
-	* @param assetTagNames the new asset tag names
-	* @param assetLinkEntryIds the primary keys of the new asset link entries
-	*/
-	@Override
-	public void updateAsset(long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppLocalService.updateAsset(userId, fileEntry, fileVersion,
-			assetCategoryIds, assetTagNames, assetLinkEntryIds);
 	}
 
 	/**
@@ -725,22 +415,39 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	}
 
 	/**
-	* Updates a file rank to the existing file entry. This method is only
+	* Adds the file shortcut to the existing file entry. This method is only
 	* supported by the Liferay repository.
 	*
-	* @param repositoryId the primary key of the file rank's repository
-	* @param companyId the primary key of the file rank's company
-	* @param userId the primary key of the file rank's creator/owner
-	* @param fileEntryId the primary key of the file rank's file entry
-	* @param serviceContext the service context to be applied
-	* @return the file rank
+	* @param userId the primary key of the file shortcut's creator/owner
+	* @param repositoryId the primary key of the repository
+	* @param folderId the primary key of the file shortcut's parent folder
+	* @param toFileEntryId the primary key of the file entry to point to
+	* @param serviceContext the service context to be applied. Can set the
+	asset category IDs, asset tag names, and expando bridge
+	attributes for the file entry.
+	* @return the file shortcut
 	*/
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileRank updateFileRank(
-		long repositoryId, long companyId, long userId, long fileEntryId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return _dlAppLocalService.updateFileRank(repositoryId, companyId,
-			userId, fileEntryId, serviceContext);
+	public com.liferay.portal.kernel.repository.model.FileShortcut addFileShortcut(
+		long userId, long repositoryId, long folderId, long toFileEntryId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppLocalService.addFileShortcut(userId, repositoryId,
+			folderId, toFileEntryId, serviceContext);
+	}
+
+	/**
+	* Returns the file shortcut with the primary key. This method is only
+	* supported by the Liferay repository.
+	*
+	* @param fileShortcutId the primary key of the file shortcut
+	* @return the file shortcut with the primary key
+	*/
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileShortcut getFileShortcut(
+		long fileShortcutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppLocalService.getFileShortcut(fileShortcutId);
 	}
 
 	/**
@@ -766,30 +473,91 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	}
 
 	/**
-	* Updates all file shortcuts to the existing file entry to the new file
-	* entry. This method is only supported by the Liferay repository.
+	* Returns the file version with the primary key.
 	*
-	* @param oldToFileEntryId the primary key of the old file entry pointed to
-	* @param newToFileEntryId the primary key of the new file entry to point to
+	* @param fileVersionId the primary key of the file version
+	* @return the file version with the primary key
 	*/
 	@Override
-	public void updateFileShortcuts(long oldToFileEntryId, long newToFileEntryId)
+	public com.liferay.portal.kernel.repository.model.FileVersion getFileVersion(
+		long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppLocalService.updateFileShortcuts(oldToFileEntryId,
-			newToFileEntryId);
+		return _dlAppLocalService.getFileVersion(fileVersionId);
 	}
 
 	/**
-	* Deprecated as of 7.0.0, replaced by {@link #updateFileShortcuts(long,
-	* long)}
+	* Adds a folder.
+	*
+	* @param userId the primary key of the folder's creator/owner
+	* @param repositoryId the primary key of the repository
+	* @param parentFolderId the primary key of the folder's parent folder
+	* @param name the folder's name
+	* @param description the folder's description
+	* @param serviceContext the service context to be applied. In a Liferay
+	repository, it may include mountPoint which is a boolean
+	specifying whether the folder is a facade for mounting a
+	third-party repository
+	* @return the folder
 	*/
-	@Deprecated
 	@Override
-	public void updateFileShortcuts(long toRepositoryId, long oldToFileEntryId,
-		long newToFileEntryId)
+	public com.liferay.portal.kernel.repository.model.Folder addFolder(
+		long userId, long repositoryId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppLocalService.updateFileShortcuts(toRepositoryId,
-			oldToFileEntryId, newToFileEntryId);
+		return _dlAppLocalService.addFolder(userId, repositoryId,
+			parentFolderId, name, description, serviceContext);
+	}
+
+	/**
+	* Returns the folder with the primary key.
+	*
+	* @param folderId the primary key of the folder
+	* @return the folder with the primary key
+	*/
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder getFolder(
+		long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppLocalService.getFolder(folderId);
+	}
+
+	/**
+	* Returns the folder with the name in the parent folder.
+	*
+	* @param repositoryId the primary key of the folder's repository
+	* @param parentFolderId the primary key of the folder's parent folder
+	* @param name the folder's name
+	* @return the folder with the name in the parent folder
+	*/
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder getFolder(
+		long repositoryId, long parentFolderId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppLocalService.getFolder(repositoryId, parentFolderId, name);
+	}
+
+	/**
+	* Returns the mount folder of the repository with the primary key. This
+	* method is only supported by the Liferay repository.
+	*
+	* @param repositoryId the primary key of the repository
+	* @return the folder used for mounting third-party repositories
+	*/
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder getMountFolder(
+		long repositoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppLocalService.getMountFolder(repositoryId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder moveFolder(
+		long userId, long folderId, long parentFolderId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppLocalService.moveFolder(userId, folderId, parentFolderId,
+			serviceContext);
 	}
 
 	/**
@@ -821,6 +589,238 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppLocalService.updateFolder(folderId, parentFolderId, name,
 			description, serviceContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _dlAppLocalService.getOSGiServiceIdentifier();
+	}
+
+	/**
+	* Returns the file ranks from the user. This method is only supported by
+	* the Liferay repository.
+	*
+	* @param repositoryId the primary key of the repository
+	* @param userId the primary key of the user
+	* @return the file ranks from the user
+	*/
+	@Override
+	public java.util.List<com.liferay.document.library.kernel.model.DLFileRank> getFileRanks(
+		long repositoryId, long userId) {
+		return _dlAppLocalService.getFileRanks(repositoryId, userId);
+	}
+
+	/**
+	* Delete all data associated to the given repository. This method is only
+	* supported by the Liferay repository.
+	*
+	* @param repositoryId the primary key of the data's repository
+	*/
+	@Override
+	public void deleteAll(long repositoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppLocalService.deleteAll(repositoryId);
+	}
+
+	@Override
+	public void deleteAllRepositories(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppLocalService.deleteAllRepositories(groupId);
+	}
+
+	/**
+	* Deletes the file entry.
+	*
+	* @param fileEntryId the primary key of the file entry
+	*/
+	@Override
+	public void deleteFileEntry(long fileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppLocalService.deleteFileEntry(fileEntryId);
+	}
+
+	/**
+	* Deletes the file ranks associated to a given file entry. This method is
+	* only supported by the Liferay repository.
+	*
+	* @param fileEntryId the primary key of the file entry
+	*/
+	@Override
+	public void deleteFileRanksByFileEntryId(long fileEntryId) {
+		_dlAppLocalService.deleteFileRanksByFileEntryId(fileEntryId);
+	}
+
+	/**
+	* Deletes the file ranks associated to a given user. This method is only
+	* supported by the Liferay repository.
+	*
+	* @param userId the primary key of the user
+	*/
+	@Override
+	public void deleteFileRanksByUserId(long userId) {
+		_dlAppLocalService.deleteFileRanksByUserId(userId);
+	}
+
+	/**
+	* Deletes the file shortcut. This method is only supported by the Liferay
+	* repository.
+	*
+	* @param fileShortcut the file shortcut
+	*/
+	@Override
+	public void deleteFileShortcut(
+		com.liferay.portal.kernel.repository.model.FileShortcut fileShortcut)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppLocalService.deleteFileShortcut(fileShortcut);
+	}
+
+	/**
+	* Deletes the file shortcut. This method is only supported by the Liferay
+	* repository.
+	*
+	* @param fileShortcutId the primary key of the file shortcut
+	*/
+	@Override
+	public void deleteFileShortcut(long fileShortcutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppLocalService.deleteFileShortcut(fileShortcutId);
+	}
+
+	/**
+	* Deletes all file shortcuts associated to the file entry. This method is
+	* only supported by the Liferay repository.
+	*
+	* @param toFileEntryId the primary key of the associated file entry
+	*/
+	@Override
+	public void deleteFileShortcuts(long toFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppLocalService.deleteFileShortcuts(toFileEntryId);
+	}
+
+	/**
+	* Deletes the folder and all of its subfolders and file entries.
+	*
+	* @param folderId the primary key of the folder
+	*/
+	@Override
+	public void deleteFolder(long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppLocalService.deleteFolder(folderId);
+	}
+
+	/**
+	* Subscribe the user to changes in documents of the file entry type. This
+	* method is only supported by the Liferay repository.
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the file entry type's group
+	* @param fileEntryTypeId the primary key of the file entry type
+	*/
+	@Override
+	public void subscribeFileEntryType(long userId, long groupId,
+		long fileEntryTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppLocalService.subscribeFileEntryType(userId, groupId,
+			fileEntryTypeId);
+	}
+
+	/**
+	* Subscribe the user to document changes in the folder. This method is only
+	* supported by the Liferay repository.
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the folder's group
+	* @param folderId the primary key of the folder
+	*/
+	@Override
+	public void subscribeFolder(long userId, long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppLocalService.subscribeFolder(userId, groupId, folderId);
+	}
+
+	/**
+	* Unsubscribe the user from changes in documents of the file entry type.
+	* This method is only supported by the Liferay repository.
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the file entry type's group
+	* @param fileEntryTypeId the primary key of the file entry type
+	*/
+	@Override
+	public void unsubscribeFileEntryType(long userId, long groupId,
+		long fileEntryTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppLocalService.unsubscribeFileEntryType(userId, groupId,
+			fileEntryTypeId);
+	}
+
+	/**
+	* Unsubscribe the user from document changes in the folder. This method is
+	* only supported by the Liferay repository.
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the folder's group
+	* @param folderId the primary key of the folder
+	*/
+	@Override
+	public void unsubscribeFolder(long userId, long groupId, long folderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppLocalService.unsubscribeFolder(userId, groupId, folderId);
+	}
+
+	/**
+	* Updates the file entry's asset replacing its asset categories, tags, and
+	* links.
+	*
+	* @param userId the primary key of the user
+	* @param fileEntry the file entry to update
+	* @param fileVersion the file version to update
+	* @param assetCategoryIds the primary keys of the new asset categories
+	* @param assetTagNames the new asset tag names
+	* @param assetLinkEntryIds the primary keys of the new asset link entries
+	*/
+	@Override
+	public void updateAsset(long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetLinkEntryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppLocalService.updateAsset(userId, fileEntry, fileVersion,
+			assetCategoryIds, assetTagNames, assetLinkEntryIds);
+	}
+
+	/**
+	* Updates all file shortcuts to the existing file entry to the new file
+	* entry. This method is only supported by the Liferay repository.
+	*
+	* @param oldToFileEntryId the primary key of the old file entry pointed to
+	* @param newToFileEntryId the primary key of the new file entry to point to
+	*/
+	@Override
+	public void updateFileShortcuts(long oldToFileEntryId, long newToFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppLocalService.updateFileShortcuts(oldToFileEntryId,
+			newToFileEntryId);
+	}
+
+	/**
+	* Deprecated as of 7.0.0, replaced by {@link #updateFileShortcuts(long,
+	* long)}
+	*/
+	@Deprecated
+	@Override
+	public void updateFileShortcuts(long toRepositoryId, long oldToFileEntryId,
+		long newToFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppLocalService.updateFileShortcuts(toRepositoryId,
+			oldToFileEntryId, newToFileEntryId);
 	}
 
 	@Override

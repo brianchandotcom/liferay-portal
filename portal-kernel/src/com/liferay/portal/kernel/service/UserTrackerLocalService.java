@@ -59,10 +59,25 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link UserTrackerLocalServiceUtil} to access the user tracker local service. Add custom service methods to {@link com.liferay.portal.service.impl.UserTrackerLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public UserTracker addUserTracker(long companyId, long userId,
-		Date modifiedDate, java.lang.String sessionId,
-		java.lang.String remoteAddr, java.lang.String remoteHost,
-		java.lang.String userAgent, List<UserTrackerPath> userTrackerPaths);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	/**
 	* Adds the user tracker to the database. Also notifies the appropriate model listeners.
@@ -73,6 +88,11 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public UserTracker addUserTracker(UserTracker userTracker);
 
+	public UserTracker addUserTracker(long companyId, long userId,
+		Date modifiedDate, java.lang.String sessionId,
+		java.lang.String remoteAddr, java.lang.String remoteHost,
+		java.lang.String userAgent, List<UserTrackerPath> userTrackerPaths);
+
 	/**
 	* Creates a new user tracker with the primary key. Does not add the user tracker to the database.
 	*
@@ -80,13 +100,6 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	* @return the new user tracker
 	*/
 	public UserTracker createUserTracker(long userTrackerId);
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
 
 	/**
 	* Deletes the user tracker from the database. Also notifies the appropriate model listeners.
@@ -108,7 +121,43 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	public UserTracker deleteUserTracker(long userTrackerId)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UserTracker fetchUserTracker(long userTrackerId);
+
+	/**
+	* Returns the user tracker with the primary key.
+	*
+	* @param userTrackerId the primary key of the user tracker
+	* @return the user tracker
+	* @throws PortalException if a user tracker with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UserTracker getUserTracker(long userTrackerId)
+		throws PortalException;
+
+	/**
+	* Updates the user tracker in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param userTracker the user tracker
+	* @return the user tracker that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public UserTracker updateUserTracker(UserTracker userTracker);
+
+	/**
+	* Returns the number of user trackers.
+	*
+	* @return the number of user trackers
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserTrackersCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -150,6 +199,23 @@ public interface UserTrackerLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns a range of all the user trackers.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.UserTrackerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of user trackers
+	* @param end the upper bound of the range of user trackers (not inclusive)
+	* @return the range of user trackers
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserTracker> getUserTrackers(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserTracker> getUserTrackers(long companyId, int start, int end);
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -166,70 +232,4 @@ public interface UserTrackerLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserTracker fetchUserTracker(long userTrackerId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the user tracker with the primary key.
-	*
-	* @param userTrackerId the primary key of the user tracker
-	* @return the user tracker
-	* @throws PortalException if a user tracker with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public UserTracker getUserTracker(long userTrackerId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<UserTracker> getUserTrackers(long companyId, int start, int end);
-
-	/**
-	* Returns a range of all the user trackers.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.UserTrackerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of user trackers
-	* @param end the upper bound of the range of user trackers (not inclusive)
-	* @return the range of user trackers
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<UserTracker> getUserTrackers(int start, int end);
-
-	/**
-	* Returns the number of user trackers.
-	*
-	* @return the number of user trackers
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserTrackersCount();
-
-	/**
-	* Updates the user tracker in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param userTracker the user tracker
-	* @return the user tracker that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public UserTracker updateUserTracker(UserTracker userTracker);
 }

@@ -55,7 +55,12 @@ public interface PhoneService extends BaseService {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deletePhone(long phoneId) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Phone getPhone(long phoneId) throws PortalException;
+
+	public Phone updatePhone(long phoneId, java.lang.String number,
+		java.lang.String extension, long typeId, boolean primary)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -65,13 +70,8 @@ public interface PhoneService extends BaseService {
 	public java.lang.String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Phone getPhone(long phoneId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Phone> getPhones(java.lang.String className, long classPK)
 		throws PortalException;
 
-	public Phone updatePhone(long phoneId, java.lang.String number,
-		java.lang.String extension, long typeId, boolean primary)
-		throws PortalException;
+	public void deletePhone(long phoneId) throws PortalException;
 }

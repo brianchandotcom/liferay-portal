@@ -40,10 +40,6 @@ public class PortletPreferencesServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.PortletPreferencesServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static void deleteArchivedPreferences(long portletItemId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteArchivedPreferences(portletItemId);
-	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -52,6 +48,11 @@ public class PortletPreferencesServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static void deleteArchivedPreferences(long portletItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteArchivedPreferences(portletItemId);
 	}
 
 	public static void restoreArchivedPreferences(long groupId,

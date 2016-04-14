@@ -59,8 +59,13 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link LayoutSetLocalServiceUtil} to access the layout set local service. Add custom service methods to {@link com.liferay.portal.service.impl.LayoutSetLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public LayoutSet addLayoutSet(long groupId, boolean privateLayout)
-		throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* Adds the layout set to the database. Also notifies the appropriate model listeners.
@@ -71,6 +76,9 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public LayoutSet addLayoutSet(LayoutSet layoutSet);
 
+	public LayoutSet addLayoutSet(long groupId, boolean privateLayout)
+		throws PortalException;
+
 	/**
 	* Creates a new layout set with the primary key. Does not add the layout set to the database.
 	*
@@ -78,10 +86,6 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	* @return the new layout set
 	*/
 	public LayoutSet createLayoutSet(long layoutSetId);
-
-	public void deleteLayoutSet(long groupId, boolean privateLayout,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	* Deletes the layout set from the database. Also notifies the appropriate model listeners.
@@ -103,6 +107,65 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	public LayoutSet deleteLayoutSet(long layoutSetId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutSet fetchLayoutSet(java.lang.String virtualHostname);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutSet fetchLayoutSet(long layoutSetId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutSet getLayoutSet(java.lang.String virtualHostname)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutSet getLayoutSet(long groupId, boolean privateLayout)
+		throws PortalException;
+
+	/**
+	* Returns the layout set with the primary key.
+	*
+	* @param layoutSetId the primary key of the layout set
+	* @return the layout set
+	* @throws PortalException if a layout set with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutSet getLayoutSet(long layoutSetId) throws PortalException;
+
+	/**
+	* Updates the layout set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param layoutSet the layout set
+	* @return the layout set that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public LayoutSet updateLayoutSet(LayoutSet layoutSet);
+
+	public LayoutSet updateLogo(long groupId, boolean privateLayout,
+		boolean logo, byte[] bytes) throws PortalException;
+
+	public LayoutSet updateLogo(long groupId, boolean privateLayout,
+		boolean logo, File file) throws PortalException;
+
+	public LayoutSet updateLogo(long groupId, boolean privateLayout,
+		boolean logo, InputStream is) throws PortalException;
+
+	public LayoutSet updateLogo(long groupId, boolean privateLayout,
+		boolean logo, InputStream is, boolean cleanUpStream)
+		throws PortalException;
+
+	public LayoutSet updateLookAndFeel(long groupId, boolean privateLayout,
+		java.lang.String themeId, java.lang.String colorSchemeId,
+		java.lang.String css) throws PortalException;
+
+	public LayoutSet updatePageCount(long groupId, boolean privateLayout)
+		throws PortalException;
+
+	public LayoutSet updateSettings(long groupId, boolean privateLayout,
+		java.lang.String settings) throws PortalException;
+
+	public LayoutSet updateVirtualHost(long groupId, boolean privateLayout,
+		java.lang.String virtualHostname) throws PortalException;
+
 	/**
 	* @throws PortalException
 	*/
@@ -110,7 +173,25 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the number of layout sets.
+	*
+	* @return the number of layout sets
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutSetsCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -152,54 +233,6 @@ public interface LayoutSetLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutSet fetchLayoutSet(long layoutSetId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutSet fetchLayoutSet(java.lang.String virtualHostname);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutSet getLayoutSet(long groupId, boolean privateLayout)
-		throws PortalException;
-
-	/**
-	* Returns the layout set with the primary key.
-	*
-	* @param layoutSetId the primary key of the layout set
-	* @return the layout set
-	* @throws PortalException if a layout set with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutSet getLayoutSet(long layoutSetId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutSet getLayoutSet(java.lang.String virtualHostname)
-		throws PortalException;
-
-	/**
 	* Returns a range of all the layout sets.
 	*
 	* <p>
@@ -218,33 +251,26 @@ public interface LayoutSetLocalService extends BaseLocalService,
 		java.lang.String layoutSetPrototypeUuid);
 
 	/**
-	* Returns the number of layout sets.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of layout sets
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getLayoutSetsCount();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+	public void deleteLayoutSet(long groupId, boolean privateLayout,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException;
-
-	/**
-	* Updates the layout set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param layoutSet the layout set
-	* @return the layout set that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public LayoutSet updateLayoutSet(LayoutSet layoutSet);
 
 	/**
 	* Updates the state of the layout set prototype link.
@@ -260,33 +286,7 @@ public interface LayoutSetLocalService extends BaseLocalService,
 		boolean privateLayout, boolean layoutSetPrototypeLinkEnabled,
 		java.lang.String layoutSetPrototypeUuid) throws PortalException;
 
-	public LayoutSet updateLogo(long groupId, boolean privateLayout,
-		boolean logo, byte[] bytes) throws PortalException;
-
-	public LayoutSet updateLogo(long groupId, boolean privateLayout,
-		boolean logo, File file) throws PortalException;
-
-	public LayoutSet updateLogo(long groupId, boolean privateLayout,
-		boolean logo, InputStream is) throws PortalException;
-
-	public LayoutSet updateLogo(long groupId, boolean privateLayout,
-		boolean logo, InputStream is, boolean cleanUpStream)
-		throws PortalException;
-
-	public LayoutSet updateLookAndFeel(long groupId, boolean privateLayout,
-		java.lang.String themeId, java.lang.String colorSchemeId,
-		java.lang.String css) throws PortalException;
-
 	public void updateLookAndFeel(long groupId, java.lang.String themeId,
 		java.lang.String colorSchemeId, java.lang.String css)
 		throws PortalException;
-
-	public LayoutSet updatePageCount(long groupId, boolean privateLayout)
-		throws PortalException;
-
-	public LayoutSet updateSettings(long groupId, boolean privateLayout,
-		java.lang.String settings) throws PortalException;
-
-	public LayoutSet updateVirtualHost(long groupId, boolean privateLayout,
-		java.lang.String virtualHostname) throws PortalException;
 }

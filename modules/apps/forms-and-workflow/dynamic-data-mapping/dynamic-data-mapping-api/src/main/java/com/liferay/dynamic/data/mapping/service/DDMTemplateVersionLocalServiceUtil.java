@@ -88,6 +88,65 @@ public class DDMTemplateVersionLocalServiceUtil {
 		return getService().deleteDDMTemplateVersion(templateVersionId);
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion fetchDDMTemplateVersion(
+		long templateVersionId) {
+		return getService().fetchDDMTemplateVersion(templateVersionId);
+	}
+
+	/**
+	* Returns the d d m template version with the primary key.
+	*
+	* @param templateVersionId the primary key of the d d m template version
+	* @return the d d m template version
+	* @throws PortalException if a d d m template version with the primary key could not be found
+	*/
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getDDMTemplateVersion(
+		long templateVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDDMTemplateVersion(templateVersionId);
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getLatestTemplateVersion(
+		long templateId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getLatestTemplateVersion(templateId);
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getTemplateVersion(
+		long templateId, java.lang.String version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getTemplateVersion(templateId, version);
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getTemplateVersion(
+		long templateVersionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getTemplateVersion(templateVersionId);
+	}
+
+	/**
+	* Updates the d d m template version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param ddmTemplateVersion the d d m template version
+	* @return the d d m template version that was updated
+	*/
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion updateDDMTemplateVersion(
+		com.liferay.dynamic.data.mapping.model.DDMTemplateVersion ddmTemplateVersion) {
+		return getService().updateDDMTemplateVersion(ddmTemplateVersion);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	/**
 	* @throws PortalException
 	*/
@@ -97,8 +156,32 @@ public class DDMTemplateVersionLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the number of d d m template versions.
+	*
+	* @return the number of d d m template versions
+	*/
+	public static int getDDMTemplateVersionsCount() {
+		return getService().getDDMTemplateVersionsCount();
+	}
+
+	public static int getTemplateVersionsCount(long templateId) {
+		return getService().getTemplateVersionsCount(templateId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -152,6 +235,30 @@ public class DDMTemplateVersionLocalServiceUtil {
 	}
 
 	/**
+	* Returns a range of all the d d m template versions.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of d d m template versions
+	* @param end the upper bound of the range of d d m template versions (not inclusive)
+	* @return the range of d d m template versions
+	*/
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> getDDMTemplateVersions(
+		int start, int end) {
+		return getService().getDDMTemplateVersions(start, end);
+	}
+
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> getTemplateVersions(
+		long templateId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> orderByComparator) {
+		return getService()
+				   .getTemplateVersions(templateId, start, end,
+			orderByComparator);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -173,113 +280,6 @@ public class DDMTemplateVersionLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion fetchDDMTemplateVersion(
-		long templateVersionId) {
-		return getService().fetchDDMTemplateVersion(templateVersionId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the d d m template version with the primary key.
-	*
-	* @param templateVersionId the primary key of the d d m template version
-	* @return the d d m template version
-	* @throws PortalException if a d d m template version with the primary key could not be found
-	*/
-	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getDDMTemplateVersion(
-		long templateVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getDDMTemplateVersion(templateVersionId);
-	}
-
-	/**
-	* Returns a range of all the d d m template versions.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of d d m template versions
-	* @param end the upper bound of the range of d d m template versions (not inclusive)
-	* @return the range of d d m template versions
-	*/
-	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> getDDMTemplateVersions(
-		int start, int end) {
-		return getService().getDDMTemplateVersions(start, end);
-	}
-
-	/**
-	* Returns the number of d d m template versions.
-	*
-	* @return the number of d d m template versions
-	*/
-	public static int getDDMTemplateVersionsCount() {
-		return getService().getDDMTemplateVersionsCount();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getLatestTemplateVersion(
-		long templateId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLatestTemplateVersion(templateId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getTemplateVersion(
-		long templateId, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getTemplateVersion(templateId, version);
-	}
-
-	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getTemplateVersion(
-		long templateVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getTemplateVersion(templateVersionId);
-	}
-
-	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> getTemplateVersions(
-		long templateId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> orderByComparator) {
-		return getService()
-				   .getTemplateVersions(templateId, start, end,
-			orderByComparator);
-	}
-
-	public static int getTemplateVersionsCount(long templateId) {
-		return getService().getTemplateVersionsCount(templateId);
-	}
-
-	/**
-	* Updates the d d m template version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param ddmTemplateVersion the d d m template version
-	* @return the d d m template version that was updated
-	*/
-	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion updateDDMTemplateVersion(
-		com.liferay.dynamic.data.mapping.model.DDMTemplateVersion ddmTemplateVersion) {
-		return getService().updateDDMTemplateVersion(ddmTemplateVersion);
 	}
 
 	public static DDMTemplateVersionLocalService getService() {

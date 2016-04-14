@@ -62,15 +62,6 @@ public class CountryServiceUtil {
 		return getService().fetchCountryByA3(a3);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.Country> getCountries() {
-		return getService().getCountries();
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.Country> getCountries(
-		boolean active) {
-		return getService().getCountries(active);
-	}
-
 	public static com.liferay.portal.kernel.model.Country getCountry(
 		long countryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -102,6 +93,15 @@ public class CountryServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.Country> getCountries() {
+		return getService().getCountries();
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.Country> getCountries(
+		boolean active) {
+		return getService().getCountries(active);
 	}
 
 	public static CountryService getService() {

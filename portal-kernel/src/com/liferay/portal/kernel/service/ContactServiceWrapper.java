@@ -37,15 +37,6 @@ public class ContactServiceWrapper implements ContactService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Contact> getContacts(
-		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Contact> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _contactService.getContacts(classNameId, classPK, start, end,
-			orderByComparator);
-	}
-
-	@Override
 	public int getContactsCount(long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _contactService.getContactsCount(classNameId, classPK);
@@ -59,6 +50,15 @@ public class ContactServiceWrapper implements ContactService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _contactService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Contact> getContacts(
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Contact> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _contactService.getContacts(classNameId, classPK, start, end,
+			orderByComparator);
 	}
 
 	@Override

@@ -32,6 +32,69 @@ public class ResourceTypePermissionLocalServiceWrapper
 		_resourceTypePermissionLocalService = resourceTypePermissionLocalService;
 	}
 
+	@Override
+	public boolean hasCompanyScopePermission(long companyId,
+		java.lang.String name, long roleId, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceTypePermissionLocalService.hasCompanyScopePermission(companyId,
+			name, roleId, actionId);
+	}
+
+	@Override
+	public boolean hasEitherScopePermission(long companyId,
+		java.lang.String name, long roleId, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceTypePermissionLocalService.hasEitherScopePermission(companyId,
+			name, roleId, actionId);
+	}
+
+	@Override
+	public boolean hasGroupScopePermission(long companyId, long groupId,
+		java.lang.String name, long roleId, java.lang.String actionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceTypePermissionLocalService.hasGroupScopePermission(companyId,
+			groupId, name, roleId, actionId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _resourceTypePermissionLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _resourceTypePermissionLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _resourceTypePermissionLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceTypePermissionLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceTypePermissionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
+		long companyId, long groupId, java.lang.String name) {
+		return _resourceTypePermissionLocalService.getResourceBlockPermissionsContainer(companyId,
+			groupId, name);
+	}
+
 	/**
 	* Adds the resource type permission to the database. Also notifies the appropriate model listeners.
 	*
@@ -54,16 +117,6 @@ public class ResourceTypePermissionLocalServiceWrapper
 	public com.liferay.portal.kernel.model.ResourceTypePermission createResourceTypePermission(
 		long resourceTypePermissionId) {
 		return _resourceTypePermissionLocalService.createResourceTypePermission(resourceTypePermissionId);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourceTypePermissionLocalService.deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -93,8 +146,55 @@ public class ResourceTypePermissionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _resourceTypePermissionLocalService.dynamicQuery();
+	public com.liferay.portal.kernel.model.ResourceTypePermission fetchResourceTypePermission(
+		long resourceTypePermissionId) {
+		return _resourceTypePermissionLocalService.fetchResourceTypePermission(resourceTypePermissionId);
+	}
+
+	/**
+	* Returns the resource type permission with the primary key.
+	*
+	* @param resourceTypePermissionId the primary key of the resource type permission
+	* @return the resource type permission
+	* @throws PortalException if a resource type permission with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.ResourceTypePermission getResourceTypePermission(
+		long resourceTypePermissionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _resourceTypePermissionLocalService.getResourceTypePermission(resourceTypePermissionId);
+	}
+
+	/**
+	* Updates the resource type permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param resourceTypePermission the resource type permission
+	* @return the resource type permission that was updated
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.ResourceTypePermission updateResourceTypePermission(
+		com.liferay.portal.kernel.model.ResourceTypePermission resourceTypePermission) {
+		return _resourceTypePermissionLocalService.updateResourceTypePermission(resourceTypePermission);
+	}
+
+	/**
+	* Returns the number of resource type permissions.
+	*
+	* @return the number of resource type permissions
+	*/
+	@Override
+	public int getResourceTypePermissionsCount() {
+		return _resourceTypePermissionLocalService.getResourceTypePermissionsCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _resourceTypePermissionLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -151,6 +251,37 @@ public class ResourceTypePermissionLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.ResourceTypePermission> getGroupScopeResourceTypePermissions(
+		long companyId, java.lang.String name, long roleId) {
+		return _resourceTypePermissionLocalService.getGroupScopeResourceTypePermissions(companyId,
+			name, roleId);
+	}
+
+	/**
+	* Returns a range of all the resource type permissions.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourceTypePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of resource type permissions
+	* @param end the upper bound of the range of resource type permissions (not inclusive)
+	* @return the range of resource type permissions
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.ResourceTypePermission> getResourceTypePermissions(
+		int start, int end) {
+		return _resourceTypePermissionLocalService.getResourceTypePermissions(start,
+			end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.ResourceTypePermission> getRoleResourceTypePermissions(
+		long roleId) {
+		return _resourceTypePermissionLocalService.getRoleResourceTypePermissions(roleId);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -179,17 +310,6 @@ public class ResourceTypePermissionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.ResourceTypePermission fetchResourceTypePermission(
-		long resourceTypePermissionId) {
-		return _resourceTypePermissionLocalService.fetchResourceTypePermission(resourceTypePermissionId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _resourceTypePermissionLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
 	public long getCompanyScopeActionIds(long companyId, java.lang.String name,
 		long roleId) {
 		return _resourceTypePermissionLocalService.getCompanyScopeActionIds(companyId,
@@ -201,114 +321,6 @@ public class ResourceTypePermissionLocalServiceWrapper
 		java.lang.String name, long roleId) {
 		return _resourceTypePermissionLocalService.getGroupScopeActionIds(companyId,
 			groupId, name, roleId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.ResourceTypePermission> getGroupScopeResourceTypePermissions(
-		long companyId, java.lang.String name, long roleId) {
-		return _resourceTypePermissionLocalService.getGroupScopeResourceTypePermissions(companyId,
-			name, roleId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _resourceTypePermissionLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _resourceTypePermissionLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourceTypePermissionLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.ResourceBlockPermissionsContainer getResourceBlockPermissionsContainer(
-		long companyId, long groupId, java.lang.String name) {
-		return _resourceTypePermissionLocalService.getResourceBlockPermissionsContainer(companyId,
-			groupId, name);
-	}
-
-	/**
-	* Returns the resource type permission with the primary key.
-	*
-	* @param resourceTypePermissionId the primary key of the resource type permission
-	* @return the resource type permission
-	* @throws PortalException if a resource type permission with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.ResourceTypePermission getResourceTypePermission(
-		long resourceTypePermissionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourceTypePermissionLocalService.getResourceTypePermission(resourceTypePermissionId);
-	}
-
-	/**
-	* Returns a range of all the resource type permissions.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ResourceTypePermissionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of resource type permissions
-	* @param end the upper bound of the range of resource type permissions (not inclusive)
-	* @return the range of resource type permissions
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.ResourceTypePermission> getResourceTypePermissions(
-		int start, int end) {
-		return _resourceTypePermissionLocalService.getResourceTypePermissions(start,
-			end);
-	}
-
-	/**
-	* Returns the number of resource type permissions.
-	*
-	* @return the number of resource type permissions
-	*/
-	@Override
-	public int getResourceTypePermissionsCount() {
-		return _resourceTypePermissionLocalService.getResourceTypePermissionsCount();
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.ResourceTypePermission> getRoleResourceTypePermissions(
-		long roleId) {
-		return _resourceTypePermissionLocalService.getRoleResourceTypePermissions(roleId);
-	}
-
-	@Override
-	public boolean hasCompanyScopePermission(long companyId,
-		java.lang.String name, long roleId, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourceTypePermissionLocalService.hasCompanyScopePermission(companyId,
-			name, roleId, actionId);
-	}
-
-	@Override
-	public boolean hasEitherScopePermission(long companyId,
-		java.lang.String name, long roleId, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourceTypePermissionLocalService.hasEitherScopePermission(companyId,
-			name, roleId, actionId);
-	}
-
-	@Override
-	public boolean hasGroupScopePermission(long companyId, long groupId,
-		java.lang.String name, long roleId, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _resourceTypePermissionLocalService.hasGroupScopePermission(companyId,
-			groupId, name, roleId, actionId);
 	}
 
 	@Override
@@ -324,18 +336,6 @@ public class ResourceTypePermissionLocalServiceWrapper
 		long operator) {
 		_resourceTypePermissionLocalService.updateGroupScopeResourceTypePermissions(companyId,
 			groupId, name, roleId, actionIdsLong, operator);
-	}
-
-	/**
-	* Updates the resource type permission in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param resourceTypePermission the resource type permission
-	* @return the resource type permission that was updated
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.ResourceTypePermission updateResourceTypePermission(
-		com.liferay.portal.kernel.model.ResourceTypePermission resourceTypePermission) {
-		return _resourceTypePermissionLocalService.updateResourceTypePermission(resourceTypePermission);
 	}
 
 	@Override

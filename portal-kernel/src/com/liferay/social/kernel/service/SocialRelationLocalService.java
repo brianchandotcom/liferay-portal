@@ -62,6 +62,62 @@ public interface SocialRelationLocalService extends BaseLocalService,
 	 */
 
 	/**
+	* Returns <code>true</code> if a relation of the given type exists where
+	* the user with primary key <code>userId1</code> is User1 of the relation
+	* and the user with the primary key <code>userId2</code> is User2 of the
+	* relation.
+	*
+	* @param userId1 the user that is the subject of the relation
+	* @param userId2 the user at the other end of the relation
+	* @param type the relation's type
+	* @return <code>true</code> if the relation exists; <code>false</code>
+	otherwise
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasRelation(long userId1, long userId2, int type);
+
+	/**
+	* Returns <code>true</code> if the users can be in a relation of the given
+	* type where the user with primary key <code>userId1</code> is User1 of the
+	* relation and the user with the primary key <code>userId2</code> is User2
+	* of the relation.
+	*
+	* <p>
+	* This method returns <code>false</code> if User1 and User2 are the same,
+	* if either user is the default user, or if a matching relation already
+	* exists.
+	* </p>
+	*
+	* @param userId1 the user that is the subject of the relation
+	* @param userId2 the user at the other end of the relation
+	* @param type the relation's type
+	* @return <code>true</code> if the two users can be in a new relation of
+	the given type; <code>false</code> otherwise
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isRelatable(long userId1, long userId2, int type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
 	* Adds a social relation between the two users to the database.
 	*
 	* @param userId1 the user that is the subject of the relation
@@ -90,55 +146,13 @@ public interface SocialRelationLocalService extends BaseLocalService,
 	public SocialRelation createSocialRelation(long relationId);
 
 	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	/**
-	* Removes the relation (and its inverse in case of a bidirectional
-	* relation) from the database.
+	* Deletes the social relation from the database. Also notifies the appropriate model listeners.
 	*
-	* @param relation the relation to be removed
+	* @param socialRelation the social relation
+	* @return the social relation that was removed
 	*/
-	public void deleteRelation(SocialRelation relation)
-		throws PortalException;
-
-	/**
-	* Removes the relation (and its inverse in case of a bidirectional
-	* relation) from the database.
-	*
-	* @param relationId the primary key of the relation
-	*/
-	public void deleteRelation(long relationId) throws PortalException;
-
-	/**
-	* Removes the matching relation (and its inverse in case of a bidirectional
-	* relation) from the database.
-	*
-	* @param userId1 the user that is the subject of the relation
-	* @param userId2 the user at the other end of the relation
-	* @param type the relation's type
-	*/
-	public void deleteRelation(long userId1, long userId2, int type)
-		throws PortalException;
-
-	/**
-	* Removes all relations involving the user from the database.
-	*
-	* @param userId the primary key of the user
-	*/
-	public void deleteRelations(long userId);
-
-	/**
-	* Removes all relations between User1 and User2.
-	*
-	* @param userId1 the user that is the subject of the relation
-	* @param userId2 the user at the other end of the relation
-	*/
-	public void deleteRelations(long userId1, long userId2)
-		throws PortalException;
+	@Indexable(type = IndexableType.DELETE)
+	public SocialRelation deleteSocialRelation(SocialRelation socialRelation);
 
 	/**
 	* Deletes the social relation with the primary key from the database. Also notifies the appropriate model listeners.
@@ -151,16 +165,120 @@ public interface SocialRelationLocalService extends BaseLocalService,
 	public SocialRelation deleteSocialRelation(long relationId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SocialRelation fetchSocialRelation(long relationId);
+
 	/**
-	* Deletes the social relation from the database. Also notifies the appropriate model listeners.
+	* Returns the social relation with the matching UUID and company.
+	*
+	* @param uuid the social relation's UUID
+	* @param companyId the primary key of the company
+	* @return the matching social relation, or <code>null</code> if a matching social relation could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SocialRelation fetchSocialRelationByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns the relation identified by its primary key.
+	*
+	* @param relationId the primary key of the relation
+	* @return Returns the relation
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SocialRelation getRelation(long relationId)
+		throws PortalException;
+
+	/**
+	* Returns the relation of the given type between User1 and User2.
+	*
+	* @param userId1 the user that is the subject of the relation
+	* @param userId2 the user at the other end of the relation
+	* @param type the relation's type
+	* @return Returns the relation
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SocialRelation getRelation(long userId1, long userId2, int type)
+		throws PortalException;
+
+	/**
+	* Returns the social relation with the primary key.
+	*
+	* @param relationId the primary key of the social relation
+	* @return the social relation
+	* @throws PortalException if a social relation with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SocialRelation getSocialRelation(long relationId)
+		throws PortalException;
+
+	/**
+	* Returns the social relation with the matching UUID and company.
+	*
+	* @param uuid the social relation's UUID
+	* @param companyId the primary key of the company
+	* @return the matching social relation
+	* @throws PortalException if a matching social relation could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SocialRelation getSocialRelationByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) throws PortalException;
+
+	/**
+	* Updates the social relation in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param socialRelation the social relation
-	* @return the social relation that was removed
+	* @return the social relation that was updated
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public SocialRelation deleteSocialRelation(SocialRelation socialRelation);
+	@Indexable(type = IndexableType.REINDEX)
+	public SocialRelation updateSocialRelation(SocialRelation socialRelation);
 
-	public DynamicQuery dynamicQuery();
+	/**
+	* Returns the number of inverse relations of the given type for which the
+	* user is User2 of the relation.
+	*
+	* @param userId the primary key of the user
+	* @param type the relation's type
+	* @return the number of matching relations
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getInverseRelationsCount(long userId, int type);
+
+	/**
+	* Returns the number of relations of the given type where the user is the
+	* subject of the relation.
+	*
+	* @param userId the primary key of the user
+	* @param type the relation's type
+	* @return the number of relations
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRelationsCount(long userId, int type);
+
+	/**
+	* Returns the number of relations between User1 and User2.
+	*
+	* @param userId1 the user that is the subject of the relation
+	* @param userId2 the user at the other end of the relation
+	* @return the number of relations
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRelationsCount(long userId1, long userId2);
+
+	/**
+	* Returns the number of social relations.
+	*
+	* @return the number of social relations
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getSocialRelationsCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -202,44 +320,6 @@ public interface SocialRelationLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SocialRelation fetchSocialRelation(long relationId);
-
-	/**
-	* Returns the social relation with the matching UUID and company.
-	*
-	* @param uuid the social relation's UUID
-	* @param companyId the primary key of the company
-	* @return the matching social relation, or <code>null</code> if a matching social relation could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SocialRelation fetchSocialRelationByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
 	* Returns a range of all the inverse relations of the given type for which
 	* the user is User2 of the relation.
 	*
@@ -262,51 +342,6 @@ public interface SocialRelationLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SocialRelation> getInverseRelations(long userId, int type,
 		int start, int end);
-
-	/**
-	* Returns the number of inverse relations of the given type for which the
-	* user is User2 of the relation.
-	*
-	* @param userId the primary key of the user
-	* @param type the relation's type
-	* @return the number of matching relations
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getInverseRelationsCount(long userId, int type);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Returns the relation identified by its primary key.
-	*
-	* @param relationId the primary key of the relation
-	* @return Returns the relation
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SocialRelation getRelation(long relationId)
-		throws PortalException;
-
-	/**
-	* Returns the relation of the given type between User1 and User2.
-	*
-	* @param userId1 the user that is the subject of the relation
-	* @param userId2 the user at the other end of the relation
-	* @param type the relation's type
-	* @return Returns the relation
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SocialRelation getRelation(long userId1, long userId2, int type)
-		throws PortalException;
 
 	/**
 	* Returns a range of all the relations of the given type where the user is
@@ -356,50 +391,6 @@ public interface SocialRelationLocalService extends BaseLocalService,
 		int start, int end);
 
 	/**
-	* Returns the number of relations of the given type where the user is the
-	* subject of the relation.
-	*
-	* @param userId the primary key of the user
-	* @param type the relation's type
-	* @return the number of relations
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRelationsCount(long userId, int type);
-
-	/**
-	* Returns the number of relations between User1 and User2.
-	*
-	* @param userId1 the user that is the subject of the relation
-	* @param userId2 the user at the other end of the relation
-	* @return the number of relations
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRelationsCount(long userId1, long userId2);
-
-	/**
-	* Returns the social relation with the primary key.
-	*
-	* @param relationId the primary key of the social relation
-	* @return the social relation
-	* @throws PortalException if a social relation with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SocialRelation getSocialRelation(long relationId)
-		throws PortalException;
-
-	/**
-	* Returns the social relation with the matching UUID and company.
-	*
-	* @param uuid the social relation's UUID
-	* @param companyId the primary key of the company
-	* @return the matching social relation
-	* @throws PortalException if a matching social relation could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SocialRelation getSocialRelationByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) throws PortalException;
-
-	/**
 	* Returns a range of all the social relations.
 	*
 	* <p>
@@ -414,55 +405,64 @@ public interface SocialRelationLocalService extends BaseLocalService,
 	public List<SocialRelation> getSocialRelations(int start, int end);
 
 	/**
-	* Returns the number of social relations.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of social relations
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSocialRelationsCount();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns <code>true</code> if a relation of the given type exists where
-	* the user with primary key <code>userId1</code> is User1 of the relation
-	* and the user with the primary key <code>userId2</code> is User2 of the
-	* relation.
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	/**
+	* Removes the relation (and its inverse in case of a bidirectional
+	* relation) from the database.
+	*
+	* @param relation the relation to be removed
+	*/
+	public void deleteRelation(SocialRelation relation)
+		throws PortalException;
+
+	/**
+	* Removes the relation (and its inverse in case of a bidirectional
+	* relation) from the database.
+	*
+	* @param relationId the primary key of the relation
+	*/
+	public void deleteRelation(long relationId) throws PortalException;
+
+	/**
+	* Removes the matching relation (and its inverse in case of a bidirectional
+	* relation) from the database.
 	*
 	* @param userId1 the user that is the subject of the relation
 	* @param userId2 the user at the other end of the relation
 	* @param type the relation's type
-	* @return <code>true</code> if the relation exists; <code>false</code>
-	otherwise
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasRelation(long userId1, long userId2, int type);
+	public void deleteRelation(long userId1, long userId2, int type)
+		throws PortalException;
 
 	/**
-	* Returns <code>true</code> if the users can be in a relation of the given
-	* type where the user with primary key <code>userId1</code> is User1 of the
-	* relation and the user with the primary key <code>userId2</code> is User2
-	* of the relation.
+	* Removes all relations involving the user from the database.
 	*
-	* <p>
-	* This method returns <code>false</code> if User1 and User2 are the same,
-	* if either user is the default user, or if a matching relation already
-	* exists.
-	* </p>
+	* @param userId the primary key of the user
+	*/
+	public void deleteRelations(long userId);
+
+	/**
+	* Removes all relations between User1 and User2.
 	*
 	* @param userId1 the user that is the subject of the relation
 	* @param userId2 the user at the other end of the relation
-	* @param type the relation's type
-	* @return <code>true</code> if the two users can be in a new relation of
-	the given type; <code>false</code> otherwise
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean isRelatable(long userId1, long userId2, int type);
-
-	/**
-	* Updates the social relation in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param socialRelation the social relation
-	* @return the social relation that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public SocialRelation updateSocialRelation(SocialRelation socialRelation);
+	public void deleteRelations(long userId1, long userId2)
+		throws PortalException;
 }

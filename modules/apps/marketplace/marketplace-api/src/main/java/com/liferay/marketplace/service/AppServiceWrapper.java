@@ -38,6 +38,12 @@ public class AppServiceWrapper implements AppService,
 		return _appService.deleteApp(appId);
 	}
 
+	@Override
+	public com.liferay.marketplace.model.App updateApp(java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _appService.updateApp(file);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -58,12 +64,6 @@ public class AppServiceWrapper implements AppService,
 	public void uninstallApp(long remoteAppId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_appService.uninstallApp(remoteAppId);
-	}
-
-	@Override
-	public com.liferay.marketplace.model.App updateApp(java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _appService.updateApp(file);
 	}
 
 	@Override

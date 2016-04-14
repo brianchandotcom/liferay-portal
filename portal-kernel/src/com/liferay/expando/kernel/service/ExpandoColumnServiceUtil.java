@@ -53,24 +53,10 @@ public class ExpandoColumnServiceUtil {
 		return getService().addColumn(tableId, name, type, defaultData);
 	}
 
-	public static void deleteColumn(long columnId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteColumn(columnId);
-	}
-
 	public static com.liferay.expando.kernel.model.ExpandoColumn fetchExpandoColumn(
 		long columnId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().fetchExpandoColumn(columnId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.expando.kernel.model.ExpandoColumn updateColumn(
@@ -90,6 +76,20 @@ public class ExpandoColumnServiceUtil {
 		long columnId, java.lang.String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateTypeSettings(columnId, typeSettings);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static void deleteColumn(long columnId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteColumn(columnId);
 	}
 
 	public static ExpandoColumnService getService() {

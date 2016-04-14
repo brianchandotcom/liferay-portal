@@ -35,7 +35,7 @@ public class ExpandoValueServiceWrapper implements ExpandoValueService,
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoValue addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, java.lang.String data)
+		java.lang.String columnName, long classPK, java.lang.Object data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueService.addValue(companyId, className, tableName,
 			columnName, classPK, data);
@@ -44,19 +44,19 @@ public class ExpandoValueServiceWrapper implements ExpandoValueService,
 	@Override
 	public com.liferay.expando.kernel.model.ExpandoValue addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK, java.lang.Object data)
+		java.lang.String columnName, long classPK, java.lang.String data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueService.addValue(companyId, className, tableName,
 			columnName, classPK, data);
 	}
 
 	@Override
-	public void addValues(long companyId, java.lang.String className,
-		java.lang.String tableName, long classPK,
-		java.util.Map<java.lang.String, java.io.Serializable> attributeValues)
+	public com.liferay.portal.kernel.json.JSONObject getJSONData(
+		long companyId, java.lang.String className, java.lang.String tableName,
+		java.lang.String columnName, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_expandoValueService.addValues(companyId, className, tableName,
-			classPK, attributeValues);
+		return _expandoValueService.getJSONData(companyId, className,
+			tableName, columnName, classPK);
 	}
 
 	@Override
@@ -66,6 +66,16 @@ public class ExpandoValueServiceWrapper implements ExpandoValueService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueService.getData(companyId, className, tableName,
 			columnName, classPK);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _expandoValueService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -78,22 +88,12 @@ public class ExpandoValueServiceWrapper implements ExpandoValueService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.json.JSONObject getJSONData(
-		long companyId, java.lang.String className, java.lang.String tableName,
-		java.lang.String columnName, long classPK)
+	public void addValues(long companyId, java.lang.String className,
+		java.lang.String tableName, long classPK,
+		java.util.Map<java.lang.String, java.io.Serializable> attributeValues)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoValueService.getJSONData(companyId, className,
-			tableName, columnName, classPK);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _expandoValueService.getOSGiServiceIdentifier();
+		_expandoValueService.addValues(companyId, className, tableName,
+			classPK, attributeValues);
 	}
 
 	@Override

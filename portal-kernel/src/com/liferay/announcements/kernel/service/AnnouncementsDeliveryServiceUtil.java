@@ -40,6 +40,12 @@ public class AnnouncementsDeliveryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.announcements.service.impl.AnnouncementsDeliveryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery updateDelivery(
+		long userId, java.lang.String type, boolean email, boolean sms,
+		boolean website)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateDelivery(userId, type, email, sms, website);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -48,13 +54,6 @@ public class AnnouncementsDeliveryServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery updateDelivery(
-		long userId, java.lang.String type, boolean email, boolean sms,
-		boolean website)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateDelivery(userId, type, email, sms, website);
 	}
 
 	public static AnnouncementsDeliveryService getService() {

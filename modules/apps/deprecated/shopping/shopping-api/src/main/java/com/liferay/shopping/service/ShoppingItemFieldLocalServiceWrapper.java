@@ -34,6 +34,38 @@ public class ShoppingItemFieldLocalServiceWrapper
 		_shoppingItemFieldLocalService = shoppingItemFieldLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _shoppingItemFieldLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _shoppingItemFieldLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _shoppingItemFieldLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingItemFieldLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingItemFieldLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Adds the shopping item field to the database. Also notifies the appropriate model listeners.
 	*
@@ -59,13 +91,15 @@ public class ShoppingItemFieldLocalServiceWrapper
 	}
 
 	/**
-	* @throws PortalException
+	* Deletes the shopping item field from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingItemField the shopping item field
+	* @return the shopping item field that was removed
 	*/
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingItemFieldLocalService.deletePersistedModel(persistedModel);
+	public com.liferay.shopping.model.ShoppingItemField deleteShoppingItemField(
+		com.liferay.shopping.model.ShoppingItemField shoppingItemField) {
+		return _shoppingItemFieldLocalService.deleteShoppingItemField(shoppingItemField);
 	}
 
 	/**
@@ -82,21 +116,56 @@ public class ShoppingItemFieldLocalServiceWrapper
 		return _shoppingItemFieldLocalService.deleteShoppingItemField(itemFieldId);
 	}
 
-	/**
-	* Deletes the shopping item field from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingItemField the shopping item field
-	* @return the shopping item field that was removed
-	*/
 	@Override
-	public com.liferay.shopping.model.ShoppingItemField deleteShoppingItemField(
-		com.liferay.shopping.model.ShoppingItemField shoppingItemField) {
-		return _shoppingItemFieldLocalService.deleteShoppingItemField(shoppingItemField);
+	public com.liferay.shopping.model.ShoppingItemField fetchShoppingItemField(
+		long itemFieldId) {
+		return _shoppingItemFieldLocalService.fetchShoppingItemField(itemFieldId);
 	}
 
+	/**
+	* Returns the shopping item field with the primary key.
+	*
+	* @param itemFieldId the primary key of the shopping item field
+	* @return the shopping item field
+	* @throws PortalException if a shopping item field with the primary key could not be found
+	*/
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _shoppingItemFieldLocalService.dynamicQuery();
+	public com.liferay.shopping.model.ShoppingItemField getShoppingItemField(
+		long itemFieldId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingItemFieldLocalService.getShoppingItemField(itemFieldId);
+	}
+
+	/**
+	* Updates the shopping item field in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingItemField the shopping item field
+	* @return the shopping item field that was updated
+	*/
+	@Override
+	public com.liferay.shopping.model.ShoppingItemField updateShoppingItemField(
+		com.liferay.shopping.model.ShoppingItemField shoppingItemField) {
+		return _shoppingItemFieldLocalService.updateShoppingItemField(shoppingItemField);
+	}
+
+	/**
+	* Returns the number of shopping item fields.
+	*
+	* @return the number of shopping item fields
+	*/
+	@Override
+	public int getShoppingItemFieldsCount() {
+		return _shoppingItemFieldLocalService.getShoppingItemFieldsCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _shoppingItemFieldLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -153,6 +222,29 @@ public class ShoppingItemFieldLocalServiceWrapper
 			end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.shopping.model.ShoppingItemField> getItemFields(
+		long itemId) {
+		return _shoppingItemFieldLocalService.getItemFields(itemId);
+	}
+
+	/**
+	* Returns a range of all the shopping item fields.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.shopping.model.impl.ShoppingItemFieldModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of shopping item fields
+	* @param end the upper bound of the range of shopping item fields (not inclusive)
+	* @return the range of shopping item fields
+	*/
+	@Override
+	public java.util.List<com.liferay.shopping.model.ShoppingItemField> getShoppingItemFields(
+		int start, int end) {
+		return _shoppingItemFieldLocalService.getShoppingItemFields(start, end);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -178,98 +270,6 @@ public class ShoppingItemFieldLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _shoppingItemFieldLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
-	}
-
-	@Override
-	public com.liferay.shopping.model.ShoppingItemField fetchShoppingItemField(
-		long itemFieldId) {
-		return _shoppingItemFieldLocalService.fetchShoppingItemField(itemFieldId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _shoppingItemFieldLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _shoppingItemFieldLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	@Override
-	public java.util.List<com.liferay.shopping.model.ShoppingItemField> getItemFields(
-		long itemId) {
-		return _shoppingItemFieldLocalService.getItemFields(itemId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _shoppingItemFieldLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingItemFieldLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the shopping item field with the primary key.
-	*
-	* @param itemFieldId the primary key of the shopping item field
-	* @return the shopping item field
-	* @throws PortalException if a shopping item field with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.shopping.model.ShoppingItemField getShoppingItemField(
-		long itemFieldId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingItemFieldLocalService.getShoppingItemField(itemFieldId);
-	}
-
-	/**
-	* Returns a range of all the shopping item fields.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.shopping.model.impl.ShoppingItemFieldModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of shopping item fields
-	* @param end the upper bound of the range of shopping item fields (not inclusive)
-	* @return the range of shopping item fields
-	*/
-	@Override
-	public java.util.List<com.liferay.shopping.model.ShoppingItemField> getShoppingItemFields(
-		int start, int end) {
-		return _shoppingItemFieldLocalService.getShoppingItemFields(start, end);
-	}
-
-	/**
-	* Returns the number of shopping item fields.
-	*
-	* @return the number of shopping item fields
-	*/
-	@Override
-	public int getShoppingItemFieldsCount() {
-		return _shoppingItemFieldLocalService.getShoppingItemFieldsCount();
-	}
-
-	/**
-	* Updates the shopping item field in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingItemField the shopping item field
-	* @return the shopping item field that was updated
-	*/
-	@Override
-	public com.liferay.shopping.model.ShoppingItemField updateShoppingItemField(
-		com.liferay.shopping.model.ShoppingItemField shoppingItemField) {
-		return _shoppingItemFieldLocalService.updateShoppingItemField(shoppingItemField);
 	}
 
 	@Override

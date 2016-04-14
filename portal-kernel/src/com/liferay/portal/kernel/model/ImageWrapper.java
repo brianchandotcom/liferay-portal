@@ -120,28 +120,48 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new ImageWrapper((Image)_image.clone());
+	public CacheModel<com.liferay.portal.kernel.model.Image> toCacheModel() {
+		return _image.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Image image) {
-		return _image.compareTo(image);
+	public boolean isCachedModel() {
+		return _image.isCachedModel();
 	}
 
-	/**
-	* Returns the company ID of this image.
-	*
-	* @return the company ID of this image
-	*/
 	@Override
-	public long getCompanyId() {
-		return _image.getCompanyId();
+	public boolean isEscapedModel() {
+		return _image.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _image.isNew();
+	}
+
+	@Override
+	public byte[] getTextObj() {
+		return _image.getTextObj();
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _image.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Image toEscapedModel() {
+		return new ImageWrapper(_image.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Image toUnescapedModel() {
+		return new ImageWrapper(_image.toUnescapedModel());
+	}
+
+	@Override
+	public int compareTo(com.liferay.portal.kernel.model.Image image) {
+		return _image.compareTo(image);
 	}
 
 	/**
@@ -155,13 +175,58 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	}
 
 	/**
-	* Returns the image ID of this image.
+	* Returns the size of this image.
 	*
-	* @return the image ID of this image
+	* @return the size of this image
 	*/
 	@Override
-	public long getImageId() {
-		return _image.getImageId();
+	public int getSize() {
+		return _image.getSize();
+	}
+
+	/**
+	* Returns the width of this image.
+	*
+	* @return the width of this image
+	*/
+	@Override
+	public int getWidth() {
+		return _image.getWidth();
+	}
+
+	@Override
+	public int hashCode() {
+		return _image.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _image.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new ImageWrapper((Image)_image.clone());
+	}
+
+	/**
+	* Returns the type of this image.
+	*
+	* @return the type of this image
+	*/
+	@Override
+	public java.lang.String getType() {
+		return _image.getType();
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _image.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _image.toXmlString();
 	}
 
 	/**
@@ -172,6 +237,26 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	@Override
 	public Date getModifiedDate() {
 		return _image.getModifiedDate();
+	}
+
+	/**
+	* Returns the company ID of this image.
+	*
+	* @return the company ID of this image
+	*/
+	@Override
+	public long getCompanyId() {
+		return _image.getCompanyId();
+	}
+
+	/**
+	* Returns the image ID of this image.
+	*
+	* @return the image ID of this image
+	*/
+	@Override
+	public long getImageId() {
+		return _image.getImageId();
 	}
 
 	/**
@@ -192,66 +277,6 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	@Override
 	public long getPrimaryKey() {
 		return _image.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _image.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the size of this image.
-	*
-	* @return the size of this image
-	*/
-	@Override
-	public int getSize() {
-		return _image.getSize();
-	}
-
-	@Override
-	public byte[] getTextObj() {
-		return _image.getTextObj();
-	}
-
-	/**
-	* Returns the type of this image.
-	*
-	* @return the type of this image
-	*/
-	@Override
-	public java.lang.String getType() {
-		return _image.getType();
-	}
-
-	/**
-	* Returns the width of this image.
-	*
-	* @return the width of this image
-	*/
-	@Override
-	public int getWidth() {
-		return _image.getWidth();
-	}
-
-	@Override
-	public int hashCode() {
-		return _image.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _image.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _image.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _image.isNew();
 	}
 
 	@Override
@@ -382,31 +407,6 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	@Override
 	public void setWidth(int width) {
 		_image.setWidth(width);
-	}
-
-	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Image> toCacheModel() {
-		return _image.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Image toEscapedModel() {
-		return new ImageWrapper(_image.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _image.toString();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Image toUnescapedModel() {
-		return new ImageWrapper(_image.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _image.toXmlString();
 	}
 
 	@Override

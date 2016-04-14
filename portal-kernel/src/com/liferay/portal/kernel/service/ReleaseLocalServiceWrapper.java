@@ -30,6 +30,38 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 		_releaseLocalService = releaseLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _releaseLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _releaseLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _releaseLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _releaseLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _releaseLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Adds the release to the database. Also notifies the appropriate model listeners.
 	*
@@ -65,21 +97,6 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 		return _releaseLocalService.createRelease(releaseId);
 	}
 
-	@Override
-	public void createTablesAndPopulate() {
-		_releaseLocalService.createTablesAndPopulate();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _releaseLocalService.deletePersistedModel(persistedModel);
-	}
-
 	/**
 	* Deletes the release from the database. Also notifies the appropriate model listeners.
 	*
@@ -106,8 +123,74 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _releaseLocalService.dynamicQuery();
+	public com.liferay.portal.kernel.model.Release fetchRelease(
+		java.lang.String servletContextName) {
+		return _releaseLocalService.fetchRelease(servletContextName);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Release fetchRelease(long releaseId) {
+		return _releaseLocalService.fetchRelease(releaseId);
+	}
+
+	/**
+	* Returns the release with the primary key.
+	*
+	* @param releaseId the primary key of the release
+	* @return the release
+	* @throws PortalException if a release with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Release getRelease(long releaseId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _releaseLocalService.getRelease(releaseId);
+	}
+
+	/**
+	* Updates the release in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param release the release
+	* @return the release that was updated
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.Release updateRelease(
+		com.liferay.portal.kernel.model.Release release) {
+		return _releaseLocalService.updateRelease(release);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Release updateRelease(
+		long releaseId, java.lang.String schemaVersion, int buildNumber,
+		java.util.Date buildDate, boolean verified)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _releaseLocalService.updateRelease(releaseId, schemaVersion,
+			buildNumber, buildDate, verified);
+	}
+
+	@Override
+	public int getBuildNumberOrCreate()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _releaseLocalService.getBuildNumberOrCreate();
+	}
+
+	/**
+	* Returns the number of releases.
+	*
+	* @return the number of releases
+	*/
+	@Override
+	public int getReleasesCount() {
+		return _releaseLocalService.getReleasesCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _releaseLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -164,6 +247,23 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	}
 
 	/**
+	* Returns a range of all the releases.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ReleaseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of releases
+	* @param end the upper bound of the range of releases (not inclusive)
+	* @return the range of releases
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Release> getReleases(
+		int start, int end) {
+		return _releaseLocalService.getReleases(start, end);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -190,108 +290,8 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Release fetchRelease(long releaseId) {
-		return _releaseLocalService.fetchRelease(releaseId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Release fetchRelease(
-		java.lang.String servletContextName) {
-		return _releaseLocalService.fetchRelease(servletContextName);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _releaseLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public int getBuildNumberOrCreate()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _releaseLocalService.getBuildNumberOrCreate();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _releaseLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _releaseLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _releaseLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the release with the primary key.
-	*
-	* @param releaseId the primary key of the release
-	* @return the release
-	* @throws PortalException if a release with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Release getRelease(long releaseId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _releaseLocalService.getRelease(releaseId);
-	}
-
-	/**
-	* Returns a range of all the releases.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.ReleaseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of releases
-	* @param end the upper bound of the range of releases (not inclusive)
-	* @return the range of releases
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Release> getReleases(
-		int start, int end) {
-		return _releaseLocalService.getReleases(start, end);
-	}
-
-	/**
-	* Returns the number of releases.
-	*
-	* @return the number of releases
-	*/
-	@Override
-	public int getReleasesCount() {
-		return _releaseLocalService.getReleasesCount();
-	}
-
-	/**
-	* Updates the release in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param release the release
-	* @return the release that was updated
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Release updateRelease(
-		com.liferay.portal.kernel.model.Release release) {
-		return _releaseLocalService.updateRelease(release);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Release updateRelease(
-		long releaseId, java.lang.String schemaVersion, int buildNumber,
-		java.util.Date buildDate, boolean verified)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _releaseLocalService.updateRelease(releaseId, schemaVersion,
-			buildNumber, buildDate, verified);
+	public void createTablesAndPopulate() {
+		_releaseLocalService.createTablesAndPopulate();
 	}
 
 	@Override

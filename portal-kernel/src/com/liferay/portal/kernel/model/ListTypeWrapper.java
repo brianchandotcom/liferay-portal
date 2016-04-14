@@ -91,8 +91,38 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new ListTypeWrapper((ListType)_listType.clone());
+	public CacheModel<com.liferay.portal.kernel.model.ListType> toCacheModel() {
+		return _listType.toCacheModel();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _listType.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _listType.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _listType.isNew();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _listType.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.ListType toEscapedModel() {
+		return new ListTypeWrapper(_listType.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.ListType toUnescapedModel() {
+		return new ListTypeWrapper(_listType.toUnescapedModel());
 	}
 
 	@Override
@@ -101,8 +131,48 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	}
 
 	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _listType.getExpandoBridge();
+	public int hashCode() {
+		return _listType.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _listType.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new ListTypeWrapper((ListType)_listType.clone());
+	}
+
+	/**
+	* Returns the name of this list type.
+	*
+	* @return the name of this list type
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _listType.getName();
+	}
+
+	/**
+	* Returns the type of this list type.
+	*
+	* @return the type of this list type
+	*/
+	@Override
+	public java.lang.String getType() {
+		return _listType.getType();
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _listType.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _listType.toXmlString();
 	}
 
 	/**
@@ -126,16 +196,6 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	}
 
 	/**
-	* Returns the name of this list type.
-	*
-	* @return the name of this list type
-	*/
-	@Override
-	public java.lang.String getName() {
-		return _listType.getName();
-	}
-
-	/**
 	* Returns the primary key of this list type.
 	*
 	* @return the primary key of this list type
@@ -143,41 +203,6 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	@Override
 	public long getPrimaryKey() {
 		return _listType.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _listType.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the type of this list type.
-	*
-	* @return the type of this list type
-	*/
-	@Override
-	public java.lang.String getType() {
-		return _listType.getType();
-	}
-
-	@Override
-	public int hashCode() {
-		return _listType.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _listType.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _listType.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _listType.isNew();
 	}
 
 	@Override
@@ -263,31 +288,6 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	@Override
 	public void setType(java.lang.String type) {
 		_listType.setType(type);
-	}
-
-	@Override
-	public CacheModel<com.liferay.portal.kernel.model.ListType> toCacheModel() {
-		return _listType.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.ListType toEscapedModel() {
-		return new ListTypeWrapper(_listType.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _listType.toString();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.ListType toUnescapedModel() {
-		return new ListTypeWrapper(_listType.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _listType.toXmlString();
 	}
 
 	@Override

@@ -101,7 +101,36 @@ public interface DLSyncEventLocalService extends BaseLocalService,
 	public DLSyncEvent deleteDLSyncEvent(long syncEventId)
 		throws PortalException;
 
-	public void deleteDLSyncEvents();
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLSyncEvent fetchDLSyncEvent(long syncEventId);
+
+	/**
+	* Returns the d l sync event with the primary key.
+	*
+	* @param syncEventId the primary key of the d l sync event
+	* @return the d l sync event
+	* @throws PortalException if a d l sync event with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLSyncEvent getDLSyncEvent(long syncEventId)
+		throws PortalException;
+
+	/**
+	* Updates the d l sync event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param dlSyncEvent the d l sync event
+	* @return the d l sync event that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public DLSyncEvent updateDLSyncEvent(DLSyncEvent dlSyncEvent);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	* @throws PortalException
@@ -110,7 +139,25 @@ public interface DLSyncEventLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Returns the number of d l sync events.
+	*
+	* @return the number of d l sync events
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDLSyncEventsCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -152,6 +199,26 @@ public interface DLSyncEventLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns a range of all the d l sync events.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLSyncEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of d l sync events
+	* @param end the upper bound of the range of d l sync events (not inclusive)
+	* @return the range of d l sync events
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLSyncEvent> getDLSyncEvents(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLSyncEvent> getDLSyncEvents(long modifiedTime);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DLSyncEvent> getLatestDLSyncEvents();
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -169,72 +236,5 @@ public interface DLSyncEventLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLSyncEvent fetchDLSyncEvent(long syncEventId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	* Returns the d l sync event with the primary key.
-	*
-	* @param syncEventId the primary key of the d l sync event
-	* @return the d l sync event
-	* @throws PortalException if a d l sync event with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DLSyncEvent getDLSyncEvent(long syncEventId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLSyncEvent> getDLSyncEvents(long modifiedTime);
-
-	/**
-	* Returns a range of all the d l sync events.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLSyncEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of d l sync events
-	* @param end the upper bound of the range of d l sync events (not inclusive)
-	* @return the range of d l sync events
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLSyncEvent> getDLSyncEvents(int start, int end);
-
-	/**
-	* Returns the number of d l sync events.
-	*
-	* @return the number of d l sync events
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDLSyncEventsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DLSyncEvent> getLatestDLSyncEvents();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Updates the d l sync event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param dlSyncEvent the d l sync event
-	* @return the d l sync event that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public DLSyncEvent updateDLSyncEvent(DLSyncEvent dlSyncEvent);
+	public void deleteDLSyncEvents();
 }

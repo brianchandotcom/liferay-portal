@@ -64,24 +64,12 @@ public interface JournalFeedService extends BaseService {
 		java.lang.String feedType, double feedVersion,
 		ServiceContext serviceContext) throws PortalException;
 
-	public void deleteFeed(long feedId) throws PortalException;
-
-	public void deleteFeed(long groupId, java.lang.String feedId)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalFeed getFeed(long feedId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JournalFeed getFeed(long groupId, java.lang.String feedId)
 		throws PortalException;
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
 
 	public JournalFeed updateFeed(long groupId, java.lang.String feedId,
 		java.lang.String name, java.lang.String description,
@@ -92,4 +80,16 @@ public interface JournalFeedService extends BaseService {
 		java.lang.String targetPortletId, java.lang.String contentField,
 		java.lang.String feedType, double feedVersion,
 		ServiceContext serviceContext) throws PortalException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	public void deleteFeed(long feedId) throws PortalException;
+
+	public void deleteFeed(long groupId, java.lang.String feedId)
+		throws PortalException;
 }

@@ -48,16 +48,6 @@ public class RegionServiceWrapper implements RegionService,
 		return _regionService.fetchRegion(regionId);
 	}
 
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _regionService.getOSGiServiceIdentifier();
-	}
-
 	@Override
 	public com.liferay.portal.kernel.model.Region getRegion(long countryId,
 		java.lang.String regionCode)
@@ -69,6 +59,16 @@ public class RegionServiceWrapper implements RegionService,
 	public com.liferay.portal.kernel.model.Region getRegion(long regionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _regionService.getRegion(regionId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _regionService.getOSGiServiceIdentifier();
 	}
 
 	@Override

@@ -50,31 +50,6 @@ public interface SocialRequestInterpreterLocalService extends BaseLocalService {
 	 */
 
 	/**
-	* Adds the social request interpreter to the list of available
-	* interpreters.
-	*
-	* @param requestInterpreter the social request interpreter
-	*/
-	public void addRequestInterpreter(
-		SocialRequestInterpreter requestInterpreter);
-
-	/**
-	* Removes the social request interpreter from the list of available
-	* interpreters.
-	*
-	* @param requestInterpreter the social request interpreter
-	*/
-	public void deleteRequestInterpreter(
-		SocialRequestInterpreter requestInterpreter);
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	/**
 	* Creates a human readable request feed entry for the social request using
 	* an available compatible request interpreter.
 	*
@@ -92,6 +67,31 @@ public interface SocialRequestInterpreterLocalService extends BaseLocalService {
 	*/
 	public SocialRequestFeedEntry interpret(SocialRequest request,
 		ThemeDisplay themeDisplay);
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	/**
+	* Adds the social request interpreter to the list of available
+	* interpreters.
+	*
+	* @param requestInterpreter the social request interpreter
+	*/
+	public void addRequestInterpreter(
+		SocialRequestInterpreter requestInterpreter);
+
+	/**
+	* Removes the social request interpreter from the list of available
+	* interpreters.
+	*
+	* @param requestInterpreter the social request interpreter
+	*/
+	public void deleteRequestInterpreter(
+		SocialRequestInterpreter requestInterpreter);
 
 	/**
 	* Processes the confirmation of the social request.

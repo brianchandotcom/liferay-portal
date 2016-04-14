@@ -53,12 +53,6 @@ public interface KaleoDefinitionService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoDefinitionServiceUtil} to access the kaleo definition remote service. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.service.impl.KaleoDefinitionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoDefinition> getKaleoDefinitions(long companyId, int start,
-		int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoDefinition> getKaleoDefinitions(int start, int end);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -66,4 +60,11 @@ public interface KaleoDefinitionService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoDefinition> getKaleoDefinitions(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoDefinition> getKaleoDefinitions(long companyId, int start,
+		int end);
 }

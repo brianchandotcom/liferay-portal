@@ -120,14 +120,99 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new PortletPreferencesWrapper((PortletPreferences)_portletPreferences.clone());
+	public CacheModel<com.liferay.portal.kernel.model.PortletPreferences> toCacheModel() {
+		return _portletPreferences.toCacheModel();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _portletPreferences.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _portletPreferences.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _portletPreferences.isNew();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _portletPreferences.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PortletPreferences toEscapedModel() {
+		return new PortletPreferencesWrapper(_portletPreferences.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PortletPreferences toUnescapedModel() {
+		return new PortletPreferencesWrapper(_portletPreferences.toUnescapedModel());
 	}
 
 	@Override
 	public int compareTo(
 		com.liferay.portal.kernel.model.PortletPreferences portletPreferences) {
 		return _portletPreferences.compareTo(portletPreferences);
+	}
+
+	/**
+	* Returns the owner type of this portlet preferences.
+	*
+	* @return the owner type of this portlet preferences
+	*/
+	@Override
+	public int getOwnerType() {
+		return _portletPreferences.getOwnerType();
+	}
+
+	@Override
+	public int hashCode() {
+		return _portletPreferences.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _portletPreferences.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new PortletPreferencesWrapper((PortletPreferences)_portletPreferences.clone());
+	}
+
+	/**
+	* Returns the portlet ID of this portlet preferences.
+	*
+	* @return the portlet ID of this portlet preferences
+	*/
+	@Override
+	public java.lang.String getPortletId() {
+		return _portletPreferences.getPortletId();
+	}
+
+	/**
+	* Returns the preferences of this portlet preferences.
+	*
+	* @return the preferences of this portlet preferences
+	*/
+	@Override
+	public java.lang.String getPreferences() {
+		return _portletPreferences.getPreferences();
+	}
+
+	@Override
+	public java.lang.String toString() {
+		return _portletPreferences.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _portletPreferences.toXmlString();
 	}
 
 	/**
@@ -138,11 +223,6 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	@Override
 	public long getCompanyId() {
 		return _portletPreferences.getCompanyId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _portletPreferences.getExpandoBridge();
 	}
 
 	/**
@@ -166,16 +246,6 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	}
 
 	/**
-	* Returns the owner type of this portlet preferences.
-	*
-	* @return the owner type of this portlet preferences
-	*/
-	@Override
-	public int getOwnerType() {
-		return _portletPreferences.getOwnerType();
-	}
-
-	/**
 	* Returns the plid of this portlet preferences.
 	*
 	* @return the plid of this portlet preferences
@@ -183,16 +253,6 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	@Override
 	public long getPlid() {
 		return _portletPreferences.getPlid();
-	}
-
-	/**
-	* Returns the portlet ID of this portlet preferences.
-	*
-	* @return the portlet ID of this portlet preferences
-	*/
-	@Override
-	public java.lang.String getPortletId() {
-		return _portletPreferences.getPortletId();
 	}
 
 	/**
@@ -206,16 +266,6 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	}
 
 	/**
-	* Returns the preferences of this portlet preferences.
-	*
-	* @return the preferences of this portlet preferences
-	*/
-	@Override
-	public java.lang.String getPreferences() {
-		return _portletPreferences.getPreferences();
-	}
-
-	/**
 	* Returns the primary key of this portlet preferences.
 	*
 	* @return the primary key of this portlet preferences
@@ -223,31 +273,6 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	@Override
 	public long getPrimaryKey() {
 		return _portletPreferences.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _portletPreferences.getPrimaryKeyObj();
-	}
-
-	@Override
-	public int hashCode() {
-		return _portletPreferences.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _portletPreferences.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _portletPreferences.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _portletPreferences.isNew();
 	}
 
 	@Override
@@ -373,31 +398,6 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_portletPreferences.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public CacheModel<com.liferay.portal.kernel.model.PortletPreferences> toCacheModel() {
-		return _portletPreferences.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PortletPreferences toEscapedModel() {
-		return new PortletPreferencesWrapper(_portletPreferences.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _portletPreferences.toString();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PortletPreferences toUnescapedModel() {
-		return new PortletPreferencesWrapper(_portletPreferences.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _portletPreferences.toXmlString();
 	}
 
 	@Override

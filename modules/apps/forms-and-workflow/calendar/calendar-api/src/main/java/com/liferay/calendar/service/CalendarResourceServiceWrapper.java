@@ -69,6 +69,33 @@ public class CalendarResourceServiceWrapper implements CalendarResourceService,
 		return _calendarResourceService.getCalendarResource(calendarResourceId);
 	}
 
+	@Override
+	public com.liferay.calendar.model.CalendarResource updateCalendarResource(
+		long calendarResourceId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		boolean active,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _calendarResourceService.updateCalendarResource(calendarResourceId,
+			nameMap, descriptionMap, active, serviceContext);
+	}
+
+	@Override
+	public int searchCount(long companyId, long[] groupIds,
+		long[] classNameIds, java.lang.String code, java.lang.String name,
+		java.lang.String description, boolean active, boolean andOperator) {
+		return _calendarResourceService.searchCount(companyId, groupIds,
+			classNameIds, code, name, description, active, andOperator);
+	}
+
+	@Override
+	public int searchCount(long companyId, long[] groupIds,
+		long[] classNameIds, java.lang.String keywords, boolean active) {
+		return _calendarResourceService.searchCount(companyId, groupIds,
+			classNameIds, keywords, active);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -100,33 +127,6 @@ public class CalendarResourceServiceWrapper implements CalendarResourceService,
 		return _calendarResourceService.search(companyId, groupIds,
 			classNameIds, keywords, active, andOperator, start, end,
 			orderByComparator);
-	}
-
-	@Override
-	public int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, java.lang.String code, java.lang.String name,
-		java.lang.String description, boolean active, boolean andOperator) {
-		return _calendarResourceService.searchCount(companyId, groupIds,
-			classNameIds, code, name, description, active, andOperator);
-	}
-
-	@Override
-	public int searchCount(long companyId, long[] groupIds,
-		long[] classNameIds, java.lang.String keywords, boolean active) {
-		return _calendarResourceService.searchCount(companyId, groupIds,
-			classNameIds, keywords, active);
-	}
-
-	@Override
-	public com.liferay.calendar.model.CalendarResource updateCalendarResource(
-		long calendarResourceId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _calendarResourceService.updateCalendarResource(calendarResourceId,
-			nameMap, descriptionMap, active, serviceContext);
 	}
 
 	@Override

@@ -4686,10 +4686,11 @@ public class ServiceBuilder {
 
 			@Override
 			public int compare(JavaMethod javaMethod1, JavaMethod javaMethod2) {
-				String callSignature1 = javaMethod1.getCallSignature();
-				String callSignature2 = javaMethod2.getCallSignature();
+				String declarationSignature =
+					javaMethod1.getDeclarationSignature(false);
 
-				return callSignature1.compareTo(callSignature2);
+				return declarationSignature.compareTo(
+					javaMethod2.getDeclarationSignature(false));
 			}
 
 		};

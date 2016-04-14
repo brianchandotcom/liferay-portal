@@ -40,96 +40,36 @@ public class DLAppHelperLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLAppHelperLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static void addFolder(long userId,
-		com.liferay.portal.kernel.repository.model.Folder folder,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addFolder(userId, folder, serviceContext);
-	}
-
-	public static void cancelCheckOut(long userId,
+	public static com.liferay.asset.kernel.model.AssetEntry updateAsset(
+		long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
-		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
-		com.liferay.portal.kernel.repository.model.FileVersion draftFileVersion,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
+		long assetClassPk)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.cancelCheckOut(userId, fileEntry, sourceFileVersion,
-			destinationFileVersion, draftFileVersion, serviceContext);
-	}
-
-	public static void checkAssetEntry(long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-		com.liferay.portal.kernel.repository.model.FileVersion fileVersion)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().checkAssetEntry(userId, fileEntry, fileVersion);
-	}
-
-	public static void deleteFileEntry(
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFileEntry(fileEntry);
-	}
-
-	public static void deleteFolder(
-		com.liferay.portal.kernel.repository.model.Folder folder)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteFolder(folder);
-	}
-
-	public static void deleteRepositoryFileEntries(long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteRepositoryFileEntries(repositoryId);
-	}
-
-	public static void getFileAsStream(long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-		boolean incrementCounter) {
-		getService().getFileAsStream(userId, fileEntry, incrementCounter);
-	}
-
-	public static java.util.List<com.liferay.document.library.kernel.model.DLFileShortcut> getFileShortcuts(
-		long groupId, long folderId, boolean active, int status) {
-		return getService().getFileShortcuts(groupId, folderId, active, status);
-	}
-
-	public static int getFileShortcutsCount(long groupId, long folderId,
-		boolean active, int status) {
 		return getService()
-				   .getFileShortcutsCount(groupId, folderId, active, status);
+				   .updateAsset(userId, fileEntry, fileVersion, assetClassPk);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getNoAssetFileEntries() {
-		return getService().getNoAssetFileEntries();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#moveDependentsToTrash(DLFolder)}
-	*/
-	@Deprecated
-	public static void moveDependentsToTrash(
-		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders,
-		long trashEntryId)
+	public static com.liferay.asset.kernel.model.AssetEntry updateAsset(
+		long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetLinkEntryIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.moveDependentsToTrash(dlFileEntriesAndDLFolders, trashEntryId);
+		return getService()
+				   .updateAsset(userId, fileEntry, fileVersion,
+			assetCategoryIds, assetTagNames, assetLinkEntryIds);
 	}
 
-	public static void moveDependentsToTrash(
-		com.liferay.document.library.kernel.model.DLFolder dlFolder)
+	public static com.liferay.asset.kernel.model.AssetEntry updateAsset(
+		long userId, com.liferay.portal.kernel.repository.model.Folder folder,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetLinkEntryIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().moveDependentsToTrash(dlFolder);
+		return getService()
+				   .updateAsset(userId, folder, assetCategoryIds,
+			assetTagNames, assetLinkEntryIds);
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
@@ -205,6 +145,104 @@ public class DLAppHelperLocalServiceUtil {
 		return getService().moveFolderToTrash(userId, folder);
 	}
 
+	public static int getFileShortcutsCount(long groupId, long folderId,
+		boolean active, int status) {
+		return getService()
+				   .getFileShortcutsCount(groupId, folderId, active, status);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.document.library.kernel.model.DLFileShortcut> getFileShortcuts(
+		long groupId, long folderId, boolean active, int status) {
+		return getService().getFileShortcuts(groupId, folderId, active, status);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getNoAssetFileEntries() {
+		return getService().getNoAssetFileEntries();
+	}
+
+	public static void addFolder(long userId,
+		com.liferay.portal.kernel.repository.model.Folder folder,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addFolder(userId, folder, serviceContext);
+	}
+
+	public static void cancelCheckOut(long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
+		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
+		com.liferay.portal.kernel.repository.model.FileVersion draftFileVersion,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.cancelCheckOut(userId, fileEntry, sourceFileVersion,
+			destinationFileVersion, draftFileVersion, serviceContext);
+	}
+
+	public static void checkAssetEntry(long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portal.kernel.repository.model.FileVersion fileVersion)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().checkAssetEntry(userId, fileEntry, fileVersion);
+	}
+
+	public static void deleteFileEntry(
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFileEntry(fileEntry);
+	}
+
+	public static void deleteFolder(
+		com.liferay.portal.kernel.repository.model.Folder folder)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteFolder(folder);
+	}
+
+	public static void deleteRepositoryFileEntries(long repositoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteRepositoryFileEntries(repositoryId);
+	}
+
+	public static void getFileAsStream(long userId,
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		boolean incrementCounter) {
+		getService().getFileAsStream(userId, fileEntry, incrementCounter);
+	}
+
+	public static void moveDependentsToTrash(
+		com.liferay.document.library.kernel.model.DLFolder dlFolder)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().moveDependentsToTrash(dlFolder);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#moveDependentsToTrash(DLFolder)}
+	*/
+	@Deprecated
+	public static void moveDependentsToTrash(
+		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders,
+		long trashEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.moveDependentsToTrash(dlFileEntriesAndDLFolders, trashEntryId);
+	}
+
+	public static void restoreDependentsFromTrash(
+		com.liferay.document.library.kernel.model.DLFolder dlFolder)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().restoreDependentsFromTrash(dlFolder);
+	}
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
 	#restoreDependentsFromTrash(DLFolder)}
@@ -229,12 +267,6 @@ public class DLAppHelperLocalServiceUtil {
 			.restoreDependentsFromTrash(dlFileEntriesAndDLFolders, trashEntryId);
 	}
 
-	public static void restoreDependentsFromTrash(
-		com.liferay.document.library.kernel.model.DLFolder dlFolder)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().restoreDependentsFromTrash(dlFolder);
-	}
-
 	public static void restoreFileEntryFromTrash(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -253,36 +285,15 @@ public class DLAppHelperLocalServiceUtil {
 		getService().restoreFolderFromTrash(userId, folder);
 	}
 
-	public static com.liferay.asset.kernel.model.AssetEntry updateAsset(
-		long userId,
+	public static void updateFileEntry(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds)
+		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
+		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateAsset(userId, fileEntry, fileVersion,
-			assetCategoryIds, assetTagNames, assetLinkEntryIds);
-	}
-
-	public static com.liferay.asset.kernel.model.AssetEntry updateAsset(
-		long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
-		long assetClassPk)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateAsset(userId, fileEntry, fileVersion, assetClassPk);
-	}
-
-	public static com.liferay.asset.kernel.model.AssetEntry updateAsset(
-		long userId, com.liferay.portal.kernel.repository.model.Folder folder,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames,
-		long[] assetLinkEntryIds)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateAsset(userId, folder, assetCategoryIds,
-			assetTagNames, assetLinkEntryIds);
+		getService()
+			.updateFileEntry(userId, fileEntry, sourceFileVersion,
+			destinationFileVersion, serviceContext);
 	}
 
 	public static void updateFileEntry(long userId,
@@ -294,17 +305,6 @@ public class DLAppHelperLocalServiceUtil {
 		getService()
 			.updateFileEntry(userId, fileEntry, sourceFileVersion,
 			destinationFileVersion, assetClassPk);
-	}
-
-	public static void updateFileEntry(long userId,
-		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
-		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
-		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.updateFileEntry(userId, fileEntry, sourceFileVersion,
-			destinationFileVersion, serviceContext);
 	}
 
 	public static void updateFolder(long userId,

@@ -71,157 +71,10 @@ public class MBCategoryServiceUtil {
 			serviceContext);
 	}
 
-	public static void deleteCategory(long categoryId,
-		boolean includeTrashedEntries)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCategory(categoryId, includeTrashedEntries);
-	}
-
-	public static void deleteCategory(long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteCategory(groupId, categoryId);
-	}
-
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
-		long groupId) {
-		return getService().getCategories(groupId);
-	}
-
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
-		long groupId, long excludedCategoryId, long parentCategoryId,
-		int status, int start, int end) {
-		return getService()
-				   .getCategories(groupId, excludedCategoryId,
-			parentCategoryId, status, start, end);
-	}
-
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
-		long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
-		int status, int start, int end) {
-		return getService()
-				   .getCategories(groupId, excludedCategoryIds,
-			parentCategoryIds, status, start, end);
-	}
-
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
-		long groupId, long parentCategoryId, int start, int end) {
-		return getService().getCategories(groupId, parentCategoryId, start, end);
-	}
-
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
-		long groupId, long parentCategoryId, int status, int start, int end) {
-		return getService()
-				   .getCategories(groupId, parentCategoryId, status, start, end);
-	}
-
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
-		long groupId, long[] parentCategoryIds, int start, int end) {
-		return getService().getCategories(groupId, parentCategoryIds, start, end);
-	}
-
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
-		long groupId, long[] parentCategoryIds, int status, int start, int end) {
-		return getService()
-				   .getCategories(groupId, parentCategoryIds, status, start, end);
-	}
-
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
-		long groupId, int status) {
-		return getService().getCategories(groupId, status);
-	}
-
-	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
-		long groupId, long categoryId) {
-		return getService().getCategoriesAndThreads(groupId, categoryId);
-	}
-
-	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
-		long groupId, long categoryId, int status) {
-		return getService().getCategoriesAndThreads(groupId, categoryId, status);
-	}
-
-	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
-		long groupId, long categoryId, int status, int start, int end) {
-		return getService()
-				   .getCategoriesAndThreads(groupId, categoryId, status, start,
-			end);
-	}
-
-	public static int getCategoriesAndThreadsCount(long groupId, long categoryId) {
-		return getService().getCategoriesAndThreadsCount(groupId, categoryId);
-	}
-
-	public static int getCategoriesAndThreadsCount(long groupId,
-		long categoryId, int status) {
-		return getService()
-				   .getCategoriesAndThreadsCount(groupId, categoryId, status);
-	}
-
-	public static int getCategoriesCount(long groupId, long excludedCategoryId,
-		long parentCategoryId, int status) {
-		return getService()
-				   .getCategoriesCount(groupId, excludedCategoryId,
-			parentCategoryId, status);
-	}
-
-	public static int getCategoriesCount(long groupId,
-		long[] excludedCategoryIds, long[] parentCategoryIds, int status) {
-		return getService()
-				   .getCategoriesCount(groupId, excludedCategoryIds,
-			parentCategoryIds, status);
-	}
-
-	public static int getCategoriesCount(long groupId, long parentCategoryId) {
-		return getService().getCategoriesCount(groupId, parentCategoryId);
-	}
-
-	public static int getCategoriesCount(long groupId, long parentCategoryId,
-		int status) {
-		return getService().getCategoriesCount(groupId, parentCategoryId, status);
-	}
-
-	public static int getCategoriesCount(long groupId, long[] parentCategoryIds) {
-		return getService().getCategoriesCount(groupId, parentCategoryIds);
-	}
-
-	public static int getCategoriesCount(long groupId,
-		long[] parentCategoryIds, int status) {
-		return getService()
-				   .getCategoriesCount(groupId, parentCategoryIds, status);
-	}
-
 	public static com.liferay.message.boards.kernel.model.MBCategory getCategory(
 		long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCategory(categoryId);
-	}
-
-	public static long[] getCategoryIds(long groupId, long categoryId) {
-		return getService().getCategoryIds(groupId, categoryId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static java.util.List<java.lang.Long> getSubcategoryIds(
-		java.util.List<java.lang.Long> categoryIds, long groupId,
-		long categoryId) {
-		return getService().getSubcategoryIds(categoryIds, groupId, categoryId);
-	}
-
-	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getSubscribedCategories(
-		long groupId, long userId, int start, int end) {
-		return getService().getSubscribedCategories(groupId, userId, start, end);
-	}
-
-	public static int getSubscribedCategoriesCount(long groupId, long userId) {
-		return getService().getSubscribedCategoriesCount(groupId, userId);
 	}
 
 	public static com.liferay.message.boards.kernel.model.MBCategory moveCategory(
@@ -244,21 +97,6 @@ public class MBCategoryServiceUtil {
 		return getService().moveCategoryToTrash(categoryId);
 	}
 
-	public static void restoreCategoryFromTrash(long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().restoreCategoryFromTrash(categoryId);
-	}
-
-	public static void subscribeCategory(long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().subscribeCategory(groupId, categoryId);
-	}
-
-	public static void unsubscribeCategory(long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().unsubscribeCategory(groupId, categoryId);
-	}
-
 	public static com.liferay.message.boards.kernel.model.MBCategory updateCategory(
 		long categoryId, long parentCategoryId, java.lang.String name,
 		java.lang.String description, java.lang.String displayStyle,
@@ -279,6 +117,168 @@ public class MBCategoryServiceUtil {
 			outEmailAddress, outCustom, outServerName, outServerPort,
 			outUseSSL, outUserName, outPassword, mailingListActive,
 			allowAnonymousEmail, mergeWithParentCategory, serviceContext);
+	}
+
+	public static int getCategoriesAndThreadsCount(long groupId, long categoryId) {
+		return getService().getCategoriesAndThreadsCount(groupId, categoryId);
+	}
+
+	public static int getCategoriesAndThreadsCount(long groupId,
+		long categoryId, int status) {
+		return getService()
+				   .getCategoriesAndThreadsCount(groupId, categoryId, status);
+	}
+
+	public static int getCategoriesCount(long groupId, long excludedCategoryId,
+		long parentCategoryId, int status) {
+		return getService()
+				   .getCategoriesCount(groupId, excludedCategoryId,
+			parentCategoryId, status);
+	}
+
+	public static int getCategoriesCount(long groupId, long parentCategoryId) {
+		return getService().getCategoriesCount(groupId, parentCategoryId);
+	}
+
+	public static int getCategoriesCount(long groupId, long parentCategoryId,
+		int status) {
+		return getService().getCategoriesCount(groupId, parentCategoryId, status);
+	}
+
+	public static int getCategoriesCount(long groupId,
+		long[] excludedCategoryIds, long[] parentCategoryIds, int status) {
+		return getService()
+				   .getCategoriesCount(groupId, excludedCategoryIds,
+			parentCategoryIds, status);
+	}
+
+	public static int getCategoriesCount(long groupId, long[] parentCategoryIds) {
+		return getService().getCategoriesCount(groupId, parentCategoryIds);
+	}
+
+	public static int getCategoriesCount(long groupId,
+		long[] parentCategoryIds, int status) {
+		return getService()
+				   .getCategoriesCount(groupId, parentCategoryIds, status);
+	}
+
+	public static int getSubscribedCategoriesCount(long groupId, long userId) {
+		return getService().getSubscribedCategoriesCount(groupId, userId);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+		long groupId) {
+		return getService().getCategories(groupId);
+	}
+
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+		long groupId, int status) {
+		return getService().getCategories(groupId, status);
+	}
+
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+		long groupId, long excludedCategoryId, long parentCategoryId,
+		int status, int start, int end) {
+		return getService()
+				   .getCategories(groupId, excludedCategoryId,
+			parentCategoryId, status, start, end);
+	}
+
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+		long groupId, long parentCategoryId, int start, int end) {
+		return getService().getCategories(groupId, parentCategoryId, start, end);
+	}
+
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+		long groupId, long parentCategoryId, int status, int start, int end) {
+		return getService()
+				   .getCategories(groupId, parentCategoryId, status, start, end);
+	}
+
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+		long groupId, long[] excludedCategoryIds, long[] parentCategoryIds,
+		int status, int start, int end) {
+		return getService()
+				   .getCategories(groupId, excludedCategoryIds,
+			parentCategoryIds, status, start, end);
+	}
+
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+		long groupId, long[] parentCategoryIds, int start, int end) {
+		return getService().getCategories(groupId, parentCategoryIds, start, end);
+	}
+
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getCategories(
+		long groupId, long[] parentCategoryIds, int status, int start, int end) {
+		return getService()
+				   .getCategories(groupId, parentCategoryIds, status, start, end);
+	}
+
+	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
+		long groupId, long categoryId) {
+		return getService().getCategoriesAndThreads(groupId, categoryId);
+	}
+
+	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
+		long groupId, long categoryId, int status) {
+		return getService().getCategoriesAndThreads(groupId, categoryId, status);
+	}
+
+	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
+		long groupId, long categoryId, int status, int start, int end) {
+		return getService()
+				   .getCategoriesAndThreads(groupId, categoryId, status, start,
+			end);
+	}
+
+	public static java.util.List<java.lang.Long> getSubcategoryIds(
+		java.util.List<java.lang.Long> categoryIds, long groupId,
+		long categoryId) {
+		return getService().getSubcategoryIds(categoryIds, groupId, categoryId);
+	}
+
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getSubscribedCategories(
+		long groupId, long userId, int start, int end) {
+		return getService().getSubscribedCategories(groupId, userId, start, end);
+	}
+
+	public static long[] getCategoryIds(long groupId, long categoryId) {
+		return getService().getCategoryIds(groupId, categoryId);
+	}
+
+	public static void deleteCategory(long categoryId,
+		boolean includeTrashedEntries)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCategory(categoryId, includeTrashedEntries);
+	}
+
+	public static void deleteCategory(long groupId, long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCategory(groupId, categoryId);
+	}
+
+	public static void restoreCategoryFromTrash(long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().restoreCategoryFromTrash(categoryId);
+	}
+
+	public static void subscribeCategory(long groupId, long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().subscribeCategory(groupId, categoryId);
+	}
+
+	public static void unsubscribeCategory(long groupId, long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().unsubscribeCategory(groupId, categoryId);
 	}
 
 	public static MBCategoryService getService() {

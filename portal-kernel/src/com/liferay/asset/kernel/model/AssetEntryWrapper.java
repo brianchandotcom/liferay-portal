@@ -253,14 +253,69 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 		}
 	}
 
+	/**
+	* Returns the listable of this asset entry.
+	*
+	* @return the listable of this asset entry
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new AssetEntryWrapper((AssetEntry)_assetEntry.clone());
+	public boolean getListable() {
+		return _assetEntry.getListable();
+	}
+
+	/**
+	* Returns the visible of this asset entry.
+	*
+	* @return the visible of this asset entry
+	*/
+	@Override
+	public boolean getVisible() {
+		return _assetEntry.getVisible();
 	}
 
 	@Override
-	public int compareTo(com.liferay.asset.kernel.model.AssetEntry assetEntry) {
-		return _assetEntry.compareTo(assetEntry);
+	public boolean isCachedModel() {
+		return _assetEntry.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _assetEntry.isEscapedModel();
+	}
+
+	/**
+	* Returns <code>true</code> if this asset entry is listable.
+	*
+	* @return <code>true</code> if this asset entry is listable; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isListable() {
+		return _assetEntry.isListable();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _assetEntry.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this asset entry is visible.
+	*
+	* @return <code>true</code> if this asset entry is visible; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isVisible() {
+		return _assetEntry.isVisible();
+	}
+
+	@Override
+	public com.liferay.asset.kernel.model.AssetEntry toEscapedModel() {
+		return new AssetEntryWrapper(_assetEntry.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.asset.kernel.model.AssetEntry toUnescapedModel() {
+		return new AssetEntryWrapper(_assetEntry.toUnescapedModel());
 	}
 
 	@Override
@@ -274,18 +329,73 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _assetEntry.getAvailableLanguageIds();
+	public ExpandoBridge getExpandoBridge() {
+		return _assetEntry.getExpandoBridge();
 	}
 
 	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetCategory> getCategories() {
-		return _assetEntry.getCategories();
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.asset.kernel.model.AssetEntry> toCacheModel() {
+		return _assetEntry.toCacheModel();
+	}
+
+	/**
+	* Returns the priority of this asset entry.
+	*
+	* @return the priority of this asset entry
+	*/
+	@Override
+	public double getPriority() {
+		return _assetEntry.getPriority();
 	}
 
 	@Override
-	public long[] getCategoryIds() {
-		return _assetEntry.getCategoryIds();
+	public int compareTo(com.liferay.asset.kernel.model.AssetEntry assetEntry) {
+		return _assetEntry.compareTo(assetEntry);
+	}
+
+	/**
+	* Returns the height of this asset entry.
+	*
+	* @return the height of this asset entry
+	*/
+	@Override
+	public int getHeight() {
+		return _assetEntry.getHeight();
+	}
+
+	/**
+	* Returns the view count of this asset entry.
+	*
+	* @return the view count of this asset entry
+	*/
+	@Override
+	public int getViewCount() {
+		return _assetEntry.getViewCount();
+	}
+
+	/**
+	* Returns the width of this asset entry.
+	*
+	* @return the width of this asset entry
+	*/
+	@Override
+	public int getWidth() {
+		return _assetEntry.getWidth();
+	}
+
+	@Override
+	public int hashCode() {
+		return _assetEntry.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _assetEntry.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new AssetEntryWrapper((AssetEntry)_assetEntry.clone());
 	}
 
 	/**
@@ -299,36 +409,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	/**
-	* Returns the class name ID of this asset entry.
-	*
-	* @return the class name ID of this asset entry
-	*/
-	@Override
-	public long getClassNameId() {
-		return _assetEntry.getClassNameId();
-	}
-
-	/**
-	* Returns the class p k of this asset entry.
-	*
-	* @return the class p k of this asset entry
-	*/
-	@Override
-	public long getClassPK() {
-		return _assetEntry.getClassPK();
-	}
-
-	/**
-	* Returns the class type ID of this asset entry.
-	*
-	* @return the class type ID of this asset entry
-	*/
-	@Override
-	public long getClassTypeId() {
-		return _assetEntry.getClassTypeId();
-	}
-
-	/**
 	* Returns the class uuid of this asset entry.
 	*
 	* @return the class uuid of this asset entry
@@ -336,26 +416,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	@Override
 	public java.lang.String getClassUuid() {
 		return _assetEntry.getClassUuid();
-	}
-
-	/**
-	* Returns the company ID of this asset entry.
-	*
-	* @return the company ID of this asset entry
-	*/
-	@Override
-	public long getCompanyId() {
-		return _assetEntry.getCompanyId();
-	}
-
-	/**
-	* Returns the create date of this asset entry.
-	*
-	* @return the create date of this asset entry
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _assetEntry.getCreateDate();
 	}
 
 	@Override
@@ -432,71 +492,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	/**
-	* Returns a map of the locales and localized descriptions of this asset entry.
-	*
-	* @return the locales and localized descriptions of this asset entry
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
-		return _assetEntry.getDescriptionMap();
-	}
-
-	/**
-	* Returns the end date of this asset entry.
-	*
-	* @return the end date of this asset entry
-	*/
-	@Override
-	public Date getEndDate() {
-		return _assetEntry.getEndDate();
-	}
-
-	/**
-	* Returns the entry ID of this asset entry.
-	*
-	* @return the entry ID of this asset entry
-	*/
-	@Override
-	public long getEntryId() {
-		return _assetEntry.getEntryId();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _assetEntry.getExpandoBridge();
-	}
-
-	/**
-	* Returns the expiration date of this asset entry.
-	*
-	* @return the expiration date of this asset entry
-	*/
-	@Override
-	public Date getExpirationDate() {
-		return _assetEntry.getExpirationDate();
-	}
-
-	/**
-	* Returns the group ID of this asset entry.
-	*
-	* @return the group ID of this asset entry
-	*/
-	@Override
-	public long getGroupId() {
-		return _assetEntry.getGroupId();
-	}
-
-	/**
-	* Returns the height of this asset entry.
-	*
-	* @return the height of this asset entry
-	*/
-	@Override
-	public int getHeight() {
-		return _assetEntry.getHeight();
-	}
-
-	/**
 	* Returns the layout uuid of this asset entry.
 	*
 	* @return the layout uuid of this asset entry
@@ -507,16 +502,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	/**
-	* Returns the listable of this asset entry.
-	*
-	* @return the listable of this asset entry
-	*/
-	@Override
-	public boolean getListable() {
-		return _assetEntry.getListable();
-	}
-
-	/**
 	* Returns the mime type of this asset entry.
 	*
 	* @return the mime type of this asset entry
@@ -524,61 +509,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	@Override
 	public java.lang.String getMimeType() {
 		return _assetEntry.getMimeType();
-	}
-
-	/**
-	* Returns the modified date of this asset entry.
-	*
-	* @return the modified date of this asset entry
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _assetEntry.getModifiedDate();
-	}
-
-	/**
-	* Returns the primary key of this asset entry.
-	*
-	* @return the primary key of this asset entry
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _assetEntry.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _assetEntry.getPrimaryKeyObj();
-	}
-
-	/**
-	* Returns the priority of this asset entry.
-	*
-	* @return the priority of this asset entry
-	*/
-	@Override
-	public double getPriority() {
-		return _assetEntry.getPriority();
-	}
-
-	/**
-	* Returns the publish date of this asset entry.
-	*
-	* @return the publish date of this asset entry
-	*/
-	@Override
-	public Date getPublishDate() {
-		return _assetEntry.getPublishDate();
-	}
-
-	/**
-	* Returns the start date of this asset entry.
-	*
-	* @return the start date of this asset entry
-	*/
-	@Override
-	public Date getStartDate() {
-		return _assetEntry.getStartDate();
 	}
 
 	/**
@@ -650,26 +580,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	/**
-	* Returns a map of the locales and localized summaries of this asset entry.
-	*
-	* @return the locales and localized summaries of this asset entry
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getSummaryMap() {
-		return _assetEntry.getSummaryMap();
-	}
-
-	@Override
-	public java.lang.String[] getTagNames() {
-		return _assetEntry.getTagNames();
-	}
-
-	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags() {
-		return _assetEntry.getTags();
-	}
-
-	/**
 	* Returns the title of this asset entry.
 	*
 	* @return the title of this asset entry
@@ -737,16 +647,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	/**
-	* Returns a map of the locales and localized titles of this asset entry.
-	*
-	* @return the locales and localized titles of this asset entry
-	*/
-	@Override
-	public Map<java.util.Locale, java.lang.String> getTitleMap() {
-		return _assetEntry.getTitleMap();
-	}
-
-	/**
 	* Returns the url of this asset entry.
 	*
 	* @return the url of this asset entry
@@ -754,16 +654,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	@Override
 	public java.lang.String getUrl() {
 		return _assetEntry.getUrl();
-	}
-
-	/**
-	* Returns the user ID of this asset entry.
-	*
-	* @return the user ID of this asset entry
-	*/
-	@Override
-	public long getUserId() {
-		return _assetEntry.getUserId();
 	}
 
 	/**
@@ -786,74 +676,209 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 		return _assetEntry.getUserUuid();
 	}
 
-	/**
-	* Returns the view count of this asset entry.
-	*
-	* @return the view count of this asset entry
-	*/
 	@Override
-	public int getViewCount() {
-		return _assetEntry.getViewCount();
+	public java.lang.String toString() {
+		return _assetEntry.toString();
+	}
+
+	@Override
+	public java.lang.String toXmlString() {
+		return _assetEntry.toXmlString();
+	}
+
+	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _assetEntry.getAvailableLanguageIds();
+	}
+
+	@Override
+	public java.lang.String[] getTagNames() {
+		return _assetEntry.getTagNames();
 	}
 
 	/**
-	* Returns the visible of this asset entry.
+	* Returns the create date of this asset entry.
 	*
-	* @return the visible of this asset entry
+	* @return the create date of this asset entry
 	*/
 	@Override
-	public boolean getVisible() {
-		return _assetEntry.getVisible();
+	public Date getCreateDate() {
+		return _assetEntry.getCreateDate();
 	}
 
 	/**
-	* Returns the width of this asset entry.
+	* Returns the end date of this asset entry.
 	*
-	* @return the width of this asset entry
+	* @return the end date of this asset entry
 	*/
 	@Override
-	public int getWidth() {
-		return _assetEntry.getWidth();
-	}
-
-	@Override
-	public int hashCode() {
-		return _assetEntry.hashCode();
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _assetEntry.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _assetEntry.isEscapedModel();
+	public Date getEndDate() {
+		return _assetEntry.getEndDate();
 	}
 
 	/**
-	* Returns <code>true</code> if this asset entry is listable.
+	* Returns the expiration date of this asset entry.
 	*
-	* @return <code>true</code> if this asset entry is listable; <code>false</code> otherwise
+	* @return the expiration date of this asset entry
 	*/
 	@Override
-	public boolean isListable() {
-		return _assetEntry.isListable();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _assetEntry.isNew();
+	public Date getExpirationDate() {
+		return _assetEntry.getExpirationDate();
 	}
 
 	/**
-	* Returns <code>true</code> if this asset entry is visible.
+	* Returns the modified date of this asset entry.
 	*
-	* @return <code>true</code> if this asset entry is visible; <code>false</code> otherwise
+	* @return the modified date of this asset entry
 	*/
 	@Override
-	public boolean isVisible() {
-		return _assetEntry.isVisible();
+	public Date getModifiedDate() {
+		return _assetEntry.getModifiedDate();
+	}
+
+	/**
+	* Returns the publish date of this asset entry.
+	*
+	* @return the publish date of this asset entry
+	*/
+	@Override
+	public Date getPublishDate() {
+		return _assetEntry.getPublishDate();
+	}
+
+	/**
+	* Returns the start date of this asset entry.
+	*
+	* @return the start date of this asset entry
+	*/
+	@Override
+	public Date getStartDate() {
+		return _assetEntry.getStartDate();
+	}
+
+	@Override
+	public java.util.List<com.liferay.asset.kernel.model.AssetCategory> getCategories() {
+		return _assetEntry.getCategories();
+	}
+
+	@Override
+	public java.util.List<com.liferay.asset.kernel.model.AssetTag> getTags() {
+		return _assetEntry.getTags();
+	}
+
+	/**
+	* Returns a map of the locales and localized descriptions of this asset entry.
+	*
+	* @return the locales and localized descriptions of this asset entry
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _assetEntry.getDescriptionMap();
+	}
+
+	/**
+	* Returns a map of the locales and localized summaries of this asset entry.
+	*
+	* @return the locales and localized summaries of this asset entry
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getSummaryMap() {
+		return _assetEntry.getSummaryMap();
+	}
+
+	/**
+	* Returns a map of the locales and localized titles of this asset entry.
+	*
+	* @return the locales and localized titles of this asset entry
+	*/
+	@Override
+	public Map<java.util.Locale, java.lang.String> getTitleMap() {
+		return _assetEntry.getTitleMap();
+	}
+
+	/**
+	* Returns the class name ID of this asset entry.
+	*
+	* @return the class name ID of this asset entry
+	*/
+	@Override
+	public long getClassNameId() {
+		return _assetEntry.getClassNameId();
+	}
+
+	/**
+	* Returns the class p k of this asset entry.
+	*
+	* @return the class p k of this asset entry
+	*/
+	@Override
+	public long getClassPK() {
+		return _assetEntry.getClassPK();
+	}
+
+	/**
+	* Returns the class type ID of this asset entry.
+	*
+	* @return the class type ID of this asset entry
+	*/
+	@Override
+	public long getClassTypeId() {
+		return _assetEntry.getClassTypeId();
+	}
+
+	/**
+	* Returns the company ID of this asset entry.
+	*
+	* @return the company ID of this asset entry
+	*/
+	@Override
+	public long getCompanyId() {
+		return _assetEntry.getCompanyId();
+	}
+
+	/**
+	* Returns the entry ID of this asset entry.
+	*
+	* @return the entry ID of this asset entry
+	*/
+	@Override
+	public long getEntryId() {
+		return _assetEntry.getEntryId();
+	}
+
+	/**
+	* Returns the group ID of this asset entry.
+	*
+	* @return the group ID of this asset entry
+	*/
+	@Override
+	public long getGroupId() {
+		return _assetEntry.getGroupId();
+	}
+
+	/**
+	* Returns the primary key of this asset entry.
+	*
+	* @return the primary key of this asset entry
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _assetEntry.getPrimaryKey();
+	}
+
+	/**
+	* Returns the user ID of this asset entry.
+	*
+	* @return the user ID of this asset entry
+	*/
+	@Override
+	public long getUserId() {
+		return _assetEntry.getUserId();
+	}
+
+	@Override
+	public long[] getCategoryIds() {
+		return _assetEntry.getCategoryIds();
 	}
 
 	@Override
@@ -1029,14 +1054,14 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(
-		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
-		_assetEntry.setExpandoBridgeAttributes(baseModel);
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_assetEntry.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_assetEntry.setExpandoBridgeAttributes(expandoBridge);
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+		_assetEntry.setExpandoBridgeAttributes(baseModel);
 	}
 
 	@Override
@@ -1356,31 +1381,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	@Override
 	public void setWidth(int width) {
 		_assetEntry.setWidth(width);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.asset.kernel.model.AssetEntry> toCacheModel() {
-		return _assetEntry.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.asset.kernel.model.AssetEntry toEscapedModel() {
-		return new AssetEntryWrapper(_assetEntry.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _assetEntry.toString();
-	}
-
-	@Override
-	public com.liferay.asset.kernel.model.AssetEntry toUnescapedModel() {
-		return new AssetEntryWrapper(_assetEntry.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _assetEntry.toXmlString();
 	}
 
 	@Override

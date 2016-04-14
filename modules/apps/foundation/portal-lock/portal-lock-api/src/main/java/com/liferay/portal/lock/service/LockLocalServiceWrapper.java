@@ -32,6 +32,59 @@ public class LockLocalServiceWrapper implements LockLocalService,
 		_lockLocalService = lockLocalService;
 	}
 
+	@Override
+	public boolean hasLock(long userId, java.lang.String className,
+		java.lang.String key) {
+		return _lockLocalService.hasLock(userId, className, key);
+	}
+
+	@Override
+	public boolean hasLock(long userId, java.lang.String className, long key) {
+		return _lockLocalService.hasLock(userId, className, key);
+	}
+
+	@Override
+	public boolean isLocked(java.lang.String className, java.lang.String key) {
+		return _lockLocalService.isLocked(className, key);
+	}
+
+	@Override
+	public boolean isLocked(java.lang.String className, long key) {
+		return _lockLocalService.isLocked(className, key);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _lockLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _lockLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _lockLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lockLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lockLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Adds the lock to the database. Also notifies the appropriate model listeners.
 	*
@@ -42,11 +95,6 @@ public class LockLocalServiceWrapper implements LockLocalService,
 	public com.liferay.portal.lock.model.Lock addLock(
 		com.liferay.portal.lock.model.Lock lock) {
 		return _lockLocalService.addLock(lock);
-	}
-
-	@Override
-	public void clear() {
-		_lockLocalService.clear();
 	}
 
 	/**
@@ -85,19 +133,135 @@ public class LockLocalServiceWrapper implements LockLocalService,
 		return _lockLocalService.deleteLock(lockId);
 	}
 
+	@Override
+	public com.liferay.portal.lock.model.Lock fetchLock(long lockId) {
+		return _lockLocalService.fetchLock(lockId);
+	}
+
 	/**
-	* @throws PortalException
+	* Returns the lock with the matching UUID and company.
+	*
+	* @param uuid the lock's UUID
+	* @param companyId the primary key of the company
+	* @return the matching lock, or <code>null</code> if a matching lock could not be found
 	*/
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _lockLocalService.deletePersistedModel(persistedModel);
+	public com.liferay.portal.lock.model.Lock fetchLockByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _lockLocalService.fetchLockByUuidAndCompanyId(uuid, companyId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _lockLocalService.dynamicQuery();
+	public com.liferay.portal.lock.model.Lock getLock(
+		java.lang.String className, java.lang.String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lockLocalService.getLock(className, key);
+	}
+
+	@Override
+	public com.liferay.portal.lock.model.Lock getLock(
+		java.lang.String className, long key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lockLocalService.getLock(className, key);
+	}
+
+	/**
+	* Returns the lock with the primary key.
+	*
+	* @param lockId the primary key of the lock
+	* @return the lock
+	* @throws PortalException if a lock with the primary key could not be found
+	*/
+	@Override
+	public com.liferay.portal.lock.model.Lock getLock(long lockId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lockLocalService.getLock(lockId);
+	}
+
+	/**
+	* Returns the lock with the matching UUID and company.
+	*
+	* @param uuid the lock's UUID
+	* @param companyId the primary key of the company
+	* @return the matching lock
+	* @throws PortalException if a matching lock could not be found
+	*/
+	@Override
+	public com.liferay.portal.lock.model.Lock getLockByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lockLocalService.getLockByUuidAndCompanyId(uuid, companyId);
+	}
+
+	@Override
+	public com.liferay.portal.lock.model.Lock lock(java.lang.String className,
+		java.lang.String key, java.lang.String expectedOwner,
+		java.lang.String updatedOwner) {
+		return _lockLocalService.lock(className, key, expectedOwner,
+			updatedOwner);
+	}
+
+	@Override
+	public com.liferay.portal.lock.model.Lock lock(java.lang.String className,
+		java.lang.String key, java.lang.String owner) {
+		return _lockLocalService.lock(className, key, owner);
+	}
+
+	@Override
+	public com.liferay.portal.lock.model.Lock lock(long userId,
+		java.lang.String className, java.lang.String key,
+		java.lang.String owner, boolean inheritable, long expirationTime)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lockLocalService.lock(userId, className, key, owner,
+			inheritable, expirationTime);
+	}
+
+	@Override
+	public com.liferay.portal.lock.model.Lock lock(long userId,
+		java.lang.String className, long key, java.lang.String owner,
+		boolean inheritable, long expirationTime)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lockLocalService.lock(userId, className, key, owner,
+			inheritable, expirationTime);
+	}
+
+	@Override
+	public com.liferay.portal.lock.model.Lock refresh(java.lang.String uuid,
+		long companyId, long expirationTime)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _lockLocalService.refresh(uuid, companyId, expirationTime);
+	}
+
+	/**
+	* Updates the lock in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param lock the lock
+	* @return the lock that was updated
+	*/
+	@Override
+	public com.liferay.portal.lock.model.Lock updateLock(
+		com.liferay.portal.lock.model.Lock lock) {
+		return _lockLocalService.updateLock(lock);
+	}
+
+	/**
+	* Returns the number of locks.
+	*
+	* @return the number of locks
+	*/
+	@Override
+	public int getLocksCount() {
+		return _lockLocalService.getLocksCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _lockLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -154,6 +318,23 @@ public class LockLocalServiceWrapper implements LockLocalService,
 	}
 
 	/**
+	* Returns a range of all the locks.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.lock.model.impl.LockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of locks
+	* @param end the upper bound of the range of locks (not inclusive)
+	* @return the range of locks
+	*/
+	@Override
+	public java.util.List<com.liferay.portal.lock.model.Lock> getLocks(
+		int start, int end) {
+		return _lockLocalService.getLocks(start, end);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -180,182 +361,8 @@ public class LockLocalServiceWrapper implements LockLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.lock.model.Lock fetchLock(long lockId) {
-		return _lockLocalService.fetchLock(lockId);
-	}
-
-	/**
-	* Returns the lock with the matching UUID and company.
-	*
-	* @param uuid the lock's UUID
-	* @param companyId the primary key of the company
-	* @return the matching lock, or <code>null</code> if a matching lock could not be found
-	*/
-	@Override
-	public com.liferay.portal.lock.model.Lock fetchLockByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return _lockLocalService.fetchLockByUuidAndCompanyId(uuid, companyId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _lockLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _lockLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.lock.model.Lock getLock(
-		java.lang.String className, java.lang.String key)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _lockLocalService.getLock(className, key);
-	}
-
-	@Override
-	public com.liferay.portal.lock.model.Lock getLock(
-		java.lang.String className, long key)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _lockLocalService.getLock(className, key);
-	}
-
-	/**
-	* Returns the lock with the primary key.
-	*
-	* @param lockId the primary key of the lock
-	* @return the lock
-	* @throws PortalException if a lock with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.portal.lock.model.Lock getLock(long lockId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _lockLocalService.getLock(lockId);
-	}
-
-	/**
-	* Returns the lock with the matching UUID and company.
-	*
-	* @param uuid the lock's UUID
-	* @param companyId the primary key of the company
-	* @return the matching lock
-	* @throws PortalException if a matching lock could not be found
-	*/
-	@Override
-	public com.liferay.portal.lock.model.Lock getLockByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _lockLocalService.getLockByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Returns a range of all the locks.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.lock.model.impl.LockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of locks
-	* @param end the upper bound of the range of locks (not inclusive)
-	* @return the range of locks
-	*/
-	@Override
-	public java.util.List<com.liferay.portal.lock.model.Lock> getLocks(
-		int start, int end) {
-		return _lockLocalService.getLocks(start, end);
-	}
-
-	/**
-	* Returns the number of locks.
-	*
-	* @return the number of locks
-	*/
-	@Override
-	public int getLocksCount() {
-		return _lockLocalService.getLocksCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _lockLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _lockLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public boolean hasLock(long userId, java.lang.String className,
-		java.lang.String key) {
-		return _lockLocalService.hasLock(userId, className, key);
-	}
-
-	@Override
-	public boolean hasLock(long userId, java.lang.String className, long key) {
-		return _lockLocalService.hasLock(userId, className, key);
-	}
-
-	@Override
-	public boolean isLocked(java.lang.String className, java.lang.String key) {
-		return _lockLocalService.isLocked(className, key);
-	}
-
-	@Override
-	public boolean isLocked(java.lang.String className, long key) {
-		return _lockLocalService.isLocked(className, key);
-	}
-
-	@Override
-	public com.liferay.portal.lock.model.Lock lock(java.lang.String className,
-		java.lang.String key, java.lang.String expectedOwner,
-		java.lang.String updatedOwner) {
-		return _lockLocalService.lock(className, key, expectedOwner,
-			updatedOwner);
-	}
-
-	@Override
-	public com.liferay.portal.lock.model.Lock lock(java.lang.String className,
-		java.lang.String key, java.lang.String owner) {
-		return _lockLocalService.lock(className, key, owner);
-	}
-
-	@Override
-	public com.liferay.portal.lock.model.Lock lock(long userId,
-		java.lang.String className, java.lang.String key,
-		java.lang.String owner, boolean inheritable, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _lockLocalService.lock(userId, className, key, owner,
-			inheritable, expirationTime);
-	}
-
-	@Override
-	public com.liferay.portal.lock.model.Lock lock(long userId,
-		java.lang.String className, long key, java.lang.String owner,
-		boolean inheritable, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _lockLocalService.lock(userId, className, key, owner,
-			inheritable, expirationTime);
-	}
-
-	@Override
-	public com.liferay.portal.lock.model.Lock refresh(java.lang.String uuid,
-		long companyId, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _lockLocalService.refresh(uuid, companyId, expirationTime);
-	}
-
-	@Override
-	public void unlock(java.lang.String className, long key) {
-		_lockLocalService.unlock(className, key);
+	public void clear() {
+		_lockLocalService.clear();
 	}
 
 	@Override
@@ -369,16 +376,9 @@ public class LockLocalServiceWrapper implements LockLocalService,
 		_lockLocalService.unlock(className, key, owner);
 	}
 
-	/**
-	* Updates the lock in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param lock the lock
-	* @return the lock that was updated
-	*/
 	@Override
-	public com.liferay.portal.lock.model.Lock updateLock(
-		com.liferay.portal.lock.model.Lock lock) {
-		return _lockLocalService.updateLock(lock);
+	public void unlock(java.lang.String className, long key) {
+		_lockLocalService.unlock(className, key);
 	}
 
 	@Override

@@ -206,8 +206,93 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new AddressWrapper((Address)_address.clone());
+	public CacheModel<com.liferay.portal.kernel.model.Address> toCacheModel() {
+		return _address.toCacheModel();
+	}
+
+	/**
+	* Returns the mailing of this address.
+	*
+	* @return the mailing of this address
+	*/
+	@Override
+	public boolean getMailing() {
+		return _address.getMailing();
+	}
+
+	/**
+	* Returns the primary of this address.
+	*
+	* @return the primary of this address
+	*/
+	@Override
+	public boolean getPrimary() {
+		return _address.getPrimary();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _address.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _address.isEscapedModel();
+	}
+
+	/**
+	* Returns <code>true</code> if this address is mailing.
+	*
+	* @return <code>true</code> if this address is mailing; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isMailing() {
+		return _address.isMailing();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _address.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this address is primary.
+	*
+	* @return <code>true</code> if this address is primary; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isPrimary() {
+		return _address.isPrimary();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _address.getExpandoBridge();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Address toEscapedModel() {
+		return new AddressWrapper(_address.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Address toUnescapedModel() {
+		return new AddressWrapper(_address.toUnescapedModel());
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Country getCountry() {
+		return _address.getCountry();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.ListType getType() {
+		return _address.getType();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Region getRegion() {
+		return _address.getRegion();
 	}
 
 	@Override
@@ -215,14 +300,19 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 		return _address.compareTo(address);
 	}
 
-	/**
-	* Returns the address ID of this address.
-	*
-	* @return the address ID of this address
-	*/
 	@Override
-	public long getAddressId() {
-		return _address.getAddressId();
+	public int hashCode() {
+		return _address.hashCode();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _address.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.Object clone() {
+		return new AddressWrapper((Address)_address.clone());
 	}
 
 	/**
@@ -243,136 +333,6 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	@Override
 	public java.lang.String getClassName() {
 		return _address.getClassName();
-	}
-
-	/**
-	* Returns the class name ID of this address.
-	*
-	* @return the class name ID of this address
-	*/
-	@Override
-	public long getClassNameId() {
-		return _address.getClassNameId();
-	}
-
-	/**
-	* Returns the class p k of this address.
-	*
-	* @return the class p k of this address
-	*/
-	@Override
-	public long getClassPK() {
-		return _address.getClassPK();
-	}
-
-	/**
-	* Returns the company ID of this address.
-	*
-	* @return the company ID of this address
-	*/
-	@Override
-	public long getCompanyId() {
-		return _address.getCompanyId();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Country getCountry() {
-		return _address.getCountry();
-	}
-
-	/**
-	* Returns the country ID of this address.
-	*
-	* @return the country ID of this address
-	*/
-	@Override
-	public long getCountryId() {
-		return _address.getCountryId();
-	}
-
-	/**
-	* Returns the create date of this address.
-	*
-	* @return the create date of this address
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _address.getCreateDate();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _address.getExpandoBridge();
-	}
-
-	/**
-	* Returns the mailing of this address.
-	*
-	* @return the mailing of this address
-	*/
-	@Override
-	public boolean getMailing() {
-		return _address.getMailing();
-	}
-
-	/**
-	* Returns the modified date of this address.
-	*
-	* @return the modified date of this address
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _address.getModifiedDate();
-	}
-
-	/**
-	* Returns the mvcc version of this address.
-	*
-	* @return the mvcc version of this address
-	*/
-	@Override
-	public long getMvccVersion() {
-		return _address.getMvccVersion();
-	}
-
-	/**
-	* Returns the primary of this address.
-	*
-	* @return the primary of this address
-	*/
-	@Override
-	public boolean getPrimary() {
-		return _address.getPrimary();
-	}
-
-	/**
-	* Returns the primary key of this address.
-	*
-	* @return the primary key of this address
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _address.getPrimaryKey();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _address.getPrimaryKeyObj();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Region getRegion() {
-		return _address.getRegion();
-	}
-
-	/**
-	* Returns the region ID of this address.
-	*
-	* @return the region ID of this address
-	*/
-	@Override
-	public long getRegionId() {
-		return _address.getRegionId();
 	}
 
 	/**
@@ -403,31 +363,6 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	@Override
 	public java.lang.String getStreet3() {
 		return _address.getStreet3();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.ListType getType() {
-		return _address.getType();
-	}
-
-	/**
-	* Returns the type ID of this address.
-	*
-	* @return the type ID of this address
-	*/
-	@Override
-	public long getTypeId() {
-		return _address.getTypeId();
-	}
-
-	/**
-	* Returns the user ID of this address.
-	*
-	* @return the user ID of this address
-	*/
-	@Override
-	public long getUserId() {
-		return _address.getUserId();
 	}
 
 	/**
@@ -471,43 +406,133 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	}
 
 	@Override
-	public int hashCode() {
-		return _address.hashCode();
+	public java.lang.String toString() {
+		return _address.toString();
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _address.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _address.isEscapedModel();
+	public java.lang.String toXmlString() {
+		return _address.toXmlString();
 	}
 
 	/**
-	* Returns <code>true</code> if this address is mailing.
+	* Returns the create date of this address.
 	*
-	* @return <code>true</code> if this address is mailing; <code>false</code> otherwise
+	* @return the create date of this address
 	*/
 	@Override
-	public boolean isMailing() {
-		return _address.isMailing();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _address.isNew();
+	public Date getCreateDate() {
+		return _address.getCreateDate();
 	}
 
 	/**
-	* Returns <code>true</code> if this address is primary.
+	* Returns the modified date of this address.
 	*
-	* @return <code>true</code> if this address is primary; <code>false</code> otherwise
+	* @return the modified date of this address
 	*/
 	@Override
-	public boolean isPrimary() {
-		return _address.isPrimary();
+	public Date getModifiedDate() {
+		return _address.getModifiedDate();
+	}
+
+	/**
+	* Returns the address ID of this address.
+	*
+	* @return the address ID of this address
+	*/
+	@Override
+	public long getAddressId() {
+		return _address.getAddressId();
+	}
+
+	/**
+	* Returns the class name ID of this address.
+	*
+	* @return the class name ID of this address
+	*/
+	@Override
+	public long getClassNameId() {
+		return _address.getClassNameId();
+	}
+
+	/**
+	* Returns the class p k of this address.
+	*
+	* @return the class p k of this address
+	*/
+	@Override
+	public long getClassPK() {
+		return _address.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this address.
+	*
+	* @return the company ID of this address
+	*/
+	@Override
+	public long getCompanyId() {
+		return _address.getCompanyId();
+	}
+
+	/**
+	* Returns the country ID of this address.
+	*
+	* @return the country ID of this address
+	*/
+	@Override
+	public long getCountryId() {
+		return _address.getCountryId();
+	}
+
+	/**
+	* Returns the mvcc version of this address.
+	*
+	* @return the mvcc version of this address
+	*/
+	@Override
+	public long getMvccVersion() {
+		return _address.getMvccVersion();
+	}
+
+	/**
+	* Returns the primary key of this address.
+	*
+	* @return the primary key of this address
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _address.getPrimaryKey();
+	}
+
+	/**
+	* Returns the region ID of this address.
+	*
+	* @return the region ID of this address
+	*/
+	@Override
+	public long getRegionId() {
+		return _address.getRegionId();
+	}
+
+	/**
+	* Returns the type ID of this address.
+	*
+	* @return the type ID of this address
+	*/
+	@Override
+	public long getTypeId() {
+		return _address.getTypeId();
+	}
+
+	/**
+	* Returns the user ID of this address.
+	*
+	* @return the user ID of this address
+	*/
+	@Override
+	public long getUserId() {
+		return _address.getUserId();
 	}
 
 	@Override
@@ -768,31 +793,6 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	@Override
 	public void setZip(java.lang.String zip) {
 		_address.setZip(zip);
-	}
-
-	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Address> toCacheModel() {
-		return _address.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Address toEscapedModel() {
-		return new AddressWrapper(_address.toEscapedModel());
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _address.toString();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Address toUnescapedModel() {
-		return new AddressWrapper(_address.toUnescapedModel());
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _address.toXmlString();
 	}
 
 	@Override

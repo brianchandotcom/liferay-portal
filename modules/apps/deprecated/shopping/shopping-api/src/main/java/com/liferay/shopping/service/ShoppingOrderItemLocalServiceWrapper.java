@@ -34,6 +34,38 @@ public class ShoppingOrderItemLocalServiceWrapper
 		_shoppingOrderItemLocalService = shoppingOrderItemLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _shoppingOrderItemLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _shoppingOrderItemLocalService.dynamicQuery();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _shoppingOrderItemLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingOrderItemLocalService.deletePersistedModel(persistedModel);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingOrderItemLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Adds the shopping order item to the database. Also notifies the appropriate model listeners.
 	*
@@ -59,13 +91,15 @@ public class ShoppingOrderItemLocalServiceWrapper
 	}
 
 	/**
-	* @throws PortalException
+	* Deletes the shopping order item from the database. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingOrderItem the shopping order item
+	* @return the shopping order item that was removed
 	*/
 	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingOrderItemLocalService.deletePersistedModel(persistedModel);
+	public com.liferay.shopping.model.ShoppingOrderItem deleteShoppingOrderItem(
+		com.liferay.shopping.model.ShoppingOrderItem shoppingOrderItem) {
+		return _shoppingOrderItemLocalService.deleteShoppingOrderItem(shoppingOrderItem);
 	}
 
 	/**
@@ -82,21 +116,56 @@ public class ShoppingOrderItemLocalServiceWrapper
 		return _shoppingOrderItemLocalService.deleteShoppingOrderItem(orderItemId);
 	}
 
-	/**
-	* Deletes the shopping order item from the database. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingOrderItem the shopping order item
-	* @return the shopping order item that was removed
-	*/
 	@Override
-	public com.liferay.shopping.model.ShoppingOrderItem deleteShoppingOrderItem(
-		com.liferay.shopping.model.ShoppingOrderItem shoppingOrderItem) {
-		return _shoppingOrderItemLocalService.deleteShoppingOrderItem(shoppingOrderItem);
+	public com.liferay.shopping.model.ShoppingOrderItem fetchShoppingOrderItem(
+		long orderItemId) {
+		return _shoppingOrderItemLocalService.fetchShoppingOrderItem(orderItemId);
 	}
 
+	/**
+	* Returns the shopping order item with the primary key.
+	*
+	* @param orderItemId the primary key of the shopping order item
+	* @return the shopping order item
+	* @throws PortalException if a shopping order item with the primary key could not be found
+	*/
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _shoppingOrderItemLocalService.dynamicQuery();
+	public com.liferay.shopping.model.ShoppingOrderItem getShoppingOrderItem(
+		long orderItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _shoppingOrderItemLocalService.getShoppingOrderItem(orderItemId);
+	}
+
+	/**
+	* Updates the shopping order item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param shoppingOrderItem the shopping order item
+	* @return the shopping order item that was updated
+	*/
+	@Override
+	public com.liferay.shopping.model.ShoppingOrderItem updateShoppingOrderItem(
+		com.liferay.shopping.model.ShoppingOrderItem shoppingOrderItem) {
+		return _shoppingOrderItemLocalService.updateShoppingOrderItem(shoppingOrderItem);
+	}
+
+	/**
+	* Returns the number of shopping order items.
+	*
+	* @return the number of shopping order items
+	*/
+	@Override
+	public int getShoppingOrderItemsCount() {
+		return _shoppingOrderItemLocalService.getShoppingOrderItemsCount();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _shoppingOrderItemLocalService.getOSGiServiceIdentifier();
 	}
 
 	/**
@@ -153,6 +222,29 @@ public class ShoppingOrderItemLocalServiceWrapper
 			end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.shopping.model.ShoppingOrderItem> getOrderItems(
+		long orderId) {
+		return _shoppingOrderItemLocalService.getOrderItems(orderId);
+	}
+
+	/**
+	* Returns a range of all the shopping order items.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.shopping.model.impl.ShoppingOrderItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of shopping order items
+	* @param end the upper bound of the range of shopping order items (not inclusive)
+	* @return the range of shopping order items
+	*/
+	@Override
+	public java.util.List<com.liferay.shopping.model.ShoppingOrderItem> getShoppingOrderItems(
+		int start, int end) {
+		return _shoppingOrderItemLocalService.getShoppingOrderItems(start, end);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -178,98 +270,6 @@ public class ShoppingOrderItemLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _shoppingOrderItemLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
-	}
-
-	@Override
-	public com.liferay.shopping.model.ShoppingOrderItem fetchShoppingOrderItem(
-		long orderItemId) {
-		return _shoppingOrderItemLocalService.fetchShoppingOrderItem(orderItemId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _shoppingOrderItemLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _shoppingOrderItemLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _shoppingOrderItemLocalService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public java.util.List<com.liferay.shopping.model.ShoppingOrderItem> getOrderItems(
-		long orderId) {
-		return _shoppingOrderItemLocalService.getOrderItems(orderId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingOrderItemLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the shopping order item with the primary key.
-	*
-	* @param orderItemId the primary key of the shopping order item
-	* @return the shopping order item
-	* @throws PortalException if a shopping order item with the primary key could not be found
-	*/
-	@Override
-	public com.liferay.shopping.model.ShoppingOrderItem getShoppingOrderItem(
-		long orderItemId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _shoppingOrderItemLocalService.getShoppingOrderItem(orderItemId);
-	}
-
-	/**
-	* Returns a range of all the shopping order items.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.shopping.model.impl.ShoppingOrderItemModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of shopping order items
-	* @param end the upper bound of the range of shopping order items (not inclusive)
-	* @return the range of shopping order items
-	*/
-	@Override
-	public java.util.List<com.liferay.shopping.model.ShoppingOrderItem> getShoppingOrderItems(
-		int start, int end) {
-		return _shoppingOrderItemLocalService.getShoppingOrderItems(start, end);
-	}
-
-	/**
-	* Returns the number of shopping order items.
-	*
-	* @return the number of shopping order items
-	*/
-	@Override
-	public int getShoppingOrderItemsCount() {
-		return _shoppingOrderItemLocalService.getShoppingOrderItemsCount();
-	}
-
-	/**
-	* Updates the shopping order item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param shoppingOrderItem the shopping order item
-	* @return the shopping order item that was updated
-	*/
-	@Override
-	public com.liferay.shopping.model.ShoppingOrderItem updateShoppingOrderItem(
-		com.liferay.shopping.model.ShoppingOrderItem shoppingOrderItem) {
-		return _shoppingOrderItemLocalService.updateShoppingOrderItem(shoppingOrderItem);
 	}
 
 	@Override

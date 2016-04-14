@@ -57,24 +57,10 @@ public class AnnouncementsEntryServiceUtil {
 			expirationDateHour, expirationDateMinute, priority, alert);
 	}
 
-	public static void deleteEntry(long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteEntry(entryId);
-	}
-
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntry getEntry(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getEntry(entryId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
 	}
 
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntry updateEntry(
@@ -91,6 +77,20 @@ public class AnnouncementsEntryServiceUtil {
 			displayDateMinute, displayImmediately, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,
 			expirationDateMinute, priority);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static void deleteEntry(long entryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteEntry(entryId);
 	}
 
 	public static AnnouncementsEntryService getService() {

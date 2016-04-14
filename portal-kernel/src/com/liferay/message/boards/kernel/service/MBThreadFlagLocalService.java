@@ -67,6 +67,9 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBThreadFlagLocalServiceUtil} to access the message boards thread flag local service. Add custom service methods to {@link com.liferay.portlet.messageboards.service.impl.MBThreadFlagLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasThreadFlag(long userId, MBThread thread)
+		throws PortalException;
 
 	/**
 	* Adds the message boards thread flag to the database. Also notifies the appropriate model listeners.
@@ -108,6 +111,68 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 	public MBThreadFlag deleteMBThreadFlag(long threadFlagId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBThreadFlag fetchMBThreadFlag(long threadFlagId);
+
+	/**
+	* Returns the message boards thread flag matching the UUID and group.
+	*
+	* @param uuid the message boards thread flag's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBThreadFlag fetchMBThreadFlagByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
+	/**
+	* Returns the message boards thread flag with the primary key.
+	*
+	* @param threadFlagId the primary key of the message boards thread flag
+	* @return the message boards thread flag
+	* @throws PortalException if a message boards thread flag with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBThreadFlag getMBThreadFlag(long threadFlagId)
+		throws PortalException;
+
+	/**
+	* Returns the message boards thread flag matching the UUID and group.
+	*
+	* @param uuid the message boards thread flag's UUID
+	* @param groupId the primary key of the group
+	* @return the matching message boards thread flag
+	* @throws PortalException if a matching message boards thread flag could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBThreadFlag getMBThreadFlagByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBThreadFlag getThreadFlag(long userId, MBThread thread)
+		throws PortalException;
+
+	/**
+	* Updates the message boards thread flag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param mbThreadFlag the message boards thread flag
+	* @return the message boards thread flag that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public MBThreadFlag updateMBThreadFlag(MBThreadFlag mbThreadFlag);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
 	/**
 	* @throws PortalException
 	*/
@@ -115,16 +180,25 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public void deleteThreadFlag(MBThreadFlag threadFlag);
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
-	public void deleteThreadFlag(long threadFlagId) throws PortalException;
+	/**
+	* Returns the number of message boards thread flags.
+	*
+	* @return the number of message boards thread flags
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMBThreadFlagsCount();
 
-	public void deleteThreadFlagsByThreadId(long threadId);
-
-	public void deleteThreadFlagsByUserId(long userId);
-
-	public DynamicQuery dynamicQuery();
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -164,71 +238,6 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBThreadFlag fetchMBThreadFlag(long threadFlagId);
-
-	/**
-	* Returns the message boards thread flag matching the UUID and group.
-	*
-	* @param uuid the message boards thread flag's UUID
-	* @param groupId the primary key of the group
-	* @return the matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBThreadFlag fetchMBThreadFlagByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the message boards thread flag with the primary key.
-	*
-	* @param threadFlagId the primary key of the message boards thread flag
-	* @return the message boards thread flag
-	* @throws PortalException if a message boards thread flag with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBThreadFlag getMBThreadFlag(long threadFlagId)
-		throws PortalException;
-
-	/**
-	* Returns the message boards thread flag matching the UUID and group.
-	*
-	* @param uuid the message boards thread flag's UUID
-	* @param groupId the primary key of the group
-	* @return the matching message boards thread flag
-	* @throws PortalException if a matching message boards thread flag could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBThreadFlag getMBThreadFlagByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the message boards thread flags.
@@ -271,39 +280,29 @@ public interface MBThreadFlagLocalService extends BaseLocalService,
 		OrderByComparator<MBThreadFlag> orderByComparator);
 
 	/**
-	* Returns the number of message boards thread flags.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of message boards thread flags
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getMBThreadFlagsCount();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the OSGi service identifier.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the OSGi service identifier
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public void deleteThreadFlag(MBThreadFlag threadFlag);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public MBThreadFlag getThreadFlag(long userId, MBThread thread)
-		throws PortalException;
+	public void deleteThreadFlag(long threadFlagId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasThreadFlag(long userId, MBThread thread)
-		throws PortalException;
+	public void deleteThreadFlagsByThreadId(long threadId);
 
-	/**
-	* Updates the message boards thread flag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param mbThreadFlag the message boards thread flag
-	* @return the message boards thread flag that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public MBThreadFlag updateMBThreadFlag(MBThreadFlag mbThreadFlag);
+	public void deleteThreadFlagsByUserId(long userId);
 }

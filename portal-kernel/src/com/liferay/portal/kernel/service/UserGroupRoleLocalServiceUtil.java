@@ -40,6 +40,54 @@ public class UserGroupRoleLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.service.impl.UserGroupRoleLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static boolean hasUserGroupRole(long userId, long groupId,
+		java.lang.String roleName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().hasUserGroupRole(userId, groupId, roleName);
+	}
+
+	public static boolean hasUserGroupRole(long userId, long groupId,
+		java.lang.String roleName, boolean inherit)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().hasUserGroupRole(userId, groupId, roleName, inherit);
+	}
+
+	public static boolean hasUserGroupRole(long userId, long groupId,
+		long roleId) {
+		return getService().hasUserGroupRole(userId, groupId, roleId);
+	}
+
+	public static boolean hasUserGroupRole(long userId, long groupId,
+		long roleId, boolean inherit) {
+		return getService().hasUserGroupRole(userId, groupId, roleId, inherit);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
 
 	/**
 	* Adds the user group role to the database. Also notifies the appropriate model listeners.
@@ -52,16 +100,6 @@ public class UserGroupRoleLocalServiceUtil {
 		return getService().addUserGroupRole(userGroupRole);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.model.UserGroupRole> addUserGroupRoles(
-		long userId, long groupId, long[] roleIds) {
-		return getService().addUserGroupRoles(userId, groupId, roleIds);
-	}
-
-	public static java.util.List<com.liferay.portal.kernel.model.UserGroupRole> addUserGroupRoles(
-		long[] userIds, long groupId, long roleId) {
-		return getService().addUserGroupRoles(userIds, groupId, roleId);
-	}
-
 	/**
 	* Creates a new user group role with the primary key. Does not add the user group role to the database.
 	*
@@ -71,15 +109,6 @@ public class UserGroupRoleLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.UserGroupRole createUserGroupRole(
 		com.liferay.portal.kernel.service.persistence.UserGroupRolePK userGroupRolePK) {
 		return getService().createUserGroupRole(userGroupRolePK);
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
@@ -106,47 +135,65 @@ public class UserGroupRoleLocalServiceUtil {
 		return getService().deleteUserGroupRole(userGroupRolePK);
 	}
 
-	public static void deleteUserGroupRoles(long groupId, int roleType) {
-		getService().deleteUserGroupRoles(groupId, roleType);
+	public static com.liferay.portal.kernel.model.UserGroupRole fetchUserGroupRole(
+		com.liferay.portal.kernel.service.persistence.UserGroupRolePK userGroupRolePK) {
+		return getService().fetchUserGroupRole(userGroupRolePK);
 	}
 
-	public static void deleteUserGroupRoles(long userId, long groupId,
-		long[] roleIds) {
-		getService().deleteUserGroupRoles(userId, groupId, roleIds);
+	/**
+	* Returns the user group role with the primary key.
+	*
+	* @param userGroupRolePK the primary key of the user group role
+	* @return the user group role
+	* @throws PortalException if a user group role with the primary key could not be found
+	*/
+	public static com.liferay.portal.kernel.model.UserGroupRole getUserGroupRole(
+		com.liferay.portal.kernel.service.persistence.UserGroupRolePK userGroupRolePK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUserGroupRole(userGroupRolePK);
 	}
 
-	public static void deleteUserGroupRoles(long userId, long[] groupIds) {
-		getService().deleteUserGroupRoles(userId, groupIds);
+	/**
+	* Updates the user group role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param userGroupRole the user group role
+	* @return the user group role that was updated
+	*/
+	public static com.liferay.portal.kernel.model.UserGroupRole updateUserGroupRole(
+		com.liferay.portal.kernel.model.UserGroupRole userGroupRole) {
+		return getService().updateUserGroupRole(userGroupRole);
 	}
 
-	public static void deleteUserGroupRoles(long[] userIds, long groupId) {
-		getService().deleteUserGroupRoles(userIds, groupId);
+	/**
+	* Returns the number of user group roles.
+	*
+	* @return the number of user group roles
+	*/
+	public static int getUserGroupRolesCount() {
+		return getService().getUserGroupRolesCount();
 	}
 
-	public static void deleteUserGroupRoles(long[] userIds, long groupId,
-		long roleId) {
-		getService().deleteUserGroupRoles(userIds, groupId, roleId);
+	public static int getUserGroupRolesCount(long userId, long groupId) {
+		return getService().getUserGroupRolesCount(userId, groupId);
 	}
 
-	public static void deleteUserGroupRoles(long[] userIds, long groupId,
-		int roleType) {
-		getService().deleteUserGroupRoles(userIds, groupId, roleType);
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static void deleteUserGroupRolesByGroupId(long groupId) {
-		getService().deleteUserGroupRolesByGroupId(groupId);
+	public static java.util.List<com.liferay.portal.kernel.model.UserGroupRole> addUserGroupRoles(
+		long userId, long groupId, long[] roleIds) {
+		return getService().addUserGroupRoles(userId, groupId, roleIds);
 	}
 
-	public static void deleteUserGroupRolesByRoleId(long roleId) {
-		getService().deleteUserGroupRolesByRoleId(roleId);
-	}
-
-	public static void deleteUserGroupRolesByUserId(long userId) {
-		getService().deleteUserGroupRolesByUserId(userId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
+	public static java.util.List<com.liferay.portal.kernel.model.UserGroupRole> addUserGroupRoles(
+		long[] userIds, long groupId, long roleId) {
+		return getService().addUserGroupRoles(userIds, groupId, roleId);
 	}
 
 	/**
@@ -200,71 +247,6 @@ public class UserGroupRoleLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.portal.kernel.model.UserGroupRole fetchUserGroupRole(
-		com.liferay.portal.kernel.service.persistence.UserGroupRolePK userGroupRolePK) {
-		return getService().fetchUserGroupRole(userGroupRolePK);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the user group role with the primary key.
-	*
-	* @param userGroupRolePK the primary key of the user group role
-	* @return the user group role
-	* @throws PortalException if a user group role with the primary key could not be found
-	*/
-	public static com.liferay.portal.kernel.model.UserGroupRole getUserGroupRole(
-		com.liferay.portal.kernel.service.persistence.UserGroupRolePK userGroupRolePK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getUserGroupRole(userGroupRolePK);
-	}
-
-	/**
 	* Returns a range of all the user group roles.
 	*
 	* <p>
@@ -312,49 +294,66 @@ public class UserGroupRoleLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of user group roles.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @return the number of user group roles
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
-	public static int getUserGroupRolesCount() {
-		return getService().getUserGroupRolesCount();
-	}
-
-	public static int getUserGroupRolesCount(long userId, long groupId) {
-		return getService().getUserGroupRolesCount(userId, groupId);
-	}
-
-	public static boolean hasUserGroupRole(long userId, long groupId,
-		long roleId) {
-		return getService().hasUserGroupRole(userId, groupId, roleId);
-	}
-
-	public static boolean hasUserGroupRole(long userId, long groupId,
-		long roleId, boolean inherit) {
-		return getService().hasUserGroupRole(userId, groupId, roleId, inherit);
-	}
-
-	public static boolean hasUserGroupRole(long userId, long groupId,
-		java.lang.String roleName)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().hasUserGroupRole(userId, groupId, roleName);
-	}
-
-	public static boolean hasUserGroupRole(long userId, long groupId,
-		java.lang.String roleName, boolean inherit)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().hasUserGroupRole(userId, groupId, roleName, inherit);
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Updates the user group role in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Returns the number of rows matching the dynamic query.
 	*
-	* @param userGroupRole the user group role
-	* @return the user group role that was updated
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
 	*/
-	public static com.liferay.portal.kernel.model.UserGroupRole updateUserGroupRole(
-		com.liferay.portal.kernel.model.UserGroupRole userGroupRole) {
-		return getService().updateUserGroupRole(userGroupRole);
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void deleteUserGroupRoles(long groupId, int roleType) {
+		getService().deleteUserGroupRoles(groupId, roleType);
+	}
+
+	public static void deleteUserGroupRoles(long userId, long groupId,
+		long[] roleIds) {
+		getService().deleteUserGroupRoles(userId, groupId, roleIds);
+	}
+
+	public static void deleteUserGroupRoles(long userId, long[] groupIds) {
+		getService().deleteUserGroupRoles(userId, groupIds);
+	}
+
+	public static void deleteUserGroupRoles(long[] userIds, long groupId) {
+		getService().deleteUserGroupRoles(userIds, groupId);
+	}
+
+	public static void deleteUserGroupRoles(long[] userIds, long groupId,
+		int roleType) {
+		getService().deleteUserGroupRoles(userIds, groupId, roleType);
+	}
+
+	public static void deleteUserGroupRoles(long[] userIds, long groupId,
+		long roleId) {
+		getService().deleteUserGroupRoles(userIds, groupId, roleId);
+	}
+
+	public static void deleteUserGroupRolesByGroupId(long groupId) {
+		getService().deleteUserGroupRolesByGroupId(groupId);
+	}
+
+	public static void deleteUserGroupRolesByRoleId(long roleId) {
+		getService().deleteUserGroupRolesByRoleId(roleId);
+	}
+
+	public static void deleteUserGroupRolesByUserId(long userId) {
+		getService().deleteUserGroupRolesByUserId(userId);
 	}
 
 	public static UserGroupRoleLocalService getService() {

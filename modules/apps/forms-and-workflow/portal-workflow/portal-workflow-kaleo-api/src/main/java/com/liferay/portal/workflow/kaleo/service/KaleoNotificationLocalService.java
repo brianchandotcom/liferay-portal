@@ -61,10 +61,24 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link KaleoNotificationLocalServiceUtil} to access the kaleo notification local service. Add custom service methods to {@link com.liferay.portal.workflow.kaleo.service.impl.KaleoNotificationLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public KaleoNotification addKaleoNotification(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		long kaleoDefinitionId, java.lang.String kaleoNodeName,
-		Notification notification, ServiceContext serviceContext)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* @throws PortalException
+	*/
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
 	/**
@@ -77,6 +91,12 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	public KaleoNotification addKaleoNotification(
 		KaleoNotification kaleoNotification);
 
+	public KaleoNotification addKaleoNotification(
+		java.lang.String kaleoClassName, long kaleoClassPK,
+		long kaleoDefinitionId, java.lang.String kaleoNodeName,
+		Notification notification, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new kaleo notification with the primary key. Does not add the kaleo notification to the database.
 	*
@@ -84,10 +104,6 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	* @return the new kaleo notification
 	*/
 	public KaleoNotification createKaleoNotification(long kaleoNotificationId);
-
-	public void deleteCompanyKaleoNotifications(long companyId);
-
-	public void deleteKaleoDefinitionKaleoNotifications(long kaleoDefinitionId);
 
 	/**
 	* Deletes the kaleo notification from the database. Also notifies the appropriate model listeners.
@@ -110,14 +126,44 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	public KaleoNotification deleteKaleoNotification(long kaleoNotificationId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoNotification fetchKaleoNotification(long kaleoNotificationId);
+
 	/**
-	* @throws PortalException
+	* Returns the kaleo notification with the primary key.
+	*
+	* @param kaleoNotificationId the primary key of the kaleo notification
+	* @return the kaleo notification
+	* @throws PortalException if a kaleo notification with the primary key could not be found
 	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoNotification getKaleoNotification(long kaleoNotificationId)
 		throws PortalException;
 
-	public DynamicQuery dynamicQuery();
+	/**
+	* Updates the kaleo notification in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param kaleoNotification the kaleo notification
+	* @return the kaleo notification that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public KaleoNotification updateKaleoNotification(
+		KaleoNotification kaleoNotification);
+
+	/**
+	* Returns the number of kaleo notifications.
+	*
+	* @return the number of kaleo notifications
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKaleoNotificationsCount();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -159,6 +205,29 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
+	* Returns a range of all the kaleo notifications.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoNotificationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of kaleo notifications
+	* @param end the upper bound of the range of kaleo notifications (not inclusive)
+	* @return the range of kaleo notifications
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoNotification> getKaleoNotifications(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoNotification> getKaleoNotifications(
+		java.lang.String kaleoClassName, long kaleoClassPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoNotification> getKaleoNotifications(
+		java.lang.String kaleoClassName, long kaleoClassPK,
+		java.lang.String executionType);
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -176,76 +245,7 @@ public interface KaleoNotificationLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoNotification fetchKaleoNotification(long kaleoNotificationId);
+	public void deleteCompanyKaleoNotifications(long companyId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* Returns the kaleo notification with the primary key.
-	*
-	* @param kaleoNotificationId the primary key of the kaleo notification
-	* @return the kaleo notification
-	* @throws PortalException if a kaleo notification with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoNotification getKaleoNotification(long kaleoNotificationId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoNotification> getKaleoNotifications(
-		java.lang.String kaleoClassName, long kaleoClassPK);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoNotification> getKaleoNotifications(
-		java.lang.String kaleoClassName, long kaleoClassPK,
-		java.lang.String executionType);
-
-	/**
-	* Returns a range of all the kaleo notifications.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoNotificationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of kaleo notifications
-	* @param end the upper bound of the range of kaleo notifications (not inclusive)
-	* @return the range of kaleo notifications
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KaleoNotification> getKaleoNotifications(int start, int end);
-
-	/**
-	* Returns the number of kaleo notifications.
-	*
-	* @return the number of kaleo notifications
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getKaleoNotificationsCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	* Updates the kaleo notification in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param kaleoNotification the kaleo notification
-	* @return the kaleo notification that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public KaleoNotification updateKaleoNotification(
-		KaleoNotification kaleoNotification);
+	public void deleteKaleoDefinitionKaleoNotifications(long kaleoDefinitionId);
 }

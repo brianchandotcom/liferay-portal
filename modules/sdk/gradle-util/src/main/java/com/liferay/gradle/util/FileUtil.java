@@ -128,7 +128,7 @@ public class FileUtil {
 			mirrorsCacheArtifactDir.mkdirs();
 
 			String mirrorsUrl = url.replaceFirst(
-				"http:\\/\\/", "http://mirrors/");
+				"http:\\/\\/", "http://mirrors.lax.liferay.com/");
 
 			if (tryLocalNetwork) {
 				try {

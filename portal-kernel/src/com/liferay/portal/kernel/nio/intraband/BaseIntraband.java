@@ -89,9 +89,8 @@ public abstract class BaseIntraband implements Intraband {
 
 			copyDatagramReceiveHandlers[index] = datagramReceiveHandler;
 		}
-		while (
-			!datagramReceiveHandlersReference.compareAndSet(
-				datagramReceiveHandlers, copyDatagramReceiveHandlers));
+		while (!datagramReceiveHandlersReference.compareAndSet(
+					datagramReceiveHandlers, copyDatagramReceiveHandlers));
 
 		return oldDatagramReceiveHandler;
 	}

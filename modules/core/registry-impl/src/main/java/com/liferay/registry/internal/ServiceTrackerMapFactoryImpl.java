@@ -39,8 +39,7 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 	}
 
 	public void clearServiceTrackerMaps() {
-		for (
-			com.liferay.osgi.service.tracker.collections.map.
+		for (com.liferay.osgi.service.tracker.collections.map.
 				ServiceTrackerMap<?, ?> serviceTrackerMap :
 					_serviceTrackerMaps.keySet()) {
 

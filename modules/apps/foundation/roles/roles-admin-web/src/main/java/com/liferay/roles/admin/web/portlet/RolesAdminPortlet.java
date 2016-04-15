@@ -243,8 +243,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 		if (!ArrayUtil.isEmpty(addUserIds) ||
 			!ArrayUtil.isEmpty(removeUserIds)) {
 
-			try (
-				ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
+			try (ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
 					new ProxyModeThreadLocalCloseable()) {
 
 				ProxyModeThreadLocal.setForceSync(true);

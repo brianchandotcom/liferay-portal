@@ -75,8 +75,8 @@ public class CSSRTLConverter {
 		List<ICSSExpressionMember> icssExpressionMembers =
 			cssExpression.getAllMembers();
 
-		for (
-			ICSSExpressionMember icssExpressionMember : icssExpressionMembers) {
+		for (ICSSExpressionMember icssExpressionMember :
+				icssExpressionMembers) {
 
 			if (icssExpressionMember instanceof CSSExpressionMemberFunction) {
 				CSSExpressionMemberFunction cssExpressionMemberFunction =
@@ -229,8 +229,8 @@ public class CSSRTLConverter {
 	}
 
 	private void _processRule(CSSStyleRule cssStyleRule) {
-		for (
-			CSSDeclaration cssDeclaration : cssStyleRule.getAllDeclarations()) {
+		for (CSSDeclaration cssDeclaration :
+				cssStyleRule.getAllDeclarations()) {
 
 			String property = _stripAsterisk(cssDeclaration.getProperty());
 

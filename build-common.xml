@@ -1223,6 +1223,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 			<update-gradle-properties />
 
+			<ant antfile="build-test.xml" target="update-test-gradle-properties" inheritAll="false" />
+
 			<gradle-execute task="setupPortalTools">
 				<arg value="--build-file=${project.dir}/modules/util.gradle" />
 			</gradle-execute>
@@ -1606,6 +1608,7 @@ rerun your task.
 				app.server.type=${app.server.type}
 				baseline.jar.report.level=${baseline.jar.report.level}
 				baseline.jar.report.only.dirty.packages=${baseline.jar.report.only.dirty.packages}
+				database.jdbc.oracle.driver=${jdbc.oracle.driver}
 				jsp.precompile.enabled=${jsp.precompile.enabled}
 				junit.java.integration.gc=${junit.java.integration.gc}
 				junit.java.unit.gc=${junit.java.unit.gc}

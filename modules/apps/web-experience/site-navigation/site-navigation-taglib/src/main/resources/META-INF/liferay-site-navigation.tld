@@ -27,7 +27,6 @@
 			<name>ddmTemplateKey</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>The depth of children pages displayed.</description>
@@ -40,7 +39,6 @@
 			<name>includedLayouts</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>Whether to display help messages intended for page administrators.</description>
@@ -60,14 +58,12 @@
 			<name>rootLayoutType</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>The UUID of the root page to be used in the tree of pages.</description>
 			<name>rootLayoutUuid</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 	</tag>
 </taglib>

@@ -15,28 +15,24 @@
 			<name>confirmMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>A message to be used for the <![CDATA[<code>empty-trash</code>]]> button and link.</description>
 			<name>emptyMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>A message to display to give users information about removing items from the recycle bin.</description>
 			<name>infoMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>A URL for the <![CDATA[<code>empty-trash</code>]]> button/link.</description>
 			<name>portletURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>The number of items to be removed from the recycle bin.</description>
@@ -56,14 +52,12 @@
 			<name>portletURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>A redirect URL.</description>
 			<name>redirect</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 	</tag>
 </taglib>

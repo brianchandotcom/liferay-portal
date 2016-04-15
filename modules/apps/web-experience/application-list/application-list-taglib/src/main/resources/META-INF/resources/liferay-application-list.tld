@@ -20,7 +20,6 @@
 			<name>portletId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<name>servletContext</name>
@@ -70,14 +69,12 @@
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>The text to use in the link if no <![CDATA[<code>panelApp</code>]]> is passed.</description>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>The panel app to be rendered.</description>
@@ -96,7 +93,6 @@
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 	</tag>
 	<tag>

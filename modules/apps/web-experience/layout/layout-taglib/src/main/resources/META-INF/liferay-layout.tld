@@ -62,7 +62,6 @@
 			<name>linkTemplate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>The base <![CDATA[<code>PortletURL</code>]]> to use to generate the URL of the nodes.</description>
@@ -90,14 +89,12 @@
 			<name>rootLinkTemplate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>The text to display in the root node of the tree.</description>
 			<name>rootNodeName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>Whether to persist the state of open/closed nodes for the next time the user views this tree.</description>
@@ -118,7 +115,6 @@
 			<name>selectedLayoutIds</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>The primary key of the page that is currently selected.</description>
@@ -132,7 +128,6 @@
 			<name>treeId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 	</tag>
 </taglib>

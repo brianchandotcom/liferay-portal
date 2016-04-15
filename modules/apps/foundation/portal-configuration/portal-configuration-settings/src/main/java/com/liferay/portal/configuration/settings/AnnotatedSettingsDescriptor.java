@@ -55,8 +55,8 @@ public class AnnotatedSettingsDescriptor implements SettingsDescriptor {
 		Method[] methods = _settingsClass.getMethods();
 
 		for (Method method : methods) {
-			Settings.Property settingsProperty = method.getAnnotation
-				(Settings.Property.class);
+			Settings.Property settingsProperty = method.getAnnotation(
+				Settings.Property.class);
 
 			if ((settingsProperty != null) && settingsProperty.ignore()) {
 				continue;

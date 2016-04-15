@@ -79,8 +79,8 @@ public class BaseModelHintsImplTest {
 
 		localizedFieldElement.addAttribute("localized", "true");
 
-		Element sanitizeFieldElement = addFieldElement
-			(modelElement, "sanitizeField", "String");
+		Element sanitizeFieldElement = addFieldElement(
+			modelElement, "sanitizeField", "String");
 
 		addSanitizeElement(sanitizeFieldElement, "text/html", "ALL");
 

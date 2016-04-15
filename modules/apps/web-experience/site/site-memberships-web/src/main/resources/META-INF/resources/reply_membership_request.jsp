@@ -27,10 +27,6 @@ if (Validator.isNull(redirect)) {
 	redirect = portletURL.toString();
 }
 
-long groupId = ParamUtil.getLong(request, "groupId");
-
-Group group = GroupLocalServiceUtil.getGroup(groupId);
-
 long membershipRequestId = ParamUtil.getLong(request, "membershipRequestId");
 
 MembershipRequest membershipRequest = MembershipRequestLocalServiceUtil.getMembershipRequest(membershipRequestId);
@@ -45,7 +41,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "reply-membership-request-f
 
 <portlet:actionURL name="replyMembershipRequest" var="replyMembershipRequestURL">
 	<portlet:param name="mvcPath" value="/reply_membership_request.jsp" />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= replyMembershipRequestURL %>" cssClass="container-fluid-1280" method="post" name="fm">
@@ -63,6 +59,11 @@ renderResponse.setTitle(LanguageUtil.format(request, "reply-membership-request-f
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
+
+			<%
+			Group group = themeDisplay.getScopeGroup();
+			%>
+
 			<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
 				<h4 class="text-default"><liferay-ui:message key="description" /></h4>
 

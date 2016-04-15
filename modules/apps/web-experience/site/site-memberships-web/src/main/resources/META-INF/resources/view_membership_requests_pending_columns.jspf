@@ -16,8 +16,6 @@
 
 <%
 User membershipRequestUser = UserLocalServiceUtil.fetchUserById(membershipRequest.getUserId());
-
-row.setObject(new Object[] {membershipRequestUser, group, membershipRequest});
 %>
 
 <c:choose>

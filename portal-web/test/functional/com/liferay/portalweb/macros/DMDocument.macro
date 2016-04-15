@@ -181,7 +181,7 @@
 	<command name="addDocumentTypePG">
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
 		<execute function="AssertClick" locator1="MenuItem#DOCUMENT_TYPE" value1="${dmDocumentTypeName}" />
 
@@ -1863,6 +1863,19 @@
 
 	<command name="viewDocumentTypePG">
 		<if>
+			<condition function="IsElementNotPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DROPDOWN" />
+			<then>
+				<execute function="Refresh" />
+			</then>
+		</if>
+
+		<execute function="Click" locator1="Button#INFO" />
+
+		<execute function="Click" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DROPDOWN" />
+
+		<execute function="AssertClick" locator1="MenuItem#DM_DOCUMENT_TYPE" value1="Document Type" />
+
+		<if>
 			<isset var="booleanValue" />
 			<then>
 				<var name="key_booleanValue" value="${booleanValue}" />
@@ -1903,7 +1916,7 @@
 			<then>
 				<var name="key_numberValue" value="${numberValue}" />
 
-				<execute function="AssertTextEquals#assertValue" locator1="DocumentsAndMediaDocument#METADATA_PANEL_NUMBER" value1="${numberValue}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#METADATA_PANEL_NUMBER" value1="${numberValue}" />
 			</then>
 		</if>
 	</command>

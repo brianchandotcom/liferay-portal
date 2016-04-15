@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>PROFILE_BADGE_COUNT</td>
-	<td>//div[@class='panel-title']/div[@aria-expanded="false"]//span[contains(@class,'notifications-count')]</td>
+	<td>//span[contains(@class,'notifications-count')]</td>
 	<td></td>
 </tr>
 <tr>

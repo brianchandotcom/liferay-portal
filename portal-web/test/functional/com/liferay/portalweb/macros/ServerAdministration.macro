@@ -79,7 +79,7 @@
 		<execute function="Check" locator1="ServerAdministrationMail#INCOMING_SECURE_NETWORK_CONNECTION_CHECKBOX" />
 
 		<if>
-			<equals arg1="needsReply" arg2="true" />
+			<equals arg1="${needsReply}" arg2="true" />
 			<then>
 				<execute function="Type" locator1="ServerAdministrationMail#INCOMING_USER_NAME" value1="recent:${userName}" />
 			</then>
@@ -94,7 +94,7 @@
 		<execute function="Check" locator1="ServerAdministrationMail#OUTGOING_SECURE_CONNECTION_CHECKBOX" />
 
 		<if>
-			<equals arg1="needsReply" arg2="true" />
+			<equals arg1="${needsReply}" arg2="true" />
 			<then>
 				<execute function="Type" locator1="ServerAdministrationMail#OUTGOING_USER_NAME" value1="recent:${userName}" />
 			</then>

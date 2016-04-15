@@ -1022,7 +1022,7 @@
 	</command>
 
 	<command name="ViewMBThreadAndReplyThreadInGmail" priority="4">
-		<property name="custom.properties" value="message.boards.message.formats.default=html{line.separator}pop.server.notifications.enabled=true{line.separator}pop.server.subdomain={line.separator}mail.session.mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory{line.separator}mail.session.mail.pop3.socketFactory.class=javax.net.ssl.SSLSocketFactory" />
+		<property name="custom.properties" value="message.boards.message.formats.default=html${line.separator}pop.server.notifications.enabled=true${line.separator}pop.server.subdomain=${line.separator}mail.session.mail.transport.protocol=smtp${line.separator}mail.session.mail.smtp.starttls.enable=true${line.separator}mail.session.mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory${line.separator}mail.session.mail.store.protocol=pop3${line.separator}mail.session.mail.pop3.socketFactory.port=995${line.separator}mail.session.mail.pop3.socketFactory.class=javax.net.ssl.SSLSocketFactory" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />
@@ -1032,6 +1032,10 @@
 			<var name="needsReply" value="true" />
 			<var method="TestPropsUtil#get('email.address.1')" name="userName" />
 			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">

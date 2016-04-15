@@ -191,6 +191,13 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		java.lang.String className, long classPK, long[] categoryIds,
 		java.lang.String[] tagNames) throws PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
+	Date, Date, String, long, String, long, long[], String[],
+	boolean, boolean, Date, Date, Date, Date, String, String,
+	String, String, String, String, int, int, Double)}
+	*/
+	@java.lang.Deprecated
 	public AssetEntry updateEntry(long userId, long groupId, Date createDate,
 		Date modifiedDate, java.lang.String className, long classPK,
 		java.lang.String classUuid, long classTypeId, long[] categoryIds,
@@ -201,11 +208,21 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		java.lang.String url, java.lang.String layoutUuid, int height,
 		int width, java.lang.Double priority) throws PortalException;
 
+	public AssetEntry updateEntry(long userId, long groupId, Date createDate,
+		Date modifiedDate, java.lang.String className, long classPK,
+		java.lang.String classUuid, long classTypeId, long[] categoryIds,
+		java.lang.String[] tagNames, boolean listable, boolean visible,
+		Date startDate, Date endDate, Date publishDate, Date expirationDate,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String summary,
+		java.lang.String url, java.lang.String layoutUuid, int height,
+		int width, java.lang.Double priority) throws PortalException;
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
 	Date, Date, String, long, String, long, long[], String[],
-	boolean, boolean, Date, Date, Date, String, String, String,
-	String, String, String, int, int, Double)}
+	boolean, boolean, Date, Date, Date, Date, String, String,
+	String, String, String, String, int, int, Double)}
 	*/
 	@java.lang.Deprecated
 	public AssetEntry updateEntry(long userId, long groupId, Date createDate,

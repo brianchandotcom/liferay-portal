@@ -65,7 +65,10 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			throw new NullPointerException("A DDM Form instance was never set");
 		}
 
-		evaluateDDMFormFieldValidationExpressions(ddmFormValues, ddmForm);
+		DDMFormEvaluationResult ddmFormEvaluationResult =
+			getDDMFormEvaluationResult(ddmForm, ddmFormValues);
+
+		inspectDDMFormEvaluationResult(ddmFormEvaluationResult);
 
 		traverseDDMFormFields(
 			ddmForm.getDDMFormFields(),
@@ -73,7 +76,8 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 
 		traverseDDMFormFieldValues(
 			ddmFormValues.getDDMFormFieldValues(),
-			ddmForm.getDDMFormFieldsMap(false));
+			ddmForm.getDDMFormFieldsMap(false),
+			ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap());
 	}
 
 	protected JSONArray createJSONArray(String fieldName, String json)
@@ -87,16 +91,13 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		}
 	}
 
-	protected void evaluateDDMFormFieldValidationExpressions(
-			DDMFormValues ddmFormValues, DDMForm ddmForm)
+	protected DDMFormEvaluationResult getDDMFormEvaluationResult(
+			DDMForm ddmForm, DDMFormValues ddmFormValues)
 		throws DDMFormValuesValidationException {
 
 		try {
-			DDMFormEvaluationResult ddmFormEvaluationResult =
-				_ddmFormEvaluator.evaluate(
-					ddmForm, ddmFormValues, ddmFormValues.getDefaultLocale());
-
-			inspectDDMFormEvaluationResult(ddmFormEvaluationResult);
+			return _ddmFormEvaluator.evaluate(
+				ddmForm, ddmFormValues, ddmFormValues.getDefaultLocale());
 		}
 		catch (DDMFormEvaluationException ddmfee) {
 			throw new DDMFormValuesValidationException(ddmfee);
@@ -187,7 +188,9 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 
 	protected void traverseDDMFormFieldValues(
 			List<DDMFormFieldValue> ddmFormFieldValues,
-			Map<String, DDMFormField> ddmFormFieldsMap)
+			Map<String, DDMFormField> ddmFormFieldsMap,
+			Map<String, DDMFormFieldEvaluationResult>
+				ddmFormFieldEvaluationResultsMap)
 		throws DDMFormValuesValidationException {
 
 		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
@@ -197,11 +200,12 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			if (Validator.isNotNull(ddmFormField)) {
 				validateDDMFormFieldValue(
 					ddmFormFieldsMap.get(ddmFormFieldValue.getName()),
-					ddmFormFieldValue);
+					ddmFormFieldValue, ddmFormFieldEvaluationResultsMap);
 
 				traverseDDMFormFieldValues(
 					ddmFormFieldValue.getNestedDDMFormFieldValues(),
-					ddmFormField.getNestedDDMFormFieldsMap());
+					ddmFormField.getNestedDDMFormFieldsMap(),
+					ddmFormFieldEvaluationResultsMap);
 			}
 		}
 	}
@@ -238,7 +242,9 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 	}
 
 	protected void validateDDMFormFieldValue(
-			DDMFormField ddmFormField, DDMFormFieldValue ddmFormFieldValue)
+			DDMFormField ddmFormField, DDMFormFieldValue ddmFormFieldValue,
+			Map<String, DDMFormFieldEvaluationResult>
+				ddmFormFieldEvaluationResultsMap)
 		throws DDMFormValuesValidationException {
 
 		if (ddmFormField == null) {
@@ -249,16 +255,19 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 
 		validateDDMFormFieldValue(
 			ddmFormField, ddmFormValues.getAvailableLocales(),
-			ddmFormValues.getDefaultLocale(), ddmFormFieldValue.getValue());
+			ddmFormValues.getDefaultLocale(), ddmFormFieldValue.getValue(),
+			ddmFormFieldEvaluationResultsMap.get(ddmFormFieldValue.getName()));
 
 		traverseDDMFormFieldValues(
 			ddmFormFieldValue.getNestedDDMFormFieldValues(),
-			ddmFormField.getNestedDDMFormFieldsMap());
+			ddmFormField.getNestedDDMFormFieldsMap(),
+			ddmFormFieldEvaluationResultsMap);
 	}
 
 	protected void validateDDMFormFieldValue(
 			DDMFormField ddmFormField, Set<Locale> availableLocales,
-			Locale defaultLocale, Value value)
+			Locale defaultLocale, Value value,
+			DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult)
 		throws DDMFormValuesValidationException {
 
 		if (Validator.isNull(ddmFormField.getDataType())) {
@@ -268,7 +277,8 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 		}
 		else {
 			if ((value == null) ||
-				(ddmFormField.isRequired() && isNull(value))) {
+				(ddmFormField.isRequired() &&
+				 ddmFormFieldEvaluationResult.isVisible() && isNull(value))) {
 
 				throw new RequiredValue(ddmFormField.getName());
 			}

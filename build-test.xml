@@ -8021,6 +8021,62 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 		<record action="stop" name="${liferay.home}/db_upgrade_log" />
 
+		<loadfile
+			property="db.upgrade.log"
+			srcfile="${liferay.home}/db_upgrade_log"
+		/>
+
+		<beanshell>
+			<![CDATA[
+				import java.util.regex.Matcher;
+				import java.util.regex.Pattern;
+
+				Pattern errorPattern = Pattern.compile(".*ERROR.*[\n$]?");
+				Pattern upgradeExceptionPattern = Pattern.compile(".*UpgradeException.[\n$]?");
+
+				String log = project.getProperty("db.upgrade.log");
+				String[] lines = log.split("\n");
+
+				StringBuffer sb = new StringBuffer();
+
+				int count = 0;
+
+				for (String line : lines) {
+					Matcher errorMatcher = errorPattern.matcher(line);
+
+					if (errorMatcher.find()) {
+						count++;
+						sb.append("    ");
+						sb.append(line);
+						sb.append("\n\n");
+
+						continue;
+					}
+
+					errorMatcher = upgradeExceptionPattern.matcher(line);
+
+					if (errorMatcher.find()) {
+						count++;
+						sb.append("    ");
+						sb.append(line);
+						sb.append("\n\n");
+					}
+				}
+
+				String errorString = sb.toString();
+
+				if (count > 0) {
+					sb = new StringBuffer();
+
+					sb.append(count);
+					sb.append(" errors found during DB Upgrade.\n");
+					sb.append(errorString);
+
+					System.out.println(sb.toString());
+				}
+			]]>
+		</beanshell>
+
 		<delete file="${liferay.home}/build-db-upgrade.xml" />
 		<delete file="${liferay.home}/db_upgrade_log" />
 		<delete file="${liferay.home}/portal-ext.properties" />

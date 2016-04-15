@@ -6567,6 +6567,10 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<os family="windows" />
 							<then>
 								<exec executable="${db2.executable}">
+									<arg line="/c /w db2 drop db lportal" />
+								</exec>
+
+								<exec executable="${db2.executable}">
 									<arg line="/c /w db2 -fcreate.sql -td;" />
 								</exec>
 							</then>

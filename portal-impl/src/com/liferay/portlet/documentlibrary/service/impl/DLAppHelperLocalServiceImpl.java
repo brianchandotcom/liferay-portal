@@ -183,8 +183,9 @@ public class DLAppHelperLocalServiceImpl
 				DLFileEntryConstants.getClassName(),
 				fileVersion.getFileVersionId(), fileEntry.getUuid(),
 				fileEntryTypeId, assetCategoryIds, assetTagNames, true, false,
-				null, null, null, fileEntry.getMimeType(), fileEntry.getTitle(),
-				fileEntry.getDescription(), null, null, null, 0, 0, null);
+				null, null, null, null, fileEntry.getMimeType(),
+				fileEntry.getTitle(), fileEntry.getDescription(), null, null,
+				null, 0, 0, null);
 
 			List<AssetLink> assetLinks = assetLinkLocalService.getDirectLinks(
 				fileEntryAssetEntry.getEntryId(), false);
@@ -907,16 +908,23 @@ public class DLAppHelperLocalServiceImpl
 				DLFileEntryConstants.getClassName(),
 				fileVersion.getFileVersionId(), fileEntry.getUuid(),
 				fileEntryTypeId, assetCategoryIds, assetTagNames, true, false,
-				null, null, null, fileEntry.getMimeType(), fileEntry.getTitle(),
-				fileEntry.getDescription(), null, null, null, 0, 0, null);
+				null, null, null, null, fileEntry.getMimeType(),
+				fileEntry.getTitle(), fileEntry.getDescription(), null, null,
+				null, 0, 0, null);
 		}
 		else {
+			Date publishDate = null;
+
+			if (visible) {
+				publishDate = fileEntry.getCreateDate();
+			}
+
 			assetEntry = assetEntryLocalService.updateEntry(
 				userId, fileEntry.getGroupId(), fileEntry.getCreateDate(),
 				fileEntry.getModifiedDate(),
 				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
 				fileEntry.getUuid(), fileEntryTypeId, assetCategoryIds,
-				assetTagNames, true, visible, null, null, null,
+				assetTagNames, true, visible, null, null, publishDate, null,
 				fileEntry.getMimeType(), fileEntry.getTitle(),
 				fileEntry.getDescription(), null, null, null, 0, 0, null);
 
@@ -932,7 +940,8 @@ public class DLAppHelperLocalServiceImpl
 					DLFileShortcutConstants.getClassName(),
 					dlFileShortcut.getFileShortcutId(),
 					dlFileShortcut.getUuid(), fileEntryTypeId, assetCategoryIds,
-					assetTagNames, true, true, null, null, null,
+					assetTagNames, true, true, null, null,
+					dlFileShortcut.getCreateDate(), null,
 					fileEntry.getMimeType(), fileEntry.getTitle(),
 					fileEntry.getDescription(), null, null, null, 0, 0, null);
 			}
@@ -968,11 +977,17 @@ public class DLAppHelperLocalServiceImpl
 			visible = true;
 		}
 
+		Date publishDate = null;
+
+		if (visible) {
+			publishDate = folder.getCreateDate();
+		}
+
 		assetEntry = assetEntryLocalService.updateEntry(
 			userId, folder.getGroupId(), folder.getCreateDate(),
 			folder.getModifiedDate(), DLFolderConstants.getClassName(),
 			folder.getFolderId(), folder.getUuid(), 0, assetCategoryIds,
-			assetTagNames, true, visible, null, null, null, null,
+			assetTagNames, true, visible, null, null, publishDate, null, null,
 			folder.getName(), folder.getDescription(), null, null, null, 0, 0,
 			null);
 
@@ -1098,7 +1113,8 @@ public class DLAppHelperLocalServiceImpl
 								DLFileEntryConstants.getClassName(),
 								fileEntry.getFileEntryId(), fileEntry.getUuid(),
 								fileEntryTypeId, assetCategoryIds,
-								assetTagNames, true, true, null, null, null,
+								assetTagNames, true, true, null, null,
+								fileEntry.getCreateDate(), null,
 								draftAssetEntry.getMimeType(),
 								fileEntry.getTitle(),
 								fileEntry.getDescription(), null, null, null, 0,

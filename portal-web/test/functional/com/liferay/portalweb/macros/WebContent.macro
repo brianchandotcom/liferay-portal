@@ -301,9 +301,17 @@
 		<execute function="AssertClick" locator1="MenuItem#WEB_CONTENT_LANGUAGE" value1="${localizedLanguage}" />
 
 		<if>
+			<not>
+				<condition function="IsElementPresent" locator1="Translation#SELECTED_LOCALE" value1="${localizedLanguage}" />
+			</not>
+			<then>
+				<execute function="Click" locator1="Translation#CURRENT_LOCALE" />
+			</then>
+		</if>
+
+		<if>
 			<isset var="localizedTitle" />
 			<then>
-				<execute function="Click" locator1="Translation#TITLE" />
 				<execute function="Type#mouseOverFocusType" locator1="TextInput#TITLE" value1="${localizedTitle}" />
 			</then>
 		</if>
@@ -1773,7 +1781,7 @@
 
 		<execute function="AssertTextEquals" locator1="DDMField#TEXT_BOX" value1="${webContentTextBox}" />
 
-		<var name="key_translationLocale" value="es_ES" />
+		<var name="key_localizedLanguage" value="Spanish (Spain)" />
 
 		<execute function="Click" locator1="Translation#CURRENT_LOCALE" />
 

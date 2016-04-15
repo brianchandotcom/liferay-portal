@@ -38,13 +38,13 @@ public class ServiceLocator {
 		Object bean = null;
 
 		try {
-			bean = PortalBeanLocatorUtil.locate(
-				_getServiceName(serviceName));
+			Registry registry = RegistryUtil.getRegistry();
+
+			bean = registry.getService(serviceName);
 
 			if (bean == null) {
-				Registry registry = RegistryUtil.getRegistry();
-
-				bean = registry.getService(serviceName);
+				bean = PortalBeanLocatorUtil.locate(
+					_getServiceName(serviceName));
 			}
 		}
 		catch (Exception e) {

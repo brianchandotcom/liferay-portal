@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Item Selector Taglib FreeMarker Contributor
-Bundle-SymbolicName: com.liferay.item.selector.taglib.freemarker.contributor
-Bundle-Version: 2.0.1
-Import-Package: com.liferay.item.selector.taglib.servlet.taglib
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
--liferay-includeresource: @com.liferay.item.selector.taglib-*.jar!/META-INF/resources/liferay-item-selector.tld

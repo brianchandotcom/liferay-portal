@@ -102,10 +102,6 @@ public class PortletPropsValues {
 		ServiceProps.get(
 			PortletPropsKeys.ADMIN_EMAIL_KB_ARTICLE_UPDATED_SUBJECT);
 
-	public static final String[] ADMIN_KB_ARTICLE_DEFAULT_SECTIONS =
-		ServiceProps.getArray(
-			PortletPropsKeys.ADMIN_KB_ARTICLE_DEFAULT_SECTIONS);
-
 	public static final boolean ADMIN_KB_ARTICLE_INCREMENT_PRIORITY_ENABLED =
 		GetterUtil.getBoolean(
 			ServiceProps.get(
@@ -113,6 +109,10 @@ public class PortletPropsValues {
 
 	public static final String[] ADMIN_KB_ARTICLE_SECTIONS =
 		ServiceProps.getArray(PortletPropsKeys.ADMIN_KB_ARTICLE_SECTIONS);
+
+	public static final String[] ADMIN_KB_ARTICLE_SECTIONS_DEFAULT_SECTIONS =
+		ServiceProps.getArray(
+			PortletPropsKeys.ADMIN_KB_ARTICLE_SECTIONS_DEFAULT_SECTIONS);
 
 	public static final int KNOWLEDGE_BASE_RATINGS_NUMBER_OF_STARS =
 		GetterUtil.getInteger(

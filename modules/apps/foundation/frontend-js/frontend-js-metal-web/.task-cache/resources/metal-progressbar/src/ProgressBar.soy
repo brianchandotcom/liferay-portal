@@ -4,7 +4,6 @@
  * This renders the main element.
  * @param? barClass
  * @param? elementClasses
- * @param id
  * @param? label
  * @param? max
  * @param? min
@@ -15,7 +14,6 @@
 	{let $curMin: $min ? $min : 0 /}
 	{let $curValue: $value ? $value : 0 /}
 	<div
-		id="{$id}"
 		class="progress {$elementClasses ? ' ' + $elementClasses : ''}"
 		role="progressbar"
 		aria-valuemax="{$curMax}"

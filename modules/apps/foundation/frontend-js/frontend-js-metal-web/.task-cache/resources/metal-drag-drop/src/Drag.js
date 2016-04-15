@@ -150,6 +150,7 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/Drag", ['exports', 'meta
 			_this.on(Drag.Events.DRAG, _this.defaultDragFn_, true);
 			_this.on(Drag.Events.END, _this.defaultEndFn_, true);
 			_this.on('sourcesChanged', _this.handleSourcesChanged_.bind(_this));
+			_this.on('containerChanged', _this.handleContainerChanged_.bind(_this));
 			_this.dragScrollDelta_.on('scrollDelta', _this.handleScrollDelta_.bind(_this));
 			_dom2.default.on(document, 'keydown', _this.handleKeyDown_.bind(_this));
 			return _this;
@@ -256,7 +257,13 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/Drag", ['exports', 'meta
 
 		Drag.prototype.constrainToRegion_ = function constrainToRegion_(region) {
 			var constrain = this.constrain;
-			if (constrain) {
+			if (!constrain) {
+				return;
+			}
+
+			if (_metal.core.isFunction(constrain)) {
+				_metal.object.mixin(region, constrain(region));
+			} else {
 				if (_metal.core.isElement(constrain)) {
 					constrain = _position2.default.getRegion(constrain, true);
 				}
@@ -412,6 +419,16 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/Drag", ['exports', 'meta
 			}
 		};
 
+		Drag.prototype.handleContainerChanged_ = function handleContainerChanged_() {
+			if (_metal.core.isString(this.sources)) {
+				this.sourceHandler_.removeAllListeners();
+				this.attachSourceEvents_();
+			}
+			if (this.prevScrollContainersSelector_) {
+				this.scrollContainers = this.prevScrollContainersSelector_;
+			}
+		};
+
 		Drag.prototype.handleSourcesChanged_ = function handleSourcesChanged_() {
 			this.sourceHandler_.removeAllListeners();
 			this.attachSourceEvents_();
@@ -455,8 +472,9 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/Drag", ['exports', 'meta
 			return val;
 		};
 
-		Drag.prototype.setterScrollContainersFn_ = function setterScrollContainersFn_(scrollContainers) {
-			var elements = this.toElements_(scrollContainers);
+		Drag.prototype.setterScrollContainersFn_ = function setterScrollContainersFn_(val) {
+			this.prevScrollContainersSelector_ = _metal.core.isString(val) ? val : null;
+			var elements = this.toElements_(val);
 			elements.push(document);
 			return elements;
 		};
@@ -558,7 +576,7 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/Drag", ['exports', 'meta
    * to anywhere on the page. Can be either already an object with the
    * boundaries relative to the document, or an element to use the boundaries
    * from, or even a selector for finding that element.
-   * @type {!Element|Object|string}
+   * @type {!Element|Object|function()|string}
    */
 		constrain: {
 			setter: 'setterConstrainFn',

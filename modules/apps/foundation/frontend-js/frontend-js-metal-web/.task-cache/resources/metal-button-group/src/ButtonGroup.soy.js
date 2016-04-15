@@ -84,19 +84,19 @@ define("frontend-js-metal-web@1.0.6/metal-button-group/src/ButtonGroup.soy", ['e
      * @suppress {checkTypes}
      */
     function $render(opt_data, opt_ignored, opt_ijData) {
-      ie_open('div', null, null, 'id', opt_data.id, 'class', 'btn-group component' + (opt_data.elementClasses ? ' ' + opt_data.elementClasses : ''));
-      var buttonList28 = opt_data.buttons;
-      var buttonListLen28 = buttonList28.length;
-      for (var buttonIndex28 = 0; buttonIndex28 < buttonListLen28; buttonIndex28++) {
-        var buttonData28 = buttonList28[buttonIndex28];
-        var type__soy8 = buttonData28.type ? buttonData28.type : 'button';
-        var cssClass__soy9 = buttonData28.cssClass ? buttonData28.cssClass : 'btn btn-default';
-        ie_open('button', null, null, 'type', type__soy8, 'class', cssClass__soy9 + $selectedClass({ label: buttonData28.label, selected: opt_data.selected }, null, opt_ijData), 'data-index', buttonIndex28, 'data-onclick', 'handleClick_');
+      ie_open('div', null, null, 'class', 'btn-group component' + (opt_data.elementClasses ? ' ' + opt_data.elementClasses : ''));
+      var buttonList26 = opt_data.buttons;
+      var buttonListLen26 = buttonList26.length;
+      for (var buttonIndex26 = 0; buttonIndex26 < buttonListLen26; buttonIndex26++) {
+        var buttonData26 = buttonList26[buttonIndex26];
+        var type__soy6 = buttonData26.type ? buttonData26.type : 'button';
+        var cssClass__soy7 = buttonData26.cssClass ? buttonData26.cssClass : 'btn btn-default';
+        ie_open('button', null, null, 'type', type__soy6, 'class', cssClass__soy7 + $selectedClass({ label: buttonData26.label, selected: opt_data.selected }, null, opt_ijData), 'data-index', buttonIndex26, 'data-onclick', 'handleClick_');
         ie_open('span', null, null, 'class', 'btn-group-label');
-        itext((goog.asserts.assert((buttonData28.label ? buttonData28.label : '') != null), buttonData28.label ? buttonData28.label : ''));
+        itext((goog.asserts.assert((buttonData26.label ? buttonData26.label : '') != null), buttonData26.label ? buttonData26.label : ''));
         ie_close('span');
-        if (buttonData28.icon) {
-          ie_void('span', null, null, 'class', buttonData28.icon);
+        if (buttonData26.icon) {
+          ie_void('span', null, null, 'class', buttonData26.icon);
         }
         ie_close('button');
       }
@@ -117,11 +117,11 @@ define("frontend-js-metal-web@1.0.6/metal-button-group/src/ButtonGroup.soy", ['e
     function $selectedClass(opt_data, opt_ignored, opt_ijData) {
       var output = '';
       if (opt_data.selected) {
-        var selectedValueList37 = opt_data.selected;
-        var selectedValueListLen37 = selectedValueList37.length;
-        for (var selectedValueIndex37 = 0; selectedValueIndex37 < selectedValueListLen37; selectedValueIndex37++) {
-          var selectedValueData37 = selectedValueList37[selectedValueIndex37];
-          output += selectedValueData37 == opt_data.label ? ' btn-group-selected' : '';
+        var selectedValueList35 = opt_data.selected;
+        var selectedValueListLen35 = selectedValueList35.length;
+        for (var selectedValueIndex35 = 0; selectedValueIndex35 < selectedValueListLen35; selectedValueIndex35++) {
+          var selectedValueData35 = selectedValueList35[selectedValueIndex35];
+          output += selectedValueData35 == opt_data.label ? ' btn-group-selected' : '';
         }
       }
       return output;
@@ -131,7 +131,7 @@ define("frontend-js-metal-web@1.0.6/metal-button-group/src/ButtonGroup.soy", ['e
       $selectedClass.soyTemplateName = 'ButtonGroup.selectedClass';
     }
 
-    exports.render.params = ["buttons", "elementClasses", "id", "selected"];
+    exports.render.params = ["buttons", "elementClasses", "selected"];
     exports.selectedClass.params = ["label", "selected"];
     exports.templates = templates = exports;
     return exports;

@@ -4,11 +4,10 @@
  * This renders the main element.
  * @param buttons
  * @param? elementClasses
- * @param id
  * @param? selected
  */
 {template .render}
-	<div id="{$id}" class="btn-group component{$elementClasses ? ' ' + $elementClasses : ''}">
+	<div class="btn-group component{$elementClasses ? ' ' + $elementClasses : ''}">
 		{foreach $button in $buttons}
 			{let $type: $button.type ? $button.type : 'button' /}
 			{let $cssClass: $button.cssClass ? $button.cssClass : 'btn btn-default' /}

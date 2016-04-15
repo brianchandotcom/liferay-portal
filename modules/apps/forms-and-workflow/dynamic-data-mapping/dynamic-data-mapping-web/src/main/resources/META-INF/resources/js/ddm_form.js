@@ -1043,22 +1043,6 @@ AUI.add(
 						instance.syncUI();
 					},
 
-					showNotice: function(message) {
-						var instance = this;
-
-						if (!instance.notice) {
-							instance.notice = new Liferay.Notice(
-								{
-									toggleText: false,
-									type: 'warning'
-								}
-							).hide();
-						}
-
-						instance.notice.html(message);
-						instance.notice.show();
-					},
-
 					syncReadOnlyUI: function() {
 						var instance = this;
 

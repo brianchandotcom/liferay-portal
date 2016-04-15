@@ -980,7 +980,10 @@
 
 		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
-		<execute function="AssertElementNotPresent" locator1="AP#ASSET_ABSTRACT_EDIT" />
+
+		<execute function="Click" locator1="AP#ASSET_ABSTRACT_EDIT" />
+
+		<execute function="AssertElementNotPresent" locator1="AP#ASSET_EDIT" />
 	</command>
 
 	<command name="viewOrderedFieldPG">

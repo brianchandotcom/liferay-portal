@@ -25,9 +25,6 @@ public class FieldNames {
 	public static final String CONFIGURATION_MODEL_ATTRIBUTE_NAME =
 		"configurationModelAttributeName";
 
-	public static final String CONFIGURATION_MODEL_CATEGORY =
-		"configurationModelCategory";
-
 	public static final String CONFIGURATION_MODEL_FACTORY_PID =
 		"configurationModelFactoryPid";
 

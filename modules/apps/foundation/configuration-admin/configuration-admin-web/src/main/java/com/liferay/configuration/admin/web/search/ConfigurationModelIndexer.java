@@ -120,7 +120,6 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 			Field.TITLE, Field.UID,
 			FieldNames.CONFIGURATION_MODEL_ATTRIBUTE_DESCRIPTION,
 			FieldNames.CONFIGURATION_MODEL_ATTRIBUTE_NAME,
-			FieldNames.CONFIGURATION_MODEL_CATEGORY,
 			FieldNames.CONFIGURATION_MODEL_FACTORY_PID,
 			FieldNames.CONFIGURATION_MODEL_ID);
 		setFilterSearch(false);
@@ -145,9 +144,6 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		addSearchTerm(
 			searchQuery, searchContext,
 			FieldNames.CONFIGURATION_MODEL_ATTRIBUTE_NAME, false);
-		addSearchTerm(
-			searchQuery, searchContext, FieldNames.CONFIGURATION_MODEL_CATEGORY,
-			false);
 		addSearchTerm(
 			searchQuery, searchContext,
 			FieldNames.CONFIGURATION_MODEL_FACTORY_PID, false);
@@ -190,9 +186,6 @@ public class ConfigurationModelIndexer extends BaseIndexer<ConfigurationModel> {
 		document.addUID(
 			ConfigurationAdminPortletKeys.SYSTEM_SETTINGS,
 			configurationModel.getID());
-		document.addKeyword(
-			FieldNames.CONFIGURATION_MODEL_CATEGORY,
-			configurationModel.getCategory());
 		document.addKeyword(
 			FieldNames.CONFIGURATION_MODEL_FACTORY_PID,
 			configurationModel.getFactoryPid());

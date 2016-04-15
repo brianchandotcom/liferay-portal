@@ -493,7 +493,7 @@
 		<field indexed="true" name="classTypeId" stored="true" type="string" />
 		<field indexed="true" name="comments" stored="true" type="text" />
 		<field indexed="true" name="companyId" stored="true" type="long" />
-		<field indexed="true" name="configurationModelAttributeName" stored="true" type="string" />
+		<field indexed="true" multiValued="true" name="configurationModelAttributeName" stored="true" type="string" />
 		<field indexed="true" name="configurationModelFactoryPid" stored="true" type="string" />
 		<field indexed="true" name="configurationModelId" stored="true" type="string" />
 		<field indexed="true" name="content" stored="true" termPositions="true" termVectors="true" type="text" />

@@ -670,11 +670,12 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					List<String> commands = new ArrayList<>();
 
 					boolean gradleDaemon = _getGradleDaemon(task);
-					String gradleRelativePath = _getGradleRelativePath();
+					String gradleRelativePath = _relativize(_getGradlewFile());
+
+					// Move to the root directory
 
 					commands.add(
-						"cd " +
-							FileUtil.getAbsolutePath(project.getProjectDir()));
+						"cd " + FileUtil.getAbsolutePath(project.getRootDir()));
 
 					// Publish if the artifact has never been published
 
@@ -688,13 +689,12 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 					commands.add(
 						_getGradleCommand(
-							gradleRelativePath, buildChangeLogTask.getName(),
+							gradleRelativePath, buildChangeLogTask,
 							gradleDaemon));
 
 					commands.add(
 						"git add " +
-							project.relativePath(
-								buildChangeLogTask.getChangeLogFile()));
+							_relativize(buildChangeLogTask.getChangeLogFile()));
 
 					commands.add(
 						_getGitCommitCommand("change log", true, true));
@@ -706,7 +706,9 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 							gradleRelativePath, BASELINE_TASK_NAME,
 							gradleDaemon));
 
-					commands.add("git add --all .");
+					commands.add(
+						"git add --all " +
+							_relativize(project.getProjectDir()));
 
 					commands.add(
 						_getGitCommitCommand("packageinfo", true, false));
@@ -774,14 +776,24 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				}
 
 				private String _getGradleCommand(
-					String gradleRelativePath, String command,
+					String gradleRelativePath, String taskName,
 					boolean gradleDaemon, String ... arguments) {
+
+					Task task = GradleUtil.getTask(project, taskName);
+
+					return _getGradleCommand(
+						gradleRelativePath, task, gradleDaemon, arguments);
+				}
+
+				private String _getGradleCommand(
+					String gradleRelativePath, Task task, boolean gradleDaemon,
+					String ... arguments) {
 
 					StringBuilder sb = new StringBuilder();
 
 					sb.append(gradleRelativePath);
 					sb.append(' ');
-					sb.append(command);
+					sb.append(task.getPath());
 
 					if (gradleDaemon) {
 						sb.append(" --daemon");
@@ -808,16 +820,14 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					return gradleDaemon;
 				}
 
-				private String _getGradleRelativePath() {
+				private File _getGradlewFile() {
 					File rootDir = portalRootDir;
 
 					if (portalRootDir == null) {
 						rootDir = project.getRootDir();
 					}
 
-					File gradlewFile = new File(rootDir, "gradlew");
-
-					return project.relativePath(gradlewFile);
+					return new File(rootDir, "gradlew");
 				}
 
 				private List<String> _getPublishCommands(
@@ -854,7 +864,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 					// Commit "prep next"
 
-					commands.add("git add " + project.relativePath("bnd.bnd"));
+					commands.add("git add " + _relativize("bnd.bnd"));
 
 					File moduleConfigFile = getModuleConfigFile(project);
 
@@ -862,8 +872,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 						moduleConfigFile.exists()) {
 
 						commands.add(
-							"git add " +
-								project.relativePath(moduleConfigFile));
+							"git add " + _relativize(moduleConfigFile));
 					}
 
 					commands.add(_getGitCommitCommand("prep next", true));
@@ -872,8 +881,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 					commands.add(
 						"git add " +
-							project.relativePath(
-								recordArtifactTask.getOutputFile()));
+							_relativize(recordArtifactTask.getOutputFile()));
 
 					commands.add(
 						_getGitCommitCommand("artifact properties", true));
@@ -883,6 +891,18 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					commands.add(_getGitCommitCommand("apply", true, false));
 
 					return commands;
+				}
+
+				private String _relativize(File file) {
+					Project rootProject = project.getRootProject();
+
+					return rootProject.relativePath(file);
+				}
+
+				private String _relativize(String fileName) {
+					File file = project.file(fileName);
+
+					return _relativize(file);
 				}
 
 			});

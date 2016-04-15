@@ -42,6 +42,7 @@ import java.io.OutputStream;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.felix.utils.log.Logger;
 
@@ -62,12 +63,50 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 	configurationPid = "com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
-		"osgi.command.function=execute", "osgi.command.function=list",
-		"osgi.command.scope=upgrade"
+		"osgi.command.function=dryrun", "osgi.command.function=execute",
+		"osgi.command.function=list", "osgi.command.scope=upgrade"
 	},
 	service = Object.class
 )
 public class ReleaseManager {
+
+	public void dryrun() {
+		Set<String> bundleSymbolicNames = _serviceTrackerMap.keySet();
+
+		for (String bundleSymbolicName : bundleSymbolicNames) {
+			String schemaVersionString = getSchemaVersionString(
+				bundleSymbolicName);
+
+			ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
+				_serviceTrackerMap.getService(bundleSymbolicName));
+
+			List<List<UpgradeInfo>> upgradeInfosList =
+				releaseGraphManager.getUpgradeInfosList(schemaVersionString);
+
+			int size = upgradeInfosList.size();
+
+			if (size > 1) {
+				System.out.println(
+					"There are " + size + " possible end nodes for " +
+						schemaVersionString);
+			}
+
+			if (size == 0) {
+				continue;
+			}
+
+			List<UpgradeInfo> upgradeInfos = upgradeInfosList.get(0);
+
+			UpgradeInfo lastUpgradeInfo = upgradeInfos.get(
+				upgradeInfos.size() - 1);
+
+			System.out.println(
+				"Would upgrade " + bundleSymbolicName + " from " +
+					schemaVersionString + " to " +
+						lastUpgradeInfo.getToSchemaVersionString() + " and " +
+							"its dependent modules");
+		}
+	}
 
 	public void execute(String bundleSymbolicName) {
 		doExecute(bundleSymbolicName, _serviceTrackerMap);

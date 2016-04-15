@@ -61,16 +61,16 @@ renderResponse.setTitle(LanguageUtil.format(request, "reply-membership-request-f
 
 	<aui:model-context bean="<%= membershipRequest %>" model="<%= MembershipRequest.class %>" />
 
-	<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
-		<aui:field-wrapper label="description">
-			<p>
-				<%= HtmlUtil.escape(group.getDescription()) %>
-			</p>
-		</aui:field-wrapper>
-	</c:if>
-
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
+			<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
+				<h4 class="text-default"><liferay-ui:message key="description" /></h4>
+
+				<p class="text-default">
+					<%= HtmlUtil.escape(group.getDescription(locale)) %>
+				</p>
+			</c:if>
+
 			<liferay-ui:user-portrait
 				cssClass="user-icon-lg"
 				userId="<%= membershipRequest.getUserId() %>"

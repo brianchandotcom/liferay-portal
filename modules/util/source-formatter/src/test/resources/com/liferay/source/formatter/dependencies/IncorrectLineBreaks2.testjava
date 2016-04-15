@@ -34,7 +34,7 @@ public class IncorrectLineBreaks2 {
 
 	public void method2() {}
 
-	public void method3(String inputString) {
+	public String method3(String inputString) {
 		return StringUtil.replace(
 			inputString, new String[] {"hello world", "Hello World"},
 			new String[] {
@@ -42,6 +42,11 @@ public class IncorrectLineBreaks2 {
 				"Hello World, Hello World, Hello World"
 			}
 		);
+	}
+
+	public String method4(String inputString) {
+		return StringUtil.replace
+			(inputString, "Hello World Hello", "World Hello World");
 	}
 
 }

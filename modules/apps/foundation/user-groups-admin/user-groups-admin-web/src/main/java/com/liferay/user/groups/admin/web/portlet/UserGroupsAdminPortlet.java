@@ -148,8 +148,7 @@ public class UserGroupsAdminPortlet extends MVCPortlet {
 		long[] removeUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
-		try (
-			ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
+		try (ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
 				new ProxyModeThreadLocalCloseable()) {
 
 			ProxyModeThreadLocal.setForceSync(true);

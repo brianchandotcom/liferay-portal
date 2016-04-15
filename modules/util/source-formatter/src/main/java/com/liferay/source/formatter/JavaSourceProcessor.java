@@ -2969,6 +2969,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				0);
 		}
 
+		if (trimmedPreviousLine.matches("((else )?if|for|try|while) \\(")) {
+			return getCombinedLinesContent(
+				content, fileName, line, trimmedLine, lineLength, lineCount,
+				previousLine, null, tabDiff, false, false, 0);
+		}
+
 		if (previousLine.endsWith("= new")) {
 			return getCombinedLinesContent(
 				content, fileName, line, trimmedLine, lineLength, lineCount,

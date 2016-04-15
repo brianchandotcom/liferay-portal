@@ -32,7 +32,6 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidDefaultLocaleForProperty;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidIndexType;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidVisibilityExpression;
-import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.portal.bean.BeanPropertiesImpl;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -42,19 +41,14 @@ import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Marcellus Tavares
  */
-@RunWith(PowerMockRunner.class)
-public class DDMFormValidatorTest extends PowerMockito {
+public class DDMFormValidatorTest {
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		setUpBeanPropertiesUtil();
 		setUpDDMFormValidator();
 	}
@@ -68,7 +62,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test(expected = MustSetValidCharactersForFieldName.class)
@@ -79,7 +73,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 		ddmForm.addDDMFormField(
 			new DDMFormField("text-dash", DDMFormFieldType.TEXT));
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test(expected = MustSetDefaultLocaleAsAvailableLocale.class)
@@ -89,7 +83,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 		ddmForm.setAvailableLocales(createAvailableLocales(LocaleUtil.BRAZIL));
 		ddmForm.setDefaultLocale(LocaleUtil.US);
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test(expected = MustSetValidCharactersForFieldName.class)
@@ -100,7 +94,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 		ddmForm.addDDMFormField(
 			new DDMFormField("$text", DDMFormFieldType.TEXT));
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test(expected = MustNotDuplicateFieldName.class)
@@ -119,7 +113,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 
 		ddmForm.addDDMFormField(name2DDMFormField);
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test(expected = MustNotDuplicateFieldName.class)
@@ -138,7 +132,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 
 		ddmForm.addDDMFormField(name2DDMFormField);
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test(expected = MustSetValidIndexType.class)
@@ -153,7 +147,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test(expected = MustSetValidCharactersForFieldName.class)
@@ -166,7 +160,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test(expected = MustSetValidCharactersForFieldType.class)
@@ -178,7 +172,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test(expected = MustSetValidVisibilityExpression.class)
@@ -193,7 +187,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test(expected = MustSetOptionsForField.class)
@@ -208,7 +202,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test(expected = MustSetAvailableLocales.class)
@@ -218,7 +212,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 		ddmForm.setAvailableLocales(null);
 		ddmForm.setDefaultLocale(LocaleUtil.US);
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test(expected = MustSetDefaultLocale.class)
@@ -227,7 +221,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 
 		ddmForm.setDefaultLocale(null);
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test(expected = MustSetValidCharactersForFieldName.class)
@@ -238,7 +232,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 		ddmForm.addDDMFormField(
 			new DDMFormField("Text with Space", DDMFormFieldType.TEXT));
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test
@@ -248,7 +242,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 
 		ddmForm.addDDMFormField(new DDMFormField("和ó", DDMFormFieldType.TEXT));
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test
@@ -260,7 +254,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test
@@ -272,7 +266,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test
@@ -287,7 +281,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test(expected = MustSetValidAvailableLocalesForProperty.class)
@@ -308,7 +302,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test(expected = MustSetValidAvailableLocalesForProperty.class)
@@ -325,7 +319,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test(expected = MustSetValidDefaultLocaleForProperty.class)
@@ -348,7 +342,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	@Test(expected = MustSetValidDefaultLocaleForProperty.class)
@@ -367,7 +361,7 @@ public class DDMFormValidatorTest extends PowerMockito {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		_ddmFormValidator.validate(ddmForm);
+		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
 	protected Set<Locale> createAvailableLocales(Locale... locales) {
@@ -380,16 +374,12 @@ public class DDMFormValidatorTest extends PowerMockito {
 		beanPropertiesUtil.setBeanProperties(new BeanPropertiesImpl());
 	}
 
-	protected void setUpDDMFormValidator() throws Exception {
-		_ddmFormValidator = new DDMFormValidatorImpl();
-
-		field(
-			DDMFormValidatorImpl.class, "_ddmExpressionFactory"
-		).set(
-			_ddmFormValidator, new DDMExpressionFactoryImpl()
-		);
+	protected void setUpDDMFormValidator() {
+		_ddmFormValidatorImpl.setDDMExpressionFactory(
+			new DDMExpressionFactoryImpl());
 	}
 
-	private DDMFormValidator _ddmFormValidator;
+	private final DDMFormValidatorImpl _ddmFormValidatorImpl =
+		new DDMFormValidatorImpl();
 
 }

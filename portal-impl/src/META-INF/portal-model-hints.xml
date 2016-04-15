@@ -1140,6 +1140,7 @@
 		</field>
 		<field name="replyComments" type="String">
 			<hint-collection name="TEXTAREA" />
+			<validator name="required" />
 		</field>
 		<field name="replyDate" type="Date" />
 		<field name="replierUserId" type="long" />

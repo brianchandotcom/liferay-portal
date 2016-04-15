@@ -779,11 +779,11 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="jboss" database.type="mysql" />
 	</target>
 
-	<target name="functional-resin40-mysql56-jdk7">
+	<target name="functional-resin40-mysql56-jdk8">
 		<run-functional-test app.server.type="resin" database.type="mysql" />
 	</target>
 
-	<target name="functional-tcserver26-mysql56-jdk7">
+	<target name="functional-tcserver26-mysql56-jdk8">
 		<run-functional-test app.server.type="tcserver" database.type="mysql" />
 	</target>
 
@@ -803,7 +803,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<antcall target="functional-tomcat8-mysql56-jdk7" />
 	</target>
 
-	<target name="functional-tomcat8-oracle12-jdk7">
+	<target name="functional-tomcat8-oracle12-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="oracle" />
 	</target>
 
@@ -811,15 +811,15 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
 	</target>
 
-	<target name="functional-tomcat8-sybase16-jdk7">
+	<target name="functional-tomcat8-sybase16-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="sybase" />
 	</target>
 
-	<target name="functional-weblogic121-mysql56-jdk7">
+	<target name="functional-weblogic121-mysql56-jdk8">
 		<run-functional-test app.server.type="weblogic" database.type="mysql" />
 	</target>
 
-	<target name="functional-websphere85-mysql56-jdk7">
+	<target name="functional-websphere85-mysql56-jdk8">
 		<run-functional-test app.server.type="websphere" database.type="mysql" />
 	</target>
 

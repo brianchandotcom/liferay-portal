@@ -129,8 +129,6 @@
 
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Save" />
 
-		<execute macro="Alert#viewSuccessMessage" />
-
 		<if>
 			<equals arg1="${userEmailAddressVariation}" arg2="Invalid" />
 			<then>

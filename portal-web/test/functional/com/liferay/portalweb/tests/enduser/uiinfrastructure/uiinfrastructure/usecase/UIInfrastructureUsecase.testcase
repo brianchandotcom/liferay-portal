@@ -86,8 +86,6 @@
 			<var name="entryTitle" value="Blogs Title" />
 		</execute>
 
-		<execute macro="PortletEntry#publish" />
-
 		<execute macro="Alert#viewSuccessMessageText">
 			<var name="sucessMessage" value="Your request completed successfully." />
 		</execute>

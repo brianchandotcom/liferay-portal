@@ -3519,7 +3519,11 @@ public class PortletImpl extends PortletBaseImpl {
 		try {
 			lock.lock();
 
-			if (lock != _readyLock.get(getRootPortletId())) {
+			Lock doubleCheckLock = _readyLock.get(getRootPortletId());
+
+			if (lock != doubleCheckLock) {
+				//unsetReady has been invoked while we were locked
+
 				return;
 			}
 
@@ -4021,6 +4025,9 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	private static final Log _log = LogFactoryUtil.getLog(PortletImpl.class);
 
+	/**
+	 * Map of the ready states of all portlets keyed by their root portlet ID.
+	 */
 	private static final ConcurrentMap<String, Lock> _readyLock =
 		new ConcurrentHashMap<>();
 

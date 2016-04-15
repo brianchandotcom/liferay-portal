@@ -160,6 +160,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 
 										String type = curRendererFactory.getTypeName(locale);
 
+										data.put("destroyOnHide", true);
 										data.put("title", LanguageUtil.format(request, "select-x", type, false));
 										data.put("type", type);
 								%>
@@ -188,6 +189,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 
 											String type = assetAvailableClassType.getName();
 
+											data.put("destroyOnHide", true);
 											data.put("title", LanguageUtil.format(request, "select-x", type, false));
 											data.put("type", type);
 								%>

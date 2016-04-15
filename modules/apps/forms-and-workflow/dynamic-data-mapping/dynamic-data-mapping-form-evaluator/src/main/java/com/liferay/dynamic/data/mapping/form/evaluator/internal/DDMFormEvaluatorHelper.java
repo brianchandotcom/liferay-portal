@@ -158,7 +158,12 @@ public class DDMFormEvaluatorHelper {
 			new DDMFormFieldEvaluationResult(
 				ddmFormFieldValue.getName(), ddmFormFieldValue.getInstanceId());
 
-		if (ddmFormField.isRequired() &&
+		boolean visible = evaluateBooleanExpression(
+			ddmFormField.getVisibilityExpression(), ancestorDDMFormFieldValues);
+
+		ddmFormFieldEvaluationResult.setVisible(visible);
+
+		if (visible && ddmFormField.isRequired() &&
 			isDDMFormFieldValueEmpty(ddmFormFieldValue)) {
 
 			ddmFormFieldEvaluationResult.setErrorMessage(
@@ -184,17 +189,12 @@ public class DDMFormEvaluatorHelper {
 			}
 		}
 
-		boolean visible = evaluateBooleanExpression(
-			ddmFormField.getVisibilityExpression(), ancestorDDMFormFieldValues);
-
-		ddmFormFieldEvaluationResult.setVisible(visible);
-
 		List<DDMFormFieldEvaluationResult> nestedDDMFormFieldEvaluationResults =
 			evaluateDDMFormFieldValues(
 				ddmFormFieldValue.getNestedDDMFormFieldValues(),
 				ancestorDDMFormFieldValues);
 
-		ddmFormFieldEvaluationResult. setNestedDDMFormFieldEvaluationResults(
+		ddmFormFieldEvaluationResult.setNestedDDMFormFieldEvaluationResults(
 			nestedDDMFormFieldEvaluationResults);
 
 		return ddmFormFieldEvaluationResult;

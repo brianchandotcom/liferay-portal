@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.validator;
+package com.liferay.dynamic.data.mapping.validator.internal;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
@@ -23,7 +23,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationExcepti
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException.MustNotDuplicateFieldName;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException.MustSetDefaultLocale;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException.MustSetEqualLocaleForLayoutAndTitle;
-import com.liferay.dynamic.data.mapping.validator.internal.DDMFormLayoutValidatorImpl;
+import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.Locale;

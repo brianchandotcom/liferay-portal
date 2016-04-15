@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.validator;
+package com.liferay.dynamic.data.mapping.validator.internal;
 
 import static org.mockito.Mockito.mock;
 
@@ -38,7 +38,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationExcepti
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidValue;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.MustSetValidValuesSize;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException.RequiredValue;
-import com.liferay.dynamic.data.mapping.validator.internal.DDMFormValuesValidatorImpl;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;

@@ -943,7 +943,8 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		PortletURL viewSummaryURL = liferayPortletResponse.createRenderURL();
 
-		viewSummaryURL.setParameter("mvcPath", "/view_resources.jsp");
+		viewSummaryURL.setParameter(
+			"mvcPath", "/contacts_center/view_resources.jsp");
 		viewSummaryURL.setParameter("redirect", redirect);
 		viewSummaryURL.setParameter(
 			"entryId", String.valueOf(entry.getEntryId()));
@@ -1038,7 +1039,8 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 		PortletURL viewSummaryURL = liferayPortletResponse.createRenderURL();
 
-		viewSummaryURL.setParameter("mvcPath", "/view_resources.jsp");
+		viewSummaryURL.setParameter(
+			"mvcPath", "/contacts_center/view_resources.jsp");
 		viewSummaryURL.setParameter("userId", String.valueOf(user.getUserId()));
 		viewSummaryURL.setParameter("portalUser", Boolean.TRUE.toString());
 		viewSummaryURL.setWindowState(LiferayWindowState.EXCLUSIVE);

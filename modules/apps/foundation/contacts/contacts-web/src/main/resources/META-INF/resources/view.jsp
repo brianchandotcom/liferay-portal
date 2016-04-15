@@ -197,7 +197,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 										</div>
 
 										<liferay-portlet:renderURL var="viewUserSummaryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-											<portlet:param name="mvcPath" value="/view_resources.jsp" />
+											<portlet:param name="mvcPath" value="/contacts_center/view_resources.jsp" />
 											<portlet:param name="userId" value="<%= String.valueOf(user2.getUserId()) %>" />
 											<portlet:param name="portalUser" value="<%= Boolean.TRUE.toString() %>" />
 										</liferay-portlet:renderURL>
@@ -258,7 +258,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 										</div>
 
 										<liferay-portlet:renderURL var="viewContactSummaryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-											<portlet:param name="mvcPath" value="/view_resources.jsp" />
+											<portlet:param name="mvcPath" value="/contacts_center/view_resources.jsp" />
 											<portlet:param name="redirect" value="<%= currentURL %>" />
 											<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 											<portlet:param name="portalUser" value="<%= Boolean.FALSE.toString() %>" />
@@ -302,7 +302,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 				<div id="<portlet:namespace />userToolbarButtons"><!-- --></div>
 
 				<div class="hide" id="<portlet:namespace />contactCenterToolbarButtons">
-					<liferay-util:include page="/contacts_center_toolbar.jsp" servletContext="<%= application %>" />
+					<liferay-util:include page="/contacts_center/contacts_center_toolbar.jsp" servletContext="<%= application %>" />
 				</div>
 
 				<div id="<portlet:namespace />messageContainer"></div>
@@ -603,7 +603,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 						addContact.on(
 							'click',
 							function(event) {
-								contactsCenter.showPopup('<%= LanguageUtil.get(request, "add-contact") %>', '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/edit_entry.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>');
+								contactsCenter.showPopup('<%= LanguageUtil.get(request, "add-contact") %>', '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/contacts_center/edit_entry.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>');
 							}
 						);
 					}

@@ -56,15 +56,16 @@ public class BaseMentionsEditorConfigContributor
 		triggerJSONObject.put("term", "@");
 		triggerJSONObject.put("tplReplace", "{mention}");
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(8);
 
-		sb.append("<div class=\"display-style-3 taglib-user-display\">");
-		sb.append("<span><span class=\"user-profile-image\" ");
-		sb.append("style=\"background-image: url('{portraitURL}');");
-		sb.append("background-size: 32px 32px; height: 32px; width: 32px;\">");
-		sb.append("</span><span class=\"user-name\">{fullName}</span>");
-		sb.append("<span class=\"user-details\">@{screenName}</span></span>");
-		sb.append("</div>");
+		sb.append("<div class=\"nameplate\">");
+		sb.append("<div class=\"nameplate-field\"><div class=\"user-icon\">");
+		sb.append("<img class=\"img-circle\" src=\"{portraitURL}\" ");
+		sb.append("height=\"32px\" width=\"32px\"></img>");
+		sb.append("</div></div>");
+		sb.append("<div class=\"nameplate-content\">");
+		sb.append("<h4>{fullName}<small>@{screenName}</small></h4>");
+		sb.append("</div></div>");
 
 		triggerJSONObject.put("tplResults", sb.toString());
 

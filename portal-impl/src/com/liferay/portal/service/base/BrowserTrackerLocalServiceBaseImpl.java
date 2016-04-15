@@ -225,7 +225,7 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.BrowserTrackerLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(browserTrackerLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(BrowserTracker.class);
 
@@ -238,7 +238,7 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.BrowserTrackerLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(browserTrackerLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(BrowserTracker.class);
 
@@ -250,7 +250,7 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.BrowserTrackerLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(browserTrackerLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(BrowserTracker.class);
 

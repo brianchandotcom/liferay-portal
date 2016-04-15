@@ -242,7 +242,7 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(assetEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AssetEntry.class);
 
@@ -255,7 +255,7 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(assetEntryLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(AssetEntry.class);
 
@@ -266,7 +266,7 @@ public abstract class AssetEntryLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(assetEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AssetEntry.class);
 

@@ -266,7 +266,7 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.document.library.kernel.service.DLFileShortcutLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(dlFileShortcutLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DLFileShortcut.class);
 
@@ -279,7 +279,7 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.document.library.kernel.service.DLFileShortcutLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(dlFileShortcutLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(DLFileShortcut.class);
 
@@ -291,7 +291,7 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.document.library.kernel.service.DLFileShortcutLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(dlFileShortcutLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DLFileShortcut.class);
 

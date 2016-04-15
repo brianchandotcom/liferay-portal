@@ -231,7 +231,7 @@ public abstract class SocialActivitySetLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.social.kernel.service.SocialActivitySetLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(socialActivitySetLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(SocialActivitySet.class);
 
@@ -244,7 +244,7 @@ public abstract class SocialActivitySetLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.social.kernel.service.SocialActivitySetLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(socialActivitySetLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(SocialActivitySet.class);
 
@@ -256,7 +256,7 @@ public abstract class SocialActivitySetLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.social.kernel.service.SocialActivitySetLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(socialActivitySetLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(SocialActivitySet.class);
 

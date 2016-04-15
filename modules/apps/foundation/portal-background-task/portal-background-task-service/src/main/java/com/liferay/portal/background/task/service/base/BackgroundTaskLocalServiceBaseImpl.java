@@ -229,7 +229,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.background.task.service.BackgroundTaskLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(backgroundTaskLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(BackgroundTask.class);
 
@@ -242,7 +242,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.background.task.service.BackgroundTaskLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(backgroundTaskLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(BackgroundTask.class);
 
@@ -254,7 +254,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.background.task.service.BackgroundTaskLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(backgroundTaskLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(BackgroundTask.class);
 

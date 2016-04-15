@@ -225,7 +225,7 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.ClusterGroupLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(clusterGroupLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ClusterGroup.class);
 
@@ -238,7 +238,7 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.ClusterGroupLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(clusterGroupLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(ClusterGroup.class);
 
@@ -250,7 +250,7 @@ public abstract class ClusterGroupLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.ClusterGroupLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(clusterGroupLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ClusterGroup.class);
 

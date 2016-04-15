@@ -248,7 +248,7 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.message.boards.kernel.service.MBMailingListLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(mbMailingListLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(MBMailingList.class);
 
@@ -261,7 +261,7 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.message.boards.kernel.service.MBMailingListLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(mbMailingListLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(MBMailingList.class);
 
@@ -273,7 +273,7 @@ public abstract class MBMailingListLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.message.boards.kernel.service.MBMailingListLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(mbMailingListLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(MBMailingList.class);
 

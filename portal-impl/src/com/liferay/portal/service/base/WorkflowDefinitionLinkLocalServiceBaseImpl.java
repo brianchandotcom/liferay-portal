@@ -233,7 +233,7 @@ public abstract class WorkflowDefinitionLinkLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(workflowDefinitionLinkLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(WorkflowDefinitionLink.class);
 
@@ -247,7 +247,7 @@ public abstract class WorkflowDefinitionLinkLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(workflowDefinitionLinkLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(WorkflowDefinitionLink.class);
 
@@ -259,7 +259,7 @@ public abstract class WorkflowDefinitionLinkLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(workflowDefinitionLinkLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(WorkflowDefinitionLink.class);
 

@@ -226,7 +226,7 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.UserTrackerLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(userTrackerLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(UserTracker.class);
 
@@ -239,7 +239,7 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.UserTrackerLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(userTrackerLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(UserTracker.class);
 
@@ -251,7 +251,7 @@ public abstract class UserTrackerLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.UserTrackerLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(userTrackerLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(UserTracker.class);
 

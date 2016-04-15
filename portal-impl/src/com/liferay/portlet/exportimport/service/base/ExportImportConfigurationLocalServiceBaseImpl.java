@@ -236,7 +236,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(exportImportConfigurationLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ExportImportConfiguration.class);
 
@@ -250,7 +250,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(exportImportConfigurationLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(ExportImportConfiguration.class);
 
@@ -262,7 +262,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(exportImportConfigurationLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ExportImportConfiguration.class);
 

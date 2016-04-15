@@ -225,7 +225,7 @@ public abstract class EntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.contacts.service.EntryLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(entryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(Entry.class);
 
@@ -238,7 +238,7 @@ public abstract class EntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.contacts.service.EntryLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(entryLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(Entry.class);
 
@@ -249,7 +249,7 @@ public abstract class EntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.contacts.service.EntryLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(entryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(Entry.class);
 

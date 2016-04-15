@@ -262,7 +262,7 @@ public abstract class CalendarResourceLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.calendar.service.CalendarResourceLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(calendarResourceLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(CalendarResource.class);
 
@@ -275,7 +275,7 @@ public abstract class CalendarResourceLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.calendar.service.CalendarResourceLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(calendarResourceLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(CalendarResource.class);
 
@@ -287,7 +287,7 @@ public abstract class CalendarResourceLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.calendar.service.CalendarResourceLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(calendarResourceLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(CalendarResource.class);
 

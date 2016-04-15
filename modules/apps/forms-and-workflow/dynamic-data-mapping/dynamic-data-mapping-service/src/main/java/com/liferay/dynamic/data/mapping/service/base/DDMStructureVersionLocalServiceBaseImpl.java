@@ -230,7 +230,7 @@ public abstract class DDMStructureVersionLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(ddmStructureVersionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DDMStructureVersion.class);
 
@@ -243,7 +243,7 @@ public abstract class DDMStructureVersionLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(ddmStructureVersionLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(DDMStructureVersion.class);
 
@@ -255,7 +255,7 @@ public abstract class DDMStructureVersionLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(ddmStructureVersionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DDMStructureVersion.class);
 

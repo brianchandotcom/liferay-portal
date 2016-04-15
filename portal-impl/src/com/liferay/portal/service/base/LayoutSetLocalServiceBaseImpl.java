@@ -231,7 +231,7 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(layoutSetLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(LayoutSet.class);
 
@@ -244,7 +244,7 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(layoutSetLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(LayoutSet.class);
 
@@ -255,7 +255,7 @@ public abstract class LayoutSetLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(layoutSetLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(LayoutSet.class);
 

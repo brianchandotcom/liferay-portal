@@ -231,7 +231,7 @@ public abstract class DDMDataProviderInstanceLinkLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(ddmDataProviderInstanceLinkLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DDMDataProviderInstanceLink.class);
 
@@ -245,7 +245,7 @@ public abstract class DDMDataProviderInstanceLinkLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(ddmDataProviderInstanceLinkLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(DDMDataProviderInstanceLink.class);
 
@@ -257,7 +257,7 @@ public abstract class DDMDataProviderInstanceLinkLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(ddmDataProviderInstanceLinkLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DDMDataProviderInstanceLink.class);
 

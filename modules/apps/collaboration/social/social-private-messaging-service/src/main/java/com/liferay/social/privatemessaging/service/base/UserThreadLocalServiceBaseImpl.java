@@ -235,7 +235,7 @@ public abstract class UserThreadLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.social.privatemessaging.service.UserThreadLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(userThreadLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(UserThread.class);
 
@@ -248,7 +248,7 @@ public abstract class UserThreadLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.social.privatemessaging.service.UserThreadLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(userThreadLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(UserThread.class);
 
@@ -260,7 +260,7 @@ public abstract class UserThreadLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.social.privatemessaging.service.UserThreadLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(userThreadLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(UserThread.class);
 

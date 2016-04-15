@@ -231,7 +231,7 @@ public abstract class ExpandoTableLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(expandoTableLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ExpandoTable.class);
 
@@ -244,7 +244,7 @@ public abstract class ExpandoTableLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(expandoTableLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(ExpandoTable.class);
 
@@ -255,7 +255,7 @@ public abstract class ExpandoTableLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(expandoTableLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(ExpandoTable.class);
 

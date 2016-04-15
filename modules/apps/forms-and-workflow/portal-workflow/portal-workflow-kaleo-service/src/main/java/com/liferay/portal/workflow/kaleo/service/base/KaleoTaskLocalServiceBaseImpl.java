@@ -242,7 +242,7 @@ public abstract class KaleoTaskLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(kaleoTaskLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(KaleoTask.class);
 
@@ -255,7 +255,7 @@ public abstract class KaleoTaskLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(kaleoTaskLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(KaleoTask.class);
 
@@ -266,7 +266,7 @@ public abstract class KaleoTaskLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(kaleoTaskLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(KaleoTask.class);
 

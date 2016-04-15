@@ -243,7 +243,7 @@ public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.message.boards.kernel.service.MBBanLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(mbBanLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(MBBan.class);
 
@@ -256,7 +256,7 @@ public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.message.boards.kernel.service.MBBanLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(mbBanLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(MBBan.class);
 
@@ -267,7 +267,7 @@ public abstract class MBBanLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.message.boards.kernel.service.MBBanLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(mbBanLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(MBBan.class);
 

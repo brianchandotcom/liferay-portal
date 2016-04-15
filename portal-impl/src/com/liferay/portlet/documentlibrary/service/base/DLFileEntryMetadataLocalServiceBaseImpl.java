@@ -248,7 +248,7 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(dlFileEntryMetadataLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DLFileEntryMetadata.class);
 
@@ -261,7 +261,7 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(dlFileEntryMetadataLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(DLFileEntryMetadata.class);
 
@@ -273,7 +273,7 @@ public abstract class DLFileEntryMetadataLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(dlFileEntryMetadataLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DLFileEntryMetadata.class);
 

@@ -261,7 +261,7 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(ratingsEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(RatingsEntry.class);
 
@@ -274,7 +274,7 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(ratingsEntryLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(RatingsEntry.class);
 
@@ -285,7 +285,7 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(ratingsEntryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(RatingsEntry.class);
 

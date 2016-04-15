@@ -236,7 +236,7 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(subscriptionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(Subscription.class);
 
@@ -249,7 +249,7 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(subscriptionLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(Subscription.class);
 
@@ -261,7 +261,7 @@ public abstract class SubscriptionLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(subscriptionLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(Subscription.class);
 

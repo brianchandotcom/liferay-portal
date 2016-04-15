@@ -275,7 +275,7 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(bookmarksFolderLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(BookmarksFolder.class);
 
@@ -288,7 +288,7 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(bookmarksFolderLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(BookmarksFolder.class);
 
@@ -299,7 +299,7 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(bookmarksFolderLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(BookmarksFolder.class);
 

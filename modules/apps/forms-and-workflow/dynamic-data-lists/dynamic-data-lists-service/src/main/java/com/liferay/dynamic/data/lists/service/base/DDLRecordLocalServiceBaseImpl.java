@@ -253,7 +253,7 @@ public abstract class DDLRecordLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(ddlRecordLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DDLRecord.class);
 
@@ -266,7 +266,7 @@ public abstract class DDLRecordLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(ddlRecordLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(DDLRecord.class);
 
@@ -277,7 +277,7 @@ public abstract class DDLRecordLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(ddlRecordLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(DDLRecord.class);
 

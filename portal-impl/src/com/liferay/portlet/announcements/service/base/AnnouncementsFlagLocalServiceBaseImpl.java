@@ -228,7 +228,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.announcements.kernel.service.AnnouncementsFlagLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(announcementsFlagLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AnnouncementsFlag.class);
 
@@ -241,7 +241,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.announcements.kernel.service.AnnouncementsFlagLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(announcementsFlagLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(AnnouncementsFlag.class);
 
@@ -252,7 +252,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.announcements.kernel.service.AnnouncementsFlagLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(announcementsFlagLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AnnouncementsFlag.class);
 

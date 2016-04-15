@@ -262,7 +262,7 @@ public abstract class WikiNodeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.wiki.service.WikiNodeLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(wikiNodeLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(WikiNode.class);
 
@@ -275,7 +275,7 @@ public abstract class WikiNodeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.wiki.service.WikiNodeLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(wikiNodeLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(WikiNode.class);
 
@@ -286,7 +286,7 @@ public abstract class WikiNodeLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.wiki.service.WikiNodeLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(wikiNodeLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(WikiNode.class);
 

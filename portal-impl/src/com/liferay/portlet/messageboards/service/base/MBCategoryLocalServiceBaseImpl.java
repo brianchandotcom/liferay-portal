@@ -277,7 +277,7 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(mbCategoryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(MBCategory.class);
 
@@ -290,7 +290,7 @@ public abstract class MBCategoryLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(mbCategoryLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(MBCategory.class);
 
@@ -301,7 +301,7 @@ public abstract class MBCategoryLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(mbCategoryLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(MBCategory.class);
 

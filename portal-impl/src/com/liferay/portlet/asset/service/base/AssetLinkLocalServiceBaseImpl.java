@@ -227,7 +227,7 @@ public abstract class AssetLinkLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(assetLinkLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AssetLink.class);
 
@@ -240,7 +240,7 @@ public abstract class AssetLinkLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(assetLinkLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(AssetLink.class);
 
@@ -251,7 +251,7 @@ public abstract class AssetLinkLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(assetLinkLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(AssetLink.class);
 

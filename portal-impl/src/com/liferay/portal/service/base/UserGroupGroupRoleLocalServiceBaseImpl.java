@@ -235,7 +235,7 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(userGroupGroupRoleLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(UserGroupGroupRole.class);
 
@@ -251,7 +251,7 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
 
-		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setBaseLocalService(userGroupGroupRoleLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(UserGroupGroupRole.class);
 
@@ -266,7 +266,7 @@ public abstract class UserGroupGroupRoleLocalServiceBaseImpl
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
-		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil.getService());
+		actionableDynamicQuery.setBaseLocalService(userGroupGroupRoleLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(UserGroupGroupRole.class);
 

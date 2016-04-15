@@ -194,17 +194,22 @@ public class SetupWizardSampleDataUtil {
 			};
 
 			for (int i = 1; i <= 10; i++) {
-				String screenName = organizationPrefix + i;
+				String defaultUserEmailAddress = defaultUser.getEmailAddress();
+
+				String[] emailAddressSplit = defaultUserEmailAddress.split(
+					StringPool.AT);
 
 				StringBundler sb = new StringBundler(5);
 
-				sb.append("test.");
+				sb.append(emailAddressSplit[0]);
+				sb.append(StringPool.PERIOD);
 				sb.append(organizationPrefix);
 				sb.append(StringPool.PERIOD);
 				sb.append(i);
-				sb.append("@liferay.com");
 
-				String emailAddress = sb.toString();
+				String screenName = sb.toString();
+
+				String emailAddress = screenName + emailAddressSplit[1];
 
 				String lastName = organizationPrefix + StringPool.SPACE + i;
 

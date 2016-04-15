@@ -58,6 +58,13 @@ public class AssetEntryServiceUtil {
 		return getService().incrementViewCounter(className, classPK);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, Date,
+	Date, String, long, String, long, long[], String[], boolean,
+	boolean, Date, Date, Date, Date, String, String, String,
+	String, String, String, int, int, Double)}
+	*/
+	@Deprecated
 	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
 		long groupId, java.util.Date createDate, java.util.Date modifiedDate,
 		java.lang.String className, long classPK, java.lang.String classUuid,
@@ -76,11 +83,31 @@ public class AssetEntryServiceUtil {
 			description, summary, url, layoutUuid, height, width, priority);
 	}
 
+	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
+		long groupId, java.util.Date createDate, java.util.Date modifiedDate,
+		java.lang.String className, long classPK, java.lang.String classUuid,
+		long classTypeId, long[] categoryIds, java.lang.String[] tagNames,
+		boolean listable, boolean visible, java.util.Date startDate,
+		java.util.Date endDate, java.util.Date publishDate,
+		java.util.Date expirationDate, java.lang.String mimeType,
+		java.lang.String title, java.lang.String description,
+		java.lang.String summary, java.lang.String url,
+		java.lang.String layoutUuid, int height, int width,
+		java.lang.Double priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateEntry(groupId, createDate, modifiedDate, className,
+			classPK, classUuid, classTypeId, categoryIds, tagNames, listable,
+			visible, startDate, endDate, publishDate, expirationDate, mimeType,
+			title, description, summary, url, layoutUuid, height, width,
+			priority);
+	}
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, Date,
 	Date, String, long, String, long, long[], String[], boolean,
-	boolean, Date, Date, Date, String, String, String, String,
-	String, String, int, int, Double)}
+	boolean, Date, Date, Date, Date, String, String, String,
+	String, String, String, int, int, Double)}
 	*/
 	@Deprecated
 	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(

@@ -2438,19 +2438,21 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		throws PortalException {
 
 		boolean visible = false;
+		Date publishDate = null;
 
 		if (assetEntryVisible && message.isApproved() &&
 			((message.getClassNameId() == 0) ||
 			 (message.getParentMessageId() != 0))) {
 
 			visible = true;
+			publishDate = message.getModifiedDate();
 		}
 
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
 			userId, message.getGroupId(), message.getCreateDate(),
 			message.getModifiedDate(), message.getWorkflowClassName(),
 			message.getMessageId(), message.getUuid(), 0, assetCategoryIds,
-			assetTagNames, true, visible, null, null, null,
+			assetTagNames, true, visible, null, null, publishDate, null,
 			ContentTypes.TEXT_HTML, message.getSubject(), null, null, null,
 			null, 0, 0, message.getPriority());
 

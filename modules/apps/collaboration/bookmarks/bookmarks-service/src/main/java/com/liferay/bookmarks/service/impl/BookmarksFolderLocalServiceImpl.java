@@ -599,7 +599,7 @@ public class BookmarksFolderLocalServiceImpl
 			userId, folder.getGroupId(), folder.getCreateDate(),
 			folder.getModifiedDate(), BookmarksFolder.class.getName(),
 			folder.getFolderId(), folder.getUuid(), 0, assetCategoryIds,
-			assetTagNames, true, true, null, null, null,
+			assetTagNames, true, true, null, null, folder.getCreateDate(), null,
 			ContentTypes.TEXT_PLAIN, folder.getName(), folder.getDescription(),
 			null, null, null, 0, 0, priority);
 

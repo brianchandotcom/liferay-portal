@@ -1887,23 +1887,29 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		AssetEntry assetEntry = null;
 
+		Date publishDate = null;
+
 		if (addDraftAssetEntry) {
 			assetEntry = assetEntryLocalService.updateEntry(
 				userId, page.getGroupId(), page.getCreateDate(),
 				page.getModifiedDate(), WikiPage.class.getName(),
 				page.getPrimaryKey(), page.getUuid(), 0, assetCategoryIds,
-				assetTagNames, true, false, null, null, null,
+				assetTagNames, true, false, null, null, publishDate, null,
 				ContentTypes.TEXT_HTML, page.getTitle(), null, null, null, null,
 				0, 0, priority);
 		}
 		else {
+			if (page.isApproved()) {
+				publishDate = page.getCreateDate();
+			}
+
 			assetEntry = assetEntryLocalService.updateEntry(
 				userId, page.getGroupId(), page.getCreateDate(),
 				page.getModifiedDate(), WikiPage.class.getName(),
 				page.getResourcePrimKey(), page.getUuid(), 0, assetCategoryIds,
-				assetTagNames, true, page.isApproved(), null, null, null,
-				ContentTypes.TEXT_HTML, page.getTitle(), null, null, null, null,
-				0, 0, priority);
+				assetTagNames, true, page.isApproved(), null, null, publishDate,
+				null, ContentTypes.TEXT_HTML, page.getTitle(), null, null, null,
+				null, 0, 0, priority);
 		}
 
 		assetLinkLocalService.updateLinks(
@@ -2045,8 +2051,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 						page.getModifiedDate(), WikiPage.class.getName(),
 						page.getResourcePrimKey(), page.getUuid(), 0,
 						assetCategoryIds, assetTagNames, true, true, null, null,
-						null, ContentTypes.TEXT_HTML, page.getTitle(), null,
-						null, null, null, 0, 0, null);
+						page.getCreateDate(), null, ContentTypes.TEXT_HTML,
+						page.getTitle(), null, null, null, null, 0, 0, null);
 
 					// Asset Links
 

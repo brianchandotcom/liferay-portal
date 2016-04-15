@@ -5,7 +5,7 @@ buildscript {
 
 	repositories {
 		maven {
-			url "https://cdn.repository.liferay.com/nexus/content/groups/public/"
+			url "http://cdn.repository.liferay.com/nexus/content/groups/public/"
 		}
 	}
 }
@@ -15,7 +15,7 @@ subprojects {
 
 	repositories {
 		maven {
-			url "https://cdn.repository.liferay.com/nexus/content/groups/public/"
+			url "http://cdn.repository.liferay.com/nexus/content/groups/public/"
 		}
 	}
 }

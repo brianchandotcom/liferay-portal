@@ -3077,8 +3077,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			userId, companyGroup.getGroupId(), null, null,
 			Group.class.getName(), group.getGroupId(), null, 0,
 			assetCategoryIds, assetTagNames, true, false, null, null, null,
-			null, group.getDescriptiveName(), group.getDescription(), null,
-			null, null, 0, 0, null);
+			null, null, group.getDescriptiveName(), group.getDescription(),
+			null, null, null, 0, 0, null);
 	}
 
 	/**

@@ -2,6 +2,12 @@ buildscript {
 	dependencies {
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.service.builder", version: "latest.release"
 	}
+
+	repositories {
+		maven {
+			url "http://cdn.repository.liferay.com/nexus/content/groups/public/"
+		}
+	}
 }
 
 apply plugin: "com.liferay.portal.tools.service.builder"

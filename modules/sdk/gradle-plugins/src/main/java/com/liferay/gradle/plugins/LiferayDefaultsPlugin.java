@@ -665,32 +665,75 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		task.doLast(
 			new Action<Task>() {
 
+				@Override
+				public void execute(Task task) {
+					List<String> commands = new ArrayList<>();
+
+					boolean gradleDaemon = _getGradleDaemon(task);
+					String gradleRelativePath = _getGradleRelativePath();
+
+					commands.add(
+						"cd " +
+							FileUtil.getAbsolutePath(project.getProjectDir()));
+
+					// Publish if the artifact has never been published
+
+					if (!hasBaseline(project)) {
+						commands.addAll(
+							_getPublishCommands(
+								gradleRelativePath, gradleDaemon, true));
+					}
+
+					// Change log
+
+					commands.add(
+						_getGradleCommand(
+							gradleRelativePath, buildChangeLogTask.getName(),
+							gradleDaemon));
+
+					commands.add(
+						"git add " +
+							project.relativePath(
+								buildChangeLogTask.getChangeLogFile()));
+
+					commands.add(
+						_getGitCommitCommand("change log", true, true));
+
+					// Baseline
+
+					commands.add(
+						_getGradleCommand(
+							gradleRelativePath, BASELINE_TASK_NAME,
+							gradleDaemon));
+
+					commands.add("git add --all .");
+
+					commands.add(
+						_getGitCommitCommand("packageinfo", true, false));
+
+					// Publish the artifact since there will either be change
+					// log or baseline changes
+
+					commands.addAll(
+						_getPublishCommands(
+							gradleRelativePath, gradleDaemon, false));
+
+					System.out.println();
+
+					for (String command : commands) {
+						System.out.print(" && ");
+						System.out.print(command);
+					}
+
+					if (GradleUtil.getProperty(project, "first", false)) {
+						throw new GradleException();
+					}
+				}
+
 				private String _getGitCommitCommand(
 					String message, boolean ignored) {
 
 					return _getGitCommitCommand(message, false, ignored);
-				}
-
-				private String _getGradleCommand(
-					String gradleRelativePath, String command,
-					boolean gradleDaemon, String ... arguments) {
-
-					StringBuilder sb = new StringBuilder();
-
-					sb.append(gradleRelativePath);
-					sb.append(' ');
-					sb.append(command);
-
-					if (gradleDaemon) {
-						sb.append(" --daemon");
-					}
-
-					for (String argument : arguments) {
-						sb.append(' ');
-						sb.append(argument);
-					}
-
-					return sb.toString();
 				}
 
 				private String _getGitCommitCommand(
@@ -725,6 +768,28 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 					if (all) {
 						sb.append(')');
+					}
+
+					return sb.toString();
+				}
+
+				private String _getGradleCommand(
+					String gradleRelativePath, String command,
+					boolean gradleDaemon, String ... arguments) {
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append(gradleRelativePath);
+					sb.append(' ');
+					sb.append(command);
+
+					if (gradleDaemon) {
+						sb.append(" --daemon");
+					}
+
+					for (String argument : arguments) {
+						sb.append(' ');
+						sb.append(argument);
 					}
 
 					return sb.toString();
@@ -818,71 +883,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 					commands.add(_getGitCommitCommand("apply", true, false));
 
 					return commands;
-				}
-
-				@Override
-				public void execute(Task task) {
-					List<String> commands = new ArrayList<>();
-
-					boolean gradleDaemon = _getGradleDaemon(task);
-					String gradleRelativePath = _getGradleRelativePath();
-
-					commands.add(
-						"cd " +
-							FileUtil.getAbsolutePath(project.getProjectDir()));
-
-					// Publish if the artifact has never been published
-
-					if (!hasBaseline(project)) {
-						commands.addAll(
-							_getPublishCommands(
-								gradleRelativePath, gradleDaemon, true));
-					}
-
-					// Change log
-
-					commands.add(
-						_getGradleCommand(
-							gradleRelativePath, buildChangeLogTask.getName(),
-							gradleDaemon));
-
-					commands.add(
-						"git add " +
-							project.relativePath(
-								buildChangeLogTask.getChangeLogFile()));
-
-					commands.add(
-						_getGitCommitCommand("change log", true, true));
-
-					// Baseline
-
-					commands.add(
-						_getGradleCommand(
-							gradleRelativePath, BASELINE_TASK_NAME,
-							gradleDaemon));
-
-					commands.add("git add --all .");
-
-					commands.add(
-						_getGitCommitCommand("packageinfo", true, false));
-
-					// Publish the artifact since there will either be change
-					// log or baseline changes
-
-					commands.addAll(
-						_getPublishCommands(
-							gradleRelativePath, gradleDaemon, false));
-
-					System.out.println();
-
-					for (String command : commands) {
-						System.out.print(" && ");
-						System.out.print(command);
-					}
-
-					if (GradleUtil.getProperty(project, "first", false)) {
-						throw new GradleException();
-					}
 				}
 
 			});

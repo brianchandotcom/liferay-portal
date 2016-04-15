@@ -21,4 +21,5 @@ dependencies {
 
 buildService {
 	apiDir = "../_api_/src/main/java"
+	propsUtil = "_package_.service.util.PropsUtil"
 }

@@ -7901,6 +7901,13 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<ant dir="util-java" target="test-unit" inheritAll="false" />
 	</target>
 
+	<target name="update-test-gradle-properties">
+		<propertyfile file="${project.dir}/.gradle/gradle.properties">
+			<entry key="database.jdbc.drivers.url" value="${test.jdbc.drivers.url}" />
+			<entry key="database.oracle.version" value="${database.oracle.version}" />
+		</propertyfile>
+	</target>
+
 	<target name="upgrade-legacy-database">
 		<delete file="${liferay.home}/build-db-upgrade.xml" />
 		<delete file="${liferay.home}/db_upgrade_log" />

@@ -86,6 +86,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
@@ -3505,24 +3506,29 @@ public class PortletImpl extends PortletBaseImpl {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		synchronized (_serviceRegistrars) {
-			if (ready) {
-				ServiceRegistrar<Portlet> serviceRegistrar =
-					registry.getServiceRegistrar(Portlet.class);
+		if (ready) {
+			ServiceRegistrar<Portlet> serviceRegistrar =
+				registry.getServiceRegistrar(Portlet.class);
 
-				Map<String, Object> properties = new HashMap<>();
+			ServiceRegistrar<Portlet> previousServiceRegistrar =
+				_serviceRegistrars.putIfAbsent(
+					getRootPortletId(), serviceRegistrar);
 
-				properties.put("javax.portlet.name", getPortletName());
-
-				serviceRegistrar.registerService(
-					Portlet.class, this, properties);
-
-				_serviceRegistrars.put(getRootPortletId(), serviceRegistrar);
+			if (previousServiceRegistrar != null) {
+				serviceRegistrar = previousServiceRegistrar;
 			}
-			else {
-				ServiceRegistrar<Portlet> serviceRegistrar =
-					_serviceRegistrars.remove(getRootPortletId());
 
+			Map<String, Object> properties = new HashMap<>();
+
+			properties.put("javax.portlet.name", getPortletName());
+
+			serviceRegistrar.registerService(Portlet.class, this, properties);
+		}
+		else {
+			ServiceRegistrar<Portlet> serviceRegistrar =
+				_serviceRegistrars.remove(getRootPortletId());
+
+			if (serviceRegistrar != null) {
 				serviceRegistrar.destroy();
 			}
 		}
@@ -3967,10 +3973,10 @@ public class PortletImpl extends PortletBaseImpl {
 	public void unsetReady() {
 		_readyMap.remove(getRootPortletId());
 
-		synchronized (_serviceRegistrars) {
-			ServiceRegistrar<Portlet> serviceRegistrar =
-				_serviceRegistrars.remove(getRootPortletId());
+		ServiceRegistrar<Portlet> serviceRegistrar = _serviceRegistrars.remove(
+			getRootPortletId());
 
+		if (serviceRegistrar != null) {
 			serviceRegistrar.destroy();
 		}
 	}
@@ -3986,8 +3992,8 @@ public class PortletImpl extends PortletBaseImpl {
 	private static final Map<String, Boolean> _readyMap =
 		new ConcurrentHashMap<>();
 
-	private static final Map<String, ServiceRegistrar<Portlet>>
-		_serviceRegistrars = new HashMap<>();
+	private static final ConcurrentMap<String, ServiceRegistrar<Portlet>>
+		_serviceRegistrars = new ConcurrentHashMap<>();
 
 	/**
 	 * The action timeout of the portlet.

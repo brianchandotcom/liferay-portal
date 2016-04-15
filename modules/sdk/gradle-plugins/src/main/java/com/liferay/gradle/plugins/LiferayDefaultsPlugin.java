@@ -697,7 +697,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 							_relativize(buildChangeLogTask.getChangeLogFile()));
 
 					commands.add(
-						_getGitCommitCommand("change log", true, true));
+						_getGitCommitCommand("change log", false, true, true));
 
 					// Baseline
 
@@ -711,7 +711,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 							_relativize(project.getProjectDir()));
 
 					commands.add(
-						_getGitCommitCommand("packageinfo", true, false));
+						_getGitCommitCommand(
+							"packageinfo", false, false, true));
 
 					// Publish the artifact since there will either be change
 					// log or baseline changes
@@ -733,17 +734,12 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 				}
 
 				private String _getGitCommitCommand(
-					String message, boolean ignored) {
-
-					return _getGitCommitCommand(message, false, ignored);
-				}
-
-				private String _getGitCommitCommand(
-					String message, boolean all, boolean ignored) {
+					String message, boolean all, boolean ignored,
+					boolean quiet) {
 
 					StringBuilder sb = new StringBuilder();
 
-					if (all) {
+					if (all || quiet) {
 						sb.append("(git diff-index --quiet HEAD || ");
 					}
 
@@ -768,7 +764,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 					sb.append('"');
 
-					if (all) {
+					if (all || quiet) {
 						sb.append(')');
 					}
 
@@ -875,7 +871,8 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 							"git add " + _relativize(moduleConfigFile));
 					}
 
-					commands.add(_getGitCommitCommand("prep next", true));
+					commands.add(
+						_getGitCommitCommand("prep next", false, true, false));
 
 					// Commit "artifact properties"
 
@@ -884,11 +881,13 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 							_relativize(recordArtifactTask.getOutputFile()));
 
 					commands.add(
-						_getGitCommitCommand("artifact properties", true));
+						_getGitCommitCommand(
+							"artifact properties", false, true, false));
 
 					// Commit other changed files
 
-					commands.add(_getGitCommitCommand("apply", true, false));
+					commands.add(
+						_getGitCommitCommand("apply", true, false, true));
 
 					return commands;
 				}

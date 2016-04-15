@@ -608,7 +608,7 @@ public class BookmarksEntryLocalServiceImpl
 			userId, entry.getGroupId(), entry.getCreateDate(),
 			entry.getModifiedDate(), BookmarksEntry.class.getName(),
 			entry.getEntryId(), entry.getUuid(), 0, assetCategoryIds,
-			assetTagNames, true, true, null, null, null,
+			assetTagNames, true, true, null, null, entry.getCreateDate(), null,
 			ContentTypes.TEXT_PLAIN, entry.getName(), entry.getDescription(),
 			null, entry.getUrl(), null, 0, 0, priority);
 

@@ -770,9 +770,9 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				record.getModifiedDate(),
 				DDLRecordConstants.getClassName(scope),
 				recordVersion.getRecordVersionId(), record.getUuid(), 0,
-				assetCategoryIds, assetTagNames, true, false, null, null, null,
-				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
-				null, 0, 0, priority);
+				assetCategoryIds, assetTagNames, true, false, null, null,
+				record.getCreateDate(), null, ContentTypes.TEXT_HTML, title,
+				null, StringPool.BLANK, null, null, 0, 0, priority);
 		}
 		else {
 			assetEntryLocalService.updateEntry(
@@ -780,8 +780,9 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 				record.getModifiedDate(),
 				DDLRecordConstants.getClassName(scope), record.getRecordId(),
 				record.getUuid(), 0, assetCategoryIds, assetTagNames, true,
-				visible, null, null, null, ContentTypes.TEXT_HTML, title, null,
-				StringPool.BLANK, null, null, 0, 0, priority);
+				visible, null, null, record.getCreateDate(), null,
+				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
+				null, 0, 0, priority);
 		}
 	}
 

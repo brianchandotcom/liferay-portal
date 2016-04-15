@@ -15,6 +15,11 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -125,6 +130,47 @@ public class VerifyLayout extends VerifyProcess {
 						layoutFriendlyURL.getLanguageId());
 				}
 			}
+
+			ActionableDynamicQuery actionableDynamicQuery =
+				LayoutFriendlyURLLocalServiceUtil.getActionableDynamicQuery();
+
+			actionableDynamicQuery.setAddCriteriaMethod(
+				new ActionableDynamicQuery.AddCriteriaMethod() {
+
+					@Override
+					public void addCriteria(DynamicQuery dynamicQuery) {
+						DynamicQuery layoutDynamicQuery =
+							LayoutLocalServiceUtil.dynamicQuery();
+
+						Projection projection = ProjectionFactoryUtil.property(
+							"plid");
+
+						layoutDynamicQuery.setProjection(projection);
+
+						Property plidProperty = PropertyFactoryUtil.forName(
+							"plid");
+
+						dynamicQuery.add(
+							plidProperty.notIn(layoutDynamicQuery));
+					}
+
+				});
+
+			actionableDynamicQuery.setPerformActionMethod(
+				new ActionableDynamicQuery.
+					PerformActionMethod<LayoutFriendlyURL>() {
+
+					@Override
+					public void performAction(
+						LayoutFriendlyURL layoutFriendlyURL) {
+
+						LayoutFriendlyURLLocalServiceUtil.
+							deleteLayoutFriendlyURL(layoutFriendlyURL);
+					}
+
+				});
+
+			actionableDynamicQuery.performActions();
 		}
 	}
 

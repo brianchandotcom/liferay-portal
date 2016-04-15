@@ -20,6 +20,7 @@
 			<name>ddmTemplateGroupId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
 		</attribute>
 		<attribute>
 			<description>The key of the DDM template to use for rendering the navigation (see Application Display Templates). If not set, the default ADT is used.</description>
@@ -32,6 +33,7 @@
 			<name>displayDepth</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
 			<name>includedLayouts</name>
@@ -43,11 +45,13 @@
 			<name>preview</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<name>rootLayoutLevel</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
 		</attribute>
 		<attribute>
 			<description>The layout type of the root page to be used in the tree of pages. The accepted layout type values are <![CDATA[<code>relative</code>]]>, <![CDATA[<code>select</code>]]>, and <![CDATA[<code>absolute</code>]]>.</description>

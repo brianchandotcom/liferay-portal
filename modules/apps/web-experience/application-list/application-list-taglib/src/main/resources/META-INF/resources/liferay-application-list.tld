@@ -37,6 +37,7 @@
 			<name>panelCategory</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.application.list.PanelCategory</type>
 		</attribute>
 		<attribute>
 			<name>servletContext</name>
@@ -54,12 +55,14 @@
 			<name>active</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Boolean</type>
 		</attribute>
 		<attribute>
 			<description>The data attribute to use in the link if no <![CDATA[<code>panelApp</code>]]> is passed.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
 			<description>The ID to use in the link if no <![CDATA[<code>panelApp</code>]]> is passed.</description>
@@ -78,6 +81,7 @@
 			<name>panelApp</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.application.list.PanelApp</type>
 		</attribute>
 		<attribute>
 			<name>servletContext</name>
@@ -101,12 +105,14 @@
 			<name>panelCategory</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.application.list.PanelCategory</type>
 		</attribute>
 		<attribute>
 			<description>Whether to persist the state (expanded/collapsed) of the panel for the next time the user sees this panel.</description>
 			<name>persistState</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<name>servletContext</name>
@@ -118,18 +124,21 @@
 			<name>showBody</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Whether to display the header of the panel.</description>
 			<name>showHeader</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 		<attribute>
 			<description>Whether to expand the panel by default; otherwise, the panel is collapsed by default.</description>
 			<name>showOpen</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -142,12 +151,14 @@
 			<name>panelApps</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.List</type>
 		</attribute>
 		<attribute>
 			<description>The panel category to display.</description>
 			<name>panelCategory</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.application.list.PanelCategory</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -160,12 +171,14 @@
 			<name>panelCategory</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.application.list.PanelCategory</type>
 		</attribute>
 		<attribute>
 			<description>Whether to expand the panel by default; otherwise, the panel is collapsed by default.</description>
 			<name>showOpen</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -178,6 +191,7 @@
 			<name>panelCategory</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.application.list.PanelCategory</type>
 		</attribute>
 	</tag>
 </taglib>

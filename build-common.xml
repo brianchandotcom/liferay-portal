@@ -1549,12 +1549,12 @@ rerun your task.
 					<matches pattern="ee-.+" string="${liferay.releng.branch}" />
 				</or>
 				<then>
-					<var name="liferay.releng.app.title.suffix" value="\s EE" />
+					<var name="liferay.releng.app.title.suffix" value="" />
 					<var name="liferay.releng.public" value="false" />
 					<var name="liferay.releng.supported" value="true" />
 				</then>
 				<else>
-					<var name="liferay.releng.app.title.suffix" value="" />
+					<var name="liferay.releng.app.title.suffix" value="\s CE" />
 					<var name="liferay.releng.public" value="true" />
 					<var name="liferay.releng.supported" value="false" />
 				</else>

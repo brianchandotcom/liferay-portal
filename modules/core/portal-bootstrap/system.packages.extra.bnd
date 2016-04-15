@@ -78,6 +78,7 @@ Export-Package:\
 	java_cup.runtime.*;version='2.7.1',\
 	javax.jms.*;version='1.1',\
 	javax.mail.*;version='1.4',\
+	javax.persistence.*;version='2.0',\
 	javax.portlet.*;version='2.0',\
 	javax.servlet.*;version='3.0',\
 	javax.xml;version='1.4',\
@@ -207,6 +208,7 @@ Import-Package: !*
 	@lib/com.liferay.registry.api.jar,\
 	@../../../lib/development/jms.jar,\
 	@../../../lib/development/mail.jar,\
+	@../../../lib/development/persistence.jar,\
 	@../../../lib/development/servlet-api.jar,\
 	@../../../lib/global/portlet.jar,\
 	@../../../lib/portal/ant.jar,\

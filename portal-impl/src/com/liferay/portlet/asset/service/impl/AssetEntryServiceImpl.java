@@ -148,6 +148,34 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			long groupId, Date createDate, Date modifiedDate, String className,
 			long classPK, String classUuid, long classTypeId,
 			long[] categoryIds, String[] tagNames, boolean listable,
+			boolean visible, Date startDate, Date endDate, Date publishDate,
+			Date expirationDate, String mimeType, String title,
+			String description, String summary, String url, String layoutUuid,
+			int height, int width, Double priority)
+		throws PortalException {
+
+		AssetEntryPermission.check(
+			getPermissionChecker(), className, classPK, ActionKeys.UPDATE);
+
+		return assetEntryLocalService.updateEntry(
+			getUserId(), groupId, createDate, modifiedDate, className, classPK,
+			classUuid, classTypeId, categoryIds, tagNames, listable, visible,
+			startDate, endDate, publishDate, expirationDate, mimeType, title,
+			description, summary, url, layoutUuid, height, width, priority);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, Date,
+	 *             Date, String, long, String, long, long[], String[], boolean,
+	 *             boolean, Date, Date, Date, Date, String, String, String,
+	 *             String, String, String, int, int, Double)}
+	 */
+	@Deprecated
+	@Override
+	public AssetEntry updateEntry(
+			long groupId, Date createDate, Date modifiedDate, String className,
+			long classPK, String classUuid, long classTypeId,
+			long[] categoryIds, String[] tagNames, boolean listable,
 			boolean visible, Date startDate, Date endDate, Date expirationDate,
 			String mimeType, String title, String description, String summary,
 			String url, String layoutUuid, int height, int width,
@@ -167,8 +195,8 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, Date,
 	 *             Date, String, long, String, long, long[], String[], boolean,
-	 *             boolean, Date, Date, Date, String, String, String, String,
-	 *             String, String, int, int, Double)}
+	 *             boolean, Date, Date, Date, Date, String, String, String,
+	 *             String, String, String, int, int, Double)}
 	 */
 	@Deprecated
 	@Override

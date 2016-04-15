@@ -113,9 +113,9 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 				var form = $(document.<portlet:namespace /><%= formName %>);
 
 				form.fm('<%= HtmlUtil.getAUICompatibleId(name) %>').prop('disabled', checked);
-				form.fm('<%= HtmlUtil.escapeAttribute(dayParam) %>').prop('disabled', checked);
-				form.fm('<%= HtmlUtil.escapeAttribute(monthParam) %>').prop('disabled', checked);
-				form.fm('<%= HtmlUtil.escapeAttribute(yearParam) %>').prop('disabled', checked);
+				form.fm('<%= HtmlUtil.escapeJS(dayParam) %>').prop('disabled', checked);
+				form.fm('<%= HtmlUtil.escapeJS(monthParam) %>').prop('disabled', checked);
+				form.fm('<%= HtmlUtil.escapeJS(yearParam) %>').prop('disabled', checked);
 			}
 		);
 	</aui:script>

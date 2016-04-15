@@ -13,132 +13,138 @@
  * details.
  */
 --%>
-
-<aui:fieldset-group markupView="lexicon">
-
-	<%
-	final FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(0);
-
-	String sectionId = namespace + _getSectionId(formNavigatorEntry.getKey());
-
-	String errorSection = null;
-	%>
-
-	<!-- Begin fragment <%= sectionId %> -->
-
-	<aui:fieldset id="<%= _getSectionId(formNavigatorEntry.getKey()) %>">
-
-		<%
-		PortalIncludeUtil.include(
-			pageContext,
-			new PortalIncludeUtil.HTMLRenderer() {
-
-				public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-					formNavigatorEntry.include(request, response);
-				}
-
-			});
-
-		errorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
-
-		if (Validator.equals(formNavigatorEntry.getKey(), errorSection)) {
-			request.setAttribute(WebKeys.ERROR_SECTION, null);
-		}
-		%>
-
-	</aui:fieldset>
-
-	<!-- End fragment <%= sectionId %> -->
-
-	<%
-	for (int i = 1; i < formNavigatorEntries.size(); i++) {
-		final FormNavigatorEntry curFormNavigatorEntry = formNavigatorEntries.get(i);
-
-		sectionId = namespace + _getSectionId(curFormNavigatorEntry.getKey());
-	%>
-
-		<!-- Begin fragment <%= sectionId %> -->
-
-		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="<%= _getSectionId(curFormNavigatorEntry.getKey()) %>" label="<%= curFormNavigatorEntry.getLabel(locale) %>">
+<c:choose>
+	<c:when test='<%= displayStyle.equals("steps") %>'>
+		<%@ include file="/html/taglib/ui/form_navigator/lexicon/steps.jspf" %>
+	</c:when>
+	<c:otherwise>
+		<aui:fieldset-group markupView="lexicon">
 
 			<%
-			PortalIncludeUtil.include(
-				pageContext,
-				new PortalIncludeUtil.HTMLRenderer() {
+			final FormNavigatorEntry formNavigatorEntry = formNavigatorEntries.get(0);
 
-					public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-						curFormNavigatorEntry.include(request, response);
-					}
+			String sectionId = namespace + _getSectionId(formNavigatorEntry.getKey());
 
-				});
+			String errorSection = null;
 			%>
 
-		</aui:fieldset>
+			<!-- Begin fragment <%= sectionId %> -->
 
-		<!-- End fragment <%= sectionId %> -->
+			<aui:fieldset id="<%= _getSectionId(formNavigatorEntry.getKey()) %>">
 
-	<%
-		String curErrorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
+				<%
+				PortalIncludeUtil.include(
+					pageContext,
+					new PortalIncludeUtil.HTMLRenderer() {
 
-		if (Validator.equals(_getSectionId(curFormNavigatorEntry.getKey()), _getSectionId(curErrorSection))) {
-			errorSection = curErrorSection;
-
-			request.setAttribute(WebKeys.ERROR_SECTION, null);
-		}
-	}
-	%>
-
-	<%
-	if (Validator.isNotNull(errorSection)) {
-		String currentTab = (String)request.getAttribute("currentTab");
-
-		request.setAttribute("errorTab", currentTab);
-	%>
-
-		<aui:script sandbox="<%= true %>">
-			var focusField;
-
-			var sectionContent = $('#<%= _getSectionId(errorSection) %>Content');
-
-			<%
-			String focusField = (String)request.getAttribute("liferay-ui:error:focusField");
-			%>
-
-			<c:choose>
-				<c:when test="<%= Validator.isNotNull(focusField) %>">
-					focusField = sectionContent.find('#<portlet:namespace /><%= focusField %>');
-				</c:when>
-				<c:otherwise>
-					focusField = sectionContent.find('input:not([type="hidden"]).field').first();
-				</c:otherwise>
-			</c:choose>
-
-			Liferay.once(
-				'<portlet:namespace />formReady',
-				function(event) {
-					var hasFocusField = focusField.length;
-
-					if (!sectionContent.hasClass('in')) {
-						if (hasFocusField) {
-							sectionContent.one(
-								'shown.bs.collapse',
-								function() {
-									Liferay.Util.focusFormField(focusField);
-								}
-							);
+						public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+							formNavigatorEntry.include(request, response);
 						}
 
-						sectionContent.collapse('show');
-					}
-					else if (hasFocusField) {
-						Liferay.Util.focusFormField(focusField);
-					}
+					});
+
+				errorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
+
+				if (Validator.equals(formNavigatorEntry.getKey(), errorSection)) {
+					request.setAttribute(WebKeys.ERROR_SECTION, null);
 				}
-			);
-		</aui:script>
+				%>
 
-	<%
-	}
-	%>
+			</aui:fieldset>
 
-</aui:fieldset-group>
+			<!-- End fragment <%= sectionId %> -->
+
+			<%
+			for (int i = 1; i < formNavigatorEntries.size(); i++) {
+				final FormNavigatorEntry curFormNavigatorEntry = formNavigatorEntries.get(i);
+
+				sectionId = namespace + _getSectionId(curFormNavigatorEntry.getKey());
+			%>
+
+				<!-- Begin fragment <%= sectionId %> -->
+
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" id="<%= _getSectionId(curFormNavigatorEntry.getKey()) %>" label="<%= curFormNavigatorEntry.getLabel(locale) %>">
+
+					<%
+					PortalIncludeUtil.include(
+						pageContext,
+						new PortalIncludeUtil.HTMLRenderer() {
+
+							public void renderHTML(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+								curFormNavigatorEntry.include(request, response);
+							}
+
+						});
+					%>
+
+				</aui:fieldset>
+
+				<!-- End fragment <%= sectionId %> -->
+
+			<%
+				String curErrorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
+
+				if (Validator.equals(_getSectionId(curFormNavigatorEntry.getKey()), _getSectionId(curErrorSection))) {
+					errorSection = curErrorSection;
+
+					request.setAttribute(WebKeys.ERROR_SECTION, null);
+				}
+			}
+			%>
+
+			<%
+			if (Validator.isNotNull(errorSection)) {
+				String currentTab = (String)request.getAttribute("currentTab");
+
+				request.setAttribute("errorTab", currentTab);
+			%>
+
+				<aui:script sandbox="<%= true %>">
+					var focusField;
+
+					var sectionContent = $('#<%= _getSectionId(errorSection) %>Content');
+
+					<%
+					String focusField = (String)request.getAttribute("liferay-ui:error:focusField");
+					%>
+
+					<c:choose>
+						<c:when test="<%= Validator.isNotNull(focusField) %>">
+							focusField = sectionContent.find('#<portlet:namespace /><%= focusField %>');
+						</c:when>
+						<c:otherwise>
+							focusField = sectionContent.find('input:not([type="hidden"]).field').first();
+						</c:otherwise>
+					</c:choose>
+
+					Liferay.once(
+						'<portlet:namespace />formReady',
+						function(event) {
+							var hasFocusField = focusField.length;
+
+							if (!sectionContent.hasClass('in')) {
+								if (hasFocusField) {
+									sectionContent.one(
+										'shown.bs.collapse',
+										function() {
+											Liferay.Util.focusFormField(focusField);
+										}
+									);
+								}
+
+								sectionContent.collapse('show');
+							}
+							else if (hasFocusField) {
+								Liferay.Util.focusFormField(focusField);
+							}
+						}
+					);
+				</aui:script>
+
+			<%
+			}
+			%>
+
+		</aui:fieldset-group>
+	</c:otherwise>
+</c:choose>

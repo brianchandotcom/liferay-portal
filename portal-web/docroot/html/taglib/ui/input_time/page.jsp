@@ -103,19 +103,19 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 					container: '#<%= randomNamespace %>displayTime',
 					mask: '<%= amPm ? "%I:%M %p" : "%H:%M" %>',
 					on: {
-						selectionChange: function(event) {
-							var instance = this;
-
-							var date = event.newSelection[0];
-
-							instance.updateTime(date);
-						},
 						enterKey: function(event) {
 							var instance = this;
 
 							var inputVal = instance.get('activeInput').val();
 
 							var date = instance.getParsedDatesFromInputValue(inputVal).pop();
+
+							instance.updateTime(date);
+						},
+						selectionChange: function(event) {
+							var instance = this;
+
+							var date = event.newSelection[0];
 
 							instance.updateTime(date);
 						}

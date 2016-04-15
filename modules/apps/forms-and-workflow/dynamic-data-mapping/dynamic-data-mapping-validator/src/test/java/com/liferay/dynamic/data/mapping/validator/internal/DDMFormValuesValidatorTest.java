@@ -423,6 +423,45 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
 	}
 
+	@Test
+	public void testValidationWithRequiredHiddenFieldAndEmptyValue()
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			DDMFormTestUtil.createAvailableLocales(LocaleUtil.US),
+			LocaleUtil.US);
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
+			"name", "Name", true, false, true);
+
+		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		String instanceId = StringUtil.randomString();
+
+		LocalizedValue localizedValue = new LocalizedValue(LocaleUtil.US);
+
+		localizedValue.addString(LocaleUtil.US, StringPool.BLANK);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				instanceId, "name", localizedValue);
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			createDDMFormFieldEvaluationResult("name", instanceId, false);
+
+		DDMFormEvaluator ddmFormEvaluator = mockDDMFormEvaluatorWithResult(
+			createDDMFormEvaluationResult(ddmFormFieldEvaluationResult));
+
+		setDDMFormValuesValidatorEvaluator(ddmFormEvaluator);
+
+		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+	}
+
 	@Test(expected = MustNotSetValue.class)
 	public void testValidationWithSeparatorField() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
@@ -627,7 +666,7 @@ public class DDMFormValuesValidatorTest {
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
 			new DDMFormFieldEvaluationResult(name, instanceId);
 
-		ddmFormFieldEvaluationResult.setVisible(true);
+		ddmFormFieldEvaluationResult.setVisible(visible);
 
 		return ddmFormFieldEvaluationResult;
 	}

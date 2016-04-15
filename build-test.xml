@@ -8032,7 +8032,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 				import java.util.regex.Pattern;
 
 				Pattern errorPattern = Pattern.compile(".*ERROR.*[\n$]?");
-				Pattern upgradeExceptionPattern = Pattern.compile(".*UpgradeException.[\n$]?");
+				Pattern upgradeExceptionPattern = Pattern.compile(".*UpgradeException:.[\n$]?");
 
 				String log = project.getProperty("db.upgrade.log");
 				String[] lines = log.split("\n");
@@ -8055,7 +8055,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 					errorMatcher = upgradeExceptionPattern.matcher(line);
 
-					if (errorMatcher.find()) {
+					if (errorMatcher.find() && !line.contains("Caused by:")) {
 						count++;
 						sb.append("    ");
 						sb.append(line);

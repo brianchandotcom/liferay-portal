@@ -907,7 +907,39 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			});
 
 		if (gitRepoDir != null) {
-			task.onlyIf(new LeafArtifactSpec());
+			task.onlyIf(
+				new Spec<Task>() {
+
+					@Override
+					public boolean isSatisfiedBy(Task task) {
+						Project project = task.getProject();
+
+						for (Configuration configuration :
+								project.getConfigurations()) {
+
+							if (_hasProjectDependencies(configuration)) {
+								return false;
+							}
+						}
+
+						return true;
+					}
+
+					private boolean _hasProjectDependencies(
+						Configuration configuration) {
+
+						for (Dependency dependency :
+								configuration.getDependencies()) {
+
+							if (dependency instanceof ProjectDependency) {
+								return true;
+							}
+						}
+
+						return false;
+					}
+
+				});
 		}
 
 		task.setDescription(
@@ -2937,32 +2969,5 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	private static final Logger _logger = Logging.getLogger(
 		LiferayDefaultsPlugin.class);
-
-	private static class LeafArtifactSpec implements Spec<Task> {
-
-		@Override
-		public boolean isSatisfiedBy(Task task) {
-			Project project = task.getProject();
-
-			for (Configuration configuration : project.getConfigurations()) {
-				if (_hasProjectDependencies(configuration)) {
-					return false;
-				}
-			}
-
-			return true;
-		}
-
-		private boolean _hasProjectDependencies(Configuration configuration) {
-			for (Dependency dependency : configuration.getDependencies()) {
-				if (dependency instanceof ProjectDependency) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-	}
 
 }

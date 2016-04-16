@@ -907,7 +907,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			});
 
 		if (gitRepoDir != null) {
-			task.onlyIf(new LeafArtifactSpec(gitRepoDir));
+			task.onlyIf(new LeafArtifactSpec());
 		}
 
 		task.setDescription(
@@ -2940,20 +2940,12 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	private static class LeafArtifactSpec implements Spec<Task> {
 
-		public LeafArtifactSpec(File gitRepoDir) {
-			_gitRepoDir = gitRepoDir;
-		}
-
 		@Override
 		public boolean isSatisfiedBy(Task task) {
 			Project project = task.getProject();
 
 			for (Configuration configuration : project.getConfigurations()) {
-				/*if (_hasExternalProjectDependencies(project, configuration)) {
-					return false;
-				}*/
-
-				if (_hasProjectDependencies(project, configuration)) {
+				if (_hasProjectDependencies(configuration)) {
 					return false;
 				}
 			}
@@ -2961,33 +2953,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			return true;
 		}
 
-		/*private boolean _hasExternalProjectDependencies(
-			Project project, Configuration configuration) {
-
-			for (Dependency dependency : configuration.getDependencies()) {
-				if (!(dependency instanceof ProjectDependency)) {
-					continue;
-				}
-
-				ProjectDependency projectDependency =
-					(ProjectDependency)dependency;
-
-				Project dependencyProject =
-					projectDependency.getDependencyProject();
-
-				if (!FileUtil.isChild(
-						dependencyProject.getProjectDir(), _gitRepoDir)) {
-
-					return true;
-				}
-			}
-
-			return false;
-		}*/
-
-		private boolean _hasProjectDependencies(
-			Project project, Configuration configuration) {
-
+		private boolean _hasProjectDependencies(Configuration configuration) {
 			for (Dependency dependency : configuration.getDependencies()) {
 				if (dependency instanceof ProjectDependency) {
 					return true;
@@ -2996,8 +2962,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 			return false;
 		}
-
-		private final File _gitRepoDir;
 
 	}
 

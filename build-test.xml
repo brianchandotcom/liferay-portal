@@ -3631,13 +3631,7 @@ go]]></replacevalue>
 
 	<target name="check-inet-address">
 		<if>
-			<and>
-				<equals arg1="${app.server.type}" arg2="jboss" />
-				<or>
-					<equals arg1="${app.server.jboss.version}" arg2="6.0.1" />
-					<equals arg1="${app.server.jboss.version}" arg2="6.1.0" />
-				</or>
-			</and>
+			<equals arg1="${app.server.type}" arg2="jboss" />
 			<then>
 				<exec executable="/bin/bash" outputproperty="inet.address">
 					<arg value="-c" />

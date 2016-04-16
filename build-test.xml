@@ -3641,7 +3641,7 @@ go]]></replacevalue>
 			<then>
 				<exec executable="/bin/bash" outputproperty="inet.address">
 					<arg value="-c" />
-					<arg value="ifconfig eth0:0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'" />
+					<arg value="ifconfig eth0:0 | grep 'inet ' | sed -e 's/^[[:space:]]* inet \(addr:\)\?\([0-9\.]\+\).*/\2/'" />
 				</exec>
 
 				<if>

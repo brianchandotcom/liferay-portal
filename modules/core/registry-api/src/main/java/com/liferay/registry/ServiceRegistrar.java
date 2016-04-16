@@ -16,9 +16,9 @@ package com.liferay.registry;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Michael C. Han
@@ -120,6 +120,7 @@ public class ServiceRegistrar<T> {
 
 	private final Registry _registry;
 	private final Set<ServiceRegistration<T>> _serviceRegistrations =
-		new HashSet<>();
+		Collections.newSetFromMap(
+			new ConcurrentHashMap<ServiceRegistration<T>, Boolean>());
 
 }

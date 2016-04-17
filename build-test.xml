@@ -183,11 +183,21 @@ jdbc.default.url=${database.url}
 jdbc.default.username=${database.username}
 jdbc.default.password=${database.password}
 
+// HikariCP Pool
+
 jdbc.default.maximumPoolSize=20
 jdbc.default.minimumIdle=0
 
 jdbc.counter.maximumPoolSize=5
 jdbc.counter.minimumIdle=0
+
+// Tomcat JDBC Connection Pool
+
+jdbc.default.maxActive=20
+jdbc.default.minIdle=0
+
+jdbc.counter.maxActive=5
+jdbc.counter.minIdle=0
 
 counter.jdbc.prefix=jdbc.counter.]]></echo>
 

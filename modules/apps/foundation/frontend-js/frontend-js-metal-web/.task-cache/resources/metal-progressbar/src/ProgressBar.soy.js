@@ -84,12 +84,13 @@ define("frontend-js-metal-web@1.0.6/metal-progressbar/src/ProgressBar.soy", ['ex
      * @suppress {checkTypes}
      */
     function $render(opt_data, opt_ignored, opt_ijData) {
+      opt_data = opt_data || {};
       var curMax__soy3 = opt_data.max ? opt_data.max : 100;
       var curMin__soy4 = opt_data.min ? opt_data.min : 0;
       var curValue__soy5 = opt_data.value ? opt_data.value : 0;
-      ie_open('div', null, null, 'id', opt_data.id, 'class', 'progress ' + (opt_data.elementClasses ? ' ' + opt_data.elementClasses : ''), 'role', 'progressbar', 'aria-valuemax', curMax__soy3, 'aria-valuemin', curMin__soy4, 'aria-valuenow', curValue__soy5, 'tabindex', '0');
-      var percentage__soy17 = Math.floor((curValue__soy5 - curMin__soy4) * 100 / (curMax__soy3 - curMin__soy4));
-      ie_open('div', null, null, 'class', 'progress-bar' + (opt_data.barClass ? ' ' + opt_data.barClass : ''), 'style', 'width: ' + percentage__soy17 + '%');
+      ie_open('div', null, null, 'class', 'progress ' + (opt_data.elementClasses ? ' ' + opt_data.elementClasses : ''), 'role', 'progressbar', 'aria-valuemax', curMax__soy3, 'aria-valuemin', curMin__soy4, 'aria-valuenow', curValue__soy5, 'tabindex', '0');
+      var percentage__soy15 = Math.floor((curValue__soy5 - curMin__soy4) * 100 / (curMax__soy3 - curMin__soy4));
+      ie_open('div', null, null, 'class', 'progress-bar' + (opt_data.barClass ? ' ' + opt_data.barClass : ''), 'style', 'width: ' + percentage__soy15 + '%');
       itext((goog.asserts.assert((opt_data.label ? opt_data.label : '') != null), opt_data.label ? opt_data.label : ''));
       ie_close('div');
       ie_close('div');
@@ -99,7 +100,7 @@ define("frontend-js-metal-web@1.0.6/metal-progressbar/src/ProgressBar.soy", ['ex
       $render.soyTemplateName = 'ProgressBar.render';
     }
 
-    exports.render.params = ["barClass", "elementClasses", "id", "label", "max", "min", "value"];
+    exports.render.params = ["barClass", "elementClasses", "label", "max", "min", "value"];
     exports.templates = templates = exports;
     return exports;
   });

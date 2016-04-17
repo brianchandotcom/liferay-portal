@@ -72,9 +72,11 @@ define("frontend-js-metal-web@1.0.6/metal-slider/src/Slider", ['exports', 'metal
     */
 			this.drag_ = new _drag.Drag({
 				constrain: this.element.querySelector('.rail'),
-				handles: this.element.querySelector('.handle'),
-				sources: this.element.querySelector('.rail-handle')
+				container: this.element,
+				handles: '.handle',
+				sources: '.rail-handle'
 			});
+			this.on('elementChanged', this.handleElementChanged_);
 
 			this.attachDragEvents_();
 		};
@@ -87,6 +89,15 @@ define("frontend-js-metal-web@1.0.6/metal-slider/src/Slider", ['exports', 'metal
 		Slider.prototype.disposeInternal = function disposeInternal() {
 			_Component.prototype.disposeInternal.call(this);
 			this.drag_.dispose();
+		};
+
+		Slider.prototype.getDrag = function getDrag() {
+			return this.drag_;
+		};
+
+		Slider.prototype.handleElementChanged_ = function handleElementChanged_(data) {
+			this.drag_.container = data.newVal;
+			this.drag_.constrain = data.newVal.querySelector('.rail');
 		};
 
 		Slider.prototype.onRailMouseDown_ = function onRailMouseDown_(event) {

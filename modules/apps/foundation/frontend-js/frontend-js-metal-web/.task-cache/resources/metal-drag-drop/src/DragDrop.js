@@ -133,9 +133,21 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/DragDrop", ['exports', '
 			}
 		};
 
+		DragDrop.prototype.handleContainerChanged_ = function handleContainerChanged_(data, event) {
+			_Drag.prototype.handleContainerChanged_.call(this, data, event);
+			if (this.prevTargetsSelector_) {
+				this.targets = this.prevTargetsSelector_;
+			}
+		};
+
 		DragDrop.prototype.removeTarget = function removeTarget(target) {
 			_metal.array.remove(this.targets, target);
 			this.targets = this.targets;
+		};
+
+		DragDrop.prototype.setterTargetsFn_ = function setterTargetsFn_(val) {
+			this.prevTargetsSelector_ = _metal.core.isString(val) ? val : null;
+			return this.toElements_(val);
 		};
 
 		DragDrop.prototype.startDragging_ = function startDragging_() {
@@ -202,7 +214,7 @@ define("frontend-js-metal-web@1.0.6/metal-drag-drop/src/DragDrop", ['exports', '
    * @type {!Element|string}
    */
 		targets: {
-			setter: 'toElements_',
+			setter: 'setterTargetsFn_',
 			validator: 'validateElementOrString_'
 		}
 	};

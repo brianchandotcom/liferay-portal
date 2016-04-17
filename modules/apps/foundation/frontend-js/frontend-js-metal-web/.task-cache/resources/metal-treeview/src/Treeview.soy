@@ -2,12 +2,11 @@
 
 /**
  * This renders the main element.
- * @param id
  * @param? elementClasses
  * @param nodes
  */
 {template .render}
-	<div id="{$id}" class="treeview component{$elementClasses ? ' ' + $elementClasses : ''}" role="tree">
+	<div class="treeview{$elementClasses ? ' ' + $elementClasses : ''}" role="tree">
 		{call .nodes}
 			{param nodes: $nodes /}
 		{/call}

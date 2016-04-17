@@ -8,7 +8,7 @@ configurations {
 
 task buildMetalComponents(type: Copy)
 
-String metalComponentsVersion = "1.0.0-rc.17"
+String metalComponentsVersion = "1.0.0-rc.19"
 
 buildMetalComponents {
 	eachFile new StripPathSegmentsAction(7)

@@ -3860,6 +3860,26 @@ define("frontend-js-metal-web@1.0.6/metal-soy-bundle/build/bundle", ['metal-incr
       };
 
       /**
+       * Content of type {@link soydata.SanitizedContentKind.URI}.
+       *
+       * The content is a URI chunk that the caller knows is safe to emit in a
+       * template. The content direction is LTR.
+       *
+       * @constructor
+       * @extends {goog.soy.data.SanitizedContent}
+       */
+      soydata.SanitizedUri = function () {
+        goog.soy.data.SanitizedContent.call(this); // Throws an exception.
+      };
+      goog.inherits(soydata.SanitizedUri, goog.soy.data.SanitizedContent);
+
+      /** @override */
+      soydata.SanitizedUri.prototype.contentKind = soydata.SanitizedContentKind.URI;
+
+      /** @override */
+      soydata.SanitizedUri.prototype.contentDir = goog.i18n.bidi.Dir.LTR;
+
+      /**
        * Unsanitized plain text string.
        *
        * While all strings are effectively safe to use as a plain text, there are no
@@ -4002,6 +4022,24 @@ define("frontend-js-metal-web@1.0.6/metal-soy-bundle/build/bundle", ['metal-incr
       soydata.markUnsanitizedText = function (content, opt_contentDir) {
         return new soydata.UnsanitizedText(content, opt_contentDir);
       };
+
+      soydata.VERY_UNSAFE = {};
+
+      /**
+      * Takes a leap of faith that the provided content is "safe" to use as a URI
+      * in a Soy template.
+      *
+      * This creates a Soy SanitizedContent object which indicates to Soy there is
+      * no need to escape it when printed as a URI (e.g. in an href or src
+      * attribute), such as if it's already been encoded or  if it's a Javascript:
+      * URI.
+      *
+      * @param {*} content A chunk of URI that the caller knows is safe to
+      *     emit in a template.
+      * @return {!soydata.SanitizedUri} Sanitized content wrapper that indicates to
+      *     Soy not to escape or filter when printed in URI context.
+      */
+      soydata.VERY_UNSAFE.ordainSanitizedUri = soydata.$$makeSanitizedContentFactoryWithDefaultDirOnly_(soydata.SanitizedUri);
 
       // -----------------------------------------------------------------------------
       // Below are private utilities to be used by Soy-generated code only.
@@ -4283,6 +4321,38 @@ define("frontend-js-metal-web@1.0.6/metal-soy-bundle/build/bundle", ['metal-incr
        */
       soy.esc.$$escapeHtmlHelper = function (v) {
         return goog.string.htmlEscape(String(v));
+      };
+
+      /**
+       * Allows only data-protocol image URI's.
+       *
+       * @param {*} value The value to process. May not be a string, but the value
+       *     will be coerced to a string.
+       * @return {!soydata.SanitizedUri} An escaped version of value.
+       */
+      soy.$$filterImageDataUri = function (value) {
+        // NOTE: Even if it's a SanitizedUri, we will still filter it.
+        return soydata.VERY_UNSAFE.ordainSanitizedUri(soy.esc.$$filterImageDataUriHelper(value));
+      };
+
+      /**
+       * A pattern that vets values produced by the named directives.
+       * @private {!RegExp}
+       */
+      soy.esc.$$FILTER_FOR_FILTER_IMAGE_DATA_URI_ = /^data:image\/(?:bmp|gif|jpe?g|png|tiff|webp);base64,[a-z0-9+\/]+=*$/i;
+
+      /**
+       * A helper for the Soy directive |filterImageDataUri
+       * @param {*} value Can be of any type but will be coerced to a string.
+       * @return {string} The escaped text.
+       */
+      soy.esc.$$filterImageDataUriHelper = function (value) {
+        var str = String(value);
+        if (!soy.esc.$$FILTER_FOR_FILTER_IMAGE_DATA_URI_.test(str)) {
+          goog.asserts.fail('Bad value `%s` for |filterImageDataUri', [str]);
+          return 'data:image/gif;base64,zSoyz';
+        }
+        return str;
       };
 
       // END GENERATED CODE

@@ -106,10 +106,10 @@ public class DDMIndexerImpl implements DDMIndexer {
 						document.addKeywordSortable(name, (Boolean[])value);
 					}
 					else if (value instanceof Date) {
-						document.addDate(name, (Date)value);
+						document.addDateSortable(name, (Date)value);
 					}
 					else if (value instanceof Date[]) {
-						document.addDate(name, (Date[])value);
+						document.addDateSortable(name, (Date[])value);
 					}
 					else if (value instanceof Double) {
 						document.addNumberSortable(name, (Double)value);

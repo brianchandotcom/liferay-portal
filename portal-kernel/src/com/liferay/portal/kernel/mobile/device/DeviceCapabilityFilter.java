@@ -14,9 +14,12 @@
 
 package com.liferay.portal.kernel.mobile.device;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public interface DeviceCapabilityFilter {
 
 	public boolean accept(String capabilityName);

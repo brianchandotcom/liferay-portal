@@ -14,12 +14,15 @@
 
 package com.liferay.portal.kernel.mobile.device;
 
+import aQute.bnd.annotation.ProviderType;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Milen Dyankov
  * @author Michael C. Han
  */
+@ProviderType
 public interface DeviceRecognitionProvider {
 
 	public Device detectDevice(HttpServletRequest request);
@@ -28,6 +31,10 @@ public interface DeviceRecognitionProvider {
 
 	public void reload() throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setDeviceCapabilityFilter(
 		DeviceCapabilityFilter deviceCapabilityFilter);
 

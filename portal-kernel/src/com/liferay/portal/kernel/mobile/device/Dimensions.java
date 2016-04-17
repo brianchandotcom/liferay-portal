@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.mobile.device;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
@@ -21,6 +23,7 @@ import java.io.Serializable;
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public class Dimensions implements Serializable {
 
 	public static final Dimensions UNKNOWN = new Dimensions(-1, -1);

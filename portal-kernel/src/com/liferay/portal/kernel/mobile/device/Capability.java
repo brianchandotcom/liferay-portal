@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.mobile.device;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -24,6 +26,7 @@ import java.io.Serializable;
  * @author Milen Dyankov
  * @author Michael C. Han
  */
+@ProviderType
 public class Capability implements Serializable {
 
 	public Capability(String name, String value) {

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.mobile.device;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.Map;
@@ -22,6 +24,7 @@ import java.util.Map;
  * @author Milen Dyankov
  * @author Michael C. Han
  */
+@ProviderType
 public interface Device extends Serializable {
 
 	public String getBrand();
@@ -30,8 +33,16 @@ public interface Device extends Serializable {
 
 	public String getBrowserVersion();
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public Map<String, Capability> getCapabilities();
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String getCapability(String name);
 
 	public String getModel();

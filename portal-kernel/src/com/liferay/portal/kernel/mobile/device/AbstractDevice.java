@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.mobile.device;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.StringBundler;
 
 /**
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.util.StringBundler;
  * @author Milen Dyankov
  * @author Michael C. Han
  */
+@ProviderType
 public abstract class AbstractDevice implements Device {
 
 	@Override

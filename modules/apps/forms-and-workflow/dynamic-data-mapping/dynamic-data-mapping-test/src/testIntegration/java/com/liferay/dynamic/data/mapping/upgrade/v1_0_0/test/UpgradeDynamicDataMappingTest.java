@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -1012,26 +1013,27 @@ public class UpgradeDynamicDataMappingTest {
 	protected void addContent(long contentId, String data) throws Exception {
 		StringBundler sb = new StringBundler(4);
 
-		sb.append("insert into DDMContent (contentId, groupId, companyId, ");
-		sb.append("userId, userName, createDate, modifiedDate, name, ");
-		sb.append("description, data_) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-		sb.append("?)");
+		sb.append("insert into DDMContent (uuid_, contentId, groupId, ");
+		sb.append("companyId, userId, userName, createDate, modifiedDate, ");
+		sb.append("name, description, data_) values (?, ?, ?, ?, ?, ?, ?, ?, ");
+		sb.append("?, ?, ?)");
 
 		String sql = sb.toString();
 
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
 			PreparedStatement ps = con.prepareStatement(sql)) {
 
-			ps.setLong(1, contentId);
-			ps.setLong(2, _group.getGroupId());
-			ps.setLong(3, _group.getCompanyId());
-			ps.setLong(4, TestPropsValues.getUserId());
-			ps.setString(5, null);
-			ps.setTimestamp(6, _timestamp);
+			ps.setString(1, PortalUUIDUtil.generate());
+			ps.setLong(2, contentId);
+			ps.setLong(3, _group.getGroupId());
+			ps.setLong(4, _group.getCompanyId());
+			ps.setLong(5, TestPropsValues.getUserId());
+			ps.setString(6, null);
 			ps.setTimestamp(7, _timestamp);
-			ps.setString(8, DDMStorageLink.class.getName());
-			ps.setString(9, StringPool.BLANK);
-			ps.setString(10, data);
+			ps.setTimestamp(8, _timestamp);
+			ps.setString(9, DDMStorageLink.class.getName());
+			ps.setString(10, StringPool.BLANK);
+			ps.setString(11, data);
 
 			ps.executeUpdate();
 		}
@@ -1099,37 +1101,38 @@ public class UpgradeDynamicDataMappingTest {
 
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("insert into DDMStructure (structureId, groupId, ");
+		sb.append("insert into DDMStructure (uuid_, structureId, groupId, ");
 		sb.append("companyId, userId, userName, versionUserId, ");
 		sb.append("versionUserName, createDate, modifiedDate, ");
 		sb.append("parentStructureId, classNameId, structureKey, version, ");
 		sb.append("name, description, definition, storageType, type_) ");
 		sb.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-		sb.append("?, ?)");
+		sb.append("?, ?, ?)");
 
 		String sql = sb.toString();
 
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
 			PreparedStatement ps = con.prepareStatement(sql)) {
 
-			ps.setLong(1, structureId);
-			ps.setLong(2, _group.getGroupId());
-			ps.setLong(3, _group.getCompanyId());
-			ps.setLong(4, TestPropsValues.getUserId());
-			ps.setString(5, null);
-			ps.setLong(6, TestPropsValues.getUserId());
-			ps.setString(7, null);
-			ps.setTimestamp(8, _timestamp);
+			ps.setString(1, PortalUUIDUtil.generate());
+			ps.setLong(2, structureId);
+			ps.setLong(3, _group.getGroupId());
+			ps.setLong(4, _group.getCompanyId());
+			ps.setLong(5, TestPropsValues.getUserId());
+			ps.setString(6, null);
+			ps.setLong(7, TestPropsValues.getUserId());
+			ps.setString(8, null);
 			ps.setTimestamp(9, _timestamp);
-			ps.setLong(10, parentStructureId);
-			ps.setLong(11, _classNameIdDDLRecordSet);
-			ps.setString(12, StringUtil.randomString());
-			ps.setString(13, version);
-			ps.setString(14, StringUtil.randomString());
-			ps.setString(15, StringPool.BLANK);
-			ps.setString(16, definition);
-			ps.setString(17, storageType);
-			ps.setInt(18, DDMStructureConstants.TYPE_DEFAULT);
+			ps.setTimestamp(10, _timestamp);
+			ps.setLong(11, parentStructureId);
+			ps.setLong(12, _classNameIdDDLRecordSet);
+			ps.setString(13, StringUtil.randomString());
+			ps.setString(14, version);
+			ps.setString(15, StringUtil.randomString());
+			ps.setString(16, StringPool.BLANK);
+			ps.setString(17, definition);
+			ps.setString(18, storageType);
+			ps.setInt(19, DDMStructureConstants.TYPE_DEFAULT);
 
 			ps.executeUpdate();
 		}
@@ -1140,40 +1143,40 @@ public class UpgradeDynamicDataMappingTest {
 			String language, String type)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(6);
 
-		sb.append("insert into DDMTemplate (templateId, groupId, companyId, ");
-		sb.append("userId, userName, versionUserId, versionUserName, ");
-		sb.append("createDate, modifiedDate, classNameId, classPK, ");
-		sb.append("resourceClassNameId, templateKey, version, name, mode_, ");
-		sb.append("language, script, type_) values (?, ?, ?, ?, ?, ?, ?, ?, ");
-		sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ");
-		sb.append("?)");
+		sb.append("insert into DDMTemplate (uuid_, templateId, groupId, ");
+		sb.append("companyId, userId, userName, versionUserId, ");
+		sb.append("versionUserName, createDate, modifiedDate, classNameId, ");
+		sb.append("classPK, resourceClassNameId, templateKey, version, name, ");
+		sb.append("mode_, language, script, type_) values (?, ?, ?, ?, ?, ?, ");
+		sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 		String sql = sb.toString();
 
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
 			PreparedStatement ps = con.prepareStatement(sql)) {
 
-			ps.setLong(1, templateId);
-			ps.setLong(2, _group.getGroupId());
-			ps.setLong(3, _group.getCompanyId());
-			ps.setLong(4, TestPropsValues.getUserId());
-			ps.setString(5, null);
-			ps.setLong(6, TestPropsValues.getUserId());
-			ps.setString(7, null);
-			ps.setTimestamp(8, _timestamp);
+			ps.setString(1, PortalUUIDUtil.generate());
+			ps.setLong(2, templateId);
+			ps.setLong(3, _group.getGroupId());
+			ps.setLong(4, _group.getCompanyId());
+			ps.setLong(5, TestPropsValues.getUserId());
+			ps.setString(6, null);
+			ps.setLong(7, TestPropsValues.getUserId());
+			ps.setString(8, null);
 			ps.setTimestamp(9, _timestamp);
-			ps.setLong(10, _classNameIdDDMStructure);
-			ps.setLong(11, structureId);
-			ps.setLong(12, _classNameIdDDLRecordSet);
-			ps.setString(13, StringUtil.randomString());
-			ps.setString(14, version);
-			ps.setString(15, StringUtil.randomString());
-			ps.setString(16, DDMTemplateConstants.TEMPLATE_MODE_CREATE);
-			ps.setString(17, language);
-			ps.setString(18, script);
-			ps.setString(19, type);
+			ps.setTimestamp(10, _timestamp);
+			ps.setLong(11, _classNameIdDDMStructure);
+			ps.setLong(12, structureId);
+			ps.setLong(13, _classNameIdDDLRecordSet);
+			ps.setString(14, StringUtil.randomString());
+			ps.setString(15, version);
+			ps.setString(16, StringUtil.randomString());
+			ps.setString(17, DDMTemplateConstants.TEMPLATE_MODE_CREATE);
+			ps.setString(18, language);
+			ps.setString(19, script);
+			ps.setString(20, type);
 
 			ps.executeUpdate();
 		}

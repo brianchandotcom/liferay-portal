@@ -2131,6 +2131,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A text value for the checkbox label to enable and disable the date input. The default value is <![CDATA[<code>Disable</code>]]>.</description>
+			<name>dateTogglerCheckboxLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>A variable name to refer to the day of the component.</description>
 			<name>dayParam</name>
 			<required>false</required>

@@ -40,6 +40,10 @@ public class InputDateTag extends BaseValidatorTagSupport {
 		_cssClass = cssClass;
 	}
 
+	public void setDateTogglerCheckboxLabel(String dateTogglerCheckboxLabel) {
+		_dateTogglerCheckboxLabel = dateTogglerCheckboxLabel;
+	}
+
 	public void setDayParam(String dayParam) {
 		_dayParam = dayParam;
 	}
@@ -108,6 +112,7 @@ public class InputDateTag extends BaseValidatorTagSupport {
 	protected void cleanUp() {
 		_autoFocus = false;
 		_cssClass = null;
+		_dateTogglerCheckboxLabel = null;
 		_dayParam = null;
 		_dayValue = 0;
 		_disabled = false;
@@ -135,6 +140,7 @@ public class InputDateTag extends BaseValidatorTagSupport {
 		request.setAttribute(
 			"liferay-ui:input-date:autoFocus", String.valueOf(_autoFocus));
 		request.setAttribute("liferay-ui:input-date:cssClass", _cssClass);
+		request.setAttribute("liferay-ui:input-date:dateTogglerCheckboxLabel", _dateTogglerCheckboxLabel);
 		request.setAttribute("liferay-ui:input-date:dayParam", _dayParam);
 		request.setAttribute(
 			"liferay-ui:input-date:dayValue", String.valueOf(_dayValue));
@@ -170,6 +176,7 @@ public class InputDateTag extends BaseValidatorTagSupport {
 
 	private boolean _autoFocus;
 	private String _cssClass;
+	private String _dateTogglerCheckboxLabel;
 	private String _dayParam;
 	private int _dayValue;
 	private boolean _disabled;

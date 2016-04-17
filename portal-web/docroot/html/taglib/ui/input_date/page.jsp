@@ -24,11 +24,13 @@ if (GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-date:di
 }
 
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-date:cssClass"));
+String dateTogglerCheckboxLabel = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-date:dateTogglerCheckboxLabel"), "disable");
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-date:disabled"));
 String dayParam = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-date:dayParam"));
 int dayValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-date:dayValue"));
 int firstDayOfWeek = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-date:firstDayOfWeek"));
 Date firstEnabledDate = GetterUtil.getDate(request.getAttribute("liferay-ui:input-date:firstEnabledDate"), DateFormatFactoryUtil.getDate(locale), null);
+String formName = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-date:formName"));
 Date lastEnabledDate = GetterUtil.getDate(request.getAttribute("liferay-ui:input-date:lastEnabledDate"), DateFormatFactoryUtil.getDate(locale), null);
 String monthParam = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-date:monthParam"));
 int monthValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-date:monthValue"));
@@ -77,7 +79,7 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 			<input class="form-control" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= nameId %>" name="<%= namespace + HtmlUtil.escapeAttribute(name) %>" type="date" value="<%= format.format(calendar.getTime()) %>" />
 		</c:when>
 		<c:otherwise>
-			<aui:input disabled="<%= disabled %>" id="<%= HtmlUtil.getAUICompatibleId(name) %>" label="" name="<%= name %>" placeholder="<%= StringUtil.toLowerCase(simpleDateFormatPattern) %>" required="<%= required %>" title="" type="text" value="<%= nullable ? StringPool.BLANK : format.format(calendar.getTime()) %>" wrappedField="<%= true %>">
+			<aui:input disabled="<%= disabled %>" id="<%= HtmlUtil.getAUICompatibleId(name) %>" label="" name="<%= name %>" placeholder="<%= StringUtil.toLowerCase(simpleDateFormatPattern) %>" required="<%= required %>" title="" type="text" value="<%= format.format(calendar.getTime()) %>" wrappedField="<%= true %>">
 				<aui:validator errorMessage="please-enter-a-valid-date" name="custom">
 					function(val) {
 						return AUI().use('aui-datatype-date-parse').Parsers.date('<%= mask %>', val);
@@ -87,10 +89,37 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 		</c:otherwise>
 	</c:choose>
 
-	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= dayParamId %>" name="<%= namespace + HtmlUtil.escapeAttribute(dayParam) %>" type="hidden" value="<%= (!BrowserSnifferUtil.isMobile(request) && nullable) ? "" : dayValue %>" />
-	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= monthParamId %>" name="<%= namespace + HtmlUtil.escapeAttribute(monthParam) %>" type="hidden" value="<%= (!BrowserSnifferUtil.isMobile(request) && nullable) ? "" : monthValue %>" />
-	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= yearParamId %>" name="<%= namespace + HtmlUtil.escapeAttribute(yearParam) %>" type="hidden" value="<%= (!BrowserSnifferUtil.isMobile(request) && nullable) ? "" : yearValue %>" />
+	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= dayParamId %>" name="<%= namespace + HtmlUtil.escapeAttribute(dayParam) %>" type="hidden" value="<%= dayValue %>" />
+	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= monthParamId %>" name="<%= namespace + HtmlUtil.escapeAttribute(monthParam) %>" type="hidden" value="<%= monthValue %>" />
+	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= yearParamId %>" name="<%= namespace + HtmlUtil.escapeAttribute(yearParam) %>" type="hidden" value="<%= yearValue %>" />
 </span>
+
+<c:if test="<%= nullable %>">
+
+	<%
+	String dateTogglerCheckboxName = TextFormatter.format(dateTogglerCheckboxLabel, TextFormatter.M);
+	%>
+
+	<aui:input label="<%= dateTogglerCheckboxLabel %>" name="<%= randomNamespace + dateTogglerCheckboxName %>" type="checkbox" value="<%= disabled %>" />
+
+	<aui:script sandbox="<%= true %>">
+		var checkbox = $('#<portlet:namespace /><%= randomNamespace + dateTogglerCheckboxName %>');
+
+		checkbox.on(
+			'click mouseover',
+			function(event) {
+				var checked = checkbox.prop('checked');
+
+				var form = $(document.<portlet:namespace /><%= formName %>);
+
+				form.fm('<%= HtmlUtil.getAUICompatibleId(name) %>').prop('disabled', checked);
+				form.fm('<%= HtmlUtil.escapeJS(dayParam) %>').prop('disabled', checked);
+				form.fm('<%= HtmlUtil.escapeJS(monthParam) %>').prop('disabled', checked);
+				form.fm('<%= HtmlUtil.escapeJS(yearParam) %>').prop('disabled', checked);
+			}
+		);
+	</aui:script>
+</c:if>
 
 <aui:script use='<%= "aui-datepicker" + (BrowserSnifferUtil.isMobile(request) ? "-native" : StringPool.BLANK) %>'>
 	Liferay.component(

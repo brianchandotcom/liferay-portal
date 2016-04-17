@@ -34,6 +34,8 @@ public class ServiceRegistrar<T> {
 	}
 
 	public void destroy(ServiceFinalizer<T> serviceFinalizer) {
+		_destroyed = true;
+
 		for (ServiceRegistration<T> serviceRegistration :
 				_serviceRegistrations) {
 
@@ -53,10 +55,22 @@ public class ServiceRegistrar<T> {
 	}
 
 	public Collection<ServiceRegistration<T>> getServiceRegistrations() {
+		if (_destroyed) {
+			return Collections.emptySet();
+		}
+
 		return Collections.unmodifiableCollection(_serviceRegistrations);
 	}
 
+	public boolean isDestroyed() {
+		return _destroyed;
+	}
+
 	public ServiceRegistration<T> registerService(Class<T> clazz, T service) {
+		if (_destroyed) {
+			return null;
+		}
+
 		ServiceRegistration<T> serviceRegistration = _registry.registerService(
 			clazz, service);
 
@@ -67,6 +81,10 @@ public class ServiceRegistrar<T> {
 
 	public ServiceRegistration<T> registerService(
 		Class<T> clazz, T service, Map<String, Object> properties) {
+
+		if (_destroyed) {
+			return null;
+		}
 
 		ServiceRegistration<T> serviceRegistration = _registry.registerService(
 			clazz, service, properties);
@@ -80,6 +98,10 @@ public class ServiceRegistrar<T> {
 		ServiceRegistration<T> serviceRegistration = _registry.registerService(
 			className, service);
 
+		if (_destroyed) {
+			return null;
+		}
+
 		_serviceRegistrations.add(serviceRegistration);
 
 		return serviceRegistration;
@@ -87,6 +109,10 @@ public class ServiceRegistrar<T> {
 
 	public ServiceRegistration<T> registerService(
 		String className, T service, Map<String, Object> properties) {
+
+		if (_destroyed) {
+			return null;
+		}
 
 		ServiceRegistration<T> serviceRegistration = _registry.registerService(
 			className, service, properties);
@@ -99,6 +125,10 @@ public class ServiceRegistrar<T> {
 	public ServiceRegistration<T> registerService(
 		String[] classNames, T service) {
 
+		if (_destroyed) {
+			return null;
+		}
+
 		ServiceRegistration<T> serviceRegistration = _registry.registerService(
 			classNames, service);
 
@@ -110,6 +140,10 @@ public class ServiceRegistrar<T> {
 	public ServiceRegistration<T> registerService(
 		String[] classNames, T service, Map<String, Object> properties) {
 
+		if (_destroyed) {
+			return null;
+		}
+
 		ServiceRegistration<T> serviceRegistration = _registry.registerService(
 			classNames, service, properties);
 
@@ -118,6 +152,7 @@ public class ServiceRegistrar<T> {
 		return serviceRegistration;
 	}
 
+	private volatile boolean _destroyed;
 	private final Registry _registry;
 	private final Set<ServiceRegistration<T>> _serviceRegistrations =
 		Collections.newSetFromMap(

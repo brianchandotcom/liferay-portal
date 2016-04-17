@@ -54,6 +54,8 @@ public interface Document extends Cloneable, Serializable {
 
 	public void addGeoLocation(double latitude, double longitude);
 
+	public void addGeoLocation(String name, double latitude, double longitude);
+
 	public void addKeyword(String name, boolean value);
 
 	public void addKeyword(String name, Boolean value);

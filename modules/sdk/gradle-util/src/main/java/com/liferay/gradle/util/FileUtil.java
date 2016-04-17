@@ -48,6 +48,8 @@ import org.gradle.api.AntBuilder;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
 
 /**
  * @author Andrea Di Giorgi
@@ -128,7 +130,7 @@ public class FileUtil {
 			mirrorsCacheArtifactDir.mkdirs();
 
 			String mirrorsUrl = url.replaceFirst(
-				"http:\\/\\/", "http://mirrors/");
+				"http:\\/\\/", "http://mirrors.lax.liferay.com/");
 
 			if (tryLocalNetwork) {
 				try {
@@ -467,6 +469,11 @@ public class FileUtil {
 				args.put("ignoreerrors", ignoreErrors);
 				args.put("src", url);
 
+				if (_logger.isLifecycleEnabled()) {
+					_logger.lifecycle(
+						"Trying to download " + url + " to " + tmpFile);
+				}
+
 				antBuilder.invokeMethod("get", args);
 			}
 
@@ -634,5 +641,7 @@ public class FileUtil {
 
 	private static final File _TMP_DIR = new File(
 		System.getProperty("java.io.tmpdir"));
+
+	private static final Logger _logger = Logging.getLogger(FileUtil.class);
 
 }

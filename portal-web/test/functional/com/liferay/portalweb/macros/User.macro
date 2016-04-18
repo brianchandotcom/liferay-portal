@@ -967,6 +967,10 @@
 	</command>
 
 	<command name="changePasswordCP">
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Password" />
+		</execute>
+
 		<if>
 			<equals arg1="${userPassword}" arg2="Invalid" />
 			<then>

@@ -150,7 +150,7 @@
 </tr>
 <tr>
 	<td>OPEN_SSO</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Open SSO')]</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'OpenSSO')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -289,7 +289,6 @@
 		<execute function="Click" locator1="Toolbar#MANAGEMENT_BAR_TRASH_ICON_BUTTON" />
 
 		<execute macro="Alert#viewSuccessMessage" />
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No users were found." />
 	</command>
 
 	<command name="searchCP">

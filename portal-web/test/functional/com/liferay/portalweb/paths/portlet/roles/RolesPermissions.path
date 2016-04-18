@@ -658,17 +658,17 @@
 <!--SITE_ADMIN_CONTENT_MESSAGE_BOARDS_RESOURCE_PERMISSIONS_MESSAGES-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_RESOURCE_PERMISSIONS_MESSAGES_ADD_CATEGORY_CHECKBOX</td>
-	<td>//input[contains(@value,'messageboardsADD_CATEGORY')]</td>
+	<td>//input[contains(@value,'message.boardsADD_CATEGORY')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_RESOURCE_PERMISSIONS_MESSAGES_ADD_MESSAGE_CHECKBOX</td>
-	<td>//input[contains(@value,'messageboardsADD_MESSAGE')]</td>
+	<td>//input[contains(@value,'message.boardsADD_MESSAGE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_RESOURCE_PERMISSIONS_MESSAGES_VIEW_CHECKBOX</td>
-	<td>//input[contains(@value,'messageboardsVIEW')]</td>
+	<td>//input[contains(@value,'message.boardsVIEW')]</td>
 	<td></td>
 </tr>
 <tr>

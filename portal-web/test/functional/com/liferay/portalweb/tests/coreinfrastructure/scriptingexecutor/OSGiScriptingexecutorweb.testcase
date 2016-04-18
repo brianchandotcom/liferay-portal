@@ -7,7 +7,7 @@
 	</set-up>
 
 	<command name="ScriptingExecutorWebSmoke" priority="4">
-		<property name="web.plugins.includes" value="sample-scripting-executor-hook" />
+		<property name="hook.plugins.includes" value="sample-scripting-executor-hook" />
 
 		<var name="appName" value="sample-scripting-executor-hook" />
 		<var name="portletName" value="sample-scripting-executor-hook" />

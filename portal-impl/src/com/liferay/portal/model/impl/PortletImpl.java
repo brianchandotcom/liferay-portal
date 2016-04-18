@@ -2556,13 +2556,13 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public boolean isReady() {
-		Boolean ready = _readyMap.get(getRootPortletId());
+		Readiness readiness = _readinessMap.get(getRootPortletId());
 
-		if (ready == null) {
+		if (readiness == null) {
 			return true;
 		}
 		else {
-			return ready;
+			return readiness._ready;
 		}
 	}
 
@@ -3502,33 +3502,46 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public void setReady(boolean ready) {
-		_readyMap.put(getRootPortletId(), ready);
-
 		Registry registry = RegistryUtil.getRegistry();
 
-		if (ready) {
-			ServiceRegistrar<Portlet> serviceRegistrar =
-				registry.getServiceRegistrar(Portlet.class);
+		Readiness readiness = new Readiness(
+			ready, registry.getServiceRegistrar(Portlet.class));
 
-			ServiceRegistrar<Portlet> previousServiceRegistrar =
-				_serviceRegistrars.putIfAbsent(
-					getRootPortletId(), serviceRegistrar);
+		String rootPortletId = getRootPortletId();
 
-			if (previousServiceRegistrar != null) {
-				serviceRegistrar = previousServiceRegistrar;
+		Readiness previousReadiness = _readinessMap.putIfAbsent(
+			rootPortletId, readiness);
+
+		if (previousReadiness != null) {
+			readiness = previousReadiness;
+		}
+
+		synchronized (readiness) {
+			if (readiness != _readinessMap.get(rootPortletId)) {
+				return;
 			}
 
-			Map<String, Object> properties = new HashMap<>();
+			readiness._ready = ready;
 
-			properties.put("javax.portlet.name", getPortletName());
-
-			serviceRegistrar.registerService(Portlet.class, this, properties);
-		}
-		else {
 			ServiceRegistrar<Portlet> serviceRegistrar =
-				_serviceRegistrars.remove(getRootPortletId());
+				readiness._serviceRegistrar;
 
-			if (serviceRegistrar != null) {
+			if (ready) {
+				if (serviceRegistrar.isDestroyed()) {
+					serviceRegistrar = registry.getServiceRegistrar(
+						Portlet.class);
+
+					readiness._serviceRegistrar = serviceRegistrar;
+				}
+
+				Map<String, Object> properties = new HashMap<>();
+
+				properties.put("javax.portlet.name", getPortletName());
+
+				serviceRegistrar.registerService(
+					Portlet.class, this, properties);
+			}
+			else {
 				serviceRegistrar.destroy();
 			}
 		}
@@ -3971,13 +3984,15 @@ public class PortletImpl extends PortletBaseImpl {
 
 	@Override
 	public void unsetReady() {
-		_readyMap.remove(getRootPortletId());
+		Readiness readiness = _readinessMap.remove(getRootPortletId());
 
-		ServiceRegistrar<Portlet> serviceRegistrar = _serviceRegistrars.remove(
-			getRootPortletId());
+		if (readiness != null) {
+			synchronized (readiness) {
+				ServiceRegistrar<Portlet> serviceRegistrar =
+					readiness._serviceRegistrar;
 
-		if (serviceRegistrar != null) {
-			serviceRegistrar.destroy();
+				serviceRegistrar.destroy();
+			}
 		}
 	}
 
@@ -3989,11 +4004,8 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * Map of the ready states of all portlets keyed by their root portlet ID.
 	 */
-	private static final Map<String, Boolean> _readyMap =
+	private static final ConcurrentMap<String, Readiness> _readinessMap =
 		new ConcurrentHashMap<>();
-
-	private static final ConcurrentMap<String, ServiceRegistrar<Portlet>>
-		_serviceRegistrars = new ConcurrentHashMap<>();
 
 	/**
 	 * The action timeout of the portlet.
@@ -4561,5 +4573,19 @@ public class PortletImpl extends PortletBaseImpl {
 	 * The name of the XML-RPC method class of the portlet.
 	 */
 	private String _xmlRpcMethodClass;
+
+	private static class Readiness {
+
+		private Readiness(
+			boolean ready, ServiceRegistrar<Portlet> serviceRegistrar) {
+
+			_ready = ready;
+			_serviceRegistrar = serviceRegistrar;
+		}
+
+		private volatile boolean _ready;
+		private ServiceRegistrar<Portlet> _serviceRegistrar;
+
+	}
 
 }

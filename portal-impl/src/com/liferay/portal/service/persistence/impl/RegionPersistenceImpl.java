@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.RegionImpl;
 import com.liferay.portal.model.impl.RegionModelImpl;
 
@@ -49,6 +48,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -1170,7 +1170,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			Region region = (Region)result;
 
 			if ((countryId != region.getCountryId()) ||
-					!Validator.equals(regionCode, region.getRegionCode())) {
+					!Objects.equals(regionCode, region.getRegionCode())) {
 				result = null;
 			}
 		}

@@ -26,11 +26,12 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
+
+import java.util.Objects;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -104,10 +105,10 @@ public class ComboServletTest extends PowerMockito {
 
 					Object[] args = invocation.getArguments();
 
-					if (Validator.equals(_TEST_PORTLET_ID, args[0])) {
+					if (Objects.equals(_TEST_PORTLET_ID, args[0])) {
 						return _testPortlet;
 					}
-					else if (Validator.equals(PortletKeys.PORTAL, args[0])) {
+					else if (Objects.equals(PortletKeys.PORTAL, args[0])) {
 						return _portalPortlet;
 					}
 

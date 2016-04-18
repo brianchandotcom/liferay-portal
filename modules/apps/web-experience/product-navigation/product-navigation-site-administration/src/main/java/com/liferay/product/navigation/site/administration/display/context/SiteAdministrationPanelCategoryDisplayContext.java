@@ -46,6 +46,7 @@ import com.liferay.site.util.GroupURLProvider;
 import com.liferay.site.util.RecentGroupManager;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
@@ -310,7 +311,7 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		ProductMenuDisplayContext productMenuDisplayContext =
 			new ProductMenuDisplayContext(_portletRequest, _portletResponse);
 
-		_collapsedPanel = Validator.equals(
+		_collapsedPanel = Objects.equals(
 			_panelCategory.getKey(),
 			productMenuDisplayContext.getRootPanelCategoryKey());
 

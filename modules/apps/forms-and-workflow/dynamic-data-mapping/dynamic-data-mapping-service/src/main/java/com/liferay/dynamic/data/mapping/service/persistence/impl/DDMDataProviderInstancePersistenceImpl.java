@@ -59,6 +59,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -207,8 +208,7 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMDataProviderInstance ddmDataProviderInstance : list) {
-					if (!Validator.equals(uuid,
-								ddmDataProviderInstance.getUuid())) {
+					if (!Objects.equals(uuid, ddmDataProviderInstance.getUuid())) {
 						list = null;
 
 						break;
@@ -733,7 +733,7 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 		if (result instanceof DDMDataProviderInstance) {
 			DDMDataProviderInstance ddmDataProviderInstance = (DDMDataProviderInstance)result;
 
-			if (!Validator.equals(uuid, ddmDataProviderInstance.getUuid()) ||
+			if (!Objects.equals(uuid, ddmDataProviderInstance.getUuid()) ||
 					(groupId != ddmDataProviderInstance.getGroupId())) {
 				result = null;
 			}
@@ -1030,8 +1030,7 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMDataProviderInstance ddmDataProviderInstance : list) {
-					if (!Validator.equals(uuid,
-								ddmDataProviderInstance.getUuid()) ||
+					if (!Objects.equals(uuid, ddmDataProviderInstance.getUuid()) ||
 							(companyId != ddmDataProviderInstance.getCompanyId())) {
 						list = null;
 

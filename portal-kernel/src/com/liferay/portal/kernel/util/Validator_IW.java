@@ -78,6 +78,10 @@ public class Validator_IW {
 		return Validator.equals(long1, long2);
 	}
 
+	/**
+	 * @deprecated
+	 */
+	@Deprecated
 	public boolean equals(java.lang.Object obj1, java.lang.Object obj2) {
 		return Validator.equals(obj1, obj2);
 	}

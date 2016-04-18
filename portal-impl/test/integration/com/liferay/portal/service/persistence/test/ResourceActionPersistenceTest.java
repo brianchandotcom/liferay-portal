@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
@@ -52,6 +51,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -389,11 +389,10 @@ public class ResourceActionPersistenceTest {
 
 		ResourceAction existingResourceAction = _persistence.findByPrimaryKey(newResourceAction.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(existingResourceAction.getName(),
+		Assert.assertTrue(Objects.equals(existingResourceAction.getName(),
 				ReflectionTestUtil.invoke(existingResourceAction,
 					"getOriginalName", new Class<?>[0])));
-		Assert.assertTrue(Validator.equals(
-				existingResourceAction.getActionId(),
+		Assert.assertTrue(Objects.equals(existingResourceAction.getActionId(),
 				ReflectionTestUtil.invoke(existingResourceAction,
 					"getOriginalActionId", new Class<?>[0])));
 	}

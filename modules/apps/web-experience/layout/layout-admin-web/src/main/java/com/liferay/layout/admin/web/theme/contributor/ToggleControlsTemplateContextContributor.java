@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,7 +61,7 @@ public class ToggleControlsTemplateContextContributor
 		String cssClass = GetterUtil.getString(
 			contextObjects.get("bodyCssClass"));
 
-		if (Validator.equals(liferayToggleControls, "visible")) {
+		if (Objects.equals(liferayToggleControls, "visible")) {
 			cssClass += " controls-visible";
 		}
 		else {

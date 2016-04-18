@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.ResourceBlockImpl;
 import com.liferay.portal.model.impl.ResourceBlockModelImpl;
 
@@ -51,6 +50,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -210,7 +210,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			if ((list != null) && !list.isEmpty()) {
 				for (ResourceBlock resourceBlock : list) {
 					if ((companyId != resourceBlock.getCompanyId()) ||
-							!Validator.equals(name, resourceBlock.getName())) {
+							!Objects.equals(name, resourceBlock.getName())) {
 						list = null;
 
 						break;
@@ -814,7 +814,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 				for (ResourceBlock resourceBlock : list) {
 					if ((companyId != resourceBlock.getCompanyId()) ||
 							(groupId != resourceBlock.getGroupId()) ||
-							!Validator.equals(name, resourceBlock.getName())) {
+							!Objects.equals(name, resourceBlock.getName())) {
 						list = null;
 
 						break;
@@ -1416,8 +1416,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 
 			if ((companyId != resourceBlock.getCompanyId()) ||
 					(groupId != resourceBlock.getGroupId()) ||
-					!Validator.equals(name, resourceBlock.getName()) ||
-					!Validator.equals(permissionsHash,
+					!Objects.equals(name, resourceBlock.getName()) ||
+					!Objects.equals(permissionsHash,
 						resourceBlock.getPermissionsHash())) {
 				result = null;
 			}

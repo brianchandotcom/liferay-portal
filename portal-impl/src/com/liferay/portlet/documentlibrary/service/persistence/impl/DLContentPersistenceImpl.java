@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import com.liferay.portlet.documentlibrary.model.impl.DLContentImpl;
 import com.liferay.portlet.documentlibrary.model.impl.DLContentModelImpl;
@@ -55,6 +54,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -770,7 +770,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 				for (DLContent dlContent : list) {
 					if ((companyId != dlContent.getCompanyId()) ||
 							(repositoryId != dlContent.getRepositoryId()) ||
-							!Validator.equals(path, dlContent.getPath())) {
+							!Objects.equals(path, dlContent.getPath())) {
 						list = null;
 
 						break;
@@ -1984,8 +1984,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 
 			if ((companyId != dlContent.getCompanyId()) ||
 					(repositoryId != dlContent.getRepositoryId()) ||
-					!Validator.equals(path, dlContent.getPath()) ||
-					!Validator.equals(version, dlContent.getVersion())) {
+					!Objects.equals(path, dlContent.getPath()) ||
+					!Objects.equals(version, dlContent.getVersion())) {
 				result = null;
 			}
 		}

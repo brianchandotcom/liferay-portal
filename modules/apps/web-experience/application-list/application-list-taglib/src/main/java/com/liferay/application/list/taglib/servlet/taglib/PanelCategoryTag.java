@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -97,7 +97,7 @@ public class PanelCategoryTag extends BasePanelTag {
 			String state = SessionClicks.get(
 				request, PanelCategory.class.getName() + getId(), "closed");
 
-			if (Validator.equals(state, "open")) {
+			if (Objects.equals(state, "open")) {
 				return true;
 			}
 		}

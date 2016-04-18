@@ -995,6 +995,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = formatAssertEquals(fileName, newContent);
 
+		newContent = formatValidatorEquals(newContent);
+
 		newContent = fixMissingEmptyLineAfterSettingVariable(newContent);
 
 		newContent = getCombinedLinesContent(
@@ -2790,6 +2792,28 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			fileName, content, className, packagePath);
 	}
 
+	protected String formatValidatorEquals(String content) {
+		Matcher matcher = _validatorEqualsPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		content = StringUtil.replaceFirst(
+			content, "Validator.equals(", "Objects.equals(");
+
+		if (content.contains("import java.util.Objects;")) {
+			return content;
+		}
+
+		int pos = content.indexOf("\npackage ");
+
+		pos = content.indexOf("\n", pos + 1);
+
+		return StringUtil.insert(
+			content, "import java.util.Objects;\n", pos + 1);
+	}
+
 	protected String getCombinedLinesContent(String content, Pattern pattern) {
 		Matcher matcher = pattern.matcher(content);
 
@@ -4294,5 +4318,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
 	private List<String> _upgradeServiceUtilExcludes;
+	private final Pattern _validatorEqualsPattern = Pattern.compile(
+		"\\WValidator\\.equals\\(");
 
 }

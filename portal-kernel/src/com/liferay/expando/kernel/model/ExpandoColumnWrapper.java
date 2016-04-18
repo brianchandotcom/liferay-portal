@@ -18,12 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -406,7 +406,7 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 
 		ExpandoColumnWrapper expandoColumnWrapper = (ExpandoColumnWrapper)obj;
 
-		if (Validator.equals(_expandoColumn, expandoColumnWrapper._expandoColumn)) {
+		if (Objects.equals(_expandoColumn, expandoColumnWrapper._expandoColumn)) {
 			return true;
 		}
 

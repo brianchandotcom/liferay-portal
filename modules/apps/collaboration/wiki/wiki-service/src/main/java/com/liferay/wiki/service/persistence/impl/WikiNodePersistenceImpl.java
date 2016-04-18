@@ -56,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -199,7 +200,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiNode wikiNode : list) {
-					if (!Validator.equals(uuid, wikiNode.getUuid())) {
+					if (!Objects.equals(uuid, wikiNode.getUuid())) {
 						list = null;
 
 						break;
@@ -717,7 +718,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		if (result instanceof WikiNode) {
 			WikiNode wikiNode = (WikiNode)result;
 
-			if (!Validator.equals(uuid, wikiNode.getUuid()) ||
+			if (!Objects.equals(uuid, wikiNode.getUuid()) ||
 					(groupId != wikiNode.getGroupId())) {
 				result = null;
 			}
@@ -1009,7 +1010,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WikiNode wikiNode : list) {
-					if (!Validator.equals(uuid, wikiNode.getUuid()) ||
+					if (!Objects.equals(uuid, wikiNode.getUuid()) ||
 							(companyId != wikiNode.getCompanyId())) {
 						list = null;
 
@@ -2916,7 +2917,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			WikiNode wikiNode = (WikiNode)result;
 
 			if ((groupId != wikiNode.getGroupId()) ||
-					!Validator.equals(name, wikiNode.getName())) {
+					!Objects.equals(name, wikiNode.getName())) {
 				result = null;
 			}
 		}

@@ -22,13 +22,13 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -871,7 +871,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 
 		MDRRuleWrapper mdrRuleWrapper = (MDRRuleWrapper)obj;
 
-		if (Validator.equals(_mdrRule, mdrRuleWrapper._mdrRule)) {
+		if (Objects.equals(_mdrRule, mdrRuleWrapper._mdrRule)) {
 			return true;
 		}
 

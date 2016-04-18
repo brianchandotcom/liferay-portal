@@ -19,12 +19,12 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -445,7 +445,7 @@ public class PluginSettingWrapper implements PluginSetting,
 
 		PluginSettingWrapper pluginSettingWrapper = (PluginSettingWrapper)obj;
 
-		if (Validator.equals(_pluginSetting, pluginSettingWrapper._pluginSetting)) {
+		if (Objects.equals(_pluginSetting, pluginSettingWrapper._pluginSetting)) {
 			return true;
 		}
 

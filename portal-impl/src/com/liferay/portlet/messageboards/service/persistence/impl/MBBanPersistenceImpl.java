@@ -57,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -199,7 +200,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBBan mbBan : list) {
-					if (!Validator.equals(uuid, mbBan.getUuid())) {
+					if (!Objects.equals(uuid, mbBan.getUuid())) {
 						list = null;
 
 						break;
@@ -713,7 +714,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		if (result instanceof MBBan) {
 			MBBan mbBan = (MBBan)result;
 
-			if (!Validator.equals(uuid, mbBan.getUuid()) ||
+			if (!Objects.equals(uuid, mbBan.getUuid()) ||
 					(groupId != mbBan.getGroupId())) {
 				result = null;
 			}
@@ -1004,7 +1005,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBBan mbBan : list) {
-					if (!Validator.equals(uuid, mbBan.getUuid()) ||
+					if (!Objects.equals(uuid, mbBan.getUuid()) ||
 							(companyId != mbBan.getCompanyId())) {
 						list = null;
 

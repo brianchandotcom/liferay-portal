@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import com.liferay.portlet.social.model.impl.SocialActivityCounterImpl;
 import com.liferay.portlet.social.model.impl.SocialActivityCounterModelImpl;
@@ -53,6 +52,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -1911,7 +1911,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 			if ((groupId != socialActivityCounter.getGroupId()) ||
 					(classNameId != socialActivityCounter.getClassNameId()) ||
 					(classPK != socialActivityCounter.getClassPK()) ||
-					!Validator.equals(name, socialActivityCounter.getName()) ||
+					!Objects.equals(name, socialActivityCounter.getName()) ||
 					(ownerType != socialActivityCounter.getOwnerType()) ||
 					(startPeriod != socialActivityCounter.getStartPeriod())) {
 				result = null;
@@ -2268,7 +2268,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 			if ((groupId != socialActivityCounter.getGroupId()) ||
 					(classNameId != socialActivityCounter.getClassNameId()) ||
 					(classPK != socialActivityCounter.getClassPK()) ||
-					!Validator.equals(name, socialActivityCounter.getName()) ||
+					!Objects.equals(name, socialActivityCounter.getName()) ||
 					(ownerType != socialActivityCounter.getOwnerType()) ||
 					(endPeriod != socialActivityCounter.getEndPeriod())) {
 				result = null;

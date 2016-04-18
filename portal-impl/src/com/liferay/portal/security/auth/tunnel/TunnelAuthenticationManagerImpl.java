@@ -37,6 +37,8 @@ import java.net.HttpURLConnection;
 
 import java.security.Key;
 
+import java.util.Objects;
+
 import javax.crypto.spec.SecretKeySpec;
 
 import javax.servlet.http.HttpServletRequest;
@@ -100,7 +102,7 @@ public class TunnelAuthenticationManagerImpl
 		String password = httpAuthorizationHeader.getAuthParameter(
 			HttpAuthorizationHeader.AUTH_PARAMETER_NAME_PASSWORD);
 
-		if (!Validator.equals(expectedPassword, password)) {
+		if (!Objects.equals(expectedPassword, password)) {
 			AuthException authException = new RemoteAuthException();
 
 			authException.setType(RemoteAuthException.WRONG_SHARED_SECRET);

@@ -57,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -200,7 +201,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBThreadFlag mbThreadFlag : list) {
-					if (!Validator.equals(uuid, mbThreadFlag.getUuid())) {
+					if (!Objects.equals(uuid, mbThreadFlag.getUuid())) {
 						list = null;
 
 						break;
@@ -718,7 +719,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		if (result instanceof MBThreadFlag) {
 			MBThreadFlag mbThreadFlag = (MBThreadFlag)result;
 
-			if (!Validator.equals(uuid, mbThreadFlag.getUuid()) ||
+			if (!Objects.equals(uuid, mbThreadFlag.getUuid()) ||
 					(groupId != mbThreadFlag.getGroupId())) {
 				result = null;
 			}
@@ -1009,7 +1010,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBThreadFlag mbThreadFlag : list) {
-					if (!Validator.equals(uuid, mbThreadFlag.getUuid()) ||
+					if (!Objects.equals(uuid, mbThreadFlag.getUuid()) ||
 							(companyId != mbThreadFlag.getCompanyId())) {
 						list = null;
 

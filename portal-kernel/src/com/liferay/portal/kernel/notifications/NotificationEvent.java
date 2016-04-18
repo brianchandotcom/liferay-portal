@@ -16,10 +16,11 @@ package com.liferay.portal.kernel.notifications;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
+
+import java.util.Objects;
 
 /**
  * @author Edward Han
@@ -46,7 +47,7 @@ public class NotificationEvent implements Serializable {
 
 		NotificationEvent notificationEvent = (NotificationEvent)obj;
 
-		if (Validator.equals(getUuid(), notificationEvent.getUuid())) {
+		if (Objects.equals(getUuid(), notificationEvent.getUuid())) {
 			return true;
 		}
 

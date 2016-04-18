@@ -31,6 +31,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -658,7 +659,7 @@ public class ArrayUtil {
 		}
 
 		for (int i = 0; i < array.length; i++) {
-			if (Validator.equals(value, array[i])) {
+			if (Objects.equals(value, array[i])) {
 				return true;
 			}
 		}
@@ -694,7 +695,7 @@ public class ArrayUtil {
 				}
 			}
 			else {
-				if (Validator.equals(array[i], value)) {
+				if (Objects.equals(array[i], value)) {
 					return true;
 				}
 			}

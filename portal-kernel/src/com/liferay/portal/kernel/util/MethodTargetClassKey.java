@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.util;
 
 import java.lang.reflect.Method;
 
+import java.util.Objects;
+
 /**
  * @author Shuyang Zhou
  * @author Brian Wing Shun Chan
@@ -42,7 +44,7 @@ public class MethodTargetClassKey {
 		MethodTargetClassKey methodTargetClassKey = (MethodTargetClassKey)obj;
 
 		if ((_targetClass == methodTargetClassKey._targetClass) &&
-			Validator.equals(_method, methodTargetClassKey._method)) {
+			Objects.equals(_method, methodTargetClassKey._method)) {
 
 			return true;
 		}

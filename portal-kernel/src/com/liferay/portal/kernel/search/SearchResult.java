@@ -17,10 +17,10 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Eudaldo Alonso
@@ -59,7 +59,7 @@ public class SearchResult {
 		SearchResult searchResult = (SearchResult)obj;
 
 		if ((_classPK == searchResult._classPK) &&
-			Validator.equals(_className, searchResult._className)) {
+			Objects.equals(_className, searchResult._className)) {
 
 			return true;
 		}

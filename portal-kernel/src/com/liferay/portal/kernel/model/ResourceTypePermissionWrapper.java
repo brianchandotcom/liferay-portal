@@ -19,12 +19,12 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -403,7 +403,7 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission,
 
 		ResourceTypePermissionWrapper resourceTypePermissionWrapper = (ResourceTypePermissionWrapper)obj;
 
-		if (Validator.equals(_resourceTypePermission,
+		if (Objects.equals(_resourceTypePermission,
 					resourceTypePermissionWrapper._resourceTypePermission)) {
 			return true;
 		}

@@ -14,13 +14,13 @@
 
 package com.liferay.portal.kernel.io;
 
-import com.liferay.portal.kernel.util.Validator;
-
 import java.io.File;
 import java.io.Serializable;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import java.util.Objects;
 
 /**
  * @author Shuyang Zhou
@@ -47,7 +47,7 @@ public class PathHolder implements Serializable {
 
 		PathHolder pathHolder = (PathHolder)obj;
 
-		if (Validator.equals(toString(), pathHolder.toString())) {
+		if (Objects.equals(toString(), pathHolder.toString())) {
 			return true;
 		}
 

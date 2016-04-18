@@ -15,12 +15,12 @@
 package com.liferay.portal.remote.rest.extender.test.activator.configuration;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.remote.rest.extender.test.service.Greeter;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -150,7 +150,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 							HttpWhiteboardConstants.
 								HTTP_WHITEBOARD_CONTEXT_NAME);
 
-						if (Validator.equals(contextName, "rest-test")) {
+						if (Objects.equals(contextName, "rest-test")) {
 							countDownLatch.countDown();
 
 							close();

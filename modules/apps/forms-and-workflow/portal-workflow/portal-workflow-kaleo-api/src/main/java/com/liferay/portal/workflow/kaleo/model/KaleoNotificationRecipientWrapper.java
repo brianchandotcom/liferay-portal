@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -690,7 +690,7 @@ public class KaleoNotificationRecipientWrapper
 
 		KaleoNotificationRecipientWrapper kaleoNotificationRecipientWrapper = (KaleoNotificationRecipientWrapper)obj;
 
-		if (Validator.equals(_kaleoNotificationRecipient,
+		if (Objects.equals(_kaleoNotificationRecipient,
 					kaleoNotificationRecipientWrapper._kaleoNotificationRecipient)) {
 			return true;
 		}

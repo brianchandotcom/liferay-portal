@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.concurrent;
 
-import com.liferay.portal.kernel.util.Validator;
+import java.util.Objects;
 
 /**
  * <p>
@@ -44,7 +44,7 @@ public class ReadWriteLockKey<T> {
 
 		ReadWriteLockKey<T> readWriteLockKey = (ReadWriteLockKey<T>)obj;
 
-		if (Validator.equals(_key, readWriteLockKey._key)) {
+		if (Objects.equals(_key, readWriteLockKey._key)) {
 			return true;
 		}
 

@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.util;
 
 import java.io.Serializable;
 
+import java.util.Objects;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -47,7 +49,7 @@ public class KeyValuePair implements Comparable<KeyValuePair>, Serializable {
 
 		KeyValuePair kvp = (KeyValuePair)obj;
 
-		if (Validator.equals(_key, kvp._key)) {
+		if (Objects.equals(_key, kvp._key)) {
 			return true;
 		}
 

@@ -18,12 +18,12 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -324,7 +324,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 
 		ExpandoTableWrapper expandoTableWrapper = (ExpandoTableWrapper)obj;
 
-		if (Validator.equals(_expandoTable, expandoTableWrapper._expandoTable)) {
+		if (Objects.equals(_expandoTable, expandoTableWrapper._expandoTable)) {
 			return true;
 		}
 

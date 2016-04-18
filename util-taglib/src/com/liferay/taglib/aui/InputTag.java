@@ -30,6 +30,7 @@ import com.liferay.taglib.aui.base.BaseInputTag;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -70,14 +71,14 @@ public class InputTag extends BaseInputTag {
 			baseType = ModelHintsUtil.getType(model.getName(), getField());
 		}
 		else if (Validator.isNotNull(type)) {
-			if (Validator.equals(type, "checkbox") ||
-				Validator.equals(type, "radio") ||
-				Validator.equals(type, "resource")) {
+			if (Objects.equals(type, "checkbox") ||
+				Objects.equals(type, "radio") ||
+				Objects.equals(type, "resource")) {
 
 				baseType = type;
 			}
-			else if (Validator.equals(type, "toggle-card") ||
-					 Validator.equals(type, "toggle-switch")) {
+			else if (Objects.equals(type, "toggle-card") ||
+					 Objects.equals(type, "toggle-switch")) {
 
 				baseType = "checkbox";
 			}
@@ -238,8 +239,8 @@ public class InputTag extends BaseInputTag {
 
 				id = AUIUtil.normalizeId(fieldParam);
 			}
-			else if (!Validator.equals(type, "assetTags") &&
-					 !Validator.equals(type, "radio")) {
+			else if (!Objects.equals(type, "assetTags") &&
+					 !Objects.equals(type, "radio")) {
 
 				id = AUIUtil.normalizeId(name);
 			}
@@ -251,7 +252,7 @@ public class InputTag extends BaseInputTag {
 
 		String forLabel = id;
 
-		if (Validator.equals(type, "assetTags")) {
+		if (Objects.equals(type, "assetTags")) {
 			forLabel = forLabel.concat("assetTagNames");
 		}
 
@@ -270,7 +271,7 @@ public class InputTag extends BaseInputTag {
 		String title = getTitle();
 
 		if ((title == null) &&
-			(Validator.isNull(label) || Validator.equals(type, "image"))) {
+			(Validator.isNull(label) || Objects.equals(type, "image"))) {
 
 			title = TextFormatter.format(name, TextFormatter.P);
 		}
@@ -309,7 +310,7 @@ public class InputTag extends BaseInputTag {
 	}
 
 	protected void updateFormCheckboxNames() {
-		if (!Validator.equals(getBaseType(), "checkbox")) {
+		if (!Objects.equals(getBaseType(), "checkbox")) {
 			return;
 		}
 

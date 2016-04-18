@@ -17,7 +17,8 @@ package com.liferay.portal.upgrade.registry;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Objects;
 
 /**
  * @author Miguel Pastor
@@ -46,12 +47,12 @@ public class UpgradeInfo {
 
 		UpgradeInfo upgradeInfo = (UpgradeInfo)object;
 
-		if (Validator.equals(
+		if (Objects.equals(
 				_fromSchemaVersionString,
 				upgradeInfo._fromSchemaVersionString) &&
-			Validator.equals(
+			Objects.equals(
 				_toSchemaVersionString, upgradeInfo._toSchemaVersionString) &&
-			Validator.equals(_upgradeStep, upgradeInfo._upgradeStep)) {
+			Objects.equals(_upgradeStep, upgradeInfo._upgradeStep)) {
 
 			return true;
 		}

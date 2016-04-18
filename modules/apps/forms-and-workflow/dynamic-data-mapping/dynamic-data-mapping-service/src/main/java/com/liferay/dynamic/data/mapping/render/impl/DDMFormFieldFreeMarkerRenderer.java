@@ -52,6 +52,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -335,8 +336,8 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 					fields, ddmFormField, portletNamespace, namespace, mode,
 					readOnly, showEmptyFieldLabel, locale));
 
-			if (Validator.equals(ddmFormField.getType(), "select") ||
-				Validator.equals(ddmFormField.getType(), "radio")) {
+			if (Objects.equals(ddmFormField.getType(), "select") ||
+				Objects.equals(ddmFormField.getType(), "radio")) {
 
 				Map<String, Object> optionFreeMarkerContext = new HashMap<>(
 					freeMarkerContext);

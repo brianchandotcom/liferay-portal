@@ -18,9 +18,10 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
+
+import java.util.Objects;
 
 /**
  * @author Milen Dyankov
@@ -46,8 +47,8 @@ public class Capability implements Serializable {
 
 		Capability capability = (Capability)obj;
 
-		if (Validator.equals(_name, capability._name) &&
-			Validator.equals(_value, capability._value)) {
+		if (Objects.equals(_name, capability._name) &&
+			Objects.equals(_value, capability._value)) {
 
 			return true;
 		}

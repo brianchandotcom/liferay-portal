@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.CountryImpl;
 import com.liferay.portal.model.impl.CountryModelImpl;
 
@@ -49,6 +48,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -158,7 +158,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		if (result instanceof Country) {
 			Country country = (Country)result;
 
-			if (!Validator.equals(name, country.getName())) {
+			if (!Objects.equals(name, country.getName())) {
 				result = null;
 			}
 		}
@@ -389,7 +389,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		if (result instanceof Country) {
 			Country country = (Country)result;
 
-			if (!Validator.equals(a2, country.getA2())) {
+			if (!Objects.equals(a2, country.getA2())) {
 				result = null;
 			}
 		}
@@ -620,7 +620,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		if (result instanceof Country) {
 			Country country = (Country)result;
 
-			if (!Validator.equals(a3, country.getA3())) {
+			if (!Objects.equals(a3, country.getA3())) {
 				result = null;
 			}
 		}

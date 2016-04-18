@@ -27,12 +27,12 @@ import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * @author Charles May
@@ -357,10 +357,10 @@ public class PermissionCacheUtil {
 			PermissionKey permissionKey = (PermissionKey)obj;
 
 			if ((permissionKey._groupId == _groupId) &&
-				Validator.equals(permissionKey._name, _name) &&
-				Validator.equals(permissionKey._primKey, _primKey) &&
+				Objects.equals(permissionKey._name, _name) &&
+				Objects.equals(permissionKey._primKey, _primKey) &&
 				Arrays.equals(permissionKey._roleIds, _roleIds) &&
-				Validator.equals(permissionKey._actionId, _actionId)) {
+				Objects.equals(permissionKey._actionId, _actionId)) {
 
 				return true;
 			}
@@ -440,7 +440,7 @@ public class PermissionCacheUtil {
 			if ((resourceBlockIdsKey._companyId == _companyId) &&
 				(resourceBlockIdsKey._groupId == _groupId) &&
 				(resourceBlockIdsKey._userId == _userId) &&
-				Validator.equals(resourceBlockIdsKey._name, _name)) {
+				Objects.equals(resourceBlockIdsKey._name, _name)) {
 
 				return true;
 			}
@@ -564,7 +564,7 @@ public class PermissionCacheUtil {
 
 			if ((UserPrimaryKeyRoleKey._userId == _userId) &&
 				(UserPrimaryKeyRoleKey._primaryKey == _primaryKey) &&
-				Validator.equals(UserPrimaryKeyRoleKey._name, _name)) {
+				Objects.equals(UserPrimaryKeyRoleKey._name, _name)) {
 
 				return true;
 			}

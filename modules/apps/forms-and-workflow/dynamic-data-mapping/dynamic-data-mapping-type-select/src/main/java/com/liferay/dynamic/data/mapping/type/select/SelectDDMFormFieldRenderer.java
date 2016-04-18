@@ -26,11 +26,11 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -72,7 +72,7 @@ public class SelectDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 		String dataSourceType = GetterUtil.getString(
 			ddmFormField.getProperty("dataSourceType"), "manual");
 
-		if (Validator.equals(dataSourceType, "manual")) {
+		if (Objects.equals(dataSourceType, "manual")) {
 			return ddmFormField.getDDMFormFieldOptions();
 		}
 

@@ -61,6 +61,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -210,7 +211,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
-					if (!Validator.equals(uuid, journalArticle.getUuid())) {
+					if (!Objects.equals(uuid, journalArticle.getUuid())) {
 						list = null;
 
 						break;
@@ -730,7 +731,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		if (result instanceof JournalArticle) {
 			JournalArticle journalArticle = (JournalArticle)result;
 
-			if (!Validator.equals(uuid, journalArticle.getUuid()) ||
+			if (!Objects.equals(uuid, journalArticle.getUuid()) ||
 					(groupId != journalArticle.getGroupId())) {
 				result = null;
 			}
@@ -1026,7 +1027,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
-					if (!Validator.equals(uuid, journalArticle.getUuid()) ||
+					if (!Objects.equals(uuid, journalArticle.getUuid()) ||
 							(companyId != journalArticle.getCompanyId())) {
 						list = null;
 
@@ -3511,7 +3512,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
-					if (!Validator.equals(DDMStructureKey,
+					if (!Objects.equals(DDMStructureKey,
 								journalArticle.getDDMStructureKey())) {
 						list = null;
 
@@ -4383,7 +4384,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
-					if (!Validator.equals(DDMTemplateKey,
+					if (!Objects.equals(DDMTemplateKey,
 								journalArticle.getDDMTemplateKey())) {
 						list = null;
 
@@ -4939,7 +4940,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
-					if (!Validator.equals(layoutUuid,
+					if (!Objects.equals(layoutUuid,
 								journalArticle.getLayoutUuid())) {
 						list = null;
 
@@ -9743,7 +9744,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
 					if ((groupId != journalArticle.getGroupId()) ||
-							!Validator.equals(articleId,
+							!Objects.equals(articleId,
 								journalArticle.getArticleId())) {
 						list = null;
 
@@ -10751,7 +10752,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
 					if ((groupId != journalArticle.getGroupId()) ||
-							!Validator.equals(urlTitle,
+							!Objects.equals(urlTitle,
 								journalArticle.getUrlTitle())) {
 						list = null;
 
@@ -11763,7 +11764,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
 					if ((groupId != journalArticle.getGroupId()) ||
-							!Validator.equals(DDMStructureKey,
+							!Objects.equals(DDMStructureKey,
 								journalArticle.getDDMStructureKey())) {
 						list = null;
 
@@ -12784,7 +12785,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
 					if ((groupId != journalArticle.getGroupId()) ||
-							!Validator.equals(DDMTemplateKey,
+							!Objects.equals(DDMTemplateKey,
 								journalArticle.getDDMTemplateKey())) {
 						list = null;
 
@@ -13802,7 +13803,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
 					if ((groupId != journalArticle.getGroupId()) ||
-							!Validator.equals(layoutUuid,
+							!Objects.equals(layoutUuid,
 								journalArticle.getLayoutUuid())) {
 						list = null;
 
@@ -14795,7 +14796,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
 					if ((groupId != journalArticle.getGroupId()) ||
-							Validator.equals(layoutUuid,
+							Objects.equals(layoutUuid,
 								journalArticle.getLayoutUuid())) {
 						list = null;
 
@@ -18348,7 +18349,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
 					if ((classNameId != journalArticle.getClassNameId()) ||
-							!Validator.equals(DDMTemplateKey,
+							!Objects.equals(DDMTemplateKey,
 								journalArticle.getDDMTemplateKey())) {
 						list = null;
 
@@ -23879,7 +23880,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			if ((groupId != journalArticle.getGroupId()) ||
 					(classNameId != journalArticle.getClassNameId()) ||
-					!Validator.equals(DDMStructureKey,
+					!Objects.equals(DDMStructureKey,
 						journalArticle.getDDMStructureKey())) {
 				result = null;
 			}
@@ -24217,7 +24218,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				for (JournalArticle journalArticle : list) {
 					if ((groupId != journalArticle.getGroupId()) ||
 							(classNameId != journalArticle.getClassNameId()) ||
-							!Validator.equals(DDMTemplateKey,
+							!Objects.equals(DDMTemplateKey,
 								journalArticle.getDDMTemplateKey())) {
 						list = null;
 
@@ -25304,7 +25305,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				for (JournalArticle journalArticle : list) {
 					if ((groupId != journalArticle.getGroupId()) ||
 							(classNameId != journalArticle.getClassNameId()) ||
-							!Validator.equals(layoutUuid,
+							!Objects.equals(layoutUuid,
 								journalArticle.getLayoutUuid())) {
 						list = null;
 
@@ -26337,7 +26338,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			JournalArticle journalArticle = (JournalArticle)result;
 
 			if ((groupId != journalArticle.getGroupId()) ||
-					!Validator.equals(articleId, journalArticle.getArticleId()) ||
+					!Objects.equals(articleId, journalArticle.getArticleId()) ||
 					(version != journalArticle.getVersion())) {
 				result = null;
 			}
@@ -26667,7 +26668,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
 					if ((groupId != journalArticle.getGroupId()) ||
-							!Validator.equals(articleId,
+							!Objects.equals(articleId,
 								journalArticle.getArticleId()) ||
 							(status != journalArticle.getStatus())) {
 						list = null;
@@ -27727,7 +27728,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
 					if ((groupId != journalArticle.getGroupId()) ||
-							!Validator.equals(articleId,
+							!Objects.equals(articleId,
 								journalArticle.getArticleId()) ||
 							!ArrayUtil.contains(statuses,
 								journalArticle.getStatus())) {
@@ -28312,7 +28313,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
 					if ((groupId != journalArticle.getGroupId()) ||
-							!Validator.equals(articleId,
+							!Objects.equals(articleId,
 								journalArticle.getArticleId()) ||
 							(status == journalArticle.getStatus())) {
 						list = null;
@@ -29391,7 +29392,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
 					if ((groupId != journalArticle.getGroupId()) ||
-							!Validator.equals(urlTitle,
+							!Objects.equals(urlTitle,
 								journalArticle.getUrlTitle()) ||
 							(status != journalArticle.getStatus())) {
 						list = null;

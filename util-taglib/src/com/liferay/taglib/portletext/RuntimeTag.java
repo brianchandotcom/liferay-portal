@@ -50,6 +50,7 @@ import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.util.PortalIncludeUtil;
 
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -175,7 +176,7 @@ public class RuntimeTag extends TagSupport {
 
 		Map<String, String[]> parameterMap = request.getParameterMap();
 
-		if (!Validator.equals(
+		if (!Objects.equals(
 				portletInstance.getPortletInstanceKey(),
 				request.getParameter("p_p_id"))) {
 
@@ -194,7 +195,7 @@ public class RuntimeTag extends TagSupport {
 
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-			if (Validator.equals(
+			if (Objects.equals(
 					portletDisplay.getId(),
 					portletInstance.getPortletInstanceKey())) {
 

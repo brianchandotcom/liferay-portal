@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 
 import java.net.URL;
 
+import java.util.Objects;
+
 import javax.servlet.ServletContext;
 
 /**
@@ -49,7 +51,7 @@ public class ThemeHelper {
 
 		String contextPath = servletContext.getContextPath();
 
-		if (!Validator.equals(
+		if (!Objects.equals(
 				PortalUtil.getPathContext(contextPath),
 				PortalUtil.getPathContext())) {
 

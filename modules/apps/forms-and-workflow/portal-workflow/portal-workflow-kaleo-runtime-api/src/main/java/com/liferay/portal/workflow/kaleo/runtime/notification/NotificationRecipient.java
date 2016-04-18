@@ -22,6 +22,8 @@ import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
 
 import java.io.UnsupportedEncodingException;
 
+import java.util.Objects;
+
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
@@ -67,7 +69,7 @@ public class NotificationRecipient {
 			(NotificationRecipient)obj;
 
 		if ((_companyId == notificationRecipient._companyId) &&
-			Validator.equals(
+			Objects.equals(
 				_emailAddress, notificationRecipient._emailAddress) &&
 			(_userId == notificationRecipient._userId)) {
 

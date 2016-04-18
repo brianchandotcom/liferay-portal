@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -49,6 +48,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -202,7 +202,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalContentSearch journalContentSearch : list) {
-					if (!Validator.equals(portletId,
+					if (!Objects.equals(portletId,
 								journalContentSearch.getPortletId())) {
 						list = null;
 
@@ -759,7 +759,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalContentSearch journalContentSearch : list) {
-					if (!Validator.equals(articleId,
+					if (!Objects.equals(articleId,
 								journalContentSearch.getArticleId())) {
 						list = null;
 
@@ -1877,7 +1877,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalContentSearch journalContentSearch : list) {
 					if ((groupId != journalContentSearch.getGroupId()) ||
-							!Validator.equals(articleId,
+							!Objects.equals(articleId,
 								journalContentSearch.getArticleId())) {
 						list = null;
 
@@ -3078,7 +3078,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 				for (JournalContentSearch journalContentSearch : list) {
 					if ((groupId != journalContentSearch.getGroupId()) ||
 							(privateLayout != journalContentSearch.getPrivateLayout()) ||
-							!Validator.equals(articleId,
+							!Objects.equals(articleId,
 								journalContentSearch.getArticleId())) {
 						list = null;
 
@@ -3730,7 +3730,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 					if ((groupId != journalContentSearch.getGroupId()) ||
 							(privateLayout != journalContentSearch.getPrivateLayout()) ||
 							(layoutId != journalContentSearch.getLayoutId()) ||
-							!Validator.equals(portletId,
+							!Objects.equals(portletId,
 								journalContentSearch.getPortletId())) {
 						list = null;
 
@@ -4385,9 +4385,9 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 			if ((groupId != journalContentSearch.getGroupId()) ||
 					(privateLayout != journalContentSearch.getPrivateLayout()) ||
 					(layoutId != journalContentSearch.getLayoutId()) ||
-					!Validator.equals(portletId,
+					!Objects.equals(portletId,
 						journalContentSearch.getPortletId()) ||
-					!Validator.equals(articleId,
+					!Objects.equals(articleId,
 						journalContentSearch.getArticleId())) {
 				result = null;
 			}

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -74,7 +75,7 @@ public class Notification {
 
 		Notification notification = (Notification)obj;
 
-		if (Validator.equals(_name, notification._name)) {
+		if (Objects.equals(_name, notification._name)) {
 			return true;
 		}
 

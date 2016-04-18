@@ -63,6 +63,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -211,7 +212,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetVocabulary assetVocabulary : list) {
-					if (!Validator.equals(uuid, assetVocabulary.getUuid())) {
+					if (!Objects.equals(uuid, assetVocabulary.getUuid())) {
 						list = null;
 
 						break;
@@ -732,7 +733,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		if (result instanceof AssetVocabulary) {
 			AssetVocabulary assetVocabulary = (AssetVocabulary)result;
 
-			if (!Validator.equals(uuid, assetVocabulary.getUuid()) ||
+			if (!Objects.equals(uuid, assetVocabulary.getUuid()) ||
 					(groupId != assetVocabulary.getGroupId())) {
 				result = null;
 			}
@@ -1027,7 +1028,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetVocabulary assetVocabulary : list) {
-					if (!Validator.equals(uuid, assetVocabulary.getUuid()) ||
+					if (!Objects.equals(uuid, assetVocabulary.getUuid()) ||
 							(companyId != assetVocabulary.getCompanyId())) {
 						list = null;
 
@@ -3416,7 +3417,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 			AssetVocabulary assetVocabulary = (AssetVocabulary)result;
 
 			if ((groupId != assetVocabulary.getGroupId()) ||
-					!Validator.equals(name, assetVocabulary.getName())) {
+					!Objects.equals(name, assetVocabulary.getName())) {
 				result = null;
 			}
 		}

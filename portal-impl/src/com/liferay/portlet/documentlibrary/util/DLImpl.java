@@ -93,6 +93,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -1085,9 +1086,9 @@ public class DLImpl implements DL {
 			DLFileVersion dlFileVersion, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.equals(
+		if (Objects.equals(
 				serviceContext.getCommand(), Constants.ADD_WEBDAV) ||
-			Validator.equals(
+			Objects.equals(
 				serviceContext.getCommand(), Constants.UPDATE_WEBDAV)) {
 
 			return serviceContext.getPortalURL() +

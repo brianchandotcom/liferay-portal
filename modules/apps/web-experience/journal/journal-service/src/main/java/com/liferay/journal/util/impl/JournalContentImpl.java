@@ -35,9 +35,10 @@ import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
+
+import java.util.Objects;
 
 import javax.portlet.RenderRequest;
 
@@ -336,13 +337,13 @@ public class JournalContentImpl implements JournalContent {
 			JournalContentKey journalContentKey = (JournalContentKey)obj;
 
 			if ((journalContentKey._groupId == _groupId) &&
-				Validator.equals(journalContentKey._articleId, _articleId) &&
+				Objects.equals(journalContentKey._articleId, _articleId) &&
 				(journalContentKey._version == _version) &&
-				Validator.equals(
+				Objects.equals(
 					journalContentKey._ddmTemplateKey, _ddmTemplateKey) &&
 				(journalContentKey._layoutSetId == _layoutSetId) &&
-				Validator.equals(journalContentKey._viewMode, _viewMode) &&
-				Validator.equals(journalContentKey._languageId, _languageId) &&
+				Objects.equals(journalContentKey._viewMode, _viewMode) &&
+				Objects.equals(journalContentKey._languageId, _languageId) &&
 				(journalContentKey._page == _page) &&
 				(journalContentKey._secure == _secure)) {
 

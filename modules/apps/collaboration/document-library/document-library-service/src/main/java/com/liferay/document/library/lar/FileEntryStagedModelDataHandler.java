@@ -73,6 +73,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -433,7 +434,7 @@ public class FileEntryStagedModelDataHandler
 				boolean deleteFileEntry = false;
 				boolean updateFileEntry = false;
 
-				if (!Validator.equals(
+				if (!Objects.equals(
 						fileVersion.getUuid(),
 						latestExistingFileVersion.getUuid())) {
 

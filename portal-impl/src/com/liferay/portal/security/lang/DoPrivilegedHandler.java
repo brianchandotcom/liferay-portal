@@ -17,7 +17,6 @@ package com.liferay.portal.security.lang;
 import com.liferay.portal.kernel.security.pacl.NotPrivileged;
 import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -31,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Raymond Augé
@@ -196,7 +196,7 @@ public class DoPrivilegedHandler
 			// class must be assignable from the cached method key's class
 
 			if (_declaringClass.isAssignableFrom(methodKey._declaringClass) &&
-				Validator.equals(_methodName, methodKey._methodName) &&
+				Objects.equals(_methodName, methodKey._methodName) &&
 				Arrays.equals(_parameterTypes, methodKey._parameterTypes)) {
 
 				return true;

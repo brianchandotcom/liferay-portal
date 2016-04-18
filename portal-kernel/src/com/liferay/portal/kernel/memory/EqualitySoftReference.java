@@ -14,10 +14,10 @@
 
 package com.liferay.portal.kernel.memory;
 
-import com.liferay.portal.kernel.util.Validator;
-
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
+
+import java.util.Objects;
 
 /**
  * @author Shuyang Zhou
@@ -51,7 +51,7 @@ public class EqualitySoftReference<T> extends SoftReference<T> {
 		EqualitySoftReference<?> equalitySoftReference =
 			(EqualitySoftReference<?>)obj;
 
-		if (Validator.equals(get(), equalitySoftReference.get())) {
+		if (Objects.equals(get(), equalitySoftReference.get())) {
 			return true;
 		}
 

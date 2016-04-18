@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.framework.Bundle;
@@ -78,7 +79,7 @@ public class SoyPortletHelper {
 		JSONObject contextJSONObject = JSONFactoryUtil.createJSONObject();
 
 		for (String key : template.getKeys()) {
-			if (Validator.equals(key, TemplateConstants.NAMESPACE)) {
+			if (Objects.equals(key, TemplateConstants.NAMESPACE)) {
 				continue;
 			}
 

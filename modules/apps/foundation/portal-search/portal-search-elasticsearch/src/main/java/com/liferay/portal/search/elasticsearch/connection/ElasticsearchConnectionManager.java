@@ -17,12 +17,12 @@ package com.liferay.portal.search.elasticsearch.connection;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.client.AdminClient;
@@ -151,7 +151,7 @@ public class ElasticsearchConnectionManager {
 	}
 
 	protected synchronized void modify(OperationMode operationMode) {
-		if (Validator.equals(operationMode, _operationMode)) {
+		if (Objects.equals(operationMode, _operationMode)) {
 			return;
 		}
 

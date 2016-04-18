@@ -19,13 +19,13 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -534,7 +534,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 
 		MembershipRequestWrapper membershipRequestWrapper = (MembershipRequestWrapper)obj;
 
-		if (Validator.equals(_membershipRequest,
+		if (Objects.equals(_membershipRequest,
 					membershipRequestWrapper._membershipRequest)) {
 			return true;
 		}

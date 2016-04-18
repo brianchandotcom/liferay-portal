@@ -58,6 +58,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -205,7 +206,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutPrototype layoutPrototype : list) {
-					if (!Validator.equals(uuid, layoutPrototype.getUuid())) {
+					if (!Objects.equals(uuid, layoutPrototype.getUuid())) {
 						list = null;
 
 						break;
@@ -1169,7 +1170,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutPrototype layoutPrototype : list) {
-					if (!Validator.equals(uuid, layoutPrototype.getUuid()) ||
+					if (!Objects.equals(uuid, layoutPrototype.getUuid()) ||
 							(companyId != layoutPrototype.getCompanyId())) {
 						list = null;
 

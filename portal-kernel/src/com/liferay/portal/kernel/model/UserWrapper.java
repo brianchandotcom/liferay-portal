@@ -21,13 +21,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -1997,7 +1997,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 
 		UserWrapper userWrapper = (UserWrapper)obj;
 
-		if (Validator.equals(_user, userWrapper._user)) {
+		if (Objects.equals(_user, userWrapper._user)) {
 			return true;
 		}
 

@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -401,7 +401,7 @@ public class MBStatsUserWrapper implements MBStatsUser,
 
 		MBStatsUserWrapper mbStatsUserWrapper = (MBStatsUserWrapper)obj;
 
-		if (Validator.equals(_mbStatsUser, mbStatsUserWrapper._mbStatsUser)) {
+		if (Objects.equals(_mbStatsUser, mbStatsUserWrapper._mbStatsUser)) {
 			return true;
 		}
 

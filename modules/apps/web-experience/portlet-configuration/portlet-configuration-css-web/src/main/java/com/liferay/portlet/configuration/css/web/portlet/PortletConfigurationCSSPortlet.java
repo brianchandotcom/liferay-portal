@@ -40,6 +40,7 @@ import com.liferay.portlet.configuration.css.web.constants.PortletConfigurationC
 import java.io.IOException;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -218,7 +219,7 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 				rootPortletId, languageId);
 
 			if ((title != null) &&
-				!Validator.equals(defaultPortletTitle, title)) {
+				!Objects.equals(defaultPortletTitle, title)) {
 
 				portletSetup.setValue("portletSetupTitle_" + languageId, title);
 			}

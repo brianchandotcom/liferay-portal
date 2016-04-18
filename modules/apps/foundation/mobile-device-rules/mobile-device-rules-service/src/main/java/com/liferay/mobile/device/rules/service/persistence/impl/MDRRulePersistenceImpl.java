@@ -54,6 +54,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -197,7 +198,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MDRRule mdrRule : list) {
-					if (!Validator.equals(uuid, mdrRule.getUuid())) {
+					if (!Objects.equals(uuid, mdrRule.getUuid())) {
 						list = null;
 
 						break;
@@ -715,7 +716,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		if (result instanceof MDRRule) {
 			MDRRule mdrRule = (MDRRule)result;
 
-			if (!Validator.equals(uuid, mdrRule.getUuid()) ||
+			if (!Objects.equals(uuid, mdrRule.getUuid()) ||
 					(groupId != mdrRule.getGroupId())) {
 				result = null;
 			}
@@ -1007,7 +1008,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MDRRule mdrRule : list) {
-					if (!Validator.equals(uuid, mdrRule.getUuid()) ||
+					if (!Objects.equals(uuid, mdrRule.getUuid()) ||
 							(companyId != mdrRule.getCompanyId())) {
 						list = null;
 

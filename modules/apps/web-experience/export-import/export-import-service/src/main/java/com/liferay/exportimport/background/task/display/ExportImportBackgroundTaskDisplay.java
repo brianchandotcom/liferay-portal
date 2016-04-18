@@ -32,6 +32,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Andrew Betts
@@ -96,7 +97,7 @@ public class ExportImportBackgroundTaskDisplay
 			int base = PERCENTAGE_MAX;
 
 			if (_phase.equals(Constants.EXPORT) &&
-				!Validator.equals(_cmd, Constants.PUBLISH_TO_REMOTE)) {
+				!Objects.equals(_cmd, Constants.PUBLISH_TO_REMOTE)) {
 
 				base = _EXPORT_PHASE_MAX_PERCENTAGE;
 			}
@@ -116,7 +117,7 @@ public class ExportImportBackgroundTaskDisplay
 		}
 
 		if ((_allProgressBarCountersTotal > PERCENTAGE_MIN) &&
-			(!Validator.equals(_cmd, Constants.PUBLISH_TO_REMOTE) ||
+			(!Objects.equals(_cmd, Constants.PUBLISH_TO_REMOTE) ||
 			 (getPercentage() < PERCENTAGE_MAX))) {
 
 			return true;
@@ -168,11 +169,11 @@ public class ExportImportBackgroundTaskDisplay
 		else if (hasStagedModelMessage()) {
 			_messageKey = "exporting";
 
-			if (Validator.equals(_cmd, Constants.IMPORT)) {
+			if (Objects.equals(_cmd, Constants.IMPORT)) {
 				_messageKey = "importing";
 			}
-			else if (Validator.equals(_cmd, Constants.PUBLISH_TO_LIVE) ||
-					 Validator.equals(_cmd, Constants.PUBLISH_TO_REMOTE)) {
+			else if (Objects.equals(_cmd, Constants.PUBLISH_TO_LIVE) ||
+					 Objects.equals(_cmd, Constants.PUBLISH_TO_REMOTE)) {
 
 				_messageKey = "publishing";
 			}
@@ -209,7 +210,7 @@ public class ExportImportBackgroundTaskDisplay
 	}
 
 	protected boolean hasRemoteMessage() {
-		if (Validator.equals(_cmd, Constants.PUBLISH_TO_REMOTE) &&
+		if (Objects.equals(_cmd, Constants.PUBLISH_TO_REMOTE) &&
 			(getPercentage() == PERCENTAGE_MAX)) {
 
 			return true;

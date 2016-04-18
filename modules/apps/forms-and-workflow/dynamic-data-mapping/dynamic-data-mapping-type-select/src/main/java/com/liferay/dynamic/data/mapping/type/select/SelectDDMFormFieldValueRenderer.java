@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -85,7 +85,7 @@ public class SelectDDMFormFieldValueRenderer
 		String dataSourceType = GetterUtil.getString(
 			ddmFormField.getProperty("dataSourceType"), "manual");
 
-		if (Validator.equals(dataSourceType, "manual")) {
+		if (Objects.equals(dataSourceType, "manual")) {
 			return true;
 		}
 

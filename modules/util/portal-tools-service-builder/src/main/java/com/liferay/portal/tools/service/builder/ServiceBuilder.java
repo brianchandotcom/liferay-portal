@@ -97,6 +97,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
@@ -3966,14 +3967,14 @@ public class ServiceBuilder {
 					String name1 = entity1.getName();
 					String name2 = entity2.getName();
 
-					if (Validator.equals(
+					if (Objects.equals(
 							entity1.getPackagePath(), "com.liferay.portal") &&
 						name1.equals("Company")) {
 
 						return -1;
 					}
 
-					if (Validator.equals(
+					if (Objects.equals(
 							entity2.getPackagePath(), "com.liferay.portal") &&
 						name2.equals("Company")) {
 

@@ -32,6 +32,8 @@ import com.liferay.portal.workflow.definition.web.display.context.WorkflowDefini
 
 import java.io.IOException;
 
+import java.util.Objects;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -81,7 +83,7 @@ public class WorkflowDefinitionPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, displayContext);
 
-			if (Validator.equals(path, "/edit_workflow_definition.jsp")) {
+			if (Objects.equals(path, "/edit_workflow_definition.jsp")) {
 				setWorkflowDefinitionRenderRequestAttribute(renderRequest);
 			}
 		}

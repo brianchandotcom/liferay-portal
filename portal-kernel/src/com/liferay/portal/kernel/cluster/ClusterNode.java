@@ -18,12 +18,13 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+
+import java.util.Objects;
 
 /**
  * @author Tina Tian
@@ -56,12 +57,12 @@ public class ClusterNode implements Serializable {
 
 		ClusterNode clusterNode = (ClusterNode)obj;
 
-		if (Validator.equals(_clusterNodeId, clusterNode._clusterNodeId) &&
-			Validator.equals(_bindInetAddress, clusterNode._bindInetAddress) &&
-			Validator.equals(
+		if (Objects.equals(_clusterNodeId, clusterNode._clusterNodeId) &&
+			Objects.equals(_bindInetAddress, clusterNode._bindInetAddress) &&
+			Objects.equals(
 				_portalInetSocketAddress,
 				clusterNode._portalInetSocketAddress) &&
-			Validator.equals(_portalProtocol, clusterNode._portalProtocol)) {
+			Objects.equals(_portalProtocol, clusterNode._portalProtocol)) {
 
 			return true;
 		}

@@ -114,6 +114,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -392,7 +393,7 @@ public class JournalPortlet extends MVCPortlet {
 
 		String path = getPath(renderRequest, renderResponse);
 
-		if (Validator.equals(path, "/edit_article.jsp")) {
+		if (Objects.equals(path, "/edit_article.jsp")) {
 			renderRequest.setAttribute(
 				JournalWebKeys.ITEM_SELECTOR, _itemSelector);
 		}

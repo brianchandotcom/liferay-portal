@@ -37,6 +37,7 @@ import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -142,7 +143,7 @@ public class SiteTeamsDisplayContext {
 	}
 
 	public boolean isDescriptiveView() {
-		if (Validator.equals(getDisplayStyle(), "descriptive")) {
+		if (Objects.equals(getDisplayStyle(), "descriptive")) {
 			return true;
 		}
 
@@ -162,7 +163,7 @@ public class SiteTeamsDisplayContext {
 	}
 
 	public boolean isIconView() {
-		if (Validator.equals(getDisplayStyle(), "icon")) {
+		if (Objects.equals(getDisplayStyle(), "icon")) {
 			return true;
 		}
 
@@ -170,7 +171,7 @@ public class SiteTeamsDisplayContext {
 	}
 
 	public boolean isListView() {
-		if (Validator.equals(getDisplayStyle(), "list")) {
+		if (Objects.equals(getDisplayStyle(), "list")) {
 			return true;
 		}
 

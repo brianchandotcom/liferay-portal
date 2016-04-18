@@ -19,12 +19,12 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -645,7 +645,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 
 		CompanyWrapper companyWrapper = (CompanyWrapper)obj;
 
-		if (Validator.equals(_company, companyWrapper._company)) {
+		if (Objects.equals(_company, companyWrapper._company)) {
 			return true;
 		}
 

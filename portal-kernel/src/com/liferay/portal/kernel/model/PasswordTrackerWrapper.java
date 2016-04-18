@@ -19,13 +19,13 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -379,7 +379,7 @@ public class PasswordTrackerWrapper implements PasswordTracker,
 
 		PasswordTrackerWrapper passwordTrackerWrapper = (PasswordTrackerWrapper)obj;
 
-		if (Validator.equals(_passwordTracker,
+		if (Objects.equals(_passwordTracker,
 					passwordTrackerWrapper._passwordTracker)) {
 			return true;
 		}

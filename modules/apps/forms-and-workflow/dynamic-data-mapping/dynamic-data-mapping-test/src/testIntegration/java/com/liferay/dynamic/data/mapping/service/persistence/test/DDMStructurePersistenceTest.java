@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
@@ -58,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -561,7 +561,7 @@ public class DDMStructurePersistenceTest {
 
 		DDMStructure existingDDMStructure = _persistence.findByPrimaryKey(newDDMStructure.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(existingDDMStructure.getUuid(),
+		Assert.assertTrue(Objects.equals(existingDDMStructure.getUuid(),
 				ReflectionTestUtil.invoke(existingDDMStructure,
 					"getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(Long.valueOf(existingDDMStructure.getGroupId()),
@@ -574,7 +574,7 @@ public class DDMStructurePersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingDDMStructure.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(existingDDMStructure,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(
+		Assert.assertTrue(Objects.equals(
 				existingDDMStructure.getStructureKey(),
 				ReflectionTestUtil.invoke(existingDDMStructure,
 					"getOriginalStructureKey", new Class<?>[0])));

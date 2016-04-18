@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
@@ -67,6 +66,7 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -270,7 +270,7 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 					try {
 						DLFileEntry dlFileEntry = dlFileVersion.getFileEntry();
 
-						if (Validator.equals(
+						if (Objects.equals(
 								dlFileEntry.getVersion(),
 								dlFileVersion.getVersion())) {
 

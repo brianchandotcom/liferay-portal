@@ -45,6 +45,7 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Adolfo Pérez
@@ -96,17 +97,17 @@ public class DLFileVersionPolicyImpl implements DLFileVersionPolicy {
 			return false;
 		}
 
-		if (Validator.equals(serviceContext.getCommand(), Constants.REVERT)) {
+		if (Objects.equals(serviceContext.getCommand(), Constants.REVERT)) {
 			return false;
 		}
 
-		if (!Validator.equals(
+		if (!Objects.equals(
 				lastDLFileVersion.getTitle(), latestDLFileVersion.getTitle())) {
 
 			return false;
 		}
 
-		if (!Validator.equals(
+		if (!Objects.equals(
 				lastDLFileVersion.getDescription(),
 				latestDLFileVersion.getDescription())) {
 

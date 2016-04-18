@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import com.liferay.portlet.asset.model.impl.AssetCategoryPropertyImpl;
 import com.liferay.portlet.asset.model.impl.AssetCategoryPropertyModelImpl;
@@ -56,6 +55,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -1245,8 +1245,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetCategoryProperty assetCategoryProperty : list) {
 					if ((companyId != assetCategoryProperty.getCompanyId()) ||
-							!Validator.equals(key,
-								assetCategoryProperty.getKey())) {
+							!Objects.equals(key, assetCategoryProperty.getKey())) {
 						list = null;
 
 						break;
@@ -1798,7 +1797,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 			AssetCategoryProperty assetCategoryProperty = (AssetCategoryProperty)result;
 
 			if ((categoryId != assetCategoryProperty.getCategoryId()) ||
-					!Validator.equals(key, assetCategoryProperty.getKey())) {
+					!Objects.equals(key, assetCategoryProperty.getKey())) {
 				result = null;
 			}
 		}

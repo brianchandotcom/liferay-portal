@@ -26,9 +26,9 @@ import com.liferay.portal.kernel.util.PortletCategoryKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -39,27 +39,27 @@ public class PortletCategoryUtil {
 	public static String getPortletCategoryKey(
 		String legacyPortletCategoryKey) {
 
-		if (Validator.equals(legacyPortletCategoryKey, "apps") ||
-			Validator.equals(legacyPortletCategoryKey, "marketplace")) {
+		if (Objects.equals(legacyPortletCategoryKey, "apps") ||
+			Objects.equals(legacyPortletCategoryKey, "marketplace")) {
 
 			return PortletCategoryKeys.CONTROL_PANEL_APPS;
 		}
-		else if (Validator.equals(legacyPortletCategoryKey, "configuration") ||
-				 Validator.equals(legacyPortletCategoryKey, "portal") ||
-				 Validator.equals(legacyPortletCategoryKey, "server")) {
+		else if (Objects.equals(legacyPortletCategoryKey, "configuration") ||
+				 Objects.equals(legacyPortletCategoryKey, "portal") ||
+				 Objects.equals(legacyPortletCategoryKey, "server")) {
 
 			return PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION;
 		}
-		else if (Validator.equals(legacyPortletCategoryKey, "content")) {
+		else if (Objects.equals(legacyPortletCategoryKey, "content")) {
 			return PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT;
 		}
-		else if (Validator.equals(legacyPortletCategoryKey, "my")) {
+		else if (Objects.equals(legacyPortletCategoryKey, "my")) {
 			return PortletCategoryKeys.USER_MY_ACCOUNT;
 		}
-		else if (Validator.equals(legacyPortletCategoryKey, "sites")) {
+		else if (Objects.equals(legacyPortletCategoryKey, "sites")) {
 			return PortletCategoryKeys.CONTROL_PANEL_SITES;
 		}
-		else if (Validator.equals(legacyPortletCategoryKey, "users")) {
+		else if (Objects.equals(legacyPortletCategoryKey, "users")) {
 			return PortletCategoryKeys.CONTROL_PANEL_USERS;
 		}
 

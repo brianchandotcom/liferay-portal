@@ -22,11 +22,11 @@ import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.service.access.policy.configuration.SAPConfiguration;
 import com.liferay.portal.security.service.access.policy.constants.SAPConstants;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
@@ -50,13 +50,13 @@ public class SAPEntryImpl extends SAPEntryBaseImpl {
 				new CompanyServiceSettingsLocator(
 					getCompanyId(), SAPConstants.SERVICE_NAME));
 
-		if (Validator.equals(
+		if (Objects.equals(
 				getName(), sapConfiguration.systemDefaultSAPEntryName())) {
 
 			return true;
 		}
 
-		if (Validator.equals(
+		if (Objects.equals(
 				getName(), sapConfiguration.systemUserPasswordSAPEntryName())) {
 
 			return true;

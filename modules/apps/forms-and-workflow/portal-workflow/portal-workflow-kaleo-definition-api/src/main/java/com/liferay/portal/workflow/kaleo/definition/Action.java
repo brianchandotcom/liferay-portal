@@ -16,6 +16,8 @@ package com.liferay.portal.workflow.kaleo.definition;
 
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Objects;
+
 /**
  * @author Michael C. Han
  */
@@ -53,7 +55,7 @@ public class Action {
 
 		Action action = (Action)obj;
 
-		if (Validator.equals(_name, action._name)) {
+		if (Objects.equals(_name, action._name)) {
 			return true;
 		}
 

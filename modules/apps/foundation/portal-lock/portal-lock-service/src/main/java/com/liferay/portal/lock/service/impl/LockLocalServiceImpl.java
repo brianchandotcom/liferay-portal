@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lock.exception.DuplicateLockException;
 import com.liferay.portal.lock.exception.ExpiredLockException;
 import com.liferay.portal.lock.exception.NoSuchLockException;
@@ -34,6 +33,7 @@ import com.liferay.portal.lock.service.base.LockLocalServiceBaseImpl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 import org.hibernate.exception.ConstraintViolationException;
@@ -222,7 +222,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 								lock.setNew(true);
 							}
-							else if (Validator.equals(
+							else if (Objects.equals(
 										lock.getOwner(), expectedOwner)) {
 
 								lock.setCreateDate(new Date());
@@ -343,7 +343,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 								return null;
 							}
 
-							if (Validator.equals(lock.getOwner(), owner)) {
+							if (Objects.equals(lock.getOwner(), owner)) {
 								lockPersistence.remove(lock);
 								lockPersistence.flush();
 							}

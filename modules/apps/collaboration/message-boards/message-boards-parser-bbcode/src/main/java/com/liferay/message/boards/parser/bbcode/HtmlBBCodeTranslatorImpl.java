@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -472,7 +473,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 				String attributeName = matcher.group(1);
 				String attributeValue = matcher.group(2);
 
-				if (Validator.equals(attributeName, "type")) {
+				if (Objects.equals(attributeName, "type")) {
 					if (_orderedListStyles.get(attributeValue) != null) {
 						listStyle = _orderedListStyles.get(attributeValue);
 
@@ -488,7 +489,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 						attributesSB.append("\"");
 					}
 				}
-				else if (Validator.equals(attributeName, "start") &&
+				else if (Objects.equals(attributeName, "start") &&
 						 Validator.isNumber(attributeValue)) {
 
 					attributesSB.append(" start=\"");

@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import com.liferay.shopping.exception.NoSuchItemException;
@@ -56,6 +55,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -1726,7 +1726,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 			ShoppingItem shoppingItem = (ShoppingItem)result;
 
 			if ((companyId != shoppingItem.getCompanyId()) ||
-					!Validator.equals(sku, shoppingItem.getSku())) {
+					!Objects.equals(sku, shoppingItem.getSku())) {
 				result = null;
 			}
 		}

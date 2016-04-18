@@ -19,12 +19,12 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -361,7 +361,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 
 		RegionWrapper regionWrapper = (RegionWrapper)obj;
 
-		if (Validator.equals(_region, regionWrapper._region)) {
+		if (Objects.equals(_region, regionWrapper._region)) {
 			return true;
 		}
 

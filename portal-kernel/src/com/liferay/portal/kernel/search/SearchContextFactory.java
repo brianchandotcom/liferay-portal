@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.Serializable;
@@ -27,6 +26,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
@@ -77,7 +77,7 @@ public class SearchContextFactory {
 			if (scopes != null) {
 				String groupId = "0";
 
-				if (Validator.equals(scopes[0], "this-site")) {
+				if (Objects.equals(scopes[0], "this-site")) {
 					groupId = String.valueOf(themeDisplay.getScopeGroupId());
 				}
 

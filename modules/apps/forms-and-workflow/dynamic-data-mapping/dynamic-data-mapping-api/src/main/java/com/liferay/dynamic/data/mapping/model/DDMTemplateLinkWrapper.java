@@ -20,12 +20,12 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -354,7 +354,7 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 
 		DDMTemplateLinkWrapper ddmTemplateLinkWrapper = (DDMTemplateLinkWrapper)obj;
 
-		if (Validator.equals(_ddmTemplateLink,
+		if (Objects.equals(_ddmTemplateLink,
 					ddmTemplateLinkWrapper._ddmTemplateLink)) {
 			return true;
 		}

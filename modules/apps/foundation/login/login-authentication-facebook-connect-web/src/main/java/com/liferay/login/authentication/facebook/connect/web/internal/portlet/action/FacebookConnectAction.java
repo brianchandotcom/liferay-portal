@@ -45,6 +45,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -185,7 +186,7 @@ public class FacebookConnectAction extends BaseStrutsAction {
 		String lastName = jsonObject.getString("last_name");
 		long prefixId = 0;
 		long suffixId = 0;
-		boolean male = Validator.equals(jsonObject.getString("gender"), "male");
+		boolean male = Objects.equals(jsonObject.getString("gender"), "male");
 		int birthdayMonth = Calendar.JANUARY;
 		int birthdayDay = 1;
 		int birthdayYear = 1970;
@@ -336,7 +337,7 @@ public class FacebookConnectAction extends BaseStrutsAction {
 		String emailAddress = jsonObject.getString("email");
 		String firstName = jsonObject.getString("first_name");
 		String lastName = jsonObject.getString("last_name");
-		boolean male = Validator.equals(jsonObject.getString("gender"), "male");
+		boolean male = Objects.equals(jsonObject.getString("gender"), "male");
 
 		if ((facebookId == user.getFacebookId()) &&
 			emailAddress.equals(user.getEmailAddress()) &&

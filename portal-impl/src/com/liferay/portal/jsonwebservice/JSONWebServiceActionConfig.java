@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Method;
 
+import java.util.Objects;
+
 /**
  * @author Igor Spasic
  * @author Raymond Augé
@@ -134,9 +136,7 @@ public class JSONWebServiceActionConfig
 		JSONWebServiceActionConfig jsonWebServiceActionConfig =
 			(JSONWebServiceActionConfig)object;
 
-		if (Validator.equals(
-				_signature, jsonWebServiceActionConfig._signature)) {
-
+		if (Objects.equals(_signature, jsonWebServiceActionConfig._signature)) {
 			return true;
 		}
 

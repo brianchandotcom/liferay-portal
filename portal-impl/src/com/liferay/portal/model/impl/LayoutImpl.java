@@ -80,6 +80,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.PortletException;
@@ -1115,8 +1116,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public boolean isTypeControlPanel() {
-		if (Validator.equals(getType(), LayoutConstants.TYPE_CONTROL_PANEL) ||
-			Validator.equals(
+		if (Objects.equals(getType(), LayoutConstants.TYPE_CONTROL_PANEL) ||
+			Objects.equals(
 				_getLayoutTypeControllerType(),
 				LayoutConstants.TYPE_CONTROL_PANEL)) {
 
@@ -1128,8 +1129,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public boolean isTypeEmbedded() {
-		if (Validator.equals(getType(), LayoutConstants.TYPE_EMBEDDED) ||
-			Validator.equals(
+		if (Objects.equals(getType(), LayoutConstants.TYPE_EMBEDDED) ||
+			Objects.equals(
 				_getLayoutTypeControllerType(),
 				LayoutConstants.TYPE_EMBEDDED)) {
 
@@ -1141,8 +1142,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public boolean isTypeLinkToLayout() {
-		if (Validator.equals(getType(), LayoutConstants.TYPE_LINK_TO_LAYOUT) ||
-			Validator.equals(
+		if (Objects.equals(getType(), LayoutConstants.TYPE_LINK_TO_LAYOUT) ||
+			Objects.equals(
 				_getLayoutTypeControllerType(),
 				LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
 
@@ -1154,8 +1155,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public boolean isTypePanel() {
-		if (Validator.equals(getType(), LayoutConstants.TYPE_PANEL) ||
-			Validator.equals(
+		if (Objects.equals(getType(), LayoutConstants.TYPE_PANEL) ||
+			Objects.equals(
 				_getLayoutTypeControllerType(), LayoutConstants.TYPE_PANEL)) {
 
 			return true;
@@ -1166,8 +1167,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public boolean isTypePortlet() {
-		if (Validator.equals(getType(), LayoutConstants.TYPE_PORTLET) ||
-			Validator.equals(
+		if (Objects.equals(getType(), LayoutConstants.TYPE_PORTLET) ||
+			Objects.equals(
 				_getLayoutTypeControllerType(), LayoutConstants.TYPE_PORTLET)) {
 
 			return true;
@@ -1178,7 +1179,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public boolean isTypeSharedPortlet() {
-		if (Validator.equals(getType(), LayoutConstants.TYPE_SHARED_PORTLET)) {
+		if (Objects.equals(getType(), LayoutConstants.TYPE_SHARED_PORTLET)) {
 			return true;
 		}
 
@@ -1187,7 +1188,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public boolean isTypeURL() {
-		if (Validator.equals(getType(), LayoutConstants.TYPE_URL)) {
+		if (Objects.equals(getType(), LayoutConstants.TYPE_URL)) {
 			return true;
 		}
 

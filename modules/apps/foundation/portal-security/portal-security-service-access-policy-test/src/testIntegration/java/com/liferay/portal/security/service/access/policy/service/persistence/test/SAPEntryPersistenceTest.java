@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.service.access.policy.exception.NoSuchEntryException;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalServiceUtil;
@@ -57,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -449,7 +449,7 @@ public class SAPEntryPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingSAPEntry.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(existingSAPEntry,
 				"getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(existingSAPEntry.getName(),
+		Assert.assertTrue(Objects.equals(existingSAPEntry.getName(),
 				ReflectionTestUtil.invoke(existingSAPEntry, "getOriginalName",
 					new Class<?>[0])));
 	}

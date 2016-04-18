@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Marcellus Tavares
@@ -69,10 +70,10 @@ public class OptionsDDMFormFieldContextHelper {
 
 	protected boolean isChecked(String optionValue) {
 		if (Validator.isNull(_value)) {
-			return Validator.equals(_predefinedValue, optionValue);
+			return Objects.equals(_predefinedValue, optionValue);
 		}
 
-		return Validator.equals(_value, optionValue);
+		return Objects.equals(_value, optionValue);
 	}
 
 	protected String toString(String value) {

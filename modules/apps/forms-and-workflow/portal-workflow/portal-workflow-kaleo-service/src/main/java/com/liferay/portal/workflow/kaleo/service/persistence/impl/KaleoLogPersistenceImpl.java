@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchLogException;
 import com.liferay.portal.workflow.kaleo.model.KaleoLog;
@@ -52,6 +51,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -2259,7 +2259,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoLog kaleoLog : list) {
 					if ((kaleoInstanceTokenId != kaleoLog.getKaleoInstanceTokenId()) ||
-							!Validator.equals(type, kaleoLog.getType())) {
+							!Objects.equals(type, kaleoLog.getType())) {
 						list = null;
 
 						break;
@@ -2872,11 +2872,11 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoLog kaleoLog : list) {
-					if (!Validator.equals(kaleoClassName,
+					if (!Objects.equals(kaleoClassName,
 								kaleoLog.getKaleoClassName()) ||
 							(kaleoClassPK != kaleoLog.getKaleoClassPK()) ||
 							(kaleoInstanceTokenId != kaleoLog.getKaleoInstanceTokenId()) ||
-							!Validator.equals(type, kaleoLog.getType())) {
+							!Objects.equals(type, kaleoLog.getType())) {
 						list = null;
 
 						break;

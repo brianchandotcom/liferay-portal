@@ -55,6 +55,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -711,7 +712,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Calendar calendar : list) {
-					if (!Validator.equals(uuid, calendar.getUuid())) {
+					if (!Objects.equals(uuid, calendar.getUuid())) {
 						list = null;
 
 						break;
@@ -1229,7 +1230,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 		if (result instanceof Calendar) {
 			Calendar calendar = (Calendar)result;
 
-			if (!Validator.equals(uuid, calendar.getUuid()) ||
+			if (!Objects.equals(uuid, calendar.getUuid()) ||
 					(groupId != calendar.getGroupId())) {
 				result = null;
 			}
@@ -1521,7 +1522,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Calendar calendar : list) {
-					if (!Validator.equals(uuid, calendar.getUuid()) ||
+					if (!Objects.equals(uuid, calendar.getUuid()) ||
 							(companyId != calendar.getCompanyId())) {
 						list = null;
 

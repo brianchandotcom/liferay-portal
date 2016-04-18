@@ -50,6 +50,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -192,7 +193,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Module module : list) {
-					if (!Validator.equals(uuid, module.getUuid())) {
+					if (!Objects.equals(uuid, module.getUuid())) {
 						list = null;
 
 						break;
@@ -1242,7 +1243,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Module module : list) {
-					if (!Validator.equals(bundleSymbolicName,
+					if (!Objects.equals(bundleSymbolicName,
 								module.getBundleSymbolicName())) {
 						list = null;
 
@@ -1796,7 +1797,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Module module : list) {
-					if (!Validator.equals(contextName, module.getContextName())) {
+					if (!Objects.equals(contextName, module.getContextName())) {
 						list = null;
 
 						break;
@@ -2316,7 +2317,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 			Module module = (Module)result;
 
 			if ((appId != module.getAppId()) ||
-					!Validator.equals(contextName, module.getContextName())) {
+					!Objects.equals(contextName, module.getContextName())) {
 				result = null;
 			}
 		}
@@ -2593,9 +2594,9 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 			Module module = (Module)result;
 
 			if ((appId != module.getAppId()) ||
-					!Validator.equals(bundleSymbolicName,
+					!Objects.equals(bundleSymbolicName,
 						module.getBundleSymbolicName()) ||
-					!Validator.equals(bundleVersion, module.getBundleVersion())) {
+					!Objects.equals(bundleVersion, module.getBundleVersion())) {
 				result = null;
 			}
 		}

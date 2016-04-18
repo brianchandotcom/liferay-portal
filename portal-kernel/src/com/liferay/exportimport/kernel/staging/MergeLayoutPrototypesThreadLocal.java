@@ -16,12 +16,12 @@ package com.liferay.exportimport.kernel.staging;
 
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -75,7 +75,7 @@ public class MergeLayoutPrototypesThreadLocal {
 		public boolean equals(Object obj) {
 			MethodKey methodKey = (MethodKey)obj;
 
-			if (Validator.equals(_method, methodKey._method) &&
+			if (Objects.equals(_method, methodKey._method) &&
 				Arrays.equals(_arguments, methodKey._arguments)) {
 
 				return true;

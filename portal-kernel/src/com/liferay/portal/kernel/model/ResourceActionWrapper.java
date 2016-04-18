@@ -19,12 +19,12 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -331,7 +331,7 @@ public class ResourceActionWrapper implements ResourceAction,
 
 		ResourceActionWrapper resourceActionWrapper = (ResourceActionWrapper)obj;
 
-		if (Validator.equals(_resourceAction,
+		if (Objects.equals(_resourceAction,
 					resourceActionWrapper._resourceAction)) {
 			return true;
 		}

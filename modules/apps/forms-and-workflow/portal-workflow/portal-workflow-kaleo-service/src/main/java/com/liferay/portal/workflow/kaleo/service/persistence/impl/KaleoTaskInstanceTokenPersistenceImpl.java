@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
@@ -52,6 +51,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -2015,7 +2015,7 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoTaskInstanceToken kaleoTaskInstanceToken : list) {
-					if (!Validator.equals(className,
+					if (!Objects.equals(className,
 								kaleoTaskInstanceToken.getClassName()) ||
 							(classPK != kaleoTaskInstanceToken.getClassPK())) {
 						list = null;

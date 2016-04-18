@@ -3194,13 +3194,11 @@
 			<var name="eventTitle" value="Original Event Title" />
 		</execute>
 
-		<execute macro="CalendarScheduler#gotoEditViaDialogBox" />
-
-		<execute macro="CalendarEvent#editTitle">
+		<execute macro="CalendarScheduler#editTitle">
 			<var name="eventTitle" value="Edited Title" />
 		</execute>
 
-		<execute macro="CalendarEvent#publishRepeating">
+		<execute macro="CalendarScheduler#saveRepeatingEvent">
 			<var name="saveOption" value="All Events in the Series" />
 		</execute>
 

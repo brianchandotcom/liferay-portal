@@ -1112,9 +1112,11 @@
 		</execute>
 
 		<execute macro="FormFields#viewCheckboxLabel">
-			<var name="fieldLabel" value="Checkbox Field*" />
+			<var name="fieldLabel" value="Checkbox Field" />
 			<var name="fieldName" value="CheckboxField" />
 		</execute>
+
+		<execute macro="FormFields#viewRequiredAsterisk" />
 
 		<execute macro="FormPortlet#submitWithValidationError" />
 

@@ -199,6 +199,22 @@
 		<execute function="AssertClick" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_SAVE_BUTTON" value1="Save" />
 	</command>
 
+	<command name="saveRepeatingEvent">
+		<execute macro="Button#clickSave" />
+
+		<execute function="AssertElementPresent" locator1="CalendarEditEvent#RECURRING_EVENT_DIALOG_BOX_HEADER" />
+
+		<var method="StringUtil#replace('${saveOption}', ' ', '_')" name="saveOptionPath" />
+
+		<var method="StringUtil#upperCase('${saveOptionPath}')" name="saveOptionPath" />
+
+		<execute function="AssertClick" locator1="CalendarEditEvent#${saveOptionPath}_BUTTON" value1="${saveOption}" />
+
+		<execute function="Refresh" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="selectCalendar">
 		<execute function="Select" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR" value1="${calendarName}" />
 	</command>

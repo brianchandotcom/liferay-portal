@@ -407,7 +407,11 @@ public class MapUtilTest {
 
 					@Override
 					public boolean filter(Number number) {
-						return (number.intValue() % 2 == 0);
+						if ((number.intValue() % 2) == 0) {
+							return true;
+						}
+
+						return false;
 					}
 
 				});
@@ -435,7 +439,11 @@ public class MapUtilTest {
 
 					@Override
 					public boolean filter(Map.Entry<?, Number> entry) {
-						return (entry.getValue().intValue() % 2 == 0);
+						if ((entry.getValue().intValue() % 2) == 0) {
+							return true;
+						}
+
+						return false;
 					}
 
 				});

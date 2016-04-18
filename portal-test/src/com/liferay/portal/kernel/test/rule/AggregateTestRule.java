@@ -103,11 +103,11 @@ public class AggregateTestRule implements ArquillianClassRuleHandler, TestRule {
 
 			@Override
 			public int compare(TestRule testRule1, TestRule testRule2) {
-				return getIndex(testRule1.getClass()) -
-					getIndex(testRule2.getClass());
+				return _getIndex(testRule1.getClass()) -
+					_getIndex(testRule2.getClass());
 			}
 
-			private int getIndex(Class<?> testRuleClass) {
+			private int _getIndex(Class<?> testRuleClass) {
 				Set<String> testRuleClassNames = new HashSet<>();
 
 				while (TestRule.class.isAssignableFrom(testRuleClass)) {

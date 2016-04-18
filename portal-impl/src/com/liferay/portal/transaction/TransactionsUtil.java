@@ -58,7 +58,7 @@ public class TransactionsUtil {
 						return _annotations;
 					}
 
-					private Annotation[] _annotations = new Annotation[] {
+					private final Annotation[] _annotations = new Annotation[] {
 						new Skip() {
 
 							@Override

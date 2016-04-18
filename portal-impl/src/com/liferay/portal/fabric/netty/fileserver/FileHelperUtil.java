@@ -73,6 +73,17 @@ public class FileHelperUtil {
 						}
 
 						@Override
+						public FileVisitResult visitFile(
+								Path file,
+								BasicFileAttributes basicFileAttributes)
+							throws IOException {
+
+							Files.delete(file);
+
+							return FileVisitResult.CONTINUE;
+						}
+
+						@Override
 						public FileVisitResult visitFileFailed(
 								Path file, IOException ioe)
 							throws IOException {
@@ -82,17 +93,6 @@ public class FileHelperUtil {
 							}
 
 							throw ioe;
-						}
-
-						@Override
-						public FileVisitResult visitFile(
-								Path file,
-								BasicFileAttributes basicFileAttributes)
-							throws IOException {
-
-							Files.delete(file);
-
-							return FileVisitResult.CONTINUE;
 						}
 
 					});
@@ -145,6 +145,21 @@ public class FileHelperUtil {
 					}
 
 					@Override
+					public FileVisitResult preVisitDirectory(
+							Path dir, BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						Files.copy(
+							dir, toPath.resolve(fromPath.relativize(dir)),
+							StandardCopyOption.COPY_ATTRIBUTES,
+							StandardCopyOption.REPLACE_EXISTING);
+
+						fileTimes.put(dir, Files.getLastModifiedTime(dir));
+
+						return FileVisitResult.CONTINUE;
+					}
+
+					@Override
 					public FileVisitResult visitFile(
 							Path file, BasicFileAttributes basicFileAttributes)
 						throws IOException {
@@ -170,21 +185,6 @@ public class FileHelperUtil {
 						Files.copy(
 							file, toFile, StandardCopyOption.COPY_ATTRIBUTES,
 							StandardCopyOption.REPLACE_EXISTING);
-
-						return FileVisitResult.CONTINUE;
-					}
-
-					@Override
-					public FileVisitResult preVisitDirectory(
-							Path dir, BasicFileAttributes basicFileAttributes)
-						throws IOException {
-
-						Files.copy(
-							dir, toPath.resolve(fromPath.relativize(dir)),
-							StandardCopyOption.COPY_ATTRIBUTES,
-							StandardCopyOption.REPLACE_EXISTING);
-
-						fileTimes.put(dir, Files.getLastModifiedTime(dir));
 
 						return FileVisitResult.CONTINUE;
 					}

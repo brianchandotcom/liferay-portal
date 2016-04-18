@@ -289,21 +289,6 @@ public class JspServlet extends HttpServlet {
 			new ServletConfig() {
 
 				@Override
-				public String getServletName() {
-					return servletConfig.getServletName();
-				}
-
-				@Override
-				public ServletContext getServletContext() {
-					return _jspServletContext;
-				}
-
-				@Override
-				public Enumeration<String> getInitParameterNames() {
-					return initParameterNames;
-				}
-
-				@Override
 				public String getInitParameter(String name) {
 					String value = servletConfig.getInitParameter(name);
 
@@ -312,6 +297,21 @@ public class JspServlet extends HttpServlet {
 					}
 
 					return value;
+				}
+
+				@Override
+				public Enumeration<String> getInitParameterNames() {
+					return initParameterNames;
+				}
+
+				@Override
+				public ServletContext getServletContext() {
+					return _jspServletContext;
+				}
+
+				@Override
+				public String getServletName() {
+					return servletConfig.getServletName();
 				}
 
 				private final ServletContext _jspServletContext =

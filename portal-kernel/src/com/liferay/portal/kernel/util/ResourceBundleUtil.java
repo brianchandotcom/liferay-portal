@@ -41,13 +41,13 @@ public class ResourceBundleUtil {
 		new ResourceBundle() {
 
 			@Override
-			protected Object handleGetObject(String key) {
-				return key;
+			public Enumeration<String> getKeys() {
+				return Collections.emptyEnumeration();
 			}
 
 			@Override
-			public Enumeration<String> getKeys() {
-				return Collections.emptyEnumeration();
+			protected Object handleGetObject(String key) {
+				return key;
 			}
 
 		};

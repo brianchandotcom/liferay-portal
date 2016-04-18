@@ -254,6 +254,11 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 				new UpgradeStep() {
 
 					@Override
+					public String toString() {
+						return "Initial Database Creation";
+					}
+
+					@Override
 					public void upgrade(DBProcessContext dbProcessContext) {
 						DBContext dbContext = dbProcessContext.getDBContext();
 
@@ -274,11 +279,6 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 						catch (Exception e) {
 							new UpgradeException(e);
 						}
-					}
-
-					@Override
-					public String toString() {
-						return "Initial Database Creation";
 					}
 
 				});

@@ -447,13 +447,13 @@ public class SPIAgentResponseTest {
 			new StubHttpServletResponse() {
 
 				@Override
-				public boolean isCommitted() {
-					return false;
+				public void flushBuffer() throws IOException {
+					throw ioException;
 				}
 
 				@Override
-				public void flushBuffer() throws IOException {
-					throw ioException;
+				public boolean isCommitted() {
+					return false;
 				}
 
 				@Override

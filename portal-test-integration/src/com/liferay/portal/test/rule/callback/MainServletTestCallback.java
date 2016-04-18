@@ -74,13 +74,13 @@ public class MainServletTestCallback extends BaseTestCallback<Void, Void> {
 				new PortalLifecycle() {
 
 					@Override
-					public void portalInit() {
-						ModuleFrameworkUtilAdapter.registerContext(
-							mockServletContext);
+					public void portalDestroy() {
 					}
 
 					@Override
-					public void portalDestroy() {
+					public void portalInit() {
+						ModuleFrameworkUtilAdapter.registerContext(
+							mockServletContext);
 					}
 
 				});

@@ -171,7 +171,6 @@ public class DeletionSystemEventExporter {
 
 				@Override
 				public void performAction(SystemEvent systemEvent) {
-
 					exportDeletionSystemEvent(
 						portletDataContext, systemEvent, rootElement);
 				}

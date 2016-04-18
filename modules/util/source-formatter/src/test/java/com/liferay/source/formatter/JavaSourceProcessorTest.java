@@ -291,6 +291,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("SortJavaTerms1.testjava");
 		test("SortJavaTerms2.testjava");
 		test("SortJavaTerms3.testjava");
+		test("SortJavaTerms4.testjava");
 	}
 
 	@Test

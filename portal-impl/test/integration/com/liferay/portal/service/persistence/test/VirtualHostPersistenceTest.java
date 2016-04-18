@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
@@ -52,6 +51,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -388,7 +388,7 @@ public class VirtualHostPersistenceTest {
 
 		VirtualHost existingVirtualHost = _persistence.findByPrimaryKey(newVirtualHost.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(existingVirtualHost.getHostname(),
+		Assert.assertTrue(Objects.equals(existingVirtualHost.getHostname(),
 				ReflectionTestUtil.invoke(existingVirtualHost,
 					"getOriginalHostname", new Class<?>[0])));
 

@@ -56,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -198,7 +199,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SAPEntry sapEntry : list) {
-					if (!Validator.equals(uuid, sapEntry.getUuid())) {
+					if (!Objects.equals(uuid, sapEntry.getUuid())) {
 						list = null;
 
 						break;
@@ -1150,7 +1151,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SAPEntry sapEntry : list) {
-					if (!Validator.equals(uuid, sapEntry.getUuid()) ||
+					if (!Objects.equals(uuid, sapEntry.getUuid()) ||
 							(companyId != sapEntry.getCompanyId())) {
 						list = null;
 
@@ -3890,7 +3891,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 			SAPEntry sapEntry = (SAPEntry)result;
 
 			if ((companyId != sapEntry.getCompanyId()) ||
-					!Validator.equals(name, sapEntry.getName())) {
+					!Objects.equals(name, sapEntry.getName())) {
 				result = null;
 			}
 		}

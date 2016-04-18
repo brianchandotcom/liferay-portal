@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -49,6 +48,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -1244,7 +1244,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticleImage journalArticleImage : list) {
 					if ((groupId != journalArticleImage.getGroupId()) ||
-							!Validator.equals(articleId,
+							!Objects.equals(articleId,
 								journalArticleImage.getArticleId()) ||
 							(version != journalArticleImage.getVersion())) {
 						list = null;
@@ -1871,13 +1871,13 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 			JournalArticleImage journalArticleImage = (JournalArticleImage)result;
 
 			if ((groupId != journalArticleImage.getGroupId()) ||
-					!Validator.equals(articleId,
+					!Objects.equals(articleId,
 						journalArticleImage.getArticleId()) ||
 					(version != journalArticleImage.getVersion()) ||
-					!Validator.equals(elInstanceId,
+					!Objects.equals(elInstanceId,
 						journalArticleImage.getElInstanceId()) ||
-					!Validator.equals(elName, journalArticleImage.getElName()) ||
-					!Validator.equals(languageId,
+					!Objects.equals(elName, journalArticleImage.getElName()) ||
+					!Objects.equals(languageId,
 						journalArticleImage.getLanguageId())) {
 				result = null;
 			}

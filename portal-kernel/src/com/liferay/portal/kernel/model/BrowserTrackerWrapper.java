@@ -19,12 +19,12 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -351,7 +351,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 
 		BrowserTrackerWrapper browserTrackerWrapper = (BrowserTrackerWrapper)obj;
 
-		if (Validator.equals(_browserTracker,
+		if (Objects.equals(_browserTracker,
 					browserTrackerWrapper._browserTracker)) {
 			return true;
 		}

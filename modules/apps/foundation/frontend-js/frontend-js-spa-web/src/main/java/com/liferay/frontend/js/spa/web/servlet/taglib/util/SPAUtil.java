@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.lang.reflect.Field;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -89,7 +90,7 @@ public class SPAUtil {
 
 		if (Validator.isNotNull(portletId) &&
 			Validator.isNotNull(singlePageApplicationLastPortletId) &&
-			!Validator.equals(portletId, singlePageApplicationLastPortletId)) {
+			!Objects.equals(portletId, singlePageApplicationLastPortletId)) {
 
 			return true;
 		}

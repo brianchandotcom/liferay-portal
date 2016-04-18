@@ -55,6 +55,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -722,7 +723,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BookmarksFolder bookmarksFolder : list) {
-					if (!Validator.equals(uuid, bookmarksFolder.getUuid())) {
+					if (!Objects.equals(uuid, bookmarksFolder.getUuid())) {
 						list = null;
 
 						break;
@@ -1243,7 +1244,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		if (result instanceof BookmarksFolder) {
 			BookmarksFolder bookmarksFolder = (BookmarksFolder)result;
 
-			if (!Validator.equals(uuid, bookmarksFolder.getUuid()) ||
+			if (!Objects.equals(uuid, bookmarksFolder.getUuid()) ||
 					(groupId != bookmarksFolder.getGroupId())) {
 				result = null;
 			}
@@ -1539,7 +1540,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BookmarksFolder bookmarksFolder : list) {
-					if (!Validator.equals(uuid, bookmarksFolder.getUuid()) ||
+					if (!Objects.equals(uuid, bookmarksFolder.getUuid()) ||
 							(companyId != bookmarksFolder.getCompanyId())) {
 						list = null;
 

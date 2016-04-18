@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
@@ -58,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -628,7 +628,7 @@ public class DDMTemplatePersistenceTest {
 
 		DDMTemplate existingDDMTemplate = _persistence.findByPrimaryKey(newDDMTemplate.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(existingDDMTemplate.getUuid(),
+		Assert.assertTrue(Objects.equals(existingDDMTemplate.getUuid(),
 				ReflectionTestUtil.invoke(existingDDMTemplate,
 					"getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(Long.valueOf(existingDDMTemplate.getGroupId()),
@@ -645,8 +645,7 @@ public class DDMTemplatePersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingDDMTemplate.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(existingDDMTemplate,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(
-				existingDDMTemplate.getTemplateKey(),
+		Assert.assertTrue(Objects.equals(existingDDMTemplate.getTemplateKey(),
 				ReflectionTestUtil.invoke(existingDDMTemplate,
 					"getOriginalTemplateKey", new Class<?>[0])));
 	}

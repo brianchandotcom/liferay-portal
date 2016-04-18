@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.util;
 
 import java.io.Serializable;
 
+import java.util.Objects;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -41,7 +43,7 @@ public class ObjectValuePair<K, V> implements Serializable {
 
 		ObjectValuePair<K, V> kvp = (ObjectValuePair<K, V>)obj;
 
-		if (Validator.equals(_key, kvp._key)) {
+		if (Objects.equals(_key, kvp._key)) {
 			return true;
 		}
 

@@ -101,6 +101,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -993,7 +994,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 				actionRequest, property, themeSetting.getValue());
 
 			if ((isLayout &&
-				 !Validator.equals(
+				 !Objects.equals(
 					 value,
 					 layout.getDefaultThemeSetting(key, device, false))) ||
 				(!isLayout && !value.equals(themeSetting.getValue()))) {

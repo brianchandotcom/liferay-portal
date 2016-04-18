@@ -40,6 +40,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -256,8 +257,8 @@ public class DDMFormEvaluatorHelper {
 
 		String dataType = ddmFormField.getDataType();
 
-		if (Validator.equals(dataType, "boolean") &&
-			Validator.equals(valueString, "false")) {
+		if (Objects.equals(dataType, "boolean") &&
+			Objects.equals(valueString, "false")) {
 
 			return true;
 		}

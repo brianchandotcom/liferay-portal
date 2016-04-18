@@ -59,6 +59,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -726,7 +727,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CalendarResource calendarResource : list) {
-					if (!Validator.equals(uuid, calendarResource.getUuid())) {
+					if (!Objects.equals(uuid, calendarResource.getUuid())) {
 						list = null;
 
 						break;
@@ -1247,7 +1248,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 		if (result instanceof CalendarResource) {
 			CalendarResource calendarResource = (CalendarResource)result;
 
-			if (!Validator.equals(uuid, calendarResource.getUuid()) ||
+			if (!Objects.equals(uuid, calendarResource.getUuid()) ||
 					(groupId != calendarResource.getGroupId())) {
 				result = null;
 			}
@@ -1543,7 +1544,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CalendarResource calendarResource : list) {
-					if (!Validator.equals(uuid, calendarResource.getUuid()) ||
+					if (!Objects.equals(uuid, calendarResource.getUuid()) ||
 							(companyId != calendarResource.getCompanyId())) {
 						list = null;
 
@@ -3452,7 +3453,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 			if ((list != null) && !list.isEmpty()) {
 				for (CalendarResource calendarResource : list) {
 					if ((groupId != calendarResource.getGroupId()) ||
-							!Validator.equals(code, calendarResource.getCode())) {
+							!Objects.equals(code, calendarResource.getCode())) {
 						list = null;
 
 						break;
@@ -4376,7 +4377,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 				for (CalendarResource calendarResource : list) {
 					if (!ArrayUtil.contains(groupIds,
 								calendarResource.getGroupId()) ||
-							!Validator.equals(code, calendarResource.getCode())) {
+							!Objects.equals(code, calendarResource.getCode())) {
 						list = null;
 
 						break;

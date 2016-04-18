@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.cm.Configuration;
@@ -192,8 +193,8 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 			return false;
 		}
 
-		if (Validator.equals(getScope(), Scope.COMPANY.toString()) &&
-			Validator.equals(getLabelAttribute(), PROPERTY_KEY_COMPANY_ID)) {
+		if (Objects.equals(getScope(), Scope.COMPANY.toString()) &&
+			Objects.equals(getLabelAttribute(), PROPERTY_KEY_COMPANY_ID)) {
 
 			return true;
 		}

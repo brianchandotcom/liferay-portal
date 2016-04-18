@@ -54,6 +54,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -197,7 +198,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MDRAction mdrAction : list) {
-					if (!Validator.equals(uuid, mdrAction.getUuid())) {
+					if (!Objects.equals(uuid, mdrAction.getUuid())) {
 						list = null;
 
 						break;
@@ -715,7 +716,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		if (result instanceof MDRAction) {
 			MDRAction mdrAction = (MDRAction)result;
 
-			if (!Validator.equals(uuid, mdrAction.getUuid()) ||
+			if (!Objects.equals(uuid, mdrAction.getUuid()) ||
 					(groupId != mdrAction.getGroupId())) {
 				result = null;
 			}
@@ -1006,7 +1007,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MDRAction mdrAction : list) {
-					if (!Validator.equals(uuid, mdrAction.getUuid()) ||
+					if (!Objects.equals(uuid, mdrAction.getUuid()) ||
 							(companyId != mdrAction.getCompanyId())) {
 						list = null;
 

@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 
@@ -44,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 
@@ -139,7 +139,7 @@ public class HotDeployImpl implements HotDeploy {
 		String servletContextName, PortalLifecycle portalLifecycle) {
 
 		for (HotDeployEvent hotDeployEvent : _dependentHotDeployEvents) {
-			if (Validator.equals(
+			if (Objects.equals(
 					servletContextName,
 					hotDeployEvent.getServletContextName())) {
 

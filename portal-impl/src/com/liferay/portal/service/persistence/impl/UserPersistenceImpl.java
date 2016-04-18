@@ -66,6 +66,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -208,7 +209,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
-					if (!Validator.equals(uuid, user.getUuid())) {
+					if (!Objects.equals(uuid, user.getUuid())) {
 						list = null;
 
 						break;
@@ -758,7 +759,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
-					if (!Validator.equals(uuid, user.getUuid()) ||
+					if (!Objects.equals(uuid, user.getUuid()) ||
 							(companyId != user.getCompanyId())) {
 						list = null;
 
@@ -2033,7 +2034,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
-					if (!Validator.equals(emailAddress, user.getEmailAddress())) {
+					if (!Objects.equals(emailAddress, user.getEmailAddress())) {
 						list = null;
 
 						break;
@@ -3019,7 +3020,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
 					if ((companyId != user.getCompanyId()) ||
-							!Validator.equals(createDate, user.getCreateDate())) {
+							!Objects.equals(createDate, user.getCreateDate())) {
 						list = null;
 
 						break;
@@ -3590,8 +3591,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
 					if ((companyId != user.getCompanyId()) ||
-							!Validator.equals(modifiedDate,
-								user.getModifiedDate())) {
+							!Objects.equals(modifiedDate, user.getModifiedDate())) {
 						list = null;
 
 						break;
@@ -4355,7 +4355,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			User user = (User)result;
 
 			if ((companyId != user.getCompanyId()) ||
-					!Validator.equals(screenName, user.getScreenName())) {
+					!Objects.equals(screenName, user.getScreenName())) {
 				result = null;
 			}
 		}
@@ -4609,7 +4609,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			User user = (User)result;
 
 			if ((companyId != user.getCompanyId()) ||
-					!Validator.equals(emailAddress, user.getEmailAddress())) {
+					!Objects.equals(emailAddress, user.getEmailAddress())) {
 				result = null;
 			}
 		}
@@ -5093,7 +5093,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			User user = (User)result;
 
 			if ((companyId != user.getCompanyId()) ||
-					!Validator.equals(googleUserId, user.getGoogleUserId())) {
+					!Objects.equals(googleUserId, user.getGoogleUserId())) {
 				result = null;
 			}
 		}
@@ -5354,7 +5354,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			User user = (User)result;
 
 			if ((companyId != user.getCompanyId()) ||
-					!Validator.equals(openId, user.getOpenId())) {
+					!Objects.equals(openId, user.getOpenId())) {
 				result = null;
 			}
 		}
@@ -6198,9 +6198,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			if ((list != null) && !list.isEmpty()) {
 				for (User user : list) {
 					if ((companyId != user.getCompanyId()) ||
-							!Validator.equals(createDate, user.getCreateDate()) ||
-							!Validator.equals(modifiedDate,
-								user.getModifiedDate())) {
+							!Objects.equals(createDate, user.getCreateDate()) ||
+							!Objects.equals(modifiedDate, user.getModifiedDate())) {
 						list = null;
 
 						break;

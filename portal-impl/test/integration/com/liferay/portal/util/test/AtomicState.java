@@ -14,13 +14,13 @@
 
 package com.liferay.portal.util.test;
 
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -45,7 +45,7 @@ public class AtomicState {
 	}
 
 	public boolean equalsTo(String value) {
-		return Validator.equals(_atomicReference.get(), value);
+		return Objects.equals(_atomicReference.get(), value);
 	}
 
 	public String get() {

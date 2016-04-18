@@ -56,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -200,7 +201,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 
 			if ((list != null) && !list.isEmpty()) {
 				for (EmailAddress emailAddress : list) {
-					if (!Validator.equals(uuid, emailAddress.getUuid())) {
+					if (!Objects.equals(uuid, emailAddress.getUuid())) {
 						list = null;
 
 						break;
@@ -756,7 +757,7 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 
 			if ((list != null) && !list.isEmpty()) {
 				for (EmailAddress emailAddress : list) {
-					if (!Validator.equals(uuid, emailAddress.getUuid()) ||
+					if (!Objects.equals(uuid, emailAddress.getUuid()) ||
 							(companyId != emailAddress.getCompanyId())) {
 						list = null;
 

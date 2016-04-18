@@ -21,13 +21,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -601,7 +601,7 @@ public class EmailAddressWrapper implements EmailAddress,
 
 		EmailAddressWrapper emailAddressWrapper = (EmailAddressWrapper)obj;
 
-		if (Validator.equals(_emailAddress, emailAddressWrapper._emailAddress)) {
+		if (Objects.equals(_emailAddress, emailAddressWrapper._emailAddress)) {
 			return true;
 		}
 

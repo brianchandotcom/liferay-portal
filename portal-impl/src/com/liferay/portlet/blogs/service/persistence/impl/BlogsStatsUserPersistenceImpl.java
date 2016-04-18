@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import com.liferay.portlet.blogs.model.impl.BlogsStatsUserImpl;
 import com.liferay.portlet.blogs.model.impl.BlogsStatsUserModelImpl;
@@ -55,6 +54,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -2511,7 +2511,7 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsStatsUser blogsStatsUser : list) {
 					if ((userId != blogsStatsUser.getUserId()) ||
-							!Validator.equals(lastPostDate,
+							!Objects.equals(lastPostDate,
 								blogsStatsUser.getLastPostDate())) {
 						list = null;
 

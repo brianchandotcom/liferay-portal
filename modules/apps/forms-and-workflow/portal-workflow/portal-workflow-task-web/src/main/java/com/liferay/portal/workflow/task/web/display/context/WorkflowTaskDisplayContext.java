@@ -72,6 +72,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
@@ -873,7 +874,7 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public boolean isNavigationAll() {
-		if (Validator.equals(getNavigation(), "all")) {
+		if (Objects.equals(getNavigation(), "all")) {
 			return true;
 		}
 
@@ -881,7 +882,7 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public boolean isNavigationCompleted() {
-		if (Validator.equals(getNavigation(), "completed")) {
+		if (Objects.equals(getNavigation(), "completed")) {
 			return true;
 		}
 
@@ -889,7 +890,7 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public boolean isNavigationPending() {
-		if (Validator.equals(getNavigation(), "pending")) {
+		if (Objects.equals(getNavigation(), "pending")) {
 			return true;
 		}
 

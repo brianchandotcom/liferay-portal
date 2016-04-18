@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -487,7 +487,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 
 		EntryWrapper entryWrapper = (EntryWrapper)obj;
 
-		if (Validator.equals(_entry, entryWrapper._entry)) {
+		if (Objects.equals(_entry, entryWrapper._entry)) {
 			return true;
 		}
 

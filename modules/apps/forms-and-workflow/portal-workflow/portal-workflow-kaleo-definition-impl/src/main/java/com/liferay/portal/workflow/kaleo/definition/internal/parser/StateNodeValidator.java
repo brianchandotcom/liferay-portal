@@ -14,11 +14,12 @@
 
 package com.liferay.portal.workflow.kaleo.definition.internal.parser;
 
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.State;
 import com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -50,7 +51,7 @@ public class StateNodeValidator extends BaseNodeValidator<State> {
 
 		State initialState = definition.getInitialState();
 
-		if (!Validator.equals(initialState, state)) {
+		if (!Objects.equals(initialState, state)) {
 			throw new WorkflowException(
 				"Multiple initial states " + state.getName() + " and " +
 					initialState.getName());

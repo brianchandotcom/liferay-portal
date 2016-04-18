@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -759,7 +759,7 @@ public class KaleoDefinitionWrapper implements KaleoDefinition,
 
 		KaleoDefinitionWrapper kaleoDefinitionWrapper = (KaleoDefinitionWrapper)obj;
 
-		if (Validator.equals(_kaleoDefinition,
+		if (Objects.equals(_kaleoDefinition,
 					kaleoDefinitionWrapper._kaleoDefinition)) {
 			return true;
 		}

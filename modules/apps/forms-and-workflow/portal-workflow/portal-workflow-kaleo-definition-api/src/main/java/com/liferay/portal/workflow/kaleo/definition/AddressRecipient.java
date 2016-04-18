@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.definition;
 
-import com.liferay.portal.kernel.util.Validator;
+import java.util.Objects;
 
 /**
  * @author Michael C. Han
@@ -39,7 +39,7 @@ public class AddressRecipient extends Recipient {
 
 		AddressRecipient addressRecipient = (AddressRecipient)obj;
 
-		if (Validator.equals(_address, addressRecipient._address)) {
+		if (Objects.equals(_address, addressRecipient._address)) {
 			return true;
 		}
 

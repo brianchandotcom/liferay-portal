@@ -16,6 +16,8 @@ package com.liferay.portal.workflow.kaleo.definition;
 
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Objects;
+
 /**
  * @author Michael C. Han
  */
@@ -48,7 +50,7 @@ public class RoleRecipient extends Recipient {
 
 		RoleRecipient roleRecipient = (RoleRecipient)obj;
 
-		if (Validator.equals(_roleName, roleRecipient._roleName) &&
+		if (Objects.equals(_roleName, roleRecipient._roleName) &&
 			(_roleId == roleRecipient._roleId)) {
 
 			return true;

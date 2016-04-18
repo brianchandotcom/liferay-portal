@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.jcr.Binary;
 import javax.jcr.Node;
@@ -413,7 +414,7 @@ public class JCRStore extends BaseStore {
 			if (version.getLinearSuccessor() == null) {
 				Version restoreVersion = linearPredecessorVersion;
 
-				if (Validator.equals(
+				if (Objects.equals(
 						JCRConstants.JCR_ROOT_VERSION,
 						linearPredecessorVersion.getName())) {
 

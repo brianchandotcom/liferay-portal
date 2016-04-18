@@ -19,13 +19,13 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -1033,7 +1033,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 
 		ContactWrapper contactWrapper = (ContactWrapper)obj;
 
-		if (Validator.equals(_contact, contactWrapper._contact)) {
+		if (Objects.equals(_contact, contactWrapper._contact)) {
 			return true;
 		}
 

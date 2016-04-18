@@ -123,13 +123,7 @@ public class Validator {
 	}
 
 	/**
-	 * Returns <code>true</code> if the objects are either equal, the same
-	 * instance, or both <code>null</code>.
-	 *
-	 * @param  obj1 the first object
-	 * @param  obj2 the second object
-	 * @return <code>true</code> if the objects are either equal, the same
-	 *         instance, or both <code>null</code>; <code>false</code> otherwise
+	 * @deprecated As of 7.0.0
 	 */
 	public static boolean equals(Object obj1, Object obj2) {
 		if (obj1 == obj2) {

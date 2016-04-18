@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.LogUtil;
 
+import java.util.Objects;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -105,7 +107,7 @@ public class JavaDetector {
 		_javaVersion = System.getProperty("java.version");
 		_javaVmVersion = System.getProperty("java.vm.version");
 
-		_64bit = Validator.equals(
+		_64bit = Objects.equals(
 			"64", System.getProperty("sun.arch.data.model"));
 
 		boolean oracle = false;

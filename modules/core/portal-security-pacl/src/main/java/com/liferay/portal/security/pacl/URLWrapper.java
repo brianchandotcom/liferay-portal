@@ -14,9 +14,9 @@
 
 package com.liferay.portal.security.pacl;
 
-import com.liferay.portal.kernel.util.Validator;
-
 import java.net.URL;
+
+import java.util.Objects;
 
 /**
  * @author Raymond Augé
@@ -44,7 +44,7 @@ public class URLWrapper {
 		URLWrapper urlWrapper = (URLWrapper)obj;
 
 		if ((_url == urlWrapper._url) ||
-			Validator.equals(_urlString, urlWrapper._urlString)) {
+			Objects.equals(_urlString, urlWrapper._urlString)) {
 
 			return true;
 		}

@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -597,7 +597,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 
 		MeetupsEntryWrapper meetupsEntryWrapper = (MeetupsEntryWrapper)obj;
 
-		if (Validator.equals(_meetupsEntry, meetupsEntryWrapper._meetupsEntry)) {
+		if (Objects.equals(_meetupsEntry, meetupsEntryWrapper._meetupsEntry)) {
 			return true;
 		}
 

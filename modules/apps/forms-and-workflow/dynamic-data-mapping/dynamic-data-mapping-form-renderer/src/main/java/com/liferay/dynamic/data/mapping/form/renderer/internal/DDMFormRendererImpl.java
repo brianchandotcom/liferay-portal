@@ -63,6 +63,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.servlet.Servlet;
@@ -271,10 +272,10 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	protected String getTemplateNamespace(DDMFormLayout ddmFormLayout) {
 		String paginationMode = ddmFormLayout.getPaginationMode();
 
-		if (Validator.equals(paginationMode, DDMFormLayout.SINGLE_PAGE_MODE)) {
+		if (Objects.equals(paginationMode, DDMFormLayout.SINGLE_PAGE_MODE)) {
 			return "ddm.simple_form";
 		}
-		else if (Validator.equals(paginationMode, DDMFormLayout.TABBED_MODE)) {
+		else if (Objects.equals(paginationMode, DDMFormLayout.TABBED_MODE)) {
 			return "ddm.tabbed_form";
 		}
 

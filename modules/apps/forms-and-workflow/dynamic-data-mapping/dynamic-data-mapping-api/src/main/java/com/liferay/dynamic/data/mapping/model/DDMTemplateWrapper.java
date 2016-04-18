@@ -22,13 +22,13 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -1286,7 +1286,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 
 		DDMTemplateWrapper ddmTemplateWrapper = (DDMTemplateWrapper)obj;
 
-		if (Validator.equals(_ddmTemplate, ddmTemplateWrapper._ddmTemplate)) {
+		if (Objects.equals(_ddmTemplate, ddmTemplateWrapper._ddmTemplate)) {
 			return true;
 		}
 

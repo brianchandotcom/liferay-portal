@@ -24,10 +24,10 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -64,7 +64,7 @@ public class NoAutoCommitIndexer<T> implements Indexer<T> {
 		NoAutoCommitIndexer<?> noAutoCommitIndexer =
 			(NoAutoCommitIndexer<?>)object;
 
-		return Validator.equals(_indexer, noAutoCommitIndexer._indexer);
+		return Objects.equals(_indexer, noAutoCommitIndexer._indexer);
 	}
 
 	@Override

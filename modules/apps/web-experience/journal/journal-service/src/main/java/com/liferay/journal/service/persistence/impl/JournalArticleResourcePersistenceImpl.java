@@ -51,6 +51,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -199,7 +200,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticleResource journalArticleResource : list) {
-					if (!Validator.equals(uuid, journalArticleResource.getUuid())) {
+					if (!Objects.equals(uuid, journalArticleResource.getUuid())) {
 						list = null;
 
 						break;
@@ -724,7 +725,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		if (result instanceof JournalArticleResource) {
 			JournalArticleResource journalArticleResource = (JournalArticleResource)result;
 
-			if (!Validator.equals(uuid, journalArticleResource.getUuid()) ||
+			if (!Objects.equals(uuid, journalArticleResource.getUuid()) ||
 					(groupId != journalArticleResource.getGroupId())) {
 				result = null;
 			}
@@ -1020,7 +1021,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticleResource journalArticleResource : list) {
-					if (!Validator.equals(uuid, journalArticleResource.getUuid()) ||
+					if (!Objects.equals(uuid, journalArticleResource.getUuid()) ||
 							(companyId != journalArticleResource.getCompanyId())) {
 						list = null;
 
@@ -2086,7 +2087,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 			JournalArticleResource journalArticleResource = (JournalArticleResource)result;
 
 			if ((groupId != journalArticleResource.getGroupId()) ||
-					!Validator.equals(articleId,
+					!Objects.equals(articleId,
 						journalArticleResource.getArticleId())) {
 				result = null;
 			}

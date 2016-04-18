@@ -20,12 +20,12 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -387,7 +387,7 @@ public class SocialRelationWrapper implements SocialRelation,
 
 		SocialRelationWrapper socialRelationWrapper = (SocialRelationWrapper)obj;
 
-		if (Validator.equals(_socialRelation,
+		if (Objects.equals(_socialRelation,
 					socialRelationWrapper._socialRelation)) {
 			return true;
 		}

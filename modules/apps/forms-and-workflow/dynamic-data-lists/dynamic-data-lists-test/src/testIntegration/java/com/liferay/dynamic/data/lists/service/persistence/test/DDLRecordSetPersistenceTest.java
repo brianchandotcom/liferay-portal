@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
@@ -58,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -480,7 +480,7 @@ public class DDLRecordSetPersistenceTest {
 
 		DDLRecordSet existingDDLRecordSet = _persistence.findByPrimaryKey(newDDLRecordSet.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(existingDDLRecordSet.getUuid(),
+		Assert.assertTrue(Objects.equals(existingDDLRecordSet.getUuid(),
 				ReflectionTestUtil.invoke(existingDDLRecordSet,
 					"getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(Long.valueOf(existingDDLRecordSet.getGroupId()),
@@ -490,7 +490,7 @@ public class DDLRecordSetPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingDDLRecordSet.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingDDLRecordSet,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(
+		Assert.assertTrue(Objects.equals(
 				existingDDLRecordSet.getRecordSetKey(),
 				ReflectionTestUtil.invoke(existingDDLRecordSet,
 					"getOriginalRecordSetKey", new Class<?>[0])));

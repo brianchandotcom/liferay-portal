@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -33,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -105,8 +105,8 @@ public class Field implements Serializable {
 		Field field = (Field)obj;
 
 		if ((_ddmStructureId == field._ddmStructureId) &&
-			Validator.equals(_name, field._name) &&
-			Validator.equals(_valuesMap, field._valuesMap)) {
+			Objects.equals(_name, field._name) &&
+			Objects.equals(_valuesMap, field._valuesMap)) {
 
 			return true;
 		}

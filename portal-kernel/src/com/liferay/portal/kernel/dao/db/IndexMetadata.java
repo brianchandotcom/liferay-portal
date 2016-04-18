@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * @author James Lefeu
@@ -77,7 +77,7 @@ public class IndexMetadata extends Index implements Comparable<IndexMetadata> {
 
 		IndexMetadata indexMetadata = (IndexMetadata)obj;
 
-		if (Validator.equals(getTableName(), indexMetadata.getTableName()) &&
+		if (Objects.equals(getTableName(), indexMetadata.getTableName()) &&
 			Arrays.equals(_columnNames, indexMetadata._columnNames)) {
 
 			return true;

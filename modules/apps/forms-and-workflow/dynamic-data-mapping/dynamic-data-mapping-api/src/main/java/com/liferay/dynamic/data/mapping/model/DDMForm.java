@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.model;
 
 import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -25,6 +24,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -66,10 +66,10 @@ public class DDMForm implements Serializable {
 
 		DDMForm ddmForm = (DDMForm)obj;
 
-		if (Validator.equals(
+		if (Objects.equals(
 				_availableLocales, ddmForm._availableLocales) &&
-			Validator.equals(_defaultLocale, ddmForm._defaultLocale) &&
-			Validator.equals(
+			Objects.equals(_defaultLocale, ddmForm._defaultLocale) &&
+			Objects.equals(
 				_ddmFormFields, ddmForm._ddmFormFields)) {
 
 			return true;

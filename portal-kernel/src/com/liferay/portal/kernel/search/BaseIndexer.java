@@ -98,6 +98,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.PortletRequest;
@@ -154,7 +155,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 		Indexer<?> indexer = (Indexer<?>)object;
 
-		return Validator.equals(getClassName(), indexer.getClassName());
+		return Objects.equals(getClassName(), indexer.getClassName());
 	}
 
 	/**

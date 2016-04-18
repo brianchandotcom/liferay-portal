@@ -54,6 +54,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -199,7 +200,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PollsChoice pollsChoice : list) {
-					if (!Validator.equals(uuid, pollsChoice.getUuid())) {
+					if (!Objects.equals(uuid, pollsChoice.getUuid())) {
 						list = null;
 
 						break;
@@ -717,7 +718,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		if (result instanceof PollsChoice) {
 			PollsChoice pollsChoice = (PollsChoice)result;
 
-			if (!Validator.equals(uuid, pollsChoice.getUuid()) ||
+			if (!Objects.equals(uuid, pollsChoice.getUuid()) ||
 					(groupId != pollsChoice.getGroupId())) {
 				result = null;
 			}
@@ -1010,7 +1011,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PollsChoice pollsChoice : list) {
-					if (!Validator.equals(uuid, pollsChoice.getUuid()) ||
+					if (!Objects.equals(uuid, pollsChoice.getUuid()) ||
 							(companyId != pollsChoice.getCompanyId())) {
 						list = null;
 
@@ -2066,7 +2067,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 			PollsChoice pollsChoice = (PollsChoice)result;
 
 			if ((questionId != pollsChoice.getQuestionId()) ||
-					!Validator.equals(name, pollsChoice.getName())) {
+					!Objects.equals(name, pollsChoice.getName())) {
 				result = null;
 			}
 		}

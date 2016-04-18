@@ -60,6 +60,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -828,8 +829,8 @@ public class JournalConverterImpl implements JournalConverter {
 
 		String parentType = parentElement.attributeValue("type");
 
-		if (Validator.equals(parentType, "list") ||
-			Validator.equals(parentType, "multi-list")) {
+		if (Objects.equals(parentType, "list") ||
+			Objects.equals(parentType, "multi-list")) {
 
 			Element metadataElement = dynamicElementElement.element(
 				"meta-data");

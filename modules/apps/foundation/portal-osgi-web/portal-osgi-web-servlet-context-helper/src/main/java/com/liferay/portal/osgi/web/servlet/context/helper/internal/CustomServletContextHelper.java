@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
@@ -151,7 +152,7 @@ public class CustomServletContextHelper
 					String patternExtension = urlPattern.substring(2);
 
 					if (Validator.isNotNull(patternExtension) &&
-						Validator.equals("*", patternExtension)) {
+						Objects.equals("*", patternExtension)) {
 
 						forbidden = true;
 
@@ -162,7 +163,7 @@ public class CustomServletContextHelper
 
 					String pathExtension = path.substring(index + 1);
 
-					if (Validator.equals(patternExtension, pathExtension)) {
+					if (Objects.equals(patternExtension, pathExtension)) {
 						forbidden = true;
 
 						break;
@@ -186,13 +187,13 @@ public class CustomServletContextHelper
 						subpath = subpath.substring(0, index +1);
 					}
 
-					if (Validator.equals(urlPatternPath, subpath)) {
+					if (Objects.equals(urlPatternPath, subpath)) {
 						forbidden = true;
 
 						break;
 					}
 				}
-				else if (Validator.equals(urlPattern, path)) {
+				else if (Objects.equals(urlPattern, path)) {
 					forbidden = true;
 
 					break;

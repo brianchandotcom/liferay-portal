@@ -27,6 +27,7 @@ import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Provides a serializable loose representation for {@link Method}, considering
@@ -103,7 +104,7 @@ public class MethodKey implements Externalizable {
 		MethodKey methodKey = (MethodKey)obj;
 
 		if ((_declaringClass == methodKey._declaringClass) &&
-			Validator.equals(_methodName, methodKey._methodName) &&
+			Objects.equals(_methodName, methodKey._methodName) &&
 			Arrays.equals(_parameterTypes, methodKey._parameterTypes)) {
 
 			return true;

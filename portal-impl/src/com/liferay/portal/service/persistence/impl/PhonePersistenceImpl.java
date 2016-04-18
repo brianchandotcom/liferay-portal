@@ -56,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -199,7 +200,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Phone phone : list) {
-					if (!Validator.equals(uuid, phone.getUuid())) {
+					if (!Objects.equals(uuid, phone.getUuid())) {
 						list = null;
 
 						break;
@@ -751,7 +752,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Phone phone : list) {
-					if (!Validator.equals(uuid, phone.getUuid()) ||
+					if (!Objects.equals(uuid, phone.getUuid()) ||
 							(companyId != phone.getCompanyId())) {
 						list = null;
 

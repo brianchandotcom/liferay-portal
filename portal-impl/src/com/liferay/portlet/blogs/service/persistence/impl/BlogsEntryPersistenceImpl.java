@@ -71,6 +71,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -216,7 +217,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
-					if (!Validator.equals(uuid, blogsEntry.getUuid())) {
+					if (!Objects.equals(uuid, blogsEntry.getUuid())) {
 						list = null;
 
 						break;
@@ -734,7 +735,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		if (result instanceof BlogsEntry) {
 			BlogsEntry blogsEntry = (BlogsEntry)result;
 
-			if (!Validator.equals(uuid, blogsEntry.getUuid()) ||
+			if (!Objects.equals(uuid, blogsEntry.getUuid()) ||
 					(groupId != blogsEntry.getGroupId())) {
 				result = null;
 			}
@@ -1027,7 +1028,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (BlogsEntry blogsEntry : list) {
-					if (!Validator.equals(uuid, blogsEntry.getUuid()) ||
+					if (!Objects.equals(uuid, blogsEntry.getUuid()) ||
 							(companyId != blogsEntry.getCompanyId())) {
 						list = null;
 
@@ -2941,7 +2942,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			BlogsEntry blogsEntry = (BlogsEntry)result;
 
 			if ((groupId != blogsEntry.getGroupId()) ||
-					!Validator.equals(urlTitle, blogsEntry.getUrlTitle())) {
+					!Objects.equals(urlTitle, blogsEntry.getUrlTitle())) {
 				result = null;
 			}
 		}

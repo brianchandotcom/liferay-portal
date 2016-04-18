@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -164,7 +165,7 @@ public class LoggerElement {
 		List<LoggerElement> childLoggerElements = new ArrayList<>();
 
 		for (LoggerElement childLoggerElement : _childLoggerElements) {
-			if (Validator.equals(childLoggerElement.getName(), name)) {
+			if (Objects.equals(childLoggerElement.getName(), name)) {
 				childLoggerElements.add(childLoggerElement);
 			}
 		}
@@ -180,7 +181,7 @@ public class LoggerElement {
 		List<LoggerElement> childLoggerElements = new ArrayList<>();
 
 		for (LoggerElement childLoggerElement : _childLoggerElements) {
-			if (Validator.equals(childLoggerElement.getName(), name)) {
+			if (Objects.equals(childLoggerElement.getName(), name)) {
 				childLoggerElements.add(childLoggerElement);
 			}
 		}
@@ -200,7 +201,7 @@ public class LoggerElement {
 				continue;
 			}
 
-			if (Validator.equals(classNames[i], className)) {
+			if (Objects.equals(classNames[i], className)) {
 				continue;
 			}
 

@@ -86,6 +86,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 
@@ -629,7 +630,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		LDAPImportConfiguration ldapImportConfiguration =
 			_ldapImportConfigurationProvider.getConfiguration(companyId);
 
-		if (Validator.equals(
+		if (Objects.equals(
 				ldapImportConfiguration.importUserSyncStrategy(),
 				_USER_SYNC_STRATEGY_UUID)) {
 
@@ -1058,7 +1059,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			userGroup = _userGroupLocalService.getUserGroup(
 				companyId, ldapGroup.getGroupName());
 
-			if (!Validator.equals(
+			if (!Objects.equals(
 					userGroup.getDescription(), ldapGroup.getDescription())) {
 
 				_userGroupLocalService.updateUserGroup(

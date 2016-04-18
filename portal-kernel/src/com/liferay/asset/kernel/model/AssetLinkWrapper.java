@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -460,7 +460,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 
 		AssetLinkWrapper assetLinkWrapper = (AssetLinkWrapper)obj;
 
-		if (Validator.equals(_assetLink, assetLinkWrapper._assetLink)) {
+		if (Objects.equals(_assetLink, assetLinkWrapper._assetLink)) {
 			return true;
 		}
 

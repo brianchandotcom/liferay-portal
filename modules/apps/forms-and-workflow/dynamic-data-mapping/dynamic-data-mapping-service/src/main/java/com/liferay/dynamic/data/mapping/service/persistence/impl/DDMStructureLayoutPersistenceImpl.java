@@ -54,6 +54,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -201,7 +202,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStructureLayout ddmStructureLayout : list) {
-					if (!Validator.equals(uuid, ddmStructureLayout.getUuid())) {
+					if (!Objects.equals(uuid, ddmStructureLayout.getUuid())) {
 						list = null;
 
 						break;
@@ -723,7 +724,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 		if (result instanceof DDMStructureLayout) {
 			DDMStructureLayout ddmStructureLayout = (DDMStructureLayout)result;
 
-			if (!Validator.equals(uuid, ddmStructureLayout.getUuid()) ||
+			if (!Objects.equals(uuid, ddmStructureLayout.getUuid()) ||
 					(groupId != ddmStructureLayout.getGroupId())) {
 				result = null;
 			}
@@ -1018,7 +1019,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStructureLayout ddmStructureLayout : list) {
-					if (!Validator.equals(uuid, ddmStructureLayout.getUuid()) ||
+					if (!Objects.equals(uuid, ddmStructureLayout.getUuid()) ||
 							(companyId != ddmStructureLayout.getCompanyId())) {
 						list = null;
 

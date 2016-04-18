@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.xsl.XSLURIResolver;
 
 import java.io.Externalizable;
@@ -31,6 +30,7 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -66,7 +66,7 @@ public class JournalXSLURIResolver implements Externalizable, XSLURIResolver {
 		JournalXSLURIResolver journalXSLURIResolver =
 			(JournalXSLURIResolver)obj;
 
-		if (Validator.equals(_languageId, journalXSLURIResolver._languageId) &&
+		if (Objects.equals(_languageId, journalXSLURIResolver._languageId) &&
 			_tokens.equals(journalXSLURIResolver._tokens)) {
 
 			return true;

@@ -45,6 +45,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 
@@ -131,7 +132,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			return false;
 		}
 
-		if (Validator.equals("ddm-date", ddmFormField.getType())) {
+		if (Objects.equals("ddm-date", ddmFormField.getType())) {
 			return true;
 		}
 

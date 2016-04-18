@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -29,6 +28,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Kyle Stiemann
@@ -64,7 +64,7 @@ public class FileEntryWrapper implements FileEntry, ModelWrapper<FileEntry> {
 
 		FileEntryWrapper fileEntryWrapper = (FileEntryWrapper)obj;
 
-		if (Validator.equals(_fileEntry, fileEntryWrapper._fileEntry)) {
+		if (Objects.equals(_fileEntry, fileEntryWrapper._fileEntry)) {
 			return true;
 		}
 

@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
@@ -53,6 +52,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -499,7 +499,7 @@ public class OrganizationPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingOrganization.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(existingOrganization,
 				"getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(existingOrganization.getName(),
+		Assert.assertTrue(Objects.equals(existingOrganization.getName(),
 				ReflectionTestUtil.invoke(existingOrganization,
 					"getOriginalName", new Class<?>[0])));
 	}

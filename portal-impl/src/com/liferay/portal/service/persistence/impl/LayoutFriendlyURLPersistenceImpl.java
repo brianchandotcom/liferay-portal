@@ -56,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -203,7 +204,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutFriendlyURL layoutFriendlyURL : list) {
-					if (!Validator.equals(uuid, layoutFriendlyURL.getUuid())) {
+					if (!Objects.equals(uuid, layoutFriendlyURL.getUuid())) {
 						list = null;
 
 						break;
@@ -725,7 +726,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		if (result instanceof LayoutFriendlyURL) {
 			LayoutFriendlyURL layoutFriendlyURL = (LayoutFriendlyURL)result;
 
-			if (!Validator.equals(uuid, layoutFriendlyURL.getUuid()) ||
+			if (!Objects.equals(uuid, layoutFriendlyURL.getUuid()) ||
 					(groupId != layoutFriendlyURL.getGroupId())) {
 				result = null;
 			}
@@ -1020,7 +1021,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutFriendlyURL layoutFriendlyURL : list) {
-					if (!Validator.equals(uuid, layoutFriendlyURL.getUuid()) ||
+					if (!Objects.equals(uuid, layoutFriendlyURL.getUuid()) ||
 							(companyId != layoutFriendlyURL.getCompanyId())) {
 						list = null;
 
@@ -3130,7 +3131,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			if ((list != null) && !list.isEmpty()) {
 				for (LayoutFriendlyURL layoutFriendlyURL : list) {
 					if ((plid != layoutFriendlyURL.getPlid()) ||
-							!Validator.equals(friendlyURL,
+							!Objects.equals(friendlyURL,
 								layoutFriendlyURL.getFriendlyURL())) {
 						list = null;
 
@@ -3681,7 +3682,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			LayoutFriendlyURL layoutFriendlyURL = (LayoutFriendlyURL)result;
 
 			if ((plid != layoutFriendlyURL.getPlid()) ||
-					!Validator.equals(languageId,
+					!Objects.equals(languageId,
 						layoutFriendlyURL.getLanguageId())) {
 				result = null;
 			}
@@ -3991,7 +3992,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 				for (LayoutFriendlyURL layoutFriendlyURL : list) {
 					if ((groupId != layoutFriendlyURL.getGroupId()) ||
 							(privateLayout != layoutFriendlyURL.getPrivateLayout()) ||
-							!Validator.equals(friendlyURL,
+							!Objects.equals(friendlyURL,
 								layoutFriendlyURL.getFriendlyURL())) {
 						list = null;
 
@@ -4606,9 +4607,9 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 
 			if ((groupId != layoutFriendlyURL.getGroupId()) ||
 					(privateLayout != layoutFriendlyURL.getPrivateLayout()) ||
-					!Validator.equals(friendlyURL,
+					!Objects.equals(friendlyURL,
 						layoutFriendlyURL.getFriendlyURL()) ||
-					!Validator.equals(languageId,
+					!Objects.equals(languageId,
 						layoutFriendlyURL.getLanguageId())) {
 				result = null;
 			}

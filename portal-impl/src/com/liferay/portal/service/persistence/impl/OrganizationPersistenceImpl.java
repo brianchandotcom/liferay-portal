@@ -64,6 +64,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -208,7 +209,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Organization organization : list) {
-					if (!Validator.equals(uuid, organization.getUuid())) {
+					if (!Objects.equals(uuid, organization.getUuid())) {
 						list = null;
 
 						break;
@@ -1166,7 +1167,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Organization organization : list) {
-					if (!Validator.equals(uuid, organization.getUuid()) ||
+					if (!Objects.equals(uuid, organization.getUuid()) ||
 							(companyId != organization.getCompanyId())) {
 						list = null;
 
@@ -5794,7 +5795,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			Organization organization = (Organization)result;
 
 			if ((companyId != organization.getCompanyId()) ||
-					!Validator.equals(name, organization.getName())) {
+					!Objects.equals(name, organization.getName())) {
 				result = null;
 			}
 		}

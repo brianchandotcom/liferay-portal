@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -687,8 +688,8 @@ public final class SummaryLoggerHandler {
 			return false;
 		}
 
-		if (!Validator.equals(element.getName(), "execute") &&
-			!Validator.equals(element.getName(), "task")) {
+		if (!Objects.equals(element.getName(), "execute") &&
+			!Objects.equals(element.getName(), "task")) {
 
 			return false;
 		}
@@ -716,7 +717,7 @@ public final class SummaryLoggerHandler {
 			return false;
 		}
 
-		if (!Validator.equals(element.getName(), "execute")) {
+		if (!Objects.equals(element.getName(), "execute")) {
 			return false;
 		}
 

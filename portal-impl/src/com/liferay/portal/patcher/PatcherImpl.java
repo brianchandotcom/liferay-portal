@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -233,7 +234,7 @@ public class PatcherImpl implements Patcher {
 
 		Class<?> clazz = getClass();
 
-		if (Validator.equals(fileName, PATCHER_SERVICE_PROPERTIES)) {
+		if (Objects.equals(fileName, PATCHER_SERVICE_PROPERTIES)) {
 			clazz = clazz.getInterfaces()[0];
 		}
 

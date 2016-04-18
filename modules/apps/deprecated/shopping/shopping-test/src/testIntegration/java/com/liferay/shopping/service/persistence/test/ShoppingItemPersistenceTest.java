@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
@@ -59,6 +58,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -558,7 +558,7 @@ public class ShoppingItemPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingShoppingItem.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(existingShoppingItem,
 				"getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(existingShoppingItem.getSku(),
+		Assert.assertTrue(Objects.equals(existingShoppingItem.getSku(),
 				ReflectionTestUtil.invoke(existingShoppingItem,
 					"getOriginalSku", new Class<?>[0])));
 	}

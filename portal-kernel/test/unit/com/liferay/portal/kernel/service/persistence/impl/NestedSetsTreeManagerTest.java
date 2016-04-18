@@ -419,6 +419,14 @@ public class NestedSetsTreeManagerTest {
 
 		@Override
 		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+
+			if (!(obj instanceof SimpleNestedSetsTreeNode)) {
+				return false;
+			}
+
 			SimpleNestedSetsTreeNode simpleNestedSetsTreeNode =
 				(SimpleNestedSetsTreeNode)obj;
 

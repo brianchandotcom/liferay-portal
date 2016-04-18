@@ -15,9 +15,9 @@
 package com.liferay.portal.kernel.service.persistence.impl;
 
 import com.liferay.portal.kernel.model.NestedSetsTreeNodeModel;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Shuyang Zhou
@@ -83,7 +83,7 @@ public abstract class NestedSetsTreeManager<T extends NestedSetsTreeNodeModel> {
 	}
 
 	public void move(T t, T oldParentT, T newParentT) {
-		if (Validator.equals(oldParentT, newParentT)) {
+		if (Objects.equals(oldParentT, newParentT)) {
 			return;
 		}
 

@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.mapping.storage;
 
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -29,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -57,7 +57,7 @@ public class Fields implements Iterable<Field>, Serializable {
 		Fields fields = (Fields)obj;
 
 		if (includePrivateFields) {
-			return Validator.equals(_fieldsMap, fields._fieldsMap);
+			return Objects.equals(_fieldsMap, fields._fieldsMap);
 		}
 
 		List<Field> fieldList1 = getFieldsList(includePrivateFields);

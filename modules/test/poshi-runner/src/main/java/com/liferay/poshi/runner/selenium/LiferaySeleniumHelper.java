@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -463,7 +464,7 @@ public class LiferaySeleniumHelper {
 		LiferaySelenium liferaySelenium, String pattern) {
 
 		TestCase.assertTrue(
-			Validator.equals(pattern, liferaySelenium.getAlert()));
+			Objects.equals(pattern, liferaySelenium.getAlert()));
 	}
 
 	public static void assertNotChecked(
@@ -491,7 +492,7 @@ public class LiferaySeleniumHelper {
 		throws Exception {
 
 		TestCase.assertTrue(
-			Validator.equals(pattern, liferaySelenium.getLocation()));
+			Objects.equals(pattern, liferaySelenium.getLocation()));
 	}
 
 	public static void assertNotPartialText(
@@ -913,11 +914,11 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
-		if (Validator.equals(PropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.1") ||
-			Validator.equals(PropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.2") ||
-			Validator.equals(PropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.3") ||
-			Validator.equals(PropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.4") ||
-			Validator.equals(PropsValues.LIFERAY_PORTAL_BRANCH, "ee-6.2.10")) {
+		if (Objects.equals(PropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.1") ||
+			Objects.equals(PropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.2") ||
+			Objects.equals(PropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.3") ||
+			Objects.equals(PropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.4") ||
+			Objects.equals(PropsValues.LIFERAY_PORTAL_BRANCH, "ee-6.2.10")) {
 
 			if (line.contains(
 					"com.liferay.portal.kernel.search.SearchException: " +

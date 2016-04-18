@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.ntlm.NetlogonConnectionManager;
 import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
@@ -36,6 +35,7 @@ import com.liferay.portal.security.sso.ntlm.internal.NtlmUserAccount;
 import com.liferay.portal.util.PortalInstances;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.Filter;
@@ -194,15 +194,15 @@ public class NtlmFilter extends BaseFilter {
 			_ntlmManagers.put(companyId, ntlmManager);
 		}
 		else {
-			if (!Validator.equals(ntlmManager.getDomain(), domain) ||
-				!Validator.equals(
+			if (!Objects.equals(ntlmManager.getDomain(), domain) ||
+				!Objects.equals(
 					ntlmManager.getDomainController(), domainController) ||
-				!Validator.equals(
+				!Objects.equals(
 					ntlmManager.getDomainControllerName(),
 					domainControllerName) ||
-				!Validator.equals(
+				!Objects.equals(
 					ntlmManager.getServiceAccount(), serviceAccount) ||
-				!Validator.equals(
+				!Objects.equals(
 					ntlmManager.getServicePassword(), servicePassword)) {
 
 				ntlmManager.setConfiguration(

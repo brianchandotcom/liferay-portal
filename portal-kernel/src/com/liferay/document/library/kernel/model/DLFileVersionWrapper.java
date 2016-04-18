@@ -22,13 +22,13 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -1134,7 +1134,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 
 		DLFileVersionWrapper dlFileVersionWrapper = (DLFileVersionWrapper)obj;
 
-		if (Validator.equals(_dlFileVersion, dlFileVersionWrapper._dlFileVersion)) {
+		if (Objects.equals(_dlFileVersion, dlFileVersionWrapper._dlFileVersion)) {
 			return true;
 		}
 

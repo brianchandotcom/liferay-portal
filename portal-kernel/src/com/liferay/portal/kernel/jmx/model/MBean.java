@@ -20,12 +20,12 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HashCode;
 import com.liferay.portal.kernel.util.HashCodeFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.management.MBeanInfo;
 import javax.management.ObjectName;
@@ -65,8 +65,8 @@ public class MBean implements Serializable {
 
 		MBean mBean = (MBean)obj;
 
-		if (Validator.equals(_domainName, mBean._domainName) &&
-			Validator.equals(_mBeanName, mBean._mBeanName)) {
+		if (Objects.equals(_domainName, mBean._domainName) &&
+			Objects.equals(_mBeanName, mBean._mBeanName)) {
 
 			return true;
 		}

@@ -2,13 +2,13 @@
 	<#if finderCol.isPrimitiveType(false)>
 		(${finderCol.name} != ${entity.varName}.get${finderCol.methodName}())
 	<#else>
-		!Validator.equals(${finderCol.name}, ${entity.varName}.get${finderCol.methodName}())
+		!Objects.equals(${finderCol.name}, ${entity.varName}.get${finderCol.methodName}())
 	</#if>
 <#elseif finderCol.comparator == "!=">
 	<#if finderCol.isPrimitiveType(false)>
 		(${finderCol.name} == ${entity.varName}.get${finderCol.methodName}())
 	<#else>
-		Validator.equals(${finderCol.name}, ${entity.varName}.get${finderCol.methodName}())
+		Objects.equals(${finderCol.name}, ${entity.varName}.get${finderCol.methodName}())
 	</#if>
 <#elseif finderCol.comparator == ">">
 	<#if finderCol.type == "Date">

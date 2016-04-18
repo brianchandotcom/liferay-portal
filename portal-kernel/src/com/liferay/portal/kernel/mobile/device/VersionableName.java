@@ -24,6 +24,7 @@ import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -87,7 +88,7 @@ public class VersionableName
 
 		VersionableName versionableName = (VersionableName)obj;
 
-		if (Validator.equals(_name, versionableName._name)) {
+		if (Objects.equals(_name, versionableName._name)) {
 			return true;
 		}
 

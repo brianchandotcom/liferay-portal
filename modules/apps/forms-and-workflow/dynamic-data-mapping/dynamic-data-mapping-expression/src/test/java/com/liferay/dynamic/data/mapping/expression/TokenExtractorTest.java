@@ -16,10 +16,10 @@ package com.liferay.dynamic.data.mapping.expression;
 
 import com.liferay.dynamic.data.mapping.expression.internal.TokenExtractor;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -190,7 +190,7 @@ public class TokenExtractorTest {
 		Map<String, String> variableMap, String value) {
 
 		for (Map.Entry<String, String> entry : variableMap.entrySet()) {
-			if (Validator.equals(entry.getValue(), value)) {
+			if (Objects.equals(entry.getValue(), value)) {
 				return entry.getKey();
 			}
 		}

@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
@@ -53,6 +52,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -389,7 +389,7 @@ public class ExpandoTablePersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingExpandoTable.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(existingExpandoTable,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(existingExpandoTable.getName(),
+		Assert.assertTrue(Objects.equals(existingExpandoTable.getName(),
 				ReflectionTestUtil.invoke(existingExpandoTable,
 					"getOriginalName", new Class<?>[0])));
 	}

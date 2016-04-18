@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -241,7 +242,7 @@ public class PoshiRunnerValidation {
 			for (Element returnElement : returnElements) {
 				Element parentElement = returnElement.getParent();
 
-				if (!Validator.equals(parentElement.getName(), "execute")) {
+				if (!Objects.equals(parentElement.getName(), "execute")) {
 					validReturnElements.add(returnElement);
 				}
 			}
@@ -266,7 +267,7 @@ public class PoshiRunnerValidation {
 
 				Element parentElement = returnElement.getParent();
 
-				if (Validator.equals(parentElement.getName(), "execute")) {
+				if (Objects.equals(parentElement.getName(), "execute")) {
 					continue;
 				}
 
@@ -382,7 +383,7 @@ public class PoshiRunnerValidation {
 
 		String elementName = element.getName();
 
-		if (!Validator.equals(elementName, "definition")) {
+		if (!Objects.equals(elementName, "definition")) {
 			_exceptions.add(
 				new Exception(
 					"Root element name must be definition\n" + filePath + ":" +
@@ -1131,7 +1132,7 @@ public class PoshiRunnerValidation {
 			filePath);
 		String rootElementName = element.getName();
 
-		if (!Validator.equals(rootElementName, "html")) {
+		if (!Objects.equals(rootElementName, "html")) {
 			_exceptions.add(
 				new Exception(
 					"Invalid " + rootElementName + " element\n" + filePath +
@@ -1222,7 +1223,7 @@ public class PoshiRunnerValidation {
 					"Missing thead class name\n" + filePath + ":" +
 						trElement.attributeValue("line-number")));
 		}
-		else if (!Validator.equals(theadClassName, className)) {
+		else if (!Objects.equals(theadClassName, className)) {
 			_exceptions.add(
 				new Exception(
 					"Thead class name does not match file name\n" + filePath +
@@ -1237,7 +1238,7 @@ public class PoshiRunnerValidation {
 
 		Element titleElement = headElement.element("title");
 
-		if (!Validator.equals(titleElement.getText(), className)) {
+		if (!Objects.equals(titleElement.getText(), className)) {
 			_exceptions.add(
 				new Exception(
 					"File name and title are different\n" + filePath + ":" +
@@ -1324,7 +1325,7 @@ public class PoshiRunnerValidation {
 		List<Element> childElements = element.elements();
 
 		for (Element childElement : childElements) {
-			if (Validator.equals(childElement.getName(), requiredElementName)) {
+			if (Objects.equals(childElement.getName(), requiredElementName)) {
 				found = true;
 
 				break;

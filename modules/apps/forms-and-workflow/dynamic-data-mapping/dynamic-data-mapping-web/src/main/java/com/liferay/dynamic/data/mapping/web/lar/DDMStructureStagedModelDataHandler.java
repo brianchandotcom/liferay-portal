@@ -52,13 +52,13 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -552,35 +552,33 @@ public class DDMStructureStagedModelDataHandler
 
 		// Check other attributes
 
-		if (!Validator.equals(
+		if (!Objects.equals(
 				existingStructure.getDefinition(), structure.getDefinition())) {
 
 			return true;
 		}
 
-		if (!Validator.equals(
+		if (!Objects.equals(
 				existingStructure.getDescriptionMap(),
 				structure.getDescriptionMap())) {
 
 			return true;
 		}
 
-		if (!Validator.equals(
+		if (!Objects.equals(
 				existingStructure.getNameMap(), structure.getNameMap())) {
 
 			return true;
 		}
 
-		if (!Validator.equals(
+		if (!Objects.equals(
 				existingStructure.getStorageType(),
 				structure.getStorageType())) {
 
 			return true;
 		}
 
-		if (!Validator.equals(
-				existingStructure.getType(), structure.getType())) {
-
+		if (!Objects.equals(existingStructure.getType(), structure.getType())) {
 			return true;
 		}
 

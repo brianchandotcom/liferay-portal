@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -46,6 +45,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -392,7 +392,7 @@ public class DDMStructureTestUtil {
 
 		String type = element.attributeValue("type");
 
-		if (Validator.equals(type, "option")) {
+		if (Objects.equals(type, "option")) {
 			sb.append(StringPool.SLASH);
 
 			sb.append(element.attributeValue("value"));

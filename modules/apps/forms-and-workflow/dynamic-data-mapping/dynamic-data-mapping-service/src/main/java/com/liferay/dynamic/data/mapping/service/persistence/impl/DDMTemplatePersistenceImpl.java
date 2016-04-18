@@ -59,6 +59,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -202,7 +203,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMTemplate ddmTemplate : list) {
-					if (!Validator.equals(uuid, ddmTemplate.getUuid())) {
+					if (!Objects.equals(uuid, ddmTemplate.getUuid())) {
 						list = null;
 
 						break;
@@ -720,7 +721,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		if (result instanceof DDMTemplate) {
 			DDMTemplate ddmTemplate = (DDMTemplate)result;
 
-			if (!Validator.equals(uuid, ddmTemplate.getUuid()) ||
+			if (!Objects.equals(uuid, ddmTemplate.getUuid()) ||
 					(groupId != ddmTemplate.getGroupId())) {
 				result = null;
 			}
@@ -1011,7 +1012,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMTemplate ddmTemplate : list) {
-					if (!Validator.equals(uuid, ddmTemplate.getUuid()) ||
+					if (!Objects.equals(uuid, ddmTemplate.getUuid()) ||
 							(companyId != ddmTemplate.getCompanyId())) {
 						list = null;
 
@@ -2949,7 +2950,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMTemplate ddmTemplate : list) {
-					if (!Validator.equals(templateKey,
+					if (!Objects.equals(templateKey,
 								ddmTemplate.getTemplateKey())) {
 						list = null;
 
@@ -3496,7 +3497,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMTemplate ddmTemplate : list) {
-					if (!Validator.equals(type, ddmTemplate.getType())) {
+					if (!Objects.equals(type, ddmTemplate.getType())) {
 						list = null;
 
 						break;
@@ -4041,7 +4042,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMTemplate ddmTemplate : list) {
-					if (!Validator.equals(language, ddmTemplate.getLanguage())) {
+					if (!Objects.equals(language, ddmTemplate.getLanguage())) {
 						list = null;
 
 						break;
@@ -8651,7 +8652,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 			if ((groupId != ddmTemplate.getGroupId()) ||
 					(classNameId != ddmTemplate.getClassNameId()) ||
-					!Validator.equals(templateKey, ddmTemplate.getTemplateKey())) {
+					!Objects.equals(templateKey, ddmTemplate.getTemplateKey())) {
 				result = null;
 			}
 		}
@@ -8970,7 +8971,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 				for (DDMTemplate ddmTemplate : list) {
 					if ((classNameId != ddmTemplate.getClassNameId()) ||
 							(classPK != ddmTemplate.getClassPK()) ||
-							!Validator.equals(type, ddmTemplate.getType())) {
+							!Objects.equals(type, ddmTemplate.getType())) {
 						list = null;
 
 						break;
@@ -9606,7 +9607,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 					if ((groupId != ddmTemplate.getGroupId()) ||
 							(classNameId != ddmTemplate.getClassNameId()) ||
 							(classPK != ddmTemplate.getClassPK()) ||
-							!Validator.equals(type, ddmTemplate.getType())) {
+							!Objects.equals(type, ddmTemplate.getType())) {
 						list = null;
 
 						break;
@@ -10743,8 +10744,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 					if ((groupId != ddmTemplate.getGroupId()) ||
 							(classNameId != ddmTemplate.getClassNameId()) ||
 							(classPK != ddmTemplate.getClassPK()) ||
-							!Validator.equals(type, ddmTemplate.getType()) ||
-							!Validator.equals(mode, ddmTemplate.getMode())) {
+							!Objects.equals(type, ddmTemplate.getType()) ||
+							!Objects.equals(mode, ddmTemplate.getMode())) {
 						list = null;
 
 						break;

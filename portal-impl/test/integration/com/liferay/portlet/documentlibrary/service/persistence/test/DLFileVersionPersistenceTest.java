@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
@@ -54,6 +53,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -569,7 +569,7 @@ public class DLFileVersionPersistenceTest {
 
 		DLFileVersion existingDLFileVersion = _persistence.findByPrimaryKey(newDLFileVersion.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(existingDLFileVersion.getUuid(),
+		Assert.assertTrue(Objects.equals(existingDLFileVersion.getUuid(),
 				ReflectionTestUtil.invoke(existingDLFileVersion,
 					"getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(Long.valueOf(existingDLFileVersion.getGroupId()),
@@ -579,7 +579,7 @@ public class DLFileVersionPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingDLFileVersion.getFileEntryId()),
 			ReflectionTestUtil.<Long>invoke(existingDLFileVersion,
 				"getOriginalFileEntryId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(existingDLFileVersion.getVersion(),
+		Assert.assertTrue(Objects.equals(existingDLFileVersion.getVersion(),
 				ReflectionTestUtil.invoke(existingDLFileVersion,
 					"getOriginalVersion", new Class<?>[0])));
 	}

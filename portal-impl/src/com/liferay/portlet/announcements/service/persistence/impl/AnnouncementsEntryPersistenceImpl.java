@@ -66,6 +66,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -215,7 +216,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AnnouncementsEntry announcementsEntry : list) {
-					if (!Validator.equals(uuid, announcementsEntry.getUuid())) {
+					if (!Objects.equals(uuid, announcementsEntry.getUuid())) {
 						list = null;
 
 						break;
@@ -1182,7 +1183,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AnnouncementsEntry announcementsEntry : list) {
-					if (!Validator.equals(uuid, announcementsEntry.getUuid()) ||
+					if (!Objects.equals(uuid, announcementsEntry.getUuid()) ||
 							(companyId != announcementsEntry.getCompanyId())) {
 						list = null;
 

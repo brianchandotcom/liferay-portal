@@ -25,9 +25,10 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.kernel.service.SocialActivityAchievementLocalServiceUtil;
 import com.liferay.social.kernel.service.SocialActivityCounterLocalServiceUtil;
+
+import java.util.Objects;
 
 /**
  * @author Zsolt Berentey
@@ -35,7 +36,7 @@ import com.liferay.social.kernel.service.SocialActivityCounterLocalServiceUtil;
 public class BaseSocialAchievement implements SocialAchievement {
 
 	public boolean equals(SocialAchievement socialAchievement) {
-		if (Validator.equals(_name, socialAchievement.getName())) {
+		if (Objects.equals(_name, socialAchievement.getName())) {
 			return true;
 		}
 

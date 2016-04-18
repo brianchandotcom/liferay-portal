@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.ResourceActionImpl;
 import com.liferay.portal.model.impl.ResourceActionModelImpl;
 
@@ -48,6 +47,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -196,7 +196,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ResourceAction resourceAction : list) {
-					if (!Validator.equals(name, resourceAction.getName())) {
+					if (!Objects.equals(name, resourceAction.getName())) {
 						list = null;
 
 						break;
@@ -715,8 +715,8 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		if (result instanceof ResourceAction) {
 			ResourceAction resourceAction = (ResourceAction)result;
 
-			if (!Validator.equals(name, resourceAction.getName()) ||
-					!Validator.equals(actionId, resourceAction.getActionId())) {
+			if (!Objects.equals(name, resourceAction.getName()) ||
+					!Objects.equals(actionId, resourceAction.getActionId())) {
 				result = null;
 			}
 		}

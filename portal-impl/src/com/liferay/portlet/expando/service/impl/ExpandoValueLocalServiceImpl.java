@@ -22,7 +22,6 @@ import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.typeconverter.DateArrayConverter;
 import com.liferay.portal.typeconverter.NumberArrayConverter;
 import com.liferay.portal.typeconverter.NumberConverter;
@@ -38,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import jodd.typeconverter.TypeConverterManager;
 import jodd.typeconverter.TypeConverterManagerBean;
@@ -683,9 +683,7 @@ public class ExpandoValueLocalServiceImpl
 				value.setClassPK(classPK);
 			}
 
-			if (value.isNew() ||
-				!Validator.equals(value.getData(), dataString)) {
-
+			if (value.isNew() || !Objects.equals(value.getData(), dataString)) {
 				value.setData(dataString);
 
 				expandoValuePersistence.update(value);
@@ -1672,7 +1670,7 @@ public class ExpandoValueLocalServiceImpl
 			value.setClassPK(classPK);
 		}
 
-		if (value.isNew() || !Validator.equals(value.getData(), data)) {
+		if (value.isNew() || !Objects.equals(value.getData(), data)) {
 			value.setData(data);
 
 			expandoValuePersistence.update(value);

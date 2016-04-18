@@ -31,6 +31,7 @@ import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -122,7 +123,7 @@ public class PanelAppTag extends BasePanelTag {
 			active = _active.booleanValue();
 		}
 		else {
-			active = Validator.equals(
+			active = Objects.equals(
 				themeDisplay.getPpid(), _panelApp.getPortletId());
 		}
 

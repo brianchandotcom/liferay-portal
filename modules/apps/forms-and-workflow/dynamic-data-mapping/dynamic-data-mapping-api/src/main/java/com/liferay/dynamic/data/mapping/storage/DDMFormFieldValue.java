@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -27,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Marcellus Tavares
@@ -54,10 +54,10 @@ public class DDMFormFieldValue implements Serializable {
 
 		DDMFormFieldValue ddmFormFieldValue = (DDMFormFieldValue)obj;
 
-		if (Validator.equals(_instanceId, ddmFormFieldValue._instanceId) &&
-			Validator.equals(_name, ddmFormFieldValue._name) &&
-			Validator.equals(_value, ddmFormFieldValue._value) &&
-			Validator.equals(
+		if (Objects.equals(_instanceId, ddmFormFieldValue._instanceId) &&
+			Objects.equals(_name, ddmFormFieldValue._name) &&
+			Objects.equals(_value, ddmFormFieldValue._value) &&
+			Objects.equals(
 				_nestedDDMFormFieldValues,
 				ddmFormFieldValue._nestedDDMFormFieldValues)) {
 

@@ -20,7 +20,6 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -28,6 +27,7 @@ import java.sql.Blob;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -415,7 +415,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 
 		DLContentWrapper dlContentWrapper = (DLContentWrapper)obj;
 
-		if (Validator.equals(_dlContent, dlContentWrapper._dlContent)) {
+		if (Objects.equals(_dlContent, dlContentWrapper._dlContent)) {
 			return true;
 		}
 

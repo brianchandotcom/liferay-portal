@@ -22,13 +22,13 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -718,7 +718,7 @@ public class SAPEntryWrapper implements SAPEntry, ModelWrapper<SAPEntry> {
 
 		SAPEntryWrapper sapEntryWrapper = (SAPEntryWrapper)obj;
 
-		if (Validator.equals(_sapEntry, sapEntryWrapper._sapEntry)) {
+		if (Objects.equals(_sapEntry, sapEntryWrapper._sapEntry)) {
 			return true;
 		}
 

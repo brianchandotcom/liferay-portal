@@ -19,13 +19,13 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -589,7 +589,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 
 		WorkflowDefinitionLinkWrapper workflowDefinitionLinkWrapper = (WorkflowDefinitionLinkWrapper)obj;
 
-		if (Validator.equals(_workflowDefinitionLink,
+		if (Objects.equals(_workflowDefinitionLink,
 					workflowDefinitionLinkWrapper._workflowDefinitionLink)) {
 			return true;
 		}

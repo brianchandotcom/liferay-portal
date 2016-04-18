@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.ServiceComponentImpl;
 import com.liferay.portal.model.impl.ServiceComponentModelImpl;
 
@@ -49,6 +48,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -208,7 +208,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ServiceComponent serviceComponent : list) {
-					if (!Validator.equals(buildNamespace,
+					if (!Objects.equals(buildNamespace,
 								serviceComponent.getBuildNamespace())) {
 						list = null;
 
@@ -735,7 +735,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		if (result instanceof ServiceComponent) {
 			ServiceComponent serviceComponent = (ServiceComponent)result;
 
-			if (!Validator.equals(buildNamespace,
+			if (!Objects.equals(buildNamespace,
 						serviceComponent.getBuildNamespace()) ||
 					(buildNumber != serviceComponent.getBuildNumber())) {
 				result = null;

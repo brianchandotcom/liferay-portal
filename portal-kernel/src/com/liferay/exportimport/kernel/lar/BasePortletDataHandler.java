@@ -34,6 +34,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 
@@ -670,7 +671,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		Version currentVersion = Version.getInstance(getSchemaVersion());
 		Version importedVersion = Version.getInstance(schemaVersion);
 
-		if (!Validator.equals(
+		if (!Objects.equals(
 				currentVersion.getMajor(), importedVersion.getMajor())) {
 
 			return false;

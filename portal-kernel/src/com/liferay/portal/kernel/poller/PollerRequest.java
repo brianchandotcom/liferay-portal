@@ -15,11 +15,11 @@
 package com.liferay.portal.kernel.poller;
 
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -55,7 +55,7 @@ public class PollerRequest implements Serializable {
 
 		PollerRequest portletRequest = (PollerRequest)obj;
 
-		if (Validator.equals(_portletId, portletRequest._portletId)) {
+		if (Objects.equals(_portletId, portletRequest._portletId)) {
 			return true;
 		}
 

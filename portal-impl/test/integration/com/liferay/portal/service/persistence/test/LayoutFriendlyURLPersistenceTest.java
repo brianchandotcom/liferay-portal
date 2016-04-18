@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
@@ -53,6 +52,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -504,8 +504,7 @@ public class LayoutFriendlyURLPersistenceTest {
 
 		LayoutFriendlyURL existingLayoutFriendlyURL = _persistence.findByPrimaryKey(newLayoutFriendlyURL.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(
-				existingLayoutFriendlyURL.getUuid(),
+		Assert.assertTrue(Objects.equals(existingLayoutFriendlyURL.getUuid(),
 				ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
 					"getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(Long.valueOf(existingLayoutFriendlyURL.getGroupId()),
@@ -515,7 +514,7 @@ public class LayoutFriendlyURLPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingLayoutFriendlyURL.getPlid()),
 			ReflectionTestUtil.<Long>invoke(existingLayoutFriendlyURL,
 				"getOriginalPlid", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(
+		Assert.assertTrue(Objects.equals(
 				existingLayoutFriendlyURL.getLanguageId(),
 				ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
 					"getOriginalLanguageId", new Class<?>[0])));
@@ -527,11 +526,11 @@ public class LayoutFriendlyURLPersistenceTest {
 				existingLayoutFriendlyURL.getPrivateLayout()),
 			ReflectionTestUtil.<Boolean>invoke(existingLayoutFriendlyURL,
 				"getOriginalPrivateLayout", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(
+		Assert.assertTrue(Objects.equals(
 				existingLayoutFriendlyURL.getFriendlyURL(),
 				ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
 					"getOriginalFriendlyURL", new Class<?>[0])));
-		Assert.assertTrue(Validator.equals(
+		Assert.assertTrue(Objects.equals(
 				existingLayoutFriendlyURL.getLanguageId(),
 				ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
 					"getOriginalLanguageId", new Class<?>[0])));

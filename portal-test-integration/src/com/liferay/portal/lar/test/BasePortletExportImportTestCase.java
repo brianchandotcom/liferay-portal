@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
@@ -64,6 +63,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 
@@ -613,14 +613,14 @@ public abstract class BasePortletExportImportTestCase
 					AssetEntryLocalServiceUtil.getEntry(
 						importedLink.getEntryId2());
 
-				if (!Validator.equals(
+				if (!Objects.equals(
 						sourceAssetEntry.getClassUuid(),
 						importedLinkSourceAssetEntry.getClassUuid())) {
 
 					continue;
 				}
 
-				if (!Validator.equals(
+				if (!Objects.equals(
 						targetAssetEntry.getClassUuid(),
 						importedLinkTargetAssetEntry.getClassUuid())) {
 

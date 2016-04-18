@@ -14,10 +14,10 @@
 
 package com.liferay.portal.security.pacl.jndi;
 
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.pacl.PACLPolicy;
 
 import java.util.Hashtable;
+import java.util.Objects;
 
 import javax.naming.Binding;
 import javax.naming.Context;
@@ -119,7 +119,7 @@ public class PACLContext implements Context {
 
 		Context context = (Context)obj;
 
-		if (Validator.equals(_context, context)) {
+		if (Objects.equals(_context, context)) {
 			return true;
 		}
 

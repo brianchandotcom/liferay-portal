@@ -54,6 +54,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -196,7 +197,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Lock lock : list) {
-					if (!Validator.equals(uuid, lock.getUuid())) {
+					if (!Objects.equals(uuid, lock.getUuid())) {
 						list = null;
 
 						break;
@@ -746,7 +747,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Lock lock : list) {
-					if (!Validator.equals(uuid, lock.getUuid()) ||
+					if (!Objects.equals(uuid, lock.getUuid()) ||
 							(companyId != lock.getCompanyId())) {
 						list = null;
 
@@ -1818,8 +1819,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		if (result instanceof Lock) {
 			Lock lock = (Lock)result;
 
-			if (!Validator.equals(className, lock.getClassName()) ||
-					!Validator.equals(key, lock.getKey())) {
+			if (!Objects.equals(className, lock.getClassName()) ||
+					!Objects.equals(key, lock.getKey())) {
 				result = null;
 			}
 		}

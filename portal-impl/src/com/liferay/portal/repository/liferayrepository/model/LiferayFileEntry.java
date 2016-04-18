@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.util.RepositoryModelUtil;
 
@@ -48,6 +47,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Alexander Chow
@@ -89,7 +89,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 
 		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)obj;
 
-		if (Validator.equals(_dlFileEntry, liferayFileEntry._dlFileEntry)) {
+		if (Objects.equals(_dlFileEntry, liferayFileEntry._dlFileEntry)) {
 			return true;
 		}
 

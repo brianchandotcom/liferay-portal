@@ -79,6 +79,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.ServiceLoader;
 import java.util.Set;
@@ -576,7 +577,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		}
 
 		for (DeploymentExtension deploymentExtension : _deploymentExtensions) {
-			if (Validator.equals(
+			if (Objects.equals(
 					appServerType, deploymentExtension.getServerId())) {
 
 				deploymentExtension.copyXmls(this, srcFile);
@@ -1603,7 +1604,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		}
 
 		for (DeploymentExtension deploymentExtension : _deploymentExtensions) {
-			if (Validator.equals(
+			if (Objects.equals(
 					appServerType, deploymentExtension.getServerId())) {
 
 				deploymentExtension.postDeploy(destDir, deployDir);

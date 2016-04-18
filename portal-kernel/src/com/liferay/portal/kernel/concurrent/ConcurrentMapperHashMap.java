@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.concurrent;
 
-import com.liferay.portal.kernel.util.Validator;
-
 import java.io.Serializable;
 
 import java.util.AbstractCollection;
@@ -24,6 +22,7 @@ import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 
@@ -320,8 +319,8 @@ public abstract class ConcurrentMapperHashMap<K, IK, V, IV>
 
 			Map.Entry<K, V> entry = (Map.Entry<K, V>)obj;
 
-			if (Validator.equals(getKey(), entry.getKey()) &&
-				Validator.equals(getValue(), entry.getValue())) {
+			if (Objects.equals(getKey(), entry.getKey()) &&
+				Objects.equals(getValue(), entry.getValue())) {
 
 				return true;
 			}

@@ -51,6 +51,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -198,7 +199,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStorageLink ddmStorageLink : list) {
-					if (!Validator.equals(uuid, ddmStorageLink.getUuid())) {
+					if (!Objects.equals(uuid, ddmStorageLink.getUuid())) {
 						list = null;
 
 						break;
@@ -757,7 +758,7 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStorageLink ddmStorageLink : list) {
-					if (!Validator.equals(uuid, ddmStorageLink.getUuid()) ||
+					if (!Objects.equals(uuid, ddmStorageLink.getUuid()) ||
 							(companyId != ddmStorageLink.getCompanyId())) {
 						list = null;
 

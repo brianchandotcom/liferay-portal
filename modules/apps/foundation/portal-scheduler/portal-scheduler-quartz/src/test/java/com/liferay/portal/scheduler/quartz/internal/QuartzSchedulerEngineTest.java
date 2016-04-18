@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.scheduler.JobStateSerializeUtil;
@@ -58,6 +57,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -667,7 +667,7 @@ public class QuartzSchedulerEngineTest {
 					String destinationName =
 						(String)invocationOnMock.getArguments()[0];
 
-					if (!Validator.equals(
+					if (!Objects.equals(
 							_synchronousDestination.getName(),
 							destinationName)) {
 

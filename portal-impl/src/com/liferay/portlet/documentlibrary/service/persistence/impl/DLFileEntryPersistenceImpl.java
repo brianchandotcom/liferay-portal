@@ -62,6 +62,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -207,7 +208,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntry dlFileEntry : list) {
-					if (!Validator.equals(uuid, dlFileEntry.getUuid())) {
+					if (!Objects.equals(uuid, dlFileEntry.getUuid())) {
 						list = null;
 
 						break;
@@ -725,7 +726,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		if (result instanceof DLFileEntry) {
 			DLFileEntry dlFileEntry = (DLFileEntry)result;
 
-			if (!Validator.equals(uuid, dlFileEntry.getUuid()) ||
+			if (!Objects.equals(uuid, dlFileEntry.getUuid()) ||
 					(groupId != dlFileEntry.getGroupId())) {
 				result = null;
 			}
@@ -1018,7 +1019,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntry dlFileEntry : list) {
-					if (!Validator.equals(uuid, dlFileEntry.getUuid()) ||
+					if (!Objects.equals(uuid, dlFileEntry.getUuid()) ||
 							(companyId != dlFileEntry.getCompanyId())) {
 						list = null;
 
@@ -3477,7 +3478,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntry dlFileEntry : list) {
-					if (!Validator.equals(mimeType, dlFileEntry.getMimeType())) {
+					if (!Objects.equals(mimeType, dlFileEntry.getMimeType())) {
 						list = null;
 
 						break;
@@ -7425,7 +7426,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntry dlFileEntry : list) {
 					if ((folderId != dlFileEntry.getFolderId()) ||
-							!Validator.equals(name, dlFileEntry.getName())) {
+							!Objects.equals(name, dlFileEntry.getName())) {
 						list = null;
 
 						break;
@@ -9502,7 +9503,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 			if ((groupId != dlFileEntry.getGroupId()) ||
 					(folderId != dlFileEntry.getFolderId()) ||
-					!Validator.equals(name, dlFileEntry.getName())) {
+					!Objects.equals(name, dlFileEntry.getName())) {
 				result = null;
 			}
 		}
@@ -9783,7 +9784,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 			if ((groupId != dlFileEntry.getGroupId()) ||
 					(folderId != dlFileEntry.getFolderId()) ||
-					!Validator.equals(fileName, dlFileEntry.getFileName())) {
+					!Objects.equals(fileName, dlFileEntry.getFileName())) {
 				result = null;
 			}
 		}
@@ -10063,7 +10064,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 
 			if ((groupId != dlFileEntry.getGroupId()) ||
 					(folderId != dlFileEntry.getFolderId()) ||
-					!Validator.equals(title, dlFileEntry.getTitle())) {
+					!Objects.equals(title, dlFileEntry.getTitle())) {
 				result = null;
 			}
 		}

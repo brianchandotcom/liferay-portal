@@ -54,6 +54,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -197,7 +198,7 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDLRecord ddlRecord : list) {
-					if (!Validator.equals(uuid, ddlRecord.getUuid())) {
+					if (!Objects.equals(uuid, ddlRecord.getUuid())) {
 						list = null;
 
 						break;
@@ -715,7 +716,7 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		if (result instanceof DDLRecord) {
 			DDLRecord ddlRecord = (DDLRecord)result;
 
-			if (!Validator.equals(uuid, ddlRecord.getUuid()) ||
+			if (!Objects.equals(uuid, ddlRecord.getUuid()) ||
 					(groupId != ddlRecord.getGroupId())) {
 				result = null;
 			}
@@ -1006,7 +1007,7 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDLRecord ddlRecord : list) {
-					if (!Validator.equals(uuid, ddlRecord.getUuid()) ||
+					if (!Objects.equals(uuid, ddlRecord.getUuid()) ||
 							(companyId != ddlRecord.getCompanyId())) {
 						list = null;
 

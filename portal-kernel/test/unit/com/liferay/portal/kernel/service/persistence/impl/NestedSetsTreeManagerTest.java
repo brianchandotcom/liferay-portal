@@ -422,7 +422,9 @@ public class NestedSetsTreeManagerTest {
 			SimpleNestedSetsTreeNode simpleNestedSetsTreeNode =
 				(SimpleNestedSetsTreeNode)obj;
 
-			if (_primaryKey == simpleNestedSetsTreeNode._primaryKey) {
+			if ((simpleNestedSetsTreeNode != null) &&
+				(_primaryKey == simpleNestedSetsTreeNode._primaryKey)) {
+
 				return true;
 			}
 

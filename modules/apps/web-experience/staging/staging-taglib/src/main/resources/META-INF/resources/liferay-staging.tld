@@ -26,7 +26,6 @@
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -39,7 +38,6 @@
 			<name>cmd</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>Whether to disable all the rendered inputs on the screen.</description>
@@ -67,7 +65,6 @@
 			<name>type</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -81,7 +78,6 @@
 			<name>portletId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -94,7 +90,6 @@
 			<name>cmd</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>Whether to disable all rendered inputs on the screen.</description>
@@ -121,7 +116,6 @@
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>The layout set branch ID to be used.</description>
@@ -162,14 +156,12 @@
 			<name>action</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>The CSS class used to format the Permissions section's description.</description>
 			<name>descriptionCSSClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>Whether to disable all the rendered inputs on the screen.</description>
@@ -197,7 +189,6 @@
 			<name>labelCSSClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -238,7 +229,6 @@
 			<name>type</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -271,7 +261,6 @@
 			<name>action</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>Whether to disable all the rendered inputs on the screen.</description>
@@ -306,7 +295,6 @@
 			<name>treeId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -319,7 +307,6 @@
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
 			<description>The staged model to be used to display the publishing information.</description>

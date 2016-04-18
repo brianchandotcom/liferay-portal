@@ -849,7 +849,7 @@
 	<command name="viewEditedSitePagesVariationPG">
 		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Staging#EDITED_SITE_PAGES_VARIATION" value1="${sitePagesVariationName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Staging#SITE_PAGES_VARIATION" value1="${sitePagesVariationName}" />
 	</command>
 
 	<command name="viewHistoryVersionPG">

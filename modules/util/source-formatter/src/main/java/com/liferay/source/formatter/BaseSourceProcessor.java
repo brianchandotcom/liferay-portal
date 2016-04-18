@@ -1099,7 +1099,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected String formatJavaTerms(
 			String javaClassName, String packagePath, File file,
 			String fileName, String absolutePath, String content,
-			String javaClassContent, int javaClassLineCount,
+			String javaClassContent, int javaClassLineCount, String indent,
 			List<String> checkJavaFieldTypesExcludes,
 			List<String> javaTermAccessLevelModifierExcludes,
 			List<String> javaTermSortExcludes,
@@ -1119,7 +1119,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		JavaClass javaClass = new JavaClass(
 			javaClassName, packagePath, file, fileName, absolutePath, content,
-			javaClassContent, javaClassLineCount, StringPool.TAB, null,
+			javaClassContent, javaClassLineCount, indent + StringPool.TAB, null,
 			javaTermAccessLevelModifierExcludes, javaSourceProcessor);
 
 		String newJavaClassContent = javaClass.formatJavaTerms(

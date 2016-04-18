@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,6 +33,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Bruno Farache
  */
+@ProviderType
 public interface Document extends Cloneable, Serializable {
 
 	public void add(Field field);
@@ -38,6 +41,10 @@ public interface Document extends Cloneable, Serializable {
 	public void addDate(String name, Date value);
 
 	public void addDate(String name, Date[] values);
+
+	public void addDateSortable(String name, Date value);
+
+	public void addDateSortable(String name, Date[] values);
 
 	public void addFile(String name, byte[] bytes, String fileExt)
 		throws IOException;

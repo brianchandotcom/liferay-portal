@@ -104,6 +104,7 @@
 	.asset-entry-abstract .asset-entry-abstract-image img {
 		display: block;
 		margin: 0 auto;
+		max-height: 100%;
 	}
 
 	.asset-entry-abstract .taglib-icon {

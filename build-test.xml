@@ -8031,8 +8031,25 @@ jdbc.default.password=${database.mysql.password}</echo>
 				import java.util.regex.Matcher;
 				import java.util.regex.Pattern;
 
+				public boolean matchesPatterns(Pattern[] patterns, String string) {
+					for (Pattern pattern : patterns) {
+						Matcher matcher = pattern.matcher(string);
+						if (matcher.find()) {
+							return true;
+						}
+					}
+					return false;
+				}
+
 				Pattern errorPattern = Pattern.compile(".*ERROR.*[\n$]?");
 				Pattern upgradeExceptionPattern = Pattern.compile(".*UpgradeException:.[\n$]?");
+
+				Pattern[] excludedPatterns = new Pattern[] {
+					Pattern.compile(".*Caused by:.*"),
+					Pattern.compile(".*Portal property.*is obsolete.*"),
+					Pattern.compile(".*Portal .*was modularized.*"),
+					Pattern.compile(".*Table.*does not exist.*")
+				};
 
 				String log = project.getProperty("db.upgrade.log");
 				String[] lines = log.split("\n");
@@ -8042,24 +8059,28 @@ jdbc.default.password=${database.mysql.password}</echo>
 				int count = 0;
 
 				for (String line : lines) {
-					Matcher errorMatcher = errorPattern.matcher(line);
+					Matcher matcher = errorPattern.matcher(line);
 
-					if (errorMatcher.find()) {
-						count++;
-						sb.append("    ");
-						sb.append(line);
-						sb.append("\n\n");
+					if (matcher.find()) {
+						if (!matchesPatterns(excludedPatterns, line)) {
+							count++;
+							sb.append("    ");
+							sb.append(line);
+							sb.append("\n\n");
+						}
 
 						continue;
 					}
 
-					errorMatcher = upgradeExceptionPattern.matcher(line);
+					matcher = upgradeExceptionPattern.matcher(line);
 
-					if (errorMatcher.find() && !line.contains("Caused by:")) {
-						count++;
-						sb.append("    ");
-						sb.append(line);
-						sb.append("\n\n");
+					if (matcher.find() && !line.contains("Caused by:")) {
+						if (!matchesPatterns(excludedPatterns, line)) {
+							count++;
+							sb.append("    ");
+							sb.append(line);
+							sb.append("\n\n");
+						}
 					}
 				}
 

@@ -14,20 +14,27 @@
 
 package com.liferay.jenkins.results.parser;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 /**
  * @author Kevin Yen
  */
-public class JenkinsStopJobUtilTest {
+public interface Build {
 
-	@Test
-	public void testEncodeAuthorizationFields() throws Exception {
-		String encodedString = JenkinsStopJobUtil.encodeAuthorizationFields(
-			"test", "test");
+	public int getBuildNumber();
 
-		Assert.assertEquals("dGVzdDp0ZXN0", encodedString);
-	}
+	public String getBuildURL();
+
+	public String getJobName();
+
+	public String getJobURL();
+
+	public String getMaster();
+
+	public String getResult();
+
+	public String getStatus();
+
+	public long getStatusAge();
+
+	public void update() throws Exception;
 
 }

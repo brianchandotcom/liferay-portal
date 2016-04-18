@@ -45,6 +45,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAVIGATION_SPECIFIC_PAGE</td>
+	<td>//ul[contains(.,'Navigation')]//li[contains(.,'${key_page}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SPECIFIC_PAGE_X_DELETE</td>
+	<td>//ul[contains(.,'Navigation')]//li[contains(.,'${key_page}')]//span[@class='delete-tab']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

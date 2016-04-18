@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder package-path="com.liferay.portal.lock" auto-import-default-references="false" auto-namespace-tables="false" mvcc-enabled="true">
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" mvcc-enabled="true" package-path="com.liferay.portal.lock">
 	<namespace>Lock</namespace>
-	<entity name="Lock" uuid="true" local-service="true" remote-service="false">
+	<entity local-service="true" name="Lock" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="lockId" type="long" primary="true" />
+		<column name="lockId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -27,7 +27,7 @@
 		<!-- Finder methods -->
 
 		<finder name="LtExpirationDate" return-type="Collection">
-			<finder-column name="expirationDate" comparator="&lt;" />
+			<finder-column comparator="&lt;" name="expirationDate" />
 		</finder>
 		<finder name="C_K" return-type="Lock" unique="true">
 			<finder-column name="className" />
@@ -36,7 +36,7 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="User" />
+		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
 		<exception>DuplicateLock</exception>

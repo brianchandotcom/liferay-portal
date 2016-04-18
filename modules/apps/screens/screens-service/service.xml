@@ -1,26 +1,26 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder package-path="com.liferay.screens" auto-namespace-tables="true">
+<service-builder auto-namespace-tables="true" package-path="com.liferay.screens">
 	<author>José Manuel Navarro</author>
 	<namespace>Screens</namespace>
-	<entity name="ScreensAssetEntry" local-service="false" remote-service="true">
-		<reference package-path="com.liferay.dynamic.data.lists" entity="DDLRecord" />
-		<reference package-path="com.liferay.dynamic.data.lists" entity="DDLRecordSet" />
-		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMStructure" />
-		<reference package-path="com.liferay.journal" entity="JournalArticle" />
-		<reference package-path="com.liferay.journal" entity="JournalArticleResource" />
-		<reference package-path="com.liferay.portal" entity="PortletItem" />
-		<reference package-path="com.liferay.portal" entity="PortletPreferences" />
-		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
-		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLApp" />
-		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileEntry" />
+	<entity local-service="false" name="ScreensAssetEntry" remote-service="true">
+		<reference entity="DDLRecord" package-path="com.liferay.dynamic.data.lists" />
+		<reference entity="DDLRecordSet" package-path="com.liferay.dynamic.data.lists" />
+		<reference entity="DDMStructure" package-path="com.liferay.dynamic.data.mapping" />
+		<reference entity="JournalArticle" package-path="com.liferay.journal" />
+		<reference entity="JournalArticleResource" package-path="com.liferay.journal" />
+		<reference entity="PortletItem" package-path="com.liferay.portal" />
+		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
+		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
+		<reference entity="DLApp" package-path="com.liferay.portlet.documentlibrary" />
+		<reference entity="DLFileEntry" package-path="com.liferay.portlet.documentlibrary" />
 	</entity>
-	<entity name="ScreensDDLRecord" local-service="false" remote-service="true">
-		<reference package-path="com.liferay.dynamic.data.lists" entity="DDLRecord" />
+	<entity local-service="false" name="ScreensDDLRecord" remote-service="true">
+		<reference entity="DDLRecord" package-path="com.liferay.dynamic.data.lists" />
 	</entity>
-	<entity name="ScreensJournalArticle" local-service="false" remote-service="true">
-		<reference package-path="com.liferay.journal" entity="JournalArticle" />
-		<reference package-path="com.liferay.journal" entity="JournalArticleResource" />
+	<entity local-service="false" name="ScreensJournalArticle" remote-service="true">
+		<reference entity="JournalArticle" package-path="com.liferay.journal" />
+		<reference entity="JournalArticleResource" package-path="com.liferay.journal" />
 	</entity>
 </service-builder>

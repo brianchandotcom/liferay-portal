@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder package-path="com.liferay.shopping" auto-import-default-references="false" auto-namespace-tables="false">
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.shopping">
 	<namespace>Shopping</namespace>
-	<entity name="ShoppingCart" local-service="true" remote-service="false">
+	<entity local-service="true" name="ShoppingCart" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="cartId" type="long" primary="true" />
+		<column name="cartId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -43,15 +43,15 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.shopping" entity="ShoppingCoupon" />
-		<reference package-path="com.liferay.shopping" entity="ShoppingItem" />
+		<reference entity="User" package-path="com.liferay.portal" />
+		<reference entity="ShoppingCoupon" package-path="com.liferay.shopping" />
+		<reference entity="ShoppingItem" package-path="com.liferay.shopping" />
 	</entity>
-	<entity name="ShoppingCategory" local-service="true" remote-service="true">
+	<entity local-service="true" name="ShoppingCategory" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="categoryId" type="long" primary="true" />
+		<column name="categoryId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -75,7 +75,7 @@
 
 		<order by="asc">
 			<order-column name="parentCategoryId" />
-			<order-column name="name" case-sensitive="false" />
+			<order-column case-sensitive="false" name="name" />
 		</order>
 
 		<!-- Finder methods -->
@@ -94,15 +94,15 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Resource" />
-		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.shopping" entity="ShoppingItem" />
+		<reference entity="Resource" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+		<reference entity="ShoppingItem" package-path="com.liferay.shopping" />
 	</entity>
-	<entity name="ShoppingCoupon" local-service="true" remote-service="true">
+	<entity local-service="true" name="ShoppingCoupon" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="couponId" type="long" primary="true" />
+		<column name="couponId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -147,15 +147,15 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.shopping" entity="ShoppingCategory" />
-		<reference package-path="com.liferay.shopping" entity="ShoppingItem" />
+		<reference entity="User" package-path="com.liferay.portal" />
+		<reference entity="ShoppingCategory" package-path="com.liferay.shopping" />
+		<reference entity="ShoppingItem" package-path="com.liferay.shopping" />
 	</entity>
-	<entity name="ShoppingItem" local-service="true" remote-service="true">
+	<entity local-service="true" name="ShoppingItem" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="itemId" type="long" primary="true" />
+		<column name="itemId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -227,18 +227,18 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Image" />
-		<reference package-path="com.liferay.portal" entity="Resource" />
-		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.shopping" entity="ShoppingCategory" />
-		<reference package-path="com.liferay.shopping" entity="ShoppingItemField" />
-		<reference package-path="com.liferay.shopping" entity="ShoppingItemPrice" />
+		<reference entity="Image" package-path="com.liferay.portal" />
+		<reference entity="Resource" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+		<reference entity="ShoppingCategory" package-path="com.liferay.shopping" />
+		<reference entity="ShoppingItemField" package-path="com.liferay.shopping" />
+		<reference entity="ShoppingItemPrice" package-path="com.liferay.shopping" />
 	</entity>
-	<entity name="ShoppingItemField" local-service="true" remote-service="false">
+	<entity local-service="true" name="ShoppingItemField" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="itemFieldId" type="long" primary="true" />
+		<column name="itemFieldId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -255,7 +255,7 @@
 
 		<order by="asc">
 			<order-column name="itemId" />
-			<order-column name="name" case-sensitive="false" />
+			<order-column case-sensitive="false" name="name" />
 		</order>
 
 		<!-- Finder methods -->
@@ -264,11 +264,11 @@
 			<finder-column name="itemId" />
 		</finder>
 	</entity>
-	<entity name="ShoppingItemPrice" local-service="true" remote-service="false">
+	<entity local-service="true" name="ShoppingItemPrice" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="itemPriceId" type="long" primary="true" />
+		<column name="itemPriceId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -301,13 +301,13 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.shopping" entity="ShoppingItem" />
+		<reference entity="ShoppingItem" package-path="com.liferay.shopping" />
 	</entity>
-	<entity name="ShoppingOrder" local-service="true" remote-service="true">
+	<entity local-service="true" name="ShoppingOrder" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="orderId" type="long" primary="true" />
+		<column name="orderId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -393,20 +393,20 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.mail" entity="Mail" />
-		<reference package-path="com.liferay.portal" entity="Company" />
-		<reference package-path="com.liferay.portal" entity="Resource" />
-		<reference package-path="com.liferay.portal" entity="Subscription" />
-		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.shopping" entity="ShoppingItem" />
-		<reference package-path="com.liferay.shopping" entity="ShoppingItemField" />
-		<reference package-path="com.liferay.shopping" entity="ShoppingOrderItem" />
+		<reference entity="Mail" package-path="com.liferay.mail" />
+		<reference entity="Company" package-path="com.liferay.portal" />
+		<reference entity="Resource" package-path="com.liferay.portal" />
+		<reference entity="Subscription" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+		<reference entity="ShoppingItem" package-path="com.liferay.shopping" />
+		<reference entity="ShoppingItemField" package-path="com.liferay.shopping" />
+		<reference entity="ShoppingOrderItem" package-path="com.liferay.shopping" />
 	</entity>
-	<entity name="ShoppingOrderItem" local-service="true" remote-service="false">
+	<entity local-service="true" name="ShoppingOrderItem" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="orderItemId" type="long" primary="true" />
+		<column name="orderItemId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 

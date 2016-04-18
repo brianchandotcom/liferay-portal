@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder api-package-path="com.liferay.announcements.kernel" package-path="com.liferay.portlet.announcements" auto-import-default-references="false">
+<service-builder api-package-path="com.liferay.announcements.kernel" auto-import-default-references="false" package-path="com.liferay.portlet.announcements">
 	<namespace>Announcements</namespace>
-	<entity name="AnnouncementsDelivery" local-service="true" remote-service="true">
+	<entity local-service="true" name="AnnouncementsDelivery" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="deliveryId" type="long" primary="true" />
+		<column name="deliveryId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -33,13 +33,13 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="User" />
+		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity name="AnnouncementsEntry" uuid="true" local-service="true" remote-service="true">
+	<entity local-service="true" name="AnnouncementsEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="entryId" type="long" primary="true" />
+		<column name="entryId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -86,23 +86,23 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.mail" entity="Mail" />
-		<reference package-path="com.liferay.portal" entity="Company" />
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portal" entity="Organization" />
-		<reference package-path="com.liferay.portal" entity="Resource" />
-		<reference package-path="com.liferay.portal" entity="Role" />
-		<reference package-path="com.liferay.portal" entity="Team" />
-		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.portal" entity="UserGroup" />
-		<reference package-path="com.liferay.portlet.announcements" entity="AnnouncementsDelivery" />
-		<reference package-path="com.liferay.portlet.announcements" entity="AnnouncementsFlag" />
+		<reference entity="Mail" package-path="com.liferay.mail" />
+		<reference entity="Company" package-path="com.liferay.portal" />
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="Organization" package-path="com.liferay.portal" />
+		<reference entity="Resource" package-path="com.liferay.portal" />
+		<reference entity="Role" package-path="com.liferay.portal" />
+		<reference entity="Team" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+		<reference entity="UserGroup" package-path="com.liferay.portal" />
+		<reference entity="AnnouncementsDelivery" package-path="com.liferay.portlet.announcements" />
+		<reference entity="AnnouncementsFlag" package-path="com.liferay.portlet.announcements" />
 	</entity>
-	<entity name="AnnouncementsFlag" local-service="true" remote-service="true">
+	<entity local-service="true" name="AnnouncementsFlag" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="flagId" type="long" primary="true" />
+		<column name="flagId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 

@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder package-path="com.liferay.portal.workflow.kaleo" auto-namespace-tables="false">
+<service-builder auto-namespace-tables="false" package-path="com.liferay.portal.workflow.kaleo">
 	<namespace>Kaleo</namespace>
-	<entity name="KaleoAction" local-service="true" remote-service="false">
+	<entity local-service="true" name="KaleoAction" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="kaleoActionId" type="long" primary="true" />
+		<column name="kaleoActionId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -59,11 +59,11 @@
 			<finder-column name="executionType" />
 		</finder>
 	</entity>
-	<entity name="KaleoCondition" local-service="true" remote-service="false">
+	<entity local-service="true" name="KaleoCondition" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="kaleoConditionId" type="long" primary="true" />
+		<column name="kaleoConditionId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -103,11 +103,11 @@
 			<finder-column name="kaleoNodeId" />
 		</finder>
 	</entity>
-	<entity name="KaleoDefinition" local-service="true" remote-service="true">
+	<entity local-service="true" name="KaleoDefinition" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="kaleoDefinitionId" type="long" primary="true" />
+		<column name="kaleoDefinitionId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -124,7 +124,7 @@
 		<!-- Other fields -->
 
 		<column name="name" type="String" />
-		<column name="title" type="String" localized="true" />
+		<column localized="true" name="title" type="String" />
 		<column name="description" type="String" />
 		<column name="content" type="String" />
 		<column name="version" type="int" />
@@ -161,11 +161,11 @@
 			<finder-column name="active" />
 		</finder>
 	</entity>
-	<entity name="KaleoInstance" local-service="true" remote-service="false">
+	<entity local-service="true" name="KaleoInstance" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="kaleoInstanceId" type="long" primary="true" />
+		<column name="kaleoInstanceId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -224,11 +224,11 @@
 			<finder-column name="completionDate" />
 		</finder>
 	</entity>
-	<entity name="KaleoInstanceToken" local-service="true" remote-service="false">
+	<entity local-service="true" name="KaleoInstanceToken" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="kaleoInstanceTokenId" type="long" primary="true" />
+		<column name="kaleoInstanceTokenId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -281,11 +281,11 @@
 			<finder-column name="completionDate" />
 		</finder>
 	</entity>
-	<entity name="KaleoLog" local-service="true" remote-service="false">
+	<entity local-service="true" name="KaleoLog" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="kaleoLogId" type="long" primary="true" />
+		<column name="kaleoLogId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -356,11 +356,11 @@
 			<finder-column name="type" />
 		</finder>
 	</entity>
-	<entity name="KaleoNode" local-service="true" remote-service="false">
+	<entity local-service="true" name="KaleoNode" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="kaleoNodeId" type="long" primary="true" />
+		<column name="kaleoNodeId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -403,11 +403,11 @@
 			<finder-column name="kaleoDefinitionId" />
 		</finder>
 	</entity>
-	<entity name="KaleoNotification" local-service="true" remote-service="false">
+	<entity local-service="true" name="KaleoNotification" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="kaleoNotificationId" type="long" primary="true" />
+		<column name="kaleoNotificationId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -458,11 +458,11 @@
 			<finder-column name="executionType" />
 		</finder>
 	</entity>
-	<entity name="KaleoNotificationRecipient" local-service="true" remote-service="false">
+	<entity local-service="true" name="KaleoNotificationRecipient" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="kaleoNotificationRecipientId" type="long" primary="true" />
+		<column name="kaleoNotificationRecipientId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -509,13 +509,13 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Role" />
+		<reference entity="Role" package-path="com.liferay.portal" />
 	</entity>
-	<entity name="KaleoTask" local-service="true" remote-service="false">
+	<entity local-service="true" name="KaleoTask" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="kaleoTaskId" type="long" primary="true" />
+		<column name="kaleoTaskId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -554,11 +554,11 @@
 			<finder-column name="kaleoNodeId" />
 		</finder>
 	</entity>
-	<entity name="KaleoTaskAssignment" local-service="true" remote-service="false">
+	<entity local-service="true" name="KaleoTaskAssignment" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="kaleoTaskAssignmentId" type="long" primary="true" />
+		<column name="kaleoTaskAssignmentId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -611,13 +611,13 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Role" />
+		<reference entity="Role" package-path="com.liferay.portal" />
 	</entity>
-	<entity name="KaleoTaskAssignmentInstance" local-service="true" remote-service="false">
+	<entity local-service="true" name="KaleoTaskAssignmentInstance" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="kaleoTaskAssignmentInstanceId" type="long" primary="true" />
+		<column name="kaleoTaskAssignmentInstanceId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -676,11 +676,11 @@
 			<finder-column name="assigneeClassPK" />
 		</finder>
 	</entity>
-	<entity name="KaleoTaskInstanceToken" local-service="true" remote-service="false">
+	<entity local-service="true" name="KaleoTaskInstanceToken" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="kaleoTaskInstanceTokenId" type="long" primary="true" />
+		<column name="kaleoTaskInstanceTokenId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -735,11 +735,11 @@
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
-	<entity name="KaleoTimer" local-service="true" remote-service="false">
+	<entity local-service="true" name="KaleoTimer" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="kaleoTimerId" type="long" primary="true" />
+		<column name="kaleoTimerId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -784,11 +784,11 @@
 			<finder-column name="blocking" />
 		</finder>
 	</entity>
-	<entity name="KaleoTimerInstanceToken" local-service="true" remote-service="false">
+	<entity local-service="true" name="KaleoTimerInstanceToken" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="kaleoTimerInstanceTokenId" type="long" primary="true" />
+		<column name="kaleoTimerInstanceTokenId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -843,11 +843,11 @@
 			<finder-column name="blocking" />
 		</finder>
 	</entity>
-	<entity name="KaleoTransition" local-service="true" remote-service="false">
+	<entity local-service="true" name="KaleoTransition" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="kaleoTransitionId" type="long" primary="true" />
+		<column name="kaleoTransitionId" primary="true" type="long" />
 
 		<!-- Group instance -->
 

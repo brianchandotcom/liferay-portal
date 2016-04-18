@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
 
-<service-builder package-path="com.liferay.calendar" auto-namespace-tables="false">
+<service-builder auto-namespace-tables="false" package-path="com.liferay.calendar">
 	<author>Eduardo Lundgren</author>
 	<namespace>Calendar</namespace>
-	<entity name="Calendar" uuid="true" local-service="true" remote-service="true">
+	<entity local-service="true" name="Calendar" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="calendarId" type="long" primary="true" />
+		<column name="calendarId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -29,8 +29,8 @@
 		<!-- Other fields -->
 
 		<column name="calendarResourceId" type="long" />
-		<column name="name" type="String" localized="true" />
-		<column name="description" type="String" localized="true" />
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
 		<column name="timeZoneId" type="String" />
 		<column name="color" type="int" />
 		<column name="defaultCalendar" type="boolean" />
@@ -58,13 +58,13 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Group" />
+		<reference entity="Group" package-path="com.liferay.portal" />
 	</entity>
-	<entity name="CalendarBooking" uuid="true" local-service="true" remote-service="true" trash-enabled="true">
+	<entity local-service="true" name="CalendarBooking" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="calendarBookingId" type="long" primary="true" />
+		<column name="calendarBookingId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -88,8 +88,8 @@
 		<column name="calendarResourceId" type="long" />
 		<column name="parentCalendarBookingId" type="long" />
 		<column name="vEventUid" type="String" />
-		<column name="title" type="String" localized="true" />
-		<column name="description" type="String" localized="true" />
+		<column localized="true" name="title" type="String" />
+		<column localized="true" name="description" type="String" />
 		<column name="location" type="String" />
 		<column name="startTime" type="long" />
 		<column name="endTime" type="long" />
@@ -109,7 +109,7 @@
 
 		<order by="asc">
 			<order-column name="startTime" />
-			<order-column name="title" case-sensitive="false" />
+			<order-column case-sensitive="false" name="title" />
 		</order>
 
 		<!-- Finder methods -->
@@ -133,7 +133,7 @@
 		</finder>
 		<finder name="C_S" return-type="Collection">
 			<finder-column name="calendarId" />
-			<finder-column name="status" arrayable-operator="OR" />
+			<finder-column arrayable-operator="OR" name="status" />
 		</finder>
 		<finder name="P_S" return-type="Collection">
 			<finder-column name="parentCalendarBookingId" />
@@ -142,23 +142,23 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.mail" entity="Mail" />
-		<reference package-path="com.liferay.portal" entity="Company" />
-		<reference package-path="com.liferay.portal" entity="Subscription" />
-		<reference package-path="com.liferay.portal" entity="WorkflowInstanceLink" />
-		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
-		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
-		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
-		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
-		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
-		<reference package-path="com.liferay.portlet.social" entity="SocialActivityCounter" />
-		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
+		<reference entity="Mail" package-path="com.liferay.mail" />
+		<reference entity="Company" package-path="com.liferay.portal" />
+		<reference entity="Subscription" package-path="com.liferay.portal" />
+		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
+		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
+		<reference entity="MBMessage" package-path="com.liferay.portlet.messageboards" />
+		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
+		<reference entity="SocialActivity" package-path="com.liferay.portlet.social" />
+		<reference entity="SocialActivityCounter" package-path="com.liferay.portlet.social" />
+		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
-	<entity name="CalendarNotificationTemplate" uuid="true" local-service="true" remote-service="true">
+	<entity local-service="true" name="CalendarNotificationTemplate" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="calendarNotificationTemplateId" type="long" primary="true" />
+		<column name="calendarNotificationTemplateId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -193,11 +193,11 @@
 			<finder-column name="notificationTemplateType" />
 		</finder>
 	</entity>
-	<entity name="CalendarResource" uuid="true" local-service="true" remote-service="true">
+	<entity local-service="true" name="CalendarResource" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="calendarResourceId" type="long" primary="true" />
+		<column name="calendarResourceId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -221,15 +221,15 @@
 		<column name="classPK" type="long" />
 		<column name="classUuid" type="String" />
 		<column name="code" type="String" />
-		<column name="name" type="String" localized="true" />
-		<column name="description" type="String" localized="true" />
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
 		<column name="active" type="boolean" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
 
 		<order by="asc">
-			<order-column name="code" case-sensitive="false" />
+			<order-column case-sensitive="false" name="code" />
 		</order>
 
 		<!-- Finder methods -->
@@ -241,7 +241,7 @@
 			<finder-column name="active" />
 		</finder>
 		<finder name="G_C" return-type="Collection">
-			<finder-column name="groupId" arrayable-operator="OR" />
+			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column name="code" />
 		</finder>
 		<finder name="G_A" return-type="Collection">
@@ -254,13 +254,13 @@
 		</finder>
 		<finder name="C_C_A" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="code" comparator="LIKE" />
+			<finder-column comparator="LIKE" name="code" />
 			<finder-column name="active" />
 		</finder>
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 	</entity>
 	<exceptions>
 		<exception>CalendarBookingDuration</exception>

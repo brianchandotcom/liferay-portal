@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder package-path="com.liferay.dynamic.data.mapping" auto-import-default-references="false" auto-namespace-tables="false">
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.dynamic.data.mapping">
 	<namespace>DDM</namespace>
-	<entity name="DDMContent" uuid="true" local-service="true" remote-service="false">
+	<entity local-service="true" name="DDMContent" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="contentId" type="long" primary="true" />
+		<column name="contentId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -23,7 +23,7 @@
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" localized="true" />
+		<column localized="true" name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="data" type="String" />
 
@@ -38,13 +38,13 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="User" />
+		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity name="DDMDataProviderInstance" uuid="true" local-service="true" remote-service="true">
+	<entity local-service="true" name="DDMDataProviderInstance" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="dataProviderInstanceId" type="long" primary="true" />
+		<column name="dataProviderInstanceId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -60,30 +60,29 @@
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" localized="true" />
-		<column name="description" type="String" localized="true" />
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
 		<column name="definition" type="String" />
 		<column name="type" type="String" />
 
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" arrayable-operator="OR" />
+			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-
-		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMDataProviderInstanceLink" />
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portal" entity="Resource" />
-		<reference package-path="com.liferay.portal" entity="User" />
+		<reference entity="DDMDataProviderInstanceLink" package-path="com.liferay.dynamic.data.mapping" />
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="Resource" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity name="DDMDataProviderInstanceLink" local-service="true" remote-service="false">
+	<entity local-service="true" name="DDMDataProviderInstanceLink" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="dataProviderInstanceLinkId" type="long" primary="true" />
+		<column name="dataProviderInstanceLinkId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -107,11 +106,11 @@
 			<finder-column name="structureId" />
 		</finder>
 	</entity>
-	<entity name="DDMStorageLink" uuid="true" local-service="true" remote-service="false">
+	<entity local-service="true" name="DDMStorageLink" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="storageLinkId" type="long" primary="true" />
+		<column name="storageLinkId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -132,11 +131,11 @@
 			<finder-column name="structureId" />
 		</finder>
 	</entity>
-	<entity name="DDMStructure" uuid="true" local-service="true" remote-service="true">
+	<entity local-service="true" name="DDMStructure" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="structureId" type="long" primary="true" />
+		<column name="structureId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -158,8 +157,8 @@
 		<column name="classNameId" type="long" />
 		<column name="structureKey" type="String" />
 		<column name="version" type="String" />
-		<column name="name" type="String" localized="true" />
-		<column name="description" type="String" localized="true" />
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
 		<column name="definition" type="String" />
 		<column name="storageType" type="String" />
 		<column name="type" type="int" />
@@ -168,7 +167,7 @@
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" arrayable-operator="OR" />
+			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>
 		<finder name="ParentStructureId" return-type="Collection">
 			<finder-column name="parentStructureId" />
@@ -179,12 +178,12 @@
 		<finder name="StructureKey" return-type="Collection">
 			<finder-column name="structureKey" />
 		</finder>
-		<finder name="G_P" return-type="Collection" >
+		<finder name="G_P" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="parentStructureId" />
 		</finder>
-		<finder name="G_C" return-type="Collection" >
-			<finder-column name="groupId" arrayable-operator="OR" />
+		<finder name="G_C" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column name="classNameId" />
 		</finder>
 		<finder name="C_C" return-type="Collection">
@@ -196,7 +195,7 @@
 			<finder-column name="classNameId" />
 			<finder-column name="structureKey" />
 		</finder>
-		<finder name="G_N_D" return-type="Collection" db-index="false">
+		<finder db-index="false" name="G_N_D" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="name" />
 			<finder-column name="description" />
@@ -204,22 +203,22 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMDataProviderInstanceLink" />
-		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMStructureLayout" />
-		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMStructureLink" />
-		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMStructureVersion" />
-		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMTemplate" />
-		<reference package-path="com.liferay.portal" entity="ClassName" />
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portal" entity="Resource" />
-		<reference package-path="com.liferay.portal" entity="SystemEvent" />
-		<reference package-path="com.liferay.portal" entity="User" />
+		<reference entity="DDMDataProviderInstanceLink" package-path="com.liferay.dynamic.data.mapping" />
+		<reference entity="DDMStructureLayout" package-path="com.liferay.dynamic.data.mapping" />
+		<reference entity="DDMStructureLink" package-path="com.liferay.dynamic.data.mapping" />
+		<reference entity="DDMStructureVersion" package-path="com.liferay.dynamic.data.mapping" />
+		<reference entity="DDMTemplate" package-path="com.liferay.dynamic.data.mapping" />
+		<reference entity="ClassName" package-path="com.liferay.portal" />
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="Resource" package-path="com.liferay.portal" />
+		<reference entity="SystemEvent" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity name="DDMStructureLayout" uuid="true" local-service="true" remote-service="false">
+	<entity local-service="true" name="DDMStructureLayout" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="structureLayoutId" type="long" primary="true" />
+		<column name="structureLayoutId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -246,13 +245,13 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="User" />
+		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity name="DDMStructureLink" local-service="true" remote-service="false">
+	<entity local-service="true" name="DDMStructureLink" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="structureLinkId" type="long" primary="true" />
+		<column name="structureLinkId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -282,11 +281,11 @@
 			<finder-column name="structureId" />
 		</finder>
 	</entity>
-	<entity name="DDMStructureVersion" local-service="true" remote-service="true">
+	<entity local-service="true" name="DDMStructureVersion" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="structureVersionId" type="long" primary="true" />
+		<column name="structureVersionId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -304,8 +303,8 @@
 		<column name="structureId" type="long" />
 		<column name="version" type="String" />
 		<column name="parentStructureId" type="long" />
-		<column name="name" type="String" localized="true" />
-		<column name="description" type="String" localized="true" />
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
 		<column name="definition" type="String" />
 		<column name="storageType" type="String" />
 		<column name="type" type="int" />
@@ -328,11 +327,11 @@
 			<finder-column name="status" />
 		</finder>
 	</entity>
-	<entity name="DDMTemplate" uuid="true" local-service="true" remote-service="true">
+	<entity local-service="true" name="DDMTemplate" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="templateId" type="long" primary="true" />
+		<column name="templateId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -355,8 +354,8 @@
 		<column name="resourceClassNameId" type="long" />
 		<column name="templateKey" type="String" />
 		<column name="version" type="String" />
-		<column name="name" type="String" localized="true" />
-		<column name="description" type="String" localized="true" />
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
 		<column name="type" type="String" />
 		<column name="mode" type="String" />
 		<column name="language" type="String" />
@@ -392,11 +391,11 @@
 			<finder-column name="classNameId" />
 		</finder>
 		<finder name="G_CPK" return-type="Collection">
-			<finder-column name="groupId" arrayable-operator="OR" />
+			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column name="classPK" />
 		</finder>
 		<finder name="G_C_C" return-type="Collection">
-			<finder-column name="groupId" arrayable-operator="OR" />
+			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
@@ -426,21 +425,21 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMStructure" />
-		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMTemplateLink" />
-		<reference package-path="com.liferay.dynamic.data.mapping" entity="DDMTemplateVersion" />
-		<reference package-path="com.liferay.portal" entity="ClassName" />
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portal" entity="Image" />
-		<reference package-path="com.liferay.portal" entity="Resource" />
-		<reference package-path="com.liferay.portal" entity="SystemEvent" />
-		<reference package-path="com.liferay.portal" entity="User" />
+		<reference entity="DDMStructure" package-path="com.liferay.dynamic.data.mapping" />
+		<reference entity="DDMTemplateLink" package-path="com.liferay.dynamic.data.mapping" />
+		<reference entity="DDMTemplateVersion" package-path="com.liferay.dynamic.data.mapping" />
+		<reference entity="ClassName" package-path="com.liferay.portal" />
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="Image" package-path="com.liferay.portal" />
+		<reference entity="Resource" package-path="com.liferay.portal" />
+		<reference entity="SystemEvent" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity name="DDMTemplateLink" local-service="true" remote-service="false">
+	<entity local-service="true" name="DDMTemplateLink" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="templateLinkId" type="long" primary="true" />
+		<column name="templateLinkId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -465,11 +464,11 @@
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
-	<entity name="DDMTemplateVersion" local-service="true" remote-service="true">
+	<entity local-service="true" name="DDMTemplateVersion" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="templateVersionId" type="long" primary="true" />
+		<column name="templateVersionId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -488,8 +487,8 @@
 		<column name="classPK" type="long" />
 		<column name="templateId" type="long" />
 		<column name="version" type="String" />
-		<column name="name" type="String" localized="true" />
-		<column name="description" type="String" localized="true" />
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
 		<column name="language" type="String" />
 		<column name="script" type="String" />
 		<column name="status" type="int" />

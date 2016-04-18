@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder package-path="com.liferay.portlet.ratings" api-package-path="com.liferay.ratings.kernel">
+<service-builder api-package-path="com.liferay.ratings.kernel" package-path="com.liferay.portlet.ratings">
 	<namespace>Ratings</namespace>
-	<entity name="RatingsEntry" uuid="true" local-service="true" remote-service="true">
+	<entity local-service="true" name="RatingsEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="entryId" type="long" primary="true" />
+		<column name="entryId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -42,15 +42,15 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
-		<reference package-path="com.liferay.portlet.blogs" entity="BlogsEntry" />
-		<reference package-path="com.liferay.portlet.blogs" entity="BlogsStatsUser" />
+		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
+		<reference entity="BlogsEntry" package-path="com.liferay.portlet.blogs" />
+		<reference entity="BlogsStatsUser" package-path="com.liferay.portlet.blogs" />
 	</entity>
-	<entity name="RatingsStats" local-service="true" remote-service="false">
+	<entity local-service="true" name="RatingsStats" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="statsId" type="long" primary="true" />
+		<column name="statsId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 

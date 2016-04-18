@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder package-path="com.liferay.invitation.invite.members" auto-namespace-tables="true">
+<service-builder auto-namespace-tables="true" package-path="com.liferay.invitation.invite.members">
 	<namespace>SO</namespace>
-	<entity name="MemberRequest" local-service="true" remote-service="false">
+	<entity local-service="true" name="MemberRequest" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="memberRequestId" type="long" primary="true" />
+		<column name="memberRequestId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -55,9 +55,9 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portal" entity="Layout" />
-		<reference package-path="com.liferay.portal" entity="UserGroupRole" />
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="Layout" package-path="com.liferay.portal" />
+		<reference entity="UserGroupRole" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
 		<exception>MemberRequestAlreadyUsed</exception>

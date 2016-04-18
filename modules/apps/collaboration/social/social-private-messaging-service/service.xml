@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
 
-<service-builder package-path="com.liferay.social.privatemessaging" auto-namespace-tables="true">
+<service-builder auto-namespace-tables="true" package-path="com.liferay.social.privatemessaging">
 	<namespace>PM</namespace>
-	<entity name="UserThread" local-service="true" remote-service="true">
+	<entity local-service="true" name="UserThread" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="userThreadId" type="long" primary="true" />
+		<column name="userThreadId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -54,11 +54,11 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.mail" entity="Mail" />
-		<reference package-path="com.liferay.portal" entity="Company" />
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portal" entity="Layout" />
-		<reference package-path="com.liferay.portal" entity="UserNotificationEvent" />
-		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
+		<reference entity="Mail" package-path="com.liferay.mail" />
+		<reference entity="Company" package-path="com.liferay.portal" />
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="Layout" package-path="com.liferay.portal" />
+		<reference entity="UserNotificationEvent" package-path="com.liferay.portal" />
+		<reference entity="MBMessage" package-path="com.liferay.portlet.messageboards" />
 	</entity>
 </service-builder>

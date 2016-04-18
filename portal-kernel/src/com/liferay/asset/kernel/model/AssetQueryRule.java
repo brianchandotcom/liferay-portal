@@ -15,7 +15,8 @@
 package com.liferay.asset.kernel.model;
 
 import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Objects;
 
 /**
  * @author Roberto Díaz
@@ -45,7 +46,7 @@ public class AssetQueryRule {
 
 		if ((_contains == assetQueryRule._contains) &&
 			(_andOperator == assetQueryRule._andOperator) &&
-			Validator.equals(_name, assetQueryRule._name)) {
+			Objects.equals(_name, assetQueryRule._name)) {
 
 			return true;
 		}

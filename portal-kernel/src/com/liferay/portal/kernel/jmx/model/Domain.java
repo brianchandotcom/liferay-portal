@@ -16,11 +16,11 @@ package com.liferay.portal.kernel.jmx.model;
 
 import com.liferay.portal.kernel.util.HashCode;
 import com.liferay.portal.kernel.util.HashCodeFactoryUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Shuyang Zhou
@@ -53,7 +53,7 @@ public class Domain implements Serializable {
 
 		Domain domain = (Domain)obj;
 
-		if (Validator.equals(_domainName, domain._domainName)) {
+		if (Objects.equals(_domainName, domain._domainName)) {
 			return true;
 		}
 

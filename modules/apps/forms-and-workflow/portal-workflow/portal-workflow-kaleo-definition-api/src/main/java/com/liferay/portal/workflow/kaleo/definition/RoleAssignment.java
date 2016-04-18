@@ -16,7 +16,8 @@ package com.liferay.portal.workflow.kaleo.definition;
 
 import com.liferay.portal.kernel.util.HashCode;
 import com.liferay.portal.kernel.util.HashCodeFactoryUtil;
-import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Objects;
 
 /**
  * @author Michael C. Han
@@ -50,7 +51,7 @@ public class RoleAssignment extends Assignment {
 
 		RoleAssignment roleAssignment = (RoleAssignment)obj;
 
-		if (Validator.equals(_roleName, roleAssignment._roleName) &&
+		if (Objects.equals(_roleName, roleAssignment._roleName) &&
 			(_roleId == roleAssignment._roleId)) {
 
 			return true;

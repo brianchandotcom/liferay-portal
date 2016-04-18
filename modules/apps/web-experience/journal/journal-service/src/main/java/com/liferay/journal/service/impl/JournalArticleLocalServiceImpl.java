@@ -180,6 +180,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -7050,7 +7051,7 @@ public class JournalArticleLocalServiceImpl
 			groupId, urlTitle);
 
 		if ((urlTitleArticle != null) &&
-			!Validator.equals(
+			!Objects.equals(
 				urlTitleArticle.getArticleId(), articleId)) {
 
 			urlTitle = getUniqueUrlTitle(id, groupId, articleId, urlTitle);

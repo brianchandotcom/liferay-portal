@@ -24,6 +24,8 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Reader;
 
+import java.util.Objects;
+
 /**
  * @author Tina Tian
  */
@@ -72,7 +74,7 @@ public class XSLTemplateResource implements TemplateResource {
 
 		if (_templateId.equals(xslTemplateResource._templateId) &&
 			_xsl.equals(xslTemplateResource._xsl) &&
-			Validator.equals(
+			Objects.equals(
 				_xslURIResolver, xslTemplateResource._xslURIResolver) &&
 			_xml.equals(xslTemplateResource._xml)) {
 

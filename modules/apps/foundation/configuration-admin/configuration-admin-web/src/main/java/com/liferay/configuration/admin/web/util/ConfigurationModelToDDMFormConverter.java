@@ -24,9 +24,9 @@ import com.liferay.dynamic.data.mapping.storage.FieldConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import org.osgi.service.metatype.AttributeDefinition;
@@ -222,7 +222,7 @@ public class ConfigurationModelToDDMFormConverter {
 	protected void setDDMFormFieldDisplayStyle(DDMFormField ddmFormField) {
 		String dataType = ddmFormField.getDataType();
 
-		if (Validator.equals(dataType, FieldConstants.STRING)) {
+		if (Objects.equals(dataType, FieldConstants.STRING)) {
 			ddmFormField.setProperty("displayStyle", "multiline");
 		}
 	}

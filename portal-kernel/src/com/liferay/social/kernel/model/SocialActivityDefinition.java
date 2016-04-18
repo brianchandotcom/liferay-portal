@@ -16,7 +16,6 @@ package com.liferay.social.kernel.model;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -26,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Zsolt Berentey
@@ -79,20 +79,20 @@ public class SocialActivityDefinition implements Serializable {
 			(SocialActivityDefinition)obj;
 
 		if ((activityDefinition != null) &&
-			Validator.equals(
+			Objects.equals(
 				_achievements, activityDefinition.getAchievements()) &&
-			Validator.equals(
+			Objects.equals(
 				_activityCounterDefinitions,
 				activityDefinition._activityCounterDefinitions) &&
-			Validator.equals(
+			Objects.equals(
 				_activityProcessor,
 				activityDefinition.getActivityProcessor()) &&
 			(_activityType == activityDefinition.getActivityType()) &&
 			(_countersEnabled == activityDefinition.isCountersEnabled()) &&
-			Validator.equals(
+			Objects.equals(
 				_languageKey, activityDefinition.getLanguageKey()) &&
 			(_logActivity == activityDefinition.isLogActivity()) &&
-			Validator.equals(_modelName, activityDefinition.getModelName())) {
+			Objects.equals(_modelName, activityDefinition.getModelName())) {
 
 			return true;
 		}

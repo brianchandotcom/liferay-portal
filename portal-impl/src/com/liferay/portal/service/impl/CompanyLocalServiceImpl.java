@@ -104,6 +104,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.Callable;
@@ -1089,7 +1090,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				String oldLanguageIds = portletPreferences.getValue(
 					PropsKeys.LOCALES, StringPool.BLANK);
 
-				if (!Validator.equals(oldLanguageIds, newLanguageIds)) {
+				if (!Objects.equals(oldLanguageIds, newLanguageIds)) {
 					validateLanguageIds(newLanguageIds);
 
 					LanguageUtil.resetAvailableLocales(companyId);

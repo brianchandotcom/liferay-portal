@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -149,7 +150,7 @@ public abstract class SettingsConfigurationAction
 
 				String[] oldValues = settings.getValues(name, null);
 
-				if (!Validator.equals(values, oldValues)) {
+				if (!Objects.equals(values, oldValues)) {
 					modifiableSettings.setValues(name, values);
 				}
 			}

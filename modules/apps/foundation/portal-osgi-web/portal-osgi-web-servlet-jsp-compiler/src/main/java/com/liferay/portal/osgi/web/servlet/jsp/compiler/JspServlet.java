@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.JspBundleClassloader;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.JspServletContext;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.JspTagHandlerPool;
@@ -44,6 +43,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
@@ -345,7 +345,7 @@ public class JspServlet extends HttpServlet {
 		try {
 			currentThread.setContextClassLoader(_jspBundleClassloader);
 
-			if (Validator.equals(
+			if (Objects.equals(
 					_jspServlet.getInitParameter("logVerbosityLevel"),
 					"DEBUG")) {
 

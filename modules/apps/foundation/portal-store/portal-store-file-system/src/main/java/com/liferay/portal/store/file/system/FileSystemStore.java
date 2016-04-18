@@ -42,6 +42,7 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.cm.Configuration;
@@ -692,7 +693,7 @@ public class FileSystemStore extends BaseStore {
 				String advancedFileSystemRootDir =
 					(String)advancedFileSystemDictionary.get("rootdir");
 
-				if (Validator.equals(
+				if (Objects.equals(
 						fileSystemRootDir, advancedFileSystemRootDir)) {
 
 					throw new IllegalArgumentException(

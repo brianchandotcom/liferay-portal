@@ -53,6 +53,7 @@ import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.servlet.http.HttpSession;
 
@@ -168,7 +169,7 @@ public class GoogleAuthorizationImpl implements GoogleAuthorization {
 		String lastName = userinfoplus.getFamilyName();
 		long prefixId = 0;
 		long suffixId = 0;
-		boolean male = Validator.equals(userinfoplus.getGender(), "male");
+		boolean male = Objects.equals(userinfoplus.getGender(), "male");
 		int birthdayMonth = Calendar.JANUARY;
 		int birthdayDay = 1;
 		int birthdayYear = 1970;
@@ -325,7 +326,7 @@ public class GoogleAuthorizationImpl implements GoogleAuthorization {
 		String googleUserId = userinfoplus.getId();
 		String firstName = userinfoplus.getGivenName();
 		String lastName = userinfoplus.getFamilyName();
-		boolean male = Validator.equals(userinfoplus.getGender(), "male");
+		boolean male = Objects.equals(userinfoplus.getGender(), "male");
 
 		if (emailAddress.equals(user.getEmailAddress()) &&
 			firstName.equals(user.getFirstName()) &&

@@ -17,12 +17,13 @@ package com.liferay.portal.kernel.servlet;
 import com.liferay.portal.kernel.util.CookieUtil;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+
+import java.util.Objects;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -243,13 +244,13 @@ public class Header implements Externalizable {
 			return true;
 		}
 
-		if (!Validator.equals(cookie1.getComment(), cookie2.getComment()) ||
-			!Validator.equals(cookie1.getDomain(), cookie2.getDomain()) ||
+		if (!Objects.equals(cookie1.getComment(), cookie2.getComment()) ||
+			!Objects.equals(cookie1.getDomain(), cookie2.getDomain()) ||
 			(cookie1.getMaxAge() != cookie2.getMaxAge()) ||
-			!Validator.equals(cookie1.getName(), cookie2.getName()) ||
-			!Validator.equals(cookie1.getPath(), cookie2.getPath()) ||
+			!Objects.equals(cookie1.getName(), cookie2.getName()) ||
+			!Objects.equals(cookie1.getPath(), cookie2.getPath()) ||
 			(cookie1.getSecure() != cookie2.getSecure()) ||
-			!Validator.equals(cookie1.getValue(), cookie2.getValue()) ||
+			!Objects.equals(cookie1.getValue(), cookie2.getValue()) ||
 			(cookie1.getVersion() != cookie2.getVersion())) {
 
 			return false;

@@ -21,9 +21,10 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Method;
+
+import java.util.Objects;
 
 /**
  * @author Michael C. Han
@@ -67,13 +68,13 @@ public class IndexerRequest {
 
 		IndexerRequest indexerRequest = (IndexerRequest)object;
 
-		if (Validator.equals(_indexer, indexerRequest._indexer) &&
-			(Validator.equals(_method, indexerRequest._method) ||
-			 (Validator.equals(
+		if (Objects.equals(_indexer, indexerRequest._indexer) &&
+			(Objects.equals(_method, indexerRequest._method) ||
+			 (Objects.equals(
 				 _method.getName(), indexerRequest._method.getName()) &&
-			  Validator.equals(
+			  Objects.equals(
 				  _modelPrimaryKey, indexerRequest._modelPrimaryKey))) &&
-			Validator.equals(_modelClassName, indexerRequest._modelClassName)) {
+			Objects.equals(_modelClassName, indexerRequest._modelClassName)) {
 
 			return true;
 		}

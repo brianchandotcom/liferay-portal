@@ -16,11 +16,12 @@ package com.liferay.hello.soy.web.portlet;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.portlet.bridge.soy.SoyPortlet;
 
 import java.io.IOException;
+
+import java.util.Objects;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -74,7 +75,7 @@ public class HelloSoyPortlet extends SoyPortlet {
 
 		String path = getPath(renderRequest, renderResponse);
 
-		if (Validator.equals(path, "hello_soy_edit")) {
+		if (Objects.equals(path, "hello_soy_edit")) {
 			portletURL.setParameter("mvcPath", "hello_soy_view");
 		}
 		else {

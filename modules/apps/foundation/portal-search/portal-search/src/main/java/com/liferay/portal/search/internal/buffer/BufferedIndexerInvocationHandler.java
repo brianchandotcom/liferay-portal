@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.search.Bufferable;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.buffer.IndexerRequest;
 import com.liferay.portal.search.buffer.IndexerRequestBuffer;
 import com.liferay.portal.search.buffer.IndexerRequestBufferOverflowHandler;
@@ -35,6 +34,7 @@ import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * @author Michael C. Han
@@ -91,7 +91,7 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 			!(args0Class.isArray() ||
 			  Collection.class.isAssignableFrom(args0Class)) &&
 			!((args.length == 2) && (args[0] instanceof String) &&
-			  Validator.equals(args[1].getClass(), Long.class))) {
+			  Objects.equals(args[1].getClass(), Long.class))) {
 
 			return method.invoke(_indexer, args);
 		}

@@ -14,8 +14,9 @@
 
 package com.liferay.portal.kernel.display.context;
 
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.ServiceReference;
+
+import java.util.Objects;
 
 /**
  * @author Iván Zaera
@@ -51,7 +52,7 @@ public class DisplayContextFactoryReference<T extends DisplayContextFactory>
 		DisplayContextFactoryReference<?> displayContextFactoryReference =
 			(DisplayContextFactoryReference<?>)obj;
 
-		if (Validator.equals(
+		if (Objects.equals(
 				_serviceReference,
 				displayContextFactoryReference._serviceReference)) {
 

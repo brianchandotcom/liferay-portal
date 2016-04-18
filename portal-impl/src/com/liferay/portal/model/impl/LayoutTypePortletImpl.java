@@ -74,6 +74,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -725,7 +726,7 @@ public class LayoutTypePortletImpl
 					CustomizedPages.namespacePlid(getPlid()), columnId,
 					StringPool.NULL);
 
-				if (!Validator.equals(columnValue, StringPool.NULL)) {
+				if (!Objects.equals(columnValue, StringPool.NULL)) {
 					setUserPreference(columnId, null);
 				}
 			}

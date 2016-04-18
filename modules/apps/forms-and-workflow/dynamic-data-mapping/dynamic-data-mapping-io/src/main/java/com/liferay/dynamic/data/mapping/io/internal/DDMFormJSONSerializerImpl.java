@@ -30,11 +30,11 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -155,13 +155,13 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 
 		String dataType = ddmFormFieldTypeSetting.getDataType();
 
-		if (Validator.equals(dataType, "boolean")) {
+		if (Objects.equals(dataType, "boolean")) {
 			return GetterUtil.getBoolean(property);
 		}
-		else if (Validator.equals(dataType, "ddm-options")) {
+		else if (Objects.equals(dataType, "ddm-options")) {
 			return toJSONArray((DDMFormFieldOptions)property);
 		}
-		else if (Validator.equals(dataType, "ddm-validation")) {
+		else if (Objects.equals(dataType, "ddm-validation")) {
 			return toJSONObject((DDMFormFieldValidation)property);
 		}
 		else {

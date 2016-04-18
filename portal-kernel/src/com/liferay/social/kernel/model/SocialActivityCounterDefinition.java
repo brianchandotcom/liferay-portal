@@ -17,9 +17,10 @@ package com.liferay.social.kernel.model;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
+
+import java.util.Objects;
 
 /**
  * @author Zsolt Berentey
@@ -77,7 +78,7 @@ public class SocialActivityCounterDefinition implements Serializable {
 			(_limitEnabled == activityCounterDefinition._limitEnabled) &&
 			(_limitPeriod == activityCounterDefinition._limitPeriod) &&
 			(_limitValue == activityCounterDefinition._limitValue) &&
-			Validator.equals(_name, activityCounterDefinition._name) &&
+			Objects.equals(_name, activityCounterDefinition._name) &&
 			(_ownerType == activityCounterDefinition._ownerType) &&
 			(_periodLength == activityCounterDefinition._periodLength) &&
 			(_transient == activityCounterDefinition._transient)) {

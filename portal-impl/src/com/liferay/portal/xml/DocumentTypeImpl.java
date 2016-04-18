@@ -15,8 +15,9 @@
 package com.liferay.portal.xml;
 
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.DocumentType;
+
+import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
@@ -39,7 +40,7 @@ public class DocumentTypeImpl implements DocumentType {
 
 		DocumentTypeImpl documentTypeImpl = (DocumentTypeImpl)obj;
 
-		if (Validator.equals(_documentType, documentTypeImpl._documentType)) {
+		if (Objects.equals(_documentType, documentTypeImpl._documentType)) {
 			return true;
 		}
 

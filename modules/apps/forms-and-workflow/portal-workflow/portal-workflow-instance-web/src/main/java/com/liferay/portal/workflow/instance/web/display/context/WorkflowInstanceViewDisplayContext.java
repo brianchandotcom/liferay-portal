@@ -45,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -247,7 +248,7 @@ public class WorkflowInstanceViewDisplayContext
 	}
 
 	public boolean isNavigationAll() {
-		if (Validator.equals(getNavigation(), "all")) {
+		if (Objects.equals(getNavigation(), "all")) {
 			return true;
 		}
 
@@ -255,7 +256,7 @@ public class WorkflowInstanceViewDisplayContext
 	}
 
 	public boolean isNavigationCompleted() {
-		if (Validator.equals(getNavigation(), "completed")) {
+		if (Objects.equals(getNavigation(), "completed")) {
 			return true;
 		}
 
@@ -263,7 +264,7 @@ public class WorkflowInstanceViewDisplayContext
 	}
 
 	public boolean isNavigationPending() {
-		if (Validator.equals(getNavigation(), "pending")) {
+		if (Objects.equals(getNavigation(), "pending")) {
 			return true;
 		}
 

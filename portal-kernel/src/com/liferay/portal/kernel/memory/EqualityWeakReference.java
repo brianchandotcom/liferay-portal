@@ -14,10 +14,10 @@
 
 package com.liferay.portal.kernel.memory;
 
-import com.liferay.portal.kernel.util.Validator;
-
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
+
+import java.util.Objects;
 
 /**
  * @author Shuyang Zhou
@@ -51,7 +51,7 @@ public class EqualityWeakReference<T> extends WeakReference<T> {
 		EqualityWeakReference<?> equalityWeakReference =
 			(EqualityWeakReference<?>)obj;
 
-		if (Validator.equals(get(), equalityWeakReference.get())) {
+		if (Objects.equals(get(), equalityWeakReference.get())) {
 			return true;
 		}
 

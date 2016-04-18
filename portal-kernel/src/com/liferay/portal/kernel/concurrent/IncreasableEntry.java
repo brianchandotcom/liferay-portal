@@ -16,7 +16,8 @@ package com.liferay.portal.kernel.concurrent;
 
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Objects;
 
 /**
  * @author Shuyang Zhou
@@ -40,8 +41,8 @@ public abstract class IncreasableEntry<K, V> {
 
 		IncreasableEntry<K, V> increasableEntry = (IncreasableEntry<K, V>)obj;
 
-		if (Validator.equals(key, increasableEntry.key) &&
-			Validator.equals(value, increasableEntry.value)) {
+		if (Objects.equals(key, increasableEntry.key) &&
+			Objects.equals(value, increasableEntry.value)) {
 
 			return true;
 		}

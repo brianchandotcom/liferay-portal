@@ -93,6 +93,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Provides the local service helper for the document library application.
@@ -1017,7 +1018,7 @@ public class DLAppHelperLocalServiceImpl
 			return;
 		}
 
-		if (Validator.equals(serviceContext.getCommand(), Constants.REVERT)) {
+		if (Objects.equals(serviceContext.getCommand(), Constants.REVERT)) {
 			List<AssetCategory> assetCategories =
 				assetCategoryLocalService.getCategories(
 					DLFileEntryConstants.getClassName(),

@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.io.Serializable;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -197,7 +198,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 		Document document = getDocument(ddlRecord);
 
 		if (!recordVersion.isApproved()) {
-			if (Validator.equals(
+			if (Objects.equals(
 					recordVersion.getVersion(),
 					DDLRecordConstants.VERSION_DEFAULT)) {
 

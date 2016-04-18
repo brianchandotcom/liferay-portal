@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.InputStream;
@@ -34,6 +33,7 @@ import java.io.Serializable;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Alexander Chow
@@ -68,9 +68,7 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 
 		LiferayFileVersion liferayFileVersion = (LiferayFileVersion)obj;
 
-		if (Validator.equals(
-				_dlFileVersion, liferayFileVersion._dlFileVersion)) {
-
+		if (Objects.equals(_dlFileVersion, liferayFileVersion._dlFileVersion)) {
 			return true;
 		}
 

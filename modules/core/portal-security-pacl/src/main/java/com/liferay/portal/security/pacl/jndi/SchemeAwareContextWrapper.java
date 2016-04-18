@@ -14,9 +14,8 @@
 
 package com.liferay.portal.security.pacl.jndi;
 
-import com.liferay.portal.kernel.util.Validator;
-
 import java.util.Hashtable;
+import java.util.Objects;
 
 import javax.naming.Binding;
 import javax.naming.Context;
@@ -114,7 +113,7 @@ public class SchemeAwareContextWrapper implements Context {
 
 		Context context = (Context)obj;
 
-		if (Validator.equals(_context, context)) {
+		if (Objects.equals(_context, context)) {
 			return true;
 		}
 

@@ -15,7 +15,8 @@
 package com.liferay.document.library.web.display.context;
 
 import com.liferay.document.library.display.context.DLDisplayContextFactory;
-import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Objects;
 
 import org.osgi.framework.ServiceReference;
 
@@ -51,7 +52,7 @@ public class DLDisplayContextFactoryReference
 		DLDisplayContextFactoryReference dlDisplayContextFactoryReference =
 			(DLDisplayContextFactoryReference)obj;
 
-		if (Validator.equals(
+		if (Objects.equals(
 				_serviceReference,
 				dlDisplayContextFactoryReference._serviceReference)) {
 

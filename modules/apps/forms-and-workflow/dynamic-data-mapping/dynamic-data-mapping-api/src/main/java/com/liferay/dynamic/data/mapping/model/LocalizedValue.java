@@ -16,11 +16,11 @@ package com.liferay.dynamic.data.mapping.model;
 
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -63,8 +63,8 @@ public class LocalizedValue implements Value {
 
 		LocalizedValue localizedValue = (LocalizedValue)obj;
 
-		if (Validator.equals(_defaultLocale, localizedValue._defaultLocale) &&
-			Validator.equals(_values, localizedValue._values)) {
+		if (Objects.equals(_defaultLocale, localizedValue._defaultLocale) &&
+			Objects.equals(_values, localizedValue._values)) {
 
 			return true;
 		}

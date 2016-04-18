@@ -15,13 +15,13 @@
 package com.liferay.portal.workflow.kaleo.definition;
 
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -56,7 +56,7 @@ public abstract class Node implements ActionAware, NotificationAware {
 
 		Node node = (Node)obj;
 
-		if (!Validator.equals(_name, node._name)) {
+		if (!Objects.equals(_name, node._name)) {
 			return false;
 		}
 

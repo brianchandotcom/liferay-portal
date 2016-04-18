@@ -14,9 +14,8 @@
 
 package com.liferay.portal.osgi.web.servlet.context.helper.definition;
 
-import com.liferay.portal.kernel.util.Validator;
-
 import java.util.EventListener;
+import java.util.Objects;
 
 /**
  * @author Raymond Augé
@@ -35,7 +34,7 @@ public class ListenerDefinition {
 
 		ListenerDefinition listenerDefinition = (ListenerDefinition)obj;
 
-		if (Validator.equals(
+		if (Objects.equals(
 				_eventListener.getClass(),
 				listenerDefinition._eventListener.getClass())) {
 

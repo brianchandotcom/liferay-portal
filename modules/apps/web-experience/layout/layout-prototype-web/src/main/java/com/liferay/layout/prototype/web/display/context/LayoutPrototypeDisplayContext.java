@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.LayoutPrototypeCreateDateComparator;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -154,7 +155,7 @@ public class LayoutPrototypeDisplayContext {
 	}
 
 	public boolean isDescriptiveView() {
-		if (Validator.equals(getDisplayStyle(), "descriptive")) {
+		if (Objects.equals(getDisplayStyle(), "descriptive")) {
 			return true;
 		}
 
@@ -170,7 +171,7 @@ public class LayoutPrototypeDisplayContext {
 	}
 
 	public boolean isIconView() {
-		if (Validator.equals(getDisplayStyle(), "icon")) {
+		if (Objects.equals(getDisplayStyle(), "icon")) {
 			return true;
 		}
 
@@ -178,7 +179,7 @@ public class LayoutPrototypeDisplayContext {
 	}
 
 	public boolean isListView() {
-		if (Validator.equals(getDisplayStyle(), "list")) {
+		if (Objects.equals(getDisplayStyle(), "list")) {
 			return true;
 		}
 

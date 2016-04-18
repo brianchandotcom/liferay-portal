@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
@@ -48,6 +47,7 @@ import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Assume;
@@ -1111,7 +1111,7 @@ public abstract class BaseTrashHandlerTestCase {
 			TrashHandlerRegistryUtil.getTrashHandler(
 				whenHasParent.getParentBaseModelClassName());
 
-		if (Validator.equals(
+		if (Objects.equals(
 				getBaseModelClassName(),
 				whenHasParent.getParentBaseModelClassName())) {
 
@@ -1442,7 +1442,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, serviceContext);
 
-		if (Validator.equals(
+		if (Objects.equals(
 				getBaseModelClassName(),
 				whenHasParent.getParentBaseModelClassName())) {
 
@@ -1769,7 +1769,7 @@ public abstract class BaseTrashHandlerTestCase {
 			TrashHandlerRegistryUtil.getTrashHandler(
 				whenHasParent.getParentBaseModelClassName());
 
-		if (Validator.equals(
+		if (Objects.equals(
 				getBaseModelClassName(),
 				whenHasParent.getParentBaseModelClassName())) {
 

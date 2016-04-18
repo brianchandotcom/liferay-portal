@@ -46,6 +46,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
@@ -771,10 +772,10 @@ public class ServiceContext implements Cloneable, Serializable {
 	 *         command; <code>false</code> otherwise
 	 */
 	public boolean isCommandAdd() {
-		if (Validator.equals(_command, Constants.ADD) ||
-			Validator.equals(_command, Constants.ADD_DYNAMIC) ||
-			Validator.equals(_command, Constants.ADD_MULTIPLE) ||
-			Validator.equals(_command, Constants.ADD_WEBDAV)) {
+		if (Objects.equals(_command, Constants.ADD) ||
+			Objects.equals(_command, Constants.ADD_DYNAMIC) ||
+			Objects.equals(_command, Constants.ADD_MULTIPLE) ||
+			Objects.equals(_command, Constants.ADD_WEBDAV)) {
 
 			return true;
 		}
@@ -791,9 +792,9 @@ public class ServiceContext implements Cloneable, Serializable {
 	 *         command; <code>false</code> otherwise
 	 */
 	public boolean isCommandUpdate() {
-		if (Validator.equals(_command, Constants.UPDATE) ||
-			Validator.equals(_command, Constants.UPDATE_AND_CHECKIN) ||
-			Validator.equals(_command, Constants.UPDATE_WEBDAV)) {
+		if (Objects.equals(_command, Constants.UPDATE) ||
+			Objects.equals(_command, Constants.UPDATE_AND_CHECKIN) ||
+			Objects.equals(_command, Constants.UPDATE_WEBDAV)) {
 
 			return true;
 		}

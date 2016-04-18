@@ -19,13 +19,13 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Kyle Stiemann
@@ -61,7 +61,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 
 		FolderWrapper folderWrapper = (FolderWrapper)obj;
 
-		if (Validator.equals(_folder, folderWrapper._folder)) {
+		if (Objects.equals(_folder, folderWrapper._folder)) {
 			return true;
 		}
 

@@ -42,6 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Stack;
 
 import javax.servlet.Filter;
@@ -627,7 +628,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 				if (Validator.isNull(assembledInitParameterValue)) {
 					if ((webXMLInitParameterValue == null) &&
-						!Validator.equals(
+						!Objects.equals(
 							assembledInitParameterValue,
 							initParametersEntry.getValue())) {
 
@@ -752,7 +753,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 				if (Validator.isNull(assembledInitParameterValue)) {
 					if ((webXMLInitParameterValue == null) &&
-						!Validator.equals(
+						!Objects.equals(
 							assembledInitParameterValue,
 							initParameterEntry.getValue())) {
 

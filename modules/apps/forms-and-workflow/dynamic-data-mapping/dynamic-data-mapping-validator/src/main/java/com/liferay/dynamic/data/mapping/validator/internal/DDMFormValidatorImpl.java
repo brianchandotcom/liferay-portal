@@ -46,6 +46,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -135,7 +136,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		String dataSourceType = (String)ddmFormField.getProperty(
 			"dataSourceType");
 
-		if (!Validator.equals(dataSourceType, "manual")) {
+		if (!Objects.equals(dataSourceType, "manual")) {
 			return;
 		}
 

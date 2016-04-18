@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -70,10 +70,10 @@ public class CheckboxDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 	protected String getStatus(String value, String predefinedValue) {
 		String status = StringPool.BLANK;
 
-		if (Validator.equals(value, "true")) {
+		if (Objects.equals(value, "true")) {
 			status = "checked";
 		}
-		else if (Validator.equals(predefinedValue, "true")) {
+		else if (Objects.equals(predefinedValue, "true")) {
 			status = "checked";
 		}
 

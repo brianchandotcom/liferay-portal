@@ -16,7 +16,6 @@ package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -25,6 +24,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.hibernate.engine.SessionImplementor;
 import org.hibernate.type.StandardBasicTypes;
@@ -55,7 +55,7 @@ public class MapType implements CompositeUserType, Serializable {
 
 	@Override
 	public boolean equals(Object x, Object y) {
-		return Validator.equals(x, y);
+		return Objects.equals(x, y);
 	}
 
 	@Override

@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -193,7 +194,7 @@ public class BreadcrumbUtil {
 
 		if (Validator.isNotNull(portletDisplay.getId()) &&
 			!portletDisplay.isFocused() &&
-			!Validator.equals(
+			!Objects.equals(
 				portletDisplay.getId(),
 				PortletProviderUtil.getPortletId(
 					BreadcrumbEntry.class.getName(),

@@ -16,7 +16,8 @@ package com.liferay.portal.kernel.template;
 
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Objects;
 
 /**
  * @author Jorge Ferrer
@@ -63,8 +64,8 @@ public class TemplateVariableDefinition {
 		TemplateVariableDefinition templateVariableDefinition =
 			(TemplateVariableDefinition)obj;
 
-		if (Validator.equals(_name, templateVariableDefinition._name) &&
-			Validator.equals(_accessor, templateVariableDefinition._accessor)) {
+		if (Objects.equals(_name, templateVariableDefinition._name) &&
+			Objects.equals(_accessor, templateVariableDefinition._accessor)) {
 
 			return true;
 		}

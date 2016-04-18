@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -100,7 +101,7 @@ public class ForkNodeValidator extends BaseNodeValidator<Fork> {
 			NodeType nodeType = sourceNode.getNodeType();
 
 			if (nodeType.equals(NodeType.FORK) &&
-				Validator.equals(fork, sourceNode)) {
+				Objects.equals(fork, sourceNode)) {
 
 				continue;
 			}
@@ -161,7 +162,7 @@ public class ForkNodeValidator extends BaseNodeValidator<Fork> {
 				if (Validator.isNull(join)) {
 					join = (Join)targetNode;
 				}
-				else if (!Validator.equals(join, targetNode)) {
+				else if (!Objects.equals(join, targetNode)) {
 					throw new WorkflowException(
 						"Fork " + fork.getName() + " and join " +
 							targetNode.getName() + " are not paired");

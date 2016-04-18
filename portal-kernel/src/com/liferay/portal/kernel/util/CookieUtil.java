@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.io.Serializer;
 
 import java.nio.ByteBuffer;
 
+import java.util.Objects;
+
 import javax.servlet.http.Cookie;
 
 /**
@@ -68,11 +70,11 @@ public class CookieUtil {
 	}
 
 	public static boolean equals(Cookie cookie1, Cookie cookie2) {
-		if (!Validator.equals(cookie1.getComment(), cookie2.getComment())) {
+		if (!Objects.equals(cookie1.getComment(), cookie2.getComment())) {
 			return false;
 		}
 
-		if (!Validator.equals(cookie1.getDomain(), cookie2.getDomain())) {
+		if (!Objects.equals(cookie1.getDomain(), cookie2.getDomain())) {
 			return false;
 		}
 
@@ -80,11 +82,11 @@ public class CookieUtil {
 			return false;
 		}
 
-		if (!Validator.equals(cookie1.getName(), cookie2.getName())) {
+		if (!Objects.equals(cookie1.getName(), cookie2.getName())) {
 			return false;
 		}
 
-		if (!Validator.equals(cookie1.getPath(), cookie2.getPath())) {
+		if (!Objects.equals(cookie1.getPath(), cookie2.getPath())) {
 			return false;
 		}
 
@@ -92,7 +94,7 @@ public class CookieUtil {
 			return false;
 		}
 
-		if (!Validator.equals(cookie1.getValue(), cookie2.getValue())) {
+		if (!Objects.equals(cookie1.getValue(), cookie2.getValue())) {
 			return false;
 		}
 

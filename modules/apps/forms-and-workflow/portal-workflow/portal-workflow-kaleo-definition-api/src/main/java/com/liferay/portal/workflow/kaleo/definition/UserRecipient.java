@@ -16,7 +16,8 @@ package com.liferay.portal.workflow.kaleo.definition;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Objects;
 
 /**
  * @author Michael C. Han
@@ -47,8 +48,8 @@ public class UserRecipient extends Recipient {
 
 		UserRecipient userRecipient = (UserRecipient)obj;
 
-		if (Validator.equals(_emailAddress, userRecipient._emailAddress) &&
-			Validator.equals(_screenName, userRecipient._screenName) &&
+		if (Objects.equals(_emailAddress, userRecipient._emailAddress) &&
+			Objects.equals(_screenName, userRecipient._screenName) &&
 			(_userId == userRecipient._userId)) {
 
 			return true;

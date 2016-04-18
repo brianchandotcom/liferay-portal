@@ -30,6 +30,8 @@ import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
 import com.liferay.trash.web.constants.TrashPortletKeys;
 
+import java.util.Objects;
+
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -272,7 +274,7 @@ public class TrashDisplayContext {
 	}
 
 	public boolean isDescriptiveView() {
-		if (Validator.equals(getDisplayStyle(), "descriptive")) {
+		if (Objects.equals(getDisplayStyle(), "descriptive")) {
 			return true;
 		}
 
@@ -280,7 +282,7 @@ public class TrashDisplayContext {
 	}
 
 	public boolean isIconView() {
-		if (Validator.equals(getDisplayStyle(), "icon")) {
+		if (Objects.equals(getDisplayStyle(), "icon")) {
 			return true;
 		}
 
@@ -288,7 +290,7 @@ public class TrashDisplayContext {
 	}
 
 	public boolean isListView() {
-		if (Validator.equals(getDisplayStyle(), "list")) {
+		if (Objects.equals(getDisplayStyle(), "list")) {
 			return true;
 		}
 

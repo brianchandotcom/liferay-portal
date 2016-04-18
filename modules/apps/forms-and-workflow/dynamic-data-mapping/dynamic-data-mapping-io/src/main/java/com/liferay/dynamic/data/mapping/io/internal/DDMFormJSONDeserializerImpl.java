@@ -38,6 +38,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -113,14 +114,14 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 
 		String dataType = ddmFormFieldTypeSetting.getDataType();
 
-		if (Validator.equals(dataType, "boolean")) {
+		if (Objects.equals(dataType, "boolean")) {
 			return Boolean.valueOf(serializedDDMFormFieldProperty);
 		}
-		else if (Validator.equals(dataType, "ddm-options")) {
+		else if (Objects.equals(dataType, "ddm-options")) {
 			return deserializeDDMFormFieldOptions(
 				serializedDDMFormFieldProperty);
 		}
-		else if (Validator.equals(dataType, "ddm-validation")) {
+		else if (Objects.equals(dataType, "ddm-validation")) {
 			return deserializeDDMFormFieldValidation(
 				serializedDDMFormFieldProperty);
 		}

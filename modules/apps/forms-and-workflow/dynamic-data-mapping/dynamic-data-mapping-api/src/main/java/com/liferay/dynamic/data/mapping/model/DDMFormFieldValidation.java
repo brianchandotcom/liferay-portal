@@ -15,9 +15,10 @@
 package com.liferay.dynamic.data.mapping.model;
 
 import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
+
+import java.util.Objects;
 
 /**
  * @author Marcellus Tavares
@@ -47,9 +48,9 @@ public class DDMFormFieldValidation implements Serializable {
 		DDMFormFieldValidation ddmFormFieldValidation =
 			(DDMFormFieldValidation)obj;
 
-		if (Validator.equals(
+		if (Objects.equals(
 				_errorMessage, ddmFormFieldValidation._errorMessage) &&
-			Validator.equals(_expression, ddmFormFieldValidation._expression)) {
+			Objects.equals(_expression, ddmFormFieldValidation._expression)) {
 
 			return true;
 		}

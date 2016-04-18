@@ -16,7 +16,8 @@ package com.liferay.portal.workflow.kaleo.definition;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Objects;
 
 /**
  * @author Michael C. Han
@@ -47,8 +48,8 @@ public class UserAssignment extends Assignment {
 
 		UserAssignment userAssignment = (UserAssignment)obj;
 
-		if (Validator.equals(_emailAddress, userAssignment._emailAddress) &&
-			Validator.equals(_screenName, userAssignment._screenName) &&
+		if (Objects.equals(_emailAddress, userAssignment._emailAddress) &&
+			Objects.equals(_screenName, userAssignment._screenName) &&
 			(_userId == userAssignment._userId)) {
 
 			return true;

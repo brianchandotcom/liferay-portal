@@ -17,12 +17,12 @@ package com.liferay.product.navigation.control.menu;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,7 +46,7 @@ public abstract class BaseProductNavigationControlMenuEntry
 		ProductNavigationControlMenuEntry productNavigationControlMenuEntry =
 			(ProductNavigationControlMenuEntry)obj;
 
-		if (Validator.equals(
+		if (Objects.equals(
 				getKey(), productNavigationControlMenuEntry.getKey())) {
 
 			return true;

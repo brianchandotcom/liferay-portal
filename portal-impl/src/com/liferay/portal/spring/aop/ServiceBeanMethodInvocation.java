@@ -17,7 +17,6 @@ package com.liferay.portal.spring.aop;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -26,6 +25,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
@@ -74,7 +74,7 @@ public class ServiceBeanMethodInvocation
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 			(ServiceBeanMethodInvocation)obj;
 
-		if (Validator.equals(_method, serviceBeanMethodInvocation._method)) {
+		if (Objects.equals(_method, serviceBeanMethodInvocation._method)) {
 			return true;
 		}
 

@@ -16,13 +16,13 @@ package com.liferay.dynamic.data.mapping.model;
 
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -78,9 +78,9 @@ public class DDMFormFieldOptions implements Serializable {
 
 		DDMFormFieldOptions ddmFormFieldOptions = (DDMFormFieldOptions)obj;
 
-		if (Validator.equals(
+		if (Objects.equals(
 				_defaultLocale, ddmFormFieldOptions._defaultLocale) &&
-			Validator.equals(_options, ddmFormFieldOptions._options)) {
+			Objects.equals(_options, ddmFormFieldOptions._options)) {
 
 			return true;
 		}

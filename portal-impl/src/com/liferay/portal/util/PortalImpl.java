@@ -252,6 +252,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -6139,7 +6140,7 @@ public class PortalImpl implements Portal {
 				PropsValues.WEB_SERVER_FORWARDED_PROTOCOL_HEADER);
 
 			if (Validator.isNotNull(forwardedProtocol) &&
-				Validator.equals(Http.HTTPS, forwardedProtocol)) {
+				Objects.equals(Http.HTTPS, forwardedProtocol)) {
 
 				return true;
 			}
@@ -6632,7 +6633,7 @@ public class PortalImpl implements Portal {
 			redirect = PATH_MAIN + "/portal/status";
 		}
 
-		if (Validator.equals(redirect, request.getRequestURI())) {
+		if (Objects.equals(redirect, request.getRequestURI())) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to redirect to missing URI: " + redirect);
 			}

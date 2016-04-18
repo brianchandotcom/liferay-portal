@@ -18,13 +18,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelWrapper;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Alexander Chow
@@ -53,7 +53,7 @@ public class FileVersionWrapper
 
 		FileVersionWrapper fileVersionWrapper = (FileVersionWrapper)obj;
 
-		if (Validator.equals(_fileVersion, fileVersionWrapper._fileVersion)) {
+		if (Objects.equals(_fileVersion, fileVersionWrapper._fileVersion)) {
 			return true;
 		}
 

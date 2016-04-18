@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Pablo Carvalho
@@ -92,8 +93,8 @@ public class DDMFormField implements Serializable {
 
 		DDMFormField ddmFormField = (DDMFormField)obj;
 
-		if (Validator.equals(_properties, ddmFormField._properties) &&
-			Validator.equals(
+		if (Objects.equals(_properties, ddmFormField._properties) &&
+			Objects.equals(
 				_nestedDDMFormFields, ddmFormField._nestedDDMFormFields)) {
 
 			return true;

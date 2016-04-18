@@ -27,6 +27,7 @@ import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.dom4j.Element;
 
@@ -576,8 +577,8 @@ public final class CommandLoggerHandler {
 	}
 
 	private static boolean _isCommand(Element element) {
-		if (!Validator.equals(element.getName(), "condition") &&
-			!Validator.equals(element.getName(), "execute")) {
+		if (!Objects.equals(element.getName(), "condition") &&
+			!Objects.equals(element.getName(), "execute")) {
 
 			return false;
 		}
@@ -598,7 +599,7 @@ public final class CommandLoggerHandler {
 	}
 
 	private static boolean _isFail(Element element) {
-		return Validator.equals(
+		return Objects.equals(
 			StringUtil.toLowerCase(element.getName()), "fail");
 	}
 

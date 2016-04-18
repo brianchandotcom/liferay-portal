@@ -104,6 +104,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -340,7 +341,7 @@ public class AssetPublisherUtil {
 			String queryName = portletPreferences.getValue(
 				"queryName" + i, StringPool.BLANK);
 
-			if (Validator.equals(queryName, "assetCategories") &&
+			if (Objects.equals(queryName, "assetCategories") &&
 				queryContains && queryAndOperator) {
 
 				assetCategoryIds = GetterUtil.getLongValues(queryValues);
@@ -622,7 +623,7 @@ public class AssetPublisherUtil {
 			String queryName = portletPreferences.getValue(
 				"queryName" + i, StringPool.BLANK);
 
-			if (Validator.equals(queryName, "assetCategories")) {
+			if (Objects.equals(queryName, "assetCategories")) {
 				long[] assetCategoryIds = GetterUtil.getLongValues(queryValues);
 
 				if (queryContains && queryAndOperator) {
@@ -796,7 +797,7 @@ public class AssetPublisherUtil {
 			String queryName = portletPreferences.getValue(
 				"queryName" + i, StringPool.BLANK);
 
-			if (!Validator.equals(queryName, "assetCategories") &&
+			if (!Objects.equals(queryName, "assetCategories") &&
 				queryContains && queryAndOperator) {
 
 				allAssetTagNames = queryValues;

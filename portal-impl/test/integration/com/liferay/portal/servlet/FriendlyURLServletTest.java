@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -40,6 +39,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -178,7 +178,7 @@ public class FriendlyURLServletTest {
 
 		Object[] expectedRedirectArray = null;
 
-		if (!Validator.equals(i18nPath, expectedI18nPath)) {
+		if (!Objects.equals(i18nPath, expectedI18nPath)) {
 			expectedRedirectArray =
 				new Object[] {expectedI18nPath + requestURI, true};
 		}

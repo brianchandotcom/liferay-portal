@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import com.liferay.portlet.social.model.impl.SocialActivityLimitImpl;
 import com.liferay.portlet.social.model.impl.SocialActivityLimitModelImpl;
@@ -52,6 +51,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -1786,7 +1786,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 					(classNameId != socialActivityLimit.getClassNameId()) ||
 					(classPK != socialActivityLimit.getClassPK()) ||
 					(activityType != socialActivityLimit.getActivityType()) ||
-					!Validator.equals(activityCounterName,
+					!Objects.equals(activityCounterName,
 						socialActivityLimit.getActivityCounterName())) {
 				result = null;
 			}

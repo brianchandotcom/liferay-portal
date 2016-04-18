@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
@@ -58,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -437,22 +437,22 @@ public class JournalArticleImagePersistenceTest {
 				existingJournalArticleImage.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingJournalArticleImage,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(
+		Assert.assertTrue(Objects.equals(
 				existingJournalArticleImage.getArticleId(),
 				ReflectionTestUtil.invoke(existingJournalArticleImage,
 					"getOriginalArticleId", new Class<?>[0])));
 		AssertUtils.assertEquals(existingJournalArticleImage.getVersion(),
 			ReflectionTestUtil.<Double>invoke(existingJournalArticleImage,
 				"getOriginalVersion", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(
+		Assert.assertTrue(Objects.equals(
 				existingJournalArticleImage.getElInstanceId(),
 				ReflectionTestUtil.invoke(existingJournalArticleImage,
 					"getOriginalElInstanceId", new Class<?>[0])));
-		Assert.assertTrue(Validator.equals(
+		Assert.assertTrue(Objects.equals(
 				existingJournalArticleImage.getElName(),
 				ReflectionTestUtil.invoke(existingJournalArticleImage,
 					"getOriginalElName", new Class<?>[0])));
-		Assert.assertTrue(Validator.equals(
+		Assert.assertTrue(Objects.equals(
 				existingJournalArticleImage.getLanguageId(),
 				ReflectionTestUtil.invoke(existingJournalArticleImage,
 					"getOriginalLanguageId", new Class<?>[0])));

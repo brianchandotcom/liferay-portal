@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
@@ -53,6 +52,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -2325,8 +2325,7 @@ public class KaleoInstancePersistenceImpl extends BasePersistenceImpl<KaleoInsta
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoInstance kaleoInstance : list) {
-					if (!Validator.equals(className,
-								kaleoInstance.getClassName()) ||
+					if (!Objects.equals(className, kaleoInstance.getClassName()) ||
 							(classPK != kaleoInstance.getClassPK())) {
 						list = null;
 
@@ -2948,10 +2947,10 @@ public class KaleoInstancePersistenceImpl extends BasePersistenceImpl<KaleoInsta
 			if ((list != null) && !list.isEmpty()) {
 				for (KaleoInstance kaleoInstance : list) {
 					if ((companyId != kaleoInstance.getCompanyId()) ||
-							!Validator.equals(kaleoDefinitionName,
+							!Objects.equals(kaleoDefinitionName,
 								kaleoInstance.getKaleoDefinitionName()) ||
 							(kaleoDefinitionVersion != kaleoInstance.getKaleoDefinitionVersion()) ||
-							!Validator.equals(completionDate,
+							!Objects.equals(completionDate,
 								kaleoInstance.getCompletionDate())) {
 						list = null;
 

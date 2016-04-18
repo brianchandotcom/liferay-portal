@@ -57,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -205,7 +206,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileVersion dlFileVersion : list) {
-					if (!Validator.equals(uuid, dlFileVersion.getUuid())) {
+					if (!Objects.equals(uuid, dlFileVersion.getUuid())) {
 						list = null;
 
 						break;
@@ -723,7 +724,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		if (result instanceof DLFileVersion) {
 			DLFileVersion dlFileVersion = (DLFileVersion)result;
 
-			if (!Validator.equals(uuid, dlFileVersion.getUuid()) ||
+			if (!Objects.equals(uuid, dlFileVersion.getUuid()) ||
 					(groupId != dlFileVersion.getGroupId())) {
 				result = null;
 			}
@@ -1018,7 +1019,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileVersion dlFileVersion : list) {
-					if (!Validator.equals(uuid, dlFileVersion.getUuid()) ||
+					if (!Objects.equals(uuid, dlFileVersion.getUuid()) ||
 							(companyId != dlFileVersion.getCompanyId())) {
 						list = null;
 
@@ -2616,7 +2617,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileVersion dlFileVersion : list) {
-					if (!Validator.equals(mimeType, dlFileVersion.getMimeType())) {
+					if (!Objects.equals(mimeType, dlFileVersion.getMimeType())) {
 						list = null;
 
 						break;
@@ -3667,7 +3668,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 			DLFileVersion dlFileVersion = (DLFileVersion)result;
 
 			if ((fileEntryId != dlFileVersion.getFileEntryId()) ||
-					!Validator.equals(version, dlFileVersion.getVersion())) {
+					!Objects.equals(version, dlFileVersion.getVersion())) {
 				result = null;
 			}
 		}
@@ -5117,9 +5118,8 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 				for (DLFileVersion dlFileVersion : list) {
 					if ((groupId != dlFileVersion.getGroupId()) ||
 							(folderId != dlFileVersion.getFolderId()) ||
-							!Validator.equals(title, dlFileVersion.getTitle()) ||
-							!Validator.equals(version,
-								dlFileVersion.getVersion())) {
+							!Objects.equals(title, dlFileVersion.getTitle()) ||
+							!Objects.equals(version, dlFileVersion.getVersion())) {
 						list = null;
 
 						break;

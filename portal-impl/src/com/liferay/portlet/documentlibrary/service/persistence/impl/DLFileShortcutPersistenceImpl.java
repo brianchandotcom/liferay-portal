@@ -59,6 +59,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -206,7 +207,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileShortcut dlFileShortcut : list) {
-					if (!Validator.equals(uuid, dlFileShortcut.getUuid())) {
+					if (!Objects.equals(uuid, dlFileShortcut.getUuid())) {
 						list = null;
 
 						break;
@@ -726,7 +727,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		if (result instanceof DLFileShortcut) {
 			DLFileShortcut dlFileShortcut = (DLFileShortcut)result;
 
-			if (!Validator.equals(uuid, dlFileShortcut.getUuid()) ||
+			if (!Objects.equals(uuid, dlFileShortcut.getUuid()) ||
 					(groupId != dlFileShortcut.getGroupId())) {
 				result = null;
 			}
@@ -1020,7 +1021,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileShortcut dlFileShortcut : list) {
-					if (!Validator.equals(uuid, dlFileShortcut.getUuid()) ||
+					if (!Objects.equals(uuid, dlFileShortcut.getUuid()) ||
 							(companyId != dlFileShortcut.getCompanyId())) {
 						list = null;
 

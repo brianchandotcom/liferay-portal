@@ -20,12 +20,12 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -530,7 +530,7 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 
 		SocialActivitySetWrapper socialActivitySetWrapper = (SocialActivitySetWrapper)obj;
 
-		if (Validator.equals(_socialActivitySet,
+		if (Objects.equals(_socialActivitySet,
 					socialActivitySetWrapper._socialActivitySet)) {
 			return true;
 		}

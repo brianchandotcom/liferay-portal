@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.PortletPreferencesImpl;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
 
@@ -51,6 +50,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -709,7 +709,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PortletPreferences portletPreferences : list) {
-					if (!Validator.equals(portletId,
+					if (!Objects.equals(portletId,
 								portletPreferences.getPortletId())) {
 						list = null;
 
@@ -1275,7 +1275,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			if ((list != null) && !list.isEmpty()) {
 				for (PortletPreferences portletPreferences : list) {
 					if ((ownerType != portletPreferences.getOwnerType()) ||
-							!Validator.equals(portletId,
+							!Objects.equals(portletId,
 								portletPreferences.getPortletId())) {
 						list = null;
 
@@ -1866,7 +1866,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			if ((list != null) && !list.isEmpty()) {
 				for (PortletPreferences portletPreferences : list) {
 					if ((plid != portletPreferences.getPlid()) ||
-							!Validator.equals(portletId,
+							!Objects.equals(portletId,
 								portletPreferences.getPortletId())) {
 						list = null;
 
@@ -3060,7 +3060,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 				for (PortletPreferences portletPreferences : list) {
 					if ((ownerId != portletPreferences.getOwnerId()) ||
 							(ownerType != portletPreferences.getOwnerType()) ||
-							!Validator.equals(portletId,
+							!Objects.equals(portletId,
 								portletPreferences.getPortletId())) {
 						list = null;
 
@@ -3698,7 +3698,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 				for (PortletPreferences portletPreferences : list) {
 					if ((ownerType != portletPreferences.getOwnerType()) ||
 							(plid != portletPreferences.getPlid()) ||
-							!Validator.equals(portletId,
+							!Objects.equals(portletId,
 								portletPreferences.getPortletId())) {
 						list = null;
 
@@ -4305,8 +4305,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			if ((ownerId != portletPreferences.getOwnerId()) ||
 					(ownerType != portletPreferences.getOwnerType()) ||
 					(plid != portletPreferences.getPlid()) ||
-					!Validator.equals(portletId,
-						portletPreferences.getPortletId())) {
+					!Objects.equals(portletId, portletPreferences.getPortletId())) {
 				result = null;
 			}
 		}

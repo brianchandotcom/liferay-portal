@@ -22,13 +22,13 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -1743,7 +1743,7 @@ public class JournalArticleWrapper implements JournalArticle,
 
 		JournalArticleWrapper journalArticleWrapper = (JournalArticleWrapper)obj;
 
-		if (Validator.equals(_journalArticle,
+		if (Objects.equals(_journalArticle,
 					journalArticleWrapper._journalArticle)) {
 			return true;
 		}

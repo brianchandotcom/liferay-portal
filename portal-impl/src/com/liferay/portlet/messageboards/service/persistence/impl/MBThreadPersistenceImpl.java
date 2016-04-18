@@ -64,6 +64,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -208,7 +209,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBThread mbThread : list) {
-					if (!Validator.equals(uuid, mbThread.getUuid())) {
+					if (!Objects.equals(uuid, mbThread.getUuid())) {
 						list = null;
 
 						break;
@@ -726,7 +727,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		if (result instanceof MBThread) {
 			MBThread mbThread = (MBThread)result;
 
-			if (!Validator.equals(uuid, mbThread.getUuid()) ||
+			if (!Objects.equals(uuid, mbThread.getUuid()) ||
 					(groupId != mbThread.getGroupId())) {
 				result = null;
 			}
@@ -1019,7 +1020,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBThread mbThread : list) {
-					if (!Validator.equals(uuid, mbThread.getUuid()) ||
+					if (!Objects.equals(uuid, mbThread.getUuid()) ||
 							(companyId != mbThread.getCompanyId())) {
 						list = null;
 
@@ -6451,8 +6452,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBThread mbThread : list) {
-					if (!Validator.equals(lastPostDate,
-								mbThread.getLastPostDate()) ||
+					if (!Objects.equals(lastPostDate, mbThread.getLastPostDate()) ||
 							(priority != mbThread.getPriority())) {
 						list = null;
 
@@ -7041,7 +7041,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 				for (MBThread mbThread : list) {
 					if ((groupId != mbThread.getGroupId()) ||
 							(categoryId != mbThread.getCategoryId()) ||
-							!Validator.equals(lastPostDate,
+							!Objects.equals(lastPostDate,
 								mbThread.getLastPostDate())) {
 						list = null;
 

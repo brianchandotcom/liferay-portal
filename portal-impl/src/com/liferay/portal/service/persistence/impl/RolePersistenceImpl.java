@@ -65,6 +65,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -208,7 +209,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
-					if (!Validator.equals(uuid, role.getUuid())) {
+					if (!Objects.equals(uuid, role.getUuid())) {
 						list = null;
 
 						break;
@@ -1154,7 +1155,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
-					if (!Validator.equals(uuid, role.getUuid()) ||
+					if (!Objects.equals(uuid, role.getUuid()) ||
 							(companyId != role.getCompanyId())) {
 						list = null;
 
@@ -2991,7 +2992,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
-					if (!Validator.equals(name, role.getName())) {
+					if (!Objects.equals(name, role.getName())) {
 						list = null;
 
 						break;
@@ -4767,7 +4768,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
-					if (!Validator.equals(subtype, role.getSubtype())) {
+					if (!Objects.equals(subtype, role.getSubtype())) {
 						list = null;
 
 						break;
@@ -5677,7 +5678,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			Role role = (Role)result;
 
 			if ((companyId != role.getCompanyId()) ||
-					!Validator.equals(name, role.getName())) {
+					!Objects.equals(name, role.getName())) {
 				result = null;
 			}
 		}
@@ -7366,7 +7367,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			if ((list != null) && !list.isEmpty()) {
 				for (Role role : list) {
 					if ((type != role.getType()) ||
-							!Validator.equals(subtype, role.getSubtype())) {
+							!Objects.equals(subtype, role.getSubtype())) {
 						list = null;
 
 						break;

@@ -22,13 +22,13 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -1236,7 +1236,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 
 		MBMessageWrapper mbMessageWrapper = (MBMessageWrapper)obj;
 
-		if (Validator.equals(_mbMessage, mbMessageWrapper._mbMessage)) {
+		if (Objects.equals(_mbMessage, mbMessageWrapper._mbMessage)) {
 			return true;
 		}
 

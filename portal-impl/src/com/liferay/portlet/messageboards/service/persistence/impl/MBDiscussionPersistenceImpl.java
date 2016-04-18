@@ -57,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -200,7 +201,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBDiscussion mbDiscussion : list) {
-					if (!Validator.equals(uuid, mbDiscussion.getUuid())) {
+					if (!Objects.equals(uuid, mbDiscussion.getUuid())) {
 						list = null;
 
 						break;
@@ -718,7 +719,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		if (result instanceof MBDiscussion) {
 			MBDiscussion mbDiscussion = (MBDiscussion)result;
 
-			if (!Validator.equals(uuid, mbDiscussion.getUuid()) ||
+			if (!Objects.equals(uuid, mbDiscussion.getUuid()) ||
 					(groupId != mbDiscussion.getGroupId())) {
 				result = null;
 			}
@@ -1009,7 +1010,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBDiscussion mbDiscussion : list) {
-					if (!Validator.equals(uuid, mbDiscussion.getUuid()) ||
+					if (!Objects.equals(uuid, mbDiscussion.getUuid()) ||
 							(companyId != mbDiscussion.getCompanyId())) {
 						list = null;
 

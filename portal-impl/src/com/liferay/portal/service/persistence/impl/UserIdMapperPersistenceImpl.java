@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.UserIdMapperImpl;
 import com.liferay.portal.model.impl.UserIdMapperModelImpl;
 
@@ -52,6 +51,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -672,7 +672,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 			UserIdMapper userIdMapper = (UserIdMapper)result;
 
 			if ((userId != userIdMapper.getUserId()) ||
-					!Validator.equals(type, userIdMapper.getType())) {
+					!Objects.equals(type, userIdMapper.getType())) {
 				result = null;
 			}
 		}
@@ -925,8 +925,8 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		if (result instanceof UserIdMapper) {
 			UserIdMapper userIdMapper = (UserIdMapper)result;
 
-			if (!Validator.equals(type, userIdMapper.getType()) ||
-					!Validator.equals(externalUserId,
+			if (!Objects.equals(type, userIdMapper.getType()) ||
+					!Objects.equals(externalUserId,
 						userIdMapper.getExternalUserId())) {
 				result = null;
 			}

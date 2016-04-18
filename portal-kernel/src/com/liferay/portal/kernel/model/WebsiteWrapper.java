@@ -21,13 +21,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -626,7 +626,7 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 
 		WebsiteWrapper websiteWrapper = (WebsiteWrapper)obj;
 
-		if (Validator.equals(_website, websiteWrapper._website)) {
+		if (Objects.equals(_website, websiteWrapper._website)) {
 			return true;
 		}
 

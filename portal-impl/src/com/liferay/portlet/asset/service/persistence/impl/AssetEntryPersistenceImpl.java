@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import com.liferay.portlet.asset.model.impl.AssetEntryImpl;
 import com.liferay.portlet.asset.model.impl.AssetEntryModelImpl;
@@ -63,6 +62,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -1716,8 +1716,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetEntry assetEntry : list) {
-					if (!Validator.equals(publishDate,
-								assetEntry.getPublishDate())) {
+					if (!Objects.equals(publishDate, assetEntry.getPublishDate())) {
 						list = null;
 
 						break;
@@ -2262,7 +2261,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetEntry assetEntry : list) {
-					if (!Validator.equals(expirationDate,
+					if (!Objects.equals(expirationDate,
 								assetEntry.getExpirationDate())) {
 						list = null;
 
@@ -2803,7 +2802,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetEntry assetEntry : list) {
-					if (!Validator.equals(layoutUuid, assetEntry.getLayoutUuid())) {
+					if (!Objects.equals(layoutUuid, assetEntry.getLayoutUuid())) {
 						list = null;
 
 						break;
@@ -3325,7 +3324,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 			AssetEntry assetEntry = (AssetEntry)result;
 
 			if ((groupId != assetEntry.getGroupId()) ||
-					!Validator.equals(classUuid, assetEntry.getClassUuid())) {
+					!Objects.equals(classUuid, assetEntry.getClassUuid())) {
 				result = null;
 			}
 		}

@@ -60,6 +60,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -203,7 +204,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Group group : list) {
-					if (!Validator.equals(uuid, group.getUuid())) {
+					if (!Objects.equals(uuid, group.getUuid())) {
 						list = null;
 
 						break;
@@ -717,7 +718,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		if (result instanceof Group) {
 			Group group = (Group)result;
 
-			if (!Validator.equals(uuid, group.getUuid()) ||
+			if (!Objects.equals(uuid, group.getUuid()) ||
 					(groupId != group.getGroupId())) {
 				result = null;
 			}
@@ -1009,7 +1010,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Group group : list) {
-					if (!Validator.equals(uuid, group.getUuid()) ||
+					if (!Objects.equals(uuid, group.getUuid()) ||
 							(companyId != group.getCompanyId())) {
 						list = null;
 
@@ -3340,7 +3341,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			Group group = (Group)result;
 
 			if ((companyId != group.getCompanyId()) ||
-					!Validator.equals(groupKey, group.getGroupKey())) {
+					!Objects.equals(groupKey, group.getGroupKey())) {
 				result = null;
 			}
 		}
@@ -3594,7 +3595,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			Group group = (Group)result;
 
 			if ((companyId != group.getCompanyId()) ||
-					!Validator.equals(friendlyURL, group.getFriendlyURL())) {
+					!Objects.equals(friendlyURL, group.getFriendlyURL())) {
 				result = null;
 			}
 		}
@@ -7286,7 +7287,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 			if ((companyId != group.getCompanyId()) ||
 					(liveGroupId != group.getLiveGroupId()) ||
-					!Validator.equals(groupKey, group.getGroupKey())) {
+					!Objects.equals(groupKey, group.getGroupKey())) {
 				result = null;
 			}
 		}
@@ -8021,7 +8022,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			if ((companyId != group.getCompanyId()) ||
 					(classNameId != group.getClassNameId()) ||
 					(liveGroupId != group.getLiveGroupId()) ||
-					!Validator.equals(groupKey, group.getGroupKey())) {
+					!Objects.equals(groupKey, group.getGroupKey())) {
 				result = null;
 			}
 		}

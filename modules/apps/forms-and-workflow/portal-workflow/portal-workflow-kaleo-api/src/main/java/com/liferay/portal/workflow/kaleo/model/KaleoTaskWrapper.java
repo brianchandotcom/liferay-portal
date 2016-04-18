@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -526,7 +526,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 
 		KaleoTaskWrapper kaleoTaskWrapper = (KaleoTaskWrapper)obj;
 
-		if (Validator.equals(_kaleoTask, kaleoTaskWrapper._kaleoTask)) {
+		if (Objects.equals(_kaleoTask, kaleoTaskWrapper._kaleoTask)) {
 			return true;
 		}
 

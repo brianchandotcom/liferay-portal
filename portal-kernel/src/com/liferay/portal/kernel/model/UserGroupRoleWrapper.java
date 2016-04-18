@@ -19,12 +19,12 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -370,7 +370,7 @@ public class UserGroupRoleWrapper implements UserGroupRole,
 
 		UserGroupRoleWrapper userGroupRoleWrapper = (UserGroupRoleWrapper)obj;
 
-		if (Validator.equals(_userGroupRole, userGroupRoleWrapper._userGroupRole)) {
+		if (Objects.equals(_userGroupRole, userGroupRoleWrapper._userGroupRole)) {
 			return true;
 		}
 

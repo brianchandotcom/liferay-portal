@@ -59,6 +59,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -202,7 +203,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStructure ddmStructure : list) {
-					if (!Validator.equals(uuid, ddmStructure.getUuid())) {
+					if (!Objects.equals(uuid, ddmStructure.getUuid())) {
 						list = null;
 
 						break;
@@ -720,7 +721,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		if (result instanceof DDMStructure) {
 			DDMStructure ddmStructure = (DDMStructure)result;
 
-			if (!Validator.equals(uuid, ddmStructure.getUuid()) ||
+			if (!Objects.equals(uuid, ddmStructure.getUuid()) ||
 					(groupId != ddmStructure.getGroupId())) {
 				result = null;
 			}
@@ -1011,7 +1012,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStructure ddmStructure : list) {
-					if (!Validator.equals(uuid, ddmStructure.getUuid()) ||
+					if (!Objects.equals(uuid, ddmStructure.getUuid()) ||
 							(companyId != ddmStructure.getCompanyId())) {
 						list = null;
 
@@ -3937,7 +3938,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStructure ddmStructure : list) {
-					if (!Validator.equals(structureKey,
+					if (!Objects.equals(structureKey,
 								ddmStructure.getStructureKey())) {
 						list = null;
 
@@ -7369,8 +7370,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 			if ((groupId != ddmStructure.getGroupId()) ||
 					(classNameId != ddmStructure.getClassNameId()) ||
-					!Validator.equals(structureKey,
-						ddmStructure.getStructureKey())) {
+					!Objects.equals(structureKey, ddmStructure.getStructureKey())) {
 				result = null;
 			}
 		}
@@ -7689,8 +7689,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			if ((list != null) && !list.isEmpty()) {
 				for (DDMStructure ddmStructure : list) {
 					if ((groupId != ddmStructure.getGroupId()) ||
-							!Validator.equals(name, ddmStructure.getName()) ||
-							!Validator.equals(description,
+							!Objects.equals(name, ddmStructure.getName()) ||
+							!Objects.equals(description,
 								ddmStructure.getDescription())) {
 						list = null;
 

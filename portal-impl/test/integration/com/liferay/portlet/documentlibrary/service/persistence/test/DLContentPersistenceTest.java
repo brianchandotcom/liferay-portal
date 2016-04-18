@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
@@ -58,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -439,10 +439,10 @@ public class DLContentPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingDLContent.getRepositoryId()),
 			ReflectionTestUtil.<Long>invoke(existingDLContent,
 				"getOriginalRepositoryId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(existingDLContent.getPath(),
+		Assert.assertTrue(Objects.equals(existingDLContent.getPath(),
 				ReflectionTestUtil.invoke(existingDLContent, "getOriginalPath",
 					new Class<?>[0])));
-		Assert.assertTrue(Validator.equals(existingDLContent.getVersion(),
+		Assert.assertTrue(Objects.equals(existingDLContent.getVersion(),
 				ReflectionTestUtil.invoke(existingDLContent,
 					"getOriginalVersion", new Class<?>[0])));
 	}

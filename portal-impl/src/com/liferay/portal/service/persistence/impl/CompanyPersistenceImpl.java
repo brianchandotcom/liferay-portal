@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.CompanyImpl;
 import com.liferay.portal.model.impl.CompanyModelImpl;
 
@@ -50,6 +49,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -159,7 +159,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		if (result instanceof Company) {
 			Company company = (Company)result;
 
-			if (!Validator.equals(webId, company.getWebId())) {
+			if (!Objects.equals(webId, company.getWebId())) {
 				result = null;
 			}
 		}
@@ -390,7 +390,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		if (result instanceof Company) {
 			Company company = (Company)result;
 
-			if (!Validator.equals(mx, company.getMx())) {
+			if (!Objects.equals(mx, company.getMx())) {
 				result = null;
 			}
 		}

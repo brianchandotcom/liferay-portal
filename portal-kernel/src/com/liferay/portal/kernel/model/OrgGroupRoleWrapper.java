@@ -19,12 +19,12 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -339,7 +339,7 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 
 		OrgGroupRoleWrapper orgGroupRoleWrapper = (OrgGroupRoleWrapper)obj;
 
-		if (Validator.equals(_orgGroupRole, orgGroupRoleWrapper._orgGroupRole)) {
+		if (Objects.equals(_orgGroupRole, orgGroupRoleWrapper._orgGroupRole)) {
 			return true;
 		}
 

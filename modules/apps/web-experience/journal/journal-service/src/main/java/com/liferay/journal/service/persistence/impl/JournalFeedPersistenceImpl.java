@@ -56,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -200,7 +201,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalFeed journalFeed : list) {
-					if (!Validator.equals(uuid, journalFeed.getUuid())) {
+					if (!Objects.equals(uuid, journalFeed.getUuid())) {
 						list = null;
 
 						break;
@@ -718,7 +719,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		if (result instanceof JournalFeed) {
 			JournalFeed journalFeed = (JournalFeed)result;
 
-			if (!Validator.equals(uuid, journalFeed.getUuid()) ||
+			if (!Objects.equals(uuid, journalFeed.getUuid()) ||
 					(groupId != journalFeed.getGroupId())) {
 				result = null;
 			}
@@ -1010,7 +1011,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalFeed journalFeed : list) {
-					if (!Validator.equals(uuid, journalFeed.getUuid()) ||
+					if (!Objects.equals(uuid, journalFeed.getUuid()) ||
 							(companyId != journalFeed.getCompanyId())) {
 						list = null;
 
@@ -2418,7 +2419,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 			JournalFeed journalFeed = (JournalFeed)result;
 
 			if ((groupId != journalFeed.getGroupId()) ||
-					!Validator.equals(feedId, journalFeed.getFeedId())) {
+					!Objects.equals(feedId, journalFeed.getFeedId())) {
 				result = null;
 			}
 		}

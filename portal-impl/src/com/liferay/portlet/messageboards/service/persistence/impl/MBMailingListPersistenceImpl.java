@@ -57,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -203,7 +204,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMailingList mbMailingList : list) {
-					if (!Validator.equals(uuid, mbMailingList.getUuid())) {
+					if (!Objects.equals(uuid, mbMailingList.getUuid())) {
 						list = null;
 
 						break;
@@ -721,7 +722,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		if (result instanceof MBMailingList) {
 			MBMailingList mbMailingList = (MBMailingList)result;
 
-			if (!Validator.equals(uuid, mbMailingList.getUuid()) ||
+			if (!Objects.equals(uuid, mbMailingList.getUuid()) ||
 					(groupId != mbMailingList.getGroupId())) {
 				result = null;
 			}
@@ -1014,7 +1015,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 			if ((list != null) && !list.isEmpty()) {
 				for (MBMailingList mbMailingList : list) {
-					if (!Validator.equals(uuid, mbMailingList.getUuid()) ||
+					if (!Objects.equals(uuid, mbMailingList.getUuid()) ||
 							(companyId != mbMailingList.getCompanyId())) {
 						list = null;
 

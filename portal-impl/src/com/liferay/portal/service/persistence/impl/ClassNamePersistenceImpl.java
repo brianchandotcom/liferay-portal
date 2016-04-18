@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.model.impl.ClassNameModelImpl;
 
@@ -48,6 +47,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -157,7 +157,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		if (result instanceof ClassName) {
 			ClassName className = (ClassName)result;
 
-			if (!Validator.equals(value, className.getValue())) {
+			if (!Objects.equals(value, className.getValue())) {
 				result = null;
 			}
 		}

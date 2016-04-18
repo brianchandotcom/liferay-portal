@@ -54,6 +54,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -201,7 +202,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntryMetadata dlFileEntryMetadata : list) {
-					if (!Validator.equals(uuid, dlFileEntryMetadata.getUuid())) {
+					if (!Objects.equals(uuid, dlFileEntryMetadata.getUuid())) {
 						list = null;
 
 						break;
@@ -765,7 +766,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 
 			if ((list != null) && !list.isEmpty()) {
 				for (DLFileEntryMetadata dlFileEntryMetadata : list) {
-					if (!Validator.equals(uuid, dlFileEntryMetadata.getUuid()) ||
+					if (!Objects.equals(uuid, dlFileEntryMetadata.getUuid()) ||
 							(companyId != dlFileEntryMetadata.getCompanyId())) {
 						list = null;
 

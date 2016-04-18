@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
@@ -58,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -452,7 +452,7 @@ public class PollsChoicePersistenceTest {
 
 		PollsChoice existingPollsChoice = _persistence.findByPrimaryKey(newPollsChoice.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(existingPollsChoice.getUuid(),
+		Assert.assertTrue(Objects.equals(existingPollsChoice.getUuid(),
 				ReflectionTestUtil.invoke(existingPollsChoice,
 					"getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(Long.valueOf(existingPollsChoice.getGroupId()),
@@ -462,7 +462,7 @@ public class PollsChoicePersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingPollsChoice.getQuestionId()),
 			ReflectionTestUtil.<Long>invoke(existingPollsChoice,
 				"getOriginalQuestionId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(existingPollsChoice.getName(),
+		Assert.assertTrue(Objects.equals(existingPollsChoice.getName(),
 				ReflectionTestUtil.invoke(existingPollsChoice,
 					"getOriginalName", new Class<?>[0])));
 	}

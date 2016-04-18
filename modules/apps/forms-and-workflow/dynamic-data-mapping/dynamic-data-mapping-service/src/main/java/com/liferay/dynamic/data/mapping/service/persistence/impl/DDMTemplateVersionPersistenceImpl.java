@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -49,6 +48,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -683,7 +683,7 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 			DDMTemplateVersion ddmTemplateVersion = (DDMTemplateVersion)result;
 
 			if ((templateId != ddmTemplateVersion.getTemplateId()) ||
-					!Validator.equals(version, ddmTemplateVersion.getVersion())) {
+					!Objects.equals(version, ddmTemplateVersion.getVersion())) {
 				result = null;
 			}
 		}

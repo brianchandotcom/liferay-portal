@@ -19,12 +19,12 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -373,7 +373,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 
 		PasswordPolicyRelWrapper passwordPolicyRelWrapper = (PasswordPolicyRelWrapper)obj;
 
-		if (Validator.equals(_passwordPolicyRel,
+		if (Objects.equals(_passwordPolicyRel,
 					passwordPolicyRelWrapper._passwordPolicyRel)) {
 			return true;
 		}

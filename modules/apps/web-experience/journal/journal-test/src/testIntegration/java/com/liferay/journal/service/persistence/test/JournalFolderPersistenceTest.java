@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
@@ -58,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -543,7 +543,7 @@ public class JournalFolderPersistenceTest {
 
 		JournalFolder existingJournalFolder = _persistence.findByPrimaryKey(newJournalFolder.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(existingJournalFolder.getUuid(),
+		Assert.assertTrue(Objects.equals(existingJournalFolder.getUuid(),
 				ReflectionTestUtil.invoke(existingJournalFolder,
 					"getOriginalUuid", new Class<?>[0])));
 		Assert.assertEquals(Long.valueOf(existingJournalFolder.getGroupId()),
@@ -553,7 +553,7 @@ public class JournalFolderPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingJournalFolder.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingJournalFolder,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(existingJournalFolder.getName(),
+		Assert.assertTrue(Objects.equals(existingJournalFolder.getName(),
 				ReflectionTestUtil.invoke(existingJournalFolder,
 					"getOriginalName", new Class<?>[0])));
 
@@ -564,7 +564,7 @@ public class JournalFolderPersistenceTest {
 				existingJournalFolder.getParentFolderId()),
 			ReflectionTestUtil.<Long>invoke(existingJournalFolder,
 				"getOriginalParentFolderId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(existingJournalFolder.getName(),
+		Assert.assertTrue(Objects.equals(existingJournalFolder.getName(),
 				ReflectionTestUtil.invoke(existingJournalFolder,
 					"getOriginalName", new Class<?>[0])));
 	}

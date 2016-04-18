@@ -55,6 +55,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -207,7 +208,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CalendarNotificationTemplate calendarNotificationTemplate : list) {
-					if (!Validator.equals(uuid,
+					if (!Objects.equals(uuid,
 								calendarNotificationTemplate.getUuid())) {
 						list = null;
 
@@ -735,7 +736,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 		if (result instanceof CalendarNotificationTemplate) {
 			CalendarNotificationTemplate calendarNotificationTemplate = (CalendarNotificationTemplate)result;
 
-			if (!Validator.equals(uuid, calendarNotificationTemplate.getUuid()) ||
+			if (!Objects.equals(uuid, calendarNotificationTemplate.getUuid()) ||
 					(groupId != calendarNotificationTemplate.getGroupId())) {
 				result = null;
 			}
@@ -1033,7 +1034,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CalendarNotificationTemplate calendarNotificationTemplate : list) {
-					if (!Validator.equals(uuid,
+					if (!Objects.equals(uuid,
 								calendarNotificationTemplate.getUuid()) ||
 							(companyId != calendarNotificationTemplate.getCompanyId())) {
 						list = null;
@@ -2134,9 +2135,9 @@ public class CalendarNotificationTemplatePersistenceImpl
 			CalendarNotificationTemplate calendarNotificationTemplate = (CalendarNotificationTemplate)result;
 
 			if ((calendarId != calendarNotificationTemplate.getCalendarId()) ||
-					!Validator.equals(notificationType,
+					!Objects.equals(notificationType,
 						calendarNotificationTemplate.getNotificationType()) ||
-					!Validator.equals(notificationTemplateType,
+					!Objects.equals(notificationTemplateType,
 						calendarNotificationTemplate.getNotificationTemplateType())) {
 				result = null;
 			}

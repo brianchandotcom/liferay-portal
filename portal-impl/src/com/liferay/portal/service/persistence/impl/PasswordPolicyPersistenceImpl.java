@@ -59,6 +59,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -206,7 +207,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PasswordPolicy passwordPolicy : list) {
-					if (!Validator.equals(uuid, passwordPolicy.getUuid())) {
+					if (!Objects.equals(uuid, passwordPolicy.getUuid())) {
 						list = null;
 
 						break;
@@ -1168,7 +1169,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 			if ((list != null) && !list.isEmpty()) {
 				for (PasswordPolicy passwordPolicy : list) {
-					if (!Validator.equals(uuid, passwordPolicy.getUuid()) ||
+					if (!Objects.equals(uuid, passwordPolicy.getUuid()) ||
 							(companyId != passwordPolicy.getCompanyId())) {
 						list = null;
 
@@ -3238,7 +3239,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 			PasswordPolicy passwordPolicy = (PasswordPolicy)result;
 
 			if ((companyId != passwordPolicy.getCompanyId()) ||
-					!Validator.equals(name, passwordPolicy.getName())) {
+					!Objects.equals(name, passwordPolicy.getName())) {
 				result = null;
 			}
 		}

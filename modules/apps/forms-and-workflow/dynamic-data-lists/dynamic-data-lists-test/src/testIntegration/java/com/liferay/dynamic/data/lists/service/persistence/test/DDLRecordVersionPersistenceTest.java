@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
@@ -58,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -450,7 +450,7 @@ public class DDLRecordVersionPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingDDLRecordVersion.getRecordId()),
 			ReflectionTestUtil.<Long>invoke(existingDDLRecordVersion,
 				"getOriginalRecordId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(
+		Assert.assertTrue(Objects.equals(
 				existingDDLRecordVersion.getVersion(),
 				ReflectionTestUtil.invoke(existingDDLRecordVersion,
 					"getOriginalVersion", new Class<?>[0])));

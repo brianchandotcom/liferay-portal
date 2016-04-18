@@ -59,6 +59,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -203,7 +204,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Layout layout : list) {
-					if (!Validator.equals(uuid, layout.getUuid())) {
+					if (!Objects.equals(uuid, layout.getUuid())) {
 						list = null;
 
 						break;
@@ -734,7 +735,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		if (result instanceof Layout) {
 			Layout layout = (Layout)result;
 
-			if (!Validator.equals(uuid, layout.getUuid()) ||
+			if (!Objects.equals(uuid, layout.getUuid()) ||
 					(groupId != layout.getGroupId()) ||
 					(privateLayout != layout.getPrivateLayout())) {
 				result = null;
@@ -1041,7 +1042,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Layout layout : list) {
-					if (!Validator.equals(uuid, layout.getUuid()) ||
+					if (!Objects.equals(uuid, layout.getUuid()) ||
 							(companyId != layout.getCompanyId())) {
 						list = null;
 
@@ -3196,7 +3197,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Layout layout : list) {
-					if (!Validator.equals(layoutPrototypeUuid,
+					if (!Objects.equals(layoutPrototypeUuid,
 								layout.getLayoutPrototypeUuid())) {
 						list = null;
 
@@ -3764,7 +3765,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Layout layout : list) {
-					if (!Validator.equals(sourcePrototypeLayoutUuid,
+					if (!Objects.equals(sourcePrototypeLayoutUuid,
 								layout.getSourcePrototypeLayoutUuid())) {
 						list = null;
 
@@ -6509,7 +6510,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 				for (Layout layout : list) {
 					if ((groupId != layout.getGroupId()) ||
 							(privateLayout != layout.getPrivateLayout()) ||
-							!Validator.equals(type, layout.getType())) {
+							!Objects.equals(type, layout.getType())) {
 						list = null;
 
 						break;
@@ -7541,7 +7542,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			if ((groupId != layout.getGroupId()) ||
 					(privateLayout != layout.getPrivateLayout()) ||
-					!Validator.equals(friendlyURL, layout.getFriendlyURL())) {
+					!Objects.equals(friendlyURL, layout.getFriendlyURL())) {
 				result = null;
 			}
 		}
@@ -7827,7 +7828,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			if ((groupId != layout.getGroupId()) ||
 					(privateLayout != layout.getPrivateLayout()) ||
-					!Validator.equals(sourcePrototypeLayoutUuid,
+					!Objects.equals(sourcePrototypeLayoutUuid,
 						layout.getSourcePrototypeLayoutUuid())) {
 				result = null;
 			}

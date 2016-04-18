@@ -22,13 +22,13 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -1005,7 +1005,7 @@ public class CalendarResourceWrapper implements CalendarResource,
 
 		CalendarResourceWrapper calendarResourceWrapper = (CalendarResourceWrapper)obj;
 
-		if (Validator.equals(_calendarResource,
+		if (Objects.equals(_calendarResource,
 					calendarResourceWrapper._calendarResource)) {
 			return true;
 		}

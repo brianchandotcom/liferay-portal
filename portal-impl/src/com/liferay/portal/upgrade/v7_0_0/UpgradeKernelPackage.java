@@ -48,8 +48,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 				WildcardMode.SURROUND);
 
 			upgradeTable(
-				"ListType", "type_", getClassNames(),
-				WildcardMode.LEADING);
+				"ListType", "type_", getClassNames(), WildcardMode.LEADING);
 			upgradeTable(
 				"ResourceAction", "name", getResourceNames(),
 				WildcardMode.LEADING);

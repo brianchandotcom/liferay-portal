@@ -193,10 +193,14 @@ jdbc.counter.minimumIdle=0
 
 // Tomcat
 
+jdbc.default.initialSize=0
 jdbc.default.maxActive=20
+jdbc.default.maxIdle=0
 jdbc.default.minIdle=0
 
+jdbc.counter.initialSize=0
 jdbc.counter.maxActive=5
+jdbc.counter.maxIdle=0
 jdbc.counter.minIdle=0
 
 counter.jdbc.prefix=jdbc.counter.]]></echo>

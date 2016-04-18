@@ -125,8 +125,15 @@ $horizontal-spacing: 35px;
 	width: 100%;
 
 	@keyframes fade-down {
-		from { top: -50px; opacity: 0; }
-			to { top: 0; opacity: 1; }
+		from {
+			opacity: 0;
+			top: -50px;
+		}
+
+		to {
+			opacity: 1;
+			top: 0;
+		}
 	}
 
 	&:focus {

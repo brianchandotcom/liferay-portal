@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeNotifications;
 import com.liferay.portal.upgrade.v7_0_1.UpgradeCompany;
 import com.liferay.portal.upgrade.v7_0_1.UpgradeDocumentLibrary;
 import com.liferay.portal.upgrade.v7_0_1.UpgradeMessageBoards;
@@ -40,6 +41,7 @@ public class UpgradeProcess_7_0_1 extends UpgradeProcess {
 		upgrade(UpgradeDocumentLibrary.class);
 		upgrade(UpgradeMessageBoards.class);
 		upgrade(UpgradeModules.class);
+		upgrade(UpgradeNotifications.class);
 
 		clearIndexesCache();
 	}

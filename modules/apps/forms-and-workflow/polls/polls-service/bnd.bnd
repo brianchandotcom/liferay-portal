@@ -6,4 +6,5 @@ Export-Package:\
 	com.liferay.polls.service.configuration.configurator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Polls
+Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true

@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
 
-<service-builder package-path="com.liferay.marketplace" auto-namespace-tables="true">
+<service-builder auto-namespace-tables="true" package-path="com.liferay.marketplace">
 	<author>Ryan Park</author>
 	<namespace>Marketplace</namespace>
-	<entity name="App" uuid="true" local-service="true" remote-service="true">
+	<entity local-service="true" name="App" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="appId" type="long" primary="true" />
+		<column name="appId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -40,11 +40,11 @@
 			<finder-column name="category" />
 		</finder>
 	</entity>
-	<entity name="Module" uuid="true" local-service="true" remote-service="false">
+	<entity local-service="true" name="Module" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="moduleId" type="long" primary="true" />
+		<column name="moduleId" primary="true" type="long" />
 
 		<!-- Other fields -->
 

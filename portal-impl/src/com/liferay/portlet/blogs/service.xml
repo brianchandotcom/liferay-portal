@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder api-package-path="com.liferay.blogs.kernel" package-path="com.liferay.portlet.blogs" auto-import-default-references="false">
+<service-builder api-package-path="com.liferay.blogs.kernel" auto-import-default-references="false" package-path="com.liferay.portlet.blogs">
 	<namespace>Blogs</namespace>
-	<entity name="BlogsEntry" uuid="true" local-service="true" remote-service="true" trash-enabled="true">
+	<entity local-service="true" name="BlogsEntry" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="entryId" type="long" primary="true" />
+		<column name="entryId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -66,7 +66,7 @@
 		</finder>
 		<finder name="G_LtD" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="displayDate" comparator="&lt;" />
+			<finder-column comparator="&lt;" name="displayDate" />
 		</finder>
 		<finder name="G_S" return-type="Collection">
 			<finder-column name="groupId" />
@@ -74,7 +74,7 @@
 		</finder>
 		<finder name="G_NotS" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="status" comparator="!=" />
+			<finder-column comparator="!=" name="status" />
 		</finder>
 		<finder name="C_U" return-type="Collection">
 			<finder-column name="companyId" />
@@ -82,7 +82,7 @@
 		</finder>
 		<finder name="C_LtD" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="displayDate" comparator="&lt;" />
+			<finder-column comparator="&lt;" name="displayDate" />
 		</finder>
 		<finder name="C_S" return-type="Collection">
 			<finder-column name="companyId" />
@@ -90,36 +90,36 @@
 		</finder>
 		<finder name="C_NotS" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="status" comparator="!=" />
+			<finder-column comparator="!=" name="status" />
 		</finder>
 		<finder name="LtD_S" return-type="Collection">
-			<finder-column name="displayDate" comparator="&lt;" />
+			<finder-column comparator="&lt;" name="displayDate" />
 			<finder-column name="status" />
 		</finder>
 		<finder name="G_U_LtD" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
-			<finder-column name="displayDate" comparator="&lt;" />
+			<finder-column comparator="&lt;" name="displayDate" />
 		</finder>
 		<finder name="G_U_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
-			<finder-column name="status" arrayable-operator="OR" />
+			<finder-column arrayable-operator="OR" name="status" />
 		</finder>
 		<finder name="G_U_NotS" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
-			<finder-column name="status" comparator="!=" />
+			<finder-column comparator="!=" name="status" />
 		</finder>
 		<finder name="G_LtD_S" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="displayDate" comparator="&lt;" />
+			<finder-column comparator="&lt;" name="displayDate" />
 			<finder-column name="status" />
 		</finder>
 		<finder name="G_LtD_NotS" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="displayDate" comparator="&lt;" />
-			<finder-column name="status" comparator="!=" />
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column comparator="!=" name="status" />
 		</finder>
 		<finder name="C_U_S" return-type="Collection">
 			<finder-column name="companyId" />
@@ -129,54 +129,54 @@
 		<finder name="C_U_NotS" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="userId" />
-			<finder-column name="status" comparator="!=" />
+			<finder-column comparator="!=" name="status" />
 		</finder>
 		<finder name="C_LtD_S" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="displayDate" comparator="&lt;" />
+			<finder-column comparator="&lt;" name="displayDate" />
 			<finder-column name="status" />
 		</finder>
 		<finder name="C_LtD_NotS" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="displayDate" comparator="&lt;" />
-			<finder-column name="status" comparator="!=" />
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column comparator="!=" name="status" />
 		</finder>
 		<finder name="G_U_LtD_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
-			<finder-column name="displayDate" comparator="&lt;" />
+			<finder-column comparator="&lt;" name="displayDate" />
 			<finder-column name="status" />
 		</finder>
 		<finder name="G_U_LtD_NotS" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
-			<finder-column name="displayDate" comparator="&lt;" />
-			<finder-column name="status" comparator="!=" />
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column comparator="!=" name="status" />
 		</finder>
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Company" />
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portal" entity="Image" />
-		<reference package-path="com.liferay.portal" entity="Organization" />
-		<reference package-path="com.liferay.portal" entity="PortletPreferences" />
-		<reference package-path="com.liferay.portal" entity="Resource" />
-		<reference package-path="com.liferay.portal" entity="Subscription" />
-		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.portal" entity="WorkflowInstanceLink" />
-		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
-		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
-		<reference package-path="com.liferay.portlet.blogs" entity="BlogsStatsUser" />
-		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
-		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
-		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
+		<reference entity="Company" package-path="com.liferay.portal" />
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="Image" package-path="com.liferay.portal" />
+		<reference entity="Organization" package-path="com.liferay.portal" />
+		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
+		<reference entity="Resource" package-path="com.liferay.portal" />
+		<reference entity="Subscription" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
+		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
+		<reference entity="BlogsStatsUser" package-path="com.liferay.portlet.blogs" />
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
+		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
-	<entity name="BlogsStatsUser" local-service="true" remote-service="false">
+	<entity local-service="true" name="BlogsStatsUser" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="statsUserId" type="long" primary="true" />
+		<column name="statsUserId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -215,11 +215,11 @@
 		</finder>
 		<finder name="G_NotE" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="entryCount" comparator="!=" />
+			<finder-column comparator="!=" name="entryCount" />
 		</finder>
 		<finder name="C_NotE" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="entryCount" comparator="!=" />
+			<finder-column comparator="!=" name="entryCount" />
 		</finder>
 		<finder name="U_L" return-type="Collection">
 			<finder-column name="userId" />
@@ -228,8 +228,8 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portlet.blogs" entity="BlogsEntry" />
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="BlogsEntry" package-path="com.liferay.portlet.blogs" />
 	</entity>
 	<exceptions>
 		<exception>EntryContent</exception>

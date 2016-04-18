@@ -3,11 +3,11 @@
 
 <service-builder api-package-path="com.liferay.expando.kernel" package-path="com.liferay.portlet.expando">
 	<namespace>Expando</namespace>
-	<entity name="ExpandoColumn" local-service="true" remote-service="true">
+	<entity local-service="true" name="ExpandoColumn" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="columnId" type="long" primary="true" />
+		<column name="columnId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -34,14 +34,14 @@
 		</finder>
 		<finder name="T_N" return-type="Collection" unique="true">
 			<finder-column name="tableId" />
-			<finder-column name="name" arrayable-operator="OR" />
+			<finder-column arrayable-operator="OR" name="name" />
 		</finder>
 	</entity>
-	<entity name="ExpandoRow" local-service="true" remote-service="false">
+	<entity local-service="true" name="ExpandoRow" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="rowId" type="long" primary="true" />
+		<column name="rowId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -66,11 +66,11 @@
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
-	<entity name="ExpandoTable" local-service="true" remote-service="false" json-enabled="true">
+	<entity json-enabled="true" local-service="true" name="ExpandoTable" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="tableId" type="long" primary="true" />
+		<column name="tableId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -93,11 +93,11 @@
 			<finder-column name="name" />
 		</finder>
 	</entity>
-	<entity name="ExpandoValue" local-service="true" remote-service="true" dynamic-update-enabled="true">
+	<entity dynamic-update-enabled="true" local-service="true" name="ExpandoValue" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="valueId" type="long" primary="true" />
+		<column name="valueId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -156,7 +156,7 @@
 			<finder-column name="columnId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="T_C_D" return-type="Collection" db-index="false">
+		<finder db-index="false" name="T_C_D" return-type="Collection">
 			<finder-column name="tableId" />
 			<finder-column name="columnId" />
 			<finder-column name="data" />

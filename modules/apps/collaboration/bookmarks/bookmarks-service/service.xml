@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder package-path="com.liferay.bookmarks" auto-namespace-tables="false">
+<service-builder auto-namespace-tables="false" package-path="com.liferay.bookmarks">
 	<namespace>Bookmarks</namespace>
-	<entity name="BookmarksEntry" uuid="true" local-service="true" remote-service="true" trash-enabled="true">
+	<entity local-service="true" name="BookmarksEntry" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="entryId" type="long" primary="true" />
+		<column name="entryId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -44,7 +44,7 @@
 
 		<order by="asc">
 			<order-column name="folderId" />
-			<order-column name="name" case-sensitive="false" />
+			<order-column case-sensitive="false" name="name" />
 		</order>
 
 		<!-- Finder methods -->
@@ -54,7 +54,7 @@
 		</finder>
 		<finder name="G_F" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="folderId" arrayable-operator="OR" />
+			<finder-column arrayable-operator="OR" name="folderId" />
 		</finder>
 		<finder name="G_S" return-type="Collection">
 			<finder-column name="groupId" />
@@ -62,11 +62,11 @@
 		</finder>
 		<finder name="G_NotS" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="status" comparator="!=" />
+			<finder-column comparator="!=" name="status" />
 		</finder>
 		<finder name="C_NotS" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="status" comparator="!=" />
+			<finder-column comparator="!=" name="status" />
 		</finder>
 		<finder name="G_U_S" return-type="Collection">
 			<finder-column name="groupId" />
@@ -76,44 +76,44 @@
 		<finder name="G_U_NotS" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
-			<finder-column name="status" comparator="!=" />
+			<finder-column comparator="!=" name="status" />
 		</finder>
 		<finder name="G_F_S" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="folderId" arrayable-operator="OR" />
+			<finder-column arrayable-operator="OR" name="folderId" />
 			<finder-column name="status" />
 		</finder>
 		<finder name="G_F_NotS" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="folderId" arrayable-operator="OR" />
-			<finder-column name="status" comparator="!=" />
+			<finder-column arrayable-operator="OR" name="folderId" />
+			<finder-column comparator="!=" name="status" />
 		</finder>
 		<finder name="G_U_F_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
-			<finder-column name="folderId" arrayable-operator="OR" />
+			<finder-column arrayable-operator="OR" name="folderId" />
 			<finder-column name="status" />
 		</finder>
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portal" entity="PortletPreferences" />
-		<reference package-path="com.liferay.portal" entity="Subscription" />
-		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
-		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
-		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
-		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
-		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
-		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
-		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
-		<reference package-path="com.liferay.portlet.trash" entity="TrashVersion" />
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="PortletPreferences" package-path="com.liferay.portal" />
+		<reference entity="Subscription" package-path="com.liferay.portal" />
+		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
+		<reference entity="SocialActivity" package-path="com.liferay.portlet.social" />
+		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
+		<reference entity="TrashVersion" package-path="com.liferay.portlet.trash" />
 	</entity>
-	<entity name="BookmarksFolder" uuid="true" local-service="true" remote-service="true" trash-enabled="true">
+	<entity local-service="true" name="BookmarksFolder" remote-service="true" trash-enabled="true" uuid="true">
 
 		<!-- PK fields -->
 
-		<column name="folderId" type="long" primary="true" container-model="true" />
+		<column container-model="true" name="folderId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -133,7 +133,7 @@
 
 		<!-- Other fields -->
 
-		<column name="parentFolderId" type="long" parent-container-model="true" />
+		<column name="parentFolderId" parent-container-model="true" type="long" />
 		<column name="treePath" type="String" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
@@ -147,7 +147,7 @@
 
 		<order by="asc">
 			<order-column name="parentFolderId" />
-			<order-column name="name" case-sensitive="false" />
+			<order-column case-sensitive="false" name="name" />
 		</order>
 
 		<!-- Finder methods -->
@@ -164,7 +164,7 @@
 		</finder>
 		<finder name="C_NotS" return-type="Collection">
 			<finder-column name="companyId" />
-			<finder-column name="status" comparator="!=" />
+			<finder-column comparator="!=" name="status" />
 		</finder>
 		<finder name="G_P_S" return-type="Collection">
 			<finder-column name="groupId" />
@@ -174,26 +174,26 @@
 		<finder name="G_P_NotS" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="parentFolderId" />
-			<finder-column name="status" comparator="!=" />
+			<finder-column comparator="!=" name="status" />
 		</finder>
-		<finder name="F_C_P_NotS" return-type="Collection" db-index="false">
-			<finder-column name="folderId" comparator="&gt;" />
+		<finder db-index="false" name="F_C_P_NotS" return-type="Collection">
+			<finder-column comparator="&gt;" name="folderId" />
 			<finder-column name="companyId" />
 			<finder-column name="parentFolderId" />
-			<finder-column name="status" comparator="!=" />
+			<finder-column comparator="!=" name="status" />
 		</finder>
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portal" entity="Subscription" />
-		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
-		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
-		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
-		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
-		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
-		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
-		<reference package-path="com.liferay.portlet.trash" entity="TrashVersion" />
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="Subscription" package-path="com.liferay.portal" />
+		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
+		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
+		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
+		<reference entity="SocialActivity" package-path="com.liferay.portlet.social" />
+		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
+		<reference entity="TrashVersion" package-path="com.liferay.portlet.trash" />
 	</entity>
 	<exceptions>
 		<exception>EntryURL</exception>

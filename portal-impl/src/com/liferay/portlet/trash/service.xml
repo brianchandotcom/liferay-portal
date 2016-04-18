@@ -3,11 +3,11 @@
 
 <service-builder api-package-path="com.liferay.trash.kernel" package-path="com.liferay.portlet.trash">
 	<namespace>Trash</namespace>
-	<entity name="TrashEntry" local-service="true" remote-service="true">
+	<entity local-service="true" name="TrashEntry" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="entryId" type="long" primary="true" />
+		<column name="entryId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -44,7 +44,7 @@
 		</finder>
 		<finder name="G_LtCD" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="createDate" comparator="&lt;" />
+			<finder-column comparator="&lt;" name="createDate" />
 		</finder>
 		<finder name="G_C" return-type="Collection">
 			<finder-column name="groupId" />
@@ -57,14 +57,14 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Group" />
-		<reference package-path="com.liferay.portal" entity="SystemEvent" />
+		<reference entity="Group" package-path="com.liferay.portal" />
+		<reference entity="SystemEvent" package-path="com.liferay.portal" />
 	</entity>
-	<entity name="TrashVersion" local-service="true" remote-service="false">
+	<entity local-service="true" name="TrashVersion" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="versionId" type="long" primary="true" />
+		<column name="versionId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 

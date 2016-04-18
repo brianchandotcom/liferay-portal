@@ -128,17 +128,17 @@ public class DocumentImpl implements Document {
 				_INDEX_DATE_FORMAT_PATTERN);
 		}
 
-		String[] dates = new String[values.length];
+		String[] datesString = new String[values.length];
 		Long[] datesTime = new Long[values.length];
 
 		for (int i = 0; i < values.length; i++) {
-			dates[i] = _dateFormat.format(values[i]);
+			datesString[i] = _dateFormat.format(values[i]);
 			datesTime[i] = values[i].getTime();
 		}
 
 		createSortableNumericField(name, false, datesTime);
 
-		Field field = createField(name, dates);
+		Field field = createField(name, datesString);
 
 		field.setDates(values);
 	}
@@ -158,17 +158,17 @@ public class DocumentImpl implements Document {
 			return;
 		}
 
-		String[] dates = new String[values.length];
+		String[] datesString = new String[values.length];
 		Long[] datesTime = new Long[values.length];
 
 		for (int i = 0; i < values.length; i++) {
-			dates[i] = _dateFormat.format(values[i]);
+			datesString[i] = _dateFormat.format(values[i]);
 			datesTime[i] = values[i].getTime();
 		}
 
 		createSortableNumericField(name, true, datesTime);
 
-		addKeyword(name, dates);
+		addKeyword(name, datesString);
 	}
 
 	@Override

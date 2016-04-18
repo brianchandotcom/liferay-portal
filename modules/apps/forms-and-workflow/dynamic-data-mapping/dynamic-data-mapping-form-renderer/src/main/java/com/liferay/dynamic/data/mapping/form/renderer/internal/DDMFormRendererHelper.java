@@ -323,8 +323,12 @@ public class DDMFormRendererHelper {
 		StringBundler sb = new StringBundler(
 			nestedDDMFormFieldValuesMap.size());
 
-		for (List<DDMFormFieldValue> nestedDDMFormFieldValues :
-				nestedDDMFormFieldValuesMap.values()) {
+		for (DDMFormFieldValue nestedDDMFormFieldValue :
+				ddmFormFieldValue.getNestedDDMFormFieldValues()) {
+
+			List<DDMFormFieldValue> nestedDDMFormFieldValues =
+				nestedDDMFormFieldValuesMap.get(
+					nestedDDMFormFieldValue.getName());
 
 			sb.append(
 				renderDDMFormFieldValues(

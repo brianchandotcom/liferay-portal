@@ -2,8 +2,17 @@ Bundle-Name: Liferay Polls Service
 Bundle-SymbolicName: com.liferay.polls.service
 Bundle-Version: 1.0.4
 Export-Package:\
+	com.liferay.polls.configuration,\
 	com.liferay.polls.lar,\
-	com.liferay.polls.service.configuration.configurator
+	com.liferay.polls.model.impl,\
+	com.liferay.polls.service.base,\
+	com.liferay.polls.service.http,\
+	com.liferay.polls.service.impl,\
+	com.liferay.polls.upgrade,\
+	com.liferay.polls.upgrade.v1_0_0,\
+	com.liferay.polls.verify,\
+	com.liferay.polls.verify.model
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Polls
+Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true

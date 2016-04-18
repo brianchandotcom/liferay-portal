@@ -53,7 +53,7 @@ public class BuildDeploymentHelperTask extends JavaExec {
 	}
 
 	public BuildDeploymentHelperTask deploymentFiles(
-		Object ... deploymentFiles) {
+		Object... deploymentFiles) {
 
 		return deploymentFiles(Arrays.asList(deploymentFiles));
 	}
@@ -108,7 +108,7 @@ public class BuildDeploymentHelperTask extends JavaExec {
 		deploymentFiles(deploymentFiles);
 	}
 
-	public void setDeploymentFiles(Object ... deploymentFiles) {
+	public void setDeploymentFiles(Object... deploymentFiles) {
 		setDeploymentFiles(Arrays.asList(deploymentFiles));
 	}
 

@@ -180,7 +180,7 @@ public class BndProjectBuilderImpl implements BndProjectBuilder {
 	}
 
 	protected Properties buildProperties(
-			Processor processor, File propertiesFile, File ... extraFiles)
+			Processor processor, File propertiesFile, File... extraFiles)
 		throws IOException {
 
 		Properties properties = new Properties();

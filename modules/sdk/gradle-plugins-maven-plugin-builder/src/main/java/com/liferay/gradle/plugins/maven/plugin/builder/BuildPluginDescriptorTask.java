@@ -138,7 +138,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	}
 
 	public BuildPluginDescriptorTask forcedExclusions(
-		String ... forcedExclusions) {
+		String... forcedExclusions) {
 
 		return forcedExclusions(Arrays.asList(forcedExclusions));
 	}
@@ -236,7 +236,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		forcedExclusions(forcedExclusions);
 	}
 
-	public void setForcedExclusions(String ... forcedExclusions) {
+	public void setForcedExclusions(String... forcedExclusions) {
 		setForcedExclusions(Arrays.asList(forcedExclusions));
 	}
 

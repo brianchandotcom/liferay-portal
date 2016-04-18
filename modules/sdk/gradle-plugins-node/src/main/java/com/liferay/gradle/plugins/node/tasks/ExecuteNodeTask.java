@@ -42,7 +42,7 @@ public class ExecuteNodeTask extends DefaultTask {
 		return this;
 	}
 
-	public ExecuteNodeTask args(Object ... args) {
+	public ExecuteNodeTask args(Object... args) {
 		_nodeExecutor.args(args);
 
 		return this;
@@ -77,7 +77,7 @@ public class ExecuteNodeTask extends DefaultTask {
 		_nodeExecutor.setArgs(args);
 	}
 
-	public void setArgs(Object ... args) {
+	public void setArgs(Object... args) {
 		_nodeExecutor.setArgs(args);
 	}
 

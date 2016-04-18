@@ -169,7 +169,7 @@ public class BuildChangeLogTask extends DefaultTask {
 		ticketIdPrefixes(ticketIdPrefixes);
 	}
 
-	public void setTicketIdPrefixes(String ... ticketIdPrefixes) {
+	public void setTicketIdPrefixes(String... ticketIdPrefixes) {
 		setTicketIdPrefixes(Arrays.asList(ticketIdPrefixes));
 	}
 
@@ -181,7 +181,7 @@ public class BuildChangeLogTask extends DefaultTask {
 		return this;
 	}
 
-	public BuildChangeLogTask ticketIdPrefixes(String ... ticketIdPrefixes) {
+	public BuildChangeLogTask ticketIdPrefixes(String... ticketIdPrefixes) {
 		return ticketIdPrefixes(Arrays.asList(ticketIdPrefixes));
 	}
 

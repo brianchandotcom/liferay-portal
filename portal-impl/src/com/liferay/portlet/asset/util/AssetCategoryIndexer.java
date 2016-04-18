@@ -225,7 +225,6 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 
 				@Override
 				public void performAction(AssetCategory category) {
-
 					try {
 						Document document = getDocument(category);
 

@@ -200,7 +200,7 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 		soyDependency(soyDependencies);
 	}
 
-	public void setSoyDependencies(Object ... soyDependencies) {
+	public void setSoyDependencies(Object... soyDependencies) {
 		setSoyDependencies(Arrays.asList(soyDependencies));
 	}
 
@@ -214,7 +214,7 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 		soySrcInclude(soySrcIncludes);
 	}
 
-	public void setSoySrcIncludes(Object ... soySrcIncludes) {
+	public void setSoySrcIncludes(Object... soySrcIncludes) {
 		setSoySrcIncludes(Arrays.asList(soySrcIncludes));
 	}
 
@@ -224,7 +224,7 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 		srcInclude(srcIncludes);
 	}
 
-	public void setSrcIncludes(Object ... srcIncludes) {
+	public void setSrcIncludes(Object... srcIncludes) {
 		setSrcIncludes(Arrays.asList(srcIncludes));
 	}
 
@@ -234,7 +234,7 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 		return this;
 	}
 
-	public TranspileJSTask soyDependency(Object ... soyDependencies) {
+	public TranspileJSTask soyDependency(Object... soyDependencies) {
 		return soyDependency(Arrays.asList(soyDependencies));
 	}
 
@@ -244,7 +244,7 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 		return this;
 	}
 
-	public TranspileJSTask soySrcInclude(Object ... soySrcIncludes) {
+	public TranspileJSTask soySrcInclude(Object... soySrcIncludes) {
 		return soySrcInclude(Arrays.asList(soySrcIncludes));
 	}
 
@@ -254,7 +254,7 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 		return this;
 	}
 
-	public TranspileJSTask srcInclude(Object ... srcIncludes) {
+	public TranspileJSTask srcInclude(Object... srcIncludes) {
 		return srcInclude(Arrays.asList(srcIncludes));
 	}
 

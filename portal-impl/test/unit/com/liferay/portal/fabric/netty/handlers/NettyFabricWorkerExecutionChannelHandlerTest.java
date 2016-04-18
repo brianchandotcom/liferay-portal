@@ -400,15 +400,15 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 			new URLStreamHandler() {
 
 				@Override
+				protected URLConnection openConnection(URL url) {
+					throw new UnsupportedOperationException();
+				}
+
+				@Override
 				protected void parseURL(
 					URL url, String spec, int start, int limit) {
 
 					ReflectionUtil.throwException(malformedURLException);
-				}
-
-				@Override
-				protected URLConnection openConnection(URL url) {
-					throw new UnsupportedOperationException();
 				}
 
 			});

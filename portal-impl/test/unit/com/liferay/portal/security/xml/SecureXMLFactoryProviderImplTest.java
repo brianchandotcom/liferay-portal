@@ -196,7 +196,7 @@ public class SecureXMLFactoryProviderImplTest {
 							}
 						}
 
-						private int _contentLenght = 0;
+						private int _contentLenght;
 
 					});
 

@@ -29,7 +29,7 @@ import org.osgi.framework.Bundle;
  */
 public class JspBundleClassloader extends URLClassLoader {
 
-	public JspBundleClassloader(Bundle ... bundles) {
+	public JspBundleClassloader(Bundle... bundles) {
 		super(new URL[0]);
 
 		if (bundles.length == 0) {

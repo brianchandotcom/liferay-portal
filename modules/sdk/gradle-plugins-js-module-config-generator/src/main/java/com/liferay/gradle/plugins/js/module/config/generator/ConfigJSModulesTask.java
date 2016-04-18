@@ -94,7 +94,7 @@ public class ConfigJSModulesTask
 	}
 
 	@Override
-	public ConfigJSModulesTask exclude(String ... excludes) {
+	public ConfigJSModulesTask exclude(String... excludes) {
 		_patternFilterable.exclude(excludes);
 
 		return this;
@@ -219,7 +219,7 @@ public class ConfigJSModulesTask
 	}
 
 	@Override
-	public ConfigJSModulesTask include(String ... includes) {
+	public ConfigJSModulesTask include(String... includes) {
 		_patternFilterable.include(includes);
 
 		return this;

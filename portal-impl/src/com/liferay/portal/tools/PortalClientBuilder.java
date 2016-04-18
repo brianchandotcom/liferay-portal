@@ -122,14 +122,14 @@ public class PortalClientBuilder {
 				new ResourceLoader() {
 
 					@Override
-					public Resource getResource(String name) {
-						return new FileSystemResource(
-							new File(docRootDir, name));
+					public ClassLoader getClassLoader() {
+						return AxisServlet.class.getClassLoader();
 					}
 
 					@Override
-					public ClassLoader getClassLoader() {
-						return AxisServlet.class.getClassLoader();
+					public Resource getResource(String name) {
+						return new FileSystemResource(
+							new File(docRootDir, name));
 					}
 
 				}),

@@ -995,7 +995,11 @@ public class ArrayUtilTest {
 
 			@Override
 			public boolean filter(Double d) {
-				return d >= 1.1;
+				if (d >= 1.1) {
+					return true;
+				}
+
+				return false;
 			}
 
 		};
@@ -1005,7 +1009,11 @@ public class ArrayUtilTest {
 
 			@Override
 			public boolean filter(Integer i) {
-				return i >= 5;
+				if (i >= 5) {
+					return true;
+				}
+
+				return false;
 			}
 
 		};
@@ -1015,7 +1023,11 @@ public class ArrayUtilTest {
 
 			@Override
 			public boolean filter(User user) {
-				return user.getAge() > 18;
+				if (user.getAge() > 18) {
+					return true;
+				}
+
+				return false;
 			}
 
 		};

@@ -52,7 +52,7 @@ import java.util.Map;
  */
 public class VerifyResourcePermissions extends VerifyProcess {
 
-	public void verify(VerifiableResourcedModel ... verifiableResourcedModels)
+	public void verify(VerifiableResourcedModel... verifiableResourcedModels)
 		throws Exception {
 
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();

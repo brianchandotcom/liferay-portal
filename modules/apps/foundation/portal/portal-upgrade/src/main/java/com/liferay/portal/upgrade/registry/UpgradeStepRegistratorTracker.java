@@ -44,7 +44,7 @@ public class UpgradeStepRegistratorTracker {
 	public static List<ServiceRegistration<UpgradeStep>> register(
 		BundleContext bundleContext, String bundleSymbolicName,
 		String fromSchemaVersionString, String toSchemaVersionString,
-		UpgradeStep ... upgradeSteps) {
+		UpgradeStep... upgradeSteps) {
 
 		List<ServiceRegistration<UpgradeStep>> serviceRegistrations =
 			new ArrayList<>();

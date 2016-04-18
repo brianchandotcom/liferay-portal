@@ -37,7 +37,7 @@ import org.gradle.api.artifacts.ResolvedModuleVersion;
 public class RenameDependencyClosure extends Closure<String> {
 
 	public RenameDependencyClosure(
-		Project project, String ... configurationNames) {
+		Project project, String... configurationNames) {
 
 		super(null);
 

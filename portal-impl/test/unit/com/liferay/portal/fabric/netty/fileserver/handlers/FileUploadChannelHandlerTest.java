@@ -201,15 +201,15 @@ public class FileUploadChannelHandlerTest {
 			new FileChannelWrapper(fileUploadChannelHandler.fileChannel) {
 
 				@Override
+				public long position() {
+					return unsyncByteArrayOutputStream.size();
+				}
+
+				@Override
 				public int write(ByteBuffer byteBuffer) {
 					unsyncByteArrayOutputStream.write(byteBuffer.get());
 
 					return 1;
-				}
-
-				@Override
-				public long position() {
-					return unsyncByteArrayOutputStream.size();
 				}
 
 			});

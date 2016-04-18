@@ -137,7 +137,7 @@ public abstract class TestOrderHelper {
 			DDMFormFieldType.TEXT);
 	}
 
-	protected static String[] toJsonArrays(String ... strings) {
+	protected static String[] toJsonArrays(String... strings) {
 		String[] jsonArrays = new String[strings.length];
 
 		for (int i = 0; i < strings.length; i++) {

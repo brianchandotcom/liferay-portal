@@ -28,7 +28,7 @@ import org.osgi.framework.Bundle;
  */
 public class BundleResolverClassLoader extends ClassLoader {
 
-	public BundleResolverClassLoader(Bundle ... bundles) {
+	public BundleResolverClassLoader(Bundle... bundles) {
 		if (bundles.length == 0) {
 			throw new IllegalArgumentException(
 				"At least one bundle is required");

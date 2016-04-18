@@ -476,7 +476,7 @@ public class WebDriverHelper {
 						return _webDriver.getCurrentUrl();
 					}
 
-					private Callable<String> init(WebDriver webDriver)
+					private Callable<String> _init(WebDriver webDriver)
 						throws Exception {
 
 						_webDriver = webDriver;
@@ -486,7 +486,7 @@ public class WebDriverHelper {
 
 					private WebDriver _webDriver;
 
-				}.init(webDriver));
+				}._init(webDriver));
 
 			Thread thread = new Thread(futureTask);
 

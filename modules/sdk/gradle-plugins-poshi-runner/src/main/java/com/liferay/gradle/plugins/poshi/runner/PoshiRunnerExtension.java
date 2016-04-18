@@ -93,7 +93,7 @@ public class PoshiRunnerExtension {
 		testNames(testNames);
 	}
 
-	public void setTestNames(Object ... testNames) {
+	public void setTestNames(Object... testNames) {
 		setTestNames(Arrays.asList(testNames));
 	}
 
@@ -105,7 +105,7 @@ public class PoshiRunnerExtension {
 		GUtil.addToCollection(_testNames, testNames);
 	}
 
-	public void testNames(Object ... testNames) {
+	public void testNames(Object... testNames) {
 		testNames(Arrays.asList(testNames));
 	}
 

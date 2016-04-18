@@ -43,7 +43,7 @@ public class WhipTaskExtension {
 		return this;
 	}
 
-	public WhipTaskExtension excludes(Object ... excludes) {
+	public WhipTaskExtension excludes(Object... excludes) {
 		return excludes(Arrays.asList(excludes));
 	}
 
@@ -69,7 +69,7 @@ public class WhipTaskExtension {
 		return this;
 	}
 
-	public WhipTaskExtension includes(Object ... includes) {
+	public WhipTaskExtension includes(Object... includes) {
 		return includes(Arrays.asList(includes));
 	}
 

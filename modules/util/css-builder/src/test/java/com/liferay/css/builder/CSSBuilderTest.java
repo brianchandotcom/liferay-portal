@@ -58,8 +58,8 @@ public class CSSBuilderTest {
 			new SimpleFileVisitor<Path>() {
 
 				@Override
-				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
+				public FileVisitResult postVisitDirectory(
+						Path path, IOException ioe)
 					throws IOException {
 
 					Files.delete(path);
@@ -68,8 +68,8 @@ public class CSSBuilderTest {
 				}
 
 				@Override
-				public FileVisitResult postVisitDirectory(
-						Path path, IOException ioe)
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
 					Files.delete(path);

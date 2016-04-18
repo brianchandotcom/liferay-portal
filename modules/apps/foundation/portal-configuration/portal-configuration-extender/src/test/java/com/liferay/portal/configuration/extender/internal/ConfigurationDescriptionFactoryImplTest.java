@@ -85,13 +85,13 @@ public class ConfigurationDescriptionFactoryImplTest {
 				new NamedConfigurationContent() {
 
 					@Override
-					public String getName() {
-						return "aName";
+					public InputStream getInputStream() {
+						return new ByteArrayInputStream(new byte[0]);
 					}
 
 					@Override
-					public InputStream getInputStream() {
-						return new ByteArrayInputStream(new byte[0]);
+					public String getName() {
+						return "aName";
 					}
 
 				});

@@ -85,7 +85,7 @@ public class FormatJavadocTask extends JavaExec {
 		return this;
 	}
 
-	public FormatJavadocTask limits(Object ... limits) {
+	public FormatJavadocTask limits(Object... limits) {
 		return limits(Arrays.asList(limits));
 	}
 
@@ -109,7 +109,7 @@ public class FormatJavadocTask extends JavaExec {
 		limits(limits);
 	}
 
-	public void setLimits(Object ... limits) {
+	public void setLimits(Object... limits) {
 		setLimits(Arrays.asList(limits));
 	}
 

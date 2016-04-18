@@ -1019,9 +1019,42 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent = formatJavaTerms(
 				className, packagePath, file, fileName, absolutePath,
 				newContent, javaClassContent, javaClassLineCount,
-				_checkJavaFieldTypesExcludes,
+				StringPool.BLANK, _checkJavaFieldTypesExcludes,
 				_javaTermAccessLevelModifierExcludes, _javaTermSortExcludes,
 				_testAnnotationsExcludes);
+		}
+
+		matcher = _anonymousClassPattern.matcher(newContent);
+
+		while (matcher.find()) {
+			if (getLevel(matcher.group()) != 0) {
+				continue;
+			}
+
+			int x = matcher.start() + 1;
+			int y = matcher.end();
+
+			while (true) {
+				String javaClassContent = newContent.substring(x, y);
+
+				if (getLevel(javaClassContent, "{", "}") != 0) {
+					y++;
+
+					continue;
+				}
+
+				int javaClassLineCount = getLineCount(
+					newContent, matcher.start() + 1);
+
+				newContent = formatJavaTerms(
+					className, packagePath, file, fileName, absolutePath,
+					newContent, javaClassContent, javaClassLineCount,
+					matcher.group(1), _checkJavaFieldTypesExcludes,
+					_javaTermAccessLevelModifierExcludes, _javaTermSortExcludes,
+					_testAnnotationsExcludes);
+
+				break;
+			}
 		}
 
 		newContent = formatJava(fileName, absolutePath, newContent);
@@ -4200,6 +4233,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private boolean _allowUseServiceUtilInServiceImpl;
 	private final Pattern _annotationMetaTypePattern = Pattern.compile(
 		"\\s(name|description) = \"%");
+	private final Pattern _anonymousClassPattern = Pattern.compile(
+		"\n(\t+)new .*\\) \\{\n\n");
 	private final Pattern _arrayPattern = Pattern.compile(
 		"(\n\t*.* =) (new \\w*\\[\\] \\{)\n(\t*)(.+)\n\t*(\\};)\n");
 	private final Pattern _assertEqualsPattern = Pattern.compile(

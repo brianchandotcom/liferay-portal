@@ -128,7 +128,7 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 		return this;
 	}
 
-	public BuildThumbnailsTask imageDirs(Object ... imageDirs) {
+	public BuildThumbnailsTask imageDirs(Object... imageDirs) {
 		return imageDirs(Arrays.asList(imageDirs));
 	}
 

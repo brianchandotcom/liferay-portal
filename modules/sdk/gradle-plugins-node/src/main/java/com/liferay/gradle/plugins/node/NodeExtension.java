@@ -162,7 +162,7 @@ public class NodeExtension {
 		return this;
 	}
 
-	public NodeExtension npmArgs(Object ... npmArgs) {
+	public NodeExtension npmArgs(Object... npmArgs) {
 		return npmArgs(Arrays.asList(npmArgs));
 	}
 
@@ -188,7 +188,7 @@ public class NodeExtension {
 		npmArgs(npmArgs);
 	}
 
-	public void setNpmArgs(Object ... npmArgs) {
+	public void setNpmArgs(Object... npmArgs) {
 		setNpmArgs(Arrays.asList(npmArgs));
 	}
 

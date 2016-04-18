@@ -269,12 +269,12 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			new ServiceDependencyListener() {
 
 				@Override
-				public void destroy() {
+				public void dependenciesFulfilled() {
+					_serviceWrapperRegistry = new ServiceWrapperRegistry();
 				}
 
 				@Override
-				public void dependenciesFulfilled() {
-					_serviceWrapperRegistry = new ServiceWrapperRegistry();
+				public void destroy() {
 				}
 
 			});

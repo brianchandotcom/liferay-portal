@@ -485,7 +485,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			newContent = formatJavaTerms(
 				javaClassName, null, file, fileName, absolutePath, newContent,
-				javaClassContent, javaClassLineCount, null, null, null, null);
+				javaClassContent, javaClassLineCount, StringPool.BLANK, null,
+				null, null, null);
 		}
 
 		JSPSourceTabCalculator jspSourceTabCalculator =

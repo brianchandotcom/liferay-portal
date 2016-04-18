@@ -83,6 +83,10 @@
 		> ul.form-navigator.multi-step-progress-bar {
 			display: block;
 			padding-top: 10px;
+
+			.tab-label {
+				outline-width: 0;
+			}
 		}
 	}
 

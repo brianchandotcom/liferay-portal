@@ -65,10 +65,19 @@
 			<arg value="-q" />
 		</exec>
 
-		<fail message="Stale artifacts detected:${line.separator}${stale.artifacts.output}">
+		<loadfile property="module.stale.artifacts">
+			<filterchain>
+				<linecontains>
+					<contains value="${app.name}" />
+				</linecontains>
+			</filterchain>
+			<propertyresource name="stale.artifacts.output" />
+		</loadfile>
+
+		<fail message="Stale artifacts detected:${line.separator}${module.stale.artifacts}">
 			<condition>
 				<not>
-					<equals arg1="${stale.artifacts.output}" arg2="" />
+					<equals arg1="${module.stale.artifacts}" arg2="" />
 				</not>
 			</condition>
 		</fail>

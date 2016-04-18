@@ -144,6 +144,34 @@ public class DocumentImpl implements Document {
 	}
 
 	@Override
+	public void addDateSortable(String name, Date value) {
+		if (value == null) {
+			return;
+		}
+
+		addDateSortable(name, new Date[] {value});
+	}
+
+	@Override
+	public void addDateSortable(String name, Date[] values) {
+		if (values == null) {
+			return;
+		}
+
+		String[] dates = new String[values.length];
+		Long[] datesTime = new Long[values.length];
+
+		for (int i = 0; i < values.length; i++) {
+			dates[i] = _dateFormat.format(values[i]);
+			datesTime[i] = values[i].getTime();
+		}
+
+		createSortableNumericField(name, true, datesTime);
+
+		addKeyword(name, dates);
+	}
+
+	@Override
 	public void addFile(String name, byte[] bytes, String fileExt) {
 		InputStream is = new UnsyncByteArrayInputStream(bytes);
 

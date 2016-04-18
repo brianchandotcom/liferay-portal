@@ -270,6 +270,21 @@
 		function(event) {
 			var tab = event.newVal;
 
+			var tabIndex = tabview.indexOf(tab);
+
+			tabview.each(
+				function(item, index) {
+					var node = tabview.item(index).get('boundingBox');
+
+					if (tabview.indexOf(item) < tabIndex) {
+						node.addClass('complete');
+					}
+					else {
+						node.removeClass('complete');
+					}
+				}
+			);
+
 			var boundingBox = tab.get('boundingBox');
 
 			var sectionId = boundingBox.getData('sectionId');

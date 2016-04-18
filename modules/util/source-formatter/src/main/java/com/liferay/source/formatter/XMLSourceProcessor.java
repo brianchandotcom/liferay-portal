@@ -335,7 +335,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			formatResourceActionXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("/service.xml")) {
-			formatServiceXML(fileName, absolutePath, newContent);
+			newContent = formatServiceXML(fileName, absolutePath, newContent);
 		}
 		else if (fileName.endsWith("/schema.xml") &&
 				 absolutePath.contains("solr")) {
@@ -881,13 +881,15 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			new ResourceActionPortletResourceElementComparator());
 	}
 
-	protected void formatServiceXML(
+	protected String formatServiceXML(
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		Document document = readXML(content);
 
 		Element rootElement = document.getRootElement();
+
+		sortAttributes(rootElement, true);
 
 		List<Element> entityElements = rootElement.elements("entity");
 
@@ -914,6 +916,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkOrder(
 			fileName, rootElement.element("exceptions"), "exception", null,
 			new ServiceExceptionElementComparator());
+
+		return Dom4jUtil.toString(document);
 	}
 
 	protected void formatSolrSchema(String fileName, String content)

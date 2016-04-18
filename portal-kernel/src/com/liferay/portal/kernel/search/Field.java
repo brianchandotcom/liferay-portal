@@ -333,6 +333,16 @@ public class Field implements Serializable {
 
 	public void setGeoLocationPoint(GeoLocationPoint geoLocationPoint) {
 		_geoLocationPoint = geoLocationPoint;
+
+		if (geoLocationPoint == null) {
+			_values = null;
+
+			return;
+		}
+
+		setValue(
+			"lat:" + geoLocationPoint.getLatitude() + ",lon:" +
+				geoLocationPoint.getLongitude());
 	}
 
 	public void setLocalizedValues(Map<Locale, String> localizedValues) {

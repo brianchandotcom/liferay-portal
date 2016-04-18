@@ -173,7 +173,12 @@ public class DocumentImpl implements Document {
 
 	@Override
 	public void addGeoLocation(double latitude, double longitude) {
-		Field field = new Field(Field.GEO_LOCATION);
+		addGeoLocation(Field.GEO_LOCATION, latitude, longitude);
+	}
+
+	@Override
+	public void addGeoLocation(String name, double latitude, double longitude) {
+		Field field = new Field(name);
 
 		field.setGeoLocationPoint(new GeoLocationPoint(latitude, longitude));
 

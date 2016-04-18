@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,6 +33,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Bruno Farache
  */
+@ProviderType
 public interface Document extends Cloneable, Serializable {
 
 	public void add(Field field);
@@ -53,6 +56,8 @@ public interface Document extends Cloneable, Serializable {
 		throws IOException;
 
 	public void addGeoLocation(double latitude, double longitude);
+
+	public void addGeoLocation(String name, double latitude, double longitude);
 
 	public void addKeyword(String name, boolean value);
 

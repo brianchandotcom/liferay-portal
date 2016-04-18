@@ -21,6 +21,7 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.convert.documentlibrary.FileSystemStoreRootDirException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -36,6 +37,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -223,6 +226,38 @@ public class FileSystemStore extends BaseStore {
 		}
 
 		return fileNameVersionFile;
+	}
+
+	@Override
+	public byte[] getFileAsBytes(
+			long companyId, long repositoryId, String fileName)
+		throws PortalException {
+
+		try {
+			File file = getFile(companyId, repositoryId, fileName);
+
+			return Files.readAllBytes(file.toPath());
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+	}
+
+	@Override
+	public byte[] getFileAsBytes(
+			long companyId, long repositoryId, String fileName,
+			String versionLabel)
+		throws PortalException {
+
+		try {
+			File file = getFile(
+				companyId, repositoryId, fileName, versionLabel);
+
+			return Files.readAllBytes(file.toPath());
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
 	}
 
 	@Override
@@ -475,27 +510,23 @@ public class FileSystemStore extends BaseStore {
 	protected void deleteEmptyAncestors(
 		long companyId, long repositoryId, File file) {
 
-		String[] fileNames = file.list();
+		while (file != null) {
+			if (!file.delete()) {
+				return;
+			}
 
-		if ((fileNames == null) || (fileNames.length > 0)) {
-			return;
-		}
+			String fileName = file.getName();
 
-		String fileName = file.getName();
+			if ((repositoryId > 0) &&
+				fileName.equals(String.valueOf(repositoryId))) {
 
-		if ((repositoryId > 0) &&
-			fileName.equals(String.valueOf(repositoryId))) {
+				RepositoryDirKey repositoryDirKey = new RepositoryDirKey(
+					companyId, repositoryId);
 
-			RepositoryDirKey repositoryDirKey = new RepositoryDirKey(
-				companyId, repositoryId);
+				_repositoryDirs.remove(repositoryDirKey);
+			}
 
-			_repositoryDirs.remove(repositoryDirKey);
-		}
-
-		File parentFile = file.getParentFile();
-
-		if (file.delete() && (parentFile != null)) {
-			deleteEmptyAncestors(companyId, repositoryId, parentFile);
+			file = file.getParentFile();
 		}
 	}
 

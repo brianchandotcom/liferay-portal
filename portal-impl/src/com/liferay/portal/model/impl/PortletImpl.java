@@ -77,6 +77,7 @@ import com.liferay.social.kernel.model.SocialRequestInterpreter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -87,8 +88,6 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
@@ -2558,13 +2557,13 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public boolean isReady() {
-		Boolean ready = _readyMap.get(getRootPortletId());
+		Readiness readiness = _readinessMap.get(getRootPortletId());
 
-		if (ready == null) {
+		if (readiness == null) {
 			return true;
 		}
 		else {
-			return ready;
+			return readiness._ready;
 		}
 	}
 
@@ -3504,57 +3503,46 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public void setReady(boolean ready) {
-		Lock lock = _readyLock.get(getRootPortletId());
+		Registry registry = RegistryUtil.getRegistry();
 
-		if (lock == null) {
-			Lock newLock = new ReentrantLock();
+		Readiness readiness = new Readiness(
+			ready, registry.getServiceRegistrar(Portlet.class));
 
-			lock = _readyLock.putIfAbsent(getRootPortletId(), newLock);
+		String rootPortletId = getRootPortletId();
 
-			if (lock == null) {
-				lock = newLock;
-			}
+		Readiness previousReadiness = _readinessMap.putIfAbsent(
+			rootPortletId, readiness);
+
+		if (previousReadiness != null) {
+			readiness = previousReadiness;
 		}
 
-		try {
-			lock.lock();
-
-			if (lock != _readyLock.get(getRootPortletId())) {
+		synchronized (readiness) {
+			if (readiness != _readinessMap.get(rootPortletId)) {
 				return;
 			}
 
-			Boolean readyMapValue = _readyMap.get(getRootPortletId());
+			readiness._ready = ready;
 
-			if ((readyMapValue != null) && (ready == readyMapValue)) {
-				return;
-			}
-
-			Registry registry = RegistryUtil.getRegistry();
+			ServiceRegistrar<Portlet> serviceRegistrar =
+				readiness._serviceRegistrar;
 
 			if (ready) {
-				ServiceRegistrar<Portlet> serviceRegistrar =
-					registry.getServiceRegistrar(Portlet.class);
+				if (serviceRegistrar.isDestroyed()) {
+					serviceRegistrar = registry.getServiceRegistrar(
+						Portlet.class);
 
-				Map<String, Object> properties = new HashMap<>();
-
-				properties.put("javax.portlet.name", getPortletName());
+					readiness._serviceRegistrar = serviceRegistrar;
+				}
 
 				serviceRegistrar.registerService(
-					Portlet.class, this, properties);
-
-				_serviceRegistrars.put(getRootPortletId(), serviceRegistrar);
+					Portlet.class, this,
+					Collections.singletonMap(
+						"javax.portlet.name", getPortletName()));
 			}
 			else {
-				ServiceRegistrar<Portlet> serviceRegistrar =
-					_serviceRegistrars.remove(getRootPortletId());
-
 				serviceRegistrar.destroy();
 			}
-
-			_readyMap.put(getRootPortletId(), ready);
-		}
-		finally {
-			lock.unlock();
 		}
 	}
 
@@ -3995,23 +3983,14 @@ public class PortletImpl extends PortletBaseImpl {
 
 	@Override
 	public void unsetReady() {
-		Lock lock = _readyLock.get(getRootPortletId());
+		Readiness readiness = _readinessMap.remove(getRootPortletId());
 
-		if (lock != null) {
-			try {
-				lock.lock();
-
-				_readyMap.remove(getRootPortletId());
-
+		if (readiness != null) {
+			synchronized (readiness) {
 				ServiceRegistrar<Portlet> serviceRegistrar =
-					_serviceRegistrars.remove(getRootPortletId());
+					readiness._serviceRegistrar;
 
 				serviceRegistrar.destroy();
-
-				_readyLock.remove(getRootPortletId(), lock);
-			}
-			finally {
-				lock.unlock();
 			}
 		}
 	}
@@ -4021,16 +4000,11 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	private static final Log _log = LogFactoryUtil.getLog(PortletImpl.class);
 
-	private static final ConcurrentMap<String, Lock> _readyLock =
-		new ConcurrentHashMap<>();
-
 	/**
 	 * Map of the ready states of all portlets keyed by their root portlet ID.
 	 */
-	private static final Map<String, Boolean> _readyMap = new HashMap<>();
-
-	private static final Map<String, ServiceRegistrar<Portlet>>
-		_serviceRegistrars = new HashMap<>();
+	private static final ConcurrentMap<String, Readiness> _readinessMap =
+		new ConcurrentHashMap<>();
 
 	/**
 	 * The action timeout of the portlet.
@@ -4598,5 +4572,19 @@ public class PortletImpl extends PortletBaseImpl {
 	 * The name of the XML-RPC method class of the portlet.
 	 */
 	private String _xmlRpcMethodClass;
+
+	private static class Readiness {
+
+		private Readiness(
+			boolean ready, ServiceRegistrar<Portlet> serviceRegistrar) {
+
+			_ready = ready;
+			_serviceRegistrar = serviceRegistrar;
+		}
+
+		private volatile boolean _ready;
+		private ServiceRegistrar<Portlet> _serviceRegistrar;
+
+	}
 
 }

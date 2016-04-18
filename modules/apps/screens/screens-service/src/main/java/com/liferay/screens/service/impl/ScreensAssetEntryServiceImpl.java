@@ -18,6 +18,8 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.calendar.model.CalendarBooking;
+import com.liferay.calendar.service.CalendarBookingService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
@@ -46,6 +48,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
 import com.liferay.screens.service.base.ScreensAssetEntryServiceBaseImpl;
 
@@ -178,6 +181,9 @@ public class ScreensAssetEntryServiceImpl
 		if (className.equals(BlogsEntry.class.getName())) {
 			return getBlogsEntryJSONObject(assetEntry);
 		}
+		else if (className.equals(CalendarBooking.class.getName())) {
+			return getCalendarJSONObject(assetEntry);
+		}
 		else if (className.equals(DLFileEntry.class.getName())) {
 			return getFileEntryJSONObject(assetEntry);
 		}
@@ -211,6 +217,23 @@ public class ScreensAssetEntryServiceImpl
 				JSONFactoryUtil.looseSerialize(blogsEntry)));
 
 		return blogsEntryJSONObject;
+	}
+
+	protected JSONObject getCalendarJSONObject(AssetEntry assetEntry)
+		throws PortalException {
+
+		CalendarBooking calendarBooking =
+			_calendarBookingService.getCalendarBooking(assetEntry.getClassPK());
+
+		JSONObject calendarBookingJSONObject =
+			JSONFactoryUtil.createJSONObject();
+
+		calendarBookingJSONObject.put(
+			"calendarBooking",
+			JSONFactoryUtil.createJSONObject(
+				JSONFactoryUtil.looseSerialize(calendarBooking)));
+
+		return calendarBookingJSONObject;
 	}
 
 	protected JSONObject getFileEntryJSONObject(AssetEntry assetEntry)
@@ -325,5 +348,8 @@ public class ScreensAssetEntryServiceImpl
 
 		return jsonArray;
 	}
+
+	@ServiceReference(type = CalendarBookingService.class)
+	private CalendarBookingService _calendarBookingService;
 
 }

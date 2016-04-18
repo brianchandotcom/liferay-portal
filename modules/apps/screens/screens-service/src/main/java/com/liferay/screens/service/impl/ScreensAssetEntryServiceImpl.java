@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletItem;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -189,6 +190,9 @@ public class ScreensAssetEntryServiceImpl
 		else if (className.equals("com.liferay.journal.model.JournalArticle")) {
 			return getJournalArticleJSONObject(assetEntry);
 		}
+		else if (className.equals(User.class.getName())) {
+			return getUserJSONObject(assetEntry);
+		}
 
 		return JSONFactoryUtil.createJSONObject();
 	}
@@ -283,6 +287,21 @@ public class ScreensAssetEntryServiceImpl
 		jsonObject.remove("content");
 
 		return journalArticleJSONObject;
+	}
+
+	protected JSONObject getUserJSONObject(AssetEntry assetEntry)
+		throws PortalException {
+
+		User user = userService.getUserById(assetEntry.getClassPK());
+
+		JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
+
+		userJSONObject.put(
+			"user",
+			JSONFactoryUtil.createJSONObject(
+				JSONFactoryUtil.looseSerialize(user)));
+
+		return userJSONObject;
 	}
 
 	protected JSONArray toJSONArray(

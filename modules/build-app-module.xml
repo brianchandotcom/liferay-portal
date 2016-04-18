@@ -4,7 +4,7 @@
 <project name="build-app-module">
 	<property file="bnd.bnd" />
 
-	<pathconvert property="releng.module.dir">
+	<pathconvert property="module.dir.releng">
 		<filtermapper>
 			<replacestring from="modules${file.separator}apps" to="modules${file.separator}.releng${file.separator}apps" />
 		</filtermapper>
@@ -17,15 +17,15 @@
 	<target name="dist-module-artifact" depends="download-artifact,record-artifact-change-log" />
 
 	<target name="download-artifact">
-		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
+		<fail message="Missing artifact.properties file in ${module.dir.releng}.">
 			<condition>
 				<not>
-					<available file="${releng.module.dir}/artifact.properties" />
+					<available file="${module.dir.releng}/artifact.properties" />
 				</not>
 			</condition>
 		</fail>
 
-		<loadproperties srcFile="${releng.module.dir}/artifact.properties">
+		<loadproperties srcFile="${module.dir.releng}/artifact.properties">
 			<filterchain>
 				<linecontains>
 					<contains value="artifact.url=" />
@@ -48,7 +48,7 @@
 		description=""
 		unless="${app.has.artifact.previous.release}"
 	>
-		<loadfile failonerror="false" property="artifact.change.log.ticket.list" srcfile="${releng.module.dir}/liferay-releng.changelog">
+		<loadfile failonerror="false" property="artifact.change.log.ticket.list" srcfile="${module.dir.releng}/liferay-releng.changelog">
 			<filterchain>
 				<linecontainsregexp>
 					<regexp pattern="[0-9a-f]{40}\^\.\.[0-9a-f]{40}" />
@@ -75,7 +75,7 @@
 		description="Get an aggregated list of tickets from the change logs of all versions of the current module since the version present in the previous release of this app."
 		if="${app.has.artifact.previous.release}"
 	>
-		<loadfile failonerror="false" property="artifact.change.log.ticket.list" srcfile="${releng.module.dir}/liferay-releng.changelog">
+		<loadfile failonerror="false" property="artifact.change.log.ticket.list" srcfile="${module.dir.releng}/liferay-releng.changelog">
 			<filterchain>
 				<tokenfilter>
 					<filetokenizer />

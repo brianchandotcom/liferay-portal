@@ -2,17 +2,21 @@
 <!DOCTYPE project>
 
 <project name="build-app">
-	<import file="build-app-module.xml" />
+	<fail message="Please provide a value &quot;app.name&quot; when running this command.">
+		<condition>
+			<not>
+				<isset property="app.name" />
+			</not>
+		</condition>
+	</fail>
 
-	<pathconvert property="releng.app.dir">
-		<filtermapper>
-			<replacestring from="modules${file.separator}apps" to="modules${file.separator}.releng${file.separator}apps" />
-		</filtermapper>
+	<property name="app.dir" value="${basedir}/apps/${app.name}" />
 
-		<path>
-			<pathelement location="${basedir}" />
-		</path>
-	</pathconvert>
+	<property name="app.dir.releng" value="${basedir}/.releng/apps/${app.name}" />
+
+	<property name="dist.dir" value="${app.dir.releng}/dist" />
+
+	<mkdir dir="${dist.dir}" />
 
 	<pathconvert pathsep="," property="app.module.dirs">
 		<globmapper from="${modules.dir}${file.separator}*" to="*" />
@@ -25,21 +29,13 @@
 		</path>
 	</pathconvert>
 
-	<mkdir dir="${releng.app.dir}/dist" />
-
-	<pathconvert property="dist.dir">
-		<dirset dir="${releng.app.dir}" includes="dist" />
-	</pathconvert>
-
 	<condition property="app.first.version">
 		<not>
-			<available file="${releng.app.dir}/app.changelog" />
+			<available file="${app.dir.releng}/app.changelog" />
 		</not>
 	</condition>
 
-	<basename file="${basedir}" property="app.name" />
-
-	<property file="${modules.dir}/../build.properties" />
+	<property file="${basedir}/../build.properties" />
 
 	<macrodef name="set-artifact-versions-previous-release">
 		<attribute name="app.version.previous.release" />
@@ -81,19 +77,19 @@
 	<target name="clean-app">
 		<delete dir="${dist.dir}" />
 
-		<exec executable="git" dir="${releng.app.dir}">
+		<exec executable="git" dir="${app.dir.releng}">
 			<arg line="clean" />
 			<arg line="-f" />
 		</exec>
 
-		<exec executable="git" dir="${releng.app.dir}">
+		<exec executable="git" dir="${app.dir.releng}">
 			<arg line="checkout" />
 			<arg line="app.changelog" />
 		</exec>
 	</target>
 
 	<target name="dist-module-artifacts" depends="check-stale-artifacts,get-artifact-versions-previous-release">
-		<subant target="dist-module-artifact">
+		<subant genericantfile="${basedir}/build-app-module.xml" target="dist-module-artifact">
 			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
 			<property name="app.dir" value="${basedir}" />
 			<property name="app.first.version" value="${app.first.version}" />
@@ -155,7 +151,7 @@
 	</target>
 
 	<target name="get-app-version-previous-release">
-		<loadfile failonerror="false" property="app.version.previous.release" srcfile="${releng.app.dir}/app.changelog">
+		<loadfile failonerror="false" property="app.version.previous.release" srcfile="${app.dir.releng}/app.changelog">
 			<filterchain>
 				<linecontains>
 					<contains value="# " />
@@ -175,7 +171,7 @@
 	</target>
 
 	<target name="get-artifact-versions-previous-release" depends="get-app-version-previous-release">
-		<property file="${releng.app.dir}/app.changelog" />
+		<property file="${app.dir.releng}/app.changelog" />
 
 		<set-artifact-versions-previous-release app.version.previous.release="${app.version.previous.release}" />
 	</target>
@@ -183,18 +179,18 @@
 	<target name="write-app-change-log" depends="dist-module-artifacts,get-app-artifacts,get-app-change-log,get-app-change-log-header,get-app-git-id">
 		<property name="double.space" value="${line.separator}${line.separator}" />
 
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.change.log.header}" />
+		<echo append="true" file="${app.dir.releng}/app.changelog" message="${app.change.log.header}" />
 
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${double.space}" />
+		<echo append="true" file="${app.dir.releng}/app.changelog" message="${double.space}" />
 
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.artifacts}" />
+		<echo append="true" file="${app.dir.releng}/app.changelog" message="${app.artifacts}" />
 
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${double.space}" />
+		<echo append="true" file="${app.dir.releng}/app.changelog" message="${double.space}" />
 
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.change.log}" />
+		<echo append="true" file="${app.dir.releng}/app.changelog" message="${app.change.log}" />
 
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${double.space}" />
+		<echo append="true" file="${app.dir.releng}/app.changelog" message="${double.space}" />
 
-		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.git.id}" />
+		<echo append="true" file="${app.dir.releng}/app.changelog" message="${app.git.id}" />
 	</target>
 </project>

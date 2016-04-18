@@ -16,12 +16,12 @@ package com.liferay.portal.spring.transaction;
 
 import com.liferay.portal.kernel.annotation.AnnotationLocator;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.MethodTargetClassKey;
 
 import java.lang.reflect.Method;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
 import org.springframework.transaction.interceptor.TransactionAttribute;
@@ -37,11 +37,23 @@ public class AnnotationTransactionAttributeSource
 	public TransactionAttribute getTransactionAttribute(
 		Method method, Class<?> targetClass) {
 
-		MethodTargetClassKey methodTargetClassKey = new MethodTargetClassKey(
-			method, targetClass);
+		Map<Method, TransactionAttribute> transactionAttributes =
+			_transactionAttributes.get(targetClass);
 
-		TransactionAttribute transactionAttribute = _transactionAttributes.get(
-			methodTargetClassKey);
+		if (transactionAttributes == null) {
+			transactionAttributes = new ConcurrentHashMap<>();
+
+			Map<Method, TransactionAttribute> previousTransactionAttributes =
+				_transactionAttributes.putIfAbsent(
+					targetClass, transactionAttributes);
+
+			if (previousTransactionAttributes != null) {
+				transactionAttributes = previousTransactionAttributes;
+			}
+		}
+
+		TransactionAttribute transactionAttribute = transactionAttributes.get(
+			method);
 
 		if (transactionAttribute != null) {
 			if (transactionAttribute == _nullTransactionAttribute) {
@@ -58,12 +70,10 @@ public class AnnotationTransactionAttributeSource
 		transactionAttribute = TransactionAttributeBuilder.build(transactional);
 
 		if (transactionAttribute == null) {
-			_transactionAttributes.put(
-				methodTargetClassKey, _nullTransactionAttribute);
+			transactionAttributes.put(method, _nullTransactionAttribute);
 		}
 		else {
-			_transactionAttributes.put(
-				methodTargetClassKey, transactionAttribute);
+			transactionAttributes.put(method, transactionAttribute);
 		}
 
 		return transactionAttribute;
@@ -72,7 +82,7 @@ public class AnnotationTransactionAttributeSource
 	private static final TransactionAttribute _nullTransactionAttribute =
 		new DefaultTransactionAttribute();
 
-	private final Map<MethodTargetClassKey, TransactionAttribute>
+	private final ConcurrentMap<Class<?>, Map<Method, TransactionAttribute>>
 		_transactionAttributes = new ConcurrentHashMap<>();
 
 }

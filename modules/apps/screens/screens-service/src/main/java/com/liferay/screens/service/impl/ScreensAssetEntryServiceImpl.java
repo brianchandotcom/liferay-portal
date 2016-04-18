@@ -21,6 +21,7 @@ import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.permission.JournalArticlePermission;
@@ -187,13 +188,11 @@ public class ScreensAssetEntryServiceImpl
 		else if (className.equals(DLFileEntry.class.getName())) {
 			return getFileEntryJSONObject(assetEntry);
 		}
-		else if (className.equals(
-					"com.liferay.dynamic.data.lists.model.DDLRecord")) {
-
+		else if (className.equals(DDLRecord.class.getName())) {
 			return screensDDLRecordService.getDDLRecord(
 				assetEntry.getClassPK(), locale);
 		}
-		else if (className.equals("com.liferay.journal.model.JournalArticle")) {
+		else if (className.equals(JournalArticle.class.getName())) {
 			return getJournalArticleJSONObject(assetEntry);
 		}
 		else if (className.equals(User.class.getName())) {

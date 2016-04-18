@@ -103,6 +103,9 @@ public class IncorrectWhitespace {
 		return s;
 	}
 
+	public void method5(String ... strings) {
+	}
+
 	protected class SubClass1 {
 
 	}

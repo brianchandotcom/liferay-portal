@@ -46,10 +46,15 @@ public class UpgradeClassNames extends UpgradeProcess {
 		updateClassName("KaleoInstance", "className");
 		updateClassName("KaleoInstanceToken", "className");
 		updateClassName("KaleoLog", "currentAssigneeClassName");
+		updateClassName("KaleoNotificationRecipient", "recipientClassName");
+		updateClassName("KaleoTaskAssignment", "assigneeClassName");
+		updateClassName("KaleoTaskAssignmentInstance", "assigneeClassName");
 		updateClassName("KaleoTaskInstanceToken", "className");
 
 		updateWorkflowContextEntryClassName("KaleoInstance", "kaleoInstanceId");
 		updateWorkflowContextEntryClassName("KaleoLog", "kaleoLogId");
+		updateWorkflowContextEntryClassName(
+			"KaleoTaskAssignmentInstance", "kaleoTaskAssignmentInstanceId");
 		updateWorkflowContextEntryClassName(
 			"KaleoTaskInstanceToken", "kaleoTaskInstanceTokenId");
 	}
@@ -207,6 +212,9 @@ public class UpgradeClassNames extends UpgradeProcess {
 		_classNamesMap.put(
 			"com.liferay.portlet.journal.model.JournalArticle",
 			"com.liferay.journal.model.JournalArticle");
+		_classNamesMap.put(
+			"com.liferay.portlet.messageboards.model.MBDiscussion",
+			"com.liferay.message.boards.kernel.model.MBDiscussion");
 		_classNamesMap.put(
 			"com.liferay.portlet.messageboards.model.MBMessage",
 			"com.liferay.message.boards.kernel.model.MBMessage");

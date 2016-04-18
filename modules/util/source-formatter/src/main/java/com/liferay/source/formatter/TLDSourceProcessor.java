@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
@@ -45,11 +46,18 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = _typePattern.matcher(content);
 
 		while (matcher.find()) {
-			int lineCount = getLineCount(content, matcher.start());
+			String typeName = matcher.group(1);
 
-			processErrorMessage(
-				fileName,
-				"Use fully qualified classType: " + fileName + " " + lineCount);
+			if (typeName.matches("[A-Z]\\w*")) {
+				processErrorMessage(
+					fileName,
+					"Use fully qualified classType: " + fileName + " " +
+						getLineCount(content, matcher.start(1)));
+			}
+			else if (typeName.equals("java.lang.String")) {
+				content = StringUtil.replaceFirst(
+					content, matcher.group(), "\n");
+			}
 		}
 
 		Document document = readXML(content);
@@ -82,7 +90,7 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 	private static final String[] _INCLUDES = new String[] {"**/*.tld"};
 
 	private static final Pattern _typePattern = Pattern.compile(
-		"<type>[A-Z][a-z]*</type>");
+		"\n\t*<type>(.*)</type>\n");
 
 	private static class TagElementComparator extends ElementComparator {
 

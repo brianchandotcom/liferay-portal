@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1460926291243
+Bnd-LastModified: 1460989383013
 Bundle-ManifestVersion: 2
 Bundle-Name: portal-bootstrap
 Bundle-SymbolicName: portal-bootstrap
 Bundle-Vendor: Liferay, Inc.
 Bundle-Version: 1.0.0
-Created-By: 1.7.0_71 (Oracle Corporation)
+Created-By: 1.7.0_45 (Oracle Corporation)
 Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  u.impl;version="4.0.1";uses:="com.liferay.ibm.icu.math,com.liferay.ib
  m.icu.text,com.liferay.ibm.icu.util",com.liferay.ibm.icu.impl.coll;ve
@@ -2860,7 +2860,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  rtal.kernel.messaging,com.liferay.portal.kernel.scheduler",com.lifera
  y.portal.kernel.scripting;version="7.0.0";uses:="com.liferay.portal.k
  ernel.exception,javax.portlet",com.liferay.portal.kernel.search;versi
- on="7.1.0";uses:="com.liferay.asset.kernel.model,com.liferay.expando.
+ on="7.2.0";uses:="com.liferay.asset.kernel.model,com.liferay.expando.
  kernel.model,com.liferay.portal.kernel.backgroundtask,com.liferay.por
  tal.kernel.comment,com.liferay.portal.kernel.exception,com.liferay.po
  rtal.kernel.json,com.liferay.portal.kernel.messaging,com.liferay.port
@@ -4369,6 +4369,8 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  0.0",org.apache.commons.validator.routines;version="1.5.0",org.apache
  .xml.serializer;version="2.7.1",org.objectweb.asm.attrs;version="5.0.
  1"
+Git-Descriptor: 4728ff1-dirty
+Git-SHA: 4728ff1e78764190e41d3f94554fd6607de8b3d4
 Javac-Debug: on
 Javac-Deprecation: off
 Javac-Encoding: UTF-8

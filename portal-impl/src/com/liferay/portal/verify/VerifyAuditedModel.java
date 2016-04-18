@@ -44,7 +44,7 @@ import java.util.Map;
  */
 public class VerifyAuditedModel extends VerifyProcess {
 
-	public void verify(VerifiableAuditedModel ... verifiableAuditedModels)
+	public void verify(VerifiableAuditedModel... verifiableAuditedModels)
 		throws Exception {
 
 		List<String> unverifiedTableNames = new ArrayList<>();

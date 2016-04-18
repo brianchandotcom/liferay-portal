@@ -57,7 +57,7 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 	}
 
 	public static FileTree getJarsFileTree(
-		Project project, File dir, String ... excludes) {
+		Project project, File dir, String... excludes) {
 
 		Map<String, Object> args = new HashMap<>();
 
@@ -92,7 +92,7 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		return true;
 	}
 
-	public static FileCollection join(FileCollection ... fileCollections) {
+	public static FileCollection join(FileCollection... fileCollections) {
 		FileCollection joinedFileCollection = null;
 
 		for (FileCollection fileCollection : fileCollections) {
@@ -117,7 +117,7 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 	}
 
 	public static void touchFiles(
-		Project project, File dir, long time, String ... includes) {
+		Project project, File dir, long time, String... includes) {
 
 		Map<String, Object> args = new HashMap<>();
 

@@ -50,7 +50,7 @@ public class BuildTaglibsTask extends JavaExec {
 		return this;
 	}
 
-	public BuildTaglibsTask componentsXmlFiles(Object ... componentsXmlFiles) {
+	public BuildTaglibsTask componentsXmlFiles(Object... componentsXmlFiles) {
 		return componentsXmlFiles(Arrays.asList(componentsXmlFiles));
 	}
 
@@ -121,7 +121,7 @@ public class BuildTaglibsTask extends JavaExec {
 		componentsXmlFiles(componentsXmlFiles);
 	}
 
-	public void setComponentsXmlFiles(Object ... componentsXmlFiles) {
+	public void setComponentsXmlFiles(Object... componentsXmlFiles) {
 		setComponentsXmlFiles(Arrays.asList(componentsXmlFiles));
 	}
 

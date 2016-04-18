@@ -72,7 +72,7 @@ public class TaskCache implements PatternFilterable {
 	}
 
 	@Override
-	public TaskCache exclude(String ... excludes) {
+	public TaskCache exclude(String... excludes) {
 		_patternFilterable.exclude(excludes);
 
 		return this;
@@ -163,7 +163,7 @@ public class TaskCache implements PatternFilterable {
 	}
 
 	@Override
-	public TaskCache include(String ... includes) {
+	public TaskCache include(String... includes) {
 		_patternFilterable.include(includes);
 
 		return this;
@@ -199,7 +199,7 @@ public class TaskCache implements PatternFilterable {
 		skipTaskDependency(skippedTaskDependencies);
 	}
 
-	public void setSkippedTaskDependencies(Object ... skippedTaskDependencies) {
+	public void setSkippedTaskDependencies(Object... skippedTaskDependencies) {
 		setSkippedTaskDependencies(Arrays.asList(skippedTaskDependencies));
 	}
 
@@ -209,7 +209,7 @@ public class TaskCache implements PatternFilterable {
 		testFile(testFiles);
 	}
 
-	public void setTestFiles(Object ... testFiles) {
+	public void setTestFiles(Object... testFiles) {
 		setTestFiles(Arrays.asList(testFiles));
 	}
 
@@ -222,7 +222,7 @@ public class TaskCache implements PatternFilterable {
 		return this;
 	}
 
-	public TaskCache skipTaskDependency(Object ... skippedTaskDependencies) {
+	public TaskCache skipTaskDependency(Object... skippedTaskDependencies) {
 		return skipTaskDependency(Arrays.asList(skippedTaskDependencies));
 	}
 
@@ -232,7 +232,7 @@ public class TaskCache implements PatternFilterable {
 		return this;
 	}
 
-	public TaskCache testFile(Object ... testFiles) {
+	public TaskCache testFile(Object... testFiles) {
 		return testFile(Arrays.asList(testFiles));
 	}
 

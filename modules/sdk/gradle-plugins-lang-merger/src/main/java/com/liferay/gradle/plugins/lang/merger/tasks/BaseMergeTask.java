@@ -157,7 +157,7 @@ public abstract class BaseMergeTask extends DefaultTask {
 		sourceDirs(sourceDirs);
 	}
 
-	public void setSourceDirs(Object ... sourceDirs) {
+	public void setSourceDirs(Object... sourceDirs) {
 		setSourceDirs(Arrays.asList(sourceDirs));
 	}
 
@@ -167,7 +167,7 @@ public abstract class BaseMergeTask extends DefaultTask {
 		return this;
 	}
 
-	public BaseMergeTask sourceDirs(Object ... sourceDirs) {
+	public BaseMergeTask sourceDirs(Object... sourceDirs) {
 		return sourceDirs(Arrays.asList(sourceDirs));
 	}
 

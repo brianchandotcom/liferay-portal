@@ -100,7 +100,7 @@ public class PatchTask extends DefaultTask {
 		return this;
 	}
 
-	public PatchTask args(Object ... args) {
+	public PatchTask args(Object... args) {
 		return args(Arrays.asList(args));
 	}
 
@@ -110,7 +110,7 @@ public class PatchTask extends DefaultTask {
 		return this;
 	}
 
-	public PatchTask fileNames(Object ... fileNames) {
+	public PatchTask fileNames(Object... fileNames) {
 		return fileNames(Arrays.asList(fileNames));
 	}
 
@@ -328,7 +328,7 @@ public class PatchTask extends DefaultTask {
 		return this;
 	}
 
-	public PatchTask patchFiles(Object ... patchFiles) {
+	public PatchTask patchFiles(Object... patchFiles) {
 		return patchFiles(Arrays.asList(patchFiles));
 	}
 
@@ -338,7 +338,7 @@ public class PatchTask extends DefaultTask {
 		args(args);
 	}
 
-	public void setArgs(Object ... args) {
+	public void setArgs(Object... args) {
 		setArgs(Arrays.asList(args));
 	}
 

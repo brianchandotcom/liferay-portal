@@ -63,13 +63,13 @@ public class ConcatenateTask extends DefaultTask {
 		sourceFiles(sourceFiles);
 	}
 
-	public ConcatenateTask sourceFiles(Iterable<Object> ... sourceFiles) {
+	public ConcatenateTask sourceFiles(Iterable<Object>... sourceFiles) {
 		GUtil.addToCollection(_sourceFiles, sourceFiles);
 
 		return this;
 	}
 
-	public ConcatenateTask sourceFiles(Object ... sourceFiles) {
+	public ConcatenateTask sourceFiles(Object... sourceFiles) {
 		return sourceFiles(Arrays.asList(sourceFiles));
 	}
 

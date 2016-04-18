@@ -126,7 +126,7 @@ public class PluginAutoDeployListenerHelper {
 		}
 	}
 
-	public boolean isMatchingFileExtension(String ... extensions) {
+	public boolean isMatchingFileExtension(String... extensions) {
 		String fileName = _file.getName();
 
 		fileName = StringUtil.toLowerCase(fileName);

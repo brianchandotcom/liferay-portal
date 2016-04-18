@@ -71,7 +71,7 @@ public class TLDDocTask extends JavaExec implements PatternFilterable {
 	}
 
 	@Override
-	public TLDDocTask exclude(String ... excludes) {
+	public TLDDocTask exclude(String... excludes) {
 		_patternFilterable.exclude(excludes);
 
 		return this;
@@ -135,7 +135,7 @@ public class TLDDocTask extends JavaExec implements PatternFilterable {
 	}
 
 	@Override
-	public TLDDocTask include(String ... includes) {
+	public TLDDocTask include(String... includes) {
 		_patternFilterable.include(includes);
 
 		return this;
@@ -165,7 +165,7 @@ public class TLDDocTask extends JavaExec implements PatternFilterable {
 		_source.add(source);
 	}
 
-	public TLDDocTask source(Object ... sources) {
+	public TLDDocTask source(Object... sources) {
 		for (Object source : sources) {
 			_source.add(source);
 		}

@@ -39,7 +39,7 @@ import java.util.Map;
  */
 public class VerifyGroupedModel extends VerifyProcess {
 
-	public void verify(VerifiableGroupedModel ... verifiableGroupedModels)
+	public void verify(VerifiableGroupedModel... verifiableGroupedModels)
 		throws Exception {
 
 		List<String> unverifiedTableNames = new ArrayList<>();

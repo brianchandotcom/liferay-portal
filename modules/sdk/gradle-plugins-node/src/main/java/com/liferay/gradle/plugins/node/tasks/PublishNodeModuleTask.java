@@ -153,7 +153,7 @@ public class PublishNodeModuleTask extends ExecuteNpmTask {
 		_moduleKeywords.clear();
 	}
 
-	public void setModuleKeywords(Object ... moduleKeywords) {
+	public void setModuleKeywords(Object... moduleKeywords) {
 		setModuleKeywords(Arrays.asList(moduleKeywords));
 	}
 

@@ -773,7 +773,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 				private String _getGradleCommand(
 					String gradleRelativePath, String taskName,
-					boolean gradleDaemon, String ... arguments) {
+					boolean gradleDaemon, String... arguments) {
 
 					Task task = GradleUtil.getTask(project, taskName);
 
@@ -783,7 +783,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 
 				private String _getGradleCommand(
 					String gradleRelativePath, Task task, boolean gradleDaemon,
-					String ... arguments) {
+					String... arguments) {
 
 					StringBuilder sb = new StringBuilder();
 
@@ -2670,7 +2670,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		return (Map<String, String>)bundleExtension.getInstructions();
 	}
 
-	protected String getGitResult(Project project, final Object ... args) {
+	protected String getGitResult(Project project, final Object... args) {
 		final ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 

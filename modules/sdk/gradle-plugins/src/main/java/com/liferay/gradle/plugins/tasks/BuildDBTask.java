@@ -51,7 +51,7 @@ public class BuildDBTask extends JavaExec {
 		return this;
 	}
 
-	public BuildDBTask databaseTypes(Object ... databaseTypes) {
+	public BuildDBTask databaseTypes(Object... databaseTypes) {
 		return databaseTypes(Arrays.asList(databaseTypes));
 	}
 
@@ -96,7 +96,7 @@ public class BuildDBTask extends JavaExec {
 		databaseTypes(databaseTypes);
 	}
 
-	public void setDatabaseTypes(Object ... databaseTypes) {
+	public void setDatabaseTypes(Object... databaseTypes) {
 		setDatabaseTypes(Arrays.asList(databaseTypes));
 	}
 

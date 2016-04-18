@@ -80,7 +80,7 @@ public class PrincipalException extends PortalException {
 
 	public static class MustBeEnabled extends PrincipalException {
 
-		public MustBeEnabled(long companyId, String ... resourceName) {
+		public MustBeEnabled(long companyId, String... resourceName) {
 			super(
 				String.format(
 					"%s must be enabled for company %s",

@@ -61,7 +61,7 @@ public class ReflectionUtil {
 	}
 
 	public static Method getDeclaredMethod(
-			Class<?> clazz, String name, Class<?> ... parameterTypes)
+			Class<?> clazz, String name, Class<?>... parameterTypes)
 		throws Exception {
 
 		Method method = clazz.getDeclaredMethod(name, parameterTypes);

@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 public class PortletResourceStaticURLGenerator {
 
 	public List<String> generate(
-		Portlet portlet, PortletResourceAccessor ... portletResourceAccessors) {
+		Portlet portlet, PortletResourceAccessor... portletResourceAccessors) {
 
 		List<String> urls = new ArrayList<>();
 

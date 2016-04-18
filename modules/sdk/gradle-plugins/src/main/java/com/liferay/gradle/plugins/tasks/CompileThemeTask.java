@@ -164,7 +164,7 @@ public class CompileThemeTask extends DefaultTask {
 		return this;
 	}
 
-	public CompileThemeTask themeTypes(String ... themeTypes) {
+	public CompileThemeTask themeTypes(String... themeTypes) {
 		return themeTypes(Arrays.asList(themeTypes));
 	}
 

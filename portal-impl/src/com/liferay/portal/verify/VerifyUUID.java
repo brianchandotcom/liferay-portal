@@ -37,7 +37,7 @@ import java.util.Map;
  */
 public class VerifyUUID extends VerifyProcess {
 
-	public static void verify(VerifiableUUIDModel ... verifiableUUIDModels)
+	public static void verify(VerifiableUUIDModel... verifiableUUIDModels)
 		throws Exception {
 
 		VerifyUUID verifyUUID = new VerifyUUID();

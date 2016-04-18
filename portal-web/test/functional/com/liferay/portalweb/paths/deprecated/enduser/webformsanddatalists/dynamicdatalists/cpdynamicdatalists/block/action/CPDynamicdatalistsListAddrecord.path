@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>DOCUMENTS_AND_MEDIA_CHOOSE_FROM_DOCUMENT_LIBRARY</td>
-	<td>//div[@data-fieldname='${key_fieldName}']/div/button[contains(.,'Choose from Document Library')]</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/div/button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>

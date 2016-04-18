@@ -88,7 +88,7 @@ $horizontal-spacing: 35px;
 	}
 }
 
-.form-builder-page-manager-popover-header  {
+.form-builder-page-manager-popover-header {
 	.popover-content {
 		padding: 7px 21px;
 	}
@@ -123,6 +123,18 @@ $horizontal-spacing: 35px;
 	height: 100%;
 	margin: 0;
 	width: 100%;
+
+	@keyframes fade-down {
+		from {
+			opacity: 0;
+			top: -50px;
+		}
+
+		to {
+			opacity: 1;
+			top: 0;
+		}
+	}
 
 	&:focus {
 		outline: none;
@@ -233,6 +245,10 @@ $horizontal-spacing: 35px;
 
 			.drag-placeholder {
 				opacity: 0.5;
+			}
+
+			.last-option:not(:first-of-type) {
+				@include animation(fade-down 0.7s ease);
 			}
 
 			.last-option .close {

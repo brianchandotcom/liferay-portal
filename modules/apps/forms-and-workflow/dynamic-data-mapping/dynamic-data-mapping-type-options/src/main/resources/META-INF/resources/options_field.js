@@ -243,6 +243,13 @@ AUI.add(
 						);
 					},
 
+					_afterRender: function(field) {
+						var instance = this;
+
+						instance._bindListEvents();
+						instance._renderFieldUI(field);
+					},
+
 					_afterSortableListDragEnd: function(event) {
 						var instance = this;
 
@@ -283,10 +290,20 @@ AUI.add(
 					_bindFieldUI: function(field) {
 						var instance = this;
 
-						field.after('render', A.bind('_renderFieldUI', instance, field));
+						field.after('render', A.bind('_afterRender', instance, field));
 
 						field.bindContainerEvent('click', A.bind('_onFieldClickClose', instance, field), '.close');
 						field.bindInputEvent('valuechange', A.bind('_onFieldValueChange', instance, field));
+					},
+
+					_bindListEvents: function() {
+						var instance = this;
+
+						var options = instance._getOptionsNode();
+
+						instance._eventHandlers.push(
+							options.delegate('focus', A.bind('_onFocusOption', instance), '.last-option .field')
+						);
 					},
 
 					_canSortNode: function(event) {
@@ -338,13 +355,19 @@ AUI.add(
 					_getNodeIndex: function(node) {
 						var instance = this;
 
-						var container = instance.get('container');
-
-						var options = container.one('.options');
+						var options = instance._getOptionsNode();
 
 						var siblings = options.all('> .lfr-ddm-form-field-container');
 
 						return siblings.indexOf(node);
+					},
+
+					_getOptionsNode: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						return container.one('.options');
 					},
 
 					_onFieldClickClose: function(field) {
@@ -369,10 +392,12 @@ AUI.add(
 						var repetitions = field.get('repetitions');
 
 						if (field.get('repeatedIndex') === repetitions.length - 1) {
-							var newField = instance.addField();
-
-							newField.get('container').scrollIntoView();
+							instance.addField();
 						}
+					},
+
+					_onFocusOption: function(event) {
+						event.target.scrollIntoView();
 					},
 
 					_renderFields: function(optionsValues) {

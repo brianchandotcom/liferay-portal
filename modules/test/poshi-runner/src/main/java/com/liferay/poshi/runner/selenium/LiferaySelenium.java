@@ -479,6 +479,8 @@ public interface LiferaySelenium {
 	public void saveScreenshotBeforeAction(boolean actionFailed)
 		throws Exception;
 
+	public void scrollBy(String coordString);
+
 	public void scrollWebElementIntoView(String locator) throws Exception;
 
 	public void select(String selectLocator, String optionLocator);

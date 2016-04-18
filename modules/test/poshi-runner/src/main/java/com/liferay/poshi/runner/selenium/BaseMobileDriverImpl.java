@@ -1061,9 +1061,7 @@ public abstract class BaseMobileDriverImpl
 			return isInViewport(locator);
 		}
 		else {
-			if (!webElement.isDisplayed()) {
-				WebDriverHelper.scrollWebElementIntoView(this, webElement);
-			}
+			WebDriverHelper.scrollWebElementIntoView(this, webElement);
 
 			return webElement.isDisplayed();
 		}
@@ -1299,6 +1297,11 @@ public abstract class BaseMobileDriverImpl
 		}
 
 		LiferaySeleniumHelper.saveScreenshotBeforeAction(this, actionFailed);
+	}
+
+	@Override
+	public void scrollBy(String coordString) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

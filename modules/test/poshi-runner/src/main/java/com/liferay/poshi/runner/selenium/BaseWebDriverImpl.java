@@ -461,9 +461,7 @@ public abstract class BaseWebDriverImpl
 				webElement.click();
 			}
 			catch (Exception e) {
-				if (!webElement.isDisplayed()) {
-					scrollWebElementIntoView(webElement);
-				}
+				scrollWebElementIntoView(webElement);
 
 				webElement.click();
 			}
@@ -910,9 +908,7 @@ public abstract class BaseWebDriverImpl
 				"Element is not present at \"" + locator + "\"");
 		}
 
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
+		scrollWebElementIntoView(webElement);
 
 		return webElement.getAttribute("value");
 	}
@@ -1175,9 +1171,7 @@ public abstract class BaseWebDriverImpl
 				"Element is not present at \"" + locator + "\"");
 		}
 
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
+		scrollWebElementIntoView(webElement);
 
 		String text = webElement.getText();
 
@@ -1260,9 +1254,7 @@ public abstract class BaseWebDriverImpl
 	public boolean isChecked(String locator) {
 		WebElement webElement = getWebElement(locator, "1");
 
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
+		scrollWebElementIntoView(webElement);
 
 		return webElement.isSelected();
 	}
@@ -1412,9 +1404,7 @@ public abstract class BaseWebDriverImpl
 	public boolean isVisible(String locator) {
 		WebElement webElement = getWebElement(locator, "1");
 
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
+		scrollWebElementIntoView(webElement);
 
 		return webElement.isDisplayed();
 	}
@@ -1561,9 +1551,7 @@ public abstract class BaseWebDriverImpl
 	public void mouseDown(String locator) {
 		WebElement webElement = getWebElement(locator);
 
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
+		scrollWebElementIntoView(webElement);
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -1584,9 +1572,7 @@ public abstract class BaseWebDriverImpl
 	public void mouseDownAt(String locator, String coordString) {
 		WebElement webElement = getWebElement(locator);
 
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
+		scrollWebElementIntoView(webElement);
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -1629,9 +1615,7 @@ public abstract class BaseWebDriverImpl
 	public void mouseMove(String locator) {
 		WebElement webElement = getWebElement(locator);
 
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
+		scrollWebElementIntoView(webElement);
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -1650,9 +1634,7 @@ public abstract class BaseWebDriverImpl
 	public void mouseMoveAt(String locator, String coordString) {
 		WebElement webElement = getWebElement(locator);
 
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
+		scrollWebElementIntoView(webElement);
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -1681,9 +1663,7 @@ public abstract class BaseWebDriverImpl
 	public void mouseOut(String locator) {
 		WebElement webElement = getWebElement(locator);
 
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
+		scrollWebElementIntoView(webElement);
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -1703,9 +1683,7 @@ public abstract class BaseWebDriverImpl
 	public void mouseOver(String locator) {
 		WebElement webElement = getWebElement(locator);
 
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
+		scrollWebElementIntoView(webElement);
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -1741,9 +1719,7 @@ public abstract class BaseWebDriverImpl
 	public void mouseUp(String locator) {
 		WebElement webElement = getWebElement(locator);
 
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
+		scrollWebElementIntoView(webElement);
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -1762,9 +1738,7 @@ public abstract class BaseWebDriverImpl
 	public void mouseUpAt(String locator, String coordString) {
 		WebElement webElement = getWebElement(locator);
 
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
+		scrollWebElementIntoView(webElement);
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 
@@ -1898,6 +1872,11 @@ public abstract class BaseWebDriverImpl
 		}
 
 		LiferaySeleniumHelper.saveScreenshotBeforeAction(this, actionFailed);
+	}
+
+	@Override
+	public void scrollBy(String coordString) {
+		WebDriverHelper.scrollBy(this, coordString);
 	}
 
 	@Override

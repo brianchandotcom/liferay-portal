@@ -302,7 +302,7 @@ AUI.add(
 						var options = instance._getOptionsNode();
 
 						instance._eventHandlers.push(
-							options.delegate('focus', A.bind('_scrollHelper', instance), '.last-option .field')
+							options.delegate('focus', A.bind('_onFocusOption', instance), '.last-option .field')
 						);
 					},
 
@@ -396,6 +396,10 @@ AUI.add(
 						}
 					},
 
+					_onFocusOption: function(event) {
+						event.target.scrollIntoView();
+					},
+
 					_renderFields: function(optionsValues) {
 						var instance = this;
 
@@ -439,10 +443,6 @@ AUI.add(
 					_restoreField: function(field, contextValue) {
 						field.set('key', contextValue.value);
 						field.set('value', contextValue.label);
-					},
-
-					_scrollHelper: function(event) {
-						event.target.scrollIntoView();
 					},
 
 					_syncFieldUI: function(field) {

@@ -90,7 +90,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 		"com.liferay.portlet.header-portlet-css=/admin/css/main.css",
 		"com.liferay.portlet.icon=/admin/icons/form.png",
 		"com.liferay.portlet.instanceable=false",
-		"com.liferay.portlet.layout-cacheable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",

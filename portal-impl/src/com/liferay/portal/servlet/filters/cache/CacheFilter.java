@@ -95,8 +95,11 @@ public class CacheFilter extends BasePortalFilter {
 
 		// Url
 
+		String url = PortalUtil.getCurrentCompleteURL(request);
+
 		sb.append(HttpUtil.getProtocol(request));
 		sb.append(Http.PROTOCOL_DELIMITER);
+		sb.append(HttpUtil.getDomain(url));
 		sb.append(request.getContextPath());
 		sb.append(request.getServletPath());
 		sb.append(request.getPathInfo());
@@ -109,9 +112,7 @@ public class CacheFilter extends BasePortalFilter {
 				JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING);
 
 			if (queryString == null) {
-				String url = PortalUtil.getCurrentCompleteURL(request);
-
-				int pos = url.indexOf(StringPool.QUESTION);
+				int pos = url.indexOf(CharPool.QUESTION);
 
 				if (pos > -1) {
 					queryString = url.substring(pos + 1);
@@ -453,11 +454,9 @@ public class CacheFilter extends BasePortalFilter {
 				bufferCacheServletResponse.getHeader(
 					HttpHeaders.CACHE_CONTROL));
 
-			if ((bufferCacheServletResponse.getStatus() ==
-					HttpServletResponse.SC_OK) &&
+			if (isCacheableResponse(bufferCacheServletResponse) &&
 				!cacheControl.contains(HttpHeaders.PRAGMA_NO_CACHE_VALUE) &&
-				isCacheableRequest(request) &&
-				isCacheableResponse(bufferCacheServletResponse)) {
+				isCacheableRequest(request)) {
 
 				CacheUtil.putCacheResponseData(
 					companyId, key, cacheResponseData);

@@ -30,7 +30,6 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.display-category=category.cms",
 		"com.liferay.portlet.icon=/icons/asset_tags_cloud.png",
 		"com.liferay.portlet.instanceable=true",
-		"com.liferay.portlet.layout-cacheable=true",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",

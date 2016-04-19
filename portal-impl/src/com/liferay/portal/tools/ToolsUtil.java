@@ -154,6 +154,10 @@ public class ToolsUtil {
 		String fileName = StringUtil.replace(
 			file.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
 
+		return getPackagePath(fileName);
+	}
+
+	public static String getPackagePath(String fileName) {
 		int x = Math.max(
 			fileName.lastIndexOf("/com/"), fileName.lastIndexOf("/org/"));
 		int y = fileName.lastIndexOf(CharPool.SLASH);

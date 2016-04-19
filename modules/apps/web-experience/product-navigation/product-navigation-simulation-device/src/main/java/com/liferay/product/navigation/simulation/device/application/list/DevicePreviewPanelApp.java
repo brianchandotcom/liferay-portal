@@ -17,13 +17,20 @@ package com.liferay.product.navigation.simulation.device.application.list;
 import com.liferay.application.list.BaseJSPPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.product.navigation.simulation.application.list.SimulationPanelCategory;
 import com.liferay.product.navigation.simulation.web.constants.ProductNavigationSimulationPortletKeys;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 
@@ -46,6 +53,15 @@ public class DevicePreviewPanelApp extends BaseJSPPanelApp {
 	@Override
 	public String getJspPath() {
 		return "/simulation_device.jsp";
+	}
+
+	@Override
+	public String getLabel(Locale locale) {
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				LocaleUtil.toLanguageId(locale));
+
+		return LanguageUtil.get(resourceBundle, "screen-size");
 	}
 
 	@Override
@@ -85,6 +101,11 @@ public class DevicePreviewPanelApp extends BaseJSPPanelApp {
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
+
+		_resourceBundleLoader =
+			ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByServletContextName(
+					servletContext.getServletContextName());
 	}
 
 	protected boolean hasPreviewInDevicePermission(
@@ -94,5 +115,7 @@ public class DevicePreviewPanelApp extends BaseJSPPanelApp {
 		return GroupPermissionUtil.contains(
 			permissionChecker, group, ActionKeys.PREVIEW_IN_DEVICE);
 	}
+
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

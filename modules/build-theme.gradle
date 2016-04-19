@@ -1,15 +1,35 @@
 import groovy.json.JsonBuilder
+import groovy.json.JsonSlurper
+
+buildscript {
+	apply from: rootProject.file("build-buildscript.gradle"), to: buildscript
+}
 
 apply plugin: "base"
+apply plugin: "maven"
 apply plugin: "com.liferay.cache"
 apply plugin: "com.liferay.gulp"
 
-buildDir = file("build_gradle")
+JsonSlurper jsonSlurper = new JsonSlurper()
+
+Map packageJson = jsonSlurper.parse(file("package.json"))
+
+project.archivesBaseName = packageJson.name
+project.buildDir = file("build_gradle")
+project.group = "com.liferay.plugins"
+project.version = packageJson.version
 
 task deploy(type: Copy)
+task install(type: Upload)
 
-assemble {
-	dependsOn gulpBuild
+afterEvaluate {
+	apply from: buildscript.classLoader.getResource("com/liferay/gradle/plugins/dependencies/config-maven.gradle"), to: project
+}
+
+artifacts {
+	archives(file("dist/${project.archivesBaseName}.war")) {
+		builtBy gulpBuild
+	}
 }
 
 cache {
@@ -39,6 +59,11 @@ deploy {
 	from "dist"
 	group = "build"
 	into new File(project.properties["liferay.home"], "deploy")
+}
+
+install {
+	configuration = configurations.archives
+	description = "Installs the 'archives' artifacts into the local Maven repository."
 }
 
 tasks.all {

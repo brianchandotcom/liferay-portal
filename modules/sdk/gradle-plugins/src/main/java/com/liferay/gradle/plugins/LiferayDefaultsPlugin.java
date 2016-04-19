@@ -1686,7 +1686,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			configureTaskBuildChangeLog(buildChangeLogTask, relengDir);
 			configureTaskProcessResources(buildChangeLogTask);
 
-			if (taskNames.contains(LiferayOSGiPlugin.DEPLOY_TASK_NAME)) {
+			if (taskNames.contains(LiferayBasePlugin.DEPLOY_TASK_NAME)) {
 				configureTaskDeploy(recordArtifactTask);
 			}
 		}
@@ -2073,7 +2073,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		final Project project = recordArtifactTask.getProject();
 
 		Task task = GradleUtil.getTask(
-			project, LiferayOSGiPlugin.DEPLOY_TASK_NAME);
+			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
 
 		if (!(task instanceof Copy)) {
 			return;

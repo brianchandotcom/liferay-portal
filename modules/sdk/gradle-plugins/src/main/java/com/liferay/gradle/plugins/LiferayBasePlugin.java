@@ -34,12 +34,15 @@ import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class LiferayBasePlugin implements Plugin<Project> {
+
+	public static final String DEPLOY_TASK_NAME = "deploy";
 
 	public static final String PORTAL_CONFIGURATION_NAME = "portal";
 
@@ -51,6 +54,7 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, SourceFormatterDefaultsPlugin.class);
 
 		addConfigurationPortal(project, liferayExtension);
+		addTaskDeploy(project, liferayExtension);
 
 		configureConfigurations(project, liferayExtension);
 		configureTasksDirectDeploy(project, liferayExtension);
@@ -134,6 +138,26 @@ public class LiferayBasePlugin implements Plugin<Project> {
 			project);
 
 		return liferayExtension;
+	}
+
+	protected Copy addTaskDeploy(
+		Project project, final LiferayExtension liferayExtension) {
+
+		Copy copy = GradleUtil.addTask(project, DEPLOY_TASK_NAME, Copy.class);
+
+		copy.into(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return liferayExtension.getDeployDir();
+				}
+
+			});
+
+		copy.setDescription("Assembles the project and deploys it to Liferay.");
+
+		return copy;
 	}
 
 	protected void configureConfigurations(

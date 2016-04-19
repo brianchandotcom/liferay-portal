@@ -105,16 +105,11 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 	public static final String CLEAN_DEPLOYED_PROPERTY_NAME = "cleanDeployed";
 
-	public static final String DEPLOY_TASK_NAME = "deploy";
-
 	public static final String PLUGIN_NAME = "liferayOSGi";
 
 	@Override
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
-
-		LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
 
 		final LiferayOSGiExtension liferayOSGiExtension =
 			GradleUtil.addExtension(
@@ -122,9 +117,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		applyPlugins(project);
 
+		addDeployedFile(project, JavaPlugin.JAR_TASK_NAME, false);
+
 		addTaskAutoUpdateXml(project);
 		addTasksBuildWSDDJar(project);
-		addTaskDeploy(project, liferayExtension);
 
 		configureArchivesBaseName(project);
 		configureDescription(project);
@@ -157,7 +153,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		Project project = abstractArchiveTask.getProject();
 
 		Task task = GradleUtil.getTask(
-			abstractArchiveTask.getProject(), DEPLOY_TASK_NAME);
+			abstractArchiveTask.getProject(),
+			LiferayBasePlugin.DEPLOY_TASK_NAME);
 
 		if (!(task instanceof Copy)) {
 			return;
@@ -214,6 +211,15 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 				});
 		}
+	}
+
+	protected void addDeployedFile(
+		Project project, String taskName, boolean lazy) {
+
+		AbstractArchiveTask abstractArchiveTask =
+			(AbstractArchiveTask)GradleUtil.getTask(project, taskName);
+
+		addDeployedFile(abstractArchiveTask, lazy);
 	}
 
 	protected DirectDeployTask addTaskAutoUpdateXml(final Project project) {
@@ -500,30 +506,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		return jar;
 	}
 
-	protected Copy addTaskDeploy(
-		Project project, final LiferayExtension liferayExtension) {
-
-		Copy copy = GradleUtil.addTask(project, DEPLOY_TASK_NAME, Copy.class);
-
-		copy.into(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return liferayExtension.getDeployDir();
-				}
-
-			});
-
-		copy.setDescription("Assembles the project and deploys it to Liferay.");
-
-		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-
-		addDeployedFile(jar, false);
-
-		return copy;
-	}
-
 	protected void addTasksBuildWSDDJar(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
@@ -707,7 +689,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				for (Task task : project.getTasks()) {
 					String taskName = task.getName();
 
-					if (taskName.equals(DEPLOY_TASK_NAME) ||
+					if (taskName.equals(LiferayBasePlugin.DEPLOY_TASK_NAME) ||
 						taskName.equals(
 							EclipsePlugin.getECLIPSE_CP_TASK_NAME()) ||
 						taskName.equals(

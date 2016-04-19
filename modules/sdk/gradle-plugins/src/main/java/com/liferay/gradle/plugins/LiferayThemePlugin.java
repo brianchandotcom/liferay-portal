@@ -57,9 +57,6 @@ public class LiferayThemePlugin implements Plugin<Project> {
 	public static final String CREATE_LIFERAY_THEME_JSON_TASK_NAME =
 		"createLiferayThemeJson";
 
-	public static final String DEPLOY_TASK_NAME =
-		LiferayOSGiPlugin.DEPLOY_TASK_NAME;
-
 	@Override
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
@@ -145,7 +142,7 @@ public class LiferayThemePlugin implements Plugin<Project> {
 	}
 
 	protected Task addTaskDeploy(Project project) {
-		Task task = project.task(DEPLOY_TASK_NAME);
+		Task task = project.task(LiferayBasePlugin.DEPLOY_TASK_NAME);
 
 		task.dependsOn(_GULP_DEPLOY_TASK_NAME);
 		task.setDescription("Assembles the theme and deploys it to Liferay.");

@@ -115,16 +115,16 @@ public class UpgradeClient {
 	public UpgradeClient(String jvmOpts, File logFile) throws Exception {
 		_consoleReader = new ConsoleReader();
 
-		_datasourcePropertiesFile = new File(
+		_dataSourcePropertiesFile = new File(
 			"portal-upgrade-datasource.properties");
 
-		_datasourceProperties = new Properties();
+		_dataSourceProperties = new Properties();
 
-		if (_datasourcePropertiesFile.exists()) {
+		if (_dataSourcePropertiesFile.exists()) {
 			try (InputStream inputStream =
-					new FileInputStream(_datasourcePropertiesFile)) {
+					new FileInputStream(_dataSourcePropertiesFile)) {
 
-				_datasourceProperties.load(inputStream);
+				_dataSourceProperties.load(inputStream);
 			}
 			catch (IOException ioe) {
 				System.err.println("Could not load server.properties");
@@ -287,7 +287,7 @@ public class UpgradeClient {
 
 	public void verifyProperties() {
 		try {
-			_verifyDatasourceProperties();
+			_verifyDataSourceProperties();
 
 			_verifyServerProperties();
 
@@ -386,7 +386,7 @@ public class UpgradeClient {
 	}
 
 	private void _saveProperties() throws IOException {
-		_store(_datasourceProperties, _datasourcePropertiesFile);
+		_store(_dataSourceProperties, _dataSourcePropertiesFile);
 
 		_store(_serverProperties, _serverPropertiesFile);
 
@@ -404,19 +404,19 @@ public class UpgradeClient {
 		}
 	}
 
-	private void _verifyDatasourceProperties() throws IOException {
-		String value = _datasourceProperties.getProperty(
+	private void _verifyDataSourceProperties() throws IOException {
+		String value = _dataSourceProperties.getProperty(
 			"jdbc.default.driverClassName");
 
 		if ((value == null) || value.equals("")) {
 			String response;
 
-			Datasource2 datasource2 = null;
+			DataSource dataSource = null;
 
-			while (datasource2 == null) {
+			while (dataSource == null) {
 				System.out.print("[ ");
 
-				for (String name : _datasources.keySet()) {
+				for (String name : _dataSources.keySet()) {
 					System.out.print(name + " ");
 				}
 
@@ -430,9 +430,9 @@ public class UpgradeClient {
 					response = "mysql";
 				}
 
-				datasource2 = _datasources.get(response);
+				dataSource = _dataSources.get(response);
 
-				if (datasource2 == null) {
+				if (dataSource == null) {
 					System.err.println(
 						response + " is not a supported database");
 				}
@@ -440,58 +440,58 @@ public class UpgradeClient {
 
 			System.out.println(
 				"Please enter your database JDBC driver protocol (" +
-					datasource2.getProtocol() + "): ");
+					dataSource.getProtocol() + "): ");
 
 			response = _consoleReader.readLine();
 
 			if (!response.equals("")) {
-				datasource2.setProtocol(response);
+				dataSource.setProtocol(response);
 			}
 
 			System.out.println(
 				"Please enter your database JDBC driver class name(" +
-					datasource2.getClassName() + "): ");
+					dataSource.getClassName() + "): ");
 
 			response = _consoleReader.readLine();
 
 			if (!response.equals("")) {
-				datasource2.setClassName(response);
+				dataSource.setClassName(response);
 			}
 
 			System.out.println(
-				"Please enter your database host (" + datasource2.getHost() +
+				"Please enter your database host (" + dataSource.getHost() +
 					"): ");
 
 			response = _consoleReader.readLine();
 
 			if (!response.equals("")) {
-				datasource2.setHost(response);
+				dataSource.setHost(response);
 			}
 
 			System.out.println(
 				"Please enter your database port (" +
-					(datasource2.getPort() > 0 ?
-						datasource2.getPort() : "none") + "): ");
+					(dataSource.getPort() > 0 ?
+						dataSource.getPort() : "none") + "): ");
 
 			response = _consoleReader.readLine();
 
 			if (!response.equals("")) {
 				if (response.equals("none")) {
-					datasource2.setPort(0);
+					dataSource.setPort(0);
 				}
 				else {
-					datasource2.setPort(Integer.parseInt(response));
+					dataSource.setPort(Integer.parseInt(response));
 				}
 			}
 
 			System.out.println(
 				"Please enter your database name (" +
-					datasource2.getDatabaseName() + "): ");
+					dataSource.getDatabaseName() + "): ");
 
 			response = _consoleReader.readLine();
 
 			if (!response.equals("")) {
-				datasource2.setDatabaseName(response);
+				dataSource.setDatabaseName(response);
 			}
 
 			System.out.println("Please enter your database username: ");
@@ -502,13 +502,13 @@ public class UpgradeClient {
 
 			String password = _consoleReader.readLine();
 
-			_datasourceProperties.setProperty(
-				"jdbc.default.driverClassName", datasource2.getClassName());
-			_datasourceProperties.setProperty(
-				"jdbc.default.url", datasource2.getUrl());
-			_datasourceProperties.setProperty(
+			_dataSourceProperties.setProperty(
+				"jdbc.default.driverClassName", dataSource.getClassName());
+			_dataSourceProperties.setProperty(
+				"jdbc.default.url", dataSource.getUrl());
+			_dataSourceProperties.setProperty(
 				"jdbc.default.username", username);
-			_datasourceProperties.setProperty(
+			_dataSourceProperties.setProperty(
 				"jdbc.default.password", password);
 		}
 	}
@@ -609,7 +609,7 @@ public class UpgradeClient {
 
 	private static final Map<String, AppServer> _appServers =
 		new LinkedHashMap<>();
-	private static final Map<String, Datasource2> _datasources =
+	private static final Map<String, DataSource> _dataSources =
 		new LinkedHashMap<>();
 
 	static {
@@ -622,19 +622,19 @@ public class UpgradeClient {
 		_appServers.put("websphere", AppServer.getWebsphere());
 		_appServers.put("wildfly", AppServer.getWildFly());
 
-		_datasources.put("db2", Datasource2.getDB2());
-		_datasources.put("mariadb", Datasource2.getMariaDB());
-		_datasources.put("mysql", Datasource2.getMySQL());
-		_datasources.put("oracle", Datasource2.getOracle());
-		_datasources.put("postgresql", Datasource2.getPostgreSQL());
-		_datasources.put("sqlserver", Datasource2.getSQLServer());
-		_datasources.put("sybase", Datasource2.getSybase());
+		_dataSources.put("db2", DataSource.getDB2());
+		_dataSources.put("mariadb", DataSource.getMariaDB());
+		_dataSources.put("mysql", DataSource.getMySQL());
+		_dataSources.put("oracle", DataSource.getOracle());
+		_dataSources.put("postgresql", DataSource.getPostgreSQL());
+		_dataSources.put("sqlserver", DataSource.getSQLServer());
+		_dataSources.put("sybase", DataSource.getSybase());
 	}
 
 	private AppServer _appServer;
 	private final ConsoleReader _consoleReader;
-	private final Properties _datasourceProperties;
-	private final File _datasourcePropertiesFile;
+	private final Properties _dataSourceProperties;
+	private final File _dataSourcePropertiesFile;
 	private final String _jvmOpts;
 	private final File _logFile;
 	private final Properties _serverProperties;

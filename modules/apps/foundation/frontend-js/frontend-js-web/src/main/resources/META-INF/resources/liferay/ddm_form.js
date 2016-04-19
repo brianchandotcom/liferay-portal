@@ -332,6 +332,12 @@ AUI.add(
 						);
 					},
 
+					destructor: function() {
+						var instance = this;
+
+						instance.get('container').remove();
+					},
+
 					renderUI: function() {
 						var instance = this;
 
@@ -1955,12 +1961,11 @@ AUI.add(
 				NAME: 'liferay-ddm-form',
 
 				prototype: {
-					repeatableInstances: {},
-
 					initializer: function() {
 						var instance = this;
 
 						instance.eventHandlers = [];
+						instance.repeatableInstances = {};
 
 						instance.bindUI();
 						instance.renderUI();
@@ -1996,8 +2001,20 @@ AUI.add(
 						var instance = this;
 
 						AArray.invoke(instance.eventHandlers, 'detach');
+						AArray.invoke(instance.get('fields'), 'destroy');
+
+						instance.get('container').remove();
 
 						instance.eventHandlers = null;
+
+						 A.each(
+						 	instance.repeatableInstances,
+						 	function(item) {
+						 		item.destroy();
+						 	}
+						 );
+
+						 instance.repeatableInstances = null;
 					},
 
 					moveField: function(parentField, oldIndex, newIndex) {

@@ -17,10 +17,10 @@ package com.liferay.portal.tools.upgrade.client;
 /**
  * @author David Truong
  */
-public class Datasource {
+public class Datasource2 {
 
-	public static Datasource getDB2() {
-		return new Datasource(
+	public static Datasource2 getDB2() {
+		return new Datasource2(
 			"com.ibm.db2.jcc.DB2Driver", "jdbc:db2://", "localhost", 50000,
 			"/lportal",
 			":deferPrepares=false;fullyMaterializeInputStreams=true;" +
@@ -28,16 +28,16 @@ public class Datasource {
 					"progressiveStreaming=2;");
 	}
 
-	public static Datasource getMariaDB() {
-		return new Datasource(
+	public static Datasource2 getMariaDB() {
+		return new Datasource2(
 			"org.mariadb.jdbc.Driver", "jdbc:mariadb://", "localhost", 0,
 			"/lportal",
 			"?useUnicode=true&characterEncoding=UTF-8" +
 				"&useFastDateParsing=false");
 	}
 
-	public static Datasource getMySQL() {
-		return new Datasource(
+	public static Datasource2 getMySQL() {
+		return new Datasource2(
 			"com.mysql.jdbc.Driver", "jdbc:mysql://", "localhost", 0,
 			"/lportal",
 			"?characterEncoding=UTF-8&dontTrackOpenResources=true" +
@@ -45,26 +45,26 @@ public class Datasource {
 					"&useFastDateParsing=false&useUnicode=true");
 	}
 
-	public static Datasource getOracle() {
-		return new Datasource(
+	public static Datasource2 getOracle() {
+		return new Datasource2(
 			"oracle.jdbc.OracleDriver", "jdbc:oracle:thin:@", "localhost", 1521,
 			":xe", "");
 	}
 
-	public static Datasource getPostgreSQL() {
-		return new Datasource(
+	public static Datasource2 getPostgreSQL() {
+		return new Datasource2(
 			"org.postgresql.Driver", "jdbc:postgresql://", "localhost", 5432,
 			"/lportal", "");
 	}
 
-	public static Datasource getSQLServer() {
-		return new Datasource(
+	public static Datasource2 getSQLServer() {
+		return new Datasource2(
 			"com.microsoft.sqlserver.jdbc.SQLServerDriver", "jdbc:sqlserver://",
 			"localhost", 0, "/lportal", "");
 	}
 
-	public static Datasource getSybase() {
-		return new Datasource(
+	public static Datasource2 getSybase() {
+		return new Datasource2(
 			"com.sybase.jdbc4.jdbc.SybDriver", "jdbc:sybase:Tds:", "localhost",
 			5000, "/lportal", "");
 	}
@@ -118,7 +118,7 @@ public class Datasource {
 		_protocol = protocol;
 	}
 
-	private Datasource(
+	private Datasource2(
 		String className, String protocol, String host, int port,
 		String databaseName, String params) {
 

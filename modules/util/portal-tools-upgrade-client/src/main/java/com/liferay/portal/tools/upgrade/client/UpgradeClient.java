@@ -121,8 +121,7 @@ public class UpgradeClient {
 		_datasourceProperties = new Properties();
 
 		if (_datasourcePropertiesFile.exists()) {
-			try (
-				InputStream inputStream =
+			try (InputStream inputStream =
 					new FileInputStream(_datasourcePropertiesFile)) {
 
 				_datasourceProperties.load(inputStream);
@@ -141,8 +140,7 @@ public class UpgradeClient {
 		_serverProperties = new Properties();
 
 		if (_serverPropertiesFile.exists()) {
-			try (
-				InputStream inputStream =
+			try (InputStream inputStream =
 					new FileInputStream(_serverPropertiesFile)) {
 
 				_serverProperties.load(inputStream);
@@ -157,8 +155,7 @@ public class UpgradeClient {
 		_upgradeProperties = new Properties();
 
 		if (_upgradePropertiesFile.exists()) {
-			try (
-				InputStream inputStream =
+			try (InputStream inputStream =
 					new FileInputStream(_upgradePropertiesFile)) {
 
 				_upgradeProperties.load(inputStream);
@@ -414,9 +411,9 @@ public class UpgradeClient {
 		if ((value == null) || value.equals("")) {
 			String response;
 
-			Datasource datasource = null;
+			Datasource2 datasource2 = null;
 
-			while (datasource == null) {
+			while (datasource2 == null) {
 				System.out.print("[ ");
 
 				for (String name : _datasources.keySet()) {
@@ -433,9 +430,9 @@ public class UpgradeClient {
 					response = "mysql";
 				}
 
-				datasource = _datasources.get(response);
+				datasource2 = _datasources.get(response);
 
-				if (datasource == null) {
+				if (datasource2 == null) {
 					System.err.println(
 						response + " is not a supported database");
 				}
@@ -443,58 +440,58 @@ public class UpgradeClient {
 
 			System.out.println(
 				"Please enter your database JDBC driver protocol (" +
-					datasource.getProtocol() + "): ");
+					datasource2.getProtocol() + "): ");
 
 			response = _consoleReader.readLine();
 
 			if (!response.equals("")) {
-				datasource.setProtocol(response);
+				datasource2.setProtocol(response);
 			}
 
 			System.out.println(
 				"Please enter your database JDBC driver class name(" +
-					datasource.getClassName() + "): ");
+					datasource2.getClassName() + "): ");
 
 			response = _consoleReader.readLine();
 
 			if (!response.equals("")) {
-				datasource.setClassName(response);
+				datasource2.setClassName(response);
 			}
 
 			System.out.println(
-				"Please enter your database host (" + datasource.getHost() +
+				"Please enter your database host (" + datasource2.getHost() +
 					"): ");
 
 			response = _consoleReader.readLine();
 
 			if (!response.equals("")) {
-				datasource.setHost(response);
+				datasource2.setHost(response);
 			}
 
 			System.out.println(
 				"Please enter your database port (" +
-					(datasource.getPort() > 0 ?
-						datasource.getPort() : "none") + "): ");
+					(datasource2.getPort() > 0 ?
+						datasource2.getPort() : "none") + "): ");
 
 			response = _consoleReader.readLine();
 
 			if (!response.equals("")) {
 				if (response.equals("none")) {
-					datasource.setPort(0);
+					datasource2.setPort(0);
 				}
 				else {
-					datasource.setPort(Integer.parseInt(response));
+					datasource2.setPort(Integer.parseInt(response));
 				}
 			}
 
 			System.out.println(
 				"Please enter your database name (" +
-					datasource.getDatabaseName() + "): ");
+					datasource2.getDatabaseName() + "): ");
 
 			response = _consoleReader.readLine();
 
 			if (!response.equals("")) {
-				datasource.setDatabaseName(response);
+				datasource2.setDatabaseName(response);
 			}
 
 			System.out.println("Please enter your database username: ");
@@ -506,9 +503,9 @@ public class UpgradeClient {
 			String password = _consoleReader.readLine();
 
 			_datasourceProperties.setProperty(
-				"jdbc.default.driverClassName", datasource.getClassName());
+				"jdbc.default.driverClassName", datasource2.getClassName());
 			_datasourceProperties.setProperty(
-				"jdbc.default.url", datasource.getUrl());
+				"jdbc.default.url", datasource2.getUrl());
 			_datasourceProperties.setProperty(
 				"jdbc.default.username", username);
 			_datasourceProperties.setProperty(
@@ -612,7 +609,7 @@ public class UpgradeClient {
 
 	private static final Map<String, AppServer> _appServers =
 		new LinkedHashMap<>();
-	private static final Map<String, Datasource> _datasources =
+	private static final Map<String, Datasource2> _datasources =
 		new LinkedHashMap<>();
 
 	static {
@@ -625,13 +622,13 @@ public class UpgradeClient {
 		_appServers.put("websphere", AppServer.getWebsphere());
 		_appServers.put("wildfly", AppServer.getWildFly());
 
-		_datasources.put("db2", Datasource.getDB2());
-		_datasources.put("mariadb", Datasource.getMariaDB());
-		_datasources.put("mysql", Datasource.getMySQL());
-		_datasources.put("oracle", Datasource.getOracle());
-		_datasources.put("postgresql", Datasource.getPostgreSQL());
-		_datasources.put("sqlserver", Datasource.getSQLServer());
-		_datasources.put("sybase", Datasource.getSybase());
+		_datasources.put("db2", Datasource2.getDB2());
+		_datasources.put("mariadb", Datasource2.getMariaDB());
+		_datasources.put("mysql", Datasource2.getMySQL());
+		_datasources.put("oracle", Datasource2.getOracle());
+		_datasources.put("postgresql", Datasource2.getPostgreSQL());
+		_datasources.put("sqlserver", Datasource2.getSQLServer());
+		_datasources.put("sybase", Datasource2.getSybase());
 	}
 
 	private AppServer _appServer;

@@ -2056,7 +2056,7 @@ closeTemplate()
 				<echo file="${tstamp.value}/create-weblogic-domain.bat">
 					@echo off
 
-					set "USER_MEM_ARGS=-Xmx1024m -XX:PermSize=256m"
+					set "USER_MEM_ARGS=-Xmx1024m -XX:MetaspaceSize=256m"
 
 					set "MW_HOME=${app.server.weblogic.dir.windows}"
 
@@ -2142,7 +2142,7 @@ closeTemplate()
 				<echo file="${tstamp.value}/create-weblogic-domain.sh">
 					#!/bin/sh
 
-					export USER_MEM_ARGS="-Xmx1024m -XX:PermSize=256m"
+					export USER_MEM_ARGS="-Xmx1024m -XX:MetaspaceSize=256m"
 
 					export MW_HOME="${app.server.weblogic.dir}"
 
@@ -2171,7 +2171,7 @@ closeTemplate()
 						<![CDATA[
 							# Any changes to this script may be lost when adding extensions to this configuration.
 
-							export USER_MEM_ARGS="-Xmx1024m -XX:PermSize=512m"
+							export USER_MEM_ARGS="-Xmx1024m -XX:MetaspaceSize=512m"
 
 							export MW_HOME="${app.server.weblogic.dir}"
 

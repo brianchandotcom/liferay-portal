@@ -161,7 +161,8 @@ import org.gradle.util.VersionNumber;
 /**
  * @author Andrea Di Giorgi
  */
-public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
+public class LiferayOSGiDefaultsPlugin
+	extends BaseDefaultsPlugin<LiferayPlugin> {
 
 	public static final String BASELINE_CONFIGURATION_NAME = "baseline";
 
@@ -2968,6 +2969,6 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 	};
 
 	private static final Logger _logger = Logging.getLogger(
-		LiferayDefaultsPlugin.class);
+		LiferayOSGiDefaultsPlugin.class);
 
 }

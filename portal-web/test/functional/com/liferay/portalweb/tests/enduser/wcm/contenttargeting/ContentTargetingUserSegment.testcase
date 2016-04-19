@@ -49,7 +49,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AddGlobalUserSegmentToSiteViaUserSegmentContentDisplayPortlet" priority="4">
+	<command name="AddGlobalUserSegmentToSiteViaUserSegmentContentDisplayPortlet" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />
 		</execute>
@@ -133,7 +133,7 @@
 		</execute>
 	</command>
 
-	<command name="AddParentSiteUserSegmentToChildSiteViaUserSegmentContentDisplayPortlet" priority="4">
+	<command name="AddParentSiteUserSegmentToChildSiteViaUserSegmentContentDisplayPortlet" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -258,7 +258,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentBehaviorContentVisitedCP" priority="4">
+	<command name="AddUserSegmentBehaviorContentVisitedCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -315,7 +315,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentBehaviorPageVisitedCP" priority="4">
+	<command name="AddUserSegmentBehaviorPageVisitedCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -350,7 +350,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentBehaviorScorePointsCP" priority="4">
+	<command name="AddUserSegmentBehaviorScorePointsCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -385,7 +385,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentBlankCP" priority="4">
+	<command name="AddUserSegmentBlankCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -402,7 +402,7 @@
 		<execute macro="ContentTargetingUserSegment#saveCP" />
 	</command>
 
-	<command name="AddUserSegmentSocialFacebookAgeCP" priority="4">
+	<command name="AddUserSegmentSocialFacebookAgeCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -439,7 +439,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentSocialFacebookCityCP" priority="4">
+	<command name="AddUserSegmentSocialFacebookCityCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -474,7 +474,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentSocialFacebookEducationCP" priority="4">
+	<command name="AddUserSegmentSocialFacebookEducationCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -511,7 +511,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentSocialFacebookFriendsCP" priority="4">
+	<command name="AddUserSegmentSocialFacebookFriendsCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -548,7 +548,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentSocialFacebookGenderCP" priority="4">
+	<command name="AddUserSegmentSocialFacebookGenderCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -583,7 +583,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentSocialFacebookPageLikeCP" priority="4">
+	<command name="AddUserSegmentSocialFacebookPageLikeCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -618,7 +618,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentSystemAttributesBrowserCP" priority="4">
+	<command name="AddUserSegmentSystemAttributesBrowserCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -653,7 +653,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentSystemAttributesDeviceCP" priority="4">
+	<command name="AddUserSegmentSystemAttributesDeviceCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -701,7 +701,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentSystemAttributesLocationCP" priority="4">
+	<command name="AddUserSegmentSystemAttributesLocationCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -738,7 +738,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentSystemAttributesOperatingSystemCP" priority="4">
+	<command name="AddUserSegmentSystemAttributesOperatingSystemCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -773,7 +773,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentSystemAttributesTimeCP" priority="4">
+	<command name="AddUserSegmentSystemAttributesTimeCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -810,7 +810,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentUserAttributesAgeCP" priority="4">
+	<command name="AddUserSegmentUserAttributesAgeCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -847,7 +847,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentUserAttributesGenderCP" priority="4">
+	<command name="AddUserSegmentUserAttributesGenderCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -882,7 +882,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentUserAttributesOrganizationMemberCP" priority="4">
+	<command name="AddUserSegmentUserAttributesOrganizationMemberCP" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -928,7 +928,7 @@
 		<execute macro="Organization#tearDownCP" />
 	</command>
 
-	<command name="AddUserSegmentUserAttributesOrganizationRoleCP" priority="4">
+	<command name="AddUserSegmentUserAttributesOrganizationRoleCP" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -976,7 +976,7 @@
 		<execute macro="Organization#tearDownCP" />
 	</command>
 
-	<command name="AddUserSegmentUserAttributesRegularRoleCP" priority="4">
+	<command name="AddUserSegmentUserAttributesRegularRoleCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -1011,7 +1011,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentUserAttributesSiteMemberCP" priority="4">
+	<command name="AddUserSegmentUserAttributesSiteMemberCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -1046,7 +1046,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentUserAttributesSiteRoleCP" priority="4">
+	<command name="AddUserSegmentUserAttributesSiteRoleCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -1083,7 +1083,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentUserAttributesUserGroupMemberCP" priority="4">
+	<command name="AddUserSegmentUserAttributesUserGroupMemberCP" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="User Groups" />
 		</execute>
@@ -1126,7 +1126,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSegmentUserAttributesUserSignedInCP" priority="4">
+	<command name="AddUserSegmentUserAttributesUserSignedInCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -1158,7 +1158,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteUserSegmentCP" priority="4">
+	<command name="DeleteUserSegmentCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -1193,7 +1193,7 @@
 		</execute>
 	</command>
 
-	<command name="EditUserSegmentCP" priority="4">
+	<command name="EditUserSegmentCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -1250,7 +1250,7 @@
 		</execute>
 	</command>
 
-	<command name="UserSegmentContentViewReport" priority="4">
+	<command name="UserSegmentContentViewReport" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -1352,7 +1352,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewRulesAppliedUserSegmentContentDisplayPortlet" priority="4">
+	<command name="ViewRulesAppliedUserSegmentContentDisplayPortlet" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>

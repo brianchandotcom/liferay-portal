@@ -225,7 +225,7 @@
 		</execute>
 	</command>
 
-	<command name="CampaignAddViaCampaignContentDisplayPortlet" priority="4">
+	<command name="CampaignAddViaCampaignContentDisplayPortlet" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -546,7 +546,7 @@
 		</execute>
 	</command>
 
-	<command name="CampaignViewInSimulatorPG" priority="4">
+	<command name="CampaignViewInSimulatorPG" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -1098,7 +1098,7 @@
 		</execute>
 	</command>
 
-	<command name="ClusteringWithContentTargeting" priority="4">
+	<command name="ClusteringWithContentTargeting" priority="3">
 		<property name="app.server.bundles.size" value="1" />
 		<property name="cluster.enabled" value="true" />
 
@@ -1366,7 +1366,7 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportSmoke" priority="4">
+	<command name="ExportImportSmoke" priority="5">
 		<execute macro="LAR#setupContentTargeting" />
 
 		<execute macro="LAR#_gotoExportSite">

@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.tasks;
 
-import com.liferay.gradle.plugins.LiferayBasePlugin;
+import com.liferay.gradle.plugins.LiferayOSGiPlugin;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
 
@@ -44,7 +44,7 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 
 	public BuildThumbnailsTask() {
 		GradleUtil.setProperty(
-			this, LiferayBasePlugin.AUTO_CLEAN_PROPERTY_NAME, false);
+			this, LiferayOSGiPlugin.AUTO_CLEAN_PROPERTY_NAME, false);
 	}
 
 	@Override

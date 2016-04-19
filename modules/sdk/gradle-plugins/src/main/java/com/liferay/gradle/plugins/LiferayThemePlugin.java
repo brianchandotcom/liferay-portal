@@ -60,7 +60,10 @@ public class LiferayThemePlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+		GradleUtil.applyPlugin(project, BasePlugin.class);
+		GradleUtil.applyPlugin(project, GulpPlugin.class);
 		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
+		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 
 		LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
@@ -68,10 +71,6 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		// liferay-theme-tasks already uses the "build" directory
 
 		project.setBuildDir("build_gradle");
-
-		GradleUtil.applyPlugin(project, BasePlugin.class);
-		GradleUtil.applyPlugin(project, GulpPlugin.class);
-		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 
 		Task createLiferayThemeJsonTask = addTaskCreateLiferayThemeJson(
 			project, liferayExtension);

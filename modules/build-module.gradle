@@ -1,2 +1,0 @@
-apply plugin: "com.liferay.defaults.plugin"
-apply plugin: "com.liferay.plugin"

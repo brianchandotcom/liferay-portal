@@ -14,11 +14,10 @@ gradle.beforeProject {
 	}
 
 	configure(project) {
-		if (project.path.startsWith(":apps:foundation:frontend-theme:") && FileUtil.exists(project, "gulpfile.js")) {
-			apply from: rootProject.file("build-theme.gradle")
-		}
-		else if (FileUtil.exists(project, "bnd.bnd") && FileUtil.exists(project, "build.gradle")) {
-			apply from: rootProject.file("build-module.gradle")
+		apply plugin: "com.liferay.defaults.plugin"
+		apply plugin: "com.liferay.plugin"
+
+		pluginManager.withPlugin("com.liferay.osgi.plugin") {
 			apply plugin: "pmd"
 
 			configurations {

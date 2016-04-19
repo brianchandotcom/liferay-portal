@@ -8,4 +8,4 @@ ffi-1.9.10-java
 multi_json-1.11.2
 rb-fsevent-0.9.7
 rb-inotify-0.9.7
-sass-3.4.21
+sass-3.4.22

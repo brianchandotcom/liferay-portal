@@ -90,8 +90,20 @@ public class DataSource {
 	}
 
 	public String getUrl() {
-		return _protocol + _host + (_port > 0 ? ":" + _port : "") +
-			_databaseName + _params;
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_protocol);
+		sb.append(_host);
+
+		if (_port > 0) {
+			sb.append(':');
+			sb.append(_port);
+		}
+
+		sb.append(_databaseName);
+		sb.append(_params);
+
+		return sb.toString();
 	}
 
 	public void setClassName(String className) {

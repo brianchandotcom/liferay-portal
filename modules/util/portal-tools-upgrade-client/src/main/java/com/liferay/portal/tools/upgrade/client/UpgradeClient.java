@@ -455,10 +455,17 @@ public class UpgradeClient {
 				dataSource.setHost(response);
 			}
 
+			String portString;
+
+			if (dataSource.getPort() > 0) {
+				portString = String.valueOf(dataSource.getPort());
+			}
+			else {
+				portString = "none";
+			}
+
 			System.out.println(
-				"Please enter your database port (" +
-					(dataSource.getPort() > 0 ?
-						dataSource.getPort() : "none") + "): ");
+				"Please enter your database port (" + portString + "): ");
 
 			response = _consoleReader.readLine();
 

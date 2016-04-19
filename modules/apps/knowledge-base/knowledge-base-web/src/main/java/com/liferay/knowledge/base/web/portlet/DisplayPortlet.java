@@ -88,7 +88,6 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Knowledge Base Display",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.always-send-redirect=true",
-		"javax.portlet.init-param.config-template=/display/configuration.jsp",
 		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.template-path=/display/",
 		"javax.portlet.init-param.view-template=/display/view.jsp",

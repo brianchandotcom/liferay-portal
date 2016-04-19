@@ -46,6 +46,7 @@ import org.gradle.api.artifacts.ConfigurablePublishArtifact;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
 
@@ -75,9 +76,9 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		Task createLiferayThemeJsonTask = addTaskCreateLiferayThemeJson(
 			project, liferayExtension);
 
-		addTaskDeploy(project);
 		configureArtifacts(project);
 		configureTaskClean(project);
+		configureTaskDeploy(project);
 		configureTasksExecuteGulp(project, createLiferayThemeJsonTask);
 	}
 
@@ -141,15 +142,6 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		return task;
 	}
 
-	protected Task addTaskDeploy(Project project) {
-		Task task = project.task(LiferayBasePlugin.DEPLOY_TASK_NAME);
-
-		task.dependsOn(_GULP_DEPLOY_TASK_NAME);
-		task.setDescription("Assembles the theme and deploys it to Liferay.");
-
-		return task;
-	}
-
 	protected void configureArtifacts(final Project project) {
 		ArtifactHandler artifacts = project.getArtifacts();
 
@@ -182,6 +174,14 @@ public class LiferayThemePlugin implements Plugin<Project> {
 				StringUtil.capitalize(NodePlugin.NPM_INSTALL_TASK_NAME));
 	}
 
+	protected void configureTaskDeploy(Project project) {
+		Copy copy = (Copy)GradleUtil.getTask(
+			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
+
+		copy.dependsOn(BasePlugin.ASSEMBLE_TASK_NAME);
+		copy.from(getWarFile(project));
+	}
+
 	protected void configureTaskExecuteGulp(
 		ExecuteGulpTask executeGulpTask, Task createLiferayThemeJsonTask) {
 
@@ -212,7 +212,5 @@ public class LiferayThemePlugin implements Plugin<Project> {
 	}
 
 	private static final String _GULP_BUILD_TASK_NAME = "gulpBuild";
-
-	private static final String _GULP_DEPLOY_TASK_NAME = "gulpDeploy";
 
 }

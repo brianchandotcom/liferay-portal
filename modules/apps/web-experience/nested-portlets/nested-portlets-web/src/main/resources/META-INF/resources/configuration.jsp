@@ -26,7 +26,7 @@
 	<aui:input name="oldLayoutTemplateId" type="hidden" value="<%= nestedPortletsDisplayContext.getLayoutTemplateId() %>" />
 
 	<aui:fieldset-group markupView="lexicon">
-		<aui:fieldset>
+		<aui:fieldset cssClass="display-style-icon">
 			<h4><liferay-ui:message key="layout-template" /></h4>
 
 			<%
@@ -35,19 +35,17 @@
 			for (LayoutTemplate layoutTemplate : nestedPortletsDisplayContext.getLayoutTemplates()) {
 			%>
 
-				<div class="col-md-2 col-sm-4 col-xs-6">
-					<div class="checkbox toggle-card-dm">
+				<div class="entry-card lfr-asset-item">
+					<div class="radio radio-card radio-top-left">
 						<label>
 							<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" label="" name="preferences--layoutTemplateId--" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" />
 
-							<div class="card card-dm toggle-card-container">
+							<div class="card">
 								<div class="aspect-ratio aspect-ratio-bg-cover" style="background-image:url('<%= layoutTemplate.getStaticResourcePath() + HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>')">
 								</div>
-								<div class="card-footer">
-									<div class="card-dm-details">
-										<div class="card-dm-small">
-											<%= layoutTemplate.getName(locale) %>
-										</div>
+								<div class="card-row card-row-padded">
+									<div class="card-col-field">
+										<%= layoutTemplate.getName(locale) %>
 									</div>
 								</div>
 							</div>

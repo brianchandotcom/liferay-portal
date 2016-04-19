@@ -14,6 +14,10 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.UnsupportedEncodingException;
+
+import java.net.URLDecoder;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -222,7 +226,9 @@ public class DownstreamBuild extends BaseBuild {
 		return new HashMap<>();
 	}
 
-	protected Map<String, String> getParameters(String queryString) {
+	protected Map<String, String> getParameters(String queryString)
+		throws UnsupportedEncodingException {
+
 		if (!queryString.contains("=")) {
 			return Collections.emptyMap();
 		}
@@ -233,7 +239,10 @@ public class DownstreamBuild extends BaseBuild {
 			if (parameter.contains("=")) {
 				String[] parameterParts = parameter.split("=");
 
-				parameters.put(parameterParts[0], parameterParts[1]);
+				String name = URLDecoder.decode(parameterParts[0], "UTF-8");
+				String value = URLDecoder.decode(parameterParts[1], "UTF-8");
+
+				parameters.put(name, value);
 			}
 		}
 

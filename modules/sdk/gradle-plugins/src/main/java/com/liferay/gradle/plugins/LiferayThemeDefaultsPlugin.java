@@ -65,11 +65,19 @@ public class LiferayThemeDefaultsPlugin
 		addTaskInstall(project);
 
 		applyConfigScripts(project);
+
+		configureProject(project);
+	}
+
+	protected void configureProject(Project project) {
+		project.setGroup(_GROUP);
 	}
 
 	@Override
 	protected Class<LiferayThemePlugin> getPluginClass() {
 		return LiferayThemePlugin.class;
 	}
+
+	private static final String _GROUP = "com.liferay.plugins";
 
 }

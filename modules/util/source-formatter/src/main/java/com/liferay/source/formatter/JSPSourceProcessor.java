@@ -805,14 +805,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					line = StringUtil.replace(line, "<%=", "<%= ");
 				}
 
-				if (trimmedPreviousLine.equals("%>") &&
+				if (trimmedPreviousLine.matches("(--)?%>") &&
 					Validator.isNotNull(line) && !trimmedLine.equals("-->")) {
 
 					sb.append("\n");
 				}
 				else if (Validator.isNotNull(previousLine) &&
 						 !trimmedPreviousLine.equals("<!--") &&
-						 trimmedLine.equals("<%")) {
+						 trimmedLine.matches("<%(--)?")) {
 
 					sb.append("\n");
 				}

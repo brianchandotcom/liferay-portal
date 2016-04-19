@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.util.FileUtil;
+import com.liferay.gradle.plugins.util.GradleUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,19 +36,19 @@ public class LiferayPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		Plugin<Project> plugin = null;
+		Class<? extends Plugin<Project>> clazz;
 
 		if (isOSGiPlugin(project)) {
-			plugin = new LiferayOSGiPlugin();
+			clazz = LiferayOSGiPlugin.class;
 		}
 		else if (isThemePlugin(project)) {
-			plugin = new LiferayThemePlugin();
+			clazz = LiferayThemePlugin.class;
 		}
 		else {
-			plugin = new LiferayBasePlugin();
+			clazz = LiferayBasePlugin.class;
 		}
 
-		plugin.apply(project);
+		GradleUtil.applyPlugin(project, clazz);
 	}
 
 	protected boolean isOSGiPlugin(Project project) {

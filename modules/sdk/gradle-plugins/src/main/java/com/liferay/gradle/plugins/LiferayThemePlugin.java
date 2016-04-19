@@ -18,6 +18,7 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.gulp.ExecuteGulpTask;
 import com.liferay.gradle.plugins.gulp.GulpPlugin;
 import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
@@ -72,6 +73,7 @@ public class LiferayThemePlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, BasePlugin.class);
 		GradleUtil.applyPlugin(project, GulpPlugin.class);
+		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 
 		Task createLiferayThemeJsonTask = addTaskCreateLiferayThemeJson(
 			project, liferayExtension);

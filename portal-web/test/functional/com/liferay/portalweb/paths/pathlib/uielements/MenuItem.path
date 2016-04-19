@@ -800,7 +800,7 @@
 </tr>
 <tr>
 	<td>STAGING_CONFIGURATION</td>
-	<td>//a[contains(@id,'staging-configuration')]</td>
+	<td>//a[contains(@id,'configuration') and contains(.,'Staging Configuration')]</td>
 	<td></td>
 </tr>
 <tr>

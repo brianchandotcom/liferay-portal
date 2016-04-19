@@ -23,9 +23,10 @@
 <%@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.SessionClicks" %>
 <%@ page import="com.liferay.portal.kernel.util.StringPool" %>
-<%@ page import="com.liferay.portal.kernel.util.Validator" %>
 <%@ page import="com.liferay.product.navigation.product.menu.web.constants.ProductNavigationProductMenuPortletKeys" %>
 <%@ page import="com.liferay.product.navigation.product.menu.web.constants.ProductNavigationProductMenuWebKeys" %>
+
+<%@ page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 <%@ page import="javax.portlet.RenderRequest" %>
@@ -43,8 +44,8 @@ portletURL.setParameter("mvcPath", "/portlet/product_menu.jsp");
 portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 %>
 
-<li class="control-menu-nav-item <%= Validator.equals(productMenuState, "open") ? "active" : StringPool.BLANK %>">
-	<a class="control-menu-icon product-menu-toggle sidenav-toggler" data-content="body" data-qa-id="productMenu" data-target="#<%= portletNamespace %>sidenavSliderId" data-title="<%= HtmlUtil.escape(LanguageUtil.get(request, "menu")) %>" data-toggle="sidenav" data-type="fixed-push" data-type-mobile="fixed" <%= Validator.equals(productMenuState, "open") ? StringPool.BLANK : "data-url='" + portletURL.toString() + "'" %> href="javascript:;" id="<%= portletNamespace %>sidenavToggleId" onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "menu")) %>')">
+<li class="control-menu-nav-item <%= Objects.equals(productMenuState, "open") ? "active" : StringPool.BLANK %>">
+	<a class="control-menu-icon product-menu-toggle sidenav-toggler" data-content="body" data-qa-id="productMenu" data-target="#<%= portletNamespace %>sidenavSliderId" data-title="<%= HtmlUtil.escape(LanguageUtil.get(request, "menu")) %>" data-toggle="sidenav" data-type="fixed-push" data-type-mobile="fixed" <%= Objects.equals(productMenuState, "open") ? StringPool.BLANK : "data-url='" + portletURL.toString() + "'" %> href="javascript:;" id="<%= portletNamespace %>sidenavToggleId" onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "menu")) %>')">
 		<div class="toast-animation">
 			<div class="pm"></div>
 

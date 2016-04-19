@@ -63,7 +63,7 @@ for (String key : keys) {
 		<c:choose>
 			<c:when test="<%= trashedEntriesCount > 1 %>">
 				<c:choose>
-					<c:when test="<%= Validator.equals(cmd, Constants.REMOVE) %>">
+					<c:when test="<%= Objects.equals(cmd, Constants.REMOVE) %>">
 						<liferay-ui:message arguments="<%= new Object[] {trashedEntriesCount} %>" key="x-items-were-removed" translateArguments="<%= false %>" />
 					</c:when>
 					<c:otherwise>
@@ -102,7 +102,7 @@ for (String key : keys) {
 				</liferay-util:buffer>
 
 				<c:choose>
-					<c:when test="<%= Validator.equals(cmd, Constants.REMOVE) %>">
+					<c:when test="<%= Objects.equals(cmd, Constants.REMOVE) %>">
 						<liferay-ui:message arguments="<%= new Object[] {LanguageUtil.get(request, type), trashEntityLink} %>" key="the-x-x-was-removed" translateArguments="<%= false %>" />
 					</c:when>
 					<c:otherwise>

@@ -75,7 +75,7 @@ String rootLayoutType = siteNavigationMenuDisplayContext.getRootLayoutType();
 									if (layoutDescriptionLayout != null) {
 								%>
 
-										<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= Validator.equals(layoutDescriptionLayout.getUuid(), siteNavigationMenuDisplayContext.getRootLayoutUuid()) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
+										<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= Objects.equals(layoutDescriptionLayout.getUuid(), siteNavigationMenuDisplayContext.getRootLayoutUuid()) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
 
 								<%
 									}

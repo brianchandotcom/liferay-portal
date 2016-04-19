@@ -58,7 +58,7 @@ else if (Validator.isNotNull(ddmStructureKey)) {
 
 String ddmTemplateKey = ParamUtil.getString(request, "ddmTemplateKey");
 
-if (Validator.isNull(ddmTemplateKey) && (article != null) && Validator.equals(article.getDDMStructureKey(), ddmStructureKey)) {
+if (Validator.isNull(ddmTemplateKey) && (article != null) && Objects.equals(article.getDDMStructureKey(), ddmStructureKey)) {
 	ddmTemplateKey = article.getDDMTemplateKey();
 }
 
@@ -88,7 +88,7 @@ boolean changeableDefaultLanguage = journalWebConfiguration.changeableDefaultLan
 if (article != null) {
 	String articleDefaultLanguageId = LocalizationUtil.getDefaultLanguageId(article.getContent(), LocaleUtil.getSiteDefault());
 
-	if (!Validator.equals(defaultLanguageId, articleDefaultLanguageId)) {
+	if (!Objects.equals(defaultLanguageId, articleDefaultLanguageId)) {
 		changeableDefaultLanguage = true;
 	}
 

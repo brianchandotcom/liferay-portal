@@ -31,7 +31,7 @@ if (selLayout != null) {
 	for (Portlet portlet : portlets) {
 	%>
 
-		<aui:option label="<%= portlet.getDisplayName() %>" selected="<%= (Validator.equals(selectedPortletId, portlet.getPortletId())) %>" value="<%= portlet.getPortletId() %>" />
+		<aui:option label="<%= portlet.getDisplayName() %>" selected="<%= (Objects.equals(selectedPortletId, portlet.getPortletId())) %>" value="<%= portlet.getPortletId() %>" />
 
 	<%
 	}

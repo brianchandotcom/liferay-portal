@@ -113,7 +113,7 @@ if (iteratorURL != null) {
 						}
 					}
 
-					if (Validator.equals(orderByType, "asc")) {
+					if (Objects.equals(orderByType, "asc")) {
 						orderByType = "desc";
 					}
 					else {

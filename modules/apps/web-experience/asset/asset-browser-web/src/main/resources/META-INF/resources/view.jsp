@@ -85,7 +85,7 @@
 			%>
 
 			<c:choose>
-				<c:when test='<%= Validator.equals(assetBrowserDisplayContext.getDisplayStyle(), "descriptive") %>'>
+				<c:when test='<%= Objects.equals(assetBrowserDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-text>
 						<liferay-ui:user-portrait
 							cssClass="user-icon-lg"
@@ -125,7 +125,7 @@
 						</h6>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= Validator.equals(assetBrowserDisplayContext.getDisplayStyle(), "icon") %>'>
+				<c:when test='<%= Objects.equals(assetBrowserDisplayContext.getDisplayStyle(), "icon") %>'>
 
 					<%
 					row.setCssClass("entry-card lfr-asset-item");
@@ -156,7 +156,7 @@
 						</c:choose>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= Validator.equals(assetBrowserDisplayContext.getDisplayStyle(), "list") %>'>
+				<c:when test='<%= Objects.equals(assetBrowserDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
 						cssClass="content-column title-column"
 						name="title"

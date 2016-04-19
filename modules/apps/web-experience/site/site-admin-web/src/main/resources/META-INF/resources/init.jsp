@@ -117,6 +117,7 @@ page import="com.liferay.sites.kernel.util.SitesUtil" %>
 page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
 page import="java.util.Map" %><%@
+page import="java.util.Objects" %><%@
 page import="java.util.Set" %>
 
 <%@ page import="javax.portlet.PortletPreferences" %><%@

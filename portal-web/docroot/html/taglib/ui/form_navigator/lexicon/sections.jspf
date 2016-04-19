@@ -46,7 +46,7 @@
 
 				errorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
 
-				if (Validator.equals(formNavigatorEntry.getKey(), errorSection)) {
+				if (Objects.equals(formNavigatorEntry.getKey(), errorSection)) {
 					request.setAttribute(WebKeys.ERROR_SECTION, null);
 				}
 				%>
@@ -85,7 +85,7 @@
 			<%
 				String curErrorSection = (String)request.getAttribute(WebKeys.ERROR_SECTION);
 
-				if (Validator.equals(_getSectionId(curFormNavigatorEntry.getKey()), _getSectionId(curErrorSection))) {
+				if (Objects.equals(_getSectionId(curFormNavigatorEntry.getKey()), _getSectionId(curErrorSection))) {
 					errorSection = curErrorSection;
 
 					request.setAttribute(WebKeys.ERROR_SECTION, null);

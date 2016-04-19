@@ -28,9 +28,10 @@ page import="com.liferay.portal.kernel.theme.NavItem" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.util.LayoutDescription" %><%@
 page import="com.liferay.site.navigation.menu.web.display.context.SiteNavigationMenuDisplayContext" %>
+
+<%@ page import="java.util.Objects" %>
 
 <liferay-theme:defineObjects />
 

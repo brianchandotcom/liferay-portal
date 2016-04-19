@@ -36,6 +36,8 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
@@ -54,11 +56,13 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.model.adapter.StagedGroup;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -575,6 +579,11 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	}
 
 	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
 
@@ -764,6 +773,11 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 
 		String[] newValues = new String[oldValues.length];
 
+		Element rootElement = portletDataContext.getExportDataRootElement();
+
+		Element groupIdMappingsElement = rootElement.addElement(
+			"group-id-mappings");
+
 		for (int i = 0; i < oldValues.length; i++) {
 			String oldValue = oldValues[i];
 
@@ -771,6 +785,10 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				newValues[i] = StringUtil.replace(
 					oldValue, companyGroupScopeId,
 					"[$COMPANY_GROUP_SCOPE_ID$]");
+
+				if (newValues[i].contains("[$COMPANY_GROUP_SCOPE_ID$]")) {
+					continue;
+				}
 			}
 			else if (oldValue.startsWith(
 						AssetPublisherUtil.SCOPE_ID_LAYOUT_PREFIX)) {
@@ -793,6 +811,37 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			else {
 				newValues[i] = oldValue;
 			}
+
+			long groupId = AssetPublisherUtil.getGroupIdFromScopeId(
+				newValues[i], portletDataContext.getGroupId(),
+				portletDataContext.isPrivateLayout());
+
+			Group group = _groupLocalService.fetchGroup(groupId);
+
+			long liveGroupId = 0;
+
+			if (group != null) {
+				liveGroupId = group.getLiveGroupId();
+
+				if (group.isStagedRemotely()) {
+					liveGroupId = group.getRemoteLiveGroupId();
+				}
+			}
+
+			if ((groupId == 0) || (liveGroupId == 0)) {
+				continue;
+			}
+
+			newValues[i] = String.valueOf(groupId);
+
+			Element groupIdMappingElement = groupIdMappingsElement.addElement(
+				"group-id-mapping");
+
+			groupIdMappingElement.addAttribute(
+				"group-id", String.valueOf(groupId));
+
+			groupIdMappingElement.addAttribute(
+				"live-group-id", String.valueOf(liveGroupId));
 		}
 
 		portletPreferences.setValues(key, newValues);
@@ -903,8 +952,8 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			}
 			else if (name.equals("scopeIds")) {
 				updateImportScopeIds(
-					portletPreferences, name, companyGroup.getGroupId(),
-					portletDataContext.getPlid());
+					portletDataContext, portletPreferences, name,
+					companyGroup.getGroupId(), portletDataContext.getPlid());
 			}
 		}
 
@@ -915,6 +964,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	}
 
 	protected void updateImportScopeIds(
+			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences, String key,
 			long companyGroupId, long plid)
 		throws Exception {
@@ -924,6 +974,27 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		if (oldValues == null) {
 			return;
 		}
+
+		StagedModelDataHandler<StagedGroup> stagedModelDataHandler =
+			(StagedModelDataHandler<StagedGroup>)
+				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+					StagedGroup.class.getName());
+
+		Element rootElement = portletDataContext.getImportDataRootElement();
+
+		Element groupIdMappingsElement = rootElement.element(
+			"group-id-mappings");
+
+		for (Element groupIdMappingElement :
+				groupIdMappingsElement.elements("group-id-mapping")) {
+
+			stagedModelDataHandler.importMissingReference(
+				portletDataContext, groupIdMappingElement);
+		}
+
+		Map<Long, Long> groupIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Group.class);
 
 		Layout layout = _layoutLocalService.getLayout(plid);
 
@@ -935,6 +1006,28 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		for (String oldValue : oldValues) {
 			String newValue = StringUtil.replace(
 				oldValue, "[$COMPANY_GROUP_SCOPE_ID$]", companyGroupScopeId);
+
+			if (Validator.isNumber(oldValue) &&
+				groupIds.containsKey(Long.valueOf(oldValue))) {
+
+				Group group = _groupLocalService.fetchGroup(
+					groupIds.get(Long.valueOf(oldValue)));
+
+				if (group != null) {
+					newValue = AssetPublisherUtil.getScopeId(
+						group, portletDataContext.getScopeGroupId());
+				}
+			}
+
+			if (Validator.isNumber(newValue)) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Ignoring group " + newValue + " because it cannot " +
+							"be converted to scope");
+				}
+
+				continue;
+			}
 
 			try {
 				if (!AssetPublisherUtil.isScopeIdSelectable(
@@ -989,6 +1082,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	private CompanyLocalService _companyLocalService;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;
 	private OrganizationLocalService _organizationLocalService;
 	private PortletLocalService _portletLocalService;

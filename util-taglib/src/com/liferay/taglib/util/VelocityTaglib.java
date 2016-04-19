@@ -84,6 +84,16 @@ public interface VelocityTaglib {
 			boolean showLayout, boolean showPortletBreadcrumb)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #breadcrumb(long, String,
+	 * 				boolean, boolean, boolean, boolean)}}
+	 */
+	public void breadcrumb(
+			String ddmTemplateKey, boolean showGuestGroup,
+			boolean showParentGroups, boolean showLayout,
+			boolean showPortletBreadcrumb)
+		throws Exception;
+
 	public void discussion(
 			String className, long classPK, String formAction, String formName,
 			boolean hideControls, boolean ratingsEnabled, String redirect,

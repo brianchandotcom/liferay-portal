@@ -33,7 +33,6 @@ TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 					</portlet:actionURL>
 
 					<liferay-ui:icon
-						icon="undo"
 						id="restoreEntryButton"
 						message="restore"
 						url="<%= restoreEntryURL.toString() %>"
@@ -57,7 +56,6 @@ TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 					%>
 
 					<liferay-ui:icon
-						icon="undo"
 						id="restoreEntryButton"
 						message="restore"
 						onClick="<%= taglibOnClick %>"
@@ -77,7 +75,6 @@ TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 				%>
 
 				<liferay-ui:icon
-					icon="remove"
 					id="removeEntryButton"
 					message="delete"
 					onClick="<%= taglibOnClick %>"
@@ -106,7 +103,6 @@ TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 				%>
 
 				<liferay-ui:icon
-					icon="undo"
 					id="moveEntryButton"
 					message="restore"
 					onClick="<%= taglibOnClick %>"
@@ -126,7 +122,6 @@ TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 				%>
 
 				<liferay-ui:icon
-					icon="remove"
 					id="removeEntryButton"
 					message="delete"
 					onClick="<%= taglibOnClick %>"

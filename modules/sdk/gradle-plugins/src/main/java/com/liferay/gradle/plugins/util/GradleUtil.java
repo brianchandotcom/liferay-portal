@@ -38,6 +38,7 @@ import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.file.copy.CopySpecInternal;
 import org.gradle.api.internal.file.copy.DefaultCopySpec;
+import org.gradle.api.plugins.BasePluginConvention;
 
 /**
  * @author Andrea Di Giorgi
@@ -45,6 +46,13 @@ import org.gradle.api.internal.file.copy.DefaultCopySpec;
 public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 	public static final String PORTAL_TOOL_GROUP = "com.liferay";
+
+	public static String getArchivesBaseName(Project project) {
+		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
+			project, BasePluginConvention.class);
+
+		return basePluginConvention.getArchivesBaseName();
+	}
 
 	public static String getPortalToolVersion(
 		Project project, String portalToolName) {

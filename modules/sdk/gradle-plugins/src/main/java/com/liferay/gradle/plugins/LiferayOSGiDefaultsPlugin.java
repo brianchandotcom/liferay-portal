@@ -241,7 +241,8 @@ public class LiferayOSGiDefaultsPlugin
 	protected void addDependenciesBaseline(Project project) {
 		GradleUtil.addDependency(
 			project, BASELINE_CONFIGURATION_NAME,
-			String.valueOf(project.getGroup()), getArchivesBaseName(project),
+			String.valueOf(project.getGroup()),
+			GradleUtil.getArchivesBaseName(project),
 			"(," + String.valueOf(project.getVersion()) + ")", false);
 	}
 
@@ -556,7 +557,7 @@ public class LiferayOSGiDefaultsPlugin
 
 				@Override
 				public String call() throws Exception {
-					return getArchivesBaseName(project);
+					return GradleUtil.getArchivesBaseName(project);
 				}
 
 			});
@@ -1501,7 +1502,7 @@ public class LiferayOSGiDefaultsPlugin
 				continue;
 			}
 
-			String name = getArchivesBaseName(dependencyProject);
+			String name = GradleUtil.getArchivesBaseName(dependencyProject);
 			String version = String.valueOf(dependencyProject.getVersion());
 
 			includeResource = includeResource.replace(
@@ -1797,7 +1798,8 @@ public class LiferayOSGiDefaultsPlugin
 
 				@Override
 				public File call() throws Exception {
-					String archivesBaseName = getArchivesBaseName(project);
+					String archivesBaseName = GradleUtil.getArchivesBaseName(
+						project);
 
 					if (archivesBaseName.startsWith("com.liferay.portal.")) {
 						return new File(
@@ -2574,13 +2576,6 @@ public class LiferayOSGiDefaultsPlugin
 		}
 	}
 
-	protected String getArchivesBaseName(Project project) {
-		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
-			project, BasePluginConvention.class);
-
-		return basePluginConvention.getArchivesBaseName();
-	}
-
 	protected Properties getArtifactProperties(
 		WritePropertiesTask recordArtifactTask) {
 
@@ -2709,7 +2704,7 @@ public class LiferayOSGiDefaultsPlugin
 		sb.append("group: \"");
 		sb.append(project.getGroup());
 		sb.append("\", name: \"");
-		sb.append(getArchivesBaseName(project));
+		sb.append(GradleUtil.getArchivesBaseName(project));
 		sb.append("\", version: \"");
 
 		String versionString = String.valueOf(project.getVersion());
@@ -2737,7 +2732,7 @@ public class LiferayOSGiDefaultsPlugin
 		sb.append("group: \"");
 		sb.append(project.getGroup());
 		sb.append("\", name: \"");
-		sb.append(getArchivesBaseName(project));
+		sb.append(GradleUtil.getArchivesBaseName(project));
 		sb.append("\", version: \"");
 
 		return Pattern.quote(sb.toString()) + "(\\d.+)\"";

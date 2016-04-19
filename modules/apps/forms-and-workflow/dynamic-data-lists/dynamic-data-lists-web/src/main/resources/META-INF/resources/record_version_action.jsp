@@ -40,7 +40,7 @@ DDLRecordVersion recordVersion = (DDLRecordVersion)request.getAttribute(DDLWebKe
 		url="<%= viewRecordVersionURL %>"
 	/>
 
-	<c:if test="<%= recordVersion.isApproved() && !Validator.equals(record.getVersion(), recordVersion.getVersion()) %>">
+	<c:if test="<%= recordVersion.isApproved() && !Objects.equals(record.getVersion(), recordVersion.getVersion()) %>">
 		<portlet:actionURL name="revertRecord" var="revertURL">
 			<portlet:param name="mvcPath" value="/edit_record.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />

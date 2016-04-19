@@ -39,7 +39,7 @@ if (queryLogicIndex >= 0) {
 	queryName = PrefsParamUtil.getString(portletPreferences, request, "queryName" + queryLogicIndex, "assetTags");
 	queryValues = StringUtil.merge(portletPreferences.getValues("queryValues" + queryLogicIndex, new String[0]));
 
-	if (Validator.equals(queryName, "assetTags")) {
+	if (Objects.equals(queryName, "assetTags")) {
 		queryValues = ParamUtil.getString(request, "queryTagNames" + queryLogicIndex, queryValues);
 
 		queryValues = AssetPublisherUtil.filterAssetTagNames(scopeGroupId, queryValues);
@@ -62,21 +62,21 @@ if (queryLogicIndex >= 0) {
 	</aui:select>
 
 	<aui:select cssClass="asset-query-name" id='<%= randomNamespace + "selector" %>' inlineField="<%= true %>" label="of-the-following" name='<%= "queryName" + index %>'>
-		<aui:option label="tags" selected='<%= Validator.equals(queryName, "assetTags") %>' value="assetTags" />
-		<aui:option label="categories" selected='<%= Validator.equals(queryName, "assetCategories") %>' value="assetCategories" />
+		<aui:option label="tags" selected='<%= Objects.equals(queryName, "assetTags") %>' value="assetTags" />
+		<aui:option label="categories" selected='<%= Objects.equals(queryName, "assetCategories") %>' value="assetCategories" />
 	</aui:select>
 
-	<div class="field tags-selector <%= Validator.equals(queryName, "assetTags") ? StringPool.BLANK : "hide" %>">
+	<div class="field tags-selector <%= Objects.equals(queryName, "assetTags") ? StringPool.BLANK : "hide" %>">
 		<liferay-ui:asset-tags-selector
-			curTags='<%= Validator.equals(queryName, "assetTags") ? queryValues : null %>'
+			curTags='<%= Objects.equals(queryName, "assetTags") ? queryValues : null %>'
 			groupIds="<%= categorizableGroupIds %>"
 			hiddenInput='<%= "queryTagNames" + index %>'
 		/>
 	</div>
 
-	<div class="categories-selector field <%= Validator.equals(queryName, "assetCategories") ? StringPool.BLANK : "hide" %>">
+	<div class="categories-selector field <%= Objects.equals(queryName, "assetCategories") ? StringPool.BLANK : "hide" %>">
 		<liferay-ui:asset-categories-selector
-			curCategoryIds='<%= Validator.equals(queryName, "assetCategories") ? queryValues : null %>'
+			curCategoryIds='<%= Objects.equals(queryName, "assetCategories") ? queryValues : null %>'
 			groupIds="<%= categorizableGroupIds %>"
 			hiddenInput='<%= "queryCategoryIds" + index %>'
 		/>

@@ -58,7 +58,7 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 				for (RatingsType curRatingsType : RatingsType.values()) {
 				%>
 
-					<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= Validator.equals(ratingsType, curRatingsType) %>" value="<%= curRatingsType.getValue() %>" />
+					<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= Objects.equals(ratingsType, curRatingsType) %>" value="<%= curRatingsType.getValue() %>" />
 
 				<%
 				}

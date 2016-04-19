@@ -61,7 +61,7 @@ if (ddmFormValues != null) {
 
 	String ddmFormValueDefaultLanguageId = LocaleUtil.toLanguageId(ddmFormValues.getDefaultLocale());
 
-	if (!Validator.equals(defaultLanguageId, ddmFormValueDefaultLanguageId)) {
+	if (!Objects.equals(defaultLanguageId, ddmFormValueDefaultLanguageId)) {
 		changeableDefaultLanguage = true;
 	}
 

@@ -34,7 +34,8 @@ page import="com.liferay.site.navigation.site.map.web.display.context.SiteNaviga
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.List" %><%@
-page import="java.util.Map" %>
+page import="java.util.Map" %><%@
+page import="java.util.Objects" %>
 
 <liferay-theme:defineObjects />
 

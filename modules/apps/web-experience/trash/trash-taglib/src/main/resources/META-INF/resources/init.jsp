@@ -44,6 +44,7 @@ page import="com.liferay.trash.kernel.util.TrashUtil" %>
 
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.Map" %><%@
+page import="java.util.Objects" %><%@
 page import="java.util.Set" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@

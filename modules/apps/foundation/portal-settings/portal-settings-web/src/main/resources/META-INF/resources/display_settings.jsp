@@ -46,7 +46,7 @@
 		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
 		%>
 
-			<aui:option label="<%= availableLocale.getDisplayName(locale) %>" lang="<%= LocaleUtil.toW3cLanguageId(availableLocale) %>" selected="<%= Validator.equals(companyLocale.getLanguage(), availableLocale.getLanguage()) && Validator.equals(companyLocale.getCountry(), availableLocale.getCountry()) %>" value="<%= LocaleUtil.toLanguageId(availableLocale) %>" />
+			<aui:option label="<%= availableLocale.getDisplayName(locale) %>" lang="<%= LocaleUtil.toW3cLanguageId(availableLocale) %>" selected="<%= Objects.equals(companyLocale.getLanguage(), availableLocale.getLanguage()) && Objects.equals(companyLocale.getCountry(), availableLocale.getCountry()) %>" value="<%= LocaleUtil.toLanguageId(availableLocale) %>" />
 
 		<%
 		}
@@ -134,12 +134,12 @@
 		List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), 0, user.getUserId());
 
 		for (Theme curTheme: themes) {
-			if (Validator.equals(defaultRegularThemeId, curTheme.getThemeId())) {
+			if (Objects.equals(defaultRegularThemeId, curTheme.getThemeId())) {
 				deployed = true;
 			}
 		%>
 
-			<aui:option label="<%= curTheme.getName() %>" selected="<%= Validator.equals(defaultRegularThemeId, curTheme.getThemeId()) %>" value="<%= curTheme.getThemeId() %>" />
+			<aui:option label="<%= curTheme.getName() %>" selected="<%= Objects.equals(defaultRegularThemeId, curTheme.getThemeId()) %>" value="<%= curTheme.getThemeId() %>" />
 
 		<%
 		}
@@ -160,12 +160,12 @@
 		List<Theme> themes = ThemeLocalServiceUtil.getControlPanelThemes(company.getCompanyId(), user.getUserId());
 
 		for (Theme curTheme: themes) {
-			if (Validator.equals(defaultControlPanelThemeId, curTheme.getThemeId())) {
+			if (Objects.equals(defaultControlPanelThemeId, curTheme.getThemeId())) {
 				deployed = true;
 			}
 		%>
 
-			<aui:option label="<%= curTheme.getName() %>" selected="<%= Validator.equals(defaultControlPanelThemeId, curTheme.getThemeId()) %>" value="<%= curTheme.getThemeId() %>" />
+			<aui:option label="<%= curTheme.getName() %>" selected="<%= Objects.equals(defaultControlPanelThemeId, curTheme.getThemeId()) %>" value="<%= curTheme.getThemeId() %>" />
 
 		<%
 		}

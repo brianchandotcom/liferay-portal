@@ -105,7 +105,8 @@ page import="java.util.LinkedHashMap" %><%@
 page import="java.util.LinkedList" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
-page import="java.util.Map" %>
+page import="java.util.Map" %><%@
+page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletMode" %><%@
 page import="javax.portlet.PortletURL" %><%@

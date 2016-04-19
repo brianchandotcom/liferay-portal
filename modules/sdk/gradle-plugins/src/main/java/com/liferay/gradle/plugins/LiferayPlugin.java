@@ -16,6 +16,13 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.util.FileUtil;
 
+import java.io.File;
+import java.io.IOException;
+
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+
+import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 
@@ -30,14 +37,49 @@ public class LiferayPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		Plugin<Project> plugin = null;
 
-		if (FileUtil.exists(project, "bnd.bnd")) {
+		if (isOSGiPlugin(project)) {
 			plugin = new LiferayOSGiPlugin();
+		}
+		else if (isThemePlugin(project)) {
+			plugin = new LiferayThemePlugin();
 		}
 		else {
 			plugin = new LiferayBasePlugin();
 		}
 
 		plugin.apply(project);
+	}
+
+	protected boolean isOSGiPlugin(Project project) {
+		if (FileUtil.exists(project, "bnd.bnd")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isThemePlugin(Project project) {
+		File gulpFile = project.file("gulpfile.js");
+
+		if (!gulpFile.exists()) {
+			return false;
+		}
+
+		String gulpFileContent;
+
+		try {
+			gulpFileContent = new String(
+				Files.readAllBytes(gulpFile.toPath()), StandardCharsets.UTF_8);
+		}
+		catch (IOException ioe) {
+			throw new GradleException("Unable to read " + gulpFile, ioe);
+		}
+
+		if (gulpFileContent.contains("require('liferay-theme-tasks')")) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

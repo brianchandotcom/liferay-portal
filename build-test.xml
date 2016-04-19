@@ -8046,6 +8046,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 				Pattern[] excludedPatterns = new Pattern[] {
 					Pattern.compile(".*Caused by:.*"),
+					Pattern.compile(".*Plugin security management is not enabled.*"),
 					Pattern.compile(".*Portal property.*is obsolete.*"),
 					Pattern.compile(".*Portal .*was modularized.*"),
 					Pattern.compile(".*Table.*does not exist.*")

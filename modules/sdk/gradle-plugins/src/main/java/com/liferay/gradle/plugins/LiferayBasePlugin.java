@@ -34,6 +34,7 @@ import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
 
@@ -156,6 +157,7 @@ public class LiferayBasePlugin implements Plugin<Project> {
 			});
 
 		copy.setDescription("Assembles the project and deploys it to Liferay.");
+		copy.setGroup(BasePlugin.BUILD_GROUP);
 
 		return copy;
 	}

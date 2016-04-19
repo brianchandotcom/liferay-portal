@@ -1245,7 +1245,7 @@ AUI.add(
 								},
 								eventName: 'selectContent',
 								id: 'selectContent',
-								title: Liferay.Language.get('select-web-content'),
+								title: Liferay.Language.get('journal-article'),
 								uri: instance.getWebContentSelectorURL()
 							},
 							function(event) {

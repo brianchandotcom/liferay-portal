@@ -101,7 +101,7 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 			%>
 
 			<c:choose>
-				<c:when test='<%= Validator.equals(mdrActionDisplayContext.getDisplayStyle(), "descriptive") %>'>
+				<c:when test='<%= Objects.equals(mdrActionDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-icon
 						icon="mobile-portrait"
 						toggleRowChecker="<%= true %>"
@@ -135,7 +135,7 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 						path="/action_actions.jsp"
 					/>
 				</c:when>
-				<c:when test='<%= Validator.equals(mdrActionDisplayContext.getDisplayStyle(), "icon") %>'>
+				<c:when test='<%= Objects.equals(mdrActionDisplayContext.getDisplayStyle(), "icon") %>'>
 
 					<%
 					row.setCssClass("entry-card lfr-asset-item");
@@ -163,7 +163,7 @@ PortletURL portletURL = mdrActionDisplayContext.getPortletURL();
 						</liferay-frontend:icon-vertical-card>
 					</liferay-ui:search-container-column-text>
 				</c:when>
-				<c:when test='<%= Validator.equals(mdrActionDisplayContext.getDisplayStyle(), "list") %>'>
+				<c:when test='<%= Objects.equals(mdrActionDisplayContext.getDisplayStyle(), "list") %>'>
 					<%@ include file="/action_columns.jspf" %>
 				</c:when>
 			</c:choose>

@@ -39,6 +39,8 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portlet.asset.service.permission.AssetTagPermission" %>
 
+<%@ page import="java.util.Objects" %>
+
 <%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />

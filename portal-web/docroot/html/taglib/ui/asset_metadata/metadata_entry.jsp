@@ -82,7 +82,7 @@ else if (metadataField.equals("view-count")) {
 %>
 
 <c:choose>
-	<c:when test='<%= Validator.equals(value, "author") %>'>
+	<c:when test='<%= Objects.equals(value, "author") %>'>
 
 		<%
 		User assetRendererUser = UserLocalServiceUtil.getUser(assetRenderer.getUserId());

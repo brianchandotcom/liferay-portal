@@ -608,7 +608,7 @@ private String _getPaletteItemTitle(HttpServletRequest request, ResourceBundle r
 		sb.append("</i></p>");
 	}
 
-	if (!Validator.equals(templateVariableDefinition.getDataType(), "service-locator")) {
+	if (!Objects.equals(templateVariableDefinition.getDataType(), "service-locator")) {
 		sb.append(LanguageUtil.get(request, "variable"));
 		sb.append(StringPool.COLON);
 		sb.append("&nbsp;");

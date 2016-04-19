@@ -26,7 +26,7 @@ boolean showStagingConfiguration = ParamUtil.getBoolean(request, "showStagingCon
 			<liferay-ui:message key="you-do-not-have-permission-to-access-the-requested-resource" />
 		</div>
 	</c:when>
-	<c:when test="<%= showStagingConfiguration || (!group.isStaged() && !group.hasLocalOrRemoteStagingGroup()) %>">
+	<c:when test="<%= showStagingConfiguration || (PropsValues.STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED && !group.isStagedRemotely()) || (!group.isStaged() && !group.hasLocalOrRemoteStagingGroup()) %>">
 
 		<%
 		if (group.isStaged() || group.hasLocalOrRemoteStagingGroup()) {

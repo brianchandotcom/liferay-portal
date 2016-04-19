@@ -82,7 +82,9 @@ public class PublishTemplatesConfigurationIcon
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
 		if ((scopeGroup != null) &&
-			(scopeGroup.hasLocalOrRemoteStagingGroup() ||
+			(scopeGroup.hasStagingGroup() ||
+			 (scopeGroup.hasRemoteStagingGroup() &&
+			  !scopeGroup.isStagedRemotely()) ||
 			 (!scopeGroup.isStaged() && !scopeGroup.isStagingGroup()))) {
 
 			return false;

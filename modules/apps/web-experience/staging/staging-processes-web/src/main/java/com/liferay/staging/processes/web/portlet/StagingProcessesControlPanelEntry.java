@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.staging.constants.StagingProcessesPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,7 +42,9 @@ public class StagingProcessesControlPanelEntry extends BaseControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
-		if (group.hasLocalOrRemoteStagingGroup()) {
+		if (!PropsValues.STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED &&
+			group.hasLocalOrRemoteStagingGroup()) {
+
 			return true;
 		}
 

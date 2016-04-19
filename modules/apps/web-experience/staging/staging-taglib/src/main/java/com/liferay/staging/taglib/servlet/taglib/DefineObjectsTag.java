@@ -87,12 +87,21 @@ public class DefineObjectsTag extends IncludeTag {
 		}
 
 		Group liveGroup = StagingUtil.getLiveGroup(group.getGroupId());
-		Group stagingGroup = StagingUtil.getStagingGroup(group.getGroupId());
+
+		Group stagingGroup = null;
+
+		if (!group.hasRemoteStagingGroup() || group.isStagedRemotely()) {
+			stagingGroup = StagingUtil.getStagingGroup(group.getGroupId());
+		}
 
 		pageContext.setAttribute("liveGroup", liveGroup);
 		pageContext.setAttribute("liveGroupId", liveGroup.getGroupId());
-		pageContext.setAttribute("stagingGroup", stagingGroup);
-		pageContext.setAttribute("stagingGroupId", stagingGroup.getGroupId());
+
+		if (stagingGroup != null) {
+			pageContext.setAttribute("stagingGroup", stagingGroup);
+			pageContext.setAttribute(
+				"stagingGroupId", stagingGroup.getGroupId());
+		}
 
 		if (Validator.isNotNull(_portletId)) {
 			boolean stagedPortlet = liveGroup.isStagedPortlet(_portletId);

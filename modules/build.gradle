@@ -9,7 +9,7 @@ buildDir = new File(rootDir.parentFile, "build")
 gradle.beforeProject {
 	Project project ->
 
-	if (!project.parent) {
+	if (!project.parent || project.childProjects) {
 		return
 	}
 

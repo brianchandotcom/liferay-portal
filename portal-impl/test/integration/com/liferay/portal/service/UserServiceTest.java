@@ -21,15 +21,20 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -37,11 +42,14 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -69,6 +77,72 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Enclosed.class)
 public class UserServiceTest {
+
+	public static class WhenAddingUserWithDefaultSitesEnabled {
+
+		@ClassRule
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new LiferayIntegrationTestRule();
+
+		@Before
+		public void setUp() throws Exception {
+			_group = GroupTestUtil.addGroup();
+			_siteRole = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);
+
+			UnicodeProperties properties = new UnicodeProperties();
+
+			properties.put(
+				PropsKeys.ADMIN_DEFAULT_GROUP_NAMES,
+				_group.getDescriptiveName());
+
+			CompanyLocalServiceUtil.updatePreferences(
+				_group.getCompanyId(), properties);
+
+			UnicodeProperties typeSettingsProperties =
+				_group.getTypeSettingsProperties();
+
+			typeSettingsProperties.put(
+				"defaultSiteRoleIds", String.valueOf(_siteRole.getRoleId()));
+
+			GroupLocalServiceUtil.updateGroup(
+				_group.getGroupId(), typeSettingsProperties.toString());
+		}
+
+		@Test
+		public void shouldInheritDefaultSiteRolesFromDefaultSite()
+			throws Exception {
+
+			_user = UserTestUtil.addUser();
+
+			long groupId = _group.getGroupId();
+
+			Assert.assertTrue(ArrayUtil.contains(_user.getGroupIds(), groupId));
+
+			List<UserGroupRole> userGroupRoles =
+				UserGroupRoleLocalServiceUtil.getUserGroupRoles(
+					_user.getUserId(), groupId);
+
+			Assert.assertEquals(1, userGroupRoles.size());
+
+			UserGroupRole userGroupRole = userGroupRoles.get(0);
+
+			Assert.assertEquals(
+				_siteRole.getRoleId(), userGroupRole.getRoleId());
+		}
+
+		@After
+		public void tearDown() throws PortalException {
+			GroupLocalServiceUtil.deleteGroup(_group);
+			RoleLocalServiceUtil.deleteRole(_siteRole);
+			UserLocalServiceUtil.deleteUser(_user);
+		}
+
+		private Group _group;
+		private Role _siteRole;
+		private User _user;
+
+	}
 
 	public static class WhenCompanySecurityStrangersWithMXDisabled {
 

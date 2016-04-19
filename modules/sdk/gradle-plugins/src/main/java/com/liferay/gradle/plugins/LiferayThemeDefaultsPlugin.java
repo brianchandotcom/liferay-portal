@@ -17,13 +17,31 @@ package com.liferay.gradle.plugins;
 import com.liferay.gradle.plugins.util.GradleUtil;
 
 import org.gradle.api.Project;
+import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.plugins.MavenPlugin;
+import org.gradle.api.tasks.Upload;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class LiferayThemeDefaultsPlugin
 	extends BaseDefaultsPlugin<LiferayThemePlugin> {
+
+	protected Upload addTaskInstall(Project project) {
+		Upload upload = GradleUtil.addTask(
+			project, MavenPlugin.INSTALL_TASK_NAME, Upload.class);
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, Dependency.ARCHIVES_CONFIGURATION);
+
+		upload.setConfiguration(configuration);
+		upload.setDescription(
+			"Installs the '" + configuration.getName() +
+				"' artifacts into the local Maven repository.");
+
+		return upload;
+	}
 
 	protected void applyConfigScripts(Project project) {
 		GradleUtil.applyScript(
@@ -41,6 +59,10 @@ public class LiferayThemeDefaultsPlugin
 		Project project, LiferayThemePlugin liferayThemePlugin) {
 
 		applyPlugins(project);
+
+		// GRADLE-2427
+
+		addTaskInstall(project);
 
 		applyConfigScripts(project);
 	}

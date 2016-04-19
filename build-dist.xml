@@ -2046,10 +2046,10 @@ closeTemplate()
 		<if>
 			<os family="windows" />
 			<then>
-				<exec dir="${app.server.weblogic.dir}" executable="cmd">
+				<exec dir="${app.server.weblogic.dir}/wlserver/server/bin/" executable="cmd">
 					<env key="MW_HOME" value="${app.server.weblogic.dir.windows}" />
 					<arg value="/c" />
-					<arg value="configure.cmd" />
+					<arg value="setWLSEnv.cmd" />
 					<arg value="${app.server.weblogic.configure.silent}" />
 				</exec>
 
@@ -2109,7 +2109,7 @@ closeTemplate()
 				<if>
 					<os family="unix" />
 					<then>
-						<replace file="${app.server.weblogic.dir}/configure.sh">
+						<replace file="${app.server.weblogic.dir}/wlserver/server/bin/setWLSEnv.sh">
 							<replacefilter token="#!/bin/sh" value="#!/bin/bash" />
 						</replace>
 
@@ -2118,23 +2118,23 @@ closeTemplate()
 				</if>
 
 				<chmod
-					dir="${app.server.weblogic.dir}"
-					includes="configure.sh"
+					dir="${app.server.weblogic.dir}/wlserver/server/bin"
+					includes="setWLSEnv.sh"
 					perm="744"
 				/>
 
 				<if>
 					<os family="unix" />
 					<then>
-						<exec dir="${app.server.weblogic.dir}" executable="./configure.sh">
+						<exec dir="${app.server.weblogic.dir}/wlserver/server/bin/" executable="./setWLSEnv.sh">
 							<env key="MW_HOME" file="${app.server.weblogic.dir}" />
 							<arg value="${app.server.weblogic.configure.silent}" />
 						</exec>
 					</then>
 					<else>
-						<exec dir="${app.server.weblogic.dir}" executable="sh">
+						<exec dir="${app.server.weblogic.dir}/wlserver/server/bin/" executable="sh">
 							<env key="MW_HOME" file="${app.server.weblogic.dir}" />
-							<arg value="configure.sh" />
+							<arg value="setWLSEnv.sh" />
 						</exec>
 					</else>
 				</if>

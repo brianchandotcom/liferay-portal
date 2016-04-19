@@ -16,9 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<li id="<portlet:namespace />simulationDeviceContainer">
-	<h3 class="list-group-heading"><liferay-ui:message key="device" /></h3>
-
+<div id="<portlet:namespace />simulationDeviceContainer">
 	<div class="list-group-panel">
 		<div class="devices">
 			<div class="container-fluid default-devices">
@@ -74,7 +72,7 @@
 			<h5 class="text-default"><%= LanguageUtil.get(resourceBundle, "preview-may-not-be-accurate") %></h5>
 		</div>
 	</div>
-</li>
+</div>
 
 <aui:script use="liferay-product-navigation-simulation-device">
 	var simulationDevice = new Liferay.SimulationDevice(

@@ -21,6 +21,10 @@ project.buildDir = file("build_gradle")
 project.group = "com.liferay.plugins"
 project.version = packageJson.version
 
+if (project.hasProperty("snapshot")) {
+	project.version += "-SNAPSHOT"
+}
+
 task deploy(type: Copy)
 task install(type: Upload)
 task updateThemeVersion
@@ -76,6 +80,10 @@ updateThemeVersion {
 		VersionNumber newVersionNumber = new VersionNumber(versionNumber.major, versionNumber.minor, versionNumber.micro + 1, versionNumber.qualifier)
 
 		packageJsonFile.text = packageJsonFile.text.replace("\"version\": \"${versionNumber}\"", "\"version\": \"${newVersionNumber}\"")
+	}
+
+	onlyIf {
+		!project.version.endsWith("-SNAPSHOT")
 	}
 }
 

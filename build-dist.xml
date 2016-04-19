@@ -2062,7 +2062,7 @@ closeTemplate()
 
 					set "WL_HOME=${app.server.weblogic.wlserver.dir.windows}"
 
-					call %WL_HOME%/common/bin/commEnv.cmd
+					call %MW_HOME%/oracle_common/common/bin/commEnv.cmd
 
 					set "CLASSPATH=%FMWCONFIG_CLASSPATH%"
 
@@ -2148,7 +2148,7 @@ closeTemplate()
 
 					export WL_HOME="${app.server.weblogic.wlserver.dir}"
 
-					${source.command} ${WL_HOME}/common/bin/commEnv.sh
+					${source.command} ${MW_HOME}/oracle_common/common/bin/commEnv.sh
 
 					export CLASSPATH=${FMWCONFIG_CLASSPATH}
 

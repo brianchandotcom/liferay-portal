@@ -252,7 +252,8 @@ public class LiferayThemePlugin implements Plugin<Project> {
 	}
 
 	protected File getWarFile(Project project) {
-		return project.file("dist/" + project.getName() + ".war");
+		return project.file(
+			"dist/" + GradleUtil.getArchivesBaseName(project) + ".war");
 	}
 
 	private static final String _GULP_BUILD_TASK_NAME = "gulpBuild";

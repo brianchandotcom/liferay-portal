@@ -8080,6 +8080,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 					sb.append(count);
 					sb.append(" errors found during DB Upgrade.\n");
 					sb.append(errorString);
+					sb.append("DB Upgrade functional test failure.\n -> Errors occurred during upgrade.");
 
 					System.out.println(sb.toString());
 					project.setProperty("db.upgrade.failed", "true");

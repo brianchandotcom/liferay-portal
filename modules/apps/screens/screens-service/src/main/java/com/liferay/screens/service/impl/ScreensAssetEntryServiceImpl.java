@@ -17,6 +17,9 @@ package com.liferay.screens.service.impl;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
+import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.permission.JournalArticlePermission;
@@ -31,6 +34,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletItem;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -172,22 +176,40 @@ public class ScreensAssetEntryServiceImpl
 
 		String className = assetEntry.getClassName();
 
-		if (className.equals(
-				"com.liferay.document.library.kernel.model.DLFileEntry")) {
-
+		if (className.equals(BlogsEntry.class.getName())) {
+			return getBlogsEntryJSONObject(assetEntry);
+		}
+		else if (className.equals(DLFileEntry.class.getName())) {
 			return getFileEntryJSONObject(assetEntry);
 		}
-		else if (className.equals(
-					"com.liferay.dynamic.data.lists.model.DDLRecord")) {
-
+		else if (className.equals(DDLRecord.class.getName())) {
 			return screensDDLRecordService.getDDLRecord(
 				assetEntry.getClassPK(), locale);
 		}
-		else if (className.equals("com.liferay.journal.model.JournalArticle")) {
+		else if (className.equals(JournalArticle.class.getName())) {
 			return getJournalArticleJSONObject(assetEntry);
+		}
+		else if (className.equals(User.class.getName())) {
+			return getUserJSONObject(assetEntry);
 		}
 
 		return JSONFactoryUtil.createJSONObject();
+	}
+
+	protected JSONObject getBlogsEntryJSONObject(AssetEntry assetEntry)
+		throws PortalException {
+
+		BlogsEntry blogsEntry = blogsEntryService.getEntry(
+			assetEntry.getClassPK());
+
+		JSONObject blogsEntryJSONObject = JSONFactoryUtil.createJSONObject();
+
+		blogsEntryJSONObject.put(
+			"blogsEntry",
+			JSONFactoryUtil.createJSONObject(
+				JSONFactoryUtil.looseSerialize(blogsEntry)));
+
+		return blogsEntryJSONObject;
 	}
 
 	protected JSONObject getFileEntryJSONObject(AssetEntry assetEntry)
@@ -264,6 +286,21 @@ public class ScreensAssetEntryServiceImpl
 		jsonObject.remove("content");
 
 		return journalArticleJSONObject;
+	}
+
+	protected JSONObject getUserJSONObject(AssetEntry assetEntry)
+		throws PortalException {
+
+		User user = userService.getUserById(assetEntry.getClassPK());
+
+		JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
+
+		userJSONObject.put(
+			"user",
+			JSONFactoryUtil.createJSONObject(
+				JSONFactoryUtil.looseSerialize(user)));
+
+		return userJSONObject;
 	}
 
 	protected JSONArray toJSONArray(

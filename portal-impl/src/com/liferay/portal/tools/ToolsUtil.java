@@ -223,20 +223,41 @@ public class ToolsUtil {
 		return false;
 	}
 
-	public static String stripFullyQualifiedClassNames(String content)
+	public static String stripFullyQualifiedClassNames(
+			String content, String packagePath)
 		throws IOException {
 
 		String imports = JavaImportsFormatter.getImports(content);
 
-		return stripFullyQualifiedClassNames(content, imports);
+		return stripFullyQualifiedClassNames(content, imports, packagePath);
 	}
 
 	public static String stripFullyQualifiedClassNames(
-			String content, String imports)
+			String content, String imports, String packagePath)
 		throws IOException {
 
 		if (Validator.isNull(content) || Validator.isNull(imports)) {
 			return content;
+		}
+
+		Pattern pattern = Pattern.compile(
+			"\n(.*)" + StringUtil.replace(packagePath, ".", "\\.") +
+				"\\.[A-Z]");
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			String lineStart = matcher.group(1);
+
+			if (lineStart.startsWith("import ") ||
+				lineStart.contains("//") ||
+				ToolsUtil.isInsideQuotes(content, matcher.end())) {
+
+				continue;
+			}
+
+			content = StringUtil.replaceFirst(
+				content, packagePath + ".", StringPool.BLANK, matcher.start());
 		}
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
@@ -254,12 +275,12 @@ public class ToolsUtil {
 			String importPackageAndClassName = line.substring(
 				x + 7, line.lastIndexOf(StringPool.SEMICOLON));
 
-			Pattern pattern = Pattern.compile(
+			pattern = Pattern.compile(
 				"\n(.*)" +
 					StringUtil.replace(importPackageAndClassName, ".", "\\.") +
 						"\\W");
 
-			Matcher matcher = pattern.matcher(content);
+			matcher = pattern.matcher(content);
 
 			while (matcher.find()) {
 				String lineStart = matcher.group(1);
@@ -306,7 +327,7 @@ public class ToolsUtil {
 
 		content = importsFormatter.format(content, packagePath, className);
 
-		content = stripFullyQualifiedClassNames(content);
+		content = stripFullyQualifiedClassNames(content, packagePath);
 
 		File tempFile = new File(_TMP_DIR, "ServiceBuilder.temp");
 

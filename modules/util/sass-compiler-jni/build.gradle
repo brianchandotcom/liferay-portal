@@ -2,8 +2,8 @@ import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 ext {
-	libSassVersion = "3.2.5"
-	sassSpecVersion = "f34eb8b4e6c9ba192fc37231a252af1ab79972fd"
+	libSassVersion = "3.3.5"
+	sassSpecVersion = "3.3.3"
 
 	libSassUrl = "https://github.com/sass/libsass/archive/${libSassVersion}.zip"
 	sassSpecUrl = "https://github.com/sass/sass-spec/archive/${sassSpecVersion}.zip"
@@ -32,7 +32,7 @@ autoreconf --force --install
 make -j5""")
 	}
 
-	inputDirName = ".libs"
+	inputDirName = "src/.libs"
 	inputFileName = "libsass.dylib"
 	makeExecutable = "./build.sh"
 	outputFileName = "libliferaysass.dylib"

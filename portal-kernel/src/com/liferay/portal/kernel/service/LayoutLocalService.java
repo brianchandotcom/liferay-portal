@@ -813,6 +813,10 @@ public interface LayoutLocalService extends BaseLocalService,
 		long parentLayoutId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutsCount(Group group, boolean privateLayout,
+		long[] layoutIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutsCount(User user, boolean privateLayout)
 		throws PortalException;
 

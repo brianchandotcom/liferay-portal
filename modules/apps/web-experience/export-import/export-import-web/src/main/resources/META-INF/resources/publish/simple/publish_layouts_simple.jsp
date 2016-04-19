@@ -113,7 +113,21 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 								%>
 
 								<liferay-util:buffer var="badgeHTML">
-									<span class="badge badge-info"><%= (selLayoutSet.getPageCount() > 0) ? selLayoutSet.getPageCount() : LanguageUtil.get(request, "none") %></span>
+									<span class="badge badge-info">
+
+										<%
+										int layoutsCount = selLayoutSet.getPageCount();
+										%>
+
+										<c:choose>
+											<c:when test="<%= layoutsCount == 0 %>">
+												<liferay-ui:message key="none" />
+											</c:when>
+											<c:otherwise>
+												<liferay-ui:message arguments='<%= new String[] {"<strong>" + String.valueOf(layoutsCount) + "</strong>", String.valueOf(layoutsCount)} %>' key="x-of-x" />
+											</c:otherwise>
+										</c:choose>
+									</span>
 								</liferay-util:buffer>
 
 								<li class="tree-item">

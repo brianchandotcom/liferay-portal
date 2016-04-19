@@ -47,7 +47,7 @@ public class AlloyTaglibDefaultsPlugin
 					Configuration portalConfiguration =
 						GradleUtil.getConfiguration(
 							project,
-							LiferayJavaPlugin.PORTAL_CONFIGURATION_NAME);
+							LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
 
 					configuration.extendsFrom(portalConfiguration);
 				}

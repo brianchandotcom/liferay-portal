@@ -73,7 +73,7 @@ import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 /**
  * @author Andrea Di Giorgi
  */
-public class LiferayJavaPlugin implements Plugin<Project> {
+public class LiferayBasePlugin implements Plugin<Project> {
 
 	public static final String AUTO_CLEAN_PROPERTY_NAME = "autoClean";
 

@@ -576,7 +576,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		installCacheTask.setGroup(BasePlugin.UPLOAD_GROUP);
 
 		GradleUtil.setProperty(
-			installCacheTask, LiferayJavaPlugin.AUTO_CLEAN_PROPERTY_NAME,
+			installCacheTask, LiferayBasePlugin.AUTO_CLEAN_PROPERTY_NAME,
 			false);
 
 		return installCacheTask;
@@ -1646,7 +1646,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			GradleUtil.applyPlugin(project, WhipPlugin.class);
 
 			Configuration portalConfiguration = GradleUtil.getConfiguration(
-				project, LiferayJavaPlugin.PORTAL_CONFIGURATION_NAME);
+				project, LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
 			Configuration portalTestConfiguration = addConfigurationPortalTest(
 				project);
 
@@ -1686,7 +1686,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 			configureTaskBuildChangeLog(buildChangeLogTask, relengDir);
 			configureTaskProcessResources(buildChangeLogTask);
 
-			if (taskNames.contains(LiferayJavaPlugin.DEPLOY_TASK_NAME)) {
+			if (taskNames.contains(LiferayBasePlugin.DEPLOY_TASK_NAME)) {
 				configureTaskDeploy(recordArtifactTask);
 			}
 		}
@@ -2073,7 +2073,7 @@ public class LiferayDefaultsPlugin extends BaseDefaultsPlugin<LiferayPlugin> {
 		final Project project = recordArtifactTask.getProject();
 
 		Task task = GradleUtil.getTask(
-			project, LiferayJavaPlugin.DEPLOY_TASK_NAME);
+			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
 
 		if (!(task instanceof Copy)) {
 			return;

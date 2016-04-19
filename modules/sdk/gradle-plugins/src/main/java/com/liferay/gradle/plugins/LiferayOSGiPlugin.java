@@ -70,7 +70,7 @@ import org.gradle.internal.Factory;
 /**
  * @author Andrea Di Giorgi
  */
-public class LiferayOSGiPlugin extends LiferayJavaPlugin {
+public class LiferayOSGiPlugin extends LiferayBasePlugin {
 
 	public static final String AUTO_UPDATE_XML_TASK_NAME = "autoUpdateXml";
 

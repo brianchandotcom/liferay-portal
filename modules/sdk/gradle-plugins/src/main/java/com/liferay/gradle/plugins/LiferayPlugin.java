@@ -34,7 +34,7 @@ public class LiferayPlugin implements Plugin<Project> {
 			plugin = new LiferayOSGiPlugin();
 		}
 		else {
-			plugin = new LiferayJavaPlugin();
+			plugin = new LiferayBasePlugin();
 		}
 
 		plugin.apply(project);

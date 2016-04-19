@@ -190,6 +190,8 @@ AUI.add(
 					)
 				);
 
+				field.addTarget(instance);
+
 				var translationManager = instance.get('translationManager');
 
 				if (translationManager) {
@@ -328,6 +330,12 @@ AUI.add(
 								'translationmanager:editingLocaleChange': instance._afterEditingLocaleChange
 							}
 						);
+					},
+
+					destructor: function() {
+						var instance = this;
+
+						instance.get('container').remove();
 					},
 
 					renderUI: function() {
@@ -1953,12 +1961,11 @@ AUI.add(
 				NAME: 'liferay-ddm-form',
 
 				prototype: {
-					repeatableInstances: {},
-
 					initializer: function() {
 						var instance = this;
 
 						instance.eventHandlers = [];
+						instance.repeatableInstances = {};
 
 						instance.bindUI();
 						instance.renderUI();
@@ -1994,8 +2001,20 @@ AUI.add(
 						var instance = this;
 
 						AArray.invoke(instance.eventHandlers, 'detach');
+						AArray.invoke(instance.get('fields'), 'destroy');
+
+						instance.get('container').remove();
 
 						instance.eventHandlers = null;
+
+						 A.each(
+						 	instance.repeatableInstances,
+						 	function(item) {
+						 		item.destroy();
+						 	}
+						 );
+
+						 instance.repeatableInstances = null;
 					},
 
 					moveField: function(parentField, oldIndex, newIndex) {

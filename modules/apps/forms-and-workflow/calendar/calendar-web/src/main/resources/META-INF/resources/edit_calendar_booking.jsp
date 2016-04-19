@@ -40,6 +40,8 @@ long calendarId = BeanParamUtil.getLong(calendarBooking, request, "calendarId", 
 long startTime = BeanPropertiesUtil.getLong(calendarBooking, "startTime", nowJCalendar.getTimeInMillis());
 
 java.util.Calendar startTimeJCalendar = JCalendarUtil.getJCalendar(startTime, calendarBookingTimeZone);
+startTimeJCalendar.add(java.util.Calendar.HOUR, 1);
+startTimeJCalendar.set(java.util.Calendar.MINUTE, 0);
 
 int startTimeYear = ParamUtil.getInteger(request, "startTimeYear", startTimeJCalendar.get(java.util.Calendar.YEAR));
 int startTimeMonth = ParamUtil.getInteger(request, "startTimeMonth", startTimeJCalendar.get(java.util.Calendar.MONTH));
@@ -59,7 +61,7 @@ startTimeJCalendar.setFirstDayOfWeek(weekStartsOn + 1);
 
 startTime = startTimeJCalendar.getTimeInMillis();
 
-java.util.Calendar defaultEndTimeJCalendar = (java.util.Calendar)nowJCalendar.clone();
+java.util.Calendar defaultEndTimeJCalendar = (java.util.Calendar)startTimeJCalendar.clone();
 
 defaultEndTimeJCalendar.add(java.util.Calendar.MINUTE, defaultDuration);
 

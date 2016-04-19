@@ -1973,21 +1973,45 @@ rerun this task.
 
 		<delete dir="${app.server.weblogic.dir}" />
 
-		<unzip
-			dest="${app.server.weblogic.dir}"
-			src="${app.server.parent.dir}/${app.server.weblogic.zip.name}"
-		/>
+		<if>
+			<equals arg1="${app.server.weblogic.version.build}" arg2="1221" />
+			<then>
+				<unzip
+					dest="${app.server.weblogic.dir}-temp"
+					src="${app.server.parent.dir}/${app.server.weblogic.zip.name}"
+				/>
+			</then>
+			<else>
+				<unzip
+					dest="${app.server.weblogic.dir}"
+					src="${app.server.parent.dir}/${app.server.weblogic.zip.name}"
+				/>
+			</else>
+		</if>
 
 		<if>
-			<equals arg1="${app.server.weblogic.version.build}" arg2="1213" />
+			<equals arg1="${app.server.weblogic.version.build}" arg2="1221" />
 			<then>
-				<move todir="${app.server.weblogic.dir}">
-					<fileset dir="${app.server.weblogic.dir}/wls12130" />
-				</move>
+				<java jar="${app.server.weblogic.dir}-temp/${app.server.weblogic.jar.name}" fork="true">
+					<arg line="ORACLE_HOME=${app.server.weblogic.dir}" />
+				</java>
+
+				<delete dir="${app.server.weblogic.dir}-temp" />
 
 				<property name="app.server.weblogic.configure.silent" value="-silent" />
 				<property name="app.server.weblogic.template.dir" value="${app.server.weblogic.wlserver.dir}/common/templates/wls" />
 			</then>
+			<elseif>
+				<equals arg1="${app.server.weblogic.version.build}" arg2="1213" />
+				<then>
+					<move todir="${app.server.weblogic.dir}">
+						<fileset dir="${app.server.weblogic.dir}/wls${app.server.weblogic.version.build}0" />
+					</move>
+
+					<property name="app.server.weblogic.configure.silent" value="-silent" />
+					<property name="app.server.weblogic.template.dir" value="${app.server.weblogic.wlserver.dir}/common/templates/wls" />
+				</then>
+			</elseif>
 			<else>
 				<property name="app.server.weblogic.configure.silent" value="" />
 				<property name="app.server.weblogic.template.dir" value="${app.server.weblogic.wlserver.dir}/common/templates/domains" />

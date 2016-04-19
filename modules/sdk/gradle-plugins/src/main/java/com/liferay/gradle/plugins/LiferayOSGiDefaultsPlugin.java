@@ -77,7 +77,6 @@ import nebula.plugin.extraconfigurations.OptionalBasePlugin;
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 
 import org.dm.gradle.plugins.bundle.BundleExtension;
-import org.dm.gradle.plugins.bundle.BundlePlugin;
 
 import org.gradle.StartParameter;
 import org.gradle.api.Action;
@@ -162,7 +161,7 @@ import org.gradle.util.VersionNumber;
  * @author Andrea Di Giorgi
  */
 public class LiferayOSGiDefaultsPlugin
-	extends BaseDefaultsPlugin<LiferayPlugin> {
+	extends BaseDefaultsPlugin<LiferayOSGiPlugin> {
 
 	public static final String BASELINE_CONFIGURATION_NAME = "baseline";
 
@@ -1615,7 +1614,7 @@ public class LiferayOSGiDefaultsPlugin
 
 	@Override
 	protected void configureDefaults(
-		final Project project, LiferayPlugin liferayPlugin) {
+		final Project project, LiferayOSGiPlugin liferayOSGiPlugin) {
 
 		Gradle gradle = project.getGradle();
 
@@ -1661,13 +1660,25 @@ public class LiferayOSGiDefaultsPlugin
 				project, portalConfiguration, portalTestConfiguration);
 		}
 
+		Configuration baselineConfiguration = null;
+
+		if (hasBaseline(project)) {
+			baselineConfiguration = addConfigurationBaseline(project);
+		}
+
+		addTaskBaseline(project, baselineConfiguration);
+
 		InstallCacheTask installCacheTask = addTaskInstallCache(project);
 
 		addTaskCommitCache(project, installCacheTask);
 
+		addTaskCopyLibs(project);
+
 		final Jar jarJavadocTask = addTaskJarJavadoc(project);
 		final Jar jarSourcesTask = addTaskJarSources(project, testProject);
 		final Jar jarTLDDocTask = addTaskJarTLDDoc(project);
+
+		addTaskUpdateBundleVersion(project);
 
 		if (relengDir != null) {
 			GradleUtil.applyPlugin(project, ChangeLogBuilderPlugin.class);
@@ -1696,42 +1707,21 @@ public class LiferayOSGiDefaultsPlugin
 			addTaskUpdateFileVersions(project, gitRepoDir);
 
 		configureBasePlugin(project, portalRootDir);
+		configureBundleDefaultInstructions(project, publishing);
 		configureConfigurations(project);
+		configureDeployDir(project);
 		configureJavaPlugin(project);
 		configureProject(project);
 		configureRepositories(project);
 		configureSourceSetMain(project);
 		configureTaskJar(project, testProject);
+		configureTaskJavadoc(project);
 		configureTaskTest(project);
 		configureTaskTestIntegration(project);
 		configureTasksBaseline(project);
 		configureTasksFindBugs(project);
 		configureTasksJavaCompile(project);
 		configureTasksPublishNodeModule(project);
-
-		withPlugin(
-			project, BundlePlugin.class,
-			new Action<BundlePlugin>() {
-
-				@Override
-				public void execute(BundlePlugin bundlePlugin) {
-					Configuration baselineConfiguration = null;
-
-					if (hasBaseline(project)) {
-						baselineConfiguration = addConfigurationBaseline(
-							project);
-					}
-
-					addTaskBaseline(project, baselineConfiguration);
-
-					addTaskCopyLibs(project);
-					addTaskUpdateBundleVersion(project);
-					configureBundleDefaultInstructions(project, publishing);
-					configureDeployDir(project);
-					configureTaskJavadoc(project);
-				}
-
-			});
 
 		withPlugin(
 			project, ServiceBuilderPlugin.class,
@@ -1769,9 +1759,7 @@ public class LiferayOSGiDefaultsPlugin
 					configureTaskUploadArchives(
 						project, updateFileVersionsTask);
 
-					if (hasPlugin(project, BundlePlugin.class)) {
-						configureProjectBndProperties(project);
-					}
+					configureProjectBndProperties(project);
 				}
 
 			});
@@ -1792,9 +1780,7 @@ public class LiferayOSGiDefaultsPlugin
 					Task jarTask = GradleUtil.getTask(
 						project, JavaPlugin.JAR_TASK_NAME);
 
-					if (hasPlugin(project, BundlePlugin.class) &&
-						taskExecutionGraph.hasTask(jarTask)) {
-
+					if (taskExecutionGraph.hasTask(jarTask)) {
 						configureBundleInstructions(project);
 					}
 				}
@@ -2758,8 +2744,8 @@ public class LiferayOSGiDefaultsPlugin
 	}
 
 	@Override
-	protected Class<LiferayPlugin> getPluginClass() {
-		return LiferayPlugin.class;
+	protected Class<LiferayOSGiPlugin> getPluginClass() {
+		return LiferayOSGiPlugin.class;
 	}
 
 	protected String getProjectDependency(Project project) {

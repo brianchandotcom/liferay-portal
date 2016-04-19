@@ -10,22 +10,22 @@
 <tbody>
 <tr>
 	<td>USER_SEGMENT_NAME_FIELD</td>
-	<td>//input[contains(@id,'contenttargetingweb_name')]</td>
+	<td>//input[contains(@id,'ContentTargetingPortlet_name')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_SEGMENT_DESCRIPTION_FIELD</td>
-	<td>//textarea[contains(@id,'contenttargetingweb_description')]</td>
+	<td>//textarea[contains(@id,'ContentTargetingPortlet_description')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_SEGMENT_RULE_DELETE</td>
-	<td>//div[contains(@id,'${key_userSegmentRuleDelete}')]/div[2]/div/button/i[@class='icon-trash']</td>
+	<td>//div[contains(@id,'${key_userSegmentRuleDelete}')]//button/span[contains(@class,'trash')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_SEGMENT_RULE_APPLIED</td>
-	<td>//div[@class='field-header']//div[@class='row field-info']/div[contains(.,'${key_userSegmentRuleName}')]</td>
+	<td>//div[@class='field-info']//h2[contains(.,'${key_userSegmentRuleName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -35,23 +35,8 @@
 </tr>
 <!--USER_SEGMENT_TABLE_NAME-->
 <tr>
-	<td>USER_SEGMENT_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_userSegment}')]//td//input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_SEGMENT_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_userSegment}')]//td[2]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_SEGMENT_TABLE_DESCRIPTION</td>
-	<td>//tr[contains(.,'${key_userSegment}')]//td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_SEGMENT_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_userSegment}')]//td[4]//div/a[@title='Actions']</td>
+	<td>//tr[contains(.,'${key_rowEntry}')]//td[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,17 +47,12 @@
 <!--USER_SEGMENT_RULES-->
 <tr>
 	<td>USER_SEGMENT_RULES_SEARCH_FIELD</td>
-	<td>//input[contains(@id,'contenttargetingweb_searchPanel')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_SEGMENT_RULES_DROPDOWN</td>
-	<td>//div[@class='category-info']/div[contains(.,'${key_userSegmentRuleDropdown}')]</td>
+	<td>//input[contains(@id,'ContentTargetingPortlet_searchPanel')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_SEGMENT_RULES_RULE</td>
-	<td>//li[@title='${key_userSegmentRule}']//div[@class='field-title']</td>
+	<td>//li//div/h5[text()=' ${key_userSegmentRule} ']</td>
 	<td></td>
 </tr>
 <tr>
@@ -88,7 +68,7 @@
 <!--USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION-->
 <tr>
 	<td>USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_LEVEL_SELECT</td>
-	<td>//select[contains(@id,'educationLevel')]</td>
+	<td>//select[contains(@id,'education')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -183,11 +163,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_MENULIST_CONTENT</td>
-	<td>//li[@class='asset-selector']/a[contains(@id,'${key_menulistContent}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_WEB_CONTENT_IFRAME</td>
 	<td>//iframe[contains(@id,'selectContent')]</td>
 	<td></td>
@@ -199,12 +174,7 @@
 </tr>
 <tr>
 	<td>USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_WEB_CONTENT_TITLE</td>
-	<td>//div[@class='asset-title']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_CONTENT_TITLE</td>
-	<td>//div[@class='select-asset-selector']//div[@class='asset-title']</td>
+	<td>//div[@class='card-dm-text-large']</td>
 	<td></td>
 </tr>
 <tr>
@@ -291,7 +261,7 @@
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_SIGNED_IN-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_SIGNED_IN_MESSAGE</td>
-	<td>//div[@class='alert alert-info']</td>
+	<td>//p[@class='text-default']</td>
 	<td></td>
 </tr>
 <tr>

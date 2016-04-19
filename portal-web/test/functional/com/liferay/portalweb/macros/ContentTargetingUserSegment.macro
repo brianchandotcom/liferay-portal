@@ -6,9 +6,10 @@
 
 		<execute function="Click" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_CONTENT_BUTTON" />
 
-		<var name="key_menulistContent" value="${contentVisitedContent}" />
+		<var name="key_menuItem" value="${contentVisitedContent}" />
 
-		<execute function="Click" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_MENULIST_CONTENT" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
+
 		<execute function="SelectFrame" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_WEB_CONTENT_IFRAME" />
 
 		<var name="key_webContentTitle" value="${webContentTitle}" />
@@ -35,11 +36,14 @@
 	</command>
 
 	<command name="addCP">
-		<execute function="AssertClick" locator1="ContentTargeting#NAVIGATION_USER_SEGMENTS" value1="User Segments" />
-		<execute function="Click" locator1="ContentTargeting#ADD_USER_SEGMENT_BUTTON" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="User Segments" />
+		</execute>
 
-		<execute function="Type" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_NAME_FIELD" value1="${userSegmentName}" />
-		<execute function="Type" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_DESCRIPTION_FIELD" value1="${userSegmentDescription}" />
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute function="Type" locator1="TextInput#NAME" value1="${userSegmentName}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${userSegmentDescription}" />
 	</command>
 
 	<command name="addRuleCmdCP">
@@ -264,31 +268,33 @@
 	</command>
 
 	<command name="deleteUserSegmentCP">
+		<var name="key_rowEntry" value="${userSegmentName}" />
 		<var name="key_userSegment" value="${userSegmentName}" />
 
-		<execute function="Click" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_TABLE_ACTIONS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="ClickNoError" locator1="MenuItem#DELETE" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute macro="Alert#viewSuccessMessage" />
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No User Segments were found" />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No User Segments were found" />
 	</command>
 
 	<command name="editGenderRule">
-		<var name="key_userSegment" value="${userSegmentName}" />
+		<var name="key_rowEntry" value="${userSegmentName}" />
 
-		<execute function="Click" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_TABLE_ACTIONS" />
-		<execute function="Click" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_TABLE_ACTIONS_MENULIST_EDIT" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="MenuItem#EDIT" />
 
 		<execute function="Click" locator1="CPContenttargetingAddusersegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_${genderRadioPath}_RADIO" />
 	</command>
 
 	<command name="editUserSegmentCP">
+		<var name="key_rowEntry" value="${userSegmentName}" />
 		<var name="key_userSegment" value="${userSegmentName}" />
 
-		<execute function="Click" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_TABLE_ACTIONS" />
-		<execute function="Click" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_TABLE_ACTIONS_MENULIST_EDIT" />
-		<execute function="Type" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_NAME_FIELD" value1="${userSegmentNameEdit}" />
-		<execute function="Type" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_DESCRIPTION_FIELD" value1="${userSegmentDescriptionEdit}" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="MenuItem#EDIT" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${userSegmentNameEdit}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${userSegmentDescriptionEdit}" />
 
 		<if>
 			<isset var="userSegmentRuleDeleteList" />
@@ -316,24 +322,23 @@
 		</if>
 	</command>
 
-	<command name="saveCP">
-		<execute macro="PortletEntry#save" />
-	</command>
-
 	<command name="viewCP">
-		<execute function="Click" locator1="ContentTargeting#NAVIGATION_USER_SEGMENTS" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="User Segments" />
+		</execute>
 
-		<var name="key_userSegmentName" value="${userSegmentName}" />
+		<var name="key_rowEntry" value="${userSegmentName}" />
 
-		<execute function="AssertTextEquals" locator1="ContentTargeting#USER_SEGMENT_TABLE_NAME" value1="${userSegmentName}" />
+		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX" value1="${userSegmentName}" />
+
 		<execute function="AssertTextEquals" locator1="ContentTargeting#USER_SEGMENT_TABLE_DESCRIPTION" value1="${userSegmentDescription}" />
 	</command>
 
 	<command name="viewImportContentVisitedRuleEmpty">
-		<var name="key_userSegment" value="${userSegmentName}" />
+		<var name="key_rowEntry" value="${userSegmentName}" />
 
-		<execute function="Click" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_TABLE_ACTIONS" />
-		<execute function="Click" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_TABLE_ACTIONS_MENULIST_EDIT" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="MenuItem#EDIT" />
 
 		<execute function="AssertElementNotPresent#assertNotVisible" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_RULE_CONTENT_VISITED_CONTENT_TITLE" />
 	</command>
@@ -374,10 +379,10 @@
 	</command>
 
 	<command name="viewRulesCP">
-		<var name="key_userSegment" value="${userSegmentName}" />
+		<var name="key_rowEntry" value="${userSegmentName}" />
 
-		<execute function="Click" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_TABLE_ACTIONS" />
-		<execute function="Click" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_TABLE_ACTIONS_MENULIST_EDIT" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="MenuItem#EDIT" />
 
 		<for list="${viewUserSegmentRuleList}" param="usersegmentRuleName">
 			<var name="key_userSegmentRuleName" value="${usersegmentRuleName}" />

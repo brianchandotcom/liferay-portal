@@ -67,7 +67,7 @@
 			<var name="genderRadio" value="Male" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -173,7 +173,7 @@
 			<var name="genderRadio" value="Male" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Child SiteName" />
@@ -192,7 +192,7 @@
 			<var name="genderRadio" value="Male" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Child SiteName" />
@@ -298,7 +298,7 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -333,7 +333,7 @@
 			<var name="friendlyURL" value="/test-page-name" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -368,7 +368,7 @@
 			<var name="scorePoints" value="100" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -399,7 +399,7 @@
 			<var name="userSegmentName" value="User Segment Name" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="AddUserSegmentSocialFacebookAgeCP" priority="5">
@@ -421,7 +421,7 @@
 			<var name="facebookYoungerThanAge" value="50" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -457,7 +457,7 @@
 			<var name="facebookCity" value="Diamond Bar" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -493,7 +493,7 @@
 			<var name="facebookEducationLevel" value="College" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -530,7 +530,7 @@
 			<var name="numberOfFriends" value="50" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -566,7 +566,7 @@
 			<var name="facebookGenderRadio" value="Male" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -601,7 +601,7 @@
 			<var name="facebookURL" value="liferay" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -636,7 +636,7 @@
 			<var name="browserName" value="Firefox" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -684,7 +684,7 @@
 			<var name="deviceFamilyName" value="Device Family Name" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -720,7 +720,7 @@
 			<var name="regionName" value="Madrid" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -756,7 +756,7 @@
 			<var name="operatingSystemName" value="Mac" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -792,7 +792,7 @@
 			<var name="startTime" value="10:30 AM" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -829,7 +829,7 @@
 			<var name="youngerThanAge" value="99" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -865,7 +865,7 @@
 			<var name="genderRadio" value="Female" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -909,7 +909,7 @@
 			<var name="organizationName" value="Organization Name" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -956,7 +956,7 @@
 			<var name="organizationRole" value="Organization Owner" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -994,7 +994,7 @@
 			<var name="regularRole" value="Guest" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -1029,7 +1029,7 @@
 			<var name="selectSiteMemberSite" value="Site Name" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -1065,7 +1065,7 @@
 			<var name="siteRoleSite" value="Liferay" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -1109,7 +1109,7 @@
 			<var name="userGroupName" value="User Group Name" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -1142,7 +1142,7 @@
 
 		<execute macro="ContentTargetingUserSegment#addUserAttributesUserSignedInRuleCP" />
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -1172,13 +1172,7 @@
 			<var name="userSegmentName" value="User Segment Name" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#addUserAttributesGenderRuleCP">
-			<var name="genderRadio" value="Female" />
-		</execute>
-
-		<execute macro="ContentTargetingUserSegment#addUserAttributesUserSignedInRuleCP" />
-
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -1207,13 +1201,7 @@
 			<var name="userSegmentName" value="User Segment Name" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#addUserAttributesGenderRuleCP">
-			<var name="genderRadio" value="Female" />
-		</execute>
-
-		<execute macro="ContentTargetingUserSegment#addUserAttributesUserSignedInRuleCP" />
-
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -1227,11 +1215,9 @@
 			<var name="userSegmentDescriptionEdit" value="User Segment Description Edit" />
 			<var name="userSegmentName" value="User Segment Name" />
 			<var name="userSegmentNameEdit" value="User Segment Name Edit" />
-			<var name="userSegmentRuleAddList" value="Site Role,Regular Role" />
-			<var name="userSegmentRuleDeleteList" value="UserLoggedRule,GenderRule" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -1241,12 +1227,13 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#viewRulesCP">
-			<var name="regularRole" value="Administrator" />
-			<var name="siteRole" value="Site Administrator" />
-			<var name="siteRoleSite" value="Global" />
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="List" />
+		</execute>
+
+		<execute macro="ContentTargetingUserSegment#viewCP">
 			<var name="userSegmentName" value="User Segment Name Edit" />
-			<var name="viewUserSegmentRuleList" value="Site Role,Regular Role" />
+			<var name="userSegmentDescription" value="User Segment Description Edit" />
 		</execute>
 	</command>
 
@@ -1268,7 +1255,7 @@
 			<var name="genderRadio" value="Male" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -1370,7 +1357,7 @@
 			<var name="genderRadio" value="Female" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />

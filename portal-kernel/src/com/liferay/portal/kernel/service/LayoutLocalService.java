@@ -810,6 +810,10 @@ public interface LayoutLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutsCount(Group group, boolean privateLayout,
+		long[] layoutIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutsCount(Group group, boolean privateLayout,
 		long parentLayoutId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -990,6 +990,12 @@ public class LayoutLocalServiceUtil {
 
 	public static int getLayoutsCount(
 		com.liferay.portal.kernel.model.Group group, boolean privateLayout,
+		long[] layoutIds) {
+		return getService().getLayoutsCount(group, privateLayout, layoutIds);
+	}
+
+	public static int getLayoutsCount(
+		com.liferay.portal.kernel.model.Group group, boolean privateLayout,
 		long parentLayoutId) {
 		return getService().getLayoutsCount(group, privateLayout, parentLayoutId);
 	}

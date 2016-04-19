@@ -17,6 +17,9 @@ package com.liferay.portal.service.impl;
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -1328,6 +1331,28 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		return layoutPersistence.countByG_P_P(
 			group.getGroupId(), privateLayout, parentLayoutId);
+	}
+
+	@Override
+	public int getLayoutsCount(
+		Group group, boolean privateLayout, long[] layoutIds) {
+
+		DynamicQuery dynamicQuery = dynamicQuery();
+
+		Property groupIdProperty = PropertyFactoryUtil.forName("groupId");
+
+		dynamicQuery.add(groupIdProperty.eq(group.getGroupId()));
+
+		Property privateLayoutProperty = PropertyFactoryUtil.forName(
+			"privateLayout");
+
+		dynamicQuery.add(privateLayoutProperty.eq(privateLayout));
+
+		Property layoutIdProperty = PropertyFactoryUtil.forName("layoutId");
+
+		dynamicQuery.add(layoutIdProperty.in(layoutIds));
+
+		return GetterUtil.getInteger(dynamicQueryCount(dynamicQuery));
 	}
 
 	@Override

@@ -1024,6 +1024,13 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	@Override
 	public int getLayoutsCount(com.liferay.portal.kernel.model.Group group,
+		boolean privateLayout, long[] layoutIds) {
+		return _layoutLocalService.getLayoutsCount(group, privateLayout,
+			layoutIds);
+	}
+
+	@Override
+	public int getLayoutsCount(com.liferay.portal.kernel.model.Group group,
 		boolean privateLayout, long parentLayoutId) {
 		return _layoutLocalService.getLayoutsCount(group, privateLayout,
 			parentLayoutId);

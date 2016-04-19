@@ -2943,7 +2943,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  .portal.kernel.security.sso;version="1.0.0";uses:="javax.servlet.http
  ",com.liferay.portal.kernel.security.xml;version="1.0.0";uses:="javax
  .xml.parsers,javax.xml.stream,org.xml.sax",com.liferay.portal.kernel.
- service;version="1.2.0";uses:="com.liferay.announcements.kernel.model
+ service;version="1.3.0";uses:="com.liferay.announcements.kernel.model
  ,com.liferay.expando.kernel.model,com.liferay.exportimport.kernel.lar
  ,com.liferay.exportimport.kernel.model,com.liferay.portal.kernel.cach
  e.thread.local,com.liferay.portal.kernel.cluster,com.liferay.portal.k

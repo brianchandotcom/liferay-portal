@@ -83,12 +83,32 @@
 
 				<c:choose>
 					<c:when test="<%= disableInputs %>">
+						<liferay-util:buffer var="badgeHTML">
+							<span class="badge badge-info">
 
-						<%
-						int layoutsCount = LayoutLocalServiceUtil.getLayoutsCount(group, privateLayout);
-						%>
+								<%
+								int layoutsCountTemplate = LayoutLocalServiceUtil.getLayoutsCount(group, privateLayout, selectedLayoutIdsArray);
+								int layoutsCountTotal = LayoutLocalServiceUtil.getLayoutsCount(group, privateLayout);
 
-						<liferay-ui:message arguments="<%= new String[] {String.valueOf(selectedLayoutIdsArray.length), String.valueOf(layoutsCount)} %>" key="x-selected-out-of-x" />
+								if (layoutsCountTemplate > layoutsCountTotal) {
+									layoutsCountTemplate = layoutsCountTotal;
+								}
+								%>
+
+								<c:choose>
+									<c:when test="<%= layoutsCountTotal == 0 %>">
+										<liferay-ui:message key="none" />
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:message arguments='<%= new String[] {"<strong>" + String.valueOf(layoutsCountTemplate) + "</strong>", String.valueOf(layoutsCountTotal)} %>' key="x-of-x" />
+									</c:otherwise>
+								</c:choose>
+							</span>
+						</liferay-util:buffer>
+
+						<li class="tree-item">
+							<liferay-ui:message arguments="<%= badgeHTML %>" key="pages-x" />
+						</li>
 					</c:when>
 					<c:otherwise>
 						<div class="pages-selector">

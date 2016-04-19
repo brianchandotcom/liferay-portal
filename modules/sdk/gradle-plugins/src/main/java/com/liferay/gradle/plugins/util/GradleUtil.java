@@ -47,6 +47,10 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 	public static final String PORTAL_TOOL_GROUP = "com.liferay";
 
+	public static final String SNAPSHOT_PROPERTY_NAME = "snapshot";
+
+	public static final String SNAPSHOT_VERSION_SUFFIX = "-SNAPSHOT";
+
 	public static String getArchivesBaseName(Project project) {
 		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
 			project, BasePluginConvention.class);
@@ -168,6 +172,21 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		}
 
 		return false;
+	}
+
+	public static void setProjectSnapshotVersion(Project project) {
+		boolean snapshot = false;
+
+		if (project.hasProperty(SNAPSHOT_PROPERTY_NAME)) {
+			snapshot = GradleUtil.getProperty(
+				project, SNAPSHOT_PROPERTY_NAME, true);
+		}
+
+		String version = String.valueOf(project.getVersion());
+
+		if (snapshot && !version.endsWith(SNAPSHOT_VERSION_SUFFIX)) {
+			project.setVersion(version + SNAPSHOT_VERSION_SUFFIX);
+		}
 	}
 
 	public static Map<String, String> toStringMap(Map<String, ?> map) {

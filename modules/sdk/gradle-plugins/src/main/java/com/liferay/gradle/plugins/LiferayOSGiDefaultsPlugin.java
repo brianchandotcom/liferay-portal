@@ -839,7 +839,7 @@ public class LiferayOSGiDefaultsPlugin
 						_getGradleCommand(
 							gradleRelativePath,
 							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME, gradleDaemon,
-							"-P" + _SNAPSHOT_PROPERTY_NAME));
+							"-P" + GradleUtil.SNAPSHOT_PROPERTY_NAME));
 
 					// Publish release
 
@@ -1748,12 +1748,13 @@ public class LiferayOSGiDefaultsPlugin
 
 					configureArtifacts(
 						project, jarJavadocTask, jarSourcesTask, jarTLDDocTask);
-					configureProjectVersion(project);
 					configureTaskJarSources(jarSourcesTask);
 					configureTaskUpdateFileVersions(
 						updateFileVersionsTask, portalRootDir);
 
-					// configureProjectVersion must be called before
+					GradleUtil.setProjectSnapshotVersion(project);
+
+					// setProjectSnapshotVersion must be called before
 					// configureTaskUploadArchives, because the latter one needs
 					// to know if we are publishing a snapshot or not.
 
@@ -1929,21 +1930,6 @@ public class LiferayOSGiDefaultsPlugin
 		GradleUtil.setProperty(
 			project, "plugin.full.version",
 			String.valueOf(project.getVersion()));
-	}
-
-	protected void configureProjectVersion(Project project) {
-		boolean snapshot = false;
-
-		if (project.hasProperty(_SNAPSHOT_PROPERTY_NAME)) {
-			snapshot = GradleUtil.getProperty(
-				project, _SNAPSHOT_PROPERTY_NAME, true);
-		}
-
-		String version = String.valueOf(project.getVersion());
-
-		if (snapshot && !version.endsWith(_SNAPSHOT_VERSION_SUFFIX)) {
-			project.setVersion(version + _SNAPSHOT_VERSION_SUFFIX);
-		}
 	}
 
 	protected void configureRepositories(Project project) {
@@ -2504,7 +2490,7 @@ public class LiferayOSGiDefaultsPlugin
 
 		String version = String.valueOf(project.getVersion());
 
-		if (version.endsWith(_SNAPSHOT_VERSION_SUFFIX)) {
+		if (version.endsWith(GradleUtil.SNAPSHOT_VERSION_SUFFIX)) {
 			return;
 		}
 
@@ -2927,10 +2913,6 @@ public class LiferayOSGiDefaultsPlugin
 
 	private static final String _REPOSITORY_URL = System.getProperty(
 		"repository.url", DEFAULT_REPOSITORY_URL);
-
-	private static final String _SNAPSHOT_PROPERTY_NAME = "snapshot";
-
-	private static final String _SNAPSHOT_VERSION_SUFFIX = "-SNAPSHOT";
 
 	private static final Object[] _TEST_INTEGRATION_JVM_ARGS = {
 		"-Xms512m", "-Xmx512m", "-XX:MaxNewSize=32m", "-XX:MaxPermSize=200m",

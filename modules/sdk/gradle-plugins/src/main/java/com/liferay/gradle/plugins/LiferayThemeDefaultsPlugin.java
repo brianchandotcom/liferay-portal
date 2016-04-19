@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.util.GradleUtil;
 
+import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.Dependency;
@@ -67,6 +68,16 @@ public class LiferayThemeDefaultsPlugin
 		applyConfigScripts(project);
 
 		configureProject(project);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					GradleUtil.setProjectSnapshotVersion(project);
+				}
+
+			});
 	}
 
 	protected void configureProject(Project project) {

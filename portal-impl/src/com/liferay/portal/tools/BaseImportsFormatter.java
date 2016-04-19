@@ -16,8 +16,6 @@ package com.liferay.portal.tools;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -110,51 +108,6 @@ public abstract class BaseImportsFormatter implements ImportsFormatter {
 			sb.append("\n");
 
 			previousImportPackage = importPackage;
-		}
-
-		return sb.toString();
-	}
-
-	protected String stripUnusedImports(
-			String imports, String content, String packageDir, String className,
-			String classNameExceptionRegex)
-		throws IOException {
-
-		Set<String> classes = ClassUtil.getClasses(
-			new UnsyncStringReader(content), className);
-
-		StringBundler sb = new StringBundler();
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new UnsyncStringReader(imports));
-
-		String line = null;
-
-		while ((line = unsyncBufferedReader.readLine()) != null) {
-			int x = line.indexOf("import ");
-
-			if (x == -1) {
-				continue;
-			}
-
-			int y = line.lastIndexOf(CharPool.PERIOD);
-
-			String importPackage = line.substring(x + 7, y);
-
-			if (importPackage.equals(packageDir) ||
-				importPackage.equals("java.lang")) {
-
-				continue;
-			}
-
-			String importClass = line.substring(y + 1, line.length() - 1);
-
-			if (importClass.matches(classNameExceptionRegex) ||
-				classes.contains(importClass)) {
-
-				sb.append(line);
-				sb.append("\n");
-			}
 		}
 
 		return sb.toString();

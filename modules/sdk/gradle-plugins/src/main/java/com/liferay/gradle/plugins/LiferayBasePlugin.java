@@ -123,7 +123,7 @@ public class LiferayBasePlugin implements Plugin<Project> {
 
 	protected LiferayExtension addLiferayExtension(Project project) {
 		LiferayExtension liferayExtension = GradleUtil.addExtension(
-			project, LiferayPlugin.PLUGIN_NAME, getLiferayExtensionClass());
+			project, LiferayPlugin.PLUGIN_NAME, LiferayExtension.class);
 
 		GradleUtil.applyScript(
 			project,
@@ -237,10 +237,6 @@ public class LiferayBasePlugin implements Plugin<Project> {
 				}
 
 			});
-	}
-
-	protected Class<? extends LiferayExtension> getLiferayExtensionClass() {
-		return LiferayExtension.class;
 	}
 
 }

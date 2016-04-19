@@ -21,7 +21,7 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashEntry.
 <c:choose>
 	<c:when test="<%= trashHandler.isRestorable(trashEntry.getClassPK()) && !trashHandler.isInTrashContainer(trashEntry.getClassPK()) %>">
 		<portlet:actionURL name="restoreEntries" var="restoreEntryURL">
-			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="trashEntryId" value="<%= String.valueOf(trashEntry.getEntryId()) %>" />
 		</portlet:actionURL>
 

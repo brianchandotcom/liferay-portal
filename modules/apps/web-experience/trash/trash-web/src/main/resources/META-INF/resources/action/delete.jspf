@@ -15,7 +15,7 @@
 --%>
 
 <portlet:actionURL name="deleteEntries" var="deleteEntryURL">
-	<portlet:param name="redirect" value="<%= redirect %>" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="trashEntryId" value="<%= String.valueOf(trashEntry.getEntryId()) %>" />
 </portlet:actionURL>
 

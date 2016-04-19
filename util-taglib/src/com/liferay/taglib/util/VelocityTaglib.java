@@ -14,6 +14,8 @@
 
 package com.liferay.taglib.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -37,6 +39,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Daniel Reuther
  */
+@ProviderType
 public interface VelocityTaglib {
 
 	public String actionURL(long plid, String portletName, String queryString)
@@ -82,6 +85,16 @@ public interface VelocityTaglib {
 			long ddmTemplateGroupId, String ddmTemplateKey,
 			boolean showGuestGroup, boolean showParentGroups,
 			boolean showLayout, boolean showPortletBreadcrumb)
+		throws Exception;
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #breadcrumb(long, String,
+	 * 				boolean, boolean, boolean, boolean)}}
+	 */
+	public void breadcrumb(
+			String ddmTemplateKey, boolean showGuestGroup,
+			boolean showParentGroups, boolean showLayout,
+			boolean showPortletBreadcrumb)
 		throws Exception;
 
 	public void discussion(

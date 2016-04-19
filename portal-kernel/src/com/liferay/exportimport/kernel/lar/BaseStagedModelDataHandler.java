@@ -375,6 +375,20 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 					portletDataContext),
 				new TransientValue<T>(stagedModel));
 		}
+		catch (NoSuchModelException nsme) {
+			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
+				EVENT_STAGED_MODEL_IMPORT_FAILED, getProcessFlag(),
+				PortletDataContextFactoryUtil.clonePortletDataContext(
+					portletDataContext),
+				new TransientValue<T>(stagedModel), nsme);
+
+			PortletDataException pde = new PortletDataException(nsme);
+
+			pde.setStagedModel(stagedModel);
+			pde.setType(PortletDataException.MISSING_DEPENDENCY);
+
+			throw pde;
+		}
 		catch (PortletDataException pde) {
 			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 				EVENT_STAGED_MODEL_IMPORT_FAILED, getProcessFlag(),

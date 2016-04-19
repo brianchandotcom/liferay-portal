@@ -855,7 +855,7 @@ public class StagingImpl implements Staging {
 				errorMessage = LanguageUtil.format(
 					locale,
 					"the-x-x-has-missing-references-that-could-not-be-found-" +
-						"during-the-export",
+						"during-the-process",
 					new String[] {
 						ResourceActionsUtil.getModelResource(
 							locale, referrerClassName),

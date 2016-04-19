@@ -47,6 +47,9 @@ public class LiferayBasePlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		LiferayExtension liferayExtension = addLiferayExtension(project);
 
+		GradleUtil.applyPlugin(project, NodeDefaultsPlugin.class);
+		GradleUtil.applyPlugin(project, SourceFormatterDefaultsPlugin.class);
+
 		addConfigurationPortal(project, liferayExtension);
 
 		configureConfigurations(project, liferayExtension);

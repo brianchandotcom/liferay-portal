@@ -2568,6 +2568,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static Pattern taglibSessionKeyPattern = Pattern.compile(
 		"<liferay-ui:error [^>]+>|<liferay-ui:success [^>]+>",
 		Pattern.MULTILINE);
+	protected static Pattern validatorEqualsPattern = Pattern.compile(
+		"\\WValidator\\.equals\\(");
 
 	protected SourceFormatterArgs sourceFormatterArgs;
 

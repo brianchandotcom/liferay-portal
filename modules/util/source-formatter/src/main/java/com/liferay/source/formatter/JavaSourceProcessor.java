@@ -2826,7 +2826,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatValidatorEquals(String content) {
-		Matcher matcher = _validatorEqualsPattern.matcher(content);
+		Matcher matcher = validatorEqualsPattern.matcher(content);
 
 		if (!matcher.find()) {
 			return content;
@@ -4353,7 +4353,5 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
 	private List<String> _upgradeServiceUtilExcludes;
-	private final Pattern _validatorEqualsPattern = Pattern.compile(
-		"\\WValidator\\.equals\\(");
 
 }

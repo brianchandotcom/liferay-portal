@@ -21,7 +21,7 @@ BookmarksFolder curFolder = null;
 if (result instanceof AssetEntry) {
 	AssetEntry assetEntry = (AssetEntry)result;
 
-	if (Validator.equals(assetEntry.getClassName(), BookmarksFolder.class.getName())) {
+	if (Objects.equals(assetEntry.getClassName(), BookmarksFolder.class.getName())) {
 		curFolder = BookmarksFolderServiceUtil.getFolder(assetEntry.getClassPK());
 	}
 	else {

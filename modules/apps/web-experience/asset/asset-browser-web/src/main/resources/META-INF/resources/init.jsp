@@ -38,7 +38,8 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%@ page import="java.util.Date" %><%@
 page import="java.util.HashMap" %><%@
-page import="java.util.Map" %>
+page import="java.util.Map" %><%@
+page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />
 

@@ -214,7 +214,7 @@ LayoutItemSelectorCriterion layoutItemSelectorCriterion = layoutItemSelectorView
 				<c:when test="<%= itemSelectorReturnTypeName.equals(URLItemSelectorReturnType.class.getName()) %>">
 					button.attr('data-value', url);
 				</c:when>
-				<c:when test="<%= Validator.equals(itemSelectorReturnTypeName, UUIDItemSelectorReturnType.class.getName()) %>">
+				<c:when test="<%= Objects.equals(itemSelectorReturnTypeName, UUIDItemSelectorReturnType.class.getName()) %>">
 					button.attr('data-value', uuid);
 				</c:when>
 			</c:choose>

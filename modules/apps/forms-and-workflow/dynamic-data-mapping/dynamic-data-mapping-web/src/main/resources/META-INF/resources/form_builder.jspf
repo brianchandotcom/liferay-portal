@@ -25,7 +25,7 @@ if (Validator.isNotNull(script)) {
 
 		String ddmFormDefaultLanguageId = LocaleUtil.toLanguageId(ddmForm.getDefaultLocale());
 
-		if (!Validator.equals(defaultLanguageId, ddmFormDefaultLanguageId)) {
+		if (!Objects.equals(defaultLanguageId, ddmFormDefaultLanguageId)) {
 			changeableDefaultLanguage = true;
 		}
 

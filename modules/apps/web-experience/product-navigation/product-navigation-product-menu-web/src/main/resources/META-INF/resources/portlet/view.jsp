@@ -33,7 +33,7 @@ String productMenuState = SessionClicks.get(request, ProductNavigationProductMen
 	</h4>
 
 	<div class="sidebar-body">
-		<c:if test='<%= Validator.equals(productMenuState, "open") %>'>
+		<c:if test='<%= Objects.equals(productMenuState, "open") %>'>
 			<liferay-util:include page="/portlet/product_menu.jsp" servletContext="<%= application %>" />
 		</c:if>
 	</div>

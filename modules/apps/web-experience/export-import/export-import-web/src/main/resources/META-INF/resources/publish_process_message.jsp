@@ -54,7 +54,7 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 
 			String phase = GetterUtil.getString(backgroundTaskStatus.getAttribute("phase"));
 
-			if (phase.equals(Constants.EXPORT) && !Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
+			if (phase.equals(Constants.EXPORT) && !Objects.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
 				base = 50;
 			}
 
@@ -64,7 +64,7 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 
 		<div class="active progress progress-striped progress-xs">
 			<div class="progress-bar" style="width: <%= percentage %>%;">
-				<c:if test="<%= (allProgressBarCountersTotal > 0) && (!Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE) || (percentage < 100)) %>">
+				<c:if test="<%= (allProgressBarCountersTotal > 0) && (!Objects.equals(cmd, Constants.PUBLISH_TO_REMOTE) || (percentage < 100)) %>">
 					<%= percentage + StringPool.PERCENT %>
 				</c:if>
 			</div>
@@ -76,7 +76,7 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 		%>
 
 		<c:choose>
-			<c:when test="<%= Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE) && (percentage == 100) %>">
+			<c:when test="<%= Objects.equals(cmd, Constants.PUBLISH_TO_REMOTE) && (percentage == 100) %>">
 				<div class="progress-current-item">
 					<strong><liferay-ui:message key="please-wait-as-the-publication-processes-on-the-remote-site" /></strong>
 				</div>
@@ -86,10 +86,10 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 				<%
 				String messageKey = "exporting";
 
-				if (Validator.equals(cmd, Constants.IMPORT)) {
+				if (Objects.equals(cmd, Constants.IMPORT)) {
 					messageKey = "importing";
 				}
-				else if (Validator.equals(cmd, Constants.PUBLISH_TO_LIVE) || Validator.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
+				else if (Objects.equals(cmd, Constants.PUBLISH_TO_LIVE) || Objects.equals(cmd, Constants.PUBLISH_TO_REMOTE)) {
 					messageKey = "publishing";
 				}
 				%>

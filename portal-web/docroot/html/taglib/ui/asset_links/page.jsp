@@ -100,7 +100,7 @@ if (assetEntryId > 0) {
 
 					String urlViewInContext = assetRenderer.getURLViewInContext((LiferayPortletRequest)portletRequest, (LiferayPortletResponse)portletResponse, noSuchEntryRedirect);
 
-					if (Validator.isNotNull(urlViewInContext) && !Validator.equals(urlViewInContext, noSuchEntryRedirect)) {
+					if (Validator.isNotNull(urlViewInContext) && !Objects.equals(urlViewInContext, noSuchEntryRedirect)) {
 						urlViewInContext = HttpUtil.setParameter(urlViewInContext, "inheritRedirect", Boolean.TRUE);
 						urlViewInContext = HttpUtil.setParameter(urlViewInContext, "redirect", currentURL);
 					}

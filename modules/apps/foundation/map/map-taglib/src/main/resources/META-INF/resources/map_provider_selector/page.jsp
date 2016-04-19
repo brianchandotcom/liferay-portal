@@ -29,7 +29,7 @@
 		for (MapProvider mapProvider : mapProviders) {
 		%>
 
-			<aui:input checked="<%= Validator.equals(mapProviderKey, mapProvider.getKey()) %>" helpMessage="<%= mapProvider.getHelpMessage() %>" id='<%= mapProvider.getKey() + "Enabled" %>' label="<%= mapProvider.getLabel(locale) %>" name="<%= name %>" type="radio" value="<%= mapProvider.getKey() %>" />
+			<aui:input checked="<%= Objects.equals(mapProviderKey, mapProvider.getKey()) %>" helpMessage="<%= mapProvider.getHelpMessage() %>" id='<%= mapProvider.getKey() + "Enabled" %>' label="<%= mapProvider.getLabel(locale) %>" name="<%= name %>" type="radio" value="<%= mapProvider.getKey() %>" />
 
 			<div id="<portlet:namespace /><%= mapProvider.getKey() %>Options">
 
@@ -43,7 +43,7 @@
 			StringBundler sb = new StringBundler((mapProviders.size() - 1) * 6 - 1);
 
 			for (MapProvider curMapProvider : mapProviders) {
-				if (Validator.equals(mapProvider.getKey(), curMapProvider.getKey())) {
+				if (Objects.equals(mapProvider.getKey(), curMapProvider.getKey())) {
 					continue;
 				}
 

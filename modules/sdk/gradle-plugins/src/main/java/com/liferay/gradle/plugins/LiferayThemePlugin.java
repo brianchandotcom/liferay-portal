@@ -22,8 +22,10 @@ import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
+import com.liferay.gradle.util.Validator;
 
 import groovy.json.JsonOutput;
+import groovy.json.JsonSlurper;
 
 import groovy.lang.Closure;
 
@@ -46,6 +48,7 @@ import org.gradle.api.artifacts.ConfigurablePublishArtifact;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
@@ -67,6 +70,11 @@ public class LiferayThemePlugin implements Plugin<Project> {
 
 		LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
+
+		Map<String, Object> packageJson = getPackageJson(project);
+
+		configureArchivesBaseName(project, packageJson);
+		configureVersion(project, packageJson);
 
 		// liferay-theme-tasks already uses the "build" directory
 
@@ -141,6 +149,21 @@ public class LiferayThemePlugin implements Plugin<Project> {
 		return task;
 	}
 
+	protected void configureArchivesBaseName(
+		Project project, Map<String, Object> packageJson) {
+
+		String name = (String)packageJson.get("name");
+
+		if (Validator.isNull(name)) {
+			return;
+		}
+
+		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
+			project, BasePluginConvention.class);
+
+		basePluginConvention.setArchivesBaseName(name);
+	}
+
 	protected void configureArtifacts(final Project project) {
 		ArtifactHandler artifacts = project.getArtifacts();
 
@@ -204,6 +227,28 @@ public class LiferayThemePlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	protected void configureVersion(
+		Project project, Map<String, Object> packageJson) {
+
+		String version = (String)packageJson.get("version");
+
+		if (Validator.isNotNull(version)) {
+			project.setVersion(version);
+		}
+	}
+
+	protected Map<String, Object> getPackageJson(Project project) {
+		File file = project.file("package.json");
+
+		if (!file.exists()) {
+			return Collections.emptyMap();
+		}
+
+		JsonSlurper jsonSlurper = new JsonSlurper();
+
+		return (Map<String, Object>)jsonSlurper.parse(file);
 	}
 
 	protected File getWarFile(Project project) {

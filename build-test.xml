@@ -8055,11 +8055,11 @@ jdbc.default.password=${database.mysql.password}</echo>
 				};
 
 				String log = project.getProperty("db.upgrade.log");
+
 				String[] lines = log.split("\n");
 
-				StringBuffer sb = new StringBuffer();
-
 				int count = 0;
+				StringBuffer sb = new StringBuffer();
 
 				for (String line : lines) {
 					if (matchesPatterns(includedPatterns, line)) {
@@ -8082,9 +8082,12 @@ jdbc.default.password=${database.mysql.password}</echo>
 					sb.append(errorString);
 
 					System.out.println(sb.toString());
+					project.setProperty("db.upgrade.failed", "true");
 				}
 			]]>
 		</beanshell>
+
+		<fail message="Database upgrade has failed." if="db.upgrade.failed" />
 
 		<delete file="${liferay.home}/build-db-upgrade.xml" />
 		<delete file="${liferay.home}/db_upgrade_log" />

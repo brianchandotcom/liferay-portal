@@ -43,6 +43,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -248,43 +250,21 @@ public class ToolsUtil {
 			String importPackageAndClassName = line.substring(
 				x + 7, line.lastIndexOf(StringPool.SEMICOLON));
 
-			x = -1;
+			Pattern pattern = Pattern.compile(
+				"\n(.*)" +
+					StringUtil.replace(importPackageAndClassName, ".", "\\.") +
+						"\\W");
 
-			while (true) {
-				x = content.indexOf(importPackageAndClassName, x + 1);
+			Matcher matcher = pattern.matcher(content);
 
-				if (x == -1) {
-					break;
-				}
+			while (matcher.find()) {
+				String lineStart = matcher.group(1);
 
-				if (isInsideQuotes(content, x)) {
+				if (lineStart.startsWith("import ") ||
+					lineStart.contains("//") ||
+					ToolsUtil.isInsideQuotes(content, matcher.end() - 2)) {
+
 					continue;
-				}
-
-				if (content.length() >
-						(x + importPackageAndClassName.length())) {
-
-					char nextChar = content.charAt(
-						x + importPackageAndClassName.length());
-
-					if (Character.isAlphabetic(nextChar) ||
-						Character.isDigit(nextChar) ||
-						(nextChar == CharPool.PERIOD) ||
-						(nextChar == CharPool.SEMICOLON) ||
-						(nextChar == CharPool.UNDERLINE)) {
-
-						continue;
-					}
-
-					if (x > 0) {
-						char previousChar = content.charAt(x - 1);
-
-						if ((previousChar == CharPool.QUOTE) &&
-							(nextChar == CharPool.QUOTE)) {
-
-							continue;
-						}
-					}
 				}
 
 				String importClassName = importPackageAndClassName.substring(
@@ -292,7 +272,8 @@ public class ToolsUtil {
 						1);
 
 				content = StringUtil.replaceFirst(
-					content, importPackageAndClassName, importClassName, x);
+					content, importPackageAndClassName, importClassName,
+					matcher.start());
 			}
 		}
 

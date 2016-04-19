@@ -25,14 +25,9 @@ TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(trashEntry.
 			<portlet:param name="trashEntryId" value="<%= String.valueOf(trashEntry.getEntryId()) %>" />
 		</portlet:actionURL>
 
-		<%
-		String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "checkEntry', {trashEntryId: " + trashEntry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'});";
-		%>
-
 		<liferay-ui:icon
 			message="restore"
-			onClick="<%= taglibOnClick %>"
-			url="javascript:;"
+			url="<%= restoreEntryURL.toString() %>"
 		/>
 	</c:when>
 	<c:when test="<%= !trashHandler.isRestorable(trashEntry.getClassPK()) && trashHandler.isMovable() %>">

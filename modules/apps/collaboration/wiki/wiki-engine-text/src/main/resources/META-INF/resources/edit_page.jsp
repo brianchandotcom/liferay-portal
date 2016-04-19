@@ -13,6 +13,7 @@
  * details.
  */
 --%>
+
 <%@ include file="/init.jsp" %>
 
 <%

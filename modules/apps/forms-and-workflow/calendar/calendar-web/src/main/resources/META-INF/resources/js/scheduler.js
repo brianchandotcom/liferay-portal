@@ -827,8 +827,6 @@ AUI.add(
 
 							var editCalendarBookingURL = decodeURIComponent(recorder.get('editCalendarBookingURL'));
 
-							var date = instance.get('date');
-
 							var data = {
 								activeView: activeViewName,
 								calendarId: calendarId,

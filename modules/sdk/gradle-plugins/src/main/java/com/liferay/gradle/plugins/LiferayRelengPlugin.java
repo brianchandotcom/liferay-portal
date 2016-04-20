@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins;
 import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask;
 import com.liferay.gradle.plugins.change.log.builder.ChangeLogBuilderPlugin;
 import com.liferay.gradle.plugins.tasks.PrintArtifactPublishCommandsTask;
+import com.liferay.gradle.plugins.tasks.UpdateVersionTask;
 import com.liferay.gradle.plugins.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
@@ -30,6 +31,7 @@ import java.io.IOException;
 
 import java.lang.reflect.Method;
 
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
@@ -40,11 +42,13 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.PublishArtifact;
 import org.gradle.api.artifacts.PublishArtifactSet;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.maven.MavenDeployer;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.internal.artifacts.publish.ArchivePublishArtifact;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
@@ -64,6 +68,9 @@ import org.gradle.process.ExecSpec;
  * @author Andrea Di Giorgi
  */
 public class LiferayRelengPlugin implements Plugin<Project> {
+
+	public static final String PRINT_ARTIFACT_PUBLISH_COMMANDS =
+		"printArtifactPublishCommands";
 
 	public static final String PRINT_STALE_ARTIFACT_TASK_NAME =
 		"printStaleArtifact";
@@ -88,6 +95,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		final WritePropertiesTask recordArtifactTask = addTaskRecordArtifact(
 			project, relengDir);
 
+		addTaskPrintArtifactPublishCommands(project, recordArtifactTask);
 		addTaskPrintStaleArtifact(project, recordArtifactTask);
 
 		configureTaskBuildChangeLog(buildChangeLogTask, relengDir);
@@ -117,9 +125,70 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					}
 				}
 
+			});
+	}
+
+	protected PrintArtifactPublishCommandsTask
+		addTaskPrintArtifactPublishCommands(
+			Project project, final WritePropertiesTask recordArtifactTask) {
+
+		final PrintArtifactPublishCommandsTask
+			printArtifactPublishCommandsTask = GradleUtil.addTask(
+				project, PRINT_ARTIFACT_PUBLISH_COMMANDS,
+				PrintArtifactPublishCommandsTask.class);
+
+		printArtifactPublishCommandsTask.setArtifactPropertiesFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return recordArtifactTask.getOutputFile();
 				}
 
 			});
+
+		printArtifactPublishCommandsTask.setDescription(
+			"Prints the artifact publish commands if this project has been " +
+				"changed since the last publish.");
+
+		configureTaskEnabledIfStale(
+			printArtifactPublishCommandsTask, recordArtifactTask);
+
+		File gitRepoDir = GradleUtil.getRootDir(project, ".gitrepo");
+
+		if (gitRepoDir != null) {
+			configureTaskEnabledIfLeaf(printArtifactPublishCommandsTask);
+		}
+
+		GradleUtil.withPlugin(
+			project, LiferayOSGiDefaultsPlugin.class,
+			new Action<LiferayOSGiDefaultsPlugin>() {
+
+				@Override
+				public void execute(
+					LiferayOSGiDefaultsPlugin liferayOSGiDefaultsPlugin) {
+
+					configureTaskPrintArtifactPublishCommandsForOSGi(
+						printArtifactPublishCommandsTask);
+				}
+
+			});
+
+		GradleUtil.withPlugin(
+			project, LiferayThemeDefaultsPlugin.class,
+			new Action<LiferayThemeDefaultsPlugin>() {
+
+				@Override
+				public void execute(
+					LiferayThemeDefaultsPlugin liferayThemeDefaultsPlugin) {
+
+					configureTaskPrintArtifactPublishCommandsForTheme(
+						printArtifactPublishCommandsTask);
+				}
+
+			});
+
+		return printArtifactPublishCommandsTask;
 	}
 
 	protected Task addTaskPrintStaleArtifact(
@@ -328,6 +397,113 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	protected void configureTaskEnabledIfLeaf(Task task) {
+		task.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					Project project = task.getProject();
+
+					for (Configuration configuration :
+							project.getConfigurations()) {
+
+						if (_hasProjectDependencies(configuration)) {
+							return false;
+						}
+					}
+
+					return true;
+				}
+
+				private boolean _hasProjectDependencies(
+					Configuration configuration) {
+
+					for (Dependency dependency :
+							configuration.getDependencies()) {
+
+						if (dependency instanceof ProjectDependency) {
+							return true;
+						}
+					}
+
+					return false;
+				}
+
+			});
+	}
+
+	protected void configureTaskEnabledIfStale(
+		Task task, final WritePropertiesTask recordArtifactTask) {
+
+		task.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					Properties artifactProperties = getArtifactProperties(
+						recordArtifactTask);
+
+					return isStale(
+						recordArtifactTask.getProject(), artifactProperties);
+				}
+
+			});
+	}
+
+	protected void configureTaskPrintArtifactPublishCommandsForOSGi(
+		PrintArtifactPublishCommandsTask printArtifactPublishCommandsTask) {
+
+		Project project = printArtifactPublishCommandsTask.getProject();
+
+		if (LiferayOSGiDefaultsPlugin.isTestProject(project)) {
+			printArtifactPublishCommandsTask.setEnabled(false);
+		}
+
+		printArtifactPublishCommandsTask.setFirstPublishExcludedTaskName(
+			LiferayOSGiDefaultsPlugin.UPDATE_FILE_VERSIONS_TASK_NAME);
+
+		configureTaskPrintArtifactPublishCommandsPrepNextFiles(
+			printArtifactPublishCommandsTask,
+			LiferayOSGiDefaultsPlugin.UPDATE_BUNDLE_VERSION_TASK_NAME);
+	}
+
+	protected void configureTaskPrintArtifactPublishCommandsForTheme(
+		PrintArtifactPublishCommandsTask printArtifactPublishCommandsTask) {
+
+		configureTaskPrintArtifactPublishCommandsPrepNextFiles(
+			printArtifactPublishCommandsTask,
+			LiferayThemeDefaultsPlugin.UPDATE_THEME_VERSION_TASK_NAME);
+	}
+
+	protected void configureTaskPrintArtifactPublishCommandsPrepNextFiles(
+		final PrintArtifactPublishCommandsTask
+			printArtifactPublishCommandsTask,
+		final String updateVersionTaskName) {
+
+		Project project = printArtifactPublishCommandsTask.getProject();
+
+		Action<Project> action = new Action<Project>() {
+
+			@Override
+			public void execute(Project project) {
+				UpdateVersionTask updateVersionTask =
+					(UpdateVersionTask)GradleUtil.getTask(
+						project, updateVersionTaskName);
+
+				Map<Object, Object> patterns = updateVersionTask.getPatterns();
+
+				FileCollection fileCollection = project.files(
+					patterns.keySet());
+
+				printArtifactPublishCommandsTask.prepNextFiles(fileCollection);
+			}
+
+		};
+
+		project.afterEvaluate(action);
 	}
 
 	protected void configureTaskPrintStaleArtifactForOSGi(Task task) {

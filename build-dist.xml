@@ -1973,21 +1973,45 @@ rerun this task.
 
 		<delete dir="${app.server.weblogic.dir}" />
 
-		<unzip
-			dest="${app.server.weblogic.dir}"
-			src="${app.server.parent.dir}/${app.server.weblogic.zip.name}"
-		/>
+		<if>
+			<equals arg1="${app.server.weblogic.version.build}" arg2="1221" />
+			<then>
+				<unzip
+					dest="${app.server.weblogic.dir}-temp"
+					src="${app.server.parent.dir}/${app.server.weblogic.zip.name}"
+				/>
+			</then>
+			<else>
+				<unzip
+					dest="${app.server.weblogic.dir}"
+					src="${app.server.parent.dir}/${app.server.weblogic.zip.name}"
+				/>
+			</else>
+		</if>
 
 		<if>
-			<equals arg1="${app.server.weblogic.version.build}" arg2="1213" />
+			<equals arg1="${app.server.weblogic.version.build}" arg2="1221" />
 			<then>
-				<move todir="${app.server.weblogic.dir}">
-					<fileset dir="${app.server.weblogic.dir}/wls12130" />
-				</move>
+				<java jar="${app.server.weblogic.dir}-temp/${app.server.weblogic.jar.name}" fork="true">
+					<arg line="ORACLE_HOME=${app.server.weblogic.dir}" />
+				</java>
+
+				<delete dir="${app.server.weblogic.dir}-temp" />
 
 				<property name="app.server.weblogic.configure.silent" value="-silent" />
 				<property name="app.server.weblogic.template.dir" value="${app.server.weblogic.wlserver.dir}/common/templates/wls" />
 			</then>
+			<elseif>
+				<equals arg1="${app.server.weblogic.version.build}" arg2="1213" />
+				<then>
+					<move todir="${app.server.weblogic.dir}">
+						<fileset dir="${app.server.weblogic.dir}/wls${app.server.weblogic.version.build}0" />
+					</move>
+
+					<property name="app.server.weblogic.configure.silent" value="-silent" />
+					<property name="app.server.weblogic.template.dir" value="${app.server.weblogic.wlserver.dir}/common/templates/wls" />
+				</then>
+			</elseif>
 			<else>
 				<property name="app.server.weblogic.configure.silent" value="" />
 				<property name="app.server.weblogic.template.dir" value="${app.server.weblogic.wlserver.dir}/common/templates/domains" />
@@ -2022,23 +2046,23 @@ closeTemplate()
 		<if>
 			<os family="windows" />
 			<then>
-				<exec dir="${app.server.weblogic.dir}" executable="cmd">
+				<exec dir="${app.server.weblogic.dir}/wlserver/server/bin/" executable="cmd">
 					<env key="MW_HOME" value="${app.server.weblogic.dir.windows}" />
 					<arg value="/c" />
-					<arg value="configure.cmd" />
+					<arg value="setWLSEnv.cmd" />
 					<arg value="${app.server.weblogic.configure.silent}" />
 				</exec>
 
 				<echo file="${tstamp.value}/create-weblogic-domain.bat">
 					@echo off
 
-					set "USER_MEM_ARGS=-Xmx1024m -XX:PermSize=256m"
+					set "USER_MEM_ARGS=-Xmx1024m -XX:MetaspaceSize=256m"
 
 					set "MW_HOME=${app.server.weblogic.dir.windows}"
 
 					set "WL_HOME=${app.server.weblogic.wlserver.dir.windows}"
 
-					call %WL_HOME%/common/bin/commEnv.cmd
+					call %MW_HOME%/oracle_common/common/bin/commEnv.cmd
 
 					set "CLASSPATH=%FMWCONFIG_CLASSPATH%"
 
@@ -2085,7 +2109,7 @@ closeTemplate()
 				<if>
 					<os family="unix" />
 					<then>
-						<replace file="${app.server.weblogic.dir}/configure.sh">
+						<replace file="${app.server.weblogic.dir}/wlserver/server/bin/setWLSEnv.sh">
 							<replacefilter token="#!/bin/sh" value="#!/bin/bash" />
 						</replace>
 
@@ -2094,23 +2118,23 @@ closeTemplate()
 				</if>
 
 				<chmod
-					dir="${app.server.weblogic.dir}"
-					includes="configure.sh"
+					dir="${app.server.weblogic.dir}/wlserver/server/bin"
+					includes="setWLSEnv.sh"
 					perm="744"
 				/>
 
 				<if>
 					<os family="unix" />
 					<then>
-						<exec dir="${app.server.weblogic.dir}" executable="./configure.sh">
+						<exec dir="${app.server.weblogic.dir}/wlserver/server/bin/" executable="./setWLSEnv.sh">
 							<env key="MW_HOME" file="${app.server.weblogic.dir}" />
 							<arg value="${app.server.weblogic.configure.silent}" />
 						</exec>
 					</then>
 					<else>
-						<exec dir="${app.server.weblogic.dir}" executable="sh">
+						<exec dir="${app.server.weblogic.dir}/wlserver/server/bin/" executable="sh">
 							<env key="MW_HOME" file="${app.server.weblogic.dir}" />
-							<arg value="configure.sh" />
+							<arg value="setWLSEnv.sh" />
 						</exec>
 					</else>
 				</if>
@@ -2118,13 +2142,13 @@ closeTemplate()
 				<echo file="${tstamp.value}/create-weblogic-domain.sh">
 					#!/bin/sh
 
-					export USER_MEM_ARGS="-Xmx1024m -XX:PermSize=256m"
+					export USER_MEM_ARGS="-Xmx1024m -XX:MetaspaceSize=256m"
 
 					export MW_HOME="${app.server.weblogic.dir}"
 
 					export WL_HOME="${app.server.weblogic.wlserver.dir}"
 
-					${source.command} ${WL_HOME}/common/bin/commEnv.sh
+					${source.command} ${MW_HOME}/oracle_common/common/bin/commEnv.sh
 
 					export CLASSPATH=${FMWCONFIG_CLASSPATH}
 
@@ -2147,7 +2171,7 @@ closeTemplate()
 						<![CDATA[
 							# Any changes to this script may be lost when adding extensions to this configuration.
 
-							export USER_MEM_ARGS="-Xmx1024m -XX:PermSize=512m"
+							export USER_MEM_ARGS="-Xmx1024m -XX:MetaspaceSize=512m"
 
 							export MW_HOME="${app.server.weblogic.dir}"
 

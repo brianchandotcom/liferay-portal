@@ -181,13 +181,6 @@ public class InitUtil {
 			return;
 		}
 
-		if (!_neverInitialized) {
-			PropsUtil.reload();
-		}
-		else {
-			_neverInitialized = false;
-		}
-
 		init();
 
 		try {
@@ -268,6 +261,5 @@ public class InitUtil {
 
 	private static ApplicationContext _appApplicationContext;
 	private static boolean _initialized;
-	private static boolean _neverInitialized = true;
 
 }

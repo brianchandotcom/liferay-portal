@@ -575,11 +575,7 @@ public class PrefsPropsUtil {
 			return value;
 		}
 
-		if (defaultValue) {
-			return preferences.getValue(name, StringPool.TRUE);
-		}
-
-		return preferences.getValue(name, StringPool.FALSE);
+		return String.valueOf(defaultValue);
 	}
 
 	public static String getString(

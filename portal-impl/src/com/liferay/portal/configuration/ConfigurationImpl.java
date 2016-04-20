@@ -51,10 +51,20 @@ import org.apache.commons.configuration.MapConfiguration;
 public class ConfigurationImpl
 	implements com.liferay.portal.kernel.configuration.Configuration {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #ConfigurationImpl(ClassLoader, String, long, String)}
+	 */
+	@Deprecated
 	public ConfigurationImpl(ClassLoader classLoader, String name) {
 		this(classLoader, name, CompanyConstants.SYSTEM);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #ConfigurationImpl(ClassLoader, String, long, String)}
+	 */
+	@Deprecated
 	public ConfigurationImpl(
 		ClassLoader classLoader, String name, long companyId) {
 
@@ -71,6 +81,15 @@ public class ConfigurationImpl
 				_log.error(e, e);
 			}
 		}
+
+		_componentConfiguration = new ClassLoaderComponentConfiguration(
+			classLoader, webId, name);
+
+		printSources(companyId, webId);
+	}
+
+	public ConfigurationImpl(
+		ClassLoader classLoader, String name, long companyId, String webId) {
 
 		_componentConfiguration = new ClassLoaderComponentConfiguration(
 			classLoader, webId, name);

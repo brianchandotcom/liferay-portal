@@ -33,9 +33,10 @@
 		<execute function="Click" locator1="CampaignContentDisplay#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
 		<execute function="Click" locator1="CampaignContentDisplay#OTHERWISE_PANEL_SELECT_CONTENT_BUTTON" />
 
-		<var name="key_contentType" value="${contentType}" />
+		<var name="key_menuItem" value="${contentType}" />
 
-		<execute function="Click" locator1="CampaignContentDisplay#OTHERWISE_PANEL_CONTENT_DROPDOWN_MENULIST" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="SelectFrame" locator1="CampaignContentDisplay#SELECT_CONTENT_IFRAME" />
 

@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>USER_SEGMENT_NAME_FIELD</td>
-	<td>//input[contains(@id,'ContentTargetingPortlet_name')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_SEGMENT_DESCRIPTION_FIELD</td>
 	<td>//textarea[contains(@id,'ContentTargetingPortlet_description')]</td>
 	<td></td>
@@ -26,17 +21,6 @@
 <tr>
 	<td>USER_SEGMENT_RULE_APPLIED</td>
 	<td>//div[@class='field-info']//h2[contains(.,'${key_userSegmentRuleName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--USER_SEGMENT_TABLE_NAME-->
-<tr>
-	<td>USER_SEGMENT_TABLE_DESCRIPTION</td>
-	<td>//tr[contains(.,'${key_rowEntry}')]//td[3]</td>
 	<td></td>
 </tr>
 <tr>

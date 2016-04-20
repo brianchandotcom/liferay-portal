@@ -631,7 +631,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ContentTargetingSimulator#gotoPG" />
+		<execute macro="MobileDevice#previewPG">
+			<var name="deviceType" value="desktop" />
+		</execute>
 
 		<execute macro="ContentTargetingSimulator#viewCampaignsViaSimulatorPG">
 			<var name="viewCampaignMatched" value="Campaign Name Male" />
@@ -3639,7 +3641,7 @@
 
 		<execute macro="DMDocument#addCP">
 			<var name="dmDocumentDescription" value="DM Document Description 1" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
+			<var name="dmDocumentFile" value="Document_1.png" />
 			<var name="dmDocumentTitle" value="DM Document Title 1" />
 		</execute>
 
@@ -4159,7 +4161,9 @@
 			<var name="viewUserSegmentSelected" value="Male User Segment Name" />
 		</execute>
 
-		<execute macro="ContentTargetingSimulator#gotoPG" />
+		<execute macro="MobileDevice#previewPG">
+			<var name="deviceType" value="desktop" />
+		</execute>
 
 		<execute macro="ContentTargetingSimulator#viewUserSegmentsViaSimulatorPG">
 			<var name="viewUserSegmentMatched" value="Male User Segment Name" />
@@ -4187,7 +4191,9 @@
 			<var name="viewUserSegmentSelected" value="Default" />
 		</execute>
 
-		<execute macro="ContentTargetingSimulator#gotoPG" />
+		<execute macro="MobileDevice#previewPG">
+			<var name="deviceType" value="desktop" />
+		</execute>
 
 		<execute macro="ContentTargetingSimulator#simulateUserSegmentPG">
 			<var name="simulationbutton" value="Stop Simulation" />
@@ -4368,7 +4374,9 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ContentTargetingSimulator#gotoPG" />
+		<execute macro="MobileDevice#previewPG">
+			<var name="deviceType" value="desktop" />
+		</execute>
 
 		<execute macro="ContentTargetingSimulator#viewUserSegmentsViaSimulatorPG">
 			<var name="viewUserSegmentMatched" value="Site Member Name,Male User Segment Name,Age 25 - 50" />

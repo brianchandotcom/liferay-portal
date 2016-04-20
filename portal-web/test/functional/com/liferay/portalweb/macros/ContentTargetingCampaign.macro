@@ -3,8 +3,8 @@
 		<execute function="AssertClick" locator1="ContentTargeting#NAVIGATION_CAMPAIGNS" value1="Campaigns" />
 		<execute function="Click" locator1="ContentTargeting#ADD_CAMPAIGN_BUTTON" />
 
-		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_NAME_FIELD" value1="${campaignName}" />
-		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_DESCRIPTION_FIELD" value1="${campaignDescription}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${campaignName}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${campaignDescription}" />
 
 		<if>
 			<isset var="userSegmentSelect" />
@@ -22,7 +22,7 @@
 		<if>
 			<equals arg1="${campaignInactive}" arg2="true" />
 			<then>
-				<execute function="Uncheck" locator1="ContentTargetingEditCampaign#CAMPAIGN_ACTIVE_CHECKBOX" />
+				<execute function="Uncheck" locator1="ToggleSwitch#ACTIVE" />
 			</then>
 		</if>
 	</command>
@@ -133,8 +133,8 @@
 		<execute function="Click" locator1="ContentTargeting#CAMPAIGN_TABLE_ACTIONS" />
 		<execute function="Click" locator1="MenuItem#EDIT" />
 
-		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_NAME_FIELD" value1="${campaignNameEdit}" />
-		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_DESCRIPTION_FIELD" value1="${campaignDescriptionEdit}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${campaignNameEdit}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${campaignDescriptionEdit}" />
 
 		<if>
 			<isset var="userSegmentSelectEdit" />

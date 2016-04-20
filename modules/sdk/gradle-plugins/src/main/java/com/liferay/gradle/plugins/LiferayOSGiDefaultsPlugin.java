@@ -2498,9 +2498,7 @@ public class LiferayOSGiDefaultsPlugin
 	protected void configureTaskUploadArchives(
 		Project project, ReplaceRegexTask updateFileVersionsTask) {
 
-		String version = String.valueOf(project.getVersion());
-
-		if (version.endsWith(GradleUtil.SNAPSHOT_VERSION_SUFFIX)) {
+		if (GradleUtil.isSnapshot(project)) {
 			return;
 		}
 

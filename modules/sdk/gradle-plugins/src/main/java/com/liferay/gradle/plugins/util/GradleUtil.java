@@ -55,8 +55,6 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 	public static final String SNAPSHOT_PROPERTY_NAME = "snapshot";
 
-	public static final String SNAPSHOT_VERSION_SUFFIX = "-SNAPSHOT";
-
 	public static String getArchivesBaseName(Project project) {
 		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
 			project, BasePluginConvention.class);
@@ -179,6 +177,16 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		return false;
 	}
 
+	public static boolean isSnapshot(Project project) {
+		String version = String.valueOf(project.getVersion());
+
+		if (version.endsWith(_SNAPSHOT_VERSION_SUFFIX)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean replaceCopySpecSourcePath(
 		CopySpec copySpec, Object oldSourcePath, Object newSourcePath) {
 
@@ -220,8 +228,8 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 		String version = String.valueOf(project.getVersion());
 
-		if (snapshot && !version.endsWith(SNAPSHOT_VERSION_SUFFIX)) {
-			project.setVersion(version + SNAPSHOT_VERSION_SUFFIX);
+		if (snapshot && !version.endsWith(_SNAPSHOT_VERSION_SUFFIX)) {
+			project.setVersion(version + _SNAPSHOT_VERSION_SUFFIX);
 		}
 	}
 
@@ -245,6 +253,8 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 		pluginContainer.withType(pluginClass, action);
 	}
+
+	private static final String _SNAPSHOT_VERSION_SUFFIX = "-SNAPSHOT";
 
 	private static final Properties _portalToolVersions = new Properties();
 

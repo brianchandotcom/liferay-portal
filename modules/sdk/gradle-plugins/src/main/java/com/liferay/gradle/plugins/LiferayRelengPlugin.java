@@ -356,13 +356,9 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			public boolean isSatisfiedBy(Task task) {
 				Project project = task.getProject();
 
-				if (GradleUtil.hasStartParameterTask(project, task.getName())) {
-					return true;
-				}
+				if (GradleUtil.hasStartParameterTask(project, task.getName()) ||
+					GradleUtil.isSnapshot(project)) {
 
-				String version = String.valueOf(project.getVersion());
-
-				if (!version.endsWith(GradleUtil.SNAPSHOT_VERSION_SUFFIX)) {
 					return true;
 				}
 

@@ -16,8 +16,6 @@ package com.liferay.knowledge.base.upgrade.v1_3_0;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
-import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.upgrade.v6_2_0.BaseUpgradeAttachments;
@@ -50,7 +48,7 @@ public class UpgradeKBAttachments extends BaseUpgradeAttachments {
 
 	@Override
 	protected String getClassName() {
-		return KBArticle.class.getName();
+		return "com.liferay.knowledgebase.model.KBArticle";
 	}
 
 	@Override
@@ -82,7 +80,7 @@ public class UpgradeKBAttachments extends BaseUpgradeAttachments {
 
 	@Override
 	protected String getPortletId() {
-		return KBPortletKeys.KNOWLEDGE_BASE_ARTICLE;
+		return "3_WAR_knowledgebaseportlet";
 	}
 
 	@Override

@@ -28,7 +28,7 @@ public class UpgradeKBArticle extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		long kbArticleClassNameId = PortalUtil.getClassNameId(
-			KBArticleConstants.getClassName());
+			"com.liferay.knowledgebase.model.KBArticle");
 
 		runSQL(
 			"update KBArticle set parentResourceClassNameId = " +
@@ -40,7 +40,7 @@ public class UpgradeKBArticle extends UpgradeProcess {
 		sb.append("update KBArticle set parentResourceClassNameId = ");
 
 		long kbFolderClassNameId = PortalUtil.getClassNameId(
-			KBFolderConstants.getClassName());
+			"com.liferay.knowledgebase.model.KBFolder");
 
 		sb.append(kbFolderClassNameId);
 

@@ -14,10 +14,13 @@
 
 package com.liferay.knowledge.base.upgrade.v1_3_3;
 
-import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,6 +28,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * @author Adolfo Pérez
@@ -108,8 +112,7 @@ public class UpgradeKBFolder extends UpgradeProcess {
 				long kbFolderId = rs.getLong(1);
 				String name = rs.getString(2);
 
-				String urlTitle = KnowledgeBaseUtil.getUrlTitle(
-					kbFolderId, name);
+				String urlTitle = _getUrlTitle(kbFolderId, name);
 
 				urlTitles.put(kbFolderId, urlTitle);
 			}
@@ -143,4 +146,32 @@ public class UpgradeKBFolder extends UpgradeProcess {
 		}
 	}
 
+	/**
+	 * @see {@link
+	 *      com.liferay.knowledge.base.util.KnowledgeBaseUtil#getUrlTitle(long,
+	 *      String)}
+	 */
+	private String _getUrlTitle(long id, String title) {
+		if (title == null) {
+			return String.valueOf(id);
+		}
+
+		title = StringUtil.toLowerCase(title.trim());
+
+		if (Validator.isNull(title) || Validator.isNumber(title) ||
+			title.equals("rss")) {
+
+			title = String.valueOf(id);
+		}
+		else {
+			title = FriendlyURLNormalizerUtil.normalize(
+				title, _normalizationFriendlyUrlPattern);
+		}
+
+		return ModelHintsUtil.trimString(
+			"com.liferay.knowledgebase.KBArticle", "urlTitle", title);
+	}
+
+	private static final Pattern _normalizationFriendlyUrlPattern =
+		Pattern.compile("[^a-z0-9_-]");
 }

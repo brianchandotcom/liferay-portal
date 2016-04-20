@@ -26,19 +26,19 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 	protected void doUpgrade() throws Exception {
 		runSQL("alter table KBArticle add lastPublishDate DATE null");
 
-		updateLastPublishDates(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "KBArticle");
+		updateLastPublishDates("1_WAR_knowledgebaseportlet", "KBArticle");
 
 		runSQL("alter table KBComment add lastPublishDate DATE null");
 
-		updateLastPublishDates(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "KBComment");
+		updateLastPublishDates("1_WAR_knowledgebaseportlet", "KBComment");
 
 		runSQL("alter table KBFolder add lastPublishDate DATE null");
 
-		updateLastPublishDates(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "KBFolder");
+		updateLastPublishDates("1_WAR_knowledgebaseportlet", "KBFolder");
 
 		runSQL("alter table KBTemplate add lastPublishDate DATE null");
 
-		updateLastPublishDates(KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "KBTemplate");
+		updateLastPublishDates("1_WAR_knowledgebaseportlet", "KBTemplate");
 	}
 
 }

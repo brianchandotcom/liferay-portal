@@ -282,6 +282,8 @@ public class TrashPortlet extends MVCPortlet {
 		if (SessionErrors.contains(
 				renderRequest, RestoreEntryException.class.getName())) {
 
+			hideDefaultErrorMessage(renderRequest);
+
 			include("/restore_entry.jsp", renderRequest, renderResponse);
 		}
 		else {

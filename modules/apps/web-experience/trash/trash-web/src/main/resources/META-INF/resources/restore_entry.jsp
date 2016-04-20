@@ -31,6 +31,8 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(ree.getOldName());
 %>
 
+<liferay-ui:error exception="<%= RestoreEntryException.class %>" message='<%= LanguageUtil.format(request, "an-entry-with-name-x-already-exists", HtmlUtil.escape(ree.getOldName()))%>' translateMessage="<%= false %>" />
+
 <liferay-portlet:actionURL name="restoreEntry" varImpl="restoreURL" />
 
 <aui:form action="<%= restoreURL %>" cssClass="container-fluid-1280" name="fm">
@@ -41,10 +43,6 @@ renderResponse.setTitle(ree.getOldName());
 
 	<aui:fieldset-group markupview="lexicon">
 		<aui:fieldset>
-			<p class="text-muted">
-				<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(ree.getOldName())} %>" key="an-entry-with-name-x-already-exists" translateArguments="<%= false %>" />
-			</p>
-
 			<c:choose>
 				<c:when test="<%= ree.isOverridable() %>">
 					<aui:input checked="<%= true %>" id="override" label="overwrite-the-existing-entry-with-the-one-from-the-recycle-bin" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />

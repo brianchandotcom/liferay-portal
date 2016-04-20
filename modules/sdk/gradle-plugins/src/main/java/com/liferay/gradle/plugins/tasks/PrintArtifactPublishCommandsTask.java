@@ -50,6 +50,13 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 	public static final String IGNORED_MESSAGE_PATTERN = "artifact:ignore";
 
 	public PrintArtifactPublishCommandsTask() {
+		String firstOnlyString = GradleUtil.getTaskPrefixedProperty(
+			this, "first");
+
+		if (Validator.isNotNull(firstOnlyString)) {
+			_firstOnly = Boolean.parseBoolean(firstOnlyString);
+		}
+
 		_gradleDaemon = true;
 
 		String gradleDaemonString = GradleUtil.getTaskPrefixedProperty(
@@ -91,6 +98,10 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		Project project = getProject();
 
 		return project.files(_prepNextFiles);
+	}
+
+	public boolean isFirstOnly() {
+		return _firstOnly;
 	}
 
 	@Input
@@ -175,13 +186,17 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 			System.out.print(command);
 		}
 
-		if (GradleUtil.getProperty(project, "first", false)) {
+		if (isFirstOnly()) {
 			throw new GradleException();
 		}
 	}
 
 	public void setArtifactPropertiesFile(Object artifactPropertiesFile) {
 		_artifactPropertiesFile = artifactPropertiesFile;
+	}
+
+	public void setFirstOnly(boolean firstOnly) {
+		_firstOnly = firstOnly;
 	}
 
 	public void setFirstPublishExcludedTaskName(
@@ -370,6 +385,7 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 	}
 
 	private Object _artifactPropertiesFile;
+	private boolean _firstOnly;
 	private Object _firstPublishExcludedTaskName;
 	private boolean _gradleDaemon;
 	private Object _gradleDir;

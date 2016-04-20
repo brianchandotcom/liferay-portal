@@ -2,4 +2,6 @@ dependencies {
 	compile group: "org.parboiled", name: "parboiled-core", version: "1.1.6"
 	compile group: "org.parboiled", name: "parboiled-java", version: "1.1.6"
 	compile group: "org.pegdown", name: "pegdown", version: "1.1.0"
+
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.2.0"
 }

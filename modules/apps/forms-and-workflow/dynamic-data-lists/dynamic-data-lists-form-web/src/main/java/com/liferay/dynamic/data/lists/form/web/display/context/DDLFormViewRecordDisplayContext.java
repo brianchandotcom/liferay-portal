@@ -51,12 +51,14 @@ public class DDLFormViewRecordDisplayContext {
 		DDLRecordLocalService ddlRecordLocalService,
 		DDMFormRenderer ddmFormRenderer,
 		DDMFormValuesFactory ddmFormValuesFactory,
+		DDMFormValuesMerge ddmFormValuesMerge,
 		DDMStructureLocalService ddmStructureLocalService) {
 
 		_httpServletResponse = httpServletResponse;
 		_ddlRecordLocalService = ddlRecordLocalService;
 		_ddmFormRenderer = ddmFormRenderer;
 		_ddmFormValuesFactory = ddmFormValuesFactory;
+		_ddmFormValuesMerge = ddmFormValuesMerge;
 		_ddmStructureLocalService = ddmStructureLocalService;
 
 		_ddlFormAdminRequestHelper = new DDLFormAdminRequestHelper(
@@ -75,7 +77,7 @@ public class DDLFormViewRecordDisplayContext {
 		DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
 			renderRequest, ddmForm);
 
-		ddmFormValues = DDMFormValuesMerge.mergeDDMFormValues(
+		ddmFormValues = _ddmFormValuesMerge.mergeDDMFormValues(
 			record.getDDMFormValues(), ddmFormValues);
 
 		DDMFormRenderingContext ddmFormRenderingContext =
@@ -174,6 +176,7 @@ public class DDLFormViewRecordDisplayContext {
 	private final DDLRecordLocalService _ddlRecordLocalService;
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
+	private final DDMFormValuesMerge _ddmFormValuesMerge;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private DDMStructure _ddmStucture;
 	private final HttpServletResponse _httpServletResponse;

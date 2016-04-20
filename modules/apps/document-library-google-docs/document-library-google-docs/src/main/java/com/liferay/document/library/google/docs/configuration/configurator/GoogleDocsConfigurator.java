@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.google.docs.configuration.configurator;
 
+import com.liferay.document.library.ddm.DLFileEntryMetadataDDMPermissionSupport;
 import com.liferay.document.library.google.docs.migration.LegacyGoogleDocsMigration;
 import com.liferay.document.library.google.docs.util.GoogleDocsDLFileEntryTypeHelper;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -154,6 +155,12 @@ public class GoogleDocsConfigurator {
 		DLFileEntryLocalService dlFileEntryLocalService) {
 
 		_dlFileEntryLocalService = dlFileEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFileEntryMetadataDDMPermissionSupport(
+		DLFileEntryMetadataDDMPermissionSupport
+			dlFileEntryMetadataDDMPermissionSupport) {
 	}
 
 	@Reference(unbind = "-")

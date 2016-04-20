@@ -435,6 +435,27 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			});
 	}
 
+	protected void configureTaskEnabledIfRelease(Task task) {
+		task.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					Project project = task.getProject();
+
+					if (GradleUtil.hasStartParameterTask(
+							project, task.getName()) ||
+						GradleUtil.isSnapshot(project)) {
+
+						return true;
+					}
+
+					return false;
+				}
+
+			});
+	}
+
 	protected void configureTaskEnabledIfStale(
 		Task task, final WritePropertiesTask recordArtifactTask) {
 
@@ -543,26 +564,9 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		Task uploadArchivesTask = GradleUtil.getTask(
 			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
 
-		Spec<Task> releaseProjectSpec = new Spec<Task>() {
-
-			@Override
-			public boolean isSatisfiedBy(Task task) {
-				Project project = task.getProject();
-
-				if (GradleUtil.hasStartParameterTask(project, task.getName()) ||
-					GradleUtil.isSnapshot(project)) {
-
-					return true;
-				}
-
-				return false;
-			}
-
-		};
-
 		uploadArchivesTask.dependsOn(recordArtifactTask);
 
-		recordArtifactTask.onlyIf(releaseProjectSpec);
+		configureTaskEnabledIfRelease(recordArtifactTask);
 	}
 
 	protected Properties getArtifactProperties(

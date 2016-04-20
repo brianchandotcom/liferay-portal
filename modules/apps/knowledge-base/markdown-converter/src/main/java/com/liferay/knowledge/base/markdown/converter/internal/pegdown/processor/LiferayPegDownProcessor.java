@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.markdown.converter.internal.pegdown.processor;
+package com.liferay.knowledge.base.markdown.converter.internal.pegdown.processor;
 
-import com.liferay.markdown.converter.internal.pegdown.serializer.LiferayToHtmlSerializer;
+import com.liferay.knowledge.base.markdown.converter.internal.pegdown.serializer.LiferayToHtmlSerializer;
 
 import org.pegdown.LinkRenderer;
 import org.pegdown.Parser;

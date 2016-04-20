@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.markdown.converter;
+package com.liferay.knowledge.base.markdown.converter;
 
 import java.io.IOException;
 

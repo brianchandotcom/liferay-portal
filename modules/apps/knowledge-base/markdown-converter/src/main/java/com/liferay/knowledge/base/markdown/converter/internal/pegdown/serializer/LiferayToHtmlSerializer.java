@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.markdown.converter.internal.pegdown.serializer;
+package com.liferay.knowledge.base.markdown.converter.internal.pegdown.serializer;
 
-import com.liferay.markdown.converter.internal.pegdown.ast.PicWithCaptionNode;
+import com.liferay.knowledge.base.markdown.converter.internal.pegdown.ast.PicWithCaptionNode;
 
 import java.util.List;
 

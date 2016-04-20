@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.markdown.converter.internal.pegdown.ast;
+package com.liferay.knowledge.base.markdown.converter.internal.pegdown.ast;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
-Bundle-Name: Liferay Markdown Converter
-Bundle-SymbolicName: com.liferay.markdown.converter
+Bundle-Name: Liferay Knowledge Base Markdown Converter
+Bundle-SymbolicName: com.liferay.knowledge.base.markdown.converter
 Bundle-Version: 1.0.3
 Export-Package:\
-	com.liferay.markdown.converter,\
-	com.liferay.markdown.converter.factory,\
+	com.liferay.knowledge.base.markdown.converter,\
+	com.liferay.knowledge.base.markdown.converter.factory,\
 	\
 	org.pegdown.*
-Private-Package: com.liferay.markdown.converter.internal.*
+Private-Package: com.liferay.knowledge.base.markdown.converter.internal.*

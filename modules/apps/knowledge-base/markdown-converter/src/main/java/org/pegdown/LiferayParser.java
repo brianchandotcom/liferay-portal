@@ -14,7 +14,7 @@
 
 package org.pegdown;
 
-import com.liferay.markdown.converter.internal.pegdown.ast.PicWithCaptionNode;
+import com.liferay.knowledge.base.markdown.converter.internal.pegdown.ast.PicWithCaptionNode;
 
 import org.parboiled.Rule;
 import org.parboiled.common.ArrayBuilder;

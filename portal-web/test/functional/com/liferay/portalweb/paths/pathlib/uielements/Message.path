@@ -229,6 +229,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>URL_ERROR</td>
+	<td>//code[@class='lfr-url-error']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_BLOCKED</td>
 	<td>//div[contains(@class,'alert-block')]</td>
 	<td></td>

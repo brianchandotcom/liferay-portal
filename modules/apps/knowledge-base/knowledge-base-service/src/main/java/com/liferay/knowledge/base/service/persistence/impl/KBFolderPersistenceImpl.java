@@ -57,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -199,7 +200,7 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KBFolder kbFolder : list) {
-					if (!Validator.equals(uuid, kbFolder.getUuid())) {
+					if (!Objects.equals(uuid, kbFolder.getUuid())) {
 						list = null;
 
 						break;
@@ -672,8 +673,8 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
 			}
 
 			throw new NoSuchFolderException(msg.toString());
@@ -717,7 +718,7 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 		if (result instanceof KBFolder) {
 			KBFolder kbFolder = (KBFolder)result;
 
-			if (!Validator.equals(uuid, kbFolder.getUuid()) ||
+			if (!Objects.equals(uuid, kbFolder.getUuid()) ||
 					(groupId != kbFolder.getGroupId())) {
 				result = null;
 			}
@@ -1008,7 +1009,7 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KBFolder kbFolder : list) {
-					if (!Validator.equals(uuid, kbFolder.getUuid()) ||
+					if (!Objects.equals(uuid, kbFolder.getUuid()) ||
 							(companyId != kbFolder.getCompanyId())) {
 						list = null;
 
@@ -2440,8 +2441,8 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
 			}
 
 			throw new NoSuchFolderException(msg.toString());
@@ -2490,7 +2491,7 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 
 			if ((groupId != kbFolder.getGroupId()) ||
 					(parentKBFolderId != kbFolder.getParentKBFolderId()) ||
-					!Validator.equals(name, kbFolder.getName())) {
+					!Objects.equals(name, kbFolder.getName())) {
 				result = null;
 			}
 		}
@@ -2728,8 +2729,8 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
 			}
 
 			throw new NoSuchFolderException(msg.toString());
@@ -2778,7 +2779,7 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 
 			if ((groupId != kbFolder.getGroupId()) ||
 					(parentKBFolderId != kbFolder.getParentKBFolderId()) ||
-					!Validator.equals(urlTitle, kbFolder.getUrlTitle())) {
+					!Objects.equals(urlTitle, kbFolder.getUrlTitle())) {
 				result = null;
 			}
 		}
@@ -3260,8 +3261,8 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 					primaryKey);
 
 			if (kbFolder == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+				if (_log.isDebugEnabled()) {
+					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchFolderException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
@@ -3486,8 +3487,8 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 		KBFolder kbFolder = fetchByPrimaryKey(primaryKey);
 
 		if (kbFolder == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			if (_log.isDebugEnabled()) {
+				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			throw new NoSuchFolderException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +

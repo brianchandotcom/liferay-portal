@@ -65,19 +65,13 @@ public interface KBTemplateService extends BaseService {
 	public KBTemplate deleteKBTemplate(long kbTemplateId)
 		throws PortalException;
 
-	public void deleteKBTemplates(long groupId, long[] kbTemplateIds)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBTemplate> getGroupKBTemplates(long groupId, int start,
-		int end, OrderByComparator<KBTemplate> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupKBTemplatesCount(long groupId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBTemplate getKBTemplate(long kbTemplateId)
 		throws PortalException;
+
+	public KBTemplate updateKBTemplate(long kbTemplateId,
+		java.lang.String title, java.lang.String content,
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBTemplateSearchDisplay getKBTemplateSearchDisplay(long groupId,
@@ -86,6 +80,9 @@ public interface KBTemplateService extends BaseService {
 		int delta, OrderByComparator<KBTemplate> orderByComparator)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupKBTemplatesCount(long groupId);
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -93,7 +90,10 @@ public interface KBTemplateService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public KBTemplate updateKBTemplate(long kbTemplateId,
-		java.lang.String title, java.lang.String content,
-		ServiceContext serviceContext) throws PortalException;
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KBTemplate> getGroupKBTemplates(long groupId, int start,
+		int end, OrderByComparator<KBTemplate> orderByComparator);
+
+	public void deleteKBTemplates(long groupId, long[] kbTemplateIds)
+		throws PortalException;
 }

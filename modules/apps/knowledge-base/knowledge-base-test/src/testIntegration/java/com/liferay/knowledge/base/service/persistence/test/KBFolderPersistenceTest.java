@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
@@ -58,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -466,7 +466,7 @@ public class KBFolderPersistenceTest {
 
 		KBFolder existingKBFolder = _persistence.findByPrimaryKey(newKBFolder.getPrimaryKey());
 
-		Assert.assertTrue(Validator.equals(existingKBFolder.getUuid(),
+		Assert.assertTrue(Objects.equals(existingKBFolder.getUuid(),
 				ReflectionTestUtil.invoke(existingKBFolder, "getOriginalUuid",
 					new Class<?>[0])));
 		Assert.assertEquals(Long.valueOf(existingKBFolder.getGroupId()),
@@ -479,7 +479,7 @@ public class KBFolderPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingKBFolder.getParentKBFolderId()),
 			ReflectionTestUtil.<Long>invoke(existingKBFolder,
 				"getOriginalParentKBFolderId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(existingKBFolder.getName(),
+		Assert.assertTrue(Objects.equals(existingKBFolder.getName(),
 				ReflectionTestUtil.invoke(existingKBFolder, "getOriginalName",
 					new Class<?>[0])));
 
@@ -489,7 +489,7 @@ public class KBFolderPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingKBFolder.getParentKBFolderId()),
 			ReflectionTestUtil.<Long>invoke(existingKBFolder,
 				"getOriginalParentKBFolderId", new Class<?>[0]));
-		Assert.assertTrue(Validator.equals(existingKBFolder.getUrlTitle(),
+		Assert.assertTrue(Objects.equals(existingKBFolder.getUrlTitle(),
 				ReflectionTestUtil.invoke(existingKBFolder,
 					"getOriginalUrlTitle", new Class<?>[0])));
 	}

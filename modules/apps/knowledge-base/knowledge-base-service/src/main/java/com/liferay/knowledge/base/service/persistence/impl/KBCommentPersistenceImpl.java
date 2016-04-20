@@ -57,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -201,7 +202,7 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KBComment kbComment : list) {
-					if (!Validator.equals(uuid, kbComment.getUuid())) {
+					if (!Objects.equals(uuid, kbComment.getUuid())) {
 						list = null;
 
 						break;
@@ -674,8 +675,8 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
 			}
 
 			throw new NoSuchCommentException(msg.toString());
@@ -719,7 +720,7 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		if (result instanceof KBComment) {
 			KBComment kbComment = (KBComment)result;
 
-			if (!Validator.equals(uuid, kbComment.getUuid()) ||
+			if (!Objects.equals(uuid, kbComment.getUuid()) ||
 					(groupId != kbComment.getGroupId())) {
 				result = null;
 			}
@@ -1011,7 +1012,7 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KBComment kbComment : list) {
-					if (!Validator.equals(uuid, kbComment.getUuid()) ||
+					if (!Objects.equals(uuid, kbComment.getUuid()) ||
 							(companyId != kbComment.getCompanyId())) {
 						list = null;
 
@@ -5266,8 +5267,8 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 					primaryKey);
 
 			if (kbComment == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+				if (_log.isDebugEnabled()) {
+					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchCommentException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
@@ -5600,8 +5601,8 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		KBComment kbComment = fetchByPrimaryKey(primaryKey);
 
 		if (kbComment == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			if (_log.isDebugEnabled()) {
+				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			throw new NoSuchCommentException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +

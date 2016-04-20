@@ -60,6 +60,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -204,7 +205,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KBArticle kbArticle : list) {
-					if (!Validator.equals(uuid, kbArticle.getUuid())) {
+					if (!Objects.equals(uuid, kbArticle.getUuid())) {
 						list = null;
 
 						break;
@@ -677,8 +678,8 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
 			}
 
 			throw new NoSuchArticleException(msg.toString());
@@ -722,7 +723,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		if (result instanceof KBArticle) {
 			KBArticle kbArticle = (KBArticle)result;
 
-			if (!Validator.equals(uuid, kbArticle.getUuid()) ||
+			if (!Objects.equals(uuid, kbArticle.getUuid()) ||
 					(groupId != kbArticle.getGroupId())) {
 				result = null;
 			}
@@ -1014,7 +1015,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (KBArticle kbArticle : list) {
-					if (!Validator.equals(uuid, kbArticle.getUuid()) ||
+					if (!Objects.equals(uuid, kbArticle.getUuid()) ||
 							(companyId != kbArticle.getCompanyId())) {
 						list = null;
 
@@ -2950,8 +2951,8 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
 			}
 
 			throw new NoSuchArticleException(msg.toString());
@@ -12563,8 +12564,8 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
 			}
 
 			throw new NoSuchArticleException(msg.toString());
@@ -22131,7 +22132,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 				for (KBArticle kbArticle : list) {
 					if ((groupId != kbArticle.getGroupId()) ||
 							(kbFolderId != kbArticle.getKbFolderId()) ||
-							!Validator.equals(urlTitle, kbArticle.getUrlTitle())) {
+							!Objects.equals(urlTitle, kbArticle.getUrlTitle())) {
 						list = null;
 
 						break;
@@ -29213,7 +29214,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 				for (KBArticle kbArticle : list) {
 					if ((groupId != kbArticle.getGroupId()) ||
 							(kbFolderId != kbArticle.getKbFolderId()) ||
-							!Validator.equals(urlTitle, kbArticle.getUrlTitle()) ||
+							!Objects.equals(urlTitle, kbArticle.getUrlTitle()) ||
 							(status != kbArticle.getStatus())) {
 						list = null;
 
@@ -30324,7 +30325,7 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 				for (KBArticle kbArticle : list) {
 					if ((groupId != kbArticle.getGroupId()) ||
 							(kbFolderId != kbArticle.getKbFolderId()) ||
-							!Validator.equals(urlTitle, kbArticle.getUrlTitle()) ||
+							!Objects.equals(urlTitle, kbArticle.getUrlTitle()) ||
 							!ArrayUtil.contains(statuses, kbArticle.getStatus())) {
 						list = null;
 
@@ -31104,8 +31105,8 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 					primaryKey);
 
 			if (kbArticle == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+				if (_log.isDebugEnabled()) {
+					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
 				throw new NoSuchArticleException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
@@ -31828,8 +31829,8 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		KBArticle kbArticle = fetchByPrimaryKey(primaryKey);
 
 		if (kbArticle == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			if (_log.isDebugEnabled()) {
+				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			throw new NoSuchArticleException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +

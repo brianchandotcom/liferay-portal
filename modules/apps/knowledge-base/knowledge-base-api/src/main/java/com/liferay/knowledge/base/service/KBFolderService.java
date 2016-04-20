@@ -74,9 +74,9 @@ public interface KBFolderService extends BaseService {
 	public KBFolder getKBFolderByUrlTitle(long groupId, long parentKbFolderId,
 		java.lang.String urlTitle) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<KBFolder> getKBFolders(long groupId, long parentKBFolderId,
-		int start, int end) throws PortalException;
+	public KBFolder updateKBFolder(long parentResourceClassNameId,
+		long parentResourcePrimKey, long kbFolderId, java.lang.String name,
+		java.lang.String description) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKBFoldersCount(long groupId, long parentKBFolderId)
@@ -89,10 +89,10 @@ public interface KBFolderService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KBFolder> getKBFolders(long groupId, long parentKBFolderId,
+		int start, int end) throws PortalException;
+
 	public void moveKBFolder(long kbFolderId, long parentKBFolderId)
 		throws PortalException;
-
-	public KBFolder updateKBFolder(long parentResourceClassNameId,
-		long parentResourcePrimKey, long kbFolderId, java.lang.String name,
-		java.lang.String description) throws PortalException;
 }

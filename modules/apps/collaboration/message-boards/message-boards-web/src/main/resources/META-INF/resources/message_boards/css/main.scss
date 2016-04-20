@@ -152,11 +152,15 @@
 	}
 
 	@include sm {
+		.message-user-display {
+			width: 50%;
+		}
+
 		.social-interaction {
 			position: absolute;
 			right: 0;
 			top: 0;
-			width: 100%;
+			width: 50%;
 
 			& > div {
 				float: right;

@@ -412,9 +412,7 @@ public class IncludeTag extends AttributesTagSupport {
 			portalContextPath = StringPool.SLASH;
 		}
 
-		if (contextPath.equals(StringPool.SLASH) ||
-			Validator.equals(portalContextPath, contextPath)) {
-
+		if (contextPath.equals(portalContextPath)) {
 			portalContext = true;
 		}
 

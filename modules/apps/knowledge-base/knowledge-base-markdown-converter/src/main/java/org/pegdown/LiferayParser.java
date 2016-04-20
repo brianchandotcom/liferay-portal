@@ -14,7 +14,7 @@
 
 package org.pegdown;
 
-import com.liferay.markdown.converter.internal.pegdown.ast.PicWithCaptionNode;
+import com.liferay.knowledge.base.markdown.converter.internal.pegdown.ast.PicWithCaptionNode;
 
 import org.parboiled.Rule;
 import org.parboiled.common.ArrayBuilder;
@@ -39,7 +39,7 @@ public class LiferayParser extends Parser {
 
 	@Override
 	public Rule Block() {
-		ArrayBuilder<Rule> arrayBuilder = new ArrayBuilder<Rule>();
+		ArrayBuilder<Rule> arrayBuilder = new ArrayBuilder<>();
 
 		arrayBuilder.add(BlockQuote(), Verbatim());
 

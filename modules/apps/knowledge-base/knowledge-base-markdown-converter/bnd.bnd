@@ -1,0 +1,16 @@
+Bundle-Name: Liferay Knowledge Base Markdown Converter
+Bundle-SymbolicName: com.liferay.knowledge.base.markdown.converter
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.knowledge.base.markdown.converter,\
+	com.liferay.knowledge.base.markdown.converter.factory
+Import-Package:\
+	!org.parboiled.*,\
+	\
+	!org.pegdown.*,\
+	*
+Private-Package: com.liferay.knowledge.base.markdown.converter.internal.*
+-liferay-includeresource:\
+	@parboiled-core*.jar,\
+	@parboiled-java*.jar,\
+	@pegdown*.java

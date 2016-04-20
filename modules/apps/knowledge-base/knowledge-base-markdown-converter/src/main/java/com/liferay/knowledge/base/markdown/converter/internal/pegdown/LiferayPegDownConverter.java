@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.markdown.converter.internal.pegdown;
+package com.liferay.knowledge.base.markdown.converter.internal.pegdown;
 
-import com.liferay.markdown.converter.MarkdownConverter;
-import com.liferay.markdown.converter.internal.pegdown.processor.LiferayPegDownProcessor;
+import com.liferay.knowledge.base.markdown.converter.MarkdownConverter;
+import com.liferay.knowledge.base.markdown.converter.internal.pegdown.processor.LiferayPegDownProcessor;
 
 import org.parboiled.Parboiled;
 

@@ -12,15 +12,20 @@
  * details.
  */
 
-package com.liferay.markdown.converter.factory;
+package com.liferay.knowledge.base.markdown.converter.internal.pegdown.factory;
 
-import com.liferay.markdown.converter.MarkdownConverter;
+import com.liferay.knowledge.base.markdown.converter.MarkdownConverter;
+import com.liferay.knowledge.base.markdown.converter.factory.MarkdownConverterFactory;
+import com.liferay.knowledge.base.markdown.converter.internal.pegdown.LiferayPegDownConverter;
 
 /**
  * @author Sergio González
  */
-public interface MarkdownConverterFactory {
+public class MarkdownConverterFactoryImpl implements MarkdownConverterFactory {
 
-	public MarkdownConverter create();
+	@Override
+	public MarkdownConverter create() {
+		return new LiferayPegDownConverter();
+	}
 
 }

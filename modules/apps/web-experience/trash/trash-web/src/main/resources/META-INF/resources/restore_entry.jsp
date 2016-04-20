@@ -33,34 +33,36 @@ renderResponse.setTitle(ree.getOldName());
 
 <liferay-portlet:actionURL name="restoreEntry" varImpl="restoreURL" />
 
-<div class="alert alert-warning" id="<portlet:namespace />messageContainer">
-	<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(ree.getOldName())} %>" key="an-entry-with-name-x-already-exists" translateArguments="<%= false %>" />
-</div>
-
-<aui:form action="<%= restoreURL %>" name="restoreTrashEntryFm">
+<aui:form action="<%= restoreURL %>" cssClass="container-fluid-1280" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="trashEntryId" type="hidden" value="<%= ree.getTrashEntryId() %>" />
 	<aui:input name="duplicateEntryId" type="hidden" value="<%= ree.getDuplicateEntryId() %>" />
 	<aui:input name="oldName" type="hidden" value="<%= ree.getOldName() %>" />
 
-	<aui:fieldset>
-		<c:choose>
-			<c:when test="<%= ree.isOverridable() %>">
-				<aui:input checked="<%= true %>" id="override" label="overwrite-the-existing-entry-with-the-one-from-the-recycle-bin" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />
+	<aui:fieldset-group markupview="lexicon">
+		<aui:fieldset>
+			<p class="text-muted">
+				<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(ree.getOldName())} %>" key="an-entry-with-name-x-already-exists" translateArguments="<%= false %>" />
+			</p>
 
-				<aui:input id="rename" label="keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
-			</c:when>
-			<c:otherwise>
-				<aui:input id="rename" name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.RENAME %>" />
-			</c:otherwise>
-		</c:choose>
+			<c:choose>
+				<c:when test="<%= ree.isOverridable() %>">
+					<aui:input checked="<%= true %>" id="override" label="overwrite-the-existing-entry-with-the-one-from-the-recycle-bin" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />
 
-		<aui:input cssClass="new-file-name" label='<%= ree.isOverridable() ? StringPool.BLANK : "keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" %>' name="newName" title="keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" value="<%= TrashUtil.getNewName(themeDisplay, entry.getClassName(), entry.getClassPK(), ree.getOldName()) %>" />
-	</aui:fieldset>
+					<aui:input id="rename" label="keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
+				</c:when>
+				<c:otherwise>
+					<aui:input id="rename" name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.RENAME %>" />
+				</c:otherwise>
+			</c:choose>
+
+			<aui:input label='<%= ree.isOverridable() ? StringPool.BLANK : "keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" %>' name="newName" value="<%= TrashUtil.getNewName(themeDisplay, entry.getClassName(), entry.getClassPK(), ree.getOldName()) %>" />
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-cancel" type="cancel" />
+		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button type="submit" />
+		<aui:button cssClass="btn-cancel btn-lg" type="cancel" />
 	</aui:button-row>
 </aui:form>

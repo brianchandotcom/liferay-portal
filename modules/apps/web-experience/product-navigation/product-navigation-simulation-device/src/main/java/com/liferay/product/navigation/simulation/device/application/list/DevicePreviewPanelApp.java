@@ -23,9 +23,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.product.navigation.simulation.application.list.SimulationPanelCategory;
 import com.liferay.product.navigation.simulation.web.constants.ProductNavigationSimulationPortletKeys;
 
@@ -57,9 +55,8 @@ public class DevicePreviewPanelApp extends BaseJSPPanelApp {
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(
-				LocaleUtil.toLanguageId(locale));
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
 
 		return LanguageUtil.get(resourceBundle, "screen-size");
 	}
@@ -101,11 +98,6 @@ public class DevicePreviewPanelApp extends BaseJSPPanelApp {
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
-
-		_resourceBundleLoader =
-			ResourceBundleLoaderUtil.
-				getResourceBundleLoaderByServletContextName(
-					servletContext.getServletContextName());
 	}
 
 	protected boolean hasPreviewInDevicePermission(
@@ -115,7 +107,5 @@ public class DevicePreviewPanelApp extends BaseJSPPanelApp {
 		return GroupPermissionUtil.contains(
 			permissionChecker, group, ActionKeys.PREVIEW_IN_DEVICE);
 	}
-
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

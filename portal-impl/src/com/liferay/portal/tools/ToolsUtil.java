@@ -240,24 +240,34 @@ public class ToolsUtil {
 			return content;
 		}
 
-		Pattern pattern = Pattern.compile(
-			"\n(.*)" + StringUtil.replace(packagePath, ".", "\\.") +
-				"\\.[A-Z]");
+		Pattern pattern1 = Pattern.compile(
+			"\n(.*)" + StringUtil.replace(packagePath, CharPool.PERIOD, "\\.") +
+				"\\.([A-Z]\\w+)\\W");
 
-		Matcher matcher = pattern.matcher(content);
+		Matcher matcher1 = pattern1.matcher(content);
 
-		while (matcher.find()) {
-			String lineStart = matcher.group(1);
+		while (matcher1.find()) {
+			String lineStart = matcher1.group(1);
 
-			if (lineStart.startsWith("import ") ||
-				lineStart.contains("//") ||
-				ToolsUtil.isInsideQuotes(content, matcher.end())) {
+			if (lineStart.startsWith("import ") || lineStart.contains("//") ||
+				ToolsUtil.isInsideQuotes(content, matcher1.start(2))) {
 
 				continue;
 			}
 
+			String className = matcher1.group(2);
+
+			Pattern pattern2 = Pattern.compile(
+				"import [\\w.]+\\." + className + ";");
+
+			Matcher matcher2 = pattern2.matcher(imports);
+
+			if (matcher2.find()) {
+				continue;
+			}
+
 			content = StringUtil.replaceFirst(
-				content, packagePath + ".", StringPool.BLANK, matcher.start());
+				content, packagePath + ".", StringPool.BLANK, matcher1.start());
 		}
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
@@ -275,19 +285,19 @@ public class ToolsUtil {
 			String importPackageAndClassName = line.substring(
 				x + 7, line.lastIndexOf(StringPool.SEMICOLON));
 
-			pattern = Pattern.compile(
-				"\n(.*)" +
+			Pattern pattern3 = Pattern.compile(
+				"\n(.*)(" +
 					StringUtil.replace(importPackageAndClassName, ".", "\\.") +
-						"\\W");
+						")\\W");
 
-			matcher = pattern.matcher(content);
+			Matcher matcher3 = pattern3.matcher(content);
 
-			while (matcher.find()) {
-				String lineStart = matcher.group(1);
+			while (matcher3.find()) {
+				String lineStart = matcher3.group(1);
 
 				if (lineStart.startsWith("import ") ||
 					lineStart.contains("//") ||
-					ToolsUtil.isInsideQuotes(content, matcher.end() - 2)) {
+					ToolsUtil.isInsideQuotes(content, matcher3.start(2))) {
 
 					continue;
 				}
@@ -298,7 +308,7 @@ public class ToolsUtil {
 
 				content = StringUtil.replaceFirst(
 					content, importPackageAndClassName, importClassName,
-					matcher.start());
+					matcher3.start());
 			}
 		}
 

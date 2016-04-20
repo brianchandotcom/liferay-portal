@@ -17,8 +17,6 @@ package com.liferay.gradle.plugins;
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.version.Version;
 
-import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask;
-import com.liferay.gradle.plugins.change.log.builder.ChangeLogBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.js.module.config.generator.ConfigJSModulesTask;
@@ -30,7 +28,6 @@ import com.liferay.gradle.plugins.tasks.BaselineTask;
 import com.liferay.gradle.plugins.tasks.InstallCacheTask;
 import com.liferay.gradle.plugins.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.tasks.UpdateVersionTask;
-import com.liferay.gradle.plugins.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.TLDDocBuilderPlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.tasks.TLDDocTask;
@@ -53,20 +50,15 @@ import groovy.lang.Closure;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-
-import java.lang.reflect.Method;
 
 import java.nio.charset.StandardCharsets;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -89,7 +81,6 @@ import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ModuleDependency;
 import org.gradle.api.artifacts.ProjectDependency;
-import org.gradle.api.artifacts.PublishArtifactSet;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.ResolvedConfiguration;
 import org.gradle.api.artifacts.ResolvedDependency;
@@ -97,7 +88,6 @@ import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
 import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
-import org.gradle.api.artifacts.maven.MavenDeployer;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.execution.TaskExecutionGraph;
 import org.gradle.api.file.CopySpec;
@@ -106,7 +96,6 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.GradleInternal;
-import org.gradle.api.internal.artifacts.publish.ArchivePublishArtifact;
 import org.gradle.api.internal.project.ProjectInternal;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
@@ -118,7 +107,6 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.plugins.MavenPluginConvention;
-import org.gradle.api.plugins.MavenRepositoryHandlerConvention;
 import org.gradle.api.plugins.ReportingBasePlugin;
 import org.gradle.api.plugins.quality.FindBugs;
 import org.gradle.api.plugins.quality.FindBugsPlugin;
@@ -131,8 +119,6 @@ import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.StopActionException;
 import org.gradle.api.tasks.TaskCollection;
 import org.gradle.api.tasks.TaskContainer;
-import org.gradle.api.tasks.Upload;
-import org.gradle.api.tasks.bundling.AbstractArchiveTask;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.compile.CompileOptions;
 import org.gradle.api.tasks.compile.JavaCompile;
@@ -181,14 +167,6 @@ public class LiferayOSGiDefaultsPlugin
 	public static final String JAR_TLDDOC_TASK_NAME = "jarTLDDoc";
 
 	public static final String PORTAL_TEST_CONFIGURATION_NAME = "portalTest";
-
-	public static final String PRINT_ARTIFACT_PUBLISH_COMMANDS =
-		"printArtifactPublishCommands";
-
-	public static final String PRINT_STALE_ARTIFACT_TASK_NAME =
-		"printStaleArtifact";
-
-	public static final String RECORD_ARTIFACT_TASK_NAME = "recordArtifact";
 
 	public static final String UPDATE_BUNDLE_VERSION_TASK_NAME =
 		"updateBundleVersion";
@@ -660,400 +638,6 @@ public class LiferayOSGiDefaultsPlugin
 		jar.from(tlddocTask);
 
 		return jar;
-	}
-
-	protected Task addTaskPrintArtifactPublishCommands(
-		File gitRepoDir, final File portalRootDir,
-		final BuildChangeLogTask buildChangeLogTask,
-		final WritePropertiesTask recordArtifactTask, boolean testProject) {
-
-		final Project project = buildChangeLogTask.getProject();
-
-		Task task = project.task(PRINT_ARTIFACT_PUBLISH_COMMANDS);
-
-		task.doLast(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					List<String> commands = new ArrayList<>();
-
-					boolean gradleDaemon = _getGradleDaemon(task);
-					String gradleRelativePath = _relativize(_getGradlewFile());
-
-					// Move to the root directory
-
-					commands.add(
-						"cd " + FileUtil.getAbsolutePath(project.getRootDir()));
-
-					// Publish if the artifact has never been published
-
-					if (!hasBaseline(project)) {
-						commands.addAll(
-							_getPublishCommands(
-								gradleRelativePath, gradleDaemon, true));
-					}
-
-					// Change log
-
-					commands.add(
-						_getGradleCommand(
-							gradleRelativePath, buildChangeLogTask,
-							gradleDaemon));
-
-					commands.add(
-						"git add " +
-							_relativize(buildChangeLogTask.getChangeLogFile()));
-
-					commands.add(
-						_getGitCommitCommand("change log", false, true, true));
-
-					// Baseline
-
-					commands.add(
-						_getGradleCommand(
-							gradleRelativePath, BASELINE_TASK_NAME,
-							gradleDaemon));
-
-					commands.add(
-						"git add --all " +
-							_relativize(project.getProjectDir()));
-
-					commands.add(
-						_getGitCommitCommand(
-							"packageinfo", false, false, true));
-
-					// Publish the artifact since there will either be change
-					// log or baseline changes
-
-					commands.addAll(
-						_getPublishCommands(
-							gradleRelativePath, gradleDaemon, false));
-
-					System.out.println();
-
-					for (String command : commands) {
-						System.out.print(" && ");
-						System.out.print(command);
-					}
-
-					if (GradleUtil.getProperty(project, "first", false)) {
-						throw new GradleException();
-					}
-				}
-
-				private String _getGitCommitCommand(
-					String message, boolean all, boolean ignored,
-					boolean quiet) {
-
-					StringBuilder sb = new StringBuilder();
-
-					if (all || quiet) {
-						sb.append("(git diff-index --quiet HEAD || ");
-					}
-
-					sb.append("git commit ");
-
-					if (all) {
-						sb.append("--all ");
-					}
-
-					sb.append("--message=\"");
-
-					if (ignored) {
-						sb.append(_IGNORED_MESSAGE_PATTERN);
-						sb.append(' ');
-					}
-
-					sb.append(project.getName());
-					sb.append(' ');
-					sb.append(project.getVersion());
-					sb.append(' ');
-					sb.append(message);
-
-					sb.append('"');
-
-					if (all || quiet) {
-						sb.append(')');
-					}
-
-					return sb.toString();
-				}
-
-				private String _getGradleCommand(
-					String gradleRelativePath, String taskName,
-					boolean gradleDaemon, String... arguments) {
-
-					Task task = GradleUtil.getTask(project, taskName);
-
-					return _getGradleCommand(
-						gradleRelativePath, task, gradleDaemon, arguments);
-				}
-
-				private String _getGradleCommand(
-					String gradleRelativePath, Task task, boolean gradleDaemon,
-					String... arguments) {
-
-					StringBuilder sb = new StringBuilder();
-
-					sb.append(gradleRelativePath);
-					sb.append(' ');
-					sb.append(task.getPath());
-
-					if (gradleDaemon) {
-						sb.append(" --daemon");
-					}
-
-					for (String argument : arguments) {
-						sb.append(' ');
-						sb.append(argument);
-					}
-
-					return sb.toString();
-				}
-
-				private boolean _getGradleDaemon(Task task) {
-					boolean gradleDaemon = true;
-
-					String gradleDaemonString =
-						GradleUtil.getTaskPrefixedProperty(task, "daemon");
-
-					if (Validator.isNotNull(gradleDaemonString)) {
-						gradleDaemon = Boolean.parseBoolean(gradleDaemonString);
-					}
-
-					return gradleDaemon;
-				}
-
-				private File _getGradlewFile() {
-					File rootDir = portalRootDir;
-
-					if (portalRootDir == null) {
-						rootDir = project.getRootDir();
-					}
-
-					return new File(rootDir, "gradlew");
-				}
-
-				private List<String> _getPublishCommands(
-					String gradleRelativePath, boolean gradleDaemon,
-					boolean excludeUpdateFileVersions) {
-
-					List<String> commands = new ArrayList<>();
-
-					// Publish snapshot
-
-					commands.add(
-						_getGradleCommand(
-							gradleRelativePath,
-							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME, gradleDaemon,
-							"-P" + GradleUtil.SNAPSHOT_PROPERTY_NAME));
-
-					// Publish release
-
-					String[] arguments;
-
-					if (excludeUpdateFileVersions) {
-						arguments =
-							new String[] {"-x", UPDATE_FILE_VERSIONS_TASK_NAME};
-					}
-					else {
-						arguments = new String[0];
-					}
-
-					commands.add(
-						_getGradleCommand(
-							gradleRelativePath,
-							BasePlugin.UPLOAD_ARCHIVES_TASK_NAME, gradleDaemon,
-							arguments));
-
-					// Commit "prep next"
-
-					commands.add("git add " + _relativize("bnd.bnd"));
-
-					File moduleConfigFile = getModuleConfigFile(project);
-
-					if ((moduleConfigFile != null) &&
-						moduleConfigFile.exists()) {
-
-						commands.add(
-							"git add " + _relativize(moduleConfigFile));
-					}
-
-					commands.add(
-						_getGitCommitCommand("prep next", false, true, false));
-
-					// Commit "artifact properties"
-
-					commands.add(
-						"git add " +
-							_relativize(recordArtifactTask.getOutputFile()));
-
-					commands.add(
-						_getGitCommitCommand(
-							"artifact properties", false, true, false));
-
-					// Commit other changed files
-
-					commands.add(
-						_getGitCommitCommand("apply", true, false, true));
-
-					return commands;
-				}
-
-				private String _relativize(File file) {
-					Project rootProject = project.getRootProject();
-
-					return rootProject.relativePath(file);
-				}
-
-				private String _relativize(String fileName) {
-					File file = project.file(fileName);
-
-					return _relativize(file);
-				}
-
-			});
-
-		if (gitRepoDir != null) {
-			task.onlyIf(
-				new Spec<Task>() {
-
-					@Override
-					public boolean isSatisfiedBy(Task task) {
-						Project project = task.getProject();
-
-						for (Configuration configuration :
-								project.getConfigurations()) {
-
-							if (_hasProjectDependencies(configuration)) {
-								return false;
-							}
-						}
-
-						return true;
-					}
-
-					private boolean _hasProjectDependencies(
-						Configuration configuration) {
-
-						for (Dependency dependency :
-								configuration.getDependencies()) {
-
-							if (dependency instanceof ProjectDependency) {
-								return true;
-							}
-						}
-
-						return false;
-					}
-
-				});
-		}
-
-		task.setDescription(
-			"Prints the artifact publish commands if this project has been " +
-				"changed since the last publish.");
-
-		configureTaskEnabledIfStale(task, recordArtifactTask, testProject);
-
-		return task;
-	}
-
-	protected Task addTaskPrintStaleArtifact(
-		File portalRootDir, WritePropertiesTask recordArtifactTask,
-		boolean testProject) {
-
-		Project project = recordArtifactTask.getProject();
-
-		Task task = project.task(PRINT_STALE_ARTIFACT_TASK_NAME);
-
-		task.doLast(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					Project project = task.getProject();
-
-					File projectDir = project.getProjectDir();
-
-					System.out.println(projectDir.getAbsolutePath());
-				}
-
-			});
-
-		task.setDescription(
-			"Prints the project directory if this project has been changed " +
-				"since the last publish.");
-		task.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
-
-		configureTaskEnabledIfStale(task, recordArtifactTask, testProject);
-
-		return task;
-	}
-
-	protected WritePropertiesTask addTaskRecordArtifact(
-		Project project, File destinationDir) {
-
-		final WritePropertiesTask writePropertiesTask = GradleUtil.addTask(
-			project, RECORD_ARTIFACT_TASK_NAME, WritePropertiesTask.class);
-
-		writePropertiesTask.property(
-			"artifact.git.id",
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return getGitResult(
-						writePropertiesTask.getProject(), "rev-parse", "HEAD");
-				}
-
-			});
-
-		Configuration configuration = GradleUtil.getConfiguration(
-			project, Dependency.ARCHIVES_CONFIGURATION);
-
-		PublishArtifactSet publishArtifactSet = configuration.getArtifacts();
-
-		publishArtifactSet.withType(
-			ArchivePublishArtifact.class,
-			new Action<ArchivePublishArtifact>() {
-
-				@Override
-				public void execute(
-					final ArchivePublishArtifact archivePublishArtifact) {
-
-					String key = archivePublishArtifact.getClassifier();
-
-					if (Validator.isNull(key)) {
-						key = "artifact.url";
-					}
-					else {
-						key = "artifact." + key + ".url";
-					}
-
-					writePropertiesTask.property(
-						key,
-						new Callable<String>() {
-
-							@Override
-							public String call() throws Exception {
-								return getArtifactRemoteURL(
-									archivePublishArtifact.getArchiveTask(),
-									false);
-							}
-
-						});
-				}
-
-			});
-
-		writePropertiesTask.setDescription(
-			"Records the commit ID and the artifact URLs.");
-		writePropertiesTask.setOutputFile(
-			new File(destinationDir, "artifact.properties"));
-
-		return writePropertiesTask;
 	}
 
 	protected UpdateVersionTask addTaskUpdateBundleVersion(Project project) {
@@ -1582,11 +1166,9 @@ public class LiferayOSGiDefaultsPlugin
 
 		List<String> taskNames = startParameter.getTaskNames();
 
-		File gitRepoDir = GradleUtil.getRootDir(project, ".gitrepo");
 		final File portalRootDir = GradleUtil.getRootDir(
 			project.getRootProject(), "portal-impl");
 		final boolean publishing = isPublishing(project);
-		File relengDir = getRelengDir(project);
 		boolean testProject = isTestProject(project);
 
 		applyPlugins(project);
@@ -1639,29 +1221,6 @@ public class LiferayOSGiDefaultsPlugin
 		final Jar jarTLDDocTask = addTaskJarTLDDoc(project);
 
 		addTaskUpdateBundleVersion(project);
-
-		if (relengDir != null) {
-			GradleUtil.applyPlugin(project, ChangeLogBuilderPlugin.class);
-
-			BuildChangeLogTask buildChangeLogTask =
-				(BuildChangeLogTask)GradleUtil.getTask(
-					project, ChangeLogBuilderPlugin.BUILD_CHANGE_LOG_TASK_NAME);
-
-			WritePropertiesTask recordArtifactTask = addTaskRecordArtifact(
-				project, relengDir);
-
-			addTaskPrintArtifactPublishCommands(
-				gitRepoDir, portalRootDir, buildChangeLogTask,
-				recordArtifactTask, testProject);
-			addTaskPrintStaleArtifact(
-				portalRootDir, recordArtifactTask, testProject);
-			configureTaskBuildChangeLog(buildChangeLogTask, relengDir);
-			configureTaskProcessResources(buildChangeLogTask);
-
-			if (taskNames.contains(LiferayBasePlugin.DEPLOY_TASK_NAME)) {
-				configureTaskDeploy(recordArtifactTask);
-			}
-		}
 
 		final ReplaceRegexTask updateFileVersionsTask =
 			addTaskUpdateFileVersions(project);
@@ -1996,91 +1555,6 @@ public class LiferayOSGiDefaultsPlugin
 		baselineTask.setReportOnlyDirtyPackages(reportOnlyDirtyPackages);
 	}
 
-	protected void configureTaskBuildChangeLog(
-		BuildChangeLogTask buildChangeLogTask, File destinationDir) {
-
-		buildChangeLogTask.setChangeLogFile(
-			new File(destinationDir, "liferay-releng.changelog"));
-	}
-
-	protected void configureTaskDeploy(WritePropertiesTask recordArtifactTask) {
-		final Project project = recordArtifactTask.getProject();
-
-		Task task = GradleUtil.getTask(
-			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
-
-		if (!(task instanceof Copy)) {
-			return;
-		}
-
-		Properties artifactProperties = getArtifactProperties(
-			recordArtifactTask);
-
-		if (isStale(project, artifactProperties)) {
-			if (_logger.isDebugEnabled()) {
-				_logger.debug(
-					"Unable to download artifact, " + project + " is stale");
-			}
-
-			return;
-		}
-
-		final String artifactURL = artifactProperties.getProperty(
-			"artifact.url");
-
-		if (Validator.isNull(artifactURL)) {
-			if (_logger.isWarnEnabled()) {
-				_logger.warn(
-					"Unable to find artifact.url in " +
-						recordArtifactTask.getOutputFile());
-			}
-
-			return;
-		}
-
-		Copy copy = (Copy)task;
-
-		Task jarTask = GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-
-		boolean replaced = GradleUtil.replaceCopySpecSourcePath(
-			copy.getRootSpec(), jarTask,
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return FileUtil.get(project, artifactURL);
-				}
-
-			});
-
-		if (replaced && _logger.isLifecycleEnabled()) {
-			_logger.lifecycle("Downloading artifact from " + artifactURL);
-		}
-	}
-
-	protected void configureTaskEnabledIfStale(
-		Task task, final WritePropertiesTask recordArtifactTask,
-		boolean testProject) {
-
-		if (testProject) {
-			task.setEnabled(false);
-		}
-
-		task.onlyIf(
-			new Spec<Task>() {
-
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					Properties artifactProperties = getArtifactProperties(
-						recordArtifactTask);
-
-					return isStale(
-						recordArtifactTask.getProject(), artifactProperties);
-				}
-
-			});
-	}
-
 	protected void configureTaskFindBugs(FindBugs findBugs) {
 		findBugs.setMaxHeapSize("1g");
 
@@ -2283,32 +1757,6 @@ public class LiferayOSGiDefaultsPlugin
 		}
 	}
 
-	protected void configureTaskProcessResources(
-		final BuildChangeLogTask buildChangeLogTask) {
-
-		Copy copy = (Copy)GradleUtil.getTask(
-			buildChangeLogTask.getProject(),
-			JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
-
-		copy.from(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return buildChangeLogTask.getChangeLogFile();
-				}
-
-			},
-			new Closure<Void>(null) {
-
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					copySpec.into("META-INF");
-				}
-
-			});
-	}
-
 	protected void configureTaskPublishNodeModule(
 		PublishNodeModuleTask publishNodeModuleTask) {
 
@@ -2456,13 +1904,6 @@ public class LiferayOSGiDefaultsPlugin
 
 		TaskContainer taskContainer = project.getTasks();
 
-		Task recordArtifactTask = taskContainer.findByName(
-			RECORD_ARTIFACT_TASK_NAME);
-
-		if (recordArtifactTask != null) {
-			uploadArchivesTask.dependsOn(recordArtifactTask);
-		}
-
 		TaskCollection<PublishNodeModuleTask> publishNodeModuleTasks =
 			taskContainer.withType(PublishNodeModuleTask.class);
 
@@ -2511,68 +1952,6 @@ public class LiferayOSGiDefaultsPlugin
 
 				});
 		}
-	}
-
-	protected Properties getArtifactProperties(
-		WritePropertiesTask recordArtifactTask) {
-
-		try {
-			return FileUtil.readProperties(recordArtifactTask.getOutputFile());
-		}
-		catch (IOException ioe) {
-			throw new GradleException(
-				"Unable to read artifact properties", ioe);
-		}
-	}
-
-	protected String getArtifactRemoteURL(
-			AbstractArchiveTask abstractArchiveTask, boolean cdn)
-		throws Exception {
-
-		Project project = abstractArchiveTask.getProject();
-
-		Upload upload = (Upload)GradleUtil.getTask(
-			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
-
-		RepositoryHandler repositoryHandler = upload.getRepositories();
-
-		MavenDeployer mavenDeployer = (MavenDeployer)repositoryHandler.getAt(
-			MavenRepositoryHandlerConvention.DEFAULT_MAVEN_DEPLOYER_NAME);
-
-		Object repository = mavenDeployer.getRepository();
-
-		// org.apache.maven.artifact.ant.RemoteRepository is not in the
-		// classpath
-
-		Class<?> repositoryClass = repository.getClass();
-
-		Method getUrlMethod = repositoryClass.getMethod("getUrl");
-
-		String url = (String)getUrlMethod.invoke(repository);
-
-		if (cdn) {
-			url = url.replace("http://", "http://cdn.");
-			url = url.replace("https://", "https://cdn.");
-		}
-
-		StringBuilder sb = new StringBuilder(url);
-
-		if (sb.charAt(sb.length() - 1) != '/') {
-			sb.append('/');
-		}
-
-		String group = String.valueOf(project.getGroup());
-
-		sb.append(group.replace('.', '/'));
-
-		sb.append('/');
-		sb.append(abstractArchiveTask.getBaseName());
-		sb.append('/');
-		sb.append(abstractArchiveTask.getVersion());
-		sb.append('/');
-		sb.append(abstractArchiveTask.getArchiveName());
-
-		return sb.toString();
 	}
 
 	protected String getBundleInstruction(Project project, String key) {
@@ -2686,18 +2065,6 @@ public class LiferayOSGiDefaultsPlugin
 		return "project(\"" + project.getPath() + "\")";
 	}
 
-	protected File getRelengDir(Project project) {
-		File relengDir = new File(project.getRootDir(), ".releng");
-
-		if (!relengDir.exists()) {
-			return null;
-		}
-
-		return new File(
-			relengDir,
-			FileUtil.relativize(project.getProjectDir(), project.getRootDir()));
-	}
-
 	protected Version getVersion(Object version) {
 		try {
 			return Version.parseVersion(String.valueOf(version));
@@ -2762,66 +2129,11 @@ public class LiferayOSGiDefaultsPlugin
 		return false;
 	}
 
-	protected boolean isStale(
-		final Project project, Properties artifactProperties) {
-
-		final String artifactGitId = artifactProperties.getProperty(
-			"artifact.git.id");
-
-		if (Validator.isNull(artifactGitId)) {
-			if (_logger.isInfoEnabled()) {
-				_logger.info(project + " has never been published");
-			}
-
-			return true;
-		}
-
-		final ByteArrayOutputStream byteArrayOutputStream =
-			new ByteArrayOutputStream();
-
-		project.exec(
-			new Action<ExecSpec>() {
-
-				@Override
-				public void execute(ExecSpec execSpec) {
-					execSpec.commandLine(
-						"git", "log", "--format=%s", artifactGitId + "..HEAD",
-						".");
-
-					execSpec.setStandardOutput(byteArrayOutputStream);
-					execSpec.setWorkingDir(project.getProjectDir());
-				}
-
-			});
-
-		String output = byteArrayOutputStream.toString();
-
-		String[] lines = output.split("\\r?\\n");
-
-		for (String line : lines) {
-			if (_logger.isInfoEnabled()) {
-				_logger.info(line);
-			}
-
-			if (Validator.isNull(line)) {
-				continue;
-			}
-
-			if (!line.contains(_IGNORED_MESSAGE_PATTERN)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private static final String _APP_BND_FILE_NAME = "app.bnd";
 
 	private static final String _CACHE_COMMIT_MESSAGE = "FAKE GRADLE CACHE";
 
 	private static final String _GROUP = "com.liferay";
-
-	private static final String _IGNORED_MESSAGE_PATTERN = "artifact:ignore";
 
 	private static final JavaVersion _JAVA_VERSION = JavaVersion.VERSION_1_7;
 

@@ -9,48 +9,8 @@
 </thead>
 <tbody>
 <tr>
-	<td>CONFIGURATION_LINK</td>
-	<td>//div[contains(@class,'usersegmentcontentdisplay')]//a[@data-title='Configuration']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME</td>
-	<td>//iframe[contains(@src,'usersegmentcontentdisplay')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_CONTENT_IFRAME</td>
-	<td>//iframe[contains(@id,'selectContent')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>UNDO_LINK</td>
-	<td>//div[contains(@class,'undomanager')]/a[@class='lfr-action-undo']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CLEAR_HISTORY_LINK</td>
-	<td>//div[contains(@class,'undomanager')]/a[@class='lfr-action-clear']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SAVE_BUTTON</td>
-	<td>//button[contains(.,'Save')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ENTRY_CONTENT</td>
-	<td>//div[@class='asset-content']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INFO_MESSAGE</td>
-	<td>//div[contains(@class,'usersegmentcontentdisplay')]/section//div[@class='alert alert-info']</td>
+	<td>//div[contains(@id,'UserSegmentContentDisplayPortlet')]//div[@class='full-content']</td>
 	<td></td>
 </tr>
 <tr>
@@ -65,33 +25,43 @@
 </tr>
 <!--PREVIEW-->
 <tr>
+	<td>PREVIEW_BUTTON</td>
+	<td>//div[contains(@class,'portlet-content') and contains(.,'User Segment Content Display')]//div[contains(@class,'preview-button')]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_BUTTON_UNEXPANDED</td>
+	<td>//div[contains(@class,'portlet-content') and contains(.,'User Segment Content Display')]//div[contains(@class,'preview-button')]/button[@aria-expanded='false']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_BUTTON_EXPANDED</td>
+	<td>//div[contains(@class,'portlet-content') and contains(.,'User Segment Content Display')]//div[contains(@class,'preview-button')]/button[@aria-expanded='true']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PREVIEW_USER_SEGMENT_SELECTED</td>
-	<td>//div[@class='content-preview selected']//div[contains(.,'${key_viewUserSegmentSelected}')]</td>
+	<td>//li[@class='active'][contains(.,'${key_viewUserSegmentSelected}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_1</td>
-	<td>//div[contains(@id,'usersegmentcontentdisplay')]/div[@data-index='0']</td>
+	<td>//li[contains(@id,'PreviewContent0')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_2</td>
-	<td>//div[contains(@id,'usersegmentcontentdisplay')]/div[@data-index='1']</td>
+	<td>//li[contains(@id,'PreviewContent1')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_3</td>
-	<td>//div[contains(@id,'usersegmentcontentdisplay')]/div[@data-index='2']</td>
+	<td>//li[contains(@id,'PreviewContent1')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_DOCUMENT_1_PNG</td>
 	<td>portal/portlets/user_segment_content_display_document.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_USER_SEGMENT_SELECTED</td>
-	<td>//div[@class='content-preview selected']//div[contains(.,'${key_viewUserSegmentSelected}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -132,22 +102,17 @@
 </tr>
 <tr>
 	<td>RULE_PANEL_SELECTED_DISPLAY_CONTENT_TITLE</td>
-	<td>//div[@class='asset-title' and contains(.,'${key_contentTitle}')]</td>
+	<td>//div[contains(@class,'card-dm-text-large') and contains(.,'${key_contentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_PANEL_SELECTED_DISPLAY_CONTENT_TYPE</td>
-	<td>//div[@class='asset-type' and contains(.,'Type: ${key_contentType}')]</td>
+	<td>//div[contains(@class,'card-dm-text') and contains(.,'${key_contentType}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>RULE_PANEL_DISPLAY_CONTENT_DROPDOWN</td>
+	<td>RULE_PANEL_DISPLAY_CONTENT_SELECT</td>
 	<td>xpath=(//div/a[@title='Select Content'])[${key_rowNumber}]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RULE_PANEL_DISPLAY_CONTENT_DROPDOWN_MENULIST</td>
-	<td>//li/a[@data-type='${key_contentType}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -162,8 +127,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX</td>
+	<td>//div[contains(.,'${key_userSegmentName}')]//span[contains(@class,'checkbox-container')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_SCOPE</td>
-	<td>//div[contains(.,'${key_userSegmentName}')]//span[contains(.,'User Segment (${key_siteScope})')]</td>
+	<td>//div[contains(.,'${key_userSegmentName}')]//span[@class='tree-label'][contains(.,'${key_siteScope}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -173,18 +143,7 @@
 </tr>
 <tr>
 	<td>RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CLOSE_BUTTON</td>
-	<td>//div[contains(@class,'selector-popup')]//button[contains(@class,'btn close')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--RULE_PANEL_DISPLAY_CONTENT_SELECT-->
-<tr>
-	<td>RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON</td>
-	<td>//tr[contains(.,'${key_contentTitle}')]//button[contains(.,'Choose')]</td>
+	<td>//div[contains(@class,'selector-popup')]//button[contains(@class,'close-content')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -209,28 +168,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>OTHERWISE_PANEL_SELECT_CONTENT_BUTTON</td>
+	<td>OTHERWISE_PANEL_SELECT_CONTENT</td>
 	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//div/a[@title='Select Content']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>OTHERWISE_PANEL_SELECTED_CONTENT_TYPE</td>
-	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//div[@class='asset-type']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>OTHERWISE_PANEL_SELECTED_CONTENT_TITLE</td>
-	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//div[@class='asset-title' and contains(.,'${key_contentTitle}')]</td>
+	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//div[contains(@class,'card-dm-text-large') and contains(.,'${key_contentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>OTHERWISE_PANEL_CONTENT_DROPDOWN_MENULIST</td>
-	<td>//li/a[@data-type='${key_contentType}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_1</td>
-	<td>//div[@data-index='0']</td>
+	<td>OTHERWISE_PANEL_SELECTED_CONTENT_TYPE</td>
+	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//div[contains(@class,'card-dm-text') and contains(.,'${key_contentType}')]</td>
 	<td></td>
 </tr>
 </tbody>

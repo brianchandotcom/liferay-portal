@@ -1,6 +1,6 @@
 <definition>
 	<command name="configureDisplayContent">
-		<execute function="SelectFrame" locator1="UserSegmentContentDisplay#USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<var method="selenium#getNumberDecrement('${rowNumber}')" name="rowIndexNumber" />
 
@@ -63,26 +63,26 @@
 		</if>
 
 		<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CLOSE_BUTTON" />
-		<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_DISPLAY_CONTENT_DROPDOWN" />
+		<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT" />
 
-		<var name="key_contentType" value="${contentType}" />
+		<var name="key_menuItem" value="${contentType}" />
 
-		<execute function="AssertClick" locator1="UserSegmentContentDisplay#RULE_PANEL_DISPLAY_CONTENT_DROPDOWN_MENULIST" value1="${contentType}" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${contentType}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="UserSegmentContentDisplay#SELECT_CONTENT_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
 
 		<var name="key_contentTitle" value="${contentTitle}" />
 
-		<execute function="AssertClickNoError" locator1="UserSegmentContentDisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" value1="Choose" />
+		<execute function="AssertClickNoError" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="Choose" />
 
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="UserSegmentContentDisplay#USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="configureOtherwiseContenDisplayRule">
-		<execute function="SelectFrame" locator1="UserSegmentContentDisplay#USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<if>
 			<isset var="otherwiseContentType" />
@@ -90,18 +90,18 @@
 				<execute function="ClickNoError" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL" />
 				<execute function="Click" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
 
-				<execute function="ClickNoError" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL_SELECT_CONTENT_BUTTON" />
+				<execute function="ClickNoError" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL_SELECT_CONTENT" />
 
-				<var name="key_contentType" value="${otherwiseContentType}" />
+				<var name="key_menuItem" value="${otherwiseContentType}" />
 
-				<execute function="Click" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL_CONTENT_DROPDOWN_MENULIST" />
+				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
 
 				<execute function="SelectFrame" value1="relative=top" />
-				<execute function="SelectFrame" locator1="UserSegmentContentDisplay#SELECT_CONTENT_IFRAME" />
+				<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
 
 				<var name="key_contentTitle" value="${otherwiseContentTitle}" />
 
-				<execute function="AssertClickNoError" locator1="UserSegmentContentDisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" value1="Choose" />
+				<execute function="AssertClickNoError" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="Choose" />
 
 				<execute function="SelectFrame" value1="relative=top" />
 			</then>
@@ -114,7 +114,7 @@
 	</command>
 
 	<command name="savePG">
-		<execute function="SelectFrame" locator1="UserSegmentContentDisplay#USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<execute function="ClickNoError" locator1="Button#SAVE" />
 		<execute macro="Alert#viewSuccessMessage" />
@@ -128,7 +128,7 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="UserSegmentContentDisplay#USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<var name="key_rowNumber" value="${rowNumber}" />
 
@@ -227,12 +227,12 @@
 			<isset var="viewDontDisplay" />
 			<then>
 				<execute function="MouseOverNoError" locator1="PGUsersegmentcontentdisplay#${viewDontDisplay}" />
-				<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#INFO_MESSAGE" value1="There are no matching rules" />
+				<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#ENTRY_CONTENT" value1="" />
 			</then>
 		</if>
 	</command>
 
 	<command name="viewNoContentPG">
-		<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#INFO_MESSAGE" value1="There are no matching rules" />
+		<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#ENTRY_CONTENT" value1="" />
 	</command>
 </definition>

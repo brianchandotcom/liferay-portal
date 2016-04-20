@@ -63,7 +63,7 @@ renderResponse.setTitle(ree.getOldName());
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button cssClass="btn-cancel btn-lg" type="cancel" />
+		<aui:button cssClass="btn-cancel btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

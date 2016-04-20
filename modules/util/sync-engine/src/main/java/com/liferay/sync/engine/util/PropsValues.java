@@ -72,4 +72,7 @@ public class PropsValues {
 	public static final String SYNC_OAUTH_WEBSITE_URL = PropsUtil.get(
 		PropsKeys.SYNC_OAUTH_WEBSITE_URL);
 
+	public static final boolean SYNC_SELECTIVE_SYNC_ENABLED = Boolean.valueOf(
+		PropsUtil.get(PropsKeys.SYNC_SELECTIVE_SYNC_ENABLED));
+
 }

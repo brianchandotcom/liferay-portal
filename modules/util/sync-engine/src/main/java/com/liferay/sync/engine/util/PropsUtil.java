@@ -14,6 +14,9 @@
 
 package com.liferay.sync.engine.util;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
@@ -48,6 +51,19 @@ public class PropsUtil {
 			Configuration configuration = new PropertiesConfiguration(
 				"sync.properties");
 
+			String syncConfigurationDirectory = configuration.getString(
+				PropsKeys.SYNC_CONFIGURATION_DIRECTORY);
+
+			syncConfigurationDirectory = syncConfigurationDirectory.replace(
+				"${user.home}", System.getProperty("user.home"));
+
+			Path path = Paths.get(
+				syncConfigurationDirectory, "sync-ext.properties");
+
+			Configuration extConfiguration = new PropertiesConfiguration(
+				path.toFile());
+
+			_compositeConfiguration.addConfiguration(extConfiguration);
 			_compositeConfiguration.addConfiguration(configuration);
 		}
 		catch (ConfigurationException ce) {

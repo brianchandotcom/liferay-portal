@@ -426,7 +426,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	}
 
 	@Reference(
-		target = "(osgi.http.whiteboard.servlet.name=DDMDataProviderServlet)",
+		target = "(osgi.http.whiteboard.servlet.name=com.liferay.dynamic.data.mapping.data.provider.internal.servlet.DDMDataProviderServlet)",
 		unbind = "-"
 	)
 	protected void setDDMDataProviderServlet(Servlet ddmDataProviderServlet) {

@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"osgi.http.whiteboard.servlet.name=DDMDataProviderServlet",
+		"osgi.http.whiteboard.servlet.name=com.liferay.dynamic.data.mapping.data.provider.internal.servlet.DDMDataProviderServlet",
 		"osgi.http.whiteboard.servlet.pattern=/dynamic-data-mapping-data-provider/*",
 		"servlet.init.httpMethods=GET,POST,HEAD"
 	},

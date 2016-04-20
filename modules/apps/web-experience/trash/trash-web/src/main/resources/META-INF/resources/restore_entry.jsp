@@ -17,34 +17,37 @@
 <%@ include file="/init.jsp" %>
 
 <%
+long duplicateEntryId = ParamUtil.getLong(request, "duplicateEntryId");
+String oldName = ParamUtil.getString(request, "oldName");
+boolean overridable = ParamUtil.getBoolean(request, "overridable");
+long trashEntryId = ParamUtil.getLong(request, "trashEntryId");
+
 PortletURL backURL = renderResponse.createRenderURL();
 
 String redirect = ParamUtil.getString(request, "redirect", backURL.toString());
 
-RestoreEntryException ree = (RestoreEntryException)SessionErrors.get(renderRequest, RestoreEntryException.class.getName());
-
-TrashEntry entry = TrashEntryLocalServiceUtil.getEntry(ree.getTrashEntryId());
+TrashEntry entry = TrashEntryLocalServiceUtil.getEntry(trashEntryId);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(ree.getOldName());
+renderResponse.setTitle(oldName);
 %>
 
-<liferay-ui:error exception="<%= RestoreEntryException.class %>" message='<%= LanguageUtil.format(request, "an-entry-with-name-x-already-exists", HtmlUtil.escape(ree.getOldName()))%>' translateMessage="<%= false %>" />
+<liferay-ui:error exception="<%= RestoreEntryException.class %>" message='<%= LanguageUtil.format(request, "an-entry-with-name-x-already-exists", HtmlUtil.escape(oldName)) %>' translateMessage="<%= false %>" />
 
 <liferay-portlet:actionURL name="restoreEntry" varImpl="restoreURL" />
 
 <aui:form action="<%= restoreURL %>" cssClass="container-fluid-1280" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="trashEntryId" type="hidden" value="<%= ree.getTrashEntryId() %>" />
-	<aui:input name="duplicateEntryId" type="hidden" value="<%= ree.getDuplicateEntryId() %>" />
-	<aui:input name="oldName" type="hidden" value="<%= ree.getOldName() %>" />
+	<aui:input name="trashEntryId" type="hidden" value="<%= trashEntryId %>" />
+	<aui:input name="duplicateEntryId" type="hidden" value="<%= duplicateEntryId %>" />
+	<aui:input name="oldName" type="hidden" value="<%= oldName %>" />
 
 	<aui:fieldset-group markupview="lexicon">
 		<aui:fieldset>
 			<c:choose>
-				<c:when test="<%= ree.isOverridable() %>">
+				<c:when test="<%= overridable %>">
 					<aui:input checked="<%= true %>" id="override" label="overwrite-the-existing-entry-with-the-one-from-the-recycle-bin" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />
 
 					<aui:input id="rename" label="keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
@@ -54,7 +57,7 @@ renderResponse.setTitle(ree.getOldName());
 				</c:otherwise>
 			</c:choose>
 
-			<aui:input label='<%= ree.isOverridable() ? StringPool.BLANK : "keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" %>' name="newName" value="<%= TrashUtil.getNewName(themeDisplay, entry.getClassName(), entry.getClassPK(), ree.getOldName()) %>" />
+			<aui:input label='<%= overridable ? StringPool.BLANK : "keep-both-entries-and-rename-the-entry-from-the-recycle-bin-as" %>' name="newName" value="<%= TrashUtil.getNewName(themeDisplay, entry.getClassName(), entry.getClassPK(), oldName) %>" />
 		</aui:fieldset>
 	</aui:fieldset-group>
 

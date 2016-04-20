@@ -14,14 +14,13 @@
 
 package com.liferay.trash.web.portlet;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.TrashPermissionException;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -40,17 +39,13 @@ import com.liferay.trash.kernel.service.TrashEntryService;
 import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.trash.web.constants.TrashPortletKeys;
 
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -165,7 +160,7 @@ public class TrashPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		checkEntry(actionRequest);
+		checkEntry(actionRequest, actionResponse);
 
 		List<ObjectValuePair<String, Long>> entries = new ArrayList<>();
 
@@ -204,7 +199,7 @@ public class TrashPortlet extends MVCPortlet {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (cmd.equals(Constants.RENAME)) {
-			checkEntry(actionRequest);
+			checkEntry(actionRequest, actionResponse);
 
 			restoreRename(actionRequest, actionResponse);
 		}
@@ -257,8 +252,9 @@ public class TrashPortlet extends MVCPortlet {
 		sendRedirect(actionRequest, actionResponse);
 	}
 
-	protected void checkEntry(ActionRequest actionRequest)
-		throws PortalException {
+	protected void checkEntry(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
 
 		long trashEntryId = ParamUtil.getLong(actionRequest, "trashEntryId");
 
@@ -270,24 +266,35 @@ public class TrashPortlet extends MVCPortlet {
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			entry.getClassName());
 
-		trashHandler.checkRestorableEntry(
-			entry, TrashEntryConstants.DEFAULT_CONTAINER_ID, newName);
-	}
-
-	@Override
-	protected void doDispatch(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		if (SessionErrors.contains(
-				renderRequest, RestoreEntryException.class.getName())) {
-
-			hideDefaultErrorMessage(renderRequest);
-
-			include("/restore_entry.jsp", renderRequest, renderResponse);
+		try {
+			trashHandler.checkRestorableEntry(
+				entry, TrashEntryConstants.DEFAULT_CONTAINER_ID, newName);
 		}
-		else {
-			super.doDispatch(renderRequest, renderResponse);
+		catch (RestoreEntryException ree) {
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			LiferayPortletResponse liferayPortletResponse =
+				(LiferayPortletResponse)actionResponse;
+
+			PortletURL renderURL = liferayPortletResponse.createRenderURL();
+
+			renderURL.setParameter("mvcPath", "/restore_entry.jsp");
+			renderURL.setParameter(
+				"duplicateEntryId", String.valueOf(ree.getDuplicateEntryId()));
+			renderURL.setParameter("oldName", ree.getOldName());
+			renderURL.setParameter(
+				"overridable", String.valueOf(ree.isOverridable()));
+			renderURL.setParameter("redirect", redirect);
+			renderURL.setParameter(
+				"trashEntryId", String.valueOf(ree.getTrashEntryId()));
+
+			actionRequest.setAttribute(WebKeys.REDIRECT, renderURL.toString());
+
+			hideDefaultErrorMessage(actionRequest);
+
+			sendRedirect(actionRequest, actionResponse);
+
+			throw ree;
 		}
 	}
 

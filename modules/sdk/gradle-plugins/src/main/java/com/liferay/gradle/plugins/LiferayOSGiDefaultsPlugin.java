@@ -2521,12 +2521,6 @@ public class LiferayOSGiDefaultsPlugin
 		uploadArchivesTask.finalizedBy(updateFileVersionsTask);
 	}
 
-	protected String escapeBRE(Object object) {
-		String s = GradleUtil.toString(object);
-
-		return s.replaceAll("[\\Q\\{}()[]*+?.|^$\\E]", "\\\\$0");
-	}
-
 	protected void forceProjectDependenciesEvaluation(Project project) {
 		GradleInternal gradleInternal = (GradleInternal)project.getGradle();
 

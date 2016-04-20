@@ -79,7 +79,7 @@ public class ServiceBuilderDefaultsPlugin
 
 		addTaskBuildDB(project);
 
-		withPlugin(
+		GradleUtil.withPlugin(
 			project, LiferayBasePlugin.class,
 			new Action<LiferayBasePlugin>() {
 
@@ -95,7 +95,7 @@ public class ServiceBuilderDefaultsPlugin
 
 			});
 
-		withPlugin(
+		GradleUtil.withPlugin(
 			project, BundlePlugin.class,
 			new Action<BundlePlugin>() {
 

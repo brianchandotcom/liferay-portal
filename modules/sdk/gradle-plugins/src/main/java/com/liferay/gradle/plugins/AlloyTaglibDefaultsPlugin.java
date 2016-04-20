@@ -38,7 +38,7 @@ public class AlloyTaglibDefaultsPlugin
 			"Configures the Alloy Taglib tool for this project.");
 		configuration.setVisible(false);
 
-		withPlugin(
+		GradleUtil.withPlugin(
 			project, LiferayBasePlugin.class,
 			new Action<LiferayBasePlugin>() {
 

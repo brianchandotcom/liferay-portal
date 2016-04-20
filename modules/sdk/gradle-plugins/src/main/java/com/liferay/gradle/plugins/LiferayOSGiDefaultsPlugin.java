@@ -1498,7 +1498,7 @@ public class LiferayOSGiDefaultsPlugin
 
 			projectConfigurer.configure(dependencyProject);
 
-			if (!hasPlugin(dependencyProject, BasePlugin.class)) {
+			if (!GradleUtil.hasPlugin(dependencyProject, BasePlugin.class)) {
 				continue;
 			}
 
@@ -1724,7 +1724,7 @@ public class LiferayOSGiDefaultsPlugin
 		configureTasksJavaCompile(project);
 		configureTasksPublishNodeModule(project);
 
-		withPlugin(
+		GradleUtil.withPlugin(
 			project, ServiceBuilderPlugin.class,
 			new Action<ServiceBuilderPlugin>() {
 
@@ -2664,7 +2664,9 @@ public class LiferayOSGiDefaultsPlugin
 	}
 
 	protected File getModuleConfigFile(Project project) {
-		if (!hasPlugin(project, JSModuleConfigGeneratorPlugin.class)) {
+		if (!GradleUtil.hasPlugin(
+				project, JSModuleConfigGeneratorPlugin.class)) {
+
 			return null;
 		}
 

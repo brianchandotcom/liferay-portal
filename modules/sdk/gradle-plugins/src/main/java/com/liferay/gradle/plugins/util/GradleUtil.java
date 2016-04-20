@@ -29,6 +29,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import org.gradle.api.Action;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.ArtifactRepositoryContainer;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
@@ -39,6 +41,7 @@ import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.file.copy.CopySpecInternal;
 import org.gradle.api.internal.file.copy.DefaultCopySpec;
 import org.gradle.api.plugins.BasePluginConvention;
+import org.gradle.api.plugins.PluginContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -103,6 +106,14 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		}
 
 		return threads;
+	}
+
+	public static boolean hasPlugin(
+		Project project, Class<? extends Plugin<?>> pluginClass) {
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		return pluginContainer.hasPlugin(pluginClass);
 	}
 
 	public static boolean isFromMavenLocal(Project project, File file) {
@@ -200,6 +211,14 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		}
 
 		return stringMap;
+	}
+
+	public static <P extends Plugin<? extends Project>> void withPlugin(
+		Project project, Class<P> pluginClass, Action<P> action) {
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(pluginClass, action);
 	}
 
 	private static final Properties _portalToolVersions = new Properties();

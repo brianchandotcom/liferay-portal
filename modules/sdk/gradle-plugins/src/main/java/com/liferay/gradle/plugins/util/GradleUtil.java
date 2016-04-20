@@ -25,10 +25,12 @@ import java.nio.file.Paths;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import org.gradle.StartParameter;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -40,6 +42,7 @@ import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.file.copy.CopySpecInternal;
 import org.gradle.api.internal.file.copy.DefaultCopySpec;
+import org.gradle.api.invocation.Gradle;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.PluginContainer;
 
@@ -120,6 +123,22 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		PluginContainer pluginContainer = project.getPlugins();
 
 		return pluginContainer.hasPlugin(pluginId);
+	}
+
+	public static boolean hasStartParameterTask(
+		Project project, String taskName) {
+
+		Gradle gradle = project.getGradle();
+
+		StartParameter startParameter = gradle.getStartParameter();
+
+		List<String> taskNames = startParameter.getTaskNames();
+
+		if (taskNames.contains(taskName)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isFromMavenLocal(Project project, File file) {

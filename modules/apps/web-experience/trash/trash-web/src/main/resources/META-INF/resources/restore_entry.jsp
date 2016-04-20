@@ -16,6 +16,19 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+PortletURL backURL = renderResponse.createRenderURL();
+
+String redirect = ParamUtil.getString(request, "redirect", backURL.toString());
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+RestoreEntryException ree = (RestoreEntryException)SessionErrors.get(renderRequest, RestoreEntryException.class.getName());
+
+renderResponse.setTitle(ree.getOldName());
+%>
+
 <liferay-portlet:actionURL name="restoreEntry" varImpl="restoreURL" />
 
 <liferay-ui:restore-entry

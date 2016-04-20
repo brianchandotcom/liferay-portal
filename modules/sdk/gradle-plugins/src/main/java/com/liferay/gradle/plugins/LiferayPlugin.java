@@ -38,10 +38,10 @@ public class LiferayPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		Class<? extends Plugin<Project>> clazz;
 
-		if (isOSGiPlugin(project)) {
+		if (isOSGi(project)) {
 			clazz = getOSGiPluginClass();
 		}
-		else if (isThemePlugin(project)) {
+		else if (isTheme(project)) {
 			clazz = getThemePluginClass();
 		}
 		else {
@@ -63,7 +63,7 @@ public class LiferayPlugin implements Plugin<Project> {
 		return LiferayThemePlugin.class;
 	}
 
-	protected boolean isOSGiPlugin(Project project) {
+	protected boolean isOSGi(Project project) {
 		if (FileUtil.exists(project, "bnd.bnd")) {
 			return true;
 		}
@@ -71,7 +71,7 @@ public class LiferayPlugin implements Plugin<Project> {
 		return false;
 	}
 
-	protected boolean isThemePlugin(Project project) {
+	protected boolean isTheme(Project project) {
 		File gulpFile = project.file("gulpfile.js");
 
 		if (!gulpFile.exists()) {

@@ -331,7 +331,7 @@
 
 		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX" value1="${userSegmentName}" />
 
-		<execute function="AssertTextEquals" locator1="ContentTargeting#USER_SEGMENT_TABLE_DESCRIPTION" value1="${userSegmentDescription}" />
+		<execute function="AssertTextEquals" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_TABLE_DESCRIPTION" value1="${userSegmentDescription}" />
 	</command>
 
 	<command name="viewImportContentVisitedRuleEmpty">
@@ -350,7 +350,7 @@
 
 		<var name="key_userSegmentName" value="${userSegmentName}" />
 
-		<execute function="AssertTextNotPresent" locator1="ContentTargeting#USER_SEGMENT_TABLE_NAME" value1="${userSegmentName}" />
+		<execute function="AssertTextNotPresent" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_TABLE_NAME" value1="${userSegmentName}" />
 	</command>
 
 	<command name="viewReport">

@@ -60,26 +60,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CAMPAIGN_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_campaignName}')]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CAMPAIGN_TABLE_DESCRIPTION</td>
-	<td>//tr[contains(.,'${key_campaignName}')]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CAMPAIGN_TABLE_PRIORITY</td>
-	<td>//tr[contains(.,'${key_campaignName}')]/td[6]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CAMPAIGN_TABLE_STATUS</td>
-	<td>//tr[contains(.,'${key_campaignName}')]/td[7]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CAMPAIGN_TABLE_ACTIONS</td>
 	<td>//tr[contains(.,'${key_campaignName}')]/td[8]//div/a[@title='Actions']</td>
 	<td></td>
@@ -109,16 +89,6 @@
 <tr>
 	<td>USER_SEGMENT_TABLE_CHECKBOX</td>
 	<td>//tr[contains(.,'${key_userSegmentName}')]/td[1]//input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_SEGMENT_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_userSegmentName}')]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_SEGMENT_TABLE_DESCRIPTION</td>
-	<td>//tr[contains(.,'${key_userSegmentName}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>

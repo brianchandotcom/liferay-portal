@@ -43,6 +43,27 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CAMPAIGN_TABLE-->
+<tr>
+	<td>CAMPAIGN_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_campaignName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TABLE_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_campaignName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TABLE_PRIORITY</td>
+	<td>//tr[contains(.,'${key_campaignName}')]/td[6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAMPAIGN_TABLE_STATUS</td>
+	<td>//tr[contains(.,'${key_campaignName}')]/td[7]</td>
+	<td></td>
+</tr>
 <!--CAMPAIGN_TRACKING_ACTIONS-->
 <tr>
 	<td>CAMPAIGN_TRACKING_ACTIONS_SEARCH_FIELD</td>

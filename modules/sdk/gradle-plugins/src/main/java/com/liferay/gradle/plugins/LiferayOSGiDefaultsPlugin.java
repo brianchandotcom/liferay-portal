@@ -29,6 +29,7 @@ import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.tasks.BaselineTask;
 import com.liferay.gradle.plugins.tasks.InstallCacheTask;
 import com.liferay.gradle.plugins.tasks.ReplaceRegexTask;
+import com.liferay.gradle.plugins.tasks.UpdateVersionTask;
 import com.liferay.gradle.plugins.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.TLDDocBuilderPlugin;
@@ -57,8 +58,6 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -155,7 +154,6 @@ import org.gradle.plugins.ide.idea.IdeaPlugin;
 import org.gradle.plugins.ide.idea.model.IdeaModel;
 import org.gradle.plugins.ide.idea.model.IdeaModule;
 import org.gradle.process.ExecSpec;
-import org.gradle.util.VersionNumber;
 
 /**
  * @author Andrea Di Giorgi
@@ -1058,95 +1056,19 @@ public class LiferayOSGiDefaultsPlugin
 		return writePropertiesTask;
 	}
 
-	protected Task addTaskUpdateBundleVersion(Project project) {
-		Task task = project.task(UPDATE_BUNDLE_VERSION_TASK_NAME);
+	protected UpdateVersionTask addTaskUpdateBundleVersion(Project project) {
+		final UpdateVersionTask updateVersionTask = GradleUtil.addTask(
+			project, UPDATE_BUNDLE_VERSION_TASK_NAME, UpdateVersionTask.class);
 
-		Action<Task> action = new Action<Task>() {
-
-			private void _update(
-					Project project, Object fileName, String oldSub,
-					String newSub)
-				throws IOException {
-
-				File file = project.file(fileName);
-
-				if (!file.exists()) {
-					if (_logger.isInfoEnabled()) {
-						_logger.info(
-							"Unable to find " + project.relativePath(file));
-					}
-
-					return;
-				}
-
-				Path path = file.toPath();
-
-				String content = new String(
-					Files.readAllBytes(path), StandardCharsets.UTF_8);
-
-				String newContent = content.replace(oldSub, newSub);
-
-				if (content.equals(newContent)) {
-					if (_logger.isWarnEnabled()) {
-						_logger.warn(
-							"Unable to update " + project.relativePath(file));
-					}
-
-					return;
-				}
-
-				Files.write(path, newContent.getBytes(StandardCharsets.UTF_8));
-
-				if (_logger.isLifecycleEnabled()) {
-					_logger.lifecycle("Updated " + project.relativePath(file));
-				}
-			}
-
-			@Override
-			public void execute(Task task) {
-				try {
-					Project project = task.getProject();
-
-					VersionNumber versionNumber = VersionNumber.parse(
-						String.valueOf(project.getVersion()));
-
-					VersionNumber newVersionNumber = new VersionNumber(
-						versionNumber.getMajor(), versionNumber.getMinor(),
-						versionNumber.getMicro() + 1,
-						versionNumber.getQualifier());
-
-					_update(
-						project, "bnd.bnd",
-						Constants.BUNDLE_VERSION + ": " + versionNumber,
-						Constants.BUNDLE_VERSION + ": " + newVersionNumber);
-
-					File moduleConfigFile = getModuleConfigFile(project);
-
-					if (moduleConfigFile != null) {
-						_update(
-							project, moduleConfigFile,
-							"\"version\": \"" + versionNumber + "\"",
-							"\"version\": \"" + newVersionNumber + "\"");
-					}
-				}
-				catch (IOException ioe) {
-					throw new GradleException(
-						"Unable to update bundle version", ioe);
-				}
-			}
-
-		};
-
-		task.doLast(action);
-
-		task.onlyIf(
+		updateVersionTask.onlyIf(
 			new Spec<Task>() {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					Project project = task.getProject();
+					UpdateVersionTask updateVersionTask =
+						(UpdateVersionTask)task;
 
-					String version = String.valueOf(project.getVersion());
+					String version = updateVersionTask.getVersion();
 
 					if (version.contains("LIFERAY-PATCHED-")) {
 						return false;
@@ -1157,11 +1079,47 @@ public class LiferayOSGiDefaultsPlugin
 
 			});
 
-		task.setDescription(
+		updateVersionTask.pattern(
+			"bnd.bnd",
+			Constants.BUNDLE_VERSION + ": " +
+				UpdateVersionTask.VERSION_PLACEHOLDER);
+
+		updateVersionTask.setDescription(
 			"Updates the project version in the " + Constants.BUNDLE_VERSION +
 				" header.");
 
-		return task;
+		updateVersionTask.setVersion(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() throws Exception {
+					Project project = updateVersionTask.getProject();
+
+					return project.getVersion();
+				}
+
+			});
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					File moduleConfigFile = getModuleConfigFile(project);
+
+					if (moduleConfigFile == null) {
+						return;
+					}
+
+					updateVersionTask.pattern(
+						moduleConfigFile,
+						"\"version\": \"" +
+							UpdateVersionTask.VERSION_PLACEHOLDER + "\"");
+				}
+
+			});
+
+		return updateVersionTask;
 	}
 
 	protected ReplaceRegexTask addTaskUpdateFileVersions(

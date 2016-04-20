@@ -113,7 +113,11 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(LiferayOSGiPlugin liferayOSGiPlugin) {
-					configureTaskDeploy(project, recordArtifactTask);
+					if (GradleUtil.hasStartParameterTask(
+							project, LiferayBasePlugin.DEPLOY_TASK_NAME)) {
+
+						configureTaskDeploy(project, recordArtifactTask);
+					}
 
 					if (LiferayOSGiDefaultsPlugin.isTestProject(project)) {
 						printStaleArtifactTask.setEnabled(false);

@@ -14,12 +14,19 @@
 
 package com.liferay.gradle.plugins;
 
+import aQute.bnd.osgi.Constants;
+
+import com.liferay.gradle.plugins.tasks.UpdateVersionTask;
 import com.liferay.gradle.plugins.util.GradleUtil;
+
+import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.tasks.Upload;
 
@@ -28,6 +35,9 @@ import org.gradle.api.tasks.Upload;
  */
 public class LiferayThemeDefaultsPlugin
 	extends BaseDefaultsPlugin<LiferayThemePlugin> {
+
+	public static final String UPDATE_THEME_VERSION_TASK_NAME =
+		"updateThemeVersion";
 
 	protected Upload addTaskInstall(Project project) {
 		Upload upload = GradleUtil.addTask(
@@ -42,6 +52,33 @@ public class LiferayThemeDefaultsPlugin
 				"' artifacts into the local Maven repository.");
 
 		return upload;
+	}
+
+	protected UpdateVersionTask addTaskUpdateThemeVersion(
+		final Project project) {
+
+		UpdateVersionTask updateVersionTask = GradleUtil.addTask(
+			project, UPDATE_THEME_VERSION_TASK_NAME, UpdateVersionTask.class);
+
+		updateVersionTask.pattern(
+			"package.json",
+			"\"version\": \"" + UpdateVersionTask.VERSION_PLACEHOLDER + "\"");
+
+		updateVersionTask.setDescription(
+			"Updates the project version in the " + Constants.BUNDLE_VERSION +
+				" header.");
+
+		updateVersionTask.setVersion(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() throws Exception {
+					return project.getVersion();
+				}
+
+			});
+
+		return updateVersionTask;
 	}
 
 	protected void applyConfigScripts(Project project) {
@@ -67,6 +104,9 @@ public class LiferayThemeDefaultsPlugin
 
 		applyConfigScripts(project);
 
+		final UpdateVersionTask updateThemeVersionTask =
+			addTaskUpdateThemeVersion(project);
+
 		configureProject(project);
 
 		project.afterEvaluate(
@@ -75,6 +115,13 @@ public class LiferayThemeDefaultsPlugin
 				@Override
 				public void execute(Project project) {
 					GradleUtil.setProjectSnapshotVersion(project);
+
+					// setProjectSnapshotVersion must be called before
+					// configureTaskUploadArchives, because the latter one needs
+					// to know if we are publishing a snapshot or not.
+
+					configureTaskUploadArchives(
+						project, updateThemeVersionTask);
 				}
 
 			});
@@ -82,6 +129,19 @@ public class LiferayThemeDefaultsPlugin
 
 	protected void configureProject(Project project) {
 		project.setGroup(_GROUP);
+	}
+
+	protected void configureTaskUploadArchives(
+		Project project, UpdateVersionTask updateThemeVersionTask) {
+
+		if (GradleUtil.isSnapshot(project)) {
+			return;
+		}
+
+		Task uploadArchivesTask = GradleUtil.getTask(
+			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+
+		uploadArchivesTask.finalizedBy(updateThemeVersionTask);
 	}
 
 	@Override

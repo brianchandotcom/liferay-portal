@@ -1712,6 +1712,36 @@
 		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 	</command>
 
+	<command name="loginUserFailWithClusteringPG">
+		<if>
+			<isset var="nodePort" />
+			<then>
+				<execute function="Open" locator1="http://localhost:${nodePort}" />
+			</then>
+			<elseif>
+				<isset var="specificURL" />
+				<then>
+					<execute macro="Navigator#openSpecificURL">
+						<var name="url" value="${specificURL}" />
+					</execute>
+				</then>
+			</elseif>
+			<else>
+				<execute macro="Navigator#openURL" />
+			</else>
+		</if>
+
+		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+
+		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
+		<execute function="Type" locator1="TextInput#PASSWORD" value1="${password}" />
+
+		<execute function="Click" locator1="Button#SIGN_IN" />
+
+		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Internal Server Error" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#URL_ERROR" value1="${urlErrorMessage}" />
+	</command>
+
 	<command name="loginUserInvalidPG">
 		<execute macro="Navigator#openURL" />
 

@@ -1143,7 +1143,7 @@ release was successful.</echo>
 						<fail>
 .
 
-Please download the JBoss EAP zip file from ${app.server.jboss.zip.url} and
+Please download the JBoss zip file from ${app.server.jboss.zip.url} and
 place it here: ${app.server.parent.dir}/${app.server.jboss.zip.name}. Then rerun
 this task.
 						</fail>

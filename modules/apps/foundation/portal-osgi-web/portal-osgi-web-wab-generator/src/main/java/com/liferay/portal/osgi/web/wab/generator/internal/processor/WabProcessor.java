@@ -1293,7 +1293,11 @@ public class WabProcessor {
 		paths.add(path);
 
 		try {
-			jarOutputStream.putNextEntry(new JarEntry(path));
+			JarEntry jarEntry = new JarEntry(path);
+
+			jarEntry.setTime(file.lastModified());
+
+			jarOutputStream.putNextEntry(jarEntry);
 
 			StreamUtil.transfer(
 				new FileInputStream(file),

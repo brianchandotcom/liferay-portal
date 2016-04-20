@@ -41,6 +41,7 @@ page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
 page import="com.liferay.portal.kernel.trash.TrashHandler" %><%@
 page import="com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.trash.TrashRenderer" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@

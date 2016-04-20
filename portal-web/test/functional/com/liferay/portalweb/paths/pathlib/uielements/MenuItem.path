@@ -249,6 +249,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIGURATION_PORTLET_OPTION</td>
+	<td>//div[contains(@class,'open')]//li[contains(@class,'portlet-configuration')]/a[@role='menuitem' and contains(.,'Configuration')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTRACT</td>
 	<td>//a[@role='menuitem' and contains(.,'Contract')]</td>
 	<td></td>

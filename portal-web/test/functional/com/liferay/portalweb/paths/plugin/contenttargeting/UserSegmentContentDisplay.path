@@ -101,16 +101,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RULE_PANEL_SELECTED_DISPLAY_CONTENT_TITLE</td>
-	<td>//div[contains(@class,'card-dm-text-large') and contains(.,'${key_contentTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RULE_PANEL_SELECTED_DISPLAY_CONTENT_TYPE</td>
-	<td>//div[contains(@class,'card-dm-text') and contains(.,'${key_contentType}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>RULE_PANEL_DISPLAY_CONTENT_SELECT</td>
 	<td>xpath=(//div/a[@title='Select Content'])[${key_rowNumber}]</td>
 	<td></td>

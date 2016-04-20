@@ -166,11 +166,11 @@
 
 		<var name="key_contentTitle" value="${contentTitle}" />
 
-		<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#RULE_PANEL_SELECTED_DISPLAY_CONTENT_TITLE" value1="${contentTitle}" />
+		<execute function="AssertTextEquals" locator1="ContentTargeting#CARD_CONTENT_TITLE" value1="${contentTitle}" />
 
 		<var name="key_contentType" value="${contentType}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="UserSegmentContentDisplay#RULE_PANEL_SELECTED_DISPLAY_CONTENT_TYPE" value1="Type: ${contentType}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="ContentTargeting#CARD_CONTENT_TYPE" value1="Type: ${contentType}" />
 
 		<if>
 			<isset var="otherwiseContentType" />

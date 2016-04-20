@@ -38,14 +38,14 @@
 		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_ALIAS_FIELD" value1="${contentAlias}" />
 		<execute function="Click" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_BUTTON" />
 
-		<var name="key_menulistContent" value="${menulistContent}" />
+		<var name="key_menuItem" value="${menulistContent}" />
 
-		<execute function="Click" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_MENULIST" />
-		<execute function="SelectFrame" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_IFRAME" />
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
+		<execute function="SelectFrame" locator1="IFrame#SELECT_CONTENT" />
 
-		<var name="key_contentTitle" value="${contentTitle}" />
+		<var name="key_rowEntry" value="${contentTitle}" />
 
-		<execute function="Click" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" />
+		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" />
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="AssertTextEquals" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_TRACKING_ACTION" value1="view" />
 	</command>
@@ -80,19 +80,19 @@
 	</command>
 
 	<command name="addTrackingActionsCmd">
-		<execute function="Type" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_SEARCH_FIELD" value1="${campaignTrackingAction}" />
+		<execute function="Type" locator1="ContentTargeting#FORM_SEARCH_FIELD" value1="${campaignTrackingAction}" />
 
 		<if>
 			<equals arg1="${campaignTrackingAction}" arg2="Youtube" />
 			<then>
 				<var name="key_campaignTrackingAction" value="Youtube" />
 
-				<execute function="DragAndDrop" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS" locator2="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_FORM_BUILDER" value1="Youtube Videos" />
+				<execute function="DragAndDrop" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS" locator2="ContentTargeting#FORM_BUILDER" value1="Youtube Videos" />
 			</then>
 			<else>
 				<var name="key_campaignTrackingAction" value="${campaignTrackingAction}" />
 
-				<execute function="DragAndDrop" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS" locator2="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_FORM_BUILDER" value1="${campaignTrackingAction}" />
+				<execute function="DragAndDrop" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS" locator2="ContentTargeting#FORM_BUILDER" value1="${campaignTrackingAction}" />
 			</else>
 		</if>
 	</command>
@@ -317,10 +317,10 @@
 			<var name="navItem" value="Campaigns" />
 		</execute>
 
-		<var name="key_campaignName" value="${campaignName}" />
+		<var name="key_rowEntry" value="${campaignName}" />
 
-		<execute function="AssertTextEquals" locator1="ContentTargetingEditCampaign#CAMPAIGN_TABLE_NAME" value1="${campaignName}" />
-		<execute function="AssertTextEquals" locator1="ContentTargetingEditCampaign#CAMPAIGN_TABLE_DESCRIPTION" value1="${campaignDescription}" />
+		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${campaignName}" />
+		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_DESCRIPTION_TD3" value1="${campaignDescription}" />
 		<execute function="AssertTextEquals" locator1="ContentTargetingEditCampaign#CAMPAIGN_TABLE_PRIORITY" value1="${campaignPriority}" />
 		<execute function="AssertTextEquals" locator1="ContentTargetingEditCampaign#CAMPAIGN_TABLE_STATUS" value1="${campaignStatus}" />
 
@@ -354,7 +354,7 @@
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 		<execute function="Click" locator1="MenuItem#EDIT" />
 
-		<execute function="AssertNotVisible" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_TITLE" />
+		<execute function="AssertNotVisible" locator1="ContentTargeting#CARD_CONTENT_TITLE_GENERIC" />
 	</command>
 
 	<command name="viewNotPresentCP">
@@ -364,7 +364,7 @@
 
 		<var name="key_campaignName" value="${campaignName}" />
 
-		<execute function="AssertElementNotPresent" locator1="ContentTargetingEditCampaign#CAMPAIGN_TABLE_NAME" value1="${campaignName}" />
+		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${campaignName}" />
 	</command>
 
 	<command name="viewTrackingActionsCP">
@@ -386,7 +386,9 @@
 				<equals arg1="${trackingAction}" arg2="Page" />
 				<then>
 					<execute function="AssertTextEquals" locator1="CPContenttargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_PAGE_ALIAS_FIELD" value1="${pageAlias}" />
+
 					<execute function="AssertTextEquals" locator1="CPContenttargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_PAGE_FRIENDLY_URL_FIELD" value1="${pageFriendlyURL}" />
+
 					<execute function="AssertTextEquals" locator1="CPContenttargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_PAGE_TRACKING_ACTION" value1="View" />
 				</then>
 				<elseif>
@@ -409,7 +411,7 @@
 					<equals arg1="${trackingAction}" arg2="Content" />
 					<then>
 						<execute function="Type" locator1="CPContenttargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_ALIAS_FIELD" value1="${contentAlias}" />
-						<execute function="AssertTextEquals" locator1="ContentTargetingEditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_TITLE" value1="${contentTitle}" />
+						<execute function="AssertTextEquals" locator1="ContentTargeting#CARD_CONTENT_TITLE" value1="${contentTitle}" />
 						<execute function="AssertTextEquals" locator1="CPContenttargetingEditcampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_TRACKING_ACTION" value1="view" />
 					</then>
 				</elseif>

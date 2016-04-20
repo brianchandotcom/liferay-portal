@@ -8,39 +8,15 @@
 <tr><td rowspan="1" colspan="3">ContentTargeting</td></tr>
 </thead>
 <tbody>
+<!--FORM-->
 <tr>
-	<td>NAVIGATION_USER_SEGMENTS</td>
-	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'User Segments')]</td>
+	<td>FORM_SEARCH_FIELD</td>
+	<td>//input[contains(@id,'ContentTargetingPortlet_searchPanel')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NAVIGATION_CAMPAIGNS</td>
-	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Campaigns')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_USER_SEGMENT_BUTTON</td>
-	<td>//ul[@aria-label='Audience Targeting']/li/a[contains(.,'Add User Segment')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_CAMPAIGN_BUTTON</td>
-	<td>//ul[@aria-label='Audience Targeting']/li/a[contains(.,'Add Campaign')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DELETE_CAMPAIGN_BUTTON</td>
-	<td>//li[contains(@id,'deleteCampaigns')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DELETE_USER_SEGMENT_BUTTON</td>
-	<td>//li[contains(@id,'deleteUserSegments')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHECKBOX_ALL</td>
-	<td>//input[@title='Select All']</td>
+	<td>FORM_BUILDER</td>
+	<td>//div[contains(@class,'form-builder-drop-container')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -48,52 +24,20 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--CAMPAIGN_TABLE-->
+<!--CARD-->
 <tr>
-	<td>CAMPAIGN_TABLE_CHECKBOX_ALL</td>
-	<td>//th[contains(@id,'campaigns')]/input[@title='Select All'] | //th[contains(@id,'campaigns')]/input[contains(@name,'allRowIds')]</td>
+	<td>CARD_CONTENT_TITLE_GENERIC</td>
+	<td>//div[contains(@class,'card-dm-text-large')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CAMPAIGN_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_campaignName}')]/td[1]//input</td>
+	<td>CARD_CONTENT_TITLE</td>
+	<td>//div[contains(@class,'card-dm-text-large') and contains(.,'${key_contentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CAMPAIGN_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_campaignName}')]/td[8]//div/a[@title='Actions']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ACTIONS_MENULIST-->
-<tr>
-	<td>ACTIONS_MENULIST_REPORTS</td>
-	<td>//ul/li/a[contains(.,'Reports')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--USER_SEGMENT_TABLE-->
-<tr>
-	<td>USER_SEGMENT_TABLE_CHECKBOX_ALL</td>
-	<td>//th[contains(@id,'userSegments')]/input[@title='Select All'] | //th[contains(@id,'userSegments')]/input[contains(@name,'allRowIds')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_SEGMENT_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_userSegmentName}')]/td[1]//input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_SEGMENT_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_userSegmentName}')]/td[4]//div/a[@title='Actions']</td>
+	<td>CARD_CONTENT_TYPE</td>
+	<td>//div[contains(@class,'card-dm-text') and contains(.,'${key_contentType}')]</td>
 	<td></td>
 </tr>
 </tbody>

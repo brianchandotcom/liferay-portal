@@ -116,6 +116,12 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		return pluginContainer.hasPlugin(pluginClass);
 	}
 
+	public static boolean hasPlugin(Project project, String pluginId) {
+		PluginContainer pluginContainer = project.getPlugins();
+
+		return pluginContainer.hasPlugin(pluginId);
+	}
+
 	public static boolean isFromMavenLocal(Project project, File file) {
 		RepositoryHandler repositoryHandler = project.getRepositories();
 

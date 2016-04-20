@@ -76,7 +76,6 @@ import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.JavaPlugin;
-import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
@@ -700,9 +699,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						continue;
 					}
 
-					PluginContainer pluginContainer = project.getPlugins();
-
-					if (pluginContainer.hasPlugin("com.liferay.cache") &&
+					if (GradleUtil.hasPlugin(project, "com.liferay.cache") &&
 						taskName.startsWith("save") &&
 						taskName.endsWith("Cache")) {
 

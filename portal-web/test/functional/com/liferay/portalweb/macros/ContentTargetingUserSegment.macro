@@ -260,9 +260,9 @@
 	</command>
 
 	<command name="deleteAllCP">
-		<execute function="Click" locator1="ContentTargeting#CHECKBOX_ALL" />
+		<execute function="Check#checkAll" locator1="Checkbox#LEXICON_SELECT_ALL" />
 
-		<execute function="ClickNoError" locator1="ContentTargeting#DELETE_USER_SEGMENT_BUTTON" />
+		<execute function="ClickNoError" locator1="Icon#DELETE" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -344,7 +344,9 @@
 	</command>
 
 	<command name="viewNotPresentCP">
-		<execute function="Click" locator1="ContentTargeting#NAVIGATION_USER_SEGMENTS" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="User Segments" />
+		</execute>
 
 		<var name="key_userSegmentName" value="${userSegmentName}" />
 
@@ -352,10 +354,13 @@
 	</command>
 
 	<command name="viewReport">
-		<var name="key_userSegmentName" value="${userSegmentName}" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="key_rowEntry" value="${userSegmentName}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="ContentTargeting#USER_SEGMENT_TABLE_ACTIONS" value1="Actions" />
-		<execute function="AssertClick" locator1="MenuItem#REPORTS" value1="Reports" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Reports" />
+		</execute>
 
 		<var name="key_reportName" value="${reportName}" />
 

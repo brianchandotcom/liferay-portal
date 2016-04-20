@@ -14,10 +14,14 @@
 
 package com.liferay.gradle.plugins;
 
+import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask;
+import com.liferay.gradle.plugins.change.log.builder.ChangeLogBuilderPlugin;
 import com.liferay.gradle.plugins.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
+
+import groovy.lang.Closure;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -41,15 +45,18 @@ import org.gradle.api.artifacts.PublishArtifact;
 import org.gradle.api.artifacts.PublishArtifactSet;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.maven.MavenDeployer;
+import org.gradle.api.file.CopySpec;
 import org.gradle.api.internal.artifacts.publish.ArchivePublishArtifact;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaBasePlugin;
+import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.plugins.MavenRepositoryHandlerConvention;
 import org.gradle.api.specs.Spec;
+import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Upload;
 import org.gradle.api.tasks.bundling.AbstractArchiveTask;
 import org.gradle.process.ExecSpec;
@@ -65,21 +72,38 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	public static final String RECORD_ARTIFACT_TASK_NAME = "recordArtifact";
 
 	@Override
-	public void apply(Project project) {
+	public void apply(final Project project) {
 		File relengDir = getRelengDir(project);
 
 		if (relengDir == null) {
 			return;
 		}
 
+		GradleUtil.applyPlugin(project, ChangeLogBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, MavenPlugin.class);
+
+		final BuildChangeLogTask buildChangeLogTask =
+			(BuildChangeLogTask)GradleUtil.getTask(
+				project, ChangeLogBuilderPlugin.BUILD_CHANGE_LOG_TASK_NAME);
 
 		WritePropertiesTask recordArtifactTask = addTaskRecordArtifact(
 			project, relengDir);
 
 		addTaskPrintStaleArtifact(project, recordArtifactTask);
 
+		configureTaskBuildChangeLog(buildChangeLogTask, relengDir);
 		configureTaskUploadArchives(project, recordArtifactTask);
+
+		GradleUtil.withPlugin(
+			project, JavaPlugin.class,
+			new Action<JavaPlugin>() {
+
+				@Override
+				public void execute(JavaPlugin javaPlugin) {
+					configureTaskProcessResources(project, buildChangeLogTask);
+				}
+
+			});
 	}
 
 	protected Task addTaskPrintStaleArtifact(
@@ -201,6 +225,38 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		publishArtifactSet.all(action);
 
 		return writePropertiesTask;
+	}
+
+	protected void configureTaskBuildChangeLog(
+		BuildChangeLogTask buildChangeLogTask, File destinationDir) {
+
+		buildChangeLogTask.setChangeLogFile(
+			new File(destinationDir, "liferay-releng.changelog"));
+	}
+
+	protected void configureTaskProcessResources(
+		Project project, final BuildChangeLogTask buildChangeLogTask) {
+
+		Copy copy = (Copy)GradleUtil.getTask(
+			project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+
+		copy.from(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return buildChangeLogTask.getChangeLogFile();
+				}
+
+			},
+			new Closure<Void>(null) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.into("META-INF");
+				}
+
+			});
 	}
 
 	protected void configureTaskUploadArchives(

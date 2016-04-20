@@ -39,16 +39,28 @@ public class LiferayPlugin implements Plugin<Project> {
 		Class<? extends Plugin<Project>> clazz;
 
 		if (isOSGiPlugin(project)) {
-			clazz = LiferayOSGiPlugin.class;
+			clazz = getOSGiPluginClass();
 		}
 		else if (isThemePlugin(project)) {
-			clazz = LiferayThemePlugin.class;
+			clazz = getThemePluginClass();
 		}
 		else {
-			clazz = LiferayBasePlugin.class;
+			clazz = getBasePluginClass();
 		}
 
 		GradleUtil.applyPlugin(project, clazz);
+	}
+
+	protected Class<? extends Plugin<Project>> getBasePluginClass() {
+		return LiferayBasePlugin.class;
+	}
+
+	protected Class<? extends Plugin<Project>> getOSGiPluginClass() {
+		return LiferayOSGiPlugin.class;
+	}
+
+	protected Class<? extends Plugin<Project>> getThemePluginClass() {
+		return LiferayThemePlugin.class;
 	}
 
 	protected boolean isOSGiPlugin(Project project) {

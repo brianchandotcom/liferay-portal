@@ -22,12 +22,23 @@ import org.gradle.api.Project;
 /**
  * @author Andrea Di Giorgi
  */
-public class LiferayDefaultsPlugin implements Plugin<Project> {
+public class LiferayDefaultsPlugin extends LiferayPlugin {
 
 	@Override
 	public void apply(Project project) {
-		GradleUtil.applyPlugin(project, LiferayOSGiDefaultsPlugin.class);
-		GradleUtil.applyPlugin(project, LiferayThemeDefaultsPlugin.class);
+		super.apply(project);
+
+		GradleUtil.applyPlugin(project, LiferayRelengPlugin.class);
+	}
+
+	@Override
+	protected Class<? extends Plugin<Project>> getOSGiPluginClass() {
+		return LiferayOSGiDefaultsPlugin.class;
+	}
+
+	@Override
+	protected Class<? extends Plugin<Project>> getThemePluginClass() {
+		return LiferayThemeDefaultsPlugin.class;
 	}
 
 }

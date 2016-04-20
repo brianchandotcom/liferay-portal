@@ -73,6 +73,7 @@ import org.gradle.StartParameter;
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.JavaVersion;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
@@ -144,8 +145,7 @@ import org.gradle.process.ExecSpec;
 /**
  * @author Andrea Di Giorgi
  */
-public class LiferayOSGiDefaultsPlugin
-	extends BaseDefaultsPlugin<LiferayOSGiPlugin> {
+public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	public static final String BASELINE_CONFIGURATION_NAME = "baseline";
 
@@ -173,6 +173,158 @@ public class LiferayOSGiDefaultsPlugin
 
 	public static final String UPDATE_FILE_VERSIONS_TASK_NAME =
 		"updateFileVersions";
+
+	@Override
+	public void apply(final Project project) {
+		GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
+
+		Gradle gradle = project.getGradle();
+
+		StartParameter startParameter = gradle.getStartParameter();
+
+		List<String> taskNames = startParameter.getTaskNames();
+
+		final File portalRootDir = GradleUtil.getRootDir(
+			project.getRootProject(), "portal-impl");
+		final boolean publishing = isPublishing(project);
+		boolean testProject = isTestProject(project);
+
+		applyPlugins(project);
+
+		// applyConfigScripts configures the "install" and "uploadArchives"
+		// tasks, and this causes the conf2ScopeMappings.mappings convention
+		// property to be cloned in a second map. Because we want to change
+		// the default mappings, we must call configureMavenConf2ScopeMappings
+		// before applyConfigScripts.
+
+		configureMavenConf2ScopeMappings(project);
+
+		applyConfigScripts(project);
+
+		if (testProject || hasTests(project)) {
+			GradleUtil.applyPlugin(project, WhipDefaultsPlugin.class);
+			GradleUtil.applyPlugin(project, WhipPlugin.class);
+
+			Configuration portalConfiguration = GradleUtil.getConfiguration(
+				project, LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
+			Configuration portalTestConfiguration = addConfigurationPortalTest(
+				project);
+
+			addDependenciesPortalTest(project);
+			addDependenciesTestCompile(project);
+			configureEclipse(project, portalTestConfiguration);
+			configureIdea(project, portalTestConfiguration);
+			configureSourceSetTest(
+				project, portalConfiguration, portalTestConfiguration);
+			configureSourceSetTestIntegration(
+				project, portalConfiguration, portalTestConfiguration);
+		}
+
+		Configuration baselineConfiguration = null;
+
+		if (hasBaseline(project)) {
+			baselineConfiguration = addConfigurationBaseline(project);
+		}
+
+		addTaskBaseline(project, baselineConfiguration);
+
+		InstallCacheTask installCacheTask = addTaskInstallCache(project);
+
+		addTaskCommitCache(project, installCacheTask);
+
+		addTaskCopyLibs(project);
+
+		final Jar jarJavadocTask = addTaskJarJavadoc(project);
+		final Jar jarSourcesTask = addTaskJarSources(project, testProject);
+		final Jar jarTLDDocTask = addTaskJarTLDDoc(project);
+
+		addTaskUpdateBundleVersion(project);
+
+		final ReplaceRegexTask updateFileVersionsTask =
+			addTaskUpdateFileVersions(project);
+
+		configureBasePlugin(project, portalRootDir);
+		configureBundleDefaultInstructions(project, publishing);
+		configureConfigurations(project);
+		configureDeployDir(project);
+		configureJavaPlugin(project);
+		configureProject(project);
+		configureRepositories(project);
+		configureSourceSetMain(project);
+		configureTaskJar(project, testProject);
+		configureTaskJavadoc(project);
+		configureTaskTest(project);
+		configureTaskTestIntegration(project);
+		configureTasksBaseline(project);
+		configureTasksFindBugs(project);
+		configureTasksJavaCompile(project);
+		configureTasksPublishNodeModule(project);
+
+		GradleUtil.withPlugin(
+			project, ServiceBuilderPlugin.class,
+			new Action<ServiceBuilderPlugin>() {
+
+				@Override
+				public void execute(ServiceBuilderPlugin serviceBuilderPlugin) {
+					configureLocalPortalTool(
+						project, portalRootDir,
+						ServiceBuilderPlugin.CONFIGURATION_NAME,
+						ServiceBuilderDefaultsPlugin.PORTAL_TOOL_NAME,
+						"portal-tools-service-builder");
+				}
+
+			});
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					checkVersion(project);
+
+					configureArtifacts(
+						project, jarJavadocTask, jarSourcesTask, jarTLDDocTask);
+					configureTaskJarSources(jarSourcesTask);
+					configureTaskUpdateFileVersions(
+						updateFileVersionsTask, portalRootDir);
+
+					GradleUtil.setProjectSnapshotVersion(project);
+
+					// setProjectSnapshotVersion must be called before
+					// configureTaskUploadArchives, because the latter one needs
+					// to know if we are publishing a snapshot or not.
+
+					configureTaskUploadArchives(
+						project, updateFileVersionsTask);
+
+					configureProjectBndProperties(project);
+				}
+
+			});
+
+		if (taskNames.contains(EclipsePlugin.getECLIPSE_TASK_NAME()) ||
+			taskNames.contains("idea")) {
+
+			forceProjectDependenciesEvaluation(project);
+		}
+
+		TaskExecutionGraph taskExecutionGraph = gradle.getTaskGraph();
+
+		taskExecutionGraph.whenReady(
+			new Closure<Void>(null) {
+
+				@SuppressWarnings("unused")
+				public void doCall(TaskExecutionGraph taskExecutionGraph) {
+					Task jarTask = GradleUtil.getTask(
+						project, JavaPlugin.JAR_TASK_NAME);
+
+					if (taskExecutionGraph.hasTask(jarTask)) {
+						configureBundleInstructions(project);
+					}
+				}
+
+			});
+	}
 
 	protected static boolean isTestProject(Project project) {
 		String projectName = project.getName();
@@ -1156,158 +1308,6 @@ public class LiferayOSGiDefaultsPlugin
 		configuration.setTransitive(transitive);
 	}
 
-	@Override
-	protected void configureDefaults(
-		final Project project, LiferayOSGiPlugin liferayOSGiPlugin) {
-
-		Gradle gradle = project.getGradle();
-
-		StartParameter startParameter = gradle.getStartParameter();
-
-		List<String> taskNames = startParameter.getTaskNames();
-
-		final File portalRootDir = GradleUtil.getRootDir(
-			project.getRootProject(), "portal-impl");
-		final boolean publishing = isPublishing(project);
-		boolean testProject = isTestProject(project);
-
-		applyPlugins(project);
-
-		// applyConfigScripts configures the "install" and "uploadArchives"
-		// tasks, and this causes the conf2ScopeMappings.mappings convention
-		// property to be cloned in a second map. Because we want to change
-		// the default mappings, we must call configureMavenConf2ScopeMappings
-		// before applyConfigScripts.
-
-		configureMavenConf2ScopeMappings(project);
-
-		applyConfigScripts(project);
-
-		if (testProject || hasTests(project)) {
-			GradleUtil.applyPlugin(project, WhipDefaultsPlugin.class);
-			GradleUtil.applyPlugin(project, WhipPlugin.class);
-
-			Configuration portalConfiguration = GradleUtil.getConfiguration(
-				project, LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
-			Configuration portalTestConfiguration = addConfigurationPortalTest(
-				project);
-
-			addDependenciesPortalTest(project);
-			addDependenciesTestCompile(project);
-			configureEclipse(project, portalTestConfiguration);
-			configureIdea(project, portalTestConfiguration);
-			configureSourceSetTest(
-				project, portalConfiguration, portalTestConfiguration);
-			configureSourceSetTestIntegration(
-				project, portalConfiguration, portalTestConfiguration);
-		}
-
-		Configuration baselineConfiguration = null;
-
-		if (hasBaseline(project)) {
-			baselineConfiguration = addConfigurationBaseline(project);
-		}
-
-		addTaskBaseline(project, baselineConfiguration);
-
-		InstallCacheTask installCacheTask = addTaskInstallCache(project);
-
-		addTaskCommitCache(project, installCacheTask);
-
-		addTaskCopyLibs(project);
-
-		final Jar jarJavadocTask = addTaskJarJavadoc(project);
-		final Jar jarSourcesTask = addTaskJarSources(project, testProject);
-		final Jar jarTLDDocTask = addTaskJarTLDDoc(project);
-
-		addTaskUpdateBundleVersion(project);
-
-		final ReplaceRegexTask updateFileVersionsTask =
-			addTaskUpdateFileVersions(project);
-
-		configureBasePlugin(project, portalRootDir);
-		configureBundleDefaultInstructions(project, publishing);
-		configureConfigurations(project);
-		configureDeployDir(project);
-		configureJavaPlugin(project);
-		configureProject(project);
-		configureRepositories(project);
-		configureSourceSetMain(project);
-		configureTaskJar(project, testProject);
-		configureTaskJavadoc(project);
-		configureTaskTest(project);
-		configureTaskTestIntegration(project);
-		configureTasksBaseline(project);
-		configureTasksFindBugs(project);
-		configureTasksJavaCompile(project);
-		configureTasksPublishNodeModule(project);
-
-		GradleUtil.withPlugin(
-			project, ServiceBuilderPlugin.class,
-			new Action<ServiceBuilderPlugin>() {
-
-				@Override
-				public void execute(ServiceBuilderPlugin serviceBuilderPlugin) {
-					configureLocalPortalTool(
-						project, portalRootDir,
-						ServiceBuilderPlugin.CONFIGURATION_NAME,
-						ServiceBuilderDefaultsPlugin.PORTAL_TOOL_NAME,
-						"portal-tools-service-builder");
-				}
-
-			});
-
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					checkVersion(project);
-
-					configureArtifacts(
-						project, jarJavadocTask, jarSourcesTask, jarTLDDocTask);
-					configureTaskJarSources(jarSourcesTask);
-					configureTaskUpdateFileVersions(
-						updateFileVersionsTask, portalRootDir);
-
-					GradleUtil.setProjectSnapshotVersion(project);
-
-					// setProjectSnapshotVersion must be called before
-					// configureTaskUploadArchives, because the latter one needs
-					// to know if we are publishing a snapshot or not.
-
-					configureTaskUploadArchives(
-						project, updateFileVersionsTask);
-
-					configureProjectBndProperties(project);
-				}
-
-			});
-
-		if (taskNames.contains(EclipsePlugin.getECLIPSE_TASK_NAME()) ||
-			taskNames.contains("idea")) {
-
-			forceProjectDependenciesEvaluation(project);
-		}
-
-		TaskExecutionGraph taskExecutionGraph = gradle.getTaskGraph();
-
-		taskExecutionGraph.whenReady(
-			new Closure<Void>(null) {
-
-				@SuppressWarnings("unused")
-				public void doCall(TaskExecutionGraph taskExecutionGraph) {
-					Task jarTask = GradleUtil.getTask(
-						project, JavaPlugin.JAR_TASK_NAME);
-
-					if (taskExecutionGraph.hasTask(jarTask)) {
-						configureBundleInstructions(project);
-					}
-				}
-
-			});
-	}
-
 	protected void configureDeployDir(final Project project) {
 		final LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
@@ -2054,11 +2054,6 @@ public class LiferayOSGiDefaultsPlugin
 		sb.append("\", version: \"");
 
 		return Pattern.quote(sb.toString()) + "(\\d.+)\"";
-	}
-
-	@Override
-	protected Class<LiferayOSGiPlugin> getPluginClass() {
-		return LiferayOSGiPlugin.class;
 	}
 
 	protected String getProjectDependency(Project project) {

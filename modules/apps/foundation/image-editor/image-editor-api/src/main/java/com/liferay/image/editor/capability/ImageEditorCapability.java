@@ -12,19 +12,26 @@
  * details.
  */
 
-package com.liferay.image.editor.api;
+package com.liferay.image.editor.capability;
 
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletContext;
 
 /**
  * @author Bruno Basto
  */
-public abstract class BaseImageEditorFeature implements ImageEditorFeature {
+public interface ImageEditorCapability {
+
+	public String getLabel(Locale locale);
+
+	public String getName();
+
+	public ServletContext getServletContext();
 
 	public void prepareContext(
-		Map<String, Object> context, HttpServletRequest request) {
-	}
+		Map<String, Object> context, HttpServletRequest request);
 
 }

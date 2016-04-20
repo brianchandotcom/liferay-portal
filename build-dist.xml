@@ -51,11 +51,9 @@
 	</macrodef>
 
 	<macrodef name="update-jboss-java-opts">
-		<attribute name="app.server.jboss.dir" />
-
 		<sequential>
 			<replace
-				dir="@{app.server.jboss.dir}/bin"
+				dir="${app.server.jboss.dir}/bin"
 				includes="*.bat,*.conf"
 				token="-Xmx512m"
 				value="-Xmx1024m"
@@ -129,7 +127,7 @@
 
 		<antcall target="unzip-jboss" inheritAll="false" />
 
-		<update-jboss-java-opts app.server.jboss.dir="${app.server.parent.dir}/jboss-eap-${app.server.jboss.version}" />
+		<update-jboss-java-opts />
 
 		<delete dir="${project.dir}/portal-web/classes" />
 

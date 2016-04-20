@@ -266,8 +266,11 @@ public class ToolsUtil {
 				continue;
 			}
 
-			content = StringUtil.replaceFirst(
+			String newContent = StringUtil.replaceFirst(
 				content, packagePath + ".", StringPool.BLANK, matcher1.start());
+
+			return stripFullyQualifiedClassNames(
+				newContent, imports, packagePath);
 		}
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
@@ -306,9 +309,12 @@ public class ToolsUtil {
 					importPackageAndClassName.lastIndexOf(StringPool.PERIOD) +
 						1);
 
-				content = StringUtil.replaceFirst(
+				String newContent = StringUtil.replaceFirst(
 					content, importPackageAndClassName, importClassName,
 					matcher3.start());
+
+				return stripFullyQualifiedClassNames(
+					newContent, imports, packagePath);
 			}
 		}
 

@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
@@ -162,7 +163,7 @@ public class AdminPortlet extends BaseKBPortlet {
 
 		try {
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(KBWebKeys.THEME_DISPLAY);
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			UploadPortletRequest uploadPortletRequest =
 				PortalUtil.getUploadPortletRequest(actionRequest);
@@ -385,7 +386,7 @@ public class AdminPortlet extends BaseKBPortlet {
 
 		try {
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(KBWebKeys.THEME_DISPLAY);
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				actionRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,

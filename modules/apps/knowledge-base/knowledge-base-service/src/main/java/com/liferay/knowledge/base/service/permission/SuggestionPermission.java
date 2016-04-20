@@ -35,8 +35,8 @@ public class SuggestionPermission {
 
 		if (!actionId.equals(KBActionKeys.VIEW_SUGGESTIONS)) {
 			throw new IllegalArgumentException(
-				"Suggestions only support the " + KBActionKeys.VIEW_SUGGESTIONS +
-					" permission");
+				"Suggestions only support the " +
+					KBActionKeys.VIEW_SUGGESTIONS + " permission");
 		}
 
 		if (AdminPermission.contains(

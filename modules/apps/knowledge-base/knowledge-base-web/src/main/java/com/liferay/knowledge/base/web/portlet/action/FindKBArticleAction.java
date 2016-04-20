@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
@@ -181,7 +182,7 @@ public class FindKBArticleAction extends BaseStrutsAction {
 
 		portletURL.setPortletMode(PortletMode.VIEW);
 
-		if (Validator.equals(
+		if (Objects.equals(
 				portletId,
 				KBPortletKeys.KNOWLEDGE_BASE_ARTICLE_DEFAULT_INSTANCE)) {
 
@@ -233,7 +234,9 @@ public class FindKBArticleAction extends BaseStrutsAction {
 				String rootPortletId = PortletConstants.getRootPortletId(
 					portlet.getPortletId());
 
-				if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+				if (rootPortletId.equals(
+						KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+
 					PortletPreferences portletPreferences =
 						PortletPreferencesFactoryUtil.getPortletSetup(
 							layout, portlet.getPortletId(), StringPool.BLANK);
@@ -273,7 +276,9 @@ public class FindKBArticleAction extends BaseStrutsAction {
 					}
 				}
 
-				if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
+				if (rootPortletId.equals(
+						KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
+
 					PortletPreferences portletPreferences =
 						PortletPreferencesFactoryUtil.getPortletSetup(
 							layout, portlet.getPortletId(), StringPool.BLANK);
@@ -304,7 +309,9 @@ public class FindKBArticleAction extends BaseStrutsAction {
 					}
 				}
 
-				if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
+				if (rootPortletId.equals(
+						KBPortletKeys.KNOWLEDGE_BASE_ARTICLE)) {
+
 					PortletPreferences portletPreferences =
 						PortletPreferencesFactoryUtil.getPortletSetup(
 							layout, portlet.getPortletId(), StringPool.BLANK);

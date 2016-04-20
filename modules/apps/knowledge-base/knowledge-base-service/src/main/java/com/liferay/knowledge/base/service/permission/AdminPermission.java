@@ -42,8 +42,8 @@ public class AdminPermission extends BaseResourcePermissionChecker {
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
 		return contains(
-			permissionChecker, RESOURCE_NAME, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-			groupId, actionId);
+			permissionChecker, RESOURCE_NAME,
+			KBPortletKeys.KNOWLEDGE_BASE_ADMIN, groupId, actionId);
 	}
 
 	@Override

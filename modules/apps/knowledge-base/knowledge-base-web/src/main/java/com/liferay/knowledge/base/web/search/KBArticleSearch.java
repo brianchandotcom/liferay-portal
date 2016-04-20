@@ -25,7 +25,8 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -104,8 +105,8 @@ public class KBArticleSearch extends SearchContainer<KBArticle> {
 			String orderByType = ParamUtil.getString(
 				portletRequest, "orderByType", oldOrderByType);
 
-			if (!Validator.equals(orderByCol, oldOrderByCol) ||
-				!Validator.equals(orderByType, oldOrderByType)) {
+			if (!Objects.equals(orderByCol, oldOrderByCol) ||
+				!Objects.equals(orderByType, oldOrderByType)) {
 
 				preferences.setValue(
 					KBPortletKeys.KNOWLEDGE_BASE_ADMIN,

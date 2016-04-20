@@ -24,7 +24,8 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -84,16 +85,16 @@ public class KBTemplateSearch extends SearchContainer<KBTemplate> {
 				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "kb-templates-order-by-col",
 				"modified-date");
 			String oldOrderByType = preferences.getValue(
-				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "kb-templates-order-by-type",
-				"desc");
+				KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+				"kb-templates-order-by-type", "desc");
 
 			String orderByCol = ParamUtil.getString(
 				portletRequest, "orderByCol", oldOrderByCol);
 			String orderByType = ParamUtil.getString(
 				portletRequest, "orderByType", oldOrderByType);
 
-			if (!Validator.equals(orderByCol, oldOrderByCol) ||
-				!Validator.equals(orderByType, oldOrderByType)) {
+			if (!Objects.equals(orderByCol, oldOrderByCol) ||
+				!Objects.equals(orderByType, oldOrderByType)) {
 
 				preferences.setValue(
 					KBPortletKeys.KNOWLEDGE_BASE_ADMIN,

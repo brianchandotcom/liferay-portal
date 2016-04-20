@@ -15,7 +15,6 @@ gradle.beforeProject {
 
 	configure(project) {
 		apply plugin: "com.liferay.defaults.plugin"
-		apply plugin: "com.liferay.plugin"
 
 		pluginManager.withPlugin("com.liferay.osgi.plugin") {
 			apply plugin: "pmd"

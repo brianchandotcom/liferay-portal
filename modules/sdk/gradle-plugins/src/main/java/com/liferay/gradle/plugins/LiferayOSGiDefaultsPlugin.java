@@ -1123,7 +1123,7 @@ public class LiferayOSGiDefaultsPlugin
 	}
 
 	protected ReplaceRegexTask addTaskUpdateFileVersions(
-		final Project project, final File gitRepoDir) {
+		final Project project) {
 
 		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
 			project, UPDATE_FILE_VERSIONS_TASK_NAME, ReplaceRegexTask.class);
@@ -1158,15 +1158,6 @@ public class LiferayOSGiDefaultsPlugin
 					if (!fileName.equals("build.gradle")) {
 						return content;
 					}
-
-					/*if ((gitRepoDir != null) &&
-						FileUtil.isChild(file, gitRepoDir)) {
-
-						return content.replaceAll(
-							getModuleDependencyRegex(project),
-							Matcher.quoteReplacement(
-								getProjectDependency(project)));
-					}*/
 
 					return content.replaceAll(
 						Pattern.quote(getProjectDependency(project)),
@@ -1673,7 +1664,7 @@ public class LiferayOSGiDefaultsPlugin
 		}
 
 		final ReplaceRegexTask updateFileVersionsTask =
-			addTaskUpdateFileVersions(project, gitRepoDir);
+			addTaskUpdateFileVersions(project);
 
 		configureBasePlugin(project, portalRootDir);
 		configureBundleDefaultInstructions(project, publishing);

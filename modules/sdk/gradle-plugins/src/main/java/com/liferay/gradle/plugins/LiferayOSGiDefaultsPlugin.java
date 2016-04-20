@@ -198,6 +198,16 @@ public class LiferayOSGiDefaultsPlugin
 	public static final String UPDATE_FILE_VERSIONS_TASK_NAME =
 		"updateFileVersions";
 
+	protected static boolean isTestProject(Project project) {
+		String projectName = project.getName();
+
+		if (projectName.endsWith("-test")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected Configuration addConfigurationBaseline(final Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, BASELINE_CONFIGURATION_NAME);
@@ -2873,16 +2883,6 @@ public class LiferayOSGiDefaultsPlugin
 			if (!line.contains(_IGNORED_MESSAGE_PATTERN)) {
 				return true;
 			}
-		}
-
-		return false;
-	}
-
-	protected boolean isTestProject(Project project) {
-		String projectName = project.getName();
-
-		if (projectName.endsWith("-test")) {
-			return true;
 		}
 
 		return false;

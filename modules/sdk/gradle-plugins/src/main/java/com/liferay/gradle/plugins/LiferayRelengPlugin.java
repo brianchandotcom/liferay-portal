@@ -90,7 +90,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		final WritePropertiesTask recordArtifactTask = addTaskRecordArtifact(
 			project, relengDir);
 
-		addTaskPrintStaleArtifact(project, recordArtifactTask);
+		final Task printStaleArtifactTask = addTaskPrintStaleArtifact(
+			project, recordArtifactTask);
 
 		configureTaskBuildChangeLog(buildChangeLogTask, relengDir);
 		configureTaskUploadArchives(project, recordArtifactTask);
@@ -113,6 +114,10 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				@Override
 				public void execute(LiferayOSGiPlugin liferayOSGiPlugin) {
 					configureTaskDeploy(project, recordArtifactTask);
+
+					if (LiferayOSGiDefaultsPlugin.isTestProject(project)) {
+						printStaleArtifactTask.setEnabled(false);
+					}
 				}
 
 			});

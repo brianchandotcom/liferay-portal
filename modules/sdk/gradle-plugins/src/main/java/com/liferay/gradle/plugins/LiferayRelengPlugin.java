@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask;
 import com.liferay.gradle.plugins.change.log.builder.ChangeLogBuilderPlugin;
+import com.liferay.gradle.plugins.tasks.PrintArtifactPublishCommandsTask;
 import com.liferay.gradle.plugins.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
@@ -524,15 +525,15 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				continue;
 			}
 
-			if (!line.contains(_IGNORED_MESSAGE_PATTERN)) {
+			if (!line.contains(
+					PrintArtifactPublishCommandsTask.IGNORED_MESSAGE_PATTERN)) {
+
 				return true;
 			}
 		}
 
 		return false;
 	}
-
-	private static final String _IGNORED_MESSAGE_PATTERN = "artifact:ignore";
 
 	private static final Logger _logger = Logging.getLogger(
 		LiferayRelengPlugin.class);

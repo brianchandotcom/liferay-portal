@@ -1,18 +1,15 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-jboss-eap" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project name="portal-test-jboss" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<target name="run-jboss-eap">
+	<target name="run-jboss">
 		<antcall target="run-simple-server" />
 	</target>
 
-	<target name="run-selenium-jboss-eap">
+	<target name="run-selenium-jboss">
 		<app-server-properties-update>
 			app.server.type=jboss
-			app.server.jboss.version=${app.server.jboss.version}
-			app.server.jboss.dir=${app.server.parent.dir}/jboss-eap-${app.server.jboss.version}
-			app.server.jboss.zip.name=jboss-eap-${app.server.jboss.version}.zip
 		</app-server-properties-update>
 
 		<if>
@@ -20,7 +17,7 @@
 				<isset property="build.app.server" />
 			</not>
 			<then>
-				<ant antfile="build-dist.xml" target="build-dist-jboss-eap-${app.server.jboss.major.version}" />
+				<ant antfile="build-dist.xml" target="build-dist-jboss" />
 			</then>
 		</if>
 
@@ -30,7 +27,7 @@
 
 		<antcall target="prepare-virtual-host-name-properties" />
 
-		<antcall target="run-jboss-eap" inheritAll="false">
+		<antcall target="run-jboss" inheritAll="false">
 			<param name="test.class" value="${test.class}" />
 		</antcall>
 	</target>

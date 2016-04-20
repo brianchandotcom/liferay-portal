@@ -57,6 +57,7 @@ import org.gradle.api.plugins.MavenPlugin;
 import org.gradle.api.plugins.MavenRepositoryHandlerConvention;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.Upload;
 import org.gradle.api.tasks.bundling.AbstractArchiveTask;
 import org.gradle.process.ExecSpec;
@@ -86,7 +87,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			(BuildChangeLogTask)GradleUtil.getTask(
 				project, ChangeLogBuilderPlugin.BUILD_CHANGE_LOG_TASK_NAME);
 
-		WritePropertiesTask recordArtifactTask = addTaskRecordArtifact(
+		final WritePropertiesTask recordArtifactTask = addTaskRecordArtifact(
 			project, relengDir);
 
 		addTaskPrintStaleArtifact(project, recordArtifactTask);
@@ -101,6 +102,17 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				@Override
 				public void execute(JavaPlugin javaPlugin) {
 					configureTaskProcessResources(project, buildChangeLogTask);
+				}
+
+			});
+
+		GradleUtil.withPlugin(
+			project, LiferayOSGiPlugin.class,
+			new Action<LiferayOSGiPlugin>() {
+
+				@Override
+				public void execute(LiferayOSGiPlugin liferayOSGiPlugin) {
+					configureTaskDeploy(project, recordArtifactTask);
 				}
 
 			});
@@ -232,6 +244,75 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		buildChangeLogTask.setChangeLogFile(
 			new File(destinationDir, "liferay-releng.changelog"));
+	}
+
+	protected void configureTaskDeploy(
+		Copy copy, WritePropertiesTask recordArtifactTask) {
+
+		final Project project = copy.getProject();
+
+		Properties artifactProperties = getArtifactProperties(
+			recordArtifactTask);
+
+		if (isStale(project, artifactProperties)) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(
+					"Unable to download artifact, " + project + " is stale");
+			}
+
+			return;
+		}
+
+		final String artifactURL = artifactProperties.getProperty(
+			"artifact.url");
+
+		if (Validator.isNull(artifactURL)) {
+			if (_logger.isWarnEnabled()) {
+				_logger.warn(
+					"Unable to find artifact.url in " +
+						recordArtifactTask.getOutputFile());
+			}
+
+			return;
+		}
+
+		Task jarTask = GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+
+		boolean replaced = GradleUtil.replaceCopySpecSourcePath(
+			copy.getRootSpec(), jarTask,
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return FileUtil.get(project, artifactURL);
+				}
+
+			});
+
+		if (replaced && _logger.isLifecycleEnabled()) {
+			_logger.lifecycle("Downloading artifact from " + artifactURL);
+		}
+	}
+
+	protected void configureTaskDeploy(
+		Project project, final WritePropertiesTask recordArtifactTask) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			Copy.class,
+			new Action<Copy>() {
+
+				@Override
+				public void execute(Copy copy) {
+					String taskName = copy.getName();
+
+					if (taskName.equals(LiferayBasePlugin.DEPLOY_TASK_NAME)) {
+						configureTaskDeploy(copy, recordArtifactTask);
+					}
+				}
+
+			});
 	}
 
 	protected void configureTaskProcessResources(

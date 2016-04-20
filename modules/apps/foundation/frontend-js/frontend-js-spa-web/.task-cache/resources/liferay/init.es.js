@@ -37,8 +37,15 @@ define("frontend-js-spa-web@1.0.6/liferay/init.es", ['exports', './screen/Action
 	}, {
 		handler: _RenderURLScreen2.default,
 		path: function path(url) {
-			if (url.indexOf(themeDisplay.getPathMain()) === 0 || url.indexOf('/documents') === 0 || url.indexOf('/image') === 0) {
+			if (url.indexOf(themeDisplay.getPathMain()) === 0) {
+				return false;
+			}
 
+			var excluded = Liferay.SPA.excludedPaths.find(function (excludedPath) {
+				return url.indexOf(excludedPath) === 0;
+			});
+
+			if (excluded !== undefined) {
 				return false;
 			}
 

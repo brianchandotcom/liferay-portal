@@ -907,7 +907,6 @@
 		<antcall target="build-dist-tomcat" />
 		<antcall target="build-dist-wildlfy" />
 
-		<antcall target="zip-api" />
 		<antcall target="zip-glassfish" />
 		<antcall target="zip-jboss" />
 		<antcall target="zip-jetty" />
@@ -2832,18 +2831,6 @@ plugins.includes=</echo>
 				</actions>
 			</call>
 		</xmltask>
-	</target>
-
-	<target name="zip-api">
-		<delete file="dist/liferay-portal-doc-${lp.version}.zip" failonerror="false" />
-
-		<zip destfile="dist/liferay-portal-doc-${lp.version}.zip">
-			<zipfileset
-				dir="api"
-				includes="**/*.css,**/*.gif,**/*.html,**/*.jpeg,**/*.jpg,**/*.png,**/*.svg"
-				prefix="liferay-portal-doc-${lp.version}"
-			/>
-		</zip>
 	</target>
 
 	<target name="zip-db-upgrade">

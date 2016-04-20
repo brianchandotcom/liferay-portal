@@ -66,3 +66,17 @@ renderResponse.setTitle(ree.getOldName());
 		<aui:button cssClass="btn-cancel btn-lg" type="cancel" />
 	</aui:button-row>
 </aui:form>
+
+<aui:script use="aui-base">
+	var rename = A.one('#<portlet:namespace />rename');
+	var newName = A.one('#<portlet:namespace />newName');
+
+	rename.on('click', A.fn('focusFormField', Liferay.Util, newName));
+
+	newName.on(
+		'focus',
+		function(event) {
+			rename.attr('checked', true);
+		}
+	);
+</aui:script>

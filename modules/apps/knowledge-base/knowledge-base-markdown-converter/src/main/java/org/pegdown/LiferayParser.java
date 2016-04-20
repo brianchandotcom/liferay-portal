@@ -39,7 +39,7 @@ public class LiferayParser extends Parser {
 
 	@Override
 	public Rule Block() {
-		ArrayBuilder<Rule> arrayBuilder = new ArrayBuilder<Rule>();
+		ArrayBuilder<Rule> arrayBuilder = new ArrayBuilder<>();
 
 		arrayBuilder.add(BlockQuote(), Verbatim());
 

@@ -88,8 +88,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		final WritePropertiesTask recordArtifactTask = addTaskRecordArtifact(
 			project, relengDir);
 
-		final Task printStaleArtifactTask = addTaskPrintStaleArtifact(
-			project, recordArtifactTask);
+		addTaskPrintStaleArtifact(project, recordArtifactTask);
 
 		configureTaskBuildChangeLog(buildChangeLogTask, relengDir);
 		configureTaskUploadArchives(project, recordArtifactTask);
@@ -116,10 +115,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 						configureTaskDeploy(project, recordArtifactTask);
 					}
+				}
 
-					if (LiferayOSGiDefaultsPlugin.isTestProject(project)) {
-						printStaleArtifactTask.setEnabled(false);
-					}
 				}
 
 			});
@@ -128,7 +125,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	protected Task addTaskPrintStaleArtifact(
 		Project project, final WritePropertiesTask recordArtifactTask) {
 
-		Task task = project.task(PRINT_STALE_ARTIFACT_TASK_NAME);
+		final Task task = project.task(PRINT_STALE_ARTIFACT_TASK_NAME);
 
 		task.doLast(
 			new Action<Task>() {
@@ -162,6 +159,19 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			"Prints the project directory if this project has been changed " +
 				"since the last publish.");
 		task.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
+
+		GradleUtil.withPlugin(
+			project, LiferayOSGiDefaultsPlugin.class,
+			new Action<LiferayOSGiDefaultsPlugin>() {
+
+				@Override
+				public void execute(
+					LiferayOSGiDefaultsPlugin liferayOSGiDefaultsPlugin) {
+
+					configureTaskPrintStaleArtifactForOSGi(task);
+				}
+
+			});
 
 		return task;
 	}
@@ -318,6 +328,12 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	protected void configureTaskPrintStaleArtifactForOSGi(Task task) {
+		if (LiferayOSGiDefaultsPlugin.isTestProject(task.getProject())) {
+			task.setEnabled(false);
+		}
 	}
 
 	protected void configureTaskProcessResources(

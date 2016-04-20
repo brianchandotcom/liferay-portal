@@ -161,6 +161,13 @@
 		<execute function="AssertTextEquals" locator1="FormFields#FIELD_NAME" value1="Field Name:${fieldName}" />
 	</command>
 
+	<command name="viewMultilineTextValue">
+		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_fieldValue" value="${fieldValue}" />
+
+		<execute function="AssertTextEquals" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="${fieldValue}" />
+	</command>
+
 	<command name="viewOptionsLabel">
 		<var name="key_fieldLabel" value="${fieldLabel}" />
 		<var name="key_fieldName" value="${fieldName}" />

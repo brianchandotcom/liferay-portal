@@ -139,6 +139,20 @@
 		<execute function="AssertTextEquals" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" value1="${fieldValue}" />
 	</command>
 
+	<command name="viewMultilineTextEntry">
+		<execute macro="FormsAdmin#viewCannotEditFormEntries" />
+
+		<execute macro="FormFields#viewTextLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="FormFields#viewMultilineTextValue">
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldValue" value="${fieldValue}" />
+		</execute>
+	</command>
+
 	<command name="viewNoFormEntries">
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No entries were found." />
 	</command>

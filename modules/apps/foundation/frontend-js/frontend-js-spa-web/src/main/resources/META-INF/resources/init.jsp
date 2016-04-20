@@ -24,7 +24,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <aui:script position="inline" require="frontend-js-spa-web/liferay/init.es">
 	var app = Liferay.SPA.app;
 
-	app.setBlacklist(<%= SPAUtil.getPortletsBlacklist(themeDisplay) %>);
+	app.setPortletsBlacklist(<%= SPAUtil.getPortletsBlacklist(themeDisplay) %>);
 	app.setValidStatusCodes(<%= SPAUtil.getValidStatusCodes() %>);
 </aui:script>
 

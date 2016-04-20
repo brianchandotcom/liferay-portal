@@ -25,9 +25,11 @@ import java.io.IOException;
 
 import java.lang.reflect.Method;
 
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
+import org.gradle.StartParameter;
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
@@ -40,6 +42,7 @@ import org.gradle.api.artifacts.PublishArtifactSet;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.maven.MavenDeployer;
 import org.gradle.api.internal.artifacts.publish.ArchivePublishArtifact;
+import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.BasePlugin;
@@ -75,6 +78,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			project, relengDir);
 
 		addTaskPrintStaleArtifact(project, recordArtifactTask);
+
+		configureTaskUploadArchives(project, recordArtifactTask);
 	}
 
 	protected Task addTaskPrintStaleArtifact(
@@ -123,6 +128,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		final WritePropertiesTask writePropertiesTask = GradleUtil.addTask(
 			project, RECORD_ARTIFACT_TASK_NAME, WritePropertiesTask.class);
+
+		writePropertiesTask.onlyIf(_releaseProjectSpec);
 
 		writePropertiesTask.property(
 			"artifact.git.id",
@@ -194,6 +201,15 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		publishArtifactSet.all(action);
 
 		return writePropertiesTask;
+	}
+
+	protected void configureTaskUploadArchives(
+		Project project, Object... finalizingTasks) {
+
+		Task uploadArchivesTask = GradleUtil.getTask(
+			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+
+		uploadArchivesTask.finalizedBy(finalizingTasks);
 	}
 
 	protected Properties getArtifactProperties(
@@ -360,5 +376,32 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 	private static final Logger _logger = Logging.getLogger(
 		LiferayRelengPlugin.class);
+
+	private static final Spec<Task> _releaseProjectSpec = new Spec<Task>() {
+
+		@Override
+		public boolean isSatisfiedBy(Task task) {
+			Project project = task.getProject();
+
+			Gradle gradle = project.getGradle();
+
+			StartParameter startParameter = gradle.getStartParameter();
+
+			List<String> taskNames = startParameter.getTaskNames();
+
+			if (taskNames.contains(task.getName())) {
+				return true;
+			}
+
+			String version = String.valueOf(project.getVersion());
+
+			if (!version.endsWith(GradleUtil.SNAPSHOT_VERSION_SUFFIX)) {
+				return true;
+			}
+
+			return false;
+		}
+
+	};
 
 }

@@ -682,15 +682,17 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	}
 
 	protected File getRelengDir(Project project) {
-		File relengDir = new File(project.getRootDir(), ".releng");
+		File rootDir = GradleUtil.getRootDir(
+			project.getRootProject(), ".releng");
 
-		if (!relengDir.exists()) {
+		if (rootDir == null) {
 			return null;
 		}
 
+		File relengDir = new File(rootDir, ".releng");
+
 		return new File(
-			relengDir,
-			FileUtil.relativize(project.getProjectDir(), project.getRootDir()));
+			relengDir, FileUtil.relativize(project.getProjectDir(), rootDir));
 	}
 
 	protected boolean isStale(

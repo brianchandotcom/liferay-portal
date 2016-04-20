@@ -75,8 +75,6 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 	public static File getRootDir(Project project, String markerFileName) {
 		File dir = project.getProjectDir();
 
-		dir = dir.getParentFile();
-
 		while (true) {
 			File markerFile = new File(dir, markerFileName);
 

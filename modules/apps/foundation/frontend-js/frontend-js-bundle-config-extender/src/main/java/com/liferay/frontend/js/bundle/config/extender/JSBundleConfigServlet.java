@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"osgi.http.whiteboard.servlet.name=JS Bundle Config Servlet",
+		"osgi.http.whiteboard.servlet.name=com.liferay.frontend.js.bundle.config.extender.JSBundleConfigServlet",
 		"osgi.http.whiteboard.servlet.pattern=/js_bundle_config",
 		"service.ranking:Integer=" + (Integer.MAX_VALUE - 1000)
 	},

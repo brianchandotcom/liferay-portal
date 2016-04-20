@@ -225,7 +225,7 @@ public class HttpTunnelExtender extends AbstractExtender {
 				"liferay.http.tunnel." + _bundle.getSymbolicName());
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
-				"HttpTunnelServlet");
+				TunnelServlet.class.getName());
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
 				"/api/liferay/do");

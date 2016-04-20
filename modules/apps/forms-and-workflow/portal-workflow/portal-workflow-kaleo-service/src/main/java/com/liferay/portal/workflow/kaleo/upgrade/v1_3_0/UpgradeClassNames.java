@@ -46,6 +46,7 @@ public class UpgradeClassNames extends UpgradeProcess {
 		updateClassName("KaleoInstance", "className");
 		updateClassName("KaleoInstanceToken", "className");
 		updateClassName("KaleoLog", "currentAssigneeClassName");
+		updateClassName("KaleoLog", "previousAssigneeClassName");
 		updateClassName("KaleoNotificationRecipient", "recipientClassName");
 		updateClassName("KaleoTaskAssignment", "assigneeClassName");
 		updateClassName("KaleoTaskAssignmentInstance", "assigneeClassName");
@@ -54,9 +55,9 @@ public class UpgradeClassNames extends UpgradeProcess {
 		updateWorkflowContextEntryClassName("KaleoInstance", "kaleoInstanceId");
 		updateWorkflowContextEntryClassName("KaleoLog", "kaleoLogId");
 		updateWorkflowContextEntryClassName(
-			"KaleoTaskAssignmentInstance", "kaleoTaskAssignmentInstanceId");
-		updateWorkflowContextEntryClassName(
 			"KaleoTaskInstanceToken", "kaleoTaskInstanceTokenId");
+		updateWorkflowContextEntryClassName(
+			"KaleoTimerInstanceToken", "kaleoTimerInstanceTokenId");
 	}
 
 	protected String renamePortalJavaClassNames(String workflowContextJSON) {
@@ -69,6 +70,7 @@ public class UpgradeClassNames extends UpgradeProcess {
 			String oldPortalJavaClassName = matcher.group(1);
 
 			if (oldPortalJavaClassName.contains(".impl") ||
+				oldPortalJavaClassName.contains(".kernel") ||
 				oldSubs.contains(oldPortalJavaClassName)) {
 
 				continue;

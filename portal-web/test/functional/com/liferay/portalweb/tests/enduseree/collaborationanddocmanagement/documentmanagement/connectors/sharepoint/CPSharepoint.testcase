@@ -192,11 +192,8 @@
 			<var name="dmDocumentTitle" value="Document_3.txt" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_3.txt" />
-		</execute>
-
 		<execute macro="DMDocument#checkoutCP">
+			<var name="dmDocumentTitle" value="Document_3.txt" />
 			<var name="dmRepositoryName" value="true" />
 		</execute>
 
@@ -251,11 +248,8 @@
 			<var name="dmDocumentTitle" value="Document_4.txt" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_4.txt" />
-		</execute>
-
 		<execute macro="DMDocument#checkoutCP">
+			<var name="dmDocumentTitle" value="Document_4.txt" />
 			<var name="dmRepositoryName" value="true" />
 		</execute>
 
@@ -563,11 +557,8 @@
 			<var name="dmDocumentTitle" value="Document_1.txt" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_1.txt" />
-		</execute>
-
 		<execute macro="DMDocument#checkoutCP">
+			<var name="dmDocumentTitle" value="Document_1.txt" />
 			<var name="dmRepositoryName" value="true" />
 		</execute>
 
@@ -724,11 +715,8 @@
 			<var name="dmDocumentTitle" value="Document_1.xls" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_1.xls" />
-		</execute>
-
 		<execute macro="DMDocument#checkoutCP">
+			<var name="dmDocumentTitle" value="Document_1.xls" />
 			<var name="dmRepositoryName" value="true" />
 		</execute>
 

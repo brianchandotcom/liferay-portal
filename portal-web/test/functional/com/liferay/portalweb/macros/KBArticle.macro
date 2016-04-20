@@ -839,9 +839,9 @@
 	<command name="selectScopePG">
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
 
-		<execute function="AssertClick" locator1="KnowledgeBaseConfiguration#SECTION_SCOPE" value1="Scope" />
+		<execute function="AssertClick" locator1="NavBar#SCOPE" value1="Scope" />
 
-		<execute function="Select" locator1="KnowledgeBaseConfiguration#SCOPE_SELECTION" value1="${newKBPageScope}" />
+		<execute function="Select" locator1="Select#SCOPE" value1="${newKBPageScope}" />
 
 		<execute macro="PortletEntry#save" />
 
@@ -878,7 +878,9 @@
 
 		<execute function="Click" locator1="KnowledgeBase#SCOPE_DROPDOWN" />
 
-		<execute function="AssertClick" locator1="KnowledgeBase#SCOPE" value1="${kbPageScope}" />
+		<var name="key_scopeSelection" value="${kbPageScope}" />
+
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="MenuItem#SCOPE_SELECTION" value1="${kbPageScope}" />
 	</command>
 
 	<command name="subscribeCP">

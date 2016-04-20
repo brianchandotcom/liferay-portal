@@ -673,7 +673,12 @@
 	</command>
 
 	<command name="checkoutCP">
-		<execute function="AssertClick" locator1="DocumentsAndMediaDocument#TOOLBAR_CHECKOUT_BUTTON" value1="Checkout" />
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_ACTIONS" />
+
+		<execute function="AssertClick" locator1="MenuItem#CHECKOUT" value1="Checkout" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 
 		<if>

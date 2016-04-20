@@ -2634,9 +2634,7 @@
 			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Welcome" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Page#gotoChildPagePG">
 			<var name="childPageName" value="Knowledge Base Display Page" />

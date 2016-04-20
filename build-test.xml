@@ -8021,6 +8021,76 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 		<record action="stop" name="${liferay.home}/db_upgrade_log" />
 
+		<loadfile
+			property="db.upgrade.log"
+			srcfile="${liferay.home}/db_upgrade_log"
+		/>
+
+		<beanshell>
+			<![CDATA[
+				import java.util.regex.Matcher;
+				import java.util.regex.Pattern;
+
+				public boolean matchesAnyPattern(Pattern[] patterns, String string) {
+					for (Pattern pattern : patterns) {
+						Matcher matcher = pattern.matcher(string);
+
+						if (matcher.find()) {
+							return true;
+						}
+					}
+					return false;
+				}
+
+				Pattern[] excludePatterns = new Pattern[] {
+					Pattern.compile(".*Caused by:.*"),
+					Pattern.compile(".*Plugin security management is not enabled.*"),
+					Pattern.compile(".*Portal property.*is obsolete.*"),
+					Pattern.compile(".*Portal .*was modularized.*"),
+					Pattern.compile(".*Table.*does not exist.*")
+				};
+
+				Pattern[] includePatterns = new Pattern[] {
+					Pattern.compile(".*ERROR.*[\n$]?"),
+					Pattern.compile(".*UpgradeException:.[\n$]?")
+				};
+
+				String log = project.getProperty("db.upgrade.log");
+
+				String[] lines = log.split("\n");
+
+				int count = 0;
+				StringBuffer sb = new StringBuffer();
+
+				for (String line : lines) {
+					if (matchesAnyPattern(includePatterns, line) && (!matchesAnyPattern(excludePatterns, line))) {
+						count++;
+
+						sb.append("    ");
+						sb.append(line);
+						sb.append("\n\n");
+					}
+				}
+
+				String errorString = sb.toString();
+
+				if (count > 0) {
+					sb = new StringBuffer();
+
+					sb.append(count);
+					sb.append(" errors found during DB Upgrade.\n");
+					sb.append(errorString);
+					sb.append("DB Upgrade functional test failure.\n -> Errors occurred during upgrade.");
+
+					System.out.println(sb.toString());
+
+					project.setProperty("db.upgrade.failed", "true");
+				}
+			]]>
+		</beanshell>
+
+		<fail message="Database upgrade has failed." if="db.upgrade.failed" />
+
 		<delete file="${liferay.home}/build-db-upgrade.xml" />
 		<delete file="${liferay.home}/db_upgrade_log" />
 		<delete file="${liferay.home}/portal-ext.properties" />

@@ -53,7 +53,7 @@ public class JavaImportsFormatter extends BaseImportsFormatter {
 
 	@Override
 	protected String doFormat(
-			String content, Pattern importPattern, String packageDir,
+			String content, Pattern importPattern, String packagePath,
 			String className)
 		throws IOException {
 
@@ -64,7 +64,7 @@ public class JavaImportsFormatter extends BaseImportsFormatter {
 		}
 
 		String newImports = stripUnusedImports(
-			imports, content, packageDir, className, "\\*");
+			imports, content, packagePath, className, "\\*");
 
 		newImports = sortAndGroupImports(newImports);
 
@@ -83,8 +83,8 @@ public class JavaImportsFormatter extends BaseImportsFormatter {
 	}
 
 	protected String stripUnusedImports(
-			String imports, String content, String packageDir, String className,
-			String classNameExceptionRegex)
+			String imports, String content, String packagePath,
+			String className, String classNameExceptionRegex)
 		throws IOException {
 
 		Set<String> classes = ClassUtil.getClasses(
@@ -108,7 +108,7 @@ public class JavaImportsFormatter extends BaseImportsFormatter {
 
 			String importPackage = line.substring(x + 7, y);
 
-			if (importPackage.equals(packageDir) ||
+			if (importPackage.equals(packagePath) ||
 				importPackage.equals("java.lang")) {
 
 				continue;

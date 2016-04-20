@@ -40,10 +40,10 @@ public abstract class BaseImportsFormatter implements ImportsFormatter {
 	}
 
 	@Override
-	public String format(String content, String packageDir, String className)
+	public String format(String content, String packagePath, String className)
 		throws IOException {
 
-		return doFormat(content, null, packageDir, className);
+		return doFormat(content, null, packagePath, className);
 	}
 
 	protected abstract ImportPackage createImportPackage(String line);
@@ -67,7 +67,7 @@ public abstract class BaseImportsFormatter implements ImportsFormatter {
 	}
 
 	protected abstract String doFormat(
-			String content, Pattern importPattern, String packageDir,
+			String content, Pattern importPattern, String packagePath,
 			String className)
 		throws IOException;
 

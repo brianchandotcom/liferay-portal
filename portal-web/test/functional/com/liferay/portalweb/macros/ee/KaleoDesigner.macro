@@ -58,13 +58,13 @@
 	</command>
 
 	<command name="addNewDefinitionViaKDCP">
-		<execute function="AssertClick" locator1="KaleoDesigner#ADD_NEW_DEFINITION_BUTTON" value1="Add New Definition" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${workflowDefinitionTitle}" />
 	</command>
 
 	<command name="addNewDefinitionViaWorkflowCP">
-		<execute function="AssertClick" locator1="WorkflowDefinition#TOOLBAR_ADD_NEW_DEFINITION" value1="Add New Definition" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="SelectFrame" locator1="KaleoDesignerEditWorkflow#IFRAME" />
 		<execute function="Type" locator1="TextInput#TITLE" value1="${workflowDefinitionTitle}" />

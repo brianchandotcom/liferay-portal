@@ -18,8 +18,6 @@
 	</command>
 
 	<command name="addForm">
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#ADD_FORM_BUTTON" value1="Add Form" />
-
 		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
 
 		<execute function="Click" locator1="Button#PLUS" />
@@ -30,7 +28,9 @@
 	</command>
 
 	<command name="addProcess">
-		<execute function="AssertClick" locator1="KaleoFormsAdmin#TOOLBAR_ADD" value1="Add" />
+		<execute function="AssertTextEquals" locator1="ControlMenu#HEADER_TITLE" value1="Kaleo Forms Admin" />
+
+		<execute function="Click" locator1="Button#PLUS" />
 	</command>
 
 	<command name="addProcessDetails">
@@ -489,9 +489,7 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="KaleoFormsAdminViewProcessRecords#SUBMIT_NEW" value1="Submit New ${kfProcessName}" />
-
-		<execute function="AssertTextEquals" locator1="DDLEditRecord#HEADER_TITLE" value1="New ${kfProcessName}" />
+		<execute function="Click" locator1="Button#PLUS" />
 	</command>
 
 	<command name="tearDownProcess">

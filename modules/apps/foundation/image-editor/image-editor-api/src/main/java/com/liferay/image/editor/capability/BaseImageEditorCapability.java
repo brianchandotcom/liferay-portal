@@ -12,21 +12,20 @@
  * details.
  */
 
-package com.liferay.image.editor.api;
+package com.liferay.image.editor.capability;
 
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.ServletContext;
 
 /**
  * @author Bruno Basto
  */
-public interface ImageEditorFeature {
-
-	public ServletContext getServletContext();
+public abstract class BaseImageEditorCapability
+	implements ImageEditorCapability {
 
 	public void prepareContext(
-		Map<String, Object> context, HttpServletRequest request);
+		Map<String, Object> context, HttpServletRequest request) {
+	}
 
 }

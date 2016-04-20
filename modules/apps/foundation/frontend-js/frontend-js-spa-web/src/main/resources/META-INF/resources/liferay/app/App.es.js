@@ -36,8 +36,32 @@ class LiferayApp extends App {
 		dom.append(body, '<div class="lfr-spa-loading-bar"></div>');
 	}
 
+	createScreenInstance(path, route) {
+		var screen = super.createScreenInstance(path, route);
+
+		if (this.isCacheEnabled() && this.isScreenCacheExpired(screen)) {
+			screen.clearCache();
+		}
+
+		return screen;
+	}
+
+	getCacheExpirationTime() {
+		return Liferay.SPA.cacheExpirationTime;
+	}
+
 	getValidStatusCodes() {
 		return this.validStatusCodes;
+	}
+
+	isCacheEnabled() {
+		return this.getCacheExpirationTime() > -1;
+	}
+
+	isScreenCacheExpired(screen) {
+		var lastModifiedInterval = (new Date()).getTime() - screen.getCacheLastModified();
+
+		return lastModifiedInterval > this.getCacheExpirationTime();
 	}
 
 	onBeforeNavigate(event) {

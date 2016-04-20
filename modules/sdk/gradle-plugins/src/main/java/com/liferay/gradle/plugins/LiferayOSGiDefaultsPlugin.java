@@ -1391,7 +1391,7 @@ public class LiferayOSGiDefaultsPlugin
 				"Git-SHA", "${system-allow-fail;git rev-list -1 HEAD}");
 		}
 
-		File appDir = getRootDir(project, _APP_BND_FILE_NAME);
+		File appDir = GradleUtil.getRootDir(project, _APP_BND_FILE_NAME);
 
 		if (appDir != null) {
 			File appFile = new File(appDir, _APP_BND_FILE_NAME);
@@ -1591,8 +1591,8 @@ public class LiferayOSGiDefaultsPlugin
 
 		List<String> taskNames = startParameter.getTaskNames();
 
-		File gitRepoDir = getRootDir(project, ".gitrepo");
-		final File portalRootDir = getRootDir(
+		File gitRepoDir = GradleUtil.getRootDir(project, ".gitrepo");
+		final File portalRootDir = GradleUtil.getRootDir(
 			project.getRootProject(), "portal-impl");
 		final boolean publishing = isPublishing(project);
 		File relengDir = getRelengDir(project);
@@ -2705,26 +2705,6 @@ public class LiferayOSGiDefaultsPlugin
 		return new File(
 			relengDir,
 			FileUtil.relativize(project.getProjectDir(), project.getRootDir()));
-	}
-
-	protected File getRootDir(Project project, String markerFileName) {
-		File dir = project.getProjectDir();
-
-		dir = dir.getParentFile();
-
-		while (true) {
-			File markerFile = new File(dir, markerFileName);
-
-			if (markerFile.exists()) {
-				return dir;
-			}
-
-			dir = dir.getParentFile();
-
-			if (dir == null) {
-				return null;
-			}
-		}
 	}
 
 	protected Version getVersion(Object version) {

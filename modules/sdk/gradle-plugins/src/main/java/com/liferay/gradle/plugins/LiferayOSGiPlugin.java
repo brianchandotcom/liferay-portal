@@ -521,11 +521,14 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	protected void applyPlugins(Project project) {
-		GradleUtil.applyPlugin(project, JavaPlugin.class);
-
 		GradleUtil.applyPlugin(project, BundlePlugin.class);
 
 		configureBundleExtension(project);
+
+		// "bundle" must be applied before "java", otherwise it will be too late
+		// to replace the JarBuilderFactory.
+
+		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
 		GradleUtil.applyPlugin(project, AlloyTaglibDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, CSSBuilderDefaultsPlugin.class);

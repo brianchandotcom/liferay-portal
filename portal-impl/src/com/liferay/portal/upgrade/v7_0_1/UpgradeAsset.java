@@ -1,24 +1,22 @@
 package com.liferay.portal.upgrade.v7_0_1;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 public class UpgradeAsset extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		addAssetPublishDate();
+		_addAssetPublishDate();
 	}
 
-	private void addAssetPublishDate() throws SQLException {
+	private void _addAssetPublishDate() throws SQLException {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-
 			StringBundler sb = new StringBundler();
 
 			sb.append("select AssetEntry.entryId, AssetEntry.createDate ");

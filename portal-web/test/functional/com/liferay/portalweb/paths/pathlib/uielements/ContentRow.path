@@ -65,6 +65,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_CONTENT_ENTRY_DESCRIPTION_TD3</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_CONTENT_ENTRY_NAME_LINK</td>
 	<td>//*[@data-qa-id='row']//a[contains(.,'${key_rowEntry}')]</td>
 	<td></td>

@@ -28,36 +28,10 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--USER_SEGMENT_TABLE_NAME-->
-<tr>
-	<td>USER_SEGMENT_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_userSegmentName}')]/td[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_SEGMENT_TABLE_DESCRIPTION</td>
-	<td>//tr[contains(.,'${key_rowEntry}')]//td[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_SEGMENT_RULES-->
-<tr>
-	<td>USER_SEGMENT_RULES_SEARCH_FIELD</td>
-	<td>//input[contains(@id,'ContentTargetingPortlet_searchPanel')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>USER_SEGMENT_RULES_RULE</td>
 	<td>//li//div/h5[text()=' ${key_userSegmentRule} ']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_SEGMENT_RULES_FORM_BUILDER</td>
-	<td>//div[contains(@class,'form-builder-drop-container')]</td>
 	<td></td>
 </tr>
 <tr>

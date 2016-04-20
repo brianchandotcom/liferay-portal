@@ -31,13 +31,12 @@ PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(SimulationP
 
 			<%
 			for (PanelApp panelApp : panelCategoryHelper.getAllPanelApps(panelCategory.getKey())) {
-				String panelAppKey = panelApp.getKey().replaceAll("[\\W]", "_");
 			%>
 
 				<div class="panel">
-					<div class="panel-heading" id="<%= renderResponse.getNamespace() + panelAppKey + "Header" %>" role="tab">
+					<div class="panel-heading" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Header" role="tab">
 						<div class="panel-title">
-							<div aria-controls="<%= "#" + renderResponse.getNamespace() + panelAppKey + "Collapse" %>" aria-expanded="<%= true %>" class="collapse-icon collapse-icon-middle collapsed panel-toggler" data-parent="#<portlet:namespace />SimulationAccordion" data-toggle="collapse" href="<%= "#" + renderResponse.getNamespace() + panelAppKey + "Collapse" %>" role="button">
+							<div aria-controls="<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Collapse" aria-expanded="<%= true %>" class="collapse-icon collapse-icon-middle collapsed panel-toggler" data-parent="#<portlet:namespace />SimulationAccordion" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Collapse" role="button">
 								<span class="category-name truncate-text"><%= panelApp.getLabel(locale) %></span>
 
 								<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
@@ -47,9 +46,9 @@ PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(SimulationP
 						</div>
 					</div>
 
-					<div aria-expanded="<%= true %>" aria-labelledby="<%= renderResponse.getNamespace() + panelAppKey + "Header" %>" class="collapse in panel-collapse" id="<%= renderResponse.getNamespace() + panelAppKey + "Collapse" %>" role="tabpanel">
+					<div aria-expanded="<%= true %>" aria-labelledby="<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Header" class="collapse in panel-collapse" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Collapse" role="tabpanel">
 						<div class="simulation-app-panel-body">
-							<liferay-application-list:panel-app label="" panelApp="<%= panelApp %>" />
+							<liferay-application-list:panel-app panelApp="<%= panelApp %>" />
 						</div>
 					</div>
 				</div>

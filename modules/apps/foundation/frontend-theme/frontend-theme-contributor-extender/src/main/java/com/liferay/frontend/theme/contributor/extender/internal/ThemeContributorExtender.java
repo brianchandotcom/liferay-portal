@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.theme.contributor.extender.internal;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
@@ -68,9 +69,44 @@ public class ThemeContributorExtender extends AbstractExtender {
 
 	@Override
 	protected Extension doCreateExtension(Bundle bundle) throws Exception {
+		String type = _getProperty(
+			bundle, "Liferay-Theme-Contributor-Type", "themeContributorType");
+
+		if (type == null) {
+			return null;
+		}
+
+		BundleWebResourcesImpl bundleWebResources = _scanForResources(bundle);
+
+		if (bundleWebResources == null) {
+			return null;
+		}
+
+		int themeContributorWeight = GetterUtil.getInteger(
+			_getProperty(
+				bundle, "Liferay-Theme-Contributor-Weight",
+				"themeContributorWeight"));
+
+		return new ThemeContributorExtension(
+			bundle, bundleWebResources, themeContributorWeight);
+	}
+
+	@Override
+	protected void error(String s, Throwable t) {
+		_logger.log(Logger.LOG_ERROR, s, t);
+	}
+
+	@Override
+	protected void warn(Bundle bundle, String s, Throwable t) {
+		_logger.log(Logger.LOG_WARNING, "[" + bundle + "] " + s, t);
+	}
+
+	private String _getProperty(
+		Bundle bundle, String headerName, String jsonName) {
+
 		Dictionary<String, String> headers = bundle.getHeaders();
 
-		String type = headers.get("Liferay-Theme-Contributor-Type");
+		String type = headers.get(headerName);
 
 		if (type == null) {
 			URL entryURL = bundle.getEntry("/package.json");
@@ -87,8 +123,7 @@ public class ThemeContributorExtender extends AbstractExtender {
 						packageJsonObject.optJSONObject("liferayTheme");
 
 					if (liferayThemeJSONObject != null) {
-						type = liferayThemeJSONObject.getString(
-							"themeContributorType");
+						type = liferayThemeJSONObject.getString(jsonName);
 					}
 				}
 				catch (IOException ioe) {
@@ -97,27 +132,7 @@ public class ThemeContributorExtender extends AbstractExtender {
 			}
 		}
 
-		if (type == null) {
-			return null;
-		}
-
-		BundleWebResourcesImpl bundleWebResources = _scanForResources(bundle);
-
-		if (bundleWebResources == null) {
-			return null;
-		}
-
-		return new ThemeContributorExtension(bundle, bundleWebResources);
-	}
-
-	@Override
-	protected void error(String s, Throwable t) {
-		_logger.log(Logger.LOG_ERROR, s, t);
-	}
-
-	@Override
-	protected void warn(Bundle bundle, String s, Throwable t) {
-		_logger.log(Logger.LOG_WARNING, "[" + bundle + "] " + s, t);
+		return type;
 	}
 
 	private BundleWebResourcesImpl _scanForResources(Bundle bundle) {

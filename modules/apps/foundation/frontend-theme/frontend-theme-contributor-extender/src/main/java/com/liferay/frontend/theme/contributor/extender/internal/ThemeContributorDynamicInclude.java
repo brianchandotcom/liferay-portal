@@ -186,8 +186,7 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 
 	private BundleContext _bundleContext;
 	private final Collection<ServiceReference<BundleWebResources>>
-		_bundleWebResourcesServiceReferences = new TreeSet<>(
-			Collections.reverseOrder());
+		_bundleWebResourcesServiceReferences = new TreeSet<>();
 	private volatile Collection<String> _cssResourceURLs =
 		new CopyOnWriteArrayList<>();
 	private volatile Collection<String> _jsResourceURLs =

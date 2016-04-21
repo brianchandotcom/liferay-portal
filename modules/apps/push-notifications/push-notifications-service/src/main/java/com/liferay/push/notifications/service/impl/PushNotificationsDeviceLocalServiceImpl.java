@@ -35,7 +35,8 @@ import com.liferay.push.notifications.service.base.PushNotificationsDeviceLocalS
 @ProviderType
 public class PushNotificationsDeviceLocalServiceImpl
 	extends PushNotificationsDeviceLocalServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.push.notifications.service.PushNotificationsDeviceLocalServiceUtil} to access the push notifications device local service.

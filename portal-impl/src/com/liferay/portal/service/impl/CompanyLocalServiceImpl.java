@@ -66,7 +66,6 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -230,7 +229,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			company = companyPersistence.create(companyId);
 
 			try {
-				company.setKey(Base64.objectToString(Encryptor.generateKey()));
+				company.setKey(Encryptor.serializeKey(Encryptor.generateKey()));
 			}
 			catch (EncryptorException ee) {
 				throw new SystemException(ee);
@@ -476,7 +475,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		}
 
 		try {
-			company.setKey(Base64.objectToString(Encryptor.generateKey()));
+			company.setKey(Encryptor.serializeKey(Encryptor.generateKey()));
 		}
 		catch (EncryptorException ee) {
 			throw new SystemException(ee);

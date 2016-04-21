@@ -43,6 +43,6 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.List" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />

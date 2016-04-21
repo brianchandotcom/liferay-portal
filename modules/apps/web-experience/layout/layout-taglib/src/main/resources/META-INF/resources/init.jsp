@@ -39,6 +39,6 @@ page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />

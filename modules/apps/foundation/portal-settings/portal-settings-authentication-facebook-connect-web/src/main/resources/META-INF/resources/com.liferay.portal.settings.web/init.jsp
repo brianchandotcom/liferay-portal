@@ -29,6 +29,6 @@ page import="com.liferay.portal.security.sso.facebook.connect.constants.Facebook
 
 <%@ page import="javax.portlet.ActionRequest" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />

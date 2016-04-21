@@ -40,6 +40,6 @@ page import="com.liferay.taglib.aui.AUIUtil" %>
 <%@ page import="java.util.Locale" %><%@
 page import="java.util.Objects" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />

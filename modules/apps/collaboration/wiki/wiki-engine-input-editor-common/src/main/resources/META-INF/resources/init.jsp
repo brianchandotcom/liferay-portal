@@ -33,6 +33,6 @@ page import="com.liferay.wiki.model.WikiPage" %>
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.Map" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />

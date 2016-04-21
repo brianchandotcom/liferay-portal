@@ -38,6 +38,6 @@ page import="java.net.URL" %>
 
 <%@ page import="javax.portlet.ActionRequest" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />

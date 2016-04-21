@@ -1845,31 +1845,47 @@ wrapper.java.additional.11="-Dfile.encoding=UTF-8"]]></replacevalue>
 			src="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}"
 		/>
 
-		<propertyregex
-			input="${app.server.weblogic.dir.windows}"
-			property="app.server.weblogic.dir.windows.double.slash"
-			regexp="\\"
-			replace="\\\\\\\\"
-		/>
+		<if>
+			<os family="unix" />
+			<then>
+				<replace
+					dir="${app.server.weblogic.dir}"
+					includes="**/*.cmd,**/*.domains,**/*.properties,**/*.sh,**/*.xml"
+				>
+					<replacefilter token="${env.JAVA_HOME}" value="@env.JAVA_HOME@" />
+				</replace>
+			</then>
+			<elseif>
+				<os family="windows" />
+				<then>
+					<propertyregex
+						input="${app.server.weblogic.dir.windows}"
+						property="app.server.weblogic.dir.windows.double.slash"
+						regexp="\\"
+						replace="\\\\\\\\"
+					/>
 
-		<propertyregex
-			input="${app.server.weblogic.dir.windows.double.slash}"
-			property="app.server.weblogic.dir.windows.escaped"
-			regexp=":"
-			replace="\\\\:"
-		/>
+					<propertyregex
+						input="${app.server.weblogic.dir.windows.double.slash}"
+						property="app.server.weblogic.dir.windows.escaped"
+						regexp=":"
+						replace="\\\\:"
+					/>
 
-		<replace
-			dir="${app.server.weblogic.dir}"
-			includes="**/*.cmd,**/*.domains,**/*.properties,**/*.sh,**/*.xml"
-		>
-			<replacefilter token="@app.server.weblogic.dir@" value="${app.server.weblogic.dir}" />
-			<replacefilter token="@app.server.weblogic.dir.windows@" value="${app.server.weblogic.dir.windows}" />
-			<replacefilter token="@app.server.weblogic.dir.windows.double.slash@" value="${app.server.weblogic.dir.windows.double.slash}" />
-			<replacefilter token="@app.server.weblogic.dir.windows.escaped@" value="${app.server.weblogic.dir.windows.escaped}" />
-			<replacefilter token="@env.COMPUTERNAME@" value="${env.COMPUTERNAME}" />
-			<replacefilter token="@env.JAVA_HOME@" value="${env.JAVA_HOME}" />
-		</replace>
+					<replace
+						dir="${app.server.weblogic.dir}"
+						includes="**/*.cmd,**/*.domains,**/*.properties,**/*.sh,**/*.xml"
+					>
+						<replacefilter token="@app.server.weblogic.dir@" value="${app.server.weblogic.dir}" />
+						<replacefilter token="@app.server.weblogic.dir.windows@" value="${app.server.weblogic.dir.windows}" />
+						<replacefilter token="@app.server.weblogic.dir.windows.double.slash@" value="${app.server.weblogic.dir.windows.double.slash}" />
+						<replacefilter token="@app.server.weblogic.dir.windows.escaped@" value="${app.server.weblogic.dir.windows.escaped}" />
+						<replacefilter token="@env.COMPUTERNAME@" value="${env.COMPUTERNAME}" />
+						<replacefilter token="@env.JAVA_HOME@" value="${env.JAVA_HOME}" />
+					</replace>
+				</then>
+			</elseif>
+		</if>
 	</target>
 
 	<target name="unzip-weblogic-original">
@@ -3298,56 +3314,72 @@ plugins.includes=</echo>
 			<fileset dir="${app.server.weblogic.dir}" includes="logs/**" />
 		</delete>
 
-		<propertyregex
-			input="${app.server.parent.dir.windows}"
-			property="app.server.parent.dir.windows.double.slash"
-			regexp="\\"
-			replace="\\\\\\\\"
-		/>
+		<if>
+			<os family="unix" />
+			<then>
+				<replace
+					dir="${app.server.weblogic.dir}"
+					includes="**/*.cmd,**/*.domains,**/*.properties,**/*.sh,**/*.xml"
+				>
+					<replacefilter token="${env.JAVA_HOME}" value="@env.JAVA_HOME@" />
+				</replace>
+			</then>
+			<elseif>
+				<os family="windows" />
+				<then>
+					<propertyregex
+						input="${app.server.parent.dir.windows}"
+						property="app.server.parent.dir.windows.double.slash"
+						regexp="\\"
+						replace="\\\\\\\\"
+					/>
 
-		<propertyregex
-			input="${app.server.parent.dir.windows.double.slash}"
-			property="app.server.parent.dir.windows.escaped"
-			regexp=":"
-			replace="\\\\:"
-		/>
+					<propertyregex
+						input="${app.server.parent.dir.windows.double.slash}"
+						property="app.server.parent.dir.windows.escaped"
+						regexp=":"
+						replace="\\\\:"
+					/>
 
-		<propertyregex
-			input="${app.server.weblogic.dir.windows}"
-			property="app.server.weblogic.dir.windows.double.slash"
-			regexp="\\"
-			replace="\\\\\\\\"
-		/>
+					<propertyregex
+						input="${app.server.weblogic.dir.windows}"
+						property="app.server.weblogic.dir.windows.double.slash"
+						regexp="\\"
+						replace="\\\\\\\\"
+					/>
 
-		<propertyregex
-			input="${app.server.weblogic.dir.windows.double.slash}"
-			property="app.server.weblogic.dir.windows.escaped"
-			regexp=":"
-			replace="\\\\:"
-		/>
+					<propertyregex
+						input="${app.server.weblogic.dir.windows.double.slash}"
+						property="app.server.weblogic.dir.windows.escaped"
+						regexp=":"
+						replace="\\\\:"
+					/>
 
-		<antelope:stringutil property="env.COMPUTERNAME.lowercase" string="${env.COMPUTERNAME}">
-			<antelope:lowercase />
-		</antelope:stringutil>
+					<antelope:stringutil property="env.COMPUTERNAME.lowercase" string="${env.COMPUTERNAME}">
+						<antelope:lowercase />
+					</antelope:stringutil>
 
-		<replace
-			dir="${app.server.weblogic.dir}"
-			includes="**/*.cmd,**/*.domains,**/*.properties,**/*.sh,**/*.xml"
-		>
-			<replacefilter token="${app.server.parent.dir}/WEBLOG~1.1" value="@app.server.weblogic.dir@" />
-			<replacefilter token="${app.server.parent.dir}/WEBLOG~1.6" value="@app.server.weblogic.dir@" />
-			<replacefilter token="${app.server.parent.dir.windows}\WEBLOG~1.1" value="@app.server.weblogic.dir.windows@" />
-			<replacefilter token="${app.server.parent.dir.windows}\WEBLOG~1.6" value="@app.server.weblogic.dir.windows@" />
-			<replacefilter token="${app.server.parent.dir.windows.double.slash}\\WEBLOG~1.1" value="@app.server.weblogic.dir.windows.double.slash@" />
-			<replacefilter token="${app.server.parent.dir.windows.double.slash}\\WEBLOG~1.6" value="@app.server.weblogic.dir.windows.double.slash@" />
-			<replacefilter token="${app.server.parent.dir.windows.escaped}\\WEBLOG~1.1" value="@app.server.weblogic.dir.windows.escaped@" />
-			<replacefilter token="${app.server.parent.dir.windows.escaped}\\WEBLOG~1.6" value="@app.server.weblogic.dir.windows.escaped@" />
-			<replacefilter token="${app.server.weblogic.dir}" value="@app.server.weblogic.dir@" />
-			<replacefilter token="${app.server.weblogic.dir.windows}" value="@app.server.weblogic.dir.windows@" />
-			<replacefilter token="${app.server.weblogic.dir.windows.escaped}" value="@app.server.weblogic.dir.windows.escaped@" />
-			<replacefilter token="${env.COMPUTERNAME.lowercase}" value="@env.COMPUTERNAME@" />
-			<replacefilter token="${env.JAVA_HOME}" value="@env.JAVA_HOME@" />
-		</replace>
+					<replace
+						dir="${app.server.weblogic.dir}"
+						includes="**/*.cmd,**/*.domains,**/*.properties,**/*.sh,**/*.xml"
+					>
+						<replacefilter token="${app.server.parent.dir}/WEBLOG~1.1" value="@app.server.weblogic.dir@" />
+						<replacefilter token="${app.server.parent.dir}/WEBLOG~1.6" value="@app.server.weblogic.dir@" />
+						<replacefilter token="${app.server.parent.dir.windows}\WEBLOG~1.1" value="@app.server.weblogic.dir.windows@" />
+						<replacefilter token="${app.server.parent.dir.windows}\WEBLOG~1.6" value="@app.server.weblogic.dir.windows@" />
+						<replacefilter token="${app.server.parent.dir.windows.double.slash}\\WEBLOG~1.1" value="@app.server.weblogic.dir.windows.double.slash@" />
+						<replacefilter token="${app.server.parent.dir.windows.double.slash}\\WEBLOG~1.6" value="@app.server.weblogic.dir.windows.double.slash@" />
+						<replacefilter token="${app.server.parent.dir.windows.escaped}\\WEBLOG~1.1" value="@app.server.weblogic.dir.windows.escaped@" />
+						<replacefilter token="${app.server.parent.dir.windows.escaped}\\WEBLOG~1.6" value="@app.server.weblogic.dir.windows.escaped@" />
+						<replacefilter token="${app.server.weblogic.dir}" value="@app.server.weblogic.dir@" />
+						<replacefilter token="${app.server.weblogic.dir.windows}" value="@app.server.weblogic.dir.windows@" />
+						<replacefilter token="${app.server.weblogic.dir.windows.escaped}" value="@app.server.weblogic.dir.windows.escaped@" />
+						<replacefilter token="${env.COMPUTERNAME.lowercase}" value="@env.COMPUTERNAME@" />
+						<replacefilter token="${env.JAVA_HOME}" value="@env.JAVA_HOME@" />
+					</replace>
+				</then>
+			</elseif>
+		</if>
 
 		<zip
 			destfile="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}"

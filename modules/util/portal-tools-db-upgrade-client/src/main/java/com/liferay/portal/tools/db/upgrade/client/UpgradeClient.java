@@ -171,8 +171,8 @@ public class UpgradeClient {
 
 			while ((line = bufferedReader.readLine()) != null) {
 				if (line.equals(
-						"Running modules upgrades. Connect to Gogo shell to " +
-							"check the status.")) {
+						"Running modules upgrades. Connect to your Gogo Shell" +
+							" to check the status.")) {
 
 					break;
 				}

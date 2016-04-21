@@ -17,19 +17,13 @@ package com.liferay.push.notifications.sender;
 import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Bruno Farache
  */
 public interface PushNotificationsSender {
 
-	public PushNotificationsSender create(Map<String, Object> configuration);
-
-	public void reset();
-
-	public void send(
-			String platform, List<String> tokens, JSONObject payloadJSONObject)
+	public void send(List<String> tokens, JSONObject payloadJSONObject)
 		throws Exception;
 
 }

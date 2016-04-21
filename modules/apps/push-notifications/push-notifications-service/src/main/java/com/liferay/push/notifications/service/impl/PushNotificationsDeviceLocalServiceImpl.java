@@ -148,7 +148,7 @@ public class PushNotificationsDeviceLocalServiceImpl
 		Exception exception = null;
 
 		try {
-			pushNotificationsSender.send(platform, tokens, payloadJSONObject);
+			pushNotificationsSender.send(tokens, payloadJSONObject);
 		}
 		catch (PortalException pe) {
 			exception = pe;

@@ -301,10 +301,10 @@ public class PortletPermissionImpl implements PortletPermission {
 			groupId = layout.getGroupId();
 		}
 
-		if ((layout instanceof VirtualLayout) && layout.isTypeControlPanel()) {
-			VirtualLayout virtualLayout = (VirtualLayout)layout;
+		if ((group.isControlPanel() || layout.isTypeControlPanel()) &&
+			actionId.equals(ActionKeys.VIEW)) {
 
-			layout = virtualLayout.getSourceLayout();
+			return true;
 		}
 
 		if (!actionId.equals(ActionKeys.VIEW) &&
@@ -336,10 +336,6 @@ public class PortletPermissionImpl implements PortletPermission {
 			if (hasPermission != null) {
 				return hasPermission.booleanValue();
 			}
-		}
-
-		if (group.isControlPanel() && actionId.equals(ActionKeys.VIEW)) {
-			return true;
 		}
 
 		resourcePermissionPrimKey = getPrimaryKey(layout.getPlid(), portletId);

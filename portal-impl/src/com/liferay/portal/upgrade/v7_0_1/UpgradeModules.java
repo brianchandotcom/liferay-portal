@@ -34,8 +34,8 @@ public class UpgradeModules
 		"com.liferay.announcements.web", "com.liferay.contacts.web",
 		"com.liferay.directory.web",
 		"com.liferay.invitation.invite.members.web",
-		"com.liferay.microblogs.web", "com.liferay.recent.documents.web",
-		"com.liferay.social.networking.web",
+		"com.liferay.knowledge.base.web", "com.liferay.microblogs.web",
+		"com.liferay.recent.documents.web", "com.liferay.social.networking.web",
 		"com.liferay.social.privatemessaging.web"
 	};
 

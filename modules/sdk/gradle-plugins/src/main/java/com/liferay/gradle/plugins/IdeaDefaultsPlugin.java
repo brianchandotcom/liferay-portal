@@ -65,7 +65,7 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 	protected void configureIdeaModuleExcludeDirs(
 		Project project, IdeaPlugin ideaPlugin) {
 
-		if (!hasPlugin(project, JavaPlugin.class)) {
+		if (!GradleUtil.hasPlugin(project, JavaPlugin.class)) {
 			return;
 		}
 
@@ -104,7 +104,7 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 
 			@SuppressWarnings("unused")
 			public void doCall(XmlProvider xmlProvider) throws Exception {
-				if (!hasPlugin(project, JavaPlugin.class)) {
+				if (!GradleUtil.hasPlugin(project, JavaPlugin.class)) {
 					return;
 				}
 
@@ -174,7 +174,7 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 	}
 
 	protected File getClassesDir(Project project) {
-		if (!hasPlugin(project, JavaPlugin.class)) {
+		if (!GradleUtil.hasPlugin(project, JavaPlugin.class)) {
 			return null;
 		}
 

@@ -25,10 +25,14 @@ import java.nio.file.Paths;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import org.gradle.StartParameter;
+import org.gradle.api.Action;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.ArtifactRepositoryContainer;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
@@ -38,6 +42,9 @@ import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.file.copy.CopySpecInternal;
 import org.gradle.api.internal.file.copy.DefaultCopySpec;
+import org.gradle.api.invocation.Gradle;
+import org.gradle.api.plugins.BasePluginConvention;
+import org.gradle.api.plugins.PluginContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -45,6 +52,15 @@ import org.gradle.api.internal.file.copy.DefaultCopySpec;
 public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 	public static final String PORTAL_TOOL_GROUP = "com.liferay";
+
+	public static final String SNAPSHOT_PROPERTY_NAME = "snapshot";
+
+	public static String getArchivesBaseName(Project project) {
+		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
+			project, BasePluginConvention.class);
+
+		return basePluginConvention.getArchivesBaseName();
+	}
 
 	public static String getPortalToolVersion(
 		Project project, String portalToolName) {
@@ -54,6 +70,24 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 		return GradleUtil.getProperty(
 			project, portalToolName + ".version", portalToolVersion);
+	}
+
+	public static File getRootDir(Project project, String markerFileName) {
+		File dir = project.getProjectDir();
+
+		while (true) {
+			File markerFile = new File(dir, markerFileName);
+
+			if (markerFile.exists()) {
+				return dir;
+			}
+
+			dir = dir.getParentFile();
+
+			if (dir == null) {
+				return null;
+			}
+		}
 	}
 
 	public static File getSrcDir(SourceDirectorySet sourceDirectorySet) {
@@ -91,6 +125,36 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		}
 
 		return threads;
+	}
+
+	public static boolean hasPlugin(
+		Project project, Class<? extends Plugin<?>> pluginClass) {
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		return pluginContainer.hasPlugin(pluginClass);
+	}
+
+	public static boolean hasPlugin(Project project, String pluginId) {
+		PluginContainer pluginContainer = project.getPlugins();
+
+		return pluginContainer.hasPlugin(pluginId);
+	}
+
+	public static boolean hasStartParameterTask(
+		Project project, String taskName) {
+
+		Gradle gradle = project.getGradle();
+
+		StartParameter startParameter = gradle.getStartParameter();
+
+		List<String> taskNames = startParameter.getTaskNames();
+
+		if (taskNames.contains(taskName)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isFromMavenLocal(Project project, File file) {
@@ -131,6 +195,16 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		return false;
 	}
 
+	public static boolean isSnapshot(Project project) {
+		String version = String.valueOf(project.getVersion());
+
+		if (version.endsWith(_SNAPSHOT_VERSION_SUFFIX)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean replaceCopySpecSourcePath(
 		CopySpec copySpec, Object oldSourcePath, Object newSourcePath) {
 
@@ -162,6 +236,21 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		return false;
 	}
 
+	public static void setProjectSnapshotVersion(Project project) {
+		boolean snapshot = false;
+
+		if (project.hasProperty(SNAPSHOT_PROPERTY_NAME)) {
+			snapshot = GradleUtil.getProperty(
+				project, SNAPSHOT_PROPERTY_NAME, true);
+		}
+
+		String version = String.valueOf(project.getVersion());
+
+		if (snapshot && !version.endsWith(_SNAPSHOT_VERSION_SUFFIX)) {
+			project.setVersion(version + _SNAPSHOT_VERSION_SUFFIX);
+		}
+	}
+
 	public static Map<String, String> toStringMap(Map<String, ?> map) {
 		Map<String, String> stringMap = new HashMap<>();
 
@@ -174,6 +263,16 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 		return stringMap;
 	}
+
+	public static <P extends Plugin<? extends Project>> void withPlugin(
+		Project project, Class<P> pluginClass, Action<P> action) {
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(pluginClass, action);
+	}
+
+	private static final String _SNAPSHOT_VERSION_SUFFIX = "-SNAPSHOT";
 
 	private static final Properties _portalToolVersions = new Properties();
 

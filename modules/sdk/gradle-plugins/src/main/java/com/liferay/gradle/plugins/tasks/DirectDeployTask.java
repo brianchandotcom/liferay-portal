@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.tasks;
 
-import com.liferay.gradle.plugins.LiferayJavaPlugin;
+import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
@@ -201,7 +201,7 @@ public class DirectDeployTask extends BasePortalToolsTask {
 			project, getConfigurationName());
 
 		Configuration portalConfiguration = GradleUtil.getConfiguration(
-			project, LiferayJavaPlugin.PORTAL_CONFIGURATION_NAME);
+			project, LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
 
 		configuration.extendsFrom(portalConfiguration);
 	}

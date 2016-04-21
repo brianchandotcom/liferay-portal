@@ -9,16 +9,14 @@ buildDir = new File(rootDir.parentFile, "build")
 gradle.beforeProject {
 	Project project ->
 
-	if (!project.parent) {
+	if (!project.parent || project.childProjects) {
 		return
 	}
 
 	configure(project) {
-		if (project.path.startsWith(":apps:foundation:frontend-theme:") && FileUtil.exists(project, "gulpfile.js")) {
-			apply from: rootProject.file("build-theme.gradle")
-		}
-		else if (FileUtil.exists(project, "bnd.bnd") && FileUtil.exists(project, "build.gradle")) {
-			apply from: rootProject.file("build-module.gradle")
+		apply plugin: "com.liferay.defaults.plugin"
+
+		pluginManager.withPlugin("com.liferay.osgi.plugin") {
 			apply plugin: "pmd"
 
 			configurations {

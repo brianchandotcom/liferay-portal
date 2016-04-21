@@ -79,23 +79,23 @@ public class ServiceBuilderDefaultsPlugin
 
 		addTaskBuildDB(project);
 
-		withLiferayPlugin(
-			project,
-			new Action<LiferayPlugin>() {
+		GradleUtil.withPlugin(
+			project, LiferayBasePlugin.class,
+			new Action<LiferayBasePlugin>() {
 
 				@Override
-				public void execute(LiferayPlugin liferayPlugin) {
+				public void execute(LiferayBasePlugin liferayBasePlugin) {
 					Configuration portalConfiguration =
 						GradleUtil.getConfiguration(
 							project,
-							LiferayJavaPlugin.PORTAL_CONFIGURATION_NAME);
+							LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
 
 					configureTasksBuildDB(project, portalConfiguration);
 				}
 
 			});
 
-		withPlugin(
+		GradleUtil.withPlugin(
 			project, BundlePlugin.class,
 			new Action<BundlePlugin>() {
 

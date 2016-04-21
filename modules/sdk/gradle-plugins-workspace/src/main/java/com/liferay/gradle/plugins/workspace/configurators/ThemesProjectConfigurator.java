@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.workspace.configurators;
 
-import com.liferay.gradle.plugins.LiferayJavaPlugin;
+import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.gulp.ExecuteGulpTask;
 import com.liferay.gradle.plugins.gulp.GulpPlugin;
 import com.liferay.gradle.plugins.node.NodePlugin;
@@ -160,7 +160,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	protected Task addTaskDeploy(Project project) {
-		Task task = project.task(LiferayJavaPlugin.DEPLOY_TASK_NAME);
+		Task task = project.task(LiferayBasePlugin.DEPLOY_TASK_NAME);
 
 		task.dependsOn(_GULP_DEPLOY_TASK_NAME);
 		task.setDescription("Assembles the theme and deploys it to Liferay.");

@@ -14,8 +14,8 @@
 
 package com.liferay.gradle.plugins.workspace.configurators;
 
-import com.liferay.gradle.plugins.LiferayDefaultsPlugin;
-import com.liferay.gradle.plugins.LiferayJavaPlugin;
+import com.liferay.gradle.plugins.LiferayBasePlugin;
+import com.liferay.gradle.plugins.LiferayOSGiDefaultsPlugin;
 import com.liferay.gradle.plugins.LiferayPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerPlugin;
@@ -112,7 +112,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 					MavenArtifactRepository mavenArtifactRepository) {
 
 					mavenArtifactRepository.setUrl(
-						LiferayDefaultsPlugin.DEFAULT_REPOSITORY_URL);
+						LiferayOSGiDefaultsPlugin.DEFAULT_REPOSITORY_URL);
 				}
 
 			});
@@ -152,7 +152,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		Task task = GradleUtil.getTask(
 			project, PoshiRunnerPlugin.RUN_POSHI_TASK_NAME);
 
-		task.dependsOn(LiferayJavaPlugin.DEPLOY_TASK_NAME);
+		task.dependsOn(LiferayBasePlugin.DEPLOY_TASK_NAME);
 	}
 
 	@Override

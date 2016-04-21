@@ -1,22 +1,15 @@
-FileTree fileTree = fileTree(rootDir) {
-	exclude "**/bin/"
-	exclude "sdk/*/samples/"
-	exclude "sdk/gradle-templates/classes/"
-	exclude "sdk/gradle-templates/src/"
+FileTree modulesFileTree
 
-	if (Boolean.getBoolean("portal.build")) {
-		String excludesString = System.properties["portal.build.modules.excludes"]
-		String includesString = System.properties["portal.build.modules.includes"]
+if (Boolean.getBoolean("portal.build")) {
+	modulesFileTree = fileTree(dir: rootDir, include: "*/**/portal.build")
+}
+else {
+	modulesFileTree = fileTree(rootDir) {
+		exclude "**/bin/"
+		exclude "sdk/*/samples/"
+		exclude "sdk/gradle-templates/classes/"
+		exclude "sdk/gradle-templates/src/"
 
-		if (excludesString) {
-			exclude excludesString.tokenize(",")
-		}
-
-		if (includesString) {
-			include includesString.tokenize(",")
-		}
-	}
-	else {
 		include "*/**/build.gradle"
 		include "apps/foundation/frontend-theme/*/gulpfile.js"
 	}
@@ -24,7 +17,7 @@ FileTree fileTree = fileTree(rootDir) {
 
 URI rootURI = rootDir.toURI()
 
-fileTree.each {
+modulesFileTree.each {
 	String dirName = rootURI.relativize(it.parentFile.toURI())
 
 	dirName = dirName[0 .. -2]

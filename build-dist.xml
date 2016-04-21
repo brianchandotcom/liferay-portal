@@ -3311,7 +3311,8 @@ plugins.includes=</echo>
 
 	<target name="zip-weblogic-custom">
 		<delete>
-			<fileset dir="${app.server.weblogic.dir}" includes="logs/**" />
+			<fileset dir="${app.server.weblogic.dir}/cfgtoollogs" includes="opatchauto/**" />
+			<fileset dir="${app.server.weblogic.dir}/cfgtoollogs" includes="oui/**" />
 		</delete>
 
 		<if>

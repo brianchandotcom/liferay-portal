@@ -1,7 +1,4 @@
 {
-	"dependencies": {
-		"metal-components": "metal/metal-components#7c748624750e27bfb467bc9a23ee5ca8f939ca09"
-	},
 	"name": "frontend-js-metal-web",
 	"version": "1.0.6"
 }

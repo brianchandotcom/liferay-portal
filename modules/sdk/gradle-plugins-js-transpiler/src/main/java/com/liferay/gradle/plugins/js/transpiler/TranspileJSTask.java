@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
@@ -43,30 +42,6 @@ import org.gradle.util.GUtil;
 public class TranspileJSTask extends ExecuteNodeScriptTask {
 
 	public TranspileJSTask() {
-		dependsOn(JSTranspilerPlugin.DOWNLOAD_LFR_AMD_LOADER_TASK_NAME);
-		dependsOn(JSTranspilerPlugin.DOWNLOAD_METAL_CLI_TASK_NAME);
-
-		setScriptFile(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return new File(
-						getNodeDir(), "node_modules/metal-cli/index.js");
-				}
-
-			});
-
-		soyDependency(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return getNodeDir() + "/node_modules/metal*/src/**/*.soy";
-				}
-
-			});
-
 		soySrcInclude("**/*.soy");
 		srcInclude("**/*.es.js", "**/*.soy.js");
 	}

@@ -2,5 +2,6 @@
 	"dependencies": {
 		"jquery": "~2.1.4"
 	},
-	"name": "samples"
+	"name": "samples",
+	"version": "1.0.0"
 }

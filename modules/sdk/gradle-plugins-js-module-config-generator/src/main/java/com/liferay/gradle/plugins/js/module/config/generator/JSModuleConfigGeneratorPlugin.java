@@ -56,8 +56,10 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 				project, EXTENSION_NAME,
 				JSModuleConfigGeneratorExtension.class);
 
-		addTaskDownloadLiferayModuleConfigGenerator(
-			project, jsModuleConfigGeneratorExtension);
+		final DownloadNodeModuleTask downloadLiferayModuleConfigGeneratorTask =
+			addTaskDownloadLiferayModuleConfigGenerator(
+				project, jsModuleConfigGeneratorExtension);
+
 		addTaskConfigJSModules(project);
 
 		project.afterEvaluate(
@@ -65,7 +67,8 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					configureTasksConfigJSModules(project);
+					configureTasksConfigJSModules(
+						project, downloadLiferayModuleConfigGeneratorTask);
 				}
 
 			});
@@ -139,15 +142,32 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 		return downloadLiferayModuleConfigGeneratorTask;
 	}
 
-	protected void configureTaskConfigJSModulesEnabled(
-		ConfigJSModulesTask configJSModulesTask) {
+	protected void configureTaskConfigJSModules(
+		ConfigJSModulesTask configJSModulesTask,
+		final DownloadNodeModuleTask downloadLiferayModuleConfigGeneratorTask) {
 
 		File file = configJSModulesTask.getModuleConfigFile();
 
 		if ((file == null) || !file.exists()) {
 			configJSModulesTask.setDependsOn(Collections.emptySet());
 			configJSModulesTask.setEnabled(false);
+
+			return;
 		}
+
+		configJSModulesTask.dependsOn(downloadLiferayModuleConfigGeneratorTask);
+
+		configJSModulesTask.setScriptFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						downloadLiferayModuleConfigGeneratorTask.getModuleDir(),
+						"bin/index.js");
+				}
+
+			});
 	}
 
 	protected void configureTaskConfigJSModulesForJavaPlugin(
@@ -193,7 +213,10 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 		classesTask.dependsOn(configJSModulesTask);
 	}
 
-	protected void configureTasksConfigJSModules(Project project) {
+	protected void configureTasksConfigJSModules(
+		Project project,
+		final DownloadNodeModuleTask downloadLiferayModuleConfigGeneratorTask) {
+
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -202,7 +225,9 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(ConfigJSModulesTask configJSModulesTask) {
-					configureTaskConfigJSModulesEnabled(configJSModulesTask);
+					configureTaskConfigJSModules(
+						configJSModulesTask,
+						downloadLiferayModuleConfigGeneratorTask);
 				}
 
 			});

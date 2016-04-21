@@ -24,7 +24,6 @@ import java.io.File;
 
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
@@ -50,24 +49,7 @@ public class ConfigJSModulesTask
 	extends ExecuteNodeScriptTask implements PatternFilterable {
 
 	public ConfigJSModulesTask() {
-		dependsOn(
-			JSModuleConfigGeneratorPlugin.
-				DOWNLOAD_LIFERAY_MODULE_CONFIG_GENERATOR_TASK_NAME);
-
 		include("**/*.es.js*", "**/*.soy.js*");
-
-		setScriptFile(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return new File(
-						getNodeDir(),
-						"node_modules/liferay-module-config-generator/bin/" +
-							"index.js");
-				}
-
-			});
 	}
 
 	@Override

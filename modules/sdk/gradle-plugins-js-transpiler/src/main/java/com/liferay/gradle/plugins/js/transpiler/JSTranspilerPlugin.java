@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.js.transpiler;
 
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
+import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
@@ -57,11 +58,18 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, NodePlugin.class);
 
+		final ExecuteNpmTask npmInstallTask =
+			(ExecuteNpmTask)GradleUtil.getTask(
+				project, NodePlugin.NPM_INSTALL_TASK_NAME);
+
 		JSTranspilerExtension jsTranspilerExtension = GradleUtil.addExtension(
 			project, EXTENSION_NAME, JSTranspilerExtension.class);
 
-		addTaskDownloadLfrAmdLoader(project, jsTranspilerExtension);
-		addTaskDownloadMetalCli(project, jsTranspilerExtension);
+		final DownloadNodeModuleTask downloadLfrAmdLoaderTask =
+			addTaskDownloadLfrAmdLoader(project, jsTranspilerExtension);
+		final DownloadNodeModuleTask downloadMetalCliTask =
+			addTaskDownloadMetalCli(project, jsTranspilerExtension);
+
 		addTaskTranspileJS(project);
 
 		project.afterEvaluate(
@@ -69,7 +77,9 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					configureTasksTranspileJS(project);
+					configureTasksTranspileJS(
+						project, downloadLfrAmdLoaderTask, downloadMetalCliTask,
+						npmInstallTask);
 				}
 
 			});
@@ -142,7 +152,11 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		return transpileJSTask;
 	}
 
-	protected void configureTasksTranspileJS(Project project) {
+	protected void configureTasksTranspileJS(
+		Project project, final DownloadNodeModuleTask downloadLfrAmdLoaderTask,
+		final DownloadNodeModuleTask downloadMetalCliTask,
+		final ExecuteNpmTask npmInstallTask) {
+
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -151,21 +165,54 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(TranspileJSTask transpileJSTask) {
-					configureTaskTranspileJSEnabled(transpileJSTask);
+					configureTaskTranspileJS(
+						transpileJSTask, downloadLfrAmdLoaderTask,
+						downloadMetalCliTask, npmInstallTask);
 				}
 
 			});
 	}
 
-	protected void configureTaskTranspileJSEnabled(
-		TranspileJSTask transpileJSTask) {
+	protected void configureTaskTranspileJS(
+		TranspileJSTask transpileJSTask,
+		final DownloadNodeModuleTask downloadLfrAmdLoaderTask,
+		final DownloadNodeModuleTask downloadMetalCliTask,
+		final ExecuteNpmTask npmInstallTask) {
 
 		FileCollection fileCollection = transpileJSTask.getSourceFiles();
 
 		if (fileCollection.isEmpty()) {
 			transpileJSTask.setDependsOn(Collections.emptySet());
 			transpileJSTask.setEnabled(false);
+
+			return;
 		}
+
+		transpileJSTask.dependsOn(
+			downloadLfrAmdLoaderTask, downloadMetalCliTask, npmInstallTask);
+
+		transpileJSTask.setScriptFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						downloadMetalCliTask.getModuleDir(), "index.js");
+				}
+
+			});
+
+		transpileJSTask.soyDependency(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return
+						npmInstallTask.getWorkingDir() +
+							"/node_modules/metal*/src/**/*.soy";
+				}
+
+			});
 	}
 
 	protected void configureTaskTranspileJSForJavaPlugin(

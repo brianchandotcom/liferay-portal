@@ -83,17 +83,6 @@ public class PushNotificationsDeviceLocalServiceImpl
 	}
 
 	@Override
-	public void resetPushNotificationSenders() {
-		for (Map.Entry<String, PushNotificationsSender> entry :
-				_pushNotificationsSenders.entrySet()) {
-
-			PushNotificationsSender pushNotificationsSender = entry.getValue();
-
-			pushNotificationsSender.reset();
-		}
-	}
-
-	@Override
 	public void sendPushNotification(
 			long[] toUserIds, JSONObject payloadJSONObject)
 		throws PortalException {
@@ -124,25 +113,11 @@ public class PushNotificationsDeviceLocalServiceImpl
 			String platform, List<String> tokens, JSONObject payloadJSONObject)
 		throws PortalException {
 
-		sendPushNotification(platform, tokens, payloadJSONObject, null);
-	}
-
-	@Override
-	public void sendPushNotification(
-			String platform, List<String> tokens, JSONObject payloadJSONObject,
-			Map<String, Object> configuration)
-		throws PortalException {
-
 		PushNotificationsSender pushNotificationsSender =
 			_pushNotificationsSenders.get(platform);
 
 		if (pushNotificationsSender == null) {
 			return;
-		}
-
-		if (configuration != null) {
-			pushNotificationsSender = pushNotificationsSender.create(
-				configuration);
 		}
 
 		Exception exception = null;

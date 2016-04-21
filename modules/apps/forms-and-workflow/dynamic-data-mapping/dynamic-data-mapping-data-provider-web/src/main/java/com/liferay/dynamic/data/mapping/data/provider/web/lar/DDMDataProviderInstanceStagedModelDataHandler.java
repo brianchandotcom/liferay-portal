@@ -129,8 +129,8 @@ public class DDMDataProviderInstanceStagedModelDataHandler
 
 		if (ddmDataProvider == null) {
 			throw new IllegalStateException(
-				"No such DataProvider of type " + dataProviderInstance.getType()
-			);
+				"No such DataProvider of type " +
+					dataProviderInstance.getType());
 		}
 
 		long userId = portletDataContext.getUserId(

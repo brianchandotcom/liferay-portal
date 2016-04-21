@@ -73,8 +73,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 			PortalUtil.getDefaultCompanyId(),
 			Arrays.asList(
 				LocaleUtil.CANADA_FRENCH, LocaleUtil.SPAIN, LocaleUtil.US),
-			LocaleUtil.US
-		);
+			LocaleUtil.US);
 
 		_nameMap = new HashMap<>();
 

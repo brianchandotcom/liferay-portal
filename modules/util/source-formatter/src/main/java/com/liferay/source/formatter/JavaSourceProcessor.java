@@ -1022,6 +1022,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 			newContent, fileName);
 
+		newContent = fixLineStartingWithCloseParenthesis(newContent, fileName);
+
 		pos = newContent.indexOf("\npublic ");
 
 		if (pos != -1) {
@@ -1212,6 +1214,53 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				return StringUtil.replaceFirst(
 					content, "\n\n" + tabs + "}\n", "\n" + tabs + "}\n", pos);
+			}
+		}
+
+		return content;
+	}
+
+	protected String fixLineStartingWithCloseParenthesis(
+		String content, String fileName) {
+
+		Matcher matcher = _lineStartingWithOpenParenthesisPattern.matcher(
+			content);
+
+		while (matcher.find()) {
+			String tabs = matcher.group(2);
+
+			int lineCount = getLineCount(content, matcher.start(2));
+
+			String lastCharacterPreviousLine = matcher.group(1);
+
+			if (lastCharacterPreviousLine.equals(StringPool.OPEN_PARENTHESIS)) {
+				processErrorMessage(
+					fileName,
+					"line break: " + fileName + " " +
+						getLineCount(content, matcher.start(1)));
+
+				return content;
+			}
+
+			while (true) {
+				lineCount--;
+
+				String line = getLine(content, lineCount);
+
+				if (getLeadingTabCount(line) != tabs.length()) {
+					continue;
+				}
+
+				String trimmedLine = StringUtil.trimLeading(line);
+
+				if (trimmedLine.startsWith(").") ||
+					trimmedLine.startsWith("@")) {
+
+					break;
+				}
+
+				return StringUtil.replaceFirst(
+					content, "\n" + tabs, StringPool.BLANK, matcher.start());
 			}
 		}
 
@@ -4322,6 +4371,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _javaTermAccessLevelModifierExcludes;
 	private List<String> _javaTermSortExcludes;
 	private List<String> _lineLengthExcludes;
+	private final Pattern _lineStartingWithOpenParenthesisPattern =
+		Pattern.compile("(.)\n+(\t+)\\)[^.\n].*\n");
 	private final Pattern _logLevelPattern = Pattern.compile(
 		"\n(\t+)_log.(debug|error|info|trace|warn)\\(");
 	private final Pattern _logPattern = Pattern.compile(

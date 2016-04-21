@@ -212,8 +212,7 @@ public class JournalFolderStagedModelDataHandler
 				},
 				folder.getFolderId(),
 				JournalFolderConstants.
-					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW
-			);
+					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW);
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(

@@ -94,8 +94,7 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 				DDLRecordSet.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "form-entries", true, false, null,
-				DDLRecord.class.getName())
-		);
+				DDLRecord.class.getName()));
 	}
 
 	protected DynamicQuery createRecordSetDynamicQuery() {

@@ -471,8 +471,7 @@ public class ObjectServiceTrackerMapTest {
 							Emitter<TrackedOne> emitter) {
 						}
 
-					}
-				)) {
+					})) {
 
 			ServiceRegistration<TrackedOne> serviceRegistration1 =
 				registerService(new TrackedOne());

@@ -131,8 +131,8 @@ public class PageSubscriptionPortletConfigurationIcon
 			if (WikiPagePermissionChecker.contains(
 					wikiRequestHelper.getPermissionChecker(), page,
 					ActionKeys.SUBSCRIBE) &&
-				(wikiGroupServiceOverriddenConfiguration.emailPageAddedEnabled(
-					) ||
+				(wikiGroupServiceOverriddenConfiguration.
+					emailPageAddedEnabled() ||
 				 wikiGroupServiceOverriddenConfiguration.
 					 emailPageUpdatedEnabled())) {
 

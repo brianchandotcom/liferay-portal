@@ -571,8 +571,7 @@ public class UIItemsBuilder {
 				null, DLFileEntryConstants.getClassName(),
 				HtmlUtil.unescape(_fileEntry.getTitle()), null,
 				String.valueOf(_fileEntry.getFileEntryId()),
-				LiferayWindowState.POP_UP.toString(), null, _request
-			);
+				LiferayWindowState.POP_UP.toString(), null, _request);
 		}
 		catch (Exception e) {
 			throw new SystemException("Unable to create permissions URL", e);

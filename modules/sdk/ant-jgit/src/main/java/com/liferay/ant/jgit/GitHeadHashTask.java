@@ -88,8 +88,7 @@ public class GitHeadHashTask extends Task {
 
 			revWalk.setTreeFilter(
 				AndTreeFilter.create(
-					PathFilter.create(relativePath), TreeFilter.ANY_DIFF
-				));
+					PathFilter.create(relativePath), TreeFilter.ANY_DIFF));
 
 			RevCommit revCommit = revWalk.next();
 

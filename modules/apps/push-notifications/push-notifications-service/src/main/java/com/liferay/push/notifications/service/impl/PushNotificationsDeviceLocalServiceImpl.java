@@ -16,29 +16,181 @@ package com.liferay.push.notifications.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.push.notifications.messaging.DestinationNames;
+import com.liferay.push.notifications.model.PushNotificationsDevice;
+import com.liferay.push.notifications.sender.BaseResponse;
+import com.liferay.push.notifications.sender.PushNotificationsSender;
 import com.liferay.push.notifications.service.base.PushNotificationsDeviceLocalServiceBaseImpl;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 /**
- * The implementation of the push notifications device local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.push.notifications.service.PushNotificationsDeviceLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
+ * @author Silvio Santos
  * @author Bruno Farache
- * @see PushNotificationsDeviceLocalServiceBaseImpl
- * @see com.liferay.push.notifications.service.PushNotificationsDeviceLocalServiceUtil
  */
 @ProviderType
 public class PushNotificationsDeviceLocalServiceImpl
 	extends PushNotificationsDeviceLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.push.notifications.service.PushNotificationsDeviceLocalServiceUtil} to access the push notifications device local service.
-	 */
+	@Override
+	public PushNotificationsDevice addPushNotificationsDevice(
+		long userId, String platform, String token) {
+
+		long pushNotificationsDeviceId = counterLocalService.increment();
+
+		PushNotificationsDevice pushNotificationsDevice =
+			pushNotificationsDevicePersistence.create(
+				pushNotificationsDeviceId);
+
+		pushNotificationsDevice.setUserId(userId);
+		pushNotificationsDevice.setCreateDate(new Date());
+		pushNotificationsDevice.setPlatform(platform);
+		pushNotificationsDevice.setToken(token);
+
+		pushNotificationsDevicePersistence.update(pushNotificationsDevice);
+
+		return pushNotificationsDevice;
+	}
+
+	@Override
+	public PushNotificationsDevice deletePushNotificationsDevice(String token)
+		throws PortalException {
+
+		PushNotificationsDevice pushNotificationsDevice =
+			pushNotificationsDevicePersistence.findByToken(token);
+
+		pushNotificationsDevicePersistence.remove(pushNotificationsDevice);
+
+		return pushNotificationsDevice;
+	}
+
+	@Override
+	public List<PushNotificationsDevice> getPushNotificationsDevices(
+		int start, int end, OrderByComparator orderByComparator) {
+
+		return pushNotificationsDevicePersistence.findAll(
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public void resetPushNotificationSenders() {
+		for (Map.Entry<String, PushNotificationsSender> entry :
+				_pushNotificationsSenders.entrySet()) {
+
+			PushNotificationsSender pushNotificationsSender = entry.getValue();
+
+			pushNotificationsSender.reset();
+		}
+	}
+
+	@Override
+	public void sendPushNotification(
+			long[] toUserIds, JSONObject payloadJSONObject)
+		throws PortalException {
+
+		for (String platform : _pushNotificationsSenders.keySet()) {
+			List<String> tokens = new ArrayList<>();
+
+			List<PushNotificationsDevice> pushNotificationsDevices =
+				pushNotificationsDevicePersistence.findByU_P(
+					toUserIds, platform, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			for (PushNotificationsDevice pushNotificationsDevice :
+					pushNotificationsDevices) {
+
+				tokens.add(pushNotificationsDevice.getToken());
+			}
+
+			if (tokens.isEmpty()) {
+				continue;
+			}
+
+			sendPushNotification(platform, tokens, payloadJSONObject);
+		}
+	}
+
+	@Override
+	public void sendPushNotification(
+			String platform, List<String> tokens, JSONObject payloadJSONObject)
+		throws PortalException {
+
+		sendPushNotification(platform, tokens, payloadJSONObject, null);
+	}
+
+	@Override
+	public void sendPushNotification(
+			String platform, List<String> tokens, JSONObject payloadJSONObject,
+			Map<String, Object> configuration)
+		throws PortalException {
+
+		PushNotificationsSender pushNotificationsSender =
+			_pushNotificationsSenders.get(platform);
+
+		if (pushNotificationsSender == null) {
+			return;
+		}
+
+		if (configuration != null) {
+			pushNotificationsSender = pushNotificationsSender.create(
+				configuration);
+		}
+
+		Exception exception = null;
+
+		try {
+			pushNotificationsSender.send(platform, tokens, payloadJSONObject);
+		}
+		catch (PortalException pe) {
+			exception = pe;
+
+			throw pe;
+		}
+		catch (Exception e) {
+			exception = e;
+
+			throw new PortalException(e);
+		}
+		finally {
+			if (exception != null) {
+				MessageBusUtil.sendMessage(
+					DestinationNames.PUSH_NOTIFICATION_RESPONSE,
+					new BaseResponse(platform, exception));
+			}
+		}
+	}
+
+	@Override
+	public void updateToken(String oldToken, String newToken)
+		throws PortalException {
+
+		PushNotificationsDevice oldPushNotificationsDevice =
+			deletePushNotificationsDevice(oldToken);
+
+		PushNotificationsDevice newPushNotificationsDevice =
+			pushNotificationsDevicePersistence.fetchByToken(newToken);
+
+		if (newPushNotificationsDevice == null) {
+			addPushNotificationsDevice(
+				oldPushNotificationsDevice.getUserId(),
+				oldPushNotificationsDevice.getPlatform(), newToken);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PushNotificationsDeviceLocalServiceImpl.class);
+
+	@BeanReference(name = "pushNotificationsSenders")
+	private Map<String, PushNotificationsSender> _pushNotificationsSenders;
+
 }

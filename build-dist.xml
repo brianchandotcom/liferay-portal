@@ -1827,13 +1827,24 @@ wrapper.java.additional.11="-Dfile.encoding=UTF-8"]]></replacevalue>
 		</if>
 
 		<if>
-			<available file="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}" />
+			<not>
+				<available file="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}" />
+			</not>
 			<then>
-				<antcall target="unzip-weblogic-custom" />
+				<trycatch>
+					<try>
+						<get
+							dest="${app.server.parent.dir}"
+							src="http://mirrors/files.liferay.com/private/apps/oracle/weblogicas/12/${app.server.weblogic.custom.zip.name}"
+						/>
+
+						<antcall target="unzip-weblogic-custom" />
+					</try>
+					<catch>
+						<antcall target="unzip-weblogic-original" />
+					</catch>
+				</trycatch>
 			</then>
-			<else>
-				<antcall target="unzip-weblogic-original" />
-			</else>
 		</if>
 	</target>
 

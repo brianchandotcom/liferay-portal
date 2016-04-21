@@ -32,15 +32,10 @@ TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 						<portlet:param name="trashEntryId" value="<%= String.valueOf(trashEntry.getEntryId()) %>" />
 					</portlet:actionURL>
 
-					<%
-					String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "checkEntry', {trashEntryId: " + trashEntry.getEntryId() + ", uri: '" + restoreEntryURL.toString() + "'}); void(0);";
-					%>
-
 					<liferay-ui:icon
-						icon="undo"
 						id="restoreEntryButton"
 						message="restore"
-						url="<%= taglibURL %>"
+						url="<%= restoreEntryURL.toString() %>"
 					/>
 				</c:when>
 				<c:when test="<%= !trashHandler.isRestorable(trashEntry.getClassPK()) && trashHandler.isMovable() %>">
@@ -61,7 +56,6 @@ TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 					%>
 
 					<liferay-ui:icon
-						icon="undo"
 						id="restoreEntryButton"
 						message="restore"
 						onClick="<%= taglibOnClick %>"
@@ -81,7 +75,6 @@ TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 				%>
 
 				<liferay-ui:icon
-					icon="remove"
 					id="removeEntryButton"
 					message="delete"
 					onClick="<%= taglibOnClick %>"
@@ -110,7 +103,6 @@ TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 				%>
 
 				<liferay-ui:icon
-					icon="undo"
 					id="moveEntryButton"
 					message="restore"
 					onClick="<%= taglibOnClick %>"
@@ -130,7 +122,6 @@ TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 				%>
 
 				<liferay-ui:icon
-					icon="remove"
 					id="removeEntryButton"
 					message="delete"
 					onClick="<%= taglibOnClick %>"

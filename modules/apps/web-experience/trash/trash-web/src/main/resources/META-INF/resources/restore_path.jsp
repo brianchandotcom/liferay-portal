@@ -82,23 +82,6 @@ if (Validator.isNull(redirect)) {
 	/>
 </c:if>
 
-<portlet:resourceURL id="checkEntry" var="checkEntryURL" />
-
-<portlet:renderURL var="duplicateEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="mvcPath" value="/restore_entry.jsp" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
-</portlet:renderURL>
-
-<aui:script use="liferay-restore-entry">
-	new Liferay.RestoreEntry(
-		{
-			checkEntryURL: '<%= checkEntryURL.toString() %>',
-			duplicateEntryURL: '<%= duplicateEntryURL.toString() %>',
-			namespace: '<portlet:namespace />'
-		}
-	);
-</aui:script>
-
 <portlet:actionURL name="moveEntry" var="selectContainerURL" />
 
 <aui:form action="<%= selectContainerURL.toString() %>" method="post" name="selectContainerForm">

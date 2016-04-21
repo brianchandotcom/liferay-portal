@@ -129,7 +129,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#RESTORE" value1="Restore" />
 
-		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_WARNING_MESSAGE" value1="An entry with name ${assetName} already exists." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="An entry with name ${assetName} already exists." />
 
 		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_WARNING_OVERWRITE_RADIO" />
 
@@ -143,7 +143,7 @@
 		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_TABLE_TYPE" value1="${assetType}" />
 		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#RESTORE" value1="Restore" />
-		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_WARNING_MESSAGE" value1="An entry with name ${assetName} already exists." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="An entry with name ${assetName} already exists." />
 		<execute function="Click" locator1="RecycleBin#RECYCLE_BIN_WARNING_KEEP_AND_RENAME_RADIO" />
 		<execute function="Type" locator1="RecycleBin#RECYCLE_BIN_WARNING_KEEP_AND_RENAME_FIELD" value1="${newAssetName}" />
 		<execute macro="Button#clickSave" />

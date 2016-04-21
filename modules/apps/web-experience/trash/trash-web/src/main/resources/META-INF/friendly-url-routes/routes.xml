@@ -35,6 +35,11 @@
 		<overridden-parameter name="status">8</overridden-parameter>
 	</route>
 	<route>
+		<pattern>/entry/{trashEntryId:\d+}/restore</pattern>
+		<implicit-parameter name="mvcPath">/restore_entry.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
 		<pattern>/entries</pattern>
 		<ignored-parameter name="mvcPath" />
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>

@@ -47,36 +47,40 @@ String oldName = ParamUtil.getString(request, "oldName");
 boolean overridable = ParamUtil.getBoolean(request, "overridable");
 %>
 
-<div class="alert alert-danger hide" id="<portlet:namespace />errorMessageContainer"></div>
+<div class="container-fluid-1280">
+	<div class="alert alert-danger hide" id="<portlet:namespace />errorMessageContainer"></div>
 
-<div class="alert alert-warning" id="<portlet:namespace />messageContainer">
-	<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(oldName)} %>" key="an-entry-with-name-x-already-exists" translateArguments="<%= false %>" />
+	<aui:form action="<%= restoreURL %>" enctype="multipart/form-data" method="post" name="restoreTrashEntryFm" onSubmit="event.preventDefault();">
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="trashEntryId" type="hidden" value="<%= trashEntryId %>" />
+		<aui:input name="duplicateEntryId" type="hidden" value="<%= duplicateEntryId %>" />
+		<aui:input name="oldName" type="hidden" value="<%= oldName %>" />
+
+		<aui:fieldset-group markupview="lexicon">
+			<aui:fieldset>
+				<p class="text-muted" id="<portlet:namespace />messageContainer">
+					<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(oldName)} %>" key="an-entry-with-name-x-already-exists" translateArguments="<%= false %>" />
+				</p>
+
+				<c:choose>
+					<c:when test="<%= overridable %>">
+						<aui:input checked="<%= true %>" id="override" label="<%= HtmlUtil.escape(overrideMessage) %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />
+
+						<aui:input id="rename" label="<%= HtmlUtil.escape(renameMessage) %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
+					</c:when>
+					<c:otherwise>
+						<aui:input id="rename" name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.RENAME %>" />
+					</c:otherwise>
+				</c:choose>
+
+				<aui:input cssClass="new-file-name" label='<%= overridable ? "" : HtmlUtil.escape(renameMessage) %>' name="newName" title="<%= HtmlUtil.escapeAttribute(renameMessage) %>" value="<%= TrashUtil.getNewName(themeDisplay, className, classPK, oldName) %>" />
+			</aui:fieldset>
+		</aui:fieldset-group>
+
+		<aui:button-row>
+			<aui:button type="submit" />
+
+			<aui:button cssClass="btn-cancel" type="cancel" />
+		</aui:button-row>
+	</aui:form>
 </div>
-
-<aui:form action="<%= restoreURL %>" enctype="multipart/form-data" method="post" name="restoreTrashEntryFm" onSubmit="event.preventDefault();">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="trashEntryId" type="hidden" value="<%= trashEntryId %>" />
-	<aui:input name="duplicateEntryId" type="hidden" value="<%= duplicateEntryId %>" />
-	<aui:input name="oldName" type="hidden" value="<%= oldName %>" />
-
-	<aui:fieldset>
-		<c:choose>
-			<c:when test="<%= overridable %>">
-				<aui:input checked="<%= true %>" id="override" label="<%= HtmlUtil.escape(overrideMessage) %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.OVERRIDE %>" />
-
-				<aui:input id="rename" label="<%= HtmlUtil.escape(renameMessage) %>" name="<%= Constants.CMD %>" type="radio" value="<%= Constants.RENAME %>" />
-			</c:when>
-			<c:otherwise>
-				<aui:input id="rename" name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.RENAME %>" />
-			</c:otherwise>
-		</c:choose>
-
-		<aui:input cssClass="new-file-name" label='<%= overridable ? "" : HtmlUtil.escape(renameMessage) %>' name="newName" title="<%= HtmlUtil.escapeAttribute(renameMessage) %>" value="<%= TrashUtil.getNewName(themeDisplay, className, classPK, oldName) %>" />
-	</aui:fieldset>
-
-	<aui:button-row>
-		<aui:button cssClass="btn-cancel" type="cancel" />
-
-		<aui:button type="submit" />
-	</aui:button-row>
-</aui:form>

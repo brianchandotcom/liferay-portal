@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.servlet.PortalWebResources;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 import javax.servlet.ServletContext;
 
@@ -40,10 +42,11 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class ThemeContributorExtension implements Extension {
 
 	public ThemeContributorExtension(
-		Bundle bundle, BundleWebResourcesImpl bundleWebResources) {
+		Bundle bundle, BundleWebResourcesImpl bundleWebResources, int weight) {
 
 		_bundle = bundle;
 		_bundleWebResources = bundleWebResources;
+		_weight = weight;
 	}
 
 	@Override
@@ -58,6 +61,10 @@ public class ThemeContributorExtension implements Extension {
 		String filter =
 			"(&(objectClass=" + ServletContext.class.getName() +
 				")(osgi.web.symbolicname=" + _bundle.getSymbolicName() + "))";
+
+		final Dictionary<String, Object> properties = new Hashtable<>();
+
+		properties.put("service.ranking", _weight);
 
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, filter,
@@ -88,7 +95,7 @@ public class ThemeContributorExtension implements Extension {
 					serviceRegistrations.add(
 						bundleContext.registerService(
 							BundleWebResources.class, _bundleWebResources,
-							null));
+							properties));
 
 					return serviceRegistrations;
 				}
@@ -124,6 +131,7 @@ public class ThemeContributorExtension implements Extension {
 	private final BundleWebResourcesImpl _bundleWebResources;
 	private ServiceTracker<ServletContext, Collection<ServiceRegistration<?>>>
 		_serviceTracker;
+	private final int _weight;
 
 	private class ThemeContributorPortalWebResources
 		implements PortalWebResources {

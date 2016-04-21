@@ -781,13 +781,3 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		$('#<portlet:namespace />' + className + 'ddmStructureFieldMessage').html(_.escape(message));
 	}
 </aui:script>
-
-<%!
-private String _getSectionId(String name) {
-	return TextFormatter.format(name, TextFormatter.M);
-}
-
-private String _getSectionJsp(String name) {
-	return TextFormatter.format(name, TextFormatter.N);
-}
-%>

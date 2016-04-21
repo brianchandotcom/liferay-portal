@@ -1,1 +1,1 @@
-See https://issues.liferay.com for a list of changes for this version.
+1 See https://issues.liferay.com for a list of changes for this version.

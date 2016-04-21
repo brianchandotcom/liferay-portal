@@ -18,12 +18,43 @@
 
 <%
 PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
+PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_APP_REGISTRY);
+
+PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategoryRegistry);
 
 PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(SimulationPanelCategory.SIMULATION);
 %>
 
 <div class="simulation-menu" data-qa-id="simulationMenuBody" id="<portlet:namespace />simulationPanelContainer">
-	<div id="<portlet:namespace />simulationCategoriesContainer">
-		<liferay-application-list:panel-category panelCategory="<%= panelCategory %>" showHeader="<%= false %>" />
+	<div aria-multiselectable="true" class="panel-group" role="tablist">
+
+		<%
+		for (PanelApp panelApp : panelCategoryHelper.getAllPanelApps(panelCategory.getKey())) {
+		%>
+
+			<div class="panel">
+				<div class="panel-heading" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Header" role="tab">
+					<div class="panel-title">
+						<div aria-controls="<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Collapse" aria-expanded="<%= true %>" class="collapse-icon collapse-icon-middle panel-toggler" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Collapse" role="button">
+							<span class="category-name truncate-text"><%= panelApp.getLabel(locale) %></span>
+
+							<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
+
+							<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
+						</div>
+					</div>
+				</div>
+
+				<div aria-expanded="<%= true %>" aria-labelledby="<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Header" class="collapse in panel-collapse" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelApp.getKey()) %>Collapse" role="tabpanel">
+					<div class="simulation-app-panel-body">
+						<liferay-application-list:panel-app panelApp="<%= panelApp %>" />
+					</div>
+				</div>
+			</div>
+
+		<%
+		}
+		%>
+
 	</div>
 </div>

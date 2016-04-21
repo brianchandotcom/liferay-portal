@@ -16,65 +16,53 @@
 
 <%@ include file="/init.jsp" %>
 
-<li id="<portlet:namespace />simulationDeviceContainer">
-	<h3 class="list-group-heading"><liferay-ui:message key="device" /></h3>
-
+<div id="<portlet:namespace />simulationDeviceContainer">
 	<div class="list-group-panel">
 		<div class="devices">
-			<div class="container-fluid default-devices">
-				<div class="col-md-3 col-sm-12 lfr-device-item selected text-center" data-device="smartphone">
-					<aui:icon cssClass="icon icon-monospaced" image="mobile-portrait" markupView="lexicon" />
+			<div class="container-fluid default-devices flex-container">
+				<div class="flex-item-expand hidden-sm hidden-xs lfr-device-item selected text-center" data-device="desktop">
+					<aui:icon cssClass="icon icon-monospaced" image="desktop" markupView="lexicon" />
 
-					<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="mobile-landscape" markupView="lexicon" />
-
-					<h5 class="text-default"><%= LanguageUtil.get(resourceBundle, "mobile") %></h5>
-
-					<h5 class="text-default">768px</h5>
+					<small><%= LanguageUtil.get(resourceBundle, "desktop") %></small>
 				</div>
 
-				<div class="col-md-3 hidden-sm hidden-xs lfr-device-item text-center" data-device="tablet">
+				<div class="flex-item-expand hidden-sm hidden-xs lfr-device-item text-center" data-device="tablet">
 					<aui:icon cssClass="icon icon-monospaced" image="tablet-portrait" markupView="lexicon" />
 
 					<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="tablet-landscape" markupView="lexicon" />
 
-					<h5 class="text-default"><%= LanguageUtil.get(resourceBundle, "tablet") %></h5>
-
-					<h5 class="text-default">1024px</h5>
+					<small><%= LanguageUtil.get(resourceBundle, "tablet") %></small>
 				</div>
 
-				<div class="col-md-3 hidden-sm hidden-xs lfr-device-item text-center" data-device="desktop">
-					<aui:icon cssClass="icon icon-monospaced" image="desktop" markupView="lexicon" />
+				<div class="flex-item-expand lfr-device-item text-center" data-device="smartphone">
+					<aui:icon cssClass="icon icon-monospaced" image="mobile-portrait" markupView="lexicon" />
 
-					<h5 class="text-default"><%= LanguageUtil.get(resourceBundle, "desktop") %></h5>
+					<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="mobile-landscape" markupView="lexicon" />
 
-					<h5 class="text-default">1280px</h5>
+					<small><%= LanguageUtil.get(resourceBundle, "mobile") %></small>
 				</div>
 
-				<div class="col-md-3 hidden-sm hidden-xs lfr-device-item text-center" data-device="autosize">
+				<div class="flex-item-expand hidden-sm hidden-xs lfr-device-item text-center" data-device="autosize">
 					<aui:icon cssClass="icon icon-monospaced" image="full-size" markupView="lexicon" />
 
-					<h5 class="text-default"><%= LanguageUtil.get(resourceBundle, "autosize") %></h5>
+					<small><%= LanguageUtil.get(resourceBundle, "autosize") %></small>
+				</div>
 
-					<h5 class="text-default">100%</h5>
+				<div class="flex-item-expand hidden-sm hidden-xs lfr-device-item text-center" data-device="custom">
+					<aui:icon cssClass="icon icon-monospaced" image="cog" markupView="lexicon" />
+
+					<small><liferay-ui:message key="custom" /></small>
 				</div>
 			</div>
 
-			<div class="container-fluid custom-devices hidden-sm hidden-xs">
-				<aui:input inlineField="<%= true %>" inlineLabel="left" name="width" size="4" value="400" wrapperCssClass="col-xs-5" />
+			<div class="container-fluid custom-devices flex-container hidden-sm hidden-xs hide" id="<portlet:namespace />customDeviceContainer">
+				<aui:input cssClass="input-sm" inlineField="<%= true %>" inlineLabel="left" label='<%= LanguageUtil.get(request, "height") + " (px):" %>' name="height" size="4" value="600" wrapperCssClass="flex-item-expand" />
 
-				<aui:input inlineField="<%= true %>" inlineLabel="left" name="height" size="4" value="400" wrapperCssClass="col-xs-5" />
-
-				<span class="col-xs-2 lfr-device-item" data-device="custom">
-					<aui:icon cssClass="icon icon-monospaced" image="cog" markupView="lexicon" />
-				</span>
+				<aui:input cssClass="input-sm" inlineField="<%= true %>" inlineLabel="left" label='<%= LanguageUtil.get(request, "width") + " (px):" %>' name="width" size="4" value="600" wrapperCssClass="flex-item-expand" />
 			</div>
 		</div>
-
-		<div class="preview-info-message">
-			<h5 class="text-default"><%= LanguageUtil.get(resourceBundle, "preview-may-not-be-accurate") %></h5>
-		</div>
 	</div>
-</li>
+</div>
 
 <aui:script use="liferay-product-navigation-simulation-device">
 	var simulationDevice = new Liferay.SimulationDevice(
@@ -90,13 +78,13 @@
 				},
 				desktop: {
 					height: 1050,
+					selected: true,
 					width: 1300
 				},
 				smartphone: {
 					height: 640,
 					preventTransition: true,
 					rotation: true,
-					selected: true,
 					skin: 'smartphone',
 					width: 400
 				},
@@ -119,5 +107,24 @@
 		function() {
 			simulationDevice.destroy();
 		}
+	);
+
+	A.one('.devices').delegate(
+		'click',
+		function(event) {
+			var currentTarget = event.currentTarget;
+
+			var dataDevice = currentTarget.attr('data-device');
+
+			var customDeviceContainer = A.one('#<portlet:namespace />customDeviceContainer');
+
+			if (dataDevice === 'custom') {
+				customDeviceContainer.show();
+			}
+			else {
+				customDeviceContainer.hide();
+			}
+		},
+		'.lfr-device-item'
 	);
 </aui:script>

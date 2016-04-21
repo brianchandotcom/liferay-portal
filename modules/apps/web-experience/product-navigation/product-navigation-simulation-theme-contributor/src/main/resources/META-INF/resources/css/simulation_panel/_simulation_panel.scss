@@ -1,7 +1,15 @@
 .lfr-simulation-panel {
-	width: 350px;
+	width: 320px;
 
 	.custom-devices {
+		background-color: #3A4D5A;
+		margin: 25px;
+		padding: 5px;
+
+		label {
+			font-size: 12px;
+		}
+
 		.form-control {
 			padding: 8px 6px;
 		}
@@ -18,15 +26,19 @@
 	.lfr-device-item {
 		cursor: pointer;
 
-		&.selected .icon {
-			background-color: #3A4D5A;
+		&.selected {
+			color: #FFF;
+
+			.icon {
+				background-color: #3A4D5A;
+			}
 		}
 	}
 
-	.preview-info-message {
-		background-color: #1B2228;
-		margin: 20px;
-		padding: 5px 20px;
+	.panel {
+		.simulation-app-panel-body {
+			padding-top: 20px;
+		}
 	}
 }
 
@@ -168,7 +180,7 @@
 	display: none;
 	left: 0;
 	position: fixed;
-	right: 350px;
+	right: 320px;
 	top: 0;
 	z-index: 500;
 

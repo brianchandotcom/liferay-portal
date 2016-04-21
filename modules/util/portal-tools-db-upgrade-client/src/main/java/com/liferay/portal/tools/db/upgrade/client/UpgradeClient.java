@@ -624,12 +624,12 @@ public class UpgradeClient {
 		String value = _portalUpgradeExtProperties.getProperty("liferay.home");
 
 		if ((value == null) || value.isEmpty()) {
-			System.out.println("Please enter your Liferay home (../): ");
+			System.out.println("Please enter your Liferay home (../../): ");
 
 			String response = _consoleReader.readLine();
 
 			if (response.isEmpty()) {
-				response = "../";
+				response = "../../";
 			}
 
 			File liferayHome = new File(response);

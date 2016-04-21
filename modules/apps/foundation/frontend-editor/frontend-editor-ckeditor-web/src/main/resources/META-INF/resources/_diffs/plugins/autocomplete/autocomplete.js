@@ -5,11 +5,13 @@
 	var KeyMap = A.Event.KeyMap;
 	var Lang = A.Lang;
 
+	var CSS_LFR_AC_CONTENT = 'lfr-ac-content';
+
 	var STR_EDITOR = 'editor';
 
 	var STR_SPACE = ' ';
 
-	var TPL_REPLACE_HTML = '<span class="lfr-ac-content">{html}</span>';
+	var TPL_REPLACE_HTML = '<span class="' + CSS_LFR_AC_CONTENT + '">{html}</span>';
 
 	var AutoCompleteCKEditor = function() {};
 
@@ -204,7 +206,7 @@
 						}
 					}
 
-					return !hasTrigger;
+					return !(hasTrigger || node.type === CKEDITOR.NODE_ELEMENT && node.$.className === CSS_LFR_AC_CONTENT);
 				};
 
 				triggerWalker.checkBackward();
@@ -300,6 +302,9 @@
 					if (KeyMap.isKey(event.keyCode, 'enter') || !inlineEditor) {
 						instance._onInputKey(event);
 					}
+				}
+				else if (acVisible && event.keyCode === KeyMap.ESC) {
+					instance.hide();
 				}
 				else {
 					instance._processCaretTask();

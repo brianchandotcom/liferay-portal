@@ -28,9 +28,46 @@ public class JSONCurlUtil {
 	public static String get(String curlOptions, String jsonPath)
 		throws Exception {
 
+		curlOptions = curlOptions.trim();
+
+		curlOptions = curlOptions.replaceAll("\\s+\\\\?\\s+", " ");
+
+		StringBuilder sb = new StringBuilder();
+
+		for (String curlOption : curlOptions.split(" ")) {
+			if (curlOption.matches("https?:\\/\\/.+")) {
+				sb.append(curlOption);
+			}
+			else if (curlOption.matches("[^\\=]*\\=[^\\=]*")) {
+				int x = curlOption.indexOf("=");
+
+				String param = curlOption.substring(0, x);
+				String value = curlOption.substring(x + 1);
+
+				if (value.startsWith("{") && value.endsWith("}") &&
+					OSDetector.isWindows()) {
+
+					value = value.replaceAll("\"", "\\\\\"");
+
+					value = "\"" + value + "\"";
+				}
+
+				sb.append(" ");
+				sb.append(param);
+				sb.append("=");
+				sb.append(value);
+			}
+			else {
+				sb.append(" ");
+				sb.append(curlOption);
+			}
+		}
+
 		Runtime runtime = Runtime.getRuntime();
 
-		Process process = runtime.exec("curl " + curlOptions);
+		System.out.println("curl " + sb.toString());
+
+		Process process = runtime.exec("curl " + sb.toString());
 
 		InputStreamReader inputStreamReader = new InputStreamReader(
 			process.getInputStream());
@@ -40,7 +77,7 @@ public class JSONCurlUtil {
 
 		String line = null;
 
-		StringBuilder sb = new StringBuilder();
+		sb = new StringBuilder();
 
 		while ((line = inputBufferedReader.readLine()) != null) {
 			sb.append(line);

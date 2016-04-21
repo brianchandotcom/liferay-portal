@@ -16,7 +16,6 @@ package com.liferay.push.notifications.sender.apple.internal;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
@@ -34,7 +33,6 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Silvio Santos
@@ -51,19 +49,6 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 		_certificatePath = certificatePath;
 		_certificatePassword = certificatePassword;
 		_sandbox = sandbox;
-	}
-
-	@Override
-	public PushNotificationsSender create(Map<String, Object> configuration) {
-		String certificatePath = MapUtil.getString(
-			configuration, PortletPropsKeys.APPLE_CERTIFICATE_PATH, null);
-		String certificatePassword = MapUtil.getString(
-			configuration, PortletPropsKeys.APPLE_CERTIFICATE_PASSWORD, null);
-		Boolean sandbox = (Boolean)configuration.get(
-			PortletPropsKeys.APPLE_SANDBOX);
-
-		return new ApplePushNotificationsSender(
-			certificatePath, certificatePassword, sandbox);
 	}
 
 	public String getCertificatePassword() {
@@ -97,16 +82,7 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 	}
 
 	@Override
-	public synchronized void reset() {
-		_apnsService = null;
-		_certificatePassword = null;
-		_certificatePath = null;
-		_sandbox = null;
-	}
-
-	@Override
-	public void send(
-			String platform, List<String> tokens, JSONObject payloadJSONObject)
+	public void send(List<String> tokens, JSONObject payloadJSONObject)
 		throws Exception {
 
 		ApnsService apnsService = getApnsService();

@@ -225,6 +225,20 @@ if (showSource) {
 
 		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) %> ? <%= editorConfigJSONObject %> : {};
 
+		if (editorConfig.extraPlugins) {
+
+			var extraPluginsArr = editorConfig.extraPlugins.split(',');
+
+			var extraPlugins = extraPluginsArr.reduce(function(prevVal, item, index) {
+				if (item !== 'ae_embed') {
+					prevVal.push(item);
+				}
+				return prevVal;
+			}, []).join(',');
+
+			editorConfig.extraPlugins = extraPlugins;
+		}
+		editorConfig.removePlugins = editorConfig.removePlugins ? editorConfig.removePlugins + ',ae_embed' : 'ae_embed';
 		editorConfig = A.merge(
 			{
 				title: '<%= LanguageUtil.get(resourceBundle, "rich-text-editor") %>'

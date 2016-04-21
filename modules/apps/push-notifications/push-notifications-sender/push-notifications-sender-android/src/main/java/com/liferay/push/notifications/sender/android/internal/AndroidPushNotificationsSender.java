@@ -21,79 +21,76 @@ import com.google.android.gcm.server.MulticastResult;
 import com.google.android.gcm.server.Result;
 import com.google.android.gcm.server.Sender;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
 import com.liferay.push.notifications.exception.PushNotificationsException;
 import com.liferay.push.notifications.messaging.DestinationNames;
 import com.liferay.push.notifications.sender.PushNotificationsSender;
 import com.liferay.push.notifications.sender.Response;
-import com.liferay.push.notifications.service.PushNotificationsDeviceLocalServiceUtil;
+import com.liferay.push.notifications.sender.android.internal.configuration.AndroidPushNotificationsSenderConfiguration;
+import com.liferay.push.notifications.service.PushNotificationsDeviceLocalService;
 
 import java.util.List;
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Silvio Santos
  * @author Bruno Farache
  */
+@Component(
+	configurationPid = "com.liferay.push.notifications.sender.android.internal.configuration.AndroidPushNotificationsSenderConfiguration",
+	immediate = true,
+	property = {"platform=" + AndroidPushNotificationsSender.PLATFORM}
+)
 public class AndroidPushNotificationsSender implements PushNotificationsSender {
 
-	public AndroidPushNotificationsSender() {
-	}
-
-	public AndroidPushNotificationsSender(String apiKey, Integer retries) {
-		_apiKey = apiKey;
-		_retries = retries;
-	}
-
-	public String getAPIKey() {
-		if (Validator.isNull(_apiKey)) {
-			_apiKey = PrefsPropsUtil.getString(
-				PortletPropsKeys.ANDROID_API_KEY,
-				PortletPropsValues.ANDROID_API_KEY);
-		}
-
-		return _apiKey;
-	}
-
-	public int getRetries() {
-		if (_retries == null) {
-			_retries = PrefsPropsUtil.getInteger(
-				PortletPropsKeys.ANDROID_RETRIES,
-				PortletPropsValues.ANDROID_RETRIES);
-		}
-
-		return _retries;
-	}
+	public static final String PLATFORM = "android";
 
 	@Override
 	public void send(List<String> tokens, JSONObject payloadJSONObject)
 		throws Exception {
 
-		Sender sender = getSender();
-
-		if (sender == null) {
-			return;
+		if (_sender == null) {
+			throw new PushNotificationsException(
+				"Android push notifications sender is not configured properly");
 		}
 
 		Message message = buildMessage(payloadJSONObject);
 
-		MulticastResult multicastResult = sender.send(
-			message, tokens, getRetries());
+		MulticastResult multicastResult = _sender.send(
+			message, tokens,
+			_androidPushNotificationsSenderConfiguration.retries());
 
 		validateMulticastResult(tokens, payloadJSONObject, multicastResult);
 	}
 
-	public void setAPIKey(String apiKey) {
-		_apiKey = apiKey;
-	}
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_androidPushNotificationsSenderConfiguration =
+			ConfigurableUtil.createConfigurable(
+				AndroidPushNotificationsSenderConfiguration.class, properties);
 
-	public void setRetries(int retries) {
-		_retries = retries;
+		String apiKey = _androidPushNotificationsSenderConfiguration.apiKey();
+
+		if (Validator.isNull(apiKey)) {
+			_sender = null;
+
+			return;
+		}
+
+		_sender = new Sender(apiKey);
 	}
 
 	protected Message buildMessage(JSONObject payloadJSONObject) {
@@ -106,20 +103,18 @@ public class AndroidPushNotificationsSender implements PushNotificationsSender {
 		return builder.build();
 	}
 
-	protected synchronized Sender getSender() throws Exception {
-		if (_sender == null) {
-			String apiKey = getAPIKey();
+	@Deactivate
+	protected void deactivate() {
+		_sender = null;
+	}
 
-			if (Validator.isNull(apiKey)) {
-				throw new PushNotificationsException(
-					"The property \"android.api.key\" is not set in " +
-						"portlet.properties");
-			}
+	@Reference(unbind = "-")
+	protected void setPushNotificationsDeviceLocalService(
+		PushNotificationsDeviceLocalService
+			pushNotificationsDeviceLocalService) {
 
-			_sender = new Sender(apiKey);
-		}
-
-		return _sender;
+		_pushNotificationsDeviceLocalService =
+			pushNotificationsDeviceLocalService;
 	}
 
 	protected void validateMulticastResult(
@@ -152,7 +147,7 @@ public class AndroidPushNotificationsSender implements PushNotificationsSender {
 				Validator.isNotNull(messageId)) {
 
 				try {
-					PushNotificationsDeviceLocalServiceUtil.updateToken(
+					_pushNotificationsDeviceLocalService.updateToken(
 						token, canonicalRegistrationId);
 				}
 				catch (Exception e) {
@@ -171,7 +166,7 @@ public class AndroidPushNotificationsSender implements PushNotificationsSender {
 					errorCodeName.equals(Constants.ERROR_NOT_REGISTERED)) {
 
 					try {
-						PushNotificationsDeviceLocalServiceUtil.
+						_pushNotificationsDeviceLocalService.
 							deletePushNotificationsDevice(token);
 					}
 					catch (Exception e) {
@@ -188,8 +183,10 @@ public class AndroidPushNotificationsSender implements PushNotificationsSender {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AndroidPushNotificationsSender.class);
 
-	private String _apiKey;
-	private Integer _retries;
-	private Sender _sender;
+	private volatile AndroidPushNotificationsSenderConfiguration
+		_androidPushNotificationsSenderConfiguration;
+	private PushNotificationsDeviceLocalService
+		_pushNotificationsDeviceLocalService;
+	private volatile Sender _sender;
 
 }

@@ -79,7 +79,8 @@ public class JavaImportsFormatter extends BaseImportsFormatter {
 			"(?m)^[ \t]*((?:package|import) .*;)\\s*^[ \t]*/\\*\\*",
 			"$1\n\n/**");
 
-		return content;
+		return ToolsUtil.stripFullyQualifiedClassNames(
+			content, newImports, packagePath);
 	}
 
 	protected String stripUnusedImports(

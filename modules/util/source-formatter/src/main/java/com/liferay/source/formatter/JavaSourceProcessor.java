@@ -989,6 +989,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			checkStringUtilReplace(fileName, newContent);
 		}
 
+		// LPS-65229
+
+		if (fileName.endsWith("ResourceCommand.java") &&
+			newContent.contains("ServletResponseUtil.sendFile(")) {
+
+			processErrorMessage(
+				fileName,
+				"Use PortletResponseUtil.sendFile instead of " +
+					"ServletResponseUtil.sendFile: " + fileName);
+		}
+
 		if (!fileName.endsWith("GetterUtilTest.java")) {
 			checkGetterUtilGet(fileName, newContent);
 		}

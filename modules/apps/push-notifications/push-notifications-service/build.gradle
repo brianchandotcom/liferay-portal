@@ -1,0 +1,8 @@
+buildService {
+	apiDir = "../push-notifications-api/src/main/java"
+	testDir = "../push-notifications-test/src/testIntegration/java"
+}
+
+dependencies {
+	provided project(":apps:push-notifications:push-notifications-api")
+}

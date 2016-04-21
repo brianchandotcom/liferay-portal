@@ -539,16 +539,6 @@ public class UpgradeClient {
 			}
 
 			System.out.println(
-				"Please enter your database host (" + dataSource.getHost() +
-					"): ");
-
-			response = _consoleReader.readLine();
-
-			if (!response.isEmpty()) {
-				dataSource.setHost(response);
-			}
-
-			System.out.println(
 				"Please enter your database JDBC driver class name(" +
 					dataSource.getClassName() + "): ");
 
@@ -566,6 +556,16 @@ public class UpgradeClient {
 
 			if (!response.isEmpty()) {
 				dataSource.setProtocol(response);
+			}
+
+			System.out.println(
+				"Please enter your database host (" + dataSource.getHost() +
+					"): ");
+
+			response = _consoleReader.readLine();
+
+			if (!response.isEmpty()) {
+				dataSource.setHost(response);
 			}
 
 			String port = null;
@@ -601,13 +601,13 @@ public class UpgradeClient {
 				}
 			}
 
-			System.out.println("Please enter your database password: ");
-
-			String password = _consoleReader.readLine();
-
 			System.out.println("Please enter your database username: ");
 
 			String username = _consoleReader.readLine();
+
+			System.out.println("Please enter your database password: ");
+
+			String password = _consoleReader.readLine();
 
 			_portalUpgradeDatabaseProperties.setProperty(
 				"jdbc.default.driverClassName", dataSource.getClassName());

@@ -739,20 +739,19 @@ public interface DDMTemplateModel extends AttachedModel, BaseModel<DDMTemplate>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.dynamic.data.mapping.model.DDMTemplate ddmTemplate);
+	public int compareTo(DDMTemplate ddmTemplate);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.dynamic.data.mapping.model.DDMTemplate> toCacheModel();
+	public CacheModel<DDMTemplate> toCacheModel();
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMTemplate toEscapedModel();
+	public DDMTemplate toEscapedModel();
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMTemplate toUnescapedModel();
+	public DDMTemplate toUnescapedModel();
 
 	@Override
 	public String toString();

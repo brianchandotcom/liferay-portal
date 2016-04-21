@@ -278,6 +278,46 @@ public class DLFileEntryWrapper implements DLFileEntry,
 		}
 	}
 
+	@Override
+	public DLFileEntry toEscapedModel() {
+		return new DLFileEntryWrapper(_dlFileEntry.toEscapedModel());
+	}
+
+	@Override
+	public DLFileEntry toUnescapedModel() {
+		return new DLFileEntryWrapper(_dlFileEntry.toUnescapedModel());
+	}
+
+	@Override
+	public DLFileEntryType getDLFileEntryType()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntry.getDLFileEntryType();
+	}
+
+	@Override
+	public DLFileVersion getFileVersion()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntry.getFileVersion();
+	}
+
+	@Override
+	public DLFileVersion getFileVersion(java.lang.String version)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntry.getFileVersion(version);
+	}
+
+	@Override
+	public DLFileVersion getLatestFileVersion(boolean trusted)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntry.getLatestFileVersion(trusted);
+	}
+
+	@Override
+	public DLFolder getFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntry.getFolder();
+	}
+
 	/**
 	* Returns the manual check in required of this document library file entry.
 	*
@@ -359,48 +399,6 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntry toEscapedModel() {
-		return new DLFileEntryWrapper(_dlFileEntry.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntry toUnescapedModel() {
-		return new DLFileEntryWrapper(_dlFileEntry.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryType getDLFileEntryType()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntry.getDLFileEntryType();
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileVersion getFileVersion()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntry.getFileVersion();
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileVersion getFileVersion(
-		java.lang.String version)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntry.getFileVersion(version);
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileVersion getLatestFileVersion(
-		boolean trusted)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntry.getLatestFileVersion(trusted);
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFolder getFolder()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntry.getFolder();
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _dlFileEntry.getExpandoBridge();
 	}
@@ -411,7 +409,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.document.library.kernel.model.DLFileEntry> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<DLFileEntry> toCacheModel() {
 		return _dlFileEntry.toCacheModel();
 	}
 
@@ -442,8 +440,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.document.library.kernel.model.DLFileEntry dlFileEntry) {
+	public int compareTo(DLFileEntry dlFileEntry) {
 		return _dlFileEntry.compareTo(dlFileEntry);
 	}
 
@@ -691,13 +688,12 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public java.util.List<com.liferay.document.library.kernel.model.DLFileShortcut> getFileShortcuts() {
+	public java.util.List<DLFileShortcut> getFileShortcuts() {
 		return _dlFileEntry.getFileShortcuts();
 	}
 
 	@Override
-	public java.util.List<com.liferay.document.library.kernel.model.DLFileVersion> getFileVersions(
-		int status) {
+	public java.util.List<DLFileVersion> getFileVersions(int status) {
 		return _dlFileEntry.getFileVersions(status);
 	}
 

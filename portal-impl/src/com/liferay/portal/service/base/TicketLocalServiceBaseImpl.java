@@ -450,7 +450,7 @@ public abstract class TicketLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.TicketLocalService.class)
+	@BeanReference(type = TicketLocalService.class)
 	protected TicketLocalService ticketLocalService;
 	@BeanReference(type = TicketPersistence.class)
 	protected TicketPersistence ticketPersistence;

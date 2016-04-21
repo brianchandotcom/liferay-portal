@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * @author Bruno Farache
+ * @author     Bruno Farache
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated

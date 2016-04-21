@@ -698,7 +698,7 @@ public abstract class WallEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.social.networking.service.MeetupsRegistrationLocalService meetupsRegistrationLocalService;
 	@BeanReference(type = MeetupsRegistrationPersistence.class)
 	protected MeetupsRegistrationPersistence meetupsRegistrationPersistence;
-	@BeanReference(type = com.liferay.social.networking.service.WallEntryLocalService.class)
+	@BeanReference(type = WallEntryLocalService.class)
 	protected WallEntryLocalService wallEntryLocalService;
 	@BeanReference(type = WallEntryPersistence.class)
 	protected WallEntryPersistence wallEntryPersistence;

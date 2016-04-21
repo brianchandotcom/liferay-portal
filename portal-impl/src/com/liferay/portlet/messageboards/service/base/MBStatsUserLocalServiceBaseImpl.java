@@ -648,7 +648,7 @@ public abstract class MBStatsUserLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.message.boards.kernel.service.MBStatsUserLocalService.class)
+	@BeanReference(type = MBStatsUserLocalService.class)
 	protected MBStatsUserLocalService mbStatsUserLocalService;
 	@BeanReference(type = MBStatsUserPersistence.class)
 	protected MBStatsUserPersistence mbStatsUserPersistence;

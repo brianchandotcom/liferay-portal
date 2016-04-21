@@ -54,12 +54,11 @@ public interface PollsQuestion extends PollsQuestionModel, PersistedModel {
 			}
 		};
 
-	public java.util.List<com.liferay.polls.model.PollsChoice> getChoices();
+	public java.util.List<PollsChoice> getChoices();
 
-	public java.util.List<com.liferay.polls.model.PollsVote> getVotes();
+	public java.util.List<PollsVote> getVotes();
 
-	public java.util.List<com.liferay.polls.model.PollsVote> getVotes(
-		int start, int end);
+	public java.util.List<PollsVote> getVotes(int start, int end);
 
 	public int getVotesCount();
 

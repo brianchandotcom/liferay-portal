@@ -150,8 +150,24 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Team> toCacheModel() {
+	public CacheModel<Team> toCacheModel() {
 		return _team.toCacheModel();
+	}
+
+	@Override
+	public Role getRole()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _team.getRole();
+	}
+
+	@Override
+	public Team toEscapedModel() {
+		return new TeamWrapper(_team.toEscapedModel());
+	}
+
+	@Override
+	public Team toUnescapedModel() {
+		return new TeamWrapper(_team.toUnescapedModel());
 	}
 
 	@Override
@@ -175,23 +191,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Role getRole()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _team.getRole();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Team toEscapedModel() {
-		return new TeamWrapper(_team.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Team toUnescapedModel() {
-		return new TeamWrapper(_team.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Team team) {
+	public int compareTo(Team team) {
 		return _team.compareTo(team);
 	}
 

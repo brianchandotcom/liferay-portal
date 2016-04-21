@@ -54,13 +54,13 @@ public interface LayoutPrototype extends LayoutPrototypeModel, PersistedModel {
 			}
 		};
 
-	public com.liferay.portal.kernel.model.Group getGroup()
+	public Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public long getGroupId()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.portal.kernel.model.Layout getLayout()
+	public Layout getLayout()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean hasSetModifiedDate();

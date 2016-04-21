@@ -108,6 +108,16 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	}
 
 	@Override
+	public AnnouncementsFlag toEscapedModel() {
+		return new AnnouncementsFlagWrapper(_announcementsFlag.toEscapedModel());
+	}
+
+	@Override
+	public AnnouncementsFlag toUnescapedModel() {
+		return new AnnouncementsFlagWrapper(_announcementsFlag.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _announcementsFlag.isCachedModel();
 	}
@@ -123,28 +133,17 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	}
 
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsFlag toEscapedModel() {
-		return new AnnouncementsFlagWrapper(_announcementsFlag.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsFlag toUnescapedModel() {
-		return new AnnouncementsFlagWrapper(_announcementsFlag.toUnescapedModel());
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _announcementsFlag.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.announcements.kernel.model.AnnouncementsFlag> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<AnnouncementsFlag> toCacheModel() {
 		return _announcementsFlag.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.announcements.kernel.model.AnnouncementsFlag announcementsFlag) {
+	public int compareTo(AnnouncementsFlag announcementsFlag) {
 		return _announcementsFlag.compareTo(announcementsFlag);
 	}
 

@@ -163,6 +163,22 @@ public class KaleoDefinitionWrapper implements KaleoDefinition,
 		}
 	}
 
+	@Override
+	public KaleoDefinition toEscapedModel() {
+		return new KaleoDefinitionWrapper(_kaleoDefinition.toEscapedModel());
+	}
+
+	@Override
+	public KaleoDefinition toUnescapedModel() {
+		return new KaleoDefinitionWrapper(_kaleoDefinition.toUnescapedModel());
+	}
+
+	@Override
+	public KaleoNode getKaleoStartNode()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoDefinition.getKaleoStartNode();
+	}
+
 	/**
 	* Returns the active of this kaleo definition.
 	*
@@ -209,29 +225,12 @@ public class KaleoDefinitionWrapper implements KaleoDefinition,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.workflow.kaleo.model.KaleoDefinition> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<KaleoDefinition> toCacheModel() {
 		return _kaleoDefinition.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition toEscapedModel() {
-		return new KaleoDefinitionWrapper(_kaleoDefinition.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition toUnescapedModel() {
-		return new KaleoDefinitionWrapper(_kaleoDefinition.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoNode getKaleoStartNode()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoDefinition.getKaleoStartNode();
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.workflow.kaleo.model.KaleoDefinition kaleoDefinition) {
+	public int compareTo(KaleoDefinition kaleoDefinition) {
 		return _kaleoDefinition.compareTo(kaleoDefinition);
 	}
 

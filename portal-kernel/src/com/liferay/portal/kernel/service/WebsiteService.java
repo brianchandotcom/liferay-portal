@@ -51,8 +51,7 @@ public interface WebsiteService extends BaseService {
 	 */
 	public Website addWebsite(java.lang.String className, long classPK,
 		java.lang.String url, long typeId, boolean primary,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Website getWebsite(long websiteId) throws PortalException;

@@ -169,20 +169,19 @@ public interface ExpandoTableModel extends BaseModel<ExpandoTable>, ShardedModel
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.expando.kernel.model.ExpandoTable expandoTable);
+	public int compareTo(ExpandoTable expandoTable);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.expando.kernel.model.ExpandoTable> toCacheModel();
+	public CacheModel<ExpandoTable> toCacheModel();
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoTable toEscapedModel();
+	public ExpandoTable toEscapedModel();
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoTable toUnescapedModel();
+	public ExpandoTable toUnescapedModel();
 
 	@Override
 	public String toString();

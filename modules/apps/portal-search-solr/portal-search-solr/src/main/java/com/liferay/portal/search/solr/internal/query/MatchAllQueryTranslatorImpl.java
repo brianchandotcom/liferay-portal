@@ -31,8 +31,7 @@ public class MatchAllQueryTranslatorImpl implements MatchAllQueryTranslator {
 	public org.apache.lucene.search.Query translate(
 		MatchAllQuery matchAllQuery) {
 
-		org.apache.lucene.search.MatchAllDocsQuery matchAllDocsQuery =
-			new MatchAllDocsQuery();
+		MatchAllDocsQuery matchAllDocsQuery = new MatchAllDocsQuery();
 
 		if (!matchAllQuery.isDefaultBoost()) {
 			matchAllDocsQuery.setBoost(matchAllQuery.getBoost());

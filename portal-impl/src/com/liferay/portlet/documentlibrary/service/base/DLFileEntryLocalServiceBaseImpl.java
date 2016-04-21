@@ -1526,7 +1526,7 @@ public abstract class DLFileEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.document.library.kernel.service.DLFileEntryLocalService.class)
+	@BeanReference(type = DLFileEntryLocalService.class)
 	protected DLFileEntryLocalService dlFileEntryLocalService;
 	@BeanReference(type = DLFileEntryPersistence.class)
 	protected DLFileEntryPersistence dlFileEntryPersistence;

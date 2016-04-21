@@ -128,6 +128,16 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	}
 
 	@Override
+	public AssetLink toEscapedModel() {
+		return new AssetLinkWrapper(_assetLink.toEscapedModel());
+	}
+
+	@Override
+	public AssetLink toUnescapedModel() {
+		return new AssetLinkWrapper(_assetLink.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _assetLink.isCachedModel();
 	}
@@ -143,27 +153,17 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	}
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetLink toEscapedModel() {
-		return new AssetLinkWrapper(_assetLink.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.asset.kernel.model.AssetLink toUnescapedModel() {
-		return new AssetLinkWrapper(_assetLink.toUnescapedModel());
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _assetLink.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.asset.kernel.model.AssetLink> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<AssetLink> toCacheModel() {
 		return _assetLink.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(com.liferay.asset.kernel.model.AssetLink assetLink) {
+	public int compareTo(AssetLink assetLink) {
 		return _assetLink.compareTo(assetLink);
 	}
 

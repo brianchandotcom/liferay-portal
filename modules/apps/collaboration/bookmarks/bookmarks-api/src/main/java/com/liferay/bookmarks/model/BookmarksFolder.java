@@ -59,10 +59,10 @@ public interface BookmarksFolder extends BookmarksFolderModel, PermissionedModel
 	public java.util.List<java.lang.Long> getAncestorFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.bookmarks.model.BookmarksFolder> getAncestors()
+	public java.util.List<BookmarksFolder> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.bookmarks.model.BookmarksFolder getParentFolder()
+	public BookmarksFolder getParentFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean isRoot();

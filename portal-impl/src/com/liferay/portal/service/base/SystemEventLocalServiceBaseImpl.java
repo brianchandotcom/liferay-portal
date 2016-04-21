@@ -571,7 +571,7 @@ public abstract class SystemEventLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.SystemEventLocalService.class)
+	@BeanReference(type = SystemEventLocalService.class)
 	protected SystemEventLocalService systemEventLocalService;
 	@BeanReference(type = SystemEventPersistence.class)
 	protected SystemEventPersistence systemEventPersistence;

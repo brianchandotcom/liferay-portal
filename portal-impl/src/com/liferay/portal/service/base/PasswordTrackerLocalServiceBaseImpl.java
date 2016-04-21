@@ -537,7 +537,7 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.PasswordTrackerLocalService.class)
+	@BeanReference(type = PasswordTrackerLocalService.class)
 	protected PasswordTrackerLocalService passwordTrackerLocalService;
 	@BeanReference(type = PasswordTrackerPersistence.class)
 	protected PasswordTrackerPersistence passwordTrackerPersistence;

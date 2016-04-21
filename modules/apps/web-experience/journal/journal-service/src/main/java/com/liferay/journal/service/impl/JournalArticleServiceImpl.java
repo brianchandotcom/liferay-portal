@@ -49,7 +49,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Levente Hudák
- * @see    com.liferay.journal.service.impl.JournalArticleLocalServiceImpl
+ * @see    JournalArticleLocalServiceImpl
  */
 public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 

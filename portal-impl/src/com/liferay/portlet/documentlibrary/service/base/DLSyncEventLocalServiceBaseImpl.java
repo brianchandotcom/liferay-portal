@@ -419,7 +419,7 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.document.library.kernel.service.DLSyncEventLocalService.class)
+	@BeanReference(type = DLSyncEventLocalService.class)
 	protected DLSyncEventLocalService dlSyncEventLocalService;
 	@BeanReference(type = DLSyncEventPersistence.class)
 	protected DLSyncEventPersistence dlSyncEventPersistence;

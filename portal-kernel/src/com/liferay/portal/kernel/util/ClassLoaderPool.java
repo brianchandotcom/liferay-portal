@@ -61,7 +61,7 @@ public class ClassLoaderPool {
 	 * <p>
 	 * If the class loader is <code>null</code> or if no context name is
 	 * associated with the class loader, {@link
-	 * com.liferay.portal.kernel.util.StringPool#<code>NULL</code>} is returned.
+	 * StringPool#<code>NULL</code>} is returned.
 	 * </p>
 	 *
 	 * @param  classLoader the class loader

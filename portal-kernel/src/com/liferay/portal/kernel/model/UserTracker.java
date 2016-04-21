@@ -53,7 +53,7 @@ public interface UserTracker extends UserTrackerModel, PersistedModel {
 			}
 		};
 
-	public void addPath(com.liferay.portal.kernel.model.UserTrackerPath path);
+	public void addPath(UserTrackerPath path);
 
 	public java.lang.String getEmailAddress();
 
@@ -61,5 +61,5 @@ public interface UserTracker extends UserTrackerModel, PersistedModel {
 
 	public int getHits();
 
-	public java.util.List<com.liferay.portal.kernel.model.UserTrackerPath> getPaths();
+	public java.util.List<UserTrackerPath> getPaths();
 }

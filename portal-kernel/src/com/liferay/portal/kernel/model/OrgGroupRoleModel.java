@@ -170,20 +170,19 @@ public interface OrgGroupRoleModel extends BaseModel<OrgGroupRole>, MVCCModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.OrgGroupRole orgGroupRole);
+	public int compareTo(OrgGroupRole orgGroupRole);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.OrgGroupRole> toCacheModel();
+	public CacheModel<OrgGroupRole> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.OrgGroupRole toEscapedModel();
+	public OrgGroupRole toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.OrgGroupRole toUnescapedModel();
+	public OrgGroupRole toUnescapedModel();
 
 	@Override
 	public String toString();

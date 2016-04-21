@@ -77,7 +77,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 	* @return the layouts that are direct or indirect children of the current
 	layout
 	*/
-	public java.util.List<com.liferay.portal.kernel.model.Layout> getAllChildren();
+	public java.util.List<Layout> getAllChildren();
 
 	/**
 	* Returns the ID of the topmost parent layout (e.g. n-th parent layout) of
@@ -104,7 +104,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*
 	* @return the current layout's list of parent layouts
 	*/
-	public java.util.List<com.liferay.portal.kernel.model.Layout> getAncestors()
+	public java.util.List<Layout> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -113,7 +113,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*
 	* @return the list of all child layouts
 	*/
-	public java.util.List<com.liferay.portal.kernel.model.Layout> getChildren();
+	public java.util.List<Layout> getChildren();
 
 	/**
 	* Returns all child layouts of the current layout that the user has
@@ -123,7 +123,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 	* @return the list of all child layouts that the user has permission to
 	access
 	*/
-	public java.util.List<com.liferay.portal.kernel.model.Layout> getChildren(
+	public java.util.List<Layout> getChildren(
 		com.liferay.portal.kernel.security.permission.PermissionChecker permissionChecker)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -136,7 +136,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 	the color scheme  of the layout set that contains the current
 	layout if no color scheme is configured
 	*/
-	public com.liferay.portal.kernel.model.ColorScheme getColorScheme()
+	public ColorScheme getColorScheme()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -157,10 +157,9 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public java.lang.String getDefaultThemeSetting(java.lang.String key,
 		java.lang.String device, boolean inheritLookAndFeel);
 
-	public java.util.List<com.liferay.portal.kernel.model.Portlet> getEmbeddedPortlets();
+	public java.util.List<Portlet> getEmbeddedPortlets();
 
-	public java.util.List<com.liferay.portal.kernel.model.Portlet> getEmbeddedPortlets(
-		long groupId);
+	public java.util.List<Portlet> getEmbeddedPortlets(long groupId);
 
 	/**
 	* Returns the layout's friendly URL for the given locale.
@@ -188,7 +187,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*
 	* @return the current layout's group
 	*/
-	public com.liferay.portal.kernel.model.Group getGroup()
+	public Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -227,7 +226,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*
 	* @return the current layout's layout set
 	*/
-	public com.liferay.portal.kernel.model.LayoutSet getLayoutSet()
+	public LayoutSet getLayoutSet()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -235,7 +234,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*
 	* @return the current layout's layout type
 	*/
-	public com.liferay.portal.kernel.model.LayoutType getLayoutType();
+	public LayoutType getLayoutType();
 
 	/**
 	* Returns the current layout's linked layout.
@@ -243,7 +242,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 	* @return the current layout's linked layout, or <code>null</code> if no
 	linked layout could be found
 	*/
-	public com.liferay.portal.kernel.model.Layout getLinkedToLayout();
+	public Layout getLinkedToLayout();
 
 	/**
 	* Returns the current layout's parent plid.
@@ -266,7 +265,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 		javax.servlet.http.HttpServletRequest request)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.portal.kernel.model.Group getScopeGroup()
+	public Group getScopeGroup()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getTarget();
@@ -278,7 +277,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 	* @return the current layout's theme, or the layout set's theme if no
 	layout theme is configured
 	*/
-	public com.liferay.portal.kernel.model.Theme getTheme()
+	public Theme getTheme()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getThemeSetting(java.lang.String key,
@@ -325,8 +324,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 		javax.servlet.http.HttpServletResponse response)
 		throws java.lang.Exception;
 
-	public boolean isChildSelected(boolean selectable,
-		com.liferay.portal.kernel.model.Layout layout)
+	public boolean isChildSelected(boolean selectable, Layout layout)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -409,8 +407,8 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*/
 	public boolean isRootLayout();
 
-	public boolean isSelected(boolean selectable,
-		com.liferay.portal.kernel.model.Layout layout, long ancestorPlid);
+	public boolean isSelected(boolean selectable, Layout layout,
+		long ancestorPlid);
 
 	/**
 	* Returns <code>true</code> if the current layout can hold embedded
@@ -444,8 +442,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public boolean matches(javax.servlet.http.HttpServletRequest request,
 		java.lang.String friendlyURL);
 
-	public void setLayoutSet(
-		com.liferay.portal.kernel.model.LayoutSet layoutSet);
+	public void setLayoutSet(LayoutSet layoutSet);
 
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties);

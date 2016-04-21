@@ -268,20 +268,19 @@ public interface ShoppingItemPriceModel extends BaseModel<ShoppingItemPrice>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.shopping.model.ShoppingItemPrice shoppingItemPrice);
+	public int compareTo(ShoppingItemPrice shoppingItemPrice);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.shopping.model.ShoppingItemPrice> toCacheModel();
+	public CacheModel<ShoppingItemPrice> toCacheModel();
 
 	@Override
-	public com.liferay.shopping.model.ShoppingItemPrice toEscapedModel();
+	public ShoppingItemPrice toEscapedModel();
 
 	@Override
-	public com.liferay.shopping.model.ShoppingItemPrice toUnescapedModel();
+	public ShoppingItemPrice toUnescapedModel();
 
 	@Override
 	public String toString();

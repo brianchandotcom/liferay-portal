@@ -56,14 +56,14 @@ public interface User extends UserModel, PersistedModel {
 	public void addRemotePreference(
 		com.liferay.portal.kernel.util.RemotePreference remotePreference);
 
-	public com.liferay.portal.kernel.model.Contact fetchContact();
+	public Contact fetchContact();
 
 	/**
 	* Returns the user's addresses.
 	*
 	* @return the user's addresses
 	*/
-	public java.util.List<com.liferay.portal.kernel.model.Address> getAddresses();
+	public java.util.List<Address> getAddresses();
 
 	/**
 	* Returns the user's birth date.
@@ -87,7 +87,7 @@ public interface User extends UserModel, PersistedModel {
 	* @return the user's associated contact
 	* @see Contact
 	*/
-	public com.liferay.portal.kernel.model.Contact getContact()
+	public Contact getContact()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -245,7 +245,7 @@ public interface User extends UserModel, PersistedModel {
 	*
 	* @return the user's email addresses
 	*/
-	public java.util.List<com.liferay.portal.kernel.model.EmailAddress> getEmailAddresses();
+	public java.util.List<EmailAddress> getEmailAddresses();
 
 	/**
 	* Returns <code>true</code> if the user is female.
@@ -272,13 +272,13 @@ public interface User extends UserModel, PersistedModel {
 	@com.liferay.portal.kernel.bean.AutoEscape()
 	public java.lang.String getFullName(boolean usePrefix, boolean useSuffix);
 
-	public com.liferay.portal.kernel.model.Group getGroup();
+	public Group getGroup();
 
 	public long getGroupId();
 
 	public long[] getGroupIds();
 
-	public java.util.List<com.liferay.portal.kernel.model.Group> getGroups();
+	public java.util.List<Group> getGroups();
 
 	public java.lang.String getInitials();
 
@@ -296,13 +296,13 @@ public interface User extends UserModel, PersistedModel {
 	public boolean getMale()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.portal.kernel.model.Group> getMySiteGroups()
+	public java.util.List<Group> getMySiteGroups()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.portal.kernel.model.Group> getMySiteGroups(
-		int max) throws com.liferay.portal.kernel.exception.PortalException;
+	public java.util.List<Group> getMySiteGroups(int max)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.portal.kernel.model.Group> getMySiteGroups(
+	public java.util.List<Group> getMySiteGroups(
 		java.lang.String[] classNames, int max)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -312,10 +312,10 @@ public interface User extends UserModel, PersistedModel {
 	public long[] getOrganizationIds(boolean includeAdministrative)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations()
+	public java.util.List<Organization> getOrganizations()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
+	public java.util.List<Organization> getOrganizations(
 		boolean includeAdministrative)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -323,12 +323,12 @@ public interface User extends UserModel, PersistedModel {
 
 	public boolean getPasswordModified();
 
-	public com.liferay.portal.kernel.model.PasswordPolicy getPasswordPolicy()
+	public PasswordPolicy getPasswordPolicy()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getPasswordUnencrypted();
 
-	public java.util.List<com.liferay.portal.kernel.model.Phone> getPhones();
+	public java.util.List<Phone> getPhones();
 
 	public java.lang.String getPortraitURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
@@ -350,32 +350,30 @@ public interface User extends UserModel, PersistedModel {
 
 	public long[] getRoleIds();
 
-	public java.util.List<com.liferay.portal.kernel.model.Role> getRoles();
+	public java.util.List<Role> getRoles();
 
-	public java.util.List<com.liferay.portal.kernel.model.Group> getSiteGroups()
+	public java.util.List<Group> getSiteGroups()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.portal.kernel.model.Group> getSiteGroups(
-		boolean includeAdministrative)
+	public java.util.List<Group> getSiteGroups(boolean includeAdministrative)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public long[] getTeamIds();
 
-	public java.util.List<com.liferay.portal.kernel.model.Team> getTeams();
+	public java.util.List<Team> getTeams();
 
 	public java.util.TimeZone getTimeZone();
 
 	public java.util.Date getUnlockDate()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.Date getUnlockDate(
-		com.liferay.portal.kernel.model.PasswordPolicy passwordPolicy);
+	public java.util.Date getUnlockDate(PasswordPolicy passwordPolicy);
 
 	public long[] getUserGroupIds();
 
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup> getUserGroups();
+	public java.util.List<UserGroup> getUserGroups();
 
-	public java.util.List<com.liferay.portal.kernel.model.Website> getWebsites();
+	public java.util.List<Website> getWebsites();
 
 	public boolean hasCompanyMx()
 		throws com.liferay.portal.kernel.exception.PortalException;

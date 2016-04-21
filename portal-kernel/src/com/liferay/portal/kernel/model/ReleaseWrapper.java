@@ -141,8 +141,18 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Release> toCacheModel() {
+	public CacheModel<Release> toCacheModel() {
 		return _release.toCacheModel();
+	}
+
+	@Override
+	public Release toEscapedModel() {
+		return new ReleaseWrapper(_release.toEscapedModel());
+	}
+
+	@Override
+	public Release toUnescapedModel() {
+		return new ReleaseWrapper(_release.toUnescapedModel());
 	}
 
 	/**
@@ -186,17 +196,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Release toEscapedModel() {
-		return new ReleaseWrapper(_release.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Release toUnescapedModel() {
-		return new ReleaseWrapper(_release.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Release release) {
+	public int compareTo(Release release) {
 		return _release.compareTo(release);
 	}
 

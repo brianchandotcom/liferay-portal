@@ -332,19 +332,19 @@ public interface LayoutSetModel extends BaseModel<LayoutSet>, MVCCModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.portal.kernel.model.LayoutSet layoutSet);
+	public int compareTo(LayoutSet layoutSet);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.LayoutSet> toCacheModel();
+	public CacheModel<LayoutSet> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.LayoutSet toEscapedModel();
+	public LayoutSet toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.LayoutSet toUnescapedModel();
+	public LayoutSet toUnescapedModel();
 
 	@Override
 	public String toString();

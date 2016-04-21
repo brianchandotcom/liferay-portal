@@ -452,7 +452,7 @@ public abstract class ListTypeLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.ListTypeLocalService.class)
+	@BeanReference(type = ListTypeLocalService.class)
 	protected ListTypeLocalService listTypeLocalService;
 	@BeanReference(type = ListTypePersistence.class)
 	protected ListTypePersistence listTypePersistence;

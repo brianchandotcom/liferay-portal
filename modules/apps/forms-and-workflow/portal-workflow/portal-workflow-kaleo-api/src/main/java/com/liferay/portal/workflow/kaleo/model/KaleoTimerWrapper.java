@@ -183,6 +183,16 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 		}
 	}
 
+	@Override
+	public KaleoTimer toEscapedModel() {
+		return new KaleoTimerWrapper(_kaleoTimer.toEscapedModel());
+	}
+
+	@Override
+	public KaleoTimer toUnescapedModel() {
+		return new KaleoTimerWrapper(_kaleoTimer.toUnescapedModel());
+	}
+
 	/**
 	* Returns the blocking of this kaleo timer.
 	*
@@ -229,18 +239,8 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.workflow.kaleo.model.KaleoTimer> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<KaleoTimer> toCacheModel() {
 		return _kaleoTimer.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTimer toEscapedModel() {
-		return new KaleoTimerWrapper(_kaleoTimer.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTimer toUnescapedModel() {
-		return new KaleoTimerWrapper(_kaleoTimer.toUnescapedModel());
 	}
 
 	/**
@@ -264,8 +264,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.workflow.kaleo.model.KaleoTimer kaleoTimer) {
+	public int compareTo(KaleoTimer kaleoTimer) {
 		return _kaleoTimer.compareTo(kaleoTimer);
 	}
 
@@ -385,7 +384,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment> getKaleoTaskReassignments() {
+	public java.util.List<KaleoTaskAssignment> getKaleoTaskReassignments() {
 		return _kaleoTimer.getKaleoTaskReassignments();
 	}
 

@@ -380,19 +380,19 @@ public interface KaleoTaskAssignmentInstanceModel extends BaseModel<KaleoTaskAss
 
 	@Override
 	public int compareTo(
-		com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance);
+		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance> toCacheModel();
+	public CacheModel<KaleoTaskAssignmentInstance> toCacheModel();
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance toEscapedModel();
+	public KaleoTaskAssignmentInstance toEscapedModel();
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance toUnescapedModel();
+	public KaleoTaskAssignmentInstance toUnescapedModel();
 
 	@Override
 	public String toString();

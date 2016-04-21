@@ -165,8 +165,18 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.LayoutFriendlyURL> toCacheModel() {
+	public CacheModel<LayoutFriendlyURL> toCacheModel() {
 		return _layoutFriendlyURL.toCacheModel();
+	}
+
+	@Override
+	public LayoutFriendlyURL toEscapedModel() {
+		return new LayoutFriendlyURLWrapper(_layoutFriendlyURL.toEscapedModel());
+	}
+
+	@Override
+	public LayoutFriendlyURL toUnescapedModel() {
+		return new LayoutFriendlyURLWrapper(_layoutFriendlyURL.toUnescapedModel());
 	}
 
 	/**
@@ -210,18 +220,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.LayoutFriendlyURL toEscapedModel() {
-		return new LayoutFriendlyURLWrapper(_layoutFriendlyURL.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutFriendlyURL toUnescapedModel() {
-		return new LayoutFriendlyURLWrapper(_layoutFriendlyURL.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.LayoutFriendlyURL layoutFriendlyURL) {
+	public int compareTo(LayoutFriendlyURL layoutFriendlyURL) {
 		return _layoutFriendlyURL.compareTo(layoutFriendlyURL);
 	}
 

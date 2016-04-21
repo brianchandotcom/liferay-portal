@@ -651,7 +651,7 @@ public abstract class ResourceBlockLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.ResourceBlockLocalService.class)
+	@BeanReference(type = ResourceBlockLocalService.class)
 	protected ResourceBlockLocalService resourceBlockLocalService;
 	@BeanReference(type = ResourceBlockPersistence.class)
 	protected ResourceBlockPersistence resourceBlockPersistence;

@@ -115,7 +115,7 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	@Override
 	public com.liferay.portal.kernel.model.Team addTeam(long userId,
 		long groupId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _teamLocalService.addTeam(userId, groupId, name, description,
 			serviceContext);

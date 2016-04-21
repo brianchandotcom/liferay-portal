@@ -513,7 +513,7 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.UserNotificationEventLocalService.class)
+	@BeanReference(type = UserNotificationEventLocalService.class)
 	protected UserNotificationEventLocalService userNotificationEventLocalService;
 	@BeanReference(type = UserNotificationEventPersistence.class)
 	protected UserNotificationEventPersistence userNotificationEventPersistence;

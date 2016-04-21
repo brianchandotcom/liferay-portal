@@ -87,9 +87,8 @@ public interface OrgGroupRole extends OrgGroupRoleModel {
 			}
 		};
 
-	public boolean containsGroup(
-		java.util.List<com.liferay.portal.kernel.model.Group> groups);
+	public boolean containsGroup(java.util.List<Group> groups);
 
 	public boolean containsOrganization(
-		java.util.List<com.liferay.portal.kernel.model.Organization> organizations);
+		java.util.List<Organization> organizations);
 }

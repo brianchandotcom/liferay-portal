@@ -1141,7 +1141,7 @@ public abstract class KaleoNodeLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService kaleoLogLocalService;
 	@BeanReference(type = KaleoLogPersistence.class)
 	protected KaleoLogPersistence kaleoLogPersistence;
-	@BeanReference(type = com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService.class)
+	@BeanReference(type = KaleoNodeLocalService.class)
 	protected KaleoNodeLocalService kaleoNodeLocalService;
 	@BeanReference(type = KaleoNodePersistence.class)
 	protected KaleoNodePersistence kaleoNodePersistence;

@@ -90,10 +90,10 @@ public interface AssetCategory extends AssetCategoryModel,
 			}
 		};
 
-	public java.util.List<com.liferay.asset.kernel.model.AssetCategory> getAncestors()
+	public java.util.List<AssetCategory> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.asset.kernel.model.AssetCategory getParentCategory();
+	public AssetCategory getParentCategory();
 
 	public java.lang.String getPath(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException;

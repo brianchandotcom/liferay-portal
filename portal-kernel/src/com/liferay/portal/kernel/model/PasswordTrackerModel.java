@@ -201,20 +201,19 @@ public interface PasswordTrackerModel extends BaseModel<PasswordTracker>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.PasswordTracker passwordTracker);
+	public int compareTo(PasswordTracker passwordTracker);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.PasswordTracker> toCacheModel();
+	public CacheModel<PasswordTracker> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.PasswordTracker toEscapedModel();
+	public PasswordTracker toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.PasswordTracker toUnescapedModel();
+	public PasswordTracker toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -129,7 +129,7 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	@Override
 	public void addModelResources(
 		com.liferay.portal.kernel.model.AuditedModel auditedModel,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourceLocalService.addModelResources(auditedModel, serviceContext);
 	}
@@ -333,7 +333,7 @@ public class ResourceLocalServiceWrapper implements ResourceLocalService,
 	@Override
 	public void updateModelResources(
 		com.liferay.portal.kernel.model.AuditedModel auditedModel,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_resourceLocalService.updateModelResources(auditedModel, serviceContext);
 	}

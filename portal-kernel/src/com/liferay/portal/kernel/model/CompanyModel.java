@@ -269,19 +269,19 @@ public interface CompanyModel extends BaseModel<Company>, MVCCModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Company company);
+	public int compareTo(Company company);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Company> toCacheModel();
+	public CacheModel<Company> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.Company toEscapedModel();
+	public Company toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.Company toUnescapedModel();
+	public Company toUnescapedModel();
 
 	@Override
 	public String toString();

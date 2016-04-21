@@ -429,7 +429,7 @@ public abstract class DDMDataProviderInstanceLinkLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocalService.class)
+	@BeanReference(type = DDMDataProviderInstanceLinkLocalService.class)
 	protected DDMDataProviderInstanceLinkLocalService ddmDataProviderInstanceLinkLocalService;
 	@BeanReference(type = DDMDataProviderInstanceLinkPersistence.class)
 	protected DDMDataProviderInstanceLinkPersistence ddmDataProviderInstanceLinkPersistence;

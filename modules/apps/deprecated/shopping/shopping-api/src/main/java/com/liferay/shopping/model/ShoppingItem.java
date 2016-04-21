@@ -54,11 +54,13 @@ public interface ShoppingItem extends ShoppingItemModel, PersistedModel {
 			}
 		};
 
-	public com.liferay.shopping.model.ShoppingCategory getCategory();
+	public int compareTo(ShoppingItem item);
+
+	public ShoppingCategory getCategory();
 
 	public java.lang.String[] getFieldsQuantitiesArray();
 
-	public java.util.List<com.liferay.shopping.model.ShoppingItemPrice> getItemPrices()
+	public java.util.List<ShoppingItemPrice> getItemPrices()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getShoppingItemImageURL(

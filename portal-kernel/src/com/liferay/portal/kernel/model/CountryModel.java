@@ -242,19 +242,19 @@ public interface CountryModel extends BaseModel<Country>, MVCCModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Country country);
+	public int compareTo(Country country);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Country> toCacheModel();
+	public CacheModel<Country> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.Country toEscapedModel();
+	public Country toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.Country toUnescapedModel();
+	public Country toUnescapedModel();
 
 	@Override
 	public String toString();

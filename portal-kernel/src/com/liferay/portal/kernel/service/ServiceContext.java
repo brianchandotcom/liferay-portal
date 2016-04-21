@@ -1172,7 +1172,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 *
 	 * <p>
 	 * These attributes should only include fields that {@link
-	 * com.liferay.portal.kernel.service.ServiceContext} does not possess by default.
+	 * ServiceContext} does not possess by default.
 	 * </p>
 	 *
 	 * @param expandoBridgeAttributes the expando bridge attributes (optionally

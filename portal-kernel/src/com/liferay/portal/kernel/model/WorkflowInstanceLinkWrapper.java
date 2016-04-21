@@ -144,8 +144,18 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.WorkflowInstanceLink> toCacheModel() {
+	public CacheModel<WorkflowInstanceLink> toCacheModel() {
 		return _workflowInstanceLink.toCacheModel();
+	}
+
+	@Override
+	public WorkflowInstanceLink toEscapedModel() {
+		return new WorkflowInstanceLinkWrapper(_workflowInstanceLink.toEscapedModel());
+	}
+
+	@Override
+	public WorkflowInstanceLink toUnescapedModel() {
+		return new WorkflowInstanceLinkWrapper(_workflowInstanceLink.toUnescapedModel());
 	}
 
 	@Override
@@ -169,18 +179,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.WorkflowInstanceLink toEscapedModel() {
-		return new WorkflowInstanceLinkWrapper(_workflowInstanceLink.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.WorkflowInstanceLink toUnescapedModel() {
-		return new WorkflowInstanceLinkWrapper(_workflowInstanceLink.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.WorkflowInstanceLink workflowInstanceLink) {
+	public int compareTo(WorkflowInstanceLink workflowInstanceLink) {
 		return _workflowInstanceLink.compareTo(workflowInstanceLink);
 	}
 

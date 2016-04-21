@@ -208,20 +208,19 @@ public interface JournalContentSearchModel extends BaseModel<JournalContentSearc
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.journal.model.JournalContentSearch journalContentSearch);
+	public int compareTo(JournalContentSearch journalContentSearch);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.journal.model.JournalContentSearch> toCacheModel();
+	public CacheModel<JournalContentSearch> toCacheModel();
 
 	@Override
-	public com.liferay.journal.model.JournalContentSearch toEscapedModel();
+	public JournalContentSearch toEscapedModel();
 
 	@Override
-	public com.liferay.journal.model.JournalContentSearch toUnescapedModel();
+	public JournalContentSearch toUnescapedModel();
 
 	@Override
 	public String toString();

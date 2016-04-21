@@ -186,20 +186,19 @@ public interface DLSyncEventModel extends BaseModel<DLSyncEvent>, ShardedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.document.library.kernel.model.DLSyncEvent dlSyncEvent);
+	public int compareTo(DLSyncEvent dlSyncEvent);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.document.library.kernel.model.DLSyncEvent> toCacheModel();
+	public CacheModel<DLSyncEvent> toCacheModel();
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLSyncEvent toEscapedModel();
+	public DLSyncEvent toEscapedModel();
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLSyncEvent toUnescapedModel();
+	public DLSyncEvent toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -553,7 +553,7 @@ public abstract class VirtualHostLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.VirtualHostLocalService.class)
+	@BeanReference(type = VirtualHostLocalService.class)
 	protected VirtualHostLocalService virtualHostLocalService;
 	@BeanReference(type = VirtualHostPersistence.class)
 	protected VirtualHostPersistence virtualHostPersistence;

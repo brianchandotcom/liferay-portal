@@ -1197,7 +1197,7 @@ public abstract class AssetEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.asset.kernel.service.AssetEntryLocalService.class)
+	@BeanReference(type = AssetEntryLocalService.class)
 	protected AssetEntryLocalService assetEntryLocalService;
 	@BeanReference(type = AssetEntryPersistence.class)
 	protected AssetEntryPersistence assetEntryPersistence;

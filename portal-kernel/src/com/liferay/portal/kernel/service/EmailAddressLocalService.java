@@ -85,8 +85,7 @@ public interface EmailAddressLocalService extends BaseLocalService,
 
 	public EmailAddress addEmailAddress(long userId,
 		java.lang.String className, long classPK, java.lang.String address,
-		long typeId, boolean primary,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long typeId, boolean primary, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

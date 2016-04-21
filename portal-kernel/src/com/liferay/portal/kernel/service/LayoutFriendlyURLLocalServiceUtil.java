@@ -71,8 +71,7 @@ public class LayoutFriendlyURLLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.LayoutFriendlyURL addLayoutFriendlyURL(
 		long userId, long companyId, long groupId, long plid,
 		boolean privateLayout, java.lang.String friendlyURL,
-		java.lang.String languageId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String languageId, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutFriendlyURL(userId, companyId, groupId, plid,
@@ -209,8 +208,7 @@ public class LayoutFriendlyURLLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.LayoutFriendlyURL updateLayoutFriendlyURL(
 		long userId, long companyId, long groupId, long plid,
 		boolean privateLayout, java.lang.String friendlyURL,
-		java.lang.String languageId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String languageId, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateLayoutFriendlyURL(userId, companyId, groupId, plid,
@@ -254,7 +252,7 @@ public class LayoutFriendlyURLLocalServiceUtil {
 		long userId, long companyId, long groupId, long plid,
 		boolean privateLayout,
 		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutFriendlyURLs(userId, companyId, groupId, plid,
@@ -372,7 +370,7 @@ public class LayoutFriendlyURLLocalServiceUtil {
 		long userId, long companyId, long groupId, long plid,
 		boolean privateLayout,
 		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateLayoutFriendlyURLs(userId, companyId, groupId, plid,

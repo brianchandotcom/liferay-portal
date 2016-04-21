@@ -54,7 +54,7 @@ public interface DDMTemplate extends DDMTemplateModel, PersistedModel {
 			}
 		};
 
-	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getLatestTemplateVersion()
+	public DDMTemplateVersion getLatestTemplateVersion()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getSmallImageType()
@@ -63,7 +63,7 @@ public interface DDMTemplate extends DDMTemplateModel, PersistedModel {
 	public java.lang.String getTemplateImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
-	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getTemplateVersion()
+	public DDMTemplateVersion getTemplateVersion()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**

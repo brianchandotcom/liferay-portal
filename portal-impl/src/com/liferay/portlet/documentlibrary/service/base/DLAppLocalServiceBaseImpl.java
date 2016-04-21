@@ -479,7 +479,7 @@ public abstract class DLAppLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.document.library.kernel.service.DLAppLocalService.class)
+	@BeanReference(type = DLAppLocalService.class)
 	protected DLAppLocalService dlAppLocalService;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;

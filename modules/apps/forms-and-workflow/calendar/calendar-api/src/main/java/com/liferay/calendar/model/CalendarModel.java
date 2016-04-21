@@ -599,19 +599,19 @@ public interface CalendarModel extends BaseModel<Calendar>, LocalizedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.calendar.model.Calendar calendar);
+	public int compareTo(Calendar calendar);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.calendar.model.Calendar> toCacheModel();
+	public CacheModel<Calendar> toCacheModel();
 
 	@Override
-	public com.liferay.calendar.model.Calendar toEscapedModel();
+	public Calendar toEscapedModel();
 
 	@Override
-	public com.liferay.calendar.model.Calendar toUnescapedModel();
+	public Calendar toUnescapedModel();
 
 	@Override
 	public String toString();

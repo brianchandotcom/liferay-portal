@@ -551,7 +551,7 @@ public abstract class DLFileRankLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.document.library.kernel.service.DLFileRankLocalService.class)
+	@BeanReference(type = DLFileRankLocalService.class)
 	protected DLFileRankLocalService dlFileRankLocalService;
 	@BeanReference(type = DLFileRankPersistence.class)
 	protected DLFileRankPersistence dlFileRankPersistence;

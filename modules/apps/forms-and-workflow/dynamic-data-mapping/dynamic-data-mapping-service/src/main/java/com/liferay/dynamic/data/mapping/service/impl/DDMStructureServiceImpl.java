@@ -36,7 +36,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Bruno Basto
  * @author Marcellus Tavares
- * @see    com.liferay.dynamic.data.mapping.service.impl.DDMStructureLocalServiceImpl
+ * @see    DDMStructureLocalServiceImpl
  */
 public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 

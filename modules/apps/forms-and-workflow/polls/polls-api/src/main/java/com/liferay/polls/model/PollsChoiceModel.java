@@ -409,19 +409,19 @@ public interface PollsChoiceModel extends BaseModel<PollsChoice>, LocalizedModel
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.polls.model.PollsChoice pollsChoice);
+	public int compareTo(PollsChoice pollsChoice);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.polls.model.PollsChoice> toCacheModel();
+	public CacheModel<PollsChoice> toCacheModel();
 
 	@Override
-	public com.liferay.polls.model.PollsChoice toEscapedModel();
+	public PollsChoice toEscapedModel();
 
 	@Override
-	public com.liferay.polls.model.PollsChoice toUnescapedModel();
+	public PollsChoice toUnescapedModel();
 
 	@Override
 	public String toString();

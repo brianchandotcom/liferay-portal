@@ -713,19 +713,19 @@ public interface BlogsEntryModel extends BaseModel<BlogsEntry>, ShardedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.blogs.kernel.model.BlogsEntry blogsEntry);
+	public int compareTo(BlogsEntry blogsEntry);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.blogs.kernel.model.BlogsEntry> toCacheModel();
+	public CacheModel<BlogsEntry> toCacheModel();
 
 	@Override
-	public com.liferay.blogs.kernel.model.BlogsEntry toEscapedModel();
+	public BlogsEntry toEscapedModel();
 
 	@Override
-	public com.liferay.blogs.kernel.model.BlogsEntry toUnescapedModel();
+	public BlogsEntry toUnescapedModel();
 
 	@Override
 	public String toString();

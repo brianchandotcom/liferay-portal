@@ -73,8 +73,7 @@ public class AddressLocalServiceUtil {
 		java.lang.String street1, java.lang.String street2,
 		java.lang.String street3, java.lang.String city, java.lang.String zip,
 		long regionId, long countryId, long typeId, boolean mailing,
-		boolean primary,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean primary, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addAddress(userId, className, classPK, street1, street2,

@@ -201,8 +201,39 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.LayoutSetBranch> toCacheModel() {
+	public CacheModel<LayoutSetBranch> toCacheModel() {
 		return _layoutSetBranch.toCacheModel();
+	}
+
+	@Override
+	public ColorScheme getColorScheme() {
+		return _layoutSetBranch.getColorScheme();
+	}
+
+	@Override
+	public Group getGroup()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutSetBranch.getGroup();
+	}
+
+	@Override
+	public LayoutSet getLayoutSet() {
+		return _layoutSetBranch.getLayoutSet();
+	}
+
+	@Override
+	public LayoutSetBranch toEscapedModel() {
+		return new LayoutSetBranchWrapper(_layoutSetBranch.toEscapedModel());
+	}
+
+	@Override
+	public LayoutSetBranch toUnescapedModel() {
+		return new LayoutSetBranchWrapper(_layoutSetBranch.toUnescapedModel());
+	}
+
+	@Override
+	public Theme getTheme() {
+		return _layoutSetBranch.getTheme();
 	}
 
 	/**
@@ -301,44 +332,12 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.ColorScheme getColorScheme() {
-		return _layoutSetBranch.getColorScheme();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Group getGroup()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSetBranch.getGroup();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutSet getLayoutSet() {
-		return _layoutSetBranch.getLayoutSet();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutSetBranch toEscapedModel() {
-		return new LayoutSetBranchWrapper(_layoutSetBranch.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutSetBranch toUnescapedModel() {
-		return new LayoutSetBranchWrapper(_layoutSetBranch.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Theme getTheme() {
-		return _layoutSetBranch.getTheme();
-	}
-
-	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {
 		return _layoutSetBranch.getSettingsProperties();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.LayoutSetBranch layoutSetBranch) {
+	public int compareTo(LayoutSetBranch layoutSetBranch) {
 		return _layoutSetBranch.compareTo(layoutSetBranch);
 	}
 

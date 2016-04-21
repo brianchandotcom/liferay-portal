@@ -36,7 +36,7 @@ public class AddressServiceWrapper implements AddressService,
 		java.lang.String street2, java.lang.String street3,
 		java.lang.String city, java.lang.String zip, long regionId,
 		long countryId, long typeId, boolean mailing, boolean primary,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _addressService.addAddress(className, classPK, street1, street2,
 			street3, city, zip, regionId, countryId, typeId, mailing, primary,

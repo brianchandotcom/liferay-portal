@@ -1354,7 +1354,7 @@ public abstract class DLAppHelperLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.document.library.kernel.service.DLAppHelperLocalService.class)
+	@BeanReference(type = DLAppHelperLocalService.class)
 	protected DLAppHelperLocalService dlAppHelperLocalService;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;

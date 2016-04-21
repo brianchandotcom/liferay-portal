@@ -281,8 +281,88 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Layout> toCacheModel() {
+	public CacheModel<Layout> toCacheModel() {
 		return _layout.toCacheModel();
+	}
+
+	/**
+	* Returns the color scheme that is configured for the current layout, or
+	* the color scheme of the layout set that contains the current layout if no
+	* color scheme is configured.
+	*
+	* @return the color scheme that is configured for the current layout, or
+	the color scheme  of the layout set that contains the current
+	layout if no color scheme is configured
+	*/
+	@Override
+	public ColorScheme getColorScheme()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layout.getColorScheme();
+	}
+
+	/**
+	* Returns the current layout's group.
+	*
+	* <p>
+	* Group is Liferay's technical name for a site.
+	* </p>
+	*
+	* @return the current layout's group
+	*/
+	@Override
+	public Group getGroup()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layout.getGroup();
+	}
+
+	@Override
+	public Group getScopeGroup()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layout.getScopeGroup();
+	}
+
+	@Override
+	public Layout toEscapedModel() {
+		return new LayoutWrapper(_layout.toEscapedModel());
+	}
+
+	@Override
+	public Layout toUnescapedModel() {
+		return new LayoutWrapper(_layout.toUnescapedModel());
+	}
+
+	/**
+	* Returns the current layout's {@link LayoutSet}.
+	*
+	* @return the current layout's layout set
+	*/
+	@Override
+	public LayoutSet getLayoutSet()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layout.getLayoutSet();
+	}
+
+	/**
+	* Returns the current layout's {@link LayoutType}.
+	*
+	* @return the current layout's layout type
+	*/
+	@Override
+	public LayoutType getLayoutType() {
+		return _layout.getLayoutType();
+	}
+
+	/**
+	* Returns the current layout's theme, or the layout set's theme if no
+	* layout theme is configured.
+	*
+	* @return the current layout's theme, or the layout set's theme if no
+	layout theme is configured
+	*/
+	@Override
+	public Theme getTheme()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layout.getTheme();
 	}
 
 	/**
@@ -378,8 +458,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
-	public boolean isChildSelected(boolean selectable,
-		com.liferay.portal.kernel.model.Layout layout)
+	public boolean isChildSelected(boolean selectable, Layout layout)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layout.isChildSelected(selectable, layout);
 	}
@@ -535,8 +614,8 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
-	public boolean isSelected(boolean selectable,
-		com.liferay.portal.kernel.model.Layout layout, long ancestorPlid) {
+	public boolean isSelected(boolean selectable, Layout layout,
+		long ancestorPlid) {
 		return _layout.isSelected(selectable, layout, ancestorPlid);
 	}
 
@@ -608,94 +687,14 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	/**
-	* Returns the color scheme that is configured for the current layout, or
-	* the color scheme of the layout set that contains the current layout if no
-	* color scheme is configured.
-	*
-	* @return the color scheme that is configured for the current layout, or
-	the color scheme  of the layout set that contains the current
-	layout if no color scheme is configured
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.ColorScheme getColorScheme()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layout.getColorScheme();
-	}
-
-	/**
-	* Returns the current layout's group.
-	*
-	* <p>
-	* Group is Liferay's technical name for a site.
-	* </p>
-	*
-	* @return the current layout's group
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Group getGroup()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layout.getGroup();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Group getScopeGroup()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layout.getScopeGroup();
-	}
-
-	/**
 	* Returns the current layout's linked layout.
 	*
 	* @return the current layout's linked layout, or <code>null</code> if no
 	linked layout could be found
 	*/
 	@Override
-	public com.liferay.portal.kernel.model.Layout getLinkedToLayout() {
+	public Layout getLinkedToLayout() {
 		return _layout.getLinkedToLayout();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Layout toEscapedModel() {
-		return new LayoutWrapper(_layout.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Layout toUnescapedModel() {
-		return new LayoutWrapper(_layout.toUnescapedModel());
-	}
-
-	/**
-	* Returns the current layout's {@link LayoutSet}.
-	*
-	* @return the current layout's layout set
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.LayoutSet getLayoutSet()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layout.getLayoutSet();
-	}
-
-	/**
-	* Returns the current layout's {@link LayoutType}.
-	*
-	* @return the current layout's layout type
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.LayoutType getLayoutType() {
-		return _layout.getLayoutType();
-	}
-
-	/**
-	* Returns the current layout's theme, or the layout set's theme if no
-	* layout theme is configured.
-	*
-	* @return the current layout's theme, or the layout set's theme if no
-	layout theme is configured
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Theme getTheme()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layout.getTheme();
 	}
 
 	@Override
@@ -704,7 +703,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Layout layout) {
+	public int compareTo(Layout layout) {
 		return _layout.compareTo(layout);
 	}
 
@@ -1357,7 +1356,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	layout
 	*/
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Layout> getAllChildren() {
+	public java.util.List<Layout> getAllChildren() {
 		return _layout.getAllChildren();
 	}
 
@@ -1369,7 +1368,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @return the current layout's list of parent layouts
 	*/
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Layout> getAncestors()
+	public java.util.List<Layout> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layout.getAncestors();
 	}
@@ -1381,7 +1380,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @return the list of all child layouts
 	*/
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Layout> getChildren() {
+	public java.util.List<Layout> getChildren() {
 		return _layout.getChildren();
 	}
 
@@ -1394,20 +1393,19 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	access
 	*/
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Layout> getChildren(
+	public java.util.List<Layout> getChildren(
 		com.liferay.portal.kernel.security.permission.PermissionChecker permissionChecker)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layout.getChildren(permissionChecker);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Portlet> getEmbeddedPortlets() {
+	public java.util.List<Portlet> getEmbeddedPortlets() {
 		return _layout.getEmbeddedPortlets();
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Portlet> getEmbeddedPortlets(
-		long groupId) {
+	public java.util.List<Portlet> getEmbeddedPortlets(long groupId) {
 		return _layout.getEmbeddedPortlets(groupId);
 	}
 
@@ -1884,8 +1882,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
-	public void setLayoutSet(
-		com.liferay.portal.kernel.model.LayoutSet layoutSet) {
+	public void setLayoutSet(LayoutSet layoutSet) {
 		_layout.setLayoutSet(layoutSet);
 	}
 

@@ -687,7 +687,7 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.document.library.kernel.service.DLFileVersionLocalService.class)
+	@BeanReference(type = DLFileVersionLocalService.class)
 	protected DLFileVersionLocalService dlFileVersionLocalService;
 	@BeanReference(type = DLFileVersionPersistence.class)
 	protected DLFileVersionPersistence dlFileVersionPersistence;

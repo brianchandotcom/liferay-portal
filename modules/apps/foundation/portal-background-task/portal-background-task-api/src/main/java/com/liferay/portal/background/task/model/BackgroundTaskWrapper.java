@@ -180,6 +180,16 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 		}
 	}
 
+	@Override
+	public BackgroundTask toEscapedModel() {
+		return new BackgroundTaskWrapper(_backgroundTask.toEscapedModel());
+	}
+
+	@Override
+	public BackgroundTask toUnescapedModel() {
+		return new BackgroundTaskWrapper(_backgroundTask.toUnescapedModel());
+	}
+
 	/**
 	* Returns the completed of this background task.
 	*
@@ -226,17 +236,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	}
 
 	@Override
-	public com.liferay.portal.background.task.model.BackgroundTask toEscapedModel() {
-		return new BackgroundTaskWrapper(_backgroundTask.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.background.task.model.BackgroundTask toUnescapedModel() {
-		return new BackgroundTaskWrapper(_backgroundTask.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.background.task.model.BackgroundTask> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<BackgroundTask> toCacheModel() {
 		return _backgroundTask.toCacheModel();
 	}
 
@@ -247,8 +247,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.background.task.model.BackgroundTask backgroundTask) {
+	public int compareTo(BackgroundTask backgroundTask) {
 		return _backgroundTask.compareTo(backgroundTask);
 	}
 

@@ -266,7 +266,7 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	public javax.portlet.PortletPreferences getDefaultPreferences(
 		long companyId, java.lang.String portletId);
 
-	@Retry(acceptor = com.liferay.portal.kernel.service.ExceptionRetryAcceptor.class, properties =  {
+	@Retry(acceptor = ExceptionRetryAcceptor.class, properties =  {
 		@Property(name = ExceptionRetryAcceptor.EXCEPTION_NAME, value = "org.springframework.dao.DataIntegrityViolationException")
 	}
 	)
@@ -274,7 +274,7 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	public javax.portlet.PortletPreferences getPreferences(
 		PortletPreferencesIds portletPreferencesIds);
 
-	@Retry(acceptor = com.liferay.portal.kernel.service.ExceptionRetryAcceptor.class, properties =  {
+	@Retry(acceptor = ExceptionRetryAcceptor.class, properties =  {
 		@Property(name = ExceptionRetryAcceptor.EXCEPTION_NAME, value = "org.springframework.dao.DataIntegrityViolationException")
 	}
 	)
@@ -282,7 +282,7 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	public javax.portlet.PortletPreferences getPreferences(long companyId,
 		long ownerId, int ownerType, long plid, java.lang.String portletId);
 
-	@Retry(acceptor = com.liferay.portal.kernel.service.ExceptionRetryAcceptor.class, properties =  {
+	@Retry(acceptor = ExceptionRetryAcceptor.class, properties =  {
 		@Property(name = ExceptionRetryAcceptor.EXCEPTION_NAME, value = "org.springframework.dao.DataIntegrityViolationException")
 	}
 	)
@@ -295,7 +295,7 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	public javax.portlet.PortletPreferences getStrictPreferences(
 		PortletPreferencesIds portletPreferencesIds);
 
-	@Retry(acceptor = com.liferay.portal.kernel.service.ExceptionRetryAcceptor.class, properties =  {
+	@Retry(acceptor = ExceptionRetryAcceptor.class, properties =  {
 		@Property(name = ExceptionRetryAcceptor.EXCEPTION_NAME, value = "org.springframework.dao.DataIntegrityViolationException")
 	}
 	)

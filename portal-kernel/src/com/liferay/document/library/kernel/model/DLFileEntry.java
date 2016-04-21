@@ -71,34 +71,31 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel, TreeModel
 		long fileVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.document.library.kernel.model.DLFileEntryType getDLFileEntryType()
+	public DLFileEntryType getDLFileEntryType()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getExtraSettingsProperties();
 
-	public java.util.List<com.liferay.document.library.kernel.model.DLFileShortcut> getFileShortcuts();
+	public java.util.List<DLFileShortcut> getFileShortcuts();
 
-	public com.liferay.document.library.kernel.model.DLFileVersion getFileVersion()
+	public DLFileVersion getFileVersion()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.document.library.kernel.model.DLFileVersion getFileVersion(
-		java.lang.String version)
+	public DLFileVersion getFileVersion(java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.document.library.kernel.model.DLFileVersion> getFileVersions(
-		int status);
+	public java.util.List<DLFileVersion> getFileVersions(int status);
 
 	public int getFileVersionsCount(int status);
 
-	public com.liferay.document.library.kernel.model.DLFolder getFolder()
+	public DLFolder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getIcon();
 
 	public java.lang.String getIconCssClass();
 
-	public com.liferay.document.library.kernel.model.DLFileVersion getLatestFileVersion(
-		boolean trusted)
+	public DLFileVersion getLatestFileVersion(boolean trusted)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.lock.Lock getLock();

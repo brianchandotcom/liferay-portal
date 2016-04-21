@@ -244,20 +244,19 @@ public interface WallEntryModel extends BaseModel<WallEntry>, GroupedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.social.networking.model.WallEntry wallEntry);
+	public int compareTo(WallEntry wallEntry);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.social.networking.model.WallEntry> toCacheModel();
+	public CacheModel<WallEntry> toCacheModel();
 
 	@Override
-	public com.liferay.social.networking.model.WallEntry toEscapedModel();
+	public WallEntry toEscapedModel();
 
 	@Override
-	public com.liferay.social.networking.model.WallEntry toUnescapedModel();
+	public WallEntry toUnescapedModel();
 
 	@Override
 	public String toString();

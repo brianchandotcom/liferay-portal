@@ -302,20 +302,19 @@ public interface KaleoConditionModel extends BaseModel<KaleoCondition>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.workflow.kaleo.model.KaleoCondition kaleoCondition);
+	public int compareTo(KaleoCondition kaleoCondition);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.workflow.kaleo.model.KaleoCondition> toCacheModel();
+	public CacheModel<KaleoCondition> toCacheModel();
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoCondition toEscapedModel();
+	public KaleoCondition toEscapedModel();
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoCondition toUnescapedModel();
+	public KaleoCondition toUnescapedModel();
 
 	@Override
 	public String toString();

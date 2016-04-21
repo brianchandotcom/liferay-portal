@@ -485,7 +485,7 @@ public abstract class ResourceBlockPermissionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.ResourceBlockPermissionLocalService.class)
+	@BeanReference(type = ResourceBlockPermissionLocalService.class)
 	protected ResourceBlockPermissionLocalService resourceBlockPermissionLocalService;
 	@BeanReference(type = ResourceBlockPermissionPersistence.class)
 	protected ResourceBlockPermissionPersistence resourceBlockPermissionPersistence;

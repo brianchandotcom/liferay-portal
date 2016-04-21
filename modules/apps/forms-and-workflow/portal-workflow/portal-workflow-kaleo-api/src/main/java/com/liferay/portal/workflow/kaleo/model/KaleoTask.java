@@ -54,8 +54,8 @@ public interface KaleoTask extends KaleoTaskModel, PersistedModel {
 			}
 		};
 
-	public com.liferay.portal.workflow.kaleo.model.KaleoNode getKaleoNode()
+	public KaleoNode getKaleoNode()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment> getKaleoTaskAssignments();
+	public java.util.List<KaleoTaskAssignment> getKaleoTaskAssignments();
 }

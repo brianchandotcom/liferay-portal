@@ -224,10 +224,10 @@ public interface SocialRequestLocalService extends BaseLocalService,
 	* <p>
 	* If the status is updated to {@link SocialRequestConstants#STATUS_CONFIRM}
 	* then {@link
-	* com.liferay.social.kernel.service.SocialRequestInterpreterLocalService#processConfirmation(
+	* SocialRequestInterpreterLocalService#processConfirmation(
 	* SocialRequest, ThemeDisplay)} is called. If the status is updated to
 	* {@link SocialRequestConstants#STATUS_IGNORE} then {@link
-	* com.liferay.social.kernel.service.SocialRequestInterpreterLocalService#processRejection(
+	* SocialRequestInterpreterLocalService#processRejection(
 	* SocialRequest, ThemeDisplay)} is called.
 	* </p>
 	*

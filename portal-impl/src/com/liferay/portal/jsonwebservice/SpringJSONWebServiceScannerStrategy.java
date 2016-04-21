@@ -70,7 +70,8 @@ public class SpringJSONWebServiceScannerStrategy
 	}
 
 	/**
-	 * @see com.liferay.portal.remote.json.web.service.extender.internal.ServiceJSONWebServiceScannerStrategy#getTargetClass(Object)
+	 * @see com.liferay.portal.remote.json.web.service.extender.internal.ServiceJSONWebServiceScannerStrategy#getTargetClass(
+	 *      Object)
 	 */
 	protected Class<?> getTargetClass(Object service) throws Exception {
 		while (ProxyUtil.isProxyClass(service.getClass())) {

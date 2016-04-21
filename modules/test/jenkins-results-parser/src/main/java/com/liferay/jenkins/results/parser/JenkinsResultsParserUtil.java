@@ -276,7 +276,7 @@ public class JenkinsResultsParserUtil {
 		for (int i = 0; i < actionsJSONArray.length(); i++) {
 			Object object = actionsJSONArray.get(i);
 
-			if (object.equals(org.json.JSONObject.NULL)) {
+			if (object.equals(JSONObject.NULL)) {
 				continue;
 			}
 

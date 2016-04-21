@@ -79,8 +79,7 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 		MembershipRequest membershipRequest);
 
 	public MembershipRequest addMembershipRequest(long userId, long groupId,
-		java.lang.String comments,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String comments, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -257,6 +256,5 @@ public interface MembershipRequestLocalService extends BaseLocalService,
 
 	public void updateStatus(long replierUserId, long membershipRequestId,
 		java.lang.String replyComments, long statusId, boolean addUserToGroup,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 }

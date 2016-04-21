@@ -105,8 +105,18 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Region> toCacheModel() {
+	public CacheModel<Region> toCacheModel() {
 		return _region.toCacheModel();
+	}
+
+	@Override
+	public Region toEscapedModel() {
+		return new RegionWrapper(_region.toEscapedModel());
+	}
+
+	@Override
+	public Region toUnescapedModel() {
+		return new RegionWrapper(_region.toUnescapedModel());
 	}
 
 	/**
@@ -150,17 +160,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Region toEscapedModel() {
-		return new RegionWrapper(_region.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Region toUnescapedModel() {
-		return new RegionWrapper(_region.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Region region) {
+	public int compareTo(Region region) {
 		return _region.compareTo(region);
 	}
 

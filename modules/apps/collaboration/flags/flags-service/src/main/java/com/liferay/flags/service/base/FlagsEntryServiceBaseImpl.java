@@ -683,7 +683,7 @@ public abstract class FlagsEntryServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.flags.service.FlagsEntryService.class)
+	@BeanReference(type = FlagsEntryService.class)
 	protected FlagsEntryService flagsEntryService;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;

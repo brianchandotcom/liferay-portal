@@ -287,20 +287,19 @@ public interface RatingsEntryModel extends AttachedModel, BaseModel<RatingsEntry
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.ratings.kernel.model.RatingsEntry ratingsEntry);
+	public int compareTo(RatingsEntry ratingsEntry);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.ratings.kernel.model.RatingsEntry> toCacheModel();
+	public CacheModel<RatingsEntry> toCacheModel();
 
 	@Override
-	public com.liferay.ratings.kernel.model.RatingsEntry toEscapedModel();
+	public RatingsEntry toEscapedModel();
 
 	@Override
-	public com.liferay.ratings.kernel.model.RatingsEntry toUnescapedModel();
+	public RatingsEntry toUnescapedModel();
 
 	@Override
 	public String toString();

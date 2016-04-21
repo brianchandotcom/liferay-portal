@@ -1042,7 +1042,7 @@ public abstract class RepositoryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.kernel.service.RepositoryLocalService.class)
 	protected com.liferay.portal.kernel.service.RepositoryLocalService repositoryLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.RepositoryService.class)
+	@BeanReference(type = RepositoryService.class)
 	protected RepositoryService repositoryService;
 	@BeanReference(type = RepositoryPersistence.class)
 	protected RepositoryPersistence repositoryPersistence;

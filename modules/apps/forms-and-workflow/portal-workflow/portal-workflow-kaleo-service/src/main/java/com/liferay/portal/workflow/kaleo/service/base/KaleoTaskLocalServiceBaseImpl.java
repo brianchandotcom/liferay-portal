@@ -1153,7 +1153,7 @@ public abstract class KaleoTaskLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.portal.workflow.kaleo.service.KaleoNotificationRecipientLocalService kaleoNotificationRecipientLocalService;
 	@BeanReference(type = KaleoNotificationRecipientPersistence.class)
 	protected KaleoNotificationRecipientPersistence kaleoNotificationRecipientPersistence;
-	@BeanReference(type = com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService.class)
+	@BeanReference(type = KaleoTaskLocalService.class)
 	protected KaleoTaskLocalService kaleoTaskLocalService;
 	@BeanReference(type = KaleoTaskPersistence.class)
 	protected KaleoTaskPersistence kaleoTaskPersistence;

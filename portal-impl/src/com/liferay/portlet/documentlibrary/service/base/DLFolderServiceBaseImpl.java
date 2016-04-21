@@ -1065,7 +1065,7 @@ public abstract class DLFolderServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.document.library.kernel.service.DLFolderLocalService.class)
 	protected com.liferay.document.library.kernel.service.DLFolderLocalService dlFolderLocalService;
-	@BeanReference(type = com.liferay.document.library.kernel.service.DLFolderService.class)
+	@BeanReference(type = DLFolderService.class)
 	protected DLFolderService dlFolderService;
 	@BeanReference(type = DLFolderPersistence.class)
 	protected DLFolderPersistence dlFolderPersistence;

@@ -273,19 +273,19 @@ public interface EntryModel extends BaseModel<Entry>, GroupedModel, ShardedModel
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.contacts.model.Entry entry);
+	public int compareTo(Entry entry);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.contacts.model.Entry> toCacheModel();
+	public CacheModel<Entry> toCacheModel();
 
 	@Override
-	public com.liferay.contacts.model.Entry toEscapedModel();
+	public Entry toEscapedModel();
 
 	@Override
-	public com.liferay.contacts.model.Entry toUnescapedModel();
+	public Entry toUnescapedModel();
 
 	@Override
 	public String toString();

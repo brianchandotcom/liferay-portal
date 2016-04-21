@@ -601,7 +601,7 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.social.kernel.service.SocialActivityAchievementLocalService.class)
+	@BeanReference(type = SocialActivityAchievementLocalService.class)
 	protected SocialActivityAchievementLocalService socialActivityAchievementLocalService;
 	@BeanReference(type = SocialActivityAchievementPersistence.class)
 	protected SocialActivityAchievementPersistence socialActivityAchievementPersistence;

@@ -466,7 +466,7 @@ public abstract class RecentLayoutRevisionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.RecentLayoutRevisionLocalService.class)
+	@BeanReference(type = RecentLayoutRevisionLocalService.class)
 	protected RecentLayoutRevisionLocalService recentLayoutRevisionLocalService;
 	@BeanReference(type = RecentLayoutRevisionPersistence.class)
 	protected RecentLayoutRevisionPersistence recentLayoutRevisionPersistence;

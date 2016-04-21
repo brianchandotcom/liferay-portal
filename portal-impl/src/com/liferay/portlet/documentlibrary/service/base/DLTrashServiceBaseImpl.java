@@ -166,7 +166,7 @@ public abstract class DLTrashServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.document.library.kernel.service.DLTrashLocalService.class)
 	protected com.liferay.document.library.kernel.service.DLTrashLocalService dlTrashLocalService;
-	@BeanReference(type = com.liferay.document.library.kernel.service.DLTrashService.class)
+	@BeanReference(type = DLTrashService.class)
 	protected DLTrashService dlTrashService;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;

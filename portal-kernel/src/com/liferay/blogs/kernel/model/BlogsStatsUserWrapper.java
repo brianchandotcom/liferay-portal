@@ -131,6 +131,16 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	}
 
 	@Override
+	public BlogsStatsUser toEscapedModel() {
+		return new BlogsStatsUserWrapper(_blogsStatsUser.toEscapedModel());
+	}
+
+	@Override
+	public BlogsStatsUser toUnescapedModel() {
+		return new BlogsStatsUserWrapper(_blogsStatsUser.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _blogsStatsUser.isCachedModel();
 	}
@@ -146,22 +156,12 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	}
 
 	@Override
-	public com.liferay.blogs.kernel.model.BlogsStatsUser toEscapedModel() {
-		return new BlogsStatsUserWrapper(_blogsStatsUser.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.blogs.kernel.model.BlogsStatsUser toUnescapedModel() {
-		return new BlogsStatsUserWrapper(_blogsStatsUser.toUnescapedModel());
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _blogsStatsUser.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.blogs.kernel.model.BlogsStatsUser> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<BlogsStatsUser> toCacheModel() {
 		return _blogsStatsUser.toCacheModel();
 	}
 
@@ -186,8 +186,7 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.blogs.kernel.model.BlogsStatsUser blogsStatsUser) {
+	public int compareTo(BlogsStatsUser blogsStatsUser) {
 		return _blogsStatsUser.compareTo(blogsStatsUser);
 	}
 

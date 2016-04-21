@@ -152,6 +152,16 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	}
 
 	@Override
+	public DLFileEntryType toEscapedModel() {
+		return new DLFileEntryTypeWrapper(_dlFileEntryType.toEscapedModel());
+	}
+
+	@Override
+	public DLFileEntryType toUnescapedModel() {
+		return new DLFileEntryTypeWrapper(_dlFileEntryType.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _dlFileEntryType.isCachedModel();
 	}
@@ -172,28 +182,17 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryType toEscapedModel() {
-		return new DLFileEntryTypeWrapper(_dlFileEntryType.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryType toUnescapedModel() {
-		return new DLFileEntryTypeWrapper(_dlFileEntryType.toUnescapedModel());
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _dlFileEntryType.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.document.library.kernel.model.DLFileEntryType> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<DLFileEntryType> toCacheModel() {
 		return _dlFileEntryType.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.document.library.kernel.model.DLFileEntryType dlFileEntryType) {
+	public int compareTo(DLFileEntryType dlFileEntryType) {
 		return _dlFileEntryType.compareTo(dlFileEntryType);
 	}
 
@@ -364,8 +363,8 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 
 	@Override
 	public java.lang.String getUnambiguousName(
-		java.util.List<com.liferay.document.library.kernel.model.DLFileEntryType> dlFileEntryTypes,
-		long groupId, java.util.Locale locale)
+		java.util.List<DLFileEntryType> dlFileEntryTypes, long groupId,
+		java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryType.getUnambiguousName(dlFileEntryTypes, groupId,
 			locale);

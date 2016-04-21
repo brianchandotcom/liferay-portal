@@ -643,7 +643,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 
 	@BeanReference(type = com.liferay.exportimport.kernel.service.ExportImportLocalService.class)
 	protected com.liferay.exportimport.kernel.service.ExportImportLocalService exportImportLocalService;
-	@BeanReference(type = com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService.class)
+	@BeanReference(type = ExportImportConfigurationLocalService.class)
 	protected ExportImportConfigurationLocalService exportImportConfigurationLocalService;
 	@BeanReference(type = ExportImportConfigurationPersistence.class)
 	protected ExportImportConfigurationPersistence exportImportConfigurationPersistence;

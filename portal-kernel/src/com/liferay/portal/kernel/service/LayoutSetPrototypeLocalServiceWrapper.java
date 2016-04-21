@@ -75,8 +75,7 @@ public class LayoutSetPrototypeLocalServiceWrapper
 		long userId, long companyId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active,
-		boolean layoutsUpdateable,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean layoutsUpdateable, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetPrototypeLocalService.addLayoutSetPrototype(userId,
 			companyId, nameMap, description, active, layoutsUpdateable,
@@ -88,8 +87,7 @@ public class LayoutSetPrototypeLocalServiceWrapper
 		long userId, long companyId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, boolean layoutsUpdateable,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean active, boolean layoutsUpdateable, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetPrototypeLocalService.addLayoutSetPrototype(userId,
 			companyId, nameMap, descriptionMap, active, layoutsUpdateable,
@@ -217,8 +215,7 @@ public class LayoutSetPrototypeLocalServiceWrapper
 		long layoutSetPrototypeId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active,
-		boolean layoutsUpdateable,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean layoutsUpdateable, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetPrototypeLocalService.updateLayoutSetPrototype(layoutSetPrototypeId,
 			nameMap, description, active, layoutsUpdateable, serviceContext);
@@ -229,8 +226,7 @@ public class LayoutSetPrototypeLocalServiceWrapper
 		long layoutSetPrototypeId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, boolean layoutsUpdateable,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean active, boolean layoutsUpdateable, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetPrototypeLocalService.updateLayoutSetPrototype(layoutSetPrototypeId,
 			nameMap, descriptionMap, active, layoutsUpdateable, serviceContext);

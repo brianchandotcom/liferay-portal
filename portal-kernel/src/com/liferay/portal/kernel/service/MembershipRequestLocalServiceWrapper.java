@@ -68,7 +68,7 @@ public class MembershipRequestLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.MembershipRequest addMembershipRequest(
 		long userId, long groupId, java.lang.String comments,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _membershipRequestLocalService.addMembershipRequest(userId,
 			groupId, comments, serviceContext);
@@ -324,7 +324,7 @@ public class MembershipRequestLocalServiceWrapper
 	@Override
 	public void updateStatus(long replierUserId, long membershipRequestId,
 		java.lang.String replyComments, long statusId, boolean addUserToGroup,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_membershipRequestLocalService.updateStatus(replierUserId,
 			membershipRequestId, replyComments, statusId, addUserToGroup,

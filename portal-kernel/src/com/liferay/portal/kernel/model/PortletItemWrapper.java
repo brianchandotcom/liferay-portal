@@ -142,8 +142,18 @@ public class PortletItemWrapper implements PortletItem,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.PortletItem> toCacheModel() {
+	public CacheModel<PortletItem> toCacheModel() {
 		return _portletItem.toCacheModel();
+	}
+
+	@Override
+	public PortletItem toEscapedModel() {
+		return new PortletItemWrapper(_portletItem.toEscapedModel());
+	}
+
+	@Override
+	public PortletItem toUnescapedModel() {
+		return new PortletItemWrapper(_portletItem.toUnescapedModel());
 	}
 
 	@Override
@@ -167,18 +177,7 @@ public class PortletItemWrapper implements PortletItem,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PortletItem toEscapedModel() {
-		return new PortletItemWrapper(_portletItem.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PortletItem toUnescapedModel() {
-		return new PortletItemWrapper(_portletItem.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.PortletItem portletItem) {
+	public int compareTo(PortletItem portletItem) {
 		return _portletItem.compareTo(portletItem);
 	}
 

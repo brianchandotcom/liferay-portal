@@ -596,7 +596,7 @@ public abstract class RepositoryEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.RepositoryEntryLocalService.class)
+	@BeanReference(type = RepositoryEntryLocalService.class)
 	protected RepositoryEntryLocalService repositoryEntryLocalService;
 	@BeanReference(type = RepositoryEntryPersistence.class)
 	protected RepositoryEntryPersistence repositoryEntryPersistence;

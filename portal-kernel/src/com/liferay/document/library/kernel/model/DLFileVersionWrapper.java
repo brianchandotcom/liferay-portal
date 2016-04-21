@@ -263,6 +263,34 @@ public class DLFileVersionWrapper implements DLFileVersion,
 		}
 	}
 
+	@Override
+	public DLFileEntry getFileEntry()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileVersion.getFileEntry();
+	}
+
+	@Override
+	public DLFileEntryType getDLFileEntryType()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileVersion.getDLFileEntryType();
+	}
+
+	@Override
+	public DLFileVersion toEscapedModel() {
+		return new DLFileVersionWrapper(_dlFileVersion.toEscapedModel());
+	}
+
+	@Override
+	public DLFileVersion toUnescapedModel() {
+		return new DLFileVersionWrapper(_dlFileVersion.toUnescapedModel());
+	}
+
+	@Override
+	public DLFolder getFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileVersion.getFolder();
+	}
+
 	/**
 	* Returns <code>true</code> if this document library file version is approved.
 	*
@@ -359,40 +387,12 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntry getFileEntry()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersion.getFileEntry();
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryType getDLFileEntryType()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersion.getDLFileEntryType();
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileVersion toEscapedModel() {
-		return new DLFileVersionWrapper(_dlFileVersion.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileVersion toUnescapedModel() {
-		return new DLFileVersionWrapper(_dlFileVersion.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFolder getFolder()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileVersion.getFolder();
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _dlFileVersion.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.document.library.kernel.model.DLFileVersion> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<DLFileVersion> toCacheModel() {
 		return _dlFileVersion.toCacheModel();
 	}
 
@@ -402,8 +402,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.document.library.kernel.model.DLFileVersion dlFileVersion) {
+	public int compareTo(DLFileVersion dlFileVersion) {
 		return _dlFileVersion.compareTo(dlFileVersion);
 	}
 

@@ -1179,7 +1179,7 @@ public abstract class BookmarksEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.bookmarks.service.BookmarksEntryLocalService.class)
+	@BeanReference(type = BookmarksEntryLocalService.class)
 	protected BookmarksEntryLocalService bookmarksEntryLocalService;
 	@BeanReference(type = BookmarksEntryPersistence.class)
 	protected BookmarksEntryPersistence bookmarksEntryPersistence;

@@ -249,6 +249,28 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		}
 	}
 
+	@Override
+	public DDMTemplate toEscapedModel() {
+		return new DDMTemplateWrapper(_ddmTemplate.toEscapedModel());
+	}
+
+	@Override
+	public DDMTemplate toUnescapedModel() {
+		return new DDMTemplateWrapper(_ddmTemplate.toUnescapedModel());
+	}
+
+	@Override
+	public DDMTemplateVersion getLatestTemplateVersion()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmTemplate.getLatestTemplateVersion();
+	}
+
+	@Override
+	public DDMTemplateVersion getTemplateVersion()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmTemplate.getTemplateVersion();
+	}
+
 	/**
 	* Returns the cacheable of this d d m template.
 	*
@@ -305,40 +327,17 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMTemplate toEscapedModel() {
-		return new DDMTemplateWrapper(_ddmTemplate.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMTemplate toUnescapedModel() {
-		return new DDMTemplateWrapper(_ddmTemplate.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getLatestTemplateVersion()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmTemplate.getLatestTemplateVersion();
-	}
-
-	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getTemplateVersion()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmTemplate.getTemplateVersion();
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _ddmTemplate.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.dynamic.data.mapping.model.DDMTemplate> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<DDMTemplate> toCacheModel() {
 		return _ddmTemplate.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.dynamic.data.mapping.model.DDMTemplate ddmTemplate) {
+	public int compareTo(DDMTemplate ddmTemplate) {
 		return _ddmTemplate.compareTo(ddmTemplate);
 	}
 

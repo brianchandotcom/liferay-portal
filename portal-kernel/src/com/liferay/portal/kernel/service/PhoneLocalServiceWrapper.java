@@ -84,7 +84,7 @@ public class PhoneLocalServiceWrapper implements PhoneLocalService,
 	public com.liferay.portal.kernel.model.Phone addPhone(long userId,
 		java.lang.String className, long classPK, java.lang.String number,
 		java.lang.String extension, long typeId, boolean primary,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _phoneLocalService.addPhone(userId, className, classPK, number,
 			extension, typeId, primary, serviceContext);

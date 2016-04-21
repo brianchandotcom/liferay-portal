@@ -170,6 +170,28 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 		}
 	}
 
+	@Override
+	public DDLRecord getRecord()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordVersion.getRecord();
+	}
+
+	@Override
+	public DDLRecordSet getRecordSet()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddlRecordVersion.getRecordSet();
+	}
+
+	@Override
+	public DDLRecordVersion toEscapedModel() {
+		return new DDLRecordVersionWrapper(_ddlRecordVersion.toEscapedModel());
+	}
+
+	@Override
+	public DDLRecordVersion toUnescapedModel() {
+		return new DDLRecordVersionWrapper(_ddlRecordVersion.toUnescapedModel());
+	}
+
 	/**
 	* Returns <code>true</code> if this d d l record version is approved.
 	*
@@ -266,28 +288,6 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecord getRecord()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordVersion.getRecord();
-	}
-
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet getRecordSet()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddlRecordVersion.getRecordSet();
-	}
-
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordVersion toEscapedModel() {
-		return new DDLRecordVersionWrapper(_ddlRecordVersion.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordVersion toUnescapedModel() {
-		return new DDLRecordVersionWrapper(_ddlRecordVersion.toUnescapedModel());
-	}
-
-	@Override
 	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getDDMFormValues()
 		throws com.liferay.dynamic.data.mapping.exception.StorageException {
 		return _ddlRecordVersion.getDDMFormValues();
@@ -299,13 +299,12 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.dynamic.data.lists.model.DDLRecordVersion> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<DDLRecordVersion> toCacheModel() {
 		return _ddlRecordVersion.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.dynamic.data.lists.model.DDLRecordVersion ddlRecordVersion) {
+	public int compareTo(DDLRecordVersion ddlRecordVersion) {
 		return _ddlRecordVersion.compareTo(ddlRecordVersion);
 	}
 

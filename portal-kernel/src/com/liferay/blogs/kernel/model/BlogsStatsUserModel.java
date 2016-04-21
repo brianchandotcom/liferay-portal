@@ -256,20 +256,19 @@ public interface BlogsStatsUserModel extends BaseModel<BlogsStatsUser>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.blogs.kernel.model.BlogsStatsUser blogsStatsUser);
+	public int compareTo(BlogsStatsUser blogsStatsUser);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.blogs.kernel.model.BlogsStatsUser> toCacheModel();
+	public CacheModel<BlogsStatsUser> toCacheModel();
 
 	@Override
-	public com.liferay.blogs.kernel.model.BlogsStatsUser toEscapedModel();
+	public BlogsStatsUser toEscapedModel();
 
 	@Override
-	public com.liferay.blogs.kernel.model.BlogsStatsUser toUnescapedModel();
+	public BlogsStatsUser toUnescapedModel();
 
 	@Override
 	public String toString();

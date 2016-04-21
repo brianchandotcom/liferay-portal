@@ -134,8 +134,18 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Ticket> toCacheModel() {
+	public CacheModel<Ticket> toCacheModel() {
 		return _ticket.toCacheModel();
+	}
+
+	@Override
+	public Ticket toEscapedModel() {
+		return new TicketWrapper(_ticket.toEscapedModel());
+	}
+
+	@Override
+	public Ticket toUnescapedModel() {
+		return new TicketWrapper(_ticket.toUnescapedModel());
 	}
 
 	@Override
@@ -164,17 +174,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Ticket toEscapedModel() {
-		return new TicketWrapper(_ticket.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Ticket toUnescapedModel() {
-		return new TicketWrapper(_ticket.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Ticket ticket) {
+	public int compareTo(Ticket ticket) {
 		return _ticket.compareTo(ticket);
 	}
 

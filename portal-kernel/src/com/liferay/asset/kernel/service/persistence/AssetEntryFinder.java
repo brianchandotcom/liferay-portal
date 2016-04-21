@@ -22,8 +22,7 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface AssetEntryFinder {
-	public int countEntries(
-		com.liferay.asset.kernel.service.persistence.AssetEntryQuery entryQuery);
+	public int countEntries(AssetEntryQuery entryQuery);
 
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> findByDLFileEntryC_T(
 		long classNameId, java.lang.String treePath);
@@ -32,5 +31,5 @@ public interface AssetEntryFinder {
 		long classNameId, java.lang.String treePath);
 
 	public java.util.List<com.liferay.asset.kernel.model.AssetEntry> findEntries(
-		com.liferay.asset.kernel.service.persistence.AssetEntryQuery entryQuery);
+		AssetEntryQuery entryQuery);
 }

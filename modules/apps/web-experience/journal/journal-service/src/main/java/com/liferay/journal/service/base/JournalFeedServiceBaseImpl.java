@@ -427,7 +427,7 @@ public abstract class JournalFeedServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.journal.service.JournalFeedLocalService.class)
 	protected com.liferay.journal.service.JournalFeedLocalService journalFeedLocalService;
-	@BeanReference(type = com.liferay.journal.service.JournalFeedService.class)
+	@BeanReference(type = JournalFeedService.class)
 	protected JournalFeedService journalFeedService;
 	@BeanReference(type = JournalFeedPersistence.class)
 	protected JournalFeedPersistence journalFeedPersistence;

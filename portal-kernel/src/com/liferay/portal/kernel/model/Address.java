@@ -53,9 +53,9 @@ public interface Address extends AddressModel, PersistedModel {
 			}
 		};
 
-	public com.liferay.portal.kernel.model.Country getCountry();
+	public Country getCountry();
 
-	public com.liferay.portal.kernel.model.Region getRegion();
+	public Region getRegion();
 
-	public com.liferay.portal.kernel.model.ListType getType();
+	public ListType getType();
 }

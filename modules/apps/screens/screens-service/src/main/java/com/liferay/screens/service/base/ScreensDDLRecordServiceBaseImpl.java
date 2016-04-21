@@ -361,7 +361,7 @@ public abstract class ScreensDDLRecordServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.screens.service.ScreensAssetEntryService.class)
 	protected com.liferay.screens.service.ScreensAssetEntryService screensAssetEntryService;
-	@BeanReference(type = com.liferay.screens.service.ScreensDDLRecordService.class)
+	@BeanReference(type = ScreensDDLRecordService.class)
 	protected ScreensDDLRecordService screensDDLRecordService;
 	@BeanReference(type = com.liferay.screens.service.ScreensJournalArticleService.class)
 	protected com.liferay.screens.service.ScreensJournalArticleService screensJournalArticleService;

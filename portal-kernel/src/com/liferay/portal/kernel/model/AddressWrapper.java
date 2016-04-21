@@ -206,8 +206,33 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Address> toCacheModel() {
+	public Address toEscapedModel() {
+		return new AddressWrapper(_address.toEscapedModel());
+	}
+
+	@Override
+	public Address toUnescapedModel() {
+		return new AddressWrapper(_address.toUnescapedModel());
+	}
+
+	@Override
+	public CacheModel<Address> toCacheModel() {
 		return _address.toCacheModel();
+	}
+
+	@Override
+	public Country getCountry() {
+		return _address.getCountry();
+	}
+
+	@Override
+	public ListType getType() {
+		return _address.getType();
+	}
+
+	@Override
+	public Region getRegion() {
+		return _address.getRegion();
 	}
 
 	/**
@@ -271,32 +296,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Address toEscapedModel() {
-		return new AddressWrapper(_address.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Address toUnescapedModel() {
-		return new AddressWrapper(_address.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Country getCountry() {
-		return _address.getCountry();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.ListType getType() {
-		return _address.getType();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Region getRegion() {
-		return _address.getRegion();
-	}
-
-	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Address address) {
+	public int compareTo(Address address) {
 		return _address.compareTo(address);
 	}
 

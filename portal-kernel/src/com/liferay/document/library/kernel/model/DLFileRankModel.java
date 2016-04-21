@@ -220,20 +220,19 @@ public interface DLFileRankModel extends BaseModel<DLFileRank>, ShardedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.document.library.kernel.model.DLFileRank dlFileRank);
+	public int compareTo(DLFileRank dlFileRank);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.document.library.kernel.model.DLFileRank> toCacheModel();
+	public CacheModel<DLFileRank> toCacheModel();
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileRank toEscapedModel();
+	public DLFileRank toEscapedModel();
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileRank toUnescapedModel();
+	public DLFileRank toUnescapedModel();
 
 	@Override
 	public String toString();

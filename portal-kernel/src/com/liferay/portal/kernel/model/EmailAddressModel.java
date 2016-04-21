@@ -334,20 +334,19 @@ public interface EmailAddressModel extends AttachedModel, BaseModel<EmailAddress
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.EmailAddress emailAddress);
+	public int compareTo(EmailAddress emailAddress);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.EmailAddress> toCacheModel();
+	public CacheModel<EmailAddress> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.EmailAddress toEscapedModel();
+	public EmailAddress toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.EmailAddress toUnescapedModel();
+	public EmailAddress toUnescapedModel();
 
 	@Override
 	public String toString();

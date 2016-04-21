@@ -152,8 +152,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	* @throws NoSuchUserGroupRoleException if a user group role with the primary key could not be found
 	*/
 	public UserGroupRole[] findByUserId_PrevAndNext(
-		com.liferay.portal.kernel.service.persistence.UserGroupRolePK userGroupRolePK,
-		long userId,
+		UserGroupRolePK userGroupRolePK, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupRole> orderByComparator)
 		throws NoSuchUserGroupRoleException;
 
@@ -285,8 +284,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	* @throws NoSuchUserGroupRoleException if a user group role with the primary key could not be found
 	*/
 	public UserGroupRole[] findByGroupId_PrevAndNext(
-		com.liferay.portal.kernel.service.persistence.UserGroupRolePK userGroupRolePK,
-		long groupId,
+		UserGroupRolePK userGroupRolePK, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupRole> orderByComparator)
 		throws NoSuchUserGroupRoleException;
 
@@ -418,8 +416,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	* @throws NoSuchUserGroupRoleException if a user group role with the primary key could not be found
 	*/
 	public UserGroupRole[] findByRoleId_PrevAndNext(
-		com.liferay.portal.kernel.service.persistence.UserGroupRolePK userGroupRolePK,
-		long roleId,
+		UserGroupRolePK userGroupRolePK, long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupRole> orderByComparator)
 		throws NoSuchUserGroupRoleException;
 
@@ -560,8 +557,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	* @throws NoSuchUserGroupRoleException if a user group role with the primary key could not be found
 	*/
 	public UserGroupRole[] findByU_G_PrevAndNext(
-		com.liferay.portal.kernel.service.persistence.UserGroupRolePK userGroupRolePK,
-		long userId, long groupId,
+		UserGroupRolePK userGroupRolePK, long userId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupRole> orderByComparator)
 		throws NoSuchUserGroupRoleException;
 
@@ -704,8 +700,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	* @throws NoSuchUserGroupRoleException if a user group role with the primary key could not be found
 	*/
 	public UserGroupRole[] findByG_R_PrevAndNext(
-		com.liferay.portal.kernel.service.persistence.UserGroupRolePK userGroupRolePK,
-		long groupId, long roleId,
+		UserGroupRolePK userGroupRolePK, long groupId, long roleId,
 		com.liferay.portal.kernel.util.OrderByComparator<UserGroupRole> orderByComparator)
 		throws NoSuchUserGroupRoleException;
 
@@ -746,8 +741,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	* @param userGroupRolePK the primary key for the new user group role
 	* @return the new user group role
 	*/
-	public UserGroupRole create(
-		com.liferay.portal.kernel.service.persistence.UserGroupRolePK userGroupRolePK);
+	public UserGroupRole create(UserGroupRolePK userGroupRolePK);
 
 	/**
 	* Removes the user group role with the primary key from the database. Also notifies the appropriate model listeners.
@@ -756,8 +750,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	* @return the user group role that was removed
 	* @throws NoSuchUserGroupRoleException if a user group role with the primary key could not be found
 	*/
-	public UserGroupRole remove(
-		com.liferay.portal.kernel.service.persistence.UserGroupRolePK userGroupRolePK)
+	public UserGroupRole remove(UserGroupRolePK userGroupRolePK)
 		throws NoSuchUserGroupRoleException;
 
 	public UserGroupRole updateImpl(UserGroupRole userGroupRole);
@@ -769,8 +762,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	* @return the user group role
 	* @throws NoSuchUserGroupRoleException if a user group role with the primary key could not be found
 	*/
-	public UserGroupRole findByPrimaryKey(
-		com.liferay.portal.kernel.service.persistence.UserGroupRolePK userGroupRolePK)
+	public UserGroupRole findByPrimaryKey(UserGroupRolePK userGroupRolePK)
 		throws NoSuchUserGroupRoleException;
 
 	/**
@@ -779,8 +771,7 @@ public interface UserGroupRolePersistence extends BasePersistence<UserGroupRole>
 	* @param userGroupRolePK the primary key of the user group role
 	* @return the user group role, or <code>null</code> if a user group role with the primary key could not be found
 	*/
-	public UserGroupRole fetchByPrimaryKey(
-		com.liferay.portal.kernel.service.persistence.UserGroupRolePK userGroupRolePK);
+	public UserGroupRole fetchByPrimaryKey(UserGroupRolePK userGroupRolePK);
 
 	@Override
 	public java.util.Map<java.io.Serializable, UserGroupRole> fetchByPrimaryKeys(

@@ -46,35 +46,35 @@ public class ReleaseUtil {
 	 */
 
 	/**
-	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
+	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
 		getPersistence().clearCache();
 	}
 
 	/**
-	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
+	 * @see BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static void clearCache(Release release) {
 		getPersistence().clearCache(release);
 	}
 
 	/**
-	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 * @see BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
 	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 * @see BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<Release> findWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 * @see BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<Release> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
@@ -82,7 +82,7 @@ public class ReleaseUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 * @see BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<Release> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
@@ -93,14 +93,14 @@ public class ReleaseUtil {
 	}
 
 	/**
-	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
+	 * @see BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
 	 */
 	public static Release update(Release release) {
 		return getPersistence().update(release);
 	}
 
 	/**
-	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
+	 * @see BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
 	 */
 	public static Release update(Release release, ServiceContext serviceContext) {
 		return getPersistence().update(release, serviceContext);

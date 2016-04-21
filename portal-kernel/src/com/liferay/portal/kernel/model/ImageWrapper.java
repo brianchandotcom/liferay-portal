@@ -120,8 +120,18 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Image> toCacheModel() {
+	public CacheModel<Image> toCacheModel() {
 		return _image.toCacheModel();
+	}
+
+	@Override
+	public Image toEscapedModel() {
+		return new ImageWrapper(_image.toEscapedModel());
+	}
+
+	@Override
+	public Image toUnescapedModel() {
+		return new ImageWrapper(_image.toUnescapedModel());
 	}
 
 	@Override
@@ -150,17 +160,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Image toEscapedModel() {
-		return new ImageWrapper(_image.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Image toUnescapedModel() {
-		return new ImageWrapper(_image.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Image image) {
+	public int compareTo(Image image) {
 		return _image.compareTo(image);
 	}
 

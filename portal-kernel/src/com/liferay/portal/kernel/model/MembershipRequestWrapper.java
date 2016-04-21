@@ -142,8 +142,18 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.MembershipRequest> toCacheModel() {
+	public CacheModel<MembershipRequest> toCacheModel() {
 		return _membershipRequest.toCacheModel();
+	}
+
+	@Override
+	public MembershipRequest toEscapedModel() {
+		return new MembershipRequestWrapper(_membershipRequest.toEscapedModel());
+	}
+
+	@Override
+	public MembershipRequest toUnescapedModel() {
+		return new MembershipRequestWrapper(_membershipRequest.toUnescapedModel());
 	}
 
 	@Override
@@ -167,18 +177,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.MembershipRequest toEscapedModel() {
-		return new MembershipRequestWrapper(_membershipRequest.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.MembershipRequest toUnescapedModel() {
-		return new MembershipRequestWrapper(_membershipRequest.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.MembershipRequest membershipRequest) {
+	public int compareTo(MembershipRequest membershipRequest) {
 		return _membershipRequest.compareTo(membershipRequest);
 	}
 

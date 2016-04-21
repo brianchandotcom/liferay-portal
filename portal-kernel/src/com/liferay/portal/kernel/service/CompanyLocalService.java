@@ -119,7 +119,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @return the company with the web domain and mail domain
 	*/
 	@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-		com.liferay.portal.kernel.exception.PortalException.class, com.liferay.portal.kernel.exception.SystemException.class}
+		PortalException.class, SystemException.class}
 	)
 	public Company checkCompany(java.lang.String webId, java.lang.String mx)
 		throws PortalException;
@@ -566,7 +566,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	*
 	* This method is called by {@link
 	* com.liferay.portlet.portalsettings.action.EditLDAPServerAction} remotely
-	* through {@link com.liferay.portal.kernel.service.CompanyService}.
+	* through {@link CompanyService}.
 	*
 	* @param companyId the primary key of the company
 	* @param keys the company's preferences keys to be remove

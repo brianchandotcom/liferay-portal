@@ -106,8 +106,18 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.PasswordPolicyRel> toCacheModel() {
+	public CacheModel<PasswordPolicyRel> toCacheModel() {
 		return _passwordPolicyRel.toCacheModel();
+	}
+
+	@Override
+	public PasswordPolicyRel toEscapedModel() {
+		return new PasswordPolicyRelWrapper(_passwordPolicyRel.toEscapedModel());
+	}
+
+	@Override
+	public PasswordPolicyRel toUnescapedModel() {
+		return new PasswordPolicyRelWrapper(_passwordPolicyRel.toUnescapedModel());
 	}
 
 	@Override
@@ -131,18 +141,7 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PasswordPolicyRel toEscapedModel() {
-		return new PasswordPolicyRelWrapper(_passwordPolicyRel.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PasswordPolicyRel toUnescapedModel() {
-		return new PasswordPolicyRelWrapper(_passwordPolicyRel.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.PasswordPolicyRel passwordPolicyRel) {
+	public int compareTo(PasswordPolicyRel passwordPolicyRel) {
 		return _passwordPolicyRel.compareTo(passwordPolicyRel);
 	}
 

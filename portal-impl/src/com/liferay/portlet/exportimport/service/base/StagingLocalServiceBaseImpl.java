@@ -620,7 +620,7 @@ public abstract class StagingLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected ExportImportConfigurationPersistence exportImportConfigurationPersistence;
 	@BeanReference(type = ExportImportConfigurationFinder.class)
 	protected ExportImportConfigurationFinder exportImportConfigurationFinder;
-	@BeanReference(type = com.liferay.exportimport.kernel.service.StagingLocalService.class)
+	@BeanReference(type = StagingLocalService.class)
 	protected StagingLocalService stagingLocalService;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;

@@ -423,7 +423,7 @@ public abstract class SAPEntryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService.class)
 	protected com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService sapEntryLocalService;
-	@BeanReference(type = com.liferay.portal.security.service.access.policy.service.SAPEntryService.class)
+	@BeanReference(type = SAPEntryService.class)
 	protected SAPEntryService sapEntryService;
 	@BeanReference(type = SAPEntryPersistence.class)
 	protected SAPEntryPersistence sapEntryPersistence;

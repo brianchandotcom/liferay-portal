@@ -220,6 +220,22 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		}
 	}
 
+	@Override
+	public MBCategory getCategory()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbThread.getCategory();
+	}
+
+	@Override
+	public MBThread toEscapedModel() {
+		return new MBThreadWrapper(_mbThread.toEscapedModel());
+	}
+
+	@Override
+	public MBThread toUnescapedModel() {
+		return new MBThreadWrapper(_mbThread.toUnescapedModel());
+	}
+
 	/**
 	* Returns the question of this message boards thread.
 	*
@@ -381,28 +397,12 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBCategory getCategory()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbThread.getCategory();
-	}
-
-	@Override
-	public com.liferay.message.boards.kernel.model.MBThread toEscapedModel() {
-		return new MBThreadWrapper(_mbThread.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.message.boards.kernel.model.MBThread toUnescapedModel() {
-		return new MBThreadWrapper(_mbThread.toUnescapedModel());
-	}
-
-	@Override
 	public com.liferay.portal.kernel.lock.Lock getLock() {
 		return _mbThread.getLock();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.message.boards.kernel.model.MBThread> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<MBThread> toCacheModel() {
 		return _mbThread.toCacheModel();
 	}
 
@@ -444,8 +444,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.message.boards.kernel.model.MBThread mbThread) {
+	public int compareTo(MBThread mbThread) {
 		return _mbThread.compareTo(mbThread);
 	}
 

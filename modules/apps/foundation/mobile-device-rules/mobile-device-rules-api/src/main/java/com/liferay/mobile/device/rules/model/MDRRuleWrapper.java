@@ -165,6 +165,16 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	}
 
 	@Override
+	public MDRRule toEscapedModel() {
+		return new MDRRuleWrapper(_mdrRule.toEscapedModel());
+	}
+
+	@Override
+	public MDRRule toUnescapedModel() {
+		return new MDRRuleWrapper(_mdrRule.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _mdrRule.isCachedModel();
 	}
@@ -185,17 +195,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	}
 
 	@Override
-	public com.liferay.mobile.device.rules.model.MDRRule toEscapedModel() {
-		return new MDRRuleWrapper(_mdrRule.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRRule toUnescapedModel() {
-		return new MDRRuleWrapper(_mdrRule.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.mobile.device.rules.model.MDRRule> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<MDRRule> toCacheModel() {
 		return _mdrRule.toCacheModel();
 	}
 
@@ -205,7 +205,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	}
 
 	@Override
-	public int compareTo(com.liferay.mobile.device.rules.model.MDRRule mdrRule) {
+	public int compareTo(MDRRule mdrRule) {
 		return _mdrRule.compareTo(mdrRule);
 	}
 

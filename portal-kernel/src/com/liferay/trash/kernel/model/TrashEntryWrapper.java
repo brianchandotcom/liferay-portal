@@ -142,6 +142,16 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	}
 
 	@Override
+	public TrashEntry toEscapedModel() {
+		return new TrashEntryWrapper(_trashEntry.toEscapedModel());
+	}
+
+	@Override
+	public TrashEntry toUnescapedModel() {
+		return new TrashEntryWrapper(_trashEntry.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _trashEntry.isCachedModel();
 	}
@@ -172,7 +182,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.trash.kernel.model.TrashEntry> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<TrashEntry> toCacheModel() {
 		return _trashEntry.toCacheModel();
 	}
 
@@ -182,22 +192,12 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	}
 
 	@Override
-	public com.liferay.trash.kernel.model.TrashEntry getRootEntry() {
+	public TrashEntry getRootEntry() {
 		return _trashEntry.getRootEntry();
 	}
 
 	@Override
-	public com.liferay.trash.kernel.model.TrashEntry toEscapedModel() {
-		return new TrashEntryWrapper(_trashEntry.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.trash.kernel.model.TrashEntry toUnescapedModel() {
-		return new TrashEntryWrapper(_trashEntry.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(com.liferay.trash.kernel.model.TrashEntry trashEntry) {
+	public int compareTo(TrashEntry trashEntry) {
 		return _trashEntry.compareTo(trashEntry);
 	}
 
@@ -489,8 +489,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	}
 
 	@Override
-	public void setRootEntry(
-		com.liferay.trash.kernel.model.TrashEntry rootEntry) {
+	public void setRootEntry(TrashEntry rootEntry) {
 		_trashEntry.setRootEntry(rootEntry);
 	}
 

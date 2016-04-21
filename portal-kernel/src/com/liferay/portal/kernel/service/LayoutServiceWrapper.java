@@ -276,7 +276,7 @@ public class LayoutServiceWrapper implements LayoutService,
 		boolean privateLayout, long parentLayoutId, java.lang.String name,
 		java.lang.String title, java.lang.String description,
 		java.lang.String type, boolean hidden, java.lang.String friendlyURL,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutService.addLayout(groupId, privateLayout, parentLayoutId,
 			name, title, description, type, hidden, friendlyURL, serviceContext);
@@ -330,7 +330,7 @@ public class LayoutServiceWrapper implements LayoutService,
 		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
 		java.lang.String type, java.lang.String typeSettings, boolean hidden,
 		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutService.addLayout(groupId, privateLayout, parentLayoutId,
 			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
@@ -418,8 +418,7 @@ public class LayoutServiceWrapper implements LayoutService,
 		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
 		java.lang.String type, boolean hidden,
 		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
-		boolean iconImage, byte[] iconBytes,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean iconImage, byte[] iconBytes, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutService.updateLayout(groupId, privateLayout, layoutId,
 			parentLayoutId, localeNamesMap, localeTitlesMap, descriptionMap,
@@ -965,8 +964,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	*/
 	@Override
 	public void deleteLayout(long groupId, boolean privateLayout,
-		long layoutId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long layoutId, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_layoutService.deleteLayout(groupId, privateLayout, layoutId,
 			serviceContext);
@@ -980,8 +978,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @param serviceContext the service context to be applied
 	*/
 	@Override
-	public void deleteLayout(long plid,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public void deleteLayout(long plid, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_layoutService.deleteLayout(plid, serviceContext);
 	}
@@ -1395,8 +1392,7 @@ public class LayoutServiceWrapper implements LayoutService,
 	*/
 	@Override
 	public void setLayouts(long groupId, boolean privateLayout,
-		long parentLayoutId, long[] layoutIds,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long parentLayoutId, long[] layoutIds, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_layoutService.setLayouts(groupId, privateLayout, parentLayoutId,
 			layoutIds, serviceContext);

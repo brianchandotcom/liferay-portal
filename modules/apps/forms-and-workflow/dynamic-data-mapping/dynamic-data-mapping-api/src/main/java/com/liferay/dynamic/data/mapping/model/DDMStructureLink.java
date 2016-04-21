@@ -55,6 +55,6 @@ public interface DDMStructureLink extends DDMStructureLinkModel, PersistedModel 
 			}
 		};
 
-	public com.liferay.dynamic.data.mapping.model.DDMStructure getStructure()
+	public DDMStructure getStructure()
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

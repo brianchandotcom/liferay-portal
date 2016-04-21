@@ -846,7 +846,7 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.LayoutRevisionLocalService.class)
+	@BeanReference(type = LayoutRevisionLocalService.class)
 	protected LayoutRevisionLocalService layoutRevisionLocalService;
 	@BeanReference(type = LayoutRevisionPersistence.class)
 	protected LayoutRevisionPersistence layoutRevisionPersistence;

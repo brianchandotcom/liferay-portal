@@ -122,8 +122,18 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.RecentLayoutRevision> toCacheModel() {
+	public CacheModel<RecentLayoutRevision> toCacheModel() {
 		return _recentLayoutRevision.toCacheModel();
+	}
+
+	@Override
+	public RecentLayoutRevision toEscapedModel() {
+		return new RecentLayoutRevisionWrapper(_recentLayoutRevision.toEscapedModel());
+	}
+
+	@Override
+	public RecentLayoutRevision toUnescapedModel() {
+		return new RecentLayoutRevisionWrapper(_recentLayoutRevision.toUnescapedModel());
 	}
 
 	@Override
@@ -147,18 +157,7 @@ public class RecentLayoutRevisionWrapper implements RecentLayoutRevision,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.RecentLayoutRevision toEscapedModel() {
-		return new RecentLayoutRevisionWrapper(_recentLayoutRevision.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.RecentLayoutRevision toUnescapedModel() {
-		return new RecentLayoutRevisionWrapper(_recentLayoutRevision.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.RecentLayoutRevision recentLayoutRevision) {
+	public int compareTo(RecentLayoutRevision recentLayoutRevision) {
 		return _recentLayoutRevision.compareTo(recentLayoutRevision);
 	}
 

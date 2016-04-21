@@ -48,8 +48,7 @@ public interface MembershipRequestService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link MembershipRequestServiceUtil} to access the membership request remote service. Add custom service methods to {@link com.liferay.portal.service.impl.MembershipRequestServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public MembershipRequest addMembershipRequest(long groupId,
-		java.lang.String comments,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String comments, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -68,6 +67,5 @@ public interface MembershipRequestService extends BaseService {
 
 	public void updateStatus(long membershipRequestId,
 		java.lang.String reviewComments, long statusId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 }

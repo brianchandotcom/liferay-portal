@@ -51,8 +51,7 @@ public interface PhoneService extends BaseService {
 	 */
 	public Phone addPhone(java.lang.String className, long classPK,
 		java.lang.String number, java.lang.String extension, long typeId,
-		boolean primary,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean primary, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

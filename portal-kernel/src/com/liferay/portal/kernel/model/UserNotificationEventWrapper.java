@@ -157,8 +157,18 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.UserNotificationEvent> toCacheModel() {
+	public CacheModel<UserNotificationEvent> toCacheModel() {
 		return _userNotificationEvent.toCacheModel();
+	}
+
+	@Override
+	public UserNotificationEvent toEscapedModel() {
+		return new UserNotificationEventWrapper(_userNotificationEvent.toEscapedModel());
+	}
+
+	@Override
+	public UserNotificationEvent toUnescapedModel() {
+		return new UserNotificationEventWrapper(_userNotificationEvent.toUnescapedModel());
 	}
 
 	/**
@@ -242,18 +252,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.UserNotificationEvent toEscapedModel() {
-		return new UserNotificationEventWrapper(_userNotificationEvent.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.UserNotificationEvent toUnescapedModel() {
-		return new UserNotificationEventWrapper(_userNotificationEvent.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.UserNotificationEvent userNotificationEvent) {
+	public int compareTo(UserNotificationEvent userNotificationEvent) {
 		return _userNotificationEvent.compareTo(userNotificationEvent);
 	}
 

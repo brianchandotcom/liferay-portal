@@ -215,20 +215,19 @@ public interface UserIdMapperModel extends BaseModel<UserIdMapper>, MVCCModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.UserIdMapper userIdMapper);
+	public int compareTo(UserIdMapper userIdMapper);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.UserIdMapper> toCacheModel();
+	public CacheModel<UserIdMapper> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.UserIdMapper toEscapedModel();
+	public UserIdMapper toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.UserIdMapper toUnescapedModel();
+	public UserIdMapper toUnescapedModel();
 
 	@Override
 	public String toString();

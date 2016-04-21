@@ -70,7 +70,7 @@ public class TicketLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.Ticket addDistinctTicket(
 		long companyId, java.lang.String className, long classPK, int type,
 		java.lang.String extraInfo, java.util.Date expirationDate,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		ServiceContext serviceContext) {
 		return getService()
 				   .addDistinctTicket(companyId, className, classPK, type,
 			extraInfo, expirationDate, serviceContext);
@@ -90,7 +90,7 @@ public class TicketLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.Ticket addTicket(
 		long companyId, java.lang.String className, long classPK, int type,
 		java.lang.String extraInfo, java.util.Date expirationDate,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		ServiceContext serviceContext) {
 		return getService()
 				   .addTicket(companyId, className, classPK, type, extraInfo,
 			expirationDate, serviceContext);

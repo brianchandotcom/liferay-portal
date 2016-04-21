@@ -160,7 +160,7 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	@Override
 	public com.liferay.portal.kernel.model.UserGroup addUserGroup(long userId,
 		long companyId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userGroupLocalService.addUserGroup(userId, companyId, name,
 			description, serviceContext);
@@ -324,8 +324,7 @@ public class UserGroupLocalServiceWrapper implements UserGroupLocalService,
 	@Override
 	public com.liferay.portal.kernel.model.UserGroup updateUserGroup(
 		long companyId, long userGroupId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String description, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userGroupLocalService.updateUserGroup(companyId, userGroupId,
 			name, description, serviceContext);

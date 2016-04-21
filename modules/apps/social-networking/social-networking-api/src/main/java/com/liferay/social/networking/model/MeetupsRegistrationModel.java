@@ -256,20 +256,19 @@ public interface MeetupsRegistrationModel extends AuditedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.social.networking.model.MeetupsRegistration meetupsRegistration);
+	public int compareTo(MeetupsRegistration meetupsRegistration);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.social.networking.model.MeetupsRegistration> toCacheModel();
+	public CacheModel<MeetupsRegistration> toCacheModel();
 
 	@Override
-	public com.liferay.social.networking.model.MeetupsRegistration toEscapedModel();
+	public MeetupsRegistration toEscapedModel();
 
 	@Override
-	public com.liferay.social.networking.model.MeetupsRegistration toUnescapedModel();
+	public MeetupsRegistration toUnescapedModel();
 
 	@Override
 	public String toString();

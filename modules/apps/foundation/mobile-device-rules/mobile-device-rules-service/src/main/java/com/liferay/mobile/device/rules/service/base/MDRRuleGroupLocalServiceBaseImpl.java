@@ -768,7 +768,7 @@ public abstract class MDRRuleGroupLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService.class)
+	@BeanReference(type = MDRRuleGroupLocalService.class)
 	protected MDRRuleGroupLocalService mdrRuleGroupLocalService;
 	@BeanReference(type = MDRRuleGroupPersistence.class)
 	protected MDRRuleGroupPersistence mdrRuleGroupPersistence;

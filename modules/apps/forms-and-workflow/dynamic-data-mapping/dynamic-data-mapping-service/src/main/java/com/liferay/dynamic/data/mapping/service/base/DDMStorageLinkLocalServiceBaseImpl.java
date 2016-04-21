@@ -450,7 +450,7 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService.class)
+	@BeanReference(type = DDMStorageLinkLocalService.class)
 	protected DDMStorageLinkLocalService ddmStorageLinkLocalService;
 	@BeanReference(type = DDMStorageLinkPersistence.class)
 	protected DDMStorageLinkPersistence ddmStorageLinkPersistence;

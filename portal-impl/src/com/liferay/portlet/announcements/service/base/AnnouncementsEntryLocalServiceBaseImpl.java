@@ -1027,7 +1027,7 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService.class)
+	@BeanReference(type = AnnouncementsEntryLocalService.class)
 	protected AnnouncementsEntryLocalService announcementsEntryLocalService;
 	@BeanReference(type = AnnouncementsEntryPersistence.class)
 	protected AnnouncementsEntryPersistence announcementsEntryPersistence;

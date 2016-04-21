@@ -69,8 +69,7 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL addLayoutFriendlyURL(
 		long userId, long companyId, long groupId, long plid,
 		boolean privateLayout, java.lang.String friendlyURL,
-		java.lang.String languageId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String languageId, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutFriendlyURLLocalService.addLayoutFriendlyURL(userId,
 			companyId, groupId, plid, privateLayout, friendlyURL, languageId,
@@ -226,8 +225,7 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL updateLayoutFriendlyURL(
 		long userId, long companyId, long groupId, long plid,
 		boolean privateLayout, java.lang.String friendlyURL,
-		java.lang.String languageId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String languageId, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutFriendlyURLLocalService.updateLayoutFriendlyURL(userId,
 			companyId, groupId, plid, privateLayout, friendlyURL, languageId,
@@ -276,7 +274,7 @@ public class LayoutFriendlyURLLocalServiceWrapper
 		long userId, long companyId, long groupId, long plid,
 		boolean privateLayout,
 		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutFriendlyURLLocalService.addLayoutFriendlyURLs(userId,
 			companyId, groupId, plid, privateLayout, friendlyURLMap,
@@ -404,7 +402,7 @@ public class LayoutFriendlyURLLocalServiceWrapper
 		long userId, long companyId, long groupId, long plid,
 		boolean privateLayout,
 		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutFriendlyURLLocalService.updateLayoutFriendlyURLs(userId,
 			companyId, groupId, plid, privateLayout, friendlyURLMap,

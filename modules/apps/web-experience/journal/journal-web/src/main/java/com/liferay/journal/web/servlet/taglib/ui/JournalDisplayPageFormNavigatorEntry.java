@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.servlet.taglib.ui;
 
+import com.liferay.layout.item.selector.web.LayoutItemSelectorView;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
 import javax.servlet.ServletContext;
@@ -36,12 +37,16 @@ public class JournalDisplayPageFormNavigatorEntry
 		return "display-page";
 	}
 
-	@Override
+	@Reference(unbind = "-")
+	public void setLayoutItemSelectorView(
+		LayoutItemSelectorView layoutItemSelectorView) {
+	}
+
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.journal.web)", unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.layout.item.selector.web)",
+		unbind = "-"
 	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public void setLayoutItemServletContext(ServletContext servletContext) {
 	}
 
 	@Override

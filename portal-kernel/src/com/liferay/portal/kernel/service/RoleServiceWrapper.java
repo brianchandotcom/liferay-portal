@@ -91,8 +91,7 @@ public class RoleServiceWrapper implements RoleService,
 		java.lang.String className, long classPK, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int type, java.lang.String subtype,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		int type, java.lang.String subtype, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _roleService.addRole(className, classPK, name, titleMap,
 			descriptionMap, type, subtype, serviceContext);
@@ -155,8 +154,7 @@ public class RoleServiceWrapper implements RoleService,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String subtype,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String subtype, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _roleService.updateRole(roleId, name, titleMap, descriptionMap,
 			subtype, serviceContext);

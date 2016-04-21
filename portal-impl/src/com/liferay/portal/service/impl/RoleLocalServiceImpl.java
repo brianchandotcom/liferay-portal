@@ -821,8 +821,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @param  userId the primary key of the user
 	 * @param  groups the groups (optionally <code>null</code>)
 	 * @return the union of all the user's roles within the groups
-	 * @see    com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(long,
-	 *         List)
+	 * @see    com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(
+	 *         long, List)
 	 */
 	@Override
 	public List<Role> getUserRelatedRoles(long userId, List<Group> groups) {
@@ -839,8 +839,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @param  userId the primary key of the user
 	 * @param  groupId the primary key of the group
 	 * @return the user's roles within the group
-	 * @see    com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(long,
-	 *         long)
+	 * @see    com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(
+	 *         long, long)
 	 */
 	@Override
 	public List<Role> getUserRelatedRoles(long userId, long groupId) {
@@ -853,8 +853,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @param  userId the primary key of the user
 	 * @param  groupIds the primary keys of the groups
 	 * @return the union of all the user's roles within the groups
-	 * @see    com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(long,
-	 *         long[])
+	 * @see    com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(
+	 *         long, long[])
 	 */
 	@Override
 	public List<Role> getUserRelatedRoles(long userId, long[] groupIds) {

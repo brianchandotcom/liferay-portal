@@ -616,7 +616,7 @@ public abstract class RatingsStatsLocalServiceBaseImpl
 	protected RatingsEntryPersistence ratingsEntryPersistence;
 	@BeanReference(type = RatingsEntryFinder.class)
 	protected RatingsEntryFinder ratingsEntryFinder;
-	@BeanReference(type = com.liferay.ratings.kernel.service.RatingsStatsLocalService.class)
+	@BeanReference(type = RatingsStatsLocalService.class)
 	protected RatingsStatsLocalService ratingsStatsLocalService;
 	@BeanReference(type = RatingsStatsPersistence.class)
 	protected RatingsStatsPersistence ratingsStatsPersistence;

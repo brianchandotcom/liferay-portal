@@ -233,7 +233,7 @@ public abstract class BackgroundTaskServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.background.task.service.BackgroundTaskLocalService.class)
 	protected com.liferay.portal.background.task.service.BackgroundTaskLocalService backgroundTaskLocalService;
-	@BeanReference(type = com.liferay.portal.background.task.service.BackgroundTaskService.class)
+	@BeanReference(type = BackgroundTaskService.class)
 	protected BackgroundTaskService backgroundTaskService;
 	@BeanReference(type = BackgroundTaskPersistence.class)
 	protected BackgroundTaskPersistence backgroundTaskPersistence;

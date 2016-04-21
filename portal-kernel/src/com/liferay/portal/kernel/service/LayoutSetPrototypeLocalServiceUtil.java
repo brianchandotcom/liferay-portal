@@ -77,8 +77,7 @@ public class LayoutSetPrototypeLocalServiceUtil {
 		long userId, long companyId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active,
-		boolean layoutsUpdateable,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean layoutsUpdateable, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutSetPrototype(userId, companyId, nameMap,
@@ -89,8 +88,7 @@ public class LayoutSetPrototypeLocalServiceUtil {
 		long userId, long companyId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, boolean layoutsUpdateable,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean active, boolean layoutsUpdateable, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutSetPrototype(userId, companyId, nameMap,
@@ -208,8 +206,7 @@ public class LayoutSetPrototypeLocalServiceUtil {
 		long layoutSetPrototypeId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active,
-		boolean layoutsUpdateable,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean layoutsUpdateable, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateLayoutSetPrototype(layoutSetPrototypeId, nameMap,
@@ -220,8 +217,7 @@ public class LayoutSetPrototypeLocalServiceUtil {
 		long layoutSetPrototypeId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active, boolean layoutsUpdateable,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean active, boolean layoutsUpdateable, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateLayoutSetPrototype(layoutSetPrototypeId, nameMap,

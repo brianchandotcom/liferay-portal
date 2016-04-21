@@ -592,7 +592,7 @@ public abstract class SocialRequestLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.social.kernel.service.SocialRequestLocalService.class)
+	@BeanReference(type = SocialRequestLocalService.class)
 	protected SocialRequestLocalService socialRequestLocalService;
 	@BeanReference(type = SocialRequestPersistence.class)
 	protected SocialRequestPersistence socialRequestPersistence;

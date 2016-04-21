@@ -113,8 +113,18 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.UserIdMapper> toCacheModel() {
+	public CacheModel<UserIdMapper> toCacheModel() {
 		return _userIdMapper.toCacheModel();
+	}
+
+	@Override
+	public UserIdMapper toEscapedModel() {
+		return new UserIdMapperWrapper(_userIdMapper.toEscapedModel());
+	}
+
+	@Override
+	public UserIdMapper toUnescapedModel() {
+		return new UserIdMapperWrapper(_userIdMapper.toUnescapedModel());
 	}
 
 	@Override
@@ -138,18 +148,7 @@ public class UserIdMapperWrapper implements UserIdMapper,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.UserIdMapper toEscapedModel() {
-		return new UserIdMapperWrapper(_userIdMapper.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.UserIdMapper toUnescapedModel() {
-		return new UserIdMapperWrapper(_userIdMapper.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.UserIdMapper userIdMapper) {
+	public int compareTo(UserIdMapper userIdMapper) {
 		return _userIdMapper.compareTo(userIdMapper);
 	}
 

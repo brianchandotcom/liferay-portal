@@ -61,7 +61,7 @@ public interface DLFileShortcut extends DLFileShortcutModel, PersistedModel,
 	public java.lang.String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.document.library.kernel.model.DLFolder getDLFolder()
+	public DLFolder getDLFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.repository.model.FileVersion getFileVersion()

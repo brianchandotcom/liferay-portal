@@ -100,15 +100,13 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 	public UserNotificationEvent addUserNotificationEvent(long userId,
 		java.lang.String type, long timestamp, int deliveryType,
 		long deliverBy, java.lang.String payload, boolean actionRequired,
-		boolean archived,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean archived, ServiceContext serviceContext)
 		throws PortalException;
 
 	public UserNotificationEvent addUserNotificationEvent(long userId,
 		java.lang.String type, long timestamp, int deliveryType,
 		long deliverBy, java.lang.String payload, boolean archived,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0 {@link #addUserNotificationEvent(long, String,
@@ -118,8 +116,7 @@ public interface UserNotificationEventLocalService extends BaseLocalService,
 	public UserNotificationEvent addUserNotificationEvent(long userId,
 		java.lang.String type, long timestamp, long deliverBy,
 		java.lang.String payload, boolean archived,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new user notification event with the primary key. Does not add the user notification event to the database.

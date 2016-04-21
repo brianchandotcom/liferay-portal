@@ -93,6 +93,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -2020,13 +2021,23 @@ public class ServiceBuilder {
 		JavaClass modelImplJavaClass = _getJavaClass(
 			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 
-		List<JavaMethod> methods = ListUtil.fromArray(
-			_getMethods(modelImplJavaClass));
+		Map<String, JavaMethod> methods = new LinkedHashMap<>();
 
-		Iterator<JavaMethod> itr = methods.iterator();
+		for (JavaMethod method : _getMethods(modelImplJavaClass)) {
+			String methodSignature = _getMethodSignature(
+				method, modelImplJavaClass.getPackageName());
+
+			methods.put(methodSignature, method);
+		}
+
+		Set<Map.Entry<String, JavaMethod>> entrySet = methods.entrySet();
+
+		Iterator<Map.Entry<String, JavaMethod>> itr = entrySet.iterator();
 
 		while (itr.hasNext()) {
-			JavaMethod method = itr.next();
+			Map.Entry<String, JavaMethod> entry = itr.next();
+
+			JavaMethod method = entry.getValue();
 
 			String methodName = method.getName();
 
@@ -2039,13 +2050,16 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/model/" + entity.getName() + "Model.java");
 
 		for (JavaMethod method : _getMethods(modelJavaClass)) {
-			methods.remove(method);
+			String methodSignature = _getMethodSignature(
+				method, modelJavaClass.getPackageName());
+
+			methods.remove(methodSignature);
 		}
 
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
-		context.put("methods", methods.toArray(new Object[methods.size()]));
+		context.put("methods", methods.values());
 
 		context = _putDeprecatedKeys(context, modelJavaClass);
 
@@ -4381,6 +4395,33 @@ public class ServiceBuilder {
 		}
 
 		return methods.toArray(new JavaMethod[methods.size()]);
+	}
+
+	private String _getMethodSignature(JavaMethod method, String packagePath) {
+		StringBundler sb = new StringBundler();
+
+		sb.append(method.getName());
+		sb.append(StringPool.OPEN_PARENTHESIS);
+
+		for (JavaParameter parameter : method.getParameters()) {
+			String parameterValue = parameter.getResolvedValue();
+
+			if (parameterValue.matches("[A-Z]\\w+")) {
+				parameterValue =
+					packagePath + StringPool.PERIOD + parameterValue;
+			}
+
+			sb.append(parameterValue);
+			sb.append(StringPool.COMMA);
+		}
+
+		if (sb.index() > 2) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
 	}
 
 	private String _getSessionTypeName(int sessionType) {

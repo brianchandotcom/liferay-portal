@@ -184,20 +184,19 @@ public interface ServiceComponentModel extends BaseModel<ServiceComponent>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.ServiceComponent serviceComponent);
+	public int compareTo(ServiceComponent serviceComponent);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.ServiceComponent> toCacheModel();
+	public CacheModel<ServiceComponent> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.ServiceComponent toEscapedModel();
+	public ServiceComponent toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.ServiceComponent toUnescapedModel();
+	public ServiceComponent toUnescapedModel();
 
 	@Override
 	public String toString();

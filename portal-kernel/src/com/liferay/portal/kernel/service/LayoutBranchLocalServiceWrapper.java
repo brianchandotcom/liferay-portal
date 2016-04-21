@@ -62,7 +62,7 @@ public class LayoutBranchLocalServiceWrapper implements LayoutBranchLocalService
 	public com.liferay.portal.kernel.model.LayoutBranch addLayoutBranch(
 		long layoutRevisionId, java.lang.String name,
 		java.lang.String description, boolean master,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutBranchLocalService.addLayoutBranch(layoutRevisionId,
 			name, description, master, serviceContext);
@@ -72,7 +72,7 @@ public class LayoutBranchLocalServiceWrapper implements LayoutBranchLocalService
 	public com.liferay.portal.kernel.model.LayoutBranch addLayoutBranch(
 		long layoutSetBranchId, long plid, java.lang.String name,
 		java.lang.String description, boolean master,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutBranchLocalService.addLayoutBranch(layoutSetBranchId,
 			plid, name, description, master, serviceContext);
@@ -146,8 +146,7 @@ public class LayoutBranchLocalServiceWrapper implements LayoutBranchLocalService
 
 	@Override
 	public com.liferay.portal.kernel.model.LayoutBranch getMasterLayoutBranch(
-		long layoutSetBranchId, long plid,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long layoutSetBranchId, long plid, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutBranchLocalService.getMasterLayoutBranch(layoutSetBranchId,
 			plid, serviceContext);
@@ -168,8 +167,7 @@ public class LayoutBranchLocalServiceWrapper implements LayoutBranchLocalService
 	@Override
 	public com.liferay.portal.kernel.model.LayoutBranch updateLayoutBranch(
 		long layoutBranchId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String description, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutBranchLocalService.updateLayoutBranch(layoutBranchId,
 			name, description, serviceContext);

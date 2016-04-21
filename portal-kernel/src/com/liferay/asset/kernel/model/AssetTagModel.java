@@ -291,19 +291,19 @@ public interface AssetTagModel extends BaseModel<AssetTag>, ShardedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.asset.kernel.model.AssetTag assetTag);
+	public int compareTo(AssetTag assetTag);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.asset.kernel.model.AssetTag> toCacheModel();
+	public CacheModel<AssetTag> toCacheModel();
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetTag toEscapedModel();
+	public AssetTag toEscapedModel();
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetTag toUnescapedModel();
+	public AssetTag toUnescapedModel();
 
 	@Override
 	public String toString();

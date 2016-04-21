@@ -218,7 +218,7 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 		return _portletApp.isWARFile();
 	}
 
-	protected Set<javax.xml.namespace.QName> toJavaxQNames(
+	protected Set<QName> toJavaxQNames(
 		Set<com.liferay.portal.kernel.xml.QName> liferayQNames) {
 
 		Set<QName> javaxQNames = new HashSet<>(liferayQNames.size());

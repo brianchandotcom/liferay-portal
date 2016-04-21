@@ -658,7 +658,7 @@ public abstract class ExpandoTableLocalServiceBaseImpl
 	protected com.liferay.expando.kernel.service.ExpandoRowLocalService expandoRowLocalService;
 	@BeanReference(type = ExpandoRowPersistence.class)
 	protected ExpandoRowPersistence expandoRowPersistence;
-	@BeanReference(type = com.liferay.expando.kernel.service.ExpandoTableLocalService.class)
+	@BeanReference(type = ExpandoTableLocalService.class)
 	protected ExpandoTableLocalService expandoTableLocalService;
 	@BeanReference(type = ExpandoTablePersistence.class)
 	protected ExpandoTablePersistence expandoTablePersistence;

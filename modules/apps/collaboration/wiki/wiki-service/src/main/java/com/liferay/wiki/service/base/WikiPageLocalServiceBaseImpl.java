@@ -1311,7 +1311,7 @@ public abstract class WikiPageLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.wiki.service.WikiPageLocalService.class)
+	@BeanReference(type = WikiPageLocalService.class)
 	protected WikiPageLocalService wikiPageLocalService;
 	@BeanReference(type = WikiPagePersistence.class)
 	protected WikiPagePersistence wikiPagePersistence;

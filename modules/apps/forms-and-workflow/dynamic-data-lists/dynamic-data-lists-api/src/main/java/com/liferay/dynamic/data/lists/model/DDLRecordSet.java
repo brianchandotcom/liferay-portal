@@ -61,11 +61,11 @@ public interface DDLRecordSet extends DDLRecordSetModel, PersistedModel {
 		long formDDMTemplateId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords();
+	public java.util.List<DDLRecord> getRecords();
 
 	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getSettingsDDMFormValues()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.dynamic.data.lists.model.DDLRecordSetSettings getSettingsModel()
+	public DDLRecordSetSettings getSettingsModel()
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

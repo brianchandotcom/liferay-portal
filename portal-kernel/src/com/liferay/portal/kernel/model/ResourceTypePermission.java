@@ -55,8 +55,7 @@ public interface ResourceTypePermission extends ResourceTypePermissionModel,
 			}
 		};
 
-	public boolean hasAction(
-		com.liferay.portal.kernel.model.ResourceAction resourceAction);
+	public boolean hasAction(ResourceAction resourceAction);
 
 	public boolean isCompanyScope();
 

@@ -206,6 +206,16 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 		}
 	}
 
+	@Override
+	public MBCategory toEscapedModel() {
+		return new MBCategoryWrapper(_mbCategory.toEscapedModel());
+	}
+
+	@Override
+	public MBCategory toUnescapedModel() {
+		return new MBCategoryWrapper(_mbCategory.toUnescapedModel());
+	}
+
 	/**
 	* Returns <code>true</code> if this message boards category is approved.
 	*
@@ -342,23 +352,13 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBCategory getParentCategory()
+	public MBCategory getParentCategory()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategory.getParentCategory();
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBCategory toEscapedModel() {
-		return new MBCategoryWrapper(_mbCategory.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.message.boards.kernel.model.MBCategory toUnescapedModel() {
-		return new MBCategoryWrapper(_mbCategory.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.message.boards.kernel.model.MBCategory> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<MBCategory> toCacheModel() {
 		return _mbCategory.toCacheModel();
 	}
 
@@ -384,8 +384,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.message.boards.kernel.model.MBCategory mbCategory) {
+	public int compareTo(MBCategory mbCategory) {
 		return _mbCategory.compareTo(mbCategory);
 	}
 
@@ -591,7 +590,7 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	@Override
-	public java.util.List<com.liferay.message.boards.kernel.model.MBCategory> getAncestors()
+	public java.util.List<MBCategory> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategory.getAncestors();
 	}

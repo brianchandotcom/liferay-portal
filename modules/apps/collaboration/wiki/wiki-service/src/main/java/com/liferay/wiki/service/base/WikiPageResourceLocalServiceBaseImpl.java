@@ -482,7 +482,7 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.wiki.service.WikiPageResourceLocalService.class)
+	@BeanReference(type = WikiPageResourceLocalService.class)
 	protected WikiPageResourceLocalService wikiPageResourceLocalService;
 	@BeanReference(type = WikiPageResourcePersistence.class)
 	protected WikiPageResourcePersistence wikiPageResourcePersistence;

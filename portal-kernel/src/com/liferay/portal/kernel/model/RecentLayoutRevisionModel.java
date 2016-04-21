@@ -225,20 +225,19 @@ public interface RecentLayoutRevisionModel extends BaseModel<RecentLayoutRevisio
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.RecentLayoutRevision recentLayoutRevision);
+	public int compareTo(RecentLayoutRevision recentLayoutRevision);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.RecentLayoutRevision> toCacheModel();
+	public CacheModel<RecentLayoutRevision> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.RecentLayoutRevision toEscapedModel();
+	public RecentLayoutRevision toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.RecentLayoutRevision toUnescapedModel();
+	public RecentLayoutRevision toUnescapedModel();
 
 	@Override
 	public String toString();

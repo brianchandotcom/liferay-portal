@@ -634,7 +634,7 @@ public abstract class SubscriptionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.SubscriptionLocalService.class)
+	@BeanReference(type = SubscriptionLocalService.class)
 	protected SubscriptionLocalService subscriptionLocalService;
 	@BeanReference(type = SubscriptionPersistence.class)
 	protected SubscriptionPersistence subscriptionPersistence;

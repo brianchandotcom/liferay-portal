@@ -632,7 +632,7 @@ public abstract class MemberRequestLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.invitation.invite.members.service.MemberRequestLocalService.class)
+	@BeanReference(type = MemberRequestLocalService.class)
 	protected MemberRequestLocalService memberRequestLocalService;
 	@BeanReference(type = MemberRequestPersistence.class)
 	protected MemberRequestPersistence memberRequestPersistence;

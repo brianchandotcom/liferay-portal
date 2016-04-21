@@ -1205,7 +1205,7 @@ public abstract class KaleoTaskAssignmentLocalServiceBaseImpl
 	protected com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService kaleoTaskLocalService;
 	@BeanReference(type = KaleoTaskPersistence.class)
 	protected KaleoTaskPersistence kaleoTaskPersistence;
-	@BeanReference(type = com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalService.class)
+	@BeanReference(type = KaleoTaskAssignmentLocalService.class)
 	protected KaleoTaskAssignmentLocalService kaleoTaskAssignmentLocalService;
 	@BeanReference(type = KaleoTaskAssignmentPersistence.class)
 	protected KaleoTaskAssignmentPersistence kaleoTaskAssignmentPersistence;

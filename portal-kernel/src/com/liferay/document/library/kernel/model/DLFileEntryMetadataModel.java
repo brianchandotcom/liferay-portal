@@ -200,20 +200,19 @@ public interface DLFileEntryMetadataModel extends BaseModel<DLFileEntryMetadata>
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.document.library.kernel.model.DLFileEntryMetadata dlFileEntryMetadata);
+	public int compareTo(DLFileEntryMetadata dlFileEntryMetadata);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.document.library.kernel.model.DLFileEntryMetadata> toCacheModel();
+	public CacheModel<DLFileEntryMetadata> toCacheModel();
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryMetadata toEscapedModel();
+	public DLFileEntryMetadata toEscapedModel();
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryMetadata toUnescapedModel();
+	public DLFileEntryMetadata toUnescapedModel();
 
 	@Override
 	public String toString();

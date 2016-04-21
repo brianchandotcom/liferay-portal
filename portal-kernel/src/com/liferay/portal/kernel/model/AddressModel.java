@@ -443,19 +443,19 @@ public interface AddressModel extends AttachedModel, BaseModel<Address>,
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Address address);
+	public int compareTo(Address address);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Address> toCacheModel();
+	public CacheModel<Address> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.Address toEscapedModel();
+	public Address toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.Address toUnescapedModel();
+	public Address toUnescapedModel();
 
 	@Override
 	public String toString();

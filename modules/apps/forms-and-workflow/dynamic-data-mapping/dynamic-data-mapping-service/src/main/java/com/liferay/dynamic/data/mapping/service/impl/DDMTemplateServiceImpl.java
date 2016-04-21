@@ -39,7 +39,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren
  * @author Marcellus Tavares
- * @see    com.liferay.dynamic.data.mapping.service.impl.DDMTemplateLocalServiceImpl
+ * @see    DDMTemplateLocalServiceImpl
  */
 public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 

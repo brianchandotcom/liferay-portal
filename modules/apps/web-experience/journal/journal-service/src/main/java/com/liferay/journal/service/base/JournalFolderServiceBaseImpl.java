@@ -877,7 +877,7 @@ public abstract class JournalFolderServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.journal.service.JournalFolderLocalService.class)
 	protected com.liferay.journal.service.JournalFolderLocalService journalFolderLocalService;
-	@BeanReference(type = com.liferay.journal.service.JournalFolderService.class)
+	@BeanReference(type = JournalFolderService.class)
 	protected JournalFolderService journalFolderService;
 	@BeanReference(type = JournalFolderPersistence.class)
 	protected JournalFolderPersistence journalFolderPersistence;

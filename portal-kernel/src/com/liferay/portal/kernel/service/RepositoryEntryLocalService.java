@@ -95,8 +95,7 @@ public interface RepositoryEntryLocalService extends BaseLocalService,
 
 	public RepositoryEntry addRepositoryEntry(long userId, long groupId,
 		long repositoryId, java.lang.String mappedId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new repository entry with the primary key. Does not add the repository entry to the database.

@@ -75,7 +75,7 @@ import java.util.Set;
  * purposes.
  *
  * @author Brian Wing Shun Chan
- * @see    com.liferay.portal.service.impl.GroupLocalServiceImpl
+ * @see    GroupLocalServiceImpl
  */
 public class GroupServiceImpl extends GroupServiceBaseImpl {
 

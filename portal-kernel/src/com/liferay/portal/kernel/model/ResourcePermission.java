@@ -58,8 +58,7 @@ public interface ResourcePermission extends ResourcePermissionModel,
 	public void addResourceAction(java.lang.String actionId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public boolean hasAction(
-		com.liferay.portal.kernel.model.ResourceAction resourceAction);
+	public boolean hasAction(ResourceAction resourceAction);
 
 	public boolean hasActionId(java.lang.String actionId);
 

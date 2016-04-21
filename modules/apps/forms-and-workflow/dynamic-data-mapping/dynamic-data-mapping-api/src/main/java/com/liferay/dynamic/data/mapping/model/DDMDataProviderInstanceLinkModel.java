@@ -157,19 +157,19 @@ public interface DDMDataProviderInstanceLinkModel extends BaseModel<DDMDataProvi
 
 	@Override
 	public int compareTo(
-		com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink ddmDataProviderInstanceLink);
+		DDMDataProviderInstanceLink ddmDataProviderInstanceLink);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink> toCacheModel();
+	public CacheModel<DDMDataProviderInstanceLink> toCacheModel();
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink toEscapedModel();
+	public DDMDataProviderInstanceLink toEscapedModel();
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink toUnescapedModel();
+	public DDMDataProviderInstanceLink toUnescapedModel();
 
 	@Override
 	public String toString();

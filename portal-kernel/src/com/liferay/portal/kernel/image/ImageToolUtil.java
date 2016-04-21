@@ -186,11 +186,11 @@ public class ImageToolUtil {
 
 	/**
 	 * Detects the image format and creates an {@link
-	 * com.liferay.portal.kernel.image.ImageBag} containing the {@link
+	 * ImageBag} containing the {@link
 	 * RenderedImage} and image type.
 	 *
 	 * @param  bytes the bytes to read
-	 * @return the {@link com.liferay.portal.kernel.image.ImageBag}
+	 * @return the {@link ImageBag}
 	 * @throws ImageResolutionException if the image's dimensions were larger
 	 *         than those specified by portal properties
 	 *         <code>image.tool.image.max.height</code> and
@@ -205,11 +205,11 @@ public class ImageToolUtil {
 
 	/**
 	 * Detects the image format and creates an {@link
-	 * com.liferay.portal.kernel.image.ImageBag} containing the {@link
+	 * ImageBag} containing the {@link
 	 * RenderedImage} and image type.
 	 *
 	 * @param  file the file to read
-	 * @return the {@link com.liferay.portal.kernel.image.ImageBag}
+	 * @return the {@link ImageBag}
 	 * @throws ImageResolutionException if the image's dimensions were larger
 	 *         than those specified by portal properties
 	 *         <code>image.tool.image.max.height</code> and

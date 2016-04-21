@@ -85,8 +85,7 @@ public class RepositoryEntryLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.model.RepositoryEntry addRepositoryEntry(
 		long userId, long groupId, long repositoryId,
-		java.lang.String mappedId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String mappedId, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addRepositoryEntry(userId, groupId, repositoryId, mappedId,

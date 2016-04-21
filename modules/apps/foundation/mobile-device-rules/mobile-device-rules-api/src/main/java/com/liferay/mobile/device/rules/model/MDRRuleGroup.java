@@ -54,5 +54,5 @@ public interface MDRRuleGroup extends MDRRuleGroupModel, PersistedModel {
 			}
 		};
 
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRule> getRules();
+	public java.util.List<MDRRule> getRules();
 }

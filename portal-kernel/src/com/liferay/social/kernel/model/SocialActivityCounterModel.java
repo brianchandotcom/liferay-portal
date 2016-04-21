@@ -306,20 +306,19 @@ public interface SocialActivityCounterModel extends AttachedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.social.kernel.model.SocialActivityCounter socialActivityCounter);
+	public int compareTo(SocialActivityCounter socialActivityCounter);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.social.kernel.model.SocialActivityCounter> toCacheModel();
+	public CacheModel<SocialActivityCounter> toCacheModel();
 
 	@Override
-	public com.liferay.social.kernel.model.SocialActivityCounter toEscapedModel();
+	public SocialActivityCounter toEscapedModel();
 
 	@Override
-	public com.liferay.social.kernel.model.SocialActivityCounter toUnescapedModel();
+	public SocialActivityCounter toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -169,20 +169,19 @@ public interface PortalPreferencesModel extends BaseModel<PortalPreferences>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.PortalPreferences portalPreferences);
+	public int compareTo(PortalPreferences portalPreferences);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.PortalPreferences> toCacheModel();
+	public CacheModel<PortalPreferences> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.PortalPreferences toEscapedModel();
+	public PortalPreferences toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.PortalPreferences toUnescapedModel();
+	public PortalPreferences toUnescapedModel();
 
 	@Override
 	public String toString();

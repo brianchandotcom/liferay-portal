@@ -661,20 +661,19 @@ public interface MBThreadModel extends BaseModel<MBThread>, ContainerModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.message.boards.kernel.model.MBThread mbThread);
+	public int compareTo(MBThread mbThread);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.message.boards.kernel.model.MBThread> toCacheModel();
+	public CacheModel<MBThread> toCacheModel();
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBThread toEscapedModel();
+	public MBThread toEscapedModel();
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBThread toUnescapedModel();
+	public MBThread toUnescapedModel();
 
 	@Override
 	public String toString();

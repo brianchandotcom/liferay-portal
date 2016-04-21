@@ -361,7 +361,7 @@ public class LayoutSetLocalServiceWrapper implements LayoutSetLocalService,
 
 	@Override
 	public void deleteLayoutSet(long groupId, boolean privateLayout,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_layoutSetLocalService.deleteLayoutSet(groupId, privateLayout,
 			serviceContext);

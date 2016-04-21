@@ -37,9 +37,7 @@ public class MultiMatchQueryTranslatorImpl
 	implements MultiMatchQueryTranslator {
 
 	@Override
-	public org.apache.lucene.search.Query translate(
-		MultiMatchQuery multiMatchQuery) {
-
+	public Query translate(MultiMatchQuery multiMatchQuery) {
 		BooleanQuery booleanQuery = new BooleanQuery();
 
 		MultiMatchQuery.Type multiMatchQueryType = multiMatchQuery.getType();

@@ -150,6 +150,16 @@ public class MemberRequestWrapper implements MemberRequest,
 	}
 
 	@Override
+	public MemberRequest toEscapedModel() {
+		return new MemberRequestWrapper(_memberRequest.toEscapedModel());
+	}
+
+	@Override
+	public MemberRequest toUnescapedModel() {
+		return new MemberRequestWrapper(_memberRequest.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _memberRequest.isCachedModel();
 	}
@@ -170,23 +180,12 @@ public class MemberRequestWrapper implements MemberRequest,
 	}
 
 	@Override
-	public com.liferay.invitation.invite.members.model.MemberRequest toEscapedModel() {
-		return new MemberRequestWrapper(_memberRequest.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.invitation.invite.members.model.MemberRequest toUnescapedModel() {
-		return new MemberRequestWrapper(_memberRequest.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.invitation.invite.members.model.MemberRequest> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<MemberRequest> toCacheModel() {
 		return _memberRequest.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.invitation.invite.members.model.MemberRequest memberRequest) {
+	public int compareTo(MemberRequest memberRequest) {
 		return _memberRequest.compareTo(memberRequest);
 	}
 

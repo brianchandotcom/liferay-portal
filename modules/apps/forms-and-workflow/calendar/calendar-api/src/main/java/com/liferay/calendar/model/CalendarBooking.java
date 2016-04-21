@@ -55,13 +55,13 @@ public interface CalendarBooking extends CalendarBookingModel, PermissionedModel
 			}
 		};
 
-	public com.liferay.calendar.model.Calendar getCalendar()
+	public Calendar getCalendar()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.calendar.model.CalendarResource getCalendarResource()
+	public CalendarResource getCalendarResource()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.calendar.model.CalendarBooking> getChildCalendarBookings();
+	public java.util.List<CalendarBooking> getChildCalendarBookings();
 
 	public long getDuration();
 
@@ -70,7 +70,7 @@ public interface CalendarBooking extends CalendarBookingModel, PermissionedModel
 	@com.liferay.portal.kernel.json.JSON()
 	public int getInstanceIndex();
 
-	public com.liferay.calendar.model.CalendarBooking getParentCalendarBooking()
+	public CalendarBooking getParentCalendarBooking()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.calendar.recurrence.Recurrence getRecurrenceObj();

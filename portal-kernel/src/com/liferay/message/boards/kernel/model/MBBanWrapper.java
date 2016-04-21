@@ -137,6 +137,16 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	}
 
 	@Override
+	public MBBan toEscapedModel() {
+		return new MBBanWrapper(_mbBan.toEscapedModel());
+	}
+
+	@Override
+	public MBBan toUnescapedModel() {
+		return new MBBanWrapper(_mbBan.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _mbBan.isCachedModel();
 	}
@@ -157,22 +167,12 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBBan toEscapedModel() {
-		return new MBBanWrapper(_mbBan.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.message.boards.kernel.model.MBBan toUnescapedModel() {
-		return new MBBanWrapper(_mbBan.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.message.boards.kernel.model.MBBan> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<MBBan> toCacheModel() {
 		return _mbBan.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(com.liferay.message.boards.kernel.model.MBBan mbBan) {
+	public int compareTo(MBBan mbBan) {
 		return _mbBan.compareTo(mbBan);
 	}
 

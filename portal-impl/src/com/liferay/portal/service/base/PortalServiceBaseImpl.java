@@ -204,7 +204,7 @@ public abstract class PortalServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.kernel.service.PortalLocalService.class)
 	protected com.liferay.portal.kernel.service.PortalLocalService portalLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.PortalService.class)
+	@BeanReference(type = PortalService.class)
 	protected PortalService portalService;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;

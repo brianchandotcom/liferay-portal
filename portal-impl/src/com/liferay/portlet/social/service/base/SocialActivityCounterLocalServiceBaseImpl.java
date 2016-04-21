@@ -736,7 +736,7 @@ public abstract class SocialActivityCounterLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.social.kernel.service.SocialActivityCounterLocalService.class)
+	@BeanReference(type = SocialActivityCounterLocalService.class)
 	protected SocialActivityCounterLocalService socialActivityCounterLocalService;
 	@BeanReference(type = SocialActivityCounterPersistence.class)
 	protected SocialActivityCounterPersistence socialActivityCounterPersistence;

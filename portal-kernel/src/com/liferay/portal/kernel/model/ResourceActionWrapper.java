@@ -99,8 +99,18 @@ public class ResourceActionWrapper implements ResourceAction,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.ResourceAction> toCacheModel() {
+	public CacheModel<ResourceAction> toCacheModel() {
 		return _resourceAction.toCacheModel();
+	}
+
+	@Override
+	public ResourceAction toEscapedModel() {
+		return new ResourceActionWrapper(_resourceAction.toEscapedModel());
+	}
+
+	@Override
+	public ResourceAction toUnescapedModel() {
+		return new ResourceActionWrapper(_resourceAction.toUnescapedModel());
 	}
 
 	@Override
@@ -124,18 +134,7 @@ public class ResourceActionWrapper implements ResourceAction,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.ResourceAction toEscapedModel() {
-		return new ResourceActionWrapper(_resourceAction.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.ResourceAction toUnescapedModel() {
-		return new ResourceActionWrapper(_resourceAction.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.ResourceAction resourceAction) {
+	public int compareTo(ResourceAction resourceAction) {
 		return _resourceAction.compareTo(resourceAction);
 	}
 

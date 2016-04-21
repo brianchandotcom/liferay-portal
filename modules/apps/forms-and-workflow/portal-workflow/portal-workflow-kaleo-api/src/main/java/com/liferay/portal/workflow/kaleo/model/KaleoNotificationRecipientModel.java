@@ -376,20 +376,19 @@ public interface KaleoNotificationRecipientModel extends BaseModel<KaleoNotifica
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient kaleoNotificationRecipient);
+	public int compareTo(KaleoNotificationRecipient kaleoNotificationRecipient);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient> toCacheModel();
+	public CacheModel<KaleoNotificationRecipient> toCacheModel();
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient toEscapedModel();
+	public KaleoNotificationRecipient toEscapedModel();
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient toUnescapedModel();
+	public KaleoNotificationRecipient toUnescapedModel();
 
 	@Override
 	public String toString();

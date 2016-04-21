@@ -314,20 +314,19 @@ public interface MemberRequestModel extends BaseModel<MemberRequest>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.invitation.invite.members.model.MemberRequest memberRequest);
+	public int compareTo(MemberRequest memberRequest);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.invitation.invite.members.model.MemberRequest> toCacheModel();
+	public CacheModel<MemberRequest> toCacheModel();
 
 	@Override
-	public com.liferay.invitation.invite.members.model.MemberRequest toEscapedModel();
+	public MemberRequest toEscapedModel();
 
 	@Override
-	public com.liferay.invitation.invite.members.model.MemberRequest toUnescapedModel();
+	public MemberRequest toUnescapedModel();
 
 	@Override
 	public String toString();

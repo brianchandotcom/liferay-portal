@@ -72,7 +72,7 @@ public class LayoutRevisionLocalServiceUtil {
 		java.lang.String robots, java.lang.String typeSettings,
 		boolean iconImage, long iconImageId, java.lang.String themeId,
 		java.lang.String colorSchemeId, java.lang.String css,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addLayoutRevision(userId, layoutSetBranchId,
@@ -183,7 +183,7 @@ public class LayoutRevisionLocalServiceUtil {
 		java.lang.String robots, java.lang.String typeSettings,
 		boolean iconImage, long iconImageId, java.lang.String themeId,
 		java.lang.String colorSchemeId, java.lang.String css,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateLayoutRevision(userId, layoutRevisionId,
@@ -194,7 +194,7 @@ public class LayoutRevisionLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.model.LayoutRevision updateStatus(
 		long userId, long layoutRevisionId, int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateStatus(userId, layoutRevisionId, status,

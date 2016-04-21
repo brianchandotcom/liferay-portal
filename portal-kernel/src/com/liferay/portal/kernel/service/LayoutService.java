@@ -246,8 +246,7 @@ public interface LayoutService extends BaseService {
 	public Layout addLayout(long groupId, boolean privateLayout,
 		long parentLayoutId, java.lang.String name, java.lang.String title,
 		java.lang.String description, java.lang.String type, boolean hidden,
-		java.lang.String friendlyURL,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String friendlyURL, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -296,8 +295,7 @@ public interface LayoutService extends BaseService {
 		Map<Locale, java.lang.String> robotsMap, java.lang.String type,
 		java.lang.String typeSettings, boolean hidden,
 		Map<Locale, java.lang.String> friendlyURLMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Returns the layout matching the UUID, group, and privacy.
@@ -364,8 +362,7 @@ public interface LayoutService extends BaseService {
 		Map<Locale, java.lang.String> keywordsMap,
 		Map<Locale, java.lang.String> robotsMap, java.lang.String type,
 		boolean hidden, Map<Locale, java.lang.String> friendlyURLMap,
-		boolean iconImage, byte[] iconBytes,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean iconImage, byte[] iconBytes, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -753,9 +750,7 @@ public interface LayoutService extends BaseService {
 	* @param serviceContext the service context to be applied
 	*/
 	public void deleteLayout(long groupId, boolean privateLayout,
-		long layoutId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		long layoutId, ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Deletes the layout with the plid, also deleting the layout's child
@@ -764,8 +759,7 @@ public interface LayoutService extends BaseService {
 	* @param plid the primary key of the layout
 	* @param serviceContext the service context to be applied
 	*/
-	public void deleteLayout(long plid,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public void deleteLayout(long plid, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteTempFileEntry(long groupId, java.lang.String folderName,
@@ -1087,8 +1081,7 @@ public interface LayoutService extends BaseService {
 	* @param serviceContext the service context to be applied
 	*/
 	public void setLayouts(long groupId, boolean privateLayout,
-		long parentLayoutId, long[] layoutIds,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long parentLayoutId, long[] layoutIds, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

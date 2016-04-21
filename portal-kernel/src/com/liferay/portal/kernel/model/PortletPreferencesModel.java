@@ -214,20 +214,19 @@ public interface PortletPreferencesModel extends BaseModel<PortletPreferences>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.PortletPreferences portletPreferences);
+	public int compareTo(PortletPreferences portletPreferences);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.PortletPreferences> toCacheModel();
+	public CacheModel<PortletPreferences> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.PortletPreferences toEscapedModel();
+	public PortletPreferences toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.PortletPreferences toUnescapedModel();
+	public PortletPreferences toUnescapedModel();
 
 	@Override
 	public String toString();

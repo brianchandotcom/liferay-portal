@@ -536,7 +536,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		className = className.substring(0, pos);
 
-		String packagePath = ToolsUtil.getPackagePath(file);
+		String packagePath = ToolsUtil.getPackagePath(fileName);
 
 		checkPackagePath(content, fileName, packagePath);
 

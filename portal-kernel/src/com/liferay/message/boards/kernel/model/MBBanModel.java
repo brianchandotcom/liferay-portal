@@ -290,19 +290,19 @@ public interface MBBanModel extends BaseModel<MBBan>, ShardedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.message.boards.kernel.model.MBBan mbBan);
+	public int compareTo(MBBan mbBan);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.message.boards.kernel.model.MBBan> toCacheModel();
+	public CacheModel<MBBan> toCacheModel();
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBBan toEscapedModel();
+	public MBBan toEscapedModel();
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBBan toUnescapedModel();
+	public MBBan toUnescapedModel();
 
 	@Override
 	public String toString();

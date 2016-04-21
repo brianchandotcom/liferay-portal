@@ -469,19 +469,19 @@ public interface JournalFeedModel extends BaseModel<JournalFeed>, ShardedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.journal.model.JournalFeed journalFeed);
+	public int compareTo(JournalFeed journalFeed);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.journal.model.JournalFeed> toCacheModel();
+	public CacheModel<JournalFeed> toCacheModel();
 
 	@Override
-	public com.liferay.journal.model.JournalFeed toEscapedModel();
+	public JournalFeed toEscapedModel();
 
 	@Override
-	public com.liferay.journal.model.JournalFeed toUnescapedModel();
+	public JournalFeed toUnescapedModel();
 
 	@Override
 	public String toString();

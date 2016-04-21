@@ -183,7 +183,17 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Account> toCacheModel() {
+	public Account toEscapedModel() {
+		return new AccountWrapper(_account.toEscapedModel());
+	}
+
+	@Override
+	public Account toUnescapedModel() {
+		return new AccountWrapper(_account.toUnescapedModel());
+	}
+
+	@Override
+	public CacheModel<Account> toCacheModel() {
 		return _account.toCacheModel();
 	}
 
@@ -208,17 +218,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Account toEscapedModel() {
-		return new AccountWrapper(_account.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Account toUnescapedModel() {
-		return new AccountWrapper(_account.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Account account) {
+	public int compareTo(Account account) {
 		return _account.compareTo(account);
 	}
 

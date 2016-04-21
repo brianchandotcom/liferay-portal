@@ -628,20 +628,19 @@ public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.document.library.kernel.model.DLFileVersion dlFileVersion);
+	public int compareTo(DLFileVersion dlFileVersion);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.document.library.kernel.model.DLFileVersion> toCacheModel();
+	public CacheModel<DLFileVersion> toCacheModel();
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileVersion toEscapedModel();
+	public DLFileVersion toEscapedModel();
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileVersion toUnescapedModel();
+	public DLFileVersion toUnescapedModel();
 
 	@Override
 	public String toString();

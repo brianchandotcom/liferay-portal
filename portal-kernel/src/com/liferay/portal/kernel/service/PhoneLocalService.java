@@ -97,8 +97,7 @@ public interface PhoneLocalService extends BaseLocalService,
 
 	public Phone addPhone(long userId, java.lang.String className,
 		long classPK, java.lang.String number, java.lang.String extension,
-		long typeId, boolean primary,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long typeId, boolean primary, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

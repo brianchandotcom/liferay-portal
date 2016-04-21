@@ -55,11 +55,10 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public void clearStagingGroup();
 
-	public java.util.List<com.liferay.portal.kernel.model.Group> getAncestors()
+	public java.util.List<Group> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.portal.kernel.model.Group> getChildren(
-		boolean site);
+	public java.util.List<Group> getChildren(boolean site);
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
@@ -67,12 +66,12 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	OrderByComparator)}
 	*/
 	@java.lang.Deprecated()
-	public java.util.List<com.liferay.portal.kernel.model.Group> getChildrenWithLayouts(
-		boolean site, int start, int end);
+	public java.util.List<Group> getChildrenWithLayouts(boolean site,
+		int start, int end);
 
-	public java.util.List<com.liferay.portal.kernel.model.Group> getChildrenWithLayouts(
-		boolean site, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Group> obc);
+	public java.util.List<Group> getChildrenWithLayouts(boolean site,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Group> obc);
 
 	public int getChildrenWithLayoutsCount(boolean site);
 
@@ -80,8 +79,7 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public long getDefaultPublicPlid();
 
-	public java.util.List<com.liferay.portal.kernel.model.Group> getDescendants(
-		boolean site);
+	public java.util.List<Group> getDescendants(boolean site);
 
 	public java.lang.String getDescriptiveName()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -104,7 +102,7 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public java.lang.String getLayoutRootNodeName(boolean privateLayout,
 		java.util.Locale locale);
 
-	public com.liferay.portal.kernel.model.Group getLiveGroup();
+	public Group getLiveGroup();
 
 	public java.lang.String getLiveParentTypeSettingsProperty(
 		java.lang.String key);
@@ -115,7 +113,7 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public long getOrganizationId();
 
-	public com.liferay.portal.kernel.model.Group getParentGroup()
+	public Group getParentGroup()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getParentLiveGroupTypeSettingsProperties();
@@ -123,11 +121,11 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public java.lang.String getPathFriendlyURL(boolean privateLayout,
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
-	public com.liferay.portal.kernel.model.LayoutSet getPrivateLayoutSet();
+	public LayoutSet getPrivateLayoutSet();
 
 	public int getPrivateLayoutsPageCount();
 
-	public com.liferay.portal.kernel.model.LayoutSet getPublicLayoutSet();
+	public LayoutSet getPublicLayoutSet();
 
 	public int getPublicLayoutsPageCount();
 
@@ -140,7 +138,7 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	public java.lang.String getScopeLabel(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
-	public com.liferay.portal.kernel.model.Group getStagingGroup();
+	public Group getStagingGroup();
 
 	public java.lang.String getTypeLabel();
 

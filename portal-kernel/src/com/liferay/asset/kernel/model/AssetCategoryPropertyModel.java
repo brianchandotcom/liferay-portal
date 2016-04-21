@@ -257,20 +257,19 @@ public interface AssetCategoryPropertyModel extends AuditedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.asset.kernel.model.AssetCategoryProperty assetCategoryProperty);
+	public int compareTo(AssetCategoryProperty assetCategoryProperty);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.asset.kernel.model.AssetCategoryProperty> toCacheModel();
+	public CacheModel<AssetCategoryProperty> toCacheModel();
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetCategoryProperty toEscapedModel();
+	public AssetCategoryProperty toEscapedModel();
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetCategoryProperty toUnescapedModel();
+	public AssetCategoryProperty toUnescapedModel();
 
 	@Override
 	public String toString();

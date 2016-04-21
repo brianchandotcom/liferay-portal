@@ -419,7 +419,7 @@ public abstract class UserIdMapperLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.UserIdMapperLocalService.class)
+	@BeanReference(type = UserIdMapperLocalService.class)
 	protected UserIdMapperLocalService userIdMapperLocalService;
 	@BeanReference(type = UserIdMapperPersistence.class)
 	protected UserIdMapperPersistence userIdMapperPersistence;

@@ -617,7 +617,7 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.UserGroupRoleLocalService.class)
+	@BeanReference(type = UserGroupRoleLocalService.class)
 	protected UserGroupRoleLocalService userGroupRoleLocalService;
 	@BeanReference(type = UserGroupRolePersistence.class)
 	protected UserGroupRolePersistence userGroupRolePersistence;

@@ -58,8 +58,8 @@ public interface DLFileEntryType extends DLFileEntryTypeModel, PersistedModel {
 	public java.util.List<com.liferay.dynamic.data.mapping.kernel.DDMStructure> getDDMStructures();
 
 	public java.lang.String getUnambiguousName(
-		java.util.List<com.liferay.document.library.kernel.model.DLFileEntryType> dlFileEntryTypes,
-		long groupId, java.util.Locale locale)
+		java.util.List<DLFileEntryType> dlFileEntryTypes, long groupId,
+		java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean isExportable();

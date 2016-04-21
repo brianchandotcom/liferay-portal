@@ -55,8 +55,7 @@ public interface LayoutRevisionService extends BaseService {
 		java.lang.String robots, java.lang.String typeSettings,
 		boolean iconImage, long iconImageId, java.lang.String themeId,
 		java.lang.String colorSchemeId, java.lang.String css,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

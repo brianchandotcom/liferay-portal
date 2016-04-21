@@ -528,7 +528,7 @@ public abstract class EntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.contacts.service.EntryLocalService.class)
+	@BeanReference(type = EntryLocalService.class)
 	protected EntryLocalService entryLocalService;
 	@BeanReference(type = EntryPersistence.class)
 	protected EntryPersistence entryPersistence;

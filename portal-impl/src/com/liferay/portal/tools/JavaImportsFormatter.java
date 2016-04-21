@@ -47,7 +47,7 @@ public class JavaImportsFormatter extends BaseImportsFormatter {
 
 	@Override
 	protected String doFormat(
-			String content, Pattern importPattern, String packageDir,
+			String content, Pattern importPattern, String packagePath,
 			String className)
 		throws IOException {
 
@@ -58,7 +58,7 @@ public class JavaImportsFormatter extends BaseImportsFormatter {
 		}
 
 		String newImports = stripUnusedImports(
-			imports, content, packageDir, className, "\\*");
+			imports, content, packagePath, className, "\\*");
 
 		newImports = sortAndGroupImports(newImports);
 
@@ -73,7 +73,8 @@ public class JavaImportsFormatter extends BaseImportsFormatter {
 			"(?m)^[ \t]*((?:package|import) .*;)\\s*^[ \t]*/\\*\\*",
 			"$1\n\n/**");
 
-		return content;
+		return ToolsUtil.stripFullyQualifiedClassNames(
+			content, newImports, packagePath);
 	}
 
 	private static final Pattern _importsPattern = Pattern.compile(

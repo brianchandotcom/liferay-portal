@@ -186,6 +186,16 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 		}
 	}
 
+	@Override
+	public AnnouncementsEntry toEscapedModel() {
+		return new AnnouncementsEntryWrapper(_announcementsEntry.toEscapedModel());
+	}
+
+	@Override
+	public AnnouncementsEntry toUnescapedModel() {
+		return new AnnouncementsEntryWrapper(_announcementsEntry.toUnescapedModel());
+	}
+
 	/**
 	* Returns the alert of this announcements entry.
 	*
@@ -222,28 +232,17 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 	}
 
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry toEscapedModel() {
-		return new AnnouncementsEntryWrapper(_announcementsEntry.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsEntry toUnescapedModel() {
-		return new AnnouncementsEntryWrapper(_announcementsEntry.toUnescapedModel());
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _announcementsEntry.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.announcements.kernel.model.AnnouncementsEntry> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<AnnouncementsEntry> toCacheModel() {
 		return _announcementsEntry.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.announcements.kernel.model.AnnouncementsEntry announcementsEntry) {
+	public int compareTo(AnnouncementsEntry announcementsEntry) {
 		return _announcementsEntry.compareTo(announcementsEntry);
 	}
 

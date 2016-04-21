@@ -335,7 +335,7 @@ public class LayoutSetLocalServiceUtil {
 	}
 
 	public static void deleteLayoutSet(long groupId, boolean privateLayout,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteLayoutSet(groupId, privateLayout, serviceContext);
 	}

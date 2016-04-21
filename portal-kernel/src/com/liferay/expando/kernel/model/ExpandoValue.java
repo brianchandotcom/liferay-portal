@@ -63,7 +63,7 @@ public interface ExpandoValue extends ExpandoValueModel, PersistedModel {
 	public boolean[] getBooleanArray()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.expando.kernel.model.ExpandoColumn getColumn()
+	public ExpandoColumn getColumn()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.Date getDate()
@@ -138,7 +138,7 @@ public interface ExpandoValue extends ExpandoValueModel, PersistedModel {
 	public void setBooleanArray(boolean[] data)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void setColumn(com.liferay.expando.kernel.model.ExpandoColumn column);
+	public void setColumn(ExpandoColumn column);
 
 	public void setDate(java.util.Date data)
 		throws com.liferay.portal.kernel.exception.PortalException;

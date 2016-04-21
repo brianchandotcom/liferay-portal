@@ -179,6 +179,16 @@ public class CalendarNotificationTemplateWrapper
 	}
 
 	@Override
+	public CalendarNotificationTemplate toEscapedModel() {
+		return new CalendarNotificationTemplateWrapper(_calendarNotificationTemplate.toEscapedModel());
+	}
+
+	@Override
+	public CalendarNotificationTemplate toUnescapedModel() {
+		return new CalendarNotificationTemplateWrapper(_calendarNotificationTemplate.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _calendarNotificationTemplate.isCachedModel();
 	}
@@ -194,22 +204,12 @@ public class CalendarNotificationTemplateWrapper
 	}
 
 	@Override
-	public com.liferay.calendar.model.CalendarNotificationTemplate toEscapedModel() {
-		return new CalendarNotificationTemplateWrapper(_calendarNotificationTemplate.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.calendar.model.CalendarNotificationTemplate toUnescapedModel() {
-		return new CalendarNotificationTemplateWrapper(_calendarNotificationTemplate.toUnescapedModel());
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _calendarNotificationTemplate.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.calendar.model.CalendarNotificationTemplate> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<CalendarNotificationTemplate> toCacheModel() {
 		return _calendarNotificationTemplate.toCacheModel();
 	}
 
@@ -220,7 +220,7 @@ public class CalendarNotificationTemplateWrapper
 
 	@Override
 	public int compareTo(
-		com.liferay.calendar.model.CalendarNotificationTemplate calendarNotificationTemplate) {
+		CalendarNotificationTemplate calendarNotificationTemplate) {
 		return _calendarNotificationTemplate.compareTo(calendarNotificationTemplate);
 	}
 

@@ -1093,20 +1093,19 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.LayoutRevision layoutRevision);
+	public int compareTo(LayoutRevision layoutRevision);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.LayoutRevision> toCacheModel();
+	public CacheModel<LayoutRevision> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.LayoutRevision toEscapedModel();
+	public LayoutRevision toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.LayoutRevision toUnescapedModel();
+	public LayoutRevision toUnescapedModel();
 
 	@Override
 	public String toString();

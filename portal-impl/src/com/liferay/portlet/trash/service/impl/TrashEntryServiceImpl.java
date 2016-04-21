@@ -44,7 +44,7 @@ import java.util.List;
 /**
  * The trash entry remote service is responsible for returning trash entries.
  * For more information on trash entries services and TrashEntry, see {@link
- * com.liferay.portlet.trash.service.impl.TrashEntryLocalServiceImpl}.
+ * TrashEntryLocalServiceImpl}.
  *
  * @author Julio Camarero
  * @author Zsolt Berentey

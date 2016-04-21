@@ -216,20 +216,19 @@ public interface DLContentModel extends BaseModel<DLContent>, ShardedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.document.library.kernel.model.DLContent dlContent);
+	public int compareTo(DLContent dlContent);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.document.library.kernel.model.DLContent> toCacheModel();
+	public CacheModel<DLContent> toCacheModel();
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLContent toEscapedModel();
+	public DLContent toEscapedModel();
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLContent toUnescapedModel();
+	public DLContent toUnescapedModel();
 
 	@Override
 	public String toString();

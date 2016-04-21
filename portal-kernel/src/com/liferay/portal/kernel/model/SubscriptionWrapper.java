@@ -142,8 +142,18 @@ public class SubscriptionWrapper implements Subscription,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Subscription> toCacheModel() {
+	public CacheModel<Subscription> toCacheModel() {
 		return _subscription.toCacheModel();
+	}
+
+	@Override
+	public Subscription toEscapedModel() {
+		return new SubscriptionWrapper(_subscription.toEscapedModel());
+	}
+
+	@Override
+	public Subscription toUnescapedModel() {
+		return new SubscriptionWrapper(_subscription.toUnescapedModel());
 	}
 
 	@Override
@@ -167,18 +177,7 @@ public class SubscriptionWrapper implements Subscription,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Subscription toEscapedModel() {
-		return new SubscriptionWrapper(_subscription.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Subscription toUnescapedModel() {
-		return new SubscriptionWrapper(_subscription.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.Subscription subscription) {
+	public int compareTo(Subscription subscription) {
 		return _subscription.compareTo(subscription);
 	}
 

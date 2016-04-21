@@ -36,7 +36,7 @@ public class RepositoryServiceWrapper implements RepositoryService,
 		java.lang.String name, java.lang.String description,
 		java.lang.String portletId,
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _repositoryService.addRepository(groupId, classNameId,
 			parentFolderId, name, description, portletId,

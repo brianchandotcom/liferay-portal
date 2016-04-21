@@ -153,19 +153,19 @@ public interface ClassNameModel extends BaseModel<ClassName>, MVCCModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.portal.kernel.model.ClassName className);
+	public int compareTo(ClassName className);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.ClassName> toCacheModel();
+	public CacheModel<ClassName> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.ClassName toEscapedModel();
+	public ClassName toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.ClassName toUnescapedModel();
+	public ClassName toUnescapedModel();
 
 	@Override
 	public String toString();

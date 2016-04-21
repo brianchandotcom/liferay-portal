@@ -100,8 +100,7 @@ public interface RepositoryLocalService extends BaseLocalService,
 		long classNameId, long parentFolderId, java.lang.String name,
 		java.lang.String description, java.lang.String portletId,
 		UnicodeProperties typeSettingsProperties, boolean hidden,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new repository with the primary key. Does not add the repository to the database.

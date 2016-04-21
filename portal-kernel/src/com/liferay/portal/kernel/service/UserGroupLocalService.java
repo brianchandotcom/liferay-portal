@@ -161,8 +161,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	*/
 	public UserGroup addUserGroup(long userId, long companyId,
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new user group with the primary key. Does not add the user group to the database.
@@ -284,8 +283,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	*/
 	public UserGroup updateUserGroup(long companyId, long userGroupId,
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<UserGroup> searchUserGroups(long companyId,

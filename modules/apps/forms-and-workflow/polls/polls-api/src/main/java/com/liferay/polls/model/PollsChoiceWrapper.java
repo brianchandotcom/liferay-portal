@@ -152,6 +152,16 @@ public class PollsChoiceWrapper implements PollsChoice,
 	}
 
 	@Override
+	public PollsChoice toEscapedModel() {
+		return new PollsChoiceWrapper(_pollsChoice.toEscapedModel());
+	}
+
+	@Override
+	public PollsChoice toUnescapedModel() {
+		return new PollsChoiceWrapper(_pollsChoice.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _pollsChoice.isCachedModel();
 	}
@@ -172,22 +182,12 @@ public class PollsChoiceWrapper implements PollsChoice,
 	}
 
 	@Override
-	public com.liferay.polls.model.PollsChoice toEscapedModel() {
-		return new PollsChoiceWrapper(_pollsChoice.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.polls.model.PollsChoice toUnescapedModel() {
-		return new PollsChoiceWrapper(_pollsChoice.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.polls.model.PollsChoice> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<PollsChoice> toCacheModel() {
 		return _pollsChoice.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(com.liferay.polls.model.PollsChoice pollsChoice) {
+	public int compareTo(PollsChoice pollsChoice) {
 		return _pollsChoice.compareTo(pollsChoice);
 	}
 

@@ -1373,7 +1373,7 @@ public abstract class DLFileEntryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.document.library.kernel.service.DLFileEntryLocalService.class)
 	protected com.liferay.document.library.kernel.service.DLFileEntryLocalService dlFileEntryLocalService;
-	@BeanReference(type = com.liferay.document.library.kernel.service.DLFileEntryService.class)
+	@BeanReference(type = DLFileEntryService.class)
 	protected DLFileEntryService dlFileEntryService;
 	@BeanReference(type = DLFileEntryPersistence.class)
 	protected DLFileEntryPersistence dlFileEntryPersistence;

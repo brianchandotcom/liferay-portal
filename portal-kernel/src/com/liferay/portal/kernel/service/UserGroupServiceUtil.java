@@ -79,7 +79,7 @@ public class UserGroupServiceUtil {
 	*/
 	public static com.liferay.portal.kernel.model.UserGroup addUserGroup(
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addUserGroup(name, description, serviceContext);
 	}
@@ -150,7 +150,7 @@ public class UserGroupServiceUtil {
 	*/
 	public static com.liferay.portal.kernel.model.UserGroup updateUserGroup(
 		long userGroupId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateUserGroup(userGroupId, name, description,

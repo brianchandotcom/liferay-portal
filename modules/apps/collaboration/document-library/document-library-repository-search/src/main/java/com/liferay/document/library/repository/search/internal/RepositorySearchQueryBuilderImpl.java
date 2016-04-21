@@ -160,9 +160,7 @@ public class RepositorySearchQueryBuilderImpl
 		if (query1 instanceof BooleanQuery) {
 			BooleanQuery booleanQuery = (BooleanQuery)query1;
 
-			for (com.liferay.portal.kernel.search.BooleanClause<Query>
-					booleanClause : booleanQuery.clauses()) {
-
+			for (BooleanClause<Query> booleanClause : booleanQuery.clauses()) {
 				if (contains(booleanClause.getClause(), query2)) {
 					return true;
 				}
@@ -173,9 +171,7 @@ public class RepositorySearchQueryBuilderImpl
 		else if (query2 instanceof BooleanQuery) {
 			BooleanQuery booleanQuery = (BooleanQuery)query2;
 
-			for (com.liferay.portal.kernel.search.BooleanClause<Query>
-					booleanClause : booleanQuery.clauses()) {
-
+			for (BooleanClause<Query> booleanClause : booleanQuery.clauses()) {
 				if (contains(query1, booleanClause.getClause())) {
 					return true;
 				}

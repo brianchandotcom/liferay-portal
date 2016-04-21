@@ -985,7 +985,7 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.TeamLocalService.class)
+	@BeanReference(type = TeamLocalService.class)
 	protected TeamLocalService teamLocalService;
 	@BeanReference(type = TeamPersistence.class)
 	protected TeamPersistence teamPersistence;

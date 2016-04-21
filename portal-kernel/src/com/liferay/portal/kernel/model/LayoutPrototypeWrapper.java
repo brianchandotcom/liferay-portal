@@ -151,8 +151,30 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.LayoutPrototype> toCacheModel() {
+	public CacheModel<LayoutPrototype> toCacheModel() {
 		return _layoutPrototype.toCacheModel();
+	}
+
+	@Override
+	public Group getGroup()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPrototype.getGroup();
+	}
+
+	@Override
+	public Layout getLayout()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPrototype.getLayout();
+	}
+
+	@Override
+	public LayoutPrototype toEscapedModel() {
+		return new LayoutPrototypeWrapper(_layoutPrototype.toEscapedModel());
+	}
+
+	@Override
+	public LayoutPrototype toUnescapedModel() {
+		return new LayoutPrototypeWrapper(_layoutPrototype.toUnescapedModel());
 	}
 
 	/**
@@ -201,30 +223,7 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Group getGroup()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutPrototype.getGroup();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Layout getLayout()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutPrototype.getLayout();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutPrototype toEscapedModel() {
-		return new LayoutPrototypeWrapper(_layoutPrototype.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutPrototype toUnescapedModel() {
-		return new LayoutPrototypeWrapper(_layoutPrototype.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.LayoutPrototype layoutPrototype) {
+	public int compareTo(LayoutPrototype layoutPrototype) {
 		return _layoutPrototype.compareTo(layoutPrototype);
 	}
 

@@ -575,20 +575,19 @@ public interface BookmarksEntryModel extends BaseModel<BookmarksEntry>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.bookmarks.model.BookmarksEntry bookmarksEntry);
+	public int compareTo(BookmarksEntry bookmarksEntry);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.bookmarks.model.BookmarksEntry> toCacheModel();
+	public CacheModel<BookmarksEntry> toCacheModel();
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksEntry toEscapedModel();
+	public BookmarksEntry toEscapedModel();
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksEntry toUnescapedModel();
+	public BookmarksEntry toUnescapedModel();
 
 	@Override
 	public String toString();

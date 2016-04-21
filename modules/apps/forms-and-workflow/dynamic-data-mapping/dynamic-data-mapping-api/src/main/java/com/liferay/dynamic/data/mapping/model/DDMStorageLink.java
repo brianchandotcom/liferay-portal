@@ -57,6 +57,6 @@ public interface DDMStorageLink extends DDMStorageLinkModel, PersistedModel {
 	public java.lang.String getStorageType()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.dynamic.data.mapping.model.DDMStructure getStructure()
+	public DDMStructure getStructure()
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

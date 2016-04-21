@@ -78,6 +78,16 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	}
 
 	@Override
+	public Counter toEscapedModel() {
+		return new CounterWrapper(_counter.toEscapedModel());
+	}
+
+	@Override
+	public Counter toUnescapedModel() {
+		return new CounterWrapper(_counter.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _counter.isCachedModel();
 	}
@@ -93,27 +103,17 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	}
 
 	@Override
-	public com.liferay.counter.kernel.model.Counter toEscapedModel() {
-		return new CounterWrapper(_counter.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.counter.kernel.model.Counter toUnescapedModel() {
-		return new CounterWrapper(_counter.toUnescapedModel());
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _counter.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.counter.kernel.model.Counter> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<Counter> toCacheModel() {
 		return _counter.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(com.liferay.counter.kernel.model.Counter counter) {
+	public int compareTo(Counter counter) {
 		return _counter.compareTo(counter);
 	}
 

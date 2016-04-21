@@ -130,8 +130,18 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.UserNotificationDelivery> toCacheModel() {
+	public CacheModel<UserNotificationDelivery> toCacheModel() {
 		return _userNotificationDelivery.toCacheModel();
+	}
+
+	@Override
+	public UserNotificationDelivery toEscapedModel() {
+		return new UserNotificationDeliveryWrapper(_userNotificationDelivery.toEscapedModel());
+	}
+
+	@Override
+	public UserNotificationDelivery toUnescapedModel() {
+		return new UserNotificationDeliveryWrapper(_userNotificationDelivery.toUnescapedModel());
 	}
 
 	/**
@@ -175,18 +185,7 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.UserNotificationDelivery toEscapedModel() {
-		return new UserNotificationDeliveryWrapper(_userNotificationDelivery.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.UserNotificationDelivery toUnescapedModel() {
-		return new UserNotificationDeliveryWrapper(_userNotificationDelivery.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.UserNotificationDelivery userNotificationDelivery) {
+	public int compareTo(UserNotificationDelivery userNotificationDelivery) {
 		return _userNotificationDelivery.compareTo(userNotificationDelivery);
 	}
 

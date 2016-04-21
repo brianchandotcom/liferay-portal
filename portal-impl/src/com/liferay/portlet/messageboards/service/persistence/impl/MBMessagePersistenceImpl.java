@@ -19187,9 +19187,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 			try {
 				mbMessage.setSubject(SanitizerUtil.sanitize(companyId, groupId,
-						userId,
-						com.liferay.message.boards.kernel.model.MBMessage.class.getName(),
-						messageId, ContentTypes.TEXT_PLAIN, Sanitizer.MODE_ALL,
+						userId, MBMessage.class.getName(), messageId,
+						ContentTypes.TEXT_PLAIN, Sanitizer.MODE_ALL,
 						mbMessage.getSubject(), null));
 			}
 			catch (SanitizerException se) {

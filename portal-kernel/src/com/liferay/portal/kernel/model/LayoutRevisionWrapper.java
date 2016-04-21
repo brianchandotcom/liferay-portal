@@ -269,8 +269,42 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.LayoutRevision> toCacheModel() {
+	public CacheModel<LayoutRevision> toCacheModel() {
 		return _layoutRevision.toCacheModel();
+	}
+
+	@Override
+	public ColorScheme getColorScheme()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutRevision.getColorScheme();
+	}
+
+	@Override
+	public LayoutBranch getLayoutBranch()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutRevision.getLayoutBranch();
+	}
+
+	@Override
+	public LayoutRevision toEscapedModel() {
+		return new LayoutRevisionWrapper(_layoutRevision.toEscapedModel());
+	}
+
+	@Override
+	public LayoutRevision toUnescapedModel() {
+		return new LayoutRevisionWrapper(_layoutRevision.toUnescapedModel());
+	}
+
+	@Override
+	public LayoutSet getLayoutSet()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutRevision.getLayoutSet();
+	}
+
+	@Override
+	public Theme getTheme()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutRevision.getTheme();
 	}
 
 	/**
@@ -459,47 +493,12 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.ColorScheme getColorScheme()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutRevision.getColorScheme();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutBranch getLayoutBranch()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutRevision.getLayoutBranch();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutRevision toEscapedModel() {
-		return new LayoutRevisionWrapper(_layoutRevision.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutRevision toUnescapedModel() {
-		return new LayoutRevisionWrapper(_layoutRevision.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutSet getLayoutSet()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutRevision.getLayoutSet();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Theme getTheme()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutRevision.getTheme();
-	}
-
-	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
 		return _layoutRevision.getTypeSettingsProperties();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.LayoutRevision layoutRevision) {
+	public int compareTo(LayoutRevision layoutRevision) {
 		return _layoutRevision.compareTo(layoutRevision);
 	}
 
@@ -1037,7 +1036,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.LayoutRevision> getChildren() {
+	public java.util.List<LayoutRevision> getChildren() {
 		return _layoutRevision.getChildren();
 	}
 

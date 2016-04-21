@@ -160,8 +160,7 @@ public class RoleLocalServiceUtil {
 		java.lang.String className, long classPK, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int type, java.lang.String subtype,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		int type, java.lang.String subtype, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addRole(userId, className, classPK, name, titleMap,
@@ -371,8 +370,7 @@ public class RoleLocalServiceUtil {
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String subtype,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String subtype, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateRole(roleId, name, titleMap, descriptionMap, subtype,
@@ -757,8 +755,8 @@ public class RoleLocalServiceUtil {
 	* @param userId the primary key of the user
 	* @param groups the groups (optionally <code>null</code>)
 	* @return the union of all the user's roles within the groups
-	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(long,
-	List)
+	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(
+	long, List)
 	*/
 	public static java.util.List<com.liferay.portal.kernel.model.Role> getUserRelatedRoles(
 		long userId,
@@ -772,8 +770,8 @@ public class RoleLocalServiceUtil {
 	* @param userId the primary key of the user
 	* @param groupId the primary key of the group
 	* @return the user's roles within the group
-	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(long,
-	long)
+	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(
+	long, long)
 	*/
 	public static java.util.List<com.liferay.portal.kernel.model.Role> getUserRelatedRoles(
 		long userId, long groupId) {
@@ -786,8 +784,8 @@ public class RoleLocalServiceUtil {
 	* @param userId the primary key of the user
 	* @param groupIds the primary keys of the groups
 	* @return the union of all the user's roles within the groups
-	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(long,
-	long[])
+	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(
+	long, long[])
 	*/
 	public static java.util.List<com.liferay.portal.kernel.model.Role> getUserRelatedRoles(
 		long userId, long[] groupIds) {

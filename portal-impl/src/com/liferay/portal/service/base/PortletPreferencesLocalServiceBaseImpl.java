@@ -520,7 +520,7 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.PortletPreferencesLocalService.class)
+	@BeanReference(type = PortletPreferencesLocalService.class)
 	protected PortletPreferencesLocalService portletPreferencesLocalService;
 	@BeanReference(type = PortletPreferencesPersistence.class)
 	protected PortletPreferencesPersistence portletPreferencesPersistence;

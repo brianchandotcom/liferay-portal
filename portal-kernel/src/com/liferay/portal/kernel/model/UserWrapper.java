@@ -365,8 +365,46 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.User> toCacheModel() {
+	public CacheModel<User> toCacheModel() {
 		return _user.toCacheModel();
+	}
+
+	@Override
+	public Contact fetchContact() {
+		return _user.fetchContact();
+	}
+
+	/**
+	* Returns the user's associated contact.
+	*
+	* @return the user's associated contact
+	* @see Contact
+	*/
+	@Override
+	public Contact getContact()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getContact();
+	}
+
+	@Override
+	public Group getGroup() {
+		return _user.getGroup();
+	}
+
+	@Override
+	public PasswordPolicy getPasswordPolicy()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getPasswordPolicy();
+	}
+
+	@Override
+	public User toEscapedModel() {
+		return new UserWrapper(_user.toEscapedModel());
+	}
+
+	@Override
+	public User toUnescapedModel() {
+		return new UserWrapper(_user.toUnescapedModel());
 	}
 
 	/**
@@ -626,51 +664,13 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Contact fetchContact() {
-		return _user.fetchContact();
-	}
-
-	/**
-	* Returns the user's associated contact.
-	*
-	* @return the user's associated contact
-	* @see Contact
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Contact getContact()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getContact();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Group getGroup() {
-		return _user.getGroup();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PasswordPolicy getPasswordPolicy()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getPasswordPolicy();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.User toEscapedModel() {
-		return new UserWrapper(_user.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.User toUnescapedModel() {
-		return new UserWrapper(_user.toUnescapedModel());
-	}
-
-	@Override
 	public com.liferay.portal.kernel.util.RemotePreference getRemotePreference(
 		java.lang.String name) {
 		return _user.getRemotePreference(name);
 	}
 
 	@Override
-	public int compareTo(com.liferay.portal.kernel.model.User user) {
+	public int compareTo(User user) {
 		return _user.compareTo(user);
 	}
 
@@ -1261,8 +1261,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
-	public Date getUnlockDate(
-		com.liferay.portal.kernel.model.PasswordPolicy passwordPolicy) {
+	public Date getUnlockDate(PasswordPolicy passwordPolicy) {
 		return _user.getUnlockDate(passwordPolicy);
 	}
 
@@ -1272,7 +1271,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @return the user's addresses
 	*/
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Address> getAddresses() {
+	public java.util.List<Address> getAddresses() {
 		return _user.getAddresses();
 	}
 
@@ -1282,82 +1281,81 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* @return the user's email addresses
 	*/
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.EmailAddress> getEmailAddresses() {
+	public java.util.List<EmailAddress> getEmailAddresses() {
 		return _user.getEmailAddresses();
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Group> getGroups() {
+	public java.util.List<Group> getGroups() {
 		return _user.getGroups();
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Group> getMySiteGroups()
+	public java.util.List<Group> getMySiteGroups()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _user.getMySiteGroups();
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Group> getMySiteGroups(
-		int max) throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List<Group> getMySiteGroups(int max)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _user.getMySiteGroups(max);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Group> getMySiteGroups(
+	public java.util.List<Group> getMySiteGroups(
 		java.lang.String[] classNames, int max)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _user.getMySiteGroups(classNames, max);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations()
+	public java.util.List<Organization> getOrganizations()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _user.getOrganizations();
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Organization> getOrganizations(
+	public java.util.List<Organization> getOrganizations(
 		boolean includeAdministrative)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _user.getOrganizations(includeAdministrative);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Phone> getPhones() {
+	public java.util.List<Phone> getPhones() {
 		return _user.getPhones();
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Role> getRoles() {
+	public java.util.List<Role> getRoles() {
 		return _user.getRoles();
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Group> getSiteGroups()
+	public java.util.List<Group> getSiteGroups()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _user.getSiteGroups();
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Group> getSiteGroups(
-		boolean includeAdministrative)
+	public java.util.List<Group> getSiteGroups(boolean includeAdministrative)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _user.getSiteGroups(includeAdministrative);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Team> getTeams() {
+	public java.util.List<Team> getTeams() {
 		return _user.getTeams();
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.UserGroup> getUserGroups() {
+	public java.util.List<UserGroup> getUserGroups() {
 		return _user.getUserGroups();
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Website> getWebsites() {
+	public java.util.List<Website> getWebsites() {
 		return _user.getWebsites();
 	}
 

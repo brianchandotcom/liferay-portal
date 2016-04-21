@@ -51,8 +51,7 @@ public interface EmailAddressService extends BaseService {
 	 */
 	public EmailAddress addEmailAddress(java.lang.String className,
 		long classPK, java.lang.String address, long typeId, boolean primary,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Returns the email address with the primary key.

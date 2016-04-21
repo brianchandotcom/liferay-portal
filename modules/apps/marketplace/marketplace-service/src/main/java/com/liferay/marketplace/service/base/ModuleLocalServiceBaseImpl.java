@@ -551,7 +551,7 @@ public abstract class ModuleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.marketplace.service.AppLocalService appLocalService;
 	@BeanReference(type = AppPersistence.class)
 	protected AppPersistence appPersistence;
-	@BeanReference(type = com.liferay.marketplace.service.ModuleLocalService.class)
+	@BeanReference(type = ModuleLocalService.class)
 	protected ModuleLocalService moduleLocalService;
 	@BeanReference(type = ModulePersistence.class)
 	protected ModulePersistence modulePersistence;

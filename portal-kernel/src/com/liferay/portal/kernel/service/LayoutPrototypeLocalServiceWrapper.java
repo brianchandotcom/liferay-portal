@@ -75,7 +75,7 @@ public class LayoutPrototypeLocalServiceWrapper
 		long userId, long companyId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeLocalService.addLayoutPrototype(userId,
 			companyId, nameMap, description, active, serviceContext);
@@ -86,8 +86,7 @@ public class LayoutPrototypeLocalServiceWrapper
 		long userId, long companyId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean active, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeLocalService.addLayoutPrototype(userId,
 			companyId, nameMap, descriptionMap, active, serviceContext);
@@ -205,7 +204,7 @@ public class LayoutPrototypeLocalServiceWrapper
 		long layoutPrototypeId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeLocalService.updateLayoutPrototype(layoutPrototypeId,
 			nameMap, description, active, serviceContext);
@@ -216,8 +215,7 @@ public class LayoutPrototypeLocalServiceWrapper
 		long layoutPrototypeId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean active, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutPrototypeLocalService.updateLayoutPrototype(layoutPrototypeId,
 			nameMap, descriptionMap, active, serviceContext);

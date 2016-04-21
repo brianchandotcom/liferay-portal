@@ -64,7 +64,7 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	*
 	* @return the layout set's color scheme
 	*/
-	public com.liferay.portal.kernel.model.ColorScheme getColorScheme();
+	public ColorScheme getColorScheme();
 
 	public java.lang.String getCompanyFallbackVirtualHostname();
 
@@ -73,7 +73,7 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 	*
 	* @return the layout set's group
 	*/
-	public com.liferay.portal.kernel.model.Group getGroup()
+	public Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -98,7 +98,7 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 
 	public java.lang.String getSettingsProperty(java.lang.String key);
 
-	public com.liferay.portal.kernel.model.Theme getTheme();
+	public Theme getTheme();
 
 	public java.lang.String getThemeSetting(java.lang.String key,
 		java.lang.String device);

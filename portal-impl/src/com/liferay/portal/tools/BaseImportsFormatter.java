@@ -42,10 +42,10 @@ public abstract class BaseImportsFormatter implements ImportsFormatter {
 	}
 
 	@Override
-	public String format(String content, String packageDir, String className)
+	public String format(String content, String packagePath, String className)
 		throws IOException {
 
-		return doFormat(content, null, packageDir, className);
+		return doFormat(content, null, packagePath, className);
 	}
 
 	protected abstract ImportPackage createImportPackage(String line);
@@ -69,7 +69,7 @@ public abstract class BaseImportsFormatter implements ImportsFormatter {
 	}
 
 	protected abstract String doFormat(
-			String content, Pattern importPattern, String packageDir,
+			String content, Pattern importPattern, String packagePath,
 			String className)
 		throws IOException;
 
@@ -116,8 +116,8 @@ public abstract class BaseImportsFormatter implements ImportsFormatter {
 	}
 
 	protected String stripUnusedImports(
-			String imports, String content, String packageDir, String className,
-			String classNameExceptionRegex)
+			String imports, String content, String packagePath,
+			String className, String classNameExceptionRegex)
 		throws IOException {
 
 		Set<String> classes = ClassUtil.getClasses(
@@ -141,7 +141,7 @@ public abstract class BaseImportsFormatter implements ImportsFormatter {
 
 			String importPackage = line.substring(x + 7, y);
 
-			if (importPackage.equals(packageDir) ||
+			if (importPackage.equals(packagePath) ||
 				importPackage.equals("java.lang")) {
 
 				continue;

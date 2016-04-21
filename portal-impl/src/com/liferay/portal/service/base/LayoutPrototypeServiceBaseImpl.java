@@ -500,7 +500,7 @@ public abstract class LayoutPrototypeServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.kernel.service.LayoutPrototypeLocalService.class)
 	protected com.liferay.portal.kernel.service.LayoutPrototypeLocalService layoutPrototypeLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.LayoutPrototypeService.class)
+	@BeanReference(type = LayoutPrototypeService.class)
 	protected LayoutPrototypeService layoutPrototypeService;
 	@BeanReference(type = LayoutPrototypePersistence.class)
 	protected LayoutPrototypePersistence layoutPrototypePersistence;

@@ -366,20 +366,19 @@ public interface KaleoTransitionModel extends BaseModel<KaleoTransition>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.workflow.kaleo.model.KaleoTransition kaleoTransition);
+	public int compareTo(KaleoTransition kaleoTransition);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.workflow.kaleo.model.KaleoTransition> toCacheModel();
+	public CacheModel<KaleoTransition> toCacheModel();
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTransition toEscapedModel();
+	public KaleoTransition toEscapedModel();
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTransition toUnescapedModel();
+	public KaleoTransition toUnescapedModel();
 
 	@Override
 	public String toString();

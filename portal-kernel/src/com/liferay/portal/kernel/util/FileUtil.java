@@ -268,7 +268,7 @@ public class FileUtil {
 		return _file;
 	}
 
-	public static String getMD5Checksum(java.io.File file) throws IOException {
+	public static String getMD5Checksum(File file) throws IOException {
 		return getFile().getMD5Checksum(file);
 	}
 

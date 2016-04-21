@@ -572,8 +572,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			}
 		}
 
-		List<com.liferay.portal.kernel.model.Repository> repositories =
-			repositoryPersistence.findByGroupId(groupId);
+		List<Repository> repositories = repositoryPersistence.findByGroupId(
+			groupId);
 
 		for (Repository repository : repositories) {
 			try {

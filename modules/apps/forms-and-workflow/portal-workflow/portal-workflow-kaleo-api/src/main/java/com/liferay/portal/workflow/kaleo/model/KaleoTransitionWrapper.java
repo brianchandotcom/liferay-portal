@@ -179,6 +179,28 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 		}
 	}
 
+	@Override
+	public KaleoNode getSourceKaleoNode()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoTransition.getSourceKaleoNode();
+	}
+
+	@Override
+	public KaleoNode getTargetKaleoNode()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoTransition.getTargetKaleoNode();
+	}
+
+	@Override
+	public KaleoTransition toEscapedModel() {
+		return new KaleoTransitionWrapper(_kaleoTransition.toEscapedModel());
+	}
+
+	@Override
+	public KaleoTransition toUnescapedModel() {
+		return new KaleoTransitionWrapper(_kaleoTransition.toUnescapedModel());
+	}
+
 	/**
 	* Returns the default transition of this kaleo transition.
 	*
@@ -220,35 +242,12 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.workflow.kaleo.model.KaleoTransition> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<KaleoTransition> toCacheModel() {
 		return _kaleoTransition.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoNode getSourceKaleoNode()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoTransition.getSourceKaleoNode();
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoNode getTargetKaleoNode()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoTransition.getTargetKaleoNode();
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTransition toEscapedModel() {
-		return new KaleoTransitionWrapper(_kaleoTransition.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTransition toUnescapedModel() {
-		return new KaleoTransitionWrapper(_kaleoTransition.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.workflow.kaleo.model.KaleoTransition kaleoTransition) {
+	public int compareTo(KaleoTransition kaleoTransition) {
 		return _kaleoTransition.compareTo(kaleoTransition);
 	}
 

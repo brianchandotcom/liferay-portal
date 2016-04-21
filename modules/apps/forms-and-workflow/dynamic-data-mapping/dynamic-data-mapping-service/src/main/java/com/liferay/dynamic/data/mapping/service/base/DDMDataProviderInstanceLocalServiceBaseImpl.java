@@ -701,7 +701,7 @@ public abstract class DDMDataProviderInstanceLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService.class)
+	@BeanReference(type = DDMDataProviderInstanceLocalService.class)
 	protected DDMDataProviderInstanceLocalService ddmDataProviderInstanceLocalService;
 	@BeanReference(type = DDMDataProviderInstancePersistence.class)
 	protected DDMDataProviderInstancePersistence ddmDataProviderInstancePersistence;

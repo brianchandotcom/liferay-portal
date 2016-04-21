@@ -211,20 +211,19 @@ public interface RecentLayoutSetBranchModel extends BaseModel<RecentLayoutSetBra
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.RecentLayoutSetBranch recentLayoutSetBranch);
+	public int compareTo(RecentLayoutSetBranch recentLayoutSetBranch);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.RecentLayoutSetBranch> toCacheModel();
+	public CacheModel<RecentLayoutSetBranch> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.RecentLayoutSetBranch toEscapedModel();
+	public RecentLayoutSetBranch toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.RecentLayoutSetBranch toUnescapedModel();
+	public RecentLayoutSetBranch toUnescapedModel();
 
 	@Override
 	public String toString();

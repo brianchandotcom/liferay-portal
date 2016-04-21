@@ -84,8 +84,7 @@ public interface UserGroupService extends BaseService {
 	* @return the user group
 	*/
 	public UserGroup addUserGroup(java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String description, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -142,8 +141,7 @@ public interface UserGroupService extends BaseService {
 	* @return the user group
 	*/
 	public UserGroup updateUserGroup(long userGroupId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String description, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

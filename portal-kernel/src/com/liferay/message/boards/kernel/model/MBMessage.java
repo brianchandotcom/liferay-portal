@@ -74,7 +74,7 @@ public interface MBMessage extends MBMessageModel, PersistedModel {
 
 	public java.lang.String getBody(boolean translate);
 
-	public com.liferay.message.boards.kernel.model.MBCategory getCategory()
+	public MBCategory getCategory()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFileEntries()
@@ -87,7 +87,7 @@ public interface MBMessage extends MBMessageModel, PersistedModel {
 	public int getDeletedAttachmentsFileEntriesCount()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.message.boards.kernel.model.MBThread getThread()
+	public MBThread getThread()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public long getThreadAttachmentsFolderId()

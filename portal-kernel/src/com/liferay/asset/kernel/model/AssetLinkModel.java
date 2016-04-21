@@ -243,19 +243,19 @@ public interface AssetLinkModel extends BaseModel<AssetLink>, ShardedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.asset.kernel.model.AssetLink assetLink);
+	public int compareTo(AssetLink assetLink);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.asset.kernel.model.AssetLink> toCacheModel();
+	public CacheModel<AssetLink> toCacheModel();
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetLink toEscapedModel();
+	public AssetLink toEscapedModel();
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetLink toUnescapedModel();
+	public AssetLink toUnescapedModel();
 
 	@Override
 	public String toString();

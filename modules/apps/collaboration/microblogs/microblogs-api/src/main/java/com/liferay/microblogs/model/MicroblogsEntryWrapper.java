@@ -152,6 +152,16 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 	}
 
 	@Override
+	public MicroblogsEntry toEscapedModel() {
+		return new MicroblogsEntryWrapper(_microblogsEntry.toEscapedModel());
+	}
+
+	@Override
+	public MicroblogsEntry toUnescapedModel() {
+		return new MicroblogsEntryWrapper(_microblogsEntry.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _microblogsEntry.isCachedModel();
 	}
@@ -172,23 +182,12 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 	}
 
 	@Override
-	public com.liferay.microblogs.model.MicroblogsEntry toEscapedModel() {
-		return new MicroblogsEntryWrapper(_microblogsEntry.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.microblogs.model.MicroblogsEntry toUnescapedModel() {
-		return new MicroblogsEntryWrapper(_microblogsEntry.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.microblogs.model.MicroblogsEntry> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<MicroblogsEntry> toCacheModel() {
 		return _microblogsEntry.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.microblogs.model.MicroblogsEntry microblogsEntry) {
+	public int compareTo(MicroblogsEntry microblogsEntry) {
 		return _microblogsEntry.compareTo(microblogsEntry);
 	}
 

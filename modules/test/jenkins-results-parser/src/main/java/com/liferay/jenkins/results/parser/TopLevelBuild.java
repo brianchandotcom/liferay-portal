@@ -62,8 +62,6 @@ public class TopLevelBuild extends BaseBuild {
 
 		if (status == null) {
 			setStatus("running");
-
-			status = getStatus();
 		}
 
 		if (status.equals("completed")) {

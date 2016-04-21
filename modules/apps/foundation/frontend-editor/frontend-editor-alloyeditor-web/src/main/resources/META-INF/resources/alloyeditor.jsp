@@ -226,19 +226,18 @@ if (showSource) {
 		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) %> ? <%= editorConfigJSONObject %> : {};
 
 		if (editorConfig.extraPlugins) {
+			editorConfig.extraPlugins += ',ae_embed,ae_embed';
 
-			var extraPluginsArr = editorConfig.extraPlugins.split(',');
-
-			var extraPlugins = extraPluginsArr.reduce(function(prevVal, item, index) {
-				if (item !== 'ae_embed') {
-					prevVal.push(item);
+			editorConfig.extraPlugins = A.Array.filter(
+				editorConfig.extraPlugins.split(','),
+				function(item) {
+					return item !== 'ae_embed';
 				}
-				return prevVal;
-			}, []).join(',');
-
-			editorConfig.extraPlugins = extraPlugins;
+			).join(',');
 		}
+
 		editorConfig.removePlugins = editorConfig.removePlugins ? editorConfig.removePlugins + ',ae_embed' : 'ae_embed';
+
 		editorConfig = A.merge(
 			{
 				title: '<%= LanguageUtil.get(resourceBundle, "rich-text-editor") %>'

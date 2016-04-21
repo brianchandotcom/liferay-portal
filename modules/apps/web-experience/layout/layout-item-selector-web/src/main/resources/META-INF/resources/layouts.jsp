@@ -28,75 +28,75 @@ LayoutItemSelectorViewDisplayContext layoutItemSelectorViewDisplayContext = (Lay
 LayoutItemSelectorCriterion layoutItemSelectorCriterion = layoutItemSelectorViewDisplayContext.getLayoutItemSelectorCriterion();
 %>
 
-<liferay-ui:tabs names='<%= ((group.getPublicLayoutsPageCount() > 0) && (group.getPrivateLayoutsPageCount() > 0)) ? "public-pages,private-pages" : null %>' refresh="<%= false %>">
-
-	<%
-	boolean checkContentDisplayPage = layoutItemSelectorCriterion.isCheckDisplayPage();
-	String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
-	long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
-
-	PortletURL editLayoutURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.EDIT);
-
-	editLayoutURL.setParameter("redirect", currentURL);
-	editLayoutURL.setParameter("groupId", String.valueOf(groupId));
-	editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
-	%>
-
-	<c:if test="<%= group.getPublicLayoutsPageCount() > 0 %>">
+<div class="container-fluid-1280">
+	<liferay-ui:tabs names='<%= ((group.getPublicLayoutsPageCount() > 0) && (group.getPrivateLayoutsPageCount() > 0)) ? "public-pages,private-pages" : null %>' refresh="<%= false %>">
 
 		<%
-		editLayoutURL.setParameter("tabs1", "public-pages");
+		boolean checkContentDisplayPage = layoutItemSelectorCriterion.isCheckDisplayPage();
+		String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
+		long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
+
+		PortletURL editLayoutURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.EDIT);
+
+		editLayoutURL.setParameter("redirect", currentURL);
+		editLayoutURL.setParameter("groupId", String.valueOf(groupId));
+		editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 		%>
 
-		<liferay-ui:section>
-			<div>
-				<liferay-layout:layouts-tree
-					checkContentDisplayPage="<%= checkContentDisplayPage %>"
-					draggableTree="<%= false %>"
-					groupId="<%= groupId %>"
-					portletURL="<%= editLayoutURL %>"
-					rootNodeName="<%= group.getLayoutRootNodeName(false, themeDisplay.getLocale()) %>"
-					saveState="<%= false %>"
-					selectedLayoutIds="<%= selectedLayoutIds %>"
-					selPlid="<%= selPlid %>"
-					treeId="treeContainerPublicPages"
-				/>
-			</div>
-		</liferay-ui:section>
-	</c:if>
+		<c:if test="<%= group.getPublicLayoutsPageCount() > 0 %>">
 
-	<c:if test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
+			<%
+			editLayoutURL.setParameter("tabs1", "public-pages");
+			%>
 
-		<%
-		editLayoutURL.setParameter("tabs1", "private-pages");
-		%>
+			<liferay-ui:section>
+				<div>
+					<liferay-layout:layouts-tree
+						checkContentDisplayPage="<%= checkContentDisplayPage %>"
+						draggableTree="<%= false %>"
+						groupId="<%= groupId %>"
+						portletURL="<%= editLayoutURL %>"
+						rootNodeName="<%= group.getLayoutRootNodeName(false, themeDisplay.getLocale()) %>"
+						saveState="<%= false %>"
+						selectedLayoutIds="<%= selectedLayoutIds %>"
+						selPlid="<%= selPlid %>"
+						treeId="treeContainerPublicPages"
+					/>
+				</div>
+			</liferay-ui:section>
+		</c:if>
 
-		<liferay-ui:section>
-			<div>
-				<liferay-layout:layouts-tree
-					checkContentDisplayPage="<%= checkContentDisplayPage %>"
-					draggableTree="<%= false %>"
-					groupId="<%= groupId %>"
-					portletURL="<%= editLayoutURL %>"
-					privateLayout="<%= true %>"
-					rootNodeName="<%= group.getLayoutRootNodeName(true, themeDisplay.getLocale()) %>"
-					saveState="<%= false %>"
-					selectedLayoutIds="<%= selectedLayoutIds %>"
-					selPlid="<%= selPlid %>"
-					treeId="treeContainerPrivatePages"
-				/>
-			</div>
-		</liferay-ui:section>
-	</c:if>
-</liferay-ui:tabs>
+		<c:if test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
 
-<div class="alert" id="<portlet:namespace />selectPageMessage">
-	<aui:button cssClass="selector-button" disabled="<%= true %>" value="choose" />
+			<%
+			editLayoutURL.setParameter("tabs1", "private-pages");
+			%>
 
-	<span class="selected-page-message">
-		<liferay-ui:message key="there-is-no-selected-page" />
-	</span>
+			<liferay-ui:section>
+				<div>
+					<liferay-layout:layouts-tree
+						checkContentDisplayPage="<%= checkContentDisplayPage %>"
+						draggableTree="<%= false %>"
+						groupId="<%= groupId %>"
+						portletURL="<%= editLayoutURL %>"
+						privateLayout="<%= true %>"
+						rootNodeName="<%= group.getLayoutRootNodeName(true, themeDisplay.getLocale()) %>"
+						saveState="<%= false %>"
+						selectedLayoutIds="<%= selectedLayoutIds %>"
+						selPlid="<%= selPlid %>"
+						treeId="treeContainerPrivatePages"
+					/>
+				</div>
+			</liferay-ui:section>
+		</c:if>
+	</liferay-ui:tabs>
 </div>
+
+<aui:button-row id="selectPageMessage">
+	<aui:button cssClass="btn-lg btn-primary selector-button" disabled="<%= true %>" value="done" />
+
+	<aui:button cssClass="btn-cancel btn-lg" type="cancel" value="cancel" />
+</aui:button-row>
 
 <aui:script use="aui-base">
 	var LString = A.Lang.String;

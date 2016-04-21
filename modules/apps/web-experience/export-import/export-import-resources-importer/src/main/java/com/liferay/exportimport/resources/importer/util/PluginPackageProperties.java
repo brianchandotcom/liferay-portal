@@ -79,6 +79,12 @@ public class PluginPackageProperties {
 		return _properties.getProperty("resources-importer-target-value");
 	}
 
+	public boolean indexAfterImport() {
+		return GetterUtil.getBoolean(
+			_properties.getProperty("resources-importer-index-after-import"),
+			true);
+	}
+
 	public boolean isAppendVersion() {
 		return GetterUtil.getBoolean(
 			_properties.getProperty("resources-importer-append-version"), true);

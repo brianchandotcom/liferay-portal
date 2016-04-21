@@ -115,7 +115,17 @@ public abstract class BaseImporter implements Importer {
 					companyId, targetValue);
 
 				if (group != null) {
-					existing = true;
+					int privateLayoutPageCount =
+						group.getPrivateLayoutsPageCount();
+
+					int publicLayoutPageCount =
+						group.getPublicLayoutsPageCount();
+
+					if ((privateLayoutPageCount != 0) ||
+						(publicLayoutPageCount != 0)) {
+
+						existing = true;
+					}
 				}
 				else {
 					group = GroupLocalServiceUtil.addGroup(
@@ -185,6 +195,11 @@ public abstract class BaseImporter implements Importer {
 	}
 
 	@Override
+	public boolean isIndexAfterImport() {
+		return indexAfterImport;
+	}
+
+	@Override
 	public void setAppendVersion(boolean appendVersion) {
 		this.appendVersion = appendVersion;
 	}
@@ -202,6 +217,11 @@ public abstract class BaseImporter implements Importer {
 	@Override
 	public void setGroupId(long groupId) {
 		this.groupId = groupId;
+	}
+
+	@Override
+	public void setIndexAfterImport(boolean indexAfterImport) {
+		this.indexAfterImport = indexAfterImport;
 	}
 
 	@Override
@@ -296,6 +316,7 @@ public abstract class BaseImporter implements Importer {
 	protected boolean developerModeEnabled;
 	protected boolean existing;
 	protected long groupId;
+	protected boolean indexAfterImport;
 	protected JournalConverter journalConverter;
 	protected String resourcesDir;
 	protected ServletContext servletContext;

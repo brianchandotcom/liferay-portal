@@ -40,6 +40,8 @@ public interface Importer {
 
 	public boolean isExisting();
 
+	public boolean isIndexAfterImport();
+
 	public void setAppendVersion(boolean appendVersion);
 
 	public void setCompanyId(long companyId);
@@ -47,6 +49,8 @@ public interface Importer {
 	public void setDeveloperModeEnabled(boolean developerModeEnabled);
 
 	public void setGroupId(long groupId);
+
+	public void setIndexAfterImport(boolean indexAfterImport);
 
 	public void setJournalConverter(JournalConverter journalConverter);
 

@@ -1,10 +1,11 @@
 Bundle-Name: Liferay Portal Search
 Bundle-SymbolicName: com.liferay.portal.search
-Bundle-Version: 3.0.2
+Bundle-Version: 3.1.0
 Export-Package:\
 	com.liferay.portal.search.analysis,\
 	com.liferay.portal.search.buffer,\
-	com.liferay.portal.search.configuration
+	com.liferay.portal.search.configuration,\
+	com.liferay.portal.search.index
 Import-Package: com.liferay.portal.kernel.search;version="${range;[=,=+)}",*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Search

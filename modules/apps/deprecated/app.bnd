@@ -1,5 +1,5 @@
 Liferay-Releng-App-Description:
-Liferay-Releng-App-Title: Liferay Deprecated Apps${liferay.releng.app.title.suffix}
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Deprecated Apps
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category:
 Liferay-Releng-Demo-Url:

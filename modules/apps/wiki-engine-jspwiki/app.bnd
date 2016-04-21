@@ -1,5 +1,5 @@
 Liferay-Releng-App-Description: Apache JSPWiki is a leading open source WikiWiki engine, feature-rich and built around standard JEE components (Java, servlets, JSP). This plugin allows for the use of the JSPWiki format directly in Liferay. Manage your Liferay content with the familiarity and flexibility of this popular format.
-Liferay-Releng-App-Title: Liferay JSPWiki${liferay.releng.app.title.suffix}
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} JSPWiki
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:

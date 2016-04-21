@@ -1,5 +1,5 @@
 Liferay-Releng-App-Description: This app provides integration with Apache Solr, the popular open source enterprise search platform from the Apache Lucene project. Its major features include powerful full-text search, hit highlighting, faceted search, dynamic clustering, database integration, rich document (e.g., Word, PDF) handling, and geospatial search. Solr is highly scalable, providing distributed search and index replication, and it powers the search and navigation features of many of the world's largest internet sites. On installing and enabling this app, Liferay Portal uses Solr for indexing and searching.
-Liferay-Releng-App-Title: Liferay Solr Search Engine${liferay.releng.app.title.suffix}
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Solr Search Engine
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:

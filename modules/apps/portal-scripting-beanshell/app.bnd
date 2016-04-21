@@ -1,5 +1,5 @@
 Liferay-Releng-App-Description: The Liferay Beanshell Scripting app lets you execute portal scripts written in Beanshell. Once you install the app, you can run Beanshell scripts that invoke Liferay’s API in bulk, perform repetitive user maintenance tasks, perform system level operations, and more.
-Liferay-Releng-App-Title: Liferay BeanShell Scripting${liferay.releng.app.title.suffix}
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} BeanShell Scripting
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:

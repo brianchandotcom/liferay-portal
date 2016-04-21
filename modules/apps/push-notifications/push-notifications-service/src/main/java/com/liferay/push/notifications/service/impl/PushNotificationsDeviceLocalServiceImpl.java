@@ -77,7 +77,8 @@ public class PushNotificationsDeviceLocalServiceImpl
 
 	@Override
 	public List<PushNotificationsDevice> getPushNotificationsDevices(
-		int start, int end, OrderByComparator orderByComparator) {
+		int start, int end,
+		OrderByComparator<PushNotificationsDevice> orderByComparator) {
 
 		return pushNotificationsDevicePersistence.findAll(
 			start, end, orderByComparator);

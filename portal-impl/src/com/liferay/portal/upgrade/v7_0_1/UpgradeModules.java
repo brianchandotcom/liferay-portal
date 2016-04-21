@@ -41,6 +41,9 @@ public class UpgradeModules
 
 	private static final String[][] _CONVERTED_LEGACY_MODULES = {
 		{
+			"knowledge-base-portlet", "com.liferay.knowledge.base.service", "KB"
+		},
+		{
 			"notifications-portlet", "com.liferay.notifications.web",
 			"Notification"
 		}

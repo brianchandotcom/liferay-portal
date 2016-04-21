@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_0;
+package com.liferay.knowledge.base.upgrade.v2_0_0;
 
 /**
  * @author Adolfo Pérez
@@ -23,9 +23,10 @@ public class UpgradeRepository
 	@Override
 	protected String[][] getRenamePortletNamesArray() {
 		return new String[][] {
-			new String[] {"19", "com.liferay.message.boards"},
-			new String[] {"33", "com.liferay.blogs"},
-			new String[] {"36", "com.liferay.wiki"}
+			{
+				"com.liferay.knowledgebase.admin.portlet.AdminPortlet",
+				"com.liferay.knowledge.base.admin"
+			}
 		};
 	}
 

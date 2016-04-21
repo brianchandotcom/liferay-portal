@@ -78,6 +78,9 @@ public class BaseMentionsEditorConfigContributor
 
 		triggerJSONArray.put(triggerJSONObject);
 
+		autoCompleteConfigJSONObject.put(
+			"regExp", "(?:\\strigger|^trigger)(\\w[\\s\\w]*)");
+
 		autoCompleteConfigJSONObject.put("trigger", triggerJSONArray);
 
 		jsonObject.put("autocomplete", autoCompleteConfigJSONObject);

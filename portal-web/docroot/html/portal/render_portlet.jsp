@@ -461,55 +461,55 @@ portletDisplay.setURLClose(urlClose);
 
 PortletURL urlConfiguration = PortletProviderUtil.getPortletURL(request, PortletConfigurationApplicationType.PortletConfiguration.CLASS_NAME, PortletProvider.Action.VIEW);
 
-urlConfiguration.setWindowState(LiferayWindowState.POP_UP);
+if(urlConfiguration != null) {
+	urlConfiguration.setWindowState(LiferayWindowState.POP_UP);
 
-if (portlet.getConfigurationActionInstance() != null) {
-	urlConfiguration.setParameter("mvcPath", "/edit_configuration.jsp");
+	if (portlet.getConfigurationActionInstance() != null) {
+		urlConfiguration.setParameter("mvcPath", "/edit_configuration.jsp");
 
-	String settingsScope = (String)request.getAttribute(WebKeys.SETTINGS_SCOPE);
+		String settingsScope = (String) request.getAttribute(WebKeys.SETTINGS_SCOPE);
 
-	settingsScope = ParamUtil.get(request, "settingsScope", settingsScope);
+		settingsScope = ParamUtil.get(request, "settingsScope", settingsScope);
 
-	if (Validator.isNotNull(settingsScope)) {
-		urlConfiguration.setParameter("settingsScope", settingsScope);
+		if (Validator.isNotNull(settingsScope)) {
+			urlConfiguration.setParameter("settingsScope", settingsScope);
+		}
+	} else {
+		urlConfiguration.setParameter("mvcPath", "/edit_sharing.jsp");
 	}
-}
-else {
-	urlConfiguration.setParameter("mvcPath", "/edit_sharing.jsp");
-}
 
-urlConfiguration.setParameter("redirect", currentURL);
-urlConfiguration.setParameter("returnToFullPageURL", currentURL);
-urlConfiguration.setParameter("portletConfiguration", Boolean.TRUE.toString());
-urlConfiguration.setParameter("portletResource", portletDisplay.getId());
-urlConfiguration.setParameter("resourcePrimKey", portletPrimaryKey);
+	urlConfiguration.setParameter("redirect", currentURL);
+	urlConfiguration.setParameter("returnToFullPageURL", currentURL);
+	urlConfiguration.setParameter("portletConfiguration", Boolean.TRUE.toString());
+	urlConfiguration.setParameter("portletResource", portletDisplay.getId());
+	urlConfiguration.setParameter("resourcePrimKey", portletPrimaryKey);
 
-portletDisplay.setURLConfiguration(urlConfiguration.toString());
+	portletDisplay.setURLConfiguration(urlConfiguration.toString());
 
-StringBundler urlConfigurationJSSB = new StringBundler(15);
+	StringBundler urlConfigurationJSSB = new StringBundler(15);
 
-urlConfigurationJSSB.append("Liferay.Portlet.openWindow({bodyCssClass: 'dialog-with-footer', ");
-urlConfigurationJSSB.append("destroyOnHide: true, ");
-urlConfigurationJSSB.append("namespace: '");
-urlConfigurationJSSB.append(portletDisplay.getNamespace());
-urlConfigurationJSSB.append("', portlet: '#p_p_id_");
-urlConfigurationJSSB.append(portletDisplay.getId());
-urlConfigurationJSSB.append("_', portletId: '");
-urlConfigurationJSSB.append(portletDisplay.getId());
-
-if (PropsValues.PORTLET_CONFIG_SHOW_PORTLET_ID) {
-	urlConfigurationJSSB.append("', subTitle: '");
+	urlConfigurationJSSB.append("Liferay.Portlet.openWindow({bodyCssClass: 'dialog-with-footer', ");
+	urlConfigurationJSSB.append("destroyOnHide: true, ");
+	urlConfigurationJSSB.append("namespace: '");
+	urlConfigurationJSSB.append(portletDisplay.getNamespace());
+	urlConfigurationJSSB.append("', portlet: '#p_p_id_");
 	urlConfigurationJSSB.append(portletDisplay.getId());
+	urlConfigurationJSSB.append("_', portletId: '");
+	urlConfigurationJSSB.append(portletDisplay.getId());
+
+	if (PropsValues.PORTLET_CONFIG_SHOW_PORTLET_ID) {
+		urlConfigurationJSSB.append("', subTitle: '");
+		urlConfigurationJSSB.append(portletDisplay.getId());
+	}
+
+	urlConfigurationJSSB.append("', title: '");
+	urlConfigurationJSSB.append(UnicodeLanguageUtil.get(request, "configuration"));
+	urlConfigurationJSSB.append("', uri: '");
+	urlConfigurationJSSB.append(HtmlUtil.escapeJS(portletDisplay.getURLConfiguration()));
+	urlConfigurationJSSB.append("'}); return false;");
+
+	portletDisplay.setURLConfigurationJS(urlConfigurationJSSB.toString());
 }
-
-urlConfigurationJSSB.append("', title: '");
-urlConfigurationJSSB.append(UnicodeLanguageUtil.get(request, "configuration"));
-urlConfigurationJSSB.append("', uri: '");
-urlConfigurationJSSB.append(HtmlUtil.escapeJS(portletDisplay.getURLConfiguration()));
-urlConfigurationJSSB.append("'}); return false;");
-
-portletDisplay.setURLConfigurationJS(urlConfigurationJSSB.toString());
-
 // URL edit
 
 PortletURLImpl urlEdit = new PortletURLImpl(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE);

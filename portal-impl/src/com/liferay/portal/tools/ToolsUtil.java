@@ -250,7 +250,7 @@ public class ToolsUtil {
 			String lineStart = StringUtil.trimLeading(matcher1.group(1));
 
 			if (lineStart.startsWith("import ") || lineStart.contains("//") ||
-				ToolsUtil.isInsideQuotes(content, matcher1.start(2))) {
+				isInsideQuotes(content, matcher1.start(2))) {
 
 				continue;
 			}
@@ -300,7 +300,7 @@ public class ToolsUtil {
 
 				if (lineStart.startsWith("import ") ||
 					lineStart.contains("//") ||
-					ToolsUtil.isInsideQuotes(content, matcher3.start(2))) {
+					isInsideQuotes(content, matcher3.start(2))) {
 
 					continue;
 				}

@@ -2024,11 +2024,10 @@ public class ServiceBuilder {
 		Map<String, JavaMethod> methods = new LinkedHashMap<>();
 
 		for (JavaMethod method : _getMethods(modelImplJavaClass)) {
-			String declarationSignature = _fixDeclarationSignature(
-				method.getDeclarationSignature(false),
-				modelImplJavaClass.getPackageName());
+			String methodSignature = _getMethodSignature(
+				method, modelImplJavaClass.getPackageName());
 
-			methods.put(declarationSignature, method);
+			methods.put(methodSignature, method);
 		}
 
 		Set<Map.Entry<String, JavaMethod>> entrySet = methods.entrySet();
@@ -2051,11 +2050,10 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/model/" + entity.getName() + "Model.java");
 
 		for (JavaMethod method : _getMethods(modelJavaClass)) {
-			String declarationSignature = _fixDeclarationSignature(
-				method.getDeclarationSignature(false),
-				modelJavaClass.getPackageName());
+			String methodSignature = _getMethodSignature(
+				method, modelJavaClass.getPackageName());
 
-			methods.remove(declarationSignature);
+			methods.remove(methodSignature);
 		}
 
 		Map<String, Object> context = _getContext();
@@ -3697,23 +3695,6 @@ public class ServiceBuilder {
 		_deleteFile("docroot/WEB-INF/src/META-INF/misc-spring.xml");
 	}
 
-	private String _fixDeclarationSignature(
-		String declarationSignature, String packagePath) {
-
-		Matcher matcher = _missingFullyQualifiedNamePattern.matcher(
-			declarationSignature);
-
-		if (!matcher.find()) {
-			return declarationSignature;
-		}
-
-		declarationSignature = StringUtil.insert(
-			declarationSignature, packagePath + StringPool.PERIOD,
-			matcher.start(2));
-
-		return _fixDeclarationSignature(declarationSignature, packagePath);
-	}
-
 	private String _fixHbmXml(String content) throws IOException {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
@@ -4414,6 +4395,33 @@ public class ServiceBuilder {
 		}
 
 		return methods.toArray(new JavaMethod[methods.size()]);
+	}
+
+	private String _getMethodSignature(JavaMethod method, String packagePath) {
+		StringBundler sb = new StringBundler();
+
+		sb.append(method.getName());
+		sb.append(StringPool.OPEN_PARENTHESIS);
+
+		for (JavaParameter parameter : method.getParameters()) {
+			String parameterValue = parameter.getResolvedValue();
+
+			if (parameterValue.matches("[A-Z]\\w+")) {
+				parameterValue =
+					packagePath + StringPool.PERIOD + parameterValue;
+			}
+
+			sb.append(parameterValue);
+			sb.append(StringPool.COMMA);
+		}
+
+		if (sb.index() > 2) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
 	}
 
 	private String _getSessionTypeName(int sessionType) {
@@ -5545,8 +5553,6 @@ public class ServiceBuilder {
 	private String _hbmFileName;
 	private String _implDirName;
 	private Map<String, JavaClass> _javaClasses = new HashMap<>();
-	private Pattern _missingFullyQualifiedNamePattern = Pattern.compile(
-		"(\\(|, )([A-Z]\\w*)\\W");
 	private String _modelHintsFileName;
 	private Set<String> _modifiedFileNames = new HashSet<>();
 	private boolean _mvccEnabled;

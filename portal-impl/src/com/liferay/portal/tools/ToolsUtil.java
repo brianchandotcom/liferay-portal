@@ -343,8 +343,6 @@ public class ToolsUtil {
 
 		content = importsFormatter.format(content, packagePath, className);
 
-		content = stripFullyQualifiedClassNames(content, packagePath);
-
 		File tempFile = new File(_TMP_DIR, "ServiceBuilder.temp");
 
 		_write(tempFile, content);

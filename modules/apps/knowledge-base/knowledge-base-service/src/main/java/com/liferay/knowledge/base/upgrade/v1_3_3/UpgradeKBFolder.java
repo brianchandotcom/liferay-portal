@@ -26,6 +26,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -125,31 +126,9 @@ public class UpgradeKBFolder extends UpgradeProcess {
 		}
 	}
 
-	private void _updateKBFolder(
-			Connection con, long kbFolderId, String urlTitle)
-		throws SQLException {
-
-		PreparedStatement ps = null;
-
-		try {
-			ps = con.prepareStatement(
-				"update KBFolder set KBFolder.urlTitle = ? where " +
-					"KBFolder.kbFolderId = ?");
-
-			ps.setString(1, urlTitle);
-			ps.setLong(2, kbFolderId);
-
-			ps.execute();
-		}
-		finally {
-			DataAccess.cleanUp(ps);
-		}
-	}
-
 	/**
-	 * @see {@link
-	 *      com.liferay.knowledge.base.util.KnowledgeBaseUtil#getUrlTitle(long,
-	 *      String)}
+	 * See {@link com.liferay.knowledge.base.util.KnowledgeBaseUtil#getUrlTitle(
+	 * long, String)}
 	 */
 	private String _getUrlTitle(long id, String title) {
 		if (title == null) {
@@ -172,6 +151,28 @@ public class UpgradeKBFolder extends UpgradeProcess {
 			"com.liferay.knowledgebase.KBArticle", "urlTitle", title);
 	}
 
+	private void _updateKBFolder(
+			Connection con, long kbFolderId, String urlTitle)
+		throws SQLException {
+
+		PreparedStatement ps = null;
+
+		try {
+			ps = con.prepareStatement(
+				"update KBFolder set KBFolder.urlTitle = ? where " +
+					"KBFolder.kbFolderId = ?");
+
+			ps.setString(1, urlTitle);
+			ps.setLong(2, kbFolderId);
+
+			ps.execute();
+		}
+		finally {
+			DataAccess.cleanUp(ps);
+		}
+	}
+
 	private static final Pattern _normalizationFriendlyUrlPattern =
 		Pattern.compile("[^a-z0-9_-]");
+
 }

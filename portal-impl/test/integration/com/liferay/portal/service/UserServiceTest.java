@@ -60,7 +60,6 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -130,13 +129,13 @@ public class UserServiceTest {
 		}
 
 		@DeleteAfterTestRun
-		private User _user;
-
-		@DeleteAfterTestRun
 		private Group _group;
 
 		@DeleteAfterTestRun
 		private Role _siteRole;
+
+		@DeleteAfterTestRun
+		private User _user;
 
 	}
 
@@ -340,10 +339,10 @@ public class UserServiceTest {
 		}
 
 		@DeleteAfterTestRun
-		private User _groupAdminUser;
+		private Group _group;
 
 		@DeleteAfterTestRun
-		private Group _group;
+		private User _groupAdminUser;
 
 		@DeleteAfterTestRun
 		private Organization _organization;
@@ -444,16 +443,16 @@ public class UserServiceTest {
 		}
 
 		@DeleteAfterTestRun
-		private User _organizationGroupUser;
+		private Group _group;
 
 		@DeleteAfterTestRun
 		private User _groupOwnerUser;
 
 		@DeleteAfterTestRun
-		private Group _group;
+		private Organization _organization;
 
 		@DeleteAfterTestRun
-		private Organization _organization;
+		private User _organizationGroupUser;
 
 	}
 
@@ -508,13 +507,13 @@ public class UserServiceTest {
 		}
 
 		@DeleteAfterTestRun
+		private Organization _organization;
+
+		@DeleteAfterTestRun
 		private User _organizationAdminUser;
 
 		@DeleteAfterTestRun
 		private User _organizationOwnerUser;
-
-		@DeleteAfterTestRun
-		private Organization _organization;
 
 	}
 
@@ -571,12 +570,13 @@ public class UserServiceTest {
 			}
 		}
 
-		@DeleteAfterTestRun
-		private User _organizationAdminUser;
+		private Group _group;
 
 		@DeleteAfterTestRun
 		private Organization _organization;
-		private Group _group;
+
+		@DeleteAfterTestRun
+		private User _organizationAdminUser;
 
 	}
 
@@ -636,10 +636,10 @@ public class UserServiceTest {
 		}
 
 		@DeleteAfterTestRun
-		private User _organizationOwnerUser;
+		private Organization _organization;
 
 		@DeleteAfterTestRun
-		private Organization _organization;
+		private User _organizationOwnerUser;
 
 	}
 
@@ -696,12 +696,13 @@ public class UserServiceTest {
 			}
 		}
 
-		@DeleteAfterTestRun
-		private User _organizationOwnerUser;
+		private Group _group;
 
 		@DeleteAfterTestRun
 		private Organization _organization;
-		private Group _group;
+
+		@DeleteAfterTestRun
+		private User _organizationOwnerUser;
 
 	}
 

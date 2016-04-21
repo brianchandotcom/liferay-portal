@@ -30,4 +30,7 @@
 			<finder-column name="platform" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>PushNotifications</exception>
+	</exceptions>
 </service-builder>

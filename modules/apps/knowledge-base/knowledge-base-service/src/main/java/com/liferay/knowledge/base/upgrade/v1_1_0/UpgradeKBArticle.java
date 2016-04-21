@@ -188,6 +188,7 @@ public class UpgradeKBArticle extends UpgradeProcess {
 		upgradeTable.updateTable();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UpgradeKBArticle.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeKBArticle.class);
 
 }

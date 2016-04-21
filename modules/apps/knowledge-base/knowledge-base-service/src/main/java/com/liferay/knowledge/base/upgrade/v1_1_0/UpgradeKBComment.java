@@ -133,6 +133,7 @@ public class UpgradeKBComment extends UpgradeProcess {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UpgradeKBComment.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeKBComment.class);
 
 }

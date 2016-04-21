@@ -62,7 +62,7 @@ public class KBArticleMainUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 		return Boolean.TRUE;
 	}
 
-	private UpgradeColumn _kbArticleIdColumn;
-	private UpgradeColumn _resourcePrimKeyColumn;
+	private final UpgradeColumn _kbArticleIdColumn;
+	private final UpgradeColumn _resourcePrimKeyColumn;
 
 }

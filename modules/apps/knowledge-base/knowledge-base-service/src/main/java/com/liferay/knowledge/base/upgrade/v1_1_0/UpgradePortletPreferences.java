@@ -19,10 +19,11 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.upgrade.CamelCaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import javax.portlet.PortletPreferences;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Peter Shin
@@ -119,12 +120,12 @@ public class UpgradePortletPreferences
 		"3_WAR_knowledgebaseportlet_INSTANCE_%"
 	};
 
-	private static Map<String, String> _adminDefaultPreferencesMap;
-	private static Map<String, String> _articleDefaultPreferencesMap;
-	private static Map<String, String> _displayDefaultPreferencesMap;
-	private static Map<String, String> _oldAdminPreferenceNamesMap;
-	private static Map<String, String> _oldArticlePreferenceNamesMap;
-	private static Map<String, String> _oldDisplayPreferenceNamesMap;
+	private static final Map<String, String> _adminDefaultPreferencesMap;
+	private static final Map<String, String> _articleDefaultPreferencesMap;
+	private static final Map<String, String> _displayDefaultPreferencesMap;
+	private static final Map<String, String> _oldAdminPreferenceNamesMap;
+	private static final Map<String, String> _oldArticlePreferenceNamesMap;
+	private static final Map<String, String> _oldDisplayPreferenceNamesMap;
 
 	static {
 		_adminDefaultPreferencesMap = new HashMap<>();

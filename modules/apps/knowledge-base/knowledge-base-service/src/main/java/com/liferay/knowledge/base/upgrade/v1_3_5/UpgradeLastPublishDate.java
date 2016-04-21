@@ -14,7 +14,6 @@
 
 package com.liferay.knowledge.base.upgrade.v1_3_5;
 
-import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeLastPublishDate;
 
 /**

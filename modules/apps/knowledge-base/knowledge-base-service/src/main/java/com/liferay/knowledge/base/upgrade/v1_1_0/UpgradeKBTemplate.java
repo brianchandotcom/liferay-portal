@@ -139,6 +139,7 @@ public class UpgradeKBTemplate extends UpgradeProcess {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UpgradeKBTemplate.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeKBTemplate.class);
 
 }

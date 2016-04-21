@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -197,11 +198,32 @@ public class BaseTextExportImportContentProcessor
 
 			map = HttpUtil.parameterMapFromString(dlReference);
 
+			String[] imageIds = null;
+
 			if (map.containsKey("img_id")) {
-				map.put("image_id", map.get("img_id"));
+				imageIds = map.get("img_id");
 			}
 			else if (map.containsKey("i_id")) {
-				map.put("image_id", map.get("i_id"));
+				imageIds = map.get("i_id");
+			}
+
+			imageIds = ArrayUtil.filter(
+				imageIds,
+				new PredicateFilter<String>() {
+
+					@Override
+					public boolean filter(String parameter) {
+						if (Validator.isNotNull(parameter)) {
+							return true;
+						}
+
+						return false;
+					}
+
+				});
+
+			if (ArrayUtil.isNotEmpty(imageIds)) {
+				map.put("image_id", imageIds);
 			}
 		}
 

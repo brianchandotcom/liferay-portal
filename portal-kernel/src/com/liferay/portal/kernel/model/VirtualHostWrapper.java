@@ -99,8 +99,18 @@ public class VirtualHostWrapper implements VirtualHost,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.VirtualHost> toCacheModel() {
+	public CacheModel<VirtualHost> toCacheModel() {
 		return _virtualHost.toCacheModel();
+	}
+
+	@Override
+	public VirtualHost toEscapedModel() {
+		return new VirtualHostWrapper(_virtualHost.toEscapedModel());
+	}
+
+	@Override
+	public VirtualHost toUnescapedModel() {
+		return new VirtualHostWrapper(_virtualHost.toUnescapedModel());
 	}
 
 	@Override
@@ -124,18 +134,7 @@ public class VirtualHostWrapper implements VirtualHost,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.VirtualHost toEscapedModel() {
-		return new VirtualHostWrapper(_virtualHost.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.VirtualHost toUnescapedModel() {
-		return new VirtualHostWrapper(_virtualHost.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.VirtualHost virtualHost) {
+	public int compareTo(VirtualHost virtualHost) {
 		return _virtualHost.compareTo(virtualHost);
 	}
 

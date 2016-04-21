@@ -99,7 +99,17 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.BrowserTracker> toCacheModel() {
+	public BrowserTracker toEscapedModel() {
+		return new BrowserTrackerWrapper(_browserTracker.toEscapedModel());
+	}
+
+	@Override
+	public BrowserTracker toUnescapedModel() {
+		return new BrowserTrackerWrapper(_browserTracker.toUnescapedModel());
+	}
+
+	@Override
+	public CacheModel<BrowserTracker> toCacheModel() {
 		return _browserTracker.toCacheModel();
 	}
 
@@ -124,18 +134,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.BrowserTracker toEscapedModel() {
-		return new BrowserTrackerWrapper(_browserTracker.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.BrowserTracker toUnescapedModel() {
-		return new BrowserTrackerWrapper(_browserTracker.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.BrowserTracker browserTracker) {
+	public int compareTo(BrowserTracker browserTracker) {
 		return _browserTracker.compareTo(browserTracker);
 	}
 

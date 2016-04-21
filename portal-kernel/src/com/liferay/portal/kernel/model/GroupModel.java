@@ -658,19 +658,19 @@ public interface GroupModel extends AttachedModel, BaseModel<Group>,
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Group group);
+	public int compareTo(Group group);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Group> toCacheModel();
+	public CacheModel<Group> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.Group toEscapedModel();
+	public Group toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.Group toUnescapedModel();
+	public Group toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -51,8 +51,7 @@ public interface RepositoryService extends BaseService {
 	public Repository addRepository(long groupId, long classNameId,
 		long parentFolderId, java.lang.String name,
 		java.lang.String description, java.lang.String portletId,
-		UnicodeProperties typeSettingsProperties,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		UnicodeProperties typeSettingsProperties, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

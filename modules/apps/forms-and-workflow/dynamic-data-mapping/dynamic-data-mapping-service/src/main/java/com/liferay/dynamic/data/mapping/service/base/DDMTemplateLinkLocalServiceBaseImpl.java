@@ -423,7 +423,7 @@ public abstract class DDMTemplateLinkLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService.class)
+	@BeanReference(type = DDMTemplateLinkLocalService.class)
 	protected DDMTemplateLinkLocalService ddmTemplateLinkLocalService;
 	@BeanReference(type = DDMTemplateLinkPersistence.class)
 	protected DDMTemplateLinkPersistence ddmTemplateLinkPersistence;

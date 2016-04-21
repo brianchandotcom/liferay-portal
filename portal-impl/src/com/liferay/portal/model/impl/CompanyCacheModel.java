@@ -179,7 +179,7 @@ public class CompanyCacheModel implements CacheModel<Company>, Externalizable,
 
 		active = objectInput.readBoolean();
 
-		_companySecurityBag = (com.liferay.portal.model.impl.CompanyImpl.CompanySecurityBag)objectInput.readObject();
+		_companySecurityBag = (CompanyImpl.CompanySecurityBag)objectInput.readObject();
 		_keyObj = (java.security.Key)objectInput.readObject();
 		_virtualHostname = (java.lang.String)objectInput.readObject();
 	}
@@ -245,7 +245,7 @@ public class CompanyCacheModel implements CacheModel<Company>, Externalizable,
 	public boolean system;
 	public int maxUsers;
 	public boolean active;
-	public com.liferay.portal.model.impl.CompanyImpl.CompanySecurityBag _companySecurityBag;
+	public CompanyImpl.CompanySecurityBag _companySecurityBag;
 	public java.security.Key _keyObj;
 	public java.lang.String _virtualHostname;
 }

@@ -99,8 +99,18 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.ClusterGroup> toCacheModel() {
+	public CacheModel<ClusterGroup> toCacheModel() {
 		return _clusterGroup.toCacheModel();
+	}
+
+	@Override
+	public ClusterGroup toEscapedModel() {
+		return new ClusterGroupWrapper(_clusterGroup.toEscapedModel());
+	}
+
+	@Override
+	public ClusterGroup toUnescapedModel() {
+		return new ClusterGroupWrapper(_clusterGroup.toUnescapedModel());
 	}
 
 	/**
@@ -144,18 +154,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.ClusterGroup toEscapedModel() {
-		return new ClusterGroupWrapper(_clusterGroup.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.ClusterGroup toUnescapedModel() {
-		return new ClusterGroupWrapper(_clusterGroup.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.ClusterGroup clusterGroup) {
+	public int compareTo(ClusterGroup clusterGroup) {
 		return _clusterGroup.compareTo(clusterGroup);
 	}
 

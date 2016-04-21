@@ -646,20 +646,19 @@ public interface DLFileEntryModel extends AttachedModel, BaseModel<DLFileEntry>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.document.library.kernel.model.DLFileEntry dlFileEntry);
+	public int compareTo(DLFileEntry dlFileEntry);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.document.library.kernel.model.DLFileEntry> toCacheModel();
+	public CacheModel<DLFileEntry> toCacheModel();
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntry toEscapedModel();
+	public DLFileEntry toEscapedModel();
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntry toUnescapedModel();
+	public DLFileEntry toUnescapedModel();
 
 	@Override
 	public String toString();

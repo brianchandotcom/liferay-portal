@@ -57,8 +57,7 @@ public class OrganizationServiceWrapper implements OrganizationService,
 	public com.liferay.portal.kernel.model.Organization addOrganization(
 		long parentOrganizationId, java.lang.String name,
 		java.lang.String type, long regionId, long countryId, long statusId,
-		java.lang.String comments, boolean site,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String comments, boolean site, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _organizationService.addOrganization(parentOrganizationId, name,
 			type, regionId, countryId, statusId, comments, site, serviceContext);
@@ -102,7 +101,7 @@ public class OrganizationServiceWrapper implements OrganizationService,
 		java.util.List<com.liferay.portal.kernel.model.OrgLabor> orgLabors,
 		java.util.List<com.liferay.portal.kernel.model.Phone> phones,
 		java.util.List<com.liferay.portal.kernel.model.Website> websites,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _organizationService.addOrganization(parentOrganizationId, name,
 			type, regionId, countryId, statusId, comments, site, addresses,
@@ -175,7 +174,7 @@ public class OrganizationServiceWrapper implements OrganizationService,
 		java.util.List<com.liferay.portal.kernel.model.OrgLabor> orgLabors,
 		java.util.List<com.liferay.portal.kernel.model.Phone> phones,
 		java.util.List<com.liferay.portal.kernel.model.Website> websites,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _organizationService.updateOrganization(organizationId,
 			parentOrganizationId, name, type, regionId, countryId, statusId,
@@ -207,8 +206,7 @@ public class OrganizationServiceWrapper implements OrganizationService,
 	public com.liferay.portal.kernel.model.Organization updateOrganization(
 		long organizationId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, long regionId, long countryId, long statusId,
-		java.lang.String comments, boolean site,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String comments, boolean site, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _organizationService.updateOrganization(organizationId,
 			parentOrganizationId, name, type, regionId, countryId, statusId,
@@ -255,7 +253,7 @@ public class OrganizationServiceWrapper implements OrganizationService,
 		java.util.List<com.liferay.portal.kernel.model.OrgLabor> orgLabors,
 		java.util.List<com.liferay.portal.kernel.model.Phone> phones,
 		java.util.List<com.liferay.portal.kernel.model.Website> websites,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _organizationService.updateOrganization(organizationId,
 			parentOrganizationId, name, type, regionId, countryId, statusId,

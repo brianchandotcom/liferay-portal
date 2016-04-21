@@ -568,20 +568,19 @@ public interface KaleoLogModel extends BaseModel<KaleoLog>, GroupedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.workflow.kaleo.model.KaleoLog kaleoLog);
+	public int compareTo(KaleoLog kaleoLog);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.workflow.kaleo.model.KaleoLog> toCacheModel();
+	public CacheModel<KaleoLog> toCacheModel();
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoLog toEscapedModel();
+	public KaleoLog toEscapedModel();
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoLog toUnescapedModel();
+	public KaleoLog toUnescapedModel();
 
 	@Override
 	public String toString();

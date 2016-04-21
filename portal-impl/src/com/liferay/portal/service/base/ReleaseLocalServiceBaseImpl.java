@@ -411,7 +411,7 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.ReleaseLocalService.class)
+	@BeanReference(type = ReleaseLocalService.class)
 	protected ReleaseLocalService releaseLocalService;
 	@BeanReference(type = ReleasePersistence.class)
 	protected ReleasePersistence releasePersistence;

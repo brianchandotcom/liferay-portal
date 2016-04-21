@@ -129,6 +129,16 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	}
 
 	@Override
+	public SocialActivityLimit toEscapedModel() {
+		return new SocialActivityLimitWrapper(_socialActivityLimit.toEscapedModel());
+	}
+
+	@Override
+	public SocialActivityLimit toUnescapedModel() {
+		return new SocialActivityLimitWrapper(_socialActivityLimit.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _socialActivityLimit.isCachedModel();
 	}
@@ -149,23 +159,12 @@ public class SocialActivityLimitWrapper implements SocialActivityLimit,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.social.kernel.model.SocialActivityLimit> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<SocialActivityLimit> toCacheModel() {
 		return _socialActivityLimit.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.social.kernel.model.SocialActivityLimit toEscapedModel() {
-		return new SocialActivityLimitWrapper(_socialActivityLimit.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.social.kernel.model.SocialActivityLimit toUnescapedModel() {
-		return new SocialActivityLimitWrapper(_socialActivityLimit.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.social.kernel.model.SocialActivityLimit socialActivityLimit) {
+	public int compareTo(SocialActivityLimit socialActivityLimit) {
 		return _socialActivityLimit.compareTo(socialActivityLimit);
 	}
 

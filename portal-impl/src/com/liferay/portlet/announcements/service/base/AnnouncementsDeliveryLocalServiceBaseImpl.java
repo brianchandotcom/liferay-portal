@@ -480,7 +480,7 @@ public abstract class AnnouncementsDeliveryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService.class)
+	@BeanReference(type = AnnouncementsDeliveryLocalService.class)
 	protected AnnouncementsDeliveryLocalService announcementsDeliveryLocalService;
 	@BeanReference(type = AnnouncementsDeliveryPersistence.class)
 	protected AnnouncementsDeliveryPersistence announcementsDeliveryPersistence;

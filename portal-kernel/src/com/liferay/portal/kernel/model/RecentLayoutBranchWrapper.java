@@ -120,8 +120,18 @@ public class RecentLayoutBranchWrapper implements RecentLayoutBranch,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.RecentLayoutBranch> toCacheModel() {
+	public CacheModel<RecentLayoutBranch> toCacheModel() {
 		return _recentLayoutBranch.toCacheModel();
+	}
+
+	@Override
+	public RecentLayoutBranch toEscapedModel() {
+		return new RecentLayoutBranchWrapper(_recentLayoutBranch.toEscapedModel());
+	}
+
+	@Override
+	public RecentLayoutBranch toUnescapedModel() {
+		return new RecentLayoutBranchWrapper(_recentLayoutBranch.toUnescapedModel());
 	}
 
 	@Override
@@ -145,18 +155,7 @@ public class RecentLayoutBranchWrapper implements RecentLayoutBranch,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.RecentLayoutBranch toEscapedModel() {
-		return new RecentLayoutBranchWrapper(_recentLayoutBranch.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.RecentLayoutBranch toUnescapedModel() {
-		return new RecentLayoutBranchWrapper(_recentLayoutBranch.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.RecentLayoutBranch recentLayoutBranch) {
+	public int compareTo(RecentLayoutBranch recentLayoutBranch) {
 		return _recentLayoutBranch.compareTo(recentLayoutBranch);
 	}
 

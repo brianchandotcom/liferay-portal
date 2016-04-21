@@ -58,10 +58,10 @@ public interface DLFolder extends DLFolderModel, PersistedModel, TreeModel {
 	public java.util.List<java.lang.Long> getAncestorFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.document.library.kernel.model.DLFolder> getAncestors()
+	public java.util.List<DLFolder> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.document.library.kernel.model.DLFolder getParentFolder()
+	public DLFolder getParentFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getPath()

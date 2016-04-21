@@ -235,20 +235,19 @@ public interface AnnouncementsDeliveryModel extends BaseModel<AnnouncementsDeliv
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.announcements.kernel.model.AnnouncementsDelivery announcementsDelivery);
+	public int compareTo(AnnouncementsDelivery announcementsDelivery);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.announcements.kernel.model.AnnouncementsDelivery> toCacheModel();
+	public CacheModel<AnnouncementsDelivery> toCacheModel();
 
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsDelivery toEscapedModel();
+	public AnnouncementsDelivery toEscapedModel();
 
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsDelivery toUnescapedModel();
+	public AnnouncementsDelivery toUnescapedModel();
 
 	@Override
 	public String toString();

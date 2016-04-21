@@ -112,7 +112,7 @@ public class TeamLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.model.Team addTeam(long userId,
 		long groupId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addTeam(userId, groupId, name, description, serviceContext);

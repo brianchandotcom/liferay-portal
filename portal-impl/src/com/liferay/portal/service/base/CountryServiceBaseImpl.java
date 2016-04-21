@@ -152,7 +152,7 @@ public abstract class CountryServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.CountryService.class)
+	@BeanReference(type = CountryService.class)
 	protected CountryService countryService;
 	@BeanReference(type = CountryPersistence.class)
 	protected CountryPersistence countryPersistence;

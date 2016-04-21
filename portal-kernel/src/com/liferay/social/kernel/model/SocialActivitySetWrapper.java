@@ -142,6 +142,16 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 	}
 
 	@Override
+	public SocialActivitySet toEscapedModel() {
+		return new SocialActivitySetWrapper(_socialActivitySet.toEscapedModel());
+	}
+
+	@Override
+	public SocialActivitySet toUnescapedModel() {
+		return new SocialActivitySetWrapper(_socialActivitySet.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _socialActivitySet.isCachedModel();
 	}
@@ -162,23 +172,12 @@ public class SocialActivitySetWrapper implements SocialActivitySet,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.social.kernel.model.SocialActivitySet> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<SocialActivitySet> toCacheModel() {
 		return _socialActivitySet.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.social.kernel.model.SocialActivitySet toEscapedModel() {
-		return new SocialActivitySetWrapper(_socialActivitySet.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.social.kernel.model.SocialActivitySet toUnescapedModel() {
-		return new SocialActivitySetWrapper(_socialActivitySet.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.social.kernel.model.SocialActivitySet socialActivitySet) {
+	public int compareTo(SocialActivitySet socialActivitySet) {
 		return _socialActivitySet.compareTo(socialActivitySet);
 	}
 

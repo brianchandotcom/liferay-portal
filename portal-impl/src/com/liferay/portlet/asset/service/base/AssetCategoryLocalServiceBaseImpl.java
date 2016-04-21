@@ -1034,7 +1034,7 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.asset.kernel.service.AssetCategoryLocalService.class)
+	@BeanReference(type = AssetCategoryLocalService.class)
 	protected AssetCategoryLocalService assetCategoryLocalService;
 	@BeanReference(type = AssetCategoryPersistence.class)
 	protected AssetCategoryPersistence assetCategoryPersistence;

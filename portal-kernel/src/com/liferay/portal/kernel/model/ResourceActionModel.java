@@ -169,20 +169,19 @@ public interface ResourceActionModel extends BaseModel<ResourceAction>, MVCCMode
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.ResourceAction resourceAction);
+	public int compareTo(ResourceAction resourceAction);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.ResourceAction> toCacheModel();
+	public CacheModel<ResourceAction> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.ResourceAction toEscapedModel();
+	public ResourceAction toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.ResourceAction toUnescapedModel();
+	public ResourceAction toUnescapedModel();
 
 	@Override
 	public String toString();

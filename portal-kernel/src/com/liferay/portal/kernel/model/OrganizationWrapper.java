@@ -193,8 +193,28 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Organization> toCacheModel() {
+	public Address getAddress() {
+		return _organization.getAddress();
+	}
+
+	@Override
+	public CacheModel<Organization> toCacheModel() {
 		return _organization.toCacheModel();
+	}
+
+	@Override
+	public Group getGroup() {
+		return _organization.getGroup();
+	}
+
+	@Override
+	public Organization toEscapedModel() {
+		return new OrganizationWrapper(_organization.toEscapedModel());
+	}
+
+	@Override
+	public Organization toUnescapedModel() {
+		return new OrganizationWrapper(_organization.toUnescapedModel());
 	}
 
 	/**
@@ -263,34 +283,13 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Address getAddress() {
-		return _organization.getAddress();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Group getGroup() {
-		return _organization.getGroup();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Organization getParentOrganization()
+	public Organization getParentOrganization()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _organization.getParentOrganization();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Organization toEscapedModel() {
-		return new OrganizationWrapper(_organization.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Organization toUnescapedModel() {
-		return new OrganizationWrapper(_organization.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.Organization organization) {
+	public int compareTo(Organization organization) {
 		return _organization.compareTo(organization);
 	}
 
@@ -446,23 +445,23 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Address> getAddresses() {
+	public java.util.List<Address> getAddresses() {
 		return _organization.getAddresses();
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Organization> getAncestors()
+	public java.util.List<Organization> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _organization.getAncestors();
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Organization> getDescendants() {
+	public java.util.List<Organization> getDescendants() {
 		return _organization.getDescendants();
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Organization> getSuborganizations() {
+	public java.util.List<Organization> getSuborganizations() {
 		return _organization.getSuborganizations();
 	}
 

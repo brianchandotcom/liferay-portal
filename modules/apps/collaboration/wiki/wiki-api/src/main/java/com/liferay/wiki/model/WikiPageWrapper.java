@@ -234,6 +234,21 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		}
 	}
 
+	@Override
+	public WikiNode getNode() {
+		return _wikiPage.getNode();
+	}
+
+	@Override
+	public WikiPage toEscapedModel() {
+		return new WikiPageWrapper(_wikiPage.toEscapedModel());
+	}
+
+	@Override
+	public WikiPage toUnescapedModel() {
+		return new WikiPageWrapper(_wikiPage.toUnescapedModel());
+	}
+
 	/**
 	* Returns the head of this wiki page.
 	*
@@ -410,7 +425,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.wiki.model.WikiPage> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<WikiPage> toCacheModel() {
 		return _wikiPage.toCacheModel();
 	}
 
@@ -442,45 +457,30 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiNode getNode() {
-		return _wikiPage.getNode();
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiPage fetchParentPage() {
+	public WikiPage fetchParentPage() {
 		return _wikiPage.fetchParentPage();
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiPage fetchRedirectPage() {
+	public WikiPage fetchRedirectPage() {
 		return _wikiPage.fetchRedirectPage();
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiPage getParentPage()
+	public WikiPage getParentPage()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPage.getParentPage();
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiPage getRedirectPage()
+	public WikiPage getRedirectPage()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPage.getRedirectPage();
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiPage getViewableParentPage() {
+	public WikiPage getViewableParentPage() {
 		return _wikiPage.getViewableParentPage();
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiPage toEscapedModel() {
-		return new WikiPageWrapper(_wikiPage.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.wiki.model.WikiPage toUnescapedModel() {
-		return new WikiPageWrapper(_wikiPage.toUnescapedModel());
 	}
 
 	/**
@@ -494,7 +494,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
-	public int compareTo(com.liferay.wiki.model.WikiPage wikiPage) {
+	public int compareTo(WikiPage wikiPage) {
 		return _wikiPage.compareTo(wikiPage);
 	}
 
@@ -726,7 +726,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
-	public java.util.List<com.liferay.wiki.model.WikiPage> getChildPages() {
+	public java.util.List<WikiPage> getChildPages() {
 		return _wikiPage.getChildPages();
 	}
 
@@ -744,17 +744,17 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
-	public java.util.List<com.liferay.wiki.model.WikiPage> getParentPages() {
+	public java.util.List<WikiPage> getParentPages() {
 		return _wikiPage.getParentPages();
 	}
 
 	@Override
-	public java.util.List<com.liferay.wiki.model.WikiPage> getViewableChildPages() {
+	public java.util.List<WikiPage> getViewableChildPages() {
 		return _wikiPage.getViewableChildPages();
 	}
 
 	@Override
-	public java.util.List<com.liferay.wiki.model.WikiPage> getViewableParentPages() {
+	public java.util.List<WikiPage> getViewableParentPages() {
 		return _wikiPage.getViewableParentPages();
 	}
 

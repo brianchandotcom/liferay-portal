@@ -283,20 +283,19 @@ public interface UserThreadModel extends AuditedModel, BaseModel<UserThread>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.social.privatemessaging.model.UserThread userThread);
+	public int compareTo(UserThread userThread);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.social.privatemessaging.model.UserThread> toCacheModel();
+	public CacheModel<UserThread> toCacheModel();
 
 	@Override
-	public com.liferay.social.privatemessaging.model.UserThread toEscapedModel();
+	public UserThread toEscapedModel();
 
 	@Override
-	public com.liferay.social.privatemessaging.model.UserThread toUnescapedModel();
+	public UserThread toUnescapedModel();
 
 	@Override
 	public String toString();

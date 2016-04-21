@@ -56,11 +56,11 @@ public interface KaleoTimerInstanceToken extends KaleoTimerInstanceTokenModel,
 			}
 		};
 
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken getKaleoInstanceToken()
+	public KaleoInstanceToken getKaleoInstanceToken()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken getKaleoTaskInstanceToken();
+	public KaleoTaskInstanceToken getKaleoTaskInstanceToken();
 
-	public com.liferay.portal.workflow.kaleo.model.KaleoTimer getKaleoTimer()
+	public KaleoTimer getKaleoTimer()
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

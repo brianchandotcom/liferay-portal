@@ -77,8 +77,7 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 	public LayoutSetBranch addLayoutSetBranch(long userId, long groupId,
 		boolean privateLayout, java.lang.String name,
 		java.lang.String description, boolean master,
-		long copyLayoutSetBranchId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long copyLayoutSetBranchId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -147,8 +146,7 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public LayoutSetBranch mergeLayoutSetBranch(long layoutSetBranchId,
-		long mergeLayoutSetBranchId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long mergeLayoutSetBranchId, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -163,8 +161,7 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 
 	public LayoutSetBranch updateLayoutSetBranch(long layoutSetBranchId,
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* @throws PortalException

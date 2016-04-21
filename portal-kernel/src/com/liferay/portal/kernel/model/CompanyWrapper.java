@@ -140,8 +140,36 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Company> toCacheModel() {
+	public Account getAccount()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _company.getAccount();
+	}
+
+	@Override
+	public CacheModel<Company> toCacheModel() {
 		return _company.toCacheModel();
+	}
+
+	@Override
+	public Company toEscapedModel() {
+		return new CompanyWrapper(_company.toEscapedModel());
+	}
+
+	@Override
+	public Company toUnescapedModel() {
+		return new CompanyWrapper(_company.toUnescapedModel());
+	}
+
+	@Override
+	public Group getGroup()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _company.getGroup();
+	}
+
+	@Override
+	public User getDefaultUser()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _company.getDefaultUser();
 	}
 
 	/**
@@ -245,35 +273,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Account getAccount()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _company.getAccount();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Company toEscapedModel() {
-		return new CompanyWrapper(_company.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Company toUnescapedModel() {
-		return new CompanyWrapper(_company.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Group getGroup()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _company.getGroup();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.User getDefaultUser()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _company.getDefaultUser();
-	}
-
-	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Company company) {
+	public int compareTo(Company company) {
 		return _company.compareTo(company);
 	}
 

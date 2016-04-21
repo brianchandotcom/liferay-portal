@@ -442,7 +442,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.ServiceComponentLocalService.class)
+	@BeanReference(type = ServiceComponentLocalService.class)
 	protected ServiceComponentLocalService serviceComponentLocalService;
 	@BeanReference(type = ServiceComponentPersistence.class)
 	protected ServiceComponentPersistence serviceComponentPersistence;

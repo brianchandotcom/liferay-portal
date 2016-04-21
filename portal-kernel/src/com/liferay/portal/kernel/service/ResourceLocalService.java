@@ -135,8 +135,7 @@ public interface ResourceLocalService extends BaseLocalService {
 	group permissions to apply, and set guest permissions to apply.
 	*/
 	public void addModelResources(AuditedModel auditedModel,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	public void addModelResources(long companyId, long groupId, long userId,
 		java.lang.String name, java.lang.String primKey,
@@ -292,8 +291,7 @@ public interface ResourceLocalService extends BaseLocalService {
 	and guest permissions.
 	*/
 	public void updateModelResources(AuditedModel auditedModel,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates resources matching the name, primary key string and scope,

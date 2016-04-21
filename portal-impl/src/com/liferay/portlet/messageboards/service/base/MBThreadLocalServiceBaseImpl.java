@@ -1186,7 +1186,7 @@ public abstract class MBThreadLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.message.boards.kernel.service.MBThreadLocalService.class)
+	@BeanReference(type = MBThreadLocalService.class)
 	protected MBThreadLocalService mbThreadLocalService;
 	@BeanReference(type = MBThreadPersistence.class)
 	protected MBThreadPersistence mbThreadPersistence;

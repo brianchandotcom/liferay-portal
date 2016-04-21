@@ -402,8 +402,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		long groupId, boolean privateLayout, long parentLayoutId,
 		java.lang.String name, java.lang.String title,
 		java.lang.String description, java.lang.String type, boolean hidden,
-		java.lang.String friendlyURL,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String friendlyURL, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutLocalService.addLayout(userId, groupId, privateLayout,
 			parentLayoutId, name, title, description, type, hidden,
@@ -465,7 +464,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
 		java.lang.String type, java.lang.String typeSettings, boolean hidden,
 		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutLocalService.addLayout(userId, groupId, privateLayout,
 			parentLayoutId, nameMap, titleMap, descriptionMap, keywordsMap,
@@ -753,8 +752,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> robotsMap,
 		java.lang.String type, boolean hidden,
 		java.util.Map<java.util.Locale, java.lang.String> friendlyURLMap,
-		boolean iconImage, byte[] iconBytes,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean iconImage, byte[] iconBytes, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutLocalService.updateLayout(groupId, privateLayout,
 			layoutId, parentLayoutId, nameMap, titleMap, descriptionMap,
@@ -1777,8 +1775,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*/
 	@Override
 	public void deleteLayout(com.liferay.portal.kernel.model.Layout layout,
-		boolean updateLayoutSet,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean updateLayoutSet, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_layoutLocalService.deleteLayout(layout, updateLayoutSet, serviceContext);
 	}
@@ -1794,8 +1791,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*/
 	@Override
 	public void deleteLayout(long groupId, boolean privateLayout,
-		long layoutId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long layoutId, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_layoutLocalService.deleteLayout(groupId, privateLayout, layoutId,
 			serviceContext);
@@ -1809,8 +1805,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param serviceContext the service context to be applied
 	*/
 	@Override
-	public void deleteLayout(long plid,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+	public void deleteLayout(long plid, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_layoutLocalService.deleteLayout(plid, serviceContext);
 	}
@@ -1828,7 +1823,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*/
 	@Override
 	public void deleteLayouts(long groupId, boolean privateLayout,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_layoutLocalService.deleteLayouts(groupId, privateLayout, serviceContext);
 	}
@@ -2094,8 +2089,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*/
 	@Override
 	public void setLayouts(long groupId, boolean privateLayout,
-		long parentLayoutId, long[] layoutIds,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long parentLayoutId, long[] layoutIds, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_layoutLocalService.setLayouts(groupId, privateLayout, parentLayoutId,
 			layoutIds, serviceContext);

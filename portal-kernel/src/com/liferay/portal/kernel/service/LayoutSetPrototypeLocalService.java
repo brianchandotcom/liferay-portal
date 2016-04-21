@@ -94,15 +94,13 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	public LayoutSetPrototype addLayoutSetPrototype(long userId,
 		long companyId, Map<Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active,
-		boolean layoutsUpdateable,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean layoutsUpdateable, ServiceContext serviceContext)
 		throws PortalException;
 
 	public LayoutSetPrototype addLayoutSetPrototype(long userId,
 		long companyId, Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, boolean active,
-		boolean layoutsUpdateable,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean layoutsUpdateable, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -197,15 +195,13 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 	public LayoutSetPrototype updateLayoutSetPrototype(
 		long layoutSetPrototypeId, Map<Locale, java.lang.String> nameMap,
 		java.lang.String description, boolean active,
-		boolean layoutsUpdateable,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean layoutsUpdateable, ServiceContext serviceContext)
 		throws PortalException;
 
 	public LayoutSetPrototype updateLayoutSetPrototype(
 		long layoutSetPrototypeId, Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, boolean active,
-		boolean layoutsUpdateable,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean layoutsUpdateable, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

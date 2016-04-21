@@ -287,20 +287,19 @@ public interface KaleoTaskModel extends BaseModel<KaleoTask>, GroupedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.workflow.kaleo.model.KaleoTask kaleoTask);
+	public int compareTo(KaleoTask kaleoTask);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.workflow.kaleo.model.KaleoTask> toCacheModel();
+	public CacheModel<KaleoTask> toCacheModel();
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTask toEscapedModel();
+	public KaleoTask toEscapedModel();
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTask toUnescapedModel();
+	public KaleoTask toUnescapedModel();
 
 	@Override
 	public String toString();

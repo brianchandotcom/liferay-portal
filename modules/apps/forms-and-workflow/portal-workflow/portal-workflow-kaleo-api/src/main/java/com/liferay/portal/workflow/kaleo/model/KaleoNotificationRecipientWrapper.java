@@ -193,6 +193,16 @@ public class KaleoNotificationRecipientWrapper
 	}
 
 	@Override
+	public KaleoNotificationRecipient toEscapedModel() {
+		return new KaleoNotificationRecipientWrapper(_kaleoNotificationRecipient.toEscapedModel());
+	}
+
+	@Override
+	public KaleoNotificationRecipient toUnescapedModel() {
+		return new KaleoNotificationRecipientWrapper(_kaleoNotificationRecipient.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _kaleoNotificationRecipient.isCachedModel();
 	}
@@ -213,23 +223,12 @@ public class KaleoNotificationRecipientWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<KaleoNotificationRecipient> toCacheModel() {
 		return _kaleoNotificationRecipient.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient toEscapedModel() {
-		return new KaleoNotificationRecipientWrapper(_kaleoNotificationRecipient.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient toUnescapedModel() {
-		return new KaleoNotificationRecipientWrapper(_kaleoNotificationRecipient.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient kaleoNotificationRecipient) {
+	public int compareTo(KaleoNotificationRecipient kaleoNotificationRecipient) {
 		return _kaleoNotificationRecipient.compareTo(kaleoNotificationRecipient);
 	}
 

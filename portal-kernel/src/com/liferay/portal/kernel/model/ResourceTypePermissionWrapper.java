@@ -115,13 +115,22 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.ResourceTypePermission> toCacheModel() {
+	public CacheModel<ResourceTypePermission> toCacheModel() {
 		return _resourceTypePermission.toCacheModel();
 	}
 
 	@Override
-	public boolean hasAction(
-		com.liferay.portal.kernel.model.ResourceAction resourceAction) {
+	public ResourceTypePermission toEscapedModel() {
+		return new ResourceTypePermissionWrapper(_resourceTypePermission.toEscapedModel());
+	}
+
+	@Override
+	public ResourceTypePermission toUnescapedModel() {
+		return new ResourceTypePermissionWrapper(_resourceTypePermission.toUnescapedModel());
+	}
+
+	@Override
+	public boolean hasAction(ResourceAction resourceAction) {
 		return _resourceTypePermission.hasAction(resourceAction);
 	}
 
@@ -156,18 +165,7 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.ResourceTypePermission toEscapedModel() {
-		return new ResourceTypePermissionWrapper(_resourceTypePermission.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.ResourceTypePermission toUnescapedModel() {
-		return new ResourceTypePermissionWrapper(_resourceTypePermission.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.ResourceTypePermission resourceTypePermission) {
+	public int compareTo(ResourceTypePermission resourceTypePermission) {
 		return _resourceTypePermission.compareTo(resourceTypePermission);
 	}
 

@@ -107,6 +107,16 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	@Override
+	public DLSyncEvent toEscapedModel() {
+		return new DLSyncEventWrapper(_dlSyncEvent.toEscapedModel());
+	}
+
+	@Override
+	public DLSyncEvent toUnescapedModel() {
+		return new DLSyncEventWrapper(_dlSyncEvent.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _dlSyncEvent.isCachedModel();
 	}
@@ -122,28 +132,17 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLSyncEvent toEscapedModel() {
-		return new DLSyncEventWrapper(_dlSyncEvent.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLSyncEvent toUnescapedModel() {
-		return new DLSyncEventWrapper(_dlSyncEvent.toUnescapedModel());
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _dlSyncEvent.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.document.library.kernel.model.DLSyncEvent> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<DLSyncEvent> toCacheModel() {
 		return _dlSyncEvent.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.document.library.kernel.model.DLSyncEvent dlSyncEvent) {
+	public int compareTo(DLSyncEvent dlSyncEvent) {
 		return _dlSyncEvent.compareTo(dlSyncEvent);
 	}
 

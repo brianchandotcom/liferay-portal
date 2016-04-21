@@ -566,20 +566,19 @@ public interface MDRActionModel extends AttachedModel, BaseModel<MDRAction>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.mobile.device.rules.model.MDRAction mdrAction);
+	public int compareTo(MDRAction mdrAction);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.mobile.device.rules.model.MDRAction> toCacheModel();
+	public CacheModel<MDRAction> toCacheModel();
 
 	@Override
-	public com.liferay.mobile.device.rules.model.MDRAction toEscapedModel();
+	public MDRAction toEscapedModel();
 
 	@Override
-	public com.liferay.mobile.device.rules.model.MDRAction toUnescapedModel();
+	public MDRAction toUnescapedModel();
 
 	@Override
 	public String toString();

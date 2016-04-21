@@ -22277,9 +22277,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 			try {
 				wikiPage.setTitle(SanitizerUtil.sanitize(companyId, groupId,
-						userId,
-						com.liferay.wiki.model.WikiPage.class.getName(),
-						pageId, ContentTypes.TEXT_PLAIN, Sanitizer.MODE_ALL,
+						userId, WikiPage.class.getName(), pageId,
+						ContentTypes.TEXT_PLAIN, Sanitizer.MODE_ALL,
 						wikiPage.getTitle(), null));
 			}
 			catch (SanitizerException se) {

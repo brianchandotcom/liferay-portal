@@ -1124,7 +1124,7 @@ public abstract class KaleoConditionLocalServiceBaseImpl
 	protected com.liferay.portal.workflow.kaleo.service.KaleoActionLocalService kaleoActionLocalService;
 	@BeanReference(type = KaleoActionPersistence.class)
 	protected KaleoActionPersistence kaleoActionPersistence;
-	@BeanReference(type = com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService.class)
+	@BeanReference(type = KaleoConditionLocalService.class)
 	protected KaleoConditionLocalService kaleoConditionLocalService;
 	@BeanReference(type = KaleoConditionPersistence.class)
 	protected KaleoConditionPersistence kaleoConditionPersistence;

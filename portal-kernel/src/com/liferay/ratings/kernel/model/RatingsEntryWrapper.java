@@ -138,6 +138,16 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	}
 
 	@Override
+	public RatingsEntry toEscapedModel() {
+		return new RatingsEntryWrapper(_ratingsEntry.toEscapedModel());
+	}
+
+	@Override
+	public RatingsEntry toUnescapedModel() {
+		return new RatingsEntryWrapper(_ratingsEntry.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _ratingsEntry.isCachedModel();
 	}
@@ -158,18 +168,8 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.ratings.kernel.model.RatingsEntry> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<RatingsEntry> toCacheModel() {
 		return _ratingsEntry.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.ratings.kernel.model.RatingsEntry toEscapedModel() {
-		return new RatingsEntryWrapper(_ratingsEntry.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.ratings.kernel.model.RatingsEntry toUnescapedModel() {
-		return new RatingsEntryWrapper(_ratingsEntry.toUnescapedModel());
 	}
 
 	/**
@@ -183,8 +183,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.ratings.kernel.model.RatingsEntry ratingsEntry) {
+	public int compareTo(RatingsEntry ratingsEntry) {
 		return _ratingsEntry.compareTo(ratingsEntry);
 	}
 

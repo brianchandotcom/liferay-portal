@@ -542,7 +542,7 @@ public abstract class ShoppingOrderServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.shopping.service.ShoppingOrderLocalService.class)
 	protected com.liferay.shopping.service.ShoppingOrderLocalService shoppingOrderLocalService;
-	@BeanReference(type = com.liferay.shopping.service.ShoppingOrderService.class)
+	@BeanReference(type = ShoppingOrderService.class)
 	protected ShoppingOrderService shoppingOrderService;
 	@BeanReference(type = ShoppingOrderPersistence.class)
 	protected ShoppingOrderPersistence shoppingOrderPersistence;

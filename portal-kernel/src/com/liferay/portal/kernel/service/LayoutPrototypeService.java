@@ -60,15 +60,13 @@ public interface LayoutPrototypeService extends BaseService {
 	@java.lang.Deprecated
 	public LayoutPrototype addLayoutPrototype(
 		Map<Locale, java.lang.String> nameMap, java.lang.String description,
-		boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	public LayoutPrototype addLayoutPrototype(
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPrototype fetchLayoutPrototype(long layoutPrototypeId)
@@ -85,15 +83,13 @@ public interface LayoutPrototypeService extends BaseService {
 	@java.lang.Deprecated
 	public LayoutPrototype updateLayoutPrototype(long layoutPrototypeId,
 		Map<Locale, java.lang.String> nameMap, java.lang.String description,
-		boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	public LayoutPrototype updateLayoutPrototype(long layoutPrototypeId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

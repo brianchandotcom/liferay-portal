@@ -298,20 +298,19 @@ public interface MicroblogsEntryModel extends AuditedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.microblogs.model.MicroblogsEntry microblogsEntry);
+	public int compareTo(MicroblogsEntry microblogsEntry);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.microblogs.model.MicroblogsEntry> toCacheModel();
+	public CacheModel<MicroblogsEntry> toCacheModel();
 
 	@Override
-	public com.liferay.microblogs.model.MicroblogsEntry toEscapedModel();
+	public MicroblogsEntry toEscapedModel();
 
 	@Override
-	public com.liferay.microblogs.model.MicroblogsEntry toUnescapedModel();
+	public MicroblogsEntry toUnescapedModel();
 
 	@Override
 	public String toString();

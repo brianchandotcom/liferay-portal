@@ -114,6 +114,16 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 		}
 	}
 
+	@Override
+	public AnnouncementsDelivery toEscapedModel() {
+		return new AnnouncementsDeliveryWrapper(_announcementsDelivery.toEscapedModel());
+	}
+
+	@Override
+	public AnnouncementsDelivery toUnescapedModel() {
+		return new AnnouncementsDeliveryWrapper(_announcementsDelivery.toUnescapedModel());
+	}
+
 	/**
 	* Returns the email of this announcements delivery.
 	*
@@ -190,28 +200,17 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	}
 
 	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsDelivery toEscapedModel() {
-		return new AnnouncementsDeliveryWrapper(_announcementsDelivery.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.announcements.kernel.model.AnnouncementsDelivery toUnescapedModel() {
-		return new AnnouncementsDeliveryWrapper(_announcementsDelivery.toUnescapedModel());
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _announcementsDelivery.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.announcements.kernel.model.AnnouncementsDelivery> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<AnnouncementsDelivery> toCacheModel() {
 		return _announcementsDelivery.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.announcements.kernel.model.AnnouncementsDelivery announcementsDelivery) {
+	public int compareTo(AnnouncementsDelivery announcementsDelivery) {
 		return _announcementsDelivery.compareTo(announcementsDelivery);
 	}
 

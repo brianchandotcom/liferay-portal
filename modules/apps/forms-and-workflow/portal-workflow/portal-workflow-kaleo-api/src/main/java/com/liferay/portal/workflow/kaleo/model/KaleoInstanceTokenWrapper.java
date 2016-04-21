@@ -180,6 +180,28 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 		}
 	}
 
+	@Override
+	public KaleoInstance getKaleoInstance()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoInstanceToken.getKaleoInstance();
+	}
+
+	@Override
+	public KaleoInstanceToken toEscapedModel() {
+		return new KaleoInstanceTokenWrapper(_kaleoInstanceToken.toEscapedModel());
+	}
+
+	@Override
+	public KaleoInstanceToken toUnescapedModel() {
+		return new KaleoInstanceTokenWrapper(_kaleoInstanceToken.toUnescapedModel());
+	}
+
+	@Override
+	public KaleoNode getCurrentKaleoNode()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoInstanceToken.getCurrentKaleoNode();
+	}
+
 	/**
 	* Returns the completed of this kaleo instance token.
 	*
@@ -226,41 +248,18 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<KaleoInstanceToken> toCacheModel() {
 		return _kaleoInstanceToken.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstance getKaleoInstance()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoInstanceToken.getKaleoInstance();
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken getParentKaleoInstanceToken()
+	public KaleoInstanceToken getParentKaleoInstanceToken()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoInstanceToken.getParentKaleoInstanceToken();
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken toEscapedModel() {
-		return new KaleoInstanceTokenWrapper(_kaleoInstanceToken.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken toUnescapedModel() {
-		return new KaleoInstanceTokenWrapper(_kaleoInstanceToken.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoNode getCurrentKaleoNode()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoInstanceToken.getCurrentKaleoNode();
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken kaleoInstanceToken) {
+	public int compareTo(KaleoInstanceToken kaleoInstanceToken) {
 		return _kaleoInstanceToken.compareTo(kaleoInstanceToken);
 	}
 
@@ -360,12 +359,12 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken> getChildrenKaleoInstanceTokens() {
+	public java.util.List<KaleoInstanceToken> getChildrenKaleoInstanceTokens() {
 		return _kaleoInstanceToken.getChildrenKaleoInstanceTokens();
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken> getIncompleteChildrenKaleoInstanceTokens() {
+	public java.util.List<KaleoInstanceToken> getIncompleteChildrenKaleoInstanceTokens() {
 		return _kaleoInstanceToken.getIncompleteChildrenKaleoInstanceTokens();
 	}
 
@@ -540,8 +539,7 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 	}
 
 	@Override
-	public void setCurrentKaleoNode(
-		com.liferay.portal.workflow.kaleo.model.KaleoNode kaleoNode)
+	public void setCurrentKaleoNode(KaleoNode kaleoNode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_kaleoInstanceToken.setCurrentKaleoNode(kaleoNode);
 	}

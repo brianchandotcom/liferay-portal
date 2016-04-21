@@ -597,7 +597,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService.class)
+	@BeanReference(type = LayoutFriendlyURLLocalService.class)
 	protected LayoutFriendlyURLLocalService layoutFriendlyURLLocalService;
 	@BeanReference(type = LayoutFriendlyURLPersistence.class)
 	protected LayoutFriendlyURLPersistence layoutFriendlyURLPersistence;

@@ -669,7 +669,7 @@ public abstract class MDRActionLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.mobile.device.rules.service.MDRActionLocalService.class)
+	@BeanReference(type = MDRActionLocalService.class)
 	protected MDRActionLocalService mdrActionLocalService;
 	@BeanReference(type = MDRActionPersistence.class)
 	protected MDRActionPersistence mdrActionPersistence;

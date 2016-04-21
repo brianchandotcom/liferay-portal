@@ -537,20 +537,19 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.document.library.kernel.model.DLFileShortcut dlFileShortcut);
+	public int compareTo(DLFileShortcut dlFileShortcut);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.document.library.kernel.model.DLFileShortcut> toCacheModel();
+	public CacheModel<DLFileShortcut> toCacheModel();
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileShortcut toEscapedModel();
+	public DLFileShortcut toEscapedModel();
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileShortcut toUnescapedModel();
+	public DLFileShortcut toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -70,7 +70,7 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	@Override
 	public com.liferay.portal.kernel.model.UserGroup addUserGroup(
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userGroupService.addUserGroup(name, description, serviceContext);
 	}
@@ -146,7 +146,7 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	@Override
 	public com.liferay.portal.kernel.model.UserGroup updateUserGroup(
 		long userGroupId, java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userGroupService.updateUserGroup(userGroupId, name,
 			description, serviceContext);

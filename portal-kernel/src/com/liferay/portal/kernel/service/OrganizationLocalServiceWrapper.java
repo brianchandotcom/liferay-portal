@@ -214,8 +214,7 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	public com.liferay.portal.kernel.model.Organization addOrganization(
 		long userId, long parentOrganizationId, java.lang.String name,
 		java.lang.String type, long regionId, long countryId, long statusId,
-		java.lang.String comments, boolean site,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String comments, boolean site, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _organizationLocalService.addOrganization(userId,
 			parentOrganizationId, name, type, regionId, countryId, statusId,
@@ -380,8 +379,7 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		long companyId, long organizationId, long parentOrganizationId,
 		java.lang.String name, java.lang.String type, long regionId,
 		long countryId, long statusId, java.lang.String comments, boolean logo,
-		byte[] logoBytes, boolean site,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		byte[] logoBytes, boolean site, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _organizationLocalService.updateOrganization(companyId,
 			organizationId, parentOrganizationId, name, type, regionId,
@@ -409,8 +407,8 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 	attributes for the organization.
 	* @return the organization
 	* @deprecated As of 7.0.0, replaced by {@link #updateOrganization(long,
-	long, long, String, String, long, long, long, String, boolean,
-	byte[], boolean, ServiceContext)}
+	long, long, String, String, long, long, long, String,
+	boolean, byte[], boolean, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -418,7 +416,7 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		long companyId, long organizationId, long parentOrganizationId,
 		java.lang.String name, java.lang.String type, long regionId,
 		long countryId, long statusId, java.lang.String comments, boolean site,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _organizationLocalService.updateOrganization(companyId,
 			organizationId, parentOrganizationId, name, type, regionId,

@@ -172,8 +172,50 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.LayoutSet> toCacheModel() {
+	public CacheModel<LayoutSet> toCacheModel() {
 		return _layoutSet.toCacheModel();
+	}
+
+	/**
+	* Returns the layout set's color scheme.
+	*
+	* <p>
+	* Just like themes, color schemes can be configured on the layout set
+	* level. The layout set's color scheme can be overridden on the layout
+	* level.
+	* </p>
+	*
+	* @return the layout set's color scheme
+	*/
+	@Override
+	public ColorScheme getColorScheme() {
+		return _layoutSet.getColorScheme();
+	}
+
+	/**
+	* Returns the layout set's group.
+	*
+	* @return the layout set's group
+	*/
+	@Override
+	public Group getGroup()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutSet.getGroup();
+	}
+
+	@Override
+	public LayoutSet toEscapedModel() {
+		return new LayoutSetWrapper(_layoutSet.toEscapedModel());
+	}
+
+	@Override
+	public LayoutSet toUnescapedModel() {
+		return new LayoutSetWrapper(_layoutSet.toUnescapedModel());
+	}
+
+	@Override
+	public Theme getTheme() {
+		return _layoutSet.getTheme();
 	}
 
 	/**
@@ -256,55 +298,13 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 		return _layoutSet.getExpandoBridge();
 	}
 
-	/**
-	* Returns the layout set's color scheme.
-	*
-	* <p>
-	* Just like themes, color schemes can be configured on the layout set
-	* level. The layout set's color scheme can be overridden on the layout
-	* level.
-	* </p>
-	*
-	* @return the layout set's color scheme
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.ColorScheme getColorScheme() {
-		return _layoutSet.getColorScheme();
-	}
-
-	/**
-	* Returns the layout set's group.
-	*
-	* @return the layout set's group
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.Group getGroup()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _layoutSet.getGroup();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutSet toEscapedModel() {
-		return new LayoutSetWrapper(_layoutSet.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutSet toUnescapedModel() {
-		return new LayoutSetWrapper(_layoutSet.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Theme getTheme() {
-		return _layoutSet.getTheme();
-	}
-
 	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties() {
 		return _layoutSet.getSettingsProperties();
 	}
 
 	@Override
-	public int compareTo(com.liferay.portal.kernel.model.LayoutSet layoutSet) {
+	public int compareTo(LayoutSet layoutSet) {
 		return _layoutSet.compareTo(layoutSet);
 	}
 

@@ -470,7 +470,7 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.ImageLocalService.class)
+	@BeanReference(type = ImageLocalService.class)
 	protected ImageLocalService imageLocalService;
 	@BeanReference(type = ImagePersistence.class)
 	protected ImagePersistence imagePersistence;

@@ -192,6 +192,22 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 		}
 	}
 
+	@Override
+	public Calendar toEscapedModel() {
+		return new CalendarWrapper(_calendar.toEscapedModel());
+	}
+
+	@Override
+	public Calendar toUnescapedModel() {
+		return new CalendarWrapper(_calendar.toUnescapedModel());
+	}
+
+	@Override
+	public CalendarResource getCalendarResource()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _calendar.getCalendarResource();
+	}
+
 	/**
 	* Returns the default calendar of this calendar.
 	*
@@ -268,33 +284,17 @@ public class CalendarWrapper implements Calendar, ModelWrapper<Calendar> {
 	}
 
 	@Override
-	public com.liferay.calendar.model.Calendar toEscapedModel() {
-		return new CalendarWrapper(_calendar.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.calendar.model.Calendar toUnescapedModel() {
-		return new CalendarWrapper(_calendar.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.calendar.model.CalendarResource getCalendarResource()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _calendar.getCalendarResource();
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _calendar.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.calendar.model.Calendar> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<Calendar> toCacheModel() {
 		return _calendar.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(com.liferay.calendar.model.Calendar calendar) {
+	public int compareTo(Calendar calendar) {
 		return _calendar.compareTo(calendar);
 	}
 

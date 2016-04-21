@@ -63,8 +63,7 @@ public class LayoutSetBranchLocalServiceWrapper
 	public com.liferay.portal.kernel.model.LayoutSetBranch addLayoutSetBranch(
 		long userId, long groupId, boolean privateLayout,
 		java.lang.String name, java.lang.String description, boolean master,
-		long copyLayoutSetBranchId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long copyLayoutSetBranchId, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetBranchLocalService.addLayoutSetBranch(userId, groupId,
 			privateLayout, name, description, master, copyLayoutSetBranchId,
@@ -175,7 +174,7 @@ public class LayoutSetBranchLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.LayoutSetBranch mergeLayoutSetBranch(
 		long layoutSetBranchId, long mergeLayoutSetBranchId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetBranchLocalService.mergeLayoutSetBranch(layoutSetBranchId,
 			mergeLayoutSetBranchId, serviceContext);
@@ -196,8 +195,7 @@ public class LayoutSetBranchLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.model.LayoutSetBranch updateLayoutSetBranch(
 		long layoutSetBranchId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String description, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutSetBranchLocalService.updateLayoutSetBranch(layoutSetBranchId,
 			name, description, serviceContext);

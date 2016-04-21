@@ -1059,7 +1059,7 @@ public abstract class CalendarBookingServiceBaseImpl extends BaseServiceImpl
 	protected CalendarFinder calendarFinder;
 	@BeanReference(type = com.liferay.calendar.service.CalendarBookingLocalService.class)
 	protected com.liferay.calendar.service.CalendarBookingLocalService calendarBookingLocalService;
-	@BeanReference(type = com.liferay.calendar.service.CalendarBookingService.class)
+	@BeanReference(type = CalendarBookingService.class)
 	protected CalendarBookingService calendarBookingService;
 	@BeanReference(type = CalendarBookingPersistence.class)
 	protected CalendarBookingPersistence calendarBookingPersistence;

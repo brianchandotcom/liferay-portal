@@ -680,20 +680,19 @@ public interface MBMessageModel extends AttachedModel, BaseModel<MBMessage>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.message.boards.kernel.model.MBMessage mbMessage);
+	public int compareTo(MBMessage mbMessage);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.message.boards.kernel.model.MBMessage> toCacheModel();
+	public CacheModel<MBMessage> toCacheModel();
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBMessage toEscapedModel();
+	public MBMessage toEscapedModel();
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBMessage toUnescapedModel();
+	public MBMessage toUnescapedModel();
 
 	@Override
 	public String toString();

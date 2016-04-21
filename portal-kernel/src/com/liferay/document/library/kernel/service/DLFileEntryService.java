@@ -77,7 +77,7 @@ public interface DLFileEntryService extends BaseService {
 
 	/**
 	* As of 7.0.0, replaced by {@link #isKeepFileVersionLabel(long, boolean,
-	*              ServiceContext)}
+	* ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

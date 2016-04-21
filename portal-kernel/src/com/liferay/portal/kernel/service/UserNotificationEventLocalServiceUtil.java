@@ -97,8 +97,7 @@ public class UserNotificationEventLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.UserNotificationEvent addUserNotificationEvent(
 		long userId, java.lang.String type, long timestamp, int deliveryType,
 		long deliverBy, java.lang.String payload, boolean actionRequired,
-		boolean archived,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean archived, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addUserNotificationEvent(userId, type, timestamp,
@@ -109,7 +108,7 @@ public class UserNotificationEventLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.UserNotificationEvent addUserNotificationEvent(
 		long userId, java.lang.String type, long timestamp, int deliveryType,
 		long deliverBy, java.lang.String payload, boolean archived,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addUserNotificationEvent(userId, type, timestamp,
@@ -124,7 +123,7 @@ public class UserNotificationEventLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.UserNotificationEvent addUserNotificationEvent(
 		long userId, java.lang.String type, long timestamp, long deliverBy,
 		java.lang.String payload, boolean archived,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addUserNotificationEvent(userId, type, timestamp,

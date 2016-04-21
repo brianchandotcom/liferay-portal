@@ -374,19 +374,19 @@ public interface AccountModel extends AuditedModel, BaseModel<Account>, MVCCMode
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Account account);
+	public int compareTo(Account account);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Account> toCacheModel();
+	public CacheModel<Account> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.Account toEscapedModel();
+	public Account toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.Account toUnescapedModel();
+	public Account toUnescapedModel();
 
 	@Override
 	public String toString();

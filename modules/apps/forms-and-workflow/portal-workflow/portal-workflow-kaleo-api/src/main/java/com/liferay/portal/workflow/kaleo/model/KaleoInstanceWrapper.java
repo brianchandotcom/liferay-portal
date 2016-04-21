@@ -180,6 +180,38 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 		}
 	}
 
+	@Override
+	public KaleoDefinition getKaleoDefinition()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoInstance.getKaleoDefinition();
+	}
+
+	@Override
+	public KaleoInstance toEscapedModel() {
+		return new KaleoInstanceWrapper(_kaleoInstance.toEscapedModel());
+	}
+
+	@Override
+	public KaleoInstance toUnescapedModel() {
+		return new KaleoInstanceWrapper(_kaleoInstance.toUnescapedModel());
+	}
+
+	@Override
+	public KaleoInstanceToken getRootKaleoInstanceToken(
+		ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoInstance.getRootKaleoInstanceToken(serviceContext);
+	}
+
+	@Override
+	public KaleoInstanceToken getRootKaleoInstanceToken(
+		Map<java.lang.String, Serializable> workflowContext,
+		ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoInstance.getRootKaleoInstanceToken(workflowContext,
+			serviceContext);
+	}
+
 	/**
 	* Returns the completed of this kaleo instance.
 	*
@@ -221,45 +253,12 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.workflow.kaleo.model.KaleoInstance> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<KaleoInstance> toCacheModel() {
 		return _kaleoInstance.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition getKaleoDefinition()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoInstance.getKaleoDefinition();
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstance toEscapedModel() {
-		return new KaleoInstanceWrapper(_kaleoInstance.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstance toUnescapedModel() {
-		return new KaleoInstanceWrapper(_kaleoInstance.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken getRootKaleoInstanceToken(
-		ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoInstance.getRootKaleoInstanceToken(serviceContext);
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken getRootKaleoInstanceToken(
-		Map<java.lang.String, Serializable> workflowContext,
-		ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoInstance.getRootKaleoInstanceToken(workflowContext,
-			serviceContext);
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.workflow.kaleo.model.KaleoInstance kaleoInstance) {
+	public int compareTo(KaleoInstance kaleoInstance) {
 		return _kaleoInstance.compareTo(kaleoInstance);
 	}
 

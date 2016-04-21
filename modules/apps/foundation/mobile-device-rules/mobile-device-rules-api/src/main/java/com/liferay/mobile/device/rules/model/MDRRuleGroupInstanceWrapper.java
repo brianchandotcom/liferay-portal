@@ -160,6 +160,22 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	}
 
 	@Override
+	public MDRRuleGroup getRuleGroup()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mdrRuleGroupInstance.getRuleGroup();
+	}
+
+	@Override
+	public MDRRuleGroupInstance toEscapedModel() {
+		return new MDRRuleGroupInstanceWrapper(_mdrRuleGroupInstance.toEscapedModel());
+	}
+
+	@Override
+	public MDRRuleGroupInstance toUnescapedModel() {
+		return new MDRRuleGroupInstanceWrapper(_mdrRuleGroupInstance.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _mdrRuleGroupInstance.isCachedModel();
 	}
@@ -180,29 +196,12 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	}
 
 	@Override
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup getRuleGroup()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mdrRuleGroupInstance.getRuleGroup();
-	}
-
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance toEscapedModel() {
-		return new MDRRuleGroupInstanceWrapper(_mdrRuleGroupInstance.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRRuleGroupInstance toUnescapedModel() {
-		return new MDRRuleGroupInstanceWrapper(_mdrRuleGroupInstance.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.mobile.device.rules.model.MDRRuleGroupInstance> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<MDRRuleGroupInstance> toCacheModel() {
 		return _mdrRuleGroupInstance.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.mobile.device.rules.model.MDRRuleGroupInstance mdrRuleGroupInstance) {
+	public int compareTo(MDRRuleGroupInstance mdrRuleGroupInstance) {
 		return _mdrRuleGroupInstance.compareTo(mdrRuleGroupInstance);
 	}
 
@@ -312,7 +311,7 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	}
 
 	@Override
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRAction> getActions() {
+	public java.util.List<MDRAction> getActions() {
 		return _mdrRuleGroupInstance.getActions();
 	}
 

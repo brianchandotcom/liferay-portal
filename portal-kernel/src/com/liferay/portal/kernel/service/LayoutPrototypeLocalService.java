@@ -92,15 +92,13 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 	@java.lang.Deprecated
 	public LayoutPrototype addLayoutPrototype(long userId, long companyId,
 		Map<Locale, java.lang.String> nameMap, java.lang.String description,
-		boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	public LayoutPrototype addLayoutPrototype(long userId, long companyId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new layout prototype with the primary key. Does not add the layout prototype to the database.
@@ -187,15 +185,13 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 	@java.lang.Deprecated
 	public LayoutPrototype updateLayoutPrototype(long layoutPrototypeId,
 		Map<Locale, java.lang.String> nameMap, java.lang.String description,
-		boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
 	public LayoutPrototype updateLayoutPrototype(long layoutPrototypeId,
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* @throws PortalException

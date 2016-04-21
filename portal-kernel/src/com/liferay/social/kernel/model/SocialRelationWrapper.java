@@ -114,6 +114,16 @@ public class SocialRelationWrapper implements SocialRelation,
 	}
 
 	@Override
+	public SocialRelation toEscapedModel() {
+		return new SocialRelationWrapper(_socialRelation.toEscapedModel());
+	}
+
+	@Override
+	public SocialRelation toUnescapedModel() {
+		return new SocialRelationWrapper(_socialRelation.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _socialRelation.isCachedModel();
 	}
@@ -134,23 +144,12 @@ public class SocialRelationWrapper implements SocialRelation,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.social.kernel.model.SocialRelation> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<SocialRelation> toCacheModel() {
 		return _socialRelation.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.social.kernel.model.SocialRelation toEscapedModel() {
-		return new SocialRelationWrapper(_socialRelation.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.social.kernel.model.SocialRelation toUnescapedModel() {
-		return new SocialRelationWrapper(_socialRelation.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.social.kernel.model.SocialRelation socialRelation) {
+	public int compareTo(SocialRelation socialRelation) {
 		return _socialRelation.compareTo(socialRelation);
 	}
 

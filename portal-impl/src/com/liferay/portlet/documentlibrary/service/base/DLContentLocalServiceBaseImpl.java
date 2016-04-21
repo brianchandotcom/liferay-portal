@@ -436,7 +436,7 @@ public abstract class DLContentLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.document.library.kernel.service.DLContentLocalService.class)
+	@BeanReference(type = DLContentLocalService.class)
 	protected DLContentLocalService dlContentLocalService;
 	@BeanReference(type = DLContentPersistence.class)
 	protected DLContentPersistence dlContentPersistence;

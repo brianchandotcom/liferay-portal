@@ -164,8 +164,24 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Website> toCacheModel() {
+	public CacheModel<Website> toCacheModel() {
 		return _website.toCacheModel();
+	}
+
+	@Override
+	public ListType getType()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _website.getType();
+	}
+
+	@Override
+	public Website toEscapedModel() {
+		return new WebsiteWrapper(_website.toEscapedModel());
+	}
+
+	@Override
+	public Website toUnescapedModel() {
+		return new WebsiteWrapper(_website.toUnescapedModel());
 	}
 
 	/**
@@ -209,23 +225,7 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.ListType getType()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _website.getType();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Website toEscapedModel() {
-		return new WebsiteWrapper(_website.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Website toUnescapedModel() {
-		return new WebsiteWrapper(_website.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Website website) {
+	public int compareTo(Website website) {
 		return _website.compareTo(website);
 	}
 

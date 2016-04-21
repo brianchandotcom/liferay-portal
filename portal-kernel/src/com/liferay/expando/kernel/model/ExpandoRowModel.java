@@ -169,19 +169,19 @@ public interface ExpandoRowModel extends BaseModel<ExpandoRow>, ShardedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.expando.kernel.model.ExpandoRow expandoRow);
+	public int compareTo(ExpandoRow expandoRow);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.expando.kernel.model.ExpandoRow> toCacheModel();
+	public CacheModel<ExpandoRow> toCacheModel();
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoRow toEscapedModel();
+	public ExpandoRow toEscapedModel();
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoRow toUnescapedModel();
+	public ExpandoRow toUnescapedModel();
 
 	@Override
 	public String toString();

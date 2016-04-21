@@ -76,13 +76,11 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 
 	public LayoutBranch addLayoutBranch(long layoutRevisionId,
 		java.lang.String name, java.lang.String description, boolean master,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	public LayoutBranch addLayoutBranch(long layoutSetBranchId, long plid,
 		java.lang.String name, java.lang.String description, boolean master,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new layout branch with the primary key. Does not add the layout branch to the database.
@@ -132,9 +130,7 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutBranch getMasterLayoutBranch(long layoutSetBranchId,
-		long plid,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		long plid, ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the layout branch in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -147,8 +143,7 @@ public interface LayoutBranchLocalService extends BaseLocalService,
 
 	public LayoutBranch updateLayoutBranch(long layoutBranchId,
 		java.lang.String name, java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* @throws PortalException

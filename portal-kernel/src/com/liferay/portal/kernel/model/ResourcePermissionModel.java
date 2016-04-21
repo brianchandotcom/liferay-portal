@@ -263,20 +263,19 @@ public interface ResourcePermissionModel extends BaseModel<ResourcePermission>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.ResourcePermission resourcePermission);
+	public int compareTo(ResourcePermission resourcePermission);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.ResourcePermission> toCacheModel();
+	public CacheModel<ResourcePermission> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.ResourcePermission toEscapedModel();
+	public ResourcePermission toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.ResourcePermission toUnescapedModel();
+	public ResourcePermission toUnescapedModel();
 
 	@Override
 	public String toString();

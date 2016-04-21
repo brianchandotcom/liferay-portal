@@ -846,7 +846,7 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.message.boards.kernel.service.MBDiscussionLocalService.class)
+	@BeanReference(type = MBDiscussionLocalService.class)
 	protected MBDiscussionLocalService mbDiscussionLocalService;
 	@BeanReference(type = MBDiscussionPersistence.class)
 	protected MBDiscussionPersistence mbDiscussionPersistence;

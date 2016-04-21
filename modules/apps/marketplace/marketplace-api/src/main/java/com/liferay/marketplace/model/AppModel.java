@@ -340,19 +340,19 @@ public interface AppModel extends BaseModel<App>, ShardedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.marketplace.model.App app);
+	public int compareTo(App app);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.marketplace.model.App> toCacheModel();
+	public CacheModel<App> toCacheModel();
 
 	@Override
-	public com.liferay.marketplace.model.App toEscapedModel();
+	public App toEscapedModel();
 
 	@Override
-	public com.liferay.marketplace.model.App toUnescapedModel();
+	public App toUnescapedModel();
 
 	@Override
 	public String toString();

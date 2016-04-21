@@ -288,19 +288,19 @@ public interface TrashEntryModel extends AttachedModel, BaseModel<TrashEntry>,
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.trash.kernel.model.TrashEntry trashEntry);
+	public int compareTo(TrashEntry trashEntry);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.trash.kernel.model.TrashEntry> toCacheModel();
+	public CacheModel<TrashEntry> toCacheModel();
 
 	@Override
-	public com.liferay.trash.kernel.model.TrashEntry toEscapedModel();
+	public TrashEntry toEscapedModel();
 
 	@Override
-	public com.liferay.trash.kernel.model.TrashEntry toUnescapedModel();
+	public TrashEntry toUnescapedModel();
 
 	@Override
 	public String toString();

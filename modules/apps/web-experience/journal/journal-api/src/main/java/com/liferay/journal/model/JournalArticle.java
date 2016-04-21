@@ -83,7 +83,7 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	public java.lang.String getArticleImageURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
-	public com.liferay.journal.model.JournalArticleResource getArticleResource()
+	public JournalArticleResource getArticleResource()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getArticleResourceUuid()
@@ -99,7 +99,7 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 
 	public com.liferay.portal.kernel.xml.Document getDocument();
 
-	public com.liferay.journal.model.JournalFolder getFolder()
+	public JournalFolder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.model.Layout getLayout();

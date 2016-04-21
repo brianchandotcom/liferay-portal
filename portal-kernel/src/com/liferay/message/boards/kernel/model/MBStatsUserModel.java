@@ -213,20 +213,19 @@ public interface MBStatsUserModel extends BaseModel<MBStatsUser>, ShardedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.message.boards.kernel.model.MBStatsUser mbStatsUser);
+	public int compareTo(MBStatsUser mbStatsUser);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.message.boards.kernel.model.MBStatsUser> toCacheModel();
+	public CacheModel<MBStatsUser> toCacheModel();
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBStatsUser toEscapedModel();
+	public MBStatsUser toEscapedModel();
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBStatsUser toUnescapedModel();
+	public MBStatsUser toUnescapedModel();
 
 	@Override
 	public String toString();

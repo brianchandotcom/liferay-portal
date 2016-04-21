@@ -100,6 +100,16 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	}
 
 	@Override
+	public AssetTagStats toEscapedModel() {
+		return new AssetTagStatsWrapper(_assetTagStats.toEscapedModel());
+	}
+
+	@Override
+	public AssetTagStats toUnescapedModel() {
+		return new AssetTagStatsWrapper(_assetTagStats.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _assetTagStats.isCachedModel();
 	}
@@ -115,28 +125,17 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	}
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetTagStats toEscapedModel() {
-		return new AssetTagStatsWrapper(_assetTagStats.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.asset.kernel.model.AssetTagStats toUnescapedModel() {
-		return new AssetTagStatsWrapper(_assetTagStats.toUnescapedModel());
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _assetTagStats.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.asset.kernel.model.AssetTagStats> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<AssetTagStats> toCacheModel() {
 		return _assetTagStats.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.asset.kernel.model.AssetTagStats assetTagStats) {
+	public int compareTo(AssetTagStats assetTagStats) {
 		return _assetTagStats.compareTo(assetTagStats);
 	}
 

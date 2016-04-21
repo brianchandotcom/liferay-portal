@@ -702,7 +702,7 @@ public abstract class PortletLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.PortletLocalService.class)
+	@BeanReference(type = PortletLocalService.class)
 	protected PortletLocalService portletLocalService;
 	@BeanReference(type = PortletPersistence.class)
 	protected PortletPersistence portletPersistence;

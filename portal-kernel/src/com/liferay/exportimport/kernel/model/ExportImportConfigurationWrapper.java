@@ -181,6 +181,16 @@ public class ExportImportConfigurationWrapper
 		}
 	}
 
+	@Override
+	public ExportImportConfiguration toEscapedModel() {
+		return new ExportImportConfigurationWrapper(_exportImportConfiguration.toEscapedModel());
+	}
+
+	@Override
+	public ExportImportConfiguration toUnescapedModel() {
+		return new ExportImportConfigurationWrapper(_exportImportConfiguration.toUnescapedModel());
+	}
+
 	/**
 	* Returns <code>true</code> if this export import configuration is approved.
 	*
@@ -312,17 +322,7 @@ public class ExportImportConfigurationWrapper
 	}
 
 	@Override
-	public com.liferay.exportimport.kernel.model.ExportImportConfiguration toEscapedModel() {
-		return new ExportImportConfigurationWrapper(_exportImportConfiguration.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.exportimport.kernel.model.ExportImportConfiguration toUnescapedModel() {
-		return new ExportImportConfigurationWrapper(_exportImportConfiguration.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.exportimport.kernel.model.ExportImportConfiguration> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<ExportImportConfiguration> toCacheModel() {
 		return _exportImportConfiguration.toCacheModel();
 	}
 
@@ -348,8 +348,7 @@ public class ExportImportConfigurationWrapper
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.exportimport.kernel.model.ExportImportConfiguration exportImportConfiguration) {
+	public int compareTo(ExportImportConfiguration exportImportConfiguration) {
 		return _exportImportConfiguration.compareTo(exportImportConfiguration);
 	}
 

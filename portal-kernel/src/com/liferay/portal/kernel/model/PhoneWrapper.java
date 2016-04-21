@@ -164,8 +164,24 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Phone> toCacheModel() {
+	public CacheModel<Phone> toCacheModel() {
 		return _phone.toCacheModel();
+	}
+
+	@Override
+	public ListType getType()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _phone.getType();
+	}
+
+	@Override
+	public Phone toEscapedModel() {
+		return new PhoneWrapper(_phone.toEscapedModel());
+	}
+
+	@Override
+	public Phone toUnescapedModel() {
+		return new PhoneWrapper(_phone.toUnescapedModel());
 	}
 
 	/**
@@ -209,23 +225,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.ListType getType()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _phone.getType();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Phone toEscapedModel() {
-		return new PhoneWrapper(_phone.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Phone toUnescapedModel() {
-		return new PhoneWrapper(_phone.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Phone phone) {
+	public int compareTo(Phone phone) {
 		return _phone.compareTo(phone);
 	}
 

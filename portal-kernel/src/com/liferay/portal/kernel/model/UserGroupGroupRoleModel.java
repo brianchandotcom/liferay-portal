@@ -170,20 +170,19 @@ public interface UserGroupGroupRoleModel extends BaseModel<UserGroupGroupRole>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.UserGroupGroupRole userGroupGroupRole);
+	public int compareTo(UserGroupGroupRole userGroupGroupRole);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.UserGroupGroupRole> toCacheModel();
+	public CacheModel<UserGroupGroupRole> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.UserGroupGroupRole toEscapedModel();
+	public UserGroupGroupRole toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.UserGroupGroupRole toUnescapedModel();
+	public UserGroupGroupRole toUnescapedModel();
 
 	@Override
 	public String toString();

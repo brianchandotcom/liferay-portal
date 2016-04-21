@@ -42,8 +42,7 @@ public class WebsiteServiceUtil {
 	 */
 	public static com.liferay.portal.kernel.model.Website addWebsite(
 		java.lang.String className, long classPK, java.lang.String url,
-		long typeId, boolean primary,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long typeId, boolean primary, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addWebsite(className, classPK, url, typeId, primary,

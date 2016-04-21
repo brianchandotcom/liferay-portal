@@ -83,8 +83,7 @@ public interface LayoutRevisionLocalService extends BaseLocalService,
 		java.lang.String robots, java.lang.String typeSettings,
 		boolean iconImage, long iconImageId, java.lang.String themeId,
 		java.lang.String colorSchemeId, java.lang.String css,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new layout revision with the primary key. Does not add the layout revision to the database.
@@ -164,14 +163,11 @@ public interface LayoutRevisionLocalService extends BaseLocalService,
 		java.lang.String keywords, java.lang.String robots,
 		java.lang.String typeSettings, boolean iconImage, long iconImageId,
 		java.lang.String themeId, java.lang.String colorSchemeId,
-		java.lang.String css,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String css, ServiceContext serviceContext)
 		throws PortalException;
 
 	public LayoutRevision updateStatus(long userId, long layoutRevisionId,
-		int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		int status, ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* @throws PortalException

@@ -238,20 +238,19 @@ public interface JournalArticleImageModel extends BaseModel<JournalArticleImage>
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.journal.model.JournalArticleImage journalArticleImage);
+	public int compareTo(JournalArticleImage journalArticleImage);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.journal.model.JournalArticleImage> toCacheModel();
+	public CacheModel<JournalArticleImage> toCacheModel();
 
 	@Override
-	public com.liferay.journal.model.JournalArticleImage toEscapedModel();
+	public JournalArticleImage toEscapedModel();
 
 	@Override
-	public com.liferay.journal.model.JournalArticleImage toUnescapedModel();
+	public JournalArticleImage toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -177,7 +177,7 @@ public abstract class DDMTemplateVersionServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService.class)
 	protected com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService ddmTemplateVersionLocalService;
-	@BeanReference(type = com.liferay.dynamic.data.mapping.service.DDMTemplateVersionService.class)
+	@BeanReference(type = DDMTemplateVersionService.class)
 	protected DDMTemplateVersionService ddmTemplateVersionService;
 	@BeanReference(type = DDMTemplateVersionPersistence.class)
 	protected DDMTemplateVersionPersistence ddmTemplateVersionPersistence;

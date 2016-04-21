@@ -54,7 +54,7 @@ public interface KaleoTimer extends KaleoTimerModel, PersistedModel {
 			}
 		};
 
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment> getKaleoTaskReassignments();
+	public java.util.List<KaleoTaskAssignment> getKaleoTaskReassignments();
 
 	public boolean isRecurring();
 }

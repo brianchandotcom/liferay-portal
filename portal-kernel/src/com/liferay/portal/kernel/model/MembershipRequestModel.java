@@ -286,20 +286,19 @@ public interface MembershipRequestModel extends BaseModel<MembershipRequest>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.MembershipRequest membershipRequest);
+	public int compareTo(MembershipRequest membershipRequest);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.MembershipRequest> toCacheModel();
+	public CacheModel<MembershipRequest> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.MembershipRequest toEscapedModel();
+	public MembershipRequest toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.MembershipRequest toUnescapedModel();
+	public MembershipRequest toUnescapedModel();
 
 	@Override
 	public String toString();

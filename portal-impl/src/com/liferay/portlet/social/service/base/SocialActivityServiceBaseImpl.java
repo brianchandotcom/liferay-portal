@@ -794,7 +794,7 @@ public abstract class SocialActivityServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.social.kernel.service.SocialActivityLocalService.class)
 	protected com.liferay.social.kernel.service.SocialActivityLocalService socialActivityLocalService;
-	@BeanReference(type = com.liferay.social.kernel.service.SocialActivityService.class)
+	@BeanReference(type = SocialActivityService.class)
 	protected SocialActivityService socialActivityService;
 	@BeanReference(type = SocialActivityPersistence.class)
 	protected SocialActivityPersistence socialActivityPersistence;

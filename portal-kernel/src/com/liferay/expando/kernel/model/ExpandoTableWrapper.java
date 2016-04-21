@@ -96,6 +96,16 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	}
 
 	@Override
+	public ExpandoTable toEscapedModel() {
+		return new ExpandoTableWrapper(_expandoTable.toEscapedModel());
+	}
+
+	@Override
+	public ExpandoTable toUnescapedModel() {
+		return new ExpandoTableWrapper(_expandoTable.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _expandoTable.isCachedModel();
 	}
@@ -116,23 +126,12 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoTable toEscapedModel() {
-		return new ExpandoTableWrapper(_expandoTable.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.expando.kernel.model.ExpandoTable toUnescapedModel() {
-		return new ExpandoTableWrapper(_expandoTable.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.expando.kernel.model.ExpandoTable> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<ExpandoTable> toCacheModel() {
 		return _expandoTable.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.expando.kernel.model.ExpandoTable expandoTable) {
+	public int compareTo(ExpandoTable expandoTable) {
 		return _expandoTable.compareTo(expandoTable);
 	}
 

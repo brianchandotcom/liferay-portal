@@ -89,12 +89,12 @@ public interface UserGroupGroupRole extends UserGroupGroupRoleModel,
 			}
 		};
 
-	public com.liferay.portal.kernel.model.Group getGroup()
+	public Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.portal.kernel.model.Role getRole()
+	public Role getRole()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.portal.kernel.model.UserGroup getUserGroup()
+	public UserGroup getUserGroup()
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

@@ -135,6 +135,16 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
+	public Entry toEscapedModel() {
+		return new EntryWrapper(_entry.toEscapedModel());
+	}
+
+	@Override
+	public Entry toUnescapedModel() {
+		return new EntryWrapper(_entry.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _entry.isCachedModel();
 	}
@@ -150,27 +160,17 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
-	public com.liferay.contacts.model.Entry toEscapedModel() {
-		return new EntryWrapper(_entry.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.contacts.model.Entry toUnescapedModel() {
-		return new EntryWrapper(_entry.toUnescapedModel());
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _entry.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.contacts.model.Entry> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<Entry> toCacheModel() {
 		return _entry.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(com.liferay.contacts.model.Entry entry) {
+	public int compareTo(Entry entry) {
 		return _entry.compareTo(entry);
 	}
 

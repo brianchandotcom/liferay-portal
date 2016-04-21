@@ -185,20 +185,19 @@ public interface DDMStructureLinkModel extends AttachedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.dynamic.data.mapping.model.DDMStructureLink ddmStructureLink);
+	public int compareTo(DDMStructureLink ddmStructureLink);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.dynamic.data.mapping.model.DDMStructureLink> toCacheModel();
+	public CacheModel<DDMStructureLink> toCacheModel();
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMStructureLink toEscapedModel();
+	public DDMStructureLink toEscapedModel();
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMStructureLink toUnescapedModel();
+	public DDMStructureLink toUnescapedModel();
 
 	@Override
 	public String toString();

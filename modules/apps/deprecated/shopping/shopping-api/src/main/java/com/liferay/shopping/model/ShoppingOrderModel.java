@@ -912,19 +912,19 @@ public interface ShoppingOrderModel extends BaseModel<ShoppingOrder>,
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.shopping.model.ShoppingOrder shoppingOrder);
+	public int compareTo(ShoppingOrder shoppingOrder);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.shopping.model.ShoppingOrder> toCacheModel();
+	public CacheModel<ShoppingOrder> toCacheModel();
 
 	@Override
-	public com.liferay.shopping.model.ShoppingOrder toEscapedModel();
+	public ShoppingOrder toEscapedModel();
 
 	@Override
-	public com.liferay.shopping.model.ShoppingOrder toUnescapedModel();
+	public ShoppingOrder toUnescapedModel();
 
 	@Override
 	public String toString();

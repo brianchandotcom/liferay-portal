@@ -48,7 +48,7 @@ public class TestTemplate implements Template {
 	}
 
 	@Override
-	public Set<java.util.Map.Entry<String, Object>> entrySet() {
+	public Set<Map.Entry<String, Object>> entrySet() {
 		return null;
 	}
 

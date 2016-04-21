@@ -830,8 +830,7 @@ public class SyncWatchEventProcessor implements Runnable {
 
 			FileUtil.checkFilePath(filePath);
 
-			FileUtil.moveFile(
-				filePath, java.nio.file.Paths.get(sanitizedFilePathName));
+			FileUtil.moveFile(filePath, Paths.get(sanitizedFilePathName));
 
 			return true;
 		}

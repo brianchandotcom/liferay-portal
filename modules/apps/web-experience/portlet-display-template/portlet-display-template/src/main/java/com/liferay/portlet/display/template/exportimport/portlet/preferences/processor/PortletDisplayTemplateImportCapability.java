@@ -135,8 +135,7 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 		}
 
 		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext,
-			com.liferay.dynamic.data.mapping.model.DDMTemplate.class);
+			portletDataContext, DDMTemplate.class);
 
 		long displayStyleGroupId = getDisplayStyleGroupId(
 			portletDataContext, portletId, portletPreferences);

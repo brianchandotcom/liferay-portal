@@ -406,9 +406,8 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		com.liferay.dynamic.data.mapping.kernel.DDMStructure ddmStructure =
 			ddmStructures.get(0);
 
-		Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
-			ddmFormValuesMap = getDDMFormValuesMap(
-				ddmStructure.getStructureKey(), user.getLocale());
+		Map<String, DDMFormValues> ddmFormValuesMap = getDDMFormValuesMap(
+			ddmStructure.getStructureKey(), user.getLocale());
 
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
 			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE));

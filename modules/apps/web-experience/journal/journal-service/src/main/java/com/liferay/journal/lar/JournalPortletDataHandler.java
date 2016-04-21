@@ -90,7 +90,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Daniel Kocsis
  * @author László Csontos
  * @author Mate Thurzo
- * @see    com.liferay.journal.lar.JournalCreationStrategy
+ * @see    JournalCreationStrategy
  * @see    PortletDataHandler
  */
 @Component(

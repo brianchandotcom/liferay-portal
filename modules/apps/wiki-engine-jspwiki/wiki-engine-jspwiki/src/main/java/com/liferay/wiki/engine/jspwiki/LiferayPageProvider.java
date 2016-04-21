@@ -40,11 +40,10 @@ import java.util.Properties;
  */
 public class LiferayPageProvider implements WikiPageProvider {
 
-	public static com.ecyrd.jspwiki.WikiPage toJSPWikiPage(
+	public static WikiPage toJSPWikiPage(
 		com.liferay.wiki.model.WikiPage page, WikiEngine engine) {
 
-		com.ecyrd.jspwiki.WikiPage jspWikiPage = new com.ecyrd.jspwiki.WikiPage(
-			engine, page.getTitle());
+		WikiPage jspWikiPage = new WikiPage(engine, page.getTitle());
 
 		jspWikiPage.setAuthor(page.getUserName());
 		jspWikiPage.setVersion((int)(page.getVersion() * 10));
@@ -133,7 +132,7 @@ public class LiferayPageProvider implements WikiPageProvider {
 	}
 
 	@Override
-	public com.ecyrd.jspwiki.WikiPage getPageInfo(String title, int version)
+	public WikiPage getPageInfo(String title, int version)
 		throws ProviderException {
 
 		if (_log.isDebugEnabled()) {
@@ -233,7 +232,7 @@ public class LiferayPageProvider implements WikiPageProvider {
 	}
 
 	@Override
-	public void putPageText(com.ecyrd.jspwiki.WikiPage page, String text) {
+	public void putPageText(WikiPage page, String text) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Invoking putPageText(" + page + ", " + text + ")");
 		}

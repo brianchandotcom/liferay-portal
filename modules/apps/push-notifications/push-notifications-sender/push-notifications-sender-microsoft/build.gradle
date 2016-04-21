@@ -1,4 +1,5 @@
 dependencies {
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "org.apache.httpcomponents", name: "httpclient", version: "4.3.6"
 	provided group: "org.apache.httpcomponents", name: "httpcore", version: "4.3.3"
 	provided group: "org.jboss.aerogear.windows", name: "java-mpns", version: "0.1.0"

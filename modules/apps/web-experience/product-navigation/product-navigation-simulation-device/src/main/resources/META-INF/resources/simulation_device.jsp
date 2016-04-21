@@ -20,12 +20,10 @@
 	<div class="list-group-panel">
 		<div class="devices">
 			<div class="container-fluid default-devices flex-container">
-				<div class="flex-item-expand lfr-device-item selected text-center" data-device="smartphone">
-					<aui:icon cssClass="icon icon-monospaced" image="mobile-portrait" markupView="lexicon" />
+				<div class="flex-item-expand hidden-sm hidden-xs lfr-device-item selected text-center" data-device="desktop">
+					<aui:icon cssClass="icon icon-monospaced" image="desktop" markupView="lexicon" />
 
-					<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="mobile-landscape" markupView="lexicon" />
-
-					<small><%= LanguageUtil.get(resourceBundle, "mobile") %></small>
+					<small><%= LanguageUtil.get(resourceBundle, "desktop") %></small>
 				</div>
 
 				<div class="flex-item-expand hidden-sm hidden-xs lfr-device-item text-center" data-device="tablet">
@@ -36,10 +34,12 @@
 					<small><%= LanguageUtil.get(resourceBundle, "tablet") %></small>
 				</div>
 
-				<div class="flex-item-expand hidden-sm hidden-xs lfr-device-item text-center" data-device="desktop">
-					<aui:icon cssClass="icon icon-monospaced" image="desktop" markupView="lexicon" />
+				<div class="flex-item-expand lfr-device-item text-center" data-device="smartphone">
+					<aui:icon cssClass="icon icon-monospaced" image="mobile-portrait" markupView="lexicon" />
 
-					<small><%= LanguageUtil.get(resourceBundle, "desktop") %></small>
+					<aui:icon cssClass="hide icon icon-monospaced icon-rotate" image="mobile-landscape" markupView="lexicon" />
+
+					<small><%= LanguageUtil.get(resourceBundle, "mobile") %></small>
 				</div>
 
 				<div class="flex-item-expand hidden-sm hidden-xs lfr-device-item text-center" data-device="autosize">
@@ -78,13 +78,13 @@
 				},
 				desktop: {
 					height: 1050,
+					selected: true,
 					width: 1300
 				},
 				smartphone: {
 					height: 640,
 					preventTransition: true,
 					rotation: true,
-					selected: true,
 					skin: 'smartphone',
 					width: 400
 				},

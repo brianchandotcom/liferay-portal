@@ -21,21 +21,19 @@ if (Validator.isNull(fieldParam)) {
 	fieldParam = String.valueOf(searchDisplayContext.getSearchScopeGroupId());
 }
 
-long groupId = GetterUtil.getInteger(fieldParam);
+ScopeSearchFacetDisplayContext scopeSearchFacetDisplayContext =
+	new ScopeSearchFacetDisplayContext(
+		facet, fieldParam, locale, dataJSONObject.getInt("frequencyThreshold"),
+		dataJSONObject.getInt("maxTerms"),
+		dataJSONObject.getBoolean("showAssetCount", true),
+		GroupLocalServiceUtil.getService());
 %>
 
 <c:choose>
-	<c:when test="<%= termCollectors.isEmpty() && (groupId == 0) %>">
-		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(facet.getFieldName()) %>" type="hidden" value="<%= fieldParam %>" />
+	<c:when test="<%= scopeSearchFacetDisplayContext.isRenderNothing() %>">
+		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getFieldParamInputName()) %>" type="hidden" value="<%= scopeSearchFacetDisplayContext.getFieldParamInputValue() %>" />
 	</c:when>
 	<c:otherwise>
-
-		<%
-		int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
-		int maxTerms = dataJSONObject.getInt("maxTerms");
-		boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
-		%>
-
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<div class="panel-title">
@@ -44,52 +42,25 @@ long groupId = GetterUtil.getInteger(fieldParam);
 			</div>
 			<div class="panel-body">
 				<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
-					<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
+					<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(scopeSearchFacetDisplayContext.getFieldParamInputName()) %>" type="hidden" value="<%= scopeSearchFacetDisplayContext.getFieldParamInputValue() %>" />
 
 					<ul class="list-unstyled scopes">
 						<li class="default facet-value">
-							<a class="<%= fieldParam.equals("0") ? "text-primary" : "text-default" %>" data-value="0" href="javascript:;"><liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
+							<a class="<%= scopeSearchFacetDisplayContext.isNothingSelected() ? "text-primary" : "text-default" %>" data-value="0" href="javascript:;"><liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
 						</li>
 
 						<%
-						if (termCollectors.isEmpty()) {
-							Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+						List<ScopeSearchFacetTermDisplayContext> scopeSearchFacetTermDisplayContexts = scopeSearchFacetDisplayContext.getTermDisplayContexts();
 
-							if (group != null) {
-						%>
-
-								<li class="facet-value">
-									<a class="<%= "text-primary" %>" data-value="<%= groupId %>" href="javascript:;">
-										<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
-									</a>
-								</li>
-
-						<%
-							}
-						}
-
-						for (int i = 0; i < termCollectors.size(); i++) {
-							TermCollector termCollector = termCollectors.get(i);
-
-							long curGroupId = GetterUtil.getInteger(termCollector.getTerm());
-
-							Group group = GroupLocalServiceUtil.fetchGroup(curGroupId);
-
-							if (group == null) {
-								continue;
-							}
-
-							if (((maxTerms > 0) && (i >= maxTerms)) || ((frequencyThreshold > 0) && (frequencyThreshold > termCollector.getFrequency()))) {
-								break;
-							}
+						for (ScopeSearchFacetTermDisplayContext scopeSearchFacetTermDisplayContext : scopeSearchFacetTermDisplayContexts) {
 						%>
 
 							<li class="facet-value">
-								<a class="<%= groupId == curGroupId ? "text-primary" : "text-default" %>" data-value="<%= curGroupId %>" href="javascript:;">
-									<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
+								<a class="<%= scopeSearchFacetTermDisplayContext.isSelected() ? "text-primary" : "text-default" %>" data-value="<%= scopeSearchFacetTermDisplayContext.getGroupId() %>" href="javascript:;">
+									<%= HtmlUtil.escape(scopeSearchFacetTermDisplayContext.getDescriptiveName()) %>
 
-									<c:if test="<%= showAssetCount %>">
-										<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
+									<c:if test="<%= scopeSearchFacetTermDisplayContext.isShowCount() %>">
+										<span class="frequency">(<%= scopeSearchFacetTermDisplayContext.getCount() %>)</span>
 									</c:if>
 								</a>
 							</li>

@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Knowledge Base Test
+Bundle-SymbolicName: com.liferay.knowledge.base.test
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Knowledge Base
+-includeresource: test-classes/integration

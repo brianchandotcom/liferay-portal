@@ -25,6 +25,10 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import com.liferay.push.notifications.model.PushNotificationsDevice;
+
+import java.util.List;
+
 /**
  * Provides the remote service interface for PushNotificationsDevice. Methods of this
  * service are expected to have security checks based on the propagated JAAS
@@ -49,6 +53,17 @@ public interface PushNotificationsDeviceService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PushNotificationsDeviceServiceUtil} to access the push notifications device remote service. Add custom service methods to {@link com.liferay.push.notifications.service.impl.PushNotificationsDeviceServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@AccessControlled(guestAccessEnabled = true)
+	public PushNotificationsDevice addPushNotificationsDevice(
+		java.lang.String token, java.lang.String platform)
+		throws PortalException;
+
+	@AccessControlled(guestAccessEnabled = true)
+	public PushNotificationsDevice deletePushNotificationsDevice(
+		java.lang.String token) throws PortalException;
+
+	public PushNotificationsDevice deletePushNotificationsDevice(
+		long pushNotificationsDeviceId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +71,11 @@ public interface PushNotificationsDeviceService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public void sendPushNotification(java.lang.String platform,
+		List<java.lang.String> tokens, java.lang.String payload)
+		throws PortalException;
+
+	public void sendPushNotification(long[] toUserIds, java.lang.String payload)
+		throws PortalException;
 }

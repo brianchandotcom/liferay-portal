@@ -79,6 +79,11 @@ public class PushNotificationsDeviceLocalServiceUtil {
 		return getService().addPushNotificationsDevice(pushNotificationsDevice);
 	}
 
+	public static com.liferay.push.notifications.model.PushNotificationsDevice addPushNotificationsDevice(
+		long userId, java.lang.String platform, java.lang.String token) {
+		return getService().addPushNotificationsDevice(userId, platform, token);
+	}
+
 	/**
 	* Creates a new push notifications device with the primary key. Does not add the push notifications device to the database.
 	*
@@ -101,6 +106,12 @@ public class PushNotificationsDeviceLocalServiceUtil {
 		com.liferay.push.notifications.model.PushNotificationsDevice pushNotificationsDevice) {
 		return getService()
 				   .deletePushNotificationsDevice(pushNotificationsDevice);
+	}
+
+	public static com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
+		java.lang.String token)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePushNotificationsDevice(token);
 	}
 
 	/**
@@ -232,6 +243,13 @@ public class PushNotificationsDeviceLocalServiceUtil {
 		return getService().getPushNotificationsDevices(start, end);
 	}
 
+	public static java.util.List<com.liferay.push.notifications.model.PushNotificationsDevice> getPushNotificationsDevices(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.push.notifications.model.PushNotificationsDevice> orderByComparator) {
+		return getService()
+				   .getPushNotificationsDevices(start, end, orderByComparator);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -254,6 +272,25 @@ public class PushNotificationsDeviceLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static void sendPushNotification(java.lang.String platform,
+		java.util.List<java.lang.String> tokens,
+		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().sendPushNotification(platform, tokens, payloadJSONObject);
+	}
+
+	public static void sendPushNotification(long[] toUserIds,
+		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().sendPushNotification(toUserIds, payloadJSONObject);
+	}
+
+	public static void updateToken(java.lang.String oldToken,
+		java.lang.String newToken)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().updateToken(oldToken, newToken);
 	}
 
 	public static PushNotificationsDeviceLocalService getService() {

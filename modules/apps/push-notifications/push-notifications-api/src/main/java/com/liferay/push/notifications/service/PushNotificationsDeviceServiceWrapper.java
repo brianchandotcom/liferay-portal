@@ -34,6 +34,28 @@ public class PushNotificationsDeviceServiceWrapper
 		_pushNotificationsDeviceService = pushNotificationsDeviceService;
 	}
 
+	@Override
+	public com.liferay.push.notifications.model.PushNotificationsDevice addPushNotificationsDevice(
+		java.lang.String token, java.lang.String platform)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pushNotificationsDeviceService.addPushNotificationsDevice(token,
+			platform);
+	}
+
+	@Override
+	public com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
+		java.lang.String token)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pushNotificationsDeviceService.deletePushNotificationsDevice(token);
+	}
+
+	@Override
+	public com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
+		long pushNotificationsDeviceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pushNotificationsDeviceService.deletePushNotificationsDevice(pushNotificationsDeviceId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -42,6 +64,20 @@ public class PushNotificationsDeviceServiceWrapper
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _pushNotificationsDeviceService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public void sendPushNotification(java.lang.String platform,
+		java.util.List<java.lang.String> tokens, java.lang.String payload)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_pushNotificationsDeviceService.sendPushNotification(platform, tokens,
+			payload);
+	}
+
+	@Override
+	public void sendPushNotification(long[] toUserIds, java.lang.String payload)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_pushNotificationsDeviceService.sendPushNotification(toUserIds, payload);
 	}
 
 	@Override

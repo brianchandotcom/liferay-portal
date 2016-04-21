@@ -78,6 +78,13 @@ public class PushNotificationsDeviceLocalServiceWrapper
 		return _pushNotificationsDeviceLocalService.addPushNotificationsDevice(pushNotificationsDevice);
 	}
 
+	@Override
+	public com.liferay.push.notifications.model.PushNotificationsDevice addPushNotificationsDevice(
+		long userId, java.lang.String platform, java.lang.String token) {
+		return _pushNotificationsDeviceLocalService.addPushNotificationsDevice(userId,
+			platform, token);
+	}
+
 	/**
 	* Creates a new push notifications device with the primary key. Does not add the push notifications device to the database.
 	*
@@ -100,6 +107,13 @@ public class PushNotificationsDeviceLocalServiceWrapper
 	public com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
 		com.liferay.push.notifications.model.PushNotificationsDevice pushNotificationsDevice) {
 		return _pushNotificationsDeviceLocalService.deletePushNotificationsDevice(pushNotificationsDevice);
+	}
+
+	@Override
+	public com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
+		java.lang.String token)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pushNotificationsDeviceLocalService.deletePushNotificationsDevice(token);
 	}
 
 	/**
@@ -240,6 +254,14 @@ public class PushNotificationsDeviceLocalServiceWrapper
 			end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.push.notifications.model.PushNotificationsDevice> getPushNotificationsDevices(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.push.notifications.model.PushNotificationsDevice> orderByComparator) {
+		return _pushNotificationsDeviceLocalService.getPushNotificationsDevices(start,
+			end, orderByComparator);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -265,6 +287,29 @@ public class PushNotificationsDeviceLocalServiceWrapper
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _pushNotificationsDeviceLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
+	}
+
+	@Override
+	public void sendPushNotification(java.lang.String platform,
+		java.util.List<java.lang.String> tokens,
+		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_pushNotificationsDeviceLocalService.sendPushNotification(platform,
+			tokens, payloadJSONObject);
+	}
+
+	@Override
+	public void sendPushNotification(long[] toUserIds,
+		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_pushNotificationsDeviceLocalService.sendPushNotification(toUserIds,
+			payloadJSONObject);
+	}
+
+	@Override
+	public void updateToken(java.lang.String oldToken, java.lang.String newToken)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_pushNotificationsDeviceLocalService.updateToken(oldToken, newToken);
 	}
 
 	@Override

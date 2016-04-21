@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -90,6 +91,9 @@ public interface PushNotificationsDeviceLocalService extends BaseLocalService,
 	public PushNotificationsDevice addPushNotificationsDevice(
 		PushNotificationsDevice pushNotificationsDevice);
 
+	public PushNotificationsDevice addPushNotificationsDevice(long userId,
+		java.lang.String platform, java.lang.String token);
+
 	/**
 	* Creates a new push notifications device with the primary key. Does not add the push notifications device to the database.
 	*
@@ -108,6 +112,9 @@ public interface PushNotificationsDeviceLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public PushNotificationsDevice deletePushNotificationsDevice(
 		PushNotificationsDevice pushNotificationsDevice);
+
+	public PushNotificationsDevice deletePushNotificationsDevice(
+		java.lang.String token) throws PortalException;
 
 	/**
 	* Deletes the push notifications device with the primary key from the database. Also notifies the appropriate model listeners.
@@ -214,6 +221,11 @@ public interface PushNotificationsDeviceLocalService extends BaseLocalService,
 	public List<PushNotificationsDevice> getPushNotificationsDevices(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<PushNotificationsDevice> getPushNotificationsDevices(
+		int start, int end,
+		OrderByComparator<PushNotificationsDevice> orderByComparator);
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -231,4 +243,14 @@ public interface PushNotificationsDeviceLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void sendPushNotification(java.lang.String platform,
+		List<java.lang.String> tokens, JSONObject payloadJSONObject)
+		throws PortalException;
+
+	public void sendPushNotification(long[] toUserIds,
+		JSONObject payloadJSONObject) throws PortalException;
+
+	public void updateToken(java.lang.String oldToken, java.lang.String newToken)
+		throws PortalException;
 }

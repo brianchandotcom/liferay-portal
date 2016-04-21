@@ -41,6 +41,24 @@ public class PushNotificationsDeviceServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.push.notifications.service.impl.PushNotificationsDeviceServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.push.notifications.model.PushNotificationsDevice addPushNotificationsDevice(
+		java.lang.String token, java.lang.String platform)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addPushNotificationsDevice(token, platform);
+	}
+
+	public static com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
+		java.lang.String token)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePushNotificationsDevice(token);
+	}
+
+	public static com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
+		long pushNotificationsDeviceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .deletePushNotificationsDevice(pushNotificationsDeviceId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +67,18 @@ public class PushNotificationsDeviceServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static void sendPushNotification(java.lang.String platform,
+		java.util.List<java.lang.String> tokens, java.lang.String payload)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().sendPushNotification(platform, tokens, payload);
+	}
+
+	public static void sendPushNotification(long[] toUserIds,
+		java.lang.String payload)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().sendPushNotification(toUserIds, payload);
 	}
 
 	public static PushNotificationsDeviceService getService() {

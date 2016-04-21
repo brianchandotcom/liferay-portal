@@ -1185,14 +1185,6 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="Page#add">
-			<var name="pageName" value="Kaleo Forms" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Kaleo Forms" />
-		</execute>
-
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
 
 		<execute macro="KaleoFormsPortlet#submitNewProcess">
@@ -2528,14 +2520,6 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="Page#add">
-			<var name="pageName" value="Kaleo Forms" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Kaleo Forms" />
-		</execute>
-
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
 
 		<execute macro="KaleoFormsPortlet#submitNewProcess">
@@ -2666,14 +2650,6 @@
 
 		<execute macro="KaleoFormsAdmin#viewProcessNoRecords">
 			<var name="kfProcessName" value="${kfProcessName}" />
-		</execute>
-
-		<execute macro="Page#add">
-			<var name="pageName" value="Kaleo Forms" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Kaleo Forms" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
@@ -2808,14 +2784,6 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="Page#add">
-			<var name="pageName" value="Kaleo Forms" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Kaleo Forms" />
-		</execute>
-
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
 
 		<execute macro="KaleoFormsPortlet#submitNewProcess">
@@ -2947,14 +2915,6 @@
 
 		<execute macro="KaleoFormsAdmin#viewProcessNoRecords">
 			<var name="kfProcessName" value="${kfProcessName}" />
-		</execute>
-
-		<execute macro="Page#add">
-			<var name="pageName" value="Kaleo Forms" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Kaleo Forms" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
@@ -3149,14 +3109,6 @@
 
 		<execute macro="KaleoFormsAdmin#viewProcessNoRecords">
 			<var name="kfProcessName" value="${kfProcessName}" />
-		</execute>
-
-		<execute macro="Page#add">
-			<var name="pageName" value="Kaleo Forms" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Kaleo Forms" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
@@ -3542,14 +3494,6 @@
 
 		<execute macro="KaleoFormsAdmin#viewProcessNoRecords">
 			<var name="kfProcessName" value="${kfProcessName}" />
-		</execute>
-
-		<execute macro="Page#add">
-			<var name="pageName" value="Kaleo Forms" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Kaleo Forms" />
 		</execute>
 
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />

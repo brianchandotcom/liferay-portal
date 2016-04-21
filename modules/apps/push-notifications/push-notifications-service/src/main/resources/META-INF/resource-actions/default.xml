@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
-<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 6.2.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_6_2_0.dtd">
+<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.0.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_0_0.dtd">
 
 <resource-action-mapping>
 	<model-resource>
-		<model-name>com.liferay.pushnotifications</model-name>
+		<model-name>com.liferay.push.notifications</model-name>
 		<portlet-ref>
-			<portlet-name>1</portlet-name>
+			<portlet-name>com_liferay_push_notifications_web_portlet_PushNotificationsPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<permissions>

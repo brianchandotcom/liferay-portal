@@ -307,16 +307,18 @@ public class PortletPermissionImpl implements PortletPermission {
 			return true;
 		}
 
-		if (!actionId.equals(ActionKeys.VIEW) &&
-			(layout instanceof VirtualLayout)) {
+		if (layout instanceof VirtualLayout) {
+			if (layout.isCustomizable() && !actionId.equals(ActionKeys.VIEW)) {
+				if (actionId.equals(ActionKeys.ADD_TO_PAGE)) {
+					return hasAddToPagePermission(
+						permissionChecker, layout, portletId, actionId);
+				}
 
-			if (actionId.equals(ActionKeys.ADD_TO_PAGE)) {
-				return hasAddToPagePermission(
+				return hasCustomizePermission(
 					permissionChecker, layout, portletId, actionId);
 			}
 
-			return hasCustomizePermission(
-				permissionChecker, layout, portletId, actionId);
+			layout = ((VirtualLayout)layout).getSourceLayout();
 		}
 
 		if (!group.isLayoutSetPrototype() &&

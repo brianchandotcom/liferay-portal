@@ -16,7 +16,6 @@ package com.liferay.push.notifications.sender.sms.internal;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
@@ -49,21 +48,6 @@ public class SMSPushNotificationsSender implements PushNotificationsSender {
 		_authToken = authToken;
 		_number = number;
 		_statusCallback = statusCallback;
-	}
-
-	@Override
-	public PushNotificationsSender create(Map<String, Object> configuration) {
-		String accountSID = MapUtil.getString(
-			configuration, PortletPropsKeys.SMS_TWILIO_ACCOUNT_SID, null);
-		String authToken = MapUtil.getString(
-			configuration, PortletPropsKeys.SMS_TWILIO_AUTH_TOKEN, null);
-		String number = MapUtil.getString(
-			configuration, PortletPropsKeys.SMS_TWILIO_NUMBER, null);
-		String statusCallback = MapUtil.getString(
-			configuration, PortletPropsKeys.SMS_TWILIO_STATUS_CALLBACK, null);
-
-		return new SMSPushNotificationsSender(
-			accountSID, authToken, number, statusCallback);
 	}
 
 	public String getAccountSID() {
@@ -107,18 +91,7 @@ public class SMSPushNotificationsSender implements PushNotificationsSender {
 	}
 
 	@Override
-	public synchronized void reset() {
-		_accountSID = null;
-		_authToken = null;
-		_number = null;
-		_statusCallback = null;
-		_twilioRestClient = null;
-	}
-
-	@Override
-	public void send(
-			String platform, List<String> phoneNumbers,
-			JSONObject payloadJSONObject)
+	public void send(List<String> phoneNumbers, JSONObject payloadJSONObject)
 		throws Exception {
 
 		TwilioRestClient twilioRestClient = getTwilioRestClient();

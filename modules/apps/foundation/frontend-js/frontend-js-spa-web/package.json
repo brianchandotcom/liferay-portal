@@ -1,8 +1,4 @@
 {
-	"dependencies": {
-		"metal": "^1.0.0-alpha",
-		"senna": "^1.0.0-alpha.1"
-	},
 	"name": "frontend-js-spa-web",
 	"version": "1.0.6"
 }

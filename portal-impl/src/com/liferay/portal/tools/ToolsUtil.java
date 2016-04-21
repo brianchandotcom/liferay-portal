@@ -244,33 +244,39 @@ public class ToolsUtil {
 			"\n(.*)" + StringUtil.replace(packagePath, CharPool.PERIOD, "\\.") +
 				"\\.([A-Z]\\w+)\\W");
 
-		Matcher matcher1 = pattern1.matcher(content);
+		outerLoop:
+		while (true) {
+			Matcher matcher1 = pattern1.matcher(content);
 
-		while (matcher1.find()) {
-			String lineStart = StringUtil.trimLeading(matcher1.group(1));
+			while (matcher1.find()) {
+				String lineStart = StringUtil.trimLeading(matcher1.group(1));
 
-			if (lineStart.startsWith("import ") || lineStart.contains("//") ||
-				isInsideQuotes(content, matcher1.start(2))) {
+				if (lineStart.startsWith("import ") ||
+					lineStart.contains("//") ||
+					isInsideQuotes(content, matcher1.start(2))) {
 
-				continue;
+					continue;
+				}
+
+				String className = matcher1.group(2);
+
+				Pattern pattern2 = Pattern.compile(
+					"import [\\w.]+\\." + className + ";");
+
+				Matcher matcher2 = pattern2.matcher(imports);
+
+				if (matcher2.find()) {
+					continue;
+				}
+
+				content = StringUtil.replaceFirst(
+					content, packagePath + ".", StringPool.BLANK,
+					matcher1.start());
+
+				continue outerLoop;
 			}
 
-			String className = matcher1.group(2);
-
-			Pattern pattern2 = Pattern.compile(
-				"import [\\w.]+\\." + className + ";");
-
-			Matcher matcher2 = pattern2.matcher(imports);
-
-			if (matcher2.find()) {
-				continue;
-			}
-
-			String newContent = StringUtil.replaceFirst(
-				content, packagePath + ".", StringPool.BLANK, matcher1.start());
-
-			return stripFullyQualifiedClassNames(
-				newContent, imports, packagePath);
+			break;
 		}
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
@@ -293,28 +299,34 @@ public class ToolsUtil {
 					StringUtil.replace(importPackageAndClassName, ".", "\\.") +
 						")\\W");
 
-			Matcher matcher3 = pattern3.matcher(content);
+			outerLoop:
+			while (true) {
+				Matcher matcher3 = pattern3.matcher(content);
 
-			while (matcher3.find()) {
-				String lineStart = StringUtil.trimLeading(matcher3.group(1));
+				while (matcher3.find()) {
+					String lineStart = StringUtil.trimLeading(
+						matcher3.group(1));
 
-				if (lineStart.startsWith("import ") ||
-					lineStart.contains("//") ||
-					isInsideQuotes(content, matcher3.start(2))) {
+					if (lineStart.startsWith("import ") ||
+						lineStart.contains("//") ||
+						isInsideQuotes(content, matcher3.start(2))) {
 
-					continue;
+						continue;
+					}
+
+					String importClassName =
+						importPackageAndClassName.substring(
+							importPackageAndClassName.lastIndexOf(
+								StringPool.PERIOD) + 1);
+
+					content = StringUtil.replaceFirst(
+						content, importPackageAndClassName, importClassName,
+						matcher3.start());
+
+					continue outerLoop;
 				}
 
-				String importClassName = importPackageAndClassName.substring(
-					importPackageAndClassName.lastIndexOf(StringPool.PERIOD) +
-						1);
-
-				String newContent = StringUtil.replaceFirst(
-					content, importPackageAndClassName, importClassName,
-					matcher3.start());
-
-				return stripFullyQualifiedClassNames(
-					newContent, imports, packagePath);
+				break;
 			}
 		}
 

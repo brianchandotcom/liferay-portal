@@ -26,12 +26,18 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -96,51 +102,36 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 			"/html/common/themes/top_head.jsp#post");
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC, unbind = "removeBundleWebResources"
 	)
 	protected void addBundleWebResources(
-		BundleWebResources bundleWebResources) {
+		ServiceReference<BundleWebResources>
+			bundleWebResourcesServiceReference) {
 
-		String servletContextPath = bundleWebResources.getServletContextPath();
+		synchronized (_bundleWebResourcesServiceReferences) {
+			_bundleWebResourcesServiceReferences.add(
+				bundleWebResourcesServiceReference);
 
-		synchronized (_cssResourceURLs) {
-			for (String cssResourcePath :
-					bundleWebResources.getCssResourcePaths()) {
-
-				_cssResourceURLs.add(servletContextPath + cssResourcePath);
-			}
-		}
-
-		synchronized (_jsResourceURLs) {
-			for (String jsResourcePath :
-					bundleWebResources.getJsResourcePaths()) {
-
-				_jsResourceURLs.add(servletContextPath + jsResourcePath);
-			}
+			_rebuild();
 		}
 	}
 
 	protected void removeBundleWebResources(
-		BundleWebResources bundleWebResources) {
+		ServiceReference<BundleWebResources>
+			bundleWebResourcesServiceReference) {
 
-		String servletContextPath = bundleWebResources.getServletContextPath();
+		synchronized (_bundleWebResourcesServiceReferences) {
+			_bundleWebResourcesServiceReferences.remove(
+				bundleWebResourcesServiceReference);
 
-		synchronized (_cssResourceURLs) {
-			for (String cssResourcePath :
-					bundleWebResources.getCssResourcePaths()) {
-
-				_cssResourceURLs.remove(servletContextPath + cssResourcePath);
-			}
-		}
-
-		synchronized (_jsResourceURLs) {
-			for (String jsResourcePath :
-					bundleWebResources.getJsResourcePaths()) {
-
-				_jsResourceURLs.remove(servletContextPath + jsResourcePath);
-			}
+			_rebuild();
 		}
 	}
 
@@ -157,9 +148,49 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 		}
 	}
 
-	private final Collection<String> _cssResourceURLs =
+	private void _rebuild() {
+		Collection<String> cssResourceURLs = new ArrayList<>();
+		Collection<String> jsResourceURLs = new ArrayList<>();
+
+		for (ServiceReference<BundleWebResources>
+				bundleWebResourcesServiceReference :
+					_bundleWebResourcesServiceReferences) {
+
+			BundleWebResources bundleWebResources = _bundleContext.getService(
+				bundleWebResourcesServiceReference);
+
+			try {
+				String servletContextPath =
+					bundleWebResources.getServletContextPath();
+
+				for (String cssResourcePath :
+						bundleWebResources.getCssResourcePaths()) {
+
+					cssResourceURLs.add(servletContextPath + cssResourcePath);
+				}
+
+				for (String jsResourcePath :
+						bundleWebResources.getJsResourcePaths()) {
+
+					jsResourceURLs.add(servletContextPath + jsResourcePath);
+				}
+			}
+			finally {
+				_bundleContext.ungetService(bundleWebResourcesServiceReference);
+			}
+		}
+
+		_cssResourceURLs = cssResourceURLs;
+		_jsResourceURLs = jsResourceURLs;
+	}
+
+	private BundleContext _bundleContext;
+	private final Collection<ServiceReference<BundleWebResources>>
+		_bundleWebResourcesServiceReferences = new TreeSet<>(
+			Collections.reverseOrder());
+	private volatile Collection<String> _cssResourceURLs =
 		new CopyOnWriteArrayList<>();
-	private final Collection<String> _jsResourceURLs =
+	private volatile Collection<String> _jsResourceURLs =
 		new CopyOnWriteArrayList<>();
 
 	private static class ComboPortalResourceURLRenderer

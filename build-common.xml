@@ -1551,12 +1551,12 @@ rerun your task.
 					<matches pattern="ee-.+" string="${liferay.releng.branch}" />
 				</or>
 				<then>
-					<var name="liferay.releng.app.title.suffix" value="" />
+					<var name="liferay.releng.app.title.prefix" value="Liferay" />
 					<var name="liferay.releng.public" value="false" />
 					<var name="liferay.releng.supported" value="true" />
 				</then>
 				<else>
-					<var name="liferay.releng.app.title.suffix" value="\s CE" />
+					<var name="liferay.releng.app.title.prefix" value="Liferay CE" />
 					<var name="liferay.releng.public" value="true" />
 					<var name="liferay.releng.supported" value="false" />
 				</else>
@@ -1613,7 +1613,7 @@ rerun your task.
 				junit.java.integration.gc=${junit.java.integration.gc}
 				junit.java.unit.gc=${junit.java.unit.gc}
 				liferay.home=${liferay.home}
-				liferay.releng.app.title.suffix=${liferay.releng.app.title.suffix}
+				liferay.releng.app.title.prefix=${liferay.releng.app.title.prefix}
 				liferay.releng.public=${liferay.releng.public}
 				liferay.releng.supported=${liferay.releng.supported}
 				microsoft.translator.client.id=${microsoft.translator.client.id}

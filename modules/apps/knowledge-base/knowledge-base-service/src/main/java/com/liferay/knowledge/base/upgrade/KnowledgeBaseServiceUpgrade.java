@@ -83,6 +83,10 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.knowledge.base.service", "1.3.4", "1.3.5",
 			new com.liferay.knowledge.base.upgrade.v1_3_5.
 				UpgradeLastPublishDate());
+
+		registry.register(
+			"com.liferay.knowledge.base.service", "1.3.5", "2.0.0",
+			new com.liferay.knowledge.base.upgrade.v2_0_0.UpgradeClassNames());
 	}
 
 }

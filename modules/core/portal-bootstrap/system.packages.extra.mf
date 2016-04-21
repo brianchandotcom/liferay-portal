@@ -3516,7 +3516,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  eray.portal.kernel.upgrade";version="1.0.0",com.liferay.portal.upgrad
  e.dao.orm;uses:="com.liferay.portal.kernel.dao.db,com.liferay.portal.
  kernel.upgrade.dao.orm";version="1.0.0",com.liferay.portal.upgrade.ut
- il;version="1.1.0";uses:="com.liferay.portal.kernel.security.pacl,com
+ il;version="1.2.0";uses:="com.liferay.portal.kernel.security.pacl,com
  .liferay.portal.kernel.upgrade,com.liferay.portal.kernel.upgrade.util
  ,com.liferay.portal.kernel.xml",com.liferay.portal.upgrade.v5_2_5_to_
  6_0_0;uses:="com.liferay.portal.kernel.upgrade";version="1.0.0",com.l

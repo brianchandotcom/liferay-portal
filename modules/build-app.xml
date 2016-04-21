@@ -14,9 +14,7 @@
 
 	<property name="releng.app.dir" value="${basedir}/.releng/apps/${app.name}" />
 
-	<property name="dist.dir" value="${releng.app.dir}/dist" />
-
-	<mkdir dir="${dist.dir}" />
+	<property name="osgi.dir" value="${basedir}/../../bundles/osgi" />
 
 	<pathconvert pathsep="," property="app.module.dirs">
 		<globmapper from="${modules.dir}${file.separator}*" to="*" />
@@ -50,7 +48,11 @@
 	</target>
 
 	<target name="build-app-lpkg" depends="dist-module-artifacts-lpkg,write-lpkg-marketplace-properties">
-		<zip basedir="${dist.dir}" destfile="${dist.dir}/${app.name}.lpkg" includes="*.jar,liferay-marketplace.properties" />
+		<zip basedir="${osgi.dir}/marketplace" destfile="${osgi.dir}/marketplace/${app.name}.lpkg" includes="*.jar,liferay-marketplace.properties" />
+
+		<delete>
+			<fileset dir="${osgi.dir}/marketplace" includes="*.jar,liferay-marketplace.properties" />
+		</delete>
 	</target>
 
 	<target name="check-app-version">
@@ -102,6 +104,10 @@
 	</target>
 
 	<target name="dist-module-artifacts" depends="check-stale-artifacts,get-artifact-versions-previous-release">
+		<property name="dist.dir" value="${releng.app.dir}/dist" />
+
+		<mkdir dir="${dist.dir}" />
+
 		<subant genericantfile="${basedir}/build-app-module.xml" target="dist-module-artifact">
 			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
 			<property name="app.dir" value="${basedir}" />
@@ -115,8 +121,7 @@
 		<subant genericantfile="${basedir}/build-app-module.xml" target="dist-module-artifact-lpkg">
 			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
 			<property name="app.dir" value="${basedir}" />
-			<property name="dist.dir" value="${dist.dir}" />
-			<property name="sdk.dist.dir" value="${modules.dir}/../tools/sdk/dist" />
+			<property name="osgi.dir" value="${osgi.dir}" />
 		</subant>
 	</target>
 
@@ -205,7 +210,7 @@
 
 				<regexpmapper from="([a-z.]+)-(\d[\d.]+\d)" to="\1#\2##" />
 			</chainedmapper>
-			<fileset dir="${dist.dir}" includes="*.jar" />
+			<fileset dir="${osgi.dir}/marketplace" includes="*.jar" />
 		</pathconvert>
 	</target>
 
@@ -228,34 +233,34 @@
 	</target>
 
 	<target name="write-lpkg-marketplace-properties" depends="get-lpkg-artifacts-list">
-		<echo file="${dist.dir}/liferay-marketplace.properties" message="bundles=${lpkg.artifacts.list}" />
+		<echo file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="bundles=${lpkg.artifacts.list}" />
 
-		<echo append="true" file="${dist.dir}/liferay-marketplace.properties" message="${line.separator}" />
+		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="${line.separator}" />
 
-		<echo append="true" file="${dist.dir}/liferay-marketplace.properties" message="context-names=" />
+		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="context-names=" />
 
-		<echo append="true" file="${dist.dir}/liferay-marketplace.properties" message="${line.separator}" />
+		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="${line.separator}" />
 
-		<echo append="true" file="${dist.dir}/liferay-marketplace.properties" message="remote-app-id=71921962" />
+		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="remote-app-id=71921962" />
 
-		<echo append="true" file="${dist.dir}/liferay-marketplace.properties" message="${line.separator}" />
+		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="${line.separator}" />
 
-		<echo append="true" file="${dist.dir}/liferay-marketplace.properties" message="version=1.0" />
+		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="version=1.0" />
 
-		<echo append="true" file="${dist.dir}/liferay-marketplace.properties" message="${line.separator}" />
+		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="${line.separator}" />
 
-		<echo append="true" file="${dist.dir}/liferay-marketplace.properties" message="category=Communication" />
+		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="category=Communication" />
 
-		<echo append="true" file="${dist.dir}/liferay-marketplace.properties" message="${line.separator}" />
+		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="${line.separator}" />
 
-		<echo append="true" file="${dist.dir}/liferay-marketplace.properties" message="description=asdf" />
+		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="description=asdf" />
 
-		<echo append="true" file="${dist.dir}/liferay-marketplace.properties" message="${line.separator}" />
+		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="${line.separator}" />
 
-		<echo append="true" file="${dist.dir}/liferay-marketplace.properties" message="title=Liferay CE Collaboration" />
+		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="title=Liferay CE Collaboration" />
 
-		<echo append="true" file="${dist.dir}/liferay-marketplace.properties" message="${line.separator}" />
+		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="${line.separator}" />
 
-		<echo append="true" file="${dist.dir}/liferay-marketplace.properties" message="icon-url=https://www.liferay.com/web/guest/marketplace/-/mp/asset/icon/71985553" />
+		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="icon-url=https://www.liferay.com/web/guest/marketplace/-/mp/asset/icon/71985553" />
 	</target>
 </project>

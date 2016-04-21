@@ -14,13 +14,9 @@
 		</path>
 	</pathconvert>
 
-	<target name="copy-artifact">
-		<copy todir="${dist.dir}" file="${sdk.dist.dir}/${Bundle-SymbolicName}-${Bundle-Version}.jar" />
-	</target>
-
 	<target name="dist-module-artifact" depends="download-artifact,record-artifact-change-log" />
 
-	<target name="dist-module-artifact-lpkg" depends="copy-artifact" />
+	<target name="dist-module-artifact-lpkg" depends="move-artifact" />
 
 	<target name="download-artifact">
 		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
@@ -138,6 +134,10 @@
 		<condition property="app.has.artifact.previous.release">
 			<isset property="artifact.version.previous.release" />
 		</condition>
+	</target>
+
+	<target name="move-artifact">
+		<move file="${osgi.dir}/modules/${Bundle-SymbolicName}.jar" tofile="${osgi.dir}/marketplace/${Bundle-SymbolicName}-${Bundle-Version}.jar" />
 	</target>
 
 	<target

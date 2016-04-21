@@ -50,6 +50,6 @@ public class KBArticleRootResourcePrimKeyUpgradeColumnImpl
 		return Long.valueOf(kbArticle.getResourcePrimKey());
 	}
 
-	private UpgradeColumn _resourcePrimKeyColumn;
+	private final UpgradeColumn _resourcePrimKeyColumn;
 
 }

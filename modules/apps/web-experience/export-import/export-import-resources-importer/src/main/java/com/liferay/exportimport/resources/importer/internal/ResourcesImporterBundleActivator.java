@@ -37,6 +37,10 @@ public class ResourcesImporterBundleActivator implements BundleActivator {
 		ServiceReference<DestinationFactory> serviceReference =
 			bundleContext.getServiceReference(DestinationFactory.class);
 
+		if (serviceReference == null) {
+			return;
+		}
+
 		try {
 			DestinationFactory destinationFactory = bundleContext.getService(
 				serviceReference);

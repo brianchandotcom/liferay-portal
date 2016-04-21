@@ -36,7 +36,7 @@ public class VerifyCompany extends VerifyProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			for (Company company : CompanyLocalServiceUtil.getCompanies()) {
 				Key key = (Key)Base64.stringToObjectSilent(company.getKey());
-	
+
 				if (key != null) {
 					String keyString = Encryptor.serializeKey(key);
 					long companyId = company.getCompanyId();
@@ -48,4 +48,5 @@ public class VerifyCompany extends VerifyProcess {
 			}
 		}
 	}
+
 }

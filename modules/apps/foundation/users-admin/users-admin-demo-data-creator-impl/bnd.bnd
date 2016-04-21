@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Users Admin Demo Data Creator Impl
+Bundle-SymbolicName: com.liferay.users.admin.demo.data.creator.internal
+Bundle-Version: 1.0.0
+-dsannotations-options: inherit

@@ -93,6 +93,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -2020,13 +2021,24 @@ public class ServiceBuilder {
 		JavaClass modelImplJavaClass = _getJavaClass(
 			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 
-		List<JavaMethod> methods = ListUtil.fromArray(
-			_getMethods(modelImplJavaClass));
+		Map<String, JavaMethod> methods = new LinkedHashMap<>();
 
-		Iterator<JavaMethod> itr = methods.iterator();
+		for (JavaMethod method : _getMethods(modelImplJavaClass)) {
+			String declarationSignature = _fixDeclarationSignature(
+				method.getDeclarationSignature(false),
+				modelImplJavaClass.getPackageName());
+
+			methods.put(declarationSignature, method);
+		}
+
+		Set<Map.Entry<String, JavaMethod>> entrySet = methods.entrySet();
+
+		Iterator<Map.Entry<String, JavaMethod>> itr = entrySet.iterator();
 
 		while (itr.hasNext()) {
-			JavaMethod method = itr.next();
+			Map.Entry<String, JavaMethod> entry = itr.next();
+
+			JavaMethod method = entry.getValue();
 
 			String methodName = method.getName();
 
@@ -2039,13 +2051,17 @@ public class ServiceBuilder {
 			_serviceOutputPath + "/model/" + entity.getName() + "Model.java");
 
 		for (JavaMethod method : _getMethods(modelJavaClass)) {
-			methods.remove(method);
+			String declarationSignature = _fixDeclarationSignature(
+				method.getDeclarationSignature(false),
+				modelJavaClass.getPackageName());
+
+			methods.remove(declarationSignature);
 		}
 
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
-		context.put("methods", methods.toArray(new Object[methods.size()]));
+		context.put("methods", methods.values());
 
 		context = _putDeprecatedKeys(context, modelJavaClass);
 
@@ -3679,6 +3695,23 @@ public class ServiceBuilder {
 		_deleteFile("docroot/WEB-INF/src/META-INF/hibernate-spring.xml");
 		_deleteFile("docroot/WEB-INF/src/META-INF/infrastructure-spring.xml");
 		_deleteFile("docroot/WEB-INF/src/META-INF/misc-spring.xml");
+	}
+
+	private String _fixDeclarationSignature(
+		String declarationSignature, String packagePath) {
+
+		Matcher matcher = _missingFullyQualifiedNamePattern.matcher(
+			declarationSignature);
+
+		if (!matcher.find()) {
+			return declarationSignature;
+		}
+
+		declarationSignature = StringUtil.insert(
+			declarationSignature, packagePath + StringPool.PERIOD,
+			matcher.start(2));
+
+		return _fixDeclarationSignature(declarationSignature, packagePath);
 	}
 
 	private String _fixHbmXml(String content) throws IOException {
@@ -5512,6 +5545,8 @@ public class ServiceBuilder {
 	private String _hbmFileName;
 	private String _implDirName;
 	private Map<String, JavaClass> _javaClasses = new HashMap<>();
+	private Pattern _missingFullyQualifiedNamePattern = Pattern.compile(
+		"(\\(|, )([A-Z]\\w*)\\W");
 	private String _modelHintsFileName;
 	private Set<String> _modifiedFileNames = new HashSet<>();
 	private boolean _mvccEnabled;

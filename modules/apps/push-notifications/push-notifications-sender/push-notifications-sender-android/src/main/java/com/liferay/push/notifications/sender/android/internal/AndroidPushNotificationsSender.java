@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
@@ -36,7 +35,6 @@ import com.liferay.push.notifications.sender.Response;
 import com.liferay.push.notifications.service.PushNotificationsDeviceLocalServiceUtil;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Silvio Santos
@@ -50,16 +48,6 @@ public class AndroidPushNotificationsSender implements PushNotificationsSender {
 	public AndroidPushNotificationsSender(String apiKey, Integer retries) {
 		_apiKey = apiKey;
 		_retries = retries;
-	}
-
-	@Override
-	public PushNotificationsSender create(Map<String, Object> configuration) {
-		String apiKey = MapUtil.getString(
-			configuration, PortletPropsKeys.ANDROID_API_KEY, null);
-		Integer retries = (Integer)configuration.get(
-			PortletPropsKeys.ANDROID_RETRIES);
-
-		return new AndroidPushNotificationsSender(apiKey, retries);
 	}
 
 	public String getAPIKey() {
@@ -83,15 +71,7 @@ public class AndroidPushNotificationsSender implements PushNotificationsSender {
 	}
 
 	@Override
-	public synchronized void reset() {
-		_apiKey = null;
-		_retries = null;
-		_sender = null;
-	}
-
-	@Override
-	public void send(
-			String platform, List<String> tokens, JSONObject payloadJSONObject)
+	public void send(List<String> tokens, JSONObject payloadJSONObject)
 		throws Exception {
 
 		Sender sender = getSender();

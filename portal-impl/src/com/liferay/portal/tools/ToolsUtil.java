@@ -247,7 +247,7 @@ public class ToolsUtil {
 		Matcher matcher1 = pattern1.matcher(content);
 
 		while (matcher1.find()) {
-			String lineStart = matcher1.group(1);
+			String lineStart = StringUtil.trimLeading(matcher1.group(1));
 
 			if (lineStart.startsWith("import ") || lineStart.contains("//") ||
 				ToolsUtil.isInsideQuotes(content, matcher1.start(2))) {
@@ -296,7 +296,7 @@ public class ToolsUtil {
 			Matcher matcher3 = pattern3.matcher(content);
 
 			while (matcher3.find()) {
-				String lineStart = matcher3.group(1);
+				String lineStart = StringUtil.trimLeading(matcher3.group(1));
 
 				if (lineStart.startsWith("import ") ||
 					lineStart.contains("//") ||

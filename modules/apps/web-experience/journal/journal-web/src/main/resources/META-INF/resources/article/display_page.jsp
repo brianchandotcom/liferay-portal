@@ -140,6 +140,9 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 								destroyOnHide: true,
 								modal: true
 							},
+							dialogIframe: {
+								bodyCssClass: 'dialog-with-footer'
+							},
 							eventName: '<%= eventName %>',
 							id: '<portlet:namespace />selectDisplayPage',
 							title: '<liferay-ui:message key="select-page" />',

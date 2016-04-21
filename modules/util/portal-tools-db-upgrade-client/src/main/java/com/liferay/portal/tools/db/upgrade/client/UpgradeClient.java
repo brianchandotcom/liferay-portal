@@ -43,6 +43,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author David Truong
@@ -295,6 +296,14 @@ public class UpgradeClient {
 		}
 	}
 
+	private void _appendClassPath(StringBuilder sb, List<File> dirs)
+		throws IOException {
+
+		for (File dir : dirs) {
+			_appendClassPath(sb, dir);
+		}
+	}
+
 	private void _close(Closeable closeable) throws IOException {
 		closeable.close();
 	}
@@ -313,6 +322,7 @@ public class UpgradeClient {
 		_appendClassPath(sb, new File("."));
 		_appendClassPath(sb, new File(_appServer.getDir(), "bin"));
 		_appendClassPath(sb, _appServer.getGlobalLibDir());
+		_appendClassPath(sb, _appServer.getServerDirs());
 
 		File portalClassesDir = _appServer.getPortalClassesDir();
 
@@ -331,6 +341,17 @@ public class UpgradeClient {
 		Path relativePath = basePath.relativize(path);
 
 		return relativePath.toString();
+	}
+
+	private String[] _getRelativePaths(File baseFile, List<File> pathFiles) {
+		List<String> relativePaths = new ArrayList<>(pathFiles.size());
+
+		for (File pathFile : pathFiles) {
+			relativePaths.add(
+				_getRelativePath(baseFile.toPath(), pathFile.toPath()));
+		}
+
+		return relativePaths.toArray(new String[relativePaths.size()]);
 	}
 
 	private void _printHelp() {
@@ -424,6 +445,7 @@ public class UpgradeClient {
 			File dir = _appServer.getDir();
 			File globalLibDir = _appServer.getGlobalLibDir();
 			File portalDir = _appServer.getPortalDir();
+			List<File> serverDirs = _appServer.getServerDirs();
 
 			System.out.println(
 				"Please enter your application server directory (" + dir +
@@ -454,16 +476,31 @@ public class UpgradeClient {
 				_appServer.setPortalDirName(response);
 			}
 
+			System.out.println(
+				"Please enter a comma delimited list of any extra directories" +
+					" you need for the upgrade (" +
+						_appServer.getServerDirNames() + "): ");
+
+			response = _consoleReader.readLine();
+
+			if (!response.isEmpty()) {
+				_appServer.setServerDirNames(response);
+			}
+
 			_appServerProperties.setProperty("dir", dir.getCanonicalPath());
 			_appServerProperties.setProperty(
 				"global.dir.lib", _getRelativePath(dir, globalLibDir));
 			_appServerProperties.setProperty(
 				"portal.dir", _getRelativePath(dir, portalDir));
+			_appServerProperties.setProperty(
+				"server.dirs",
+				StringUtils.join(_getRelativePaths(dir, serverDirs)));
 		}
 		else {
 			_appServer = new AppServer(
 				value, _appServerProperties.getProperty("global.dir.lib"),
-				_appServerProperties.getProperty("portal.dir"));
+				_appServerProperties.getProperty("portal.dir"),
+				_appServerProperties.getProperty("server.dirs"));
 		}
 	}
 

@@ -114,6 +114,22 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	}
 
 	@Override
+	public DLFileEntryMetadata toEscapedModel() {
+		return new DLFileEntryMetadataWrapper(_dlFileEntryMetadata.toEscapedModel());
+	}
+
+	@Override
+	public DLFileEntryMetadata toUnescapedModel() {
+		return new DLFileEntryMetadataWrapper(_dlFileEntryMetadata.toUnescapedModel());
+	}
+
+	@Override
+	public DLFileVersion getFileVersion()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryMetadata.getFileVersion();
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _dlFileEntryMetadata.isCachedModel();
 	}
@@ -129,34 +145,17 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryMetadata toEscapedModel() {
-		return new DLFileEntryMetadataWrapper(_dlFileEntryMetadata.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileEntryMetadata toUnescapedModel() {
-		return new DLFileEntryMetadataWrapper(_dlFileEntryMetadata.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileVersion getFileVersion()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileEntryMetadata.getFileVersion();
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _dlFileEntryMetadata.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.document.library.kernel.model.DLFileEntryMetadata> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<DLFileEntryMetadata> toCacheModel() {
 		return _dlFileEntryMetadata.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.document.library.kernel.model.DLFileEntryMetadata dlFileEntryMetadata) {
+	public int compareTo(DLFileEntryMetadata dlFileEntryMetadata) {
 		return _dlFileEntryMetadata.compareTo(dlFileEntryMetadata);
 	}
 

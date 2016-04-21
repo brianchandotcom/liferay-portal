@@ -214,19 +214,19 @@ public interface ImageModel extends BaseModel<Image>, MVCCModel, ShardedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Image image);
+	public int compareTo(Image image);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Image> toCacheModel();
+	public CacheModel<Image> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.Image toEscapedModel();
+	public Image toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.Image toUnescapedModel();
+	public Image toUnescapedModel();
 
 	@Override
 	public String toString();

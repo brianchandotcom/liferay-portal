@@ -193,6 +193,22 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 		}
 	}
 
+	@Override
+	public DLFileShortcut toEscapedModel() {
+		return new DLFileShortcutWrapper(_dlFileShortcut.toEscapedModel());
+	}
+
+	@Override
+	public DLFileShortcut toUnescapedModel() {
+		return new DLFileShortcutWrapper(_dlFileShortcut.toUnescapedModel());
+	}
+
+	@Override
+	public DLFolder getDLFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileShortcut.getDLFolder();
+	}
+
 	/**
 	* Returns the active of this document library file shortcut.
 	*
@@ -344,28 +360,12 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileShortcut toEscapedModel() {
-		return new DLFileShortcutWrapper(_dlFileShortcut.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileShortcut toUnescapedModel() {
-		return new DLFileShortcutWrapper(_dlFileShortcut.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFolder getDLFolder()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlFileShortcut.getDLFolder();
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _dlFileShortcut.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.document.library.kernel.model.DLFileShortcut> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<DLFileShortcut> toCacheModel() {
 		return _dlFileShortcut.toCacheModel();
 	}
 
@@ -403,8 +403,7 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.document.library.kernel.model.DLFileShortcut dlFileShortcut) {
+	public int compareTo(DLFileShortcut dlFileShortcut) {
 		return _dlFileShortcut.compareTo(dlFileShortcut);
 	}
 

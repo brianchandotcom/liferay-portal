@@ -159,6 +159,16 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	}
 
 	@Override
+	public AssetVocabulary toEscapedModel() {
+		return new AssetVocabularyWrapper(_assetVocabulary.toEscapedModel());
+	}
+
+	@Override
+	public AssetVocabulary toUnescapedModel() {
+		return new AssetVocabularyWrapper(_assetVocabulary.toUnescapedModel());
+	}
+
+	@Override
 	public boolean hasMoreThanOneCategorySelected(long[] categoryIds) {
 		return _assetVocabulary.hasMoreThanOneCategorySelected(categoryIds);
 	}
@@ -217,22 +227,12 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	}
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetVocabulary toEscapedModel() {
-		return new AssetVocabularyWrapper(_assetVocabulary.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.asset.kernel.model.AssetVocabulary toUnescapedModel() {
-		return new AssetVocabularyWrapper(_assetVocabulary.toUnescapedModel());
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _assetVocabulary.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.asset.kernel.model.AssetVocabulary> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<AssetVocabulary> toCacheModel() {
 		return _assetVocabulary.toCacheModel();
 	}
 
@@ -246,8 +246,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.asset.kernel.model.AssetVocabulary assetVocabulary) {
+	public int compareTo(AssetVocabulary assetVocabulary) {
 		return _assetVocabulary.compareTo(assetVocabulary);
 	}
 
@@ -433,8 +432,8 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 
 	@Override
 	public java.lang.String getUnambiguousTitle(
-		java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> vocabularies,
-		long groupId, java.util.Locale locale)
+		java.util.List<AssetVocabulary> vocabularies, long groupId,
+		java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetVocabulary.getUnambiguousTitle(vocabularies, groupId,
 			locale);
@@ -516,7 +515,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	}
 
 	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetCategory> getCategories() {
+	public java.util.List<AssetCategory> getCategories() {
 		return _assetVocabulary.getCategories();
 	}
 

@@ -616,7 +616,7 @@ public abstract class LayoutSetBranchServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.kernel.service.LayoutSetBranchLocalService.class)
 	protected com.liferay.portal.kernel.service.LayoutSetBranchLocalService layoutSetBranchLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.LayoutSetBranchService.class)
+	@BeanReference(type = LayoutSetBranchService.class)
 	protected LayoutSetBranchService layoutSetBranchService;
 	@BeanReference(type = LayoutSetBranchPersistence.class)
 	protected LayoutSetBranchPersistence layoutSetBranchPersistence;

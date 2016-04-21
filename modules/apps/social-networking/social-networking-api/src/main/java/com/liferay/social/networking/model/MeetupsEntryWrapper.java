@@ -164,6 +164,16 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	}
 
 	@Override
+	public MeetupsEntry toEscapedModel() {
+		return new MeetupsEntryWrapper(_meetupsEntry.toEscapedModel());
+	}
+
+	@Override
+	public MeetupsEntry toUnescapedModel() {
+		return new MeetupsEntryWrapper(_meetupsEntry.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _meetupsEntry.isCachedModel();
 	}
@@ -184,18 +194,8 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.social.networking.model.MeetupsEntry> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<MeetupsEntry> toCacheModel() {
 		return _meetupsEntry.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.social.networking.model.MeetupsEntry toEscapedModel() {
-		return new MeetupsEntryWrapper(_meetupsEntry.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.social.networking.model.MeetupsEntry toUnescapedModel() {
-		return new MeetupsEntryWrapper(_meetupsEntry.toUnescapedModel());
 	}
 
 	/**
@@ -209,8 +209,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.social.networking.model.MeetupsEntry meetupsEntry) {
+	public int compareTo(MeetupsEntry meetupsEntry) {
 		return _meetupsEntry.compareTo(meetupsEntry);
 	}
 

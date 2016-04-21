@@ -165,8 +165,7 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		java.lang.String className, long classPK, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		int type, java.lang.String subtype,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		int type, java.lang.String subtype, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _roleLocalService.addRole(userId, className, classPK, name,
 			titleMap, descriptionMap, type, subtype, serviceContext);
@@ -389,8 +388,7 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String subtype,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String subtype, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _roleLocalService.updateRole(roleId, name, titleMap,
 			descriptionMap, subtype, serviceContext);
@@ -809,8 +807,8 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	* @param userId the primary key of the user
 	* @param groups the groups (optionally <code>null</code>)
 	* @return the union of all the user's roles within the groups
-	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(long,
-	List)
+	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(
+	long, List)
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Role> getUserRelatedRoles(
@@ -825,8 +823,8 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	* @param userId the primary key of the user
 	* @param groupId the primary key of the group
 	* @return the user's roles within the group
-	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(long,
-	long)
+	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(
+	long, long)
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Role> getUserRelatedRoles(
@@ -840,8 +838,8 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	* @param userId the primary key of the user
 	* @param groupIds the primary keys of the groups
 	* @return the union of all the user's roles within the groups
-	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(long,
-	long[])
+	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(
+	long, long[])
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Role> getUserRelatedRoles(

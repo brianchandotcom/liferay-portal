@@ -54,7 +54,7 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 			}
 		};
 
-	public java.util.List<com.liferay.asset.kernel.model.AssetCategory> getCategories();
+	public java.util.List<AssetCategory> getCategories();
 
 	public int getCategoriesCount();
 
@@ -71,8 +71,8 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties();
 
 	public java.lang.String getUnambiguousTitle(
-		java.util.List<com.liferay.asset.kernel.model.AssetVocabulary> vocabularies,
-		long groupId, java.util.Locale locale)
+		java.util.List<AssetVocabulary> vocabularies, long groupId,
+		java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean hasMoreThanOneCategorySelected(long[] categoryIds);

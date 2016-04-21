@@ -43,7 +43,7 @@ public class PhoneServiceUtil {
 	public static com.liferay.portal.kernel.model.Phone addPhone(
 		java.lang.String className, long classPK, java.lang.String number,
 		java.lang.String extension, long typeId, boolean primary,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addPhone(className, classPK, number, extension, typeId,

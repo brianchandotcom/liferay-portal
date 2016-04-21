@@ -424,6 +424,16 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 		}
 	}
 
+	@Override
+	public ShoppingOrder toEscapedModel() {
+		return new ShoppingOrderWrapper(_shoppingOrder.toEscapedModel());
+	}
+
+	@Override
+	public ShoppingOrder toUnescapedModel() {
+		return new ShoppingOrderWrapper(_shoppingOrder.toUnescapedModel());
+	}
+
 	/**
 	* Returns the insure of this shopping order.
 	*
@@ -545,18 +555,8 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.shopping.model.ShoppingOrder> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<ShoppingOrder> toCacheModel() {
 		return _shoppingOrder.toCacheModel();
-	}
-
-	@Override
-	public com.liferay.shopping.model.ShoppingOrder toEscapedModel() {
-		return new ShoppingOrderWrapper(_shoppingOrder.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.shopping.model.ShoppingOrder toUnescapedModel() {
-		return new ShoppingOrderWrapper(_shoppingOrder.toUnescapedModel());
 	}
 
 	/**
@@ -610,7 +610,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 	}
 
 	@Override
-	public int compareTo(com.liferay.shopping.model.ShoppingOrder shoppingOrder) {
+	public int compareTo(ShoppingOrder shoppingOrder) {
 		return _shoppingOrder.compareTo(shoppingOrder);
 	}
 

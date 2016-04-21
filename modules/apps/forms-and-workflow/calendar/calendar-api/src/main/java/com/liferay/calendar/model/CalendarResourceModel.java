@@ -587,20 +587,19 @@ public interface CalendarResourceModel extends AttachedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.calendar.model.CalendarResource calendarResource);
+	public int compareTo(CalendarResource calendarResource);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.calendar.model.CalendarResource> toCacheModel();
+	public CacheModel<CalendarResource> toCacheModel();
 
 	@Override
-	public com.liferay.calendar.model.CalendarResource toEscapedModel();
+	public CalendarResource toEscapedModel();
 
 	@Override
-	public com.liferay.calendar.model.CalendarResource toUnescapedModel();
+	public CalendarResource toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -70,7 +70,7 @@ public class MembershipRequestLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.model.MembershipRequest addMembershipRequest(
 		long userId, long groupId, java.lang.String comments,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addMembershipRequest(userId, groupId, comments,
@@ -298,8 +298,7 @@ public class MembershipRequestLocalServiceUtil {
 
 	public static void updateStatus(long replierUserId,
 		long membershipRequestId, java.lang.String replyComments,
-		long statusId, boolean addUserToGroup,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long statusId, boolean addUserToGroup, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateStatus(replierUserId, membershipRequestId, replyComments,

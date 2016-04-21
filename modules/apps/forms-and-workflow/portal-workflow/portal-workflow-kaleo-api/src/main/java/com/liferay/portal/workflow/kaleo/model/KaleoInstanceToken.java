@@ -56,22 +56,21 @@ public interface KaleoInstanceToken extends KaleoInstanceTokenModel,
 			}
 		};
 
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken> getChildrenKaleoInstanceTokens();
+	public java.util.List<KaleoInstanceToken> getChildrenKaleoInstanceTokens();
 
-	public com.liferay.portal.workflow.kaleo.model.KaleoNode getCurrentKaleoNode()
+	public KaleoNode getCurrentKaleoNode()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken> getIncompleteChildrenKaleoInstanceTokens();
+	public java.util.List<KaleoInstanceToken> getIncompleteChildrenKaleoInstanceTokens();
 
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstance getKaleoInstance()
+	public KaleoInstance getKaleoInstance()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken getParentKaleoInstanceToken()
+	public KaleoInstanceToken getParentKaleoInstanceToken()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean hasIncompleteChildrenKaleoInstanceToken();
 
-	public void setCurrentKaleoNode(
-		com.liferay.portal.workflow.kaleo.model.KaleoNode kaleoNode)
+	public void setCurrentKaleoNode(KaleoNode kaleoNode)
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

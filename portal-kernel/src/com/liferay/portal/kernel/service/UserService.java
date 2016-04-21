@@ -218,8 +218,7 @@ public interface UserService extends BaseService {
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
 		int birthdayYear, java.lang.String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds, long[] userGroupIds,
-		boolean sendEmail,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -284,8 +283,7 @@ public interface UserService extends BaseService {
 		List<Address> addresses, List<EmailAddress> emailAddresses,
 		List<Phone> phones, List<Website> websites,
 		List<AnnouncementsDelivery> announcementsDelivers, boolean sendEmail,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds a user with workflow.
@@ -341,8 +339,7 @@ public interface UserService extends BaseService {
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
 		int birthdayYear, java.lang.String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds, long[] userGroupIds,
-		boolean sendEmail,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean sendEmail, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -407,8 +404,7 @@ public interface UserService extends BaseService {
 		List<Address> addresses, List<EmailAddress> emailAddresses,
 		List<Phone> phones, List<Website> websites,
 		List<AnnouncementsDelivery> announcementsDelivers, boolean sendEmail,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public User getCurrentUser() throws PortalException;
@@ -468,8 +464,7 @@ public interface UserService extends BaseService {
 	*/
 	public User updateEmailAddress(long userId, java.lang.String password,
 		java.lang.String emailAddress1, java.lang.String emailAddress2,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates a user account that was automatically created when a guest user
@@ -516,8 +511,7 @@ public interface UserService extends BaseService {
 		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
 		int birthdayYear, java.lang.String jobTitle,
 		boolean updateUserInformation, boolean sendEmail,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates whether the user is locked out from logging in.
@@ -607,8 +601,7 @@ public interface UserService extends BaseService {
 	* @return the user
 	*/
 	public User updateStatus(long userId, int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the user with additional parameters.
@@ -684,8 +677,7 @@ public interface UserService extends BaseService {
 		List<Address> addresses, List<EmailAddress> emailAddresses,
 		List<Phone> phones, List<Website> websites,
 		List<AnnouncementsDelivery> announcementsDelivers,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the user.
@@ -750,8 +742,7 @@ public interface UserService extends BaseService {
 		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
 		List<UserGroupRole> userGroupRoles, long[] userGroupIds,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the user with additional parameters.
@@ -832,8 +823,7 @@ public interface UserService extends BaseService {
 		List<Address> addresses, List<EmailAddress> emailAddresses,
 		List<Phone> phones, List<Website> websites,
 		List<AnnouncementsDelivery> announcementsDelivers,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyUsersCount(long companyId) throws PortalException;
@@ -931,8 +921,7 @@ public interface UserService extends BaseService {
 	<code>null</code>)
 	*/
 	public void addGroupUsers(long groupId, long[] userIds,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the users to the organization.
@@ -1041,8 +1030,7 @@ public interface UserService extends BaseService {
 	<code>null</code>)
 	*/
 	public void unsetGroupUsers(long groupId, long[] userIds,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Removes the users from the organization.
@@ -1099,6 +1087,5 @@ public interface UserService extends BaseService {
 	user indexing is enabled.
 	*/
 	public void updateOrganizations(long userId, long[] organizationIds,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 }

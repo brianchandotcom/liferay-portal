@@ -115,8 +115,7 @@ public interface TeamLocalService extends BaseLocalService,
 		java.lang.String description) throws PortalException;
 
 	public Team addTeam(long userId, long groupId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String description, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

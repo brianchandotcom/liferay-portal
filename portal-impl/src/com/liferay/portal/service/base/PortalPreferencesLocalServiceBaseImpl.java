@@ -422,7 +422,7 @@ public abstract class PortalPreferencesLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.PortalPreferencesLocalService.class)
+	@BeanReference(type = PortalPreferencesLocalService.class)
 	protected PortalPreferencesLocalService portalPreferencesLocalService;
 	@BeanReference(type = PortalPreferencesPersistence.class)
 	protected PortalPreferencesPersistence portalPreferencesPersistence;

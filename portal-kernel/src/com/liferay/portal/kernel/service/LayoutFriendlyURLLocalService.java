@@ -87,8 +87,7 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 	public LayoutFriendlyURL addLayoutFriendlyURL(long userId, long companyId,
 		long groupId, long plid, boolean privateLayout,
 		java.lang.String friendlyURL, java.lang.String languageId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new layout friendly u r l with the primary key. Does not add the layout friendly u r l to the database.
@@ -195,8 +194,7 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 	public LayoutFriendlyURL updateLayoutFriendlyURL(long userId,
 		long companyId, long groupId, long plid, boolean privateLayout,
 		java.lang.String friendlyURL, java.lang.String languageId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -228,8 +226,7 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 	public List<LayoutFriendlyURL> addLayoutFriendlyURLs(long userId,
 		long companyId, long groupId, long plid, boolean privateLayout,
 		Map<Locale, java.lang.String> friendlyURLMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -320,8 +317,7 @@ public interface LayoutFriendlyURLLocalService extends BaseLocalService,
 	public List<LayoutFriendlyURL> updateLayoutFriendlyURLs(long userId,
 		long companyId, long groupId, long plid, boolean privateLayout,
 		Map<Locale, java.lang.String> friendlyURLMap,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Returns the number of rows matching the dynamic query.

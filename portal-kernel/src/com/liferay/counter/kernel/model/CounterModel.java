@@ -126,19 +126,19 @@ public interface CounterModel extends BaseModel<Counter> {
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.counter.kernel.model.Counter counter);
+	public int compareTo(Counter counter);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.counter.kernel.model.Counter> toCacheModel();
+	public CacheModel<Counter> toCacheModel();
 
 	@Override
-	public com.liferay.counter.kernel.model.Counter toEscapedModel();
+	public Counter toEscapedModel();
 
 	@Override
-	public com.liferay.counter.kernel.model.Counter toUnescapedModel();
+	public Counter toUnescapedModel();
 
 	@Override
 	public String toString();

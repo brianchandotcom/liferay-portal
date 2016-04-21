@@ -66,15 +66,15 @@ public interface DLFileVersion extends DLFileVersionModel, PersistedModel,
 	public java.util.List<com.liferay.dynamic.data.mapping.kernel.DDMStructure> getDDMStructures()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.document.library.kernel.model.DLFileEntryType getDLFileEntryType()
+	public DLFileEntryType getDLFileEntryType()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.util.UnicodeProperties getExtraSettingsProperties();
 
-	public com.liferay.document.library.kernel.model.DLFileEntry getFileEntry()
+	public DLFileEntry getFileEntry()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.document.library.kernel.model.DLFolder getFolder()
+	public DLFolder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.lang.String getIcon();

@@ -64,8 +64,7 @@ public interface TeamService extends BaseService {
 		java.lang.String description) throws PortalException;
 
 	public Team addTeam(long groupId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String description, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

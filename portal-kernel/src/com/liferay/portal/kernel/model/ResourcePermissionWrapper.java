@@ -141,8 +141,18 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.ResourcePermission> toCacheModel() {
+	public CacheModel<ResourcePermission> toCacheModel() {
 		return _resourcePermission.toCacheModel();
+	}
+
+	@Override
+	public ResourcePermission toEscapedModel() {
+		return new ResourcePermissionWrapper(_resourcePermission.toEscapedModel());
+	}
+
+	@Override
+	public ResourcePermission toUnescapedModel() {
+		return new ResourcePermissionWrapper(_resourcePermission.toUnescapedModel());
 	}
 
 	/**
@@ -156,8 +166,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	@Override
-	public boolean hasAction(
-		com.liferay.portal.kernel.model.ResourceAction resourceAction) {
+	public boolean hasAction(ResourceAction resourceAction) {
 		return _resourcePermission.hasAction(resourceAction);
 	}
 
@@ -197,18 +206,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.ResourcePermission toEscapedModel() {
-		return new ResourcePermissionWrapper(_resourcePermission.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.ResourcePermission toUnescapedModel() {
-		return new ResourcePermissionWrapper(_resourcePermission.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.ResourcePermission resourcePermission) {
+	public int compareTo(ResourcePermission resourcePermission) {
 		return _resourcePermission.compareTo(resourcePermission);
 	}
 

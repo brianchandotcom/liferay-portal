@@ -578,7 +578,7 @@ public abstract class DDMStructureLayoutLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService.class)
+	@BeanReference(type = DDMStructureLayoutLocalService.class)
 	protected DDMStructureLayoutLocalService ddmStructureLayoutLocalService;
 	@BeanReference(type = DDMStructureLayoutPersistence.class)
 	protected DDMStructureLayoutPersistence ddmStructureLayoutPersistence;

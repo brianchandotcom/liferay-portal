@@ -190,19 +190,19 @@ public interface RegionModel extends BaseModel<Region>, MVCCModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Region region);
+	public int compareTo(Region region);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Region> toCacheModel();
+	public CacheModel<Region> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.Region toEscapedModel();
+	public Region toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.Region toUnescapedModel();
+	public Region toUnescapedModel();
 
 	@Override
 	public String toString();

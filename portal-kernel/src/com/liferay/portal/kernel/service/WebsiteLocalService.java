@@ -97,8 +97,7 @@ public interface WebsiteLocalService extends BaseLocalService,
 
 	public Website addWebsite(long userId, java.lang.String className,
 		long classPK, java.lang.String url, long typeId, boolean primary,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new website with the primary key. Does not add the website to the database.

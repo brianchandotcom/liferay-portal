@@ -126,8 +126,18 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Country> toCacheModel() {
+	public CacheModel<Country> toCacheModel() {
 		return _country.toCacheModel();
+	}
+
+	@Override
+	public Country toEscapedModel() {
+		return new CountryWrapper(_country.toEscapedModel());
+	}
+
+	@Override
+	public Country toUnescapedModel() {
+		return new CountryWrapper(_country.toUnescapedModel());
 	}
 
 	/**
@@ -191,17 +201,7 @@ public class CountryWrapper implements Country, ModelWrapper<Country> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Country toEscapedModel() {
-		return new CountryWrapper(_country.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Country toUnescapedModel() {
-		return new CountryWrapper(_country.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Country country) {
+	public int compareTo(Country country) {
 		return _country.compareTo(country);
 	}
 

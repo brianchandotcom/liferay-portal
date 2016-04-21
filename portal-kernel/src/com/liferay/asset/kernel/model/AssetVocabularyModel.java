@@ -509,20 +509,19 @@ public interface AssetVocabularyModel extends BaseModel<AssetVocabulary>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.asset.kernel.model.AssetVocabulary assetVocabulary);
+	public int compareTo(AssetVocabulary assetVocabulary);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.asset.kernel.model.AssetVocabulary> toCacheModel();
+	public CacheModel<AssetVocabulary> toCacheModel();
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetVocabulary toEscapedModel();
+	public AssetVocabulary toEscapedModel();
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetVocabulary toUnescapedModel();
+	public AssetVocabulary toUnescapedModel();
 
 	@Override
 	public String toString();

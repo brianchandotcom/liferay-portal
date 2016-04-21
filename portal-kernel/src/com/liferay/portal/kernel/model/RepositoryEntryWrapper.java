@@ -159,8 +159,18 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.RepositoryEntry> toCacheModel() {
+	public CacheModel<RepositoryEntry> toCacheModel() {
 		return _repositoryEntry.toCacheModel();
+	}
+
+	@Override
+	public RepositoryEntry toEscapedModel() {
+		return new RepositoryEntryWrapper(_repositoryEntry.toEscapedModel());
+	}
+
+	@Override
+	public RepositoryEntry toUnescapedModel() {
+		return new RepositoryEntryWrapper(_repositoryEntry.toUnescapedModel());
 	}
 
 	/**
@@ -204,18 +214,7 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.RepositoryEntry toEscapedModel() {
-		return new RepositoryEntryWrapper(_repositoryEntry.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.RepositoryEntry toUnescapedModel() {
-		return new RepositoryEntryWrapper(_repositoryEntry.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.RepositoryEntry repositoryEntry) {
+	public int compareTo(RepositoryEntry repositoryEntry) {
 		return _repositoryEntry.compareTo(repositoryEntry);
 	}
 

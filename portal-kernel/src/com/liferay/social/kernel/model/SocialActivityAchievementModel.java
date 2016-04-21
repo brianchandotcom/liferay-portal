@@ -221,20 +221,19 @@ public interface SocialActivityAchievementModel extends BaseModel<SocialActivity
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.social.kernel.model.SocialActivityAchievement socialActivityAchievement);
+	public int compareTo(SocialActivityAchievement socialActivityAchievement);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.social.kernel.model.SocialActivityAchievement> toCacheModel();
+	public CacheModel<SocialActivityAchievement> toCacheModel();
 
 	@Override
-	public com.liferay.social.kernel.model.SocialActivityAchievement toEscapedModel();
+	public SocialActivityAchievement toEscapedModel();
 
 	@Override
-	public com.liferay.social.kernel.model.SocialActivityAchievement toUnescapedModel();
+	public SocialActivityAchievement toUnescapedModel();
 
 	@Override
 	public String toString();

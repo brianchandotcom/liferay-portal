@@ -125,6 +125,22 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	@Override
+	public ExpandoColumn getColumn()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _expandoValue.getColumn();
+	}
+
+	@Override
+	public ExpandoValue toEscapedModel() {
+		return new ExpandoValueWrapper(_expandoValue.toEscapedModel());
+	}
+
+	@Override
+	public ExpandoValue toUnescapedModel() {
+		return new ExpandoValueWrapper(_expandoValue.toUnescapedModel());
+	}
+
+	@Override
 	public boolean getBoolean()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValue.getBoolean();
@@ -152,23 +168,7 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoColumn getColumn()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _expandoValue.getColumn();
-	}
-
-	@Override
-	public com.liferay.expando.kernel.model.ExpandoValue toEscapedModel() {
-		return new ExpandoValueWrapper(_expandoValue.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.expando.kernel.model.ExpandoValue toUnescapedModel() {
-		return new ExpandoValueWrapper(_expandoValue.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.expando.kernel.model.ExpandoValue> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<ExpandoValue> toCacheModel() {
 		return _expandoValue.toCacheModel();
 	}
 
@@ -197,8 +197,7 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.expando.kernel.model.ExpandoValue expandoValue) {
+	public int compareTo(ExpandoValue expandoValue) {
 		return _expandoValue.compareTo(expandoValue);
 	}
 
@@ -489,7 +488,7 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	@Override
-	public void setColumn(com.liferay.expando.kernel.model.ExpandoColumn column) {
+	public void setColumn(ExpandoColumn column) {
 		_expandoValue.setColumn(column);
 	}
 

@@ -364,7 +364,7 @@ public abstract class PhoneServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.kernel.service.PhoneLocalService.class)
 	protected com.liferay.portal.kernel.service.PhoneLocalService phoneLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.PhoneService.class)
+	@BeanReference(type = PhoneService.class)
 	protected PhoneService phoneService;
 	@BeanReference(type = PhonePersistence.class)
 	protected PhonePersistence phonePersistence;

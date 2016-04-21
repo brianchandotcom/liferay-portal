@@ -215,7 +215,7 @@ public class UserServiceUtil {
 		int birthdayMonth, int birthdayDay, int birthdayYear,
 		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
 		long[] roleIds, long[] userGroupIds, boolean sendEmail,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addUser(companyId, autoPassword, password1, password2,
@@ -290,8 +290,7 @@ public class UserServiceUtil {
 		java.util.List<com.liferay.portal.kernel.model.Phone> phones,
 		java.util.List<com.liferay.portal.kernel.model.Website> websites,
 		java.util.List<com.liferay.announcements.kernel.model.AnnouncementsDelivery> announcementsDelivers,
-		boolean sendEmail,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean sendEmail, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addUser(companyId, autoPassword, password1, password2,
@@ -357,7 +356,7 @@ public class UserServiceUtil {
 		int birthdayMonth, int birthdayDay, int birthdayYear,
 		java.lang.String jobTitle, long[] groupIds, long[] organizationIds,
 		long[] roleIds, long[] userGroupIds, boolean sendEmail,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addUserWithWorkflow(companyId, autoPassword, password1,
@@ -433,8 +432,7 @@ public class UserServiceUtil {
 		java.util.List<com.liferay.portal.kernel.model.Phone> phones,
 		java.util.List<com.liferay.portal.kernel.model.Website> websites,
 		java.util.List<com.liferay.announcements.kernel.model.AnnouncementsDelivery> announcementsDelivers,
-		boolean sendEmail,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean sendEmail, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addUserWithWorkflow(companyId, autoPassword, password1,
@@ -515,8 +513,7 @@ public class UserServiceUtil {
 	*/
 	public static com.liferay.portal.kernel.model.User updateEmailAddress(
 		long userId, java.lang.String password, java.lang.String emailAddress1,
-		java.lang.String emailAddress2,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String emailAddress2, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateEmailAddress(userId, password, emailAddress1,
@@ -568,8 +565,7 @@ public class UserServiceUtil {
 		java.lang.String lastName, long prefixId, long suffixId, boolean male,
 		int birthdayMonth, int birthdayDay, int birthdayYear,
 		java.lang.String jobTitle, boolean updateUserInformation,
-		boolean sendEmail,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		boolean sendEmail, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateIncompleteUser(companyId, autoPassword, password1,
@@ -690,8 +686,7 @@ public class UserServiceUtil {
 	* @return the user
 	*/
 	public static com.liferay.portal.kernel.model.User updateStatus(
-		long userId, int status,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long userId, int status, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateStatus(userId, status, serviceContext);
 	}
@@ -774,7 +769,7 @@ public class UserServiceUtil {
 		java.util.List<com.liferay.portal.kernel.model.Phone> phones,
 		java.util.List<com.liferay.portal.kernel.model.Website> websites,
 		java.util.List<com.liferay.announcements.kernel.model.AnnouncementsDelivery> announcementsDelivers,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateUser(userId, oldPassword, newPassword1, newPassword2,
@@ -852,8 +847,7 @@ public class UserServiceUtil {
 		java.lang.String twitterSn, java.lang.String jobTitle, long[] groupIds,
 		long[] organizationIds, long[] roleIds,
 		java.util.List<com.liferay.portal.kernel.model.UserGroupRole> userGroupRoles,
-		long[] userGroupIds,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long[] userGroupIds, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateUser(userId, oldPassword, newPassword1, newPassword2,
@@ -949,7 +943,7 @@ public class UserServiceUtil {
 		java.util.List<com.liferay.portal.kernel.model.Phone> phones,
 		java.util.List<com.liferay.portal.kernel.model.Website> websites,
 		java.util.List<com.liferay.announcements.kernel.model.AnnouncementsDelivery> announcementsDelivers,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateUser(userId, oldPassword, newPassword1, newPassword2,
@@ -1081,7 +1075,7 @@ public class UserServiceUtil {
 	<code>null</code>)
 	*/
 	public static void addGroupUsers(long groupId, long[] userIds,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addGroupUsers(groupId, userIds, serviceContext);
 	}
@@ -1218,7 +1212,7 @@ public class UserServiceUtil {
 	<code>null</code>)
 	*/
 	public static void unsetGroupUsers(long groupId, long[] userIds,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unsetGroupUsers(groupId, userIds, serviceContext);
 	}
@@ -1290,7 +1284,7 @@ public class UserServiceUtil {
 	user indexing is enabled.
 	*/
 	public static void updateOrganizations(long userId, long[] organizationIds,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateOrganizations(userId, organizationIds, serviceContext);
 	}

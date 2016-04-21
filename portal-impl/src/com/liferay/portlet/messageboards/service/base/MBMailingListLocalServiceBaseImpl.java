@@ -593,7 +593,7 @@ public abstract class MBMailingListLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.message.boards.kernel.service.MBMailingListLocalService.class)
+	@BeanReference(type = MBMailingListLocalService.class)
 	protected MBMailingListLocalService mbMailingListLocalService;
 	@BeanReference(type = MBMailingListPersistence.class)
 	protected MBMailingListPersistence mbMailingListPersistence;

@@ -353,19 +353,19 @@ public interface CalendarNotificationTemplateModel extends BaseModel<CalendarNot
 
 	@Override
 	public int compareTo(
-		com.liferay.calendar.model.CalendarNotificationTemplate calendarNotificationTemplate);
+		CalendarNotificationTemplate calendarNotificationTemplate);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.calendar.model.CalendarNotificationTemplate> toCacheModel();
+	public CacheModel<CalendarNotificationTemplate> toCacheModel();
 
 	@Override
-	public com.liferay.calendar.model.CalendarNotificationTemplate toEscapedModel();
+	public CalendarNotificationTemplate toEscapedModel();
 
 	@Override
-	public com.liferay.calendar.model.CalendarNotificationTemplate toUnescapedModel();
+	public CalendarNotificationTemplate toUnescapedModel();
 
 	@Override
 	public String toString();

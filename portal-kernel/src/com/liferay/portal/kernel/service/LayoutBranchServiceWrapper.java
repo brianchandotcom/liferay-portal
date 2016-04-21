@@ -34,7 +34,7 @@ public class LayoutBranchServiceWrapper implements LayoutBranchService,
 	public com.liferay.portal.kernel.model.LayoutBranch addLayoutBranch(
 		long layoutRevisionId, java.lang.String name,
 		java.lang.String description, boolean master,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutBranchService.addLayoutBranch(layoutRevisionId, name,
 			description, master, serviceContext);
@@ -43,8 +43,7 @@ public class LayoutBranchServiceWrapper implements LayoutBranchService,
 	@Override
 	public com.liferay.portal.kernel.model.LayoutBranch updateLayoutBranch(
 		long layoutBranchId, java.lang.String name,
-		java.lang.String description,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String description, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutBranchService.updateLayoutBranch(layoutBranchId, name,
 			description, serviceContext);

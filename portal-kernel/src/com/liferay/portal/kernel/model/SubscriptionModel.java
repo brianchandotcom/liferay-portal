@@ -298,20 +298,19 @@ public interface SubscriptionModel extends AttachedModel, BaseModel<Subscription
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.Subscription subscription);
+	public int compareTo(Subscription subscription);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Subscription> toCacheModel();
+	public CacheModel<Subscription> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.Subscription toEscapedModel();
+	public Subscription toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.Subscription toUnescapedModel();
+	public Subscription toUnescapedModel();
 
 	@Override
 	public String toString();

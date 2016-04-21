@@ -1287,7 +1287,7 @@ public abstract class BlogsEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.blogs.kernel.service.BlogsEntryLocalService.class)
+	@BeanReference(type = BlogsEntryLocalService.class)
 	protected BlogsEntryLocalService blogsEntryLocalService;
 	@BeanReference(type = BlogsEntryPersistence.class)
 	protected BlogsEntryPersistence blogsEntryPersistence;

@@ -117,6 +117,16 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 	}
 
 	@Override
+	public ExpandoColumn toEscapedModel() {
+		return new ExpandoColumnWrapper(_expandoColumn.toEscapedModel());
+	}
+
+	@Override
+	public ExpandoColumn toUnescapedModel() {
+		return new ExpandoColumnWrapper(_expandoColumn.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _expandoColumn.isCachedModel();
 	}
@@ -132,17 +142,7 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoColumn toEscapedModel() {
-		return new ExpandoColumnWrapper(_expandoColumn.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.expando.kernel.model.ExpandoColumn toUnescapedModel() {
-		return new ExpandoColumnWrapper(_expandoColumn.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.expando.kernel.model.ExpandoColumn> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<ExpandoColumn> toCacheModel() {
 		return _expandoColumn.toCacheModel();
 	}
 
@@ -152,8 +152,7 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.expando.kernel.model.ExpandoColumn expandoColumn) {
+	public int compareTo(ExpandoColumn expandoColumn) {
 		return _expandoColumn.compareTo(expandoColumn);
 	}
 

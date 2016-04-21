@@ -374,19 +374,19 @@ public interface RepositoryModel extends BaseModel<Repository>, MVCCModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Repository repository);
+	public int compareTo(Repository repository);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Repository> toCacheModel();
+	public CacheModel<Repository> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.Repository toEscapedModel();
+	public Repository toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.Repository toUnescapedModel();
+	public Repository toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -1323,7 +1323,7 @@ public abstract class UserGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.UserGroupLocalService.class)
+	@BeanReference(type = UserGroupLocalService.class)
 	protected UserGroupLocalService userGroupLocalService;
 	@BeanReference(type = UserGroupPersistence.class)
 	protected UserGroupPersistence userGroupPersistence;

@@ -90,7 +90,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* @param publicRenderParameter a public render parameter
 	*/
 	public void addPublicRenderParameter(
-		com.liferay.portal.kernel.model.PublicRenderParameter publicRenderParameter);
+		PublicRenderParameter publicRenderParameter);
 
 	/**
 	* Adds a publishing event.
@@ -213,8 +213,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* @param portletId the cloned instance portlet ID
 	* @return a cloned instance of the portlet
 	*/
-	public com.liferay.portal.kernel.model.Portlet getClonedInstance(
-		java.lang.String portletId);
+	public Portlet getClonedInstance(java.lang.String portletId);
 
 	/**
 	* Returns the configuration action class of the portlet.
@@ -310,7 +309,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*
 	* @return the plugin settings
 	*/
-	public com.liferay.portal.kernel.model.PluginSetting getDefaultPluginSetting();
+	public PluginSetting getDefaultPluginSetting();
 
 	/**
 	* Returns the default preferences of the portlet.
@@ -621,7 +620,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*
 	* @return this portlet's application
 	*/
-	public com.liferay.portal.kernel.model.PortletApp getPortletApp();
+	public PortletApp getPortletApp();
 
 	/**
 	* Returns the name of the portlet class of the portlet.
@@ -649,14 +648,14 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*
 	* @return filters of the portlet
 	*/
-	public java.util.Map<java.lang.String, com.liferay.portal.kernel.model.PortletFilter> getPortletFilters();
+	public java.util.Map<java.lang.String, PortletFilter> getPortletFilters();
 
 	/**
 	* Returns the portlet info of the portlet.
 	*
 	* @return portlet info of the portlet
 	*/
-	public com.liferay.portal.kernel.model.PortletInfo getPortletInfo();
+	public PortletInfo getPortletInfo();
 
 	/**
 	* Returns the name of the portlet layout listener class of the portlet.
@@ -768,7 +767,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* @param identifier the identifier
 	* @return the public render parameter from an identifier
 	*/
-	public com.liferay.portal.kernel.model.PublicRenderParameter getPublicRenderParameter(
+	public PublicRenderParameter getPublicRenderParameter(
 		java.lang.String identifier);
 
 	/**
@@ -780,7 +779,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* @return the spublic render parameter from a namespace URI and a local
 	part
 	*/
-	public com.liferay.portal.kernel.model.PublicRenderParameter getPublicRenderParameter(
+	public PublicRenderParameter getPublicRenderParameter(
 		java.lang.String uri, java.lang.String localPart);
 
 	/**
@@ -788,7 +787,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*
 	* @return the public render parameters of the portlet
 	*/
-	public java.util.Set<com.liferay.portal.kernel.model.PublicRenderParameter> getPublicRenderParameters();
+	public java.util.Set<PublicRenderParameter> getPublicRenderParameters();
 
 	/**
 	* Returns the publishing events of the portlet.
@@ -860,7 +859,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*
 	* @return the root portlet of this portlet instance
 	*/
-	public com.liferay.portal.kernel.model.Portlet getRootPortlet();
+	public Portlet getRootPortlet();
 
 	/**
 	* Returns the root portlet ID of the portlet.
@@ -1637,8 +1636,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*
 	* @param pluginSetting the plugin setting
 	*/
-	public void setDefaultPluginSetting(
-		com.liferay.portal.kernel.model.PluginSetting pluginSetting);
+	public void setDefaultPluginSetting(PluginSetting pluginSetting);
 
 	/**
 	* Sets the default preferences of the portlet.
@@ -1907,8 +1905,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*
 	* @param portletApp this portlet's application
 	*/
-	public void setPortletApp(
-		com.liferay.portal.kernel.model.PortletApp portletApp);
+	public void setPortletApp(PortletApp portletApp);
 
 	/**
 	* Sets the name of the portlet class of the portlet.
@@ -1932,15 +1929,14 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* @param portletFilters the filters of the portlet
 	*/
 	public void setPortletFilters(
-		java.util.Map<java.lang.String, com.liferay.portal.kernel.model.PortletFilter> portletFilters);
+		java.util.Map<java.lang.String, PortletFilter> portletFilters);
 
 	/**
 	* Sets the portlet info of the portlet.
 	*
 	* @param portletInfo the portlet info of the portlet
 	*/
-	public void setPortletInfo(
-		com.liferay.portal.kernel.model.PortletInfo portletInfo);
+	public void setPortletInfo(PortletInfo portletInfo);
 
 	/**
 	* Sets the name of the portlet layout listener class of the portlet.
@@ -2043,7 +2039,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* @param publicRenderParameters the public render parameters of the portlet
 	*/
 	public void setPublicRenderParameters(
-		java.util.Set<com.liferay.portal.kernel.model.PublicRenderParameter> publicRenderParameters);
+		java.util.Set<PublicRenderParameter> publicRenderParameters);
 
 	/**
 	* Sets the publishing events of the portlet.

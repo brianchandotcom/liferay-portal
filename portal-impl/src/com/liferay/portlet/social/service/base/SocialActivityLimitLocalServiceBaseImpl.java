@@ -537,7 +537,7 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.social.kernel.service.SocialActivityLimitLocalService.class)
+	@BeanReference(type = SocialActivityLimitLocalService.class)
 	protected SocialActivityLimitLocalService socialActivityLimitLocalService;
 	@BeanReference(type = SocialActivityLimitPersistence.class)
 	protected SocialActivityLimitPersistence socialActivityLimitPersistence;

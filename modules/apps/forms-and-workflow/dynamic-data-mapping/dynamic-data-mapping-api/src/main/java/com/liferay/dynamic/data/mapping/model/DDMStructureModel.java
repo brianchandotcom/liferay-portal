@@ -636,20 +636,19 @@ public interface DDMStructureModel extends BaseModel<DDMStructure>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure);
+	public int compareTo(DDMStructure ddmStructure);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.dynamic.data.mapping.model.DDMStructure> toCacheModel();
+	public CacheModel<DDMStructure> toCacheModel();
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMStructure toEscapedModel();
+	public DDMStructure toEscapedModel();
 
 	@Override
-	public com.liferay.dynamic.data.mapping.model.DDMStructure toUnescapedModel();
+	public DDMStructure toUnescapedModel();
 
 	@Override
 	public String toString();

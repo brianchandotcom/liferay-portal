@@ -151,6 +151,16 @@ public class KaleoConditionWrapper implements KaleoCondition,
 	}
 
 	@Override
+	public KaleoCondition toEscapedModel() {
+		return new KaleoConditionWrapper(_kaleoCondition.toEscapedModel());
+	}
+
+	@Override
+	public KaleoCondition toUnescapedModel() {
+		return new KaleoConditionWrapper(_kaleoCondition.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _kaleoCondition.isCachedModel();
 	}
@@ -171,23 +181,12 @@ public class KaleoConditionWrapper implements KaleoCondition,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.workflow.kaleo.model.KaleoCondition> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<KaleoCondition> toCacheModel() {
 		return _kaleoCondition.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoCondition toEscapedModel() {
-		return new KaleoConditionWrapper(_kaleoCondition.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoCondition toUnescapedModel() {
-		return new KaleoConditionWrapper(_kaleoCondition.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.workflow.kaleo.model.KaleoCondition kaleoCondition) {
+	public int compareTo(KaleoCondition kaleoCondition) {
 		return _kaleoCondition.compareTo(kaleoCondition);
 	}
 

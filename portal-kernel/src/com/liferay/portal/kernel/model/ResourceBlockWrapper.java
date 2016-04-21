@@ -113,8 +113,18 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.ResourceBlock> toCacheModel() {
+	public CacheModel<ResourceBlock> toCacheModel() {
 		return _resourceBlock.toCacheModel();
+	}
+
+	@Override
+	public ResourceBlock toEscapedModel() {
+		return new ResourceBlockWrapper(_resourceBlock.toEscapedModel());
+	}
+
+	@Override
+	public ResourceBlock toUnescapedModel() {
+		return new ResourceBlockWrapper(_resourceBlock.toUnescapedModel());
 	}
 
 	@Override
@@ -138,18 +148,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.ResourceBlock toEscapedModel() {
-		return new ResourceBlockWrapper(_resourceBlock.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.ResourceBlock toUnescapedModel() {
-		return new ResourceBlockWrapper(_resourceBlock.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.ResourceBlock resourceBlock) {
+	public int compareTo(ResourceBlock resourceBlock) {
 		return _resourceBlock.compareTo(resourceBlock);
 	}
 

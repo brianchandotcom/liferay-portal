@@ -142,6 +142,22 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	}
 
 	@Override
+	public KaleoNode getKaleoNode()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kaleoTask.getKaleoNode();
+	}
+
+	@Override
+	public KaleoTask toEscapedModel() {
+		return new KaleoTaskWrapper(_kaleoTask.toEscapedModel());
+	}
+
+	@Override
+	public KaleoTask toUnescapedModel() {
+		return new KaleoTaskWrapper(_kaleoTask.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _kaleoTask.isCachedModel();
 	}
@@ -162,29 +178,12 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.workflow.kaleo.model.KaleoTask> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<KaleoTask> toCacheModel() {
 		return _kaleoTask.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoNode getKaleoNode()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoTask.getKaleoNode();
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTask toEscapedModel() {
-		return new KaleoTaskWrapper(_kaleoTask.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoTask toUnescapedModel() {
-		return new KaleoTaskWrapper(_kaleoTask.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.workflow.kaleo.model.KaleoTask kaleoTask) {
+	public int compareTo(KaleoTask kaleoTask) {
 		return _kaleoTask.compareTo(kaleoTask);
 	}
 
@@ -274,7 +273,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment> getKaleoTaskAssignments() {
+	public java.util.List<KaleoTaskAssignment> getKaleoTaskAssignments() {
 		return _kaleoTask.getKaleoTaskAssignments();
 	}
 

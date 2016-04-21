@@ -121,6 +121,16 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	}
 
 	@Override
+	public WallEntry toEscapedModel() {
+		return new WallEntryWrapper(_wallEntry.toEscapedModel());
+	}
+
+	@Override
+	public WallEntry toUnescapedModel() {
+		return new WallEntryWrapper(_wallEntry.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _wallEntry.isCachedModel();
 	}
@@ -141,23 +151,12 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.social.networking.model.WallEntry> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<WallEntry> toCacheModel() {
 		return _wallEntry.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.social.networking.model.WallEntry toEscapedModel() {
-		return new WallEntryWrapper(_wallEntry.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.social.networking.model.WallEntry toUnescapedModel() {
-		return new WallEntryWrapper(_wallEntry.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.social.networking.model.WallEntry wallEntry) {
+	public int compareTo(WallEntry wallEntry) {
 		return _wallEntry.compareTo(wallEntry);
 	}
 

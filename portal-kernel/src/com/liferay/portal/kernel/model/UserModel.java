@@ -771,19 +771,19 @@ public interface UserModel extends BaseModel<User>, MVCCModel, ShardedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.portal.kernel.model.User user);
+	public int compareTo(User user);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.User> toCacheModel();
+	public CacheModel<User> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.User toEscapedModel();
+	public User toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.User toUnescapedModel();
+	public User toUnescapedModel();
 
 	@Override
 	public String toString();

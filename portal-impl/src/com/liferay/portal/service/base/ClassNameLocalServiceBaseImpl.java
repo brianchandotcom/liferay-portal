@@ -416,7 +416,7 @@ public abstract class ClassNameLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	@BeanReference(type = ClassNameLocalService.class)
 	protected ClassNameLocalService classNameLocalService;
 	@BeanReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;

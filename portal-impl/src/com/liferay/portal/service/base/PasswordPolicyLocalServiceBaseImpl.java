@@ -682,7 +682,7 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.PasswordPolicyLocalService.class)
+	@BeanReference(type = PasswordPolicyLocalService.class)
 	protected PasswordPolicyLocalService passwordPolicyLocalService;
 	@BeanReference(type = PasswordPolicyPersistence.class)
 	protected PasswordPolicyPersistence passwordPolicyPersistence;

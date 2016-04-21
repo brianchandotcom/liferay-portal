@@ -219,8 +219,28 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.Group> toCacheModel() {
+	public CacheModel<Group> toCacheModel() {
 		return _group.toCacheModel();
+	}
+
+	@Override
+	public Group toEscapedModel() {
+		return new GroupWrapper(_group.toEscapedModel());
+	}
+
+	@Override
+	public Group toUnescapedModel() {
+		return new GroupWrapper(_group.toUnescapedModel());
+	}
+
+	@Override
+	public LayoutSet getPrivateLayoutSet() {
+		return _group.getPrivateLayoutSet();
+	}
+
+	@Override
+	public LayoutSet getPublicLayoutSet() {
+		return _group.getPublicLayoutSet();
 	}
 
 	/**
@@ -466,39 +486,19 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Group getLiveGroup() {
+	public Group getLiveGroup() {
 		return _group.getLiveGroup();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Group getParentGroup()
+	public Group getParentGroup()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _group.getParentGroup();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Group getStagingGroup() {
+	public Group getStagingGroup() {
 		return _group.getStagingGroup();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Group toEscapedModel() {
-		return new GroupWrapper(_group.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.Group toUnescapedModel() {
-		return new GroupWrapper(_group.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutSet getPrivateLayoutSet() {
-		return _group.getPrivateLayoutSet();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.LayoutSet getPublicLayoutSet() {
-		return _group.getPublicLayoutSet();
 	}
 
 	@Override
@@ -512,7 +512,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
-	public int compareTo(com.liferay.portal.kernel.model.Group group) {
+	public int compareTo(Group group) {
 		return _group.compareTo(group);
 	}
 
@@ -898,14 +898,13 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Group> getAncestors()
+	public java.util.List<Group> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _group.getAncestors();
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Group> getChildren(
-		boolean site) {
+	public java.util.List<Group> getChildren(boolean site) {
 		return _group.getChildren(site);
 	}
 
@@ -916,21 +915,20 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	*/
 	@Deprecated
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Group> getChildrenWithLayouts(
-		boolean site, int start, int end) {
+	public java.util.List<Group> getChildrenWithLayouts(boolean site,
+		int start, int end) {
 		return _group.getChildrenWithLayouts(site, start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Group> getChildrenWithLayouts(
-		boolean site, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Group> obc) {
+	public java.util.List<Group> getChildrenWithLayouts(boolean site,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Group> obc) {
 		return _group.getChildrenWithLayouts(site, start, end, obc);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.model.Group> getDescendants(
-		boolean site) {
+	public java.util.List<Group> getDescendants(boolean site) {
 		return _group.getDescendants(site);
 	}
 

@@ -657,7 +657,7 @@ public abstract class EmailAddressLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.EmailAddressLocalService.class)
+	@BeanReference(type = EmailAddressLocalService.class)
 	protected EmailAddressLocalService emailAddressLocalService;
 	@BeanReference(type = EmailAddressPersistence.class)
 	protected EmailAddressPersistence emailAddressPersistence;

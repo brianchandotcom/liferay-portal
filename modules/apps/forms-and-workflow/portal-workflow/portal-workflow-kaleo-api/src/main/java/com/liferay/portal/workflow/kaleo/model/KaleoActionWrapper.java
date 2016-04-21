@@ -193,6 +193,16 @@ public class KaleoActionWrapper implements KaleoAction,
 	}
 
 	@Override
+	public KaleoAction toEscapedModel() {
+		return new KaleoActionWrapper(_kaleoAction.toEscapedModel());
+	}
+
+	@Override
+	public KaleoAction toUnescapedModel() {
+		return new KaleoActionWrapper(_kaleoAction.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _kaleoAction.isCachedModel();
 	}
@@ -213,23 +223,12 @@ public class KaleoActionWrapper implements KaleoAction,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.portal.workflow.kaleo.model.KaleoAction> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<KaleoAction> toCacheModel() {
 		return _kaleoAction.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoAction toEscapedModel() {
-		return new KaleoActionWrapper(_kaleoAction.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoAction toUnescapedModel() {
-		return new KaleoActionWrapper(_kaleoAction.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.workflow.kaleo.model.KaleoAction kaleoAction) {
+	public int compareTo(KaleoAction kaleoAction) {
 		return _kaleoAction.compareTo(kaleoAction);
 	}
 

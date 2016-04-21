@@ -156,6 +156,16 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 		}
 	}
 
+	@Override
+	public SocialActivityCounter toEscapedModel() {
+		return new SocialActivityCounterWrapper(_socialActivityCounter.toEscapedModel());
+	}
+
+	@Override
+	public SocialActivityCounter toUnescapedModel() {
+		return new SocialActivityCounterWrapper(_socialActivityCounter.toUnescapedModel());
+	}
+
 	/**
 	* Returns the active of this social activity counter.
 	*
@@ -202,23 +212,12 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.social.kernel.model.SocialActivityCounter> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<SocialActivityCounter> toCacheModel() {
 		return _socialActivityCounter.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.social.kernel.model.SocialActivityCounter toEscapedModel() {
-		return new SocialActivityCounterWrapper(_socialActivityCounter.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.social.kernel.model.SocialActivityCounter toUnescapedModel() {
-		return new SocialActivityCounterWrapper(_socialActivityCounter.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.social.kernel.model.SocialActivityCounter socialActivityCounter) {
+	public int compareTo(SocialActivityCounter socialActivityCounter) {
 		return _socialActivityCounter.compareTo(socialActivityCounter);
 	}
 

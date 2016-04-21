@@ -678,19 +678,19 @@ public interface ShoppingItemModel extends BaseModel<ShoppingItem>, GroupedModel
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.shopping.model.ShoppingItem shoppingItem);
+	public int compareTo(ShoppingItem shoppingItem);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.shopping.model.ShoppingItem> toCacheModel();
+	public CacheModel<ShoppingItem> toCacheModel();
 
 	@Override
-	public com.liferay.shopping.model.ShoppingItem toEscapedModel();
+	public ShoppingItem toEscapedModel();
 
 	@Override
-	public com.liferay.shopping.model.ShoppingItem toUnescapedModel();
+	public ShoppingItem toUnescapedModel();
 
 	@Override
 	public String toString();

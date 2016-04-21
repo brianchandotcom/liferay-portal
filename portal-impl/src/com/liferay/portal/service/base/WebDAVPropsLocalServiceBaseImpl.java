@@ -458,7 +458,7 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.WebDAVPropsLocalService.class)
+	@BeanReference(type = WebDAVPropsLocalService.class)
 	protected WebDAVPropsLocalService webDAVPropsLocalService;
 	@BeanReference(type = WebDAVPropsPersistence.class)
 	protected WebDAVPropsPersistence webDAVPropsPersistence;

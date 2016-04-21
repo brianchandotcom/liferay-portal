@@ -328,20 +328,19 @@ public interface SocialRequestModel extends AttachedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.social.kernel.model.SocialRequest socialRequest);
+	public int compareTo(SocialRequest socialRequest);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.social.kernel.model.SocialRequest> toCacheModel();
+	public CacheModel<SocialRequest> toCacheModel();
 
 	@Override
-	public com.liferay.social.kernel.model.SocialRequest toEscapedModel();
+	public SocialRequest toEscapedModel();
 
 	@Override
-	public com.liferay.social.kernel.model.SocialRequest toUnescapedModel();
+	public SocialRequest toUnescapedModel();
 
 	@Override
 	public String toString();

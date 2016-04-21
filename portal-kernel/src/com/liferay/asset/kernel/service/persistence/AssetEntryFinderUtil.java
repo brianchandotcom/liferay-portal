@@ -25,8 +25,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class AssetEntryFinderUtil {
-	public static int countEntries(
-		com.liferay.asset.kernel.service.persistence.AssetEntryQuery entryQuery) {
+	public static int countEntries(AssetEntryQuery entryQuery) {
 		return getFinder().countEntries(entryQuery);
 	}
 
@@ -41,7 +40,7 @@ public class AssetEntryFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.asset.kernel.model.AssetEntry> findEntries(
-		com.liferay.asset.kernel.service.persistence.AssetEntryQuery entryQuery) {
+		AssetEntryQuery entryQuery) {
 		return getFinder().findEntries(entryQuery);
 	}
 

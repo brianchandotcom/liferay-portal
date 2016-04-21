@@ -652,7 +652,7 @@ public abstract class MeetupsEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.social.networking.service.MeetupsEntryLocalService.class)
+	@BeanReference(type = MeetupsEntryLocalService.class)
 	protected MeetupsEntryLocalService meetupsEntryLocalService;
 	@BeanReference(type = MeetupsEntryPersistence.class)
 	protected MeetupsEntryPersistence meetupsEntryPersistence;

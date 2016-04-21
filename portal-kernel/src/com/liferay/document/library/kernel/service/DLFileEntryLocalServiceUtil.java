@@ -65,7 +65,7 @@ public class DLFileEntryLocalServiceUtil {
 
 	/**
 	* As of 7.0.0, replaced by {@link #isKeepFileVersionLabel(long, boolean,
-	*              ServiceContext)}
+	* ServiceContext)}
 	*/
 	@Deprecated
 	public static boolean isKeepFileVersionLabel(long fileEntryId,

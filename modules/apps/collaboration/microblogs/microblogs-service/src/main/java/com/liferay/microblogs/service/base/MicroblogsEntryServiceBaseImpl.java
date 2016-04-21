@@ -584,7 +584,7 @@ public abstract class MicroblogsEntryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.microblogs.service.MicroblogsEntryLocalService.class)
 	protected com.liferay.microblogs.service.MicroblogsEntryLocalService microblogsEntryLocalService;
-	@BeanReference(type = com.liferay.microblogs.service.MicroblogsEntryService.class)
+	@BeanReference(type = MicroblogsEntryService.class)
 	protected MicroblogsEntryService microblogsEntryService;
 	@BeanReference(type = MicroblogsEntryPersistence.class)
 	protected MicroblogsEntryPersistence microblogsEntryPersistence;

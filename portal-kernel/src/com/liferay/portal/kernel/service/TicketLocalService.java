@@ -80,8 +80,7 @@ public interface TicketLocalService extends BaseLocalService,
 
 	public Ticket addDistinctTicket(long companyId, java.lang.String className,
 		long classPK, int type, java.lang.String extraInfo,
-		Date expirationDate,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext);
+		Date expirationDate, ServiceContext serviceContext);
 
 	/**
 	* Adds the ticket to the database. Also notifies the appropriate model listeners.
@@ -94,8 +93,7 @@ public interface TicketLocalService extends BaseLocalService,
 
 	public Ticket addTicket(long companyId, java.lang.String className,
 		long classPK, int type, java.lang.String extraInfo,
-		Date expirationDate,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext);
+		Date expirationDate, ServiceContext serviceContext);
 
 	/**
 	* Creates a new ticket with the primary key. Does not add the ticket to the database.

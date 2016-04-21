@@ -1186,7 +1186,7 @@ public abstract class KaleoTimerInstanceTokenLocalServiceBaseImpl
 	protected com.liferay.portal.workflow.kaleo.service.KaleoTimerLocalService kaleoTimerLocalService;
 	@BeanReference(type = KaleoTimerPersistence.class)
 	protected KaleoTimerPersistence kaleoTimerPersistence;
-	@BeanReference(type = com.liferay.portal.workflow.kaleo.service.KaleoTimerInstanceTokenLocalService.class)
+	@BeanReference(type = KaleoTimerInstanceTokenLocalService.class)
 	protected KaleoTimerInstanceTokenLocalService kaleoTimerInstanceTokenLocalService;
 	@BeanReference(type = KaleoTimerInstanceTokenPersistence.class)
 	protected KaleoTimerInstanceTokenPersistence kaleoTimerInstanceTokenPersistence;

@@ -155,19 +155,19 @@ public interface ListTypeModel extends BaseModel<ListType>, MVCCModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.portal.kernel.model.ListType listType);
+	public int compareTo(ListType listType);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.ListType> toCacheModel();
+	public CacheModel<ListType> toCacheModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.ListType toEscapedModel();
+	public ListType toEscapedModel();
 
 	@Override
-	public com.liferay.portal.kernel.model.ListType toUnescapedModel();
+	public ListType toUnescapedModel();
 
 	@Override
 	public String toString();

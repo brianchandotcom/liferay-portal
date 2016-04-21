@@ -313,8 +313,18 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.PasswordPolicy> toCacheModel() {
+	public CacheModel<PasswordPolicy> toCacheModel() {
 		return _passwordPolicy.toCacheModel();
+	}
+
+	@Override
+	public PasswordPolicy toEscapedModel() {
+		return new PasswordPolicyWrapper(_passwordPolicy.toEscapedModel());
+	}
+
+	@Override
+	public PasswordPolicy toUnescapedModel() {
+		return new PasswordPolicyWrapper(_passwordPolicy.toUnescapedModel());
 	}
 
 	/**
@@ -518,18 +528,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PasswordPolicy toEscapedModel() {
-		return new PasswordPolicyWrapper(_passwordPolicy.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PasswordPolicy toUnescapedModel() {
-		return new PasswordPolicyWrapper(_passwordPolicy.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.PasswordPolicy passwordPolicy) {
+	public int compareTo(PasswordPolicy passwordPolicy) {
 		return _passwordPolicy.compareTo(passwordPolicy);
 	}
 

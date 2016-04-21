@@ -478,7 +478,7 @@ public abstract class ExpandoValueServiceBaseImpl extends BaseServiceImpl
 	protected ExpandoTablePersistence expandoTablePersistence;
 	@BeanReference(type = com.liferay.expando.kernel.service.ExpandoValueLocalService.class)
 	protected com.liferay.expando.kernel.service.ExpandoValueLocalService expandoValueLocalService;
-	@BeanReference(type = com.liferay.expando.kernel.service.ExpandoValueService.class)
+	@BeanReference(type = ExpandoValueService.class)
 	protected ExpandoValueService expandoValueService;
 	@BeanReference(type = ExpandoValuePersistence.class)
 	protected ExpandoValuePersistence expandoValuePersistence;

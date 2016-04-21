@@ -273,7 +273,7 @@ public abstract class AssetCategoryPropertyServiceBaseImpl
 
 	@BeanReference(type = com.liferay.asset.kernel.service.AssetCategoryPropertyLocalService.class)
 	protected com.liferay.asset.kernel.service.AssetCategoryPropertyLocalService assetCategoryPropertyLocalService;
-	@BeanReference(type = com.liferay.asset.kernel.service.AssetCategoryPropertyService.class)
+	@BeanReference(type = AssetCategoryPropertyService.class)
 	protected AssetCategoryPropertyService assetCategoryPropertyService;
 	@BeanReference(type = AssetCategoryPropertyPersistence.class)
 	protected AssetCategoryPropertyPersistence assetCategoryPropertyPersistence;

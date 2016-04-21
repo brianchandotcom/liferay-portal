@@ -550,20 +550,19 @@ public interface DDLRecordSetModel extends BaseModel<DDLRecordSet>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.dynamic.data.lists.model.DDLRecordSet ddlRecordSet);
+	public int compareTo(DDLRecordSet ddlRecordSet);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.dynamic.data.lists.model.DDLRecordSet> toCacheModel();
+	public CacheModel<DDLRecordSet> toCacheModel();
 
 	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet toEscapedModel();
+	public DDLRecordSet toEscapedModel();
 
 	@Override
-	public com.liferay.dynamic.data.lists.model.DDLRecordSet toUnescapedModel();
+	public DDLRecordSet toUnescapedModel();
 
 	@Override
 	public String toString();

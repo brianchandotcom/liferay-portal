@@ -108,8 +108,7 @@ public interface RoleService extends BaseService {
 	public Role addRole(java.lang.String className, long classPK,
 		java.lang.String name, Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap, int type,
-		java.lang.String subtype,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String subtype, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -158,8 +157,7 @@ public interface RoleService extends BaseService {
 	public Role updateRole(long roleId, java.lang.String name,
 		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String subtype,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, java.lang.String keywords,

@@ -485,12 +485,12 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		_active = active;
 	}
 
-	public com.liferay.portal.model.impl.CompanyImpl.CompanySecurityBag getCompanySecurityBag() {
+	public CompanyImpl.CompanySecurityBag getCompanySecurityBag() {
 		return null;
 	}
 
 	public void setCompanySecurityBag(
-		com.liferay.portal.model.impl.CompanyImpl.CompanySecurityBag companySecurityBag) {
+		CompanyImpl.CompanySecurityBag companySecurityBag) {
 	}
 
 	public java.security.Key getKeyObj() {

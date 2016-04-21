@@ -145,6 +145,16 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	}
 
 	@Override
+	public MDRRuleGroup toEscapedModel() {
+		return new MDRRuleGroupWrapper(_mdrRuleGroup.toEscapedModel());
+	}
+
+	@Override
+	public MDRRuleGroup toUnescapedModel() {
+		return new MDRRuleGroupWrapper(_mdrRuleGroup.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _mdrRuleGroup.isCachedModel();
 	}
@@ -165,23 +175,12 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	}
 
 	@Override
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup toEscapedModel() {
-		return new MDRRuleGroupWrapper(_mdrRuleGroup.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.mobile.device.rules.model.MDRRuleGroup toUnescapedModel() {
-		return new MDRRuleGroupWrapper(_mdrRuleGroup.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.mobile.device.rules.model.MDRRuleGroup> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<MDRRuleGroup> toCacheModel() {
 		return _mdrRuleGroup.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.mobile.device.rules.model.MDRRuleGroup mdrRuleGroup) {
+	public int compareTo(MDRRuleGroup mdrRuleGroup) {
 		return _mdrRuleGroup.compareTo(mdrRuleGroup);
 	}
 
@@ -416,7 +415,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 	}
 
 	@Override
-	public java.util.List<com.liferay.mobile.device.rules.model.MDRRule> getRules() {
+	public java.util.List<MDRRule> getRules() {
 		return _mdrRuleGroup.getRules();
 	}
 

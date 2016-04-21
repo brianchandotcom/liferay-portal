@@ -114,6 +114,16 @@ public class TrashVersionWrapper implements TrashVersion,
 	}
 
 	@Override
+	public TrashVersion toEscapedModel() {
+		return new TrashVersionWrapper(_trashVersion.toEscapedModel());
+	}
+
+	@Override
+	public TrashVersion toUnescapedModel() {
+		return new TrashVersionWrapper(_trashVersion.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _trashVersion.isCachedModel();
 	}
@@ -134,7 +144,7 @@ public class TrashVersionWrapper implements TrashVersion,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.trash.kernel.model.TrashVersion> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<TrashVersion> toCacheModel() {
 		return _trashVersion.toCacheModel();
 	}
 
@@ -144,18 +154,7 @@ public class TrashVersionWrapper implements TrashVersion,
 	}
 
 	@Override
-	public com.liferay.trash.kernel.model.TrashVersion toEscapedModel() {
-		return new TrashVersionWrapper(_trashVersion.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.trash.kernel.model.TrashVersion toUnescapedModel() {
-		return new TrashVersionWrapper(_trashVersion.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.trash.kernel.model.TrashVersion trashVersion) {
+	public int compareTo(TrashVersion trashVersion) {
 		return _trashVersion.compareTo(trashVersion);
 	}
 

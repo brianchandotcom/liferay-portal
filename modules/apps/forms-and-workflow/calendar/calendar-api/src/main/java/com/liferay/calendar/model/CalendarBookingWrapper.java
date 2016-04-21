@@ -271,6 +271,28 @@ public class CalendarBookingWrapper implements CalendarBooking,
 		}
 	}
 
+	@Override
+	public Calendar getCalendar()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _calendarBooking.getCalendar();
+	}
+
+	@Override
+	public CalendarBooking toEscapedModel() {
+		return new CalendarBookingWrapper(_calendarBooking.toEscapedModel());
+	}
+
+	@Override
+	public CalendarBooking toUnescapedModel() {
+		return new CalendarBookingWrapper(_calendarBooking.toUnescapedModel());
+	}
+
+	@Override
+	public CalendarResource getCalendarResource()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _calendarBooking.getCalendarResource();
+	}
+
 	/**
 	* Returns the all day of this calendar booking.
 	*
@@ -427,31 +449,9 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	}
 
 	@Override
-	public com.liferay.calendar.model.Calendar getCalendar()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _calendarBooking.getCalendar();
-	}
-
-	@Override
-	public com.liferay.calendar.model.CalendarBooking getParentCalendarBooking()
+	public CalendarBooking getParentCalendarBooking()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _calendarBooking.getParentCalendarBooking();
-	}
-
-	@Override
-	public com.liferay.calendar.model.CalendarBooking toEscapedModel() {
-		return new CalendarBookingWrapper(_calendarBooking.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.calendar.model.CalendarBooking toUnescapedModel() {
-		return new CalendarBookingWrapper(_calendarBooking.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.calendar.model.CalendarResource getCalendarResource()
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _calendarBooking.getCalendarResource();
 	}
 
 	@Override
@@ -475,7 +475,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.calendar.model.CalendarBooking> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<CalendarBooking> toCacheModel() {
 		return _calendarBooking.toCacheModel();
 	}
 
@@ -501,8 +501,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.calendar.model.CalendarBooking calendarBooking) {
+	public int compareTo(CalendarBooking calendarBooking) {
 		return _calendarBooking.compareTo(calendarBooking);
 	}
 
@@ -832,7 +831,7 @@ public class CalendarBookingWrapper implements CalendarBooking,
 	}
 
 	@Override
-	public java.util.List<com.liferay.calendar.model.CalendarBooking> getChildCalendarBookings() {
+	public java.util.List<CalendarBooking> getChildCalendarBookings() {
 		return _calendarBooking.getChildCalendarBookings();
 	}
 

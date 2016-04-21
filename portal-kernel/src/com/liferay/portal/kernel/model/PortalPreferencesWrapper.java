@@ -99,8 +99,18 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.PortalPreferences> toCacheModel() {
+	public CacheModel<PortalPreferences> toCacheModel() {
 		return _portalPreferences.toCacheModel();
+	}
+
+	@Override
+	public PortalPreferences toEscapedModel() {
+		return new PortalPreferencesWrapper(_portalPreferences.toEscapedModel());
+	}
+
+	@Override
+	public PortalPreferences toUnescapedModel() {
+		return new PortalPreferencesWrapper(_portalPreferences.toUnescapedModel());
 	}
 
 	@Override
@@ -124,18 +134,7 @@ public class PortalPreferencesWrapper implements PortalPreferences,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PortalPreferences toEscapedModel() {
-		return new PortalPreferencesWrapper(_portalPreferences.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PortalPreferences toUnescapedModel() {
-		return new PortalPreferencesWrapper(_portalPreferences.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.PortalPreferences portalPreferences) {
+	public int compareTo(PortalPreferences portalPreferences) {
 		return _portalPreferences.compareTo(portalPreferences);
 	}
 

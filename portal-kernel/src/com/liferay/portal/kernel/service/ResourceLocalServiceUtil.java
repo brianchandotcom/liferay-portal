@@ -136,7 +136,7 @@ public class ResourceLocalServiceUtil {
 	*/
 	public static void addModelResources(
 		com.liferay.portal.kernel.model.AuditedModel auditedModel,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addModelResources(auditedModel, serviceContext);
 	}
@@ -334,7 +334,7 @@ public class ResourceLocalServiceUtil {
 	*/
 	public static void updateModelResources(
 		com.liferay.portal.kernel.model.AuditedModel auditedModel,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateModelResources(auditedModel, serviceContext);
 	}

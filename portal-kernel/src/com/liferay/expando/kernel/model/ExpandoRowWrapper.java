@@ -103,6 +103,16 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	}
 
 	@Override
+	public ExpandoRow toEscapedModel() {
+		return new ExpandoRowWrapper(_expandoRow.toEscapedModel());
+	}
+
+	@Override
+	public ExpandoRow toUnescapedModel() {
+		return new ExpandoRowWrapper(_expandoRow.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _expandoRow.isCachedModel();
 	}
@@ -118,22 +128,12 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoRow toEscapedModel() {
-		return new ExpandoRowWrapper(_expandoRow.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.expando.kernel.model.ExpandoRow toUnescapedModel() {
-		return new ExpandoRowWrapper(_expandoRow.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.expando.kernel.model.ExpandoRow> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<ExpandoRow> toCacheModel() {
 		return _expandoRow.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(com.liferay.expando.kernel.model.ExpandoRow expandoRow) {
+	public int compareTo(ExpandoRow expandoRow) {
 		return _expandoRow.compareTo(expandoRow);
 	}
 

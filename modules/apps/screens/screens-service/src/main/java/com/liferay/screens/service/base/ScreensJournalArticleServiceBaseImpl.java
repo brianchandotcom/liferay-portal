@@ -403,7 +403,7 @@ public abstract class ScreensJournalArticleServiceBaseImpl
 	protected com.liferay.screens.service.ScreensAssetEntryService screensAssetEntryService;
 	@BeanReference(type = com.liferay.screens.service.ScreensDDLRecordService.class)
 	protected com.liferay.screens.service.ScreensDDLRecordService screensDDLRecordService;
-	@BeanReference(type = com.liferay.screens.service.ScreensJournalArticleService.class)
+	@BeanReference(type = ScreensJournalArticleService.class)
 	protected ScreensJournalArticleService screensJournalArticleService;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;

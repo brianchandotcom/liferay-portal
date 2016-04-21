@@ -269,8 +269,7 @@ public interface LayoutSetLocalService extends BaseLocalService,
 		Projection projection);
 
 	public void deleteLayoutSet(long groupId, boolean privateLayout,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Updates the state of the layout set prototype link.

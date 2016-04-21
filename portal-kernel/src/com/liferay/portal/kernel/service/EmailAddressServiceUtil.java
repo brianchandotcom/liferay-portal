@@ -42,8 +42,7 @@ public class EmailAddressServiceUtil {
 	 */
 	public static com.liferay.portal.kernel.model.EmailAddress addEmailAddress(
 		java.lang.String className, long classPK, java.lang.String address,
-		long typeId, boolean primary,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long typeId, boolean primary, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addEmailAddress(className, classPK, address, typeId,

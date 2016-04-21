@@ -113,6 +113,16 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 		}
 	}
 
+	@Override
+	public DLFileRank toEscapedModel() {
+		return new DLFileRankWrapper(_dlFileRank.toEscapedModel());
+	}
+
+	@Override
+	public DLFileRank toUnescapedModel() {
+		return new DLFileRankWrapper(_dlFileRank.toUnescapedModel());
+	}
+
 	/**
 	* Returns the active of this document library file rank.
 	*
@@ -149,28 +159,17 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLFileRank toEscapedModel() {
-		return new DLFileRankWrapper(_dlFileRank.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLFileRank toUnescapedModel() {
-		return new DLFileRankWrapper(_dlFileRank.toUnescapedModel());
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _dlFileRank.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.document.library.kernel.model.DLFileRank> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<DLFileRank> toCacheModel() {
 		return _dlFileRank.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.document.library.kernel.model.DLFileRank dlFileRank) {
+	public int compareTo(DLFileRank dlFileRank) {
 		return _dlFileRank.compareTo(dlFileRank);
 	}
 

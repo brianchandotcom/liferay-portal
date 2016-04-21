@@ -171,8 +171,7 @@ public interface RoleLocalService extends BaseLocalService,
 	public Role addRole(long userId, java.lang.String className, long classPK,
 		java.lang.String name, Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap, int type,
-		java.lang.String subtype,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String subtype, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -352,8 +351,7 @@ public interface RoleLocalService extends BaseLocalService,
 	public Role updateRole(long roleId, java.lang.String name,
 		Map<Locale, java.lang.String> titleMap,
 		Map<Locale, java.lang.String> descriptionMap, java.lang.String subtype,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException;
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupRolesCount(long groupId);
@@ -668,8 +666,8 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param userId the primary key of the user
 	* @param groups the groups (optionally <code>null</code>)
 	* @return the union of all the user's roles within the groups
-	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(long,
-	List)
+	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(
+	long, List)
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getUserRelatedRoles(long userId, List<Group> groups);
@@ -680,8 +678,8 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param userId the primary key of the user
 	* @param groupId the primary key of the group
 	* @return the user's roles within the group
-	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(long,
-	long)
+	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(
+	long, long)
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getUserRelatedRoles(long userId, long groupId);
@@ -692,8 +690,8 @@ public interface RoleLocalService extends BaseLocalService,
 	* @param userId the primary key of the user
 	* @param groupIds the primary keys of the groups
 	* @return the union of all the user's roles within the groups
-	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(long,
-	long[])
+	* @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(
+	long, long[])
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getUserRelatedRoles(long userId, long[] groupIds);

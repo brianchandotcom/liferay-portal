@@ -451,7 +451,7 @@ public abstract class OrgLaborLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.OrgLaborLocalService.class)
+	@BeanReference(type = OrgLaborLocalService.class)
 	protected OrgLaborLocalService orgLaborLocalService;
 	@BeanReference(type = OrgLaborPersistence.class)
 	protected OrgLaborPersistence orgLaborPersistence;

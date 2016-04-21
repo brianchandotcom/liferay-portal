@@ -370,20 +370,19 @@ public interface BackgroundTaskModel extends BaseModel<BackgroundTask>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.portal.background.task.model.BackgroundTask backgroundTask);
+	public int compareTo(BackgroundTask backgroundTask);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.portal.background.task.model.BackgroundTask> toCacheModel();
+	public CacheModel<BackgroundTask> toCacheModel();
 
 	@Override
-	public com.liferay.portal.background.task.model.BackgroundTask toEscapedModel();
+	public BackgroundTask toEscapedModel();
 
 	@Override
-	public com.liferay.portal.background.task.model.BackgroundTask toUnescapedModel();
+	public BackgroundTask toUnescapedModel();
 
 	@Override
 	public String toString();

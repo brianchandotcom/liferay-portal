@@ -91,8 +91,18 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.ListType> toCacheModel() {
+	public CacheModel<ListType> toCacheModel() {
 		return _listType.toCacheModel();
+	}
+
+	@Override
+	public ListType toEscapedModel() {
+		return new ListTypeWrapper(_listType.toEscapedModel());
+	}
+
+	@Override
+	public ListType toUnescapedModel() {
+		return new ListTypeWrapper(_listType.toUnescapedModel());
 	}
 
 	@Override
@@ -116,17 +126,7 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.ListType toEscapedModel() {
-		return new ListTypeWrapper(_listType.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.ListType toUnescapedModel() {
-		return new ListTypeWrapper(_listType.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(com.liferay.portal.kernel.model.ListType listType) {
+	public int compareTo(ListType listType) {
 		return _listType.compareTo(listType);
 	}
 

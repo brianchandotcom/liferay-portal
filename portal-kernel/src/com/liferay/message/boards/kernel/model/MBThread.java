@@ -59,7 +59,7 @@ public interface MBThread extends MBThreadModel, PersistedModel {
 
 	public long getAttachmentsFolderId();
 
-	public com.liferay.message.boards.kernel.model.MBCategory getCategory()
+	public MBCategory getCategory()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portal.kernel.lock.Lock getLock();

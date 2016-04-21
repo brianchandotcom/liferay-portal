@@ -56,9 +56,9 @@ public interface CalendarResource extends CalendarResourceModel,
 			}
 		};
 
-	public java.util.List<com.liferay.calendar.model.Calendar> getCalendars();
+	public java.util.List<Calendar> getCalendars();
 
-	public com.liferay.calendar.model.Calendar getDefaultCalendar();
+	public Calendar getDefaultCalendar();
 
 	public long getDefaultCalendarId();
 

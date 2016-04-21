@@ -122,6 +122,16 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	}
 
 	@Override
+	public DLContent toEscapedModel() {
+		return new DLContentWrapper(_dlContent.toEscapedModel());
+	}
+
+	@Override
+	public DLContent toUnescapedModel() {
+		return new DLContentWrapper(_dlContent.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _dlContent.isCachedModel();
 	}
@@ -137,28 +147,17 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	}
 
 	@Override
-	public com.liferay.document.library.kernel.model.DLContent toEscapedModel() {
-		return new DLContentWrapper(_dlContent.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.document.library.kernel.model.DLContent toUnescapedModel() {
-		return new DLContentWrapper(_dlContent.toUnescapedModel());
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _dlContent.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.document.library.kernel.model.DLContent> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<DLContent> toCacheModel() {
 		return _dlContent.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.document.library.kernel.model.DLContent dlContent) {
+	public int compareTo(DLContent dlContent) {
 		return _dlContent.compareTo(dlContent);
 	}
 

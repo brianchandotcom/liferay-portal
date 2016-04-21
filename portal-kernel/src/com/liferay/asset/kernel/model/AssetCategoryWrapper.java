@@ -180,6 +180,16 @@ public class AssetCategoryWrapper implements AssetCategory,
 	}
 
 	@Override
+	public AssetCategory toEscapedModel() {
+		return new AssetCategoryWrapper(_assetCategory.toEscapedModel());
+	}
+
+	@Override
+	public AssetCategory toUnescapedModel() {
+		return new AssetCategoryWrapper(_assetCategory.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _assetCategory.isCachedModel();
 	}
@@ -200,18 +210,8 @@ public class AssetCategoryWrapper implements AssetCategory,
 	}
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetCategory getParentCategory() {
+	public AssetCategory getParentCategory() {
 		return _assetCategory.getParentCategory();
-	}
-
-	@Override
-	public com.liferay.asset.kernel.model.AssetCategory toEscapedModel() {
-		return new AssetCategoryWrapper(_assetCategory.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.asset.kernel.model.AssetCategory toUnescapedModel() {
-		return new AssetCategoryWrapper(_assetCategory.toUnescapedModel());
 	}
 
 	@Override
@@ -220,13 +220,12 @@ public class AssetCategoryWrapper implements AssetCategory,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.asset.kernel.model.AssetCategory> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<AssetCategory> toCacheModel() {
 		return _assetCategory.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.asset.kernel.model.AssetCategory assetCategory) {
+	public int compareTo(AssetCategory assetCategory) {
 		return _assetCategory.compareTo(assetCategory);
 	}
 
@@ -477,7 +476,7 @@ public class AssetCategoryWrapper implements AssetCategory,
 	}
 
 	@Override
-	public java.util.List<com.liferay.asset.kernel.model.AssetCategory> getAncestors()
+	public java.util.List<AssetCategory> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetCategory.getAncestors();
 	}

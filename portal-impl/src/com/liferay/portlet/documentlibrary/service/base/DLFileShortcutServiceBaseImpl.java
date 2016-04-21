@@ -637,7 +637,7 @@ public abstract class DLFileShortcutServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.document.library.kernel.service.DLFileShortcutLocalService.class)
 	protected com.liferay.document.library.kernel.service.DLFileShortcutLocalService dlFileShortcutLocalService;
-	@BeanReference(type = com.liferay.document.library.kernel.service.DLFileShortcutService.class)
+	@BeanReference(type = DLFileShortcutService.class)
 	protected DLFileShortcutService dlFileShortcutService;
 	@BeanReference(type = DLFileShortcutPersistence.class)
 	protected DLFileShortcutPersistence dlFileShortcutPersistence;

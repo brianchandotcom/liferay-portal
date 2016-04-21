@@ -1256,7 +1256,7 @@ public abstract class MBMessageServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.message.boards.kernel.service.MBMessageLocalService.class)
 	protected com.liferay.message.boards.kernel.service.MBMessageLocalService mbMessageLocalService;
-	@BeanReference(type = com.liferay.message.boards.kernel.service.MBMessageService.class)
+	@BeanReference(type = MBMessageService.class)
 	protected MBMessageService mbMessageService;
 	@BeanReference(type = MBMessagePersistence.class)
 	protected MBMessagePersistence mbMessagePersistence;

@@ -120,8 +120,18 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.kernel.model.PortletPreferences> toCacheModel() {
+	public CacheModel<PortletPreferences> toCacheModel() {
 		return _portletPreferences.toCacheModel();
+	}
+
+	@Override
+	public PortletPreferences toEscapedModel() {
+		return new PortletPreferencesWrapper(_portletPreferences.toEscapedModel());
+	}
+
+	@Override
+	public PortletPreferences toUnescapedModel() {
+		return new PortletPreferencesWrapper(_portletPreferences.toUnescapedModel());
 	}
 
 	@Override
@@ -145,18 +155,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.PortletPreferences toEscapedModel() {
-		return new PortletPreferencesWrapper(_portletPreferences.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PortletPreferences toUnescapedModel() {
-		return new PortletPreferencesWrapper(_portletPreferences.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.portal.kernel.model.PortletPreferences portletPreferences) {
+	public int compareTo(PortletPreferences portletPreferences) {
 		return _portletPreferences.compareTo(portletPreferences);
 	}
 

@@ -986,20 +986,19 @@ public interface JournalArticleModel extends AttachedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.journal.model.JournalArticle journalArticle);
+	public int compareTo(JournalArticle journalArticle);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.journal.model.JournalArticle> toCacheModel();
+	public CacheModel<JournalArticle> toCacheModel();
 
 	@Override
-	public com.liferay.journal.model.JournalArticle toEscapedModel();
+	public JournalArticle toEscapedModel();
 
 	@Override
-	public com.liferay.journal.model.JournalArticle toUnescapedModel();
+	public JournalArticle toUnescapedModel();
 
 	@Override
 	public String toString();

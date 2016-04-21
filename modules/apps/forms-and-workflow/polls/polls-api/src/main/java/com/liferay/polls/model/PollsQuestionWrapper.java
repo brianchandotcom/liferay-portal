@@ -159,6 +159,16 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
+	public PollsQuestion toEscapedModel() {
+		return new PollsQuestionWrapper(_pollsQuestion.toEscapedModel());
+	}
+
+	@Override
+	public PollsQuestion toUnescapedModel() {
+		return new PollsQuestionWrapper(_pollsQuestion.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _pollsQuestion.isCachedModel();
 	}
@@ -190,22 +200,12 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
-	public com.liferay.polls.model.PollsQuestion toEscapedModel() {
-		return new PollsQuestionWrapper(_pollsQuestion.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.polls.model.PollsQuestion toUnescapedModel() {
-		return new PollsQuestionWrapper(_pollsQuestion.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.polls.model.PollsQuestion> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<PollsQuestion> toCacheModel() {
 		return _pollsQuestion.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(com.liferay.polls.model.PollsQuestion pollsQuestion) {
+	public int compareTo(PollsQuestion pollsQuestion) {
 		return _pollsQuestion.compareTo(pollsQuestion);
 	}
 
@@ -465,18 +465,17 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
-	public java.util.List<com.liferay.polls.model.PollsChoice> getChoices() {
+	public java.util.List<PollsChoice> getChoices() {
 		return _pollsQuestion.getChoices();
 	}
 
 	@Override
-	public java.util.List<com.liferay.polls.model.PollsVote> getVotes() {
+	public java.util.List<PollsVote> getVotes() {
 		return _pollsQuestion.getVotes();
 	}
 
 	@Override
-	public java.util.List<com.liferay.polls.model.PollsVote> getVotes(
-		int start, int end) {
+	public java.util.List<PollsVote> getVotes(int start, int end) {
 		return _pollsQuestion.getVotes(start, end);
 	}
 

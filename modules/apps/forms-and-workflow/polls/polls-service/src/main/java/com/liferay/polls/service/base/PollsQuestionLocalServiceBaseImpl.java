@@ -731,7 +731,7 @@ public abstract class PollsQuestionLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.polls.service.PollsQuestionLocalService.class)
+	@BeanReference(type = PollsQuestionLocalService.class)
 	protected PollsQuestionLocalService pollsQuestionLocalService;
 	@BeanReference(type = PollsQuestionPersistence.class)
 	protected PollsQuestionPersistence pollsQuestionPersistence;

@@ -186,7 +186,7 @@ public abstract class ThemeLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.portal.kernel.service.ThemeLocalService.class)
+	@BeanReference(type = ThemeLocalService.class)
 	protected ThemeLocalService themeLocalService;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;

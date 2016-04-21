@@ -152,6 +152,16 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	}
 
 	@Override
+	public MBDiscussion toEscapedModel() {
+		return new MBDiscussionWrapper(_mbDiscussion.toEscapedModel());
+	}
+
+	@Override
+	public MBDiscussion toUnescapedModel() {
+		return new MBDiscussionWrapper(_mbDiscussion.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _mbDiscussion.isCachedModel();
 	}
@@ -172,23 +182,12 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	}
 
 	@Override
-	public com.liferay.message.boards.kernel.model.MBDiscussion toEscapedModel() {
-		return new MBDiscussionWrapper(_mbDiscussion.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.message.boards.kernel.model.MBDiscussion toUnescapedModel() {
-		return new MBDiscussionWrapper(_mbDiscussion.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.message.boards.kernel.model.MBDiscussion> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<MBDiscussion> toCacheModel() {
 		return _mbDiscussion.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.message.boards.kernel.model.MBDiscussion mbDiscussion) {
+	public int compareTo(MBDiscussion mbDiscussion) {
 		return _mbDiscussion.compareTo(mbDiscussion);
 	}
 

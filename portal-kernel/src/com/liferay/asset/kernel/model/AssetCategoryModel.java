@@ -550,20 +550,19 @@ public interface AssetCategoryModel extends BaseModel<AssetCategory>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.asset.kernel.model.AssetCategory assetCategory);
+	public int compareTo(AssetCategory assetCategory);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.asset.kernel.model.AssetCategory> toCacheModel();
+	public CacheModel<AssetCategory> toCacheModel();
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetCategory toEscapedModel();
+	public AssetCategory toEscapedModel();
 
 	@Override
-	public com.liferay.asset.kernel.model.AssetCategory toUnescapedModel();
+	public AssetCategory toUnescapedModel();
 
 	@Override
 	public String toString();

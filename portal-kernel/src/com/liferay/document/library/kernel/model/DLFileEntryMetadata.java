@@ -56,6 +56,6 @@ public interface DLFileEntryMetadata extends DLFileEntryMetadataModel,
 			}
 		};
 
-	public com.liferay.document.library.kernel.model.DLFileVersion getFileVersion()
+	public DLFileVersion getFileVersion()
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

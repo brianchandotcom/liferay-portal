@@ -16,8 +16,11 @@ package com.liferay.gradle.plugins;
 
 import aQute.bnd.osgi.Constants;
 
+import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.tasks.UpdateVersionTask;
 import com.liferay.gradle.plugins.util.GradleUtil;
+
+import java.io.File;
 
 import java.util.concurrent.Callable;
 
@@ -54,6 +57,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		final UpdateVersionTask updateThemeVersionTask =
 			addTaskUpdateThemeVersion(project);
 
+		configureDeployDir(project);
 		configureProject(project);
 
 		project.afterEvaluate(
@@ -125,6 +129,22 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 	protected void applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, MavenPlugin.class);
+	}
+
+	protected void configureDeployDir(Project project) {
+		final LiferayExtension liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
+
+		liferayExtension.setDeployDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						liferayExtension.getLiferayHome(), "deploy");
+				}
+
+			});
 	}
 
 	protected void configureProject(Project project) {

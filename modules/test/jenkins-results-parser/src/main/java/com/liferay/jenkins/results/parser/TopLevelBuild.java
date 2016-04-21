@@ -62,18 +62,22 @@ public class TopLevelBuild extends BaseBuild {
 
 		if (status == null) {
 			setStatus("running");
+
+			status = getStatus();
 		}
 
 		if (status.equals("completed")) {
 			return;
 		}
 
-		if (_downstreamBuilds != null) {		
+		if (_downstreamBuilds != null) {
 			for (DownstreamBuild downstreamBuild : _downstreamBuilds) {
 				downstreamBuild.update();
 			}
 
-			if (_downstreamBuilds.size() == getDownstreamBuildCount("completed")) {
+			if (_downstreamBuilds.size() ==
+					getDownstreamBuildCount("completed")) {
+
 				setStatus("completed");
 
 				return;

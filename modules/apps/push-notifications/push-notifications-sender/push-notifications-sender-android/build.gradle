@@ -1,0 +1,5 @@
+dependencies {
+	provided group: "com.ganyo", name: "gcm-server", version: "1.0.2"
+	provided group: "com.googlecode.json-simple", name: "json-simple", version: "1.1"
+	provided project(":apps:push-notifications:push-notifications-api")
+}

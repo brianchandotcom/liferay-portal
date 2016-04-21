@@ -29,22 +29,26 @@ import org.jboss.aerogear.windows.mpns.MpnsServiceBuilder;
 import org.jboss.aerogear.windows.mpns.notifications.TileNotification;
 import org.jboss.aerogear.windows.mpns.notifications.ToastNotification;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+
 /**
  * @author Javier Gamarra
  * @author Salva Tejero
  */
+@Component(
+	immediate = true,
+	property = {"platform=" + MicrosoftPushNotificationsSender.PLATFORM}
+)
 public class MicrosoftPushNotificationsSender
 	implements PushNotificationsSender {
+
+	public static final String PLATFORM = "microsoft";
 
 	@Override
 	public void send(List<String> tokens, JSONObject payloadJSONObject)
 		throws Exception {
-
-		MpnsService mpnsService = getMpnsService();
-
-		if (mpnsService == null) {
-			return;
-		}
 
 		String from = StringPool.BLANK;
 
@@ -68,9 +72,16 @@ public class MicrosoftPushNotificationsSender
 			from, body, attributes);
 
 		for (String token : tokens) {
-			mpnsService.push(token, tileNotification);
-			mpnsService.push(token, toastNotification);
+			_mpnsService.push(token, tileNotification);
+			_mpnsService.push(token, toastNotification);
 		}
+	}
+
+	@Activate
+	protected void activate() {
+		MpnsServiceBuilder mpnsServiceBuilder = MPNS.newService();
+
+		_mpnsService = mpnsServiceBuilder.build();
 	}
 
 	protected TileNotification buildTileNotification(
@@ -99,6 +110,11 @@ public class MicrosoftPushNotificationsSender
 		return builder.build();
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_mpnsService = null;
+	}
+
 	protected String getAttributes(JSONObject payloadJSONObject) {
 		StringBuilder sb = new StringBuilder();
 
@@ -115,16 +131,6 @@ public class MicrosoftPushNotificationsSender
 		return sb.toString();
 	}
 
-	protected synchronized MpnsService getMpnsService() throws Exception {
-		if (_mpnsService == null) {
-			MpnsServiceBuilder mpnsServiceBuilder = MPNS.newService();
-
-			_mpnsService = mpnsServiceBuilder.build();
-		}
-
-		return _mpnsService;
-	}
-
-	private MpnsService _mpnsService;
+	private volatile MpnsService _mpnsService;
 
 }

@@ -14,7 +14,13 @@
 		</path>
 	</pathconvert>
 
+	<target name="copy-artifact">
+		<copy todir="${dist.dir}" file="${sdk.dist.dir}/${Bundle-SymbolicName}-${Bundle-Version}.jar" />
+	</target>
+
 	<target name="dist-module-artifact" depends="download-artifact,record-artifact-change-log" />
+
+	<target name="dist-module-artifact-src" depends="copy-artifact" />
 
 	<target name="download-artifact">
 		<fail message="Missing artifact.properties file in ${releng.module.dir}.">

@@ -26,12 +26,15 @@ import aQute.bnd.annotation.ProviderType;
  * @author Bruno Farache
  */
 @ProviderType
-public class PushNotificationsDeviceImpl extends PushNotificationsDeviceBaseImpl {
-	/*
+public class PushNotificationsDeviceImpl
+	extends PushNotificationsDeviceBaseImpl {
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a push notifications device model instance should use the {@link com.liferay.push.notifications.model.PushNotificationsDevice} interface instead.
 	 */
 	public PushNotificationsDeviceImpl() {
 	}
+
 }

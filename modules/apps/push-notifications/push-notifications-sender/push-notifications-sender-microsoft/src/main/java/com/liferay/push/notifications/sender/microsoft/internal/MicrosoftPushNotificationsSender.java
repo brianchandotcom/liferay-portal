@@ -22,7 +22,6 @@ import com.liferay.push.notifications.sender.PushNotificationsSender;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.jboss.aerogear.windows.mpns.MPNS;
 import org.jboss.aerogear.windows.mpns.MpnsService;
@@ -38,18 +37,7 @@ public class MicrosoftPushNotificationsSender
 	implements PushNotificationsSender {
 
 	@Override
-	public PushNotificationsSender create(Map<String, Object> configuration) {
-		return new MicrosoftPushNotificationsSender();
-	}
-
-	@Override
-	public synchronized void reset() {
-		_mpnsService = null;
-	}
-
-	@Override
-	public void send(
-			String platform, List<String> tokens, JSONObject payloadJSONObject)
+	public void send(List<String> tokens, JSONObject payloadJSONObject)
 		throws Exception {
 
 		MpnsService mpnsService = getMpnsService();

@@ -81,8 +81,7 @@ public class JavaSecurityTest {
 					}
 
 				},
-				accessControlContext
-			);
+				accessControlContext);
 
 			Assert.fail();
 		}
@@ -132,15 +131,13 @@ public class JavaSecurityTest {
 								}
 
 							},
-							accessControlContext
-						);
+							accessControlContext);
 
 						return null;
 					}
 
 				},
-				accessControlContext
-			);
+				accessControlContext);
 
 			Assert.fail();
 		}
@@ -187,8 +184,7 @@ public class JavaSecurityTest {
 					}
 
 				},
-				accessControlContext
-			);
+				accessControlContext);
 
 			Assert.fail();
 		}

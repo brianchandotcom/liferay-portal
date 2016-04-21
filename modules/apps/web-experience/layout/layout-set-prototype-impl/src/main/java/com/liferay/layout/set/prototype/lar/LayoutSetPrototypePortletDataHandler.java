@@ -71,8 +71,7 @@ public class LayoutSetPrototypePortletDataHandler
 					new PortletDataHandlerBoolean(
 						NAMESPACE, "page-templates", true, false)
 				},
-				LayoutSetPrototype.class.getName()
-			));
+				LayoutSetPrototype.class.getName()));
 	}
 
 	@Override

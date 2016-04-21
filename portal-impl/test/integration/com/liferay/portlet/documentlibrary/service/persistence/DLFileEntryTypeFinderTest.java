@@ -123,8 +123,7 @@ public class DLFileEntryTypeFinderTest {
 				initialFileEntryTypesCount + 1,
 				DLFileEntryTypeFinderUtil.filterCountByKeywords(
 					_group.getCompanyId(), new long[] {_group.getGroupId()},
-					_DL_FILE_ENTRY_TYPE_NAME, true)
-			);
+					_DL_FILE_ENTRY_TYPE_NAME, true));
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
@@ -165,8 +164,7 @@ public class DLFileEntryTypeFinderTest {
 				initialFileEntryTypesCount,
 				DLFileEntryTypeFinderUtil.filterCountByKeywords(
 					_group.getCompanyId(), new long[] {_group.getGroupId()},
-					_DL_FILE_ENTRY_TYPE_NAME, true)
-			);
+					_DL_FILE_ENTRY_TYPE_NAME, true));
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
@@ -191,8 +189,7 @@ public class DLFileEntryTypeFinderTest {
 			initialFileEntryTypesCount + 1,
 			DLFileEntryTypeFinderUtil.filterCountByKeywords(
 				_group.getCompanyId(), new long[] {_group.getGroupId()},
-				StringPool.BLANK, true)
-		);
+				StringPool.BLANK, true));
 	}
 
 	@Test
@@ -214,8 +211,7 @@ public class DLFileEntryTypeFinderTest {
 			initialFileEntryTypesCount + 1,
 			DLFileEntryTypeFinderUtil.filterCountByKeywords(
 				_group.getCompanyId(), new long[] {_group.getGroupId()},
-				StringPool.BLANK, false)
-		);
+				StringPool.BLANK, false));
 	}
 
 	@Test

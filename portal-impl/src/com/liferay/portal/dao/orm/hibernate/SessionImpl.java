@@ -85,8 +85,7 @@ public class SessionImpl implements Session {
 			queryString = SQLTransformer.transformFromJpqlToHql(queryString);
 
 			return DoPrivilegedUtil.wrapWhenActive(
-				new QueryImpl(_session.createQuery(queryString), strictName)
-			);
+				new QueryImpl(_session.createQuery(queryString), strictName));
 		}
 		catch (Exception e) {
 			throw ExceptionTranslator.translate(e);
@@ -107,8 +106,7 @@ public class SessionImpl implements Session {
 
 			return DoPrivilegedUtil.wrapWhenActive(
 				new SQLQueryImpl(
-					_session.createSQLQuery(queryString), strictName)
-			);
+					_session.createSQLQuery(queryString), strictName));
 		}
 		catch (Exception e) {
 			throw ExceptionTranslator.translate(e);

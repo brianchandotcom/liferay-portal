@@ -129,8 +129,7 @@ public class ItemSelectorRepositoryEntryBrowserUtil {
 								fileEntry.getModifiedDate().getTime(),
 							true),
 						HtmlUtil.escape(fileEntry.getUserName())
-					}
-				)));
+					})));
 
 		firstTabJSONObject.put("data", firstTabDataJSONArray);
 

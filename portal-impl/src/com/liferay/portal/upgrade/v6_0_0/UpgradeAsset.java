@@ -436,23 +436,19 @@ public class UpgradeAsset extends UpgradeProcess {
 	protected void updateResources() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			updateResources(
-				"com.liferay.portlet.tags", "com.liferay.portlet.asset"
-			);
+				"com.liferay.portlet.tags", "com.liferay.portlet.asset");
 
 			updateResources(
 				"com.liferay.portlet.tags.model.TagsEntry",
-				"com.liferay.portlet.asset.model.AssetTag"
-			);
+				"com.liferay.portlet.asset.model.AssetTag");
 
 			updateResources(
 				"com.liferay.portlet.tags.model.TagsAsset",
-				"com.liferay.portlet.asset.model.AssetEntry"
-			);
+				"com.liferay.portlet.asset.model.AssetEntry");
 
 			updateResources(
 				"com.liferay.portlet.tags.model.TagsVocabulary",
-				"com.liferay.portlet.asset.model.AssetVocabulary"
-			);
+				"com.liferay.portlet.asset.model.AssetVocabulary");
 		}
 	}
 

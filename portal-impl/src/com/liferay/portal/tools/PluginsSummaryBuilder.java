@@ -167,9 +167,8 @@ public class PluginsSummaryBuilder {
 	private Set<String> _extractTicketIds(File pluginDir, String range)
 		throws Exception {
 
-		Set<String> ticketIds = new TreeSet<String>(
-			new NaturalOrderStringComparator()
-		);
+		Set<String> ticketIds = new TreeSet<>(
+			new NaturalOrderStringComparator());
 
 		Runtime runtime = Runtime.getRuntime();
 

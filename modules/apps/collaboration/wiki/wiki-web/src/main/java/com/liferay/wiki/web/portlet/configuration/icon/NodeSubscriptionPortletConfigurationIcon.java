@@ -133,8 +133,8 @@ public class NodeSubscriptionPortletConfigurationIcon
 			if (WikiNodePermissionChecker.contains(
 					themeDisplay.getPermissionChecker(), node,
 					ActionKeys.SUBSCRIBE) &&
-				(wikiGroupServiceOverriddenConfiguration.emailPageAddedEnabled(
-					) ||
+				(wikiGroupServiceOverriddenConfiguration.
+					emailPageAddedEnabled() ||
 				 wikiGroupServiceOverriddenConfiguration.
 					 emailPageUpdatedEnabled())) {
 

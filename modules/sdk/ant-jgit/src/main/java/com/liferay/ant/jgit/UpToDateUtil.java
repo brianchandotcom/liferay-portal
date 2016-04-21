@@ -71,8 +71,7 @@ public class UpToDateUtil {
 
 			revWalk.setTreeFilter(
 				AndTreeFilter.create(
-					PathFilter.create(path), TreeFilter.ANY_DIFF
-				));
+					PathFilter.create(path), TreeFilter.ANY_DIFF));
 
 			boolean changedSince = true;
 

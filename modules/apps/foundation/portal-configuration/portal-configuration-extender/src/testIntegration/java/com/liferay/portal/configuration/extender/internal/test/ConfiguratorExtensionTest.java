@@ -343,8 +343,7 @@ public class ConfiguratorExtensionTest {
 			_configurationAdmin, new Logger(_bundleContext), namespace,
 			Arrays.asList(namedConfigurationContents),
 			Arrays.<ConfigurationDescriptionFactory>asList(
-				new StringConfigurationDescriptionFactory())
-		);
+				new StringConfigurationDescriptionFactory()));
 
 		configuratorExtension.start();
 

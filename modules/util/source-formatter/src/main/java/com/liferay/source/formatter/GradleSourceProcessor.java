@@ -43,7 +43,7 @@ public class GradleSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		content = sortDependencies(content);
+		content = formatDependencies(absolutePath, content);
 
 		return trimContent(content, false);
 	}
@@ -53,7 +53,7 @@ public class GradleSourceProcessor extends BaseSourceProcessor {
 		return getFileNames(new String[0], getIncludes());
 	}
 
-	protected String sortDependencies(String content) {
+	protected String formatDependencies(String absolutePath, String content) {
 		Matcher matcher = _dependenciesPattern.matcher(content);
 
 		if (!matcher.find()) {
@@ -82,6 +82,13 @@ public class GradleSourceProcessor extends BaseSourceProcessor {
 			int pos = dependency.indexOf(StringPool.SPACE);
 
 			String configuration = dependency.substring(0, pos);
+
+			if (absolutePath.contains("/modules/apps/") &&
+				configuration.equals("compile")) {
+
+				dependency = StringUtil.replaceFirst(
+					dependency, "compile", "provided");
+			}
 
 			if ((previousConfiguration == null) ||
 				!previousConfiguration.equals(configuration)) {

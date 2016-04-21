@@ -15,7 +15,6 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.exception.NoSuchUserException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
@@ -31,13 +30,12 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -131,16 +129,14 @@ public class UserServiceTest {
 				_siteRole.getRoleId(), userGroupRole.getRoleId());
 		}
 
-		@After
-		public void tearDown() throws PortalException {
-			GroupLocalServiceUtil.deleteGroup(_group);
-			RoleLocalServiceUtil.deleteRole(_siteRole);
-			UserLocalServiceUtil.deleteUser(_user);
-		}
-
-		private Group _group;
-		private Role _siteRole;
+		@DeleteAfterTestRun
 		private User _user;
+
+		@DeleteAfterTestRun
+		private Group _group;
+
+		@DeleteAfterTestRun
+		private Role _siteRole;
 
 	}
 
@@ -343,17 +339,13 @@ public class UserServiceTest {
 			}
 		}
 
-		@After
-		public void tearDown() throws PortalException {
-			UserLocalServiceUtil.deleteUser(_groupAdminUser);
-
-			GroupLocalServiceUtil.deleteGroup(_group);
-
-			OrganizationLocalServiceUtil.deleteOrganization(_organization);
-		}
-
-		private Group _group;
+		@DeleteAfterTestRun
 		private User _groupAdminUser;
+
+		@DeleteAfterTestRun
+		private Group _group;
+
+		@DeleteAfterTestRun
 		private Organization _organization;
 
 	}
@@ -451,21 +443,17 @@ public class UserServiceTest {
 			}
 		}
 
-		@After
-		public void tearDown() throws PortalException {
-			UserLocalServiceUtil.deleteUser(_organizationGroupUser);
-
-			UserLocalServiceUtil.deleteUser(_groupOwnerUser);
-
-			GroupLocalServiceUtil.deleteGroup(_group);
-
-			OrganizationLocalServiceUtil.deleteOrganization(_organization);
-		}
-
-		private Group _group;
-		private User _groupOwnerUser;
-		private Organization _organization;
+		@DeleteAfterTestRun
 		private User _organizationGroupUser;
+
+		@DeleteAfterTestRun
+		private User _groupOwnerUser;
+
+		@DeleteAfterTestRun
+		private Group _group;
+
+		@DeleteAfterTestRun
+		private Organization _organization;
 
 	}
 
@@ -519,17 +507,14 @@ public class UserServiceTest {
 					_organizationOwnerUser.getUserId()));
 		}
 
-		@After
-		public void tearDown() throws PortalException {
-			UserLocalServiceUtil.deleteUser(_organizationAdminUser);
-			UserLocalServiceUtil.deleteUser(_organizationOwnerUser);
-
-			OrganizationLocalServiceUtil.deleteOrganization(_organization);
-		}
-
-		private Organization _organization;
+		@DeleteAfterTestRun
 		private User _organizationAdminUser;
+
+		@DeleteAfterTestRun
 		private User _organizationOwnerUser;
+
+		@DeleteAfterTestRun
+		private Organization _organization;
 
 	}
 
@@ -586,16 +571,12 @@ public class UserServiceTest {
 			}
 		}
 
-		@After
-		public void tearDown() throws PortalException {
-			UserLocalServiceUtil.deleteUser(_organizationAdminUser);
-
-			OrganizationLocalServiceUtil.deleteOrganization(_organization);
-		}
-
-		private Group _group;
-		private Organization _organization;
+		@DeleteAfterTestRun
 		private User _organizationAdminUser;
+
+		@DeleteAfterTestRun
+		private Organization _organization;
+		private Group _group;
 
 	}
 
@@ -654,15 +635,11 @@ public class UserServiceTest {
 			}
 		}
 
-		@After
-		public void tearDown() throws PortalException {
-			UserLocalServiceUtil.deleteUser(_organizationOwnerUser);
-
-			OrganizationLocalServiceUtil.deleteOrganization(_organization);
-		}
-
-		private Organization _organization;
+		@DeleteAfterTestRun
 		private User _organizationOwnerUser;
+
+		@DeleteAfterTestRun
+		private Organization _organization;
 
 	}
 
@@ -719,16 +696,12 @@ public class UserServiceTest {
 			}
 		}
 
-		@After
-		public void tearDown() throws PortalException {
-			UserLocalServiceUtil.deleteUser(_organizationOwnerUser);
-
-			OrganizationLocalServiceUtil.deleteOrganization(_organization);
-		}
-
-		private Group _group;
-		private Organization _organization;
+		@DeleteAfterTestRun
 		private User _organizationOwnerUser;
+
+		@DeleteAfterTestRun
+		private Organization _organization;
+		private Group _group;
 
 	}
 
@@ -889,11 +862,6 @@ public class UserServiceTest {
 			}
 		}
 
-		@After
-		public void tearDown() throws PortalException {
-			UserLocalServiceUtil.deleteUser(_user);
-		}
-
 		protected PortletPreferences givenThatCompanySendsNewPassword()
 			throws Exception {
 
@@ -942,6 +910,7 @@ public class UserServiceTest {
 			portletPreferences.store();
 		}
 
+		@DeleteAfterTestRun
 		private User _user;
 
 	}

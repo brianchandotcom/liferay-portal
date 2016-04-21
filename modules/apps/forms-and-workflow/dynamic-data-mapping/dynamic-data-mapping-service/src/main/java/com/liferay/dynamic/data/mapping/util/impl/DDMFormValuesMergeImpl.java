@@ -45,7 +45,7 @@ public class DDMFormValuesMergeImpl implements DDMFormValuesMerge {
 		return existingDDMFormValues;
 	}
 
-	protected DDMFormFieldValue matchDDMFormFieldValue(
+	protected DDMFormFieldValue matchDDMFormFieldValueByName(
 		DDMFormFieldValue expectedDDMFormFieldValue,
 		List<DDMFormFieldValue> actualDDMFormFieldValues) {
 
@@ -70,8 +70,9 @@ public class DDMFormValuesMergeImpl implements DDMFormValuesMerge {
 			existingDDMFormFieldValues);
 
 		for (DDMFormFieldValue newDDMFormFieldValue : newDDMFormFieldValues) {
-			DDMFormFieldValue actualDDMFormFieldValue = matchDDMFormFieldValue(
-				newDDMFormFieldValue, existingDDMFormFieldValues);
+			DDMFormFieldValue actualDDMFormFieldValue =
+				matchDDMFormFieldValueByName(
+					newDDMFormFieldValue, existingDDMFormFieldValues);
 
 			if (actualDDMFormFieldValue != null) {
 				mergeValue(

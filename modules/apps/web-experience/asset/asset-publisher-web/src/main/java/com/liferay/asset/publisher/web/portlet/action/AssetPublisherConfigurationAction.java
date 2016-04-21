@@ -319,9 +319,9 @@ public class AssetPublisherConfigurationAction
 		}
 
 		long defaultAssetClassTypeId = GetterUtil.getLong(
-			anyAssetClassTypeString);
+			anyAssetClassTypeString, -1);
 
-		if (defaultAssetClassTypeId > 0) {
+		if (defaultAssetClassTypeId > -1) {
 			return new String[] {String.valueOf(defaultAssetClassTypeId)};
 		}
 		else {

@@ -223,6 +223,17 @@ public class ToolsUtil {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #stripFullyQualifiedClassNames(String, String)}
+	 */
+	@Deprecated
+	public static String stripFullyQualifiedClassNames(String content)
+		throws IOException {
+
+		return stripFullyQualifiedClassNames(content, null);
+	}
+
 	public static String stripFullyQualifiedClassNames(
 			String content, String packagePath)
 		throws IOException {

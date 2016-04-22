@@ -18,7 +18,6 @@ import com.google.android.gcm.server.Result;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.push.notifications.constants.PushNotificationsConstants;
 import com.liferay.push.notifications.sender.BaseResponse;
 
 /**
@@ -29,7 +28,7 @@ public class AndroidResponse extends BaseResponse {
 	public AndroidResponse(
 		Result result, String token, JSONObject payloadJSONObject) {
 
-		super(PushNotificationsConstants.PLATFORM_ANDROID);
+		super(AndroidPushNotificationsSender.PLATFORM);
 
 		this.token = token;
 

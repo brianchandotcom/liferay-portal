@@ -16,7 +16,6 @@ package com.liferay.push.notifications.sender.sms.internal;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.push.notifications.constants.PushNotificationsConstants;
 import com.liferay.push.notifications.sender.BaseResponse;
 
 import com.twilio.sdk.resource.instance.Sms;
@@ -27,7 +26,7 @@ import com.twilio.sdk.resource.instance.Sms;
 public class SMSResponse extends BaseResponse {
 
 	public SMSResponse(Sms sms, JSONObject payloadJSONObject) {
-		super(PushNotificationsConstants.PLATFORM_SMS);
+		super(SMSPushNotificationsSender.PLATFORM);
 
 		accountSid = sms.getAccountSid();
 		id = sms.getSid();

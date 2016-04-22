@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
-
 <div class="alert alert-success hide" id="<portlet:namespace />success">
 	<p><liferay-ui:message key="the-push-notification-was-sent-successfully" /></p>
 </div>

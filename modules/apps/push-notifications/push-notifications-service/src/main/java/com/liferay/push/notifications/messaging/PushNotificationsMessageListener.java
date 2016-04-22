@@ -18,19 +18,28 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
-import com.liferay.push.notifications.service.PushNotificationsDeviceLocalServiceUtil;
+import com.liferay.push.notifications.service.PushNotificationsDeviceLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Silvio Santos
  * @author Bruno Farache
  */
-public class PushNotificationsMessageListener implements MessageListener {
+@Component(
+	immediate = true,
+	property = {"destination.name=" + DestinationNames.PUSH_NOTIFICATION},
+	service = MessageListener.class
+)
+public class PushNotificationsMessageListener extends BaseMessageListener {
 
 	@Override
-	public void receive(Message message) {
+	protected void doReceive(Message message) throws Exception {
 		JSONObject payloadJSONObject = (JSONObject)message.getPayload();
 
 		JSONArray toUserIdsJSONArray = payloadJSONObject.getJSONArray(
@@ -45,7 +54,7 @@ public class PushNotificationsMessageListener implements MessageListener {
 		payloadJSONObject.remove(PushNotificationsConstants.KEY_TO_USER_IDS);
 
 		try {
-			PushNotificationsDeviceLocalServiceUtil.sendPushNotification(
+			_pushNotificationsDeviceLocalService.sendPushNotification(
 				toUserIds, payloadJSONObject);
 		}
 		catch (Exception e) {
@@ -53,7 +62,19 @@ public class PushNotificationsMessageListener implements MessageListener {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setPushNotificationsDeviceLocalService(
+		PushNotificationsDeviceLocalService
+			pushNotificationsDeviceLocalService) {
+
+		_pushNotificationsDeviceLocalService =
+			pushNotificationsDeviceLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PushNotificationsMessageListener.class);
+
+	private PushNotificationsDeviceLocalService
+		_pushNotificationsDeviceLocalService;
 
 }

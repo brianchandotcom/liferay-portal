@@ -17,18 +17,28 @@ package com.liferay.push.notifications.messaging;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.push.notifications.sender.Response;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Bruno Farache
  */
+@Component(
+	immediate = true,
+	property = {
+		"destination.name=" + DestinationNames.PUSH_NOTIFICATION_RESPONSE
+	},
+	service = MessageListener.class
+)
 public class PushNotificationsResponseMessageListener
-	implements MessageListener {
+	extends BaseMessageListener {
 
 	@Override
-	public void receive(Message message) {
+	protected void doReceive(Message message) throws Exception {
 		Response response = (Response)message.getPayload();
 
 		String json = JSONFactoryUtil.serialize(response);

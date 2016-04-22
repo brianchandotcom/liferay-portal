@@ -19,6 +19,8 @@ package com.liferay.push.notifications.messaging;
  */
 public class DestinationNames {
 
+	public static final String PUSH_NOTIFICATION = "liferay/push_notification";
+
 	public static final String PUSH_NOTIFICATION_RESPONSE =
 		"liferay/push_notification_response";
 

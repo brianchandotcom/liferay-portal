@@ -4372,7 +4372,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _javaTermSortExcludes;
 	private List<String> _lineLengthExcludes;
 	private final Pattern _lineStartingWithOpenParenthesisPattern =
-		Pattern.compile("(.)\n+(\t+)\\)[^.\n].*\n");
+		Pattern.compile("(.)\n+(\t+)\\)[^.].*\n");
 	private final Pattern _logLevelPattern = Pattern.compile(
 		"\n(\t+)_log.(debug|error|info|trace|warn)\\(");
 	private final Pattern _logPattern = Pattern.compile(

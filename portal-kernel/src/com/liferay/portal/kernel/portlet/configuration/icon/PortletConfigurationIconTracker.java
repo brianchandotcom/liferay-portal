@@ -38,9 +38,8 @@ import javax.portlet.PortletRequest;
  */
 public class PortletConfigurationIconTracker {
 
-	public static List<PortletConfigurationIcon>
-		getPortletConfigurationIcons(
-			String portletId, PortletRequest portletRequest) {
+	public static List<PortletConfigurationIcon> getPortletConfigurationIcons(
+		String portletId, PortletRequest portletRequest) {
 
 		List<PortletConfigurationIcon> portletConfigurationIcons =
 			new ArrayList<>();

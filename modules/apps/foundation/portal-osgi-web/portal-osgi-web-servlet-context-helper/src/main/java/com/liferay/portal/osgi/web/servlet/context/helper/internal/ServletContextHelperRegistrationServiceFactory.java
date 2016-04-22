@@ -46,8 +46,7 @@ public class ServletContextHelperRegistrationServiceFactory
 	@Override
 	public ServletContextHelperRegistration getService(
 		Bundle bundle,
-		ServiceRegistration<ServletContextHelperRegistration>
-			registration) {
+		ServiceRegistration<ServletContextHelperRegistration> registration) {
 
 		return new ServletContextHelperRegistrationImpl(
 			bundle, _props, _saxParserFactory, _logger, _properties);

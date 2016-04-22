@@ -43,9 +43,7 @@ public class MediaItemSelectorView
 	}
 
 	@Override
-	public List<ItemSelectorReturnType>
-		getSupportedItemSelectorReturnTypes() {
-
+	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
 		return _supportedItemSelectorReturnTypes;
 	}
 

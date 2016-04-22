@@ -66,8 +66,7 @@ public class MultiValueServiceTrackerBucketFactory<SR, TS>
 
 		@Override
 		public synchronized void remove(
-			ServiceReferenceServiceTuple<SR, TS>
-				serviceReferenceServiceTuple) {
+			ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple) {
 
 			_serviceReferenceServiceTuples.remove(serviceReferenceServiceTuple);
 
@@ -76,8 +75,7 @@ public class MultiValueServiceTrackerBucketFactory<SR, TS>
 
 		@Override
 		public synchronized void store(
-			ServiceReferenceServiceTuple<SR, TS>
-				serviceReferenceServiceTuple) {
+			ServiceReferenceServiceTuple<SR, TS> serviceReferenceServiceTuple) {
 
 			_serviceReferenceServiceTuples.add(serviceReferenceServiceTuple);
 

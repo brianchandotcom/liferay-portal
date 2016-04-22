@@ -30,9 +30,7 @@ public class AudioItemSelectorCriterionHandler
 	extends BaseItemSelectorCriterionHandler<AudioItemSelectorCriterion> {
 
 	@Override
-	public Class<AudioItemSelectorCriterion>
-		getItemSelectorCriterionClass() {
-
+	public Class<AudioItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return AudioItemSelectorCriterion.class;
 	}
 

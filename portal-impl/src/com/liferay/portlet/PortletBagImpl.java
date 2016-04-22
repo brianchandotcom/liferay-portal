@@ -335,9 +335,7 @@ public class PortletBagImpl implements PortletBag {
 	}
 
 	@Override
-	public List<UserNotificationHandler>
-		getUserNotificationHandlerInstances() {
-
+	public List<UserNotificationHandler> getUserNotificationHandlerInstances() {
 		return _userNotificationHandlerInstances;
 	}
 

@@ -24,14 +24,10 @@ PushNotificationsDevice pushNotificationsDevice = (PushNotificationsDevice)row.g
 long pushNotificationsDeviceId = pushNotificationsDevice.getPushNotificationsDeviceId();
 %>
 
-<liferay-ui:icon-menu>
-	<c:if test="<%= PushNotificationsPermission.contains(permissionChecker, ActionKeys.MANAGE_DEVICES) %>">
-		<portlet:renderURL var="redirectURL">
-			<portlet:param name="tabs1" value="devices" />
-		</portlet:renderURL>
-
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<c:if test="<%= PushNotificationsPermission.contains(permissionChecker, PushNotificationsActionKeys.MANAGE_DEVICES) %>">
 		<liferay-portlet:actionURL name="deletePushNotificationsDevice" var="deleteURL">
-			<portlet:param name="redirect" value="<%= redirectURL %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="pushNotificationsDeviceId" value="<%= String.valueOf(pushNotificationsDeviceId) %>" />
 		</liferay-portlet:actionURL>
 

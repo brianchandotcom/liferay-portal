@@ -264,9 +264,12 @@ public class InputAssetLinksDisplayContext {
 
 		Map<String, Object> selectorEntryData = new HashMap<>();
 
-		selectorEntryData.put(
-			"href",
-			_getAssetBrowserPortletURL(assetRendererFactory).toString());
+		PortletURL assetBrowserPortletURL = _getAssetBrowserPortletURL(
+			assetRendererFactory);
+
+		if (assetBrowserPortletURL != null) {
+			selectorEntryData.put("href", assetBrowserPortletURL.toString());
+		}
 
 		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
 			_pageContext);
@@ -309,6 +312,10 @@ public class InputAssetLinksDisplayContext {
 		PortletURL portletURL = PortletProviderUtil.getPortletURL(
 			_request, assetRendererFactory.getClassName(),
 			PortletProvider.Action.BROWSE);
+
+		if (portletURL == null) {
+			return portletURL;
+		}
 
 		long groupId = _getAssetBrowserGroupId(assetRendererFactory);
 
@@ -382,10 +389,13 @@ public class InputAssetLinksDisplayContext {
 		PortletURL portletURL = _getAssetBrowserPortletURL(
 			assetRendererFactory);
 
-		portletURL.setParameter(
-			"subtypeSelectionId", String.valueOf(classType.getClassTypeId()));
+		if (portletURL != null) {
+			portletURL.setParameter(
+				"subtypeSelectionId",
+				String.valueOf(classType.getClassTypeId()));
 
-		selectorEntryData.put("href", portletURL.toString());
+			selectorEntryData.put("href", portletURL.toString());
+		}
 
 		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
 			_pageContext);

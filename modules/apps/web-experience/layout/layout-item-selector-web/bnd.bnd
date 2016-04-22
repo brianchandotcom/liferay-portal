@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Layout Item Selector Web
 Bundle-SymbolicName: com.liferay.layout.item.selector.web
-Bundle-Version: 1.0.2
+Bundle-Version: 1.1.0
+Export-Package: com.liferay.layout.item.selector.web
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management
 Web-ContextPath: /layout-item-selector-web

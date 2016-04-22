@@ -226,8 +226,6 @@ if (showSource) {
 		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) %> ? <%= editorConfigJSONObject %> : {};
 
 		if (editorConfig.extraPlugins) {
-			editorConfig.extraPlugins += ',ae_embed,ae_embed';
-
 			editorConfig.extraPlugins = A.Array.filter(
 				editorConfig.extraPlugins.split(','),
 				function(item) {

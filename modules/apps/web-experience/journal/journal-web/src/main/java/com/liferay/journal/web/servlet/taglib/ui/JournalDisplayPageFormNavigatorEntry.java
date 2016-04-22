@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.servlet.taglib.ui;
 
+import com.liferay.layout.item.selector.web.LayoutItemSelectorView;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
 import javax.servlet.ServletContext;
@@ -34,6 +35,11 @@ public class JournalDisplayPageFormNavigatorEntry
 	@Override
 	public String getKey() {
 		return "display-page";
+	}
+
+	@Reference(unbind = "-")
+	public void setLayoutItemSelectorView(
+		LayoutItemSelectorView layoutItemSelectorView) {
 	}
 
 	@Override

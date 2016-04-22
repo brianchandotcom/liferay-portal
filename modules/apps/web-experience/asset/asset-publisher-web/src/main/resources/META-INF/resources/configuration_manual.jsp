@@ -142,6 +142,10 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 
 									PortletURL assetBrowserURL = PortletProviderUtil.getPortletURL(request, curRendererFactory.getClassName(), PortletProvider.Action.BROWSE);
 
+									if (assetBrowserURL == null) {
+										continue;
+									}
+
 									assetBrowserURL.setParameter("groupId", String.valueOf(groupId));
 									assetBrowserURL.setParameter("selectedGroupIds", String.valueOf(groupId));
 									assetBrowserURL.setParameter("typeSelection", curRendererFactory.getClassName());

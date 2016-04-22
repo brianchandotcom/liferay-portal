@@ -14,6 +14,7 @@
 
 package com.liferay.journal.content.search.web.portlet;
 
+import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -28,6 +29,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -75,6 +77,11 @@ public class JournalContentSearchPortlet extends MVCPortlet {
 		}
 
 		super.doView(renderRequest, renderResponse);
+	}
+
+	@Reference
+	protected void setJournalArticleService(
+		JournalArticleService journalArticleService) {
 	}
 
 }

@@ -95,6 +95,11 @@ public class SimulationProductNavigationControlMenuEntry
 		super.setServletContext(servletContext);
 	}
 
+	@Reference(unbind = "-")
+	public void setSimulationPanelCategory(
+		SimulationPanelCategory simulationPanelCategory) {
+	}
+
 	protected boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)
 		throws PortalException {
 

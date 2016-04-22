@@ -42,11 +42,12 @@ public class JournalDisplayPageFormNavigatorEntry
 		LayoutItemSelectorView layoutItemSelectorView) {
 	}
 
+	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.item.selector.web)",
-		unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.journal.web)", unbind = "-"
 	)
-	public void setLayoutItemServletContext(ServletContext servletContext) {
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Override

@@ -14,7 +14,6 @@
 
 package com.liferay.push.notifications.sender.apple.internal;
 
-import com.liferay.push.notifications.constants.PushNotificationsConstants;
 import com.liferay.push.notifications.sender.BaseResponse;
 
 import com.notnoop.apns.ApnsNotification;
@@ -57,7 +56,7 @@ public class AppleResponse extends BaseResponse {
 	}
 
 	protected AppleResponse(ApnsNotification apnsNotification) {
-		super(PushNotificationsConstants.PLATFORM_APPLE);
+		super(ApplePushNotificationsSender.PLATFORM);
 
 		if (apnsNotification != null) {
 			expiry = apnsNotification.getExpiry();

@@ -2030,28 +2030,57 @@ closeTemplate()
 		<if>
 			<os family="windows" />
 			<then>
-				<exec dir="${app.server.weblogic.dir}/wlserver/server/bin" executable="cmd">
-					<env key="MW_HOME" value="${app.server.weblogic.dir.windows}" />
-					<arg value="/c" />
-					<arg value="setWLSEnv.cmd" />
-					<arg value="${app.server.weblogic.configure.silent}" />
-				</exec>
+				<if>
+					<equals arg1="${app.server.weblogic.version.build}" arg2="1221" />
+					<then>
+						<exec dir="${app.server.weblogic.dir}/wlserver/server/bin" executable="cmd">
+							<env key="MW_HOME" value="${app.server.weblogic.dir.windows}" />
+							<arg value="/c" />
+							<arg value="setWLSEnv.cmd" />
+							<arg value="${app.server.weblogic.configure.silent}" />
+						</exec>
 
-				<echo file="${tstamp.value}/create-weblogic-domain.bat">
-					@echo off
+						<echo file="${tstamp.value}/create-weblogic-domain.bat">
+							@echo off
 
-					set "USER_MEM_ARGS=-Xmx1024m -XX:MetaspaceSize=256m"
+							set "USER_MEM_ARGS=-Xmx1024m -XX:MetaspaceSize=256m"
 
-					set "MW_HOME=${app.server.weblogic.dir.windows}"
+							set "MW_HOME=${app.server.weblogic.dir.windows}"
 
-					set "WL_HOME=${app.server.weblogic.wlserver.dir.windows}"
+							set "WL_HOME=${app.server.weblogic.wlserver.dir.windows}"
 
-					call %MW_HOME%/oracle_common/common/bin/commEnv.cmd
+							call %MW_HOME%/oracle_common/common/bin/commEnv.cmd
 
-					set "CLASSPATH=%FMWCONFIG_CLASSPATH%"
+							set "CLASSPATH=%FMWCONFIG_CLASSPATH%"
 
-					"${env.JAVA_HOME}/bin/java" weblogic.WLST create-weblogic-domain.py
-				</echo>
+							"${env.JAVA_HOME}/bin/java" weblogic.WLST create-weblogic-domain.py
+						</echo>
+					</then>
+					<else>
+						<exec dir="${app.server.weblogic.dir}" executable="cmd">
+							<env key="MW_HOME" value="${app.server.weblogic.dir.windows}" />
+							<arg value="/c" />
+							<arg value="configure.cmd" />
+							<arg value="${app.server.weblogic.configure.silent}" />
+						</exec>
+
+						<echo file="${tstamp.value}/create-weblogic-domain.bat">
+							@echo off
+
+							set "USER_MEM_ARGS=-Xmx1024m -XX:MetaspaceSize=256m"
+
+							set "MW_HOME=${app.server.weblogic.dir.windows}"
+
+							set "WL_HOME=${app.server.weblogic.wlserver.dir.windows}"
+
+							call %WL_HOME%/common/bin/commEnv.cmd
+
+							set "CLASSPATH=%FMWCONFIG_CLASSPATH%"
+
+							"${env.JAVA_HOME}/bin/java" weblogic.WLST create-weblogic-domain.py
+						</echo>
+					</else>
+				</if>
 
 				<exec dir="${tstamp.value}" executable="cmd">
 					<arg value="/c" />
@@ -2093,51 +2122,119 @@ closeTemplate()
 				<if>
 					<os family="unix" />
 					<then>
-						<replace file="${app.server.weblogic.dir}/wlserver/server/bin/setWLSEnv.sh">
-							<replacefilter token="#!/bin/sh" value="#!/bin/bash" />
-						</replace>
+						<if>
+							<equals arg1="${app.server.weblogic.version.build}" arg2="1221" />
+							<then>
+								<replace file="${app.server.weblogic.dir}/wlserver/server/bin/setWLSEnv.sh">
+									<replacefilter token="#!/bin/sh" value="#!/bin/bash" />
+								</replace>
 
-						<var name="source.command" value="." />
+								<var name="source.command" value="." />
+							</then>
+							<else>
+								<replace file="${app.server.weblogic.dir}/configure.sh">
+									<replacefilter token="#!/bin/sh" value="#!/bin/bash" />
+								</replace>
+
+								<var name="source.command" value="." />
+							</else>
+						</if>
 					</then>
 				</if>
 
-				<chmod
-					dir="${app.server.weblogic.dir}/wlserver/server/bin"
-					includes="setWLSEnv.sh"
-					perm="744"
-				/>
+				<if>
+					<equals arg1="${app.server.weblogic.version.build}" arg2="1221" />
+					<then>
+						<chmod
+							dir="${app.server.weblogic.dir}/wlserver/server/bin"
+							includes="setWLSEnv.sh"
+							perm="744"
+						/>
+					</then>
+					<else>
+						<chmod
+							dir="${app.server.weblogic.dir}"
+							includes="configure.sh"
+							perm="744"
+						/>
+					</else>
+				</if>
 
 				<if>
 					<os family="unix" />
 					<then>
-						<exec dir="${app.server.weblogic.dir}/wlserver/server/bin" executable="./setWLSEnv.sh">
-							<env key="MW_HOME" file="${app.server.weblogic.dir}" />
-							<arg value="${app.server.weblogic.configure.silent}" />
-						</exec>
+						<if>
+							<equals arg1="${app.server.weblogic.version.build}" arg2="1221" />
+							<then>
+								<exec dir="${app.server.weblogic.dir}/wlserver/server/bin" executable="./setWLSEnv.sh">
+									<env key="MW_HOME" file="${app.server.weblogic.dir}" />
+									<arg value="${app.server.weblogic.configure.silent}" />
+								</exec>
+							</then>
+							<else>
+								<exec dir="${app.server.weblogic.dir}" executable="./configure.sh">
+									<env key="MW_HOME" file="${app.server.weblogic.dir}" />
+									<arg value="${app.server.weblogic.configure.silent}" />
+								</exec>
+							</else>
+						</if>
 					</then>
 					<else>
-						<exec dir="${app.server.weblogic.dir}/wlserver/server/bin" executable="sh">
-							<env key="MW_HOME" file="${app.server.weblogic.dir}" />
-							<arg value="setWLSEnv.sh" />
-						</exec>
+						<if>
+							<equals arg1="${app.server.weblogic.version.build}" arg2="1221" />
+							<then>
+								<exec dir="${app.server.weblogic.dir}/wlserver/server/bin" executable="sh">
+									<env key="MW_HOME" file="${app.server.weblogic.dir}" />
+									<arg value="setWLSEnv.sh" />
+								</exec>
+							</then>
+							<else>
+								<exec dir="${app.server.weblogic.dir}" executable="sh">
+									<env key="MW_HOME" file="${app.server.weblogic.dir}" />
+									<arg value="configure.sh" />
+								</exec>
+							</else>
+						</if>
 					</else>
 				</if>
 
-				<echo file="${tstamp.value}/create-weblogic-domain.sh">
-					#!/bin/sh
+				<if>
+					<equals arg1="${app.server.weblogic.version.build}" arg2="1221" />
+					<then>
+						<echo file="${tstamp.value}/create-weblogic-domain.sh">
+							#!/bin/sh
 
-					export USER_MEM_ARGS="-Xmx1024m -XX:MetaspaceSize=256m"
+							export USER_MEM_ARGS="-Xmx1024m -XX:MetaspaceSize=256m"
 
-					export MW_HOME="${app.server.weblogic.dir}"
+							export MW_HOME="${app.server.weblogic.dir}"
 
-					export WL_HOME="${app.server.weblogic.wlserver.dir}"
+							export WL_HOME="${app.server.weblogic.wlserver.dir}"
 
-					${source.command} ${MW_HOME}/oracle_common/common/bin/commEnv.sh
+							${source.command} ${MW_HOME}/oracle_common/common/bin/commEnv.sh
 
-					export CLASSPATH=${FMWCONFIG_CLASSPATH}
+							export CLASSPATH=${FMWCONFIG_CLASSPATH}
 
-					${env.JAVA_HOME}/bin/java weblogic.WLST create-weblogic-domain.py
-				</echo>
+							${env.JAVA_HOME}/bin/java weblogic.WLST create-weblogic-domain.py
+						</echo>
+					</then>
+					<else>
+						<echo file="${tstamp.value}/create-weblogic-domain.sh">
+							#!/bin/sh
+
+							export USER_MEM_ARGS="-Xmx1024m -XX:MetaspaceSize=256m"
+
+							export MW_HOME="${app.server.weblogic.dir}"
+
+							export WL_HOME="${app.server.weblogic.wlserver.dir}"
+
+							${source.command} ${WL_HOME}/common/bin/commEnv.sh
+
+							export CLASSPATH=${FMWCONFIG_CLASSPATH}
+
+							${env.JAVA_HOME}/bin/java weblogic.WLST create-weblogic-domain.py
+						</echo>
+					</else>
+				</if>
 
 				<chmod
 					file="${tstamp.value}/create-weblogic-domain.sh"

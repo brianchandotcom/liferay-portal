@@ -546,6 +546,7 @@
 		</execute>
 	</command>
 
+	<!-- LRQA-24692
 	<command name="CampaignViewInSimulatorPG" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -640,6 +641,7 @@
 			<var name="viewCampaignOther" value="Campaign Name Female" />
 		</execute>
 	</command>
+	-->
 
 	<command name="CampaignViewOtherwiseDisplayContentViaCampaignDisplayPortlet" priority="4">
 		<execute macro="ProductMenu#gotoSite">
@@ -4165,47 +4167,14 @@
 			<var name="deviceType" value="desktop" />
 		</execute>
 
-		<execute macro="ContentTargetingSimulator#viewUserSegmentsViaSimulatorPG">
-			<var name="viewUserSegmentMatched" value="Male User Segment Name" />
-			<var name="viewUserSegmentOther" value="Female User Segment Name" />
-		</execute>
-
-		<execute macro="ContentTargetingSimulator#configureUserSegmentMatchedPG">
-			<var name="uncheckUserSegmentMatchedList" value="Male User Segment Name" />
-		</execute>
-
-		<execute macro="ContentTargetingSimulator#configureUserSegmentOtherPG">
-			<var name="checkUserSegmentOtherList" value="Female User Segment Name" />
-		</execute>
-
-		<execute macro="ContentTargetingSimulator#simulateUserSegmentPG">
-			<var name="simulationbutton" value="Simulate" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
+		<execute macro="ContentTargetingSimulator#configureUserSegmentSimulator">
+			<var name="configureUserSegmentMatched" value="Female User Segment Name" />
+			<var name="configureUserSegmentNotMatched" value="Male User Segment Name" />
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
 			<var name="entryContentText" value="Web Content Content Female" />
 			<var name="viewUserSegmentSelected" value="Default" />
-		</execute>
-
-		<execute macro="MobileDevice#previewPG">
-			<var name="deviceType" value="desktop" />
-		</execute>
-
-		<execute macro="ContentTargetingSimulator#simulateUserSegmentPG">
-			<var name="simulationbutton" value="Stop Simulation" />
-		</execute>
-
-		<execute macro="Navigator#openSiteURL">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
-			<var name="entryContentText" value="Web Content Content Male" />
-			<var name="viewUserSegmentSelected" value="Male User Segment Name" />
 		</execute>
 	</command>
 
@@ -4378,9 +4347,8 @@
 			<var name="deviceType" value="desktop" />
 		</execute>
 
-		<execute macro="ContentTargetingSimulator#viewUserSegmentsViaSimulatorPG">
-			<var name="viewUserSegmentMatched" value="Site Member Name,Male User Segment Name,Age 25 - 50" />
-			<var name="viewUserSegmentOther" value="Site Admin Role Name,Female User Segment Name,Age 50 - 100,Age 18 - 25" />
+		<execute macro="ContentTargetingSimulator#viewUserSegmentsViaSimulator">
+			<var name="userSegments" value="Site Member Name,Male User Segment Name,Age 25 - 50,Site Admin Role Name,Female User Segment Name,Age 50 - 100,Age 18 - 25" />
 		</execute>
 	</command>
 

@@ -214,7 +214,7 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 
 			sb.append(
 				PortalUtil.getStaticResourceURL(
-					request, PortalUtil.getPathProxy() + "/combo",
+					request, PortalUtil.getPathContext() + "/combo",
 					"minifierType=" + _minifierType, _themeLastModified));
 
 			for (String resourceURL : resourceURLs) {

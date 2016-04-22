@@ -97,7 +97,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 			printWriter.write('@');
 			printWriter.write(jsLoaderModule.getVersion());
 			printWriter.write("': '");
-			printWriter.write(PortalUtil.getPathContext());
+			printWriter.write(PortalUtil.getPathProxy());
 			printWriter.write(jsLoaderModule.getContextPath());
 			printWriter.write("'");
 
@@ -108,7 +108,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 				printWriter.write("'");
 				printWriter.write(jsLoaderModule.getName());
 				printWriter.write("': '");
-				printWriter.write(PortalUtil.getPathContext());
+				printWriter.write(PortalUtil.getPathProxy());
 				printWriter.write(jsLoaderModule.getContextPath());
 				printWriter.write("'");
 			}

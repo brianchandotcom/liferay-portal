@@ -14,12 +14,12 @@
 
 package com.liferay.portal.tools.db.upgrade.client;
 
+import com.liferay.portal.tools.db.upgrade.client.util.StringUtil;
+
 import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author David Truong
@@ -114,7 +114,7 @@ public class AppServer {
 	}
 
 	public String getServerDirNames() {
-		return StringUtils.join(_serverDirs);
+		return StringUtil.join(_serverDirs, ',');
 	}
 
 	public List<File> getServerDirs() {

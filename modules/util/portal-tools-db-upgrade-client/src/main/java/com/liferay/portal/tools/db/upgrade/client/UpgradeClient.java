@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.db.upgrade.client;
 
+import com.liferay.portal.tools.db.upgrade.client.util.StringUtil;
+
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
@@ -43,7 +45,6 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author David Truong
@@ -343,7 +344,9 @@ public class UpgradeClient {
 		return relativePath.toString();
 	}
 
-	private String[] _getRelativePaths(File baseFile, List<File> pathFiles) {
+	private List<String> _getRelativePaths(
+		File baseFile, List<File> pathFiles) {
+
 		List<String> relativePaths = new ArrayList<>(pathFiles.size());
 
 		for (File pathFile : pathFiles) {
@@ -351,7 +354,7 @@ public class UpgradeClient {
 				_getRelativePath(baseFile.toPath(), pathFile.toPath()));
 		}
 
-		return relativePaths.toArray(new String[relativePaths.size()]);
+		return relativePaths;
 	}
 
 	private void _printHelp() {
@@ -496,7 +499,7 @@ public class UpgradeClient {
 				"portal.dir", _getRelativePath(dir, portalDir));
 			_appServerProperties.setProperty(
 				"server.dirs",
-				StringUtils.join(_getRelativePaths(dir, serverDirs)));
+				StringUtil.join(_getRelativePaths(dir, serverDirs), ','));
 		}
 		else {
 			_appServer = new AppServer(

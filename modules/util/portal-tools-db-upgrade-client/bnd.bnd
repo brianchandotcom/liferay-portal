@@ -5,5 +5,4 @@ JPM-Command: liferay-upgrade-db
 Main-Class: com.liferay.portal.tools.db.upgrade.client.UpgradeClient
 -liferay-includeresource:\
 	@commons-cli-*.jar,\
-	@commons-lang3-*.jar,\
 	@jline-*.jar

@@ -17,47 +17,28 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long groupId = themeDisplay.getScopeGroupId();
-
-Group group = GroupLocalServiceUtil.fetchGroup(groupId);
-
-request.setAttribute(WebKeys.GROUP, group);
-
 LayoutItemSelectorViewDisplayContext layoutItemSelectorViewDisplayContext = (LayoutItemSelectorViewDisplayContext)request.getAttribute(BaseLayoutsItemSelectorView.LAYOUT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 
 LayoutItemSelectorCriterion layoutItemSelectorCriterion = layoutItemSelectorViewDisplayContext.getLayoutItemSelectorCriterion();
 %>
 
 <div class="container-fluid-1280">
-
-	<%
-	boolean checkContentDisplayPage = layoutItemSelectorCriterion.isCheckDisplayPage();
-	String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
-	long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
-
-	PortletURL editLayoutURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.EDIT);
-
-	editLayoutURL.setParameter("redirect", currentURL);
-	editLayoutURL.setParameter("groupId", String.valueOf(groupId));
-	editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
-	%>
-
 	<liferay-layout:layouts-tree
-		checkContentDisplayPage="<%= checkContentDisplayPage %>"
+		checkContentDisplayPage="<%= layoutItemSelectorCriterion.isCheckDisplayPage() %>"
 		draggableTree="<%= false %>"
-		groupId="<%= groupId %>"
-		portletURL="<%= editLayoutURL %>"
-		privateLayout="<%= false %>"
-		rootNodeName="<%= group.getLayoutRootNodeName(false, themeDisplay.getLocale()) %>"
+		groupId="<%= scopeGroupId %>"
+		portletURL="<%= layoutItemSelectorViewDisplayContext.getEditLayoutURL() %>"
+		privateLayout="<%= layoutItemSelectorViewDisplayContext.isPrivateLayout() %>"
+		rootNodeName="<%= layoutItemSelectorViewDisplayContext.getRootNodeName() %>"
 		saveState="<%= false %>"
-		selectedLayoutIds="<%= selectedLayoutIds %>"
-		selPlid="<%= selPlid %>"
+		selectedLayoutIds="<%= layoutItemSelectorViewDisplayContext.getSelectedLayoutIds() %>"
+		selPlid="<%= layoutItemSelectorViewDisplayContext.getSelPlid() %>"
 		treeId="treeContainer"
 	/>
 </div>
 
-<aui:button-row id="selectPageMessage">
-	<aui:button cssClass="btn-lg btn-primary selector-button" disabled="<%= true %>" value="done" />
+<aui:button-row>
+	<aui:button cssClass="btn-lg btn-primary" disabled="<%= true %>" id="selectorButton" value="done" />
 
 	<aui:button cssClass="btn-cancel btn-lg" type="cancel" value="cancel" />
 </aui:button-row>
@@ -102,9 +83,7 @@ LayoutItemSelectorCriterion layoutItemSelectorCriterion = layoutItemSelectorView
 		return buffer.join(' > ');
 	};
 
-	var selectPageMessage = A.one('#<portlet:namespace />selectPageMessage');
-
-	var button = selectPageMessage.one('.selector-button');
+	var button = A.one('#<portlet:namespace />selectorButton');
 
 	button.on(
 		'click',
@@ -115,12 +94,8 @@ LayoutItemSelectorCriterion layoutItemSelectorCriterion = layoutItemSelectorView
 				'<%= layoutItemSelectorViewDisplayContext.getItemSelectedEventName() %>',
 				{
 
-					<%
-					String ckEditorFuncNum = ParamUtil.getString(request, "CKEditorFuncNum");
-					%>
-
-					<c:if test="<%= Validator.isNotNull(ckEditorFuncNum) %>">
-						ckeditorfuncnum: <%= ckEditorFuncNum %>,
+					<c:if test="<%= Validator.isNotNull(layoutItemSelectorViewDisplayContext.getCkEditorFuncNum()) %>">
+						ckeditorfuncnum: <%= layoutItemSelectorViewDisplayContext.getCkEditorFuncNum() %>,
 					</c:if>
 
 					layoutpath: currentTarget.attr('data-layoutpath'),
@@ -138,8 +113,6 @@ LayoutItemSelectorCriterion layoutItemSelectorCriterion = layoutItemSelectorView
 
 		var messageText = '<%= UnicodeLanguageUtil.get(request, "there-is-no-selected-page") %>';
 
-		var messageType = 'alert';
-
 		var lastSelectedNode = event.newVal;
 
 		var labelEl = lastSelectedNode.get('labelEl');
@@ -152,43 +125,19 @@ LayoutItemSelectorCriterion layoutItemSelectorCriterion = layoutItemSelectorView
 		if (link && url) {
 			disabled = false;
 
-			messageText = getChosenPagePath(lastSelectedNode);
-
-			messageType = 'info';
-
-			button.attr('data-layoutpath', messageText);
-
-			<%
-			String itemSelectorReturnTypeName = StringPool.BLANK;
-
-			for (ItemSelectorReturnType desiredItemSelectorReturnType : layoutItemSelectorCriterion.getDesiredItemSelectorReturnTypes()) {
-				itemSelectorReturnTypeName = ClassUtil.getClassName(desiredItemSelectorReturnType);
-
-				break;
-			}
-
-			if (Validator.isNull(itemSelectorReturnTypeName)) {
-				throw new IllegalArgumentException("Invalid item selector return type " + itemSelectorReturnTypeName);
-			}
-			%>
-
-			button.attr('data-returnType', '<%= itemSelectorReturnTypeName %>');
+			button.attr('data-layoutpath', getChosenPagePath(lastSelectedNode));
 
 			<c:choose>
-				<c:when test="<%= itemSelectorReturnTypeName.equals(URLItemSelectorReturnType.class.getName()) %>">
+				<c:when test="<%= Objects.equals(layoutItemSelectorViewDisplayContext.getItemSelectorReturnTypeName(), URLItemSelectorReturnType.class.getName()) %>">
 					button.attr('data-value', url);
 				</c:when>
-				<c:when test="<%= Objects.equals(itemSelectorReturnTypeName, UUIDItemSelectorReturnType.class.getName()) %>">
+				<c:when test="<%= Objects.equals(layoutItemSelectorViewDisplayContext.getItemSelectorReturnTypeName(), UUIDItemSelectorReturnType.class.getName()) %>">
 					button.attr('data-value', uuid);
 				</c:when>
 			</c:choose>
 		}
 
 		Liferay.Util.toggleDisabled(button, disabled);
-
-		selectPageMessage.one('.selected-page-message').html(messageText);
-
-		selectPageMessage.attr('className', 'alert alert-' + messageType);
 	};
 
 	bindTreeUI('treeContainerOutput');

@@ -217,6 +217,10 @@
 			<contains>com.liferay.portal.kernel.search.SearchException: Unable to delete</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-65283, temporarily ignore until issue is fixed.">
+			<contains>Unable to load class com.liferay.social.kernel.model.SocialActivityConstants</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LRQA-14442, temporary workaround until Kiyoshi Lee fixes it">
 			<contains>[org_eclipse_equinox_http_servlet.*Framework Event Dispatcher: Equinox Container:</contains>
 			<matches></matches>

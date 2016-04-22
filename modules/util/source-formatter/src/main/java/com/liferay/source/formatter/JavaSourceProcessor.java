@@ -3128,6 +3128,21 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					previousLine, null, tabDiff, false, true, 0);
 			}
 
+			if (previousLine.endsWith(">") &&
+				!trimmedPreviousLine.startsWith("<") &&
+				(getLevel(previousLine, "<", ">") == 0) &&
+				!trimmedLine.startsWith("extends") &&
+				!trimmedLine.startsWith("implements")) {
+
+				String beforePrevousLine = getLine(content, lineCount - 2);
+
+				if (!beforePrevousLine.endsWith(".")) {
+					return getCombinedLinesContent(
+						content, fileName, line, trimmedLine, lineLength,
+						lineCount, previousLine, null, tabDiff, false, true, 0);
+				}
+			}
+
 			if (line.endsWith(StringPool.SEMICOLON) &&
 				!previousLine.endsWith(StringPool.COLON) &&
 				!previousLine.endsWith(StringPool.OPEN_BRACKET) &&

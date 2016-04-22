@@ -261,10 +261,6 @@ public class ModulesStructureTest {
 		boolean buildGradleExists = Files.exists(buildGradlePath);
 		boolean settingsGradleExists = Files.exists(settingsGradlePath);
 
-		if (!buildGradleExists && !settingsGradleExists) {
-			return;
-		}
-
 		if (!buildGradleExists) {
 			Assert.fail("Missing " + buildGradlePath);
 		}

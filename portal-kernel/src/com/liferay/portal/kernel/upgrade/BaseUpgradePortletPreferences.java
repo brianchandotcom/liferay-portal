@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.upgrade;
 
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -35,6 +36,7 @@ import javax.portlet.ReadOnlyException;
  */
 public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 
+	@Deprecated
 	protected void deletePortletPreferences(long portletPreferencesId)
 		throws Exception {
 
@@ -221,10 +223,19 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 				sb.append(whereClause);
 			}
 
-			try (PreparedStatement ps = connection.prepareStatement(
+			try (PreparedStatement ps1 = connection.prepareStatement(
 					sb.toString());
-
-				ResultSet rs = ps.executeQuery()) {
+				PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"update PortletPreferences set preferences = ? where " +
+							"portletPreferencesId = ?");
+				PreparedStatement ps3 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"delete from PortletPreferences where " +
+							"portletPreferencesId = ?");
+				ResultSet rs = ps1.executeQuery()) {
 
 				while (rs.next()) {
 					long portletPreferencesId = rs.getLong(
@@ -287,18 +298,26 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 							preferences);
 
 						if (!preferences.equals(newPreferences)) {
-							updatePortletPreferences(
-								portletPreferencesId, newPreferences);
+							ps2.setString(1, newPreferences);
+							ps2.setLong(2, portletPreferencesId);
+
+							ps2.addBatch();
 						}
 					}
 					else {
-						deletePortletPreferences(portletPreferencesId);
+						ps3.setLong(1, portletPreferencesId);
+
+						ps3.addBatch();
 					}
+
+					ps2.executeBatch();
+					ps3.executeBatch();
 				}
 			}
 		}
 	}
 
+	@Deprecated
 	protected void updatePortletPreferences(
 			long portletPreferencesId, String preferences)
 		throws Exception {

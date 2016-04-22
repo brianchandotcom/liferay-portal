@@ -1,11 +1,24 @@
-FileTree bndFileTree = fileTree(dir: rootDir, include: "**/bnd.bnd")
+import groovy.io.FileType
+import groovy.io.FileVisitResult
 
 URI rootURI = rootDir.toURI()
 
-include bndFileTree.collect {
-	String dirName = rootURI.relativize(it.parentFile.toURI())
+rootDir.traverse(
+	preDir: {
+		File bndBndFile = new File(it, "bnd.bnd")
+		File gulpfileJsFile = new File(it, "gulpfile.js")
 
-	dirName = dirName[0 .. -2]
+		if (!bndBndFile.exists() && !gulpfileJsFile.exists()) {
+			return FileVisitResult.CONTINUE
+		}
 
-	dirName.replace('/' as char, ':' as char)
-} as String[]
+		String dirName = rootURI.relativize(it.toURI())
+
+		dirName = dirName[0 .. -2]
+
+		include dirName.replace('/' as char, ':' as char)
+
+		return FileVisitResult.SKIP_SUBTREE
+	},
+	type: FileType.DIRECTORIES
+)

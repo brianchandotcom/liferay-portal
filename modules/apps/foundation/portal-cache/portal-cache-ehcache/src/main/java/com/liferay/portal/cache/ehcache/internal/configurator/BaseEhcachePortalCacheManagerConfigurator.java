@@ -206,9 +206,8 @@ public abstract class BaseEhcachePortalCacheManagerConfigurator {
 			null, requireSerialization);
 	}
 
-	protected Set<Properties>
-		parseCacheManagerEventListenerConfigurations(
-			FactoryConfiguration<?> factoryConfiguration) {
+	protected Set<Properties> parseCacheManagerEventListenerConfigurations(
+		FactoryConfiguration<?> factoryConfiguration) {
 
 		if (factoryConfiguration == null) {
 			return Collections.emptySet();

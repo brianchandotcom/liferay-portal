@@ -30,9 +30,7 @@ public class VideoItemSelectorCriterionHandler
 	extends BaseItemSelectorCriterionHandler<VideoItemSelectorCriterion> {
 
 	@Override
-	public Class<VideoItemSelectorCriterion>
-		getItemSelectorCriterionClass() {
-
+	public Class<VideoItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return VideoItemSelectorCriterion.class;
 	}
 

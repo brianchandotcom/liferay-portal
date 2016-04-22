@@ -25,10 +25,9 @@ import javax.portlet.PortletResponse;
  */
 public class PortletConfigurationIconMenu {
 
-	public List<PortletConfigurationIcon>
-		getPortletConfigurationIcons(
-			String portletId, PortletRequest portletRequest,
-			PortletResponse portletResponse) {
+	public List<PortletConfigurationIcon> getPortletConfigurationIcons(
+		String portletId, PortletRequest portletRequest,
+		PortletResponse portletResponse) {
 
 		return PortletConfigurationIconTracker.getPortletConfigurationIcons(
 			portletId, portletRequest, _comparator);

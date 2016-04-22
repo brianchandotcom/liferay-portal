@@ -149,9 +149,8 @@ public class RepositoryClassDefinitionCatalogImpl
 		unregisterRepositoryDefiner(className);
 	}
 
-	protected ServiceRegistration<RepositoryDefiner>
-		registerRepositoryDefiner(
-			RepositoryDefiner repositoryDefiner) {
+	protected ServiceRegistration<RepositoryDefiner> registerRepositoryDefiner(
+		RepositoryDefiner repositoryDefiner) {
 
 		Registry registry = RegistryUtil.getRegistry();
 

@@ -35,9 +35,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class IconOptionsTag extends IconTag {
 
-	public List<PortletConfigurationIcon>
-		getPortletConfigurationIcons() {
-
+	public List<PortletConfigurationIcon> getPortletConfigurationIcons() {
 		if (_portletConfigurationIcons != null) {
 			return _portletConfigurationIcons;
 		}

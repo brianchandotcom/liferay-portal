@@ -375,12 +375,11 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		return rowCount;
 	}
 
-	protected static <T extends BaseModel<T>> List<T>
-		getBaseModels(
-			PortalCache<Long, long[]> portalCache,
-			MappingSqlQuery<Long> mappingSqlQuery, long masterPrimaryKey,
-			BasePersistence<T> slaveBasePersistence, int start, int end,
-			OrderByComparator<T> obc) {
+	protected static <T extends BaseModel<T>> List<T> getBaseModels(
+		PortalCache<Long, long[]> portalCache,
+		MappingSqlQuery<Long> mappingSqlQuery, long masterPrimaryKey,
+		BasePersistence<T> slaveBasePersistence, int start, int end,
+		OrderByComparator<T> obc) {
 
 		long[] slavePrimaryKeys = getPrimaryKeys(
 			portalCache, mappingSqlQuery, masterPrimaryKey, true);

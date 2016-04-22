@@ -47,8 +47,7 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 		BundleContext bundleContext, Class<SR> clazz, String filterString,
 		ServiceReferenceMapper<K, ? super SR> serviceReferenceMapper,
 		ServiceTrackerCustomizer<SR, TS> serviceTrackerCustomizer,
-		ServiceTrackerBucketFactory<SR, TS, R>
-			serviceTrackerMapBucketFactory,
+		ServiceTrackerBucketFactory<SR, TS, R> serviceTrackerMapBucketFactory,
 		ServiceTrackerMapListener<K, TS, R> serviceTrackerMapListener) {
 
 		_serviceReferenceMapper = serviceReferenceMapper;

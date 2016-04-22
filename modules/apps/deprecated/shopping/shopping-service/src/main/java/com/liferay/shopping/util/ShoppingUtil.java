@@ -151,7 +151,8 @@ public class ShoppingUtil {
 
 		if ((shoppingGroupServiceOverriddenConfiguration != null) &&
 			shoppingGroupServiceOverriddenConfiguration.
-				useAlternativeShipping() && (shipping > 0)) {
+				useAlternativeShipping() &&
+			(shipping > 0)) {
 
 			double altShippingDelta = 0.0;
 

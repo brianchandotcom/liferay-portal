@@ -1854,6 +1854,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		int previousLineLeadingWhitespace = 0;
 		int previousLineLevel = 0;
+		boolean previousLineIsStartCriteria = true;
 
 		int baseLeadingWhitespace = 0;
 		int insideMethodCallExpectedWhitespace = 0;
@@ -1887,7 +1888,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				(previousLine.endsWith("|") || previousLine.endsWith("&&")) &&
 				((previousLineLength + trimmedLine.length()) <
 					_MAX_LINE_LENGTH) &&
-				(lineLevel <= 0) && (previousLineLevel >= 0)) {
+				(lineLevel <= 0) && (previousLineLevel >= 0) &&
+				previousLineIsStartCriteria) {
 
 				return StringUtil.replace(
 					ifClause, previousLine + "\n" + originalLine,
@@ -1958,6 +1960,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			level += lineLevel;
+
+			if (Validator.isNotNull(previousLine)) {
+				if (!previousLine.endsWith("|") &&
+					!previousLine.endsWith("&") &&
+					!previousLine.endsWith("^")) {
+
+					previousLineIsStartCriteria = false;
+				}
+				else {
+					previousLineIsStartCriteria = true;
+				}
+			}
 
 			previousLine = originalLine;
 			previousLineLength = line.length();
@@ -3719,7 +3733,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			if (Validator.isNotNull(previousLine) &&
-				(getLevel(line.substring(0, x)) < 0)) {
+				(previousLine.endsWith(StringPool.PERIOD) ||
+				 (getLevel(line.substring(0, x)) < 0))) {
 
 				return x + 3;
 			}

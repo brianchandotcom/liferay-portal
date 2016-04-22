@@ -19,15 +19,12 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.push.notifications.constants.PushNotificationsPortletKeys;
 import com.liferay.push.notifications.service.PushNotificationsDeviceLocalServiceUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
-import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -71,73 +68,6 @@ public class PushNotificationsPortlet extends MVCPortlet {
 		catch (PortalException pe) {
 			SessionErrors.add(actionRequest, pe.getClass());
 		}
-
-		sendRedirect(actionRequest, actionResponse);
-	}
-
-	public void updateAndroidPreferences(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences();
-
-		String androidApiKey = ParamUtil.getString(
-			actionRequest, "androidApiKey");
-
-		portletPreferences.setValue(
-			PortletPropsKeys.ANDROID_API_KEY, androidApiKey);
-
-		int androidRetries = ParamUtil.getInteger(
-			actionRequest, "androidRetries");
-
-		portletPreferences.setValue(
-			PortletPropsKeys.ANDROID_RETRIES, String.valueOf(androidRetries));
-
-		portletPreferences.store();
-
-		PushNotificationsDeviceLocalServiceUtil.resetPushNotificationSenders();
-
-		SessionMessages.add(
-			actionRequest,
-			PortalUtil.getPortletId(actionRequest) +
-				SessionMessages.KEY_SUFFIX_UPDATED_PREFERENCES);
-
-		sendRedirect(actionRequest, actionResponse);
-	}
-
-	public void updateApplePreferences(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences();
-
-		String appleCertificatePassword = ParamUtil.getString(
-			actionRequest, "appleCertificatePassword");
-
-		portletPreferences.setValue(
-			PortletPropsKeys.APPLE_CERTIFICATE_PASSWORD,
-			appleCertificatePassword);
-
-		String appleCertificatePath = ParamUtil.getString(
-			actionRequest, "appleCertificatePath");
-
-		portletPreferences.setValue(
-			PortletPropsKeys.APPLE_CERTIFICATE_PATH, appleCertificatePath);
-
-		boolean appleSandbox = ParamUtil.getBoolean(
-			actionRequest, "appleSandbox");
-
-		portletPreferences.setValue(
-			PortletPropsKeys.APPLE_SANDBOX, String.valueOf(appleSandbox));
-
-		portletPreferences.store();
-
-		PushNotificationsDeviceLocalServiceUtil.resetPushNotificationSenders();
-
-		SessionMessages.add(
-			actionRequest,
-			PortalUtil.getPortletId(actionRequest) +
-				SessionMessages.KEY_SUFFIX_UPDATED_PREFERENCES);
 
 		sendRedirect(actionRequest, actionResponse);
 	}

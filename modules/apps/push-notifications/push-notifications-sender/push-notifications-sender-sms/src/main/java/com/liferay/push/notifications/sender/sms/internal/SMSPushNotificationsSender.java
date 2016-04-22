@@ -14,15 +14,16 @@
 
 package com.liferay.push.notifications.sender.sms.internal;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
 import com.liferay.push.notifications.exception.PushNotificationsException;
 import com.liferay.push.notifications.messaging.DestinationNames;
 import com.liferay.push.notifications.sender.PushNotificationsSender;
 import com.liferay.push.notifications.sender.Response;
+import com.liferay.push.notifications.sender.sms.internal.configuration.SMSPushNotificationsSenderConfiguration;
 
 import com.twilio.sdk.TwilioRestClient;
 import com.twilio.sdk.resource.factory.SmsFactory;
@@ -32,75 +33,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+
 /**
  * @author Bruno Farache
  */
+@Component(
+	configurationPid = "com.liferay.push.notifications.sender.sms.internal.configuration.SMSPushNotificationsSenderConfiguration",
+	immediate = true,
+	property = {"platform=" + SMSPushNotificationsSender.PLATFORM}
+)
 public class SMSPushNotificationsSender implements PushNotificationsSender {
 
-	public SMSPushNotificationsSender() {
-	}
-
-	public SMSPushNotificationsSender(
-		String accountSID, String authToken, String number,
-		String statusCallback) {
-
-		_accountSID = accountSID;
-		_authToken = authToken;
-		_number = number;
-		_statusCallback = statusCallback;
-	}
-
-	public String getAccountSID() {
-		if (Validator.isNull(_accountSID)) {
-			_accountSID = PrefsPropsUtil.getString(
-				PortletPropsKeys.SMS_TWILIO_ACCOUNT_SID,
-				PortletPropsValues.SMS_TWILIO_ACCOUNT_SID);
-		}
-
-		return _accountSID;
-	}
-
-	public String getAuthToken() {
-		if (Validator.isNull(_authToken)) {
-			_authToken = PrefsPropsUtil.getString(
-				PortletPropsKeys.SMS_TWILIO_AUTH_TOKEN,
-				PortletPropsValues.SMS_TWILIO_AUTH_TOKEN);
-		}
-
-		return _authToken;
-	}
-
-	public String getNumber() {
-		if (Validator.isNull(_number)) {
-			_number = PrefsPropsUtil.getString(
-				PortletPropsKeys.SMS_TWILIO_NUMBER,
-				PortletPropsValues.SMS_TWILIO_NUMBER);
-		}
-
-		return _number;
-	}
-
-	public String getStatusCallback() {
-		if (Validator.isNull(_statusCallback)) {
-			_statusCallback = PrefsPropsUtil.getString(
-				PortletPropsKeys.SMS_TWILIO_STATUS_CALLBACK,
-				PortletPropsValues.SMS_TWILIO_STATUS_CALLBACK);
-		}
-
-		return _statusCallback;
-	}
+	public static final String PLATFORM = "sms";
 
 	@Override
 	public void send(List<String> phoneNumbers, JSONObject payloadJSONObject)
 		throws Exception {
 
-		TwilioRestClient twilioRestClient = getTwilioRestClient();
-
-		if (twilioRestClient == null) {
-			return;
+		if (_twilioRestClient == null) {
+			throw new PushNotificationsException(
+				"SMS push notifications sender is not configured properly");
 		}
 
-		Account account = twilioRestClient.getAccount();
+		Account account = _twilioRestClient.getAccount();
 
 		SmsFactory smsFactory = account.getSmsFactory();
 
@@ -111,7 +69,7 @@ public class SMSPushNotificationsSender implements PushNotificationsSender {
 			PushNotificationsConstants.KEY_FROM);
 
 		if (Validator.isNull(from)) {
-			from = getNumber();
+			from = _smsPushNotificationsSenderConfiguration.number();
 		}
 
 		for (String phoneNumber : phoneNumbers) {
@@ -120,7 +78,8 @@ public class SMSPushNotificationsSender implements PushNotificationsSender {
 			params.put("Body", body);
 			params.put("From", from);
 
-			String statusCallback = getStatusCallback();
+			String statusCallback =
+				_smsPushNotificationsSenderConfiguration.statusCallback();
 
 			if (Validator.isNotNull(statusCallback)) {
 				params.put("StatusCallback", statusCallback);
@@ -136,52 +95,28 @@ public class SMSPushNotificationsSender implements PushNotificationsSender {
 		}
 	}
 
-	public void setAccountSID(String accountSID) {
-		_accountSID = accountSID;
-	}
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_smsPushNotificationsSenderConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SMSPushNotificationsSenderConfiguration.class, properties);
 
-	public void setAuthToken(String authToken) {
-		_authToken = authToken;
-	}
+		String accountSID =
+			_smsPushNotificationsSenderConfiguration.accountSID();
+		String authToken = _smsPushNotificationsSenderConfiguration.authToken();
 
-	public void setNumber(String number) {
-		_number = number;
-	}
+		if (Validator.isNull(accountSID) || Validator.isNull(authToken)) {
+			_twilioRestClient = null;
 
-	public void setStatusCallback(String statusCallback) {
-		_statusCallback = statusCallback;
-	}
-
-	protected synchronized TwilioRestClient getTwilioRestClient()
-		throws Exception {
-
-		if (_twilioRestClient == null) {
-			String accountSID = getAccountSID();
-
-			if (Validator.isNull(accountSID)) {
-				throw new PushNotificationsException(
-					"The property \"sms.twilio.account.sid\" is not set in " +
-						"portlet.properties");
-			}
-
-			String authToken = getAuthToken();
-
-			if (Validator.isNull(authToken)) {
-				throw new PushNotificationsException(
-					"The property \"sms.twilio.auth.token\" is not set in " +
-						"portlet.properties");
-			}
-
-			_twilioRestClient = new TwilioRestClient(accountSID, authToken);
+			return;
 		}
 
-		return _twilioRestClient;
+		_twilioRestClient = new TwilioRestClient(accountSID, authToken);
 	}
 
-	private String _accountSID;
-	private String _authToken;
-	private String _number;
-	private String _statusCallback;
-	private TwilioRestClient _twilioRestClient;
+	private volatile SMSPushNotificationsSenderConfiguration
+		_smsPushNotificationsSenderConfiguration;
+	private volatile TwilioRestClient _twilioRestClient;
 
 }

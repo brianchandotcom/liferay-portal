@@ -134,6 +134,23 @@ public class PatcherImpl implements Patcher {
 	}
 
 	@Override
+	public String getPatchingToolVersionDisplayName() {
+		if (_patchingToolVersionDisplayName != null) {
+			return _patchingToolVersionDisplayName;
+		}
+
+		Properties properties = getProperties();
+
+		if (properties.containsKey(
+				PROPERTY_PATCHING_TOOL_VERSION_DISPLAY_NAME)) {
+			_patchingToolVersionDisplayName = properties.getProperty(
+				PROPERTY_PATCHING_TOOL_VERSION_DISPLAY_NAME);
+		}
+
+		return _patchingToolVersionDisplayName;
+	}
+
+	@Override
 	public String[] getPatchLevels() {
 		if (_patchLevels != null) {
 			return _patchLevels;
@@ -274,6 +291,7 @@ public class PatcherImpl implements Patcher {
 	private String[] _installedPatchNames;
 	private File _patchDirectory;
 	private int _patchingToolVersion;
+	private String _patchingToolVersionDisplayName;
 	private String[] _patchLevels;
 	private Properties _properties;
 

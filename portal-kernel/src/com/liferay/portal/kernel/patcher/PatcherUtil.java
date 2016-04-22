@@ -52,6 +52,10 @@ public class PatcherUtil {
 		return getPatcher().getPatchingToolVersion();
 	}
 
+	public static String getPatchingToolVersionDisplayName() {
+		return getPatcher().getPatchingToolVersionDisplayName();
+	}
+
 	public static String[] getPatchLevels() {
 		return getPatcher().getPatchLevels();
 	}

@@ -23,10 +23,11 @@ public class LayoutItemSelectorViewDisplayContext {
 
 	public LayoutItemSelectorViewDisplayContext(
 		LayoutItemSelectorCriterion layoutItemSelectorCriterion,
-		String itemSelectedEventName) {
+		String itemSelectedEventName, boolean privateLayout) {
 
 		_layoutItemSelectorCriterion = layoutItemSelectorCriterion;
 		_itemSelectedEventName = itemSelectedEventName;
+		_privateLayout = privateLayout;
 	}
 
 	public String getItemSelectedEventName() {
@@ -37,7 +38,12 @@ public class LayoutItemSelectorViewDisplayContext {
 		return _layoutItemSelectorCriterion;
 	}
 
+	public boolean isPrivateLayout() {
+		return _privateLayout;
+	}
+
 	private final String _itemSelectedEventName;
 	private final LayoutItemSelectorCriterion _layoutItemSelectorCriterion;
+	private final boolean _privateLayout;
 
 }

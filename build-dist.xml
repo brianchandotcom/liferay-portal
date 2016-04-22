@@ -560,6 +560,30 @@
 		<build-dist-tomcat-bare />
 	</target>
 
+	<target name="build-dist-weblogic">
+		<app-server-properties-update>
+			app.server.type=weblogic
+		</app-server-properties-update>
+
+		<antcall target="update-sdk-properties" inheritAll="false" />
+
+		<antcall target="unzip-weblogic" />
+
+		<delete dir="${project.dir}/portal-web/classes" />
+
+		<ant target="deploy" inheritAll="false" />
+
+		<antcall target="resolve-dynamic-jars" inheritAll="false" />
+
+		<app-server-properties-reset />
+
+		<antcall target="deploy-plugins">
+			<param name="deployer.dest.dir" value="${app.server.weblogic.deploy.dir}" />
+			<param name="deployer.app.server.type" value="weblogic" />
+			<param name="deployer.app.server.lib.portal.dir" value="${app.server.weblogic.lib.portal.dir}" />
+		</antcall>
+	</target>
+
 	<target name="build-dist-websphere">
 		<app-server-properties-update>
 			app.server.type=websphere

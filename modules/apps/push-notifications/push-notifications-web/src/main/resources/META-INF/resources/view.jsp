@@ -30,7 +30,7 @@ portletURL.setParameter("tabs1", tabs1);
 %>
 
 <liferay-ui:tabs
-	names="devices,configuration"
+	names="devices,test"
 	param="tabs1"
 	portletURL="<%= portletURL %>"
 />
@@ -75,6 +75,6 @@ portletURL.setParameter("tabs1", tabs1);
 		</liferay-ui:search-container>
 	</c:when>
 	<c:otherwise>
-		<%@ include file="/configuration.jspf" %>
+		<%@ include file="/test.jspf" %>
 	</c:otherwise>
 </c:choose>

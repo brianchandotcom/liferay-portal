@@ -171,6 +171,7 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 
 <portlet:actionURL var="editArticleActionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 	<portlet:param name="mvcPath" value="/edit_article.jsp" />
+	<portlet:param name="ddmStructureKey" value="<%= ddmStructureKey %>" />
 </portlet:actionURL>
 
 <portlet:renderURL var="editArticleRenderURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">

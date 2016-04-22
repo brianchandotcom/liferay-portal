@@ -406,6 +406,10 @@ public class ResourceImporter extends FileSystemImporter {
 			resourcePath = StringPool.SLASH + resourcePath;
 		}
 
+		if (!resourcePath.endsWith(StringPool.SLASH)) {
+			resourcePath = resourcePath + StringPool.SLASH;
+		}
+
 		return resourcePath;
 	}
 

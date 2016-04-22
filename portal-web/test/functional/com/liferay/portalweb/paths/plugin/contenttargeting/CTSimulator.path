@@ -1,11 +1,11 @@
 <html>
 <head>
-<title>ContentTargetingSimulator</title>
+<title>CTSimulator</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">ContentTargetingSimulator</td></tr>
+<tr><td rowspan="1" colspan="3">CTSimulator</td></tr>
 </thead>
 <tbody>
 <tr>

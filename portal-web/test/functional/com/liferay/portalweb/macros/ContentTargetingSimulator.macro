@@ -6,7 +6,7 @@
 				<for list="${configureUserSegmentMatched}" param="userSegmentMatched">
 					<var name="key_userSegmentMatched" value="${userSegmentMatched}" />
 
-					<execute function="Click" locator1="ContentTargetingSimulator#USER_SEGMENT_MATCHED" />
+					<execute function="Click" locator1="CTSimulator#USER_SEGMENT_MATCHED" />
 				</for>
 			</then>
 		</if>
@@ -17,7 +17,7 @@
 				<for list="${configureUserSegmentNotMatched}" param="userSegmentNotMatched">
 					<var name="key_userSegmentNotMatched" value="${userSegmentNotMatched}" />
 
-					<execute function="Click" locator1="ContentTargetingSimulator#USER_SEGMENT_NOT_MATCHED" />
+					<execute function="Click" locator1="CTSimulator#USER_SEGMENT_NOT_MATCHED" />
 				</for>
 			</then>
 		</if>
@@ -27,7 +27,7 @@
 		<for list="${userSegments}" param="userSegment">
 			<var name="key_userSegmentNotMatched" value="${userSegmentNotMatched}" />
 
-			<execute function="AssertTextEquals" locator1="ContentTargetingSimulator#USER_SEGMENT_NOT_MATCHED" />
+			<execute function="AssertTextEquals" locator1="CTSimulator#USER_SEGMENT_NOT_MATCHED" />
 		</for>
 	</command>
 </definition>

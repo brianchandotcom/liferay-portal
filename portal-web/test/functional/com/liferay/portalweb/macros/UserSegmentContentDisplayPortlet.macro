@@ -72,9 +72,9 @@
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
 
-		<var name="key_contentTitle" value="${contentTitle}" />
+		<var name="key_rowEntry" value="${contentTitle}" />
 
-		<execute function="AssertClickNoError" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="Choose" />
+		<execute function="ClickNoError" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
@@ -87,10 +87,10 @@
 		<if>
 			<isset var="otherwiseContentType" />
 			<then>
-				<execute function="ClickNoError" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL" />
-				<execute function="Click" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
+				<execute function="ClickNoError" locator1="ContentTargeting#OTHERWISE_PANEL" />
+				<execute function="Click" locator1="ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
 
-				<execute function="ClickNoError" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL_SELECT_CONTENT" />
+				<execute function="ClickNoError" locator1="ContentTargeting#OTHERWISE_PANEL_SELECT_CONTENT" />
 
 				<var name="key_menuItem" value="${otherwiseContentType}" />
 
@@ -99,15 +99,15 @@
 				<execute function="SelectFrame" value1="relative=top" />
 				<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
 
-				<var name="key_contentTitle" value="${otherwiseContentTitle}" />
+				<var name="key_rowEntry" value="${otherwiseContentTitle}" />
 
-				<execute function="AssertClickNoError" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="Choose" />
+				<execute function="ClickNoError" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" />
 
 				<execute function="SelectFrame" value1="relative=top" />
 			</then>
 			<else>
-				<execute function="ClickNoError" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL" />
-				<execute function="Click" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL_DONT_DISPLAY_ANYTHING_RADIO" />
+				<execute function="ClickNoError" locator1="ContentTargeting#OTHERWISE_PANEL" />
+				<execute function="Click" locator1="ContentTargeting#OTHERWISE_PANEL_DONT_DISPLAY_ANYTHING_RADIO" />
 				<execute function="SelectFrame" value1="relative=top" />
 			</else>
 		</if>
@@ -175,16 +175,16 @@
 		<if>
 			<isset var="otherwiseContentType" />
 			<then>
-				<execute function="Click" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL" />
-				<execute function="AssertChecked" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
+				<execute function="Click" locator1="ContentTargeting#OTHERWISE_PANEL" />
+				<execute function="AssertChecked" locator1="ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
 
 				<var name="key_contentType" value="${otherwiseContentType}" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL_SELECTED_CONTENT_TYPE" value1="Type: ${otherwiseContentType}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="ContentTargeting#OTHERWISE_PANEL_SELECTED_CONTENT_TYPE" value1="Type: ${otherwiseContentType}" />
 
 				<var name="key_contentTitle" value="${otherwiseContentTitle}" />
 
-				<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL_SELECTED_CONTENT_TITLE" value1="${otherwiseContentTitle}" />
+				<execute function="AssertTextEquals" locator1="ContentTargeting#OTHERWISE_PANEL_SELECTED_CONTENT_TITLE" value1="${otherwiseContentTitle}" />
 			</then>
 		</if>
 	</command>
@@ -208,8 +208,8 @@
 		<if>
 			<isset var="preview1Text" />
 			<then>
-				<execute function="MouseOver" locator1="UserSegmentContentDisplay#PREVIEW_1" />
-				<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#PREVIEW_1" value1="${preview1Text}" />
+				<execute function="MouseOver" locator1="ContentTargeting#PREVIEW_1" />
+				<execute function="AssertTextEquals" locator1="ContentTargeting#PREVIEW_1" value1="${preview1Text}" />
 			</then>
 		</if>
 
@@ -218,8 +218,8 @@
 		<if>
 			<isset var="preview2Text" />
 			<then>
-				<execute function="MouseOver" locator1="UserSegmentContentDisplay#PREVIEW_2" />
-				<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#PREVIEW_2" value1="${preview2Text}" />
+				<execute function="MouseOver" locator1="ContentTargeting#PREVIEW_2" />
+				<execute function="AssertTextEquals" locator1="ContentTargeting#PREVIEW_2" value1="${preview2Text}" />
 			</then>
 		</if>
 

@@ -1,11 +1,11 @@
 <html>
 <head>
-<title>ContentTargetingEditCampaign</title>
+<title>EditCampaign</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">ContentTargetingEditCampaign</td></tr>
+<tr><td rowspan="1" colspan="3">EditCampaign</td></tr>
 </thead>
 <tbody>
 <tr>

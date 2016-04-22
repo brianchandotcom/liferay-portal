@@ -1319,19 +1319,19 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#viewReport">
+		<execute macro="ContentTargetingUserSegment#gotoViewReport">
 			<var name="reportName" value="Content Views" />
 			<var name="userSegmentName" value="Male Users" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#viewReportContent">
+		<execute macro="ContentTargetingUserSegment#viewReportContentViews">
 			<var name="reportCount" value="10" />
 			<var name="reportEvent" value="View" />
 			<var name="reportTitle" value="Test Page Name" />
 			<var name="reportType" value="Page" />
 		</execute>
 
-		<execute macro="ContentTargetingUserSegment#viewReportContent">
+		<execute macro="ContentTargetingUserSegment#viewReportContentViews">
 			<var name="reportCount" value="2" />
 			<var name="reportEvent" value="View" />
 			<var name="reportTitle" value="WC Male View Title" />

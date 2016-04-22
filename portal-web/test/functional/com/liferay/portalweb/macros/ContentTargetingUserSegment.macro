@@ -4,17 +4,17 @@
 			<var name="userSegmentRule" value="Content Visited" />
 		</execute>
 
-		<execute function="Click" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_CONTENT_BUTTON" />
+		<execute function="Click" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_CONTENT_BUTTON" />
 
 		<var name="key_menuItem" value="${contentVisitedContent}" />
 
 		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
 
-		<execute function="SelectFrame" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_WEB_CONTENT_IFRAME" />
+		<execute function="SelectFrame" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_WEB_CONTENT_IFRAME" />
 
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="AssertClick" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_WEB_CONTENT_ARTICLE_CHOOSE_BUTTON" value1="Choose" />
+		<execute function="AssertClick" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_WEB_CONTENT_ARTICLE_CHOOSE_BUTTON" value1="Choose" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -24,7 +24,7 @@
 			<var name="userSegmentRule" value="Page Visited" />
 		</execute>
 
-		<execute function="Type" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_PAGE_VISITED_FRIENDLY_URL_FIELD" value1="${friendlyURL}" />
+		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_PAGE_VISITED_FRIENDLY_URL_FIELD" value1="${friendlyURL}" />
 	</command>
 
 	<command name="addBehaviorScorePointsRuleCP">
@@ -32,7 +32,7 @@
 			<var name="userSegmentRule" value="Score Points" />
 		</execute>
 
-		<execute function="Type" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_SCORE_POINTS_FIELD" value1="${scorePoints}" />
+		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_SCORE_POINTS_FIELD" value1="${scorePoints}" />
 	</command>
 
 	<command name="addCP">
@@ -51,7 +51,7 @@
 
 		<var name="key_userSegmentRule" value="${userSegmentRule}" />
 
-		<execute function="DragAndDrop" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULES_RULE" locator2="ContentTargeting#FORM_BUILDER" value1="${userSegmentRule}" />
+		<execute function="DragAndDrop" locator1="EditUserSegment#USER_SEGMENT_RULES_RULE" locator2="ContentTargeting#FORM_BUILDER" value1="${userSegmentRule}" />
 	</command>
 
 	<command name="addSessionAttributesTimeRuleCP">
@@ -59,8 +59,8 @@
 			<var name="userSegmentRule" value="Time" />
 		</execute>
 
-		<execute function="Type" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_START_TIME_FIELD" value1="${startTime}" />
-		<execute function="Type" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_END_TIME_FIELD" value1="${endTime}" />
+		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_START_TIME_FIELD" value1="${startTime}" />
+		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_END_TIME_FIELD" value1="${endTime}" />
 	</command>
 
 	<command name="addSocialFacebookAgeRuleCP">
@@ -68,8 +68,8 @@
 			<var name="userSegmentRule" value="Facebook Age" />
 		</execute>
 
-		<execute function="Type" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_OLDER_THAN_FIELD" value1="${facebookOlderThanAge}" />
-		<execute function="Type" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_YOUNGER_OLDER_THAN_FIELD" value1="${facebookYoungerThanAge}" />
+		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_OLDER_THAN_FIELD" value1="${facebookOlderThanAge}" />
+		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_YOUNGER_OLDER_THAN_FIELD" value1="${facebookYoungerThanAge}" />
 	</command>
 
 	<command name="addSocialFacebookCityRuleCP">
@@ -77,7 +77,7 @@
 			<var name="userSegmentRule" value="Facebook City" />
 		</execute>
 
-		<execute function="Type" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_CITY_FIELD" value1="${facebookCity}" />
+		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_CITY_FIELD" value1="${facebookCity}" />
 	</command>
 
 	<command name="addSocialFacebookEducationRuleCP">
@@ -85,8 +85,8 @@
 			<var name="userSegmentRule" value="Facebook Education" />
 		</execute>
 
-		<execute function="Select" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_LEVEL_SELECT" value1="${facebookEducationLevel}" />
-		<execute function="Type" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_COLLEGE_HIGH_SCHOOL_NAME_FIELD" value1="${facebookCollegeHighSchoolName}" />
+		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_LEVEL_SELECT" value1="${facebookEducationLevel}" />
+		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_COLLEGE_HIGH_SCHOOL_NAME_FIELD" value1="${facebookCollegeHighSchoolName}" />
 	</command>
 
 	<command name="addSocialFacebookFriendsRuleCP">
@@ -94,8 +94,8 @@
 			<var name="userSegmentRule" value="Facebook Friends" />
 		</execute>
 
-		<execute function="Select" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_MORE_LESS_THAN_SELECT" value1="${moreLessThan}" />
-		<execute function="Type" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_FIELD" value1="${numberOfFriends}" />
+		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_MORE_LESS_THAN_SELECT" value1="${moreLessThan}" />
+		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_FIELD" value1="${numberOfFriends}" />
 	</command>
 
 	<command name="addSocialFacebookGenderRuleCP">
@@ -106,18 +106,18 @@
 		<if>
 			<equals arg1="${facebookGenderRadio}" arg2="Male" />
 			<then>
-				<execute function="Click" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_MALE_RADIO" />
+				<execute function="Click" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_MALE_RADIO" />
 			</then>
 			<elseif>
 				<equals arg1="${facebookGenderRadio}" arg2="Female" />
 				<then>
-					<execute function="Click" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_FEMALE_RADIO" />
+					<execute function="Click" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_FEMALE_RADIO" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${facebookGenderRadio}" arg2="Custom" />
 				<then>
-					<execute function="Click" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_CUSTOM_RADIO" />
+					<execute function="Click" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_CUSTOM_RADIO" />
 				</then>
 			</elseif>
 		</if>
@@ -128,7 +128,7 @@
 			<var name="userSegmentRule" value="Facebook Page Like" />
 		</execute>
 
-		<execute function="Type" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_PAGE_LIKE_FIELD" value1="${facebookURL}" />
+		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_PAGE_LIKE_FIELD" value1="${facebookURL}" />
 	</command>
 
 	<command name="addSystemAttributesBrowserRuleCP">
@@ -136,7 +136,7 @@
 			<var name="userSegmentRule" value="Browser" />
 		</execute>
 
-		<execute function="Select" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_BROWSER_SELECT" value1="${browserName}" />
+		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_BROWSER_SELECT" value1="${browserName}" />
 	</command>
 
 	<command name="addSystemAttributesDeviceRuleCP">
@@ -144,7 +144,7 @@
 			<var name="userSegmentRule" value="Device" />
 		</execute>
 
-		<execute function="Select" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_DEVICE_SELECT" value1="${deviceFamilyName}" />
+		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_DEVICE_SELECT" value1="${deviceFamilyName}" />
 	</command>
 
 	<command name="addSystemAttributesLocationRuleCP">
@@ -152,8 +152,8 @@
 			<var name="userSegmentRule" value="Location" />
 		</execute>
 
-		<execute function="Select" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_COUNTRY_SELECT" value1="${countryName}" />
-		<execute function="Select" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_REGION_SELECT" value1="${regionName}" />
+		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_COUNTRY_SELECT" value1="${countryName}" />
+		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_REGION_SELECT" value1="${regionName}" />
 	</command>
 
 	<command name="addSystemAttributesOperatingSystemRuleCP">
@@ -161,7 +161,7 @@
 			<var name="userSegmentRule" value="Operating System" />
 		</execute>
 
-		<execute function="Select" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_SYSTEM_SELECT" value1="${operatingSystemName}" />
+		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_SYSTEM_SELECT" value1="${operatingSystemName}" />
 	</command>
 
 	<command name="addSystemAttributesTimeRuleCP">
@@ -169,8 +169,8 @@
 			<var name="userSegmentRule" value="Time" />
 		</execute>
 
-		<execute function="Type" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_START_TIME_FIELD" value1="${startTime}" />
-		<execute function="Type" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_END_TIME_FIELD" value1="${endTime}" />
+		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_START_TIME_FIELD" value1="${startTime}" />
+		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_END_TIME_FIELD" value1="${endTime}" />
 	</command>
 
 	<command name="addUserAttributesAgeRuleCP">
@@ -178,8 +178,8 @@
 			<var name="userSegmentRule" value="Age" />
 		</execute>
 
-		<execute function="Type" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_OLDER_THAN_FIELD" value1="${olderThanAge}" />
-		<execute function="Type" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_YOUNGER_THAN_FIELD" value1="${youngerThanAge}" />
+		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_OLDER_THAN_FIELD" value1="${olderThanAge}" />
+		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_YOUNGER_THAN_FIELD" value1="${youngerThanAge}" />
 	</command>
 
 	<command name="addUserAttributesGenderRuleCP">
@@ -190,12 +190,12 @@
 		<if>
 			<equals arg1="${genderRadio}" arg2="Male" />
 			<then>
-				<execute function="Click" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_MALE_RADIO" />
+				<execute function="Click" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_MALE_RADIO" />
 			</then>
 			<elseif>
 				<equals arg1="${genderRadio}" arg2="Female" />
 				<then>
-					<execute function="Click" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_FEMALE_RADIO" />
+					<execute function="Click" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_GENDER_FEMALE_RADIO" />
 				</then>
 			</elseif>
 		</if>
@@ -206,7 +206,7 @@
 			<var name="userSegmentRule" value="Organization Member" />
 		</execute>
 
-		<execute function="Select" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_MEMBER_SELECT" value1="${organizationName}" />
+		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_MEMBER_SELECT" value1="${organizationName}" />
 	</command>
 
 	<command name="addUserAttributesOrganizationRoleRuleCP">
@@ -214,8 +214,8 @@
 			<var name="userSegmentRule" value="Organization Role" />
 		</execute>
 
-		<execute function="Select" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ORGANIZATION_SELECT" value1="${organizationName}" />
-		<execute function="Select" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ROLE_SELECT" value1="${organizationRole}" />
+		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ORGANIZATION_SELECT" value1="${organizationName}" />
+		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ROLE_SELECT" value1="${organizationRole}" />
 	</command>
 
 	<command name="addUserAttributesRegularRoleRuleCP">
@@ -223,7 +223,7 @@
 			<var name="userSegmentRule" value="Regular Role" />
 		</execute>
 
-		<execute function="Select" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_REGULAR_ROLE_SELECT" value1="${regularRole}" />
+		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_REGULAR_ROLE_SELECT" value1="${regularRole}" />
 	</command>
 
 	<command name="addUserAttributesSiteMemberRuleCP">
@@ -231,7 +231,7 @@
 			<var name="userSegmentRule" value="Site Member" />
 		</execute>
 
-		<execute function="Select" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER_SELECT" value1="${selectSiteMemberSite}" />
+		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER_SELECT" value1="${selectSiteMemberSite}" />
 	</command>
 
 	<command name="addUserAttributesSiteRoleRuleCP">
@@ -239,8 +239,8 @@
 			<var name="userSegmentRule" value="Site Role" />
 		</execute>
 
-		<execute function="Select" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_SELECT" value1="${siteRole}" />
-		<execute function="Select" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_SELECT" value1="${siteRoleSite}" />
+		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_SELECT" value1="${siteRole}" />
+		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_SELECT" value1="${siteRoleSite}" />
 	</command>
 
 	<command name="addUserAttributesUserGroupMemberRuleCP">
@@ -248,7 +248,7 @@
 			<var name="userSegmentRule" value="UserGroup Member" />
 		</execute>
 
-		<execute function="Select" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER_SELECT" value1="${userGroupName}" />
+		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER_SELECT" value1="${userGroupName}" />
 	</command>
 
 	<command name="addUserAttributesUserSignedInRuleCP">
@@ -256,7 +256,7 @@
 			<var name="userSegmentRule" value="User Signed In" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_SIGNED_IN_MESSAGE" value1="This rule will be matched if the user is signed in." />
+		<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_SIGNED_IN_MESSAGE" value1="This rule will be matched if the user is signed in." />
 	</command>
 
 	<command name="deleteAllCP">
@@ -302,7 +302,7 @@
 				<for list="${userSegmentRuleDeleteList}" param="userSegmentRuleDelete">
 					<var name="key_userSegmentRuleDelete" value="${userSegmentRuleDelete}" />
 
-					<execute function="ClickNoError" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_DELETE" />
+					<execute function="ClickNoError" locator1="EditUserSegment#USER_SEGMENT_RULE_DELETE" />
 
 					<execute function="Confirm" value1="Are you sure you want to delete the selected field(s)?" />
 				</for>
@@ -320,6 +320,31 @@
 				</for>
 			</then>
 		</if>
+	</command>
+
+	<command name="gotoViewReport">
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="key_rowEntry" value="${userSegmentName}" />
+		</execute>
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Reports" />
+		</execute>
+
+		<var name="key_rowEntry" value="${reportName}" />
+
+		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${reportName}" />
+		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_DESCRIPTION_TD3" value1="Displays the number of times that content has been viewed by a user who belongs to the current user segment." />
+
+		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" />
+
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM">
+			<var name="key_menuItem" value="Update" />
+		</execute>
+
+		<execute function="Pause" locator1="1000" />
 	</command>
 
 	<command name="viewCP">
@@ -340,7 +365,7 @@
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="Click" locator1="MenuItem#EDIT" />
 
-		<execute function="AssertElementNotPresent#assertNotVisible" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_RULE_CONTENT_VISITED_CONTENT_TITLE" />
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_WEB_CONTENT_TITLE" />
 	</command>
 
 	<command name="viewNotPresentCP">
@@ -353,34 +378,13 @@
 		<execute function="AssertTextNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userSegmentName}" />
 	</command>
 
-	<command name="viewReport">
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="key_rowEntry" value="${userSegmentName}" />
-		</execute>
+	<command name="viewReportContentViews">
+		<var name="key_rowEntry" value="${reportTitle}" />
 
-		<execute macro="Navigator#gotoNavItem">
-			<var name="navItem" value="Reports" />
-		</execute>
-
-		<var name="key_reportName" value="${reportName}" />
-
-		<execute function="AssertTextEquals" locator1="ContenttargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_NAME" value1="${reportName}" />
-		<execute function="AssertTextEquals" locator1="ContenttargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_DESCRIPTION" value1="Displays the number of times that content has been viewed by a user who belongs to the current user segment." />
-
-		<execute function="AssertClick" locator1="ContenttargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_ACTIONS" value1="Actions" />
-		<execute function="AssertClick" locator1="ContenttargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_ACTIONS_MENULIST_VIEW_REPORT" value1="View Report" />
-
-		<execute function="Click" locator1="ContenttargetingUserSegmentReports#UPDATE_REPORT" />
-		<execute function="Pause" locator1="1000" />
-	</command>
-
-	<command name="viewReportContent">
-		<var name="key_reportTitle" value="${reportTitle}" />
-
-		<execute function="AssertTextEquals" locator1="ContenttargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_NAME" value1="${reportTitle}" />
-		<execute function="AssertTextEquals" locator1="ContenttargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_DESCRIPTION" value1="${reportType}" />
-		<execute function="AssertTextEquals" locator1="ContenttargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_ACTIONS" value1="${reportEvent}" />
-		<execute function="AssertTextEquals" locator1="ContenttargetingUserSegmentReports#USER_SEGMENT_REPORTS_TABLE_ACTIONS_MENULIST_VIEW_REPORT" value1="${reportCount}" />
+		<execute function="AssertTextEquals" locator1="ContentTargeting#REPORT_TABLE_TITLE" value1="${reportTitle}" />
+		<execute function="AssertTextEquals" locator1="ContentTargeting#REPORT_TABLE_TYPE" value1="${reportType}" />
+		<execute function="AssertTextEquals" locator1="ContentTargeting#REPORT_TABLE_EVENT" value1="${reportEvent}" />
+		<execute function="AssertTextEquals" locator1="ContentTargeting#REPORT_TABLE_COUNT" value1="${reportCount}" />
 	</command>
 
 	<command name="viewRulesCP">
@@ -392,42 +396,42 @@
 		<for list="${viewUserSegmentRuleList}" param="usersegmentRuleName">
 			<var name="key_userSegmentRuleName" value="${usersegmentRuleName}" />
 
-			<execute function="AssertTextEquals#assertPartialText" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_APPLIED" value1="${usersegmentRuleName}" />
+			<execute function="AssertTextEquals#assertPartialText" locator1="EditUserSegment#USER_SEGMENT_RULE_APPLIED" value1="${usersegmentRuleName}" />
 
 			<if>
 				<equals arg1="${usersegmentRuleName}" arg2="Content Visited" />
 				<then>
-					<execute function="AssertTextEquals" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_WEB_CONTENT_TITLE" value1="${webContentTitle}" />
+					<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_WEB_CONTENT_TITLE" value1="${webContentTitle}" />
 				</then>
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Score Points" />
 					<then>
-						<execute function="AssertTextEquals" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_RULE_BEHAVIOR_SCORE_POINTS_FIELD" value1="${scorePoints}" />
+						<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_SCORE_POINTS_FIELD" value1="${scorePoints}" />
 					</then>
 				</elseif>
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Page Visited" />
 					<then>
-						<execute function="AssertTextEquals" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_RULE_BEHAVIOR_PAGE_VISITED_FRIENDLY_URL_FIELD" value1="${friendlyURL}" />
+						<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_PAGE_VISITED_FRIENDLY_URL_FIELD" value1="${friendlyURL}" />
 					</then>
 				</elseif>
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Facebook Education" />
 					<then>
-						<execute function="AssertSelectedLabel" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_LEVEL_SELECT" value1="${facebookEducationLevel}" />
-						<execute function="AssertTextEquals" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_COLLEGE_HIGH_SCHOOL_NAME_FIELD" value1="${facebookCollegeHighSchoolName}" />
+						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_LEVEL_SELECT" value1="${facebookEducationLevel}" />
+						<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_COLLEGE_HIGH_SCHOOL_NAME_FIELD" value1="${facebookCollegeHighSchoolName}" />
 					</then>
 				</elseif>
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Facebook City" />
 					<then>
-						<execute function="AssertTextEquals" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_CITY_FIELD" value1="${facebookCity}" />
+						<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_CITY_FIELD" value1="${facebookCity}" />
 					</then>
 				</elseif>
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Facebook Page Like" />
 					<then>
-						<execute function="AssertTextEquals" locator1="CPContenttargetingEditusersegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_PAGE_LIKE_FIELD" value1="${facebookURL}" />
+						<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_PAGE_LIKE_FIELD" value1="${facebookURL}" />
 					</then>
 				</elseif>
 				<elseif>
@@ -436,18 +440,18 @@
 						<if>
 							<equals arg1="${facebookGenderRadio}" arg2="Male" />
 							<then>
-								<execute function="AssertChecked" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_MALE_RADIO" />
+								<execute function="AssertChecked" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_MALE_RADIO" />
 							</then>
 							<elseif>
 								<equals arg1="${facebookGenderRadio}" arg2="Female" />
 								<then>
-									<execute function="AssertChecked" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_FEMALE_RADIO" />
+									<execute function="AssertChecked" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_FEMALE_RADIO" />
 								</then>
 							</elseif>
 							<elseif>
 								<equals arg1="${facebookGenderRadio}" arg2="Custom" />
 								<then>
-									<execute function="AssertChecked" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_CUSTOM_RADIO" />
+									<execute function="AssertChecked" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_CUSTOM_RADIO" />
 								</then>
 							</elseif>
 						</if>
@@ -456,21 +460,21 @@
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Facebook Friends" />
 					<then>
-						<execute function="AssertSelectedLabel" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_MORE_LESS_THAN_SELECT" value1="${moreLessThan}" />
-						<execute function="AssertTextEquals" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_FIELD" value1="${numberOfFriends}" />
+						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_MORE_LESS_THAN_SELECT" value1="${moreLessThan}" />
+						<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_FIELD" value1="${numberOfFriends}" />
 					</then>
 				</elseif>
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Facebook Age" />
 					<then>
-						<execute function="AssertTextEquals" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_OLDER_THAN_FIELD" value1="${facebookOlderThanAge}" />
-						<execute function="AssertTextEquals" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_YOUNGER_OLDER_THAN_FIELD" value1="${facebookYoungerThanAge}" />
+						<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_OLDER_THAN_FIELD" value1="${facebookOlderThanAge}" />
+						<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_AGE_YOUNGER_OLDER_THAN_FIELD" value1="${facebookYoungerThanAge}" />
 					</then>
 				</elseif>
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Site Member" />
 					<then>
-						<execute function="AssertSelectedLabel" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER_SELECT" value1="${selectSiteMemberSite}" />
+						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_MEMBER_SELECT" value1="${selectSiteMemberSite}" />
 					</then>
 				</elseif>
 				<elseif>
@@ -479,18 +483,18 @@
 						<if>
 							<equals arg1="${facebookGenderRadio}" arg2="Male" />
 							<then>
-								<execute function="AssertChecked" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_MALE_RADIO" />
+								<execute function="AssertChecked" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_MALE_RADIO" />
 							</then>
 							<elseif>
 								<equals arg1="${facebookGenderRadio}" arg2="Female" />
 								<then>
-									<execute function="AssertChecked" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_FEMALE_RADIO" />
+									<execute function="AssertChecked" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_FEMALE_RADIO" />
 								</then>
 							</elseif>
 							<elseif>
 								<equals arg1="${facebookGenderRadio}" arg2="Custom" />
 								<then>
-									<execute function="AssertChecked" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_CUSTOM_RADIO" />
+									<execute function="AssertChecked" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_GENDER_CUSTOM_RADIO" />
 								</then>
 							</elseif>
 						</if>
@@ -499,78 +503,78 @@
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Site Role" />
 					<then>
-						<execute function="AssertSelectedLabel" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_SELECT" value1="${siteRole}" />
-						<execute function="AssertSelectedLabel" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_SELECT" value1="${siteRoleSite}" />
+						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_SELECT" value1="${siteRole}" />
+						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_SELECT" value1="${siteRoleSite}" />
 					</then>
 				</elseif>
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="UserGroup Member" />
 					<then>
-						<execute function="AssertSelectedLabel" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER_SELECT" value1="${userGroupName}" />
+						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER_SELECT" value1="${userGroupName}" />
 					</then>
 				</elseif>
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="User Signed In" />
 					<then>
-						<execute function="AssertTextEquals" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_SIGNED_IN_MESSAGE" value1="This rule will be matched if the user is signed in." />
+						<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_USER_SIGNED_IN_MESSAGE" value1="This rule will be matched if the user is signed in." />
 					</then>
 				</elseif>
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Organization Role" />
 					<then>
-						<execute function="AssertSelectedLabel" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ORGANIZATION_SELECT" value1="${organizationName}" />
-						<execute function="AssertSelectedLabel" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ROLE_SELECT" value1="${organizationRole}" />
+						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ORGANIZATION_SELECT" value1="${organizationName}" />
+						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ROLE_SELECT" value1="${organizationRole}" />
 					</then>
 				</elseif>
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Organization Member" />
 					<then>
-						<execute function="AssertSelectedLabel" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_MEMBER_SELECT" value1="${organizationName}" />
+						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_MEMBER_SELECT" value1="${organizationName}" />
 					</then>
 				</elseif>
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Regular Role" />
 					<then>
-						<execute function="AssertSelectedLabel" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_REGULAR_ROLE_SELECT" value1="${regularRole}" />
+						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_REGULAR_ROLE_SELECT" value1="${regularRole}" />
 					</then>
 				</elseif>
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Age" />
 					<then>
-						<execute function="AssertTextEquals" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_OLDER_THAN_FIELD" value1="${olderThanAge}" />
-						<execute function="AssertTextEquals" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_YOUNGER_THAN_FIELD" value1="${youngerThanAge}" />
+						<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_OLDER_THAN_FIELD" value1="${olderThanAge}" />
+						<execute function="AssertTextEquals" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_AGE_YOUNGER_THAN_FIELD" value1="${youngerThanAge}" />
 					</then>
 				</elseif>
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Location" />
 					<then>
-						<execute function="AssertSelectedLabel" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_COUNTRY_SELECT" value1="${countryName}" />
-						<execute function="AssertSelectedLabel" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_REGION_SELECT" value1="${regionName}" />
+						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_COUNTRY_SELECT" value1="${countryName}" />
+						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_REGION_SELECT" value1="${regionName}" />
 					</then>
 				</elseif>
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Browser" />
 					<then>
-						<execute function="AssertSelectedLabel" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_BROWSER_SELECT" value1="${browserName}" />
+						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_BROWSER_SELECT" value1="${browserName}" />
 					</then>
 				</elseif>
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Operating System" />
 					<then>
-						<execute function="AssertSelectedLabel" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_SYSTEM_SELECT" value1="${operatingSystemName}" />
+						<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_SYSTEM_SELECT" value1="${operatingSystemName}" />
 					</then>
 				</elseif>
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Time" />
 					<then>
-						<execute function="Type" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_START_TIME_FIELD" value1="${startTime}" />
-						<execute function="Type" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_END_TIME_FIELD" value1="${endTime}" />
+						<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_START_TIME_FIELD" value1="${startTime}" />
+						<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_END_TIME_FIELD" value1="${endTime}" />
 					</then>
 				</elseif>
 				<elseif>
 					<equals arg1="${usersegmentRuleName}" arg2="Device" />
 					<then>
-						<execute function="Select" locator1="ContentTargetingEditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_DEVICE_SELECT" value1="${deviceFamilyName}" />
+						<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_DEVICE_SELECT" value1="${deviceFamilyName}" />
 					</then>
 				</elseif>
 			</if>

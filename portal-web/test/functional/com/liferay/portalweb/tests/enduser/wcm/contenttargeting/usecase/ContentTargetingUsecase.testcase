@@ -486,7 +486,7 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#updateReportCP">
+		<execute macro="ContentTargetingCampaign#updateReport">
 			<var name="campaignName" value="Campaign Name" />
 			<var name="contentTitle" value="DM Document Title" />
 			<var name="contentViewsDescription" value="true" />
@@ -532,7 +532,7 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#updateReportCP">
+		<execute macro="ContentTargetingCampaign#updateReport">
 			<var name="campaignName" value="Campaign Name" />
 			<var name="contentTitle" value="DM Document Title" />
 			<var name="viewReportType" value="Content Views" />
@@ -1044,7 +1044,7 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#updateReportCP">
+		<execute macro="ContentTargetingCampaign#updateReport">
 			<var name="campaignName" value="Campaign Name" />
 			<var name="contentTitle" value="DM Document Title" />
 			<var name="notEnoughInfoTrackingAction" value="true" />
@@ -1088,16 +1088,16 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#updateReportCP">
+		<execute macro="ContentTargetingCampaign#updateReport">
 			<var name="campaignName" value="Campaign Name" />
 			<var name="contentTitle" value="DM Document Title" />
 			<var name="viewReportType" value="Tracking Actions" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#viewTrackingReportCP">
-			<var name="trackingAlias" value="Content Alias" />
-			<var name="trackingCount" value="2" />
-			<var name="trackingEvent" value="View" />
+		<execute macro="ContentTargetingCampaign#viewMetricReport">
+			<var name="metricCount" value="2" />
+			<var name="metricEvent" value="View" />
+			<var name="metricName" value="Content Alias" />
 			<var name="userSegmentName" value="User Segment Name" />
 		</execute>
 	</command>
@@ -1415,7 +1415,6 @@
 
 		<execute macro="UserSegmentContentListPortlet#viewContent">
 			<var name="viewEntryContentList" value="Web Content Content" />
-			<var name="viewEntryTitleList" value="Web Content Title" />
 		</execute>
 
 		<execute function="Refresh" />
@@ -2072,15 +2071,7 @@
 		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="Male Users" />
 			<var name="vocabularyName" value="User Segment" />
-			<var name="webContentContent" value="Web Content Content
-
-				Web Content Content
-
-				Web Content Content
-
-				Web Content Content
-
-				Web Content Content" />
+			<var name="webContentContent" value="Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
@@ -2185,30 +2176,13 @@
 		</execute>
 
 		<execute macro="UserSegmentContentListPortlet#viewContent">
-			<var name="viewEntryContentList" value="Web Content Content
-
-				Web Content Content
-
-				Web Content Content
-
-				Web Content Content
-
-				Web Content Content" />
-			<var name="viewEntryTitleList" value="Web Content Title" />
+			<var name="viewEntryContentList" value="Web Content Content" />
 		</execute>
 
 		<execute function="Refresh" />
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
-			<var name="entryContentText" value="Web Content Content
-
-				Web Content Content
-
-				Web Content Content
-
-				Web Content Content
-
-				Web Content Content" />
+			<var name="entryContentText" value="Web Content Content" />
 			<var name="preview1Text" value="Male Users" />
 			<var name="preview2Text" value="Default" />
 			<var name="viewUserSegmentSelected" value="Male Users" />
@@ -2217,15 +2191,7 @@
 		<execute function="Refresh" />
 
 		<execute macro="CampaignDisplayPortlet#viewPG">
-			<var name="entryContentText" value="Web Content Content
-
-				Web Content Content
-
-				Web Content Content
-
-				Web Content Content
-
-				Web Content Content" />
+			<var name="entryContentText" value="Web Content Content" />
 			<var name="preview1Text" value="Campaign Name" />
 			<var name="preview2Text" value="Default" />
 			<var name="viewCampaignSelected" value="Campaign Name" />
@@ -2243,30 +2209,13 @@
 		</execute>
 
 		<execute macro="UserSegmentContentListPortlet#viewContent">
-			<var name="viewEntryContentList" value="Web Content Content
-
-				Web Content Content
-
-				Web Content Content
-
-				Web Content Content
-
-				Web Content Content" />
-			<var name="viewEntryTitleList" value="Web Content Title" />
+			<var name="viewEntryContentList" value="Web Content Content" />
 		</execute>
 
 		<execute function="Refresh" />
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
-			<var name="entryContentText" value="Web Content Content
-
-				Web Content Content
-
-				Web Content Content
-
-				Web Content Content
-
-				Web Content Content" />
+			<var name="entryContentText" value="Web Content Content" />
 			<var name="preview1Text" value="Male Users" />
 			<var name="preview2Text" value="Default" />
 			<var name="viewUserSegmentSelected" value="Male Users" />
@@ -2275,15 +2224,7 @@
 		<execute function="Refresh" />
 
 		<execute macro="CampaignDisplayPortlet#viewPG">
-			<var name="entryContentText" value="Web Content Content
-
-				Web Content Content
-
-				Web Content Content
-
-				Web Content Content
-
-				Web Content Content" />
+			<var name="entryContentText" value="Web Content Content" />
 			<var name="preview1Text" value="Campaign Name" />
 			<var name="preview2Text" value="Default" />
 			<var name="viewCampaignSelected" value="Campaign Name" />
@@ -2444,7 +2385,6 @@
 
 		<execute macro="UserSegmentContentListPortlet#viewContent">
 			<var name="viewEntryContentList" value="Web Content Content" />
-			<var name="viewEntryTitleList" value="Web Content Title" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -2454,7 +2394,6 @@
 
 		<execute macro="UserSegmentContentListPortlet#viewContent">
 			<var name="viewEntryContentList" value="Web Content Content" />
-			<var name="viewEntryTitleList" value="Web Content Title" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -2572,7 +2511,6 @@
 
 		<execute macro="UserSegmentContentListPortlet#viewContent">
 			<var name="viewEntryContentList" value="Web Content Content" />
-			<var name="viewEntryTitleList" value="Web Content Title" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -2582,7 +2520,6 @@
 
 		<execute macro="UserSegmentContentListPortlet#viewContent">
 			<var name="viewEntryContentList" value="Web Content Content" />
-			<var name="viewEntryTitleList" value="Web Content Title" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -2614,7 +2551,6 @@
 
 		<execute macro="UserSegmentContentListPortlet#viewContent">
 			<var name="viewEntryContentList" value="Web Content Content" />
-			<var name="viewEntryTitleList" value="Web Content Title" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -4235,7 +4171,6 @@
 
 		<execute macro="UserSegmentContentListPortlet#viewContent">
 			<var name="viewEntryContentList" value="Web Content Content" />
-			<var name="viewEntryTitleList" value="Web Content Title" />
 		</execute>
 	</command>
 
@@ -4417,7 +4352,6 @@
 
 		<execute macro="UserSegmentContentListPortlet#viewContent">
 			<var name="viewEntryContentList" value="Web Content Content" />
-			<var name="viewEntryTitleList" value="Web Content Title" />
 		</execute>
 	</command>
 </definition>

@@ -45,21 +45,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PREVIEW_1</td>
-	<td>//li[contains(@id,'PreviewContent0')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_2</td>
-	<td>//li[contains(@id,'PreviewContent1')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_3</td>
-	<td>//li[contains(@id,'PreviewContent1')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PREVIEW_DOCUMENT_1_PNG</td>
 	<td>portal/portlets/user_segment_content_display_document.png</td>
 	<td></td>
@@ -113,11 +98,6 @@
 <!--RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT-->
 <tr>
 	<td>RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX</td>
-	<td>//li/div[contains(.,'${key_userSegmentName}')]//i[contains(@class,'icon-check')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX</td>
 	<td>//div[contains(.,'${key_userSegmentName}')]//span[contains(@class,'checkbox-container')]</td>
 	<td></td>
 </tr>
@@ -134,42 +114,6 @@
 <tr>
 	<td>RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CLOSE_BUTTON</td>
 	<td>//div[contains(@class,'selector-popup')]//button[contains(@class,'close-content')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--OTHERWISE_PANEL-->
-<tr>
-	<td>OTHERWISE_PANEL</td>
-	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OTHERWISE_PANEL_DONT_DISPLAY_ANYTHING_RADIO</td>
-	<td>//input[contains(@id,'DefaultValueDont')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO</td>
-	<td>//label[contains(.,'Display this content')]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OTHERWISE_PANEL_SELECT_CONTENT</td>
-	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//div/a[@title='Select Content']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OTHERWISE_PANEL_SELECTED_CONTENT_TITLE</td>
-	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//div[contains(@class,'card-dm-text-large') and contains(.,'${key_contentTitle}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OTHERWISE_PANEL_SELECTED_CONTENT_TYPE</td>
-	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//div[contains(@class,'card-dm-text') and contains(.,'${key_contentType}')]</td>
 	<td></td>
 </tr>
 </tbody>

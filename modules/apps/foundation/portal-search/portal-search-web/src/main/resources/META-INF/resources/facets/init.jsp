@@ -16,6 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ page import="com.liferay.portal.search.web.facet.display.context.ScopeSearchFacetDisplayContext" %><%@
+page import="com.liferay.portal.search.web.facet.display.context.ScopeSearchFacetTermDisplayContext" %>
+
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, _RANDOM_KEY_INPUT) + StringPool.UNDERLINE;
 

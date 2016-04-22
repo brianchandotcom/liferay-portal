@@ -23,12 +23,18 @@ import aQute.bnd.service.AnalyzerPlugin;
 
 import java.io.InputStream;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
 
 /**
  * @author Andrea Di Giorgi
@@ -98,6 +104,34 @@ public class SocialAnalyzerPlugin implements AnalyzerPlugin {
 			DocumentBuilder documentBuilder =
 				_documentBuilderFactory.newDocumentBuilder();
 
+			final ClassLoader classLoader =
+				SocialAnalyzerPlugin.class.getClassLoader();
+
+			documentBuilder.setEntityResolver(
+				new EntityResolver() {
+
+					@Override
+					public InputSource resolveEntity(
+						String publicId, String systemId) {
+
+						String location = _publicIds.get(publicId);
+
+						if (location == null) {
+							return null;
+						}
+
+						InputStream inputStream =
+							classLoader.getResourceAsStream(location);
+
+						if (inputStream == null) {
+							return null;
+						}
+
+						return new InputSource(inputStream);
+					}
+
+				});
+
 			return documentBuilder.parse(inputStream);
 		}
 		finally {
@@ -107,5 +141,19 @@ public class SocialAnalyzerPlugin implements AnalyzerPlugin {
 
 	private static final DocumentBuilderFactory _documentBuilderFactory =
 		DocumentBuilderFactory.newInstance();
+	private static final Map<String, String> _publicIds =
+		new HashMap<String, String>();
+
+	static {
+		_publicIds.put(
+			"-//Liferay//DTD Social 6.1.0//EN",
+			"com/liferay/portal/definitions/liferay-social_6_1_0.dtd");
+		_publicIds.put(
+			"-//Liferay//DTD Social 6.2.0//EN",
+			"com/liferay/portal/definitions/liferay-social_6_2_0.dtd");
+		_publicIds.put(
+			"-//Liferay//DTD Social 7.0.0//EN",
+			"com/liferay/portal/definitions/liferay-social_7_0_0.dtd");
+	}
 
 }

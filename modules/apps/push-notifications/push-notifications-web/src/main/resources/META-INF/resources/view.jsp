@@ -18,7 +18,6 @@
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "devices");
-String tabs2 = ParamUtil.getString(request, "tabs2", "android");
 
 String orderByCol = ParamUtil.getString(request, "orderByCol", "platform");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
@@ -28,7 +27,6 @@ OrderByComparator orderByComparator = PushNotificationsUtil.getPushNotifications
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("tabs1", tabs1);
-portletURL.setParameter("tabs2", tabs2);
 %>
 
 <liferay-ui:tabs

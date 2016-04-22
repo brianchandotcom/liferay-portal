@@ -272,6 +272,8 @@ public interface WebKeys {
 
 	public static final String LAYOUTS = "LAYOUTS";
 
+	public static final String LOCALE = "LOCALE";
+
 	public static final String LOGOUT = "LOGOUT";
 
 	public static final String MAIL_CURRENT_ACCOUNT = "MAIL_CURRENT_ACCOUNT";

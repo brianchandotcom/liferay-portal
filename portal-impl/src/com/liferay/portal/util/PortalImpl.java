@@ -3179,7 +3179,24 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public Locale getLocale(HttpServletRequest request) {
-		return getLocale(request, null, false);
+		Locale locale = (Locale)request.getAttribute(WebKeys.LOCALE);
+
+		if (locale == _NULL_HOLDER) {
+			return null;
+		}
+
+		if (locale == null) {
+			locale = getLocale(request, null, false);
+
+			if (locale == null) {
+				request.setAttribute(WebKeys.LOCALE, _NULL_HOLDER);
+			}
+			else {
+				request.setAttribute(WebKeys.LOCALE, locale);
+			}
+		}
+
+		return locale;
 	}
 
 	@Override
@@ -3274,9 +3291,7 @@ public class PortalImpl implements Portal {
 
 		HttpSession session = request.getSession(false);
 
-		if ((session != null) &&
-			session.getAttribute(Globals.LOCALE_KEY) != null) {
-
+		if (session != null) {
 			locale = (Locale)session.getAttribute(Globals.LOCALE_KEY);
 
 			if (LanguageUtil.isAvailableLocale(groupId, locale)) {
@@ -8118,6 +8133,8 @@ public class PortalImpl implements Portal {
 
 	private static final String _LOCALHOST = "localhost";
 
+	private static final Locale _NULL_HOLDER;
+
 	private static final String _PRIVATE_GROUP_SERVLET_MAPPING =
 		PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING;
 
@@ -8134,6 +8151,12 @@ public class PortalImpl implements Portal {
 	private static final MethodHandler _resetCDNHostsMethodHandler =
 		new MethodHandler(new MethodKey(PortalUtil.class, "resetCDNHosts"));
 	private static final Date _upTime = new Date();
+
+	static {
+		Locale locale = Locale.getDefault();
+
+		_NULL_HOLDER = (Locale)locale.clone();
+	}
 
 	private final String[] _allSystemGroups;
 	private final String[] _allSystemOrganizationRoles;

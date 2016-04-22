@@ -233,8 +233,7 @@ public class MBCommentManagerImplTest extends Mockito {
 				Matchers.anyLong(), Matchers.anyString(), Matchers.anyLong(),
 				Matchers.anyString(), Matchers.anyLong(), Matchers.anyLong(),
 				Matchers.anyLong(), Matchers.anyString(), Matchers.anyString(),
-				Matchers.<ServiceContext>any()
-			)
+				Matchers.<ServiceContext>any())
 		).thenReturn(
 			_mbMessage
 		);
@@ -242,8 +241,7 @@ public class MBCommentManagerImplTest extends Mockito {
 		when(
 			_mbMessageLocalService.getDiscussionMessageDisplay(
 				_USER_ID, _GROUP_ID, _CLASS_NAME, _ENTRY_ID,
-				WorkflowConstants.STATUS_APPROVED
-			)
+				WorkflowConstants.STATUS_APPROVED)
 		).thenReturn(
 			_mbMessageDisplay
 		);

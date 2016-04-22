@@ -94,8 +94,7 @@ public class ComboServletTest extends PowerMockito {
 
 		when(
 			_portletLocalService.getPortletById(
-				Matchers.anyString()
-			)
+				Matchers.anyString())
 		).thenAnswer(
 			new Answer<Portlet>() {
 

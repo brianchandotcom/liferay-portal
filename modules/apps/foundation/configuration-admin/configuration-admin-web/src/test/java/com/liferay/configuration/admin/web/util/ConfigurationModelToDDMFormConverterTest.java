@@ -23,7 +23,9 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.language.LanguageImpl;
 
 import java.util.ListResourceBundle;
 import java.util.Locale;
@@ -46,6 +48,10 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
+
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(new LanguageImpl());
 	}
 
 	@Test

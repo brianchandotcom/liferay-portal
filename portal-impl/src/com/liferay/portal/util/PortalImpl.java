@@ -4149,13 +4149,14 @@ public class PortalImpl implements Portal {
 
 		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
 
-		String portletDescription = ResourceBundleUtil.getString(
+		String portletDescription = LanguageUtil.get(
 			resourceBundle,
 			JavaConstants.JAVAX_PORTLET_DESCRIPTION.concat(
-				StringPool.PERIOD).concat(portlet.getRootPortletId()));
+				StringPool.PERIOD).concat(portlet.getRootPortletId()),
+			null);
 
 		if (Validator.isNull(portletDescription)) {
-			portletDescription = ResourceBundleUtil.getString(
+			portletDescription = LanguageUtil.get(
 				resourceBundle, JavaConstants.JAVAX_PORTLET_DESCRIPTION);
 		}
 
@@ -4448,13 +4449,14 @@ public class PortalImpl implements Portal {
 
 		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
 
-		String portletTitle = ResourceBundleUtil.getString(
+		String portletTitle = LanguageUtil.get(
 			resourceBundle,
 			JavaConstants.JAVAX_PORTLET_TITLE.concat(StringPool.PERIOD).concat(
-				portlet.getRootPortletId()));
+				portlet.getRootPortletId()),
+			null);
 
 		if (Validator.isNull(portletTitle)) {
-			portletTitle = ResourceBundleUtil.getString(
+			portletTitle = LanguageUtil.get(
 				resourceBundle, JavaConstants.JAVAX_PORTLET_TITLE);
 		}
 

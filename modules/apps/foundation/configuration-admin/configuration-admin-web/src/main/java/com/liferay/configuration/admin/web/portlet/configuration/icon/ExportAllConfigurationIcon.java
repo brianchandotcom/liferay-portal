@@ -15,13 +15,13 @@
 package com.liferay.configuration.admin.web.portlet.configuration.icon;
 
 import com.liferay.configuration.admin.web.constants.ConfigurationAdminPortletKeys;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ResourceBundle;
@@ -54,8 +54,7 @@ public class ExportAllConfigurationIcon extends BasePortletConfigurationIcon {
 			_resourceBundleLoader.loadResourceBundle(
 				themeDisplay.getLanguageId());
 
-		return ResourceBundleUtil.getString(
-			resourceBundle, "export-all-settings");
+		return LanguageUtil.get(resourceBundle, "export-all-settings");
 	}
 
 	@Override

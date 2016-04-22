@@ -14,10 +14,7 @@
 
 package com.liferay.push.notifications.web.portlet;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.push.notifications.constants.PushNotificationsPortletKeys;
 import com.liferay.push.notifications.service.PushNotificationsDeviceService;
@@ -59,18 +56,8 @@ public class PushNotificationsPortlet extends MVCPortlet {
 		long pushNotificationsDeviceId = ParamUtil.getLong(
 			actionRequest, "pushNotificationsDeviceId");
 
-		try {
-			_pushNotificationsDeviceService.deletePushNotificationsDevice(
-				pushNotificationsDeviceId);
-
-			SessionMessages.add(
-				actionRequest, "pushNotificationsDeviceDeleted");
-		}
-		catch (PortalException pe) {
-			SessionErrors.add(actionRequest, pe.getClass());
-		}
-
-		sendRedirect(actionRequest, actionResponse);
+		_pushNotificationsDeviceService.deletePushNotificationsDevice(
+			pushNotificationsDeviceId);
 	}
 
 	@Reference(unbind = "-")

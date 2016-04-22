@@ -16,7 +16,8 @@ package com.liferay.push.notifications.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -31,7 +32,10 @@ import com.liferay.push.notifications.service.base.PushNotificationsDeviceLocalS
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Silvio Santos
@@ -62,6 +66,19 @@ public class PushNotificationsDeviceLocalServiceImpl
 	}
 
 	@Override
+	public void afterPropertiesSet() {
+		Bundle bundle = FrameworkUtil.getBundle(
+			PushNotificationsDeviceLocalServiceImpl.class);
+
+		BundleContext _bundleContext = bundle.getBundleContext();
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.singleValueMap(
+			_bundleContext, PushNotificationsSender.class, "platform");
+
+		_serviceTrackerMap.open();
+	}
+
+	@Override
 	public PushNotificationsDevice deletePushNotificationsDevice(String token)
 		throws PortalException {
 
@@ -71,6 +88,11 @@ public class PushNotificationsDeviceLocalServiceImpl
 		pushNotificationsDevicePersistence.remove(pushNotificationsDevice);
 
 		return pushNotificationsDevice;
+	}
+
+	@Override
+	public void destroy() {
+		_serviceTrackerMap.close();
 	}
 
 	@Override
@@ -87,7 +109,7 @@ public class PushNotificationsDeviceLocalServiceImpl
 			long[] toUserIds, JSONObject payloadJSONObject)
 		throws PortalException {
 
-		for (String platform : _pushNotificationsSenders.keySet()) {
+		for (String platform : _serviceTrackerMap.keySet()) {
 			List<String> tokens = new ArrayList<>();
 
 			List<PushNotificationsDevice> pushNotificationsDevices =
@@ -114,7 +136,7 @@ public class PushNotificationsDeviceLocalServiceImpl
 		throws PortalException {
 
 		PushNotificationsSender pushNotificationsSender =
-			_pushNotificationsSenders.get(platform);
+			_serviceTrackerMap.getService(platform);
 
 		if (pushNotificationsSender == null) {
 			return;
@@ -161,7 +183,7 @@ public class PushNotificationsDeviceLocalServiceImpl
 		}
 	}
 
-	@BeanReference(name = "pushNotificationsSenders")
-	private Map<String, PushNotificationsSender> _pushNotificationsSenders;
+	private ServiceTrackerMap<String, PushNotificationsSender>
+		_serviceTrackerMap;
 
 }

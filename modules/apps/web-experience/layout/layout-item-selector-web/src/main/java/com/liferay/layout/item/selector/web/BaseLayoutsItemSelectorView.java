@@ -20,17 +20,12 @@ import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.layout.item.selector.web.display.context.LayoutItemSelectorViewDisplayContext;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
 
@@ -40,14 +35,10 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Roberto Díaz
  */
-@Component(service = {ItemSelectorView.class, LayoutItemSelectorView.class})
-public class LayoutItemSelectorView
+public abstract class BaseLayoutsItemSelectorView
 	implements ItemSelectorView<LayoutItemSelectorCriterion> {
 
 	public static final String LAYOUT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
@@ -58,9 +49,7 @@ public class LayoutItemSelectorView
 		return LayoutItemSelectorCriterion.class;
 	}
 
-	public ServletContext getServletContext() {
-		return _servletContext;
-	}
+	public abstract ServletContext getServletContext();
 
 	@Override
 	public List<ItemSelectorReturnType> getSupportedItemSelectorReturnTypes() {
@@ -68,20 +57,8 @@ public class LayoutItemSelectorView
 	}
 
 	@Override
-	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = PortalUtil.getResourceBundle(locale);
-
-		return ResourceBundleUtil.getString(resourceBundle, "layouts");
-	}
-
-	@Override
 	public boolean isShowSearch() {
 		return false;
-	}
-
-	@Override
-	public boolean isVisible(ThemeDisplay themeDisplay) {
-		return true;
 	}
 
 	@Override
@@ -108,14 +85,6 @@ public class LayoutItemSelectorView
 		requestDispatcher.include(request, response);
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.item.selector.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
@@ -123,7 +92,5 @@ public class LayoutItemSelectorView
 					new URLItemSelectorReturnType(),
 					new UUIDItemSelectorReturnType()
 				}));
-
-	private ServletContext _servletContext;
 
 }

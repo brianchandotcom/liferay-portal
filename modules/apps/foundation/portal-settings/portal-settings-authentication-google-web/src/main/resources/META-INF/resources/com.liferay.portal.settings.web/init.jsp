@@ -28,6 +28,6 @@ page import="com.liferay.portal.security.sso.google.constants.GoogleConstants" %
 
 <%@ page import="javax.portlet.ActionRequest" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />

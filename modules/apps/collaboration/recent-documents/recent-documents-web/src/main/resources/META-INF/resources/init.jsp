@@ -30,6 +30,6 @@ page import="com.liferay.portal.kernel.util.StringPool" %>
 
 <%@ page import="java.util.List" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />

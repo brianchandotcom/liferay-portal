@@ -26,6 +26,6 @@ page import="com.liferay.item.selector.upload.web.ItemSelectorUploadView" %><%@
 page import="com.liferay.item.selector.upload.web.display.context.ItemSelectorUploadViewDisplayContext" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />

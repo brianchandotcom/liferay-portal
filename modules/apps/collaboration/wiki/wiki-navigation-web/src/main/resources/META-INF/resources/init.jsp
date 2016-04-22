@@ -47,6 +47,6 @@ page import="com.liferay.wiki.service.permission.WikiPagePermissionChecker" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />

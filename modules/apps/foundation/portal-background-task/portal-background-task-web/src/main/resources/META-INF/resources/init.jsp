@@ -18,6 +18,6 @@
 
 <%@ page import="com.liferay.portal.kernel.exception.NoSuchBackgroundTaskException" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />

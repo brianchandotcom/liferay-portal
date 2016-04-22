@@ -26,6 +26,6 @@ page import="com.liferay.journal.item.selector.web.JournalItemSelectorView" %><%
 page import="com.liferay.journal.item.selector.web.context.JournalItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />

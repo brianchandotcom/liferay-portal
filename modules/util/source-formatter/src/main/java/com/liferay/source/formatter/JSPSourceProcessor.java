@@ -2040,7 +2040,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _compressedJSPTaglibPattern = Pattern.compile(
 		"(<.*\n*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _defineObjectsPattern = Pattern.compile(
-		"\n\t*(<.*:defineObjects />)\n");
+		"\n\t*(<.*:defineObjects />)(\n|$)");
 	private final List<String> _duplicateImportClassNames = new ArrayList<>();
 	private final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
 		"\n\t*<%\n+\t*%>\n");

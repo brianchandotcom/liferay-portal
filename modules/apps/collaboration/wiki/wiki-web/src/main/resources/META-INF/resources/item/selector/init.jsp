@@ -48,6 +48,6 @@ page import="java.util.List" %>
 
 <liferay-frontend:defineObjects />
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />

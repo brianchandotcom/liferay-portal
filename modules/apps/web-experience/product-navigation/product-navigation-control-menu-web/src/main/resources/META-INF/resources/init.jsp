@@ -93,6 +93,6 @@ page import="javax.portlet.WindowState" %>
 
 <liferay-frontend:defineObjects />
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />

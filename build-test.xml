@@ -1694,7 +1694,9 @@ tell application "Safari" to quit
 			<if>
 				<equals arg1="${test.build.bundle.jbosseap6.0}" arg2="true" />
 				<then>
-					<ant antfile="build-dist.xml" target="build-dist-jboss-eap-6.0" inheritAll="false" />
+					<ant antfile="build-dist.xml" target="build-dist-jboss" inheritAll="false">
+						<property name="app.server.jboss.version" value="6.0.1" />
+					</ant>
 				</then>
 			</if>
 
@@ -1723,7 +1725,9 @@ tell application "Safari" to quit
 				<elseif>
 					<equals arg1="${test.build.bundle.jbosseap6.1}" arg2="true" />
 					<then>
-						<ant antfile="build-dist.xml" target="build-dist-jboss-eap-6.1" inheritAll="false" />
+						<ant antfile="build-dist.xml" target="build-dist-jboss" inheritAll="false">
+							<property name="app.server.jboss.version" value="6.1.0" />
+						</ant>
 					</then>
 				</elseif>
 			</if>

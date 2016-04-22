@@ -48,6 +48,12 @@ public class CombineLines
 	public static final String
 		STRING_1;
 
+	public List<String>
+		getList() {
+
+		return new ArrayList<>();
+	}
+
 	@Meta.AD(
 		deflt = "false", required = false
 	)

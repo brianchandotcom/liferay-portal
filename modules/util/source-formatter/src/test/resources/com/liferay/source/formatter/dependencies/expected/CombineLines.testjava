@@ -39,6 +39,10 @@ public class CombineLines extends SuperClass {
 
 	public static final String STRING_1;
 
+	public List<String> getList() {
+		return new ArrayList<>();
+	}
+
 	@Meta.AD(deflt = "false", required = false)
 	public String getString1(String test) {
 		return test;

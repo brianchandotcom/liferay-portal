@@ -49,4 +49,22 @@
 			</else>
 		</if>
 	</command>
+
+	<command name="ExecuteWithVariableArgument" priority="5">
+		<var name="varArg" value="Hello World" />
+
+		<execute groovy-script="test4.groovy" return="test">
+			<arg value="${varArg}" />
+		</execute>
+
+		<if>
+			<equals arg1="${test}" arg2="Hello World and Goodbye" />
+			<then>
+				<echo>PASS</echo>
+			</then>
+			<else>
+				<fail>Expected 'Hello World and Goodbye' but found ${test}</fail>
+			</else>
+		</if>
+	</command>
 </definition>

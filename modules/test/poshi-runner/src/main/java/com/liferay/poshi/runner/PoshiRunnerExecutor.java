@@ -457,7 +457,9 @@ public class PoshiRunnerExecutor {
 			List<String> arguments = new ArrayList<>();
 
 			for (Element executeArgElement : executeArgElements) {
-				arguments.add(executeArgElement.attributeValue("value"));
+				arguments.add(
+					PoshiRunnerVariablesUtil.replaceCommandVars(
+						executeArgElement.attributeValue("value")));
 			}
 
 			binding.setVariable(

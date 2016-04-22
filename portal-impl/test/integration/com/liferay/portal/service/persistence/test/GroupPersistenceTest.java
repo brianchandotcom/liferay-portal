@@ -292,6 +292,14 @@ public class GroupPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_Cpk() throws Exception {
+		_persistence.countByC_Cpk(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByC_Cpk(0L, 0L);
+	}
+
+	@Test
 	public void testCountByT_A() throws Exception {
 		_persistence.countByT_A(RandomTestUtil.nextInt(),
 			RandomTestUtil.randomBoolean());
@@ -305,6 +313,14 @@ public class GroupPersistenceTest {
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
 		_persistence.countByG_C_P(0L, 0L, 0L);
+	}
+
+	@Test
+	public void testCountByC_G_P() throws Exception {
+		_persistence.countByC_G_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_G_P(0L, 0L, 0L);
 	}
 
 	@Test

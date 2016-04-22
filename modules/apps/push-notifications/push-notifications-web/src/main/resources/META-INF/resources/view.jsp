@@ -24,17 +24,42 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("tabs1", tabs1);
 %>
 
-<liferay-ui:tabs
-	names="devices,test"
-	param="tabs1"
-	portletURL="<%= portletURL %>"
-/>
+<aui:nav-bar markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
 
-<c:choose>
-	<c:when test='<%= tabs1.equals("devices") %>'>
-		<%@ include file="/devices.jspf" %>
-	</c:when>
-	<c:otherwise>
-		<%@ include file="/test.jspf" %>
-	</c:otherwise>
-</c:choose>
+		<%
+		PortletURL devicesURL = renderResponse.createRenderURL();
+
+		devicesURL.setParameter("tabs1", "devices");
+		%>
+
+		<aui:nav-item
+			href="<%= devicesURL.toString() %>"
+			label="devices"
+			selected='<%= tabs1.equals("devices") %>'
+		/>
+
+		<%
+		PortletURL testURL = renderResponse.createRenderURL();
+
+		testURL.setParameter("tabs1", "test");
+		%>
+
+		<aui:nav-item
+			href="<%= testURL.toString() %>"
+			label="test"
+			selected='<%= tabs1.equals("test") %>'
+		/>
+	</aui:nav>
+</aui:nav-bar>
+
+<div class="container-fluid-1280">
+	<c:choose>
+		<c:when test='<%= tabs1.equals("test") %>'>
+			<%@ include file="/test.jspf" %>
+		</c:when>
+		<c:otherwise>
+			<%@ include file="/devices.jspf" %>
+		</c:otherwise>
+	</c:choose>
+</div>

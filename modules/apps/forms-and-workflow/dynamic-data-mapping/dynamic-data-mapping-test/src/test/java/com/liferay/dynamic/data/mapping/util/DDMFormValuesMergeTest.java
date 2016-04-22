@@ -73,13 +73,8 @@ public class DDMFormValuesMergeTest extends BaseDDMTestCase {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			mergeFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(1, ddmFormFieldValues.size());
-
-		Value value = ddmFormFieldValues.get(0).getValue();
-
-		Assert.assertEquals(text, value.getString(LocaleUtil.US));
-
-		Assert.assertEquals(textTranslator, value.getString(LocaleUtil.BRAZIL));
+		testValues(ddmFormFieldValues, LocaleUtil.US, text);
+		testValues(ddmFormFieldValues, LocaleUtil.BRAZIL, textTranslator);
 	}
 
 	@Test
@@ -110,13 +105,8 @@ public class DDMFormValuesMergeTest extends BaseDDMTestCase {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			mergeFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(1, ddmFormFieldValues.size());
-
-		Value value = ddmFormFieldValues.get(0).getValue();
-
-		Assert.assertEquals("", value.getString(LocaleUtil.US));
-
-		Assert.assertEquals(textTranslator, value.getString(LocaleUtil.BRAZIL));
+		testValues(ddmFormFieldValues, LocaleUtil.US, "");
+		testValues(ddmFormFieldValues, LocaleUtil.BRAZIL, textTranslator);
 	}
 
 	@Test
@@ -145,11 +135,7 @@ public class DDMFormValuesMergeTest extends BaseDDMTestCase {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			mergeFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(1, ddmFormFieldValues.size());
-
-		Value value = ddmFormFieldValues.get(0).getValue();
-
-		Assert.assertEquals(newValue, value.getString(LocaleUtil.US));
+		testValues(ddmFormFieldValues, LocaleUtil.US, newValue);
 	}
 
 	@Test
@@ -184,23 +170,8 @@ public class DDMFormValuesMergeTest extends BaseDDMTestCase {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			mergeFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(3, ddmFormFieldValues.size());
-
-		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
-			Value value = ddmFormFieldValue.getValue();
-
-			if (ddmFormFieldValue.getName().equals("text")) {
-				Assert.assertEquals(text, value.getString(LocaleUtil.US));
-			}
-			else if (ddmFormFieldValue.getName().equals("textNested")) {
-				Assert.assertEquals(textNested, value.getString(LocaleUtil.US));
-			}
-			else if (ddmFormFieldValue.getName().equals(("separator"))) {
-				Assert.assertEquals(newText, value.getString(LocaleUtil.US));
-			}else {
-				Assert.fail();
-			}
-		}
+		testValues(
+			ddmFormFieldValues, LocaleUtil.US, text, textNested, newText);
 	}
 
 	@Test
@@ -214,11 +185,11 @@ public class DDMFormValuesMergeTest extends BaseDDMTestCase {
 		DDMFormValues textFormValues = createTextDDMFormValues(
 			"text", textValue);
 
-		String newtext = RandomTestUtil.randomString();
+		String separatorText = RandomTestUtil.randomString();
 
 		textValue = new LocalizedValue();
 
-		textValue.addString(LocaleUtil.US, newtext);
+		textValue.addString(LocaleUtil.US, separatorText);
 
 		DDMFormValues separatorFormValues = createSeparatorDDMFormValues(
 			"separator", textValue);
@@ -229,20 +200,7 @@ public class DDMFormValuesMergeTest extends BaseDDMTestCase {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			mergeFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(2, ddmFormFieldValues.size());
-
-		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
-			Value value = ddmFormFieldValue.getValue();
-
-			if (ddmFormFieldValue.getName().equals(("text"))) {
-				Assert.assertEquals(text, value.getString(LocaleUtil.US));
-			}
-			else if (ddmFormFieldValue.getName().equals(("separator"))) {
-				Assert.assertEquals(newtext, value.getString(LocaleUtil.US));
-			}else {
-				Assert.fail();
-			}
-		}
+		testValues(ddmFormFieldValues, LocaleUtil.US, text, separatorText);
 	}
 
 	@Test
@@ -263,7 +221,7 @@ public class DDMFormValuesMergeTest extends BaseDDMTestCase {
 		textValue.addString(LocaleUtil.US, newText);
 
 		DDMFormValues newTextFormValues = createTextDDMFormValues(
-			"textOther", textValue);
+			"newText", textValue);
 
 		DDMFormValues mergeFormValues = _ddmFormValuesMerge.mergeDDMFormValues(
 			newTextFormValues, textFormValues);
@@ -271,20 +229,7 @@ public class DDMFormValuesMergeTest extends BaseDDMTestCase {
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			mergeFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(2, ddmFormFieldValues.size());
-
-		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
-			Value value = ddmFormFieldValue.getValue();
-
-			if (ddmFormFieldValue.getName().equals(("text"))) {
-				Assert.assertEquals(text, value.getString(LocaleUtil.US));
-			}
-			else if (ddmFormFieldValue.getName().equals(("textOther"))) {
-				Assert.assertEquals(newText, value.getString(LocaleUtil.US));
-			}else {
-				Assert.fail();
-			}
-		}
+		testValues(ddmFormFieldValues, LocaleUtil.US, text, newText);
 	}
 
 	protected DDMFormValues createSeparatorDDMFormValues(
@@ -351,6 +296,19 @@ public class DDMFormValuesMergeTest extends BaseDDMTestCase {
 		formValues.addDDMFormFieldValue(ddmFormFieldValue);
 
 		return formValues;
+	}
+
+	protected void testValues(
+		List<DDMFormFieldValue> ddmFormFieldValues, Locale locale,
+		String... expectedValues) {
+
+		Assert.assertEquals(expectedValues.length, ddmFormFieldValues.size());
+
+		for (int i = 0; i < expectedValues.length; i++) {
+			Value value = ddmFormFieldValues.get(i).getValue();
+
+			Assert.assertEquals(expectedValues[i], value.getString(locale));
+		}
 	}
 
 	private DDMForm _ddmForm;

@@ -50,7 +50,7 @@ public class SMSPushNotificationsSender implements PushNotificationsSender {
 	public static final String PLATFORM = "sms";
 
 	@Override
-	public void send(List<String> phoneNumbers, JSONObject payloadJSONObject)
+	public void send(List<String> numbers, JSONObject payloadJSONObject)
 		throws Exception {
 
 		if (_twilioRestClient == null) {
@@ -72,7 +72,7 @@ public class SMSPushNotificationsSender implements PushNotificationsSender {
 			from = _smsPushNotificationsSenderConfiguration.number();
 		}
 
-		for (String phoneNumber : phoneNumbers) {
+		for (String number : numbers) {
 			Map<String, String> params = new HashMap<>();
 
 			params.put("Body", body);
@@ -85,7 +85,7 @@ public class SMSPushNotificationsSender implements PushNotificationsSender {
 				params.put("StatusCallback", statusCallback);
 			}
 
-			params.put("To", phoneNumber);
+			params.put("To", number);
 
 			Response response = new SMSResponse(
 				smsFactory.create(params), payloadJSONObject);

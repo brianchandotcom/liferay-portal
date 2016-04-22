@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.db.upgrade.client;
 
+import com.liferay.portal.tools.db.upgrade.client.util.StringUtil;
+
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
@@ -120,7 +122,7 @@ public class UpgradeClient {
 		_appServerProperties = _readProperties(_appServerPropertiesFile);
 
 		_portalUpgradeDatabasePropertiesFile = new File(
-			"portal-upgrade-datasource.properties");
+			"portal-upgrade-database.properties");
 
 		_portalUpgradeDatabaseProperties = _readProperties(
 			_portalUpgradeDatabasePropertiesFile);
@@ -170,8 +172,8 @@ public class UpgradeClient {
 
 			while ((line = bufferedReader.readLine()) != null) {
 				if (line.equals(
-						"Running modules upgrades. Connect to Gogo shell to " +
-							"check the status.")) {
+						"Running modules upgrades. Connect to your Gogo Shell" +
+							" to check the status.")) {
 
 					break;
 				}
@@ -295,6 +297,14 @@ public class UpgradeClient {
 		}
 	}
 
+	private void _appendClassPath(StringBuilder sb, List<File> dirs)
+		throws IOException {
+
+		for (File dir : dirs) {
+			_appendClassPath(sb, dir);
+		}
+	}
+
 	private void _close(Closeable closeable) throws IOException {
 		closeable.close();
 	}
@@ -313,6 +323,7 @@ public class UpgradeClient {
 		_appendClassPath(sb, new File("."));
 		_appendClassPath(sb, new File(_appServer.getDir(), "bin"));
 		_appendClassPath(sb, _appServer.getGlobalLibDir());
+		_appendClassPath(sb, _appServer.getServerDirs());
 
 		File portalClassesDir = _appServer.getPortalClassesDir();
 
@@ -331,6 +342,19 @@ public class UpgradeClient {
 		Path relativePath = basePath.relativize(path);
 
 		return relativePath.toString();
+	}
+
+	private List<String> _getRelativePaths(
+		File baseFile, List<File> pathFiles) {
+
+		List<String> relativePaths = new ArrayList<>(pathFiles.size());
+
+		for (File pathFile : pathFiles) {
+			relativePaths.add(
+				_getRelativePath(baseFile.toPath(), pathFile.toPath()));
+		}
+
+		return relativePaths;
 	}
 
 	private void _printHelp() {
@@ -385,6 +409,8 @@ public class UpgradeClient {
 				String key = (String)enumeration.nextElement();
 				String value = properties.getProperty(key);
 
+				value = value.replace('\\', '/');
+
 				printWriter.println(key + "=" + value);
 			}
 		}
@@ -424,6 +450,7 @@ public class UpgradeClient {
 			File dir = _appServer.getDir();
 			File globalLibDir = _appServer.getGlobalLibDir();
 			File portalDir = _appServer.getPortalDir();
+			List<File> serverDirs = _appServer.getServerDirs();
 
 			System.out.println(
 				"Please enter your application server directory (" + dir +
@@ -454,16 +481,31 @@ public class UpgradeClient {
 				_appServer.setPortalDirName(response);
 			}
 
+			System.out.println(
+				"Please enter a comma delimited list of any extra directories" +
+					" you need for the upgrade (" +
+						_appServer.getServerDirNames() + "): ");
+
+			response = _consoleReader.readLine();
+
+			if (!response.isEmpty()) {
+				_appServer.setServerDirNames(response);
+			}
+
 			_appServerProperties.setProperty("dir", dir.getCanonicalPath());
 			_appServerProperties.setProperty(
 				"global.dir.lib", _getRelativePath(dir, globalLibDir));
 			_appServerProperties.setProperty(
 				"portal.dir", _getRelativePath(dir, portalDir));
+			_appServerProperties.setProperty(
+				"server.dirs",
+				StringUtil.join(_getRelativePaths(dir, serverDirs), ','));
 		}
 		else {
 			_appServer = new AppServer(
 				value, _appServerProperties.getProperty("global.dir.lib"),
-				_appServerProperties.getProperty("portal.dir"));
+				_appServerProperties.getProperty("portal.dir"),
+				_appServerProperties.getProperty("server.dirs"));
 		}
 	}
 
@@ -502,16 +544,6 @@ public class UpgradeClient {
 			}
 
 			System.out.println(
-				"Please enter your database host (" + dataSource.getHost() +
-					"): ");
-
-			response = _consoleReader.readLine();
-
-			if (!response.isEmpty()) {
-				dataSource.setHost(response);
-			}
-
-			System.out.println(
 				"Please enter your database JDBC driver class name(" +
 					dataSource.getClassName() + "): ");
 
@@ -529,6 +561,16 @@ public class UpgradeClient {
 
 			if (!response.isEmpty()) {
 				dataSource.setProtocol(response);
+			}
+
+			System.out.println(
+				"Please enter your database host (" + dataSource.getHost() +
+					"): ");
+
+			response = _consoleReader.readLine();
+
+			if (!response.isEmpty()) {
+				dataSource.setHost(response);
 			}
 
 			String port = null;
@@ -564,13 +606,13 @@ public class UpgradeClient {
 				}
 			}
 
-			System.out.println("Please enter your database password: ");
-
-			String password = _consoleReader.readLine();
-
 			System.out.println("Please enter your database username: ");
 
 			String username = _consoleReader.readLine();
+
+			System.out.println("Please enter your database password: ");
+
+			String password = _consoleReader.readLine();
 
 			_portalUpgradeDatabaseProperties.setProperty(
 				"jdbc.default.driverClassName", dataSource.getClassName());
@@ -587,12 +629,12 @@ public class UpgradeClient {
 		String value = _portalUpgradeExtProperties.getProperty("liferay.home");
 
 		if ((value == null) || value.isEmpty()) {
-			System.out.println("Please enter your Liferay home (../): ");
+			System.out.println("Please enter your Liferay home (../../): ");
 
 			String response = _consoleReader.readLine();
 
 			if (response.isEmpty()) {
-				response = "../";
+				response = "../../";
 			}
 
 			File liferayHome = new File(response);

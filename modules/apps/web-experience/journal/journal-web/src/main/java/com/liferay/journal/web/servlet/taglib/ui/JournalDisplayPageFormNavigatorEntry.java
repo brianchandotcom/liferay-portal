@@ -14,7 +14,8 @@
 
 package com.liferay.journal.web.servlet.taglib.ui;
 
-import com.liferay.layout.item.selector.web.LayoutItemSelectorView;
+import com.liferay.layout.item.selector.web.PrivateLayoutsItemSelectorView;
+import com.liferay.layout.item.selector.web.PublicLayoutsItemSelectorView;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
 import javax.servlet.ServletContext;
@@ -38,8 +39,13 @@ public class JournalDisplayPageFormNavigatorEntry
 	}
 
 	@Reference(unbind = "-")
-	public void setLayoutItemSelectorView(
-		LayoutItemSelectorView layoutItemSelectorView) {
+	public void setPrivateLayoutsItemSelectorView(
+		PrivateLayoutsItemSelectorView privateLayoutsItemSelectorView) {
+	}
+
+	@Reference(unbind = "-")
+	public void setPublicLayoutsItemSelectorView(
+		PublicLayoutsItemSelectorView publicLayoutsItemSelectorView) {
 	}
 
 	@Override

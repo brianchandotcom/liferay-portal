@@ -114,6 +114,60 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	}
 
 	@Override
+	public boolean addTableMappings(
+		long companyId, long leftPrimaryKey, long[] newRightPrimaryKeys) {
+
+		long[] rightPrimaryKeys = getPrimaryKeys(
+			leftToRightPortalCache, getRightPrimaryKeysSqlQuery, leftPrimaryKey,
+			false);
+
+		boolean updated = false;
+
+		for (long rightPrimaryKey : newRightPrimaryKeys) {
+			if (Arrays.binarySearch(rightPrimaryKeys, rightPrimaryKey) < 0) {
+				updated = true;
+
+				rightToLeftPortalCache.remove(rightPrimaryKey);
+
+				doAddTableMapping(companyId, leftPrimaryKey, rightPrimaryKey);
+			}
+		}
+
+		if (updated) {
+			leftToRightPortalCache.remove(leftPrimaryKey);
+		}
+
+		return updated;
+	}
+
+	@Override
+	public boolean addTableMappings(
+		long companyId, long[] newLeftPrimaryKeys, long rightPrimaryKey) {
+
+		long[] leftPrimaryKeys = getPrimaryKeys(
+			rightToLeftPortalCache, getLeftPrimaryKeysSqlQuery, rightPrimaryKey,
+			false);
+
+		boolean updated = false;
+
+		for (long leftPrimaryKey : newLeftPrimaryKeys) {
+			if (Arrays.binarySearch(leftPrimaryKeys, leftPrimaryKey) < 0) {
+				updated = true;
+
+				leftToRightPortalCache.remove(leftPrimaryKey);
+
+				doAddTableMapping(companyId, leftPrimaryKey, rightPrimaryKey);
+			}
+		}
+
+		if (updated) {
+			rightToLeftPortalCache.remove(rightPrimaryKey);
+		}
+
+		return updated;
+	}
+
+	@Override
 	public boolean containsTableMapping(
 		long leftPrimaryKey, long rightPrimaryKey) {
 
@@ -148,6 +202,56 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		rightToLeftPortalCache.remove(rightPrimaryKey);
 
 		return doDeleteTableMapping(leftPrimaryKey, rightPrimaryKey);
+	}
+
+	@Override
+	public boolean deleteTableMappings(
+		long leftPrimaryKey, long[] oldRightPrimaryKeys) {
+
+		long[] rightPrimaryKeys = getPrimaryKeys(
+			leftToRightPortalCache, getRightPrimaryKeysSqlQuery, leftPrimaryKey,
+			false);
+
+		boolean updated = false;
+
+		for (long rightPrimaryKey : oldRightPrimaryKeys) {
+			if (0 <= Arrays.binarySearch(rightPrimaryKeys, rightPrimaryKey)) {
+				rightToLeftPortalCache.remove(rightPrimaryKey);
+
+				if (doDeleteTableMapping(leftPrimaryKey, rightPrimaryKey)) {
+					updated = true;
+				}
+			}
+		}
+
+		leftToRightPortalCache.remove(leftPrimaryKey);
+
+		return updated;
+	}
+
+	@Override
+	public boolean deleteTableMappings(
+		long[] oldLeftPrimaryKeys, long rightPrimaryKey) {
+
+		long[] leftPrimaryKeys = getPrimaryKeys(
+			rightToLeftPortalCache, getLeftPrimaryKeysSqlQuery, rightPrimaryKey,
+			false);
+
+		boolean updated = false;
+
+		for (long leftPrimaryKey : oldLeftPrimaryKeys) {
+			if (0 <= Arrays.binarySearch(leftPrimaryKeys, leftPrimaryKey)) {
+				leftToRightPortalCache.remove(leftPrimaryKey);
+
+				if (doDeleteTableMapping(leftPrimaryKey, rightPrimaryKey)) {
+					updated = true;
+				}
+			}
+		}
+
+		rightToLeftPortalCache.remove(rightPrimaryKey);
+
+		return updated;
 	}
 
 	@Override

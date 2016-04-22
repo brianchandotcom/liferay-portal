@@ -42,8 +42,6 @@ import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.service.JournalArticleService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -59,7 +57,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
@@ -130,13 +128,11 @@ public class FileSystemImporter extends BaseImporter {
 		DLFolderLocalService dlFolderLocalService,
 		IndexStatusManager indexStatusManager, IndexerRegistry indexerRegistry,
 		JournalArticleLocalService journalArticleLocalService,
-		JournalArticleService journalArticleService,
 		LayoutLocalService layoutLocalService,
 		LayoutPrototypeLocalService layoutPrototypeLocalService,
 		LayoutSetLocalService layoutSetLocalService,
 		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService,
 		MimeTypes mimeTypes, Portal portal,
-		PortletPreferencesFactory portletPreferencesFactory,
 		RepositoryLocalService repositoryLocalService, SAXReader saxReader,
 		ThemeLocalService themeLocalService) {
 
@@ -152,14 +148,12 @@ public class FileSystemImporter extends BaseImporter {
 		this.indexStatusManager = indexStatusManager;
 		this.indexerRegistry = indexerRegistry;
 		this.journalArticleLocalService = journalArticleLocalService;
-		this.journalArticleService = journalArticleService;
 		this.layoutLocalService = layoutLocalService;
 		this.layoutPrototypeLocalService = layoutPrototypeLocalService;
 		this.layoutSetLocalService = layoutSetLocalService;
 		this.layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
 		this.mimeTypes = mimeTypes;
 		this.portal = portal;
-		this.portletPreferencesFactory = portletPreferencesFactory;
 		this.repositoryLocalService = repositoryLocalService;
 		this.saxReader = saxReader;
 		this.themeLocalService = themeLocalService;
@@ -1185,7 +1179,8 @@ public class FileSystemImporter extends BaseImporter {
 		}
 
 		PortletPreferences portletSetup =
-			portletPreferencesFactory.getLayoutPortletSetup(layout, portletId);
+			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+				layout, portletId);
 
 		Iterator<String> iterator = portletPreferencesJSONObject.keys();
 
@@ -1613,9 +1608,8 @@ public class FileSystemImporter extends BaseImporter {
 
 		for (String ddmStructureKey : _ddmStructureKeys) {
 			List<JournalArticle> journalArticles =
-				journalArticleService.getArticlesByStructureId(
-					getGroupId(), ddmStructureKey, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
+				journalArticleLocalService.getStructureArticles(
+					getGroupId(), ddmStructureKey);
 
 			for (JournalArticle journalArticle : journalArticles) {
 				if ((primaryKeys != null) &&
@@ -1886,7 +1880,6 @@ public class FileSystemImporter extends BaseImporter {
 	protected final IndexerRegistry indexerRegistry;
 	protected final IndexStatusManager indexStatusManager;
 	protected final JournalArticleLocalService journalArticleLocalService;
-	protected final JournalArticleService journalArticleService;
 	protected final LayoutLocalService layoutLocalService;
 	protected final LayoutPrototypeLocalService layoutPrototypeLocalService;
 	protected final LayoutSetLocalService layoutSetLocalService;
@@ -1894,7 +1887,6 @@ public class FileSystemImporter extends BaseImporter {
 		layoutSetPrototypeLocalService;
 	protected final MimeTypes mimeTypes;
 	protected final Portal portal;
-	protected final PortletPreferencesFactory portletPreferencesFactory;
 	protected final RepositoryLocalService repositoryLocalService;
 	protected final SAXReader saxReader;
 	protected ServiceContext serviceContext;

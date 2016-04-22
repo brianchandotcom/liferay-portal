@@ -155,8 +155,24 @@ else {
 	</c:if>
 
 	<c:if test="<%= (folder != null) && JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.DELETE) %>">
+
+		<%
+		String redirect = currentURL;
+
+		long currentFolderId = ParamUtil.getLong(request, "folderId");
+
+		if (currentFolderId == folder.getFolderId()) {
+			PortletURL redirectURL = liferayPortletResponse.createRenderURL();
+
+			redirectURL.setParameter("folderId", String.valueOf(folder.getParentFolderId()));
+			redirectURL.setParameter("groupId", String.valueOf(folder.getGroupId()));
+
+			redirect = redirectURL.toString();
+		}
+		%>
+
 		<portlet:actionURL name='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "moveFolderToTrash" : "deleteFolder" %>' var="deleteURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(folder.getGroupId()) %>" />
 			<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
 		</portlet:actionURL>

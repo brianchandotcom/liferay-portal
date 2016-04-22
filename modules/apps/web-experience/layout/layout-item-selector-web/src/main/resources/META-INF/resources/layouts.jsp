@@ -29,67 +29,31 @@ LayoutItemSelectorCriterion layoutItemSelectorCriterion = layoutItemSelectorView
 %>
 
 <div class="container-fluid-1280">
-	<liferay-ui:tabs names='<%= ((group.getPublicLayoutsPageCount() > 0) && (group.getPrivateLayoutsPageCount() > 0)) ? "public-pages,private-pages" : null %>' refresh="<%= false %>">
 
-		<%
-		boolean checkContentDisplayPage = layoutItemSelectorCriterion.isCheckDisplayPage();
-		String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
-		long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
+	<%
+	boolean checkContentDisplayPage = layoutItemSelectorCriterion.isCheckDisplayPage();
+	String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
+	long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
 
-		PortletURL editLayoutURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.EDIT);
+	PortletURL editLayoutURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.EDIT);
 
-		editLayoutURL.setParameter("redirect", currentURL);
-		editLayoutURL.setParameter("groupId", String.valueOf(groupId));
-		editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
-		%>
+	editLayoutURL.setParameter("redirect", currentURL);
+	editLayoutURL.setParameter("groupId", String.valueOf(groupId));
+	editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
+	%>
 
-		<c:if test="<%= group.getPublicLayoutsPageCount() > 0 %>">
-
-			<%
-			editLayoutURL.setParameter("tabs1", "public-pages");
-			%>
-
-			<liferay-ui:section>
-				<div>
-					<liferay-layout:layouts-tree
-						checkContentDisplayPage="<%= checkContentDisplayPage %>"
-						draggableTree="<%= false %>"
-						groupId="<%= groupId %>"
-						portletURL="<%= editLayoutURL %>"
-						rootNodeName="<%= group.getLayoutRootNodeName(false, themeDisplay.getLocale()) %>"
-						saveState="<%= false %>"
-						selectedLayoutIds="<%= selectedLayoutIds %>"
-						selPlid="<%= selPlid %>"
-						treeId="treeContainerPublicPages"
-					/>
-				</div>
-			</liferay-ui:section>
-		</c:if>
-
-		<c:if test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
-
-			<%
-			editLayoutURL.setParameter("tabs1", "private-pages");
-			%>
-
-			<liferay-ui:section>
-				<div>
-					<liferay-layout:layouts-tree
-						checkContentDisplayPage="<%= checkContentDisplayPage %>"
-						draggableTree="<%= false %>"
-						groupId="<%= groupId %>"
-						portletURL="<%= editLayoutURL %>"
-						privateLayout="<%= true %>"
-						rootNodeName="<%= group.getLayoutRootNodeName(true, themeDisplay.getLocale()) %>"
-						saveState="<%= false %>"
-						selectedLayoutIds="<%= selectedLayoutIds %>"
-						selPlid="<%= selPlid %>"
-						treeId="treeContainerPrivatePages"
-					/>
-				</div>
-			</liferay-ui:section>
-		</c:if>
-	</liferay-ui:tabs>
+	<liferay-layout:layouts-tree
+		checkContentDisplayPage="<%= checkContentDisplayPage %>"
+		draggableTree="<%= false %>"
+		groupId="<%= groupId %>"
+		portletURL="<%= editLayoutURL %>"
+		privateLayout="<%= false %>"
+		rootNodeName="<%= group.getLayoutRootNodeName(false, themeDisplay.getLocale()) %>"
+		saveState="<%= false %>"
+		selectedLayoutIds="<%= selectedLayoutIds %>"
+		selPlid="<%= selPlid %>"
+		treeId="treeContainer"
+	/>
 </div>
 
 <aui:button-row id="selectPageMessage">
@@ -227,11 +191,5 @@ LayoutItemSelectorCriterion layoutItemSelectorCriterion = layoutItemSelectorView
 		selectPageMessage.attr('className', 'alert alert-' + messageType);
 	};
 
-	<c:if test="<%= group.getPublicLayoutsPageCount() > 0 %>">
-		bindTreeUI('treeContainerPublicPagesOutput');
-	</c:if>
-
-	<c:if test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
-		bindTreeUI('treeContainerPrivatePagesOutput');
-	</c:if>
+	bindTreeUI('treeContainerOutput');
 </aui:script>

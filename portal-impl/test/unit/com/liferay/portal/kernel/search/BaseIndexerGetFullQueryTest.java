@@ -178,24 +178,21 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 
 		stub(
 			method(
-				SearchEngineHelperUtil.class, "getDefaultSearchEngineId"
-			)
+				SearchEngineHelperUtil.class, "getDefaultSearchEngineId")
 		).toReturn(
 			SearchEngineHelper.SYSTEM_ENGINE_ID
 		);
 
 		stub(
 			method(
-				SearchEngineHelperUtil.class, "getEntryClassNames"
-			)
+				SearchEngineHelperUtil.class, "getEntryClassNames")
 		).toReturn(
 			new String[0]
 		);
 
 		stub(
 			method(
-				SearchEngineHelperUtil.class, "getSearchEngine", String.class
-			)
+				SearchEngineHelperUtil.class, "getSearchEngine", String.class)
 		).toReturn(
 			new BaseSearchEngine()
 		);

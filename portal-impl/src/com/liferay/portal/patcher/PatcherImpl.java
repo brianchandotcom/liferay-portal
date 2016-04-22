@@ -143,8 +143,12 @@ public class PatcherImpl implements Patcher {
 
 		if (properties.containsKey(
 				PROPERTY_PATCHING_TOOL_VERSION_DISPLAY_NAME)) {
+
 			_patchingToolVersionDisplayName = properties.getProperty(
 				PROPERTY_PATCHING_TOOL_VERSION_DISPLAY_NAME);
+		}
+		else {
+			_patchingToolVersionDisplayName = "1.0." + getPatchingToolVersion();
 		}
 
 		return _patchingToolVersionDisplayName;

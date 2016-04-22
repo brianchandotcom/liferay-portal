@@ -409,7 +409,7 @@ public class UpgradeClient {
 				String key = (String)enumeration.nextElement();
 				String value = properties.getProperty(key);
 
-				value = value.replaceAll("\\\\", "/");
+				value = value.replace('\\', '/');
 
 				printWriter.println(key + "=" + value);
 			}

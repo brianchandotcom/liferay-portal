@@ -155,7 +155,6 @@ define("frontend-js-spa-web@1.0.6/metal-events/src/EventEmitterProxy", ['exports
 		return EventEmitterProxy;
 	}(_metal.Disposable);
 
-	EventEmitterProxy.prototype.registerMetalComponent && EventEmitterProxy.prototype.registerMetalComponent(EventEmitterProxy, 'EventEmitterProxy')
 	exports.default = EventEmitterProxy;
 });
 //# sourceMappingURL=EventEmitterProxy.js.map

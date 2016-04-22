@@ -233,7 +233,6 @@ define("frontend-js-spa-web@1.0.6/senna/src/app/AppDataAttributeHandler", ['expo
 		return AppDataAttributeHandler;
 	}(_metal.Disposable);
 
-	AppDataAttributeHandler.prototype.registerMetalComponent && AppDataAttributeHandler.prototype.registerMetalComponent(AppDataAttributeHandler, 'AppDataAttributeHandler')
 	exports.default = AppDataAttributeHandler;
 });
 //# sourceMappingURL=AppDataAttributeHandler.js.map

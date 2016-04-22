@@ -134,7 +134,6 @@ define("frontend-js-spa-web@1.0.6/metal-multimap/src/MultiMap", ['exports', 'met
 		return MultiMap;
 	}(_metal.Disposable);
 
-	MultiMap.prototype.registerMetalComponent && MultiMap.prototype.registerMetalComponent(MultiMap, 'MultiMap')
 	exports.default = MultiMap;
 });
 //# sourceMappingURL=MultiMap.js.map

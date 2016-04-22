@@ -175,9 +175,6 @@ define("frontend-js-spa-web@1.0.6/senna/src/screen/Screen", ['exports', 'metal/s
 		return Screen;
 	}(_Cacheable3.default);
 
-	Screen.prototype.registerMetalComponent && Screen.prototype.registerMetalComponent(Screen, 'Screen')
-
-
 	/**
   * @param {*} object
   * @return {boolean} Whether a given instance implements

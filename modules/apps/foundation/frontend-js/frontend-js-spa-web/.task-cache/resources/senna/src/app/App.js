@@ -428,7 +428,11 @@ define("frontend-js-spa-web@1.0.6/senna/src/app/App", ['exports', 'metal/src/met
 				return null;
 			}
 
-			path = _utils2.default.getUrlPathWithoutHash(path).substr(this.basePath.length);
+			path = _utils2.default.getUrlPathWithoutHash(path);
+
+			// Makes sure that the path substring will be in the expected format
+			// (that is, will end with a "/").
+			path = _utils2.default.getUrlPathWithoutHash(path.substr(this.basePath.length));
 
 			for (var i = 0; i < this.routes.length; i++) {
 				var route = this.routes[i];
@@ -859,7 +863,6 @@ define("frontend-js-spa-web@1.0.6/senna/src/app/App", ['exports', 'metal/src/met
 		return App;
 	}(_events.EventEmitter);
 
-	App.prototype.registerMetalComponent && App.prototype.registerMetalComponent(App, 'App')
 	exports.default = App;
 });
 //# sourceMappingURL=App.js.map

@@ -81,7 +81,6 @@ define("frontend-js-spa-web@1.0.6/metal-events/src/EventHandler", ['exports', 'm
 		return EventHandler;
 	}(_metal.Disposable);
 
-	EventHandler.prototype.registerMetalComponent && EventHandler.prototype.registerMetalComponent(EventHandler, 'EventHandler')
 	exports.default = EventHandler;
 });
 //# sourceMappingURL=EventHandler.js.map

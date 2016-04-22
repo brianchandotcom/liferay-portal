@@ -550,6 +550,7 @@
 		</execute>
 
 		<execute macro="LAR#exportSiteCP">
+			<var name="larFileName" value="ExportPrivatePage" />
 			<var name="privateLayout" value="true" />
 		</execute>
 
@@ -589,6 +590,7 @@
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Private Page" />
 			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Private" />
 		</execute>
 	</command>
 

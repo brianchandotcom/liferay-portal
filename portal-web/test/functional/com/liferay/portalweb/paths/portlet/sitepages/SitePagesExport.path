@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPORT_PROCESS_NAME</td>
+	<td>//input[contains(@id,'ExportPortlet_name')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPORT_BUTTON</td>
 	<td>//button[contains(.,'Export') and contains(@type,'submit')]</td>
 	<td></td>

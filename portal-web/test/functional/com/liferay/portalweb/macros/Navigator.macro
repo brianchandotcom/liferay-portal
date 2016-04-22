@@ -44,6 +44,13 @@
 	<command name="gotoPage" summary="Navigate to the page named '${pageName}'">
 		<execute macro="Navigator#openURL" />
 
+		<if>
+			<isset var="sitePagePrivacy" />
+			<then>
+				<execute macro="ProductMenu#gotoPrivatePages" />
+			</then>
+		</if>
+
 		<execute macro="Navigator#_gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>

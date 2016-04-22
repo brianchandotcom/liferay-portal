@@ -24,7 +24,6 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -191,10 +190,9 @@ public class ImporterFactory {
 			_ddmTemplateLocalService, _ddmxml, _dlAppLocalService,
 			_dlFileEntryLocalService, _dlFolderLocalService,
 			_indexStatusManager, _indexerRegistry, _journalArticleLocalService,
-			_journalArticleService, _layoutLocalService,
-			_layoutPrototypeLocalService, _layoutSetLocalService,
-			_layoutSetPrototypeLocalService, _mimeTypes, _portal,
-			_repositoryLocalService, _saxReader, _themeLocalService);
+			_layoutLocalService, _layoutPrototypeLocalService,
+			_layoutSetLocalService, _layoutSetPrototypeLocalService, _mimeTypes,
+			_portal, _repositoryLocalService, _saxReader, _themeLocalService);
 	}
 
 	protected LARImporter getLARImporter() {
@@ -208,10 +206,9 @@ public class ImporterFactory {
 			_ddmTemplateLocalService, _ddmxml, _dlAppLocalService,
 			_dlFileEntryLocalService, _dlFolderLocalService,
 			_indexStatusManager, _indexerRegistry, _journalArticleLocalService,
-			_journalArticleService, _layoutLocalService,
-			_layoutPrototypeLocalService, _layoutSetLocalService,
-			_layoutSetPrototypeLocalService, _mimeTypes, _portal,
-			_repositoryLocalService, _saxReader, _themeLocalService);
+			_layoutLocalService, _layoutPrototypeLocalService,
+			_layoutSetLocalService, _layoutSetPrototypeLocalService, _mimeTypes,
+			_portal, _repositoryLocalService, _saxReader, _themeLocalService);
 	}
 
 	@Reference
@@ -252,9 +249,6 @@ public class ImporterFactory {
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
-
-	@Reference
-	private JournalArticleService _journalArticleService;
 
 	@Reference
 	private JournalConverter _journalConverter;

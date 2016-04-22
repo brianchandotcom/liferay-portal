@@ -20,13 +20,14 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.push.notifications.constants.PushNotificationsPortletKeys;
-import com.liferay.push.notifications.service.PushNotificationsDeviceLocalServiceUtil;
+import com.liferay.push.notifications.service.PushNotificationsDeviceService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -59,8 +60,8 @@ public class PushNotificationsPortlet extends MVCPortlet {
 			actionRequest, "pushNotificationsDeviceId");
 
 		try {
-			PushNotificationsDeviceLocalServiceUtil.
-				deletePushNotificationsDevice(pushNotificationsDeviceId);
+			_pushNotificationsDeviceService.deletePushNotificationsDevice(
+				pushNotificationsDeviceId);
 
 			SessionMessages.add(
 				actionRequest, "pushNotificationsDeviceDeleted");
@@ -71,5 +72,14 @@ public class PushNotificationsPortlet extends MVCPortlet {
 
 		sendRedirect(actionRequest, actionResponse);
 	}
+
+	@Reference(unbind = "-")
+	protected void setPushNotificationsDeviceService(
+		PushNotificationsDeviceService pushNotificationsDeviceService) {
+
+		_pushNotificationsDeviceService = pushNotificationsDeviceService;
+	}
+
+	private PushNotificationsDeviceService _pushNotificationsDeviceService;
 
 }

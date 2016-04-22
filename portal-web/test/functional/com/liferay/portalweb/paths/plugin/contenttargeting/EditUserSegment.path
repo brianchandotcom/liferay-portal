@@ -1,18 +1,13 @@
 <html>
 <head>
-<title>ContentTargetingEditUserSegment</title>
+<title>EditUserSegment</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">ContentTargetingEditUserSegment</td></tr>
+<tr><td rowspan="1" colspan="3">EditUserSegment</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>USER_SEGMENT_DESCRIPTION_FIELD</td>
-	<td>//textarea[contains(@id,'ContentTargetingPortlet_description')]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>USER_SEGMENT_RULE_DELETE</td>
 	<td>//div[contains(@id,'${key_userSegmentRuleDelete}')]//button/span[contains(@class,'trash')]</td>

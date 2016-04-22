@@ -34,6 +34,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Roberto Díaz
@@ -56,6 +57,8 @@ public abstract class BaseLayoutsItemSelectorView
 		return _supportedItemSelectorReturnTypes;
 	}
 
+	public abstract boolean isPrivateLayout();
+
 	@Override
 	public boolean isShowSearch() {
 		return false;
@@ -71,7 +74,8 @@ public abstract class BaseLayoutsItemSelectorView
 		LayoutItemSelectorViewDisplayContext
 			layoutItemSelectorViewDisplayContext =
 				new LayoutItemSelectorViewDisplayContext(
-					layoutItemSelectorCriterion, itemSelectedEventName);
+					(HttpServletRequest)request, layoutItemSelectorCriterion,
+					itemSelectedEventName, isPrivateLayout());
 
 		request.setAttribute(
 			LAYOUT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,

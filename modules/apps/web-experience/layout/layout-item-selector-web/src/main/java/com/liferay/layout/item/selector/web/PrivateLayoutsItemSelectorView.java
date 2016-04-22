@@ -48,6 +48,10 @@ public class PrivateLayoutsItemSelectorView
 		return ResourceBundleUtil.getString(resourceBundle, "private-pages");
 	}
 
+	public boolean isPrivateLayout() {
+		return true;
+	}
+
 	@Override
 	public boolean isVisible(ThemeDisplay themeDisplay) {
 		Group group = themeDisplay.getScopeGroup();

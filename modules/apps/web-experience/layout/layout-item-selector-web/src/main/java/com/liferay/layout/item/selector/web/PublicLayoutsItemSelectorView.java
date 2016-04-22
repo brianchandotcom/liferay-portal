@@ -47,6 +47,10 @@ public class PublicLayoutsItemSelectorView extends BaseLayoutsItemSelectorView {
 		return ResourceBundleUtil.getString(resourceBundle, "public-pages");
 	}
 
+	public boolean isPrivateLayout() {
+		return false;
+	}
+
 	@Override
 	public boolean isVisible(ThemeDisplay themeDisplay) {
 		Group group = themeDisplay.getScopeGroup();

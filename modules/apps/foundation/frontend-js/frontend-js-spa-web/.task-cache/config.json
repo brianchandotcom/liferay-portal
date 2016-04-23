@@ -6,7 +6,7 @@
         "dependencies": ["exports", "../globals/globals", "metal/src/metal", "metal-dom/src/all/dom", "metal-promise/src/promise/Promise"]
     },
     "frontend-js-spa-web@1.0.6/senna/src/screen/HtmlScreen": {
-        "dependencies": ["exports", "metal/src/metal", "metal-dom/src/all/dom", "metal-promise/src/promise/Promise", "../globals/globals", "./RequestScreen", "../surface/Surface"]
+        "dependencies": ["exports", "metal/src/metal", "metal-dom/src/all/dom", "metal-promise/src/promise/Promise", "../globals/globals", "./RequestScreen", "../surface/Surface", "metal-useragent/src/UA", "metal-uri/src/Uri"]
     },
     "frontend-js-spa-web@1.0.6/senna/src/screen/RequestScreen": {
         "dependencies": ["exports", "metal/src/metal", "metal-ajax/src/Ajax", "metal-multimap/src/MultiMap", "metal-promise/src/promise/Promise", "../errors/errors", "../utils/utils", "../globals/globals", "./Screen", "metal-uri/src/Uri", "metal-useragent/src/UA"]
@@ -41,14 +41,14 @@
     "frontend-js-spa-web@1.0.6/metal-useragent/src/UA": {
         "dependencies": ["exports"]
     },
+    "frontend-js-spa-web@1.0.6/metal-uri/src/Uri": {
+        "dependencies": ["exports", "metal/src/metal", "./parse", "metal-multimap/src/MultiMap"]
+    },
     "frontend-js-spa-web@1.0.6/metal-uri/src/parse": {
         "dependencies": ["exports", "metal/src/metal", "./parseFromAnchor"]
     },
     "frontend-js-spa-web@1.0.6/metal-uri/src/parseFromAnchor": {
         "dependencies": ["exports"]
-    },
-    "frontend-js-spa-web@1.0.6/metal-uri/src/Uri": {
-        "dependencies": ["exports", "metal/src/metal", "./parse", "metal-multimap/src/MultiMap"]
     },
     "frontend-js-spa-web@1.0.6/metal-promise/src/promise/Promise": {
         "dependencies": ["exports", "metal/src/metal"]
@@ -71,14 +71,14 @@
     "frontend-js-spa-web@1.0.6/metal-events/src/events": {
         "dependencies": ["exports", "./EventEmitter", "./EventEmitterProxy", "./EventHandle", "./EventHandler"]
     },
-    "frontend-js-spa-web@1.0.6/metal-dom/src/dom": {
-        "dependencies": ["exports", "metal/src/metal", "./DomEventHandle"]
-    },
     "frontend-js-spa-web@1.0.6/metal-dom/src/DomEventEmitterProxy": {
         "dependencies": ["exports", "./dom", "metal-events/src/events"]
     },
     "frontend-js-spa-web@1.0.6/metal-dom/src/DomEventHandle": {
         "dependencies": ["exports", "metal-events/src/events"]
+    },
+    "frontend-js-spa-web@1.0.6/metal-dom/src/dom": {
+        "dependencies": ["exports", "metal/src/metal", "./DomEventHandle"]
     },
     "frontend-js-spa-web@1.0.6/metal-dom/src/events": {
         "dependencies": ["./dom", "./features"]
@@ -108,7 +108,7 @@
         "dependencies": ["exports"]
     },
     "frontend-js-spa-web@1.0.6/metal/src/object/object": {
-        "dependencies": ["exports", "../core"]
+        "dependencies": ["exports"]
     },
     "frontend-js-spa-web@1.0.6/metal/src/disposable/Disposable": {
         "dependencies": ["exports"]

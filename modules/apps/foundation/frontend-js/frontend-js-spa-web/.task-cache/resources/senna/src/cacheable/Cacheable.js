@@ -107,7 +107,6 @@ define("frontend-js-spa-web@1.0.6/senna/src/cacheable/Cacheable", ['exports', 'm
 		return Cacheable;
 	}(_metal.Disposable);
 
-	Cacheable.prototype.registerMetalComponent && Cacheable.prototype.registerMetalComponent(Cacheable, 'Cacheable')
 	exports.default = Cacheable;
 });
 //# sourceMappingURL=Cacheable.js.map

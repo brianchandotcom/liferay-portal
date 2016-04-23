@@ -7967,7 +7967,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<waitfor maxwait="15" maxwaitunit="minute" timeoutproperty="upgrade.timeout.error">
 					<resourcecontains
 						resource="${liferay.home}/db_upgrade_log"
-						substring="Running modules upgrades. Connect to your Gogo Shell to check the status."
+						substring="Running modules upgrades."
 					/>
 				</waitfor>
 

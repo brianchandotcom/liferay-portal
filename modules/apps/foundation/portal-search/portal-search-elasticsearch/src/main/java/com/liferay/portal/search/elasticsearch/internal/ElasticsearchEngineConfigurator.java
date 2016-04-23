@@ -80,6 +80,11 @@ public class ElasticsearchEngineConfigurator
 	}
 
 	@Override
+	protected SearchEngineHelper getSearchEngineHelper() {
+		return searchEngineHelper;
+	}
+
+	@Override
 	protected void initialize() {
 		_elasticsearchConnectionManager.connect();
 
@@ -110,6 +115,9 @@ public class ElasticsearchEngineConfigurator
 
 		_searchEngines.remove(searchEngineId);
 	}
+
+	@Reference
+	protected SearchEngineHelper searchEngineHelper;
 
 	@Reference
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;

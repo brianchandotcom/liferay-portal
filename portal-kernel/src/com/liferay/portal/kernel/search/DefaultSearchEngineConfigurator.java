@@ -54,6 +54,11 @@ public class DefaultSearchEngineConfigurator
 		return currentThread.getContextClassLoader();
 	}
 
+	@Override
+	protected SearchEngineHelper getSearchEngineHelper() {
+		return SearchEngineHelperUtil.getSearchEngineHelper();
+	}
+
 	private String _defaultSearchEngineId;
 	private IndexSearcher _indexSearcher;
 	private IndexWriter _indexWriter;

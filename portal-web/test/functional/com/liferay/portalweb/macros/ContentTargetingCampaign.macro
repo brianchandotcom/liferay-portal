@@ -12,11 +12,17 @@
 		<if>
 			<isset var="userSegmentSelect" />
 			<then>
-				<execute function="Select" locator1="EditCampaign#CAMPAIGN_USER_SEGMENT_SELECT" value1="${userSegmentSelect}" />
+				<execute function="Click" locator1="EditCampaign#CAMPAIGN_USER_SEGMENT_SELECT" />
+
+				<execute function="Click" locator1="EditCampaign#SELECT_USER_SEGMENT_CHECKBOX">
+					<var name="key_userSegmentName" value="${userSegmentSelect}" />
+				</execute>
+
+				<execute function="Click" locator1="Button#OK" />
 			</then>
 		</if>
 
-		<execute function="Type" locator1="EditCampaign#CAMPAIGN_USER_SEGMENT_SELECT" value1="${campaignStartDate}" />
+		<execute function="Type" locator1="EditCampaign#CAMPAIGN_START_DATE_FIELD" value1="${campaignStartDate}" />
 		<execute function="Type" locator1="EditCampaign#CAMPAIGN_START_TIME_FIELD" value1="${campaignStartTime}" />
 		<execute function="Type" locator1="EditCampaign#CAMPAIGN_END_DATE_FIELD" value1="${campaignEndDate}" />
 		<execute function="Type" locator1="EditCampaign#CAMPAIGN_END_TIME_FIELD" value1="${campaignEndTime}" />

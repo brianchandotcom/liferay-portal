@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>SELECT_USER_SEGMENT_CHECKBOX</td>
+	<td>//div[contains(.,'${key_userSegmentName}')]//span[contains(@class,'checkbox-container')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CAMPAIGN_USER_SEGMENT_SELECT</td>
 	<td>//button[@title='Select User Segments']</td>
 	<td></td>

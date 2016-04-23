@@ -12,9 +12,9 @@
 
 		<execute function="SelectFrame" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_WEB_CONTENT_IFRAME" />
 
-		<var name="key_webContentTitle" value="${webContentTitle}" />
+		<var name="key_rowEntry" value="${webContentTitle}" />
 
-		<execute function="AssertClick" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_SELECT_WEB_CONTENT_ARTICLE_CHOOSE_BUTTON" value1="Choose" />
+		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -397,6 +397,13 @@
 			<var name="key_userSegmentRuleName" value="${usersegmentRuleName}" />
 
 			<execute function="AssertTextEquals#assertPartialText" locator1="EditUserSegment#USER_SEGMENT_RULE_APPLIED" value1="${usersegmentRuleName}" />
+
+			<if>
+				<condition function="IsElementPresent" locator1="EditUserSegment#USER_SEGMENT_RULES_UNCOLLAPSED" />
+				<then>
+					<execute function="Click" locator1="EditUserSegment#USER_SEGMENT_RULES_UNCOLLAPSED" />
+				</then>
+			</if>
 
 			<if>
 				<equals arg1="${usersegmentRuleName}" arg2="Content Visited" />

@@ -168,6 +168,7 @@
 
 	<macrodef name="generate-gulp-user-config-json">
 		<attribute name="portlet.name" />
+
 		<attribute default="${app.server.type}" name="app.server.type" />
 		<attribute default="${app.server.@{app.server.type}.dir}" name="app.server.dir" />
 		<attribute default="user-config.json" name="file.name" />

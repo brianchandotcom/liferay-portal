@@ -6383,7 +6383,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="${tstamp.value}.zip"
 				>
 					<patternset
-						includes="liferay-portal-*/${app.server.type}-*/**"
+						includes="liferay*portal-*/${app.server.type}-*/**"
 					/>
 					<mapper
 						from="[^/]+/(.*)"
@@ -6397,7 +6397,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="${tstamp.value}.zip"
 				>
 					<patternset
-						includes="liferay-portal-*/deploy/**"
+						includes="liferay*portal-*/deploy/**"
 					/>
 					<mapper
 						from="[^/]+/(.*)"
@@ -6411,7 +6411,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="${tstamp.value}.zip"
 				>
 					<patternset
-						includes="liferay-portal-*/osgi/**"
+						includes="liferay*portal-*/osgi/**"
 					/>
 					<mapper
 						from="[^/]+/(.*)"
@@ -6425,7 +6425,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="${tstamp.value}.zip"
 				>
 					<patternset
-						includes="liferay-portal-*/patching-tool/patches/**"
+						includes="liferay*portal-*/patching-tool/patches/**"
 					/>
 					<mapper
 						from="[^/]+/(.*)"

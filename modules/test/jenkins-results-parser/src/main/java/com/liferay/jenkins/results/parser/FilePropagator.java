@@ -27,12 +27,8 @@ public class FilePropagator {
 		sb.append("'\n");
 		
 		System.out.println("Executing commands:\n" + sb.toString());
-		try {
-			Thread.sleep(3000);
-		}
-		catch (InterruptedException ie) {
-			throw new RuntimeException (ie);
-		}
+		
+		JenkinsResultsParserUtil.sleep(3000);
 
 		return 0;
 	}
@@ -74,12 +70,7 @@ public class FilePropagator {
 					if (ioe.getMessage().contains("Text file busy") &&
 						(System.currentTimeMillis() - start) < 2000) {
 
-						try {
-							Thread.sleep(100);
-						}
-						catch (InterruptedException ie) {
-							throw new RuntimeException(ie);
-						}
+						JenkinsResultsParserUtil.sleep(100);
 
 						continue;
 					}
@@ -93,12 +84,7 @@ public class FilePropagator {
 
 					System.out.println("Out of buffer space OR Temporary DNS failure - Retry in 1 minute.");
 
-					try {
-						Thread.sleep(1000 * 60);
-					}
-					catch (InterruptedException ie) {
-						throw new RuntimeException(ie);
-					}
+					JenkinsResultsParserUtil.sleep(1000 * 60);
 
 					continue;
 				}
@@ -272,12 +258,7 @@ public class FilePropagator {
 
 				System.out.println(sb.toString());
 
-				try {
-					Thread.sleep(5000);
-				}
-				catch (InterruptedException ie) {
-					throw new RuntimeException(ie);
-				}
+				JenkinsResultsParserUtil.sleep(5000);
 			}
 			
 			StringBuffer sb = new StringBuffer();

@@ -4,13 +4,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Replicator {
+public class FilePropagator {
 	
 	private int _executeCommandsStub(List<String> commands, String targetSlave) throws IOException {
 		StringBuffer sb = new StringBuffer("ssh ");
@@ -128,12 +129,12 @@ public class Replicator {
 		return "mkdir -pv " + directoryPath;
 	}
 
-	public Replicator(ReplicatorTask[] replicatorTasks, List<String> targetSlaves) {
+	public FilePropagator(FilePropagatorTask[] filePropagatorTasks, List<String> targetSlaves) {
 		
-		_replicatorTasks = new ArrayList<>(replicatorTasks.length);
+		_filePropagatorTasks = new ArrayList<>(filePropagatorTasks.length);
 
-		for (ReplicatorTask replicatorTask : replicatorTasks) {
-			_replicatorTasks.add(replicatorTask);
+		for (FilePropagatorTask filePropagatorTask : filePropagatorTasks) {
+			_filePropagatorTasks.add(filePropagatorTask);
 		}
 
 		_targetSlaves = targetSlaves;
@@ -148,15 +149,15 @@ public class Replicator {
 
 		String targetSlave = null;
 
-		for (ReplicatorTask replicatorTask : _replicatorTasks) {
+		for (FilePropagatorTask filePropagatorTask : _filePropagatorTasks) {
 			
-			System.out.println("Copying from origin: " + replicatorTask.originPath);
+			System.out.println("Copying from origin: " + filePropagatorTask.originPath);
 			
 			targetSlave = _targetSlaves.get(0);
 			
-			commands.add(_generateMkdirCommand(replicatorTask.filePath));
+			commands.add(_generateMkdirCommand(filePropagatorTask.filePath));
 
-			commands.add("rsync -vI " + replicatorTask.originPath + " " + replicatorTask.filePath);
+			commands.add("rsync -vI " + filePropagatorTask.originPath + " " + filePropagatorTask.filePath);
 		}
 
 		try {
@@ -201,24 +202,24 @@ public class Replicator {
 		}
 	}
 
-	public void onTaskCompletion(ReplicatorThread replicatorThread) {
+	public void onTaskCompletion(FilePropagatorThread filePropagatorThread) {
 		
 		//System.out.println("onTaskCompletion called.");
 		
 		synchronized(this) {
 			_completedCount++;
-			_totalTaskDuration += replicatorThread.getDuration();
+			_totalTaskDuration += filePropagatorThread.getDuration();
 
-			_busySlaves.remove(replicatorThread.getSource());
-			_busySlaves.remove(replicatorThread.getTarget());
+			_busySlaves.remove(filePropagatorThread.getSource());
+			_busySlaves.remove(filePropagatorThread.getTarget());
 		
-			_sourceSlaves.add(replicatorThread.getSource());
+			_sourceSlaves.add(filePropagatorThread.getSource());
 	
-			if (replicatorThread.isSuccessful()) {
-				_sourceSlaves.add(replicatorThread.getTarget());
+			if (filePropagatorThread.isSuccessful()) {
+				_sourceSlaves.add(filePropagatorThread.getTarget());
 			}
 			else {
-				_errorSlaves.add(replicatorThread.getTarget());
+				_errorSlaves.add(filePropagatorThread.getTarget());
 			}
 		}
 	}
@@ -244,7 +245,7 @@ public class Replicator {
 						_targetSlaves.remove(0);
 						
 						executorService.execute(
-							new ReplicatorThread(this, sourceSlave,targetSlave));
+							new FilePropagatorThread(this, sourceSlave,targetSlave));
 
 						_busySlaves.add(sourceSlave);
 						_busySlaves.add(targetSlave);
@@ -300,7 +301,7 @@ public class Replicator {
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		String bundleFileName = "liferay-portal-tomcat-7.0-nightly-20160323015850923.zip";
 		String destinationRootPath = "/root/.liferay/mirrors/release-1/1/";
@@ -315,22 +316,25 @@ public class Replicator {
 		String originBundleFilePath = originPath + bundleFileName;
 		String originSqlFilePath = originPath + sqlFileName;
 
-		ReplicatorTask[] replicatorTasks = new ReplicatorTask[] {
-			new ReplicatorTask(slaveBundleFilePath, originBundleFilePath),
-			new ReplicatorTask(slaveSqlFilePath, originSqlFilePath)
+		FilePropagatorTask[] filePropagatorTasks = new FilePropagatorTask[] {
+			new FilePropagatorTask(slaveBundleFilePath, originBundleFilePath),
+			new FilePropagatorTask(slaveSqlFilePath, originSqlFilePath)
 		};
+		List<String> slaveList = JenkinsResultsParserUtil.getSlaveList("test-1-1");
 		
-		Replicator replicator = new Replicator(
-			replicatorTasks, 
-			SlaveListGeneratorUtil.getSlaveList(
-				"test-1-1", "file:/Users/pyoo/dev/jenkins-ee/build.properties",
-				false));
+		System.out.println("slave list size: " + slaveList.size());
 
-		replicator.start(1);
+		/*
+		FilePropagator filePropagator = new FilePropagator(
+			filePropagatorTasks, 
+			JenkinsResultsParserUtil.getSlaveList("test-1-1"));
+
+		filePropagator.start(20);
+		*/
 	}
 	
-	public static class ReplicatorTask {
-		public ReplicatorTask(String filePath, String originPath) {
+	public static class FilePropagatorTask {
+		public FilePropagatorTask(String filePath, String originPath) {
 			this.filePath = filePath;
 			this.originPath = originPath;
 		}
@@ -347,13 +351,13 @@ public class Replicator {
 	private int _completedCount = 0;
 	private final Integer _slaveCount;
 
-	private List<ReplicatorTask> _replicatorTasks = new ArrayList<>();
+	private List<FilePropagatorTask> _filePropagatorTasks = new ArrayList<>();
 	private long _totalTaskDuration = 0;
 
-	private static class ReplicatorThread implements Runnable {
+	private static class FilePropagatorThread implements Runnable {
 		
-		private ReplicatorThread(Replicator replicator, String sourceSlave, String targetSlave) {
-			_replicator = replicator;
+		private FilePropagatorThread(FilePropagator filePropagator, String sourceSlave, String targetSlave) {
+			_filePropagator = filePropagator;
 			_sourceSlave = sourceSlave;
 			_targetSlave = targetSlave;
 		}
@@ -364,22 +368,22 @@ public class Replicator {
 			long start = System.currentTimeMillis();
 			
 			List<String> commands =
-				new ArrayList<>(_replicator._replicatorTasks.size());
+				new ArrayList<>(_filePropagator._filePropagatorTasks.size());
 
-			for (ReplicatorTask replicatorTask : _replicator._replicatorTasks) {
-				commands.add(_replicator._generateMkdirCommand(replicatorTask.filePath));
+			for (FilePropagatorTask filePropagatorTask : _filePropagator._filePropagatorTasks) {
+				commands.add(_filePropagator._generateMkdirCommand(filePropagatorTask.filePath));
 				
-				commands.add("rsync -vI " +	_sourceSlave + ":" + replicatorTask.filePath + " " + replicatorTask.filePath);
+				commands.add("rsync -vI " +	_sourceSlave + ":" + filePropagatorTask.filePath + " " + filePropagatorTask.filePath);
 			}
 			try {
-				_isSuccessful = _replicator._executeCommands(commands, _targetSlave) == 0;
+				_isSuccessful = _filePropagator._executeCommands(commands, _targetSlave) == 0;
 			}
 			catch (Exception e) {
 				_isSuccessful = false;
 			}
 			_duration = System.currentTimeMillis() - start;
 
-			_replicator.onTaskCompletion(this);
+			_filePropagator.onTaskCompletion(this);
 		}
 		
 		public Boolean isSuccessful() {
@@ -399,7 +403,7 @@ public class Replicator {
 		}
 		
 		private long _duration = -1;
-		private Replicator _replicator;
+		private FilePropagator _filePropagator;
 		private String _sourceSlave;
 		private String _targetSlave;
 		private Boolean _isSuccessful;

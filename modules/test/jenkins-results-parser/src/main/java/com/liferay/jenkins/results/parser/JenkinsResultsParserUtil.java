@@ -390,6 +390,15 @@ public class JenkinsResultsParserUtil {
 		return new String(Files.readAllBytes(Paths.get(file.toURI())));
 	}
 
+	public static void sleep(long duration) {
+		try {
+			Thread.sleep(duration);
+		}
+		catch(InterruptedException ie) {
+			throw new RuntimeException(ie);
+		}
+	}
+
 	public static JSONObject toJSONObject(String url) throws Exception {
 		return toJSONObject(url, true, 0);
 	}

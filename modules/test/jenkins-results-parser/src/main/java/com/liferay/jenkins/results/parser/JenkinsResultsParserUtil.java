@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.io.Writer;
 
 import java.net.MalformedURLException;
@@ -30,8 +31,11 @@ import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -355,6 +359,31 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return remoteURL;
+	}
+
+	public static List<String> getSlaveList(String masterName)
+		throws Exception {
+
+		Properties properties = new Properties();
+
+		properties.load(new StringReader(toString(getLocalURL(
+			"http://mirrors-no-cache.lax.liferay.com/github.com/liferay/" +
+				"liferay-jenkins-ee/build.properties"))));
+
+		String masterSlavesKey = "master.slaves(" + masterName + ")";
+
+		List<String> slaves = new ArrayList<>(100);
+
+		if (properties.containsKey(masterSlavesKey)) {
+			String slavesString =
+				expandSlaveRange(properties.getProperty(masterSlavesKey));
+
+			for (String slave : slavesString.split(",")) {
+				slaves.add(slave.trim());
+			}
+		}
+
+		return slaves;
 	}
 
 	public static String read(File file) throws IOException {

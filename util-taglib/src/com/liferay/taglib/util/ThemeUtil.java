@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.ThemeHelper;
-import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.registry.collections.ServiceTrackerCollections;
@@ -262,10 +261,7 @@ public class ThemeUtil {
 		Writer writer = null;
 
 		if (write) {
-
-			// Wrapping is needed because of a bug in FreeMarker
-
-			writer = UnsyncPrintWriterPool.borrow(response.getWriter());
+			writer = response.getWriter();
 		}
 		else {
 			writer = new UnsyncStringWriter();

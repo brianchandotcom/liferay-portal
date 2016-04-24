@@ -1,21 +1,21 @@
 @import "bourbon";
 @import "mixins";
 
-$chemachop-btn-padding: 8px 4px !default;
-$chemachop-btn-space: 24px !default;
-$chemachop-controls-height: 52px !default;
-$chemachop-filters-height: 90px !default;
-$chemachop-history-controls-bottom: $chemachop-controls-height + 10 !default;
-$chemachop-history-controls-side: $chemachop-btn-space !default;
+$imageeditor-btn-padding: 8px 4px !default;
+$imageeditor-btn-space: 24px !default;
+$imageeditor-controls-height: 52px !default;
+$imageeditor-filters-height: 90px !default;
+$imageeditor-history-controls-top: 30px;
 
 // Skin
 
 $brand-primary: darken(#428BCA, 6.5%) !default; // #337ab7
 
-$chemachop-bg: #869CAD !default;
-$chemachop-history-controls-btn-color: #1E5EC8 !default;
-$chemachop-link-color: $brand-primary !default;
-$chemachop-text-color: #FFF !default;
+$imageeditor-bg: #111314 !default;
+$imageeditor-history-controls-btn-color: #4E6371 !default;
+$imageeditor-link-color: $brand-primary !default;
+$imageeditor-text-color: #FFF !default;
+$imageeditor-filters-text-color: #57636A !default;
 
 $gray-base: #000 !default;
 $gray-light: lighten($gray-base, 46.7%) !default; // #777
@@ -23,42 +23,87 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #eee
 
 $slider-height: 20px;
 
+body {
+	background-color: $imageeditor-bg !important;
+}
+
 .image-editor {
-	.lfr-image-editor-image-container {
+	background-color: $imageeditor-bg;
+
+	ul, ol {
+		margin: 0;
+	}
+
+	.loading-animation {
+		left: 0;
+		margin: auto;
+		position: absolute;
+		right: 0;
+		top: 40%;
+	}
+
+	.lfr-image-editor-image-container, .lfr-image-editor-tools-container, .lfr-image-editor-history-container {
 		position: relative;
 	}
 
-	canvas.image-preview {
-		left: 0;
+	.lfr-image-editor-image-container {
+		padding: 20px;
+	}
+
+	.lfr-image-editor-tools-container {
+		height: 142px;
+	}
+
+	.lfr-image-editor-history-container {
 		position: absolute;
-		top: 0;
+		text-align: center;
+		top: $imageeditor-history-controls-top;
+		width: 100%;
+
+		a.btn {
+			background-color: $imageeditor-history-controls-btn-color;
+			margin: 0;
+			outline: none;
+
+			.lexicon-icon {
+				color: $imageeditor-text-color;
+				margin-top: -7px;
+			}
+		}
+	}
+
+	.lfr-image-editor-image-container {
+		align-items: center;
+		display: flex;
+		justify-content: center;
 	}
 
 	.controls {
-		background-color: $chemachop-bg;
+		background-color: $imageeditor-bg;
 		bottom: 0;
-		height: $chemachop-controls-height;
+		height: $imageeditor-controls-height;
 		position: absolute;
 		width: 100%;
 
 		.btn {
-			color: $chemachop-text-color;
-			padding: $chemachop-btn-padding;
+			color: $imageeditor-text-color;
+			padding: $imageeditor-btn-padding;
 		}
 
 		.filters {
-			background-color: $chemachop-bg;
-			bottom: $chemachop-controls-height;
+			background-color: $imageeditor-bg;
+			bottom: $imageeditor-controls-height;
 			height: 0;
+			left: 0;
 			overflow: hidden;
 			position: absolute;
 			width: 100%;
 			z-index: 1;
 
-			@include transition(height .6s $ease-out-quint);
+			@include transition(height 0.6s $ease-out-quint);
 
 			.btn-space {
-				margin-top: $chemachop-btn-space;
+				margin-top: $imageeditor-btn-space;
 			}
 
 			.filters-list {
@@ -70,7 +115,24 @@ $slider-height: 20px;
 
 					li {
 						display: table-cell;
-						padding: 0 2px;
+						padding: 0 5px;
+
+						&:hover a {
+							color: $imageeditor-link-color;
+							text-decoration: none;
+						}
+					}
+
+					a {
+						color: $imageeditor-filters-text-color;
+
+						&.active {
+							color: $imageeditor-link-color;
+						}
+
+						&.active canvas {
+							outline: 3px solid $imageeditor-link-color;
+						}
 					}
 
 					span {
@@ -84,63 +146,71 @@ $slider-height: 20px;
 
 		.open {
 			& > .btn {
-				color: $chemachop-link-color;
+				color: $imageeditor-link-color;
 			}
 
-			.filters {
-				height: $chemachop-filters-height;
+			.filters.open {
+				height: $imageeditor-filters-height;
 			}
-		}
-	}
-
-	.history-controls {
-		bottom: $chemachop-history-controls-bottom;
-		position: absolute;
-
-		&.history-left {
-			left: $chemachop-history-controls-side;
-		}
-
-		&.history-right {
-			right: $chemachop-history-controls-side;
-		}
-
-		a.btn {
-			background-color: $chemachop-history-controls-btn-color;
-			color: $chemachop-text-color;
-			margin: 0 2px;
 		}
 	}
 
 	.slider {
-		color: $gray-light;
+		color: $imageeditor-link-color;
+		margin: 0 auto;
 		position: relative;
 		text-align: center;
+		width: 80%;
 
 		.rail {
-			border: solid 1px $gray-light;
 			border-radius: $slider-height / 2;
 			height: $slider-height;
 			position: relative;
 
+			&::after {
+				border: solid 1px $gray-light;
+				content: "";
+				left: 0;
+				position: absolute;
+				top: 50%;
+				width: 100%;
+			}
+
 			.rail-handle {
 				position: absolute;
 				top: -1px;
+				z-index: 1;
 			}
 
 			.rail-active {
-				background-color: $gray-lighter;
+				background-color: $imageeditor-link-color;
 				border-radius: $slider-height/2 0 0 $slider-height/2;
-				height: 100%;
+				height: 2px;
 				position: relative;
+				top: $slider-height/2;
+				z-index: 1;
 			}
 
 			.handle {
 				background-color: $brand-primary;
+				border: 2px solid $imageeditor-text-color;
 				border-radius: $slider-height/2;
 				height: $slider-height;
-				margin-left: -10px;
 				width: $slider-height;
+			}
+		}
+	}
+
+	.input-group {
+		margin: 0 auto;
+
+		input.form-control {
+			float: none;
+			margin: 0 15px;
+			width: 30%;
+
+			&:not(:focus) {
+				color: $imageeditor-text-color;
 			}
 		}
 	}

@@ -164,7 +164,22 @@ public class FilePropagator {
 		return "mkdir -pv " + directoryPath;
 	}
 	
-	public FilePropagator(FilePropagatorTask[] filePropagatorTasks, List<String> targetSlaves) {
+	public FilePropagator(String[] fileNames, String originPath,
+		String slavePath, List<String> targetSlaves) {
+
+		_filePropagatorTasks = new ArrayList<>(fileNames.length);
+		
+		for(String fileName : fileNames) {
+			_filePropagatorTasks.add(new FilePropagatorTask(
+				slavePath + "/" + fileName, originPath + "/" + fileName));
+		}
+		_targetSlaves = targetSlaves;
+		
+		_copyFromOrigin();
+	}
+	
+	public FilePropagator(FilePropagatorTask[] filePropagatorTasks,
+		List<String> targetSlaves) {
 		
 		_filePropagatorTasks = new ArrayList<>(filePropagatorTasks.length);
 
@@ -174,11 +189,10 @@ public class FilePropagator {
 
 		_targetSlaves = targetSlaves;
 		
-		_slaveCount = _targetSlaves.size();
-
-		_busySlaves = new ArrayList<>(_slaveCount);
-		_errorSlaves = new ArrayList<>(_slaveCount);
-		_sourceSlaves = new ArrayList<>(_slaveCount);
+		_copyFromOrigin();
+	}
+	
+	private void _copyFromOrigin() {
 
 		List<String> commands = new ArrayList<>();
 
@@ -373,13 +387,12 @@ public class FilePropagator {
 		public String originPath;
 	}
 
-	private List<String> _busySlaves;
-	private List<String> _errorSlaves;
-	private List<String> _sourceSlaves;
-	private List<String> _targetSlaves;
+	private List<String> _busySlaves = new ArrayList<>();
+	private List<String> _errorSlaves = new ArrayList<>();
+	private List<String> _sourceSlaves = new ArrayList<>();
+	private List<String> _targetSlaves = new ArrayList<>();
 
 	private int _completedCount = 0;
-	private final Integer _slaveCount;
 
 	private List<FilePropagatorTask> _filePropagatorTasks = new ArrayList<>();
 	private long _totalTaskDuration = 0;

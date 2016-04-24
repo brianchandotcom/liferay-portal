@@ -165,13 +165,13 @@ public class FilePropagator {
 	}
 	
 	public FilePropagator(String[] fileNames, String originPath,
-		String slavePath, List<String> targetSlaves) {
+		String filePath, List<String> targetSlaves) {
 
 		_filePropagatorTasks = new ArrayList<>(fileNames.length);
 		
 		for(String fileName : fileNames) {
 			_filePropagatorTasks.add(new FilePropagatorTask(
-				slavePath + "/" + fileName, originPath + "/" + fileName));
+				filePath + "/" + fileName, originPath + "/" + fileName));
 		}
 		_targetSlaves = targetSlaves;
 		
@@ -228,11 +228,11 @@ public class FilePropagator {
 	}
 	
 	public long getAverageDuration() {
-		if (_completedCount == 0) {
+		if (_filePropogatorThreadCompletedCount == 0) {
 			return 0;
 		}
 
-		return _totalTaskDuration / _completedCount;
+		return _totalFilePropogatorThreadDuration / _filePropogatorThreadCompletedCount;
 	}
 	
 	private static String _readInputStream(InputStream inputStream) {
@@ -251,25 +251,26 @@ public class FilePropagator {
 		}
 	}
 
-	public void onTaskCompletion(FilePropagatorThread filePropagatorThread) {
-		
-		//System.out.println("onTaskCompletion called.");
-		
+	public void recordFilePropagatorThreadCompletion(
+		FilePropagatorThread filePropagatorThread) {
+
 		synchronized(this) {
-			_completedCount++;
-			_totalTaskDuration += filePropagatorThread.getDuration();
+			_filePropogatorThreadCompletedCount++;
+
+			_totalFilePropogatorThreadDuration += filePropagatorThread.getDuration();
 
 			_busySlaves.remove(filePropagatorThread.getSource());
 			_busySlaves.remove(filePropagatorThread.getTarget());
-		
+
 			_sourceSlaves.add(filePropagatorThread.getSource());
-	
-			if (filePropagatorThread.isSuccessful()) {
-				_sourceSlaves.add(filePropagatorThread.getTarget());
-			}
-			else {
+
+			if (!filePropagatorThread.isSuccessful()) {
 				_errorSlaves.add(filePropagatorThread.getTarget());
+
+				return;
 			}
+
+			_sourceSlaves.add(filePropagatorThread.getTarget());
 		}
 	}
 
@@ -392,10 +393,10 @@ public class FilePropagator {
 	private List<String> _sourceSlaves = new ArrayList<>();
 	private List<String> _targetSlaves = new ArrayList<>();
 
-	private int _completedCount = 0;
+	private int _filePropogatorThreadCompletedCount = 0;
 
 	private List<FilePropagatorTask> _filePropagatorTasks = new ArrayList<>();
-	private long _totalTaskDuration = 0;
+	private long _totalFilePropogatorThreadDuration = 0;
 
 	private static class FilePropagatorThread implements Runnable {
 		
@@ -426,7 +427,7 @@ public class FilePropagator {
 			}
 			_duration = System.currentTimeMillis() - start;
 
-			_filePropagator.onTaskCompletion(this);
+			_filePropagator.recordFilePropagatorThreadCompletion(this);
 		}
 		
 		public Boolean isSuccessful() {

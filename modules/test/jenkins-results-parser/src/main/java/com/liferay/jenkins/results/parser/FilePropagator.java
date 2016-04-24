@@ -17,7 +17,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +30,7 @@ import java.util.concurrent.Executors;
  * @author Peter Yoo
  */
 public class FilePropagator {
-	
+
 	private int _executeCommandsStub(List<String> commands, String targetSlave) throws IOException {
 		StringBuffer sb = new StringBuffer("ssh ");
 		sb.append(targetSlave);
@@ -48,39 +50,64 @@ public class FilePropagator {
 
 		return 0;
 	}
-	
-	private int _executeCommands(List<String> commands, String targetSlave) throws IOException {
-		String commandHash = Integer.toString(commands.hashCode());
-		File shellFile = new File(commandHash + ".sh");
-		try {
-			StringBuffer sb = new StringBuffer("ssh ");
-			sb.append(targetSlave);
-			sb.append(" '");
 
-			for (String command : commands) {
-				sb.append(command);
-				if (commands.indexOf(command) < (commands.size() - 1)) {
-					sb.append("; ");
-				}
+	private File _writeShellFile(List<String> commands, String targetSlave) throws IOException {
+		String fileName = Integer.toString(commands.hashCode());
+
+		File shellFile = new File(fileName + ".sh");
+
+		StringBuffer sb = new StringBuffer("ssh ");
+
+		sb.append(targetSlave);
+		sb.append(" '");
+
+		for (String command : commands) {
+			sb.append(command);
+			if (commands.indexOf(command) < (commands.size() - 1)) {
+				sb.append("; ");
 			}
-			sb.append("'\n");
-			
-			System.out.println("Executing commands:\n" + sb.toString());
+		}
+
+		sb.append("'\n");
+
+		try {
 
 			try (FileWriter shellFileWriter = new FileWriter(shellFile)) {
 				shellFileWriter.write(sb.toString());
 			}
 
 			shellFile.setExecutable(true);
+			return shellFile;
+		}
+		catch(IOException ioe) {
+			if (shellFile.exists()) {
+				shellFile.delete();
+			}
 
+			throw ioe;
+		}
+	}
+	
+	private int _executeCommands(List<String> commands, String targetSlave) throws IOException {
+		File shellFile = _writeShellFile(commands, targetSlave);
+
+		try {
+			FileSystem fileSystem = FileSystems.getDefault();
+
+			System.out.println("Executing commands:\n" +
+				new String(Files.readAllBytes(fileSystem.getPath(
+					shellFile.getAbsolutePath()))));
+
+			String errorText = null;
 			Integer exitCode = null;
 			Process process = null;
+
 			long start = System.currentTimeMillis();
-			String output = null;
 
 			while (exitCode == null) {
 				try {
-					process = Runtime.getRuntime().exec("./" + shellFile.getName());
+					process = Runtime.getRuntime().exec(
+						"./" + shellFile.getName());
 				}
 				catch (IOException ioe) {
 					if (ioe.getMessage().contains("Text file busy") &&
@@ -90,15 +117,17 @@ public class FilePropagator {
 
 						continue;
 					}
+
 					throw ioe;
 				}
 
-				output = _getOutput(process.getErrorStream());
+				errorText = _readInputStream(process.getErrorStream());
 
-				if (output.contains("No buffer space available") ||
-					output.contains("Temporary failure in name resolution")) {
+				if (errorText.contains("No buffer space available") ||
+					errorText.contains(
+						"Temporary failure in name resolution")) {
 
-					System.out.println("Out of buffer space OR Temporary DNS failure - Retry in 1 minute.");
+					System.out.println(errorText + "\nRetry in 1 minute.");
 
 					JenkinsResultsParserUtil.sleep(1000 * 60);
 
@@ -115,7 +144,11 @@ public class FilePropagator {
 				process.destroy();
 			}
 
-			System.out.println(output);
+			errorText = errorText.trim();
+
+			if (!errorText.isEmpty()) {
+				System.out.println(errorText);
+			}
 
 			return exitCode;
 		}
@@ -130,7 +163,7 @@ public class FilePropagator {
 		String directoryPath = filePath.substring(0, (filePath.lastIndexOf("/") + 1));
 		return "mkdir -pv " + directoryPath;
 	}
-
+	
 	public FilePropagator(FilePropagatorTask[] filePropagatorTasks, List<String> targetSlaves) {
 		
 		_filePropagatorTasks = new ArrayList<>(filePropagatorTasks.length);
@@ -188,7 +221,7 @@ public class FilePropagator {
 		return _totalTaskDuration / _completedCount;
 	}
 	
-	private static String _getOutput(InputStream inputStream) {
+	private static String _readInputStream(InputStream inputStream) {
 		try {
 			byte[] inputBytes = new byte[1024];
 			int size = inputStream.read(inputBytes);

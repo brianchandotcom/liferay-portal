@@ -1,0 +1,289 @@
+<definition>
+	<command name="_addUser">
+		<if>
+			<not>
+				<isset var="userEmailAddress" />
+			</not>
+			<then>
+				<fail message="Please set 'userEmailAddress'." />
+			</then>
+		</if>
+
+		<if>
+			<isset var="userFirstName" />
+			<then>
+				<execute class="java.net.URLEncoder" method="encode">
+					<arg value="${userFirstName}" />
+					<arg value="UTF-8" />
+					<return name="userFirstNameEncoded" />
+				</execute>
+			</then>
+			<else>
+				<fail message="Please set 'userFirstName'." />
+			</else>
+		</if>
+
+		<if>
+			<isset var="userLastName" />
+			<then>
+				<execute class="java.net.URLEncoder" method="encode">
+					<arg value="${userLastName}" />
+					<arg value="UTF-8" />
+					<return name="userLastNameEncoded" />
+				</execute>
+			</then>
+			<else>
+				<fail message="Please set 'userLastName'." />
+			</else>
+		</if>
+
+		<if>
+			<not>
+				<isset var="userScreenName" />
+			</not>
+			<then>
+				<fail message="Please set 'userScreenName'." />
+			</then>
+		</if>
+
+		<execute macro="JSONCompany#getCompanyId">
+			<return from="companyId" name="companyId" />
+		</execute>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return from="portalURL" name="portalURL" />
+		</execute>
+
+		<var name="curl">
+			${portalURL}/api/jsonws/user/add-user \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d autoPassword=true \
+				-d password1=test \
+				-d password2=test \
+				-d autoScreenName=false \
+				-d screenName=${userScreenName} \
+				-d emailAddress=${userEmailAddress} \
+				-d facebookId=0 \
+				-d openId=0 \
+				-d locale= \
+				-d firstName=${userFirstNameEncoded} \
+				-d middleName= \
+				-d lastName=${userLastNameEncoded} \
+				-d prefixId=0 \
+				-d suffixId=0 \
+				-d male=true \
+				-d birthdayMonth=4 \
+				-d birthdayDay=31 \
+				-d birthdayYear=1986 \
+				-d jobTitle= \
+				-d groupIds= \
+				-d organizationIds= \
+				-d roleIds= \
+				-d userGroupIds= \
+				-d sendEmail=true
+		</var>
+
+		<echo>## Adding a 'User' with the following info using JSONWS:</echo>
+
+		<echo>## * Company ID: ${companyId}</echo>
+
+		<echo>## * Email Address: ${userEmailAddress}</echo>
+
+		<echo>## * First Name: ${userFirstName}</echo>
+
+		<echo>## * Last Name: ${userLastName}</echo>
+
+		<echo>## * Screen Name: ${userScreenName}</echo>
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+			<arg value="${curl}" />
+			<arg value="$['userId']" />
+			<return name="userId" />
+		</execute>
+	</command>
+
+	<command name="_deleteUser">
+		<if>
+			<not>
+				<isset var="userId" />
+			</not>
+			<then>
+				<fail message="Please set 'userId'." />
+			</then>
+		</if>
+
+		<execute macro="JSONUser#getUserEmailAddress">
+			<var name="userId" value="${userId}" />
+			<return from="userEmailAddress" name="userEmailAddress" />
+		</execute>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return from="portalURL" name="portalURL" />
+		</execute>
+
+		<var name="curl">
+			${portalURL}/api/jsonws/user/delete-user \
+				-u test@liferay.com:test \
+				-d userId=${userId}
+		</var>
+
+		<echo>## Deleting a 'User' with the following info using JSONWS:</echo>
+
+		<echo>## * Email Address: ${userEmailAddress}</echo>
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+			<arg value="${curl}" />
+			<arg value="" />
+			<return name="temporary" />
+		</execute>
+	</command>
+
+	<command name="addUser">
+		<if>
+			<not>
+				<isset var="userEmailAddress" />
+			</not>
+			<then>
+				<fail message="Please set 'userEmailAddress'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="userFirstName" />
+			</not>
+			<then>
+				<fail message="Please set 'userFirstName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="userLastName" />
+			</not>
+			<then>
+				<fail message="Please set 'userLastName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="userScreenName" />
+			</not>
+			<then>
+				<fail message="Please set 'userScreenName'." />
+			</then>
+		</if>
+
+		<execute macro="JSONUser#_addUser">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+	</command>
+
+	<command name="deleteUserByEmailAddress">
+		<if>
+			<not>
+				<isset var="userEmailAddress" />
+			</not>
+			<then>
+				<fail message="Please set 'userEmailAddress'." />
+			</then>
+		</if>
+
+		<execute macro="JSONUser#getUserIdByEmailAddress">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<return from="userId" name="userId" />
+		</execute>
+
+		<execute macro="JSONUser#_deleteUser">
+			<var name="userId" value="${userId}" />
+		</execute>
+	</command>
+
+	<command name="deleteUserByUserId">
+		<if>
+			<not>
+				<isset var="userId" />
+			</not>
+			<then>
+				<fail message="Please set 'userId'." />
+			</then>
+		</if>
+
+		<execute macro="JSONUser#_deleteUser">
+			<var name="userId" value="${userId}" />
+		</execute>
+	</command>
+
+	<command name="getUserEmailAddress" returns="userEmailAddress">
+		<if>
+			<not>
+				<isset var="userId" />
+			</not>
+			<then>
+				<fail message="Please set 'userId'." />
+			</then>
+		</if>
+
+		<execute macro="JSONCompany#getCompanyId">
+			<return from="companyId" name="companyId" />
+		</execute>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return from="portalURL" name="portalURL" />
+		</execute>
+
+		<var name="curl">
+			${portalURL}/api/jsonws/user/get-user-by-id \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d userId=${userId}
+		</var>
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+			<arg value="${curl}" />
+			<arg value="$['emailAddress']" />
+			<return name="userEmailAddress" />
+		</execute>
+
+		<return name="userEmailAddress" value="${userEmailAddress}" />
+	</command>
+
+	<command name="getUserIdByEmailAddress" returns="userId">
+		<if>
+			<not>
+				<isset var="userEmailAddress" />
+			</not>
+			<then>
+				<fail message="Please set 'userEmailAddress'." />
+			</then>
+		</if>
+
+		<execute macro="JSONCompany#getCompanyId">
+			<return from="companyId" name="companyId" />
+		</execute>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return from="portalURL" name="portalURL" />
+		</execute>
+
+		<var name="curl">
+			${portalURL}/api/jsonws/user/get-user-by-email-address \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d emailAddress=${userEmailAddress}
+		</var>
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+			<arg value="${curl}" />
+			<arg value="$['userId']" />
+			<return name="userId" />
+		</execute>
+
+		<return name="userId" value="${userId}" />
+	</command>
+</definition>

@@ -1,0 +1,91 @@
+<definition>
+	<command name="_addLayout">
+		<if>
+			<not>
+				<isset var="groupId" />
+			</not>
+			<then>
+				<fail message="Please set 'groupId'." />
+			</then>
+		</if>
+
+		<if>
+			<isset var="layoutName" />
+			<then>
+				<execute class="java.net.URLEncoder" method="encode">
+					<arg value="${layoutName}" />
+					<arg value="UTF-8" />
+					<return name="layoutNameEncoded" />
+				</execute>
+			</then>
+			<else>
+				<fail message="Please set 'layoutName'." />
+			</else>
+		</if>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return from="portalURL" name="portalURL" />
+		</execute>
+
+		<var name="curl">
+			${portalURL}/api/jsonws/layout/add-layout \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d privateLayout=false \
+				-d parentLayoutId=0 \
+				-d name=${layoutNameEncoded} \
+				-d title= \
+				-d description= \
+				-d type=portlet \
+				-d hidden=false \
+				-d friendlyURL=
+		</var>
+
+		<execute macro="JSONGroup#getGroupName">
+			<var name="groupId" value="${groupId}" />
+			<return from="groupName" name="groupName" />
+		</execute>
+
+		<echo>## Adding a 'Layout' with the following info using JSONWS:</echo>
+
+		<echo>## * Group Name: ${groupName}</echo>
+
+		<echo>## * Layout Name: ${layoutName}</echo>
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+			<arg value="${curl}" />
+			<arg value="$['layoutId']" />
+			<return name="layoutId" />
+		</execute>
+	</command>
+
+	<command name="addLayoutByGroupName">
+		<if>
+			<not>
+				<isset var="groupName" />
+			</not>
+			<then>
+				<fail message="Please set 'groupName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="layoutName" />
+			</not>
+			<then>
+				<fail message="Please set 'layoutName'." />
+			</then>
+		</if>
+
+		<execute macro="JSONGroup#getGroupIdByName">
+			<var name="groupName" value="${groupName}" />
+			<return from="groupId" name="groupId" />
+		</execute>
+
+		<execute macro="JSONLayout#_addLayout">
+			<var name="groupId" value="${groupId}" />
+			<var name="layoutName" value="${layoutName}" />
+		</execute>
+	</command>
+</definition>

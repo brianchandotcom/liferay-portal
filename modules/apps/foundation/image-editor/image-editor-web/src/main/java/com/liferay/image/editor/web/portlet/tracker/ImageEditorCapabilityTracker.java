@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.image.editor.web;
+package com.liferay.image.editor.web.portlet.tracker;
 
-import com.liferay.image.editor.api.ImageEditorFeature;
+import com.liferay.image.editor.capability.ImageEditorCapability;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -46,30 +46,63 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bruno Basto
  */
-@Component(immediate = true, service = ImageEditorFeatureTracker.class)
-public class ImageEditorFeatureTracker {
+@Component(immediate = true, service = ImageEditorCapabilityTracker.class)
+public class ImageEditorCapabilityTracker {
 
-	public ImageEditorFeature getFeature(String featureName) {
-		return _featuresServicesMap.getService(featureName);
+	public void collectCapabilitiesRequirements(Set<String> requiredModules) {
+		for (String key : _serviceTrackerMap.keySet()) {
+			List<ImageEditorCapability> imageEditorCapabilities =
+				_serviceTrackerMap.getService(key);
+
+			for (ImageEditorCapability imageEditorCapability :
+					imageEditorCapabilities) {
+
+				Bundle capabilityBundle = FrameworkUtil.getBundle(
+					imageEditorCapability.getClass());
+
+				try {
+					String moduleName = _getModuleName(capabilityBundle);
+
+					List<URL> resourceURLs = _getResourceURLs(capabilityBundle);
+
+					for (URL resourceURL : resourceURLs) {
+						String fullFileName = resourceURL.getFile();
+
+						String fileName = _getJavaScriptFileName(fullFileName);
+
+						requiredModules.add(
+							moduleName.concat(StringPool.SLASH).concat(
+								fileName));
+					}
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
-	public Map<String, Map<String, Object>> getFeaturesProperties() {
-		return _featuresPropertiesMap;
+	public List<ImageEditorCapability> getCapabilities(String capabilityType) {
+		return _serviceTrackerMap.getService(capabilityType);
+	}
+
+	public Map<String, Object> getCapabilityProperties(String capabilityName) {
+		return _capabilityPropertiesMap.get(capabilityName);
 	}
 
 	@Activate
 	protected void activate(final BundleContext bundleContext) {
-		String filter = "(com.liferay.image.editor.tool.type=tool)";
+		String filter = "(com.liferay.image.editor.capability.type=*)";
 
-		_featuresPropertiesMap = new HashMap<>();
+		_capabilityPropertiesMap = new HashMap<>();
 
-		_featuresServicesMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ImageEditorFeature.class, filter,
-			new ServiceReferenceMapper<String, ImageEditorFeature>() {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, ImageEditorCapability.class, filter,
+			new ServiceReferenceMapper<String, ImageEditorCapability>() {
 
 				@Override
 				public void map(
-					ServiceReference<ImageEditorFeature> serviceReference,
+					ServiceReference<ImageEditorCapability> serviceReference,
 					Emitter<String> emitter) {
 
 					String[] propertyKeys = serviceReference.getPropertyKeys();
@@ -82,42 +115,20 @@ public class ImageEditorFeatureTracker {
 							serviceReference.getProperty(propertyKey));
 					}
 
-					String featureName = GetterUtil.getString(
+					String capabilityName = GetterUtil.getString(
 						serviceReference.getProperty(
-							"com.liferay.image.editor.tool.name"));
+							"com.liferay.image.editor.capability.name"));
 
-					_featuresPropertiesMap.put(featureName, properties);
+					_capabilityPropertiesMap.put(capabilityName, properties);
 
-					emitter.emit(featureName);
+					String capabilityType = GetterUtil.getString(
+						serviceReference.getProperty(
+							"com.liferay.image.editor.capability.type"));
+
+					emitter.emit(capabilityType);
 				}
 
 			});
-	}
-
-	protected void collectFeaturesRequirements(Set<String> requiredModules) {
-		for (String key : _featuresServicesMap.keySet()) {
-			ImageEditorFeature feature = _featuresServicesMap.getService(key);
-
-			Bundle toolBundle = FrameworkUtil.getBundle(feature.getClass());
-
-			try {
-				String moduleName = _getModuleName(toolBundle);
-
-				List<URL> resourceURLs = _getResourceURLs(toolBundle);
-
-				for (URL resourceURL : resourceURLs) {
-					String fullFileName = resourceURL.getFile();
-
-					String fileName = _getJavaScriptFileName(fullFileName);
-
-					requiredModules.add(
-						moduleName.concat(StringPool.SLASH).concat(fileName));
-				}
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
 	private String _getJavaScriptFileName(String fileName) {
@@ -161,7 +172,8 @@ public class ImageEditorFeatureTracker {
 
 	private static final String _ES_JS_FILE_EXTENSION = "*.es.js";
 
-	private Map<String, Map<String, Object>> _featuresPropertiesMap;
-	private ServiceTrackerMap<String, ImageEditorFeature> _featuresServicesMap;
+	private Map<String, Map<String, Object>> _capabilityPropertiesMap;
+	private ServiceTrackerMap<String, List<ImageEditorCapability>>
+		_serviceTrackerMap;
 
 }

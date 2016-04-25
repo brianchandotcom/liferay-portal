@@ -56,4 +56,19 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class ImageEditorPortlet extends SoyPortlet {
+
+	@Override
+	protected Set<String> getJavaScriptRequiredModules(String path) {
+		Set<String> requiredModules = new HashSet<String>();
+
+		requiredModules.addAll(super.getJavaScriptRequiredModules(path));
+
+		_featureTracker.collectFeaturesRequirements(requiredModules);
+
+		return requiredModules;
+	}
+
+	@Reference
+	private ImageEditorFeatureTracker _featureTracker;
+
 }

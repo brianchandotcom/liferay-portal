@@ -167,7 +167,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			checkLanguageProperties(fileName);
 		}
 		else if (fileName.endsWith("portlet.properties")) {
-			newContent = formatPortletProperties(fileName, content);
+			newContent = formatPortletProperties(content);
 		}
 		else if (fileName.endsWith("source-formatter.properties")) {
 			formatSourceFormatterProperties(fileName, content);
@@ -292,65 +292,11 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected String formatPortletProperties(String fileName, String content)
-		throws Exception {
-
+	protected String formatPortletProperties(String content) throws Exception {
 		if (!content.contains("include-and-override=portlet-ext.properties")) {
 			content =
 				"include-and-override=portlet-ext.properties" + "\n\n" +
 					content;
-		}
-
-		if (!portalSource) {
-			return content;
-		}
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
-
-			int lineCount = 0;
-
-			String line = null;
-
-			String previousProperty = StringPool.BLANK;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				lineCount++;
-
-				if (lineCount == 1) {
-					continue;
-				}
-
-				if (line.startsWith(StringPool.POUND) ||
-					line.startsWith(StringPool.SPACE) ||
-					line.startsWith(StringPool.TAB)) {
-
-					continue;
-				}
-
-				int pos = line.indexOf(CharPool.EQUAL);
-
-				if (pos == -1) {
-					continue;
-				}
-
-				String property = StringUtil.trim(line.substring(0, pos));
-
-				pos = property.indexOf(CharPool.OPEN_BRACKET);
-
-				if (pos != -1) {
-					property = property.substring(0, pos);
-				}
-
-				if (Validator.isNotNull(previousProperty) &&
-					(previousProperty.compareToIgnoreCase(property) > 0)) {
-
-					processErrorMessage(
-						fileName, "sort: " + fileName + " " + lineCount);
-				}
-
-				previousProperty = property;
-			}
 		}
 
 		return content;

@@ -1,28 +1,28 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean id="com.liferay.shopping.service.ShoppingCartLocalService" class="com.liferay.shopping.service.impl.ShoppingCartLocalServiceImpl" />
-	<bean id="com.liferay.shopping.service.persistence.ShoppingCartPersistence" class="com.liferay.shopping.service.persistence.impl.ShoppingCartPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.shopping.service.ShoppingCategoryLocalService" class="com.liferay.shopping.service.impl.ShoppingCategoryLocalServiceImpl" />
-	<bean id="com.liferay.shopping.service.ShoppingCategoryService" class="com.liferay.shopping.service.impl.ShoppingCategoryServiceImpl" />
-	<bean id="com.liferay.shopping.service.persistence.ShoppingCategoryPersistence" class="com.liferay.shopping.service.persistence.impl.ShoppingCategoryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.shopping.service.persistence.ShoppingCategoryFinder" class="com.liferay.shopping.service.persistence.impl.ShoppingCategoryFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.shopping.service.ShoppingCouponLocalService" class="com.liferay.shopping.service.impl.ShoppingCouponLocalServiceImpl" />
-	<bean id="com.liferay.shopping.service.ShoppingCouponService" class="com.liferay.shopping.service.impl.ShoppingCouponServiceImpl" />
-	<bean id="com.liferay.shopping.service.persistence.ShoppingCouponPersistence" class="com.liferay.shopping.service.persistence.impl.ShoppingCouponPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.shopping.service.persistence.ShoppingCouponFinder" class="com.liferay.shopping.service.persistence.impl.ShoppingCouponFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.shopping.service.ShoppingItemLocalService" class="com.liferay.shopping.service.impl.ShoppingItemLocalServiceImpl" />
-	<bean id="com.liferay.shopping.service.ShoppingItemService" class="com.liferay.shopping.service.impl.ShoppingItemServiceImpl" />
-	<bean id="com.liferay.shopping.service.persistence.ShoppingItemPersistence" class="com.liferay.shopping.service.persistence.impl.ShoppingItemPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.shopping.service.persistence.ShoppingItemFinder" class="com.liferay.shopping.service.persistence.impl.ShoppingItemFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.shopping.service.ShoppingItemFieldLocalService" class="com.liferay.shopping.service.impl.ShoppingItemFieldLocalServiceImpl" />
-	<bean id="com.liferay.shopping.service.persistence.ShoppingItemFieldPersistence" class="com.liferay.shopping.service.persistence.impl.ShoppingItemFieldPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.shopping.service.ShoppingItemPriceLocalService" class="com.liferay.shopping.service.impl.ShoppingItemPriceLocalServiceImpl" />
-	<bean id="com.liferay.shopping.service.persistence.ShoppingItemPricePersistence" class="com.liferay.shopping.service.persistence.impl.ShoppingItemPricePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.shopping.service.ShoppingOrderLocalService" class="com.liferay.shopping.service.impl.ShoppingOrderLocalServiceImpl" />
-	<bean id="com.liferay.shopping.service.ShoppingOrderService" class="com.liferay.shopping.service.impl.ShoppingOrderServiceImpl" />
-	<bean id="com.liferay.shopping.service.persistence.ShoppingOrderPersistence" class="com.liferay.shopping.service.persistence.impl.ShoppingOrderPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.shopping.service.persistence.ShoppingOrderFinder" class="com.liferay.shopping.service.persistence.impl.ShoppingOrderFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.shopping.service.ShoppingOrderItemLocalService" class="com.liferay.shopping.service.impl.ShoppingOrderItemLocalServiceImpl" />
-	<bean id="com.liferay.shopping.service.persistence.ShoppingOrderItemPersistence" class="com.liferay.shopping.service.persistence.impl.ShoppingOrderItemPersistenceImpl" parent="basePersistence" />
+	<bean class="com.liferay.shopping.service.impl.ShoppingCartLocalServiceImpl" id="com.liferay.shopping.service.ShoppingCartLocalService" />
+	<bean class="com.liferay.shopping.service.persistence.impl.ShoppingCartPersistenceImpl" id="com.liferay.shopping.service.persistence.ShoppingCartPersistence" parent="basePersistence" />
+	<bean class="com.liferay.shopping.service.impl.ShoppingCategoryLocalServiceImpl" id="com.liferay.shopping.service.ShoppingCategoryLocalService" />
+	<bean class="com.liferay.shopping.service.impl.ShoppingCategoryServiceImpl" id="com.liferay.shopping.service.ShoppingCategoryService" />
+	<bean class="com.liferay.shopping.service.persistence.impl.ShoppingCategoryPersistenceImpl" id="com.liferay.shopping.service.persistence.ShoppingCategoryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.shopping.service.persistence.impl.ShoppingCategoryFinderImpl" id="com.liferay.shopping.service.persistence.ShoppingCategoryFinder" parent="basePersistence" />
+	<bean class="com.liferay.shopping.service.impl.ShoppingCouponLocalServiceImpl" id="com.liferay.shopping.service.ShoppingCouponLocalService" />
+	<bean class="com.liferay.shopping.service.impl.ShoppingCouponServiceImpl" id="com.liferay.shopping.service.ShoppingCouponService" />
+	<bean class="com.liferay.shopping.service.persistence.impl.ShoppingCouponPersistenceImpl" id="com.liferay.shopping.service.persistence.ShoppingCouponPersistence" parent="basePersistence" />
+	<bean class="com.liferay.shopping.service.persistence.impl.ShoppingCouponFinderImpl" id="com.liferay.shopping.service.persistence.ShoppingCouponFinder" parent="basePersistence" />
+	<bean class="com.liferay.shopping.service.impl.ShoppingItemLocalServiceImpl" id="com.liferay.shopping.service.ShoppingItemLocalService" />
+	<bean class="com.liferay.shopping.service.impl.ShoppingItemServiceImpl" id="com.liferay.shopping.service.ShoppingItemService" />
+	<bean class="com.liferay.shopping.service.persistence.impl.ShoppingItemPersistenceImpl" id="com.liferay.shopping.service.persistence.ShoppingItemPersistence" parent="basePersistence" />
+	<bean class="com.liferay.shopping.service.persistence.impl.ShoppingItemFinderImpl" id="com.liferay.shopping.service.persistence.ShoppingItemFinder" parent="basePersistence" />
+	<bean class="com.liferay.shopping.service.impl.ShoppingItemFieldLocalServiceImpl" id="com.liferay.shopping.service.ShoppingItemFieldLocalService" />
+	<bean class="com.liferay.shopping.service.persistence.impl.ShoppingItemFieldPersistenceImpl" id="com.liferay.shopping.service.persistence.ShoppingItemFieldPersistence" parent="basePersistence" />
+	<bean class="com.liferay.shopping.service.impl.ShoppingItemPriceLocalServiceImpl" id="com.liferay.shopping.service.ShoppingItemPriceLocalService" />
+	<bean class="com.liferay.shopping.service.persistence.impl.ShoppingItemPricePersistenceImpl" id="com.liferay.shopping.service.persistence.ShoppingItemPricePersistence" parent="basePersistence" />
+	<bean class="com.liferay.shopping.service.impl.ShoppingOrderLocalServiceImpl" id="com.liferay.shopping.service.ShoppingOrderLocalService" />
+	<bean class="com.liferay.shopping.service.impl.ShoppingOrderServiceImpl" id="com.liferay.shopping.service.ShoppingOrderService" />
+	<bean class="com.liferay.shopping.service.persistence.impl.ShoppingOrderPersistenceImpl" id="com.liferay.shopping.service.persistence.ShoppingOrderPersistence" parent="basePersistence" />
+	<bean class="com.liferay.shopping.service.persistence.impl.ShoppingOrderFinderImpl" id="com.liferay.shopping.service.persistence.ShoppingOrderFinder" parent="basePersistence" />
+	<bean class="com.liferay.shopping.service.impl.ShoppingOrderItemLocalServiceImpl" id="com.liferay.shopping.service.ShoppingOrderItemLocalService" />
+	<bean class="com.liferay.shopping.service.persistence.impl.ShoppingOrderItemPersistenceImpl" id="com.liferay.shopping.service.persistence.ShoppingOrderItemPersistence" parent="basePersistence" />
 </beans>

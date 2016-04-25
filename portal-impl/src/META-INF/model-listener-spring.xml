@@ -7,14 +7,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean id="com.liferay.portal.kernel.model.ResourceBlock" class="com.liferay.portal.security.permission.ResourceBlockModelListener" />
-	<bean id="com.liferay.portal.kernel.model.ResourcePermission" class="com.liferay.portal.security.permission.ResourcePermissionModelListener" />
-	<bean id="com.liferay.portal.model.LayoutModelListener" class="com.liferay.portal.model.LayoutModelListener" />
-	<bean id="com.liferay.portal.model.LayoutSetModelListener" class="com.liferay.portal.model.LayoutSetModelListener" />
-	<bean id="com.liferay.portal.model.PortletPreferencesModelListener" class="com.liferay.portal.model.PortletPreferencesModelListener" />
-	<bean id="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutModelListener" class="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutModelListener" />
-	<bean id="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutSetModelListener" class="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutSetModelListener" />
-	<bean id="com.liferay.portlet.asset.model.AssetEntryModelListener" class="com.liferay.portlet.asset.model.AssetEntryModelListener" />
-	<bean id="com.liferay.portlet.blogs.model.GroupModelListener" class="com.liferay.portlet.blogs.model.GroupModelListener" />
-	<bean id="com.liferay.portlet.messageboards.model.LayoutModelListener" class="com.liferay.portlet.messageboards.model.LayoutModelListener" />
+	<bean class="com.liferay.portal.security.permission.ResourceBlockModelListener" id="com.liferay.portal.kernel.model.ResourceBlock" />
+	<bean class="com.liferay.portal.security.permission.ResourcePermissionModelListener" id="com.liferay.portal.kernel.model.ResourcePermission" />
+	<bean class="com.liferay.portal.model.LayoutModelListener" id="com.liferay.portal.model.LayoutModelListener" />
+	<bean class="com.liferay.portal.model.LayoutSetModelListener" id="com.liferay.portal.model.LayoutSetModelListener" />
+	<bean class="com.liferay.portal.model.PortletPreferencesModelListener" id="com.liferay.portal.model.PortletPreferencesModelListener" />
+	<bean class="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutModelListener" id="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutModelListener" />
+	<bean class="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutSetModelListener" id="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutSetModelListener" />
+	<bean class="com.liferay.portlet.asset.model.AssetEntryModelListener" id="com.liferay.portlet.asset.model.AssetEntryModelListener" />
+	<bean class="com.liferay.portlet.blogs.model.GroupModelListener" id="com.liferay.portlet.blogs.model.GroupModelListener" />
+	<bean class="com.liferay.portlet.messageboards.model.LayoutModelListener" id="com.liferay.portlet.messageboards.model.LayoutModelListener" />
 </beans>

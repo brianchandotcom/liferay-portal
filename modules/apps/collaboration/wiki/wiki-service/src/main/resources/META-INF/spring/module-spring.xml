@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean id="com.liferay.wiki.service.WikiNodeLocalService" class="com.liferay.wiki.service.impl.WikiNodeLocalServiceImpl" />
-	<bean id="com.liferay.wiki.service.WikiNodeService" class="com.liferay.wiki.service.impl.WikiNodeServiceImpl" />
-	<bean id="com.liferay.wiki.service.persistence.WikiNodePersistence" class="com.liferay.wiki.service.persistence.impl.WikiNodePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.wiki.service.WikiPageLocalService" class="com.liferay.wiki.service.impl.WikiPageLocalServiceImpl" />
-	<bean id="com.liferay.wiki.service.WikiPageService" class="com.liferay.wiki.service.impl.WikiPageServiceImpl" />
-	<bean id="com.liferay.wiki.service.persistence.WikiPagePersistence" class="com.liferay.wiki.service.persistence.impl.WikiPagePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.wiki.service.persistence.WikiPageFinder" class="com.liferay.wiki.service.persistence.impl.WikiPageFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.wiki.service.WikiPageResourceLocalService" class="com.liferay.wiki.service.impl.WikiPageResourceLocalServiceImpl" />
-	<bean id="com.liferay.wiki.service.persistence.WikiPageResourcePersistence" class="com.liferay.wiki.service.persistence.impl.WikiPageResourcePersistenceImpl" parent="basePersistence" />
+	<bean class="com.liferay.wiki.service.impl.WikiNodeLocalServiceImpl" id="com.liferay.wiki.service.WikiNodeLocalService" />
+	<bean class="com.liferay.wiki.service.impl.WikiNodeServiceImpl" id="com.liferay.wiki.service.WikiNodeService" />
+	<bean class="com.liferay.wiki.service.persistence.impl.WikiNodePersistenceImpl" id="com.liferay.wiki.service.persistence.WikiNodePersistence" parent="basePersistence" />
+	<bean class="com.liferay.wiki.service.impl.WikiPageLocalServiceImpl" id="com.liferay.wiki.service.WikiPageLocalService" />
+	<bean class="com.liferay.wiki.service.impl.WikiPageServiceImpl" id="com.liferay.wiki.service.WikiPageService" />
+	<bean class="com.liferay.wiki.service.persistence.impl.WikiPagePersistenceImpl" id="com.liferay.wiki.service.persistence.WikiPagePersistence" parent="basePersistence" />
+	<bean class="com.liferay.wiki.service.persistence.impl.WikiPageFinderImpl" id="com.liferay.wiki.service.persistence.WikiPageFinder" parent="basePersistence" />
+	<bean class="com.liferay.wiki.service.impl.WikiPageResourceLocalServiceImpl" id="com.liferay.wiki.service.WikiPageResourceLocalService" />
+	<bean class="com.liferay.wiki.service.persistence.impl.WikiPageResourcePersistenceImpl" id="com.liferay.wiki.service.persistence.WikiPageResourcePersistence" parent="basePersistence" />
 </beans>

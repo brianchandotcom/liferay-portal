@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-jonas" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project basedir="." default="test" name="portal-test-jonas" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
 	<target name="run-jonas">
@@ -38,7 +38,7 @@
 
 		<antcall target="prepare-virtual-host-name-properties" />
 
-		<antcall target="run-jonas" inheritAll="false">
+		<antcall inheritAll="false" target="run-jonas">
 			<param name="test.class" value="${test.class}" />
 		</antcall>
 	</target>

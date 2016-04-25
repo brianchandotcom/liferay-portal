@@ -2,13 +2,13 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+	<appender class="org.apache.log4j.ConsoleAppender" name="CONSOLE">
 		<layout class="org.apache.log4j.EnhancedPatternLayout">
 			<param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%t][%c{1}:%L] %m%n" />
 		</layout>
 	</appender>
 
-	<appender name="TEXT_FILE" class="org.apache.log4j.rolling.RollingFileAppender">
+	<appender class="org.apache.log4j.rolling.RollingFileAppender" name="TEXT_FILE">
 		<rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
 			<param name="FileNamePattern" value="@liferay.home@/logs/liferay@spi.id@.%d{yyyy-MM-dd}.log" />
 		</rollingPolicy>
@@ -18,7 +18,7 @@
 		</layout>
 	</appender>
 
-	<appender name="XML_FILE" class="org.apache.log4j.rolling.RollingFileAppender">
+	<appender class="org.apache.log4j.rolling.RollingFileAppender" name="XML_FILE">
 		<rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
 			<param name="FileNamePattern" value="@liferay.home@/logs/liferay@spi.id@.%d{yyyy-MM-dd}.xml" />
 		</rollingPolicy>

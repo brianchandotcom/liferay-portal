@@ -30,7 +30,7 @@
 			<forward name="portlet.shopping.error" path="/portlet/shopping/error.jsp" />
 		</action>
 
-		<action path="/shopping/edit_item_quantities" forward="portlet.shopping.edit_item_quantities" />
+		<action forward="portlet.shopping.edit_item_quantities" path="/shopping/edit_item_quantities" />
 
 		<action path="/shopping/edit_order" type="com.liferay.shopping.web.portlet.action.EditOrderAction">
 			<forward name="portlet.shopping.edit_order" path="/portlet/shopping/edit_order.jsp" />

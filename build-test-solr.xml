@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-solr" basedir="." xmlns:antelope="antlib:ise.antelope.tasks">
+<project basedir="." name="portal-test-solr" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
 	<macrodef name="prepare-solr">
@@ -48,7 +48,7 @@ writeURL=http://localhost:8983/solr/liferay</echo>
 	</target>
 
 	<target name="delete-elasticseach-osgi-bundle">
-		<delete file="${liferay.home}/osgi/portal/com.liferay.portal.search.elasticsearch.jar" failonerror="false" />
+		<delete failonerror="false" file="${liferay.home}/osgi/portal/com.liferay.portal.search.elasticsearch.jar" />
 	</target>
 
 	<target name="start-solr">
@@ -80,7 +80,7 @@ writeURL=http://localhost:8983/solr/liferay</echo>
 					<http url="http://localhost:8983/solr" />
 				</waitfor>
 
-				<fail message="Solr server failed to initialize." if="solr.server.not.started" />
+				<fail if="solr.server.not.started" message="Solr server failed to initialize." />
 
 				<exec executable="/bin/bash" os="${os.unix}">
 					<arg value="-c" />
@@ -97,7 +97,7 @@ writeURL=http://localhost:8983/solr/liferay</echo>
 					<http url="http://localhost:8983/solr" />
 				</waitfor>
 
-				<fail message="Solr server failed to initialize." if="solr.server.not.started" />
+				<fail if="solr.server.not.started" message="Solr server failed to initialize." />
 
 				<exec executable="cmd" >
 					<arg value="/c" />

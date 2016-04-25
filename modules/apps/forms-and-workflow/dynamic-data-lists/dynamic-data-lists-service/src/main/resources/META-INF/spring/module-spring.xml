@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean id="com.liferay.dynamic.data.lists.service.DDLRecordLocalService" class="com.liferay.dynamic.data.lists.service.impl.DDLRecordLocalServiceImpl" />
-	<bean id="com.liferay.dynamic.data.lists.service.DDLRecordService" class="com.liferay.dynamic.data.lists.service.impl.DDLRecordServiceImpl" />
-	<bean id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence" class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder" class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService" class="com.liferay.dynamic.data.lists.service.impl.DDLRecordSetLocalServiceImpl" />
-	<bean id="com.liferay.dynamic.data.lists.service.DDLRecordSetService" class="com.liferay.dynamic.data.lists.service.impl.DDLRecordSetServiceImpl" />
-	<bean id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetPersistence" class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordSetPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetFinder" class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordSetFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService" class="com.liferay.dynamic.data.lists.service.impl.DDLRecordVersionLocalServiceImpl" />
-	<bean id="com.liferay.dynamic.data.lists.service.DDLRecordVersionService" class="com.liferay.dynamic.data.lists.service.impl.DDLRecordVersionServiceImpl" />
-	<bean id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionPersistence" class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordVersionPersistenceImpl" parent="basePersistence" />
+	<bean class="com.liferay.dynamic.data.lists.service.impl.DDLRecordLocalServiceImpl" id="com.liferay.dynamic.data.lists.service.DDLRecordLocalService" />
+	<bean class="com.liferay.dynamic.data.lists.service.impl.DDLRecordServiceImpl" id="com.liferay.dynamic.data.lists.service.DDLRecordService" />
+	<bean class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordPersistenceImpl" id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence" parent="basePersistence" />
+	<bean class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordFinderImpl" id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder" parent="basePersistence" />
+	<bean class="com.liferay.dynamic.data.lists.service.impl.DDLRecordSetLocalServiceImpl" id="com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService" />
+	<bean class="com.liferay.dynamic.data.lists.service.impl.DDLRecordSetServiceImpl" id="com.liferay.dynamic.data.lists.service.DDLRecordSetService" />
+	<bean class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordSetPersistenceImpl" id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetPersistence" parent="basePersistence" />
+	<bean class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordSetFinderImpl" id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetFinder" parent="basePersistence" />
+	<bean class="com.liferay.dynamic.data.lists.service.impl.DDLRecordVersionLocalServiceImpl" id="com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService" />
+	<bean class="com.liferay.dynamic.data.lists.service.impl.DDLRecordVersionServiceImpl" id="com.liferay.dynamic.data.lists.service.DDLRecordVersionService" />
+	<bean class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordVersionPersistenceImpl" id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionPersistence" parent="basePersistence" />
 </beans>

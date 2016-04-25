@@ -26,45 +26,45 @@
 		<property name="methodInterceptor" ref="serviceAdvice" />
 	</bean>
 	<bean class="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" />
-	<bean id="basePersistence" abstract="true">
+	<bean abstract="true" id="basePersistence">
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="sessionFactory" ref="liferaySessionFactory" />
 	</bean>
-	<bean id="serviceAdvice" class="com.liferay.portal.spring.aop.SkipAdvice">
+	<bean class="com.liferay.portal.spring.aop.SkipAdvice" id="serviceAdvice">
 		<property name="nextMethodInterceptor" ref="accessControlAdvice" />
 	</bean>
-	<bean id="accessControlAdvice" class="com.liferay.portal.security.access.control.AccessControlAdvice">
+	<bean class="com.liferay.portal.security.access.control.AccessControlAdvice" id="accessControlAdvice">
 		<property name="accessControlAdvisor">
 			<bean class="com.liferay.portal.security.access.control.AccessControlAdvisorImpl" />
 		</property>
 		<property name="nextMethodInterceptor" ref="portalResiliencyAdvice" />
 	</bean>
-	<bean id="portalResiliencyAdvice" class="com.liferay.portal.resiliency.service.PortalResiliencyAdvice">
+	<bean class="com.liferay.portal.resiliency.service.PortalResiliencyAdvice" id="portalResiliencyAdvice">
 		<property name="nextMethodInterceptor" ref="asyncAdvice" />
 	</bean>
-	<bean id="asyncAdvice" class="com.liferay.portal.messaging.async.AsyncAdvice">
+	<bean class="com.liferay.portal.messaging.async.AsyncAdvice" id="asyncAdvice">
 		<property name="defaultDestinationName" value="liferay/async_service" />
 		<property name="nextMethodInterceptor" ref="threadLocalCacheAdvice" />
 	</bean>
-	<bean id="threadLocalCacheAdvice" class="com.liferay.portal.cache.thread.local.ThreadLocalCacheAdvice">
+	<bean class="com.liferay.portal.cache.thread.local.ThreadLocalCacheAdvice" id="threadLocalCacheAdvice">
 		<property name="nextMethodInterceptor" ref="bufferedIncrementAdvice" />
 	</bean>
-	<bean id="bufferedIncrementAdvice" class="com.liferay.portal.increment.BufferedIncrementAdvice">
+	<bean class="com.liferay.portal.increment.BufferedIncrementAdvice" id="bufferedIncrementAdvice">
 		<property name="nextMethodInterceptor" ref="indexableAdvice" />
 	</bean>
-	<bean id="indexableAdvice" class="com.liferay.portal.search.IndexableAdvice">
+	<bean class="com.liferay.portal.search.IndexableAdvice" id="indexableAdvice">
 		<property name="nextMethodInterceptor" ref="systemEventAdvice" />
 	</bean>
-	<bean id="systemEventAdvice" class="com.liferay.portal.systemevent.SystemEventAdvice">
+	<bean class="com.liferay.portal.systemevent.SystemEventAdvice" id="systemEventAdvice">
 		<property name="nextMethodInterceptor" ref="serviceContextAdvice" />
 	</bean>
-	<bean id="serviceContextAdvice" class="com.liferay.portal.service.ServiceContextAdvice">
+	<bean class="com.liferay.portal.service.ServiceContextAdvice" id="serviceContextAdvice">
 		<property name="nextMethodInterceptor" ref="retryAdvice" />
 	</bean>
-	<bean id="retryAdvice" class="com.liferay.portal.spring.aop.RetryAdvice">
+	<bean class="com.liferay.portal.spring.aop.RetryAdvice" id="retryAdvice">
 		<property name="nextMethodInterceptor" ref="transactionAdvice" />
 	</bean>
-	<bean id="counterTransactionAdvice" class="com.liferay.portal.spring.transaction.TransactionInterceptor">
+	<bean class="com.liferay.portal.spring.transaction.TransactionInterceptor" id="counterTransactionAdvice">
 		<property name="platformTransactionManager" ref="counterTransactionManager" />
 		<property name="transactionAttributeSource" ref="transactionAttributeSource" />
 		<property name="transactionExecutor">
@@ -74,17 +74,17 @@
 			</bean>
 		</property>
 	</bean>
-	<bean id="transactionAdvice" class="com.liferay.portal.spring.transaction.TransactionInterceptor">
+	<bean class="com.liferay.portal.spring.transaction.TransactionInterceptor" id="transactionAdvice">
 		<property name="platformTransactionManager" ref="liferayTransactionManager" />
 		<property name="transactionAttributeSource" ref="transactionAttributeSource" />
 		<property name="transactionExecutor" ref="transactionExecutor" />
 	</bean>
-	<bean id="transactionAttributeSource" class="com.liferay.portal.spring.transaction.AnnotationTransactionAttributeSource" />
-	<bean id="transactionExecutor" class="com.liferay.portal.spring.transaction.TransactionExecutorFactory" factory-method="createTransactionExecutor">
+	<bean class="com.liferay.portal.spring.transaction.AnnotationTransactionAttributeSource" id="transactionAttributeSource" />
+	<bean class="com.liferay.portal.spring.transaction.TransactionExecutorFactory" factory-method="createTransactionExecutor" id="transactionExecutor">
 		<constructor-arg ref="liferayTransactionManager" />
 		<constructor-arg value="false" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.transaction.TransactionInvokerUtil" class="com.liferay.portal.kernel.transaction.TransactionInvokerUtil">
+	<bean class="com.liferay.portal.kernel.transaction.TransactionInvokerUtil" id="com.liferay.portal.kernel.transaction.TransactionInvokerUtil">
 		<property name="transactionInvoker">
 			<bean class="com.liferay.portal.spring.transaction.TransactionInvokerImpl">
 				<property name="platformTransactionManager" ref="liferayTransactionManager" />

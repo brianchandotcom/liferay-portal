@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="util-taglib" basedir="." default="compile">
+<project basedir="." default="compile" name="util-taglib">
 	<import file="../build-common-java.xml" />
 
 	<property name="deploy.dir" value="${app.server.lib.portal.dir}" />
@@ -12,7 +12,7 @@
 		<sequential>
 			<clean-cmd>
 				<clean-post>
-					<delete file="${liferay.home}/osgi/portal/${jar.file}.jar" failonerror="false" />
+					<delete failonerror="false" file="${liferay.home}/osgi/portal/${jar.file}.jar" />
 				</clean-post>
 			</clean-cmd>
 		</sequential>
@@ -22,7 +22,7 @@
 		<sequential>
 			<compile-java-cmd>
 				<compile-java-post>
-					<copy file="classes/META-INF/liferay-portlet.tld" tofile="classes/META-INF/liferay-portlet_2_0.tld" preservelastmodified="true" />
+					<copy file="classes/META-INF/liferay-portlet.tld" preservelastmodified="true" tofile="classes/META-INF/liferay-portlet_2_0.tld" />
 
 					<replace file="classes/META-INF/liferay-portlet_2_0.tld">
 						<replacetoken><![CDATA[<uri>http://java.sun.com/portlet</uri>]]></replacetoken>
@@ -46,14 +46,14 @@
 				src.dir="@{src.dir}"
 			>
 				<deploy-post>
-					<copy file="@{jar.file}.jar" tofile="${liferay.home}/osgi/portal/${manifest.bundle.symbolic.name}.jar" preservelastmodified="true" />
+					<copy file="@{jar.file}.jar" preservelastmodified="true" tofile="${liferay.home}/osgi/portal/${manifest.bundle.symbolic.name}.jar" />
 
 					<if>
 						<equals arg1="${app.server.type}" arg2="tomcat" />
 						<then>
-							<copy file="@{jar.file}.jar" todir="@{deploy.dir}" preservelastmodified="true" />
+							<copy file="@{jar.file}.jar" preservelastmodified="true" todir="@{deploy.dir}" />
 
-							<copy todir="${app.server.portal.dir}/WEB-INF/tld" preservelastmodified="true">
+							<copy preservelastmodified="true" todir="${app.server.portal.dir}/WEB-INF/tld">
 								<fileset dir="classes/META-INF" includes="*.tld" />
 							</copy>
 						</then>
@@ -67,15 +67,15 @@
 		<sequential>
 			<jar-macro-cmd>
 				<jar-post>
-					<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />
+					<copy file="${jar.file}.jar" preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />
 
-					<copy todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true">
+					<copy preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies">
 						<fileset dir="classes/META-INF" />
 					</copy>
 
-					<copy file="${jar.file}.jar" todir="${project.dir}/portal-web/docroot/WEB-INF/lib" preservelastmodified="true" />
+					<copy file="${jar.file}.jar" preservelastmodified="true" todir="${project.dir}/portal-web/docroot/WEB-INF/lib" />
 
-					<copy overwrite="true" todir="${project.dir}/portal-web/docroot/WEB-INF/tld" preservelastmodified="true">
+					<copy overwrite="true" preservelastmodified="true" todir="${project.dir}/portal-web/docroot/WEB-INF/tld">
 						<fileset dir="classes/META-INF" includes="*.tld" />
 					</copy>
 				</jar-post>
@@ -103,13 +103,13 @@
 		</java>
 	</target>
 
-	<target name="jar-tlddoc" depends="taglibdoc">
+	<target depends="taglibdoc" name="jar-tlddoc">
 		<zip destfile="util-taglib-tlddoc.jar">
 			<zipfileset dir="${doc.dir}/taglibs" />
 		</zip>
 	</target>
 
-	<target name="publish-portal-release" depends="jar,jar-javadoc,jar-sources,jar-tlddoc">
+	<target depends="jar,jar-javadoc,jar-sources,jar-tlddoc" name="publish-portal-release">
 		<publish-portal-artifact >
 			<attach classifier="javadoc" file="${artifact.name}-javadoc.jar" />
 			<attach classifier="sources" file="${artifact.name}-sources.jar" />
@@ -117,7 +117,7 @@
 		</publish-portal-artifact>
 	</target>
 
-	<target name="publish-portal-snapshot" depends="jar,jar-javadoc,jar-sources,jar-tlddoc">
+	<target depends="jar,jar-javadoc,jar-sources,jar-tlddoc" name="publish-portal-snapshot">
 		<publish-portal-artifact snapshot="true">
 			<attach classifier="javadoc" file="${artifact.name}-javadoc.jar" />
 			<attach classifier="sources" file="${artifact.name}-sources.jar" />
@@ -125,12 +125,12 @@
 		</publish-portal-artifact>
 	</target>
 
-	<target name="taglibdoc" depends="validate-tld">
+	<target depends="validate-tld" name="taglibdoc">
 		<property name="doc.taglibs.dir" value="${doc.dir}/taglibs" />
 
 		<mkdir dir="${doc.taglibs.dir}" />
 
-		<pathconvert property="tld.files" pathsep=" ">
+		<pathconvert pathsep=" " property="tld.files">
 			<path>
 				<fileset dir="${project.dir}/util-taglib/src/META-INF">
 					<include name="*.tld" />
@@ -149,7 +149,7 @@
 			<arg line="${tld.files}" />
 		</java>
 
-		<copy overwrite="true" todir="${doc.taglibs.dir}/images" preservelastmodified="true">
+		<copy overwrite="true" preservelastmodified="true" todir="${doc.taglibs.dir}/images">
 			<fileset dir="${project.dir}/util-taglib/src/META-INF/images" />
 		</copy>
 	</target>

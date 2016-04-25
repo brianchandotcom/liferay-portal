@@ -7,18 +7,18 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean id="com.liferay.portal.kernel.repository.RepositoryFactory" class="com.liferay.portal.repository.RepositoryFactoryImpl" depends-on="com.liferay.portal.kernel.model.ModelHintsUtil" />
-	<bean id="com.liferay.portal.kernel.repository.RepositoryFactoryUtil" class="com.liferay.portal.kernel.repository.RepositoryFactoryUtil">
+	<bean class="com.liferay.portal.repository.RepositoryFactoryImpl" depends-on="com.liferay.portal.kernel.model.ModelHintsUtil" id="com.liferay.portal.kernel.repository.RepositoryFactory" />
+	<bean class="com.liferay.portal.kernel.repository.RepositoryFactoryUtil" id="com.liferay.portal.kernel.repository.RepositoryFactoryUtil">
 		<property name="repositoryFactory" ref="com.liferay.portal.kernel.repository.RepositoryFactory" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.repository.RepositoryProvider" class="com.liferay.portal.repository.RepositoryProviderImpl" />
-	<bean id="com.liferay.portal.kernel.repository.RepositoryProviderUtil" class="com.liferay.portal.kernel.repository.RepositoryProviderUtil" >
+	<bean class="com.liferay.portal.repository.RepositoryProviderImpl" id="com.liferay.portal.kernel.repository.RepositoryProvider" />
+	<bean class="com.liferay.portal.kernel.repository.RepositoryProviderUtil" id="com.liferay.portal.kernel.repository.RepositoryProviderUtil" >
 		<property name="repositoryProvider" ref="com.liferay.portal.kernel.repository.RepositoryProvider" />
 	</bean>
-	<bean id="com.liferay.portal.repository.liferayrepository.social.LiferayFileEntrySocialActivityManager" class="com.liferay.portal.repository.liferayrepository.social.LiferayFileEntrySocialActivityManager" />
-	<bean id="com.liferay.portal.repository.liferayrepository.social.LiferayFileShortcutSocialActivityManager" class="com.liferay.portal.repository.liferayrepository.social.LiferayFileShortcutSocialActivityManager" />
-	<bean id="com.liferay.portal.repository.liferayrepository.social.LiferayFolderSocialActivityManager" class="com.liferay.portal.repository.liferayrepository.social.LiferayFolderSocialActivityManager" />
-	<bean id="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalog" class="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogImpl" init-method="loadDefaultRepositoryDefiners">
+	<bean class="com.liferay.portal.repository.liferayrepository.social.LiferayFileEntrySocialActivityManager" id="com.liferay.portal.repository.liferayrepository.social.LiferayFileEntrySocialActivityManager" />
+	<bean class="com.liferay.portal.repository.liferayrepository.social.LiferayFileShortcutSocialActivityManager" id="com.liferay.portal.repository.liferayrepository.social.LiferayFileShortcutSocialActivityManager" />
+	<bean class="com.liferay.portal.repository.liferayrepository.social.LiferayFolderSocialActivityManager" id="com.liferay.portal.repository.liferayrepository.social.LiferayFolderSocialActivityManager" />
+	<bean class="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogImpl" id="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalog" init-method="loadDefaultRepositoryDefiners">
 		<property name="legacyExternalRepositoryFactory">
 			<bean class="com.liferay.portal.repository.external.LegacyExternalRepositoryFactory" />
 		</property>
@@ -42,7 +42,7 @@
 			</list>
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil" class="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil">
+	<bean class="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil" id="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil">
 		<property name="repositoryClassDefinitionCatalog" ref="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalog" />
 	</bean>
 </beans>

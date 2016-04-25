@@ -211,7 +211,7 @@
 
 				triggerWalker.checkBackward();
 			}
-			else {
+			else if (triggerIndex > 0 && query.charAt(triggerIndex - 1) === STR_SPACE) {
 				query = query.substring(triggerIndex);
 			}
 

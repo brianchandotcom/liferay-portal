@@ -35,8 +35,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -366,17 +366,20 @@ public class JenkinsResultsParserUtil {
 
 		Properties properties = new Properties();
 
-		properties.load(new StringReader(toString(getLocalURL(
-			"http://mirrors-no-cache.lax.liferay.com/github.com/liferay/" +
-				"liferay-jenkins-ee/build.properties"))));
+		properties.load(
+			new StringReader(
+				toString(
+					getLocalURL(
+						"http://mirrors-no-cache.lax.liferay.com/github.com/" +
+							"liferay/liferay-jenkins-ee/build.properties"))));
 
 		String masterSlavesKey = "master.slaves(" + masterName + ")";
 
 		List<String> slaves = new ArrayList<>(100);
 
 		if (properties.containsKey(masterSlavesKey)) {
-			String slavesString =
-				expandSlaveRange(properties.getProperty(masterSlavesKey));
+			String slavesString = expandSlaveRange(
+				properties.getProperty(masterSlavesKey));
 
 			for (String slave : slavesString.split(",")) {
 				slaves.add(slave.trim());
@@ -394,7 +397,7 @@ public class JenkinsResultsParserUtil {
 		try {
 			Thread.sleep(duration);
 		}
-		catch(InterruptedException ie) {
+		catch (InterruptedException ie) {
 			throw new RuntimeException(ie);
 		}
 	}

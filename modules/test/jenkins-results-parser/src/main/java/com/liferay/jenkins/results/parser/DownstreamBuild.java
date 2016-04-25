@@ -130,6 +130,12 @@ public class DownstreamBuild extends BaseBuild {
 		}
 	}
 
+	protected JSONObject getBuildJSONObject() throws Exception {
+		return JenkinsResultsParserUtil.toJSONObject(
+			getBuildURL() + "/api/json?tree=building,duration,result,url",
+			false);
+	}
+
 	protected JSONArray getBuildsJSONArray() throws Exception {
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 			getJobURL() + "/api/json?tree=builds[actions[parameters" +
@@ -140,17 +146,12 @@ public class DownstreamBuild extends BaseBuild {
 	}
 
 	protected JSONObject getCompletedBuildJSONObject() throws Exception {
-		JSONArray buildsJSONArray = getBuildsJSONArray();
+		JSONObject buildJSONObject = getBuildJSONObject();
 
-		for (int i = 0; i < buildsJSONArray.length(); i++) {
-			JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
+		if ((buildJSONObject.get("result") != null) &&
+			!buildJSONObject.getBoolean("building")) {
 
-			if ((buildNumber == buildJSONObject.getInt("number")) &&
-				(buildJSONObject.get("result") != null) &&
-				!buildJSONObject.getBoolean("building")) {
-
-				return buildJSONObject;
-			}
+			return buildJSONObject;
 		}
 
 		return null;

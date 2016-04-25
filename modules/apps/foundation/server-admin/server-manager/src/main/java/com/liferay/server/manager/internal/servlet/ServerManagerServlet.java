@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.servermanager.executor.Executor;
 import com.liferay.servermanager.executor.RootExecutor;
-import com.liferay.servermanager.util.JSONKeys;
+import com.liferay.server.manager.internal.util.JSONKeys;
 
 import java.io.IOException;
 

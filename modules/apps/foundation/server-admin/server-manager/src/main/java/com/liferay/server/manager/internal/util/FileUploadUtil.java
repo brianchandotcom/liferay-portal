@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.servermanager.util;
+package com.liferay.server.manager.internal.util;
 
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;

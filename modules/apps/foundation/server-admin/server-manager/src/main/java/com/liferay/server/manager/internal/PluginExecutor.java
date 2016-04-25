@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.server.manager.BaseExecutor;
-import com.liferay.server.manager.internal.util.JSONKeys;
+import com.liferay.server.manager.JSONKeys;
 
 import java.io.BufferedReader;
 import java.io.File;

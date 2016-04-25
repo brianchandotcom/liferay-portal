@@ -16,7 +16,6 @@ package com.liferay.server.manager;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.server.manager.internal.util.JSONKeys;
 
 import java.util.ArrayList;
 import java.util.Collections;

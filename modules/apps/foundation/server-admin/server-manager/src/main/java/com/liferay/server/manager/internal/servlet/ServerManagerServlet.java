@@ -30,8 +30,8 @@ import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.server.manager.Executor;
+import com.liferay.server.manager.JSONKeys;
 import com.liferay.server.manager.internal.RootExecutor;
-import com.liferay.server.manager.internal.util.JSONKeys;
 
 import java.io.IOException;
 

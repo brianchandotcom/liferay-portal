@@ -82,14 +82,14 @@ public class FilePropagator {
 	}
 
 	public FilePropagator(
-		String[] fileNames, String originFilePath, String filePath,
+		String[] fileNames, String originDirPath, String dirPath,
 		List<String> targetSlaves) {
 
 		for (String fileName : fileNames) {
 			_filePropagatorTasks.add(
 				new FilePropagatorTask(
-					filePath + "/" + fileName,
-					originFilePath + "/" + fileName));
+					dirPath + "/" + fileName,
+					originDirPath + "/" + fileName));
 		}
 
 		_targetSlaves.addAll(targetSlaves);
@@ -452,7 +452,7 @@ public class FilePropagator {
 
 				commands.add(
 					"rsync -vI " + _sourceSlave + ":" +
-						filePropagatorTask.filePath + " " +
+						filePropagatorTask.filePath + " " +	
 							filePropagatorTask.filePath);
 			}
 

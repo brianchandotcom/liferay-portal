@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="util-bridges" basedir="." default="compile">
+<project basedir="." default="compile" name="util-bridges">
 	<import file="../build-common-java.xml" />
 
 	<property name="deploy.dir" value="${app.server.lib.portal.dir}" />
@@ -27,8 +27,8 @@
 		<sequential>
 			<jar-macro-cmd>
 				<jar-post>
-					<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />
-					<copy file="${project.dir}/lib/portal/portals-bridges.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />
+					<copy file="${jar.file}.jar" preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />
+					<copy file="${project.dir}/lib/portal/portals-bridges.jar" preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />
 				</jar-post>
 			</jar-macro-cmd>
 		</sequential>

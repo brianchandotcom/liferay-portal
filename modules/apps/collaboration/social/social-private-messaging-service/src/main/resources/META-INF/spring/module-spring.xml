@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean id="com.liferay.social.privatemessaging.service.UserThreadLocalService" class="com.liferay.social.privatemessaging.service.impl.UserThreadLocalServiceImpl" />
-	<bean id="com.liferay.social.privatemessaging.service.UserThreadService" class="com.liferay.social.privatemessaging.service.impl.UserThreadServiceImpl" />
-	<bean id="com.liferay.social.privatemessaging.service.persistence.UserThreadPersistence" class="com.liferay.social.privatemessaging.service.persistence.impl.UserThreadPersistenceImpl" parent="basePersistence" />
+	<bean class="com.liferay.social.privatemessaging.service.impl.UserThreadLocalServiceImpl" id="com.liferay.social.privatemessaging.service.UserThreadLocalService" />
+	<bean class="com.liferay.social.privatemessaging.service.impl.UserThreadServiceImpl" id="com.liferay.social.privatemessaging.service.UserThreadService" />
+	<bean class="com.liferay.social.privatemessaging.service.persistence.impl.UserThreadPersistenceImpl" id="com.liferay.social.privatemessaging.service.persistence.UserThreadPersistence" parent="basePersistence" />
 </beans>

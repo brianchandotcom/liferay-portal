@@ -11,31 +11,31 @@
 
 	<!-- Listeners -->
 
-	<bean id="messageListener.async_service" class="com.liferay.portal.messaging.async.AsyncMessageListener" />
-	<bean id="messageListener.convert_process" class="com.liferay.portal.convert.messaging.ConvertProcessMessageListener" />
-	<bean id="messageListener.document_library_audio_processor" class="com.liferay.portlet.documentlibrary.messaging.AudioProcessorMessageListener" />
-	<bean id="messageListener.document_library_image_processor" class="com.liferay.portlet.documentlibrary.messaging.ImageProcessorMessageListener" />
-	<bean id="messageListener.document_library_pdf_processor" class="com.liferay.portlet.documentlibrary.messaging.PDFProcessorMessageListener" />
-	<bean id="messageListener.document_library_raw_metadata_processor" class="com.liferay.portlet.documentlibrary.messaging.RawMetadataProcessorMessageListener" />
-	<bean id="messageListener.document_library_video_processor" class="com.liferay.portlet.documentlibrary.messaging.VideoProcessorMessageListener" />
-	<bean id="messageListener.hot_deploy" class="com.liferay.portal.deploy.hot.messaging.HotDeployMessageListener" />
-	<bean id="messageListener.live_users" class="com.liferay.portal.liveusers.messaging.LiveUsersMessageListener" />
-	<bean id="messageListener.live_users_cluster" class="com.liferay.portal.kernel.cluster.messaging.ClusterBridgeMessageListener">
+	<bean class="com.liferay.portal.messaging.async.AsyncMessageListener" id="messageListener.async_service" />
+	<bean class="com.liferay.portal.convert.messaging.ConvertProcessMessageListener" id="messageListener.convert_process" />
+	<bean class="com.liferay.portlet.documentlibrary.messaging.AudioProcessorMessageListener" id="messageListener.document_library_audio_processor" />
+	<bean class="com.liferay.portlet.documentlibrary.messaging.ImageProcessorMessageListener" id="messageListener.document_library_image_processor" />
+	<bean class="com.liferay.portlet.documentlibrary.messaging.PDFProcessorMessageListener" id="messageListener.document_library_pdf_processor" />
+	<bean class="com.liferay.portlet.documentlibrary.messaging.RawMetadataProcessorMessageListener" id="messageListener.document_library_raw_metadata_processor" />
+	<bean class="com.liferay.portlet.documentlibrary.messaging.VideoProcessorMessageListener" id="messageListener.document_library_video_processor" />
+	<bean class="com.liferay.portal.deploy.hot.messaging.HotDeployMessageListener" id="messageListener.hot_deploy" />
+	<bean class="com.liferay.portal.liveusers.messaging.LiveUsersMessageListener" id="messageListener.live_users" />
+	<bean class="com.liferay.portal.kernel.cluster.messaging.ClusterBridgeMessageListener" id="messageListener.live_users_cluster">
 		<property name="priority">
 			<util:constant static-field="com.liferay.portal.kernel.cluster.Priority.LEVEL5" />
 		</property>
 	</bean>
-	<bean id="messageListener.message_boards_mailing_list" class="com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper">
+	<bean class="com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper" id="messageListener.message_boards_mailing_list">
 		<property name="messageListener">
 			<bean class="com.liferay.portlet.messageboards.messaging.MailingListMessageListener" />
 		</property>
 	</bean>
-	<bean id="messageListener.subscription_clean_up" class="com.liferay.portal.subscription.CleanUpSubscriptionMessageListener" />
-	<bean id="messageListener.subscription_sender" class="com.liferay.portal.messaging.SubscriptionSenderMessageListener" />
+	<bean class="com.liferay.portal.subscription.CleanUpSubscriptionMessageListener" id="messageListener.subscription_clean_up" />
+	<bean class="com.liferay.portal.messaging.SubscriptionSenderMessageListener" id="messageListener.subscription_sender" />
 
 	<!-- Configurator -->
 
-	<bean id="messagingConfigurator.misc" class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator">
+	<bean class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator" id="messagingConfigurator.misc">
 		<property name="destinationConfigurations">
 			<util:set>
 				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration">

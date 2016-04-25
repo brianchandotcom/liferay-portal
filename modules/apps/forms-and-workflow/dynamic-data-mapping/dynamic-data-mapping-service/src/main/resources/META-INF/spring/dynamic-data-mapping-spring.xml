@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
-	<bean id="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistry" class="com.liferay.dynamic.data.mapping.render.impl.DDMFormFieldRendererRegistryImpl">
+	<bean class="com.liferay.dynamic.data.mapping.render.impl.DDMFormFieldRendererRegistryImpl" id="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistry">
 		<property name="defaultDDMFormFieldRenderer">
 			<bean class="com.liferay.dynamic.data.mapping.render.impl.DDMFormFieldFreeMarkerRenderer" />
 		</property>
 	</bean>
-	<bean id="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistryUtil" class="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistryUtil">
+	<bean class="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistryUtil" id="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistryUtil">
 		<property name="DDMFormFieldRendererRegistry" ref="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistry" />
 	</bean>
-	<bean id="com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryImpl" class="com.liferay.dynamic.data.mapping.render.impl.DDMFormFieldValueRendererRegistryImpl">
+	<bean class="com.liferay.dynamic.data.mapping.render.impl.DDMFormFieldValueRendererRegistryImpl" id="com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryImpl">
 		<property name="defaultDDMFormFieldValueRenderers">
 			<list>
 				<bean class="com.liferay.dynamic.data.mapping.render.impl.CheckboxDDMFormFieldValueRenderer" />
@@ -28,15 +28,15 @@
 			</list>
 		</property>
 	</bean>
-	<bean id="com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryUtil" class="com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryUtil">
+	<bean class="com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryUtil" id="com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryUtil">
 		<property name="DDMFormFieldValueRendererRegistry" ref="com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryImpl" />
 	</bean>
-	<bean id="com.liferay.dynamic.data.mapping.render.DDMFormRendererUtil" class="com.liferay.dynamic.data.mapping.render.DDMFormRendererUtil">
+	<bean class="com.liferay.dynamic.data.mapping.render.DDMFormRendererUtil" id="com.liferay.dynamic.data.mapping.render.DDMFormRendererUtil">
 		<property name="DDMFormRenderer">
 			<bean class="com.liferay.dynamic.data.mapping.render.impl.DDMFormRendererImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.dynamic.data.mapping.storage.FieldRendererFactory" class="com.liferay.dynamic.data.mapping.storage.FieldRendererFactory">
+	<bean class="com.liferay.dynamic.data.mapping.storage.FieldRendererFactory" id="com.liferay.dynamic.data.mapping.storage.FieldRendererFactory">
 		<property name="fieldRenderers">
 			<map>
 				<entry key="date">

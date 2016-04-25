@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.servermanager.servlet;
+package com.liferay.server.manager.internal.servlet;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

@@ -832,7 +832,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkPoshiCharactersAfterDefinition(fileName, content);
 		checkPoshiCharactersBeforeDefinition(fileName, content);
 
-		content = sortPoshiAttributes(fileName, content);
+		content = sortAttributes(fileName, content);
 
 		content = sortPoshiCommands(content);
 
@@ -1174,7 +1174,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		_xmlExcludes = getPropertyList("xml.excludes");
 	}
 
-	protected String sortPoshiAttributes(String fileName, String content)
+	protected String sortAttributes(String fileName, String content)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();

@@ -21,7 +21,7 @@
 		<path>
 			<dirset dir="${basedir}" excludes="**/*-test*,**/src/**" includes="apps/${app.name}/**">
 				<present targetdir="${basedir}">
-					<mapper from="*" to="*/bnd.bnd" type="glob" />
+					<mapper from="*" to="*/portal.build" type="glob" />
 				</present>
 			</dirset>
 		</path>
@@ -212,6 +212,14 @@
 			</chainedmapper>
 			<fileset dir="${osgi.dir}/marketplace" includes="*.jar" />
 		</pathconvert>
+	</target>
+
+	<target name="reset-lpkg">
+		<subant genericantfile="${basedir}/build-app-module.xml" target="reset-artifact">
+			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
+			<property name="app.dir" value="${basedir}" />
+			<property name="osgi.dir" value="${osgi.dir}" />
+		</subant>
 	</target>
 
 	<target name="write-app-change-log" depends="dist-module-artifacts,get-app-artifacts,get-app-change-log,get-app-change-log-header,get-app-git-id">

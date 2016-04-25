@@ -35,7 +35,7 @@ import java.util.concurrent.Executors;
 public class FilePropagator {
 
 	public FilePropagator(
-		String[] fileNames, String originDirPath, String dirPath,
+		String[] fileNames, String dirPath, String originDirPath,
 		List<String> targetSlaves) {
 
 		for (String fileName : fileNames) {
@@ -49,7 +49,7 @@ public class FilePropagator {
 		_copyFromOrigin();
 	}
 
-	public long getAverageDuration() {
+	public long getAverageThreadDuration() {
 		if (_filePropogatorThreadCompletedCount == 0) {
 			return 0;
 		}
@@ -97,8 +97,8 @@ public class FilePropagator {
 				sb.append(Integer.toString(_targetSlaves.size()));
 				sb.append("\nTotal duration: ");
 				sb.append(Long.toString((System.currentTimeMillis() - start)));
-				sb.append("\nAverage duration: ");
-				sb.append(Long.toString(getAverageDuration()));
+				sb.append("\nAverage thread duration: ");
+				sb.append(Long.toString(getAverageThreadDuration()));
 				sb.append("ms\n");
 
 				System.out.println(sb.toString());
@@ -111,8 +111,8 @@ public class FilePropagator {
 			sb.append("File Propagation complete.\nTotal duration: ");
 			sb.append(Long.toString(System.currentTimeMillis() - start));
 			sb.append("ms\n");
-			sb.append("Average duration: ");
-			sb.append(Long.toString(getAverageDuration()));
+			sb.append("Average thread duration: ");
+			sb.append(Long.toString(getAverageThreadDuration()));
 			sb.append("ms\n");
 			sb.append(Integer.toString(_errorSlaves.size()));
 			sb.append(" failures occurred.\n");

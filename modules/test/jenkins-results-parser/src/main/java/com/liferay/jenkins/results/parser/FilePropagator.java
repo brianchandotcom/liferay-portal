@@ -45,14 +45,14 @@ public class FilePropagator {
 		String destinationPath =
 			destinationRootPath + "userContent/liferay-release-tool/" +
 				"7.0.x/20160323015850923/portal/";
-		String originPath =
+		String originFilePath =
 			originRootPath + "userContent/liferay-release-tool/" +
 				"7.0.x/20160323015850923/portal/";
 
 		String slaveBundleFilePath = destinationPath + bundleFileName;
 		String slaveSqlFilePath = destinationPath + sqlFileName;
-		String originBundleFilePath = originPath + bundleFileName;
-		String originSqlFilePath = originPath + sqlFileName;
+		String originBundleFilePath = originFilePath + bundleFileName;
+		String originSqlFilePath = originFilePath + sqlFileName;
 
 		FilePropagatorTask[] filePropagatorTasks = new FilePropagatorTask[] {
 			new FilePropagatorTask(slaveBundleFilePath, originBundleFilePath),
@@ -82,13 +82,14 @@ public class FilePropagator {
 	}
 
 	public FilePropagator(
-		String[] fileNames, String originPath, String filePath,
+		String[] fileNames, String originFilePath, String filePath,
 		List<String> targetSlaves) {
 
 		for (String fileName : fileNames) {
 			_filePropagatorTasks.add(
 				new FilePropagatorTask(
-					filePath + "/" + fileName, originPath + "/" + fileName));
+					filePath + "/" + fileName,
+					originFilePath + "/" + fileName));
 		}
 
 		_targetSlaves.addAll(targetSlaves);
@@ -201,14 +202,14 @@ public class FilePropagator {
 
 		for (FilePropagatorTask filePropagatorTask : _filePropagatorTasks) {
 			System.out.println(
-				"Copying from origin: " + filePropagatorTask.originPath);
+				"Copying from origin: " + filePropagatorTask.originFilePath);
 
 			targetSlave = _targetSlaves.get(0);
 
-			commands.add(_generateMkdirCommand(filePropagatorTask.filePath));
+			commands.add(_getMkdirCommand(filePropagatorTask.filePath));
 
 			commands.add(
-				"rsync -vI " + filePropagatorTask.originPath + " " +
+				"rsync -vI " + filePropagatorTask.originFilePath + " " +
 					filePropagatorTask.filePath);
 		}
 
@@ -326,7 +327,7 @@ public class FilePropagator {
 		return 0;
 	}
 
-	private String _generateMkdirCommand(String filePath) {
+	private String _getMkdirCommand(String filePath) {
 		String directoryPath = filePath.substring(
 			0, (filePath.lastIndexOf("/") + 1));
 		return "mkdir -pv " + directoryPath;
@@ -407,13 +408,13 @@ public class FilePropagator {
 
 	private static class FilePropagatorTask {
 
-		public FilePropagatorTask(String filePath, String originPath) {
+		public FilePropagatorTask(String filePath, String originFilePath) {
 			this.filePath = filePath;
-			this.originPath = originPath;
+			this.originFilePath = originFilePath;
 		}
 
 		public String filePath;
-		public String originPath;
+		public String originFilePath;
 
 	}
 
@@ -446,7 +447,7 @@ public class FilePropagator {
 					_filePropagator._filePropagatorTasks) {
 
 				commands.add(
-					_filePropagator._generateMkdirCommand(
+					_filePropagator._getMkdirCommand(
 						filePropagatorTask.filePath));
 
 				commands.add(

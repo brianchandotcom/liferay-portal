@@ -6,12 +6,6 @@
 			<div class="aspect-ratio-bg-cover user-icon user-icon-xl" ${main_menu_style}></div>
 
 			<div class="h3">${htmlUtil.escape(user_name)}</div>
-
-			<div class="time-zone">
-				<small>
-					<i class="icon-map-marker"></i> ${time_zone}
-				</small>
-			</div>
 		</div>
 
 		<div class="aspect-ratio-bg-cover bg-icon" ${main_menu_style}></div>

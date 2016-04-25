@@ -15,6 +15,7 @@
 package com.liferay.notifications.web.portlet;
 
 import com.liferay.notifications.web.constants.NotificationsPortletKeys;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.SubscriptionLocalService;
@@ -185,6 +186,13 @@ public class NotificationsPortlet extends MVCPortlet {
 		if (Validator.isNotNull(redirect)) {
 			actionResponse.sendRedirect(redirect);
 		}
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.notifications.web)(release.schema.version=2.1.0))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	@Reference(unbind = "-")

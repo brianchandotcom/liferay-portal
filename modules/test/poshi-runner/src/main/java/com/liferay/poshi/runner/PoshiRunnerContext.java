@@ -577,7 +577,7 @@ public class PoshiRunnerContext {
 
 		StringBuilder sb = new StringBuilder();
 
-		int groupSize = _getAllocatedTestGroupSize(classCommandNames.size());
+		int groupSize = 15;
 
 		List<List<String>> partitions = Lists.partition(
 			classCommandNames, groupSize);
@@ -590,7 +590,9 @@ public class PoshiRunnerContext {
 			List<String> partition = partitions.get(i);
 
 			for (int j = 0; j < partition.size(); j++) {
-				sb.append(partition.get(j));
+				sb.append(i);
+				sb.append("_");
+				sb.append(j);
 
 				if (j < (partition.size() - 1)) {
 					sb.append(" ");
@@ -598,6 +600,16 @@ public class PoshiRunnerContext {
 			}
 
 			sb.append("\n");
+
+			for (int j = 0; j < partition.size(); j++) {
+				sb.append("RUN_TEST_CASE_METHOD_GROUP_");
+				sb.append(i);
+				sb.append("_");
+				sb.append(j);
+				sb.append("=");
+				sb.append(partition.get(j));
+				sb.append("\n");
+			}
 		}
 
 		sb.append("RUN_TEST_CASE_METHOD_GROUPS=");

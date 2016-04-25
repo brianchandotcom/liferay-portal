@@ -3631,17 +3631,11 @@ go]]></replacevalue>
 
 	<target name="check-inet-address">
 		<if>
-			<and>
-				<equals arg1="${app.server.type}" arg2="jboss" />
-				<or>
-					<equals arg1="${app.server.jboss.version}" arg2="6.0.1" />
-					<equals arg1="${app.server.jboss.version}" arg2="6.1.0" />
-				</or>
-			</and>
+			<equals arg1="${app.server.type}" arg2="jboss" />
 			<then>
 				<exec executable="/bin/bash" outputproperty="inet.address">
 					<arg value="-c" />
-					<arg value="ifconfig eth0:0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'" />
+					<arg value="ifconfig eth0:0 | grep 'inet ' | sed -e 's/^[[:space:]]* inet \(addr:\)\?\([0-9\.]\+\).*/\2/'" />
 				</exec>
 
 				<if>
@@ -4899,6 +4893,7 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<get-database-property property.name="database.password" />
 		<get-database-property property.name="database.url" />
 		<get-database-property property.name="database.username" />
+		<get-database-property property.name="database.version" />
 
 		<echo file="portal-impl/src/portal-ext.properties" append="true">
 
@@ -5009,6 +5004,20 @@ custom.sql.function.isnull=CONVERT(VARCHAR,?) IS NULL
 custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				</then>
 			</elseif>
+		</if>
+
+		<if>
+			<and>
+				<equals arg1="${database.type}" arg2="oracle" />
+				<equals arg1="${database.version}" arg2="11.2.0.1.0" />
+			</and>
+			<then>
+				<replaceregexp
+					file="portal-impl/src/portal-ext.properties"
+					match="(jdbc:oracle:.*)orcl"
+					replace="\1xe"
+				/>
+			</then>
 		</if>
 
 		<if>
@@ -7473,6 +7482,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 							<resource-root path="hsql.jar" />
 							<resource-root path="mariadb.jar" />
 							<resource-root path="mysql.jar" />
+							<resource-root path="ojdbc6.jar" />
 						]]>
 					</replacevalue>
 				</replace>

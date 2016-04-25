@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.service.permission;
 
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -73,7 +74,11 @@ public class ModelPermissions implements Cloneable, Serializable {
 	}
 
 	public String[] getActionIds(String roleName) {
-		List<String> actionIds = getActionIdsList(roleName);
+		Set<String> actionIds = _actionIdsMap.get(roleName);
+
+		if (actionIds == null) {
+			return StringPool.EMPTY_ARRAY;
+		}
 
 		return actionIds.toArray(new String[actionIds.size()]);
 	}

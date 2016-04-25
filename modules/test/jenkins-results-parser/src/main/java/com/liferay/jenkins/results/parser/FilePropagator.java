@@ -121,9 +121,7 @@ public class FilePropagator {
 							break;
 						}
 
-						String targetSlave = _targetSlaves.get(0);
-
-						_targetSlaves.remove(0);
+						String targetSlave = _targetSlaves.remove(0);
 
 						executorService.execute(
 							new FilePropagatorThread(
@@ -181,8 +179,11 @@ public class FilePropagator {
 	private static String _readInputStream(InputStream inputStream) {
 		try {
 			byte[] inputBytes = new byte[1024];
+
 			int size = inputStream.read(inputBytes);
+
 			StringBuffer sb = new StringBuffer();
+
 			while (size > 0) {
 				sb.append(new String(Arrays.copyOf(inputBytes, size)));
 				size = inputStream.read(inputBytes);
@@ -369,10 +370,10 @@ public class FilePropagator {
 		sb.append(targetSlave);
 		sb.append(" '");
 
-		for (String command : commands) {
-			sb.append(command);
+		for (int i = 0; i < commands.size(); i++) {
+			sb.append(commands.get(i));
 
-			if (commands.indexOf(command) < (commands.size() - 1)) {
+			if (i < (commands.size() -1)) {
 				sb.append("; ");
 			}
 		}

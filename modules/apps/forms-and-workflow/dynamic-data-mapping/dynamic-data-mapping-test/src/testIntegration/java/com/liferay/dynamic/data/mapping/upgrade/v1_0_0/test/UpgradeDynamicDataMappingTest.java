@@ -60,7 +60,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -1498,8 +1498,8 @@ public class UpgradeDynamicDataMappingTest {
 		ExpandoValueLocalService expandoValueLocalService = registry.getService(
 			ExpandoValueLocalService.class);
 
-		ResourceActionLocalService resourceActionLocalService =
-			registry.getService(ResourceActionLocalService.class);
+		ResourceLocalService resourceLocalService = registry.getService(
+			ResourceLocalService.class);
 
 		ResourcePermissionLocalService resourcePermissionLocalService =
 			registry.getService(ResourcePermissionLocalService.class);
@@ -1511,7 +1511,7 @@ public class UpgradeDynamicDataMappingTest {
 			ddmFormXSDDeserializer, dlFileEntryLocalService,
 			dlFileVersionLocalService, dlFolderLocalService,
 			expandoRowLocalService, expandoTableLocalService,
-			expandoValueLocalService, resourceActionLocalService,
+			expandoValueLocalService, resourceLocalService,
 			resourcePermissionLocalService);
 	}
 

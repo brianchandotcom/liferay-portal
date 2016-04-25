@@ -1159,6 +1159,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				if (sortAttributes) {
 					if (trimmedLine.startsWith(StringPool.LESS_THAN) &&
 						trimmedLine.endsWith(StringPool.GREATER_THAN) &&
+						!trimmedLine.startsWith("<?") &&
 						!trimmedLine.startsWith("<%") &&
 						!trimmedLine.startsWith("<!")) {
 

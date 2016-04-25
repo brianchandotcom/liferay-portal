@@ -785,23 +785,6 @@
 		<setup-sdk />
 	</target>
 
-	<target name="sort-xml-attributes">
-		<path id="source.formatter.classpath">
-			<fileset dir="${portal.tools.dir}/source-formatter" includes="*.jar" />
-		</path>
-
-		<java
-			classname="com.liferay.source.formatter.XMLAttributesSorter"
-			classpathref="source.formatter.classpath"
-			fork="true"
-			newenvironment="true"
-		>
-			<jvmarg value="-Xmx512m" />
-			<jvmarg value="-Xss2048k" />
-			<arg value="sort.xml.file.name=${sort.xml.file.name}" />
-		</java>
-	</target>
-
 	<target name="start">
 		<antcall target="compile" />
 

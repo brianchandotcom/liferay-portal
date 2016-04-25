@@ -7,12 +7,12 @@ import com.liferay.product.navigation.control.menu.BaseProductNavigationControlM
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 @Component(
 	immediate = true,
@@ -40,13 +40,13 @@ public class _CLASS_
 	}
 
 	@Override
-	public boolean isShow(HttpServletRequest request) throws PortalException {
-		return true;
+	public String getURL(HttpServletRequest request) {
+		return "http://www.liferay.com";
 	}
 
 	@Override
-	public String getURL(HttpServletRequest request) {
-		return "http://www.liferay.com";
+	public boolean isShow(HttpServletRequest request) throws PortalException {
+		return true;
 	}
 
 }

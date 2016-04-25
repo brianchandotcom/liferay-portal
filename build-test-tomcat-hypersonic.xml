@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-tomcat-hypersonic" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project basedir="." default="test" name="portal-test-tomcat-hypersonic" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test-tomcat.xml" />
 
 	<target name="run-selenium-tomcat-hypersonic">
 		<echo file="test.${user.name}.properties">database.type=hypersonic</echo>
 
-		<antcall target="run-selenium-tomcat" inheritAll="false">
+		<antcall inheritAll="false" target="run-selenium-tomcat">
 			<param name="test.class" value="${test.class}" />
 		</antcall>
 	</target>

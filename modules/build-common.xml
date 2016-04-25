@@ -6,7 +6,7 @@
 
 	<taskdef classpath="${modules.dir}/../lib/development/ant-contrib.jar" resource="net/sf/antcontrib/antlib.xml" />
 
-	<condition property="gradlew.suffix" value=".bat" else="">
+	<condition else="" property="gradlew.suffix" value=".bat">
 		<os family="windows" />
 	</condition>
 

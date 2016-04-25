@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-plugins" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project basedir="." default="test" name="portal-test-plugins" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
 	<target name="deploy-extra-apps">
@@ -64,7 +64,7 @@ security-manager-enabled=true</echo>
 		<if>
 			<equals arg1="${liferay.portal.bundle}" arg2="6.1.20" />
 			<then>
-				<echo file="${lp.plugins.dir}/build.${user.name}.properties" append="true">
+				<echo append="true" file="${lp.plugins.dir}/build.${user.name}.properties">
 
 app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 			</then>
@@ -90,7 +90,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 				<equals arg1="${liferay.portal.bundle}" arg2="6.2.10.13" />
 			</or>
 			<then>
-				<echo file="${lp.plugins.dir}/build.${user.name}.properties" append="true">
+				<echo append="true" file="${lp.plugins.dir}/build.${user.name}.properties">
 
 app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 			</then>
@@ -122,7 +122,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 								</pathconvert>
 
 								<tstamp>
-									<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+									<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 								</tstamp>
 
 								<mkdir dir="${tstamp.value}" />
@@ -214,14 +214,14 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 				<if>
 					<isset property="plugin.types" />
 					<then>
-						<ant dir="${lp.plugins.dir}/${plugin.types}" target="clean" inheritAll="false" />
+						<ant dir="${lp.plugins.dir}/${plugin.types}" inheritAll="false" target="clean" />
 
-						<ant dir="${lp.plugins.dir}/${plugin.types}" target="deploy" inheritAll="false" />
+						<ant dir="${lp.plugins.dir}/${plugin.types}" inheritAll="false" target="deploy" />
 					</then>
 					<else>
-						<ant dir="${lp.plugins.dir}" target="clean" inheritAll="false" />
+						<ant dir="${lp.plugins.dir}" inheritAll="false" target="clean" />
 
-						<ant dir="${lp.plugins.dir}" target="deploy" inheritAll="false" />
+						<ant dir="${lp.plugins.dir}" inheritAll="false" target="deploy" />
 					</else>
 				</if>
 			</else>
@@ -274,15 +274,15 @@ liferay.home=${liferay.home}
 
 plugins.includes=${test.plugin}</echo>
 
-		<ant dir="${lp.plugins.dir}/${test.plugin.type}/${test.plugin}" target="clean" inheritAll="false" />
+		<ant dir="${lp.plugins.dir}/${test.plugin.type}/${test.plugin}" inheritAll="false" target="clean" />
 
 		<if>
 			<contains string="${test.plugin}" substring="portlet" />
 			<then>
-				<ant dir="${lp.plugins.dir}/${test.plugin.type}/${test.plugin}" target="compile-jsp" inheritAll="false" />
+				<ant dir="${lp.plugins.dir}/${test.plugin.type}/${test.plugin}" inheritAll="false" target="compile-jsp" />
 			</then>
 			<else>
-				<ant dir="${lp.plugins.dir}/${test.plugin.type}/${test.plugin}" target="compile" inheritAll="false" />
+				<ant dir="${lp.plugins.dir}/${test.plugin.type}/${test.plugin}" inheritAll="false" target="compile" />
 			</else>
 		</if>
 	</target>

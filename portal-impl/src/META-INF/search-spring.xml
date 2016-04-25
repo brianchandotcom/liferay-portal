@@ -25,33 +25,33 @@
 
 	<!-- Proxy -->
 
-	<bean id="com.liferay.portal.kernel.search.IndexSearcherProxyBean" class="com.liferay.portal.kernel.search.IndexSearcherProxyBean">
+	<bean class="com.liferay.portal.kernel.search.IndexSearcherProxyBean" id="com.liferay.portal.kernel.search.IndexSearcherProxyBean">
 		<property name="synchronousMessageSenderMode" value="DIRECT" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.search.IndexWriterProxyBean" class="com.liferay.portal.kernel.search.IndexWriterProxyBean">
+	<bean class="com.liferay.portal.kernel.search.IndexWriterProxyBean" id="com.liferay.portal.kernel.search.IndexWriterProxyBean">
 		<property name="synchronousMessageSenderMode" value="DIRECT" />
 	</bean>
 
 	<!-- Util -->
 
-	<bean id="com.liferay.portal.kernel.search.StringQueryFactory" class="com.liferay.portal.kernel.search.generic.StringQueryFactoryImpl" />
-	<bean id="com.liferay.portal.kernel.search.StringQueryFactoryUtil" class="com.liferay.portal.kernel.search.StringQueryFactoryUtil">
+	<bean class="com.liferay.portal.kernel.search.generic.StringQueryFactoryImpl" id="com.liferay.portal.kernel.search.StringQueryFactory" />
+	<bean class="com.liferay.portal.kernel.search.StringQueryFactoryUtil" id="com.liferay.portal.kernel.search.StringQueryFactoryUtil">
 		<property name="stringQueryFactory" ref="com.liferay.portal.kernel.search.StringQueryFactory" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.search.facet.AssetEntriesFacetFactory" class="com.liferay.portal.kernel.search.facet.AssetEntriesFacetFactory" />
-	<bean id="com.liferay.portal.kernel.search.facet.ModifiedFacetFactory" class="com.liferay.portal.kernel.search.facet.ModifiedFacetFactory" />
-	<bean id="com.liferay.portal.kernel.search.facet.MultiValueFacetFactory" class="com.liferay.portal.kernel.search.facet.MultiValueFacetFactory" />
-	<bean id="com.liferay.portal.kernel.search.facet.RangeFacetFactory" class="com.liferay.portal.kernel.search.facet.RangeFacetFactory" />
-	<bean id="com.liferay.portal.kernel.search.facet.ScopeFacetFactory" class="com.liferay.portal.kernel.search.facet.ScopeFacetFactory" />
-	<bean id="com.liferay.portal.kernel.search.facet.SimpleFacetFactory" class="com.liferay.portal.kernel.search.facet.SimpleFacetFactory" />
+	<bean class="com.liferay.portal.kernel.search.facet.AssetEntriesFacetFactory" id="com.liferay.portal.kernel.search.facet.AssetEntriesFacetFactory" />
+	<bean class="com.liferay.portal.kernel.search.facet.ModifiedFacetFactory" id="com.liferay.portal.kernel.search.facet.ModifiedFacetFactory" />
+	<bean class="com.liferay.portal.kernel.search.facet.MultiValueFacetFactory" id="com.liferay.portal.kernel.search.facet.MultiValueFacetFactory" />
+	<bean class="com.liferay.portal.kernel.search.facet.RangeFacetFactory" id="com.liferay.portal.kernel.search.facet.RangeFacetFactory" />
+	<bean class="com.liferay.portal.kernel.search.facet.ScopeFacetFactory" id="com.liferay.portal.kernel.search.facet.ScopeFacetFactory" />
+	<bean class="com.liferay.portal.kernel.search.facet.SimpleFacetFactory" id="com.liferay.portal.kernel.search.facet.SimpleFacetFactory" />
 
 	<!-- Generic search engine -->
 
-	<bean id="com.liferay.portal.search.generic.GenericSearchEngineImpl" class="com.liferay.portal.kernel.search.BaseSearchEngine" />
+	<bean class="com.liferay.portal.kernel.search.BaseSearchEngine" id="com.liferay.portal.search.generic.GenericSearchEngineImpl" />
 
 	<!-- Configurator -->
 
-	<bean id="searchEngineConfigurator.core" class="com.liferay.portal.kernel.search.DefaultSearchEngineConfigurator">
+	<bean class="com.liferay.portal.kernel.search.DefaultSearchEngineConfigurator" id="searchEngineConfigurator.core">
 		<property name="defaultSearchEngineId" value="SYSTEM_ENGINE" />
 		<property name="indexSearcher" ref="com.liferay.portal.kernel.search.IndexSearcherProxyBean" />
 		<property name="indexWriter" ref="com.liferay.portal.kernel.search.IndexWriterProxyBean" />
@@ -61,5 +61,5 @@
 			</util:map>
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.resiliency.spi.search.SPISearchEngineConfigurator" class="com.liferay.portal.resiliency.spi.search.SPISearchEngineConfigurator" />
+	<bean class="com.liferay.portal.resiliency.spi.search.SPISearchEngineConfigurator" id="com.liferay.portal.resiliency.spi.search.SPISearchEngineConfigurator" />
 </beans>

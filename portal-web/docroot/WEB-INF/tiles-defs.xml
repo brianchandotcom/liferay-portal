@@ -18,88 +18,88 @@
 		<put name="selectable" value="false" />
 	</definition>
 
-	<definition name="portal.api.jsonws" extends="portal">
+	<definition extends="portal" name="portal.api.jsonws">
 		<put name="pop_up" value="true" />
 		<put name="title" value="json-web-services-api" />
 		<put name="content" value="/portal/api/jsonws/index.jsp" />
 	</definition>
 
-	<definition name="portal.error" extends="portal">
+	<definition extends="portal" name="portal.error">
 		<put name="title" value="error" />
 		<put name="content" value="/portal/error.jsp" />
 	</definition>
 
-	<definition name="portal.j_login_error" extends="portal">
+	<definition extends="portal" name="portal.j_login_error">
 		<put name="title" value="error" />
 		<put name="content" value="/portal/j_login_error.jsp" />
 	</definition>
 
-	<definition name="portal.layout" extends="portal">
+	<definition extends="portal" name="portal.layout">
 		<put name="content" value="/portal/layout.jsp" />
 		<put name="selectable" value="true" />
 	</definition>
 
-	<definition name="portal.license" extends="portal">
+	<definition extends="portal" name="portal.license">
 		<put name="title" value="license" />
 		<put name="content" value="/portal/license.jsp" />
 	</definition>
 
-	<definition name="portal.login_disabled" extends="portal">
+	<definition extends="portal" name="portal.login_disabled">
 		<put name="title" value="sign-in-disabled" />
 		<put name="content" value="/portal/login_disabled.jsp" />
 	</definition>
 
-	<definition name="portal.portlet_access_denied" extends="portlet">
+	<definition extends="portlet" name="portal.portlet_access_denied">
 		<put name="portlet_content" value="/portal/portlet_access_denied.jsp" />
 	</definition>
 
-	<definition name="portal.portlet_inactive" extends="portlet">
+	<definition extends="portlet" name="portal.portlet_inactive">
 		<put name="portlet_content" value="/portal/portlet_inactive.jsp" />
 	</definition>
 
-	<definition name="portal.portlet_not_setup" extends="portlet">
+	<definition extends="portlet" name="portal.portlet_not_setup">
 		<put name="portlet_content" value="/portal/portlet_not_setup.jsp" />
 	</definition>
 
 	<definition name="portal.progress_poller" path="/portal/progress_poller.jsp" />
 
-	<definition name="portal.setup_wizard" extends="portal">
+	<definition extends="portal" name="portal.setup_wizard">
 		<put name="pop_up" value="true" />
 		<put name="title" value="basic-configuration" />
 		<put name="content" value="/portal/setup_wizard.jsp" />
 	</definition>
 
-	<definition name="portal.status" extends="portal">
+	<definition extends="portal" name="portal.status">
 		<put name="title" value="status" />
 		<put name="content" value="/portal/status.jsp" />
 	</definition>
 
-	<definition name="portal.terms_of_use" extends="portal">
+	<definition extends="portal" name="portal.terms_of_use">
 		<put name="title" value="terms-of-use" />
 		<put name="content" value="/portal/terms_of_use.jsp" />
 	</definition>
 
-	<definition name="portal.test" extends="portal">
+	<definition extends="portal" name="portal.test">
 		<put name="title" value="test" />
 		<put name="content" value="/portal/test.jsp" />
 	</definition>
 
-	<definition name="portal.update_email_address" extends="portal">
+	<definition extends="portal" name="portal.update_email_address">
 		<put name="title" value="email-address" />
 		<put name="content" value="/portal/update_email_address.jsp" />
 	</definition>
 
-	<definition name="portal.update_password" extends="portal">
+	<definition extends="portal" name="portal.update_password">
 		<put name="title" value="new-password" />
 		<put name="content" value="/portal/update_password.jsp" />
 	</definition>
 
-	<definition name="portal.update_reminder_query" extends="portal">
+	<definition extends="portal" name="portal.update_reminder_query">
 		<put name="title" value="password-reminder" />
 		<put name="content" value="/portal/update_reminder_query.jsp" />
 	</definition>
 
-	<definition name="portal.verify_email_address" extends="portal">
+	<definition extends="portal" name="portal.verify_email_address">
 		<put name="title" value="verify-email-address" />
 		<put name="content" value="/portal/verify_email_address.jsp" />
 	</definition>

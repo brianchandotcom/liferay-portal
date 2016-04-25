@@ -105,30 +105,6 @@ public class FilePropagator {
 			_filePropogatorThreadCompletedCount;
 	}
 
-	public void recordFilePropagatorThreadCompletion(
-		FilePropagatorThread filePropagatorThread) {
-
-		synchronized(this) {
-			_filePropogatorThreadCompletedCount++;
-
-			_totalFilePropogatorThreadDuration +=
-				filePropagatorThread.getDuration();
-
-			_busySlaves.remove(filePropagatorThread.getSource());
-			_busySlaves.remove(filePropagatorThread.getTarget());
-
-			_sourceSlaves.add(filePropagatorThread.getSource());
-
-			if (!filePropagatorThread.isSuccessful()) {
-				_errorSlaves.add(filePropagatorThread.getTarget());
-
-				return;
-			}
-
-			_sourceSlaves.add(filePropagatorThread.getTarget());
-		}
-	}
-
 	public void start(int threadCount) {
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			threadCount);
@@ -356,6 +332,30 @@ public class FilePropagator {
 		return "mkdir -pv " + directoryPath;
 	}
 
+	private void _recordFilePropagatorThreadCompletion(
+		FilePropagatorThread filePropagatorThread) {
+
+		synchronized(this) {
+			_filePropogatorThreadCompletedCount++;
+
+			_totalFilePropogatorThreadDuration +=
+				filePropagatorThread.getDuration();
+
+			_busySlaves.remove(filePropagatorThread.getSource());
+			_busySlaves.remove(filePropagatorThread.getTarget());
+
+			_sourceSlaves.add(filePropagatorThread.getSource());
+
+			if (!filePropagatorThread.isSuccessful()) {
+				_errorSlaves.add(filePropagatorThread.getTarget());
+
+				return;
+			}
+
+			_sourceSlaves.add(filePropagatorThread.getTarget());
+		}
+	}
+
 	private File _writeShellFile(List<String> commands, String targetSlave)
 		throws IOException {
 
@@ -465,7 +465,7 @@ public class FilePropagator {
 
 			_duration = System.currentTimeMillis() - start;
 
-			_filePropagator.recordFilePropagatorThreadCompletion(this);
+			_filePropagator._recordFilePropagatorThreadCompletion(this);
 		}
 
 		private FilePropagatorThread(

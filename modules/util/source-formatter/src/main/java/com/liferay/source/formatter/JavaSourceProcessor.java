@@ -483,6 +483,42 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkVerifyUpgradeConnection(
+		String fileName, String newContent) {
+
+		if (fileName.endsWith("Test.java")) {
+			return;
+		}
+
+		int x = fileName.lastIndexOf(CharPool.SLASH);
+
+		if ((fileName.indexOf("Verify", x) == -1) &&
+			(fileName.indexOf("Upgrade", x) == -1)) {
+
+			return;
+		}
+
+		if (isExcludedPath(_upgradeDataAccessConnectionExcludes, fileName)) {
+			return;
+		}
+
+		if (newContent.contains("ThrowableAwareRunnable")) {
+			return;
+		}
+
+		x = newContent.indexOf("DataAccess.getUpgradeOptimizedConnection");
+
+		while (x != -1) {
+			int lineCount = getLineCount(newContent, x);
+
+			processErrorMessage(
+				fileName, "Use connection field " + fileName + " " + lineCount);
+
+			x = newContent.indexOf(
+				"DataAccess.getUpgradeOptimizedConnection", x + 40);
+		}
+	}
+
 	protected void checkXMLSecurity(
 		String fileName, String content, boolean isRunOutsidePortalExclusion) {
 
@@ -1011,6 +1047,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (!fileName.endsWith("GetterUtilTest.java")) {
 			checkGetterUtilGet(fileName, newContent);
 		}
+
+		// LPS-65213
+
+		checkVerifyUpgradeConnection(fileName, newContent);
 
 		newContent = formatAssertEquals(fileName, newContent);
 
@@ -4269,6 +4309,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_secureXmlExcludes = getPropertyList("secure.xml.excludes");
 		_staticLogVariableExcludes = getPropertyList("static.log.excludes");
 		_testAnnotationsExcludes = getPropertyList("test.annotations.excludes");
+		_upgradeDataAccessConnectionExcludes = getPropertyList(
+			"upgrade.data.access.connection.excludes");
 		_upgradeServiceUtilExcludes = getPropertyList(
 			"upgrade.service.util.excludes");
 	}
@@ -4452,6 +4494,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _testAnnotationsExcludes;
 	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
+	private List<String> _upgradeDataAccessConnectionExcludes;
 	private List<String> _upgradeServiceUtilExcludes;
 
 }

@@ -156,23 +156,38 @@ public class FilePropagator {
 		String targetSlave = null;
 
 		for (FilePropagatorTask filePropagatorTask : _filePropagatorTasks) {
-			System.out.println(
-				"Copying from origin: " + filePropagatorTask._originFilePath);
+			String originFilePath = filePropagatorTask._originFilePath;
+
+			System.out.println("Copying from origin: " + originFilePath);
 
 			targetSlave = _targetSlaves.get(0);
 
-			commands.add(_getMkdirCommand(filePropagatorTask._filePath));
+			String filePath = filePropagatorTask._filePath;
 
-			commands.add(
-				"rsync -vI " + filePropagatorTask._originFilePath + " " +
-					filePropagatorTask._filePath);
+			commands.add(_getMkdirCommand(filePath));
+
+			if (originFilePath.startsWith("http")) {
+				commands.add(" curl -o " + filePath + " " + originFilePath);
+			}
+			else {
+				commands.add("rsync -vI " + originFilePath + " " + filePath);
+			}
+
+			String fileDirPath = filePath.substring(
+				0, filePath.lastIndexOf("/"));
+
+			commands.add("ls -al " + fileDirPath);
 		}
 
 		try {
-			_executeCommands(commands, targetSlave);
+			if (_executeCommands(commands, true, targetSlave) != 0) {
+				throw new RuntimeException(
+					"Copy from origin failed. Commands executed: " + commands);
+			}
 		}
 		catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException(
+				"Copy from origin failed. Commands executed: " + commands, e);
 		}
 
 		if (targetSlave != null) {
@@ -184,7 +199,8 @@ public class FilePropagator {
 		System.out.println("Copy from origin complete.");
 	}
 
-	private int _executeCommands(List<String> commands, String targetSlave)
+	private int _executeCommands(
+			List<String> commands, boolean printOutput, String targetSlave)
 		throws IOException {
 
 		File shellFile = _writeShellFile(commands, targetSlave);
@@ -218,6 +234,11 @@ public class FilePropagator {
 					}
 
 					throw ioe;
+				}
+
+				if (printOutput) {
+					System.out.println(
+						_readInputStream(process.getInputStream()));
 				}
 
 				errorText = _readInputStream(process.getErrorStream());
@@ -373,7 +394,7 @@ public class FilePropagator {
 
 			try {
 				_successful = _filePropagator._executeCommands(
-					commands, _targetSlave) == 0;
+					commands, false, _targetSlave) == 0;
 			}
 			catch (Exception e) {
 				_successful = false;

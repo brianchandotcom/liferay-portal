@@ -1,0 +1,147 @@
+@import "bourbon";
+@import "mixins";
+
+$chemachop-btn-padding: 8px 4px !default;
+$chemachop-btn-space: 24px !default;
+$chemachop-controls-height: 52px !default;
+$chemachop-filters-height: 90px !default;
+$chemachop-history-controls-bottom: $chemachop-controls-height + 10 !default;
+$chemachop-history-controls-side: $chemachop-btn-space !default;
+
+// Skin
+
+$brand-primary: darken(#428BCA, 6.5%) !default; // #337ab7
+
+$chemachop-bg: #869CAD !default;
+$chemachop-history-controls-btn-color: #1E5EC8 !default;
+$chemachop-link-color: $brand-primary !default;
+$chemachop-text-color: #FFF !default;
+
+$gray-base: #000 !default;
+$gray-light: lighten($gray-base, 46.7%) !default; // #777
+$gray-lighter: lighten($gray-base, 93.5%) !default; // #eee
+
+$slider-height: 20px;
+
+.image-editor {
+	.lfr-image-editor-image-container {
+		position: relative;
+	}
+
+	canvas.image-preview {
+		left: 0;
+		position: absolute;
+		top: 0;
+	}
+
+	.controls {
+		background-color: $chemachop-bg;
+		bottom: 0;
+		height: $chemachop-controls-height;
+		position: absolute;
+		width: 100%;
+
+		.btn {
+			color: $chemachop-text-color;
+			padding: $chemachop-btn-padding;
+		}
+
+		.filters {
+			background-color: $chemachop-bg;
+			bottom: $chemachop-controls-height;
+			height: 0;
+			overflow: hidden;
+			position: absolute;
+			width: 100%;
+			z-index: 1;
+
+			@include transition(height .6s $ease-out-quint);
+
+			.btn-space {
+				margin-top: $chemachop-btn-space;
+			}
+
+			.filters-list {
+				overflow: auto;
+				padding: 10px 0 0;
+
+				.list-table {
+					display: table;
+
+					li {
+						display: table-cell;
+						padding: 0 2px;
+					}
+
+					span {
+						display: block;
+						font-size: 12px;
+						line-height: 2;
+					}
+				}
+			}
+		}
+
+		.open {
+			& > .btn {
+				color: $chemachop-link-color;
+			}
+
+			.filters {
+				height: $chemachop-filters-height;
+			}
+		}
+	}
+
+	.history-controls {
+		bottom: $chemachop-history-controls-bottom;
+		position: absolute;
+
+		&.history-left {
+			left: $chemachop-history-controls-side;
+		}
+
+		&.history-right {
+			right: $chemachop-history-controls-side;
+		}
+
+		a.btn {
+			background-color: $chemachop-history-controls-btn-color;
+			color: $chemachop-text-color;
+			margin: 0 2px;
+		}
+	}
+
+	.slider {
+		color: $gray-light;
+		position: relative;
+		text-align: center;
+
+		.rail {
+			border: solid 1px $gray-light;
+			border-radius: $slider-height / 2;
+			height: $slider-height;
+			position: relative;
+
+			.rail-handle {
+				position: absolute;
+				top: -1px;
+			}
+
+			.rail-active {
+				background-color: $gray-lighter;
+				border-radius: $slider-height/2 0 0 $slider-height/2;
+				height: 100%;
+				position: relative;
+			}
+
+			.handle {
+				background-color: $brand-primary;
+				border-radius: $slider-height/2;
+				height: $slider-height;
+				margin-left: -10px;
+				width: $slider-height;
+			}
+		}
+	}
+}

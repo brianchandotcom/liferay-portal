@@ -14,129 +14,20 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.portal.kernel.model.ReleaseConstants;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.StringBundler;
-
-import java.io.IOException;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-
 /**
- * @author Miguel Pastor
+ * @author Roberto Díaz
  */
-public class UpgradeModules extends UpgradeProcess {
+public class UpgradeModules
+	extends com.liferay.portal.upgrade.util.UpgradeModules {
 
-	protected void addRelease(String... bundleSymbolicNames)
-		throws SQLException {
-
-		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append("insert into Release_ (mvccVersion, releaseId, ");
-		sb.append("createDate, modifiedDate, servletContextName, ");
-		sb.append("schemaVersion, buildNumber, buildDate, verified, state_, ");
-		sb.append("testString) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				sb.toString())) {
-
-			for (String bundleSymbolicName : bundleSymbolicNames) {
-				ps.setLong(1, 0);
-				ps.setLong(2, increment());
-				ps.setTimestamp(3, timestamp);
-				ps.setTimestamp(4, timestamp);
-				ps.setString(5, bundleSymbolicName);
-				ps.setString(6, "0.0.1");
-				ps.setInt(7, 001);
-				ps.setTimestamp(8, timestamp);
-				ps.setBoolean(9, false);
-				ps.setInt(10, 0);
-				ps.setString(11, ReleaseConstants.TEST_STRING);
-
-				ps.addBatch();
-			}
-
-			ps.executeBatch();
-		}
+	@Override
+	public String[] getBundleSymbolicNames() {
+		return _bundleSymbolicNames;
 	}
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		updateExtractedModules();
-
-		updateConvertedLegacyModules();
-	}
-
-	protected boolean hasServiceComponent(String buildNamespace)
-		throws SQLException {
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select serviceComponentId from ServiceComponent " +
-					"where buildNamespace = ?")) {
-
-			ps.setString(1, buildNamespace);
-
-			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next()) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
-	protected void updateConvertedLegacyModules()
-		throws IOException, SQLException {
-
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			for (String[] convertedLegacyModule : _convertedLegacyModules) {
-				String oldServletContextName = convertedLegacyModule[0];
-				String newServletContextName = convertedLegacyModule[1];
-				String buildNamespace = convertedLegacyModule[2];
-
-				try (PreparedStatement ps = connection.prepareStatement(
-						"select servletContextName, buildNumber from Release_" +
-							" where servletContextName = ?")) {
-
-					ps.setString(1, oldServletContextName);
-
-					try (ResultSet rs = ps.executeQuery()) {
-						if (!rs.next()) {
-							if (hasServiceComponent(buildNamespace)) {
-								addRelease(newServletContextName);
-							}
-						}
-						else {
-							updateServletContextName(
-								oldServletContextName, newServletContextName);
-						}
-					}
-				}
-			}
-		}
-	}
-
-	protected void updateExtractedModules() throws SQLException {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			addRelease(_bundleSymbolicNames);
-		}
-	}
-
-	protected void updateServletContextName(
-			String oldServletContextName, String newServletContextName)
-		throws IOException, SQLException {
-
-		runSQL(
-			"update Release_ set servletContextName = '" +
-				newServletContextName + "' where servletContextName = '" +
-					oldServletContextName + "'");
+	public String[][] getConvertedLegacyModules() {
+		return _convertedLegacyModules;
 	}
 
 	private static final String[] _bundleSymbolicNames = new String[] {
@@ -213,10 +104,6 @@ public class UpgradeModules extends UpgradeProcess {
 		},
 		{
 			"microblogs-portlet", "com.liferay.microblogs.service", "Microblogs"
-		},
-		{
-			"notifications-portlet", "com.liferay.notifications.web",
-			"Notifications"
 		},
 		{
 			"so-portlet", "com.liferay.invitation.invite.members.service", "SO"

@@ -3,5 +3,4 @@ Bundle-SymbolicName: com.liferay.notifications.web
 Bundle-Version: 1.0.5
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
-Liferay-Require-SchemaVersion: 2.0.0
 Web-ContextPath: /notifications-web

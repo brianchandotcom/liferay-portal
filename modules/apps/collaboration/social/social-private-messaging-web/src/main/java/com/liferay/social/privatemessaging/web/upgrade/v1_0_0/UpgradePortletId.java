@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.privatemessaging.upgrade.v1_0_0;
+package com.liferay.social.privatemessaging.web.upgrade.v1_0_0;
 
 import com.liferay.social.privatemessaging.constants.PrivateMessagingPortletKeys;
 

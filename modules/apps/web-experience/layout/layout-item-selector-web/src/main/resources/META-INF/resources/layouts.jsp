@@ -20,12 +20,19 @@
 LayoutItemSelectorViewDisplayContext layoutItemSelectorViewDisplayContext = (LayoutItemSelectorViewDisplayContext)request.getAttribute(BaseLayoutsItemSelectorView.LAYOUT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 
 LayoutItemSelectorCriterion layoutItemSelectorCriterion = layoutItemSelectorViewDisplayContext.getLayoutItemSelectorCriterion();
+
+Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
 %>
 
-<div class="container-fluid-1280">
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
+<div class="container-fluid-1280 layouts-selector">
 	<liferay-layout:layouts-tree
 		checkContentDisplayPage="<%= layoutItemSelectorCriterion.isCheckDisplayPage() %>"
 		draggableTree="<%= false %>"
+		expandFirstNode="<%= true %>"
 		groupId="<%= scopeGroupId %>"
 		portletURL="<%= layoutItemSelectorViewDisplayContext.getEditLayoutURL() %>"
 		privateLayout="<%= layoutItemSelectorViewDisplayContext.isPrivateLayout() %>"

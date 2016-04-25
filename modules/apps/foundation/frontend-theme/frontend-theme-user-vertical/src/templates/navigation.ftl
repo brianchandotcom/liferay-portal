@@ -1,16 +1,14 @@
-<#if userCardVisible>
-	<#assign main_menu_style = "style='background-image: url(${user.getPortraitURL(theme_display)});'">
+<#assign main_menu_style = "style='background-image: url(${user.getPortraitURL(theme_display)});'">
 
-	<div class="aspect-ratio-bg-cover text-center user-container">
-		<div class="user-info">
-			<div class="aspect-ratio-bg-cover user-icon user-icon-xl" ${main_menu_style}></div>
+<div class="aspect-ratio-bg-cover text-center user-container">
+	<div class="user-info">
+		<div class="aspect-ratio-bg-cover user-icon user-icon-xl" ${main_menu_style}></div>
 
-			<div class="h3">${htmlUtil.escape(user_name)}</div>
-		</div>
-
-		<div class="aspect-ratio-bg-cover bg-icon" ${main_menu_style}></div>
+		<div class="h3">${htmlUtil.escape(user_name)}</div>
 	</div>
-</#if>
+
+	<div class="aspect-ratio-bg-cover bg-icon" ${main_menu_style}></div>
+</div>
 
 <#assign VOID = freeMarkerPortletPreferences.setValue("portletSetupPortletDecoratorId", "barebone")>
 

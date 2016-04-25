@@ -312,7 +312,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			formatCustomSQLXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("structures.xml")) {
-			newContent = formatDDLStructuresXML(fileName, newContent);
+			newContent = formatDDLStructuresXML(newContent);
 		}
 		else if (fileName.endsWith("routes.xml")) {
 			newContent = formatFriendlyURLRoutesXML(fileName, newContent);
@@ -346,7 +346,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			formatResourceActionXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("/service.xml")) {
-			newContent = formatServiceXML(fileName, absolutePath, newContent);
+			formatServiceXML(fileName, absolutePath, newContent);
 		}
 		else if (fileName.endsWith("/schema.xml") &&
 				 absolutePath.contains("solr")) {
@@ -366,6 +366,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			newContent = formatWebXML(fileName, newContent);
 		}
+
+		newContent = sortAttributes(fileName, newContent);
 
 		return formatXML(newContent);
 	}
@@ -672,11 +674,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				content.substring(y + 1, z));
 	}
 
-	protected String formatDDLStructuresXML(String fileName, String content)
-		throws Exception {
-
-		content = sortAttributes(fileName, content);
-
+	protected String formatDDLStructuresXML(String content) throws Exception {
 		Document document = readXML(content);
 
 		Element rootElement = document.getRootElement();
@@ -791,8 +789,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		content = sortAttributes(fileName, content);
-
 		Document document = readXML(content);
 
 		Element rootElement = document.getRootElement();
@@ -841,8 +837,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		checkPoshiCharactersAfterDefinition(fileName, content);
 		checkPoshiCharactersBeforeDefinition(fileName, content);
-
-		content = sortAttributes(fileName, content);
 
 		content = sortPoshiCommands(content);
 
@@ -916,11 +910,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			new ResourceActionPortletResourceElementComparator());
 	}
 
-	protected String formatServiceXML(
+	protected void formatServiceXML(
 			String fileName, String absolutePath, String content)
 		throws Exception {
-
-		content = sortAttributes(fileName, content);
 
 		Document document = readXML(content);
 
@@ -951,8 +943,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkOrder(
 			fileName, rootElement.element("exceptions"), "exception", null,
 			new ServiceExceptionElementComparator());
-
-		return content;
 	}
 
 	protected void formatSolrSchema(String fileName, String content)

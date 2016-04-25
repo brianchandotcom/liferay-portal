@@ -37,27 +37,8 @@ LayoutItemSelectorCriterion layoutItemSelectorCriterion = layoutItemSelectorView
 	/>
 </div>
 
-<aui:button-row>
-	<aui:button cssClass="btn-lg btn-primary" disabled="<%= true %>" id="selectorButton" value="done" />
-
-	<aui:button cssClass="btn-cancel btn-lg" type="cancel" value="cancel" />
-</aui:button-row>
-
 <aui:script use="aui-base">
 	var LString = A.Lang.String;
-	var Util = Liferay.Util;
-
-	var bindTreeUI = function(containerId) {
-		var container = A.one('#<portlet:namespace />' + containerId);
-
-		if (container) {
-			container.swallowEvent('click', true);
-
-			var tree = container.getData('tree-view');
-
-			tree.after('lastSelectedChange', setSelectedPage);
-		}
-	};
 
 	var getChosenPagePath = function(node) {
 		var buffer = [];
@@ -83,31 +64,6 @@ LayoutItemSelectorCriterion layoutItemSelectorCriterion = layoutItemSelectorView
 		return buffer.join(' > ');
 	};
 
-	var button = A.one('#<portlet:namespace />selectorButton');
-
-	button.on(
-		'click',
-		function(event) {
-			var currentTarget = event.currentTarget;
-
-			Util.getOpener().Liferay.fire(
-				'<%= layoutItemSelectorViewDisplayContext.getItemSelectedEventName() %>',
-				{
-
-					<c:if test="<%= Validator.isNotNull(layoutItemSelectorViewDisplayContext.getCkEditorFuncNum()) %>">
-						ckeditorfuncnum: <%= layoutItemSelectorViewDisplayContext.getCkEditorFuncNum() %>,
-					</c:if>
-
-					layoutpath: currentTarget.attr('data-layoutpath'),
-					returnType: currentTarget.attr('data-returnType'),
-					value: currentTarget.attr('data-value')
-				}
-			);
-
-			Util.getWindow().destroy();
-		}
-	);
-
 	var setSelectedPage = function(event) {
 		var disabled = true;
 
@@ -122,23 +78,42 @@ LayoutItemSelectorCriterion layoutItemSelectorCriterion = layoutItemSelectorView
 		var url = link.attr('data-url');
 		var uuid = link.attr('data-uuid');
 
+		var data = {};
+
 		if (link && url) {
 			disabled = false;
 
-			button.attr('data-layoutpath', getChosenPagePath(lastSelectedNode));
+			data.layoutpath = getChosenPagePath(lastSelectedNode);
 
 			<c:choose>
 				<c:when test="<%= Objects.equals(layoutItemSelectorViewDisplayContext.getItemSelectorReturnTypeName(), URLItemSelectorReturnType.class.getName()) %>">
-					button.attr('data-value', url);
+					data.value = url;
 				</c:when>
 				<c:when test="<%= Objects.equals(layoutItemSelectorViewDisplayContext.getItemSelectorReturnTypeName(), UUIDItemSelectorReturnType.class.getName()) %>">
-					button.attr('data-value', uuid);
+					data.value = uuid;
 				</c:when>
 			</c:choose>
 		}
 
-		Liferay.Util.toggleDisabled(button, disabled);
+		<c:if test="<%= Validator.isNotNull(layoutItemSelectorViewDisplayContext.getCkEditorFuncNum()) %>">
+			data.ckeditorfuncnum: <%= layoutItemSelectorViewDisplayContext.getCkEditorFuncNum() %>;
+		</c:if>
+
+		Liferay.Util.getOpener().Liferay.fire(
+			'<%= layoutItemSelectorViewDisplayContext.getItemSelectedEventName() %>',
+			{
+				data: data
+			}
+		);
 	};
 
-	bindTreeUI('treeContainerOutput');
+	var container = A.one('#<portlet:namespace />treeContainerOutput');
+
+	if (container) {
+		container.swallowEvent('click', true);
+
+		var tree = container.getData('tree-view');
+
+		tree.after('lastSelectedChange', setSelectedPage);
+	}
 </aui:script>

@@ -124,7 +124,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest), eventName, layoutItemSelectorCriterion);
 		%>
 
-		<aui:script sandbox="<%= true %>">
+		<aui:script use="liferay-item-selector-dialog">
 			var displayPageItemContainer = $('#<portlet:namespace />displayPageItemContainer');
 			var displayPageItemRemove = $('#<portlet:namespace />displayPageItemRemove');
 			var displayPageNameInput = $('#<portlet:namespace />displayPageNameInput');
@@ -133,29 +133,29 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 			$('#<portlet:namespace />chooseDisplayPage').on(
 				'click',
 				function(event) {
-					Liferay.Util.selectEntity(
+					var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 						{
-							dialog: {
-								constrain: true,
-								destroyOnHide: true,
-								modal: true
-							},
-							dialogIframe: {
-								bodyCssClass: 'dialog-with-footer'
-							},
 							eventName: '<%= eventName %>',
-							id: '<portlet:namespace />selectDisplayPage',
+							on: {
+								selectedItemChange: function(event) {
+									var selectedItem = event.newVal;
+
+									if (selectedItem) {
+										pagesContainerInput.val(selectedItem.value);
+
+										displayPageNameInput.html(selectedItem.layoutpath);
+
+										displayPageItemRemove.removeClass('hide');
+									}
+								}
+							},
+							'strings.add': '<liferay-ui:message key="done" />',
 							title: '<liferay-ui:message key="select-page" />',
-							uri: '<%= itemSelectorURL.toString() %>'
-						},
-						function(event) {
-							pagesContainerInput.val(event.value);
-
-							displayPageNameInput.html(event.layoutpath);
-
-							displayPageItemRemove.removeClass('hide');
+							url: '<%= itemSelectorURL.toString() %>'
 						}
 					);
+
+					itemSelectorDialog.open();
 				}
 			);
 

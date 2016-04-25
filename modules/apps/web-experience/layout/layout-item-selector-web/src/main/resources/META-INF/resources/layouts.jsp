@@ -29,19 +29,23 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 </liferay-util:html-top>
 
 <div class="container-fluid-1280 layouts-selector">
-	<liferay-layout:layouts-tree
-		checkContentDisplayPage="<%= layoutItemSelectorCriterion.isCheckDisplayPage() %>"
-		draggableTree="<%= false %>"
-		expandFirstNode="<%= true %>"
-		groupId="<%= scopeGroupId %>"
-		portletURL="<%= layoutItemSelectorViewDisplayContext.getEditLayoutURL() %>"
-		privateLayout="<%= layoutItemSelectorViewDisplayContext.isPrivateLayout() %>"
-		rootNodeName="<%= layoutItemSelectorViewDisplayContext.getRootNodeName() %>"
-		saveState="<%= false %>"
-		selectedLayoutIds="<%= layoutItemSelectorViewDisplayContext.getSelectedLayoutIds() %>"
-		selPlid="<%= layoutItemSelectorViewDisplayContext.getSelPlid() %>"
-		treeId="treeContainer"
-	/>
+	<div class="card-horizontal main-content-card">
+		<div class="card-row card-row-padded">
+			<liferay-layout:layouts-tree
+				checkContentDisplayPage="<%= layoutItemSelectorCriterion.isCheckDisplayPage() %>"
+				draggableTree="<%= false %>"
+				expandFirstNode="<%= true %>"
+				groupId="<%= scopeGroupId %>"
+				portletURL="<%= layoutItemSelectorViewDisplayContext.getEditLayoutURL() %>"
+				privateLayout="<%= layoutItemSelectorViewDisplayContext.isPrivateLayout() %>"
+				rootNodeName="<%= layoutItemSelectorViewDisplayContext.getRootNodeName() %>"
+				saveState="<%= false %>"
+				selectedLayoutIds="<%= layoutItemSelectorViewDisplayContext.getSelectedLayoutIds() %>"
+				selPlid="<%= layoutItemSelectorViewDisplayContext.getSelPlid() %>"
+				treeId="treeContainer"
+			/>
+		</div>
+	</div>
 </div>
 
 <aui:script use="aui-base">

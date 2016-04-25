@@ -17,9 +17,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,21 +34,21 @@ import java.util.concurrent.Executors;
 public class FilePropagator {
 
 	private int _executeCommandsStub(List<String> commands, String targetSlave) throws IOException {
-		StringBuffer sb = new StringBuffer("ssh ");
-		sb.append(targetSlave);
-		sb.append(" '");
+		File shellFile = _writeShellFile(commands, targetSlave);
 
-		for (String command : commands) {
-			sb.append(command);
-			if (commands.indexOf(command) < (commands.size() - 1)) {
-				sb.append("; ");
+		try {
+			FileSystem fileSystem = FileSystems.getDefault();
+
+			System.out.println("Executing commands:\n" +
+				new String(Files.readAllBytes(fileSystem.getPath(
+					shellFile.getAbsolutePath()))));
+			JenkinsResultsParserUtil.sleep(3000);
+		}
+		finally {
+			if (shellFile != null && shellFile.exists()) {
+				shellFile.delete();
 			}
 		}
-		sb.append("'\n");
-		
-		System.out.println("Executing commands:\n" + sb.toString());
-		
-		JenkinsResultsParserUtil.sleep(3000);
 
 		return 0;
 	}
@@ -77,10 +79,11 @@ public class FilePropagator {
 			}
 
 			shellFile.setExecutable(true);
+
 			return shellFile;
 		}
 		catch(IOException ioe) {
-			if (shellFile.exists()) {
+			if (shellFile != null && shellFile.exists()) {
 				shellFile.delete();
 			}
 
@@ -153,7 +156,7 @@ public class FilePropagator {
 			return exitCode;
 		}
 		finally {
-			if (shellFile.exists()) {
+			if (shellFile != null && shellFile.exists()) {
 				shellFile.delete();
 			}
 		}
@@ -210,7 +213,7 @@ public class FilePropagator {
 		}
 
 		try {
-			_executeCommands(commands, targetSlave);
+			_executeCommandsStub(commands, targetSlave);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -277,12 +280,12 @@ public class FilePropagator {
 	public void start(int threadCount) {
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			threadCount);
-		System.out.println("Replication starting with " + threadCount + " threads.");
+		System.out.println("File Propagation starting with " + threadCount + " threads.");
 		
 		try {
 			long start = System.currentTimeMillis();
-			while ((_sourceSlaves.size() + _errorSlaves.size()) < _slaveCount) {
-				List<String> usedSourceSlaves = new ArrayList<>(_slaveCount);
+			while (!_targetSlaves.isEmpty() || !_busySlaves.isEmpty()) {
+
 				synchronized(this) {
 					for (String sourceSlave : _sourceSlaves) {
 						if (_targetSlaves.isEmpty()) {
@@ -291,21 +294,19 @@ public class FilePropagator {
 
 						String targetSlave = _targetSlaves.get(0);
 	
-						usedSourceSlaves.add(sourceSlave);
 						_targetSlaves.remove(0);
 						
 						executorService.execute(
-							new FilePropagatorThread(this, sourceSlave,targetSlave));
+							new FilePropagatorThread(this, sourceSlave,
+								targetSlave));
 
 						_busySlaves.add(sourceSlave);
 						_busySlaves.add(targetSlave);
 					}
 
-					_sourceSlaves.removeAll(usedSourceSlaves);
-
-					usedSourceSlaves.clear();
+					_sourceSlaves.removeAll(_busySlaves);
 				}
-				
+
 				StringBuffer sb = new StringBuffer();
 
 				sb.append("Busy slaves:");
@@ -314,9 +315,9 @@ public class FilePropagator {
 				sb.append(Integer.toString(_sourceSlaves.size()));
 				sb.append("\nTarget slaves:");
 				sb.append(Integer.toString(_targetSlaves.size()));
-				sb.append("\nTotal Time: ");
+				sb.append("\nTotal duration: ");
 				sb.append(Long.toString((System.currentTimeMillis() - start)));
-				sb.append("\nAverage Duration: ");
+				sb.append("\nAverage duration: ");
 				sb.append(Long.toString(getAverageDuration()));
 				sb.append("ms\n");
 
@@ -327,16 +328,19 @@ public class FilePropagator {
 			
 			StringBuffer sb = new StringBuffer();
 			
-			sb.append("Replication complete.\nTotal Time: ");
+			sb.append("File Propagation complete.\nTotal duration: ");
 			sb.append(Long.toString(System.currentTimeMillis() - start));
 			sb.append("ms\n");
-			sb.append("Average Duration: ");
+			sb.append("Average duration: ");
 			sb.append(Long.toString(getAverageDuration()));
 			sb.append("ms\n");
 			sb.append(Integer.toString(_errorSlaves.size()));
 			sb.append(" failures occurred.\n");
-			sb.append("Slaves that failed to respond:\n");
-			sb.append(_errorSlaves.toString());
+
+			if (_errorSlaves.size() > 0) {
+				sb.append("Slaves that failed to respond:\n");
+				sb.append(_errorSlaves.toString());
+			}
 			
 			System.out.println(sb.toString());
 
@@ -369,16 +373,13 @@ public class FilePropagator {
 		
 		System.out.println("slave list size: " + slaveList.size());
 
-		/*
 		FilePropagator filePropagator = new FilePropagator(
-			filePropagatorTasks, 
-			JenkinsResultsParserUtil.getSlaveList("test-1-1"));
+			filePropagatorTasks, slaveList);
 
 		filePropagator.start(20);
-		*/
 	}
 	
-	public static class FilePropagatorTask {
+	private static class FilePropagatorTask {
 		public FilePropagatorTask(String filePath, String originPath) {
 			this.filePath = filePath;
 			this.originPath = originPath;
@@ -420,7 +421,7 @@ public class FilePropagator {
 				commands.add("rsync -vI " +	_sourceSlave + ":" + filePropagatorTask.filePath + " " + filePropagatorTask.filePath);
 			}
 			try {
-				_isSuccessful = _filePropagator._executeCommands(commands, _targetSlave) == 0;
+				_isSuccessful = _filePropagator._executeCommandsStub(commands, _targetSlave) == 0;
 			}
 			catch (Exception e) {
 				_isSuccessful = false;

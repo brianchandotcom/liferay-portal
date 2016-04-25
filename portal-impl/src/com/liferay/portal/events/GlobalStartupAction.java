@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
+import com.liferay.portal.kernel.deploy.staging.StagingDeployDir;
+import com.liferay.portal.kernel.deploy.staging.StagingDeployUtil;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
@@ -174,6 +176,40 @@ public class GlobalStartupAction extends SimpleAction {
 
 		for (HotDeployListener hotDeployListener : getHotDeployListeners()) {
 			HotDeployUtil.registerListener(hotDeployListener);
+		}
+
+		// Staging deploy
+
+		try {
+			if (PrefsPropsUtil.getBoolean(
+					PropsKeys.STAGING_DEPLOY_ENABLED,
+					PropsValues.STAGING_DEPLOY_ENABLED)) {
+
+				File stagingDir = new File(
+					PrefsPropsUtil.getString(
+						PropsKeys.STAGING_DEPLOY_DEPLOY_DIR,
+						PropsValues.STAGING_DEPLOY_DEPLOY_DIR));
+				long interval = PrefsPropsUtil.getLong(
+					PropsKeys.STAGING_DEPLOY_INTERVAL,
+					PropsValues.STAGING_DEPLOY_INTERVAL);
+
+				StagingDeployDir stagingDeployDir = new StagingDeployDir(
+					StagingDeployDir.DEFAULT_NAME, stagingDir, interval);
+
+				if (_log.isInfoEnabled()) {
+					_log.info("Registering staging deploy directories");
+				}
+
+				StagingDeployUtil.registerDir(stagingDeployDir);
+			}
+			else {
+				if (_log.isInfoEnabled()) {
+					_log.info("Not registering staging deploy directories");
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error(e);
 		}
 
 		// Authentication

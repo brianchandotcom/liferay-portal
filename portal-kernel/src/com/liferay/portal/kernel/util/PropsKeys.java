@@ -2089,6 +2089,12 @@ public interface PropsKeys {
 
 	public static final String STAGING_DELETE_TEMP_LAR_ON_SUCCESS = "staging.delete.temp.lar.on.success";
 
+	public static final String STAGING_DEPLOY_DEPLOY_DIR = "staging.deploy.deploy.dir";
+
+	public static final String STAGING_DEPLOY_ENABLED = "staging.deploy.enabled";
+
+	public static final String STAGING_DEPLOY_INTERVAL = "staging.deploy.interval";
+
 	public static final String STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CHECK_INTERVAL = "staging.draft.export.import.configuration.check.interval";
 
 	public static final String STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT = "staging.draft.export.import.configuration.clean.up.count";

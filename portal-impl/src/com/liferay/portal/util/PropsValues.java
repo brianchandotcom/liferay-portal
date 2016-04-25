@@ -1434,6 +1434,12 @@ public class PropsValues {
 
 	public static boolean STAGING_DELETE_TEMP_LAR_ON_SUCCESS = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.STAGING_DELETE_TEMP_LAR_ON_SUCCESS));
 
+	public static final String STAGING_DEPLOY_DEPLOY_DIR = PropsUtil.get(PropsKeys.STAGING_DEPLOY_DEPLOY_DIR);
+
+	public static final boolean STAGING_DEPLOY_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.STAGING_DEPLOY_ENABLED));
+
+	public static final long STAGING_DEPLOY_INTERVAL = GetterUtil.getLong(PropsUtil.get(PropsKeys.STAGING_DEPLOY_INTERVAL));
+
 	public static int STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CHECK_INTERVAL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CHECK_INTERVAL));
 
 	public static int STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT));

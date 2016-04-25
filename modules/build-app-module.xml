@@ -4,6 +4,12 @@
 <project name="build-app-module">
 	<property file="bnd.bnd" />
 
+	<property name="artifact.location.new" value="${osgi.dir}/marketplace/${Bundle-SymbolicName}-${Bundle-Version}.jar" />
+
+	<condition property="artifact.location.old" value="${osgi.dir}/portal/${Bundle-SymbolicName}.jar" else="${osgi.dir}/modules/${Bundle-SymbolicName}.jar">
+		<contains string="${Bundle-SymbolicName}" substring="com.liferay.portal" />
+	</condition>
+
 	<pathconvert property="releng.module.dir">
 		<filtermapper>
 			<replacestring from="modules${file.separator}apps" to="modules${file.separator}.releng${file.separator}apps" />
@@ -137,7 +143,11 @@
 	</target>
 
 	<target name="move-artifact">
-		<move file="${osgi.dir}/modules/${Bundle-SymbolicName}.jar" tofile="${osgi.dir}/marketplace/${Bundle-SymbolicName}-${Bundle-Version}.jar" />
+		<move file="${artifact.location.old}" tofile="${artifact.location.new}" />
+	</target>
+
+	<target name="reset-artifact">
+		<move failonerror="false" file="${artifact.location.new}" tofile="${artifact.location.old}" />
 	</target>
 
 	<target

@@ -677,7 +677,7 @@
 		</for>
 	</command>
 
-	<command name="SubmitFormWithAllFieldsThenAssertTheyPersist" priority="4">
+	<command name="SubmitFormWithAllFieldTypesAndTwoPages" priority="4">
 		<description message="This is a use case for LPS-64798." />
 
 		<execute macro="Navigator#openURL" />

@@ -34,53 +34,6 @@ import java.util.concurrent.Executors;
  */
 public class FilePropagator {
 
-	public static void main(String[] args) throws Exception {
-		String bundleFileName =
-			"liferay-portal-tomcat-7.0-nightly-20160323015850923.zip";
-		String destinationRootPath = "/root/.liferay/mirrors/release-1/1/";
-		String originRootPath ="/mnt/mfs-ssd1-10.0.10/live/opt/java/jenkins/";
-		String sqlFileName =
-			"liferay-portal-sql-7.0-nightly-20160323015850923.zip";
-
-		String destinationPath =
-			destinationRootPath + "userContent/liferay-release-tool/" +
-				"7.0.x/20160323015850923/portal/";
-		String originFilePath =
-			originRootPath + "userContent/liferay-release-tool/" +
-				"7.0.x/20160323015850923/portal/";
-
-		String slaveBundleFilePath = destinationPath + bundleFileName;
-		String slaveSqlFilePath = destinationPath + sqlFileName;
-		String originBundleFilePath = originFilePath + bundleFileName;
-		String originSqlFilePath = originFilePath + sqlFileName;
-
-		FilePropagatorTask[] filePropagatorTasks = new FilePropagatorTask[] {
-			new FilePropagatorTask(slaveBundleFilePath, originBundleFilePath),
-			new FilePropagatorTask(slaveSqlFilePath, originSqlFilePath)
-		};
-		List<String> slaveList = JenkinsResultsParserUtil.getSlaveList(
-			"test-1-1");
-
-		System.out.println("slave list size: " + slaveList.size());
-
-		FilePropagator filePropagator = new FilePropagator(
-			filePropagatorTasks, slaveList);
-
-		filePropagator.start(20);
-	}
-
-	public FilePropagator(
-		FilePropagatorTask[] filePropagatorTasks, List<String> targetSlaves) {
-
-		for (FilePropagatorTask filePropagatorTask : filePropagatorTasks) {
-			_filePropagatorTasks.add(filePropagatorTask);
-		}
-
-		_targetSlaves.addAll(targetSlaves);
-
-		_copyFromOrigin();
-	}
-
 	public FilePropagator(
 		String[] fileNames, String originDirPath, String dirPath,
 		List<String> targetSlaves) {
@@ -88,8 +41,7 @@ public class FilePropagator {
 		for (String fileName : fileNames) {
 			_filePropagatorTasks.add(
 				new FilePropagatorTask(
-					dirPath + "/" + fileName,
-					originDirPath + "/" + fileName));
+					dirPath + "/" + fileName, originDirPath + "/" + fileName));
 		}
 
 		_targetSlaves.addAll(targetSlaves);
@@ -215,7 +167,7 @@ public class FilePropagator {
 		}
 
 		try {
-			_executeCommandsStub(commands, targetSlave);
+			_executeCommands(commands, targetSlave);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -302,30 +254,6 @@ public class FilePropagator {
 				shellFile.delete();
 			}
 		}
-	}
-
-	private int _executeCommandsStub(List<String> commands, String targetSlave)
-		throws IOException {
-
-		File shellFile = _writeShellFile(commands, targetSlave);
-
-		try {
-			FileSystem fileSystem = FileSystems.getDefault();
-
-			System.out.println("Executing commands:\n" +
-				new String(
-					Files.readAllBytes(
-						fileSystem.getPath(shellFile.getAbsolutePath()))));
-
-			JenkinsResultsParserUtil.sleep(3000);
-		}
-		finally {
-			if ((shellFile != null) && shellFile.exists()) {
-				shellFile.delete();
-			}
-		}
-
-		return 0;
 	}
 
 	private String _getMkdirCommand(String filePath) {
@@ -453,12 +381,12 @@ public class FilePropagator {
 
 				commands.add(
 					"rsync -vI " + _sourceSlave + ":" +
-						filePropagatorTask.filePath + " " +	
+						filePropagatorTask.filePath + " " +
 							filePropagatorTask.filePath);
 			}
 
 			try {
-				_isSuccessful = _filePropagator._executeCommandsStub(
+				_isSuccessful = _filePropagator._executeCommands(
 					commands, _targetSlave) == 0;
 			}
 			catch (Exception e) {

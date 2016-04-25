@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ADD_ASSET_SCOPED</td>
-	<td>//a[contains(@id,'add-content-select-scope')]</td>
+	<td>//a[@data-title='Add Content (Select Scope and Type)']</td>
 	<td></td>
 </tr>
 <tr>
@@ -178,7 +178,7 @@
 </tr>
 <tr>
 	<td>ASSET_ABSTRACT_BOOKMARK_LIFERAY_LOGO</td>
-	<td>//img[@alt='Liferay']</td>
+	<td>//*[name()='svg'][*[name()='use'][contains(@class,'logo')]]</td>
 	<td></td>
 </tr>
 <tr>

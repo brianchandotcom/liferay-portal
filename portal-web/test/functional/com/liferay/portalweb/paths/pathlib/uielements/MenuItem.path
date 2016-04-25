@@ -245,7 +245,7 @@
 </tr>
 <tr>
 	<td>CONFIGURATION</td>
-	<td>//div[contains(@class,'open')]//a[@role='menuitem']//span[contains(.,'Configuration')] | //div[contains(@class,'open')]//a[@role='menuitem' and .='Configuration']</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem']//span[.='Configuration'] | //div[contains(@class,'open')]//a[@role='menuitem' and .='Configuration']</td>
 	<td></td>
 </tr>
 <tr>

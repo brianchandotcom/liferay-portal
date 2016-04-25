@@ -624,7 +624,7 @@
 	</command>
 
 	<command name="gotoManageSitesTemplatesViaAddDropdown">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_SITES_TEMPLATES" value1="Manage Sites Templates" />
 	</command>
 

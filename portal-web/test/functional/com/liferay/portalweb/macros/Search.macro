@@ -58,7 +58,7 @@
 
 	<command name="removeUserFacetDisplayPG">
 		<execute function="Click#makeVisibleClickAt" locator1="Search#SEARCH_PORTLET_OPTIONS_WRENCH" />
-		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
 		<execute function="Uncheck" locator1="SearchConfiguration#BASIC_DISPLAY_USER_FACET_CHECKBOX" />
 		<execute macro="Button#clickSave" />

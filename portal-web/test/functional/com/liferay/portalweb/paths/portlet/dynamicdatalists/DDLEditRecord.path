@@ -176,7 +176,7 @@
 </tr>
 <tr>
 	<td>LINK_TO_PAGE_SELECT_PAGE_BUTTON</td>
-	<td>//button[contains(.,'Select Page')]</td>
+	<td>//button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>

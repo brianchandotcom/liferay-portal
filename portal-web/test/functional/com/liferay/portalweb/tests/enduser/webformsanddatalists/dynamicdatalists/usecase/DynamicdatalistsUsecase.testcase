@@ -2833,7 +2833,7 @@
 
 		<execute macro="Button#clickPublish" />
 
-		<execute macro="Alert#viewRequestFailedToComplete" />
+		<execute macro="Alert#viewRequiredField" />
 
 		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
 			<var name="document" value="Document_1.txt" />

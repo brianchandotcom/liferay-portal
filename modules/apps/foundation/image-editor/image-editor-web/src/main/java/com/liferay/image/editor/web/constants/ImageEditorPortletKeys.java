@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.image.editor.web;
+package com.liferay.image.editor.web.constants;
 
 /**
  * @author Chema Balsas
  */
 public class ImageEditorPortletKeys {
 
-	public static final String NAME = "image_editor_portlet";
+	public static final String IMAGE_EDITOR =
+		"com_liferay_image_editor_web_portlet_ImageEditorPortlet";
 
 }

@@ -304,7 +304,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			formatCustomSQLXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("structures.xml")) {
-			newContent = formatDDLStructuresXML(newContent);
+			newContent = formatDDLStructuresXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("routes.xml")) {
 			newContent = formatFriendlyURLRoutesXML(fileName, newContent);
@@ -661,12 +661,14 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				content.substring(y + 1, z));
 	}
 
-	protected String formatDDLStructuresXML(String content) throws Exception {
+	protected String formatDDLStructuresXML(String fileName, String content)
+		throws Exception {
+
+		content = sortAttributes(fileName, content);
+
 		Document document = readXML(content);
 
 		Element rootElement = document.getRootElement();
-
-		sortAttributes(rootElement, true);
 
 		sortElementsByChildElement(rootElement, "structure", "name");
 
@@ -778,11 +780,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		content = sortAttributes(fileName, content);
+
 		Document document = readXML(content);
 
 		Element rootElement = document.getRootElement();
-
-		sortAttributes(rootElement, true);
 
 		boolean checkNumericalPortletNameElement = !isExcludedPath(
 			_numericalPortletNameElementExcludes, absolutePath);
@@ -885,11 +887,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		content = sortAttributes(fileName, content);
+
 		Document document = readXML(content);
 
 		Element rootElement = document.getRootElement();
-
-		sortAttributes(rootElement, true);
 
 		List<Element> entityElements = rootElement.elements("entity");
 
@@ -917,7 +919,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			fileName, rootElement.element("exceptions"), "exception", null,
 			new ServiceExceptionElementComparator());
 
-		return Dom4jUtil.toString(document);
+		return content;
 	}
 
 	protected void formatSolrSchema(String fileName, String content)

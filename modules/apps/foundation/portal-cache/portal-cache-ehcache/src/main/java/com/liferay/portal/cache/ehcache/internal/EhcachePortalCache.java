@@ -22,9 +22,11 @@ import com.liferay.portal.kernel.cache.PortalCacheManager;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Set;
 
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
+import net.sf.ehcache.event.CacheEventListener;
 import net.sf.ehcache.event.NotificationScope;
 import net.sf.ehcache.event.RegisteredEventListeners;
 
@@ -154,7 +156,27 @@ public class EhcachePortalCache<K extends Serializable, V>
 	}
 
 	protected void reconfigEhcache(Ehcache ehcache) {
+		RegisteredEventListeners registeredEventListeners =
+			ehcache.getCacheEventNotificationService();
+
+		registeredEventListeners.registerListener(
+			new PortalCacheCacheEventListener<>(
+				aggregatedPortalCacheListener, this),
+			NotificationScope.ALL);
+
+		Ehcache oldEhcache = this.ehcache;
+
 		this.ehcache = ehcache;
+
+		registeredEventListeners =
+			oldEhcache.getCacheEventNotificationService();
+
+		Set<CacheEventListener> cacheEventListeners =
+			registeredEventListeners.getCacheEventListeners();
+
+		for (CacheEventListener cacheEventListener : cacheEventListeners) {
+			registeredEventListeners.unregisterListener(cacheEventListener);
+		}
 	}
 
 	protected volatile Ehcache ehcache;

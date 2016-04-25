@@ -66,6 +66,7 @@ public class FilePropagator {
 
 		try {
 			long start = System.currentTimeMillis();
+
 			while (!_targetSlaves.isEmpty() || !_busySlaves.isEmpty()) {
 				synchronized(this) {
 					for (String sourceSlave : _sourceSlaves) {
@@ -138,6 +139,7 @@ public class FilePropagator {
 
 			while (size > 0) {
 				sb.append(new String(Arrays.copyOf(inputBytes, size)));
+
 				size = inputStream.read(inputBytes);
 			}
 
@@ -289,9 +291,9 @@ public class FilePropagator {
 	private File _writeShellFile(List<String> commands, String targetSlave)
 		throws IOException {
 
-		String fileName = Integer.toString(commands.hashCode());
+		String shellFileName = Integer.toString(commands.hashCode());
 
-		File shellFile = new File(fileName + ".sh");
+		File shellFile = new File(shellFileName + ".sh");
 
 		StringBuffer sb = new StringBuffer("ssh ");
 
@@ -407,7 +409,7 @@ public class FilePropagator {
 			_targetSlave = targetSlave;
 		}
 
-		private long _duration = -1;
+		private long _duration = 0;
 		private final FilePropagator _filePropagator;
 		private Boolean _isSuccessful;
 		private final String _sourceSlave;

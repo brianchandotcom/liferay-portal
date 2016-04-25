@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.trash.kernel.util.TrashUtil;
 
-import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -68,11 +67,6 @@ public class BookmarksFolderAssetRenderer
 	@Override
 	public long getClassPK() {
 		return _folder.getFolderId();
-	}
-
-	@Override
-	public Date getDisplayDate() {
-		return _folder.getModifiedDate();
 	}
 
 	@Override

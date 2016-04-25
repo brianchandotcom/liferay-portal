@@ -344,7 +344,7 @@ public class DLFileShortcutLocalServiceImpl
 			DLFileShortcutConstants.getClassName(),
 			fileShortcut.getFileShortcutId(), fileShortcut.getUuid(), 0,
 			assetCategoryIds, assetTagNames, true, false, null, null, null,
-			fileEntry.getMimeType(), fileEntry.getTitle(),
+			null, fileEntry.getMimeType(), fileEntry.getTitle(),
 			fileEntry.getDescription(), null, null, null, 0, 0, null);
 	}
 

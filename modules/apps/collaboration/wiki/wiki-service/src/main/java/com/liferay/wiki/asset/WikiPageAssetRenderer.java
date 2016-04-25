@@ -39,7 +39,6 @@ import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 
-import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -108,11 +107,6 @@ public class WikiPageAssetRenderer
 		else {
 			return null;
 		}
-	}
-
-	@Override
-	public Date getDisplayDate() {
-		return _page.getModifiedDate();
 	}
 
 	@Override

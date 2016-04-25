@@ -79,6 +79,7 @@ if (user2 != null) {
 	contactsToolbarChildren.push(
 		new A.Button(
 			{
+				cssClass: '<%= showAddAsConnectionButton ? "" : "hidden" %>',
 				on: {
 					click: function(event) {
 						<portlet:namespace />relationAction(event, '<portlet:actionURL name="requestSocialRelation" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="type" value="<%= String.valueOf(SocialRelationConstants.TYPE_BI_CONNECTION) %>" /></portlet:actionURL>');
@@ -88,7 +89,6 @@ if (user2 != null) {
 				id: '<portlet:namespace />addConnectionButton',
 				label: '<%= UnicodeLanguageUtil.get(request, "connect") %>',
 				render: true,
-				visible: <%= showAddAsConnectionButton %>
 			}
 		)
 	);
@@ -96,6 +96,7 @@ if (user2 != null) {
 	contactsToolbarChildren.push(
 		new A.Button(
 			{
+				cssClass: '<%= showRemoveAsConnectionButton ? "" : "hidden" %>',
 				on: {
 					click: function(event) {
 						<portlet:namespace />relationAction(event, '<portlet:actionURL name="deleteSocialRelation" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="type" value="<%= String.valueOf(SocialRelationConstants.TYPE_BI_CONNECTION) %>" /></portlet:actionURL>');
@@ -105,7 +106,6 @@ if (user2 != null) {
 				id: '<portlet:namespace />removeConnectionButton',
 				label: '<%= UnicodeLanguageUtil.get(request, "disconnect") %>',
 				render: true,
-				visible: <%= showRemoveAsConnectionButton %>
 			}
 		)
 	);
@@ -113,7 +113,7 @@ if (user2 != null) {
 	contactsToolbarChildren.push(
 		new A.Button(
 			{
-				cssClass: 'more',
+				cssClass: 'more <%= showFollowButton ? "" : "hidden" %>',
 				on: {
 					click: function(event) {
 						<portlet:namespace />relationAction(event, '<portlet:actionURL name="addSocialRelation" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="type" value="<%= String.valueOf(SocialRelationConstants.TYPE_UNI_FOLLOWER) %>" /></portlet:actionURL>');
@@ -123,7 +123,6 @@ if (user2 != null) {
 				id: '<portlet:namespace />followButton',
 				label: '<%= UnicodeLanguageUtil.get(request, "follow") %>',
 				render: true,
-				visible: <%= showFollowButton %>
 			}
 		)
 	);
@@ -131,7 +130,7 @@ if (user2 != null) {
 	contactsToolbarChildren.push(
 		new A.Button(
 			{
-				cssClass: 'more',
+				cssClass: 'more <%= showUnFollowButton ? "" : "hidden" %>',
 				on: {
 					click: function(event) {
 						<portlet:namespace />relationAction(event, '<portlet:actionURL name="deleteSocialRelation" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="type" value="<%= String.valueOf(SocialRelationConstants.TYPE_UNI_FOLLOWER) %>" /></portlet:actionURL>');
@@ -141,7 +140,6 @@ if (user2 != null) {
 				id: '<portlet:namespace />unfollowButton',
 				label: '<%= UnicodeLanguageUtil.get(request, "unfollow") %>',
 				render: true,
-				visible: <%= showUnFollowButton %>
 			}
 		)
 	);
@@ -149,7 +147,7 @@ if (user2 != null) {
 	contactsToolbarChildren.push(
 		new A.Button(
 			{
-				cssClass: 'more',
+				cssClass: 'more <%= showBlockButton ? "" : "hidden" %>',
 				on: {
 					click: function(event) {
 						<portlet:namespace />relationAction(event, '<portlet:actionURL name="addSocialRelation" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="type" value="<%= String.valueOf(SocialRelationConstants.TYPE_UNI_ENEMY) %>" /></portlet:actionURL>');
@@ -159,7 +157,6 @@ if (user2 != null) {
 				id: '<portlet:namespace />blockButton',
 				label: '<%= UnicodeLanguageUtil.get(request, "block") %>',
 				render: true,
-				visible: <%= showBlockButton %>
 			}
 		)
 	);
@@ -167,7 +164,7 @@ if (user2 != null) {
 	contactsToolbarChildren.push(
 		new A.Button(
 			{
-				cssClass: 'more',
+				cssClass: 'more <%= showUnBlockButton ? "" : "hidden" %>',
 				on: {
 					click: function(event) {
 						<portlet:namespace />relationAction(event, '<portlet:actionURL name="deleteSocialRelation" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="type" value="<%= String.valueOf(SocialRelationConstants.TYPE_UNI_ENEMY) %>" /></portlet:actionURL>');
@@ -177,7 +174,6 @@ if (user2 != null) {
 				id: '<portlet:namespace />unblockButton',
 				label: '<%= UnicodeLanguageUtil.get(request, "unblock") %>',
 				render: true,
-				visible: <%= showUnBlockButton %>
 			}
 		)
 	);

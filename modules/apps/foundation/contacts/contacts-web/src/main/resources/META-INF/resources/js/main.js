@@ -862,8 +862,8 @@ AUI.add(
 					_showButton: function(node) {
 						node.show();
 
-						if (node.hasClass('btn-hidden')) {
-							node.removeClass('btn-hidden');
+						if (node.hasClass('hidden')) {
+							node.removeClass('hidden');
 						}
 					},
 

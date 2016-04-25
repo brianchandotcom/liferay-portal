@@ -7482,6 +7482,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 							<resource-root path="hsql.jar" />
 							<resource-root path="mariadb.jar" />
 							<resource-root path="mysql.jar" />
+							<resource-root path="ojdbc6.jar" />
 						]]>
 					</replacevalue>
 				</replace>

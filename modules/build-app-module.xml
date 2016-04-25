@@ -6,9 +6,15 @@
 
 	<property name="artifact.location.new" value="${osgi.dir}/marketplace/${Bundle-SymbolicName}-${Bundle-Version}.jar" />
 
-	<condition property="artifact.location.old" value="${osgi.dir}/portal/${Bundle-SymbolicName}.jar" else="${osgi.dir}/modules/${Bundle-SymbolicName}.jar">
+	<condition property="artifact.location.old" value="${osgi.dir}/portal/${Bundle-SymbolicName}.jar">
 		<contains string="${Bundle-SymbolicName}" substring="com.liferay.portal" />
 	</condition>
+
+	<condition property="artifact.location.old" value="${osgi.dir}/test/${Bundle-SymbolicName}.jar">
+		<contains string="${Bundle-SymbolicName}" substring=".test" />
+	</condition>
+
+	<property name="artifact.location.old" value="${osgi.dir}/modules/${Bundle-SymbolicName}.jar" />
 
 	<pathconvert property="releng.module.dir">
 		<filtermapper>

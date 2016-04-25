@@ -138,7 +138,7 @@ public class KBTemplateStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
-	protected void setKbTemplateLocalService(
+	protected void setKBTemplateLocalService(
 		KBTemplateLocalService kbTemplateLocalService) {
 
 		_kbTemplateLocalService = kbTemplateLocalService;

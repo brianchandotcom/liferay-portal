@@ -18,16 +18,24 @@ import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.impl.KBFolderImpl;
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
-import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(
+	immediate = true,
+	property = {"model.class.name=com.liferay.knowledge.base.model.KBFolder"},
+	service = KBArticleSelector.class
+)
 public class KBFolderKBArticleSelector implements KBArticleSelector {
 
 	@Override
@@ -41,7 +49,7 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 		if (ancestorResourcePrimKey !=
 				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			ancestorKBFolder = KBFolderLocalServiceUtil.fetchKBFolder(
+			ancestorKBFolder = _kbFolderLocalService.fetchKBFolder(
 				ancestorResourcePrimKey);
 
 			if (ancestorKBFolder == null) {
@@ -49,7 +57,7 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 			}
 		}
 
-		KBArticle kbArticle = KBArticleLocalServiceUtil.fetchLatestKBArticle(
+		KBArticle kbArticle = _kbArticleLocalService.fetchLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 
 		if ((kbArticle == null) || !isDescendant(kbArticle, ancestorKBFolder)) {
@@ -78,7 +86,7 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 		if (ancestorResourcePrimKey !=
 				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			ancestorKBFolder = KBFolderLocalServiceUtil.fetchKBFolder(
+			ancestorKBFolder = _kbFolderLocalService.fetchKBFolder(
 				ancestorResourcePrimKey);
 
 			if (ancestorKBFolder == null) {
@@ -93,15 +101,14 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 				kbFolder = ancestorKBFolder;
 			}
 			else {
-				kbFolder = KBFolderLocalServiceUtil.fetchKBFolderByUrlTitle(
+				kbFolder = _kbFolderLocalService.fetchKBFolderByUrlTitle(
 					groupId, ancestorKBFolder.getKbFolderId(),
 					kbFolderUrlTitle);
 			}
 		}
 
-		KBArticle kbArticle =
-			KBArticleLocalServiceUtil.fetchKBArticleByUrlTitle(
-				groupId, kbFolder.getKbFolderId(), urlTitle);
+		KBArticle kbArticle = _kbArticleLocalService.fetchKBArticleByUrlTitle(
+			groupId, kbFolder.getKbFolderId(), urlTitle);
 
 		if ((kbArticle == null) || !isDescendant(kbArticle, ancestorKBFolder)) {
 			return findClosestMatchingKBArticle(
@@ -122,15 +129,14 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 			groupId, preferredKBFolderUrlTitle, ancestorKBFolder,
 			kbFolderUrlTitle);
 
-		KBArticle kbArticle =
-			KBArticleLocalServiceUtil.fetchKBArticleByUrlTitle(
-				groupId, kbFolder.getKbFolderId(), urlTitle);
+		KBArticle kbArticle = _kbArticleLocalService.fetchKBArticleByUrlTitle(
+			groupId, kbFolder.getKbFolderId(), urlTitle);
 
 		if (kbArticle != null) {
 			return new KBArticleSelection(kbArticle, false);
 		}
 
-		kbArticle = KBArticleLocalServiceUtil.fetchFirstChildKBArticle(
+		kbArticle = _kbArticleLocalService.fetchFirstChildKBArticle(
 			groupId, kbFolder.getKbFolderId());
 
 		String[] keywords = StringUtil.split(urlTitle, '-');
@@ -145,20 +151,20 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 
 		KBFolder kbFolder = null;
 
-		int kbArticlesCount = KBArticleLocalServiceUtil.getKBArticlesCount(
+		int kbArticlesCount = _kbArticleLocalService.getKBArticlesCount(
 			groupId, ancestorKBFolder.getKbFolderId(),
 			WorkflowConstants.STATUS_APPROVED);
 
 		if (Validator.isNotNull(preferredKBFolderUrlTitle) &&
 			(kbArticlesCount == 0)) {
 
-			kbFolder = KBFolderLocalServiceUtil.fetchKBFolderByUrlTitle(
+			kbFolder = _kbFolderLocalService.fetchKBFolderByUrlTitle(
 				groupId, ancestorKBFolder.getKbFolderId(),
 				preferredKBFolderUrlTitle);
 		}
 
 		if ((kbFolder == null) && (kbArticlesCount == 0)) {
-			kbFolder = KBFolderLocalServiceUtil.fetchFirstChildKBFolder(
+			kbFolder = _kbFolderLocalService.fetchFirstChildKBFolder(
 				groupId, ancestorKBFolder.getKbFolderId());
 		}
 
@@ -166,9 +172,8 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 			kbFolder = ancestorKBFolder;
 		}
 
-		KBArticle kbArticle =
-			KBArticleLocalServiceUtil.fetchFirstChildKBArticle(
-				groupId, kbFolder.getKbFolderId());
+		KBArticle kbArticle = _kbArticleLocalService.fetchFirstChildKBArticle(
+			groupId, kbFolder.getKbFolderId());
 
 		return new KBArticleSelection(kbArticle, true);
 	}
@@ -181,24 +186,24 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 		KBFolder kbFolder = null;
 
 		if (Validator.isNotNull(kbFolderUrlTitle)) {
-			kbFolder = KBFolderLocalServiceUtil.fetchKBFolderByUrlTitle(
+			kbFolder = _kbFolderLocalService.fetchKBFolderByUrlTitle(
 				groupId, ancestorKBFolder.getKbFolderId(), kbFolderUrlTitle);
 		}
 
 		if ((kbFolder == null) &&
 			Validator.isNotNull(preferredKBFolderUrlTitle)) {
 
-			kbFolder = KBFolderLocalServiceUtil.fetchKBFolderByUrlTitle(
+			kbFolder = _kbFolderLocalService.fetchKBFolderByUrlTitle(
 				groupId, ancestorKBFolder.getKbFolderId(),
 				preferredKBFolderUrlTitle);
 		}
 
-		int kbArticlesCount = KBArticleLocalServiceUtil.getKBArticlesCount(
+		int kbArticlesCount = _kbArticleLocalService.getKBArticlesCount(
 			groupId, ancestorKBFolder.getKbFolderId(),
 			WorkflowConstants.STATUS_APPROVED);
 
 		if ((kbFolder == null) && (kbArticlesCount == 0)) {
-			kbFolder = KBFolderLocalServiceUtil.fetchFirstChildKBFolder(
+			kbFolder = _kbFolderLocalService.fetchFirstChildKBFolder(
 				groupId, ancestorKBFolder.getKbFolderId());
 		}
 
@@ -219,13 +224,13 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 			return true;
 		}
 
-		KBFolder parentKBFolder = KBFolderLocalServiceUtil.fetchKBFolder(
+		KBFolder parentKBFolder = _kbFolderLocalService.fetchKBFolder(
 			kbArticle.getKbFolderId());
 
 		while ((parentKBFolder != null) &&
 			   !parentKBFolder.equals(ancestorKBFolder)) {
 
-			parentKBFolder = KBFolderLocalServiceUtil.fetchKBFolder(
+			parentKBFolder = _kbFolderLocalService.fetchKBFolder(
 				parentKBFolder.getParentKBFolderId());
 		}
 
@@ -236,6 +241,20 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 		return false;
 	}
 
+	@Reference(unbind = "-")
+	protected void setKBArticleLocalService(
+		KBArticleLocalService kbArticleLocalService) {
+
+		_kbArticleLocalService = kbArticleLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKBFolderLocalService(
+		KBFolderLocalService kbFolderLocalService) {
+
+		_kbFolderLocalService = kbFolderLocalService;
+	}
+
 	private static final KBFolder _rootKBFolder;
 
 	static {
@@ -243,5 +262,8 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 
 		_rootKBFolder.setKbFolderId(KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
+
+	private KBArticleLocalService _kbArticleLocalService;
+	private KBFolderLocalService _kbFolderLocalService;
 
 }

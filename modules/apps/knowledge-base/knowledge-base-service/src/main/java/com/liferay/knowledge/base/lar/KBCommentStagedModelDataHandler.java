@@ -87,7 +87,7 @@ public class KBCommentStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
-	public void setKbCommentLocalService(
+	public void setKBCommentLocalService(
 		KBCommentLocalService kbCommentLocalService) {
 
 		_kbCommentLocalService = kbCommentLocalService;

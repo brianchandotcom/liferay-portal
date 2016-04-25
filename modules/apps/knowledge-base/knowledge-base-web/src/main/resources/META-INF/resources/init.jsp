@@ -132,6 +132,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
 page import="com.liferay.portal.kernel.util.PropsUtil" %><%@
+page import="com.liferay.portal.kernel.util.RSSUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
@@ -144,7 +145,6 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType" %><%@
 page import="com.liferay.taglib.search.DateSearchEntry" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.util.RSSUtil" %><%@
 page import="com.liferay.wiki.model.WikiPage" %>
 
 <%@ page import="java.math.BigDecimal" %>

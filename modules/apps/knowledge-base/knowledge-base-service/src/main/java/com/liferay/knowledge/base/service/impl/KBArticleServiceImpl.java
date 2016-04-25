@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.util.RSSUtil;
+import com.liferay.rss.util.RSSUtil;
 
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
@@ -288,7 +288,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getKBArticleAndAllDescendantKBArticles(long, long, int,
-	 *             com.liferay.portal.kernel.util.OrderByComparator)}
+	 *             OrderByComparator)}
 	 */
 	@Deprecated
 	@Override
@@ -598,7 +598,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #getKBArticles(long, long,
 	 *             int, int, int,
-	 *             com.liferay.portal.kernel.util.OrderByComparator)}
+	 *             OrderByComparator)}
 	 */
 	@Deprecated
 	@Override

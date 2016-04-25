@@ -153,7 +153,7 @@ public class KBFolderStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
-	protected void setKbFolderLocalService(
+	protected void setKBFolderLocalService(
 		KBFolderLocalService kbFolderLocalService) {
 
 		_kbFolderLocalService = kbFolderLocalService;

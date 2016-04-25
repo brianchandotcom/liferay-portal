@@ -19,22 +19,15 @@ import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.KBArticleService;
-import com.liferay.knowledge.base.service.KBCommentLocalService;
-import com.liferay.knowledge.base.service.KBCommentService;
-import com.liferay.knowledge.base.service.KBFolderService;
-import com.liferay.knowledge.base.service.KBTemplateService;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -46,7 +39,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Shin
@@ -94,7 +86,7 @@ public class SearchPortlet extends BaseKBPortlet {
 				renderRequest, "resourcePrimKey");
 
 			if (resourcePrimKey > 0) {
-				kbArticle = _kbArticleService.getLatestKBArticle(
+				kbArticle = kbArticleService.getLatestKBArticle(
 					resourcePrimKey, status);
 			}
 
@@ -151,40 +143,6 @@ public class SearchPortlet extends BaseKBPortlet {
 		}
 	}
 
-	@Override
-	protected JSONFactory getJSONFactory() {
-		return _jsonFactory;
-	}
-
-	@Override
-	protected KBArticleService getKBArticleService() {
-		return _kbArticleService;
-	}
-
-	@Override
-	protected KBCommentLocalService getKBCommentLocalService() {
-		return _kbCommentLocalService;
-	}
-
-	@Override
-	protected KBCommentService getKBCommentService() {
-		return _kbCommentService;
-	}
-
-	@Override
-	protected KBFolderService getKBFolderService() {
-		return _kbFolderService;
-	}
-
-	protected KBTemplateService getKBTemplateService() {
-		return _kbTemplateService;
-	}
-
-	@Override
-	protected Portal getPortal() {
-		return _portal;
-	}
-
 	protected int getStatus(RenderRequest renderRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			KBWebKeys.THEME_DISPLAY);
@@ -219,50 +177,5 @@ public class SearchPortlet extends BaseKBPortlet {
 
 		return WorkflowConstants.STATUS_APPROVED;
 	}
-
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBArticleService(KBArticleService kbArticleService) {
-		_kbArticleService = kbArticleService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBCommentLocalService(
-		KBCommentLocalService kbCommentLocalService) {
-
-		_kbCommentLocalService = kbCommentLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBCommentService(KBCommentService kbCommentService) {
-		_kbCommentService = kbCommentService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBFolderService(KBFolderService kbFolderService) {
-		_kbFolderService = kbFolderService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBTemplateService(KBTemplateService kbTemplateService) {
-		_kbTemplateService = kbTemplateService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
-	private JSONFactory _jsonFactory;
-	private KBArticleService _kbArticleService;
-	private KBCommentLocalService _kbCommentLocalService;
-	private KBCommentService _kbCommentService;
-	private KBFolderService _kbFolderService;
-	private KBTemplateService _kbTemplateService;
-	private Portal _portal;
 
 }

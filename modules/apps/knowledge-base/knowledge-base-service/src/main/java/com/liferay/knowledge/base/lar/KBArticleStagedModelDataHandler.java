@@ -421,7 +421,7 @@ public class KBArticleStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
-	protected void setKbArticlePersistence(
+	protected void setKBArticlePersistence(
 		KBArticlePersistence kbArticlePersistence) {
 
 		_kbArticlePersistence = kbArticlePersistence;

@@ -170,7 +170,7 @@ public class KBArticleAssetRendererFactory
 	}
 
 	@Reference(unbind = "-")
-	protected void setKbArticleLocalService(
+	protected void setKBArticleLocalService(
 		KBArticleLocalService kbArticleLocalService) {
 
 		_kbArticleLocalService = kbArticleLocalService;

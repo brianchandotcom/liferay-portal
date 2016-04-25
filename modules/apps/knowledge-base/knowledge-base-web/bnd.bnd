@@ -7,4 +7,5 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Knowledge Base
 Web-ContextPath: /knowledge-base-web
+-dsannotations-options: inherit
 -liferay-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/RSSUtil.class

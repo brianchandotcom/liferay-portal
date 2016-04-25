@@ -26,15 +26,9 @@ import com.liferay.knowledge.base.exception.NoSuchTemplateException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.KBTemplate;
-import com.liferay.knowledge.base.service.KBArticleService;
-import com.liferay.knowledge.base.service.KBCommentLocalService;
-import com.liferay.knowledge.base.service.KBCommentService;
-import com.liferay.knowledge.base.service.KBFolderService;
-import com.liferay.knowledge.base.service.KBTemplateService;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -47,7 +41,6 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -73,7 +66,6 @@ import javax.portlet.RenderResponse;
 import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Shin
@@ -119,7 +111,7 @@ public class AdminPortlet extends BaseKBPortlet {
 		long[] resourcePrimKeys = StringUtil.split(
 			ParamUtil.getString(actionRequest, "resourcePrimKeys"), 0L);
 
-		_kbArticleService.deleteKBArticles(
+		kbArticleService.deleteKBArticles(
 			themeDisplay.getScopeGroupId(), resourcePrimKeys);
 	}
 
@@ -129,7 +121,7 @@ public class AdminPortlet extends BaseKBPortlet {
 
 		long kbFolderId = ParamUtil.getLong(actionRequest, "kbFolderId");
 
-		_kbFolderService.deleteKBFolder(kbFolderId);
+		kbFolderService.deleteKBFolder(kbFolderId);
 	}
 
 	public void deleteKBTemplate(
@@ -138,7 +130,7 @@ public class AdminPortlet extends BaseKBPortlet {
 
 		long kbTemplateId = ParamUtil.getLong(actionRequest, "kbTemplateId");
 
-		_kbTemplateService.deleteKBTemplate(kbTemplateId);
+		kbTemplateService.deleteKBTemplate(kbTemplateId);
 	}
 
 	public void deleteKBTemplates(
@@ -151,7 +143,7 @@ public class AdminPortlet extends BaseKBPortlet {
 		long[] kbTemplateIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "kbTemplateIds"), 0L);
 
-		_kbTemplateService.deleteKBTemplates(
+		kbTemplateService.deleteKBTemplates(
 			themeDisplay.getScopeGroupId(), kbTemplateIds);
 	}
 
@@ -191,7 +183,7 @@ public class AdminPortlet extends BaseKBPortlet {
 			serviceContext.setGuestPermissions(new String[] {ActionKeys.VIEW});
 
 			int importedKBArticlesCount =
-				_kbArticleService.addKBArticlesMarkdown(
+				kbArticleService.addKBArticlesMarkdown(
 					themeDisplay.getScopeGroupId(), parentKBFolderId, fileName,
 					prioritizeByNumericalPrefix, inputStream, serviceContext);
 
@@ -230,7 +222,7 @@ public class AdminPortlet extends BaseKBPortlet {
 			if ((resourcePrimKey > 0) &&
 				(resourceClassNameId == kbArticleClassNameId)) {
 
-				kbArticle = _kbArticleService.getLatestKBArticle(
+				kbArticle = kbArticleService.getLatestKBArticle(
 					resourcePrimKey, status);
 			}
 
@@ -243,7 +235,7 @@ public class AdminPortlet extends BaseKBPortlet {
 				renderRequest, "kbTemplateId");
 
 			if (kbTemplateId > 0) {
-				kbTemplate = _kbTemplateService.getKBTemplate(kbTemplateId);
+				kbTemplate = kbTemplateService.getKBTemplate(kbTemplateId);
 			}
 
 			renderRequest.setAttribute(
@@ -273,7 +265,7 @@ public class AdminPortlet extends BaseKBPortlet {
 
 		String portletId = PortalUtil.getPortletId(actionRequest);
 
-		_kbArticleService.subscribeGroupKBArticles(
+		kbArticleService.subscribeGroupKBArticles(
 			themeDisplay.getScopeGroupId(), portletId);
 	}
 
@@ -286,7 +278,7 @@ public class AdminPortlet extends BaseKBPortlet {
 
 		String portletId = PortalUtil.getPortletId(actionRequest);
 
-		_kbArticleService.unsubscribeGroupKBArticles(
+		kbArticleService.unsubscribeGroupKBArticles(
 			themeDisplay.getScopeGroupId(), portletId);
 	}
 
@@ -315,7 +307,7 @@ public class AdminPortlet extends BaseKBPortlet {
 			resourcePrimKeyToPriorityMap.put(resourcePrimKey, priority);
 		}
 
-		_kbArticleService.updateKBArticlesPriorities(
+		kbArticleService.updateKBArticlesPriorities(
 			themeDisplay.getScopeGroupId(), resourcePrimKeyToPriorityMap);
 	}
 
@@ -341,12 +333,12 @@ public class AdminPortlet extends BaseKBPortlet {
 			KBFolder.class.getName(), actionRequest);
 
 		if (cmd.equals(Constants.ADD)) {
-			_kbFolderService.addKBFolder(
+			kbFolderService.addKBFolder(
 				themeDisplay.getScopeGroupId(), parentResourceClassNameId,
 				parentResourcePrimKey, name, description, serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
-			_kbFolderService.updateKBFolder(
+			kbFolderService.updateKBFolder(
 				parentResourceClassNameId, parentResourcePrimKey, kbFolderId,
 				name, description);
 		}
@@ -369,11 +361,11 @@ public class AdminPortlet extends BaseKBPortlet {
 			KBTemplate.class.getName(), actionRequest);
 
 		if (cmd.equals(Constants.ADD)) {
-			_kbTemplateService.addKBTemplate(
+			kbTemplateService.addKBTemplate(
 				portletId, title, content, serviceContext);
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
-			_kbTemplateService.updateKBTemplate(
+			kbTemplateService.updateKBTemplate(
 				kbTemplateId, title, content, serviceContext);
 		}
 	}
@@ -432,36 +424,6 @@ public class AdminPortlet extends BaseKBPortlet {
 	}
 
 	@Override
-	protected JSONFactory getJSONFactory() {
-		return _jsonFactory;
-	}
-
-	@Override
-	protected KBArticleService getKBArticleService() {
-		return _kbArticleService;
-	}
-
-	@Override
-	protected KBCommentLocalService getKBCommentLocalService() {
-		return _kbCommentLocalService;
-	}
-
-	@Override
-	protected KBCommentService getKBCommentService() {
-		return _kbCommentService;
-	}
-
-	@Override
-	protected KBFolderService getKBFolderService() {
-		return _kbFolderService;
-	}
-
-	@Override
-	protected Portal getPortal() {
-		return _portal;
-	}
-
-	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
 		if (cause instanceof KBArticleImportException ||
 			cause instanceof KBTemplateContentException ||
@@ -474,50 +436,5 @@ public class AdminPortlet extends BaseKBPortlet {
 
 		return false;
 	}
-
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBArticleService(KBArticleService kbArticleService) {
-		_kbArticleService = kbArticleService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBCommentLocalService(
-		KBCommentLocalService kbCommentLocalService) {
-
-		_kbCommentLocalService = kbCommentLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBCommentService(KBCommentService kbCommentService) {
-		_kbCommentService = kbCommentService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBFolderService(KBFolderService kbFolderService) {
-		_kbFolderService = kbFolderService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBTemplateService(KBTemplateService kbTemplateService) {
-		_kbTemplateService = kbTemplateService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
-	private JSONFactory _jsonFactory;
-	private KBArticleService _kbArticleService;
-	private KBCommentLocalService _kbCommentLocalService;
-	private KBCommentService _kbCommentService;
-	private KBFolderService _kbFolderService;
-	private KBTemplateService _kbTemplateService;
-	private Portal _portal;
 
 }

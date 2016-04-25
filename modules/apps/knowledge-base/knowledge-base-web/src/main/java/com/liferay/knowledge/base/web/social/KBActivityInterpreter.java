@@ -241,21 +241,21 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Reference(unbind = "-")
-	protected void setKbArticleLocalService(
+	protected void setKBArticleLocalService(
 		KBArticleLocalService kbArticleLocalService) {
 
 		_kbArticleLocalService = kbArticleLocalService;
 	}
 
 	@Reference(unbind = "-")
-	protected void setKbCommentLocalService(
+	protected void setKBCommentLocalService(
 		KBCommentLocalService kbCommentLocalService) {
 
 		_kbCommentLocalService = kbCommentLocalService;
 	}
 
 	@Reference(unbind = "-")
-	protected void setKbTemplateLocalService(
+	protected void setKBTemplateLocalService(
 		KBTemplateLocalService kbTemplateLocalService) {
 
 		_kbTemplateLocalService = kbTemplateLocalService;

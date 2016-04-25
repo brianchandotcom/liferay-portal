@@ -21,22 +21,16 @@ import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
-import com.liferay.knowledge.base.service.KBArticleService;
-import com.liferay.knowledge.base.service.KBCommentLocalService;
-import com.liferay.knowledge.base.service.KBCommentService;
-import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -131,11 +125,6 @@ public class SectionPortlet extends BaseKBPortlet {
 		}
 	}
 
-	@Override
-	protected JSONFactory getJSONFactory() {
-		return _jsonFactory;
-	}
-
 	protected KBArticle getKBArticle(RenderRequest renderRequest, int status)
 		throws PortalException {
 
@@ -143,8 +132,7 @@ public class SectionPortlet extends BaseKBPortlet {
 			renderRequest, "resourcePrimKey");
 
 		if (resourcePrimKey > 0) {
-			return _kbArticleService.getLatestKBArticle(
-				resourcePrimKey, status);
+			return kbArticleService.getLatestKBArticle(resourcePrimKey, status);
 		}
 
 		String urlTitle = ParamUtil.getString(renderRequest, "urlTitle");
@@ -153,7 +141,7 @@ public class SectionPortlet extends BaseKBPortlet {
 			return null;
 		}
 
-		long groupId = _portal.getScopeGroupId(renderRequest);
+		long groupId = portal.getScopeGroupId(renderRequest);
 
 		String kbFolderUrlTitle = ParamUtil.getString(
 			renderRequest, "kbFolderUrlTitle");
@@ -165,31 +153,6 @@ public class SectionPortlet extends BaseKBPortlet {
 
 		return _kbArticleLocalService.getKBArticleByUrlTitle(
 			groupId, KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, urlTitle);
-	}
-
-	@Override
-	protected KBArticleService getKBArticleService() {
-		return _kbArticleService;
-	}
-
-	@Override
-	protected KBCommentLocalService getKBCommentLocalService() {
-		return _kbCommentLocalService;
-	}
-
-	@Override
-	protected KBCommentService getKBCommentService() {
-		return _kbCommentService;
-	}
-
-	@Override
-	protected KBFolderService getKBFolderService() {
-		return _kbFolderService;
-	}
-
-	@Override
-	protected Portal getPortal() {
-		return _portal;
 	}
 
 	protected int getStatus(RenderRequest renderRequest) throws Exception {
@@ -228,50 +191,12 @@ public class SectionPortlet extends BaseKBPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		_jsonFactory = jsonFactory;
-	}
-
-	@Reference(unbind = "-")
 	protected void setKBArticleLocalService(
 		KBArticleLocalService kbArticleLocalService) {
 
 		_kbArticleLocalService = kbArticleLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setKBArticleService(KBArticleService kbArticleService) {
-		_kbArticleService = kbArticleService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBCommentLocalService(
-		KBCommentLocalService kbCommentLocalService) {
-
-		_kbCommentLocalService = kbCommentLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBCommentService(KBCommentService kbCommentService) {
-		_kbCommentService = kbCommentService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setKBFolderService(KBFolderService kbFolderService) {
-		_kbFolderService = kbFolderService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setPortal(Portal portal) {
-		_portal = portal;
-	}
-
-	private JSONFactory _jsonFactory;
 	private KBArticleLocalService _kbArticleLocalService;
-	private KBArticleService _kbArticleService;
-	private KBCommentLocalService _kbCommentLocalService;
-	private KBCommentService _kbCommentService;
-	private KBFolderService _kbFolderService;
-	private Portal _portal;
 
 }

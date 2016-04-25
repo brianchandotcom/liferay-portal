@@ -35,6 +35,7 @@ import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBCommentLocalService;
 import com.liferay.knowledge.base.service.KBCommentService;
 import com.liferay.knowledge.base.service.KBFolderService;
+import com.liferay.knowledge.base.service.KBTemplateService;
 import com.liferay.knowledge.base.service.util.KnowledgeBaseConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -73,6 +74,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Adolfo Pérez
  */
@@ -81,8 +84,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	public void addTempAttachment(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
-
-		Portal portal = getPortal();
 
 		UploadPortletRequest uploadPortletRequest =
 			portal.getUploadPortletRequest(actionRequest);
@@ -99,8 +100,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		InputStream inputStream = null;
 
 		try {
-			KBArticleService kbArticleService = getKBArticleService();
-
 			inputStream = uploadPortletRequest.getFileAsStream("file");
 
 			String mimeType = uploadPortletRequest.getContentType("file");
@@ -118,8 +117,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		KBArticleService kbArticleService = getKBArticleService();
-
 		long resourcePrimKey = ParamUtil.getLong(
 			actionRequest, "resourcePrimKey");
 
@@ -136,8 +133,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		if (!themeDisplay.isSignedIn()) {
 			return;
 		}
-
-		KBCommentService kbCommentService = getKBCommentService();
 
 		long kbCommentId = ParamUtil.getLong(actionRequest, "kbCommentId");
 
@@ -157,13 +152,9 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			actionRequest, "resourcePrimKey");
 		String fileName = ParamUtil.getString(actionRequest, "fileName");
 
-		JSONFactory jsonFactory = getJSONFactory();
-
 		JSONObject jsonObject = jsonFactory.createJSONObject();
 
 		try {
-			KBArticleService kbArticleService = getKBArticleService();
-
 			kbArticleService.deleteTempAttachment(
 				themeDisplay.getScopeGroupId(), resourcePrimKey, fileName,
 				KnowledgeBaseConstants.TEMP_FOLDER_NAME);
@@ -185,8 +176,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		Portal portal = getPortal();
-
 		long resourceClassNameId = ParamUtil.getLong(
 			actionRequest, "resourceClassNameId");
 		long resourcePrimKey = ParamUtil.getLong(
@@ -203,15 +192,11 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			KBArticleConstants.getClassName());
 
 		if (resourceClassNameId == kbArticleClassNameId) {
-			KBArticleService kbArticleService = getKBArticleService();
-
 			kbArticleService.moveKBArticle(
 				resourcePrimKey, parentResourceClassNameId,
 				parentResourcePrimKey, priority);
 		}
 		else {
-			KBFolderService kbFolderService = getKBFolderService();
-
 			kbFolderService.moveKBFolder(
 				resourcePrimKey, parentResourcePrimKey);
 		}
@@ -220,8 +205,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	public void serveKBArticleRSS(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
-
-		Portal portal = getPortal();
 
 		PortletPreferences portletPreferences =
 			resourceRequest.getPreferences();
@@ -234,8 +217,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 			return;
 		}
-
-		KBArticleService kbArticleService = getKBArticleService();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -284,8 +265,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		KBArticleService kbArticleService = getKBArticleService();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -300,8 +279,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		KBArticleService kbArticleService = getKBArticleService();
-
 		long resourcePrimKey = ParamUtil.getLong(
 			actionRequest, "resourcePrimKey");
 
@@ -311,8 +288,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 	public void updateKBArticle(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
-
-		Portal portal = getPortal();
 
 		String portletId = portal.getPortletId(actionRequest);
 
@@ -344,8 +319,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			KBArticle.class.getName(), actionRequest);
-
-		KBArticleService kbArticleService = getKBArticleService();
 
 		if (cmd.equals(Constants.ADD)) {
 			kbArticle = kbArticleService.addKBArticle(
@@ -392,9 +365,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		KBCommentLocalService kbCommentLocalService =
-			getKBCommentLocalService();
-
 		long kbCommentId = ParamUtil.getLong(actionRequest, "kbCommentId");
 
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
@@ -413,8 +383,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		}
 		else if (cmd.equals(Constants.UPDATE)) {
 			if (status == KBCommentConstants.STATUS_ANY) {
-				KBCommentService kbCommentService = getKBCommentService();
-
 				KBComment kbComment = kbCommentService.getKBComment(
 					kbCommentId);
 
@@ -433,8 +401,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortalException {
 
-		KBCommentService kbCommentService = getKBCommentService();
-
 		long kbCommentId = ParamUtil.getLong(actionRequest, "kbCommentId");
 
 		int status = ParamUtil.getInteger(actionRequest, "kbCommentStatus");
@@ -451,8 +417,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse,
 			KBArticle kbArticle)
 		throws PortalException {
-
-		Portal portal = getPortal();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -505,18 +469,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		}
 	}
 
-	protected abstract JSONFactory getJSONFactory();
-
-	protected abstract KBArticleService getKBArticleService();
-
-	protected abstract KBCommentLocalService getKBCommentLocalService();
-
-	protected abstract KBCommentService getKBCommentService();
-
-	protected abstract KBFolderService getKBFolderService();
-
-	protected abstract Portal getPortal();
-
 	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
 		if (cause instanceof AssetCategoryException ||
@@ -539,5 +491,50 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 		return false;
 	}
+
+	@Reference(unbind = "-")
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		this.jsonFactory = jsonFactory;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKBArticleService(KBArticleService kbArticleService) {
+		this.kbArticleService = kbArticleService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKBCommentLocalService(
+		KBCommentLocalService kbCommentLocalService) {
+
+		this.kbCommentLocalService = kbCommentLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKBCommentService(KBCommentService kbCommentService) {
+		this.kbCommentService = kbCommentService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKBFolderService(KBFolderService kbFolderService) {
+		this.kbFolderService = kbFolderService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKBTemplateService(KBTemplateService kbTemplateService) {
+		this.kbTemplateService = kbTemplateService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortal(Portal portal) {
+		this.portal = portal;
+	}
+
+	protected JSONFactory jsonFactory;
+	protected KBArticleService kbArticleService;
+	protected KBCommentLocalService kbCommentLocalService;
+	protected KBCommentService kbCommentService;
+	protected KBFolderService kbFolderService;
+	protected KBTemplateService kbTemplateService;
+	protected Portal portal;
 
 }

@@ -14,21 +14,22 @@
 
 package com.liferay.knowledge.base.web.selector;
 
-import com.liferay.knowledge.base.exception.NoSuchKBArticleSelectorException;
-import com.liferay.knowledge.base.service.util.PortletPropsKeys;
-import com.liferay.knowledge.base.service.util.ServiceProps;
-import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
+@Component(immediate = true, service = KBArticleSelectorFactory.class)
 public class DefaultKBArticleSelectorFactory
 	implements KBArticleSelectorFactory {
 
@@ -36,57 +37,30 @@ public class DefaultKBArticleSelectorFactory
 	public KBArticleSelector getKBArticleSelector(long classNameId)
 		throws PortalException {
 
-		ClassName className = ClassNameLocalServiceUtil.getClassName(
-			classNameId);
+		ClassName className = _classNameLocalService.getClassName(classNameId);
 
-		return getKBArticleSelector(className.getClassName());
+		return _serviceTrackerMap.getService(className.getClassName());
 	}
 
-	protected KBArticleSelector createKBArticleSelector(String className)
-		throws NoSuchKBArticleSelectorException {
-
-		try {
-			String kbArticleSelectorClassName = ServiceProps.get(
-				PortletPropsKeys.KNOWLEDGE_BASE_DISPLAY_SELECTOR,
-				new Filter(className));
-
-			if (Validator.isNull(kbArticleSelectorClassName)) {
-				throw new NoSuchKBArticleSelectorException(
-					"No KBArticleSelector found for key " + className);
-			}
-
-			Class<?> kbArticleSelectorClass = Class.forName(
-				kbArticleSelectorClassName);
-
-			return (KBArticleSelector)kbArticleSelectorClass.newInstance();
-		}
-		catch (ClassNotFoundException cnfe) {
-			throw new NoSuchKBArticleSelectorException(cnfe);
-		}
-		catch (InstantiationException ie) {
-			throw new NoSuchKBArticleSelectorException(ie);
-		}
-		catch (IllegalAccessException iae) {
-			throw new NoSuchKBArticleSelectorException(iae);
-		}
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, KBArticleSelector.class, "model.class.name");
 	}
 
-	protected KBArticleSelector getKBArticleSelector(String className)
-		throws PortalException {
-
-		KBArticleSelector kbArticleSelector = _kbArticleSelectorMap.get(
-			className);
-
-		if (kbArticleSelector == null) {
-			kbArticleSelector = createKBArticleSelector(className);
-
-			_kbArticleSelectorMap.put(className, kbArticleSelector);
-		}
-
-		return kbArticleSelector;
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
-	private final Map<String, KBArticleSelector> _kbArticleSelectorMap =
-		new ConcurrentHashMap<>();
+	@Reference(unbind = "-")
+	protected void setClassNameLocalService(
+		ClassNameLocalService classNameLocalService) {
+
+		_classNameLocalService = classNameLocalService;
+	}
+
+	private ClassNameLocalService _classNameLocalService;
+	private ServiceTrackerMap<String, KBArticleSelector> _serviceTrackerMap;
 
 }

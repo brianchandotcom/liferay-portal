@@ -15,13 +15,21 @@
 package com.liferay.knowledge.base.web.selector;
 
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
+@Component(
+	immediate = true,
+	property = {"model.class.name=com.liferay.knowledge.base.model.KBArticle"},
+	service = KBArticleSelector.class
+)
 public class KBArticleKBArticleSelector implements KBArticleSelector {
 
 	@Override
@@ -31,14 +39,14 @@ public class KBArticleKBArticleSelector implements KBArticleSelector {
 		throws PortalException {
 
 		KBArticle ancestorKBArticle =
-			KBArticleLocalServiceUtil.fetchLatestKBArticle(
+			_kbArticleLocalService.fetchLatestKBArticle(
 				ancestorResourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 
 		if (ancestorKBArticle == null) {
 			return new KBArticleSelection(null, false);
 		}
 
-		KBArticle kbArticle = KBArticleLocalServiceUtil.fetchLatestKBArticle(
+		KBArticle kbArticle = _kbArticleLocalService.fetchLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 
 		return getClosestMatchingDescendantKBArticle(
@@ -53,7 +61,7 @@ public class KBArticleKBArticleSelector implements KBArticleSelector {
 		throws PortalException {
 
 		KBArticle ancestorKBArticle =
-			KBArticleLocalServiceUtil.fetchLatestKBArticle(
+			_kbArticleLocalService.fetchLatestKBArticle(
 				ancestorResourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 
 		if (ancestorKBArticle == null) {
@@ -61,7 +69,7 @@ public class KBArticleKBArticleSelector implements KBArticleSelector {
 		}
 
 		KBArticle kbArticle =
-			KBArticleLocalServiceUtil.fetchLatestKBArticleByUrlTitle(
+			_kbArticleLocalService.fetchLatestKBArticleByUrlTitle(
 				groupId, ancestorKBArticle.getKbFolderId(), urlTitle,
 				WorkflowConstants.STATUS_APPROVED);
 
@@ -77,7 +85,7 @@ public class KBArticleKBArticleSelector implements KBArticleSelector {
 
 		while (candidateKBArticle != null) {
 			KBArticle matchingKBArticle =
-				KBArticleLocalServiceUtil.fetchKBArticleByUrlTitle(
+				_kbArticleLocalService.fetchKBArticleByUrlTitle(
 					groupId, ancestorKBArticle.getKbFolderId(),
 					candidateKBArticle.getUrlTitle());
 
@@ -129,5 +137,14 @@ public class KBArticleKBArticleSelector implements KBArticleSelector {
 
 		return false;
 	}
+
+	@Reference(unbind = "-")
+	protected void setKBArticleLocalService(
+		KBArticleLocalService kbArticleLocalService) {
+
+		_kbArticleLocalService = kbArticleLocalService;
+	}
+
+	private KBArticleLocalService _kbArticleLocalService;
 
 }

@@ -266,14 +266,14 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 	}
 
 	@Reference(unbind = "-")
-	protected void setKbArticleLocalService(
+	protected void setKBArticleLocalService(
 		KBArticleLocalService kbArticleLocalService) {
 
 		_kbArticleLocalService = kbArticleLocalService;
 	}
 
 	@Reference(unbind = "-")
-	protected void setKbFolderLocalService(
+	protected void setKBFolderLocalService(
 		KBFolderLocalService kbFolderLocalService) {
 
 		_kbFolderLocalService = kbFolderLocalService;

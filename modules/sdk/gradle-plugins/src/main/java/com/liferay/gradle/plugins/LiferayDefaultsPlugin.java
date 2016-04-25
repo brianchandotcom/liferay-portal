@@ -32,6 +32,11 @@ public class LiferayDefaultsPlugin extends LiferayPlugin {
 	}
 
 	@Override
+	protected Class<? extends Plugin<Project>> getAntPluginClass() {
+		return LiferayAntDefaultsPlugin.class;
+	}
+
+	@Override
 	protected Class<? extends Plugin<Project>> getOSGiPluginClass() {
 		return LiferayOSGiDefaultsPlugin.class;
 	}

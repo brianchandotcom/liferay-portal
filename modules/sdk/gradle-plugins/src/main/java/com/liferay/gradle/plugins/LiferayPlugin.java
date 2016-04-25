@@ -38,7 +38,10 @@ public class LiferayPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		Class<? extends Plugin<Project>> clazz;
 
-		if (isOSGi(project)) {
+		if (isAnt(project)) {
+			clazz = getAntPluginClass();
+		}
+		else if (isOSGi(project)) {
 			clazz = getOSGiPluginClass();
 		}
 		else if (isTheme(project)) {
@@ -51,6 +54,10 @@ public class LiferayPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, clazz);
 	}
 
+	protected Class<? extends Plugin<Project>> getAntPluginClass() {
+		return LiferayAntPlugin.class;
+	}
+
 	protected Class<? extends Plugin<Project>> getBasePluginClass() {
 		return LiferayBasePlugin.class;
 	}
@@ -61,6 +68,14 @@ public class LiferayPlugin implements Plugin<Project> {
 
 	protected Class<? extends Plugin<Project>> getThemePluginClass() {
 		return LiferayThemePlugin.class;
+	}
+
+	protected boolean isAnt(Project project) {
+		if (FileUtil.exists(project, "build.xml")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected boolean isOSGi(Project project) {

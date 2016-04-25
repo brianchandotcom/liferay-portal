@@ -14,14 +14,10 @@
 
 package com.liferay.gradle.plugins;
 
-import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.util.GradleUtil;
-import com.liferay.gradle.plugins.util.IncrementVersionClosure;
 
-import java.io.File;
-
-import java.util.concurrent.Callable;
+import groovy.lang.Closure;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
@@ -36,11 +32,11 @@ import org.gradle.api.tasks.Upload;
 /**
  * @author Andrea Di Giorgi
  */
-public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
+public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		GradleUtil.applyPlugin(project, LiferayThemePlugin.class);
+		GradleUtil.applyPlugin(project, LiferayAntPlugin.class);
 
 		applyPlugins(project);
 
@@ -53,7 +49,6 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		final ReplaceRegexTask updateVersionTask = addTaskUpdateVersion(
 			project);
 
-		configureDeployDir(project);
 		configureProject(project);
 
 		project.afterEvaluate(
@@ -75,7 +70,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 	protected Upload addTaskInstall(Project project) {
 		Upload upload = GradleUtil.addTask(
-			project, MavenPlugin.INSTALL_TASK_NAME, Upload.class);
+			project, MavenPlugin.INSTALL_TASK_NAME, Upload.class, true);
 
 		Configuration configuration = GradleUtil.getConfiguration(
 			project, Dependency.ARCHIVES_CONFIGURATION);
@@ -93,13 +88,25 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			project, LiferayRelengPlugin.UPDATE_VERSION_TASK_NAME,
 			ReplaceRegexTask.class);
 
-		replaceRegexTask.match("\\n\\t\"version\": \"(.+)\"", "package.json");
+		replaceRegexTask.match(
+			"module-incremental-version=(\\d+)",
+			"docroot/WEB-INF/liferay-plugin-package.properties");
 
 		replaceRegexTask.setDescription(
-			"Updates the project version in the package.json file.");
+			"Updates \"module-incremental-version\" in the " +
+				"liferay-plugin-package.properties file.");
 
 		replaceRegexTask.setReplacement(
-			IncrementVersionClosure.MICRO_INCREMENT);
+			new Closure<String>(null) {
+
+				@SuppressWarnings("unused")
+				public String doCall(String group) {
+					int moduleIncrementalVersion = Integer.parseInt(group);
+
+					return String.valueOf(moduleIncrementalVersion + 1);
+				}
+
+			});
 
 		return replaceRegexTask;
 	}
@@ -115,28 +122,12 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, MavenPlugin.class);
 	}
 
-	protected void configureDeployDir(Project project) {
-		final LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
-
-		liferayExtension.setDeployDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return new File(
-						liferayExtension.getLiferayHome(), "deploy");
-				}
-
-			});
-	}
-
 	protected void configureProject(Project project) {
 		project.setGroup(_GROUP);
 	}
 
 	protected void configureTaskUploadArchives(
-		Project project, Task updateThemeVersionTask) {
+		Project project, Task updatePluginVersionTask) {
 
 		if (GradleUtil.isSnapshot(project)) {
 			return;
@@ -145,7 +136,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		Task uploadArchivesTask = GradleUtil.getTask(
 			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
 
-		uploadArchivesTask.finalizedBy(updateThemeVersionTask);
+		uploadArchivesTask.finalizedBy(updatePluginVersionTask);
 	}
 
 	private static final String _GROUP = "com.liferay.plugins";

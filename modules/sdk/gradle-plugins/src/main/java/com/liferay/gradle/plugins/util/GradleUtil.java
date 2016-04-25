@@ -34,6 +34,7 @@ import org.gradle.StartParameter;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.artifacts.ArtifactRepositoryContainer;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.ArtifactRepository;
@@ -54,6 +55,17 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 	public static final String PORTAL_TOOL_GROUP = "com.liferay";
 
 	public static final String SNAPSHOT_PROPERTY_NAME = "snapshot";
+
+	public static <T extends Task> T addTask(
+		Project project, String name, Class<T> clazz, boolean overwrite) {
+
+		Map<String, Object> args = new HashMap<>();
+
+		args.put(Task.TASK_OVERWRITE, overwrite);
+		args.put(Task.TASK_TYPE, clazz);
+
+		return (T)project.task(args, name);
+	}
 
 	public static String getArchivesBaseName(Project project) {
 		BasePluginConvention basePluginConvention = GradleUtil.getConvention(

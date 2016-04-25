@@ -17,7 +17,7 @@ package com.liferay.gradle.plugins;
 import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask;
 import com.liferay.gradle.plugins.change.log.builder.ChangeLogBuilderPlugin;
 import com.liferay.gradle.plugins.tasks.PrintArtifactPublishCommandsTask;
-import com.liferay.gradle.plugins.tasks.UpdateVersionTask;
+import com.liferay.gradle.plugins.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
@@ -76,6 +76,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		"printStaleArtifact";
 
 	public static final String RECORD_ARTIFACT_TASK_NAME = "recordArtifact";
+
+	public static final String UPDATE_VERSION_TASK_NAME = "updateVersion";
 
 	@Override
 	public void apply(final Project project) {
@@ -174,16 +176,27 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 			});
 
-		GradleUtil.withPlugin(
-			project, LiferayThemeDefaultsPlugin.class,
-			new Action<LiferayThemeDefaultsPlugin>() {
+		project.afterEvaluate(
+			new Action<Project>() {
 
 				@Override
-				public void execute(
-					LiferayThemeDefaultsPlugin liferayThemeDefaultsPlugin) {
+				public void execute(Project project) {
+					TaskContainer taskContainer = project.getTasks();
 
-					configureTaskPrintArtifactPublishCommandsForTheme(
-						printArtifactPublishCommandsTask);
+					Task task = taskContainer.findByName(
+						UPDATE_VERSION_TASK_NAME);
+
+					if (!(task instanceof ReplaceRegexTask)) {
+						return;
+					}
+
+					ReplaceRegexTask replaceRegexTask = (ReplaceRegexTask)task;
+
+					Map<String, FileCollection> matches =
+						replaceRegexTask.getMatches();
+
+					printArtifactPublishCommandsTask.prepNextFiles(
+						matches.values());
 				}
 
 			});
@@ -485,46 +498,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		printArtifactPublishCommandsTask.setFirstPublishExcludedTaskName(
 			LiferayOSGiDefaultsPlugin.UPDATE_FILE_VERSIONS_TASK_NAME);
-
-		configureTaskPrintArtifactPublishCommandsPrepNextFiles(
-			printArtifactPublishCommandsTask,
-			LiferayOSGiDefaultsPlugin.UPDATE_BUNDLE_VERSION_TASK_NAME);
-	}
-
-	protected void configureTaskPrintArtifactPublishCommandsForTheme(
-		PrintArtifactPublishCommandsTask printArtifactPublishCommandsTask) {
-
-		configureTaskPrintArtifactPublishCommandsPrepNextFiles(
-			printArtifactPublishCommandsTask,
-			LiferayThemeDefaultsPlugin.UPDATE_THEME_VERSION_TASK_NAME);
-	}
-
-	protected void configureTaskPrintArtifactPublishCommandsPrepNextFiles(
-		final PrintArtifactPublishCommandsTask
-			printArtifactPublishCommandsTask,
-		final String updateVersionTaskName) {
-
-		Project project = printArtifactPublishCommandsTask.getProject();
-
-		Action<Project> action = new Action<Project>() {
-
-			@Override
-			public void execute(Project project) {
-				UpdateVersionTask updateVersionTask =
-					(UpdateVersionTask)GradleUtil.getTask(
-						project, updateVersionTaskName);
-
-				Map<Object, Object> patterns = updateVersionTask.getPatterns();
-
-				FileCollection fileCollection = project.files(
-					patterns.keySet());
-
-				printArtifactPublishCommandsTask.prepNextFiles(fileCollection);
-			}
-
-		};
-
-		project.afterEvaluate(action);
 	}
 
 	protected void configureTaskPrintStaleArtifactForOSGi(Task task) {

@@ -28,10 +28,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,10 +49,6 @@ import org.gradle.util.GUtil;
  */
 public class ReplaceRegexTask extends DefaultTask {
 
-	public Iterable<File> getMatchedFiles() {
-		return _matchedFiles;
-	}
-
 	@Input
 	@SkipWhenEmpty
 	public Map<String, FileCollection> getMatches() {
@@ -66,8 +60,8 @@ public class ReplaceRegexTask extends DefaultTask {
 	}
 
 	@Input
-	public String getReplacement() {
-		return GradleUtil.toString(_replacement);
+	public Object getReplacement() {
+		return _replacement;
 	}
 
 	public List<Closure<Boolean>> getReplaceOnlyIf() {
@@ -127,17 +121,14 @@ public class ReplaceRegexTask extends DefaultTask {
 
 	@TaskAction
 	public void replaceRegex() throws IOException {
-		_matchedFiles.clear();
-
 		Map<String, FileCollection> matches = getMatches();
-		String replacement = getReplacement();
 
 		for (Map.Entry<String, FileCollection> entry : matches.entrySet()) {
 			Pattern pattern = Pattern.compile(entry.getKey());
 			FileCollection fileCollection = entry.getValue();
 
 			for (File file : fileCollection) {
-				replaceRegex(file, pattern, replacement);
+				replaceRegex(file, pattern);
 			}
 		}
 	}
@@ -178,9 +169,7 @@ public class ReplaceRegexTask extends DefaultTask {
 		replaceOnlyIf(replaceOnlyIfClosures);
 	}
 
-	protected void replaceRegex(File file, Pattern pattern, String replacement)
-		throws IOException {
-
+	protected void replaceRegex(File file, Pattern pattern) throws IOException {
 		Path path = file.toPath();
 
 		String content = new String(
@@ -200,6 +189,20 @@ public class ReplaceRegexTask extends DefaultTask {
 			int groupCount = matcher.groupCount();
 
 			String group = matcher.group(groupCount);
+
+			String replacement;
+
+			Object replacementObj = getReplacement();
+
+			if (replacementObj instanceof Closure<?>) {
+				Closure<String> replacementClosure =
+					(Closure<String>)replacementObj;
+
+				replacement = replacementClosure.call(group);
+			}
+			else {
+				replacement = GradleUtil.toString(replacementObj);
+			}
 
 			for (Closure<Boolean> closure : getReplaceOnlyIf()) {
 				if (!closure.call(group, replacement, newContent)) {
@@ -238,7 +241,11 @@ public class ReplaceRegexTask extends DefaultTask {
 		if (!content.equals(newContent)) {
 			Files.write(path, newContent.getBytes(StandardCharsets.UTF_8));
 
-			_matchedFiles.add(file);
+			if (_logger.isLifecycleEnabled()) {
+				Project project = getProject();
+
+				_logger.lifecycle("Updated " + project.relativePath(file));
+			}
 		}
 	}
 
@@ -246,7 +253,6 @@ public class ReplaceRegexTask extends DefaultTask {
 		ReplaceRegexTask.class);
 
 	private boolean _ignoreUnmatched;
-	private final Set<File> _matchedFiles = new LinkedHashSet<>();
 	private final Map<String, FileCollection> _matches = new LinkedHashMap<>();
 	private final List<Closure<String>> _preClosures = new ArrayList<>();
 	private Object _replacement;

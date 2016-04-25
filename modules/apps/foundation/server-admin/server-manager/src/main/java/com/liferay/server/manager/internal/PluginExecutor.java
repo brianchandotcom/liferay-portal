@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.server.manager.BaseExecutor;
-import com.liferay.server.manager.internal.util.FileUploadUtil;
 import com.liferay.server.manager.internal.util.JSONKeys;
 
 import java.io.BufferedReader;
@@ -43,6 +43,10 @@ import java.util.Queue;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 
 /**
@@ -230,6 +234,49 @@ public class PluginExecutor extends BaseExecutor {
 		}
 	}
 
+	protected FileItem getFileItem(HttpServletRequest request)
+		throws FileUploadException {
+
+		DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
+
+		ServletFileUpload servletFileUpload = new ServletFileUpload(
+			diskFileItemFactory);
+
+		List<FileItem> fileItems = servletFileUpload.parseRequest(request);
+
+		for (FileItem fileItem : fileItems) {
+			if (!fileItem.isFormField()) {
+				return fileItem;
+			}
+		}
+
+		return null;
+	}
+
+	protected File getFileItemTempFile(HttpServletRequest request)
+		throws Exception {
+
+		FileItem fileItem = getFileItem(request);
+
+		if (fileItem == null) {
+			return null;
+		}
+
+		File tempDir = new File(
+			SystemProperties.get(SystemProperties.TMP_DIR),
+			PortalUUIDUtil.generate());
+
+		if (!tempDir.mkdirs()) {
+			return null;
+		}
+
+		File tempFile = new File(tempDir, fileItem.getName());
+
+		fileItem.write(tempFile);
+
+		return tempFile;
+	}
+
 	protected List<File> getInstalledDirectories(final String context)
 		throws Exception {
 
@@ -299,7 +346,7 @@ public class PluginExecutor extends BaseExecutor {
 		String message = "Unable to create temp file for uploaded plugin";
 
 		try {
-			tempFile = FileUploadUtil.getFileItemTempFile(request);
+			tempFile = getFileItemTempFile(request);
 		}
 		catch (Exception e) {
 			_log.error(message, e);

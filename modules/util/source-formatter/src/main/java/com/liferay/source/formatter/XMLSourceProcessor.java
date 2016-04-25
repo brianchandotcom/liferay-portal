@@ -76,6 +76,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static void sortAttributes(Element element, boolean recursive) {
 		Map<String, Attribute> attributesMap = new TreeMap<>();
 
@@ -104,6 +108,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static String sortAttributes(String content) throws Exception {
 		XMLSourceProcessor xmlSourceProcessor = new XMLSourceProcessor();
 

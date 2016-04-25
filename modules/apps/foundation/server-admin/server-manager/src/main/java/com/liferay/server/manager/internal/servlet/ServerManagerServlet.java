@@ -38,13 +38,25 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import javax.servlet.Servlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jonathan Potter
  */
+@Component(
+	immediate = true,
+	property = {
+		"osgi.http.whiteboard.servlet.name=ServerManagerServlet",
+		"osgi.http.whiteboard.servlet.pattern=/server-manager/*",
+		"servlet.init.httpMethods=DELETE,GET,POST,PUT"
+	},
+	service = Servlet.class
+)
 public class ServerManagerServlet extends HttpServlet {
 
 	protected void execute(

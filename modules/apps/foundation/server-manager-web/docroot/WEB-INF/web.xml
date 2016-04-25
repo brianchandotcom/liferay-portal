@@ -21,12 +21,4 @@
 		<filter-name>Secure Server Manager Servlet Filter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<servlet>
-		<servlet-name>Server Manager Servlet</servlet-name>
-		<servlet-class>com.liferay.servermanager.servlet.ServerManagerServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Server Manager Servlet</servlet-name>
-		<url-pattern>/*</url-pattern>
-	</servlet-mapping>
 </web-app>

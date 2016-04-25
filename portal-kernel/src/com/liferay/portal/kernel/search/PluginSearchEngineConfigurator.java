@@ -62,6 +62,11 @@ public class PluginSearchEngineConfigurator
 		return classLoader;
 	}
 
+	@Override
+	protected SearchEngineHelper getSearchEngineHelper() {
+		return SearchEngineHelperUtil.getSearchEngineHelper();
+	}
+
 	private String _defaultSearchEngineId;
 
 }

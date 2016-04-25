@@ -51,11 +51,10 @@ public class AggregateUtil {
 	};
 
 	private static final String[] _CSS_PATH_TYPES = new String[] {
-		"url('')", "url(\"\")", "url()", "url('@",
-		"url(\"@", "url(@", "url('http://", "url(\"http://", "url(http://",
-		"url('https://", "url(\"https://", "url(https://", "url('/", "url(\"/",
-		"url(/", "url('data:", "url(\"data:", "url(data:", "url('", "url(\"",
-		"url("
+		"url('')", "url(\"\")", "url()", "url('@", "url(\"@", "url(@",
+		"url('http://", "url(\"http://", "url(http://", "url('https://",
+		"url(\"https://", "url(https://", "url('/", "url(\"/", "url(/",
+		"url('data:", "url(\"data:", "url(data:", "url('", "url(\"", "url("
 	};
 
 }

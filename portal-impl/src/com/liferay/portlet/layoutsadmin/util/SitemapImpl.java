@@ -152,8 +152,7 @@ public class SitemapImpl implements Sitemap {
 	@Override
 	public String encodeXML(String input) {
 		return StringUtil.replace(
-			input,
-			new char[] {'&', '<', '>', '\'', '\"'},
+			input, new char[] {'&', '<', '>', '\'', '\"'},
 			new String[] {"&amp;", "&lt;", "&gt;", "&apos;", "&quot;"});
 	}
 

@@ -1,0 +1,36 @@
+<definition>
+	<command name="getCompanyId" returns="companyId">
+		<execute macro="JSONCompany#getPortalInstanceName">
+			<return from="portalInstanceName" name="portalInstanceName" />
+		</execute>
+
+		<var name="curl">
+			http://localhost:8080/api/jsonws/company/get-company-by-virtual-host \
+				-u test@liferay.com:test \
+				-d virtualHost=${portalInstanceName}
+		</var>
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+			<arg value="${curl}" />
+			<arg value="$['companyId']" />
+			<return name="companyId" />
+		</execute>
+
+		<return name="companyId" value="${companyId}" />
+	</command>
+
+	<command name="getPortalInstanceName" returns="portalInstanceName">
+		<var method="TestPropsUtil#get('portal.url')" name="portalInstanceName" />
+
+		<var method="StringUtil#replace('${portalInstanceName}', 'http://', '')" name="portalInstanceName" />
+		<var method="StringUtil#replace('${portalInstanceName}', ':8080', '')" name="portalInstanceName" />
+
+		<return name="portalInstanceName" value="${portalInstanceName}" />
+	</command>
+
+	<command name="getPortalURL" returns="portalURL">
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<return name="portalURL" value="${portalURL}" />
+	</command>
+</definition>

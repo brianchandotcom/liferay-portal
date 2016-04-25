@@ -54,7 +54,7 @@ public class FilePropagator {
 			return 0;
 		}
 
-		return _totalFilePropogatorThreadDuration /
+		return _totalFilePropogatorThreadsDuration /
 			_filePropogatorThreadCompletedCount;
 	}
 
@@ -157,15 +157,15 @@ public class FilePropagator {
 
 		for (FilePropagatorTask filePropagatorTask : _filePropagatorTasks) {
 			System.out.println(
-				"Copying from origin: " + filePropagatorTask.originFilePath);
+				"Copying from origin: " + filePropagatorTask._originFilePath);
 
 			targetSlave = _targetSlaves.get(0);
 
-			commands.add(_getMkdirCommand(filePropagatorTask.filePath));
+			commands.add(_getMkdirCommand(filePropagatorTask._filePath));
 
 			commands.add(
-				"rsync -vI " + filePropagatorTask.originFilePath + " " +
-					filePropagatorTask.filePath);
+				"rsync -vI " + filePropagatorTask._originFilePath + " " +
+					filePropagatorTask._filePath);
 		}
 
 		try {
@@ -270,21 +270,21 @@ public class FilePropagator {
 		synchronized(this) {
 			_filePropogatorThreadCompletedCount++;
 
-			_totalFilePropogatorThreadDuration +=
-				filePropagatorThread.getDuration();
+			_totalFilePropogatorThreadsDuration +=
+				filePropagatorThread._duration;
 
-			_busySlaves.remove(filePropagatorThread.getSource());
-			_busySlaves.remove(filePropagatorThread.getTarget());
+			_busySlaves.remove(filePropagatorThread._sourceSlave);
+			_busySlaves.remove(filePropagatorThread._targetSlave);
 
-			_sourceSlaves.add(filePropagatorThread.getSource());
+			_sourceSlaves.add(filePropagatorThread._sourceSlave);
 
-			if (!filePropagatorThread.isSuccessful()) {
-				_errorSlaves.add(filePropagatorThread.getTarget());
+			if (!filePropagatorThread._successful) {
+				_errorSlaves.add(filePropagatorThread._targetSlave);
 
 				return;
 			}
 
-			_sourceSlaves.add(filePropagatorThread.getTarget());
+			_sourceSlaves.add(filePropagatorThread._targetSlave);
 		}
 	}
 
@@ -335,37 +335,21 @@ public class FilePropagator {
 	private int _filePropogatorThreadCompletedCount;
 	private final List<String> _sourceSlaves = new ArrayList<>();
 	private final List<String> _targetSlaves = new ArrayList<>();
-	private long _totalFilePropogatorThreadDuration = 0;
+	private long _totalFilePropogatorThreadsDuration = 0;
 
 	private static class FilePropagatorTask {
 
-		public FilePropagatorTask(String filePath, String originFilePath) {
-			this.filePath = filePath;
-			this.originFilePath = originFilePath;
+		private FilePropagatorTask(String filePath, String originFilePath) {
+			_filePath = filePath;
+			_originFilePath = originFilePath;
 		}
 
-		public String filePath;
-		public String originFilePath;
+		private final String _filePath;
+		private final String _originFilePath;
 
 	}
 
 	private static class FilePropagatorThread implements Runnable {
-
-		public long getDuration() {
-			return _duration;
-		}
-
-		public String getSource() {
-			return _sourceSlave;
-		}
-
-		public String getTarget() {
-			return _targetSlave;
-		}
-
-		public Boolean isSuccessful() {
-			return _isSuccessful;
-		}
 
 		@Override
 		public void run() {
@@ -379,20 +363,20 @@ public class FilePropagator {
 
 				commands.add(
 					_filePropagator._getMkdirCommand(
-						filePropagatorTask.filePath));
+						filePropagatorTask._filePath));
 
 				commands.add(
 					"rsync -vI " + _sourceSlave + ":" +
-						filePropagatorTask.filePath + " " +
-							filePropagatorTask.filePath);
+						filePropagatorTask._filePath + " " +
+							filePropagatorTask._filePath);
 			}
 
 			try {
-				_isSuccessful = _filePropagator._executeCommands(
+				_successful = _filePropagator._executeCommands(
 					commands, _targetSlave) == 0;
 			}
 			catch (Exception e) {
-				_isSuccessful = false;
+				_successful = false;
 			}
 
 			_duration = System.currentTimeMillis() - start;
@@ -411,8 +395,8 @@ public class FilePropagator {
 
 		private long _duration = 0;
 		private final FilePropagator _filePropagator;
-		private Boolean _isSuccessful;
 		private final String _sourceSlave;
+		private boolean _successful;
 		private final String _targetSlave;
 
 	}

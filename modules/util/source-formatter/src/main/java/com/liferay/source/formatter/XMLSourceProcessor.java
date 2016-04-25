@@ -235,6 +235,61 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
+	protected void checkAntXMLProjectName(String fileName, Document document) {
+		String baseDirName = sourceFormatterArgs.getBaseDirName();
+
+		int x = baseDirName.length();
+
+		if (fileName.endsWith("-ext/build.xml")) {
+			if (fileName.startsWith(baseDirName + "ext/")) {
+				x += 4;
+			}
+		}
+		else if (fileName.endsWith("-hook/build.xml")) {
+			if (fileName.startsWith(baseDirName + "hooks/")) {
+				x += 6;
+			}
+		}
+		else if (fileName.endsWith("-layouttpl/build.xml")) {
+			if (fileName.startsWith(baseDirName + "layouttpl/")) {
+				x += 10;
+			}
+		}
+		else if (fileName.endsWith("-portlet/build.xml")) {
+			if (fileName.startsWith(baseDirName + "portlets/")) {
+				x += 9;
+			}
+		}
+		else if (fileName.endsWith("-theme/build.xml")) {
+			if (fileName.startsWith(baseDirName + "themes/")) {
+				x += 7;
+			}
+		}
+		else if (fileName.endsWith("-web/build.xml") &&
+				 !fileName.endsWith("/ext-web/build.xml")) {
+
+			if (fileName.startsWith(baseDirName + "webs/")) {
+				x += 5;
+			}
+		}
+		else {
+			return;
+		}
+
+		int y = fileName.indexOf(CharPool.SLASH, x);
+
+		String expectedProjectName = fileName.substring(x, y);
+
+		Element rootElement = document.getRootElement();
+
+		String projectName = rootElement.attributeValue("name");
+
+		if (!projectName.equals(expectedProjectName)) {
+			processErrorMessage(
+				fileName, fileName + " has an incorrect project name");
+		}
+	}
+
 	protected void checkImportFiles(String fileName, String content) {
 		Matcher matcher = _importFilePattern.matcher(content);
 
@@ -384,61 +439,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		};
 
 		return getFileNames(excludes, getIncludes());
-	}
-
-	protected void checkAntXMLProjectName(String fileName, Document document) {
-		String baseDirName = sourceFormatterArgs.getBaseDirName();
-
-		int x = baseDirName.length();
-
-		if (fileName.endsWith("-ext/build.xml")) {
-			if (fileName.startsWith(baseDirName + "ext/")) {
-				x += 4;
-			}
-		}
-		else if (fileName.endsWith("-hook/build.xml")) {
-			if (fileName.startsWith(baseDirName + "hooks/")) {
-				x += 6;
-			}
-		}
-		else if (fileName.endsWith("-layouttpl/build.xml")) {
-			if (fileName.startsWith(baseDirName + "layouttpl/")) {
-				x += 10;
-			}
-		}
-		else if (fileName.endsWith("-portlet/build.xml")) {
-			if (fileName.startsWith(baseDirName + "portlets/")) {
-				x += 9;
-			}
-		}
-		else if (fileName.endsWith("-theme/build.xml")) {
-			if (fileName.startsWith(baseDirName + "themes/")) {
-				x += 7;
-			}
-		}
-		else if (fileName.endsWith("-web/build.xml") &&
-				 !fileName.endsWith("/ext-web/build.xml")) {
-
-			if (fileName.startsWith(baseDirName + "webs/")) {
-				x += 5;
-			}
-		}
-		else {
-			return;
-		}
-
-		int y = fileName.indexOf(CharPool.SLASH, x);
-
-		String expectedProjectName = fileName.substring(x, y);
-
-		Element rootElement = document.getRootElement();
-
-		String projectName = rootElement.attributeValue("name");
-
-		if (!projectName.equals(expectedProjectName)) {
-			processErrorMessage(
-				fileName, fileName + " has an incorrect project name");
-		}
 	}
 
 	protected String fixPoshiXMLElementWithNoChild(String content) {

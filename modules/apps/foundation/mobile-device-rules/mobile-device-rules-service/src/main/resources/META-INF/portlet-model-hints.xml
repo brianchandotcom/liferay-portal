@@ -13,12 +13,12 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="ruleGroupInstanceId" type="long" />
-		<field name="name" type="String" localized="true">
+		<field localized="true" name="name" type="String">
 			<hint name="display-width">210</hint>
 			<hint name="max-length">255</hint>
 			<validator name="required" />
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="type" type="String">
@@ -39,12 +39,12 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="ruleGroupId" type="long" />
-		<field name="name" type="String" localized="true">
+		<field localized="true" name="name" type="String">
 			<hint name="display-width">210</hint>
 			<hint name="max-length">255</hint>
 			<validator name="required" />
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="type" type="String">
@@ -64,12 +64,12 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" localized="true">
+		<field localized="true" name="name" type="String">
 			<hint name="display-width">210</hint>
 			<hint name="max-length">255</hint>
 			<validator name="required" />
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="lastPublishDate" type="Date" />

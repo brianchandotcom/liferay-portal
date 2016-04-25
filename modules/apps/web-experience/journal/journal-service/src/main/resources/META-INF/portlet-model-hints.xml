@@ -21,13 +21,13 @@
 			<hint name="upper-case">true</hint>
 		</field>
 		<field name="version" type="double" />
-		<field name="title" type="String" localized="true">
+		<field localized="true" name="title" type="String">
 			<hint name="max-length">4000</hint>
 		</field>
 		<field name="urlTitle" type="String">
 			<hint name="max-length">150</hint>
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="CLOB" />
 			<hint name="display-height">40</hint>
 		</field>

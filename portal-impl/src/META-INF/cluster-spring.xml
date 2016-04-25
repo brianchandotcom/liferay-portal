@@ -8,7 +8,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
 >
-	<bean id="chainableMethodAdviceInjector.clusterableAdvice" class="com.liferay.portal.spring.aop.ChainableMethodAdviceInjector">
+	<bean class="com.liferay.portal.spring.aop.ChainableMethodAdviceInjector" id="chainableMethodAdviceInjector.clusterableAdvice">
 		<property name="injectCondition">
 			<util:constant static-field="com.liferay.portal.util.PropsValues.CLUSTER_LINK_ENABLED" />
 		</property>
@@ -17,7 +17,7 @@
 		</property>
 		<property name="parentChainableMethodAdvice" ref="serviceAdvice" />
 	</bean>
-	<bean id="chainableMethodAdviceInjector.spiClusterableAdvice" class="com.liferay.portal.spring.aop.ChainableMethodAdviceInjector">
+	<bean class="com.liferay.portal.spring.aop.ChainableMethodAdviceInjector" id="chainableMethodAdviceInjector.spiClusterableAdvice">
 		<property name="injectCondition">
 			<bean class="com.liferay.portal.kernel.resiliency.spi.SPIUtil" factory-method="isSPI" />
 		</property>

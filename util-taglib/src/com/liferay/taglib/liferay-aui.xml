@@ -7,7 +7,7 @@
 		<author>Nathan Cavanaugh</author>
 		<author>Julio Camarero</author>
 	</authors>
-	<component name="A" bodyContent="true" writeJSP="false">
+	<component bodyContent="true" name="A" writeJSP="false">
 		<description>Creates an anchor (or link) that offers custom configuration and localization.</description>
 		<attributes>
 			<attribute>
@@ -85,7 +85,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Alert" bodyContent="true">
+	<component bodyContent="true" name="Alert">
 		<attributes>
 			<attribute>
 				<name>animated</name>
@@ -129,7 +129,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Button" alloyComponent="false" bodyContent="true" writeStartJSP="false">
+	<component alloyComponent="false" bodyContent="true" name="Button" writeStartJSP="false">
 		<description>Creates a fully configurable button that offers portlet namespacing and custom icons.</description>
 		<attributes>
 			<attribute>
@@ -223,7 +223,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="ButtonRow" alloyComponent="false" bodyContent="true" writeEndJSP="false">
+	<component alloyComponent="false" bodyContent="true" name="ButtonRow" writeEndJSP="false">
 		<description>Creates a button row <![CDATA[<code>&lt;div&gt;</code>]]> tag to wrap <![CDATA[<code>&lt;aui:button&gt;</code>]]> components and offer additional styling.</description>
 		<attributes>
 			<attribute>
@@ -240,7 +240,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Col" bodyContent="true">
+	<component bodyContent="true" name="Col">
 		<description>Creates a column to display content in an <![CDATA[<code>&lt;aui:row&gt;</code>]]> component.</description>
 		<attributes>
 			<attribute>
@@ -348,7 +348,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Container" bodyContent="true">
+	<component bodyContent="true" name="Container">
 		<description>Creates a container <![CDATA[<code>&lt;div&gt;</code>]]> tag to wrap <![CDATA[<code>&lt;aui:row&gt;</code>]]> components and offer additional styling.</description>
 		<attributes>
 			<attribute>
@@ -372,7 +372,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="FieldWrapper" dynamicAttributes="false" bodyContent="true">
+	<component bodyContent="true" dynamicAttributes="false" name="FieldWrapper">
 		<description>Creates a <![CDATA[<code>&lt;div&gt;</code>]]> tag to wrap form fields and offer additional styling.</description>
 		<attributes>
 			<attribute>
@@ -444,7 +444,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Fieldset" bodyContent="true">
+	<component bodyContent="true" name="Fieldset">
 		<description>Creates a <![CDATA[<code>&lt;div&gt;</code>]]> tag to group related form elements and offer additional styling.</description>
 		<attributes>
 			<attribute>
@@ -501,7 +501,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="FieldsetGroup" bodyContent="true">
+	<component bodyContent="true" name="FieldsetGroup">
 		<description>Creates a <![CDATA[<code>&lt;div&gt;</code>]]> tag to group fieldset elements and offer additional styling.</description>
 		<attributes>
 			<attribute>
@@ -511,7 +511,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Form" bodyContent="true">
+	<component bodyContent="true" name="Form">
 		<description>Creates a form that offers additional styling and custom namespacing.</description>
 		<attributes>
 			<attribute>
@@ -919,7 +919,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="ModelContext" dynamicAttributes="false" writeJSP="false">
+	<component dynamicAttributes="false" name="ModelContext" writeJSP="false">
 		<description>Creates a configurable model context object that can be used as a model for other components.</description>
 		<attributes>
 			<attribute>
@@ -942,7 +942,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Nav" bodyContent="false">
+	<component bodyContent="false" name="Nav">
 		<description>Creates a navigation wrapper component to hold <![CDATA[<code>&lt;nav:item&gt;</code>]]> components for an <![CDATA[<code>&lt;aui:nav-bar&gt;</code>]]> component.</description>
 		<attributes>
 			<attribute>
@@ -994,7 +994,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="NavBar" bodyContent="false">
+	<component bodyContent="false" name="NavBar">
 		<description>Creates a navigation bar to house navigation components.</description>
 		<attributes>
 			<attribute>
@@ -1022,7 +1022,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="NavBarSearch" bodyContent="true">
+	<component bodyContent="true" name="NavBarSearch">
 		<description>Creates a search component for an <![CDATA[<code>&lt;aui:nav-bar&gt;</code>]]> component.</description>
 		<attributes>
 			<attribute>
@@ -1050,7 +1050,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="NavItem" bodyContent="true" writeStartJSP="false">
+	<component bodyContent="true" name="NavItem" writeStartJSP="false">
 		<description>Creates a navigation item for using in an <![CDATA[<code>&lt;aui:nav&gt;</code>]]> component.</description>
 		<attributes>
 			<attribute>
@@ -1187,7 +1187,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Option" bodyContent="true" writeEndJSP="false">
+	<component bodyContent="true" name="Option" writeEndJSP="false">
 		<description>Creates an option component for using in an <![CDATA[<code>&lt;aui:select&gt;</code>]]> component.</description>
 		<attributes>
 			<attribute>
@@ -1248,7 +1248,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Panel" bodyContent="true" dynamicAttributes="false">
+	<component bodyContent="true" dynamicAttributes="false" name="Panel">
 		<attributes>
 			<attribute>
 				<name>collapsed</name>
@@ -1278,7 +1278,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Row" bodyContent="true">
+	<component bodyContent="true" name="Row">
 		<description>Creates a row to hold <![CDATA[<code>&lt;aui:col&gt;</code>]]> components.</description>
 		<attributes>
 			<attribute>
@@ -1295,7 +1295,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Script" dynamicAttributes="false" parentClass="com.liferay.taglib.util.PositionTagSupport" writeJSP="false">
+	<component dynamicAttributes="false" name="Script" parentClass="com.liferay.taglib.util.PositionTagSupport" writeJSP="false">
 		<description>Creates a script component in which to write JavaScript that facilitates using AlloyUI modules.</description>
 		<attributes>
 			<attribute>
@@ -1325,7 +1325,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Select" bodyContent="true">
+	<component bodyContent="true" name="Select">
 		<description>Creates a select field (or combo box) for holding <![CDATA[<code>&lt;aui:option&gt;</code>]]> components.</description>
 		<attributes>
 			<attribute>
@@ -1505,10 +1505,10 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Spacer" dynamicAttributes="false" parentClass="com.liferay.taglib.TagSupport" writeBaseClass="false" writeJSP="false">
+	<component dynamicAttributes="false" name="Spacer" parentClass="com.liferay.taglib.TagSupport" writeBaseClass="false" writeJSP="false">
 		<description>Creates a spacer component that enables JSP 2.1 server-side trimming of white spaces.</description>
 	</component>
-	<component name="TranslationManager" dynamicAttributes="false">
+	<component dynamicAttributes="false" name="TranslationManager">
 		<description>Creates a UI component for managing translation of associated content.</description>
 		<attributes>
 			<attribute>
@@ -1556,7 +1556,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Validator" className="ValidatorTagImpl" dynamicAttributes="false" parentClass="com.liferay.taglib.BaseBodyTagSupport" writeJSP="false">
+	<component className="ValidatorTagImpl" dynamicAttributes="false" name="Validator" parentClass="com.liferay.taglib.BaseBodyTagSupport" writeJSP="false">
 		<description>Creates a component to validate input fields.</description>
 		<attributes>
 			<attribute>
@@ -1574,7 +1574,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="WorkflowStatus" dynamicAttributes="false">
+	<component dynamicAttributes="false" name="WorkflowStatus">
 		<description>Creates a UI component that displays the current status of its associated workflow.</description>
 		<attributes>
 			<attribute>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-tomcat-sybase" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project basedir="." default="test" name="portal-test-tomcat-sybase" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test-tomcat.xml" />
 
 	<target name="run-selenium-tomcat-sybase">
@@ -8,7 +8,7 @@
 
 		<echo file="sql/sql.${user.name}.properties">sybase.executable=isql</echo>
 
-		<antcall target="run-selenium-tomcat" inheritAll="false">
+		<antcall inheritAll="false" target="run-selenium-tomcat">
 			<param name="test.class" value="${test.class}" />
 		</antcall>
 	</target>

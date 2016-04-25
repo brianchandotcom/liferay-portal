@@ -7,20 +7,20 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean id="liferayDataSource" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
+	<bean class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy" id="liferayDataSource">
 		<property name="targetDataSource" ref="liferayDataSourceImpl" />
 	</bean>
-	<bean id="liferayDataSourceImpl" class="com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean">
+	<bean class="com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean" id="liferayDataSourceImpl">
 		<property name="propertyPrefix" value="jdbc.default." />
 	</bean>
-	<bean id="mailSession" class="com.liferay.mail.util.MailSessionFactoryBean">
+	<bean class="com.liferay.mail.util.MailSessionFactoryBean" id="mailSession">
 		<property name="propertyPrefix" value="mail.session." />
 	</bean>
-	<bean id="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry" class="com.liferay.portal.service.PersistedModelLocalServiceRegistryImpl" />
-	<bean id="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil" class="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil">
+	<bean class="com.liferay.portal.service.PersistedModelLocalServiceRegistryImpl" id="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry" />
+	<bean class="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil" id="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil">
 		<property name="persistedModelLocalServiceRegistry" ref="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.util.InfrastructureUtil" class="com.liferay.portal.kernel.util.InfrastructureUtil">
+	<bean class="com.liferay.portal.kernel.util.InfrastructureUtil" id="com.liferay.portal.kernel.util.InfrastructureUtil">
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="mailSession" ref="mailSession" />
 		<property name="transactionManager" ref="liferayTransactionManager" />

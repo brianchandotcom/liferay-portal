@@ -12,7 +12,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="questionId" type="long" />
 		<field name="name" type="String" />
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint name="max-length">1000</hint>
 		</field>
 		<field name="lastPublishDate" type="Date" />
@@ -26,11 +26,11 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="title" type="String" localized="true">
+		<field localized="true" name="title" type="String">
 			<hint name="max-length">500</hint>
 			<validator name="required" />
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 			<validator name="required" />
 		</field>

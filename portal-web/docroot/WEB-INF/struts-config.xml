@@ -25,25 +25,25 @@
 
 		<!-- Portal -->
 
-		<action path="/portal/api/jsonws" forward="portal.api.jsonws" />
+		<action forward="portal.api.jsonws" path="/portal/api/jsonws" />
 
 		<action path="/portal/edit_layout" type="com.liferay.portal.action.EditLayoutAction" />
 
-		<action path="/portal/emoticons" forward="/portal/emoticons.jsp" />
+		<action forward="/portal/emoticons.jsp" path="/portal/emoticons" />
 
-		<action path="/portal/error" forward="portal.error" />
+		<action forward="portal.error" path="/portal/error" />
 
-		<action path="/portal/expire_session" forward="/portal/expire_session.jsp" />
+		<action forward="/portal/expire_session.jsp" path="/portal/expire_session" />
 
-		<action path="/portal/extend_session" forward="/portal/extend_session.jsp" />
+		<action forward="/portal/extend_session.jsp" path="/portal/extend_session" />
 
-		<action path="/portal/flash" forward="/portal/flash.jsp" />
+		<action forward="/portal/flash.jsp" path="/portal/flash" />
 
 		<action path="/portal/get_layouts" type="com.liferay.portal.action.GetLayoutsAction" />
 
-		<action path="/portal/j_login" forward="/portal/j_login.jsp" />
+		<action forward="/portal/j_login.jsp" path="/portal/j_login" />
 
-		<action path="/portal/j_login_error" forward="portal.j_login_error" />
+		<action forward="portal.j_login_error" path="/portal/j_login_error" />
 
 		<action path="/portal/json_service" type="com.liferay.portal.action.JSONServiceAction" />
 
@@ -57,13 +57,13 @@
 
 		<action path="/portal/login" type="com.liferay.portal.action.LoginAction" />
 
-		<action path="/portal/login_disabled" forward="portal.login_disabled" />
+		<action forward="portal.login_disabled" path="/portal/login_disabled" />
 
 		<action path="/portal/logout" type="com.liferay.portal.action.LogoutAction" />
 
-		<action path="/portal/progress_poller" forward="portal.progress_poller" />
+		<action forward="portal.progress_poller" path="/portal/progress_poller" />
 
-		<action path="/portal/protected" forward="/portal/protected.jsp" />
+		<action forward="/portal/protected.jsp" path="/portal/protected" />
 
 		<action path="/portal/rate_entry" type="com.liferay.portal.action.RateEntryAction" />
 
@@ -87,9 +87,9 @@
 
 		<action path="/portal/sitemap" type="com.liferay.portal.action.SitemapAction" />
 
-		<action path="/portal/status" forward="portal.status" />
+		<action forward="portal.status" path="/portal/status" />
 
-		<action path="/portal/terms_of_use" forward="portal.terms_of_use" />
+		<action forward="portal.terms_of_use" path="/portal/terms_of_use" />
 
 		<!--<action path="/portal/test" type="com.liferay.portal.action.TestAction">
 			<forward name="portal.test" path="portal.test" />
@@ -99,7 +99,7 @@
 			<forward name="portal.test_redirect" path="/c/portal/test" redirect="true" />
 		</action>-->
 
-		<action path="/portal/touch_protected" forward="/portal/touch_protected.jsp" />
+		<action forward="/portal/touch_protected.jsp" path="/portal/touch_protected" />
 
 		<action path="/portal/update_email_address" type="com.liferay.portal.action.UpdateEmailAddressAction">
 			<forward name="portal.update_email_address" path="portal.update_email_address" />
@@ -132,7 +132,7 @@
 
 	<!-- Custom Request Processor -->
 
-	<controller processorClass="com.liferay.portal.struts.PortalRequestProcessor" contentType="text/html; charset=UTF-8" />
+	<controller contentType="text/html; charset=UTF-8" processorClass="com.liferay.portal.struts.PortalRequestProcessor" />
 
 	<!-- Tiles Plugin -->
 

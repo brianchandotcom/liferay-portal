@@ -34,6 +34,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -107,6 +108,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 						imageEditorCapability.getLabel(
 							themeDisplay.getLocale());
 
+					ServletContext imageEditorCapabilityServletContext =
+						imageEditorCapability.getServletContext();
+
 					String variant = GetterUtil.getString(
 						capabilityProperties.get(
 							"com.liferay.image.editor.capability.controls"));
@@ -114,6 +118,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 					Map<String, Object> controlContext = new HashMap<>();
 
 					controlContext.put("label", label);
+					controlContext.put(
+						"modulePath",
+						imageEditorCapabilityServletContext.getContextPath());
 					controlContext.put("variant", variant);
 
 					HttpServletRequest httpServletRequest =

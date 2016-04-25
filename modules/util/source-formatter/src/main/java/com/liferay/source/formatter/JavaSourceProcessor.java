@@ -3399,7 +3399,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					while ((previousLineLength + 1 + x) < _MAX_LINE_LENGTH) {
 						String linePart = trimmedLine.substring(0, x + 1);
 
-						if (isValidJavaParameter(linePart)) {
+						if (!ToolsUtil.isInsideQuotes(trimmedLine, x) &&
+							isValidJavaParameter(linePart)) {
+
 							if (trimmedLine.equals(linePart)) {
 								return getCombinedLinesContent(
 									content, fileName, line, trimmedLine,
@@ -4048,7 +4050,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					break;
 				}
 
-				if (isValidJavaParameter(line.substring(0, x))) {
+				if (!ToolsUtil.isInsideQuotes(line, x) &&
+					isValidJavaParameter(line.substring(0, x))) {
+
 					String firstLine = line.substring(0, x + 1);
 					String secondLine = indent + line.substring(x + 2);
 
@@ -4222,12 +4226,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (javaParameter.contains(" implements ") ||
 			javaParameter.contains(" throws ")) {
 
-			return false;
-		}
-
-		int quoteCount = StringUtil.count(javaParameter, CharPool.QUOTE);
-
-		if ((quoteCount % 2) == 1) {
 			return false;
 		}
 

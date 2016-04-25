@@ -21,7 +21,7 @@
 		<path>
 			<dirset dir="${basedir}" excludes="**/*-test*,**/src/**" includes="apps/${app.name}/**">
 				<present targetdir="${basedir}">
-					<mapper from="*" to="*/bnd.bnd" type="glob" />
+					<mapper from="*" to="*/portal.build" type="glob" />
 				</present>
 			</dirset>
 		</path>

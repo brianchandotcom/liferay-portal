@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.image.editor.web;
+package com.liferay.image.editor.web.portlet;
 
+import com.liferay.image.editor.web.constants.ImageEditorPortletKeys;
+import com.liferay.image.editor.web.portlet.tracker.ImageEditorCapabilityTracker;
 import com.liferay.portal.portlet.bridge.soy.SoyPortlet;
 
 import java.util.HashSet;
@@ -31,24 +33,19 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.application-type=full-page-application",
-		"com.liferay.portlet.application-type=widget",
 		"com.liferay.portlet.css-class-wrapper=image-editor",
-		"com.liferay.portlet.display-category=category.collaboration",
-		"com.liferay.portlet.header-portlet-css=ImageEditor.css",
-		"com.liferay.portlet.layout-cacheable=true",
+		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.header-portlet-css=/ImageEditor.css",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
-		"com.liferay.portlet.scopeable=true",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Image Editor Portlet",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=ImageEditorPortlet",
-		"javax.portlet.name=image_editor_portlet",
+		"javax.portlet.name=" + ImageEditorPortletKeys.IMAGE_EDITOR,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
@@ -59,16 +56,16 @@ public class ImageEditorPortlet extends SoyPortlet {
 
 	@Override
 	protected Set<String> getJavaScriptRequiredModules(String path) {
-		Set<String> requiredModules = new HashSet<String>();
+		Set<String> requiredModules = new HashSet<>();
 
 		requiredModules.addAll(super.getJavaScriptRequiredModules(path));
 
-		_featureTracker.collectFeaturesRequirements(requiredModules);
+		_capabilityTracker.collectCapabilitiesRequirements(requiredModules);
 
 		return requiredModules;
 	}
 
 	@Reference
-	private ImageEditorFeatureTracker _featureTracker;
+	private ImageEditorCapabilityTracker _capabilityTracker;
 
 }

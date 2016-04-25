@@ -1,0 +1,293 @@
+<definition>
+
+	<command name="_addOrganization">
+		<if>
+			<isset var="organizationName" />
+			<then>
+				<execute class="java.net.URLEncoder" method="encode">
+					<arg value="${organizationName}" />
+					<arg value="UTF-8" />
+					<return name="organizationNameEncoded" />
+				</execute>
+			</then>
+			<else>
+				<fail message="Please set 'organizationName'." />
+			</else>
+		</if>
+
+		<if>
+			<not>
+				<isset var="organizationSite" />
+			</not>
+			<then>
+				<var name="organizationSite" value="false" />
+			</then>
+		</if>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return from="portalURL" name="portalURL" />
+		</execute>
+
+		<var name="curl">
+			${portalURL}/api/jsonws/organization/add-organization \
+				-u test@liferay.com:test \
+				-d parentOrganizationId=0 \
+				-d name=${organizationNameEncoded} \
+				-d type=organization \
+				-d regionId=0 \
+				-d countryId=0 \
+				-d statusId=12017 \
+				-d comments= \
+				-d site=${organizationSite}
+		</var>
+
+		<echo>## Adding a 'Organization' with the following info using jsonws:</echo>
+
+		<echo>## * Organization Name: ${organizationName}</echo>
+
+		<echo>## * Organization Site: ${organizationSite}</echo>
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+			<arg value="${curl}" />
+			<arg value="$['organizationId']" />
+			<return name="organizationId" />
+		</execute>
+	</command>
+
+	<command name="_assignUserToOrganization">
+		<if>
+			<not>
+				<isset var="organizationId" />
+			</not>
+			<then>
+				<fail message="Please set 'organizationId'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="userId" />
+			</not>
+			<then>
+				<fail message="Please set 'userId'." />
+			</then>
+		</if>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return from="portalURL" name="portalURL" />
+		</execute>
+
+		<var name="curl">
+			${portalURL}/api/jsonws/user/add-organization-users \
+				-u test@liferay.com:test \
+				-d organizationId=${organizationId} \
+				-d userIds=${userId}
+		</var>
+
+		<execute macro="JSONOrganization#getOrganizationName">
+			<var name="organizationId" value="${organizationId}" />
+			<return from="organizationName" name="organizationName" />
+		</execute>
+
+		<execute macro="JSONUser#getUserEmailAddress">
+			<var name="userId" value="${userId}" />
+			<return from="userEmailAddress" name="userEmailAddress" />
+		</execute>
+
+		<echo>## Assigning a 'User' to an 'Organization' with the following info using JSONWS:</echo>
+
+		<echo>## * Organization Name: ${organizationName}</echo>
+
+		<echo>## * User Email Address: ${userEmailAddress}</echo>
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+			<arg value="${curl}" />
+			<arg value="$" />
+			<return name="temp" />
+		</execute>
+	</command>
+
+	<command name="_deleteOrganization">
+		<if>
+			<not>
+				<isset var="organizationId" />
+			</not>
+			<then>
+				<fail message="Please set 'organizationId'." />
+			</then>
+		</if>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return from="portalURL" name="portalURL" />
+		</execute>
+
+		<var name="curl">
+			${portalURL}/api/jsonws/organization/delete-organization \
+				-u test@liferay.com:test \
+				-d organizationId=${organizationId}
+		</var>
+
+		<execute macro="JSONOrganization#getOrganizationName">
+			<var name="organizationId" value="${organizationId}" />
+			<return from="organizationName" name="organizationName" />
+		</execute>
+
+		<echo>## Deleting an 'Organization' with the following info using JSONWS:</echo>
+
+		<echo>## * Organization Name: ${organizationName}</echo>
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+			<arg value="${curl}" />
+			<arg value="$['organizationId']" />
+			<return name="organizationId" />
+		</execute>
+	</command>
+
+	<command name="addOrganization">
+		<if>
+			<not>
+				<isset var="organizationName" />
+			</not>
+			<then>
+				<fail message="Please set 'organizationName'." />
+			</then>
+		</if>
+
+		<execute macro="JSONOrganization#_addOrganization">
+			<var name="organizationName" value="${organizationName}" />
+			<var name="organizationSite" value="${organizationSite}" />
+		</execute>
+	</command>
+
+	<command name="assignUserToOrganization">
+		<if>
+			<not>
+				<isset var="organizationName" />
+			</not>
+			<then>
+				<fail message="Please set 'organizationName'." />
+			</then>
+		</if>
+
+		<if>
+			<not>
+				<isset var="userEmailAddress" />
+			</not>
+			<then>
+				<fail message="Please set 'userEmailAddress'." />
+			</then>
+		</if>
+
+		<execute macro="JSONOrganization#getOrganizationIdByName">
+			<var name="organizationName" value="${organizationName}" />
+			<return from="organizationId" name="organizationId" />
+		</execute>
+
+		<execute macro="JSONUser#getUserIdByEmailAddress">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<return from="userId" name="userId" />
+		</execute>
+
+		<execute macro="JSONOrganization#_assignUserToOrganization">
+			<var name="organizationId" value="${organizationId}" />
+			<var name="userId" value="${userId}" />
+		</execute>
+	</command>
+
+	<command name="deleteOrganizationByName">
+		<if>
+			<not>
+				<isset var="organizationName" />
+			</not>
+			<then>
+				<fail message="Please set 'organizationName'." />
+			</then>
+		</if>
+
+		<execute macro="JSONOrganization#getOrganizationIdByName">
+			<var name="organizationName" value="${organizationName}" />
+			<return from="organizationId" name="organizationId" />
+		</execute>
+
+		<execute macro="JSONOrganization#_deleteOrganization">
+			<var name="organizationId" value="${organizationId}" />
+		</execute>
+	</command>
+
+	<command name="getOrganizationIdByName" returns="organizationId">
+		<if>
+			<not>
+				<isset var="organizationName" />
+			</not>
+			<then>
+				<fail message="Please set 'organizationName'." />
+			</then>
+		</if>
+
+		<execute macro="JSONCompany#getCompanyId">
+			<return from="companyId" name="companyId" />
+		</execute>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return from="portalURL" name="portalURL" />
+		</execute>
+
+		<var name="curl">
+			${portalURL}/api/jsonws/organization/get-organizations \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d parentOrganizationId=0
+		</var>
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+			<arg value="${curl}" />
+			<arg value="$.[?(@['name'] == '${organizationName}')]['organizationId']" />
+			<return name="organizationId" />
+		</execute>
+
+		<execute class="com.liferay.poshi.runner.util.StringUtil" method="replace">
+			<arg value="${organizationId}" />
+			<arg value="[&quot;" />
+			<arg value="" />
+			<return name="organizationId" />
+		</execute>
+
+		<execute class="com.liferay.poshi.runner.util.StringUtil" method="replace">
+			<arg value="${organizationId}" />
+			<arg value="&quot;]" />
+			<arg value="" />
+			<return name="organizationId" />
+		</execute>
+
+		<return name="organizationId" value="${organizationId}" />
+	</command>
+
+	<command name="getOrganizationName" returns="organizationName">
+		<if>
+			<not>
+				<isset var="organizationId" />
+			</not>
+			<then>
+				<fail message="Please set 'organizationId'." />
+			</then>
+		</if>
+
+		<execute macro="JSONCompany#getPortalURL">
+			<return from="portalURL" name="portalURL" />
+		</execute>
+
+		<var name="curl">
+			${portalURL}/api/jsonws/organization/get-organization \
+				-u test@liferay.com:test \
+				-d organizationId=${organizationId}
+		</var>
+
+		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
+			<arg value="${curl}" />
+			<arg value="$['name']" />
+			<return name="organizationName" />
+		</execute>
+
+		<return name="organizationName" value="${organizationName}" />
+	</command>
+</definition>

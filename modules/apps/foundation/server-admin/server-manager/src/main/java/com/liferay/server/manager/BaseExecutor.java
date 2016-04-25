@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.servermanager.executor;
+package com.liferay.server.manager;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.servermanager.util.JSONKeys;
+import com.liferay.server.manager.internal.util.JSONKeys;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -111,6 +111,6 @@ public abstract class BaseExecutor implements Executor {
 		return null;
 	}
 
-	private Map<String, Executor> _nextExecutors;
+	private final Map<String, Executor> _nextExecutors;
 
 }

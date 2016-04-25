@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.servermanager.executor.Executor;
-import com.liferay.servermanager.executor.RootExecutor;
+import com.liferay.server.manager.Executor;
+import com.liferay.server.manager.internal.RootExecutor;
 import com.liferay.server.manager.internal.util.JSONKeys;
 
 import java.io.IOException;
@@ -156,8 +156,9 @@ public class ServerManagerServlet extends HttpServlet {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ServerManagerServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ServerManagerServlet.class);
 
-	private Executor _executor = new RootExecutor();
+	private final Executor _executor = new RootExecutor();
 
 }

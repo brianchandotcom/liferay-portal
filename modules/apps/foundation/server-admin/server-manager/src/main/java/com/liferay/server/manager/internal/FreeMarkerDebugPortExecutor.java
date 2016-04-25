@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.servermanager.executor;
+package com.liferay.server.manager.internal;
 
 /**
  * @author Cindy Li

@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.servermanager.executor;
+package com.liferay.server.manager.internal;
 
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.servermanager.util.JSONKeys;
+import com.liferay.server.manager.BaseExecutor;
+import com.liferay.server.manager.internal.util.JSONKeys;
 
 import java.util.Queue;
 

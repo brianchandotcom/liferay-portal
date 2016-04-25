@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.servermanager.executor;
+package com.liferay.server.manager.internal;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -21,7 +21,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.servermanager.util.JSONKeys;
+import com.liferay.server.manager.BaseExecutor;
+import com.liferay.server.manager.internal.util.JSONKeys;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -95,7 +96,7 @@ public class OutputLogExecutor extends BaseExecutor {
 		return _simpleDateFormat.format(date);
 	}
 
-	private static Format _simpleDateFormat =
+	private static final Format _simpleDateFormat =
 		FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd");
 
 }

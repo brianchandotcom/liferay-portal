@@ -12,14 +12,16 @@
  * details.
  */
 
-package com.liferay.servermanager.executor;
+package com.liferay.server.manager.internal;
 
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.plugin.PluginPackage;
-import com.liferay.servermanager.util.JSONKeys;
+import com.liferay.server.manager.BaseExecutor;
+import com.liferay.server.manager.Executor;
+import com.liferay.server.manager.internal.util.JSONKeys;
 
 import java.util.List;
 import java.util.Queue;
@@ -69,6 +71,6 @@ public class PluginsExecutor extends BaseExecutor {
 		return _pluginExecutor;
 	}
 
-	private Executor _pluginExecutor = new PluginExecutor();
+	private final Executor _pluginExecutor = new PluginExecutor();
 
 }

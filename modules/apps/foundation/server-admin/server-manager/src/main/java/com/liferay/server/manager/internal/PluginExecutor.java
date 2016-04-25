@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.servermanager.executor;
+package com.liferay.server.manager.internal;
 
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
@@ -26,8 +26,9 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.servermanager.util.FileUploadUtil;
-import com.liferay.servermanager.util.JSONKeys;
+import com.liferay.server.manager.BaseExecutor;
+import com.liferay.server.manager.internal.util.FileUploadUtil;
+import com.liferay.server.manager.internal.util.JSONKeys;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -263,8 +264,7 @@ public class PluginExecutor extends BaseExecutor {
 						return false;
 					}
 
-				}
-			);
+				});
 
 			if (ArrayUtil.isNotEmpty(tempContextDirs)) {
 				Arrays.sort(
@@ -279,8 +279,7 @@ public class PluginExecutor extends BaseExecutor {
 							return fileName1.compareTo(fileName2);
 						}
 
-					}
-				);
+					});
 
 				File tempContextDir = tempContextDirs[
 					tempContextDirs.length - 1];
@@ -316,6 +315,6 @@ public class PluginExecutor extends BaseExecutor {
 		return null;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PluginExecutor.class);
+	private static final Log _log = LogFactoryUtil.getLog(PluginExecutor.class);
 
 }

@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.servermanager.executor;
+package com.liferay.server.manager.internal;
+
+import com.liferay.server.manager.BaseExecutor;
+import com.liferay.server.manager.Executor;
 
 import java.util.HashMap;
 import java.util.Map;

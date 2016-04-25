@@ -1,8 +1,5 @@
 Bundle-Name: Liferay Image Editor Web
 Bundle-SymbolicName: com.liferay.image.editor.web
 Bundle-Version: 1.0.0
-Include-Resource:\
-	classes,\
-	META-INF/resources=src/main/resources/META-INF/resources
 Require-Capability: soy;filter:="(type=metal)"
 -includeresource: package.json

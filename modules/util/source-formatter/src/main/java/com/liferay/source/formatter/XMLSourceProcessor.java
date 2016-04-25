@@ -386,7 +386,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return getFileNames(excludes, getIncludes());
 	}
 
-	protected String fixAntXMLProjectName(String fileName, String content) {
+	protected void checkAntXMLProjectName(String fileName, Document document) {
 		String baseDirName = sourceFormatterArgs.getBaseDirName();
 
 		int x = baseDirName.length();
@@ -424,33 +424,21 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 		else {
-			return content;
-		}
-
-		if (content.contains("<project>")) {
-			return content;
+			return;
 		}
 
 		int y = fileName.indexOf(CharPool.SLASH, x);
 
-		String correctProjectElementText =
-			"<project name=\"" + fileName.substring(x, y) + "\"";
+		String expectedProjectName = fileName.substring(x, y);
 
-		if (!content.contains(correctProjectElementText)) {
-			x = content.indexOf("<project name=\"");
+		Element rootElement = document.getRootElement();
 
-			y = content.indexOf(CharPool.QUOTE, x) + 1;
-			y = content.indexOf(CharPool.QUOTE, y) + 1;
+		String projectName = rootElement.attributeValue("name");
 
-			content =
-				content.substring(0, x) + correctProjectElementText +
-					content.substring(y);
-
+		if (!projectName.equals(expectedProjectName)) {
 			processErrorMessage(
 				fileName, fileName + " has an incorrect project name");
 		}
-
-		return content;
 	}
 
 	protected String fixPoshiXMLElementWithNoChild(String content) {
@@ -616,9 +604,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = trimContent(content, true);
 
-		newContent = fixAntXMLProjectName(fileName, newContent);
-
 		Document document = readXML(content);
+
+		checkAntXMLProjectName(fileName, document);
 
 		checkOrder(
 			fileName, document.getRootElement(), "macrodef", null,

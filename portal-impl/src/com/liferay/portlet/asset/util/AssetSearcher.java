@@ -84,16 +84,16 @@ public class AssetSearcher extends BaseSearcher {
 			addSearchTerm(searchQuery, searchContext, Field.DESCRIPTION, false);
 			addSearchTerm(searchQuery, searchContext, Field.TITLE, false);
 			addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);
-		}
-		else {
-			for (String entryClassName : searchContext.getEntryClassNames()) {
-				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
-					entryClassName);
 
-				if (Validator.isNotNull(indexer)) {
-					indexer.postProcessSearchQuery(
-						searchQuery, fullQueryBooleanFilter, searchContext);
-				}
+			return;
+		}
+
+		for (String entryClassName : searchContext.getEntryClassNames()) {
+			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(entryClassName);
+
+			if (indexer != null) {
+				indexer.postProcessSearchQuery(
+					searchQuery, fullQueryBooleanFilter, searchContext);
 			}
 		}
 	}

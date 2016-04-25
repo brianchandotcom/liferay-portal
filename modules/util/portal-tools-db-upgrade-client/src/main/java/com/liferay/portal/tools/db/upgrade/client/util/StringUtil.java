@@ -19,7 +19,7 @@ package com.liferay.portal.tools.db.upgrade.client.util;
  */
 public class StringUtil {
 
-	public static String join(Iterable<?> objects, String separator) {
+	public static String join(Iterable<?> objects, char separator) {
 		StringBuilder sb = new StringBuilder();
 
 		int i = 0;

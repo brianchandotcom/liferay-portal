@@ -98,7 +98,7 @@ public class AppServer {
 	}
 
 	public String getExtraLibDirNames() {
-		return StringUtil.join(_extraLibDirs, ",");
+		return StringUtil.join(_extraLibDirs, ',');
 	}
 
 	public List<File> getExtraLibDirs() {

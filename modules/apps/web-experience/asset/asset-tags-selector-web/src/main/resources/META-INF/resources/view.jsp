@@ -90,16 +90,22 @@
 	searchContainer.on(
 		'rowToggled',
 		function(event) {
+			var data = '';
+
 			var selectedItems = event.elements.allSelectedElements;
 
 			if (selectedItems.size() > 0) {
-				Liferay.Util.getOpener().Liferay.fire(
-					'<%= HtmlUtil.escapeJS(assetTagsSelectorDisplayContext.getEventName()) %>',
-					{
-						data: selectedItems.attr('value').join(',')
-					}
-				);
+				data = selectedItems.attr('value').join(',');
 			}
+
+			Liferay.Util.getOpener().Liferay.fire(
+				'<%= HtmlUtil.escapeJS(assetTagsSelectorDisplayContext.getEventName()) %>',
+				{
+					data: {
+						items: data
+					}
+				}
+			);
 		}
 	);
 </aui:script>

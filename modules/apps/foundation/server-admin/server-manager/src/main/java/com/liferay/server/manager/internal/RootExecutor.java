@@ -14,27 +14,57 @@
 
 package com.liferay.server.manager.internal;
 
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.server.manager.BaseExecutor;
 import com.liferay.server.manager.Executor;
+import com.liferay.server.manager.JSONKeys;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jonathan Potter
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true, property = {"server.manager.executor.path=/"},
+	service = Executor.class
+)
 public class RootExecutor extends BaseExecutor {
 
 	@Override
-	protected Map<String, Executor> initNextExecutors() {
-		Map<String, Executor> executors = new HashMap<>();
+	public void executeRead(
+			HttpServletRequest request, JSONObject responseJSONObject,
+			Queue<String> arguments)
+		throws Exception {
 
-		executors.put("plugins", new PluginsExecutor());
-		executors.put("server", new ServerExecutor());
-		executors.put("status", new StatusExecutor());
+		ExecutorPathResolver executorPathResolver = new ExecutorPathResolver(
+			_executorServiceRegistry.getAvailableExecutorPaths());
 
-		return executors;
+		List<String> paths = executorPathResolver.getNextExecutorsPaths(_path);
+
+		responseJSONObject.put(
+			JSONKeys.OUTPUT,
+			"Valid paths are " + StringUtil.merge(paths, ", "));
 	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_path = MapUtil.getString(properties, "server.manager.executor.path");
+	}
+
+	@Reference
+	private ExecutorServiceRegistry _executorServiceRegistry;
+
+	private String _path;
 
 }

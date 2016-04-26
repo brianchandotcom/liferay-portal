@@ -16,7 +16,6 @@ package com.liferay.server.manager;
 
 import com.liferay.portal.kernel.json.JSONObject;
 
-import java.util.Map;
 import java.util.Queue;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,9 +45,5 @@ public interface Executor {
 			HttpServletRequest request, JSONObject responseJSONObject,
 			Queue<String> arguments)
 		throws Exception;
-
-	public Executor getNextExecutor(Queue<String> arguments);
-
-	public Map<String, Executor> getNextExecutors();
 
 }

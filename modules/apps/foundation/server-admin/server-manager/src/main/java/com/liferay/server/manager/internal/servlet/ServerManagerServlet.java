@@ -31,7 +31,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.server.manager.Executor;
 import com.liferay.server.manager.JSONKeys;
-import com.liferay.server.manager.internal.RootExecutor;
+import com.liferay.server.manager.internal.ExecutorPathResolver;
+import com.liferay.server.manager.internal.ExecutorServiceRegistry;
 
 import java.io.IOException;
 
@@ -44,6 +45,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jonathan Potter
@@ -61,20 +63,14 @@ public class ServerManagerServlet extends HttpServlet {
 
 	protected void execute(
 			HttpServletRequest request, JSONObject responseJSONObject,
-			Queue<String> arguments)
+			String pathInfo)
 		throws Exception {
 
-		Executor executor = _executor;
+		String executorPath = getExecutorPath(pathInfo);
 
-		while (true) {
-			Executor nextExecutor = executor.getNextExecutor(arguments);
+		Executor executor = _executorServiceRegistry.getExecutor(executorPath);
 
-			if (nextExecutor == null) {
-				break;
-			}
-
-			executor = nextExecutor;
-		}
+		Queue<String> arguments = getExecutorArguments(executorPath, pathInfo);
 
 		String method = request.getMethod();
 
@@ -90,6 +86,32 @@ public class ServerManagerServlet extends HttpServlet {
 		else if (StringUtil.equalsIgnoreCase(method, HttpMethods.PUT)) {
 			executor.executeUpdate(request, responseJSONObject, arguments);
 		}
+	}
+
+	protected Queue<String> getExecutorArguments(
+		String matchingExecutorPath, String pathInfo) {
+
+		Queue<String> arguments = new LinkedList<>();
+
+		String path = StringUtil.toLowerCase(pathInfo);
+
+		path = StringUtil.replace(
+			path, matchingExecutorPath + StringPool.SLASH, StringPool.BLANK);
+
+		String[] pathParts = StringUtil.split(path, StringPool.SLASH);
+
+		for (String pathPart : pathParts) {
+			arguments.add(pathPart);
+		}
+
+		return arguments;
+	}
+
+	protected String getExecutorPath(String pathInfo) {
+		ExecutorPathResolver executorPathResolver = new ExecutorPathResolver(
+			_executorServiceRegistry.getAvailableExecutorPaths());
+
+		return executorPathResolver.getExecutorPath(pathInfo);
 	}
 
 	protected boolean isValidUser(HttpServletRequest request) {
@@ -128,23 +150,7 @@ public class ServerManagerServlet extends HttpServlet {
 		responseJSONObject.put(JSONKeys.STATUS, 0);
 
 		try {
-			Queue<String> arguments = new LinkedList<>();
-
-			String path = request.getPathInfo();
-
-			path = StringUtil.toLowerCase(path);
-
-			if (path.startsWith(StringPool.SLASH)) {
-				path = path.substring(1);
-			}
-
-			String[] pathParts = StringUtil.split(path, StringPool.SLASH);
-
-			for (String pathPart : pathParts) {
-				arguments.add(pathPart);
-			}
-
-			execute(request, responseJSONObject, arguments);
+			execute(request, responseJSONObject, request.getPathInfo());
 		}
 		catch (Exception e) {
 			responseJSONObject.put(
@@ -171,6 +177,7 @@ public class ServerManagerServlet extends HttpServlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ServerManagerServlet.class);
 
-	private final Executor _executor = new RootExecutor();
+	@Reference
+	private ExecutorServiceRegistry _executorServiceRegistry;
 
 }

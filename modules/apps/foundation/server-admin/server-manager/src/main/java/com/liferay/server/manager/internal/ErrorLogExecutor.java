@@ -15,13 +15,21 @@
 package com.liferay.server.manager.internal;
 
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.server.manager.Executor;
 
 import java.io.File;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jonathan Potter
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true,
+	property = {"server.manager.executor.path=/server/log/error"},
+	service = Executor.class
+)
 public class ErrorLogExecutor extends OutputLogExecutor {
 
 	@Override

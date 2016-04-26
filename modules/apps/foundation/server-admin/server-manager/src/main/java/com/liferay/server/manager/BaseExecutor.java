@@ -15,12 +15,7 @@
 package com.liferay.server.manager;
 
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,17 +25,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  */
 public abstract class BaseExecutor implements Executor {
-
-	public BaseExecutor() {
-		Map<String, Executor> nextExecutors = initNextExecutors();
-
-		if (nextExecutors != null) {
-			_nextExecutors = Collections.unmodifiableMap(nextExecutors);
-		}
-		else {
-			_nextExecutors = Collections.emptyMap();
-		}
-	}
 
 	@Override
 	public void executeCreate(
@@ -66,15 +50,7 @@ public abstract class BaseExecutor implements Executor {
 			Queue<String> arguments)
 		throws Exception {
 
-		Map<String, Executor> nextExecutors = getNextExecutors();
-
-		List<String> paths = new ArrayList<>(nextExecutors.keySet());
-
-		Collections.sort(paths);
-
-		responseJSONObject.put(
-			JSONKeys.OUTPUT,
-			"Valid paths are " + StringUtil.merge(paths, ", "));
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -85,31 +61,5 @@ public abstract class BaseExecutor implements Executor {
 
 		throw new UnsupportedOperationException();
 	}
-
-	@Override
-	public Executor getNextExecutor(Queue<String> arguments) {
-		Map<String, Executor> nextExecutors = getNextExecutors();
-
-		String type = arguments.peek();
-
-		Executor nextExecutor = nextExecutors.get(type);
-
-		if (nextExecutor != null) {
-			arguments.remove();
-		}
-
-		return nextExecutor;
-	}
-
-	@Override
-	public Map<String, Executor> getNextExecutors() {
-		return _nextExecutors;
-	}
-
-	protected Map<String, Executor> initNextExecutors() {
-		return null;
-	}
-
-	private final Map<String, Executor> _nextExecutors;
 
 }

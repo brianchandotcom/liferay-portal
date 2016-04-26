@@ -15,13 +15,14 @@
 package com.liferay.server.manager.internal;
 
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.server.manager.BaseExecutor;
+import com.liferay.server.manager.Executor;
 import com.liferay.server.manager.JSONKeys;
 
 import java.io.ByteArrayOutputStream;
@@ -37,10 +38,19 @@ import java.util.Queue;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Jonathan Potter
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true,
+	property = {"server.manager.executor.path=/server/log/output"},
+	service = Executor.class
+)
 public class OutputLogExecutor extends BaseExecutor {
 
 	@Override
@@ -66,6 +76,12 @@ public class OutputLogExecutor extends BaseExecutor {
 		StreamUtil.transfer(inputStream, outputStream);
 
 		responseJSONObject.put(JSONKeys.OUTPUT, outputStream.toString());
+	}
+
+	@Activate
+	protected void activate() {
+		_simpleDateFormat = _fastDateFormatFactory.getSimpleDateFormat(
+			"yyyy-MM-dd");
 	}
 
 	protected String getLiferayDateString() {
@@ -96,7 +112,9 @@ public class OutputLogExecutor extends BaseExecutor {
 		return _simpleDateFormat.format(date);
 	}
 
-	private static final Format _simpleDateFormat =
-		FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd");
+	@Reference
+	private FastDateFormatFactory _fastDateFormatFactory;
+
+	private Format _simpleDateFormat;
 
 }

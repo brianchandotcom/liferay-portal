@@ -14,9 +14,18 @@
 
 package com.liferay.server.manager.internal;
 
+import com.liferay.server.manager.Executor;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Cindy Li
  */
+@Component(
+	immediate = true,
+	property = {"server.manager.executor.path=/server/freemarker/debug-port"},
+	service = Executor.class
+)
 public class FreeMarkerDebugPortExecutor extends DebugPortExecutor {
 
 	@Override

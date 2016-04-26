@@ -16,15 +16,22 @@ package com.liferay.server.manager.internal;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.server.manager.BaseExecutor;
+import com.liferay.server.manager.Executor;
 
 import java.util.Queue;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jonathan Potter
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true, property = {"server.manager.executor.path=/status"},
+	service = Executor.class
+)
 public class StatusExecutor extends BaseExecutor {
 
 	@Override

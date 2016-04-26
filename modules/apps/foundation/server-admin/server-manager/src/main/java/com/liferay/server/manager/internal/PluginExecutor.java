@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.server.manager.BaseExecutor;
+import com.liferay.server.manager.Executor;
 import com.liferay.server.manager.JSONKeys;
 
 import java.io.BufferedReader;
@@ -49,10 +50,17 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jonathan Potter
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true,
+	property = {"server.manager.executor.path=/plugins/plugin"},
+	service = Executor.class
+)
 public class PluginExecutor extends BaseExecutor {
 
 	@Override

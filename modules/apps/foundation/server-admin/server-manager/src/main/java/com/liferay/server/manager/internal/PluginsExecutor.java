@@ -28,10 +28,16 @@ import java.util.Queue;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jonathan Potter
  * @author Brian Wing Shun Chan
  */
+@Component(
+	immediate = true, property = {"server.manager.executor.path=/plugins"},
+	service = Executor.class
+)
 public class PluginsExecutor extends BaseExecutor {
 
 	@Override
@@ -58,17 +64,6 @@ public class PluginsExecutor extends BaseExecutor {
 		}
 
 		responseJSONObject.put(JSONKeys.OUTPUT, pluginPackagesJSONArray);
-	}
-
-	@Override
-	public Executor getNextExecutor(Queue<String> arguments) {
-		String context = arguments.peek();
-
-		if (context == null) {
-			return null;
-		}
-
-		return _pluginExecutor;
 	}
 
 	private final Executor _pluginExecutor = new PluginExecutor();

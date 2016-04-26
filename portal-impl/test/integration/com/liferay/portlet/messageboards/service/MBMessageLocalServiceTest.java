@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -82,6 +83,28 @@ public class MBMessageLocalServiceTest {
 			_attachmentFile, "image/png");
 
 		Assert.assertEquals(1, message.getAttachmentsFileEntriesCount());
+	}
+
+	@Test
+	public void testAddXSSMessage() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			Collections.emptyList();
+		String subject = "<script>alert(1)</script>";
+		String body = StringPool.BLANK;
+
+		MBMessage message = MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			subject, body, "html", inputStreamOVPs, false, 0.0, false,
+			serviceContext);
+
+		if (Validator.isNotNull(message.getBody())) {
+			Assert.fail("Message body should have been sanitized.");
+		}
 	}
 
 	@Test

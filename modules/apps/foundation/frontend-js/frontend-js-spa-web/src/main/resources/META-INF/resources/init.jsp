@@ -19,7 +19,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.frontend.js.spa.web.servlet.taglib.util.SPAUtil" %>
 
-<%@ page import ="com.liferay.frontend.js.spa.web.constants.SPAWebKeys" %>
+<%@ page import="com.liferay.frontend.js.spa.web.constants.SPAWebKeys" %>
 
 <liferay-theme:defineObjects />
 

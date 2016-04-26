@@ -1187,16 +1187,16 @@
 
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
 
-		<execute macro="KaleoFormsPortlet#submitNewProcess">
+		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#populateFieldText">
+		<execute macro="KaleoFormsAdmin#populateFieldText">
 			<var name="fieldName" value="Text" />
 			<var name="kfProcessFieldData" value="One" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
+		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Kaleo Forms" />
@@ -1212,16 +1212,16 @@
 			<var name="workflowTask" value="review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#submitNewProcess">
+		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#populateFieldText">
+		<execute macro="KaleoFormsAdmin#populateFieldText">
 			<var name="fieldName" value="Text" />
 			<var name="kfProcessFieldData" value="Two" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
+		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -2522,16 +2522,16 @@
 
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
 
-		<execute macro="KaleoFormsPortlet#submitNewProcess">
+		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#populateFieldText">
+		<execute macro="KaleoFormsAdmin#populateFieldText">
 			<var name="fieldName" value="Text" />
 			<var name="kfProcessFieldData" value="One" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
+		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Kaleo Forms" />
@@ -2547,16 +2547,16 @@
 			<var name="workflowTask" value="review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#submitNewProcess">
+		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#populateFieldText">
+		<execute macro="KaleoFormsAdmin#populateFieldText">
 			<var name="fieldName" value="Text" />
 			<var name="kfProcessFieldData" value="Two" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
+		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -2654,16 +2654,16 @@
 
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
 
-		<execute macro="KaleoFormsPortlet#submitNewProcess">
+		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#populateFieldText">
+		<execute macro="KaleoFormsAdmin#populateFieldText">
 			<var name="fieldName" value="Text" />
 			<var name="kfProcessFieldData" value="One" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
+		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Kaleo Forms" />
@@ -2679,16 +2679,16 @@
 			<var name="workflowTask" value="review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#submitNewProcess">
+		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#populateFieldText">
+		<execute macro="KaleoFormsAdmin#populateFieldText">
 			<var name="fieldName" value="Text" />
 			<var name="kfProcessFieldData" value="Two" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
+		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -2786,16 +2786,16 @@
 
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
 
-		<execute macro="KaleoFormsPortlet#submitNewProcess">
+		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#populateFieldText">
+		<execute macro="KaleoFormsAdmin#populateFieldText">
 			<var name="fieldName" value="Text" />
 			<var name="kfProcessFieldData" value="One" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
+		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Kaleo Forms" />
@@ -2811,16 +2811,16 @@
 			<var name="workflowTask" value="review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#submitNewProcess">
+		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#populateFieldText">
+		<execute macro="KaleoFormsAdmin#populateFieldText">
 			<var name="fieldName" value="Text" />
 			<var name="kfProcessFieldData" value="Two" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
+		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -2919,16 +2919,16 @@
 
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
 
-		<execute macro="KaleoFormsPortlet#submitNewProcess">
+		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#populateFieldText">
+		<execute macro="KaleoFormsAdmin#populateFieldText">
 			<var name="fieldName" value="Text" />
 			<var name="kfProcessFieldData" value="One" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
+		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Kaleo Forms" />
@@ -2944,16 +2944,16 @@
 			<var name="workflowTask" value="review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#submitNewProcess">
+		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#populateFieldText">
+		<execute macro="KaleoFormsAdmin#populateFieldText">
 			<var name="fieldName" value="Text" />
 			<var name="kfProcessFieldData" value="Two" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
+		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -3113,16 +3113,16 @@
 
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
 
-		<execute macro="KaleoFormsPortlet#submitNewProcess">
+		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#populateFieldText">
+		<execute macro="KaleoFormsAdmin#populateFieldText">
 			<var name="fieldName" value="Text" />
 			<var name="kfProcessFieldData" value="One" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
+		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Kaleo Forms" />
@@ -3138,16 +3138,16 @@
 			<var name="workflowTask" value="review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#submitNewProcess">
+		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#populateFieldText">
+		<execute macro="KaleoFormsAdmin#populateFieldText">
 			<var name="fieldName" value="Text" />
 			<var name="kfProcessFieldData" value="Two" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
+		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -3498,16 +3498,16 @@
 
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
 
-		<execute macro="KaleoFormsPortlet#submitNewProcess">
+		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#populateFieldText">
+		<execute macro="KaleoFormsAdmin#populateFieldText">
 			<var name="fieldName" value="Text" />
 			<var name="kfProcessFieldData" value="One" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
+		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Kaleo Forms" />
@@ -3523,16 +3523,16 @@
 			<var name="workflowTask" value="review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#submitNewProcess">
+		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#populateFieldText">
+		<execute macro="KaleoFormsAdmin#populateFieldText">
 			<var name="fieldName" value="Text" />
 			<var name="kfProcessFieldData" value="Two" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#saveProcessRecord" />
+		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
 		<execute macro="Navigator#openURL" />
 

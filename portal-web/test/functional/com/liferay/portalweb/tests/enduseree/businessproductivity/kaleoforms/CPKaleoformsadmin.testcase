@@ -1185,7 +1185,11 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewNoTasks" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
 
 		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
@@ -2520,7 +2524,11 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewNoTasks" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
 
 		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
@@ -2652,7 +2660,11 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewNoTasks" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
 
 		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="Kaleo Forms Process" />
@@ -2784,7 +2796,11 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewNoTasks" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
 
 		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
@@ -2917,7 +2933,11 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewNoTasks" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
 
 		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
@@ -3111,7 +3131,11 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewNoTasks" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
 
 		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
@@ -3496,7 +3520,11 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewNoTasks" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#viewDefaultMyWorkflowTasksCP" />
 
 		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />

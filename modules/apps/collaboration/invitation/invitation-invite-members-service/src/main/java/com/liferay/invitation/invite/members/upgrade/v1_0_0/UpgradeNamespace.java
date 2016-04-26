@@ -15,6 +15,7 @@
 package com.liferay.invitation.invite.members.upgrade.v1_0_0;
 
 import com.liferay.invitation.invite.members.upgrade.v1_0_0.util.MemberRequestTable;
+import com.liferay.portal.kernel.dao.db.DBMetadata;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -43,7 +44,9 @@ public class UpgradeNamespace extends UpgradeProcess {
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(newTableName)) {
-			boolean hasNewTable = hasTable(newTableName);
+			DBMetadata dbMetadata = new DBMetadata(connection);
+
+			boolean hasNewTable = dbMetadata.hasTable(newTableName);
 
 			if (hasNewTable && hasRows(newTableName)) {
 				if (_log.isWarnEnabled()) {
@@ -55,7 +58,7 @@ public class UpgradeNamespace extends UpgradeProcess {
 				return;
 			}
 
-			boolean hasOldTable = hasTable(oldTableName);
+			boolean hasOldTable = dbMetadata.hasTable(oldTableName);
 
 			if (hasOldTable && !hasRows(oldTableName)) {
 				if (_log.isWarnEnabled()) {

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.portal.kernel.dao.db.DBMetadata;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -27,19 +28,24 @@ public class VerifyWorkflow extends VerifyProcess {
 	protected void deleteOrphaned() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			for (String[] orphanedAttachedModel : getOrphanedAttachedModels()) {
+				DBMetadata dbMetadata = new DBMetadata(connection);
+
 				String tableName = orphanedAttachedModel[0];
 				String columnName = orphanedAttachedModel[1];
 				String columnValue = orphanedAttachedModel[2];
 
-				if (!hasTable(tableName) || !hasColumn(tableName, columnName)) {
+				if (!dbMetadata.hasTable(tableName) ||
+					!dbMetadata.hasColumn(tableName, columnName)) {
+
 					continue;
 				}
 
 				String orphanedTableName = orphanedAttachedModel[3];
 				String orphanedColumnName = orphanedAttachedModel[4];
 
-				if (!hasTable(orphanedTableName) ||
-					!hasColumn(orphanedTableName, orphanedColumnName)) {
+				if (!dbMetadata.hasTable(orphanedTableName) ||
+					!dbMetadata.hasColumn(
+						orphanedTableName, orphanedColumnName)) {
 
 					continue;
 				}

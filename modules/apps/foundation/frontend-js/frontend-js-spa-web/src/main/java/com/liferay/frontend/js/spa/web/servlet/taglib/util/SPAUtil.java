@@ -54,11 +54,11 @@ public class SPAUtil {
 	public long getCacheExpirationTime(long companyId) {
 		long cacheExpirationTime = -1;
 
-		SPAConfiguration configuration =
+		SPAConfiguration spaConfiguration =
 			_spaConfigurationActivator.getSPAConfiguration();
 
 		cacheExpirationTime = GetterUtil.getLong(
-			configuration.cacheExpirationTime(), cacheExpirationTime);
+			spaConfiguration.cacheExpirationTime(), cacheExpirationTime);
 
 		if (cacheExpirationTime > -1) {
 			cacheExpirationTime *= Time.MINUTE;

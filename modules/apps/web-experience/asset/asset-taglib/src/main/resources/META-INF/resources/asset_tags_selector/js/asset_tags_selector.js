@@ -372,7 +372,7 @@ AUI.add(
 											);
 
 											AArray.each(
-												selectedItem.split(','),
+												selectedItem.items.split(','),
 												function(value) {
 													instance['add'](value);
 												}

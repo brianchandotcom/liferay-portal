@@ -14,14 +14,20 @@
 
 package com.liferay.portal.kernel.dao.db;
 
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Field;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,6 +39,55 @@ public class DBMetadata {
 
 	public DBMetadata(Connection connection) {
 		_connection = connection;
+	}
+
+	public boolean hasColumn(String tableName, String columnName)
+		throws Exception {
+
+		try (PreparedStatement ps = _connection.prepareStatement(
+				"select * from " + tableName);
+			ResultSet rs = ps.executeQuery()) {
+
+			ResultSetMetaData rsmd = rs.getMetaData();
+
+			for (int i = 0; i < rsmd.getColumnCount(); i++) {
+				String curColumnName = rsmd.getColumnName(i + 1);
+
+				if (StringUtil.equalsIgnoreCase(curColumnName, columnName)) {
+					return true;
+				}
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return false;
+	}
+
+	public boolean hasTable(String tableName) throws Exception {
+		return hasTable(tableName, false);
+	}
+
+	public boolean hasTable(String tableName, boolean caseSensitive)
+		throws Exception {
+
+		if (caseSensitive) {
+			if (doHasTable(tableName)) {
+				return true;
+			}
+
+			return false;
+		}
+
+		if (doHasTable(StringUtil.toLowerCase(tableName)) ||
+			doHasTable(StringUtil.toUpperCase(tableName)) ||
+			doHasTable(tableName)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean hasType(
@@ -78,6 +133,26 @@ public class DBMetadata {
 
 			return true;
 		}
+	}
+
+	protected boolean doHasTable(String tableName) throws Exception {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			DatabaseMetaData metadata = _connection.getMetaData();
+
+			rs = metadata.getTables(null, null, tableName, null);
+
+			while (rs.next()) {
+				return true;
+			}
+		}
+		finally {
+			DataAccess.cleanUp(ps, rs);
+		}
+
+		return false;
 	}
 
 	protected int getColumnType(Class<?> tableClass, String columnName)
@@ -141,6 +216,8 @@ public class DBMetadata {
 
 		return -1;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(DBMetadata.class);
 
 	private static final Pattern _columnTypeSizePattern = Pattern.compile(
 		"^\\w+(?:\\((\\d+)\\))?.*", Pattern.CASE_INSENSITIVE);

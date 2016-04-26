@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -204,7 +205,9 @@ public class CreateAnonymousAccountMVCActionCommand
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
 				if (!company.isStrangers()) {
-					throw new PrincipalException();
+					throw new PrincipalException.MustBeEnabled(
+						company.getCompanyId(),
+						PropsKeys.COMPANY_SECURITY_STRANGERS);
 				}
 
 				jsonObject = updateIncompleteUser(

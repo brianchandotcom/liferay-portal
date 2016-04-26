@@ -1,0 +1,6 @@
+dependencies {
+	provided group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.4.2"
+	provided group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.4.2"
+	provided group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.4.2"
+	provided group: "org.slf4j", name: "slf4j-api", version: "1.7.2"
+}

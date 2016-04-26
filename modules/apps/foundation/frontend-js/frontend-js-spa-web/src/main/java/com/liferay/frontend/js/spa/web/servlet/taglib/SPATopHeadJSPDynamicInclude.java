@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.js.spa.web.servlet.taglib;
 
+import com.liferay.frontend.js.spa.web.constants.SPAWebKeys;
+import com.liferay.frontend.js.spa.web.servlet.taglib.util.SPAUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
@@ -22,16 +24,34 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 
+import java.io.IOException;
+
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Bruno Basto
  */
 @Component(immediate = true, service = DynamicInclude.class)
 public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
+
+	@Override
+	public void include(
+			HttpServletRequest request, HttpServletResponse response,
+			String key)
+		throws IOException {
+
+		request.setAttribute(SPAWebKeys.SPA_UTIL, _spaUtil);
+
+		super.include(request, response, key);
+	}
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
@@ -64,7 +84,18 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		super.setServletContext(servletContext);
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"
+	)
+	protected void setSPAUtil(SPAUtil spaUtil) {
+		_spaUtil = spaUtil;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SPATopHeadJSPDynamicInclude.class);
+
+	private SPAUtil _spaUtil;
 
 }

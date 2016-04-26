@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>FOLDER_NAME</td>
-	<td>//span[@title='${key_mgFolderName}']/a</td>
+	<td>//span//a[@title='${key_mgFolderName}']</td>
 	<td></td>
 </tr>
 <tr>

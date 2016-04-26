@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.repository.external;
+package com.liferay.document.library.repository.external;
 
 /**
  * Represents the external repository folder object. Implementers of external

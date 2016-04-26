@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.repository.external.model;
+package com.liferay.document.library.repository.external.model;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
-import com.liferay.repository.external.ExtRepositoryAdapter;
-import com.liferay.repository.external.ExtRepositoryFolder;
+import com.liferay.document.library.repository.external.ExtRepositoryAdapter;
+import com.liferay.document.library.repository.external.ExtRepositoryFolder;
 
 import java.util.Date;
 

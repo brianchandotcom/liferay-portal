@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.repository.external;
+package com.liferay.document.library.repository.external;
 
 /**
  * Provides external repository constants describing the types of {@link

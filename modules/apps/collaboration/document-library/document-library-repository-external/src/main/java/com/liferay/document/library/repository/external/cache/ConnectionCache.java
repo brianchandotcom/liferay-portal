@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.repository.external.cache;
+package com.liferay.document.library.repository.external.cache;
 
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;

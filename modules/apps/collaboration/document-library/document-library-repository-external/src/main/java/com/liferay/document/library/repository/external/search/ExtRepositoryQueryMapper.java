@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.repository.external.search;
+package com.liferay.document.library.repository.external.search;
 
 import com.liferay.portal.kernel.search.SearchException;
 

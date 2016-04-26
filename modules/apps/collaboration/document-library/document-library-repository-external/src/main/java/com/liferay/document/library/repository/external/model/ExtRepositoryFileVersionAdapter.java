@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.repository.external.model;
+package com.liferay.document.library.repository.external.model;
 
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.repository.external.ExtRepositoryAdapter;
-import com.liferay.repository.external.ExtRepositoryFileVersion;
+import com.liferay.document.library.repository.external.ExtRepositoryAdapter;
+import com.liferay.document.library.repository.external.ExtRepositoryFileVersion;
 
 import java.io.InputStream;
 

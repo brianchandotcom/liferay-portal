@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.repository.external;
+package com.liferay.document.library.repository.external;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.repository.external.search.ExtRepositoryQueryMapper;
+import com.liferay.document.library.repository.external.search.ExtRepositoryQueryMapper;
 
 import java.text.DateFormat;
 import java.text.ParseException;

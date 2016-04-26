@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.repository.external;
+package com.liferay.document.library.repository.external;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
@@ -58,11 +58,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.repository.external.model.ExtRepositoryFileEntryAdapter;
-import com.liferay.repository.external.model.ExtRepositoryFileVersionAdapter;
-import com.liferay.repository.external.model.ExtRepositoryFolderAdapter;
-import com.liferay.repository.external.model.ExtRepositoryObjectAdapter;
-import com.liferay.repository.external.model.ExtRepositoryObjectAdapterType;
+import com.liferay.document.library.repository.external.model.ExtRepositoryFileEntryAdapter;
+import com.liferay.document.library.repository.external.model.ExtRepositoryFileVersionAdapter;
+import com.liferay.document.library.repository.external.model.ExtRepositoryFolderAdapter;
+import com.liferay.document.library.repository.external.model.ExtRepositoryObjectAdapter;
+import com.liferay.document.library.repository.external.model.ExtRepositoryObjectAdapterType;
 
 import java.io.InputStream;
 

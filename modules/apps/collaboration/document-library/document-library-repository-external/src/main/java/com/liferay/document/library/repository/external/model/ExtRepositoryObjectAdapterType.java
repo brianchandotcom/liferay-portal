@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.repository.external.model;
+package com.liferay.document.library.repository.external.model;
 
 /**
  * @author Iván Zaera

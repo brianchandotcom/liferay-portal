@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.repository.external;
+package com.liferay.document.library.repository.external;
 
 /**
  * Holds search results to be returned by the {@link

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.repository.external.model;
+package com.liferay.document.library.repository.external.model;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.repository.external.ExtRepositoryAdapter;
-import com.liferay.repository.external.ExtRepositoryModel;
+import com.liferay.document.library.repository.external.ExtRepositoryAdapter;
+import com.liferay.document.library.repository.external.ExtRepositoryModel;
 
 import java.io.Serializable;
 

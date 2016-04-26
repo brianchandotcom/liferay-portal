@@ -17,6 +17,7 @@ package com.liferay.image.editor.web.portlet.action;
 import com.liferay.image.editor.capability.ImageEditorCapability;
 import com.liferay.image.editor.web.constants.ImageEditorPortletKeys;
 import com.liferay.image.editor.web.portlet.tracker.ImageEditorCapabilityTracker;
+import com.liferay.image.editor.web.portlet.tracker.ImageEditorCapabilityTracker.ImageEditorCapabilityInformation;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -84,24 +85,27 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		List<Map<String, Object>> imageEditorToolsContext = new ArrayList();
 
-		List<ImageEditorCapability> imageEditorTools =
+		List<ImageEditorCapabilityInformation> imageEditorToolInformations =
 			_imageEditorCapabilityTracker.getCapabilities("tool");
 
-		if (imageEditorTools != null) {
-			List<List<ImageEditorCapability>> toolCategories =
-				groupCapabilities(imageEditorTools);
+		if (imageEditorToolInformations != null) {
+			List<List<ImageEditorCapabilityInformation>> toolCategories =
+				groupCapabilities(imageEditorToolInformations);
 
-			for (List<ImageEditorCapability> toolCategory : toolCategories) {
+			for (List<ImageEditorCapabilityInformation> toolCategory :
+					toolCategories) {
 
-				Map<String, Object> toolContext = new HashMap<String, Object>();
+				Map<String, Object> toolContext = new HashMap<>();
 
 				List<Map<String, Object>> categoryControls = new ArrayList();
 				String categoryIcon = StringPool.BLANK;
 
-				for (ImageEditorCapability imageEditorCapability : toolCategory) {
+				for (ImageEditorCapabilityInformation
+						imageEditorCapabilityInformation :
+							toolCategory) {
+
 					Map<String, Object> capabilityProperties =
-						_imageEditorCapabilityTracker.getCapabilityProperties(
-							imageEditorCapability.getName());
+						imageEditorCapabilityInformation.getProperties();
 
 					String icon = GetterUtil.getString(
 						capabilityProperties.get(
@@ -109,9 +113,12 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 					categoryIcon = icon;
 
-					String label =
-						imageEditorCapability.getLabel(
-							themeDisplay.getLocale());
+					ImageEditorCapability imageEditorCapability =
+						imageEditorCapabilityInformation.
+							getImageEditorCapability();
+
+					String label = imageEditorCapability.getLabel(
+						themeDisplay.getLocale());
 
 					ServletContext imageEditorCapabilityServletContext =
 						imageEditorCapability.getServletContext();
@@ -151,18 +158,17 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return (Template)renderRequest.getAttribute(WebKeys.TEMPLATE);
 	}
 
-	protected List<List<ImageEditorCapability>> groupCapabilities(
-		List<ImageEditorCapability> imageEditorCapabilities) {
+	protected List<List<ImageEditorCapabilityInformation>> groupCapabilities(
+		List<ImageEditorCapabilityInformation> imageEditorCapabilities) {
 
-		Map<String, List<ImageEditorCapability>> groupedCapabilities =
-			new HashMap<>();
+		Map<String, List<ImageEditorCapabilityInformation>>
+			groupedCapabilities = new HashMap<>();
 
-		for (ImageEditorCapability imageEditorCapability :
+		for (ImageEditorCapabilityInformation imageEditorCapability :
 				imageEditorCapabilities) {
 
 			Map<String, Object> capabilityProperties =
-				_imageEditorCapabilityTracker.getCapabilityProperties(
-					imageEditorCapability.getName());
+				imageEditorCapability.getProperties();
 
 			String imageEditorCapabilityCategory = GetterUtil.getString(
 				capabilityProperties.get(
@@ -170,15 +176,15 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 			groupedCapabilities.putIfAbsent(
 				imageEditorCapabilityCategory,
-				new ArrayList<ImageEditorCapability>());
+				new ArrayList<ImageEditorCapabilityInformation>());
 
-			List<ImageEditorCapability> imageEditorCapabilityList =
+			List<ImageEditorCapabilityInformation> imageEditorCapabilityList =
 				groupedCapabilities.get(imageEditorCapabilityCategory);
 
 			imageEditorCapabilityList.add(imageEditorCapability);
 		}
 
-		return new ArrayList<List<ImageEditorCapability>>(groupedCapabilities.values());
+		return new ArrayList<>(groupedCapabilities.values());
 	}
 
 	@Reference

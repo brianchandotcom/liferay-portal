@@ -904,7 +904,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				public void execute(Project project) {
 					File moduleConfigFile = getModuleConfigFile(project);
 
-					if (moduleConfigFile == null) {
+					if ((moduleConfigFile == null) ||
+						!moduleConfigFile.exists()) {
+
 						return;
 					}
 

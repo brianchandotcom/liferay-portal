@@ -247,15 +247,6 @@ public class EhcachePortalCacheTest {
 
 		testPersistentPortalCacheListener.assertActionsCount(1);
 		testPersistentPortalCacheListener.assertUpdated(_KEY_1, _VALUE_2);
-
-		testPersistentPortalCacheListener.reset();
-
-		_ehcachePortalCache.unregisterPortalCacheListener(
-			testPersistentPortalCacheListener);
-
-		_ehcachePortalCache.put(_KEY_1, _VALUE_1);
-
-		testPersistentPortalCacheListener.assertActionsCount(0);
 	}
 
 	@Test

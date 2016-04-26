@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.repository.external.model;
 
+import com.liferay.document.library.repository.external.ExtRepositoryAdapter;
+import com.liferay.document.library.repository.external.ExtRepositoryModel;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -23,8 +25,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.document.library.repository.external.ExtRepositoryAdapter;
-import com.liferay.document.library.repository.external.ExtRepositoryModel;
 
 import java.io.Serializable;
 
@@ -273,9 +273,9 @@ public abstract class ExtRepositoryModelAdapter<T>
 		return user;
 	}
 
-	private ExtRepositoryAdapter _extRepositoryAdapter;
-	private ExtRepositoryModel _extRepositoryModel;
-	private long _extRepositoryObjectId;
-	private String _uuid;
+	private final ExtRepositoryAdapter _extRepositoryAdapter;
+	private final ExtRepositoryModel _extRepositoryModel;
+	private final long _extRepositoryObjectId;
+	private final String _uuid;
 
 }

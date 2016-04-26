@@ -57,7 +57,7 @@ public class ExtRepositoryFileVersionDescriptor {
 		return _version;
 	}
 
-	private String _extRepositoryFileEntryKey;
-	private String _version;
+	private final String _extRepositoryFileEntryKey;
+	private final String _version;
 
 }

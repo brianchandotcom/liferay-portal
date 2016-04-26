@@ -15,14 +15,14 @@
 package com.liferay.document.library.repository.external.model;
 
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.repository.external.ExtRepositoryAdapter;
+import com.liferay.document.library.repository.external.ExtRepositoryObject;
+import com.liferay.document.library.repository.external.ExtRepositoryObject.ExtRepositoryPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.document.library.repository.external.ExtRepositoryAdapter;
-import com.liferay.document.library.repository.external.ExtRepositoryObject;
-import com.liferay.document.library.repository.external.ExtRepositoryObject.ExtRepositoryPermission;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -147,13 +147,14 @@ public abstract class ExtRepositoryObjectAdapter<T>
 		_extRepositoryObject = extRepositoryObject;
 	}
 
-	private static Map<String, Boolean> _unsupportedActionIds = new HashMap<>();
+	private static final Map<String, Boolean> _unsupportedActionIds =
+		new HashMap<>();
 
 	static {
 		_unsupportedActionIds.put(ActionKeys.OVERRIDE_CHECKOUT, Boolean.FALSE);
 		_unsupportedActionIds.put(ActionKeys.SUBSCRIBE, Boolean.FALSE);
 	}
 
-	private ExtRepositoryObject _extRepositoryObject;
+	private final ExtRepositoryObject _extRepositoryObject;
 
 }

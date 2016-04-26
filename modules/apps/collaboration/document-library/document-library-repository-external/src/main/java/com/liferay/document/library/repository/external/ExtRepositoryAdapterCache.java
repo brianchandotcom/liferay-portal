@@ -14,10 +14,10 @@
 
 package com.liferay.document.library.repository.external;
 
+import com.liferay.document.library.repository.external.model.ExtRepositoryModelAdapter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
-import com.liferay.document.library.repository.external.model.ExtRepositoryModelAdapter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -109,10 +109,10 @@ public class ExtRepositoryAdapterCache implements Cloneable {
 		return _extRepositoryAdapters;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ExtRepositoryAdapterCache.class);
 
-	private static ThreadLocal<ExtRepositoryAdapterCache>
+	private static final ThreadLocal<ExtRepositoryAdapterCache>
 		_extRepositoryAdapterThreadLocal =
 			new AutoResetThreadLocal<ExtRepositoryAdapterCache>(
 				ExtRepositoryAdapterCache.class.getName(),

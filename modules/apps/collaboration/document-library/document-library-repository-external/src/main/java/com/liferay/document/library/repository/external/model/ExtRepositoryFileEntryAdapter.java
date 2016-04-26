@@ -17,6 +17,8 @@ package com.liferay.document.library.repository.external.model;
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.repository.external.ExtRepositoryAdapter;
+import com.liferay.document.library.repository.external.ExtRepositoryFileEntry;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -36,8 +38,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.document.library.repository.external.ExtRepositoryAdapter;
-import com.liferay.document.library.repository.external.ExtRepositoryFileEntry;
 
 import java.io.InputStream;
 
@@ -395,9 +395,9 @@ public class ExtRepositoryFileEntryAdapter
 		return extRepositoryAdapter.getExtRepositoryFileVersionAdapters(this);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ExtRepositoryFileEntryAdapter.class);
 
-	private ExtRepositoryFileEntry _extRepositoryFileEntry;
+	private final ExtRepositoryFileEntry _extRepositoryFileEntry;
 
 }

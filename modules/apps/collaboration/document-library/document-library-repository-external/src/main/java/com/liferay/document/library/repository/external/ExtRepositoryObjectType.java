@@ -62,6 +62,6 @@ public final class ExtRepositoryObjectType<T extends ExtRepositoryModel> {
 		_name = name;
 	}
 
-	private String _name;
+	private final String _name;
 
 }

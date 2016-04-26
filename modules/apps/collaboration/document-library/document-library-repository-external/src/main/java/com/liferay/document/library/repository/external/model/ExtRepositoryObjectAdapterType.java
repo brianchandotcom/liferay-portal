@@ -42,6 +42,6 @@ public class ExtRepositoryObjectAdapterType
 		_name = name;
 	}
 
-	private String _name;
+	private final String _name;
 
 }

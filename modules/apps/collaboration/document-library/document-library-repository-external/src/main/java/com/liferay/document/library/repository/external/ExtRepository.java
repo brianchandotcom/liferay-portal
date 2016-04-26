@@ -14,11 +14,11 @@
 
 package com.liferay.document.library.repository.external;
 
+import com.liferay.document.library.repository.external.search.ExtRepositoryQueryMapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.document.library.repository.external.search.ExtRepositoryQueryMapper;
 
 import java.io.InputStream;
 

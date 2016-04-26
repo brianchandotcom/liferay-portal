@@ -16,14 +16,14 @@ package com.liferay.document.library.repository.external.model;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.repository.external.ExtRepositoryAdapter;
+import com.liferay.document.library.repository.external.ExtRepositoryFolder;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
-import com.liferay.document.library.repository.external.ExtRepositoryAdapter;
-import com.liferay.document.library.repository.external.ExtRepositoryFolder;
 
 import java.util.Date;
 
@@ -155,9 +155,9 @@ public class ExtRepositoryFolderAdapter
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ExtRepositoryFolderAdapter.class);
 
-	private ExtRepositoryFolder _extRepositoryFolder;
+	private final ExtRepositoryFolder _extRepositoryFolder;
 
 }

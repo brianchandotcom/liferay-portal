@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.repository.external;
 
+import com.liferay.document.library.repository.external.search.ExtRepositoryQueryMapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.document.library.repository.external.search.ExtRepositoryQueryMapper;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -116,6 +116,6 @@ public class ExtRepositoryQueryMapperImpl implements ExtRepositoryQueryMapper {
 	private static final String _INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(
 		PropsKeys.INDEX_DATE_FORMAT_PATTERN);
 
-	private ExtRepositoryAdapter _extRepositoryAdapter;
+	private final ExtRepositoryAdapter _extRepositoryAdapter;
 
 }

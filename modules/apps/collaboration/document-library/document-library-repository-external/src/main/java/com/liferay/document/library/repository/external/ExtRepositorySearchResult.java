@@ -70,8 +70,8 @@ public class ExtRepositorySearchResult<T extends ExtRepositoryObject> {
 		return _snippet;
 	}
 
-	private T _object;
-	private float _score;
-	private String _snippet;
+	private final T _object;
+	private final float _score;
+	private final String _snippet;
 
 }

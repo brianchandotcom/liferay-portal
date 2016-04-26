@@ -20,6 +20,11 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
+import com.liferay.document.library.repository.external.model.ExtRepositoryFileEntryAdapter;
+import com.liferay.document.library.repository.external.model.ExtRepositoryFileVersionAdapter;
+import com.liferay.document.library.repository.external.model.ExtRepositoryFolderAdapter;
+import com.liferay.document.library.repository.external.model.ExtRepositoryObjectAdapter;
+import com.liferay.document.library.repository.external.model.ExtRepositoryObjectAdapterType;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -58,11 +63,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.document.library.repository.external.model.ExtRepositoryFileEntryAdapter;
-import com.liferay.document.library.repository.external.model.ExtRepositoryFileVersionAdapter;
-import com.liferay.document.library.repository.external.model.ExtRepositoryFolderAdapter;
-import com.liferay.document.library.repository.external.model.ExtRepositoryObjectAdapter;
-import com.liferay.document.library.repository.external.model.ExtRepositoryObjectAdapterType;
 
 import java.io.InputStream;
 
@@ -1444,8 +1444,9 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 		return extRepositoryObjectAdapters;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ExtRepositoryAdapter.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExtRepositoryAdapter.class);
 
-	private ExtRepository _extRepository;
+	private final ExtRepository _extRepository;
 
 }

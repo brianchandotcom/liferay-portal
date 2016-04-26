@@ -74,8 +74,8 @@ public class ConnectionCache<T> {
 		return connection;
 	}
 
-	private ConnectionBuilder<T> _connectionBuilder;
-	private ThreadLocal<T> _connectionThreadLocal;
-	private String _sessionKey;
+	private final ConnectionBuilder<T> _connectionBuilder;
+	private final ThreadLocal<T> _connectionThreadLocal;
+	private final String _sessionKey;
 
 }

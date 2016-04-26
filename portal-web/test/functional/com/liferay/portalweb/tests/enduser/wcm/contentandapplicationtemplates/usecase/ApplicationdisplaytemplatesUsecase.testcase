@@ -70,6 +70,8 @@
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
+		<execute macro="RSS#waitForRSSLoad" />
+
 		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
 			<var name="adtType" value="RSS" />
 		</execute>
@@ -78,6 +80,8 @@
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
 		</execute>
+
+		<execute macro="RSS#waitForRSSLoad" />
 
 		<execute macro="RSS#viewCustomADT">
 			<var name="feedContentTitle" value="Technology" />

@@ -133,4 +133,9 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="${errorMessage}" />
 	</command>
+
+	<command name="waitForRSSLoad">
+		<execute function="AssertVisible" locator1="Portlet#H2_HEADER" />
+		<execute function="AssertTextEquals" locator1="Portlet#H2_HEADER" value1="RSS Publisher" />
+	</command>
 </definition>

@@ -162,8 +162,6 @@ public class CreateAnonymousAccountMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Company company = themeDisplay.getCompany();
-
 		PortletConfig portletConfig = (PortletConfig)actionRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG);
 
@@ -204,6 +202,8 @@ public class CreateAnonymousAccountMVCActionCommand
 					actionRequest, actionResponse, portletURL.toString());
 			}
 			else if (cmd.equals(Constants.UPDATE)) {
+				Company company = themeDisplay.getCompany();
+
 				if (!company.isStrangers()) {
 					throw new PrincipalException.MustBeEnabled(
 						company.getCompanyId(),

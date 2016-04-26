@@ -19,17 +19,25 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.frontend.js.spa.web.servlet.taglib.util.SPAUtil" %>
 
+<%@ page import ="com.liferay.frontend.js.spa.web.constants.SPAWebKeys" %>
+
 <liferay-theme:defineObjects />
+
+<%
+SPAUtil spaUtil = (SPAUtil)request.getAttribute(SPAWebKeys.SPA_UTIL);
+%>
 
 <aui:script position="inline" require="frontend-js-spa-web/liferay/init.es">
 	var app = Liferay.SPA.app;
 
-	app.setBlacklist(<%= SPAUtil.getPortletsBlacklist(themeDisplay) %>);
-	app.setValidStatusCodes(<%= SPAUtil.getValidStatusCodes() %>);
+	app.setPortletsBlacklist(<%= spaUtil.getPortletsBlacklist(themeDisplay) %>);
+	app.setValidStatusCodes(<%= spaUtil.getValidStatusCodes() %>);
 </aui:script>
 
 <aui:script>
 	Liferay.SPA = Liferay.SPA || {};
 
-	Liferay.SPA.clearScreensCache = <%= SPAUtil.isClearScreensCache(request, session) %>;
+	Liferay.SPA.cacheExpirationTime = <%= spaUtil.getCacheExpirationTime(themeDisplay.getCompanyId()) %>;
+	Liferay.SPA.clearScreensCache = <%= spaUtil.isClearScreensCache(request, session) %>;
+	Liferay.SPA.excludedPaths = <%= spaUtil.getExcludedPaths() %>;
 </aui:script>

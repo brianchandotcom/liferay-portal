@@ -23,10 +23,13 @@ app.addRoutes(
 		{
 			handler: RenderURLScreen,
 			path: function(url) {
-				if (url.indexOf(themeDisplay.getPathMain()) === 0 ||
-					url.indexOf('/documents') === 0 ||
-					url.indexOf('/image') === 0) {
+				if (url.indexOf(themeDisplay.getPathMain()) === 0) {
+					return false;
+				}
 
+				var isExcluded = Liferay.SPA.excludedPaths.find((excludedPath) => url.indexOf(excludedPath) === 0);
+
+				if (isExcluded !== undefined) {
 					return false;
 				}
 

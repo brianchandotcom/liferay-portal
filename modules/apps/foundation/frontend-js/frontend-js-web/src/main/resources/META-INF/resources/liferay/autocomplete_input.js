@@ -41,7 +41,7 @@ AUI.add(
 				validator: function(newVal) {
 					return Lang.isRegExp(newVal) || Lang.isString(newVal);
 				},
-				value: '(?:\\strigger|^trigger)([^\\s]+)'
+				value: '(?:\\strigger|^trigger)(\\w[\\s\\w]*)'
 			},
 
 			source: {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.js.spa.web.servlet.taglib.util;
+package com.liferay.frontend.js.spa.web.configuration;
 
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 /**
  * @author Bruno Basto
  */
-public class SPAProps {
+public class SPAConfigurationUtil {
 
 	public static String get(String key) {
 		return _configuration.get(key);
@@ -28,6 +28,6 @@ public class SPAProps {
 
 	private static final Configuration _configuration =
 		ConfigurationFactoryUtil.getConfiguration(
-			SPAProps.class.getClassLoader(), "spa");
+			SPAConfigurationUtil.class.getClassLoader(), "spa");
 
 }

@@ -16,6 +16,7 @@ package com.liferay.frontend.js.spa.web.servlet.taglib.util;
 
 import com.liferay.frontend.js.spa.web.configuration.SPAConfiguration;
 import com.liferay.frontend.js.spa.web.configuration.SPAConfigurationActivator;
+import com.liferay.frontend.js.spa.web.configuration.SPAConfigurationUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -71,7 +72,7 @@ public class SPAUtil {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		String[] excludedPaths = StringUtil.split(
-			SPAProps.get("spa.excluded.paths"));
+			SPAConfigurationUtil.get("spa.excluded.paths"));
 
 		for (String excludedPath : excludedPaths) {
 			jsonArray.put(excludedPath);

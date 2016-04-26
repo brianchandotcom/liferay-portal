@@ -109,12 +109,22 @@ public abstract class BaseDBProcess implements DBProcess {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.1, replaced by {@link DBMetadata#hasTable(String,
+	 *             boolean)}
+	 */
+	@Deprecated
 	protected boolean doHasTable(String tableName) throws Exception {
 		DBMetadata dbMetadata = new DBMetadata(connection);
 
 		return dbMetadata.hasTable(tableName, true);
 	}
 
+	/**
+	 * @deprecated As of 7.0.1, replaced by {@link DBMetadata#hasColumn(String,
+	 *             String)}
+	 */
+	@Deprecated
 	protected boolean hasColumn(String tableName, String columnName)
 		throws Exception {
 
@@ -143,6 +153,10 @@ public abstract class BaseDBProcess implements DBProcess {
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 7.0.1, replaced by {@link DBMetadata#hasTable(String)}
+	 */
+	@Deprecated
 	protected boolean hasTable(String tableName) throws Exception {
 		DBMetadata dbMetadata = new DBMetadata(connection);
 

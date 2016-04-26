@@ -147,6 +147,7 @@
 		>
 			<arg line="-d ${doc.taglibs.dir}" />
 			<arg line="${tld.files}" />
+			<arg line="-xslt ../" />
 		</java>
 
 		<copy overwrite="true" todir="${doc.taglibs.dir}/images" preservelastmodified="true">

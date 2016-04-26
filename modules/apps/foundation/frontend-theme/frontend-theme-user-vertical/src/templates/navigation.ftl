@@ -1,4 +1,3 @@
-<#assign main_menu_style = "style='background-image: url(${user.getPortraitURL(theme_display)});'">
 
 <#if page_group.isUser()>
 	<div class="aspect-ratio-bg-cover text-center user-container">

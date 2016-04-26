@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
@@ -48,6 +50,37 @@ public class UsersTemplateContextContributor
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		User user = themeDisplay.getUser();
+
+		contextObjects.put("user_id", user.getUserId());
+		contextObjects.put("is_default_user", user.isDefaultUser());
+		contextObjects.put("is_setup_complete", user.isSetupComplete());
+		contextObjects.put("user_first_name", user.getFirstName());
+		contextObjects.put("user_middle_name", user.getMiddleName());
+		contextObjects.put("user_last_name", user.getLastName());
+		contextObjects.put("user_name", user.getFullName());
+
+		try {
+			contextObjects.put("is_male", user.isMale());
+			contextObjects.put("is_female", user.isFemale());
+			contextObjects.put("user_birthday", user.getBirthday());
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+
+		contextObjects.put("user_email_address", user.getEmailAddress());
+		contextObjects.put("language", themeDisplay.getLanguageId());
+		contextObjects.put("language_id", user.getLanguageId());
+		contextObjects.put(
+			"w3c_language_id",
+			LocaleUtil.toW3cLanguageId(themeDisplay.getLanguageId()));
+		contextObjects.put(
+			"user_greeting", HtmlUtil.escape(user.getGreeting()));
+		contextObjects.put("user_comments", user.getComments());
+		contextObjects.put("user_login_ip", user.getLoginIP());
+		contextObjects.put("user_last_login_ip", user.getLastLoginIP());
 
 		Group group = themeDisplay.getSiteGroup();
 

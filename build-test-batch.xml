@@ -1000,6 +1000,36 @@ ${output.content}</echo>
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
+	<target name="plugins-gulp-jdk7">
+		<fail message="Please set the property ${test.base.dir.name}" unless="test.base.dir.name" />
+
+		<run-batch-test>
+			<test-action>
+				<exec dir="${test.base.dir.name}" executable="npm" failonerror="true">
+					<arg value="test" />
+				</exec>
+			</test-action>
+
+			<test-set-up>
+				<prepare-test-build />
+
+				<propertyregex
+					input="${test.base.dir.name}"
+					override="true"
+					property="portlet.name"
+					regexp=".*/portlets/([a-zA-Z-]+)/?.*"
+					replace="\1"
+				/>
+
+				<generate-gulp-user-config-json portlet.name="${portlet.name}" />
+
+				<exec dir="${test.base.dir.name}" executable="npm" failonerror="true">
+					<arg value="install" />
+				</exec>
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="portal-web-jdk7">
 		<run-batch-test>
 			<test-action>

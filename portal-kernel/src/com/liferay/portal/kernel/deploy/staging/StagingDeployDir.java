@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
+import java.io.FilenameFilter;
 
 /**
  * @author Ryan Park
@@ -41,10 +42,27 @@ public class StagingDeployDir {
 		FileUtil.move(file, new File(stagingDir, file.getName()));
 	}
 
-	public StagingDeployDir(String name, File stagingDir, long interval) {
+	public StagingDeployDir(
+		String name, File stagingDir, File deployDir, long interval) {
+
 		_name = name;
 		_stagingDir = stagingDir;
+		_deployDir = deployDir;
 		_interval = interval;
+	}
+
+	public void deployStagedFiles() {
+		File[] files = _stagingDir.listFiles(_stagedFilenameFilter);
+
+		for (File file : files) {
+			String fileName = file.getName();
+
+			int i = fileName.indexOf(".staged");
+
+			fileName = fileName.substring(0, i);
+
+			FileUtil.move(file, new File(_deployDir, fileName));
+		}
 	}
 
 	public long getInterval() {
@@ -111,13 +129,31 @@ public class StagingDeployDir {
 		if (_stagingDeployScanner != null) {
 			_stagingDeployScanner.pause();
 		}
+
+		deployStagedFiles();
 	}
 
 	protected void processFile(File file) {
+		String fileName = file.getName();
+
+		boolean resolves = resolveDependencies(file);
+
+		if (resolves) {
+			fileName = fileName.concat(".staged");
+		}
+		else {
+			fileName = fileName.concat(".staging_failed");
+		}
+
+		FileUtil.move(file, new File(_stagingDir, fileName));
+	}
+
+	protected boolean resolveDependencies(File file) {
+		return true;
 	}
 
 	protected void scanDirectory() {
-		File[] files = _stagingDir.listFiles();
+		File[] files = _stagingDir.listFiles(_processedFilenameFilter);
 
 		if (files == null) {
 			return;
@@ -127,9 +163,7 @@ public class StagingDeployDir {
 			String fileName = StringUtil.toLowerCase(file.getName());
 
 			if (file.isFile() &&
-				(fileName.endsWith(".jar") || fileName.endsWith(".lpkg") ||
-				 fileName.endsWith(".war") || fileName.endsWith(".xml") ||
-				 fileName.endsWith(".zip"))) {
+				(fileName.endsWith(".jar") || fileName.endsWith(".lpkg"))) {
 
 				processFile(file);
 			}
@@ -141,8 +175,39 @@ public class StagingDeployDir {
 
 	private static StagingDeployScanner _stagingDeployScanner;
 
+	private final File _deployDir;
 	private final long _interval;
 	private final String _name;
+	private final FilenameFilter _processedFilenameFilter =
+		new ProcessedFilenameFilter();
+	private final FilenameFilter _stagedFilenameFilter =
+		new StagedFilenameFilter();
 	private final File _stagingDir;
+
+	private static class ProcessedFilenameFilter implements FilenameFilter {
+
+		public boolean accept(File dir, String name) {
+			if (name.endsWith(".staged") || name.endsWith(".staging_failed")) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+
+	}
+
+	private static class StagedFilenameFilter implements FilenameFilter {
+
+		public boolean accept(File dir, String name) {
+			if (name.endsWith(".staged")) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+	}
 
 }

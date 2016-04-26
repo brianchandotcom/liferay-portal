@@ -189,12 +189,17 @@ public class GlobalStartupAction extends SimpleAction {
 					PrefsPropsUtil.getString(
 						PropsKeys.STAGING_DEPLOY_DEPLOY_DIR,
 						PropsValues.STAGING_DEPLOY_DEPLOY_DIR));
+				File deployDir = new File(
+					PrefsPropsUtil.getString(
+						PropsKeys.AUTO_DEPLOY_DEPLOY_DIR,
+						PropsValues.AUTO_DEPLOY_DEPLOY_DIR));
 				long interval = PrefsPropsUtil.getLong(
 					PropsKeys.STAGING_DEPLOY_INTERVAL,
 					PropsValues.STAGING_DEPLOY_INTERVAL);
 
 				StagingDeployDir stagingDeployDir = new StagingDeployDir(
-					StagingDeployDir.DEFAULT_NAME, stagingDir, interval);
+					StagingDeployDir.DEFAULT_NAME, stagingDir, deployDir,
+					interval);
 
 				if (_log.isInfoEnabled()) {
 					_log.info("Registering staging deploy directories");

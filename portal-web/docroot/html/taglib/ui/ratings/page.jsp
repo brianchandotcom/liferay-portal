@@ -140,23 +140,23 @@ if (ratingsEntry != null) {
 						<liferay-util:whitespace-remover>
 
 							<%
-							int positiveVotes = (int)ratingsStats.getTotalScore();
+							int positiveVotes = (int)Math.round(ratingsStats.getTotalScore());
 							int negativeVotes = ratingsStats.getTotalEntries() - positiveVotes;
 							%>
 
 							<c:choose>
 								<c:when test="<%= !themeDisplay.isSignedIn() || TrashUtil.isInTrash(className, classPK) %>">
-									<span class="glyphicon glyphicon-thumbs-up rating-element rating-thumb-up rating-<%= (yourScore > 0) ? "on" : "off" %>" title="<liferay-ui:message key="ratings-are-disabled-because-this-entry-is-in-the-recycle-bin" />"><%= positiveVotes %></span>
+									<span class="glyphicon glyphicon-thumbs-up rating-element rating-thumb-up rating-<%= (yourScore >= 0.5) ? "on" : "off" %>" title="<liferay-ui:message key="ratings-are-disabled-because-this-entry-is-in-the-recycle-bin" />"><%= positiveVotes %></span>
 
 									<c:if test="<%= type.equals(RatingsType.THUMBS.getValue()) %>">
-										<span class="glyphicon glyphicon-thumbs-down rating-element rating-thumb-down rating-<%= (yourScore == 0) ? "on" : "off" %>" title="<liferay-ui:message key="ratings-are-disabled-because-this-entry-is-in-the-recycle-bin" />"><%= negativeVotes %></span>
+										<span class="glyphicon glyphicon-thumbs-down rating-element rating-thumb-down rating-<%= (yourScore < 0.5) ? "on" : "off" %>" title="<liferay-ui:message key="ratings-are-disabled-because-this-entry-is-in-the-recycle-bin" />"><%= negativeVotes %></span>
 									</c:if>
 								</c:when>
 								<c:otherwise>
-									<a class="glyphicon glyphicon-thumbs-up rating-element rating-thumb-up rating-<%= (yourScore > 0) ? "on" : "off" %>" href="javascript:;"><%= positiveVotes %></a>
+									<a class="glyphicon glyphicon-thumbs-up rating-element rating-thumb-up rating-<%= (yourScore >= 0.5) ? "on" : "off" %>" href="javascript:;"><%= positiveVotes %></a>
 
 									<c:if test="<%= type.equals(RatingsType.THUMBS.getValue()) %>">
-										<a class="glyphicon glyphicon-thumbs-down rating-element rating-thumb-down rating-<%= (yourScore == 0) ? "on" : "off" %>" href="javascript:;"><%= negativeVotes %></a>
+										<a class="glyphicon glyphicon-thumbs-down rating-element rating-thumb-down rating-<%= (yourScore < 0.5) ? "on" : "off" %>" href="javascript:;"><%= negativeVotes %></a>
 									</c:if>
 
 									<div class="rating-input-container">
@@ -167,10 +167,10 @@ if (ratingsEntry != null) {
 										String positiveRatingMessage = null;
 
 										if (type.equals(RatingsType.THUMBS.getValue())) {
-											positiveRatingMessage = (yourScore > 0) ? "you-have-rated-this-as-good" : "rate-this-as-good";
+											positiveRatingMessage = (yourScore >= 0.5) ? "you-have-rated-this-as-good" : "rate-this-as-good";
 										}
 										else {
-											positiveRatingMessage = (yourScore > 0) ? "unlike-this" : "like-this";
+											positiveRatingMessage = (yourScore >= 0.5) ? "unlike-this" : "like-this";
 										}
 										%>
 
@@ -184,7 +184,7 @@ if (ratingsEntry != null) {
 											ratingId = PortalUtil.generateRandomKey(request, "taglib_ui_ratings_page_rating");
 											%>
 
-											<label for="<%= ratingId %>"><liferay-ui:message key='<%= (yourScore == 0) ? "you-have-rated-this-as-bad" : "rate-this-as-bad" %>' /></label>
+											<label for="<%= ratingId %>"><liferay-ui:message key='<%= (yourScore < 0.5) ? "you-have-rated-this-as-bad" : "rate-this-as-bad" %>' /></label>
 
 											<input class="rating-input" id="<%= ratingId %>" name="<portlet:namespace /><%= ratingIdPrefix %>" type="radio" value="down">
 										</c:if>

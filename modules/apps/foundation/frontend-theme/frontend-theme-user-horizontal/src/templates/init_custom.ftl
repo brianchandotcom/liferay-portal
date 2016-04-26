@@ -1,7 +1,7 @@
 <#assign layout_set_title = site_name>
 <#assign main_menu_style = "">
 
-<#if page_group.isUser()>
+<#if user2??>
 	<#assign main_menu_style = "style='background-image: url(${user2.getPortraitURL(theme_display)});'">
 </#if>
 

@@ -147,7 +147,7 @@
 </tr>
 <tr>
 	<td>ICON_FOLDER_TITLE</td>
-	<td>//span[@title='${key_dmFolderName}']//a</td>
+	<td>//span//a[@title='${key_dmFolderName}']</td>
 	<td></td>
 </tr>
 <tr>

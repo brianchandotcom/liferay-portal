@@ -22,10 +22,9 @@
 	<bean id="com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil" class="com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil">
 		<property name="portletInstanceFactory" ref="com.liferay.portal.kernel.portlet.PortletInstanceFactory" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.portlet.PortletPreferencesFactory" class="com.liferay.portlet.PortletPreferencesFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" class="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil">
-		<property name="portletPreferencesFactory">
-			<bean class="com.liferay.portlet.PortletPreferencesFactoryImpl" />
-		</property>
+		<property name="portletPreferencesFactory" ref="com.liferay.portal.kernel.portlet.PortletPreferencesFactory" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.portlet.PortletQNameUtil" class="com.liferay.portal.kernel.portlet.PortletQNameUtil">
 		<property name="portletQName">

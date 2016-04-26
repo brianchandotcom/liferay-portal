@@ -16,6 +16,9 @@ package com.liferay.portal.kernel.deploy.staging;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
@@ -26,6 +29,17 @@ import java.io.File;
 public class StagingDeployDir {
 
 	public static final String DEFAULT_NAME = "defaultStagingDeployDir";
+
+	public static void stage(File file) throws StagingDeployException {
+		if (!file.isFile()) {
+			return;
+		}
+
+		File stagingDir = new File(
+			PropsUtil.get(PropsKeys.STAGING_DEPLOY_DEPLOY_DIR));
+
+		FileUtil.move(file, new File(stagingDir, file.getName()));
+	}
 
 	public StagingDeployDir(String name, File stagingDir, long interval) {
 		_name = name;
@@ -110,7 +124,13 @@ public class StagingDeployDir {
 		}
 
 		for (File file : files) {
-			if (file.isFile()) {
+			String fileName = StringUtil.toLowerCase(file.getName());
+
+			if (file.isFile() &&
+				(fileName.endsWith(".jar") || fileName.endsWith(".lpkg") ||
+				 fileName.endsWith(".war") || fileName.endsWith(".xml") ||
+				 fileName.endsWith(".zip"))) {
+
 				processFile(file);
 			}
 		}

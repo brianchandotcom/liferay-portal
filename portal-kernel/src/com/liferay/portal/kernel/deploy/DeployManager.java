@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.deploy;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 
+import java.io.File;
+
 import java.util.List;
 import java.util.Properties;
 
@@ -52,6 +54,8 @@ public interface DeployManager {
 	public PluginPackage readPluginPackageXml(String xml) throws Exception;
 
 	public void redeploy(String context) throws Exception;
+
+	public void stage(File file) throws Exception;
 
 	public void undeploy(String context) throws Exception;
 

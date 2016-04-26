@@ -1751,10 +1751,8 @@ rerun your task.
 				append="true"
 				file="${sdk.dir}/build.${env.COMPUTERNAME}.properties"
 			>
+				app.server.parent.dir=${app.server.parent.dir}
 				app.server.type=${app.server.type}
-				auto.deploy.dir=${liferay.home}/osgi/apps
-				clean.delete.ivy.md5=true
-				clean.delete.lib=true
 				junit.java.integration.gc=${junit.java.integration.gc}
 				junit.java.unit.gc=${junit.java.unit.gc}
 				junit.java.unit.gc.logging=${junit.java.unit.gc.logging}

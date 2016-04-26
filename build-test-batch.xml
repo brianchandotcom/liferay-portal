@@ -693,6 +693,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<gradle-execute dir="modules" task="testIntegration">
 								<arg value="-Ddatabase.type=@{database.type}" />
+								<arg value="-Dmodules.only.build=true" />
 								<arg value="-Dtest.class.group.index=${axis.variable}" />
 							</gradle-execute>
 
@@ -739,7 +740,9 @@ app.server.type=@{app.server.type}]]></echo>
 			<test-action>
 				<ant dir="portal-web" target="compile-tomcat" />
 
-				<gradle-execute dir="modules" task="compileJSP" />
+				<gradle-execute dir="modules" task="compileJSP">
+					<arg value="-Dmodules.only.build=true" />
+				</gradle-execute>
 			</test-action>
 
 			<test-set-up>
@@ -893,6 +896,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-batch-test>
 			<test-action>
 				<gradle-execute dir="modules" task="test">
+					<arg value="-Dmodules.only.build=true" />
 					<arg value="-Dtest.class.group.index=${axis.variable}" />
 				</gradle-execute>
 			</test-action>
@@ -1056,7 +1060,9 @@ ${output.content}</echo>
 
 		<record action="start" name="${project.dir}/sass-compiler-log" />
 
-		<gradle-execute dir="modules" task="buildCSS" />
+		<gradle-execute dir="modules" task="buildCSS">
+			<arg value="-Dmodules.only.build=true" />
+		</gradle-execute>
 
 		<record action="stop" name="${project.dir}/sass-compiler-log" />
 

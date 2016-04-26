@@ -5,15 +5,15 @@ th.subtitle { font-weight:normal; text-align:left; padding-left:1em; padding-rig
 td { text-align:left; vertical-align:baseline; padding-left:1em; padding-right:1em}
 td.construct { vertical-align:top; padding-left:1em; padding-right:1em}
 th.ruler { background-color:black; color:black}
-table.elementTitle { width:100%; background-color:#8BB8E8}/* Pantone 278 C Hex match */
+table.elementTitle { width:100%; background-color:#1b75bb;}/* Blue 1 */
 td.leftElementTitle { font-weight:bold; font-size: medium;}
 td.rightElementTitle { text-align:right}
-table.attributeTitle { width:100%; background-color:#E3E4E5}/* Liferay Grey 2 */
+table.attributeTitle { width:100%; background-color:#8BB8E8}/* Pantone 278 C Hex match */
 td.leftAttributeTitle { font-weight:bold; font-size: medium;}
 td.rightAttributeTitle { text-align:right}
 p { text-align:justify;}
 p.model { padding-left:3em; text-align:left; font-style:italic}
-p.DTDSource { text-align:right; width:100%; background-color:#DDDDDD}
+p.DTDSource { text-align:right; width:100%; background-color:#8BB8E8}/* Pantone 278 C Hex match */
 p.emptyTagNote { font-style:italic}
 h1 { font-family:Arial; font-size: x-large;}
 h2 { font-size: medium;}

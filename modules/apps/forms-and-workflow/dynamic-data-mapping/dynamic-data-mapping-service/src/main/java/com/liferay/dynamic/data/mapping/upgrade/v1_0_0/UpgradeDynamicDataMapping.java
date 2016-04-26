@@ -660,15 +660,17 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	protected String updateTemplateScriptDateAssignStatement(
 		String dateFieldName, String language, String script) {
 
-		StringBundler oldTemplateScriptSB = new StringBundler(5);
+		StringBundler oldTemplateScriptSB = new StringBundler(7);
 		StringBundler newTemplateScriptSB = new StringBundler(5);
 
 		if (language.equals("ftl")) {
-			oldTemplateScriptSB.append("<#assign ");
+			oldTemplateScriptSB.append("<#assign\\s+");
 			oldTemplateScriptSB.append(dateFieldName);
-			oldTemplateScriptSB.append("_Data = getterUtil.getLong(");
+			oldTemplateScriptSB.append("_Data\\s*=\\s*getterUtil\\s*");
+			oldTemplateScriptSB.append(".\\s*getLong\\s*\\(\\s*");
 			oldTemplateScriptSB.append(dateFieldName);
-			oldTemplateScriptSB.append(".getData())>");
+			oldTemplateScriptSB.append(".\\s*getData\\s*\\(\\s*\\)");
+			oldTemplateScriptSB.append("\\s*\\)\\s*>");
 
 			newTemplateScriptSB.append("<#assign ");
 			newTemplateScriptSB.append(dateFieldName);
@@ -677,24 +679,26 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			newTemplateScriptSB.append(".getData())>");
 		}
 		else if (language.equals("vm")) {
-			dateFieldName = StringPool.DOLLAR + dateFieldName;
+			dateFieldName =
+				StringPool.BACK_SLASH + StringPool.DOLLAR + dateFieldName;
 
-			oldTemplateScriptSB.append("#set (");
+			oldTemplateScriptSB.append("#set\\s+\\(\\s*");
 			oldTemplateScriptSB.append(dateFieldName);
-			oldTemplateScriptSB.append("_Data = $getterUtil.getLong(");
+			oldTemplateScriptSB.append("_Data\\s*=\\s*\\$getterUtil");
+			oldTemplateScriptSB.append(".getLong\\(\\s*");
 			oldTemplateScriptSB.append(dateFieldName);
-			oldTemplateScriptSB.append(".getData()))");
+			oldTemplateScriptSB.append(".getData\\(\\)\\s*\\)");
+			oldTemplateScriptSB.append("\\s*\\)");
 
 			newTemplateScriptSB.append("#set (");
 			newTemplateScriptSB.append(dateFieldName);
-			newTemplateScriptSB.append("_Data = $getterUtil.getString(");
+			newTemplateScriptSB.append("_Data = \\$getterUtil.getString(");
 			newTemplateScriptSB.append(dateFieldName);
 			newTemplateScriptSB.append(".getData()))");
 		}
 
-		return StringUtil.replace(
-			script, oldTemplateScriptSB.toString(),
-			newTemplateScriptSB.toString());
+		return script.replaceAll(
+			oldTemplateScriptSB.toString(), newTemplateScriptSB.toString());
 	}
 
 	protected void updateTemplateScriptDateFields(
@@ -737,40 +741,44 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	protected String updateTemplateScriptDateIfStatement(
 		String dateFieldName, String language, String script) {
 
-		String oldTemplateScriptSB = StringPool.BLANK;
-		String newTemplateScriptSB = StringPool.BLANK;
+		String oldTemplateScript = StringPool.BLANK;
+		String newTemplateScript = StringPool.BLANK;
 
 		if (language.equals("ftl")) {
-			oldTemplateScriptSB = "<#if (" + dateFieldName + "_Data > 0)>";
+			oldTemplateScript =
+				"<#if\\s*\\(?\\s*" + dateFieldName + "_Data\\s*>\\s*0\\s*\\)?" +
+					"\\s*>";
 
-			newTemplateScriptSB =
+			newTemplateScript =
 				"<#if validator.isNotNull(" + dateFieldName + "_Data)>";
 		}
 		else if (language.equals("vm")) {
-			dateFieldName = StringPool.DOLLAR + dateFieldName;
+			dateFieldName =
+				StringPool.BACK_SLASH + StringPool.DOLLAR + dateFieldName;
 
-			oldTemplateScriptSB = "#if (" + dateFieldName + "_Data > 0)";
+			oldTemplateScript =
+				"#if\\s*\\(\\s*" + dateFieldName + "_Data\\s*>\\s*0\\s*\\)";
 
-			newTemplateScriptSB =
-				"#if ($validator.isNotNull(" + dateFieldName + "_Data))";
+			newTemplateScript =
+				"#if (\\$validator.isNotNull(" + dateFieldName + "_Data))";
 		}
 
-		return StringUtil.replace(
-			script, oldTemplateScriptSB, newTemplateScriptSB);
+		return script.replaceAll(oldTemplateScript, newTemplateScript);
 	}
 
 	protected String updateTemplateScriptDateParseStatement(
 		String dateFieldName, String language, String script) {
 
-		StringBundler oldTemplateScriptSB = new StringBundler(5);
+		StringBundler oldTemplateScriptSB = new StringBundler(6);
 		StringBundler newTemplateScriptSB = new StringBundler(5);
 
 		if (language.equals("ftl")) {
-			oldTemplateScriptSB.append("<#assign ");
+			oldTemplateScriptSB.append("<#assign\\s+");
 			oldTemplateScriptSB.append(dateFieldName);
-			oldTemplateScriptSB.append("_DateObj = dateUtil.newDate(");
+			oldTemplateScriptSB.append("_DateObj\\s*=\\s*dateUtil\\s*");
+			oldTemplateScriptSB.append(".\\s*newDate\\(\\s*");
 			oldTemplateScriptSB.append(dateFieldName);
-			oldTemplateScriptSB.append("_Data)>");
+			oldTemplateScriptSB.append("_Data\\s*\\)\\s*>");
 
 			newTemplateScriptSB.append("<#assign ");
 			newTemplateScriptSB.append(dateFieldName);
@@ -780,25 +788,26 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			newTemplateScriptSB.append("_Data, locale)>");
 		}
 		else if (language.equals("vm")) {
-			dateFieldName = StringPool.DOLLAR + dateFieldName;
+			dateFieldName =
+				StringPool.BACK_SLASH + StringPool.DOLLAR + dateFieldName;
 
-			oldTemplateScriptSB.append("#set (");
+			oldTemplateScriptSB.append("#set\\s*\\(");
 			oldTemplateScriptSB.append(dateFieldName);
-			oldTemplateScriptSB.append("_DateObj = $dateUtil.newDate(");
+			oldTemplateScriptSB.append("_DateObj\\s*=\\s*\\$dateUtil");
+			oldTemplateScriptSB.append(".newDate\\(\\s*");
 			oldTemplateScriptSB.append(dateFieldName);
-			oldTemplateScriptSB.append("_Data))");
+			oldTemplateScriptSB.append("_Data\\s*\\)\\s*\\)");
 
 			newTemplateScriptSB.append("#set (");
 			newTemplateScriptSB.append(dateFieldName);
 			newTemplateScriptSB.append(
-				"_DateObj = $dateUtil.parseDate(\"yyyy-MM-dd\", ");
+				"_DateObj = \\$dateUtil.parseDate(\"yyyy-MM-dd\", ");
 			newTemplateScriptSB.append(dateFieldName);
-			newTemplateScriptSB.append("_Data, $locale))");
+			newTemplateScriptSB.append("_Data, \\$locale))");
 		}
 
-		return StringUtil.replace(
-			script, oldTemplateScriptSB.toString(),
-			newTemplateScriptSB.toString());
+		return script.replaceAll(
+			oldTemplateScriptSB.toString(), newTemplateScriptSB.toString());
 	}
 
 	protected void upgradeDDLFieldTypeReferences() throws Exception {

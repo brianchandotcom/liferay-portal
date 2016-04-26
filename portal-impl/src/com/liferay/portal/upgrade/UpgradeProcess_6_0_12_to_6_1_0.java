@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade;
 
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradeAsset;
+import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradeCompanyId;
 import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradeDocumentLibrary;
 import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradeMessageBoards;
 import com.liferay.portal.upgrade.v6_0_12_to_6_1_0.UpgradePermission;
@@ -48,6 +49,8 @@ public class UpgradeProcess_6_0_12_to_6_1_0 extends Pre7UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		upgrade(UpgradeSchema.class);
+
+		upgrade(UpgradeCompanyId.class);
 
 		upgrade(UpgradeUserName.class);
 

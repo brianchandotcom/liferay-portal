@@ -37,8 +37,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author Raymond Augé
+ * @author     Raymond Augé
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.kernel.search.facet.searcher.FacetedSearcher}
  */
+@Deprecated
 public class FacetedSearcher extends BaseSearcher {
 
 	public static Indexer<?> getInstance() {

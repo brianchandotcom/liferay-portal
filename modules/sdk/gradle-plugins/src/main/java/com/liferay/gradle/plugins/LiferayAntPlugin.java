@@ -23,6 +23,7 @@ import java.io.File;
 import org.gradle.api.AntBuilder;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.artifacts.ConfigurablePublishArtifact;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
@@ -72,7 +73,9 @@ public class LiferayAntPlugin implements Plugin<Project> {
 				public void doCall(
 					ConfigurablePublishArtifact configurablePublishArtifact) {
 
-					configurablePublishArtifact.builtBy(_WAR_TASK_NAME);
+					Task warTask = GradleUtil.getTask(project, _WAR_TASK_NAME);
+
+					configurablePublishArtifact.builtBy(warTask);
 				}
 
 			});

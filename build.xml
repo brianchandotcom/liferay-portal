@@ -563,7 +563,7 @@
 			showFixmeTags="false"
 			showHiddenTags="false"
 			sourceDir="${definitions.dir}"
-			stylesheet="./stylesheet.css"
+            stylesheet="./styles/DTDDocStyle.css"
 		>
 			<include name="liferay-*${lp.version.dtd}.dtd" />
 		</DTDDoc>
@@ -653,7 +653,7 @@
 			maxmemory="2048m"
 			noqualifier="java.*"
 			overview="${module.dir}/src/overview.html"
-			stylesheetfile="./stylesheet.css"
+			stylesheetfile="./styles/stylesheet.css"
 			useexternalfile="yes"
 			use="yes"
 			windowtitle="Liferay ${lp.version} ${module.dir} API"
@@ -687,7 +687,7 @@
 			maxmemory="2048m"
 			noqualifier="java.*"
 			overview="${module.dir}/src/overview.html"
-			stylesheetfile="./stylesheet.css"
+			stylesheetfile="./styles/stylesheet.css"
 			useexternalfile="yes"
 			use="yes"
 			windowtitle="Liferay ${lp.version} ${module.dir} API"

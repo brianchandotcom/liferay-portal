@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<title>${pageTitle!"Portal Properties"}</title>
-		<link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+		<link rel="stylesheet" type="text/css" href="../../../../../../../../styles/PropertiesDoc.css">
 	</head>
 	<body>
 		<h1>${pageTitle!"Portal Properties"}</h1>

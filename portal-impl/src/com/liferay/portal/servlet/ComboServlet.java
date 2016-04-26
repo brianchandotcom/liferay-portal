@@ -457,7 +457,7 @@ public class ComboServlet extends HttpServlet {
 
 	private final Set<String> _protectedParameters = SetUtil.fromArray(
 		new String[] {
-			"b", "browserId", "minifierType", "languageId", "t", "themeId"
+			"b", "browserId", "minifierType", "languageId", "t", "themeId", "zx"
 		});
 
 	private static class FileContentBag implements Serializable {

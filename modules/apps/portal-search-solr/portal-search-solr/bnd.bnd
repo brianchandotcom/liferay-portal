@@ -31,6 +31,8 @@ Import-Package:\
 	!org.jboss.netty.*,\
 	\
 	!org.relaxng.datatype.*,\
+	\
+	com.liferay.portal.search.analysis,\
 	*
 -liferay-includeresource:\
 	lib/commons-io.jar=commons-io-*.jar,\

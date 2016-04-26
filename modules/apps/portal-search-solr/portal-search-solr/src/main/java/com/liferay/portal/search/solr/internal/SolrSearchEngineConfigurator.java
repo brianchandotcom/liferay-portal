@@ -72,6 +72,11 @@ public class SolrSearchEngineConfigurator
 		return clazz.getClassLoader();
 	}
 
+	@Override
+	protected SearchEngineHelper getSearchEngineHelper() {
+		return searchEngineHelper;
+	}
+
 	@Reference(target = "(!(search.engine.impl=*))", unbind = "-")
 	protected void setIndexSearcher(IndexSearcher indexSearcher) {
 		_indexSearcher = indexSearcher;
@@ -106,6 +111,9 @@ public class SolrSearchEngineConfigurator
 
 		_searchEngines.remove(searchEngineId);
 	}
+
+	@Reference
+	protected SearchEngineHelper searchEngineHelper;
 
 	private IndexSearcher _indexSearcher;
 	private IndexWriter _indexWriter;

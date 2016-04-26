@@ -18,17 +18,22 @@ import com.liferay.portal.cache.test.util.TestPortalCacheListener;
 import com.liferay.portal.cache.test.util.TestPortalCacheManager;
 import com.liferay.portal.cache.test.util.TestPortalCacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.config.CacheConfiguration;
 import net.sf.ehcache.config.Configuration;
+import net.sf.ehcache.event.CacheEventListener;
+import net.sf.ehcache.event.RegisteredEventListeners;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -340,11 +345,37 @@ public class EhcachePortalCacheTest {
 
 	@Test
 	public void testReconfigEhcache() {
-		Assert.assertNotNull(_ehcachePortalCache.ehcache);
+		Assert.assertSame(_ehcache, _ehcachePortalCache.ehcache);
 
-		_ehcachePortalCache.reconfigEhcache(null);
+		Map<PortalCacheListener<String, String>, PortalCacheListenerScope>
+			oldPortalCacheListeners =
+				_ehcachePortalCache.getPortalCacheListeners();
 
-		Assert.assertNull(_ehcachePortalCache.ehcache);
+		_cacheManager.addCache(_NEW_PORTAL_CACHE_NAME);
+
+		Ehcache ehcache2 = _cacheManager.getCache(_NEW_PORTAL_CACHE_NAME);
+
+		_ehcachePortalCache.reconfigEhcache(ehcache2);
+
+		Assert.assertSame(ehcache2, _ehcachePortalCache.ehcache);
+
+		Assert.assertEquals(
+			oldPortalCacheListeners,
+			_ehcachePortalCache.getPortalCacheListeners());
+
+		RegisteredEventListeners registeredEventListeners =
+			_ehcache.getCacheEventNotificationService();
+
+		Set<CacheEventListener> cacheEventListeners =
+			registeredEventListeners.getCacheEventListeners();
+
+		Assert.assertTrue(cacheEventListeners.isEmpty());
+
+		registeredEventListeners = ehcache2.getCacheEventNotificationService();
+
+		cacheEventListeners = registeredEventListeners.getCacheEventListeners();
+
+		Assert.assertFalse(cacheEventListeners.isEmpty());
 	}
 
 	@Test
@@ -617,6 +648,11 @@ public class EhcachePortalCacheTest {
 
 	private static final String _KEY_2 = "KEY_2";
 
+	private static final String _KEY_3 = "KEY_3";
+
+	private static final String _NEW_PORTAL_CACHE_NAME =
+		"NEW_PORTAL_CACHE_NAME";
+
 	private static final String _PORTAL_CACHE_MANAGER_NAME =
 		"PORTAL_CACHE_MANAGER_NAME";
 
@@ -625,6 +661,8 @@ public class EhcachePortalCacheTest {
 	private static final String _VALUE_1 = "VALUE_1";
 
 	private static final String _VALUE_2 = "VALUE_2";
+
+	private static final String _VALUE_3 = "VALUE_3";
 
 	private static CacheManager _cacheManager;
 

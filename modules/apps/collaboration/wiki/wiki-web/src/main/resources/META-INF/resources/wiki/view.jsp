@@ -140,12 +140,7 @@ if (portletTitleBasedNavigation) {
 		<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
 
 		<liferay-frontend:info-bar-buttons>
-			<liferay-frontend:info-bar-sidenav-toggler-button
-				href="javascript:;"
-				icon="info-circle"
-				label="info"
-				sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>'
-			/>
+			<liferay-frontend:info-bar-sidenav-toggler-button />
 		</liferay-frontend:info-bar-buttons>
 	</liferay-frontend:info-bar>
 </c:if>

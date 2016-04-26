@@ -104,8 +104,7 @@ public class DigitalSignatureImpl implements DigitalSignature {
 	 *
 	 * <p>
 	 * If possible, this method produces a digital signature and stores it in
-	 * the message's values map using the key {@link
-	 * Message#KEY_SIGNATURE} .
+	 * the message's values map using the key {@link Message#KEY_SIGNATURE} .
 	 * </p>
 	 *
 	 * @param message the message

@@ -116,7 +116,7 @@ public class UpgradePortletId extends UpgradeProcess {
 	}
 
 	protected String getTypeSettingsCriteria(String portletId) {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("typeSettings like '%=");
 		sb.append(portletId);

@@ -204,12 +204,12 @@ public abstract class BasePortalCache<K extends Serializable, V>
 		for (PortalCacheListener<K, V> portalCacheListener :
 				portalCacheListeners.keySet()) {
 
-			if (portalCacheListener instanceof PersistentPortalCacheListener) {
-				continue;
-			}
+			if (!(portalCacheListener instanceof
+					PersistentPortalCacheListener)) {
 
-			aggregatedPortalCacheListener.removePortalCacheListener(
-				portalCacheListener);
+				aggregatedPortalCacheListener.removePortalCacheListener(
+					portalCacheListener);
+			}
 		}
 	}
 

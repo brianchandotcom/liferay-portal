@@ -17,7 +17,6 @@ package com.liferay.server.manager.internal;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.server.manager.BaseExecutor;
 import com.liferay.server.manager.Executor;
-import com.liferay.server.manager.JSONKeys;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;

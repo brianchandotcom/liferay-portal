@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.server.manager.BaseExecutor;
 import com.liferay.server.manager.Executor;
-import com.liferay.server.manager.JSONKeys;
 
 import java.util.List;
 import java.util.Map;

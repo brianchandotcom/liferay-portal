@@ -30,9 +30,9 @@ import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.server.manager.Executor;
-import com.liferay.server.manager.JSONKeys;
 import com.liferay.server.manager.internal.ExecutorPathResolver;
 import com.liferay.server.manager.internal.ExecutorServiceRegistry;
+import com.liferay.server.manager.internal.JSONKeys;
 
 import java.io.IOException;
 

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.server.manager.BaseExecutor;
 import com.liferay.server.manager.Executor;
-import com.liferay.server.manager.JSONKeys;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

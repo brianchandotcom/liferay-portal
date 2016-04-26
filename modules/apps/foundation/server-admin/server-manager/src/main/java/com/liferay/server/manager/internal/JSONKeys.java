@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.server.manager;
+package com.liferay.server.manager.internal;
 
 /**
  * @author Jonathan Potter

@@ -14,7 +14,7 @@
 
 package com.liferay.lcs.rest;
 
-import com.liferay.jsonwebserviceclient.JSONWebServiceTransportException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 
 import javax.servlet.http.HttpServletResponse;
 

@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import com.liferay.jsonwebserviceclient.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

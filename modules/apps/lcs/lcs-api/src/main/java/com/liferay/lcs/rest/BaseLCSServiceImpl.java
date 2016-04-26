@@ -14,8 +14,8 @@
 
 package com.liferay.lcs.rest;
 
-import com.liferay.jsonwebserviceclient.BaseJSONWebServiceClientHandler;
-import com.liferay.jsonwebserviceclient.JSONWebServiceClient;
+import com.liferay.petra.json.web.service.client.BaseJSONWebServiceClientHandler;
+import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 
 /**
  * @author Ivica Cardic

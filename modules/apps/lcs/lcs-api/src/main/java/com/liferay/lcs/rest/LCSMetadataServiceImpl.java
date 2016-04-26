@@ -14,8 +14,8 @@
 
 package com.liferay.lcs.rest;
 
-import com.liferay.jsonwebserviceclient.JSONWebServiceInvocationException;
-import com.liferay.jsonwebserviceclient.JSONWebServiceTransportException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -42,7 +42,7 @@ public class BundleUtil {
 		}
 
 		if (fileName.length() == 0) {
-			return bundle.getEntry(dirName);
+			return bundle.getEntry(dirName + "/");
 		}
 
 		Enumeration<URL> enumeration = bundle.findEntries(

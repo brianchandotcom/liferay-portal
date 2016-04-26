@@ -12,19 +12,34 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.search.internal.facet.faceted.searcher;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
-import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactory;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.search.BaseSearcher;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexSearcherHelper;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerPostProcessor;
+import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -39,10 +54,18 @@ import java.util.Set;
 /**
  * @author Raymond Augé
  */
-public class FacetedSearcher extends BaseSearcher {
+public class FacetedSearcherImpl
+	extends BaseSearcher implements FacetedSearcher {
 
-	public static Indexer<?> getInstance() {
-		return new FacetedSearcher();
+	public FacetedSearcherImpl(
+		ExpandoBridgeFactory expandoBridgeFactory,
+		GroupLocalService groupLocalService, IndexerRegistry indexerRegistry,
+		IndexSearcherHelper indexSearcherHelper) {
+
+		_expandoBridgeFactory = expandoBridgeFactory;
+		_groupLocalService = groupLocalService;
+		_indexerRegistry = indexerRegistry;
+		_indexSearcherHelper = indexSearcherHelper;
 	}
 
 	protected void addSearchExpandoKeywords(
@@ -50,7 +73,7 @@ public class FacetedSearcher extends BaseSearcher {
 			String keywords, String className)
 		throws Exception {
 
-		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+		ExpandoBridge expandoBridge = _expandoBridgeFactory.getExpandoBridge(
 			searchContext.getCompanyId(), className);
 
 		Set<String> attributeNames = SetUtil.fromEnumeration(
@@ -103,7 +126,7 @@ public class FacetedSearcher extends BaseSearcher {
 			searchQuery.addTerms(Field.KEYWORDS, keywords);
 		}
 
-		List<Group> inactiveGroups = GroupLocalServiceUtil.getActiveGroups(
+		List<Group> inactiveGroups = _groupLocalService.getActiveGroups(
 			searchContext.getCompanyId(), false);
 
 		if (ListUtil.isNotEmpty(inactiveGroups)) {
@@ -118,7 +141,7 @@ public class FacetedSearcher extends BaseSearcher {
 		}
 
 		for (String entryClassName : searchContext.getEntryClassNames()) {
-			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(entryClassName);
+			Indexer<?> indexer = _indexerRegistry.getIndexer(entryClassName);
 
 			if (indexer == null) {
 				continue;
@@ -192,7 +215,7 @@ public class FacetedSearcher extends BaseSearcher {
 		}
 
 		for (String entryClassName : searchContext.getEntryClassNames()) {
-			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(entryClassName);
+			Indexer<?> indexer = _indexerRegistry.getIndexer(entryClassName);
 
 			if (indexer == null) {
 				continue;
@@ -243,7 +266,7 @@ public class FacetedSearcher extends BaseSearcher {
 
 			fullQuery.setQueryConfig(queryConfig);
 
-			return IndexSearcherHelperUtil.search(searchContext, fullQuery);
+			return _indexSearcherHelper.search(searchContext, fullQuery);
 		}
 		catch (Exception e) {
 			throw new SearchException(e);
@@ -259,7 +282,7 @@ public class FacetedSearcher extends BaseSearcher {
 		}
 
 		for (String entryClassName : searchContext.getEntryClassNames()) {
-			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(entryClassName);
+			Indexer<?> indexer = _indexerRegistry.getIndexer(entryClassName);
 
 			if (indexer == null) {
 				continue;
@@ -272,5 +295,10 @@ public class FacetedSearcher extends BaseSearcher {
 
 		return super.isFilterSearch();
 	}
+
+	private final ExpandoBridgeFactory _expandoBridgeFactory;
+	private final GroupLocalService _groupLocalService;
+	private final IndexerRegistry _indexerRegistry;
+	private final IndexSearcherHelper _indexSearcherHelper;
 
 }

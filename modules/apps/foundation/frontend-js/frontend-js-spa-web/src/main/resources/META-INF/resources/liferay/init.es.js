@@ -27,9 +27,9 @@ app.addRoutes(
 					return false;
 				}
 
-				var isExcluded = Liferay.SPA.excludedPaths.find((excludedPath) => url.indexOf(excludedPath) === 0);
+				var excluded = Liferay.SPA.excludedPaths.find((excludedPath) => url.indexOf(excludedPath) === 0);
 
-				if (isExcluded !== undefined) {
+				if (excluded !== undefined) {
 					return false;
 				}
 

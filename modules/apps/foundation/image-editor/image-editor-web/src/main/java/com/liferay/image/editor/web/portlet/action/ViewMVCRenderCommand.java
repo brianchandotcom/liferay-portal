@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -33,8 +34,8 @@ import java.util.Map;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,13 +61,17 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		Map<String, Object> capabilitiesContext = new HashMap<>();
 
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(renderRequest);
+
+		String imageUrl = ParamUtil.getString(
+			httpServletRequest, ImageEditorPortletKeys.IMAGE_EDITOR_URL);
+
 		capabilitiesContext.put(
 			"tools", getImageEditorToolsContext(renderRequest));
 
 		template.put("capabilities", capabilitiesContext);
-		template.put(
-			"image",
-			"http://localhost:8080/documents/20233/0/214H.jpg/44f148f9-adee-9020-dbc5-61c112d0bc26?t=1460307134146");
+		template.put("image", imageUrl);
 
 		return "ImageEditor";
 	}

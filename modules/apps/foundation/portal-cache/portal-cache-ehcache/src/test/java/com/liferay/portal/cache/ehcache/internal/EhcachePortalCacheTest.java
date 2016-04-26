@@ -369,7 +369,7 @@ public class EhcachePortalCacheTest {
 
 	@Test
 	public void testReconfigEhcache() {
-		Assert.assertSame(_ehcache, _ehcachePortalCache.ehcache);
+		Assert.assertSame(_ehcachePortalCache.ehcache, _ehcache);
 
 		_cacheManager.addCache(_PORTAL_CACHE_NAME_2);
 
@@ -377,7 +377,7 @@ public class EhcachePortalCacheTest {
 
 		_ehcachePortalCache.reconfigEhcache(ehcache2);
 
-		Assert.assertSame(ehcache2, _ehcachePortalCache.ehcache);
+		Assert.assertSame(_ehcachePortalCache.ehcache, ehcache2);
 
 		RegisteredEventListeners registeredEventListeners =
 			_ehcache.getCacheEventNotificationService();

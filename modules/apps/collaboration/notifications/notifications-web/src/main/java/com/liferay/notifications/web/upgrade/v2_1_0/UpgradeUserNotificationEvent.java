@@ -14,6 +14,7 @@
 
 package com.liferay.notifications.web.upgrade.v2_1_0;
 
+import com.liferay.portal.kernel.dao.db.DBMetadata;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
@@ -38,7 +39,9 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasTable("Notifications_UserNotificationEvent")) {
+		DBMetadata dbMetadata = new DBMetadata(connection);
+
+		if (dbMetadata.hasTable("Notifications_UserNotificationEvent")) {
 			updateUserNotificationEventActionRequired();
 		}
 

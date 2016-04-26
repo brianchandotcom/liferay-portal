@@ -14,6 +14,7 @@
 
 package com.liferay.microblogs.upgrade.v1_0_2;
 
+import com.liferay.portal.kernel.dao.db.DBMetadata;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
@@ -30,7 +31,9 @@ public class UpgradeMicroblogsEntry extends UpgradeProcess {
 
 	protected void removeReceiverUserId() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (!hasColumn("MicroblogsEntry", "receiverUserId")) {
+			DBMetadata dbMetadata = new DBMetadata(connection);
+
+			if (!dbMetadata.hasColumn("MicroblogsEntry", "receiverUserId")) {
 				return;
 			}
 
@@ -42,7 +45,11 @@ public class UpgradeMicroblogsEntry extends UpgradeProcess {
 
 	protected void renameReceiverMicroblogsEntryId() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (!hasColumn("MicroblogsEntry", "receiverMicroblogsEntryId")) {
+			DBMetadata dbMetadata = new DBMetadata(connection);
+
+			if (!dbMetadata.hasColumn(
+					"MicroblogsEntry", "receiverMicroblogsEntryId")) {
+
 				return;
 			}
 

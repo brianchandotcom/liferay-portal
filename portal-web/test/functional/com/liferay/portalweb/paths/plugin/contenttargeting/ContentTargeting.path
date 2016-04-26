@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>CARD_CONTENT_TYPE</td>
-	<td>//div[contains(@class,'card-dm-text') and contains(.,'${key_contentType}')]</td>
+	<td>//span[contains(@class,'lfr-card-subtitle-text') and contains(.,'${key_contentType}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -78,7 +78,7 @@
 </tr>
 <tr>
 	<td>OTHERWISE_PANEL_SELECTED_CONTENT_TYPE</td>
-	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//div[contains(@class,'card-dm-text') and contains(.,'${key_contentType}')]</td>
+	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//span[contains(@class,'lfr-card-subtitle-text') and contains(.,'${key_contentType}')]</td>
 	<td></td>
 </tr>
 <tr>

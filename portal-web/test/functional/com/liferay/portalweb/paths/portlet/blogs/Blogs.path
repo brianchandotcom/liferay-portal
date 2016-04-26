@@ -66,7 +66,7 @@
 </tr>
 <tr>
 	<td>ICON_VIEW_ENTRY_OPTIONS_DROPDOWN</td>
-	<td>//div[contains(@class,'card-footer') and contains(.,'${key_entryTitle}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
+	<td>//div[contains(@class,'taglib-vertical-card-footer') and contains(.,'${key_entryTitle}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
 <tr>

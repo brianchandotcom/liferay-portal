@@ -131,7 +131,7 @@ AUI.add(
 							content = A.Node.create('<div class="loading-animation" />');
 						}
 
-						if (!instance._currentPopup) {
+						if (!instance._currentPopup || !instance._currentPopup.loadingmask || !instance._currentPopup.io) {
 							instance._currentPopup = Liferay.Util.Window.getWindow(
 								{
 									dialog: {

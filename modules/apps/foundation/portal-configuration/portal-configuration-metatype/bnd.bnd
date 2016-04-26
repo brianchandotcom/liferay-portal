@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Portal Metatype
+Bundle-Name: Liferay Portal Configuration Metatype
 Bundle-SymbolicName: com.liferay.portal.configuration.metatype
 Bundle-Version: 2.0.1
 Export-Package:\

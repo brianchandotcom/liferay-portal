@@ -359,10 +359,9 @@
 			<bean class="com.liferay.portal.util.DigesterImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.util.FastDateFormatFactory" class="com.liferay.portal.util.FastDateFormatFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" class="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil">
-		<property name="fastDateFormatFactory">
-			<bean class="com.liferay.portal.util.FastDateFormatFactoryImpl" />
-		</property>
+		<property name="fastDateFormatFactory" ref="com.liferay.portal.kernel.util.FastDateFormatFactory" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.util.FileUtil" class="com.liferay.portal.kernel.util.FileUtil">
 		<property name="file">

@@ -1,0 +1,13 @@
+Bundle-ClassPath:\
+	.,\
+	lib/commons-fileupload.jar,\
+	lib/commons-io.jar
+Bundle-Name: Liferay Server Manager
+Bundle-SymbolicName: com.liferay.server.manager
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.server.manager
+Liferay-Releng-Module-Group-Description: This app provides remote development and deployment support from Liferay IDE. With this app, you can build Liferay projects in Liferay IDE or Liferay Developer Studio, and deploy the projects to a remote host that has this app installed. This app is designed for use with Liferay IDE only.
+Liferay-Releng-Module-Group-Title: Remote IDE Connector
+-liferay-includeresource:\
+	lib/commons-fileupload.jar=commons-fileupload-*.jar,\
+	lib/commons-io.jar=commons-io-*.jar

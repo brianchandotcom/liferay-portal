@@ -14,6 +14,7 @@
 
 package com.liferay.calendar.upgrade.v1_0_1;
 
+import com.liferay.portal.kernel.dao.db.DBMetadata;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
@@ -29,7 +30,9 @@ public class UpgradeCalendarBooking extends UpgradeProcess {
 
 	protected void updateCalendarBooking() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (!hasColumn("CalendarBooking", "vEventUid")) {
+			DBMetadata dbMetadata = new DBMetadata(connection);
+
+			if (!dbMetadata.hasColumn("CalendarBooking", "vEventUid")) {
 				runSQL("alter table CalendarBooking add vEventUid STRING null");
 			}
 

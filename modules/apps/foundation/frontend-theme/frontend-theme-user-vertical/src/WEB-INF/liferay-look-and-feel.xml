@@ -5,11 +5,10 @@
 	<compatibility>
 		<version>7.0.0+</version>
 	</compatibility>
-	<theme id="user-vertical" name="User Vertical">
+	<theme id="user-vertical" name="User Dashboard">
 		<template-extension>ftl</template-extension>
 		<settings>
 			<setting configurable="false" key="show-maximize-minimize-application-links" value="true" />
-			<setting configurable="true" key="user-card-visible" type="checkbox" value="true" />
 		</settings>
 		<portlet-decorator id="barebone" name="Barebone">
 			<portlet-decorator-css-class>portlet-barebone</portlet-decorator-css-class>

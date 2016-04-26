@@ -32,20 +32,28 @@
 					<span class="icon-bar"></span>
 				</button>
 
-				<#assign VOID = freeMarkerPortletPreferences.setValue("portletSetupPortletDecoratorId", "barebone")>
-
 				<nav class="user-personal-bar">
 					<ul class="nav navbar-nav pull-right">
+						<#assign VOID = freeMarkerPortletPreferences.setValue("portletSetupPortletDecoratorId", "barebone")>
+
 						<@liferay.user_personal_bar />
+
+						<#assign VOID = freeMarkerPortletPreferences.reset()>
 					</ul>
 				<nav>
 
-				<#assign VOID = freeMarkerPortletPreferences.reset()>
-
 				<div class="navbar-header navbar-header-left-xs">
-					<div class="site-name" title="#language_format ("go-to-x", [$site_name])">
-						${layout_set_title}
-					</div>
+					<#if !page_group.isUser()>
+						<a class="${logo_css_class} pull-left" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
+							<img alt="${logo_description}" height="64" src="${site_logo}" width="64" />
+						</a>
+					</#if>
+
+					<#if show_site_name || page_group.isUser()>
+						<div class="pull-left site-name" title="#language_format ("go-to-x", [$site_name])">
+							${layout_set_title}
+						</div>
+					</#if>
 				</div>
 			</div>
 
@@ -53,7 +61,19 @@
 	</header>
 
 	<aside class="col-md-3" id="userCard">
-		<div class="collapse navbar-collapse panel" id="navigationCollapse">
+		<div class="panel">
+			<#if page_group.isUser()>
+				<div class="aspect-ratio-bg-cover text-center user-container">
+					<div class="user-info">
+						<div class="aspect-ratio-bg-cover user-icon user-icon-xl" ${main_menu_style}></div>
+
+						<div class="h3">${htmlUtil.escape(user_name)}</div>
+					</div>
+
+					<div class="aspect-ratio-bg-cover bg-icon" ${main_menu_style}></div>
+				</div>
+			</#if>
+
 			<#include "${full_templates_path}/navigation.ftl" />
 		</div>
 	</aside>

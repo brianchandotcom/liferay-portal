@@ -40,8 +40,8 @@ body { background-color: #FFFFFF }
 h2{ font-family: Arial}
 
 /* Table colors */
-.TableHeadingColor     { background: #1b75bb } /* Blue 1 */
-.TableSubHeadingColor  { background: #8BB8E8  } /* Pantone 278 C Hex match */
+.TableHeadingColor     { background: #8BB8E8  } /* Pantone 278 C Hex match */
+.TableSubHeadingColor  { background: #1b75bb;}/* Blue 1 */
 .TableRowColor         { background: #FFFFFF } /* White */
 
 
@@ -54,11 +54,11 @@ h2{ font-family: Arial}
 /* .FrameItemFont  { font-size: 10pt; font-family: Arial, sans-serif } */
 
 /* Navigation bar fonts and colors */
-.NavBarCell1    { background-color:#8BB8E8;}/* Pantone 278 C Hex match */
-.NavBarCell1Rev { background-color:#1b75bb;}/* Blue 1 */
+.NavBarCell1    { background-color:#1b75bb;}/* Blue 1 */
+.NavBarCell1Rev { background-color:#8BB8E8;}/* Pantone 278 C Hex match */
 .NavBarFont1    { font-family: Arial, sans-serif; color:#000000;}
 .NavBarFont1Rev { font-family: Arial, sans-serif; color:#FFFFFF;}
 
-.NavBarCell2    { font-family: Arial, sans-serif; background-color:#FFFFFF;}
+.NavBarCell2    { font-family: Arial, sans-serif; background-color:#8BB8E8;}
 .NavBarCell3    { font-family: Arial, sans-serif; background-color:#FFFFFF;}
 

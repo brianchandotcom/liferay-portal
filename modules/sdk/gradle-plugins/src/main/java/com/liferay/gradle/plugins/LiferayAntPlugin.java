@@ -76,6 +76,9 @@ public class LiferayAntPlugin implements Plugin<Project> {
 					Task warTask = GradleUtil.getTask(project, _WAR_TASK_NAME);
 
 					configurablePublishArtifact.builtBy(warTask);
+
+					configurablePublishArtifact.setName(
+						GradleUtil.getArchivesBaseName(project));
 				}
 
 			});

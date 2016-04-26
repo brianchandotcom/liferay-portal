@@ -52,18 +52,18 @@ public class StagingDeployScanner extends Thread {
 
 		while (_started) {
 			try {
-				sleep(_stagingDeployDir.getInterval());
-			}
-			catch (InterruptedException ie) {
-			}
-
-			try {
 				_stagingDeployDir.scanDirectory();
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn("Unable to scan the staging deploy directory", e);
 				}
+			}
+
+			try {
+				sleep(_stagingDeployDir.getInterval());
+			}
+			catch (InterruptedException ie) {
 			}
 		}
 	}

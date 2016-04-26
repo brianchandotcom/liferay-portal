@@ -52,18 +52,18 @@ public class AutoDeployScanner extends Thread {
 
 		while (_started) {
 			try {
-				sleep(_autoDeployDir.getInterval());
-			}
-			catch (InterruptedException ie) {
-			}
-
-			try {
 				_autoDeployDir.scanDirectory();
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					_log.warn("Unable to scan the auto deploy directory", e);
 				}
+			}
+
+			try {
+				sleep(_autoDeployDir.getInterval());
+			}
+			catch (InterruptedException ie) {
 			}
 		}
 	}

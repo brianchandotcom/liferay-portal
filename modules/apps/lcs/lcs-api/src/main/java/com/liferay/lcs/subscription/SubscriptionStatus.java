@@ -53,7 +53,7 @@ public enum SubscriptionStatus {
 		_status = status;
 	}
 
-	private String _label;
-	private int _status;
+	private final String _label;
+	private final int _status;
 
 }

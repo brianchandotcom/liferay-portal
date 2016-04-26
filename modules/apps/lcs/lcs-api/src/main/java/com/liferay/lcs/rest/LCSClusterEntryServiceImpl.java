@@ -81,8 +81,7 @@ public class LCSClusterEntryServiceImpl
 			throw new RuntimeException(jsonwsie);
 		}
 
-		List<LCSClusterEntry> lcsClusterEntries =
-			new ArrayList<LCSClusterEntry>();
+		List<LCSClusterEntry> lcsClusterEntries = new ArrayList<>();
 
 		for (LCSClusterEntry lcsClusterEntry : remoteLcsClusterEntries) {
 			if (lcsClusterEntry.getType() != localLCSClusterEntryType) {
@@ -126,8 +125,7 @@ public class LCSClusterEntryServiceImpl
 			throw new RuntimeException(jsonwsie);
 		}
 
-		List<LCSClusterEntry> lcsClusterEntries =
-			new ArrayList<LCSClusterEntry>();
+		List<LCSClusterEntry> lcsClusterEntries = new ArrayList<>();
 
 		for (LCSClusterEntry lcsClusterEntry : remoteLcsClusterEntries) {
 			lcsClusterEntries.add(lcsClusterEntry);

@@ -17,8 +17,8 @@ package com.liferay.lcs.rest;
 /**
  * @author Riccardo Ferrari
  */
-public class LCSMessageServiceImpl extends BaseLCSServiceImpl
-	implements LCSMessageService {
+public class LCSMessageServiceImpl
+	extends BaseLCSServiceImpl implements LCSMessageService {
 
 	@Override
 	public void addCorpProjectLCSMessage(

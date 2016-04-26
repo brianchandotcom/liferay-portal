@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Riccardo Ferrari
  */
-public class LCSClusterNodeUptimeServiceImpl extends BaseLCSServiceImpl
-	implements LCSClusterNodeUptimeService {
+public class LCSClusterNodeUptimeServiceImpl
+	extends BaseLCSServiceImpl implements LCSClusterNodeUptimeService {
 
 	@Override
 	public void updateLCSClusterNodeUptime(String key) {

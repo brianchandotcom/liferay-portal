@@ -62,7 +62,7 @@ public enum LCSEventType {
 		"the-server-x-unexpectedly-shut-down", false, 0, 3, 3);
 
 	public static List<LCSEventType> getSupported() {
-		List<LCSEventType> lcsEventTypes = new ArrayList<LCSEventType>();
+		List<LCSEventType> lcsEventTypes = new ArrayList<>();
 
 		lcsEventTypes.add(LCS_CLUSTER_NODE_CLUSTER_LINK_FAILED);
 		lcsEventTypes.add(MONITORING_UNAVAILABLE);
@@ -173,11 +173,11 @@ public enum LCSEventType {
 		_type = type;
 	}
 
-	private String _label;
-	private String _message;
-	private boolean _repeatable;
-	private long _repeatPeriod;
-	private int _severityLevel;
+	private final String _label;
+	private final String _message;
+	private final boolean _repeatable;
+	private final long _repeatPeriod;
+	private final int _severityLevel;
 	private int _type;
 
 }

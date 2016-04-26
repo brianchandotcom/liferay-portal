@@ -115,7 +115,7 @@ public class LCSClusterNodeServiceImpl
 			throw new RuntimeException(jsonwsie);
 		}
 
-		List<LCSClusterNode> lcsClusterNodes = new ArrayList<LCSClusterNode>();
+		List<LCSClusterNode> lcsClusterNodes = new ArrayList<>();
 
 		for (LCSClusterNode lcsClusterNode : remoteLCSClusterNodes) {
 			lcsClusterNodes.add(lcsClusterNode);

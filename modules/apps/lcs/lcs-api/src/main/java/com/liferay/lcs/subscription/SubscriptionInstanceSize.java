@@ -55,8 +55,8 @@ public enum SubscriptionInstanceSize {
 		_processorCoresAllowed = processorCoresAllowed;
 	}
 
-	private int _instanceSize;
-	private String _label;
-	private int _processorCoresAllowed;
+	private final int _instanceSize;
+	private final String _label;
+	private final int _processorCoresAllowed;
 
 }

@@ -89,7 +89,7 @@ public enum SubscriptionType {
 		_label = licenseEntryType;
 	}
 
-	private String _label;
-	private String _licenseEntryType;
+	private final String _label;
+	private final String _licenseEntryType;
 
 }

@@ -115,6 +115,7 @@ public class CompressionUtil {
 		return uncompressedString;
 	}
 
-	private static Logger _log = LoggerFactory.getLogger(CompressionUtil.class);
+	private static final Logger _log = LoggerFactory.getLogger(
+		CompressionUtil.class);
 
 }

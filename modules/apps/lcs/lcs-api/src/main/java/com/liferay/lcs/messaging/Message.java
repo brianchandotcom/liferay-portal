@@ -40,7 +40,8 @@ import java.util.TreeMap;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(
 	include = JsonTypeInfo.As.PROPERTY, property = "class",
-	use = JsonTypeInfo.Id.CLASS)
+	use = JsonTypeInfo.Id.CLASS
+)
 public abstract class Message implements Serializable {
 
 	public static final String KEY_BUILD_NUMBER = "buildNumber";
@@ -259,7 +260,7 @@ public abstract class Message implements Serializable {
 	 */
 	public Map<String, Object> getValues() {
 		if (_values == null) {
-			_values = new TreeMap<String, Object>();
+			_values = new TreeMap<>();
 		}
 
 		return _values;
@@ -286,7 +287,7 @@ public abstract class Message implements Serializable {
 		}
 
 		if (_values == null) {
-			_values = new TreeMap<String, Object>();
+			_values = new TreeMap<>();
 		}
 
 		_values.put(key, value);
@@ -469,7 +470,7 @@ public abstract class Message implements Serializable {
 		return _toString;
 	}
 
-	private static ObjectMapper _objectMapper = new ObjectMapper();
+	private static final ObjectMapper _objectMapper = new ObjectMapper();
 
 	private long _createTime = System.currentTimeMillis();
 	private long _deliveryTag;

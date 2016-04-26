@@ -76,7 +76,7 @@ public class KeyStoreFactory {
 			String keyStorePath, String keyStoreType, String keyStorePassword)
 		throws Exception {
 
-		if (!validate(keyStorePath, keyStoreType, keyStorePassword)) {
+		if (!_validate(keyStorePath, keyStoreType, keyStorePassword)) {
 			return null;
 		}
 
@@ -150,7 +150,7 @@ public class KeyStoreFactory {
 	 *         valid; <code>false</code> otherwise
 	 * @throws Exception if an exception occurred
 	 */
-	private static boolean validate(
+	private static boolean _validate(
 			String keyStorePath, String keyStoreType, String keyStorePassword)
 		throws Exception {
 
@@ -169,7 +169,6 @@ public class KeyStoreFactory {
 		return true;
 	}
 
-	private static Map<String, KeyStore> _keyStores =
-		new HashMap<String, KeyStore>();
+	private static final Map<String, KeyStore> _keyStores = new HashMap<>();
 
 }

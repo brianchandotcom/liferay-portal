@@ -47,7 +47,7 @@ public class LCSProjectServiceImpl
 			throw new RuntimeException(jsonwsie);
 		}
 
-		List<LCSProject> lcsProjects = new ArrayList<LCSProject>();
+		List<LCSProject> lcsProjects = new ArrayList<>();
 
 		for (LCSProject lcsProject : remoteLCSProjects) {
 			lcsProjects.add(lcsProject);

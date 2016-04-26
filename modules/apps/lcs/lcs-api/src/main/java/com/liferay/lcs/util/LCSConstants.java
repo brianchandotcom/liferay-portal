@@ -139,6 +139,21 @@ public class LCSConstants {
 
 	public static final int PORTAL_PROPERTIES_LCS_SERVICE_UNAVAILABLE = 0;
 
+	public static String[] PORTAL_PROPERTIES_SECURITY_INSENSITIVE = {
+		"login.create.account.allow.custom.password",
+		"portal.jaas.plain.password", "portal.jaas.strict.password"
+	};
+
+	public static String[] PORTAL_PROPERTIES_SECURITY_SENSITIVE = {
+		"amazon.secret.access.key", "auth.token.shared.secret",
+		"auth.mac.shared.key", "auto.deploy.glassfish.jee.dm.passwd",
+		"captcha.engine.recaptcha.key.private", "dl.store.s3.secret.key",
+		"facebook.connect.app.secret", "ldap.security.credentials.",
+		"mail.hook.cyrus.add.user", "mail.hook.cyrus.delete.user",
+		"microsoft.translator.client.secret", "omniadmin.users",
+		"tunneling.servlet.shared.secret"
+	};
+
 	public static final String PROTOCOL_VERSION_1_0 = "1.0";
 
 	public static final String PROTOCOL_VERSION_1_1 = "1.1";
@@ -157,6 +172,9 @@ public class LCSConstants {
 
 	public static final String PROTOCOL_VERSION_CURRENT = PROTOCOL_VERSION_1_7;
 
+	public static String[] SERVER_METRICS_SUPPORTED_SERVERS =
+		{"tomcat", "weblogic"};
+
 	public static final String SETTINGS_MODULE_ADD_ENVIRONMENT =
 		"addEnvironment";
 
@@ -171,24 +189,6 @@ public class LCSConstants {
 	public static final String SOURCE_SYSTEM_NAME_LRDCOM = "LRDCOM";
 
 	public static final String SOURCE_SYSTEM_NAME_OSB = "OSB";
-
-	public static String[] PORTAL_PROPERTIES_SECURITY_INSENSITIVE = {
-		"login.create.account.allow.custom.password",
-		"portal.jaas.plain.password", "portal.jaas.strict.password"
-	};
-
-	public static String[] PORTAL_PROPERTIES_SECURITY_SENSITIVE = {
-		"amazon.secret.access.key", "auth.token.shared.secret",
-		"auth.mac.shared.key", "auto.deploy.glassfish.jee.dm.passwd",
-		"captcha.engine.recaptcha.key.private", "dl.store.s3.secret.key",
-		"facebook.connect.app.secret", "ldap.security.credentials.",
-		"mail.hook.cyrus.add.user", "mail.hook.cyrus.delete.user",
-		"microsoft.translator.client.secret", "omniadmin.users",
-		"tunneling.servlet.shared.secret"
-	};
-
-	public static String[] SERVER_METRICS_SUPPORTED_SERVERS =
-		{"tomcat", "weblogic"};
 
 	/**
 	 * Returns <code>true</code> if the application server has obtainable

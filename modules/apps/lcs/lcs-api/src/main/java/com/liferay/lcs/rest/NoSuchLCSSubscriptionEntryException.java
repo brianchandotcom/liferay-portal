@@ -20,7 +20,6 @@ package com.liferay.lcs.rest;
 public class NoSuchLCSSubscriptionEntryException extends RuntimeException {
 
 	public NoSuchLCSSubscriptionEntryException() {
-		super();
 	}
 
 	public NoSuchLCSSubscriptionEntryException(String msg) {

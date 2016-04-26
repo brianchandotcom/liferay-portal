@@ -20,7 +20,6 @@ package com.liferay.lcs.rest;
 public class DuplicateLCSClusterEntryNameException extends RuntimeException {
 
 	public DuplicateLCSClusterEntryNameException() {
-		super();
 	}
 
 	public DuplicateLCSClusterEntryNameException(String msg) {

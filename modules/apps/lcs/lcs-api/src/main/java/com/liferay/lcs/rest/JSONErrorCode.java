@@ -77,8 +77,9 @@ public enum JSONErrorCode {
 		_errorCode = errorCode;
 	}
 
-	private static Logger _log = LoggerFactory.getLogger(JSONErrorCode.class);
+	private static final Logger _log = LoggerFactory.getLogger(
+		JSONErrorCode.class);
 
-	private int _errorCode;
+	private final int _errorCode;
 
 }

@@ -50,7 +50,7 @@ public enum LCSMessageSeverity {
 		_level = level;
 	}
 
-	private String _label;
-	private int _level;
+	private final String _label;
+	private final int _level;
 
 }

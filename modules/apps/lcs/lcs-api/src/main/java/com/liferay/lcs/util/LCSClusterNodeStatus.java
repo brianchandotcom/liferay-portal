@@ -43,7 +43,7 @@ public enum LCSClusterNodeStatus {
 
 	public static LCSClusterNodeStatus[] getLCSClusterNodeStatuses(int status) {
 		List<LCSClusterNodeStatus> lcsClusterNodeStatusesList =
-			new ArrayList<LCSClusterNodeStatus>();
+			new ArrayList<>();
 
 		for (LCSClusterNodeStatus lcsClusterNodeStatus : values()) {
 			if (lcsClusterNodeStatus.hasStatus(status)) {
@@ -65,7 +65,7 @@ public enum LCSClusterNodeStatus {
 		int status) {
 
 		Map<LCSClusterNodeStatus, Object[]> lcsClusterNodeStatusObjectArrays =
-			new LinkedHashMap<LCSClusterNodeStatus, Object[]>();
+			new LinkedHashMap<>();
 
 		for (LCSClusterNodeStatus lcsClusterNodeStatus : values()) {
 			Object[] objectArray = new Object[3];
@@ -249,8 +249,8 @@ public enum LCSClusterNodeStatus {
 
 	private static final int _HEARTBEAT_DELAYED_RESET = 0xfffffff7;
 
-	private String _label;
-	private String _oppositeLabel;
-	private int _status;
+	private final String _label;
+	private final String _oppositeLabel;
+	private final int _status;
 
 }

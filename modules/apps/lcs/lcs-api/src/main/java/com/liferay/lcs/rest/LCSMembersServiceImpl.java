@@ -17,8 +17,8 @@ package com.liferay.lcs.rest;
 /**
  * @author Riccardo Ferrari
  */
-public class LCSMembersServiceImpl extends BaseLCSServiceImpl
-	implements LCSMembersService {
+public class LCSMembersServiceImpl
+	extends BaseLCSServiceImpl implements LCSMembersService {
 
 	@Override
 	public void sendMonitoringUnavailableEmail(String key) {

@@ -25,8 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Riccardo Ferrari
  */
-public class LCSMetadataServiceImpl extends BaseLCSServiceImpl
-	implements LCSMetadataService {
+public class LCSMetadataServiceImpl
+	extends BaseLCSServiceImpl implements LCSMetadataService {
 
 	@Override
 	public int getSupportedLCSPortlet(
@@ -87,6 +87,6 @@ public class LCSMetadataServiceImpl extends BaseLCSServiceImpl
 		"/osb-lcs-portlet/lcs/jsonws/v1_4/LCSMetadata";
 
 	private static final Map<String, Integer> _supportedLCSPortletMap =
-		new HashMap<String, Integer>();
+		new HashMap<>();
 
 }

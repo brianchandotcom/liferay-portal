@@ -19,8 +19,8 @@ import java.util.List;
 /**
  * @author Riccardo Ferrari
  */
-public class LCSPatchingAdvisorServiceImpl extends BaseLCSServiceImpl
-	implements LCSPatchingAdvisorService {
+public class LCSPatchingAdvisorServiceImpl
+	extends BaseLCSServiceImpl implements LCSPatchingAdvisorService {
 
 	@Override
 	public List<String> getInstallablePatchIds(

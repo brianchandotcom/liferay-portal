@@ -22,30 +22,21 @@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/layout" prefix="liferay-layout" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.item.selector.ItemSelectorReturnType" %><%@
-page import="com.liferay.item.selector.criteria.URLItemSelectorReturnType" %><%@
+<%@ page import="com.liferay.item.selector.criteria.URLItemSelectorReturnType" %><%@
 page import="com.liferay.item.selector.criteria.UUIDItemSelectorReturnType" %><%@
 page import="com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion" %><%@
-page import="com.liferay.layout.item.selector.web.LayoutItemSelectorView" %><%@
+page import="com.liferay.layout.item.selector.web.BaseLayoutsItemSelectorView" %><%@
 page import="com.liferay.layout.item.selector.web.display.context.LayoutItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
-page import="com.liferay.portal.kernel.model.Group" %><%@
-page import="com.liferay.portal.kernel.model.Layout" %><%@
-page import="com.liferay.portal.kernel.model.LayoutConstants" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
-page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.util.ClassUtil" %><%@
-page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+page import="com.liferay.portal.kernel.model.Portlet" %><%@
+page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%@ page import="java.util.Objects" %>
-
-<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

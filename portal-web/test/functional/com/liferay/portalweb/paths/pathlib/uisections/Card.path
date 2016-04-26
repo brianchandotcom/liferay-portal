@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>GENERIC_LARGE_TEXT</td>
-	<td>//div[contains(@class,'vertical-card')]//span[contains(@class,'lfr-card-title-text')]</td>
+	<td>//div[contains(@class,'vertical-card')]//span[contains(@class,'lfr-card-title-text')]//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>SPECIFIC_LARGE_TEXT</td>
-	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//span[contains(@class,'lfr-card-title-text')]</td>
+	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//span[contains(@class,'lfr-card-title-text')]//a</td>
 	<td></td>
 </tr>
 <tr>

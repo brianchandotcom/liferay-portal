@@ -39,6 +39,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -790,8 +791,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		List<ResourcePermission> resourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
-				companyId,
-				"com.liferay.portlet.dynamicdatamapping.DDMStructure",
+				companyId, DDMStructure.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				StringUtil.valueOf(structureId));
 
@@ -957,7 +957,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		List<ResourcePermission> resourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
-				companyId, "com.liferay.portlet.dynamicdatamapping.DDMTemplate",
+				companyId, DDMTemplate.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				StringUtil.valueOf(templateId));
 

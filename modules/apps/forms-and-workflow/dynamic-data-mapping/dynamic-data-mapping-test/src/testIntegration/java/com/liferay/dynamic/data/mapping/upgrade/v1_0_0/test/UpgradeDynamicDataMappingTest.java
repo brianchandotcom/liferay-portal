@@ -419,8 +419,7 @@ public class UpgradeDynamicDataMappingTest {
 		long resourcePermissionId = RandomTestUtil.randomLong();
 
 		addResourcePermission(
-			resourcePermissionId, _structureId,
-			"com.liferay.portlet.dynamicdatamapping.DDMStructure");
+			resourcePermissionId, _structureId, DDMStructure.class.getName());
 
 		_upgradeDynamicDataMapping.upgrade();
 
@@ -857,8 +856,7 @@ public class UpgradeDynamicDataMappingTest {
 		long resourcePermissionId = RandomTestUtil.randomLong();
 
 		addResourcePermission(
-			resourcePermissionId, _templateId,
-			"com.liferay.portlet.dynamicdatamapping.DDMTemplate");
+			resourcePermissionId, _templateId, DDMTemplate.class.getName());
 
 		_upgradeDynamicDataMapping.upgrade();
 

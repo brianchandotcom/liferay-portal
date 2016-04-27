@@ -28,10 +28,6 @@ public class KnowledgeBaseWebUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register(
 			"com.liferay.knowledge.base.web", "0.0.0", "1.0.0",
-			new DummyUpgradeStep());
-
-		registry.register(
-			"com.liferay.knowledge.base.web", "0.0.1", "1.0.0",
 			new com.liferay.knowledge.base.web.upgrade.v1_0_0.
 				UpgradePortletId());
 	}

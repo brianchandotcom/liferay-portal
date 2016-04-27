@@ -15,7 +15,6 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -96,46 +95,40 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		DataSource dataSource = dataSourceFactoryBean.createInstance();
 
-		try (Connection sourceConnection =
-				DataAccess.getUpgradeOptimizedConnection();
-			Connection targetConnection = dataSource.getConnection()) {
-
+		try (Connection targetConnection = dataSource.getConnection()) {
 			copyControlTable(
-				sourceConnection, targetConnection, ClassNameTable.TABLE_NAME,
+				connection, targetConnection, ClassNameTable.TABLE_NAME,
 				ClassNameTable.TABLE_COLUMNS, ClassNameTable.TABLE_SQL_CREATE);
 			copyControlTable(
-				sourceConnection, targetConnection,
-				ClusterGroupTable.TABLE_NAME, ClusterGroupTable.TABLE_COLUMNS,
+				connection, targetConnection, ClusterGroupTable.TABLE_NAME,
+				ClusterGroupTable.TABLE_COLUMNS,
 				ClusterGroupTable.TABLE_SQL_CREATE);
 			copyControlTable(
-				sourceConnection, targetConnection, CounterTable.TABLE_NAME,
+				connection, targetConnection, CounterTable.TABLE_NAME,
 				CounterTable.TABLE_COLUMNS, CounterTable.TABLE_SQL_CREATE);
 			copyControlTable(
-				sourceConnection, targetConnection, CountryTable.TABLE_NAME,
+				connection, targetConnection, CountryTable.TABLE_NAME,
 				CountryTable.TABLE_COLUMNS, CountryTable.TABLE_SQL_CREATE);
 			copyControlTable(
-				sourceConnection, targetConnection,
-				PortalPreferencesTable.TABLE_NAME,
+				connection, targetConnection, PortalPreferencesTable.TABLE_NAME,
 				PortalPreferencesTable.TABLE_COLUMNS,
 				PortalPreferencesTable.TABLE_SQL_CREATE);
 			copyControlTable(
-				sourceConnection, targetConnection, RegionTable.TABLE_NAME,
+				connection, targetConnection, RegionTable.TABLE_NAME,
 				RegionTable.TABLE_COLUMNS, RegionTable.TABLE_SQL_CREATE);
 			copyControlTable(
-				sourceConnection, targetConnection, ReleaseTable.TABLE_NAME,
+				connection, targetConnection, ReleaseTable.TABLE_NAME,
 				ReleaseTable.TABLE_COLUMNS, ReleaseTable.TABLE_SQL_CREATE);
 			copyControlTable(
-				sourceConnection, targetConnection,
-				ResourceActionTable.TABLE_NAME,
+				connection, targetConnection, ResourceActionTable.TABLE_NAME,
 				ResourceActionTable.TABLE_COLUMNS,
 				ResourceActionTable.TABLE_SQL_CREATE);
 			copyControlTable(
-				sourceConnection, targetConnection,
-				ServiceComponentTable.TABLE_NAME,
+				connection, targetConnection, ServiceComponentTable.TABLE_NAME,
 				ServiceComponentTable.TABLE_COLUMNS,
 				ServiceComponentTable.TABLE_SQL_CREATE);
 			copyControlTable(
-				sourceConnection, targetConnection, VirtualHostTable.TABLE_NAME,
+				connection, targetConnection, VirtualHostTable.TABLE_NAME,
 				VirtualHostTable.TABLE_COLUMNS,
 				VirtualHostTable.TABLE_SQL_CREATE);
 		}

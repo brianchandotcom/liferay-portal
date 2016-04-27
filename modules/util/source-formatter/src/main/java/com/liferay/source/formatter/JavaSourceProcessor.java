@@ -483,6 +483,39 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkVerifyUpgradeConnection(
+		String fileName, String className, String content) {
+
+		if (fileName.endsWith("Test.java") ||
+			(!className.contains("Upgrade") && !className.contains("Verify"))) {
+
+			return;
+		}
+
+		if (isExcludedPath(_upgradeDataAccessConnectionExcludes, fileName) ||
+			content.contains("ThrowableAwareRunnable")) {
+
+			return;
+		}
+
+		int x = -1;
+
+		while (true) {
+			x = content.indexOf(
+				"DataAccess.getUpgradeOptimizedConnection", x + 1);
+
+			if (x == -1) {
+				break;
+			}
+
+			processErrorMessage(
+				fileName,
+				"Use existing connection field instead of " +
+					"DataAccess.getUpgradeOptimizedConnection " + fileName +
+						" " + getLineCount(content, x));
+		}
+	}
+
 	protected void checkXMLSecurity(
 		String fileName, String content, boolean isRunOutsidePortalExclusion) {
 
@@ -919,6 +952,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (!fileName.endsWith("GetterUtilTest.java")) {
 			checkGetterUtilGet(fileName, newContent);
 		}
+
+		// LPS-65213
+
+		checkVerifyUpgradeConnection(fileName, className, newContent);
 
 		newContent = formatAssertEquals(fileName, newContent);
 
@@ -4294,6 +4331,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		_secureXmlExcludes = getPropertyList("secure.xml.excludes");
 		_staticLogVariableExcludes = getPropertyList("static.log.excludes");
 		_testAnnotationsExcludes = getPropertyList("test.annotations.excludes");
+		_upgradeDataAccessConnectionExcludes = getPropertyList(
+			"upgrade.data.access.connection.excludes");
 		_upgradeServiceUtilExcludes = getPropertyList(
 			"upgrade.service.util.excludes");
 	}
@@ -4479,6 +4518,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _testAnnotationsExcludes;
 	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
+	private List<String> _upgradeDataAccessConnectionExcludes;
 	private List<String> _upgradeServiceUtilExcludes;
 
 }

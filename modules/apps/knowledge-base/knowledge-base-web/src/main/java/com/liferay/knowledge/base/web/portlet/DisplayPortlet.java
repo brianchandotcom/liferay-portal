@@ -32,6 +32,7 @@ import com.liferay.knowledge.base.web.selector.KBArticleSelector;
 import com.liferay.knowledge.base.web.selector.KBArticleSelectorFactory;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -406,6 +407,13 @@ public class DisplayPortlet extends BaseKBPortlet {
 		KBArticleSelectorFactory kbArticleSelectorFactory) {
 
 		_kbArticleSelectorFactory = kbArticleSelectorFactory;
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.knowledge.base.web)(release.schema.version=1.0.0))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	private ClassNameLocalService _classNameLocalService;

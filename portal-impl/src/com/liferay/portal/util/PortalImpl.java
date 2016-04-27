@@ -6357,15 +6357,11 @@ public class PortalImpl implements Portal {
 			return false;
 		}
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			getCompanyId(httpServletRequest), portletDisplay.getId());
-
-		if (portlet.isSystem() || !portlet.isUseDefaultTemplate()) {
-			return false;
-		}
-
 		ServletContext servletContext =
 			(ServletContext)httpServletRequest.getAttribute(WebKeys.CTX);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			group.getCompanyId(), portletDisplay.getId());
 
 		InvokerPortlet invokerPortlet = PortletInstanceFactoryUtil.create(
 			portlet, servletContext);
@@ -6383,6 +6379,13 @@ public class PortalImpl implements Portal {
 	public boolean isSkipPortletContentRendering(
 		Group group, LayoutTypePortlet layoutTypePortlet,
 		PortletDisplay portletDisplay, String portletName) {
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			group.getCompanyId(), portletDisplay.getId());
+
+		if (portlet.isSystem()) {
+			return false;
+		}
 
 		if (group.isLayoutPrototype() &&
 			layoutTypePortlet.hasPortletId(portletDisplay.getId()) &&

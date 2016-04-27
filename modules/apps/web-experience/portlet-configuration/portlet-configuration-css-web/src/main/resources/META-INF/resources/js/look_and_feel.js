@@ -135,14 +135,16 @@ AUI.add(
 							instance._currentPopup = Liferay.Util.Window.getWindow(
 								{
 									dialog: {
+										after: {
+											destroy: function(event) {
+												instance._currentPopup = null;
+											}
+										},
 										draggable: {
 											handles: ['.modal-header']
 										},
 										modal: false,
 										on: {
-											destroy: function(event) {
-												instance._currentPopup = null;
-											},
 											visibleChange: function(event) {
 												instance._destroyColorPickers();
 											}

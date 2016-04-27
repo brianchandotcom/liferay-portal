@@ -38,27 +38,18 @@ public class UpgradeKBFolder extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		Connection con = null;
+		Map<Long, String> urlTitles = _getInitialUrlTitles(connection);
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+		for (Map.Entry<Long, String> entry : urlTitles.entrySet()) {
+			String uniqueUrlTitle = _findUniqueUrlTitle(
+				connection, entry.getValue());
 
-			Map<Long, String> urlTitles = _getInitialUrlTitles(con);
-
-			for (Map.Entry<Long, String> entry : urlTitles.entrySet()) {
-				String uniqueUrlTitle = _findUniqueUrlTitle(
-					con, entry.getValue());
-
-				for (int i = 1; uniqueUrlTitle == null; i++) {
-					uniqueUrlTitle = _findUniqueUrlTitle(
-						con, entry.getValue() + StringPool.DASH + i);
-				}
-
-				_updateKBFolder(con, entry.getKey(), uniqueUrlTitle);
+			for (int i = 1; uniqueUrlTitle == null; i++) {
+				uniqueUrlTitle = _findUniqueUrlTitle(
+					connection, entry.getValue() + StringPool.DASH + i);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con);
+
+			_updateKBFolder(connection, entry.getKey(), uniqueUrlTitle);
 		}
 	}
 

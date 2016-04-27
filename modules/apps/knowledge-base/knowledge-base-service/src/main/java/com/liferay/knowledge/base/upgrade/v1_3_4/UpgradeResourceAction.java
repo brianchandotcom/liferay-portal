@@ -18,7 +18,6 @@ import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,14 +42,11 @@ public class UpgradeResourceAction extends UpgradeProcess {
 	}
 
 	private boolean _hasViewFeedbackResourceAction() throws SQLException {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
+			ps = connection.prepareStatement(
 				"select count(*) from ResourceAction where actionId = ?");
 
 			ps.setString(1, _ACTION_ID_VIEW_KB_FEEDBACK);
@@ -68,7 +64,7 @@ public class UpgradeResourceAction extends UpgradeProcess {
 			return false;
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

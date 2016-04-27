@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
@@ -85,13 +84,10 @@ public class UpgradeKBAttachments extends BaseUpgradeAttachments {
 
 	@Override
 	protected void updateAttachments() throws Exception {
-		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("select MIN(kbArticleId) as kbArticleId, ");
@@ -100,7 +96,7 @@ public class UpgradeKBAttachments extends BaseUpgradeAttachments {
 			sb.append("MIN(status) as status from KBArticle ");
 			sb.append("group by resourcePrimKey, groupId, companyId");
 
-			ps = con.prepareStatement(sb.toString());
+			ps = connection.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -124,7 +120,7 @@ public class UpgradeKBAttachments extends BaseUpgradeAttachments {
 			}
 		}
 		finally {
-			DataAccess.cleanUp(con, ps, rs);
+			DataAccess.cleanUp(ps, rs);
 		}
 	}
 

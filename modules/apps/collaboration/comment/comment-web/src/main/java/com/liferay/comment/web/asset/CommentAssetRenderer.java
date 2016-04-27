@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -70,11 +69,6 @@ public class CommentAssetRenderer
 	@Override
 	public long getClassPK() {
 		return _workflowableComment.getCommentId();
-	}
-
-	@Override
-	public Date getDisplayDate() {
-		return _workflowableComment.getModifiedDate();
 	}
 
 	@Override

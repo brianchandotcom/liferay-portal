@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -65,11 +64,6 @@ public class BookmarksEntryAssetRenderer
 	@Override
 	public long getClassPK() {
 		return _entry.getEntryId();
-	}
-
-	@Override
-	public Date getDisplayDate() {
-		return _entry.getModifiedDate();
 	}
 
 	@Override

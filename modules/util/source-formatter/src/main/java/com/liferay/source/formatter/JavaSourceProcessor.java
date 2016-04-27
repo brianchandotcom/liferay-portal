@@ -486,32 +486,32 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected void checkVerifyUpgradeConnection(
 		String fileName, String className, String content) {
 
-		if (fileName.endsWith("Test.java")) {
+		if (fileName.endsWith("Test.java") ||
+			(!className.contains("Upgrade") && !className.contains("Verify"))) {
+
 			return;
 		}
 
-		if (!className.contains("Upgrade") && !className.contains("Verify")) {
+		if (isExcludedPath(_upgradeDataAccessConnectionExcludes, fileName) ||
+			content.contains("ThrowableAwareRunnable")) {
+
 			return;
 		}
 
-		if (isExcludedPath(_upgradeDataAccessConnectionExcludes, fileName)) {
-			return;
-		}
+		int x = -1;
 
-		if (content.contains("ThrowableAwareRunnable")) {
-			return;
-		}
+		while (true) {
+			x = content.indexOf(
+				"DataAccess.getUpgradeOptimizedConnection", x + 1);
 
-		int x = content.indexOf("DataAccess.getUpgradeOptimizedConnection");
-
-		while (x != -1) {
-			int lineCount = getLineCount(content, x);
+			if (x == -1) {
+				break;
+			}
 
 			processErrorMessage(
-				fileName, "Use connection field " + fileName + " " + lineCount);
-
-			x = content.indexOf(
-				"DataAccess.getUpgradeOptimizedConnection", x + 40);
+				fileName,
+				"Use connection field " + fileName + " " +
+					getLineCount(content, x));
 		}
 	}
 

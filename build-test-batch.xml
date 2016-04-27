@@ -1025,6 +1025,7 @@ ${output.content}</echo>
 
 				<exec dir="${test.base.dir.name}" executable="npm" failonerror="true">
 					<arg value="install" />
+					<arg value="--proxy http://squid.lax.liferay.com:3128" />
 				</exec>
 			</test-set-up>
 		</run-batch-test>

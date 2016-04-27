@@ -15,7 +15,7 @@ cache {
 }
 
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.image.editor.api", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.frontend.image.editor.api", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.criteria.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"

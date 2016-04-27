@@ -1,0 +1,217 @@
+@import "bourbon";
+@import "mixins";
+
+$imageeditor-btn-padding: 8px 4px !default;
+$imageeditor-btn-space: 24px !default;
+$imageeditor-controls-height: 52px !default;
+$imageeditor-filters-height: 90px !default;
+$imageeditor-history-controls-top: 30px;
+
+// Skin
+
+$brand-primary: darken(#428BCA, 6.5%) !default; // #337ab7
+
+$imageeditor-bg: #111314 !default;
+$imageeditor-history-controls-btn-color: #4E6371 !default;
+$imageeditor-link-color: $brand-primary !default;
+$imageeditor-text-color: #FFF !default;
+$imageeditor-filters-text-color: #57636A !default;
+
+$gray-base: #000 !default;
+$gray-light: lighten($gray-base, 46.7%) !default; // #777
+$gray-lighter: lighten($gray-base, 93.5%) !default; // #eee
+
+$slider-height: 20px;
+
+body {
+	background-color: $imageeditor-bg !important;
+}
+
+.image-editor {
+	background-color: $imageeditor-bg;
+
+	ul, ol {
+		margin: 0;
+	}
+
+	.loading-animation {
+		left: 0;
+		margin: auto;
+		position: absolute;
+		right: 0;
+		top: 40%;
+	}
+
+	.lfr-image-editor-image-container, .lfr-image-editor-tools-container, .lfr-image-editor-history-container {
+		position: relative;
+	}
+
+	.lfr-image-editor-image-container {
+		padding: 20px;
+	}
+
+	.lfr-image-editor-tools-container {
+		height: 142px;
+	}
+
+	.lfr-image-editor-history-container {
+		position: absolute;
+		text-align: center;
+		top: $imageeditor-history-controls-top;
+		width: 100%;
+
+		a.btn {
+			background-color: $imageeditor-history-controls-btn-color;
+			margin: 0;
+			outline: none;
+
+			.lexicon-icon {
+				color: $imageeditor-text-color;
+				margin-top: -7px;
+			}
+		}
+	}
+
+	.lfr-image-editor-image-container {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+	}
+
+	.controls {
+		background-color: $imageeditor-bg;
+		bottom: 0;
+		height: $imageeditor-controls-height;
+		position: absolute;
+		width: 100%;
+
+		.btn {
+			color: $imageeditor-text-color;
+			padding: $imageeditor-btn-padding;
+		}
+
+		.filters {
+			background-color: $imageeditor-bg;
+			bottom: $imageeditor-controls-height;
+			height: 0;
+			left: 0;
+			overflow: hidden;
+			position: absolute;
+			width: 100%;
+			z-index: 1;
+
+			@include transition(height 0.6s $ease-out-quint);
+
+			.btn-space {
+				margin-top: $imageeditor-btn-space;
+			}
+
+			.filters-list {
+				overflow: auto;
+				padding: 10px 0 0;
+
+				.list-table {
+					display: table;
+
+					li {
+						display: table-cell;
+						padding: 0 5px;
+
+						&:hover a {
+							color: $imageeditor-link-color;
+							text-decoration: none;
+						}
+					}
+
+					a {
+						color: $imageeditor-filters-text-color;
+
+						&.active {
+							color: $imageeditor-link-color;
+						}
+
+						&.active canvas {
+							outline: 3px solid $imageeditor-link-color;
+						}
+					}
+
+					span {
+						display: block;
+						font-size: 12px;
+						line-height: 2;
+					}
+				}
+			}
+		}
+
+		.open {
+			& > .btn {
+				color: $imageeditor-link-color;
+			}
+
+			.filters.open {
+				height: $imageeditor-filters-height;
+			}
+		}
+	}
+
+	.slider {
+		color: $imageeditor-link-color;
+		margin: 0 auto;
+		position: relative;
+		text-align: center;
+		width: 80%;
+
+		.rail {
+			border-radius: $slider-height / 2;
+			height: $slider-height;
+			position: relative;
+
+			&::after {
+				border: solid 1px $gray-light;
+				content: "";
+				left: 0;
+				position: absolute;
+				top: 50%;
+				width: 100%;
+			}
+
+			.rail-handle {
+				position: absolute;
+				top: -1px;
+				z-index: 1;
+			}
+
+			.rail-active {
+				background-color: $imageeditor-link-color;
+				border-radius: $slider-height/2 0 0 $slider-height/2;
+				height: 2px;
+				position: relative;
+				top: $slider-height/2;
+				z-index: 1;
+			}
+
+			.handle {
+				background-color: $brand-primary;
+				border: 2px solid $imageeditor-text-color;
+				border-radius: $slider-height/2;
+				height: $slider-height;
+				width: $slider-height;
+			}
+		}
+	}
+
+	.input-group {
+		margin: 0 auto;
+
+		input.form-control {
+			float: none;
+			margin: 0 15px;
+			width: 30%;
+
+			&:not(:focus) {
+				color: $imageeditor-text-color;
+			}
+		}
+	}
+}

@@ -799,6 +799,15 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					<var name="test.url" value="http://localhost:8080" />
 				</else>
 			</if>
+
+			<get-testcase-property property.name="portal.context" />
+
+			<if>
+				<isset property="portal.context" />
+				<then>
+					<var name="test.url" value="${test.url}/${portal.context}" />
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -3155,7 +3164,17 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</then>
 				</elseif>
 				<else>
-					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
+					<get-testcase-property property.name="portal.context" />
+
+					<if>
+						<isset property="portal.context" />
+						<then>
+							<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/${portal.context}/web/guest" />
+						</then>
+						<else>
+							<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
+						</else>
+					</if>
 				</else>
 			</if>
 
@@ -7536,6 +7555,27 @@ jdbc.default.password=${database.mysql.password}</echo>
 			<equals arg1="${database.jndi.enabled}" arg2="true" />
 			<then>
 				<prepare-database-jndi />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="portal.context" />
+
+		<if>
+			<isset property="portal.context" />
+			<then>
+				<if>
+					<equals arg1="${app.server.type}" arg2="tomcat" />
+					<then>
+						<move todir="${app.server.dir}/webapps/${portal.context}">
+							<fileset dir="${app.server.dir}/webapps/ROOT"/>
+						</move>
+						<move file="${app.server.dir}/conf/Catalina/localhost/ROOT.xml" tofile="${app.server.dir}/conf/Catalina/localhost/${portal.context}.xml" />
+						<replace file="${app.server.dir}/conf/Catalina/localhost/${portal.context}.xml" token="path=&quot;&quot;" value="path=&quot;/${portal.context}&quot;" />
+					</then>
+					<else>
+						<fail message="Changing the portal context for ${app.server.type} is not supported." />
+					</else>
+				</if>
 			</then>
 		</if>
 

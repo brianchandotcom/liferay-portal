@@ -12,34 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.search.searcher.test;
+package com.liferay.portal.search.facet.faceted.searcher.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.FacetedSearcher;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
-import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
-import com.liferay.portal.search.test.util.UserSearchFixture;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,7 +42,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class FacetedSearcherTest {
+public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 	@ClassRule
 	@Rule
@@ -59,43 +51,27 @@ public class FacetedSearcherTest {
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
-		WorkflowThreadLocal.setEnabled(false);
-
-		_userSearchFixture.setUp();
-
-		_assetTags = _userSearchFixture.getAssetTags();
-		_groups = _userSearchFixture.getGroups();
-		_users = _userSearchFixture.getUsers();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_userSearchFixture.tearDown();
-	}
-
 	@Test
 	public void testSearchByKeywords() throws Exception {
-		Group group = _userSearchFixture.addGroup();
+		Group group = userSearchFixture.addGroup();
 
 		String tag = RandomTestUtil.randomString();
 
-		_userSearchFixture.addUser(group, tag);
+		userSearchFixture.addUser(group, tag);
 
 		assertSearch(tag, 1);
 	}
 
 	@Test
 	public void testSearchByKeywordsIgnoresInactiveSites() throws Exception {
-		Group group1 = _userSearchFixture.addGroup();
+		Group group1 = userSearchFixture.addGroup();
 
-		_userSearchFixture.addUser(
+		userSearchFixture.addUser(
 			group1, "Liferay " + RandomTestUtil.randomString());
 
-		Group group2 = _userSearchFixture.addGroup();
+		Group group2 = userSearchFixture.addGroup();
 
-		_userSearchFixture.addUser(
+		userSearchFixture.addUser(
 			group2, "Liferay " + RandomTestUtil.randomString());
 
 		assertSearch("Liferay", 2);
@@ -107,27 +83,6 @@ public class FacetedSearcherTest {
 		deactivate(group2);
 
 		assertSearch("Liferay", 0);
-	}
-
-	protected static void assertSearch(final String tag, final int count)
-		throws Exception {
-
-		IdempotentRetryAssert.retryAssert(
-			10, TimeUnit.SECONDS,
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					FacetedSearcher facetedSearcher = new FacetedSearcher();
-
-					Hits hits = facetedSearcher.search(getSearchContext(tag));
-
-					Assert.assertEquals(count, hits.getLength());
-
-					return null;
-				}
-
-			});
 	}
 
 	protected static void deactivate(Group group) {
@@ -146,16 +101,25 @@ public class FacetedSearcherTest {
 		return searchContext;
 	}
 
-	@DeleteAfterTestRun
-	private List<AssetTag> _assetTags;
+	protected void assertSearch(final String tag, final int count)
+		throws Exception {
 
-	@DeleteAfterTestRun
-	private List<Group> _groups;
+		IdempotentRetryAssert.retryAssert(
+			10, TimeUnit.SECONDS,
+			new Callable<Void>() {
 
-	@DeleteAfterTestRun
-	private List<User> _users;
+				@Override
+				public Void call() throws Exception {
+					FacetedSearcher facetedSearcher = createFacetedSearcher();
 
-	private final UserSearchFixture _userSearchFixture =
-		new UserSearchFixture();
+					Hits hits = facetedSearcher.search(getSearchContext(tag));
+
+					Assert.assertEquals(count, hits.getLength());
+
+					return null;
+				}
+
+			});
+	}
 
 }

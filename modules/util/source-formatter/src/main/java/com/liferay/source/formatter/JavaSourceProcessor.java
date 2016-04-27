@@ -484,7 +484,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void checkVerifyUpgradeConnection(
-		String fileName, String newContent) {
+		String fileName, String content) {
 
 		if (fileName.endsWith("Test.java")) {
 			return;
@@ -492,8 +492,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		int x = fileName.lastIndexOf(CharPool.SLASH);
 
-		if ((fileName.indexOf("Verify", x) == -1) &&
-			(fileName.indexOf("Upgrade", x) == -1)) {
+		if ((fileName.indexOf("Upgrade", x) == -1) &&
+			(fileName.indexOf("Verify", x) == -1)) {
 
 			return;
 		}
@@ -502,19 +502,19 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return;
 		}
 
-		if (newContent.contains("ThrowableAwareRunnable")) {
+		if (content.contains("ThrowableAwareRunnable")) {
 			return;
 		}
 
-		x = newContent.indexOf("DataAccess.getUpgradeOptimizedConnection");
+		x = content.indexOf("DataAccess.getUpgradeOptimizedConnection");
 
 		while (x != -1) {
-			int lineCount = getLineCount(newContent, x);
+			int lineCount = getLineCount(content, x);
 
 			processErrorMessage(
 				fileName, "Use connection field " + fileName + " " + lineCount);
 
-			x = newContent.indexOf(
+			x = content.indexOf(
 				"DataAccess.getUpgradeOptimizedConnection", x + 40);
 		}
 	}

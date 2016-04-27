@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.trash.kernel.util.TrashUtil;
 
-import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -70,11 +69,6 @@ public class DLFolderAssetRenderer
 	@Override
 	public long getClassPK() {
 		return _folder.getPrimaryKey();
-	}
-
-	@Override
-	public Date getDisplayDate() {
-		return _folder.getModifiedDate();
 	}
 
 	@Override

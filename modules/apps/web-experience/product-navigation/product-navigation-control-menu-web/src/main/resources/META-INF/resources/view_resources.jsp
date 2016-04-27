@@ -227,9 +227,9 @@ if (Validator.isNotNull(keywords)) {
 									<h4><%= title %></h4>
 
 									<%
-									Date createDate = assetRenderer.getDisplayDate();
+									Date modifiedDate = assetEntry.getModifiedDate();
 
-									String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+									String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 									%>
 
 									<h6 class="text-default">

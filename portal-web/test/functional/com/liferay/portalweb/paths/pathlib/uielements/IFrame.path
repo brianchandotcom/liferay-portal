@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INVITE_MEMBERS</td>
+	<td>//iframe[contains(@src,'InviteMembersPortlet')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOADING_MESSAGE</td>
 	<td>//div[contains(@class,'overlaymask') and not(contains(@class,'hidden'))]//div[contains(@class,'loadingmask-message')]</td>
 	<td></td>

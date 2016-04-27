@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>InviteMembers</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">InviteMembers</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>INVITE_USER_FULL_NAME</td>
+	<td>//div[contains(@id,'InviteMembersPortlet_membersList')]//span[contains(.,'${key_inviteUserFullName}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

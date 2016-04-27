@@ -245,7 +245,7 @@
 </tr>
 <tr>
 	<td>CONFIRM</td>
-	<td>//button[contains(.,'Confirm')]</td>
+	<td>//a[contains(@class,'btn') and contains(.,'Confirm')] | //button[contains(.,'Confirm')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -371,6 +371,11 @@
 <tr>
 	<td>INFO</td>
 	<td>//a[contains(@class,'btn') and contains(.,'Info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITE_MEMBERS</td>
+	<td>//a[contains(@id,'InviteMembersPortlet') and contains(@class,'btn')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -616,6 +621,11 @@
 <tr>
 	<td>SEND</td>
 	<td>//button[contains(.,'Send')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEND_INVITATIONS</td>
+	<td>//button[contains(@id,'InviteMembersPortlet')]//span[contains(.,'Send Invitations')]</td>
 	<td></td>
 </tr>
 <tr>

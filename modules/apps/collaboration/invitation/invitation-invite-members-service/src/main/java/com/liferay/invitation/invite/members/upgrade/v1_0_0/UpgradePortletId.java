@@ -25,9 +25,7 @@ public class UpgradePortletId
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			{
-				"2_WAR_soportlet", InviteMembersPortletKeys.INVITE_MEMBERS
-			}
+			{"2_WAR_soportlet", InviteMembersPortletKeys.INVITE_MEMBERS}
 		};
 	}
 

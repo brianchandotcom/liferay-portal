@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.image.editor.web.portlet.action;
+package com.liferay.frontend.image.editor.web.portlet.action;
 
-import com.liferay.image.editor.capability.ImageEditorCapability;
-import com.liferay.image.editor.web.constants.ImageEditorPortletKeys;
-import com.liferay.image.editor.web.portlet.tracker.ImageEditorCapabilityTracker;
-import com.liferay.image.editor.web.portlet.tracker.ImageEditorCapabilityTracker.ImageEditorCapabilityInformation;
+import com.liferay.frontend.image.editor.capability.ImageEditorCapability;
+import com.liferay.frontend.image.editor.web.constants.ImageEditorPortletKeys;
+import com.liferay.frontend.image.editor.web.portlet.tracker.ImageEditorCapabilityTracker;
+import com.liferay.frontend.image.editor.web.portlet.tracker.ImageEditorCapabilityTracker.ImageEditorCapabilityInformation;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -113,7 +113,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 					String icon = GetterUtil.getString(
 						capabilityProperties.get(
-							"com.liferay.image.editor.capability.icon"));
+							"com.liferay.frontend.image.editor.capability.icon"));
 
 					categoryIcon = icon;
 
@@ -129,7 +129,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 					String variant = GetterUtil.getString(
 						capabilityProperties.get(
-							"com.liferay.image.editor.capability.controls"));
+							"com.liferay.frontend.image.editor.capability.controls"));
 
 					Map<String, Object> controlContext = new HashMap<>();
 
@@ -176,7 +176,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 			String imageEditorCapabilityCategory = GetterUtil.getString(
 				capabilityProperties.get(
-					"com.liferay.image.editor.capability.category"));
+					"com.liferay.frontend.image.editor.capability.category"));
 
 			groupedCapabilities.putIfAbsent(
 				imageEditorCapabilityCategory,

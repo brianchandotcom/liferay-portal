@@ -21,7 +21,7 @@ dependencies {
 }
 
 liferay {
-	deployDir = appServerLibGlobalDir
+	deployDir = file("${liferayHome}/osgi/core")
 }
 
 testIntegration {

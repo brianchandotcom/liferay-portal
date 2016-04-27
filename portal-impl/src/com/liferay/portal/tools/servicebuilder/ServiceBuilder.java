@@ -4289,6 +4289,10 @@ public class ServiceBuilder {
 			sb.append(col.getDBName());
 			sb.append(" ");
 
+			Map<String, String> hints = ModelHintsUtil.getHints(
+				_packagePath + ".model." + entity.getName(), colName);
+
+
 			if (StringUtil.equalsIgnoreCase(colType, "boolean")) {
 				sb.append("BOOLEAN");
 			}
@@ -4313,9 +4317,6 @@ public class ServiceBuilder {
 				sb.append("DATE");
 			}
 			else if (colType.equals("String")) {
-				Map<String, String> hints = ModelHintsUtil.getHints(
-					_packagePath + ".model." + entity.getName(), colName);
-
 				int maxLength = 75;
 
 				if (hints != null) {
@@ -4352,6 +4353,18 @@ public class ServiceBuilder {
 			}
 			else if (colType.equals("Date") || colType.equals("String")) {
 				sb.append(" null");
+			}
+
+			if (hints != null) {
+				String defaultValue = hints.get("default-value");
+
+				if(Validator.isNotNull(defaultValue)){
+					if (colType.equals("String")) {
+						sb.append(" DEFAULT '").append(defaultValue).append("'");
+					} else {
+						sb.append(" DEFAULT ").append(defaultValue);
+					}
+				}
 			}
 
 			if (Validator.isNotNull(colIdType) &&

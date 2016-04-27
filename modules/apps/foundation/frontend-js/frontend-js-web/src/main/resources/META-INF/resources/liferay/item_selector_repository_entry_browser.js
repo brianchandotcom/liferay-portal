@@ -33,6 +33,10 @@ AUI.add(
 						validator: Lang.isString,
 						value: ''
 					},
+					editItemUrl: {
+						validator: Lang.isString,
+						value: ''
+					},
 					maxFileSize: {
 						setter: Lang.toInt,
 						value: Liferay.PropsValues.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE
@@ -60,15 +64,19 @@ AUI.add(
 						instance._itemViewer = new A.LiferayItemViewer(
 							{
 								btnCloseCaption: instance.get('closeCaption'),
-								links: instance.all('.item-preview')
+								editItemUrl: instance.get('editItemUrl'),
+								links: instance.all('.item-preview'),
+								uploadItemUrl: instance.get('uploadItemUrl')
 							}
 						);
 
 						instance._uploadItemViewer = new A.LiferayItemViewer(
 							{
 								btnCloseCaption: instance.get('closeCaption'),
+								editItemUrl: instance.get('editItemUrl'),
 								links: '',
-								renderControls: false
+								renderControls: false,
+								uploadItemUrl: instance.get('uploadItemUrl')
 							}
 						);
 

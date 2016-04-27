@@ -511,7 +511,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(
 				fileName,
 				"Use existing connection field instead of " +
-					"DataAccess.getUpgradeOptimizedConnection" + fileName +
+					"DataAccess.getUpgradeOptimizedConnection " + fileName +
 						" " + getLineCount(content, x));
 		}
 	}

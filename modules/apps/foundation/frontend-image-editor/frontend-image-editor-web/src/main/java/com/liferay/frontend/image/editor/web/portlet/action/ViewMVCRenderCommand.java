@@ -178,9 +178,11 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				capabilityProperties.get(
 					"com.liferay.frontend.image.editor.capability.category"));
 
-			groupedCapabilities.putIfAbsent(
-				imageEditorCapabilityCategory,
-				new ArrayList<ImageEditorCapabilityInformation>());
+			if (groupedCapabilities.get(imageEditorCapabilityCategory) == null) {
+				groupedCapabilities.put(
+					imageEditorCapabilityCategory,
+					new ArrayList<ImageEditorCapabilityInformation>());
+			}
 
 			List<ImageEditorCapabilityInformation> imageEditorCapabilityList =
 				groupedCapabilities.get(imageEditorCapabilityCategory);

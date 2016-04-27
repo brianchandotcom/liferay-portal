@@ -2,7 +2,7 @@ import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 ext {
-	libSassVersion = "3.3.5"
+	libSassVersion = "3.3.6"
 	sassSpecVersion = "3.3.3"
 
 	libSassUrl = "https://github.com/sass/libsass/archive/${libSassVersion}.zip"

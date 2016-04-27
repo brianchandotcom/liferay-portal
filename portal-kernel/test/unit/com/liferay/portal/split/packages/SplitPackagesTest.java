@@ -15,7 +15,6 @@
 package com.liferay.portal.split.packages;
 
 import java.io.IOException;
-
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -23,9 +22,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -38,18 +38,116 @@ public class SplitPackagesTest {
 
 	@Test
 	public void testSplitPackage() throws IOException {
-		Set<String> portalImplPackageNames = _getPackageNames(
-			Paths.get("portal-impl/src"));
+		final Map<Path, Set<String>> moduleMap = new HashMap<>();
 
-		Set<String> portalKernelPackageNames = _getPackageNames(
-			Paths.get("portal-kernel/src"));
+		final Path portalPath = Paths.get(System.getProperty("user.dir"));
 
-		portalImplPackageNames.retainAll(portalKernelPackageNames);
+		Files.walkFileTree(
+			portalPath,
+			new SimpleFileVisitor<Path>() {
 
-		Assert.assertTrue(
-			"Detected split packages in portal-impl and portal-kernel: " +
-				portalImplPackageNames,
-			portalImplPackageNames.isEmpty());
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Path pathFileName = path.getFileName();
+
+					Path parentPath = path.getParent();
+
+					String pathFileNameString = pathFileName.toString();
+
+					if (
+						pathFileNameString.equals("portal-test") ||
+						pathFileNameString.equals("portal-test-integration")) {
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+					else if (
+						parentPath.equals(portalPath) &&
+						Files.exists(path.resolve("src"))) {
+
+						Set<String> packages = _getPackageNames(
+							path.resolve("src"));
+
+						_checkPackageSet(path, portalPath, moduleMap, packages);
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+					else if (Files.exists(path.resolve("portal.build"))) {
+						Set<String> packages = new HashSet<>();
+
+						if (Files.exists(path.resolve("docroot"))) {
+							Path sourcePath = path.resolve(_DOCROOTPATH);
+
+							if (Files.exists(sourcePath)) {
+								packages = _getPackageNames(sourcePath);
+							}
+
+						}
+						else {
+							Path sourcePath = path.resolve(_MAINJAVAPATH);
+
+							if (Files.exists(sourcePath)) {
+								packages = _getPackageNames(sourcePath);
+							}
+						}
+
+						_checkPackageSet(path, portalPath, moduleMap, packages);
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+	}
+
+	private void _checkPackageSet(
+			Path path, Path portalPath, Map<Path, Set<String>> moduleMap,
+			Set<String> packages)
+		throws IOException {
+
+		boolean addedToImpl = false;
+
+		for (Path mapKeyPath : moduleMap.keySet()) {
+			Set<String> mapPackages = moduleMap.get(mapKeyPath);
+
+			Set<String> currentPackages = new HashSet<>(packages);
+
+			currentPackages.retainAll(mapPackages);
+
+			if (!currentPackages.isEmpty()) {
+				if (mapKeyPath.equals(Paths.get("portal-impl"))) {
+					String text = new String(
+						Files.readAllBytes(path.resolve("build.gradle")));
+
+					if (
+						text.contains(
+							"deployDir = new File(appServerPortalDir, \"WEB-INF"
+								+ "/lib\")")) {
+
+						mapPackages.addAll(currentPackages);
+
+						moduleMap.put(mapKeyPath, mapPackages);
+
+						addedToImpl = true;
+
+						currentPackages.clear();
+					}
+				}
+			}
+			Assert.assertTrue(
+				"Detected split packages in " + portalPath.relativize(path) +
+					" and " + mapKeyPath + ": " + currentPackages,
+				currentPackages.isEmpty());
+		}
+
+		if (!addedToImpl) {
+			moduleMap.put(portalPath.relativize(path), packages);
+		}
 	}
 
 	private Set<String> _getPackageNames(final Path path) throws IOException {
@@ -86,5 +184,9 @@ public class SplitPackagesTest {
 
 		return packageNames;
 	}
+
+	private static final Path _DOCROOTPATH = Paths.get(
+		"docroot", "WEB-INF", "src", "main", "java");
+	private static final Path _MAINJAVAPATH = Paths.get("src", "main", "java");
 
 }

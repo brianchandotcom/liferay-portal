@@ -1,4 +1,5 @@
 <definition component-name="portal-plugins-osgi">
+	<property name="portal.release" value="true" />
 	<property name="plugins.deployment.type" value="osgi" />
 	<property name="testray.main.component.name" value="Social Networking" />
 

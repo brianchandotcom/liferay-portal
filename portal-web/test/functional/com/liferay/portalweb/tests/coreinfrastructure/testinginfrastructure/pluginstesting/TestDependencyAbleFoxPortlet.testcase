@@ -1,4 +1,5 @@
 <definition component-name="portal-test-plugins">
+	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="Test Plugins" />
 	<property name="portlet.plugins.includes" value="test-dependency-able-portlet,test-dependency-baker-portlet,test-dependency-charlie-portlet,test-dependency-dog-portlet,test-dependency-easy-portlet,test-dependency-fox-portlet" />
 

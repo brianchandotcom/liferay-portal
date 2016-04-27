@@ -1,4 +1,5 @@
 <definition component-name="portal-knowledge-base">
+	<property name="portal.release" value="true" />
 	<property name="portlet.plugins.includes" value="knowledge-base-portlet" />
 	<property name="testray.main.component.name" value="Knowledge Base" />
 

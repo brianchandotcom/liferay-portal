@@ -2223,6 +2223,33 @@ closeTemplate()
 	</target>
 
 	<target name="unzip-weblogic-custom">
+		<if>
+			<not>
+				<available file="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}" />
+			</not>
+			<then>
+				<trycatch>
+					<try>
+						<mirrors-get
+							dest="${app.server.parent.dir}"
+							src="http://mirrors/files.liferay.com/private/apps/oracle/weblogicas/12/${app.server.weblogic.custom.zip.name}"
+							verbose="true"
+						/>
+					</try>
+					<catch>
+						<fail>
+.
+
+Please download the Weblogic custom zip file from
+http://mirrors/files.liferay.com/private/apps/oracle/weblogicas/12 and
+place it here: ${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}. Then rerun
+this task.
+						</fail>
+					</catch>
+				</trycatch>
+			</then>
+		</if>
+
 		<delete dir="${app.server.weblogic.dir}" />
 
 		<unzip

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.image.editor.web.constants;
+package com.liferay.frontend.image.editor.web.constants;
 
 /**
  * @author Chema Balsas

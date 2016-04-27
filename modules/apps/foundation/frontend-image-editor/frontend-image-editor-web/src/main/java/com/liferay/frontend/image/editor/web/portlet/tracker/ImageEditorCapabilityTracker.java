@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.image.editor.web.portlet.tracker;
+package com.liferay.frontend.image.editor.web.portlet.tracker;
 
-import com.liferay.image.editor.capability.ImageEditorCapability;
+import com.liferay.frontend.image.editor.capability.ImageEditorCapability;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -85,9 +85,9 @@ public class ImageEditorCapabilityTracker {
 
 		_informationTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, ImageEditorCapability.class,
-			"(com.liferay.image.editor.capability.type=*)",
+			"(com.liferay.frontend.image.editor.capability.type=*)",
 			new PropertyServiceReferenceMapper<String, ImageEditorCapability>(
-				"com.liferay.image.editor.capability.type"),
+				"com.liferay.frontend.image.editor.capability.type"),
 			new ImageEditorCapabilityInformationServiceTrackerCustomizer(),
 			new PropertyServiceReferenceComparator<ImageEditorCapability>(
 				"service.ranking"),

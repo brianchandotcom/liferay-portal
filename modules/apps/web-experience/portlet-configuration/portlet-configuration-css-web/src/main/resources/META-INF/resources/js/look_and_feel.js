@@ -140,6 +140,9 @@ AUI.add(
 										},
 										modal: false,
 										on: {
+											destroy: function(event) {
+												instance._currentPopup = null;
+											},
 											visibleChange: function(event) {
 												instance._destroyColorPickers();
 											}

@@ -169,12 +169,10 @@ public class LayoutRevisionLocalServiceImpl
 		recentLayoutRevisionLocalService.deleteRecentLayoutRevisions(
 			layoutRevision.getLayoutRevisionId());
 
-		if (layoutRevision.isPending()) {
-			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
-				layoutRevision.getCompanyId(), layoutRevision.getGroupId(),
-				LayoutRevision.class.getName(),
-				layoutRevision.getLayoutRevisionId());
-		}
+		workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+			layoutRevision.getCompanyId(), layoutRevision.getGroupId(),
+			LayoutRevision.class.getName(),
+			layoutRevision.getLayoutRevisionId());
 
 		return layoutRevisionPersistence.remove(layoutRevision);
 	}

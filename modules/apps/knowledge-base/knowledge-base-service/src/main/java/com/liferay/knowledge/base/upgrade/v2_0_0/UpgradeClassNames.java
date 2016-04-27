@@ -11,21 +11,33 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+package com.liferay.knowledge.base.upgrade.v2_0_0;
 
-package com.liferay.portal.upgrade.v7_0_0;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 
 /**
  * @author Adolfo Pérez
  */
-public class UpgradeRepository
-	extends com.liferay.portal.upgrade.util.UpgradeRepository {
+public class UpgradeClassNames extends UpgradeKernelPackage {
 
 	@Override
-	protected String[][] getRenamePortletNamesArray() {
+	protected String[][] getClassNames() {
 		return new String[][] {
-			new String[] {"19", "com.liferay.message.boards"},
-			new String[] {"33", "com.liferay.blogs"},
-			new String[] {"36", "com.liferay.wiki"}
+			{"com.liferay.knowledgebase.", "com.liferay.knowledge.base."}
+		};
+	}
+
+	@Override
+	protected String[][] getResourceNames() {
+		return new String[][] {
+			{
+				"com.liferay.knowledgebase.admin",
+				"com.liferay.knowledge.base.admin"
+			},
+			{
+				"com.liferay.knowledgebase.display",
+				"com.liferay.knowledge.base.display"
+			}
 		};
 	}
 

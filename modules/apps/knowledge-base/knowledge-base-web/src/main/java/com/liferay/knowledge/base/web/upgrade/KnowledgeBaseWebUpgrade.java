@@ -11,22 +11,25 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+package com.liferay.knowledge.base.web.upgrade;
 
-package com.liferay.portal.upgrade.v7_0_0;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Adolfo Pérez
  */
-public class UpgradeRepository
-	extends com.liferay.portal.upgrade.util.UpgradeRepository {
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
+public class KnowledgeBaseWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
-	protected String[][] getRenamePortletNamesArray() {
-		return new String[][] {
-			new String[] {"19", "com.liferay.message.boards"},
-			new String[] {"33", "com.liferay.blogs"},
-			new String[] {"36", "com.liferay.wiki"}
-		};
+	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.knowledge.base.web", "0.0.0", "1.0.0",
+			new com.liferay.knowledge.base.web.upgrade.v1_0_0.
+				UpgradePortletId());
 	}
 
 }

@@ -1160,7 +1160,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			matcher = _incorrectLineBreakPattern4.matcher(content);
 
-			if (matcher.find()) {
+			while (matcher.find()) {
 				String matchingLine = matcher.group(2);
 
 				if (!matchingLine.startsWith(StringPool.DOUBLE_SLASH) &&
@@ -1170,13 +1170,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						content, matcher.group(3),
 						"\n" + matcher.group(1) + "}\n", matcher.start(3) - 1);
 
-					continue;
+					break;
 				}
 			}
 
 			matcher = _incorrectLineBreakPattern5.matcher(content);
 
-			if (matcher.find()) {
+			while (matcher.find()) {
 				String tabs = matcher.group(2);
 
 				Pattern pattern = Pattern.compile(
@@ -1194,7 +1194,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							content, "\n" + matcher.group(2), StringPool.BLANK,
 							matcher.end(1));
 
-						continue;
+						break;
 					}
 				}
 			}

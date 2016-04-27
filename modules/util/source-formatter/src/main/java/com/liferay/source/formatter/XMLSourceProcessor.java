@@ -318,6 +318,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		else if (fileName.endsWith("-model-hints.xml")) {
 			formatModelHintsXML(fileName, newContent);
 		}
+		else if (fileName.endsWith("portlet-preferences.xml")) {
+			formatPortletPreferencesXML(fileName, newContent);
+		}
 		else if (fileName.endsWith("/liferay-portlet.xml") ||
 				 (portalSource && fileName.endsWith("/portlet-custom.xml")) ||
 				 (!portalSource && fileName.endsWith("/portlet.xml"))) {
@@ -846,6 +849,28 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return fixPoshiXMLNumberOfTabs(content);
 	}
 
+	protected void formatPortletPreferencesXML(String fileName, String content)
+		throws Exception {
+
+		Document document = readXML(content);
+
+		checkOrder(
+			fileName, document.getRootElement(), "preference", null,
+			new PortletPreferenceElementComparator());
+
+		Matcher matcher = _incorrectDefaultPreferencesFileName.matcher(
+			fileName);
+
+		if (matcher.find()) {
+			String correctFileName =
+				matcher.group(1) + "-default-portlet-preferences.xml";
+
+			processErrorMessage(
+				fileName,
+				"Rename file to " + correctFileName + ": " + fileName);
+		}
+	}
+
 	protected void formatResourceActionXML(String fileName, String content)
 		throws Exception {
 
@@ -1346,6 +1371,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private List<String> _columnNames;
 	private final Pattern _importFilePattern = Pattern.compile(
 		"<import file=\"(.*)\"");
+	private final Pattern _incorrectDefaultPreferencesFileName =
+		Pattern.compile("/default-([\\w-]+)-portlet-preferences\\.xml$");
 	private List<String> _numericalPortletNameElementExcludes;
 	private final Pattern _poshiClosingTagPattern = Pattern.compile(
 		"</[^>/]*>");
@@ -1420,6 +1447,18 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			}
 
 			return elementName.substring(0, pos);
+		}
+
+	}
+
+	private static class PortletPreferenceElementComparator
+		extends ElementComparator {
+
+		@Override
+		protected String getElementName(Element preferenceElement) {
+			Element nameElement = preferenceElement.element(getNameAttribute());
+
+			return nameElement.getStringValue();
 		}
 
 	}

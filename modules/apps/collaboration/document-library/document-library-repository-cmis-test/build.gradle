@@ -5,9 +5,9 @@ copyLibs {
 dependencies {
 	provided group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-commons-api", version: "0.13.0"
 
-	testCompile group: "com.liferay", name: "com.liferay.document.library.repository.cmis", version: "2.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.document.library.repository.cmis.impl", version: "2.0.0"
 	testCompile group: "org.apache.chemistry.opencmis", name: "chemistry-opencmis-client-api", version: "0.13.0"
+	testCompile project(":apps:collaboration:document-library:document-library-repository-cmis-api")
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.5"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"

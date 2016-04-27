@@ -2690,6 +2690,11 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 		</if>
 
 		<delete dir="${tstamp.value}" />
+
+		<replace file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/cell.xml">
+			<replacetoken><![CDATA[<secureSessionCookie xmi:id="SecureSessionCookie_1" cookieDomain="*" cookieName="JSESSIONID" cookiePath="/"/>]]></replacetoken>
+			<replacevalue><![CDATA[]]></replacevalue>
+		</replace>
 	</target>
 
 	<target name="unzip-wildfly">

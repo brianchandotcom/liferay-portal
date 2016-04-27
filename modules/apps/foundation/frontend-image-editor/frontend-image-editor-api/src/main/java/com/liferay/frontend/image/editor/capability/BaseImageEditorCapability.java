@@ -77,8 +77,7 @@ public abstract class BaseImageEditorCapability
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 
-			_moduleName = GetterUtil.getString(
-				jsonObject.getString("name"), StringPool.BLANK);
+			_moduleName = GetterUtil.getString(jsonObject.getString("name"));
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

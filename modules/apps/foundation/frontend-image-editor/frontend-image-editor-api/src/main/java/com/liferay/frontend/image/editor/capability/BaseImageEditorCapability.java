@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.image.editor.capability;
+package com.liferay.frontend.image.editor.capability;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

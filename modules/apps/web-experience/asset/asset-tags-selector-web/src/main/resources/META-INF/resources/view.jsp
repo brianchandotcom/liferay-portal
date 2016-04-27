@@ -90,19 +90,19 @@
 	searchContainer.on(
 		'rowToggled',
 		function(event) {
-			var data = '';
+			var items = '';
 
 			var selectedItems = event.elements.allSelectedElements;
 
 			if (selectedItems.size() > 0) {
-				data = selectedItems.attr('value').join(',');
+				items = selectedItems.attr('value').join(',');
 			}
 
 			Liferay.Util.getOpener().Liferay.fire(
 				'<%= HtmlUtil.escapeJS(assetTagsSelectorDisplayContext.getEventName()) %>',
 				{
 					data: {
-						items: data
+						items: items
 					}
 				}
 			);

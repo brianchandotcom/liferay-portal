@@ -17,6 +17,7 @@ package com.liferay.source.formatter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ImportPackage;
 import com.liferay.portal.tools.ImportsFormatter;
 
 import java.io.File;
@@ -143,7 +144,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			return StringUtil.replace(content, includeResources, replacement);
 		}
 
-		return content;
+		return sortIncludeResources(content, includeResources);
 	}
 
 	protected String sortDefinitions(String content) {
@@ -180,6 +181,51 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			}
 
 			previousDefinition = definition;
+		}
+
+		return content;
+	}
+
+	protected String sortIncludeResources(
+		String content, String includeResources) {
+
+		String[] lines = StringUtil.splitLines(includeResources);
+
+		if (lines.length == 1) {
+			return content;
+		}
+
+		String previousIncludeResource = null;
+
+		IncludeResourceComparator includeResourceComparator =
+			new IncludeResourceComparator();
+
+		for (int i = 1; i < lines.length; i++) {
+			String includeResource = StringUtil.trim(lines[i]);
+
+			if (includeResource.endsWith(",\\")) {
+				includeResource = includeResource.substring(
+					0, includeResource.length() - 2);
+			}
+
+			if (previousIncludeResource != null) {
+				int value = includeResourceComparator.compare(
+					previousIncludeResource, includeResource);
+
+				if (value > 0) {
+					String replacement = StringUtil.replaceFirst(
+						includeResources, previousIncludeResource,
+						includeResource);
+
+					replacement = StringUtil.replaceLast(
+						replacement, includeResource, previousIncludeResource);
+
+					return StringUtil.replace(
+						content, includeResources, replacement);
+				}
+			}
+
+			previousIncludeResource = includeResource;
 		}
 
 		return content;
@@ -223,6 +269,45 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			}
 
 			return definition1.compareTo(definition2);
+		}
+
+	}
+
+	private static class IncludeResourceComparator
+		implements Comparator<String> {
+
+		@Override
+		public int compare(String includeResource1, String includeResource2) {
+			if (includeResource1.startsWith(StringPool.AT) ^
+				includeResource2.startsWith(StringPool.AT)) {
+
+				if (includeResource1.startsWith(StringPool.AT)) {
+					return 1;
+				}
+
+				return -1;
+			}
+
+			int pos1 = includeResource1.indexOf(".jar!/");
+			int pos2 = includeResource2.indexOf(".jar!/");
+
+			if ((pos1 == -1) || (pos2 == -1)) {
+				return includeResource1.compareToIgnoreCase(includeResource2);
+			}
+
+			String jarFileName1 = includeResource1.substring(0, pos1);
+			String jarFileName2 = includeResource1.substring(0, pos2);
+
+			if (!jarFileName1.equals(jarFileName2)) {
+				return includeResource1.compareToIgnoreCase(includeResource2);
+			}
+
+			ImportPackage importPackage1 = new ImportPackage(
+				includeResource1.substring(pos1 + 6), false, includeResource1);
+			ImportPackage importPackage2 = new ImportPackage(
+				includeResource2.substring(pos2 + 6), false, includeResource2);
+
+			return importPackage1.compareTo(importPackage2);
 		}
 
 	}

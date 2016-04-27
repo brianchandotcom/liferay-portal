@@ -1207,6 +1207,25 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					matcher.start());
 			}
 
+			matcher = _incorrectLineBreakPattern7.matcher(content);
+
+			while (matcher.find()) {
+				if (content.charAt(matcher.end()) != CharPool.NEW_LINE) {
+					continue;
+				}
+
+				String singleLine =
+					matcher.group(1) + StringUtil.trimLeading(matcher.group(2)) +
+						matcher.group(3);
+
+				if (getLineLength(singleLine) <= _MAX_LINE_LENGTH) {
+					content = StringUtil.replace(
+						content, matcher.group(), "\n" + singleLine);
+
+					break;
+				}
+			}
+
 			matcher = _redundantCommaPattern.matcher(content);
 
 			if (matcher.find()) {
@@ -4405,6 +4424,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(\t*).*\\}\n(\t*)\\);");
 	private final Pattern _incorrectLineBreakPattern6 = Pattern.compile(
 		"\n(\t*)\\{.+(?<!\\}(,|;)?)\n");
+	private final Pattern _incorrectLineBreakPattern7 = Pattern.compile(
+		"\n(\t+\\{)\n(.*[^;])\n\t+(\\},?)");
 	private final Pattern[] _javaSerializationVulnerabilityPatterns =
 		new Pattern[] {
 			Pattern.compile(

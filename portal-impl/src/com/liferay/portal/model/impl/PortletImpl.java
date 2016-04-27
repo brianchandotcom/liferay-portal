@@ -922,7 +922,18 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public String getFriendlyURLMapping() {
-		return _friendlyURLMapping;
+		if (Validator.isNotNull(_friendlyURLMapping)) {
+			return _friendlyURLMapping;
+		}
+
+		FriendlyURLMapper friendlyURLMapperInstance =
+			getFriendlyURLMapperInstance();
+
+		if (friendlyURLMapperInstance == null) {
+			return null;
+		}
+
+		return friendlyURLMapperInstance.getMapping();
 	}
 
 	/**

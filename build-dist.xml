@@ -1852,80 +1852,6 @@ wrapper.java.additional.11="-Dfile.encoding=UTF-8"]]></replacevalue>
 
 		<if>
 			<not>
-				<available file="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}" />
-			</not>
-			<then>
-				<trycatch>
-					<try>
-						<get
-							dest="${app.server.parent.dir}"
-							src="http://mirrors/files.liferay.com/private/apps/oracle/weblogicas/12/${app.server.weblogic.custom.zip.name}"
-						/>
-
-						<antcall target="unzip-weblogic-custom" />
-					</try>
-					<catch>
-						<antcall target="unzip-weblogic-original" />
-					</catch>
-				</trycatch>
-			</then>
-		</if>
-	</target>
-
-	<target name="unzip-weblogic-custom">
-		<delete dir="${app.server.weblogic.dir}" />
-
-		<unzip
-			dest="${app.server.weblogic.dir}"
-			src="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}"
-		/>
-
-		<if>
-			<os family="unix" />
-			<then>
-				<replace
-					dir="${app.server.weblogic.dir}"
-					includes="**/*.cmd,**/*.domains,**/*.properties,**/*.sh,**/*.xml"
-				>
-					<replacefilter token="${env.JAVA_HOME}" value="@env.JAVA_HOME@" />
-				</replace>
-			</then>
-			<elseif>
-				<os family="windows" />
-				<then>
-					<propertyregex
-						input="${app.server.weblogic.dir.windows}"
-						property="app.server.weblogic.dir.windows.double.slash"
-						regexp="\\"
-						replace="\\\\\\\\"
-					/>
-
-					<propertyregex
-						input="${app.server.weblogic.dir.windows.double.slash}"
-						property="app.server.weblogic.dir.windows.escaped"
-						regexp=":"
-						replace="\\\\:"
-					/>
-
-					<replace
-						dir="${app.server.weblogic.dir}"
-						includes="**/*.cmd,**/*.domains,**/*.properties,**/*.sh,**/*.xml"
-					>
-						<replacefilter token="@app.server.weblogic.dir@" value="${app.server.weblogic.dir}" />
-						<replacefilter token="@app.server.weblogic.dir.windows@" value="${app.server.weblogic.dir.windows}" />
-						<replacefilter token="@app.server.weblogic.dir.windows.double.slash@" value="${app.server.weblogic.dir.windows.double.slash}" />
-						<replacefilter token="@app.server.weblogic.dir.windows.escaped@" value="${app.server.weblogic.dir.windows.escaped}" />
-						<replacefilter token="@env.COMPUTERNAME@" value="${env.COMPUTERNAME}" />
-						<replacefilter token="@env.JAVA_HOME@" value="${env.JAVA_HOME}" />
-					</replace>
-				</then>
-			</elseif>
-		</if>
-	</target>
-
-	<target name="unzip-weblogic-original">
-		<if>
-			<not>
 				<available file="${app.server.parent.dir}/${app.server.weblogic.zip.name}" />
 			</not>
 			<then>
@@ -2294,6 +2220,57 @@ closeTemplate()
 		</echo>
 
 		<delete dir="${tstamp.value}" />
+	</target>
+
+	<target name="unzip-weblogic-custom">
+		<delete dir="${app.server.weblogic.dir}" />
+
+		<unzip
+			dest="${app.server.weblogic.dir}"
+			src="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}"
+		/>
+
+		<if>
+			<os family="unix" />
+			<then>
+				<replace
+					dir="${app.server.weblogic.dir}"
+					includes="**/*.cmd,**/*.domains,**/*.properties,**/*.sh,**/*.xml"
+				>
+					<replacefilter token="${env.JAVA_HOME}" value="@env.JAVA_HOME@" />
+				</replace>
+			</then>
+			<elseif>
+				<os family="windows" />
+				<then>
+					<propertyregex
+						input="${app.server.weblogic.dir.windows}"
+						property="app.server.weblogic.dir.windows.double.slash"
+						regexp="\\"
+						replace="\\\\\\\\"
+					/>
+
+					<propertyregex
+						input="${app.server.weblogic.dir.windows.double.slash}"
+						property="app.server.weblogic.dir.windows.escaped"
+						regexp=":"
+						replace="\\\\:"
+					/>
+
+					<replace
+						dir="${app.server.weblogic.dir}"
+						includes="**/*.cmd,**/*.domains,**/*.properties,**/*.sh,**/*.xml"
+					>
+						<replacefilter token="@app.server.weblogic.dir@" value="${app.server.weblogic.dir}" />
+						<replacefilter token="@app.server.weblogic.dir.windows@" value="${app.server.weblogic.dir.windows}" />
+						<replacefilter token="@app.server.weblogic.dir.windows.double.slash@" value="${app.server.weblogic.dir.windows.double.slash}" />
+						<replacefilter token="@app.server.weblogic.dir.windows.escaped@" value="${app.server.weblogic.dir.windows.escaped}" />
+						<replacefilter token="@env.COMPUTERNAME@" value="${env.COMPUTERNAME}" />
+						<replacefilter token="@env.JAVA_HOME@" value="${env.JAVA_HOME}" />
+					</replace>
+				</then>
+			</elseif>
+		</if>
 	</target>
 
 	<target name="unzip-websphere">

@@ -3,7 +3,7 @@
 <#if language == "ftl">
 ${r"<#assign"} ${name}_Data = getterUtil.getString(${variableName})>
 
-${r"<#if"} (validator.isNotNull(${name}_Data))>
+${r"<#if"} validator.isNotNull(${name}_Data)>
 	${r"<#assign"} ${name}_DateObj = dateUtil.parseDate("yyyy-MM-dd", ${name}_Data, locale)>
 
 	${r"${"}dateUtil.getDate(${name}_DateObj, "dd MMM yyyy - HH:mm:ss", locale)}

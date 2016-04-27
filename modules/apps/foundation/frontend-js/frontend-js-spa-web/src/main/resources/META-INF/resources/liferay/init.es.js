@@ -17,6 +17,14 @@ app.addRoutes(
 			path: function(url) {
 				var uri = new Uri(url);
 
+				var redirect = new Uri(uri.getParameterValue('redirect'));
+
+				var hostname = redirect.getHostname() || window.location.hostname;
+
+				if (!app.isLinkSameOrigin_(hostname)) {
+					return false;
+				}
+
 				return uri.getParameterValue('p_p_lifecycle') === '1';
 			}
 		},

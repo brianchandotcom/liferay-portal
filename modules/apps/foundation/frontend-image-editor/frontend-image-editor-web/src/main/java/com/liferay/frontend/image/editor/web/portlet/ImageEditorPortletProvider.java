@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.image.editor.web.portlet;
+package com.liferay.frontend.image.editor.web.portlet;
 
-import com.liferay.image.editor.web.constants.ImageEditorPortletKeys;
+import com.liferay.frontend.image.editor.web.constants.ImageEditorPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
 

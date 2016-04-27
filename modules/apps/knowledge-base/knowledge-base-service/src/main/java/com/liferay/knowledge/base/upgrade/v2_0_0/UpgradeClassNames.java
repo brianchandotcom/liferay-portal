@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.knowledge.base.upgrade.v2_0_0;
 
 import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;

@@ -56,7 +56,8 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
-		addConfigurationWSDLBuilder(project);
+		final Configuration wsdlBuilderConfiguration =
+			addConfigurationWSDLBuilder(project);
 
 		addTaskBuildWSDL(project);
 
@@ -65,7 +66,7 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					configureTasksBuildWSDL(project);
+					configureTasksBuildWSDL(project, wsdlBuilderConfiguration);
 				}
 
 			});
@@ -158,8 +159,8 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 	}
 
 	protected Task addTaskBuildWSDLCompile(
-		BuildWSDLTask buildWSDLTask, File inputFile, File tmpDir,
-		Task generateTask) {
+		BuildWSDLTask buildWSDLTask, FileCollection classpath, File inputFile,
+		File tmpDir, Task generateTask) {
 
 		Project project = buildWSDLTask.getProject();
 
@@ -169,8 +170,7 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 		JavaCompile javaCompile = GradleUtil.addTask(
 			project, taskName, JavaCompile.class);
 
-		javaCompile.setClasspath(
-			GradleUtil.getConfiguration(project, CONFIGURATION_NAME));
+		javaCompile.setClasspath(classpath);
 
 		File tmpBinDir = new File(tmpDir, "bin");
 
@@ -182,7 +182,8 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 	}
 
 	protected Task addTaskBuildWSDLGenerate(
-		BuildWSDLTask buildWSDLTask, File inputFile, File destinationDir) {
+		BuildWSDLTask buildWSDLTask, FileCollection classpath, File inputFile,
+		File destinationDir) {
 
 		Project project = buildWSDLTask.getProject();
 
@@ -196,8 +197,7 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 
 		javaExec.args(FileUtil.getAbsolutePath(inputFile));
 
-		javaExec.setClasspath(
-			GradleUtil.getConfiguration(project, CONFIGURATION_NAME));
+		javaExec.setClasspath(classpath);
 		javaExec.setMain("org.apache.axis.wsdl.WSDL2Java");
 
 		TaskInputs taskInputs = javaExec.getInputs();
@@ -237,7 +237,8 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 	}
 
 	protected void addTaskBuildWSDLTasks(
-		BuildWSDLTask buildWSDLTask, File inputFile) {
+		BuildWSDLTask buildWSDLTask, File inputFile,
+		Configuration wsdlBuilderConfiguration) {
 
 		Project project = buildWSDLTask.getProject();
 
@@ -250,10 +251,11 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 			File tmpSrcDir = new File(tmpDir, "src");
 
 			Task generateTask = addTaskBuildWSDLGenerate(
-				buildWSDLTask, inputFile, tmpSrcDir);
+				buildWSDLTask, wsdlBuilderConfiguration, inputFile, tmpSrcDir);
 
 			Task compileTask = addTaskBuildWSDLCompile(
-				buildWSDLTask, inputFile, tmpDir, generateTask);
+				buildWSDLTask, wsdlBuilderConfiguration, inputFile, tmpDir,
+				generateTask);
 
 			Task jarTask = addTaskBuildWSDLJar(
 				buildWSDLTask, inputFile, compileTask, generateTask);
@@ -266,13 +268,16 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 		}
 		else {
 			Task generateTask = addTaskBuildWSDLGenerate(
-				buildWSDLTask, inputFile, buildWSDLTask.getDestinationDir());
+				buildWSDLTask, wsdlBuilderConfiguration, inputFile,
+				buildWSDLTask.getDestinationDir());
 
 			buildWSDLTask.dependsOn(generateTask);
 		}
 	}
 
-	protected void configureTaskBuildWSDL(BuildWSDLTask buildWSDLTask) {
+	protected void configureTaskBuildWSDL(
+		BuildWSDLTask buildWSDLTask, Configuration wsdlBuilderConfiguration) {
+
 		FileCollection inputFiles = buildWSDLTask.getInputFiles();
 
 		if (inputFiles.isEmpty()) {
@@ -280,7 +285,8 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 		}
 
 		for (File inputFile : inputFiles) {
-			addTaskBuildWSDLTasks(buildWSDLTask, inputFile);
+			addTaskBuildWSDLTasks(
+				buildWSDLTask, inputFile, wsdlBuilderConfiguration);
 		}
 
 		if (buildWSDLTask.isBuildLibs()) {
@@ -325,7 +331,9 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureTasksBuildWSDL(Project project) {
+	protected void configureTasksBuildWSDL(
+		Project project, final Configuration wsdlBuilderConfiguration) {
+
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -334,7 +342,8 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(BuildWSDLTask buildWSDLTask) {
-					configureTaskBuildWSDL(buildWSDLTask);
+					configureTaskBuildWSDL(
+						buildWSDLTask, wsdlBuilderConfiguration);
 				}
 
 			});

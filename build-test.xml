@@ -1895,7 +1895,15 @@ tell application "Safari" to quit
 							app.server.type=weblogic
 						</app-server-properties-update>
 
-						<ant antfile="build-dist.xml" target="unzip-weblogic" inheritAll="false" />
+						<if>
+							<equals arg1="${app.server.weblogic.version.build}" arg2="1221" />
+							<then>
+								<ant antfile="build-dist.xml" target="unzip-weblogic-custom" inheritAll="false" />
+							</then>
+							<else>
+								<ant antfile="build-dist.xml" target="unzip-weblogic" inheritAll="false" />
+							</else>
+						</if>
 
 						<antcall target="deploy" inheritAll="false" />
 

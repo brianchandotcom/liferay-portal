@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
+import com.liferay.exportimport.resources.importer.portlet.preferences.PortletPreferencesRetriever;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
@@ -83,7 +84,8 @@ public class ResourceImporter extends FileSystemImporter {
 		MimeTypes mimeTypes, Portal portal,
 		PortletPreferencesFactory portletPreferencesFactory,
 		RepositoryLocalService repositoryLocalService, SAXReader saxReader,
-		ThemeLocalService themeLocalService) {
+		ThemeLocalService themeLocalService, Map<String,
+		PortletPreferencesRetriever> portletPreferencesRetrievers) {
 
 		super(
 			assetTagLocalService, ddmFormJSONDeserializer,
@@ -94,7 +96,7 @@ public class ResourceImporter extends FileSystemImporter {
 			layoutLocalService, layoutPrototypeLocalService,
 			layoutSetLocalService, layoutSetPrototypeLocalService, mimeTypes,
 			portal, portletPreferencesFactory, repositoryLocalService,
-			saxReader, themeLocalService);
+			saxReader, themeLocalService, portletPreferencesRetrievers);
 	}
 
 	@Override
@@ -109,8 +111,9 @@ public class ResourceImporter extends FileSystemImporter {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(resourcesDir);
-		sb.append(parentDirName);
+		String resourcesPath = _getResourcePath(parentDirName);
+
+		sb.append(resourcesPath);
 		sb.append("/");
 		sb.append(dirName);
 
@@ -149,8 +152,9 @@ public class ResourceImporter extends FileSystemImporter {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(resourcesDir);
-		sb.append(dirName);
+		String resourcesPath = _getResourcePath(dirName);
+
+		sb.append(resourcesPath);
 		sb.append(StringPool.SLASH);
 		sb.append(fileName);
 
@@ -190,8 +194,9 @@ public class ResourceImporter extends FileSystemImporter {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append(resourcesDir);
-		sb.append(dirName);
+		String resourcesPath = _getResourcePath(dirName);
+
+		sb.append(resourcesPath);
 		sb.append(StringPool.SLASH);
 		sb.append(fileName);
 
@@ -223,7 +228,7 @@ public class ResourceImporter extends FileSystemImporter {
 	@Override
 	protected void addDDLStructures(String dirName) throws Exception {
 		Set<String> resourcePaths = servletContext.getResourcePaths(
-			resourcesDir.concat(dirName));
+			_getResourcePath(dirName));
 
 		if (resourcePaths == null) {
 			return;
@@ -247,7 +252,7 @@ public class ResourceImporter extends FileSystemImporter {
 		throws Exception {
 
 		Set<String> resourcePaths = servletContext.getResourcePaths(
-			resourcesDir.concat(dirName));
+			_getResourcePath(dirName));
 
 		if (resourcePaths == null) {
 			return;
@@ -274,7 +279,7 @@ public class ResourceImporter extends FileSystemImporter {
 		throws Exception {
 
 		Set<String> resourcePaths = servletContext.getResourcePaths(
-			resourcesDir.concat(dirName));
+			_getResourcePath(dirName));
 
 		if (resourcePaths == null) {
 			return;
@@ -299,7 +304,7 @@ public class ResourceImporter extends FileSystemImporter {
 	@Override
 	protected void addDLFileEntries(String dirName) throws Exception {
 		Set<String> resourcePaths = servletContext.getResourcePaths(
-			resourcesDir.concat(dirName));
+			_getResourcePath(dirName));
 
 		if (resourcePaths == null) {
 			return;
@@ -368,7 +373,7 @@ public class ResourceImporter extends FileSystemImporter {
 		throws Exception {
 
 		Set<String> resourcePaths = servletContext.getResourcePaths(
-			resourcesDir.concat(dirName));
+			_getResourcePath(dirName));
 
 		if (resourcePaths == null) {
 			return;
@@ -394,7 +399,7 @@ public class ResourceImporter extends FileSystemImporter {
 	@Override
 	protected void addLayoutPrototype(String dirName) throws Exception {
 		Set<String> resourcePaths = servletContext.getResourcePaths(
-			resourcesDir.concat(dirName));
+			_getResourcePath(dirName));
 
 		if (resourcePaths == null) {
 			return;
@@ -417,7 +422,7 @@ public class ResourceImporter extends FileSystemImporter {
 
 	@Override
 	protected InputStream getInputStream(String fileName) throws Exception {
-		URL url = servletContext.getResource(resourcesDir.concat(fileName));
+		URL url = servletContext.getResource(_getResourcePath(fileName));
 
 		if (url == null) {
 			return null;
@@ -426,6 +431,16 @@ public class ResourceImporter extends FileSystemImporter {
 		URLConnection urlConnection = url.openConnection();
 
 		return urlConnection.getInputStream();
+	}
+
+	private String _getResourcePath(String dirName) {
+		if (resourcesDir.endsWith(StringPool.SLASH) &&
+			dirName.startsWith(StringPool.SLASH)) {
+
+			return resourcesDir.concat(dirName.substring(1, dirName.length()));
+		}
+
+		return resourcesDir.concat(dirName);
 	}
 
 	private final Map<String, Long> _folderIds = new HashMap<>();

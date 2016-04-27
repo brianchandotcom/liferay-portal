@@ -23,10 +23,13 @@ import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
+import com.liferay.exportimport.resources.importer.portlet.preferences.PortletPreferencesRetriever;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
@@ -38,6 +41,7 @@ import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -48,12 +52,17 @@ import com.liferay.portal.search.index.IndexStatusManager;
 import java.net.URL;
 import java.net.URLConnection;
 
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -196,7 +205,7 @@ public class ImporterFactory {
 			_layoutPrototypeLocalService, _layoutSetLocalService,
 			_layoutSetPrototypeLocalService, _mimeTypes, _portal,
 			_portletPreferencesFactory, _repositoryLocalService, _saxReader,
-			_themeLocalService);
+			_themeLocalService, _portletPreferencesRetrievers);
 	}
 
 	protected LARImporter getLARImporter() {
@@ -214,8 +223,58 @@ public class ImporterFactory {
 			_layoutPrototypeLocalService, _layoutSetLocalService,
 			_layoutSetPrototypeLocalService, _mimeTypes, _portal,
 			_portletPreferencesFactory, _repositoryLocalService, _saxReader,
-			_themeLocalService);
+			_themeLocalService, _portletPreferencesRetrievers);
 	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.AT_LEAST_ONE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "unsetPortletPreferencesRetriever"
+	)
+	protected void setPortletPreferencesRetriever(
+		PortletPreferencesRetriever portletPreferencesRetriever,
+		Map<String, Object> properties) {
+
+		String rootPortletId = GetterUtil.getString(
+			properties.get("rootPortletId"));
+
+		if (Validator.isNull(rootPortletId)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No rootPortletId defined for service: " +
+						portletPreferencesRetriever);
+			}
+
+			return;
+		}
+
+		_portletPreferencesRetrievers.put(
+			rootPortletId, portletPreferencesRetriever);
+	}
+
+	protected void unsetPortletPreferencesRetriever(
+		PortletPreferencesRetriever portletPreferencesRetriever,
+		Map<String, Object> properties) {
+
+		String rootPortletId = GetterUtil.getString(
+			properties.get("rootPortletId"));
+
+		if (Validator.isNull(rootPortletId)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No rootPortletId defined for service: " +
+						portletPreferencesRetriever);
+			}
+
+			return;
+		}
+
+		_portletPreferencesRetrievers.remove(rootPortletId);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ImporterFactory.class);
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
@@ -282,6 +341,9 @@ public class ImporterFactory {
 
 	@Reference
 	private PortletPreferencesFactory _portletPreferencesFactory;
+
+	private final Map<String, PortletPreferencesRetriever>
+		_portletPreferencesRetrievers = new ConcurrentHashMap<>();
 
 	@Reference
 	private RepositoryLocalService _repositoryLocalService;

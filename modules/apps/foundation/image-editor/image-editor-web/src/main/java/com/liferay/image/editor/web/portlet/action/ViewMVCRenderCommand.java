@@ -71,8 +71,12 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		capabilitiesContext.put(
 			"tools", getImageEditorToolsContext(renderRequest));
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		template.put("capabilities", capabilitiesContext);
 		template.put("image", imageUrl);
+		template.put("pathThemeImages", themeDisplay.getPathThemeImages());
 
 		return "ImageEditor";
 	}

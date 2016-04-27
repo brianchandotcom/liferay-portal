@@ -57,8 +57,17 @@ public class BuildWSDLTask extends DefaultTask {
 	}
 
 	@Input
+	public boolean isBuildLibs() {
+		return _buildLibs;
+	}
+
+	@Input
 	public boolean isIncludeSource() {
 		return _includeSource;
+	}
+
+	public void setBuildLibs(boolean buildLibs) {
+		_buildLibs = buildLibs;
 	}
 
 	public void setDestinationDir(Object destinationDir) {
@@ -73,6 +82,7 @@ public class BuildWSDLTask extends DefaultTask {
 		_inputDir = inputDir;
 	}
 
+	private boolean _buildLibs = true;
 	private Object _destinationDir;
 	private boolean _includeSource = true;
 	private Object _inputDir;

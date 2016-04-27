@@ -1243,7 +1243,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		if (projectPath.startsWith(":apps:") ||
 			projectPath.startsWith(":core:") ||
-			projectPath.startsWith(":private:") ||
+			projectPath.startsWith(":private:apps:") ||
+			projectPath.startsWith(":private:core:") ||
 			FileUtil.exists(project.getRootProject(), ".gitrepo")) {
 
 			configureConfigurationTransitive(

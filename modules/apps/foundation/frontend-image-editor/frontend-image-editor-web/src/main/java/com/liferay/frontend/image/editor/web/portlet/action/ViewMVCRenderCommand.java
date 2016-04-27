@@ -71,8 +71,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		capabilitiesContext.put(
 			"tools", getImageEditorToolsContext(renderRequest));
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		template.put("capabilities", capabilitiesContext);
 		template.put("image", imageUrl);
@@ -113,7 +114,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 					String icon = GetterUtil.getString(
 						capabilityProperties.get(
-							"com.liferay.frontend.image.editor.capability.icon"));
+							"com.liferay.frontend.image.editor.capability." +
+								"icon"));
 
 					categoryIcon = icon;
 
@@ -129,7 +131,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 					String variant = GetterUtil.getString(
 						capabilityProperties.get(
-							"com.liferay.frontend.image.editor.capability.controls"));
+							"com.liferay.frontend.image.editor.capability." +
+								"controls"));
 
 					Map<String, Object> controlContext = new HashMap<>();
 
@@ -178,7 +181,9 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				capabilityProperties.get(
 					"com.liferay.frontend.image.editor.capability.category"));
 
-			if (groupedCapabilities.get(imageEditorCapabilityCategory) == null) {
+			if (groupedCapabilities.get(imageEditorCapabilityCategory) ==
+					null) {
+
 				groupedCapabilities.put(
 					imageEditorCapabilityCategory,
 					new ArrayList<ImageEditorCapabilityInformation>());

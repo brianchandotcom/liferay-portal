@@ -484,17 +484,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void checkVerifyUpgradeConnection(
-		String fileName, String content) {
+		String fileName, String className, String content) {
 
 		if (fileName.endsWith("Test.java")) {
 			return;
 		}
 
-		int x = fileName.lastIndexOf(CharPool.SLASH);
-
-		if ((fileName.indexOf("Upgrade", x) == -1) &&
-			(fileName.indexOf("Verify", x) == -1)) {
-
+		if (!className.contains("Upgrade") && !className.contains("Verify")) {
 			return;
 		}
 
@@ -506,7 +502,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return;
 		}
 
-		x = content.indexOf("DataAccess.getUpgradeOptimizedConnection");
+		int x = content.indexOf("DataAccess.getUpgradeOptimizedConnection");
 
 		while (x != -1) {
 			int lineCount = getLineCount(content, x);
@@ -1050,7 +1046,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-65213
 
-		checkVerifyUpgradeConnection(fileName, newContent);
+		checkVerifyUpgradeConnection(fileName, className, newContent);
 
 		newContent = formatAssertEquals(fileName, newContent);
 

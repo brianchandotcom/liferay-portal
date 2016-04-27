@@ -1,4 +1,4 @@
 Bundle-Activator: com.liferay.registry.internal.ServiceRegistryBundleActivator
-Bundle-Name: Liferay Portal Registry Implementation
+Bundle-Name: Liferay Registry Implementation
 Bundle-SymbolicName: com.liferay.registry.impl
 Bundle-Version: 1.0.3

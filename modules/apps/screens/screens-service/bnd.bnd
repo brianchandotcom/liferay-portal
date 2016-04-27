@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Screens
+Bundle-Name: Liferay Screens Service
 Bundle-SymbolicName: com.liferay.screens.service
 Bundle-Version: 1.0.5
 Liferay-Releng-Module-Group-Description:

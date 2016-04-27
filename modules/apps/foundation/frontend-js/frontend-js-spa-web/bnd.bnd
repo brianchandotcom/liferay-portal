@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Frontend SPA Web
+Bundle-Name: Liferay Frontend JS-SPA Web
 Bundle-SymbolicName: com.liferay.frontend.js.spa.web
 Bundle-Version: 1.0.6
 Liferay-Export-JS-Submodules:\

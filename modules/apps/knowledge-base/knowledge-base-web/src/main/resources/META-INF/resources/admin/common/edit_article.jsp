@@ -129,7 +129,7 @@ String[] sections = AdminUtil.unescapeSections(BeanPropertiesUtil.getString(kbAr
 
 			sb.append("/-/");
 
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY);
 
 			sb.append(portlet.getFriendlyURLMapping());
 

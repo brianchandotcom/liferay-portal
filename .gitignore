@@ -157,6 +157,7 @@
 /test.*.properties
 /tmp
 /tools/cobertura-agent/classes
+/tools/com.liferay.portal.plugins.sdk.with.dependencies-7.0.0.zip
 /tools/liferay-doclet
 /tools/maven/*.asc
 /tools/node*

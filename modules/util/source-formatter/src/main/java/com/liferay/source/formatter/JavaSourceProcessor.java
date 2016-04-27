@@ -607,104 +607,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixRedundantEmptyLines(newContent);
 
-		while (true) {
-			Matcher matcher = _incorrectLineBreakPattern1.matcher(newContent);
-
-			if (matcher.find()) {
-				newContent = StringUtil.replaceFirst(
-					newContent, StringPool.NEW_LINE, StringPool.BLANK,
-					matcher.start());
-
-				continue;
-			}
-
-			matcher = _incorrectLineBreakPattern2.matcher(newContent);
-
-			if (matcher.find()) {
-				newContent = StringUtil.replaceFirst(
-					newContent, StringPool.NEW_LINE, StringPool.BLANK,
-					matcher.start());
-
-				continue;
-			}
-
-			matcher = _incorrectLineBreakPattern4.matcher(newContent);
-
-			if (matcher.find()) {
-				String matchingLine = matcher.group(2);
-
-				if (!matchingLine.startsWith(StringPool.DOUBLE_SLASH) &&
-					!matchingLine.startsWith(StringPool.STAR)) {
-
-					newContent = StringUtil.replaceFirst(
-						newContent, matcher.group(3),
-						"\n" + matcher.group(1) + "}\n", matcher.start(3) - 1);
-
-					continue;
-				}
-			}
-
-			matcher = _incorrectLineBreakPattern5.matcher(newContent);
-
-			if (matcher.find()) {
-				String tabs = matcher.group(2);
-
-				Pattern pattern = Pattern.compile(
-					"\n" + tabs + "([^\t]{2})(?!.*\n" + tabs + "[^\t])",
-					Pattern.DOTALL);
-
-				Matcher matcher2 = pattern.matcher(
-					newContent.substring(0, matcher.start(2)));
-
-				if (matcher2.find()) {
-					String match = matcher2.group(1);
-
-					if (!match.equals(").")) {
-						newContent = StringUtil.replaceFirst(
-							newContent, "\n" + matcher.group(2),
-							StringPool.BLANK, matcher.end(1));
-
-						continue;
-					}
-				}
-			}
-
-			matcher = _incorrectLineBreakPattern6.matcher(newContent);
-
-			if (matcher.find()) {
-				newContent = StringUtil.replaceFirst(
-					newContent, "{", "{\n" + matcher.group(1) + "\t",
-					matcher.start());
-			}
-
-			matcher = _redundantCommaPattern.matcher(newContent);
-
-			if (matcher.find()) {
-				newContent = StringUtil.replaceFirst(
-					newContent, StringPool.COMMA, StringPool.BLANK,
-					matcher.start());
-
-				continue;
-			}
-
-			break;
-		}
-
-		Matcher matcher = _incorrectLineBreakPattern3.matcher(newContent);
-
-		while (matcher.find()) {
-			if (getLevel(matcher.group()) == 0) {
-				int lineCount = getLineCount(newContent, matcher.start());
-
-				processErrorMessage(
-					fileName, "line break: " + fileName + " " + lineCount);
-			}
-		}
+		newContent = fixIncorrectLineBreaks(newContent, fileName);
 
 		newContent = formatAnnotations(
 			fileName, StringPool.BLANK, newContent, StringPool.BLANK);
 
-		matcher = _logPattern.matcher(newContent);
+		Matcher matcher = _logPattern.matcher(newContent);
 
 		if (matcher.find()) {
 			String logClassName = matcher.group(1);
@@ -1222,6 +1130,104 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				return StringUtil.replaceFirst(
 					content, "\n\n" + tabs + "}\n", "\n" + tabs + "}\n", pos);
+			}
+		}
+
+		return content;
+	}
+
+	protected String fixIncorrectLineBreaks(String content, String fileName) {
+		while (true) {
+			Matcher matcher = _incorrectLineBreakPattern1.matcher(content);
+
+			if (matcher.find()) {
+				content = StringUtil.replaceFirst(
+					content, StringPool.NEW_LINE, StringPool.BLANK,
+					matcher.start());
+
+				continue;
+			}
+
+			matcher = _incorrectLineBreakPattern2.matcher(content);
+
+			if (matcher.find()) {
+				content = StringUtil.replaceFirst(
+					content, StringPool.NEW_LINE, StringPool.BLANK,
+					matcher.start());
+
+				continue;
+			}
+
+			matcher = _incorrectLineBreakPattern4.matcher(content);
+
+			if (matcher.find()) {
+				String matchingLine = matcher.group(2);
+
+				if (!matchingLine.startsWith(StringPool.DOUBLE_SLASH) &&
+					!matchingLine.startsWith(StringPool.STAR)) {
+
+					content = StringUtil.replaceFirst(
+						content, matcher.group(3),
+						"\n" + matcher.group(1) + "}\n", matcher.start(3) - 1);
+
+					continue;
+				}
+			}
+
+			matcher = _incorrectLineBreakPattern5.matcher(content);
+
+			if (matcher.find()) {
+				String tabs = matcher.group(2);
+
+				Pattern pattern = Pattern.compile(
+					"\n" + tabs + "([^\t]{2})(?!.*\n" + tabs + "[^\t])",
+					Pattern.DOTALL);
+
+				Matcher matcher2 = pattern.matcher(
+					content.substring(0, matcher.start(2)));
+
+				if (matcher2.find()) {
+					String match = matcher2.group(1);
+
+					if (!match.equals(").")) {
+						content = StringUtil.replaceFirst(
+							content, "\n" + matcher.group(2), StringPool.BLANK,
+							matcher.end(1));
+
+						continue;
+					}
+				}
+			}
+
+			matcher = _incorrectLineBreakPattern6.matcher(content);
+
+			if (matcher.find()) {
+				content = StringUtil.replaceFirst(
+					content, "{", "{\n" + matcher.group(1) + "\t",
+					matcher.start());
+			}
+
+			matcher = _redundantCommaPattern.matcher(content);
+
+			if (matcher.find()) {
+				content = StringUtil.replaceFirst(
+					content, StringPool.COMMA, StringPool.BLANK,
+					matcher.start());
+
+				continue;
+			}
+
+			break;
+		}
+
+		Matcher matcher = _incorrectLineBreakPattern3.matcher(content);
+
+		while (matcher.find()) {
+			if (getLevel(matcher.group()) == 0) {
+				int lineCount = getLineCount(content, matcher.start());
+
+				processErrorMessage(
+					fileName, "line break: " + fileName + " " + lineCount);
 			}
 		}
 

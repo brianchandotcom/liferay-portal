@@ -3164,7 +3164,17 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</then>
 				</elseif>
 				<else>
-					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
+					<get-testcase-property property.name="portal.context" />
+
+					<if>
+						<isset property="portal.context" />
+						<then>
+							<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/${portal.context}/web/guest" />
+						</then>
+						<else>
+							<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
+						</else>
+					</if>
 				</else>
 			</if>
 

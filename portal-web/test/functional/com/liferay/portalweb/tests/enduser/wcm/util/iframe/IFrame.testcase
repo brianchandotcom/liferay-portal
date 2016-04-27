@@ -1,4 +1,5 @@
 <definition component-name="portal-util-misc">
+	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="IFrame Portlet" />
 
 	<set-up>

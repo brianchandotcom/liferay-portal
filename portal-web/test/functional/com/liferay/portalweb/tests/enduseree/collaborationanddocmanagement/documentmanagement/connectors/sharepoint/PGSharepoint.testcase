@@ -1,4 +1,5 @@
 <definition component-name="portal-document-management-ee">
+	<property name="portal.release" value="true" />
 	<property name="cmis.repository.type" value="sharepoint2010" />
 	<property name="custom.properties" value="session.store.password=true${line.separator}company.security.auth.type=screenName${line.separator}default.layout.template.id=1_column" />
 	<property name="hook.plugins.includes" value="sharepoint-hook" />

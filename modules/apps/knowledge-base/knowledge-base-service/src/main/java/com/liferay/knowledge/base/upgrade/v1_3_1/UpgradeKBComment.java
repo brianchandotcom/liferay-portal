@@ -12,21 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_0;
+package com.liferay.knowledge.base.upgrade.v1_3_1;
+
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
  * @author Adolfo Pérez
  */
-public class UpgradeRepository
-	extends com.liferay.portal.upgrade.util.UpgradeRepository {
+public class UpgradeKBComment extends UpgradeProcess {
 
 	@Override
-	protected String[][] getRenamePortletNamesArray() {
-		return new String[][] {
-			new String[] {"19", "com.liferay.message.boards"},
-			new String[] {"33", "com.liferay.blogs"},
-			new String[] {"36", "com.liferay.wiki"}
-		};
+	protected void doUpgrade() throws Exception {
+		upgradeIndexes();
+	}
+
+	protected void upgradeIndexes() throws Exception {
+		runSQL("drop index IX_FD56A55D on KBComment");
+
+		runSQL(
+			"create index IX_FD56A55D on KBComment(userId, classNameId, " +
+				"classPK)");
 	}
 
 }

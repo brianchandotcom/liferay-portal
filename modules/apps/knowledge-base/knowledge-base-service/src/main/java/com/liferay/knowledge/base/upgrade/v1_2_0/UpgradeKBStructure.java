@@ -12,21 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_0;
+package com.liferay.knowledge.base.upgrade.v1_2_0;
+
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
- * @author Adolfo Pérez
+ * @author Peter Shin
  */
-public class UpgradeRepository
-	extends com.liferay.portal.upgrade.util.UpgradeRepository {
+public class UpgradeKBStructure extends UpgradeProcess {
 
 	@Override
-	protected String[][] getRenamePortletNamesArray() {
-		return new String[][] {
-			new String[] {"19", "com.liferay.message.boards"},
-			new String[] {"33", "com.liferay.blogs"},
-			new String[] {"36", "com.liferay.wiki"}
-		};
+	protected void doUpgrade() throws Exception {
+		if (hasTable("KBStructure")) {
+			runSQL("drop table KBStructure");
+		}
 	}
 
 }

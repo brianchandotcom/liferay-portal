@@ -52,9 +52,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Marcellus Tavares
  */
 @PrepareForTest(
-	{
-		LocaleUtil.class, PortalClassLoaderUtil.class, ResourceBundleUtil.class
-	}
+	{LocaleUtil.class, PortalClassLoaderUtil.class, ResourceBundleUtil.class}
 )
 @RunWith(PowerMockRunner.class)
 public class BaseDDMTestCase extends PowerMockito {

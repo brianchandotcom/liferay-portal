@@ -319,9 +319,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 							deployedPluginDirName,
 							"WEB-INF/liferay-web.xml,WEB-INF/web.xml"
 						},
-						{
-							deployedPluginDirName, "WEB-INF/tld/*"
-						}
+						{deployedPluginDirName, "WEB-INF/tld/*"}
 					};
 
 					FileUtil.jar(project, warFile, "preserve", true, filesets);

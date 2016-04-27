@@ -31,15 +31,11 @@ public class UpgradeKernelPackage
 	}
 
 	private static final String[][] _CLASS_NAMES = new String[][] {
-		{
-			"com.liferay.portlet.wiki.model.", "com.liferay.wiki.model."
-		}
+		{"com.liferay.portlet.wiki.model.", "com.liferay.wiki.model."}
 	};
 
 	private static final String[][] _RESOURCE_NAMES = new String[][] {
-		{
-			"com.liferay.portlet.wiki", "com.liferay.wiki"
-		}
+		{"com.liferay.portlet.wiki", "com.liferay.wiki"}
 	};
 
 }

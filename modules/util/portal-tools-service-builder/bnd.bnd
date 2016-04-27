@@ -11,11 +11,12 @@ Import-Package:\
 	*
 Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 -liferay-includeresource:\
-	com/liferay/shopping/service.xml=../../../modules/apps/deprecated/shopping/shopping-service/service.xml,\
 	com/liferay/dynamic/data/lists/service.xml=../../../modules/apps/forms-and-workflow/dynamic-data-lists/dynamic-data-lists-service/service.xml,\
 	com/liferay/dynamic/data/mapping/service.xml=../../../modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-service/service.xml,\
 	com/liferay/journal/service.xml=../../../modules/apps/web-experience/journal/journal-service/service.xml,\
 	com/liferay/mobile/device/rules/service.xml=../../../modules/apps/foundation/mobile-device-rules/mobile-device-rules-service/service.xml,\
+	com/liferay/shopping/service.xml=../../../modules/apps/deprecated/shopping/shopping-service/service.xml,\
+	@com.liferay.portal.impl-*.jar!/META-INF/portal-model-hints.xml,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/counter/service.xml,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/mail/service.xml,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/freemarker/FreeMarkerUtil.class,\
@@ -27,10 +28,10 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ImportPackage.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ImportsFormatter.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/JavaImportsFormatter.class,\
+	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ToolsUtil.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/sourceformatter/ImportPackage.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/sourceformatter/ImportsFormatter.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/sourceformatter/JavaImportsFormatter.class,\
-	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ToolsUtil.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/util/EntityResolver.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/xml/SAXReaderFactory.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portlet/announcements/service.xml,\
@@ -46,7 +47,6 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.portal.impl-*.jar!/com/liferay/portlet/shopping/service.xml,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portlet/social/service.xml,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portlet/trash/service.xml,\
-	@com.liferay.portal.impl-*.jar!/META-INF/portal-model-hints.xml,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/bean/BeanProperties.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/bean/BeanPropertiesUtil.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/configuration/Filter.class,\
@@ -79,13 +79,13 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/search/Document.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/search/Field.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/search/highlight/HighlightUtil.class,\
+	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/security/RandomUtil.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/security/auth/PrincipalException.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/security/pacl/DoPrivileged.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalFilePermission.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission$NoPACL.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission$PACL.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission.class,\
-	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/security/RandomUtil.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProvider.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/security/xml/SecureXMLFactoryProviderUtil.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/Accessor.class,\

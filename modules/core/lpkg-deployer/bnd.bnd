@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal LPKG Deployer
+Bundle-SymbolicName: com.liferay.lpkg.deployer
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.lpkg.deployer

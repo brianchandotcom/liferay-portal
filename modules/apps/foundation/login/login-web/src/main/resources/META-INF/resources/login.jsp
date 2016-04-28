@@ -163,6 +163,24 @@
 			<aui:button-row>
 				<aui:button cssClass="btn-lg" type="submit" value="sign-in" />
 			</aui:button-row>
+
+			<%
+			String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
+
+			boolean showCreateAccountIcon = false;
+
+			if (!mvcRenderCommandName.equals("/login/create_account") && company.isStrangers() && !portletName.equals(PortletKeys.FAST_LOGIN)) {
+				showCreateAccountIcon = true;
+			}
+			%>
+
+			<c:if test="<%= showCreateAccountIcon %>">
+				<liferay-ui:icon
+					iconCssClass="icon-plus"
+					message="create-account"
+					url="<%= PortalUtil.getCreateAccountURL(request, themeDisplay) %>"
+				/>
+			</c:if>
 		</aui:form>
 
 		<aui:script sandbox="<%= true %>">

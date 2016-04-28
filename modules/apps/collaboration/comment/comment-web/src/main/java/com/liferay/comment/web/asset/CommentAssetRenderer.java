@@ -72,6 +72,10 @@ public class CommentAssetRenderer
 		return _workflowableComment.getCommentId();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Date getDisplayDate() {
 		return _workflowableComment.getModifiedDate();

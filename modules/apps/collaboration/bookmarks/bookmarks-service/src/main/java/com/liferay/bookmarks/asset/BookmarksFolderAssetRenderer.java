@@ -70,6 +70,10 @@ public class BookmarksFolderAssetRenderer
 		return _folder.getFolderId();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Date getDisplayDate() {
 		return _folder.getModifiedDate();

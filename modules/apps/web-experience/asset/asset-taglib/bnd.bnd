@@ -6,6 +6,5 @@ Export-Package:\
 	com.liferay.asset.taglib.servlet.taglib
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
-Liferay-Require-SchemaVersion: 1.0.0
 Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/asset";version:Version="${Bundle-Version}"
 Web-ContextPath: /asset-taglib

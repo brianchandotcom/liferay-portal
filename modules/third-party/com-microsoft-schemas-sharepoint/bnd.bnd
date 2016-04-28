@@ -1,7 +1,7 @@
 Bundle-SymbolicName: com.microsoft.schemas.sharepoint
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.microsoft.schemas.sharepoint.soap,\
+	com.microsoft.schemas.sharepoint.soap;-split-package:=merge-first,\
 	com.microsoft.schemas.sharepoint.soap.holders,\
 	com.microsoft.webservices.SharePoint.QueryService,\
 	Search.Microsoft

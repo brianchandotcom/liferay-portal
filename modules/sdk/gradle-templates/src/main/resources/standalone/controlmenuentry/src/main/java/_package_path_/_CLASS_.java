@@ -28,7 +28,7 @@ public class _CLASS_
 
 	@Override
 	public String getIconCssClass(HttpServletRequest request) {
-		return "icon-puzzle";
+		return "link";
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class _CLASS_
 
 	@Override
 	public String getURL(HttpServletRequest request) {
-		return "http://www.liferay.com";
+		return "https://www.liferay.com";
 	}
 
 	@Override

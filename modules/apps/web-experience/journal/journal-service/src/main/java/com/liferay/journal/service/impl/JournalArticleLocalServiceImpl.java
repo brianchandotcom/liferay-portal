@@ -367,7 +367,7 @@ public class JournalArticleLocalServiceImpl
 
 		validateReferences(
 			groupId, ddmStructureKey, ddmTemplateKey, layoutUuid, smallImage,
-			smallImageURL, smallImageBytes, content);
+			smallImageURL, smallImageBytes, 0, content);
 
 		serviceContext.setAttribute("articleId", articleId);
 
@@ -5218,7 +5218,8 @@ public class JournalArticleLocalServiceImpl
 
 		validateReferences(
 			groupId, ddmStructureKey, ddmTemplateKey, layoutUuid, smallImage,
-			smallImageURL, smallImageBytes, content);
+			smallImageURL, smallImageBytes, latestArticle.getSmallImageId(),
+			content);
 
 		if (addNewVersion) {
 			long id = counterLocalService.increment();
@@ -7898,7 +7899,7 @@ public class JournalArticleLocalServiceImpl
 	protected void validateReferences(
 			long groupId, String ddmStructureKey, String ddmTemplateKey,
 			String layoutUuid, boolean smallImage, String smallImageURL,
-			byte[] smallImageBytes, String content)
+			byte[] smallImageBytes, long smallImageId, String content)
 		throws PortalException {
 
 		long classNameId = classNameLocalService.getClassNameId(
@@ -7937,7 +7938,11 @@ public class JournalArticleLocalServiceImpl
 		if (smallImage && Validator.isNull(smallImageURL) &&
 			ArrayUtil.isEmpty(smallImageBytes)) {
 
-			throw new NoSuchImageException();
+			Image image = imageLocalService.fetchImage(smallImageId);
+
+			if (image == null) {
+				throw new NoSuchImageException();
+			}
 		}
 
 		ExportImportContentProcessor exportImportContentProcessor =

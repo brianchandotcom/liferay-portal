@@ -5343,29 +5343,26 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
-			<isset property="test.portal.instance" />
+			<contains string="${test.class}" substring="," />
 			<then>
-				<if>
-					<contains string="${test.class}" substring="," />
-					<then>
-						<propertyregex
-							input="${test.class}"
-							override="false"
-							property="test.name.skip.portal.instance"
-							regexp="(.*?),.*"
-							replace="\1"
-						/>
+				<propertyregex
+					input="${test.class}"
+					override="false"
+					property="test.name.skip.portal.instance"
+					regexp="(.*?),.*"
+					replace="\1"
+				/>
 
-						<echo append="true" file="${test.ext.properties.file}">
-							test.name.skip.portal.instance=${test.name.skip.portal.instance}
-						</echo>
-					</then>
-				</if>
-
+				<echo append="true" file="${test.ext.properties.file}">
+					test.portal.instance=true
+					test.name.skip.portal.instance=${test.name.skip.portal.instance}
+				</echo>
+			</then>
+			<else>
 				<echo append="true" file="${test.ext.properties.file}">
 					test.portal.instance=${test.portal.instance}
 				</echo>
-			</then>
+			</else>
 		</if>
 	</target>
 

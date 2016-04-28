@@ -597,15 +597,6 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		<sequential>
 			<fail message="Please set the property ${test.class}." unless="test.class" />
 
-			<var name="test.batch.run.type" unset="true" />
-			<var name="test.portal.instance" unset="true" />
-
-			<property name="test.batch.run.type" value="sequential" />
-			<property name="test.portal.instance" value="true" />
-
-			<propertycopy from="test.batch.run.property.names[${test.batch.name}]" name="test.batch.run.property.names" override="true" />
-			<propertycopy from="test.batch.run.property.values[${test.batch.name}]" name="test.batch.run.property.values" override="true" />
-
 			<if>
 				<and>
 					<matches pattern="[0-9]+_[0-9]+" string="${test.class}" />
@@ -614,19 +605,6 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					</not>
 				</and>
 				<then>
-					<if>
-						<not>
-							<available file="${project.dir}/test.case.method.names.properties" />
-						</not>
-						<then>
-							<antcall target="record-test-case-method-names">
-								<param name="test.batch.max.group.size" value="25" />
-								<param name="test.batch.property.names" value="${test.batch.run.property.names}" />
-								<param name="test.batch.property.values" value="${test.batch.run.property.values}" />
-							</antcall>
-						</then>
-					</if>
-
 					<loadproperties srcFile="${project.dir}/test.case.method.names.properties">
 						<filterchain>
 							<linecontains>

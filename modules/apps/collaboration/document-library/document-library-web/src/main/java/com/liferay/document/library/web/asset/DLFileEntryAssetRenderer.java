@@ -46,7 +46,6 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermiss
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.trash.kernel.util.TrashUtil;
 
-import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
@@ -111,11 +110,6 @@ public class DLFileEntryAssetRenderer
 		else {
 			return null;
 		}
-	}
-
-	@Override
-	public Date getDisplayDate() {
-		return _fileEntry.getModifiedDate();
 	}
 
 	@Override

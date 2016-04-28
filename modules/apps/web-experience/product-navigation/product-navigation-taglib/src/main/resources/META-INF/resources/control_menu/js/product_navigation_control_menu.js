@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-product-navigation-control-menu',
 	function(A) {
-		var STR_ADD_PANEL = 'addPanel';
-
 		var ControlMenu = {
 			init: function(containerId) {
 				var instance = this;
@@ -29,8 +27,6 @@ AUI.add(
 		};
 
 		Liferay.ControlMenu = ControlMenu;
-
-		Liferay.ControlMenu.ADD_PANEL = STR_ADD_PANEL;
 	},
 	'',
 	{

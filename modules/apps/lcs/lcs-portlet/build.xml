@@ -2,48 +2,9 @@
 <!DOCTYPE project>
 
 <project name="lcs-portlet" basedir="." default="deploy">
-	<property name="import.shared" value="json-web-service-client-shared,lcs-shared" />
 	<property name="hyperic.sigar.zip.file" value="hyperic-sigar-1.6.4.zip" />
 
 	<import file="../../../../tools/sdk/portlets/build-common-portlet.xml" />
-
-	<macrodef name="checkout-dependencies">
-		<sequential>
-			<exec executable="git">
-				<arg value="fetch" />
-				<arg value="${osb.lcs.repository.name}" />
-			</exec>
-
-			<exec executable="git">
-				<arg value="checkout" />
-				<arg value="${osb.lcs.repository.name}/${osb.lcs.branch.name}" />
-				<arg value="--" />
-				<arg value="../../shared/lcs-shared" />
-			</exec>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="delete-dependencies">
-		<sequential>
-			<if>
-				<available file="../../shared/lcs-shared" />
-				<then>
-					<exec executable="git">
-						<arg value="rm" />
-						<arg value="-fr" />
-						<arg value="--cached" />
-						<arg value="../../shared/lcs-shared/*" />
-					</exec>
-
-					<delete
-						dir="../../shared/lcs-shared"
-						failonerror="false"
-						includeemptydirs="true"
-					/>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
 
 	<target name="build-lang">
 		<antcall target="build-lang-cmd">
@@ -54,8 +15,6 @@
 	</target>
 
 	<target name="clean">
-		<delete-dependencies />
-
 		<clean
 			module.dir="${basedir}"
 		/>
@@ -64,31 +23,9 @@
 	<target name="compile">
 		<antcall target="merge-unzip" />
 
-		<if>
-			<not>
-				<isset property="osb.lcs.branch.name" />
-			</not>
-			<then>
-				<property name="osb.lcs.branch.name" value="ee-6.2.x" />
-			</then>
-		</if>
-
-		<if>
-			<not>
-				<isset property="osb.lcs.repository.name" />
-			</not>
-			<then>
-				<property name="osb.lcs.repository.name" value="upstream" />
-			</then>
-		</if>
-
-		<checkout-dependencies />
-
 		<compile
 			module.dir="${basedir}"
 		/>
-
-		<delete-dependencies />
 	</target>
 
 	<target name="merge-unzip">

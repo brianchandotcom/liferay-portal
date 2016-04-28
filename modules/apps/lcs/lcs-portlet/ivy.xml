@@ -11,6 +11,8 @@
 	</info>
 
 	<dependencies defaultconf="default">
+		<dependency name="com.liferay.lcs.api" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency name="com.liferay.petra.json.web.service.client" org="com.liferay" rev="1.0.1" />
 		<dependency name="metrics-core" org="com.yammer.metrics" rev="2.2.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.service.cm" org="org.osgi" rev="1.5.0" />

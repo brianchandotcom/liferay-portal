@@ -1,0 +1,1 @@
+update UserNotificationEvent set actionRequired = FALSE where actionRequired is null;

@@ -4596,7 +4596,7 @@ public class ServiceBuilder {
 			final List<Path> updateSQLFilePaths = new ArrayList<>();
 
 			try (DirectoryStream<Path> paths = Files.newDirectoryStream(
-					Paths.get(_sqlDirName), "update-6.2.0-7.0.0*.sql")) {
+					Paths.get(_sqlDirName), "update-7.0.0-7.0.1*.sql")) {
 
 				for (Path path : paths) {
 					updateSQLFilePaths.add(path);

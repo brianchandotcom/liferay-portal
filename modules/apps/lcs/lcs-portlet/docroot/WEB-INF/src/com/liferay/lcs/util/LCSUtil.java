@@ -14,16 +14,13 @@
 
 package com.liferay.lcs.util;
 
-import com.liferay.jsonwebserviceclient.JSONWebServiceClient;
-import com.liferay.jsonwebserviceclient.JSONWebServiceInvocationException;
-import com.liferay.jsonwebserviceclient.JSONWebServiceTransportException;
-import com.liferay.lcs.InvalidLCSClusterEntryException;
 import com.liferay.lcs.advisor.InstallationEnvironmentAdvisor;
 import com.liferay.lcs.advisor.InstallationEnvironmentAdvisorFactory;
 import com.liferay.lcs.advisor.LCSAlertAdvisor;
 import com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor;
 import com.liferay.lcs.exception.InitializationException;
 import com.liferay.lcs.exception.MissingLCSCredentialsException;
+import com.liferay.lcs.InvalidLCSClusterEntryException;
 import com.liferay.lcs.jsonwebserviceclient.OAuthJSONWebServiceClientImpl;
 import com.liferay.lcs.oauth.OAuthUtil;
 import com.liferay.lcs.rest.LCSClusterEntry;
@@ -31,6 +28,9 @@ import com.liferay.lcs.rest.LCSClusterEntryServiceUtil;
 import com.liferay.lcs.rest.LCSClusterNode;
 import com.liferay.lcs.rest.LCSClusterNodeServiceUtil;
 import com.liferay.lcs.rest.LCSProject;
+import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;

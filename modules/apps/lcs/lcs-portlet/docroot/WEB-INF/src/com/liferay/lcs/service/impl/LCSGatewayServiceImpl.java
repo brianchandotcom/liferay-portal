@@ -14,11 +14,11 @@
 
 package com.liferay.lcs.service.impl;
 
-import com.liferay.jsonwebserviceclient.JSONWebServiceTransportException;
 import com.liferay.lcs.messaging.Message;
 import com.liferay.lcs.service.LCSGatewayService;
 import com.liferay.lcs.util.CompressionUtil;
 import com.liferay.lcs.util.LCSConstants;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;

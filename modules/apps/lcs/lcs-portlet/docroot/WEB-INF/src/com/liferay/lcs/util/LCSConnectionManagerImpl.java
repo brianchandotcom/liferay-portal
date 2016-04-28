@@ -14,7 +14,6 @@
 
 package com.liferay.lcs.util;
 
-import com.liferay.jsonwebserviceclient.JSONWebServiceTransportException;
 import com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor;
 import com.liferay.lcs.exception.LCSExceptionSender;
 import com.liferay.lcs.messaging.Message;
@@ -23,6 +22,7 @@ import com.liferay.lcs.task.CommandMessageTask;
 import com.liferay.lcs.task.HandshakeTask;
 import com.liferay.lcs.task.HeartbeatTask;
 import com.liferay.lcs.task.SignOffTask;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.license.messaging.LCSPortletState;

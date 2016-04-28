@@ -640,8 +640,8 @@
 		<method>
 			<name>testOAuthRequest</name>
 			<throws>
-				<name>com.liferay.jsonwebserviceclient.JSONWebServiceInvocationException</name>
-				<type>com.liferay.jsonwebserviceclient.JSONWebServiceInvocationException</type>
+				<name>com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException</name>
+				<type>com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -656,8 +656,8 @@
 				<comment><![CDATA[]]></comment>
 			</return>
 			<throws>
-				<name>com.liferay.jsonwebserviceclient.JSONWebServiceTransportException</name>
-				<type>com.liferay.jsonwebserviceclient.JSONWebServiceTransportException</type>
+				<name>com.liferay.petra.json.web.service.client.JSONWebServiceTransportException</name>
+				<type>com.liferay.petra.json.web.service.client.JSONWebServiceTransportException</type>
 				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
@@ -1623,7 +1623,7 @@
 			<name>setJSONWebServiceClient</name>
 			<param>
 				<name>jsonWebServiceClient</name>
-				<type>com.liferay.jsonwebserviceclient.JSONWebServiceClient</type>
+				<type>com.liferay.petra.json.web.service.client.JSONWebServiceClient</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
@@ -3283,7 +3283,7 @@
 			<name>handleLCSGatewayUnavailable</name>
 			<param>
 				<name>jsonwste</name>
-				<type>com.liferay.jsonwebserviceclient.JSONWebServiceTransportException</type>
+				<type>com.liferay.petra.json.web.service.client.JSONWebServiceTransportException</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
@@ -3683,7 +3683,7 @@
 			<name>setJSONWebServiceClient</name>
 			<param>
 				<name>jsonWebServiceClient</name>
-				<type>com.liferay.jsonwebserviceclient.JSONWebServiceClient</type>
+				<type>com.liferay.petra.json.web.service.client.JSONWebServiceClient</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 		</method>

@@ -55,7 +55,7 @@
 
 	<!-- JSON -->
 
-	<bean id="osbLCSGatewayWebJSONWebServiceClient" class="com.liferay.jsonwebserviceclient.JSONWebServiceClientImpl">
+	<bean id="osbLCSGatewayWebJSONWebServiceClient" class="com.liferay.petra.json.web.service.client.JSONWebServiceClientImpl">
 		<property name="headers">
 			<map>
 				<entry key="OSB_LCS_API_Token" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_GATEWAY_WEB_SECURE_API_TOKEN}" />

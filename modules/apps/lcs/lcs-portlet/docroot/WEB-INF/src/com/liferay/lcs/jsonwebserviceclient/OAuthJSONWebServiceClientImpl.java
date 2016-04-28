@@ -14,10 +14,10 @@
 
 package com.liferay.lcs.jsonwebserviceclient;
 
-import com.liferay.jsonwebserviceclient.JSONWebServiceClientImpl;
-import com.liferay.jsonwebserviceclient.JSONWebServiceInvocationException;
-import com.liferay.jsonwebserviceclient.JSONWebServiceTransportException;
 import com.liferay.lcs.oauth.OAuthUtil;
+import com.liferay.petra.json.web.service.client.JSONWebServiceClientImpl;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 

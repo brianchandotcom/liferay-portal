@@ -14,12 +14,10 @@
 
 package com.liferay.lcs.messaging;
 
-import com.liferay.jsonwebserviceclient.JSONWebServiceInvocationException;
-import com.liferay.jsonwebserviceclient.JSONWebServiceTransportException;
-import com.liferay.lcs.InvalidLCSClusterEntryTokenException;
-import com.liferay.lcs.NoLCSClusterEntryTokenException;
 import com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor;
 import com.liferay.lcs.advisor.UptimeMonitoringAdvisor;
+import com.liferay.lcs.InvalidLCSClusterEntryTokenException;
+import com.liferay.lcs.NoLCSClusterEntryTokenException;
 import com.liferay.lcs.oauth.OAuthUtil;
 import com.liferay.lcs.rest.LCSClusterEntryToken;
 import com.liferay.lcs.rest.NoSuchLCSSubscriptionEntryException;
@@ -28,6 +26,8 @@ import com.liferay.lcs.task.UptimeMonitoringTask;
 import com.liferay.lcs.util.ClusterNodeUtil;
 import com.liferay.lcs.util.LCSConnectionManagerUtil;
 import com.liferay.lcs.util.LCSUtil;
+import com.liferay.petra.json.web.service.client.JSONWebServiceInvocationException;
+import com.liferay.petra.json.web.service.client.JSONWebServiceTransportException;
 import com.liferay.portal.kernel.cluster.ClusterException;
 import com.liferay.portal.kernel.license.messaging.LCSPortletState;
 import com.liferay.portal.kernel.log.Log;

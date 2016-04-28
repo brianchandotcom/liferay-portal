@@ -23,7 +23,6 @@ String taglibOpenGoogleLoginWindow = "javascript:var googleLoginWindow = window.
 %>
 
 <liferay-ui:icon
-	iconCssClass="icon-google-plus-sign"
 	message="google"
 	url="<%= taglibOpenGoogleLoginWindow %>"
 />

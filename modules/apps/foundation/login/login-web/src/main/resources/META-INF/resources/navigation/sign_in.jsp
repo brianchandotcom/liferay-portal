@@ -44,7 +44,6 @@ if (Validator.isNotNull(mvcRenderCommandName) && !mvcRenderCommandName.equals("/
 	%>
 
 	<liferay-ui:icon
-		iconCssClass="icon-signin"
 		message="sign-in"
 		url="<%= signInURL %>"
 	/>

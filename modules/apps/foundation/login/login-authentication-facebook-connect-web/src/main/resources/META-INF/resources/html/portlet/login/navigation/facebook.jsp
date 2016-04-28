@@ -35,7 +35,6 @@ String taglibOpenFacebookConnectLoginWindow = "javascript:var facebookConnectLog
 %>
 
 <liferay-ui:icon
-	iconCssClass="icon-facebook"
 	message="facebook"
 	url="<%= taglibOpenFacebookConnectLoginWindow %>"
 />

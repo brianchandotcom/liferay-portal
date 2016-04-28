@@ -22,6 +22,5 @@
 
 <liferay-ui:icon
 	message="openid"
-	src='<%= themeDisplay.getPathThemeImages() + "/common/openid.gif" %>'
 	url="<%= openIdURL %>"
 />

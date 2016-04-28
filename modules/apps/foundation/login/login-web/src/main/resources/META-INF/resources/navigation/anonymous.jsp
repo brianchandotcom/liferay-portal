@@ -32,7 +32,6 @@ if (!mvcRenderCommandName.startsWith("/login/create_anonymous_account") && portl
 	</portlet:renderURL>
 
 	<liferay-ui:icon
-		iconCssClass="icon-user"
 		message="guest"
 		url="<%= anonymousURL %>"
 	/>

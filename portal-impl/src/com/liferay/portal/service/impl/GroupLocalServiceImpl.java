@@ -861,25 +861,28 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					group.getGroupId(), RoleConstants.TYPE_SITE);
 			}
 			else {
-				if (!group.isStagingGroup() || group.isStagedRemotely()) {
 
-					// Group roles
+				// Group roles
 
-					userGroupRoleLocalService.deleteUserGroupRolesByGroupId(
-						group.getGroupId());
+				userGroupRoleLocalService.deleteUserGroupRolesByGroupId(
+					group.getGroupId());
 
-					// User group roles
+				// User group roles
 
-					userGroupGroupRoleLocalService.
-						deleteUserGroupGroupRolesByGroupId(group.getGroupId());
-				}
+				userGroupGroupRoleLocalService.
+					deleteUserGroupGroupRolesByGroupId(group.getGroupId());
 
-				if (!group.isStagingGroup() &&
-					(group.isOrganization() || group.isRegularSite())) {
+				// Resource permissions
 
+				try {
 					resourceLocalService.deleteResource(
 						group.getCompanyId(), Group.class.getName(),
 						ResourceConstants.SCOPE_INDIVIDUAL, group.getGroupId());
+				}
+				catch (Exception e) {
+					_log.error(
+						"No resource permissions found for group " +
+							group.getGroupId());
 				}
 
 				groupPersistence.remove(group);

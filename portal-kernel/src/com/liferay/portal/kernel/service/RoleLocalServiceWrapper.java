@@ -1123,14 +1123,22 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		_roleLocalService.addGroupRoles(groupId, roleIds);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void addUserRole(long userId,
-		com.liferay.portal.kernel.model.Role role) {
+		com.liferay.portal.kernel.model.Role role)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_roleLocalService.addUserRole(userId, role);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
-	public void addUserRole(long userId, long roleId) {
+	public void addUserRole(long userId, long roleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_roleLocalService.addUserRole(userId, roleId);
 	}
 
@@ -1180,8 +1188,12 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		_roleLocalService.clearGroupRoles(groupId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
-	public void clearUserRoles(long userId) {
+	public void clearUserRoles(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_roleLocalService.clearUserRoles(userId);
 	}
 
@@ -1207,25 +1219,41 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		_roleLocalService.deleteGroupRoles(groupId, roleIds);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void deleteUserRole(long userId,
-		com.liferay.portal.kernel.model.Role role) {
+		com.liferay.portal.kernel.model.Role role)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_roleLocalService.deleteUserRole(userId, role);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
-	public void deleteUserRole(long userId, long roleId) {
+	public void deleteUserRole(long userId, long roleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_roleLocalService.deleteUserRole(userId, roleId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void deleteUserRoles(long userId,
-		java.util.List<com.liferay.portal.kernel.model.Role> Roles) {
+		java.util.List<com.liferay.portal.kernel.model.Role> Roles)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_roleLocalService.deleteUserRoles(userId, Roles);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
-	public void deleteUserRoles(long userId, long[] roleIds) {
+	public void deleteUserRoles(long userId, long[] roleIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_roleLocalService.deleteUserRoles(userId, roleIds);
 	}
 

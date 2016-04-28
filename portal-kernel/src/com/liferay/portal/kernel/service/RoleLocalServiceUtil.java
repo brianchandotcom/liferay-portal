@@ -1049,12 +1049,20 @@ public class RoleLocalServiceUtil {
 		getService().addGroupRoles(groupId, roleIds);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void addUserRole(long userId,
-		com.liferay.portal.kernel.model.Role role) {
+		com.liferay.portal.kernel.model.Role role)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addUserRole(userId, role);
 	}
 
-	public static void addUserRole(long userId, long roleId) {
+	/**
+	* @throws PortalException
+	*/
+	public static void addUserRole(long userId, long roleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addUserRole(userId, roleId);
 	}
 
@@ -1099,7 +1107,11 @@ public class RoleLocalServiceUtil {
 		getService().clearGroupRoles(groupId);
 	}
 
-	public static void clearUserRoles(long userId) {
+	/**
+	* @throws PortalException
+	*/
+	public static void clearUserRoles(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().clearUserRoles(userId);
 	}
 
@@ -1121,21 +1133,37 @@ public class RoleLocalServiceUtil {
 		getService().deleteGroupRoles(groupId, roleIds);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void deleteUserRole(long userId,
-		com.liferay.portal.kernel.model.Role role) {
+		com.liferay.portal.kernel.model.Role role)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteUserRole(userId, role);
 	}
 
-	public static void deleteUserRole(long userId, long roleId) {
+	/**
+	* @throws PortalException
+	*/
+	public static void deleteUserRole(long userId, long roleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteUserRole(userId, roleId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void deleteUserRoles(long userId,
-		java.util.List<com.liferay.portal.kernel.model.Role> Roles) {
+		java.util.List<com.liferay.portal.kernel.model.Role> Roles)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteUserRoles(userId, Roles);
 	}
 
-	public static void deleteUserRoles(long userId, long[] roleIds) {
+	/**
+	* @throws PortalException
+	*/
+	public static void deleteUserRoles(long userId, long[] roleIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteUserRoles(userId, roleIds);
 	}
 

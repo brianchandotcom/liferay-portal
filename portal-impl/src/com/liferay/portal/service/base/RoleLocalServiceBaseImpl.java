@@ -557,16 +557,18 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * @throws PortalException
 	 */
 	@Override
-	public void addUserRole(long userId, long roleId) {
+	public void addUserRole(long userId, long roleId) throws PortalException {
 		userPersistence.addRole(userId, roleId);
 	}
 
 	/**
+	 * @throws PortalException
 	 */
 	@Override
-	public void addUserRole(long userId, Role role) {
+	public void addUserRole(long userId, Role role) throws PortalException {
 		userPersistence.addRole(userId, role);
 	}
 
@@ -589,37 +591,46 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * @throws PortalException
 	 */
 	@Override
-	public void clearUserRoles(long userId) {
+	public void clearUserRoles(long userId) throws PortalException {
 		userPersistence.clearRoles(userId);
 	}
 
 	/**
+	 * @throws PortalException
 	 */
 	@Override
-	public void deleteUserRole(long userId, long roleId) {
+	public void deleteUserRole(long userId, long roleId)
+		throws PortalException {
 		userPersistence.removeRole(userId, roleId);
 	}
 
 	/**
+	 * @throws PortalException
 	 */
 	@Override
-	public void deleteUserRole(long userId, Role role) {
+	public void deleteUserRole(long userId, Role role)
+		throws PortalException {
 		userPersistence.removeRole(userId, role);
 	}
 
 	/**
+	 * @throws PortalException
 	 */
 	@Override
-	public void deleteUserRoles(long userId, long[] roleIds) {
+	public void deleteUserRoles(long userId, long[] roleIds)
+		throws PortalException {
 		userPersistence.removeRoles(userId, roleIds);
 	}
 
 	/**
+	 * @throws PortalException
 	 */
 	@Override
-	public void deleteUserRoles(long userId, List<Role> Roles) {
+	public void deleteUserRoles(long userId, List<Role> Roles)
+		throws PortalException {
 		userPersistence.removeRoles(userId, Roles);
 	}
 

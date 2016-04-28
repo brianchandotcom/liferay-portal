@@ -115,7 +115,7 @@ generateJNALibrary {
 			into temporaryDir
 		}
 
-		File libSassDir = new File(temporaryDir, "libsass-${project.libSassVersion}")
+		File libSassDir = new File(temporaryDir, "libsass-${project.libSassVersion}/include")
 
 		javaexec {
 			args configurations.jnaerator.singleFile
@@ -125,7 +125,7 @@ generateJNALibrary {
 			args "-o", FileUtil.relativize(file("src/main/java"), libSassDir)
 			args "-package", "com.liferay.sass.compiler.jni.internal.libsass"
 			args "-runtime", "JNAerator"
-			args "sass_context.h"
+			args "sass/context.h"
 
 			main = "-jar"
 

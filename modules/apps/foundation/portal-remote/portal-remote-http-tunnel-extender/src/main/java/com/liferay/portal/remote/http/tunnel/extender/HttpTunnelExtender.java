@@ -182,7 +182,7 @@ public class HttpTunnelExtender extends AbstractExtender {
 					_httpTunnelExtenderConfiguration.hostsAllowed()));
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME,
-				"AuthVerifierFilter");
+				AuthVerifierFilter.class.getName());
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN,
 				"/api/liferay/do");

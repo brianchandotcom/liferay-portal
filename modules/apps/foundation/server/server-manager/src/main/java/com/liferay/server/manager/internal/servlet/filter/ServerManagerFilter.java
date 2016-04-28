@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 		"filter.init.basic_auth=true",
 		"filter.init.filter-class=com.liferay.portal.servlet.filters.secure.SecureFilter",
 		"filter.init.portal_property_prefix=server.manager.servlet.",
-		"osgi.http.whiteboard.filter.name=ServerManagerFilter",
+		"osgi.http.whiteboard.filter.name=com.liferay.server.manager.internal.servlet.filter.ServerManagerFilter",
 		"osgi.http.whiteboard.filter.pattern=/server-manager/*"
 	},
 	service = Filter.class

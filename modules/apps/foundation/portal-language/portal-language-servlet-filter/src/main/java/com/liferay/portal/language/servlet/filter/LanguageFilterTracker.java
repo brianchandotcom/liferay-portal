@@ -218,7 +218,7 @@ public class LanguageFilterTracker {
 					});
 				filterProperties.put(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME,
-					"Language Filter");
+					LanguageFilter.class.getName());
 				filterProperties.put(
 					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN,
 					new String[] {"*.css", "*.js"});

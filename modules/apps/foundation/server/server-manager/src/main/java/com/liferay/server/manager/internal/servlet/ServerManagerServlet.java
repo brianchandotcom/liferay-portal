@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"osgi.http.whiteboard.servlet.name=ServerManagerServlet",
+		"osgi.http.whiteboard.servlet.name=com.liferay.server.manager.internal.servlet.ServerManagerServlet",
 		"osgi.http.whiteboard.servlet.pattern=/server-manager/*",
 		"servlet.init.httpMethods=DELETE,GET,POST,PUT"
 	},

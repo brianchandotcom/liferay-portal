@@ -18,20 +18,18 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.collections.ServiceReferenceMapper;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.registry.util.StringPlus;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -43,7 +41,7 @@ public class MVCCommandCache {
 
 	public MVCCommandCache(
 		MVCCommand emptyMVCCommand, String packagePrefix, String portletName,
-		String mvcCommandClassName, String mvcCommandPostFix) {
+		Class<? extends MVCCommand> mvcCommandClazz, String mvcCommandPostFix) {
 
 		_emptyMVCCommand = emptyMVCCommand;
 		_mvcComandPostFix = mvcCommandPostFix;
@@ -56,27 +54,57 @@ public class MVCCommandCache {
 
 		_packagePrefix = packagePrefix;
 
-		Registry registry = RegistryUtil.getRegistry();
+		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
+			mvcCommandClazz,
+			"(&(javax.portlet.name=" + portletName +")" +
+				"(mvc.command.name=*))",
+			new ServiceReferenceMapper<String, MVCCommand>() {
 
-		Filter filter = registry.getFilter(
-			"(&(javax.portlet.name=" + portletName +")(mvc.command.name=*)" +
-				"(objectClass=" + mvcCommandClassName + "))");
+				@Override
+				public void map(
+					ServiceReference<MVCCommand> serviceReference,
+					Emitter<String> emitter) {
 
-		_serviceTracker = registry.trackServices(
-			filter, new MVCCommandServiceTrackerCustomizer());
+					List<String> mvcCommandNames = StringPlus.asList(
+						serviceReference.getProperty("mvc.command.name"));
 
-		_serviceTracker.open();
+					for (String mvcCommandName : mvcCommandNames) {
+						emitter.emit(mvcCommandName);
+					}
+				}
+
+			});
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link MVCCommandCache(MVCCommand,
+	 *             String, String, Class<? extends MVCCommand>, String)}
+	 */
+	@Deprecated
+	public MVCCommandCache(
+		MVCCommand emptyMVCCommand, String packagePrefix, String portletName,
+		String mvcCommandClassName, String mvcCommandPostFix) {
+
+		this(
+			emptyMVCCommand, packagePrefix, portletName,
+			_getMVCCommandClazz(mvcCommandClassName), mvcCommandPostFix);
 	}
 
 	public void close() {
-		_serviceTracker.close();
+		_serviceTrackerMap.close();
 	}
 
 	public MVCCommand getMVCCommand(String mvcCommandName) {
 		String className = null;
 
+		MVCCommand mvcCommand = _serviceTrackerMap.getService(mvcCommandName);
+
+		if (mvcCommand != null) {
+			return mvcCommand;
+		}
+
 		try {
-			MVCCommand mvcCommand = _mvcCommandCache.get(mvcCommandName);
+			mvcCommand = _mvcCommandCache.get(mvcCommandName);
 
 			if (mvcCommand != null) {
 				return mvcCommand;
@@ -161,8 +189,35 @@ public class MVCCommandCache {
 		return _mvcCommandCache.isEmpty();
 	}
 
+	private static Class<? extends MVCCommand> _getMVCCommandClazz(
+		String mvcCommandClassName) {
+
+		Class<? extends MVCCommand> mvcCommandClazz = null;
+
+		for (Class<? extends MVCCommand> curMVCCommandClazz :
+				_mvcCommandClasses) {
+
+			if (mvcCommandClassName.equals(curMVCCommandClazz.getName())) {
+				mvcCommandClazz = curMVCCommandClazz;
+
+				break;
+			}
+		}
+
+		if (mvcCommandClazz == null) {
+			throw new IllegalArgumentException();
+		}
+
+		return mvcCommandClazz;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		MVCCommandCache.class);
+
+	private static final List<Class<? extends MVCCommand>> _mvcCommandClasses =
+		Arrays.asList(
+			MVCActionCommand.class, MVCRenderCommand.class,
+			MVCResourceCommand.class);
 
 	private final MVCCommand _emptyMVCCommand;
 	private final String _mvcComandPostFix;
@@ -173,67 +228,7 @@ public class MVCCommandCache {
 	private final Map<String, List<MVCCommand>> _mvcCommands =
 		new ConcurrentHashMap<>();
 	private final String _packagePrefix;
-	private final ServiceTracker<MVCCommand, MVCCommand> _serviceTracker;
-
-	private class MVCCommandServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<MVCCommand, MVCCommand> {
-
-		@Override
-		public MVCCommand addingService(
-			ServiceReference<MVCCommand> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			MVCCommand mvcCommand = registry.getService(serviceReference);
-
-			List<String> mvcCommandNames = StringPlus.asList(
-				serviceReference.getProperty("mvc.command.name"));
-
-			for (String mvcCommandName : mvcCommandNames) {
-				_mvcCommandCache.put(mvcCommandName, mvcCommand);
-			}
-
-			return mvcCommand;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<MVCCommand> serviceReference,
-			MVCCommand mvcCommand) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<MVCCommand> serviceReference,
-			MVCCommand mvcCommand) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			List<String> mvcCommandNames = StringPlus.asList(
-				serviceReference.getProperty("mvc.command.name"));
-
-			for (String mvcCommandName : mvcCommandNames) {
-				_mvcCommandCache.remove(mvcCommandName);
-
-				for (List<MVCCommand> mvcCommands : _mvcCommands.values()) {
-					mvcCommands.remove(mvcCommand);
-				}
-
-				String mvcCommandClassName = ClassUtil.getClassName(mvcCommand);
-
-				List<String> mvcCommandKeys = _mvcCommandKeys.remove(
-					mvcCommandClassName);
-
-				if (ListUtil.isNotEmpty(mvcCommandKeys)) {
-					for (String mvcCommandKey : mvcCommandKeys) {
-						_mvcCommandCache.remove(mvcCommandKey);
-					}
-				}
-			}
-		}
-
-	}
+	private final ServiceTrackerMap<String, ? extends MVCCommand>
+		_serviceTrackerMap;
 
 }

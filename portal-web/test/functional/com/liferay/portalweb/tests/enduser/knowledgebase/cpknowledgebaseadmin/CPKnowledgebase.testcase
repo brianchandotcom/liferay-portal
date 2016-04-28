@@ -498,7 +498,7 @@
 		<execute macro="KBArticle#viewDefaultCP" />
 	</command>
 
-	<command name="DeleteKBFolder" priority ="4">
+	<command name="DeleteKBFolder" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

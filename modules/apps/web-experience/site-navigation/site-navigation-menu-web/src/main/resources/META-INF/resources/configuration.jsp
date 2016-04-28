@@ -42,7 +42,7 @@ String rootLayoutType = siteNavigationMenuDisplayContext.getRootLayoutType();
 					</div>
 
 					<div id="<portlet:namespace />customDisplayOptions">
-						<aui:select id ="rootLayoutType" label="root-layout" name="preferences--rootLayoutType--" value="<%= rootLayoutType %>">
+						<aui:select id="rootLayoutType" label="root-layout" name="preferences--rootLayoutType--" value="<%= rootLayoutType %>">
 							<aui:option label="parent-at-level" value="absolute" />
 							<aui:option label="relative-parent-up-by" value="relative" />
 							<aui:option label="select" value="select" />

@@ -1,0 +1,169 @@
+$darkgray: #656565;
+$gray: #8D8D8D;
+$indent-width: 16px;
+
+div.tooltip {
+	max-width: inherit;
+}
+
+span.lcs-alert {
+	display: inline-block;
+}
+
+.lcs-portlet {
+	color: $darkgray;
+	display: table;
+	padding: 12px 10px 10px;
+
+	dl {
+		margin: 0;
+
+		dt {
+			color: $darkgray;
+		}
+
+		dd {
+			color: $gray;
+			margin: 0 0 25px;
+			min-height: 20px;
+		}
+	}
+
+	h3 {
+		font-size: 20px;
+		line-height: 20px;
+	}
+
+	.all-lcs-services-panel {
+		textarea {
+			height: 150px;
+			width: 400px;
+		}
+
+		.control-group {
+			margin-bottom: 0;
+		}
+
+		.lcs-services-panel {
+			margin-left: $indent-width;
+
+			p, .properties-panel {
+				margin-bottom: 30px;
+				margin-left: $indent-width;
+			}
+
+			.properties-message {
+				margin-bottom: 10px;
+			}
+		}
+
+		.portal-properties-security-sensitive {
+			text-decoration: underline;
+		}
+	}
+
+	.aui-field-select {
+		min-width: 200px;
+		width: auto;
+	}
+
+	.cluster-node-error {
+		color: #B50303;
+		cursor: default;
+	}
+
+	.connection-status {
+		color: $gray;
+		font-size: 20px;
+		line-height: 29px;
+		padding: 10px;
+
+		& > span {
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		&.connected .connection-icon {
+			background-image: url(../images/connection_green.png);
+		}
+
+		&.disconnected .connection-icon {
+			background-image: url(../images/connection_red.png);
+		}
+
+		&.synchronizing .connection-icon {
+			background-image: url(../images/connection_orange.png);
+		}
+
+		.connection-icon {
+			height: 29px;
+			position: relative;
+			width: 29px;
+		}
+
+		.taglib-icon-help img {
+			margin-bottom: 8px;
+		}
+	}
+
+	.content {
+		.button-holder {
+			margin-bottom: 30px;
+
+			.btn {
+				outline: 0;
+			}
+		}
+
+		.lcs-synchronizing-alert {
+			display: inline-block;
+			margin: 0 0 30px 0;
+			position: relative;
+		}
+	}
+
+	.footer {
+		border-top: 1px solid $gray;
+		padding-top: 6px;
+	}
+
+	.lcs-info {
+		&:after {
+			clear: both;
+			content: '';
+			display: block;
+			visibility: hidden;
+		}
+
+		& > div {
+			float: left;
+			width: 320px;
+			word-wrap: break-word;
+		}
+	}
+
+	.lcs-environment-container {
+		.lcs-environment-input-wrapper {
+			height: 37px;
+			line-height: 37px;
+			margin-bottom: 8px;
+
+			.loadingmask-content {
+				background-color: transparent;
+			}
+
+			.loadingmask-message {
+				left: 0 !important;
+			}
+		}
+
+		.control-group {
+			margin-bottom: 0;
+			padding-top: 2px;
+		}
+
+		.button-holder {
+			margin: 0;
+		}
+	}
+}

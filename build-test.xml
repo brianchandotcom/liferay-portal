@@ -731,7 +731,13 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 	<macrodef name="get-test-url">
 		<sequential>
-			<get-test-class />
+			<if>
+				<matches pattern="[0-9]+_[0-9]+" string="${test.class}" />
+				<then>
+					<get-test-class />
+				</then>
+			</if>
+
 			<get-testcase-property property.name="testcase.url" />
 
 			<if>

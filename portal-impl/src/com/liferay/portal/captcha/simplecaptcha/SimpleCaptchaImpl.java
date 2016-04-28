@@ -16,7 +16,6 @@ package com.liferay.portal.captcha.simplecaptcha;
 
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaException;
-import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -68,11 +67,10 @@ public class SimpleCaptchaImpl implements Captcha {
 		}
 
 		if (!validateChallenge(request)) {
-			incrementCounter(request);
-
-			checkMaxChallenges(request);
-
 			throw new CaptchaTextException();
+		}
+		else {
+			incrementCounter(request);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -87,11 +85,10 @@ public class SimpleCaptchaImpl implements Captcha {
 		}
 
 		if (!validateChallenge(portletRequest)) {
-			incrementCounter(portletRequest);
-
-			checkMaxChallenges(portletRequest);
-
 			throw new CaptchaTextException();
+		}
+		else {
+			incrementCounter(portletRequest);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -105,10 +102,11 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	@Override
-	public boolean isEnabled(HttpServletRequest request)
-		throws CaptchaException {
+	public boolean isEnabled(HttpServletRequest request) {
 
-		checkMaxChallenges(request);
+		if (isMaxChallenges(request)) {
+			return false;
+		}
 
 		if (PropsValues.CAPTCHA_MAX_CHALLENGES >= 0) {
 			return true;
@@ -119,10 +117,11 @@ public class SimpleCaptchaImpl implements Captcha {
 	}
 
 	@Override
-	public boolean isEnabled(PortletRequest portletRequest)
-		throws CaptchaException {
+	public boolean isEnabled(PortletRequest portletRequest) {
 
-		checkMaxChallenges(portletRequest);
+		if (isMaxChallenges(portletRequest)) {
+			return false;
+		}
 
 		if (PropsValues.CAPTCHA_MAX_CHALLENGES >= 0) {
 			return true;
@@ -168,29 +167,29 @@ public class SimpleCaptchaImpl implements Captcha {
 			simpleCaptcha.getImage());
 	}
 
-	protected void checkMaxChallenges(HttpServletRequest request)
-		throws CaptchaMaxChallengesException {
-
+	protected boolean isMaxChallenges(HttpServletRequest request) {
 		if (PropsValues.CAPTCHA_MAX_CHALLENGES > 0) {
 			HttpSession session = request.getSession();
 
 			Integer count = (Integer)session.getAttribute(
 				WebKeys.CAPTCHA_COUNT);
 
-			checkMaxChallenges(count);
+			return isMaxChallenges(count);
 		}
+
+		return false;
 	}
 
-	protected void checkMaxChallenges(Integer count)
-		throws CaptchaMaxChallengesException {
+	protected boolean isMaxChallenges(Integer count) {
 
-		if ((count != null) && (count > PropsValues.CAPTCHA_MAX_CHALLENGES)) {
-			throw new CaptchaMaxChallengesException();
+		if ((count != null) && (count >= PropsValues.CAPTCHA_MAX_CHALLENGES)) {
+			return true;
 		}
+
+		return false;
 	}
 
-	protected void checkMaxChallenges(PortletRequest portletRequest)
-		throws CaptchaMaxChallengesException {
+	protected boolean isMaxChallenges(PortletRequest portletRequest) {
 
 		if (PropsValues.CAPTCHA_MAX_CHALLENGES > 0) {
 			PortletSession portletSession = portletRequest.getPortletSession();
@@ -198,8 +197,10 @@ public class SimpleCaptchaImpl implements Captcha {
 			Integer count = (Integer)portletSession.getAttribute(
 				WebKeys.CAPTCHA_COUNT);
 
-			checkMaxChallenges(count);
+			return isMaxChallenges(count);
 		}
+
+		return false;
 	}
 
 	protected BackgroundProducer getBackgroundProducer() {

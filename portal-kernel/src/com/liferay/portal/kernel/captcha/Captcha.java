@@ -34,11 +34,9 @@ public interface Captcha {
 
 	public String getTaglibPath();
 
-	public boolean isEnabled(HttpServletRequest request)
-		throws CaptchaException;
+	public boolean isEnabled(HttpServletRequest request);
 
-	public boolean isEnabled(PortletRequest portletRequest)
-		throws CaptchaException;
+	public boolean isEnabled(PortletRequest portletRequest);
 
 	public void serveImage(
 			HttpServletRequest request, HttpServletResponse response)

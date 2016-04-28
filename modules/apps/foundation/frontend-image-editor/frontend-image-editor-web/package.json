@@ -1,7 +1,4 @@
 {
 	"name": "frontend-image-editor-web",
-	"version": "1.0.0",
-	"devDependencies": {
-		"metal-components": "1.0.0-rc.19"
-	}
+	"version": "1.0.0"
 }

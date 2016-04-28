@@ -23,12 +23,14 @@
 	%>
 
 	<div class="closed lfr-add-panel lfr-admin-panel sidenav-fixed sidenav-menu-slider sidenav-right" id="<%= portletNamespace %>addPanelId">
-		<div class="product-menu sidebar sidebar-body sidebar-inverse">
+		<div class="product-menu sidebar sidebar-inverse">
 			<h4 class="sidebar-header">
 				<span><liferay-ui:message key="add" /></span>
 
 				<aui:icon cssClass="close icon-monospaced" id='<%= portletNamespace + "closePanelAdd" %>' image="times" markupView="lexicon" url="javascript:;" />
 			</h4>
+
+			<div class="sidebar-body"></div>
 		</div>
 	</div>
 

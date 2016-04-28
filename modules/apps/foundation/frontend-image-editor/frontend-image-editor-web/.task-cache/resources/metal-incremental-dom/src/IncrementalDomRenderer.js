@@ -300,6 +300,23 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 			this.renderIncDom();
 			_IncrementalDomAop2.default.stopInterception();
 			this.attachInlineListeners_();
+			this.emit('rendered', !this.component_.wasRendered);
+		};
+
+		IncrementalDomRenderer.prototype.renderSubComponent_ = function renderSubComponent_(tagOrCtor, config) {
+			var key = config.key || 'sub' + this.generatedKeyCount_++;
+			var comp = this.getSubComponent_(key, tagOrCtor, config);
+			var renderer = comp.getRenderer();
+			if (renderer instanceof IncrementalDomRenderer) {
+				renderer.renderInsidePatch();
+			} else {
+				console.warn('IncrementalDomRenderer doesn\'t support rendering sub components ' + 'that don\'t use IncrementalDomRenderer as well, like:', comp);
+			}
+			if (!comp.wasRendered) {
+				comp.renderAsSubComponent();
+			}
+			this.subComponentsFound_[key] = true;
+			return comp;
 		};
 
 		IncrementalDomRenderer.prototype.shouldUpdate = function shouldUpdate(changes) {
@@ -331,22 +348,6 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 				this.eventsCollector_.detachUnusedListeners();
 				this.disposeUnusedSubComponents_();
 			}
-		};
-
-		IncrementalDomRenderer.prototype.renderSubComponent_ = function renderSubComponent_(tagOrCtor, config) {
-			var key = config.key || 'sub' + this.generatedKeyCount_++;
-			var comp = this.getSubComponent_(key, tagOrCtor, config);
-			var renderer = comp.getRenderer();
-			if (renderer instanceof IncrementalDomRenderer) {
-				renderer.renderInsidePatch();
-			} else {
-				console.warn('IncrementalDomRenderer doesn\'t support rendering sub components ' + 'that don\'t use IncrementalDomRenderer as well, like:', comp);
-			}
-			if (!comp.wasRendered) {
-				comp.renderAsSubComponent();
-			}
-			this.subComponentsFound_[key] = true;
-			return comp;
 		};
 
 		return IncrementalDomRenderer;

@@ -96,7 +96,7 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 	<aui:input name="teamId" type="hidden" value="<%= String.valueOf(team.getTeamId()) %>" />
 
 	<liferay-ui:search-container
-		emptyResultsMessage="there-are-no-members.-you-can-add-a-member-by-clicking-the-button-on-the-top-of-this-box"
+		emptyResultsMessage="there-are-no-members.-you-can-add-a-member-by-clicking-the-plus-button-on-the-bottom-right-corner"
 		id="userGroups"
 		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= userGroupSearchContainer %>"

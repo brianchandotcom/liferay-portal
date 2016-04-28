@@ -6708,11 +6708,11 @@ public class JournalArticleLocalServiceImpl
 			if ((version > JournalArticleConstants.VERSION_DEFAULT) &&
 				incrementVersion) {
 
-				double oldVersion = MathUtil.format(version - 0.1, 1, 1);
-
 				long oldImageId = 0;
 
-				if ((oldVersion >= 1) && incrementVersion) {
+				if (incrementVersion) {
+					double oldVersion = getLatestVersion(groupId, articleId);
+
 					oldImageId =
 						journalArticleImageLocalService.getArticleImageId(
 							groupId, articleId, oldVersion, elInstanceId,

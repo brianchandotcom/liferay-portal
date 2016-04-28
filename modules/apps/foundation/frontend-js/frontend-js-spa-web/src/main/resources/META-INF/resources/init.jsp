@@ -39,4 +39,5 @@ SPAUtil spaUtil = (SPAUtil)request.getAttribute(SPAWebKeys.SPA_UTIL);
 	Liferay.SPA.cacheExpirationTime = <%= spaUtil.getCacheExpirationTime(themeDisplay.getCompanyId()) %>;
 	Liferay.SPA.clearScreensCache = <%= spaUtil.isClearScreensCache(request, session) %>;
 	Liferay.SPA.excludedPaths = <%= spaUtil.getExcludedPaths() %>;
+	Liferay.SPA.loginRedirect = '<%= spaUtil.getLoginRedirect(request) %>';
 </aui:script>

@@ -156,7 +156,7 @@
 				<span id="<portlet:namespace />passwordCapsLockSpan" style="display: none;"><liferay-ui:message key="caps-lock-is-on" /></span>
 
 				<c:if test="<%= company.isAutoLogin() && !PropsValues.SESSION_DISABLED %>">
-					<aui:input checked="<%= rememberMe %>" name="rememberMe" type="checkbox" />
+					<aui:input checked="<%= rememberMe %>" inlineField="<%= true %>" name="rememberMe" type="checkbox" />
 				</c:if>
 
 				<%
@@ -174,11 +174,7 @@
 						<portlet:param name="mvcRenderCommandName" value="/login/forgot_password" />
 					</portlet:renderURL>
 
-					<liferay-ui:icon
-						iconCssClass="icon-question-sign"
-						message="forgot-password"
-						url="<%= forgotPasswordURL %>"
-					/>
+					<aui:a cssClass="pull-right" href="<%= forgotPasswordURL %>" label="forgot-password">?</aui:a>
 				</c:if>
 			</aui:fieldset>
 

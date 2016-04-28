@@ -31,6 +31,8 @@ public interface ProductNavigationControlMenuEntry {
 
 	public Map<String, Object> getData(HttpServletRequest request);
 
+	public String getIcon(HttpServletRequest request);
+
 	public String getIconCssClass(HttpServletRequest request);
 
 	public String getKey();
@@ -38,6 +40,8 @@ public interface ProductNavigationControlMenuEntry {
 	public String getLabel(Locale locale);
 
 	public String getLinkCssClass(HttpServletRequest request);
+
+	public String getMarkupView(HttpServletRequest request);
 
 	public String getURL(HttpServletRequest request);
 

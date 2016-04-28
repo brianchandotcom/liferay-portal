@@ -44,10 +44,11 @@ ProductNavigationControlMenuEntryRegistry productNavigationControlMenuEntryRegis
 
 								<liferay-ui:icon
 									data="<%= productNavigationControlMenuEntry.getData(request) %>"
-									icon="<%= productNavigationControlMenuEntry.getIconCssClass(request) %>"
+									icon="<%= productNavigationControlMenuEntry.getIcon(request) %>"
+									iconCssClass="<%= productNavigationControlMenuEntry.getIconCssClass(request) %>"
 									label="<%= false %>"
 									linkCssClass='<%= "control-menu-icon " + productNavigationControlMenuEntry.getLinkCssClass(request) %>'
-									markupView="lexicon"
+									markupView="<%= productNavigationControlMenuEntry.getMarkupView(request) %>"
 									message="<%= productNavigationControlMenuEntry.getLabel(locale) %>"
 									url="<%= productNavigationControlMenuEntry.getURL(request) %>"
 								/>

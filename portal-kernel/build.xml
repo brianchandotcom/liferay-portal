@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal-kernel" basedir="." default="compile">
+<project basedir="." default="compile" name="portal-kernel">
 	<import file="../build-common-java.xml" />
 
 	<property name="deploy.dir" value="${app.server.lib.global.dir}" />

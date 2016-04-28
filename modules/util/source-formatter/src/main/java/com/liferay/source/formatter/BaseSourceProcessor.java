@@ -921,8 +921,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			String attribute = s.substring(0, x);
 
-			if (!isAttributName(attribute)) {
+			String trimmedAttribute = StringUtil.trim(attribute);
+
+			if (!isAttributName(trimmedAttribute)) {
 				return line;
+			}
+
+			if (!attribute.equals(trimmedAttribute)) {
+				return StringUtil.replace(
+					line, attribute + "=", trimmedAttribute + "=");
 			}
 
 			if (Validator.isNotNull(previousAttribute) &&
@@ -937,6 +944,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			if ((delimeter != CharPool.APOSTROPHE) &&
 				(delimeter != CharPool.QUOTE)) {
+
+				if (delimeter == CharPool.SPACE) {
+					return StringUtil.replace(
+						line, attribute + "= ", attribute + "=");
+				}
 
 				if (delimeter != CharPool.AMPERSAND) {
 					processErrorMessage(

@@ -894,7 +894,7 @@
 		</execute>
 	</command>
 
-	<command  name="OrganizationUserManagement" priority="3">
+	<command name="OrganizationUserManagement" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>

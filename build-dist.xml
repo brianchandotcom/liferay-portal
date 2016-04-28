@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal-dist" basedir="." default="dist" xmlns:antelope="antlib:ise.antelope.tasks">
+<project basedir="." default="dist" name="portal-dist" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build.xml" />
 
 	<if>
@@ -18,16 +18,16 @@
 			<if>
 				<equals arg1="${tomcat.keep.app.server.properties}" arg2="true" />
 				<then>
-					<antcall target="update-sdk-properties" inheritAll="false" />
+					<antcall inheritAll="false" target="update-sdk-properties" />
 
-					<antcall target="unzip-tomcat" inheritAll="false" />
+					<antcall inheritAll="false" target="unzip-tomcat" />
 				</then>
 				<else>
 					<app-server-properties-update>
 						app.server.type=tomcat
 					</app-server-properties-update>
 
-					<antcall target="update-sdk-properties" inheritAll="false" />
+					<antcall inheritAll="false" target="update-sdk-properties" />
 
 					<antcall target="unzip-tomcat" />
 				</else>
@@ -101,13 +101,13 @@
 			app.server.type=glassfish
 		</app-server-properties-update>
 
-		<antcall target="update-sdk-properties" inheritAll="false" />
+		<antcall inheritAll="false" target="update-sdk-properties" />
 
 		<antcall target="unzip-glassfish" />
 
-		<ant target="deploy" inheritAll="false" />
+		<ant inheritAll="false" target="deploy" />
 
-		<antcall target="resolve-dynamic-jars" inheritAll="false" />
+		<antcall inheritAll="false" target="resolve-dynamic-jars" />
 
 		<app-server-properties-reset />
 
@@ -123,17 +123,17 @@
 			app.server.type=jboss
 		</app-server-properties-update>
 
-		<antcall target="update-sdk-properties" inheritAll="false" />
+		<antcall inheritAll="false" target="update-sdk-properties" />
 
-		<antcall target="unzip-jboss" inheritAll="false" />
+		<antcall inheritAll="false" target="unzip-jboss" />
 
 		<update-jboss-java-opts />
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
-		<ant target="deploy" inheritAll="false" />
+		<ant inheritAll="false" target="deploy" />
 
-		<antcall target="resolve-dynamic-jars" inheritAll="false" />
+		<antcall inheritAll="false" target="resolve-dynamic-jars" />
 
 		<app-server-properties-reset />
 
@@ -149,15 +149,15 @@
 			app.server.type=jetty
 		</app-server-properties-update>
 
-		<antcall target="update-sdk-properties" inheritAll="false" />
+		<antcall inheritAll="false" target="update-sdk-properties" />
 
 		<antcall target="unzip-jetty" />
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
-		<ant target="deploy" inheritAll="false" />
+		<ant inheritAll="false" target="deploy" />
 
-		<antcall target="resolve-dynamic-jars" inheritAll="false" />
+		<antcall inheritAll="false" target="resolve-dynamic-jars" />
 
 		<app-server-properties-reset />
 
@@ -177,9 +177,9 @@
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
-		<ant target="deploy" inheritAll="false" />
+		<ant inheritAll="false" target="deploy" />
 
-		<antcall target="resolve-dynamic-jars" inheritAll="false" />
+		<antcall inheritAll="false" target="resolve-dynamic-jars" />
 
 		<app-server-properties-reset />
 
@@ -222,7 +222,7 @@
 			</then>
 		</if>
 
-		<ant dir="${lp.plugins.dir}/hooks/liferay-language-${locale.current}-hook" target="war" inheritAll="false" />
+		<ant dir="${lp.plugins.dir}/hooks/liferay-language-${locale.current}-hook" inheritAll="false" target="war" />
 	</target>
 
 	<target name="build-dist-language-hooks">
@@ -268,7 +268,7 @@
 			<param name="plugins.includes.bundle.required" value="true" />
 		</antcall>
 
-		<ant dir="${lp.plugins.dir}" target="all" inheritAll="false" />
+		<ant dir="${lp.plugins.dir}" inheritAll="false" target="all" />
 	</target>
 
 	<target name="build-dist-resin">
@@ -276,15 +276,15 @@
 			app.server.type=resin
 		</app-server-properties-update>
 
-		<antcall target="update-sdk-properties" inheritAll="false" />
+		<antcall inheritAll="false" target="update-sdk-properties" />
 
 		<antcall target="unzip-resin" />
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
-		<ant target="deploy" inheritAll="false" />
+		<ant inheritAll="false" target="deploy" />
 
-		<antcall target="resolve-dynamic-jars" inheritAll="false" />
+		<antcall inheritAll="false" target="resolve-dynamic-jars" />
 
 		<app-server-properties-reset />
 
@@ -296,8 +296,8 @@
 	</target>
 
 	<target name="build-dist-sql-oracle">
-		<ant dir="sql" target="rebuild-oracle" inheritAll="false" />
-		<ant dir="sql" target="export-oracle" inheritAll="false" />
+		<ant dir="sql" inheritAll="false" target="rebuild-oracle" />
+		<ant dir="sql" inheritAll="false" target="export-oracle" />
 
 		<move file="sql/lportal.dmp" tofile="dist/liferay-portal-sql-oracle-${lp.version}.dmp" />
 	</target>
@@ -309,9 +309,9 @@
 			app.server.tomcat.zip.url=http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.39/bin/apache-tomcat-7.0.39.zip
 		</app-server-properties-update>
 
-		<antcall target="update-sdk-properties" inheritAll="false" />
+		<antcall inheritAll="false" target="update-sdk-properties" />
 
-		<antcall target="build-dist-tomcat" inheritAll="false">
+		<antcall inheritAll="false" target="build-dist-tomcat">
 			<param name="tomcat.keep.app.server.properties" value="true" />
 		</antcall>
 
@@ -329,11 +329,11 @@
 
 		<delete dir="${app.server.tcat.dir}" />
 
-		<antcall target="build-dist-tcat-profile" inheritAll="false">
+		<antcall inheritAll="false" target="build-dist-tcat-profile">
 			<param name="app.server.tcat.dir" value="${app.server.tcat.dir}" />
 		</antcall>
 
-		<antcall target="build-dist-tcat-tomcat" inheritAll="false">
+		<antcall inheritAll="false" target="build-dist-tcat-tomcat">
 			<param name="app.server.tcat.dir" value="${app.server.tcat.dir}" />
 		</antcall>
 
@@ -352,12 +352,12 @@
 			</then>
 		</if>
 
-		<antcall target="build-dist-tcat-admin" inheritAll="false">
+		<antcall inheritAll="false" target="build-dist-tcat-admin">
 			<param name="app.server.tcat.dir" value="${app.server.tcat.dir}" />
 			<param name="app.server.tcat.zip.name" value="${app.server.tcat.zip.name}" />
 		</antcall>
 
-		<antcall target="build-dist-tcat-agent" inheritAll="false">
+		<antcall inheritAll="false" target="build-dist-tcat-agent">
 			<param name="app.server.tcat.dir" value="${app.server.tcat.dir}" />
 			<param name="app.server.tcat.zip.name" value="${app.server.tcat.zip.name}" />
 		</antcall>
@@ -407,7 +407,7 @@
 			plugins.war.excludes=**/WEB-INF/service/**,**/WEB-INF/src/**
 		</echo>
 
-		<ant dir="${lp.plugins.dir}" target="all" inheritAll="false" />
+		<ant dir="${lp.plugins.dir}" inheritAll="false" target="all" />
 
 		<copy todir="${app.server.tcat.dir}/admin/tcat_init/webapps/${lp.version.tcat}">
 			<fileset dir="${lp.plugins.dir}/dist" includes="*.war" />
@@ -416,13 +416,13 @@
 
 	<target name="build-dist-tcat-admin-webapps-portal">
 		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 		</tstamp>
 
 		<mkdir dir="${tstamp.value}/META-INF" />
 
 		<echo file="${tstamp.value}/META-INF/context.xml"><![CDATA[<?xml version="1.0"?>
-			<Context path="" crossContext="true">
+			<Context crossContext="true" path="">
 				<Realm
 					className="org.apache.catalina.realm.JAASRealm"
 					appName="PortalRealm"
@@ -476,7 +476,7 @@
 
 		<echo file="${app.server.tcat.dir}/profile/files/lib/ext/portal-bundle.properties">auto.deploy.deploy.dir=${catalina.base}/deploy</echo>
 
-		<delete file="dist/liferay-portal-tcat-profile-${lp.version}.zip" failonerror="false" />
+		<delete failonerror="false" file="dist/liferay-portal-tcat-profile-${lp.version}.zip" />
 
 		<zip destfile="dist/liferay-portal-tcat-profile-${lp.version}.zip">
 			<zipfileset
@@ -498,7 +498,7 @@
 		<mkdir dir="${app.server.tcat.dir}/tomcat/temp" />
 
 		<replace file="${app.server.tcat.dir}/tomcat/conf/server.xml">
-			<replacetoken><![CDATA[xmlValidation="false" xmlNamespaceAware="false" deployXML="false">]]></replacetoken>
+			<replacetoken><![CDATA[xmlValidation="false" deployXML="false" xmlNamespaceAware="false">]]></replacetoken>
 			<replacevalue><![CDATA[xmlValidation="false" xmlNamespaceAware="false">]]></replacevalue>
 		</replace>
 
@@ -514,15 +514,15 @@
 			app.server.type=tcserver
 		</app-server-properties-update>
 
-		<antcall target="update-sdk-properties" inheritAll="false" />
+		<antcall inheritAll="false" target="update-sdk-properties" />
 
 		<antcall target="unzip-tcserver" />
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
-		<antcall target="all" inheritAll="false" />
+		<antcall inheritAll="false" target="all" />
 
-		<antcall target="resolve-dynamic-jars" inheritAll="false" />
+		<antcall inheritAll="false" target="resolve-dynamic-jars" />
 
 		<app-server-properties-reset />
 
@@ -536,7 +536,7 @@
 	<target name="build-dist-tomcat">
 		<build-dist-tomcat-bare />
 
-		<ant target="deploy" inheritAll="false" />
+		<ant inheritAll="false" target="deploy" />
 
 		<if>
 			<not>
@@ -547,7 +547,7 @@
 			</then>
 		</if>
 
-		<antcall target="resolve-dynamic-jars" inheritAll="false" />
+		<antcall inheritAll="false" target="resolve-dynamic-jars" />
 
 		<antcall target="deploy-plugins">
 			<param name="deployer.dest.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/webapps" />
@@ -565,15 +565,15 @@
 			app.server.type=weblogic
 		</app-server-properties-update>
 
-		<antcall target="update-sdk-properties" inheritAll="false" />
+		<antcall inheritAll="false" target="update-sdk-properties" />
 
 		<antcall target="unzip-weblogic" />
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
-		<ant target="deploy" inheritAll="false" />
+		<ant inheritAll="false" target="deploy" />
 
-		<antcall target="resolve-dynamic-jars" inheritAll="false" />
+		<antcall inheritAll="false" target="resolve-dynamic-jars" />
 
 		<app-server-properties-reset />
 
@@ -589,15 +589,15 @@
 			app.server.type=websphere
 		</app-server-properties-update>
 
-		<antcall target="update-sdk-properties" inheritAll="false" />
+		<antcall inheritAll="false" target="update-sdk-properties" />
 
-		<antcall target="unzip-websphere" inheritAll="false" />
+		<antcall inheritAll="false" target="unzip-websphere" />
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
-		<ant target="deploy" inheritAll="false" />
+		<ant inheritAll="false" target="deploy" />
 
-		<antcall target="resolve-dynamic-jars" inheritAll="false" />
+		<antcall inheritAll="false" target="resolve-dynamic-jars" />
 
 		<app-server-properties-reset />
 
@@ -613,15 +613,15 @@
 			app.server.type=wildfly
 		</app-server-properties-update>
 
-		<antcall target="update-sdk-properties" inheritAll="false" />
+		<antcall inheritAll="false" target="update-sdk-properties" />
 
 		<antcall target="unzip-wildfly" />
 
 		<delete dir="${project.dir}/portal-web/classes" />
 
-		<ant target="deploy" inheritAll="false" />
+		<ant inheritAll="false" target="deploy" />
 
-		<antcall target="resolve-dynamic-jars" inheritAll="false" />
+		<antcall inheritAll="false" target="resolve-dynamic-jars" />
 
 		<app-server-properties-reset />
 
@@ -633,7 +633,7 @@
 	</target>
 
 	<target name="deploy-plugins">
-		<delete includeemptydirs="true" failonerror="false">
+		<delete failonerror="false" includeemptydirs="true">
 			<fileset
 				dir="${deployer.dest.dir}"
 				includes="*-ext/**,*-hook/**,*-layouttpl/**,*-portlet/**,*-theme/**"
@@ -818,7 +818,7 @@
 		<if>
 			<available file="${patching.tool.source.dir}" type="dir" />
 			<then>
-				<ant dir="${patching.tool.source.dir}" target="all" inheritAll="false" />
+				<ant dir="${patching.tool.source.dir}" inheritAll="false" target="all" />
 			</then>
 		</if>
 
@@ -879,11 +879,11 @@
 		<antcall target="zip-tomcat" />
 		<antcall target="zip-wildfly" />
 
-		<ant antfile="build-maven.xml" target="zip-maven" inheritAll="false" />
+		<ant antfile="build-maven.xml" inheritAll="false" target="zip-maven" />
 
 		<!--<antcall target="build-dist-sql-oracle" />-->
 
-		<ant dir="${lp.plugins.dir}" target="extract-plugins-sdk" inheritAll="false" />
+		<ant dir="${lp.plugins.dir}" inheritAll="false" target="extract-plugins-sdk" />
 
 		<move file="${lp.plugins.dir}/dist/liferay-plugins-sdk-${lp.version}.zip" tofile="dist/liferay-plugins-sdk-${lp.version}.zip" />
 
@@ -891,7 +891,7 @@
 			<param name="plugins.includes.marketplace.required" value="true" />
 		</antcall>
 
-		<ant dir="${lp.plugins.dir}" target="all" inheritAll="false" />
+		<ant dir="${lp.plugins.dir}" inheritAll="false" target="all" />
 
 		<if>
 			<isset property="dist.username" />
@@ -926,12 +926,12 @@ release was successful.</echo>
 		<antcall target="clean" />
 		<antcall target="start" />
 
-		<record name="prepare-generated-files.txt" action="start" />
+		<record action="start" name="prepare-generated-files.txt" />
 
-		<ant dir="portal-impl" target="build-iw" inheritAll="false" />
-		<ant dir="portal-impl" target="build-lib-versions" inheritAll="false" />
-		<ant dir="portal-impl" target="build-services" inheritAll="false" />
-		<ant dir="portal-impl" target="build-wsdds" inheritAll="false" />
+		<ant dir="portal-impl" inheritAll="false" target="build-iw" />
+		<ant dir="portal-impl" inheritAll="false" target="build-lib-versions" />
+		<ant dir="portal-impl" inheritAll="false" target="build-services" />
+		<ant dir="portal-impl" inheritAll="false" target="build-wsdds" />
 
 		<delete file="portal-impl/classes/META-INF/javadocs-all.xml" />
 		<delete file="portal-impl/classes/META-INF/javadocs-rt.xml" />
@@ -977,7 +977,7 @@ release was successful.</echo>
 					<http url="http://localhost:8080" />
 				</waitfor>
 
-				<ant dir="portal-client" target="build-client" inheritAll="false" />
+				<ant dir="portal-client" inheritAll="false" target="build-client" />
 
 				<if>
 					<os family="windows" />
@@ -997,7 +997,7 @@ release was successful.</echo>
 			project.setProperty("prepare-generated-files.tstamp", String.valueOf(System.currentTimeMillis()));
 		</beanshell>
 
-		<record name="prepare-generated-files.txt" action="stop" />
+		<record action="stop" name="prepare-generated-files.txt" />
 
 		<if>
 			<resourcecontains resource="prepare-generated-files.txt" substring="java.lang.RuntimeException" />
@@ -1019,7 +1019,7 @@ release was successful.</echo>
 				<equals arg1="${app.server.type}" arg2="glassfish" />
 				<then>
 					<tstamp>
-						<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+						<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 					</tstamp>
 
 					<unzip
@@ -1266,7 +1266,7 @@ this task.
 			<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
 		</replace>
 
-		<echo file="${app.server.jboss.bin.dir}/standalone.conf" append="true">
+		<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">
 			<![CDATA[
 				JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m"
 			]]>
@@ -1290,7 +1290,7 @@ this task.
 		</replace>
 
 		<replace file="${app.server.jboss.instance.dir}/configuration/standalone.xml">
-			<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:web:1.1" default-virtual-server="default-host" native="false">]]></replacetoken>
+			<replacetoken><![CDATA[<subsystem default-virtual-server="default-host" native="false" xmlns="urn:jboss:domain:web:1.1">]]></replacetoken>
 			<replacevalue>
 				<![CDATA[
 					<subsystem xmlns="urn:jboss:domain:web:1.1" default-virtual-server="default-host" native="false">
@@ -1455,7 +1455,7 @@ this task.
 			/>
 		</unzip>
 
-		<delete includeemptydirs="true" failonerror="false">
+		<delete failonerror="false" includeemptydirs="true">
 			<fileset
 				dir="${app.server.jonas.dir}/conf"
 				includes="db2.properties,FirebirdSQL.properties,HSQL1.properties,jetty*.xml,InstantDB1.properties,InterBase1.properties,MailMimePartDS1.properties,MailSession1.properties,McKoi1.properties,MySQL.properties,Oracle1.properties,PostgreSQL1.properties,spy.properties,Sybase1.properties"
@@ -1491,7 +1491,7 @@ this task.
 			</replacevalue>
 		</replace>
 
-		<unjar src="${app.server.jonas.dir}/lib/bootstrap/felix-launcher.jar" dest="${app.server.jonas.dir}/conf">
+		<unjar dest="${app.server.jonas.dir}/conf" src="${app.server.jonas.dir}/lib/bootstrap/felix-launcher.jar">
 			<patternset>
 				<include name="**/default.properties" />
 			</patternset>
@@ -1819,7 +1819,7 @@ wrapper.java.additional.11="-Dfile.encoding=UTF-8"]]></replacevalue>
 
 		<!--<replace file="${app.server.tomcat.dir}/conf/server.xml">
 			<replacetoken><![CDATA[xmlValidation="false" xmlNamespaceAware="false">]]></replacetoken>
-			<replacevalue><![CDATA[xmlValidation="false" xmlNamespaceAware="false" deployXML="false">]]></replacevalue>
+			<replacevalue><![CDATA[xmlValidation="false" deployXML="false" xmlNamespaceAware="false">]]></replacevalue>
 		</replace>-->
 
 		<if>
@@ -1902,7 +1902,7 @@ rerun this task.
 		<if>
 			<equals arg1="${app.server.weblogic.version.build}" arg2="1221" />
 			<then>
-				<java jar="${app.server.weblogic.dir}-temp/${app.server.weblogic.jar.name}" fork="true">
+				<java fork="true" jar="${app.server.weblogic.dir}-temp/${app.server.weblogic.jar.name}">
 					<arg line="ORACLE_HOME=${app.server.weblogic.dir}" />
 				</java>
 
@@ -1929,7 +1929,7 @@ rerun this task.
 		</if>
 
 		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 		</tstamp>
 
 		<mkdir dir="${tstamp.value}" />
@@ -2093,13 +2093,13 @@ closeTemplate()
 							<equals arg1="${app.server.weblogic.version.build}" arg2="1221" />
 							<then>
 								<exec dir="${app.server.weblogic.dir}/wlserver/server/bin" executable="./setWLSEnv.sh">
-									<env key="MW_HOME" file="${app.server.weblogic.dir}" />
+									<env file="${app.server.weblogic.dir}" key="MW_HOME" />
 									<arg value="${app.server.weblogic.configure.silent}" />
 								</exec>
 							</then>
 							<else>
 								<exec dir="${app.server.weblogic.dir}" executable="./configure.sh">
-									<env key="MW_HOME" file="${app.server.weblogic.dir}" />
+									<env file="${app.server.weblogic.dir}" key="MW_HOME" />
 									<arg value="${app.server.weblogic.configure.silent}" />
 								</exec>
 							</else>
@@ -2110,13 +2110,13 @@ closeTemplate()
 							<equals arg1="${app.server.weblogic.version.build}" arg2="1221" />
 							<then>
 								<exec dir="${app.server.weblogic.dir}/wlserver/server/bin" executable="sh">
-									<env key="MW_HOME" file="${app.server.weblogic.dir}" />
+									<env file="${app.server.weblogic.dir}" key="MW_HOME" />
 									<arg value="setWLSEnv.sh" />
 								</exec>
 							</then>
 							<else>
 								<exec dir="${app.server.weblogic.dir}" executable="sh">
-									<env key="MW_HOME" file="${app.server.weblogic.dir}" />
+									<env file="${app.server.weblogic.dir}" key="MW_HOME" />
 									<arg value="configure.sh" />
 								</exec>
 							</else>
@@ -2452,7 +2452,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 		<echo>Installing installation manager. This may take a few minutes.</echo>
 
 		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 		</tstamp>
 
 		<if>
@@ -2496,7 +2496,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 		<echo>Installing application server. This may take a few minutes.</echo>
 
 		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 		</tstamp>
 
 		<for list="${app.server.websphere.repo.zip.names}" param="app.server.websphere.repo.zip.name">
@@ -2509,7 +2509,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 		</for>
 
 		<echoxml file="${tstamp.value}/was/liferay-responseFile.xml">
-			<agent-input clean='true' temporary='false'>
+			<agent-input clean="true" temporary="false">
 
 			<install modify="false">
 			 	<offering
@@ -2524,7 +2524,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 			</profile>
 
 			<server>
-				<repository location='${project.dir}/${tstamp.value}/was/repository.config' />
+				<repository location="${project.dir}/${tstamp.value}/was/repository.config" />
 			</server>
 
 			</agent-input>
@@ -2596,8 +2596,8 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 			</elseif>
 		</if>
 
-		<delete file="${app.server.websphere.dir}/liferay-portdef.props" failonerror="false" />
-		<delete file="${app.server.websphere.dir}/liferay-responsefile.txt" failonerror="false" />
+		<delete failonerror="false" file="${app.server.websphere.dir}/liferay-portdef.props" />
+		<delete failonerror="false" file="${app.server.websphere.dir}/liferay-responsefile.txt" />
 
 		<replace file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/nodes/liferay-node/servers/server1/server.xml">
 			<replacetoken><![CDATA[disableJIT="false">]]></replacetoken>
@@ -2607,7 +2607,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 		<echo>Installing fix pack. This may take a few minutes</echo>
 
 		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 		</tstamp>
 
 		<for list="${app.server.websphere.fix.pack.was.zip.names}" param="app.server.websphere.fix.pack.was.zip.name">
@@ -2629,7 +2629,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 		</for>
 
 		<echoxml file="${tstamp.value}/was_fixpack/liferay-responseFile.xml">
-			<agent-input clean='true' temporary='false'>
+			<agent-input clean="true" temporary="false">
 
 			<install modify="false">
 			 	<offering
@@ -2649,8 +2649,8 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 			</profile>
 
 			<server>
-				<repository location='${project.dir}/${tstamp.value}/was_fixpack/repository.config' />
-				<repository location='${project.dir}/${tstamp.value}/was_fixpack_jdk/repository.config' />
+				<repository location="${project.dir}/${tstamp.value}/was_fixpack/repository.config" />
+				<repository location="${project.dir}/${tstamp.value}/was_fixpack_jdk/repository.config" />
 			</server>
 
 			</agent-input>
@@ -2743,7 +2743,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 		</replace>
 
 		<replace file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml">
-			<replacetoken><![CDATA[<location name="/" handler="welcome-content"/>]]></replacetoken>
+			<replacetoken><![CDATA[<location handler="welcome-content" name="/"/>]]></replacetoken>
 			<replacevalue></replacevalue>
 		</replace>
 
@@ -2815,7 +2815,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 			</else>
 		</if>
 
-		<echo file="${app.server.wildfly.bin.dir}/standalone.conf" append="true">
+		<echo append="true" file="${app.server.wildfly.bin.dir}/standalone.conf">
 			<![CDATA[
 				JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Duser.timezone=GMT -Xmx1024m -XX:MaxMetaspaceSize=384m -XX:MetaspaceSize=200m"
 			]]>
@@ -2926,7 +2926,7 @@ plugins.includes=</echo>
 
 	<target name="zip-db-upgrade">
 		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 		</tstamp>
 
 		<mkdir dir="${tstamp.value}/lib" />
@@ -2983,9 +2983,9 @@ plugins.includes=</echo>
 	</target>
 
 	<target name="zip-executable">
-		<delete file="dist/${zip.executable.file}-${lp.version}.zip" failonerror="false" />
+		<delete failonerror="false" file="dist/${zip.executable.file}-${lp.version}.zip" />
 
-		<antelope:stringutil string="${zip.executable.dir}" property="zip.executable.dir.beginindex">
+		<antelope:stringutil property="zip.executable.dir.beginindex" string="${zip.executable.dir}">
 			<lastindexof string="/" />
 		</antelope:stringutil>
 
@@ -2997,7 +2997,7 @@ plugins.includes=</echo>
 			result="zip.executable.dir.beginindex"
 		/>
 
-		<antelope:stringutil string="${zip.executable.dir}" property="zip.executable.dir.name">
+		<antelope:stringutil property="zip.executable.dir.name" string="${zip.executable.dir}">
 			<substring beginindex="${zip.executable.dir.beginindex}" />
 		</antelope:stringutil>
 
@@ -3187,7 +3187,7 @@ plugins.includes=</echo>
 			<available file="${patching.tool.source.dir}" type="dir" />
 			<then>
 				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+					<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 				</tstamp>
 
 				<mkdir dir="${tstamp.value}/lib" />
@@ -3230,7 +3230,7 @@ plugins.includes=</echo>
 	</target>
 
 	<target name="zip-portal-client">
-		<delete file="dist/liferay-portal-client-${lp.version}.zip" failonerror="false" />
+		<delete failonerror="false" file="dist/liferay-portal-client-${lp.version}.zip" />
 
 		<zip destfile="dist/liferay-portal-client-${lp.version}.zip">
 			<zipfileset
@@ -3247,7 +3247,7 @@ plugins.includes=</echo>
 	</target>
 
 	<target name="zip-portal-dependencies">
-		<delete file="dist/liferay-portal-dependencies-${lp.version}.zip" failonerror="false" />
+		<delete failonerror="false" file="dist/liferay-portal-dependencies-${lp.version}.zip" />
 
 		<zip destfile="dist/liferay-portal-dependencies-${lp.version}.zip">
 			<zipfileset
@@ -3277,7 +3277,7 @@ plugins.includes=</echo>
 
 	<target name="zip-portal-war-2.3">
 		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 		</tstamp>
 
 		<java
@@ -3293,7 +3293,7 @@ plugins.includes=</echo>
 			<arg value="${tstamp.value}/WEB-INF/web.xml" />
 		</java>
 
-		<delete file="dist/liferay-portal-${lp.version}-servlet23.war" failonerror="false" />
+		<delete failonerror="false" file="dist/liferay-portal-${lp.version}-servlet23.war" />
 
 		<copy
 			file="dist/liferay-portal-${lp.version}.war"
@@ -3312,7 +3312,7 @@ plugins.includes=</echo>
 
 	<target name="zip-portal-war-2.3-with-dependencies">
 		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 		</tstamp>
 
 		<copy todir="${tstamp.value}/WEB-INF/lib">
@@ -3322,7 +3322,7 @@ plugins.includes=</echo>
 			/>
 		</copy>
 
-		<delete file="dist/liferay-portal-${lp.version}-servlet23-with-dependencies.war" failonerror="false" />
+		<delete failonerror="false" file="dist/liferay-portal-${lp.version}-servlet23-with-dependencies.war" />
 
 		<copy
 			file="dist/liferay-portal-${lp.version}-servlet23.war"
@@ -3340,7 +3340,7 @@ plugins.includes=</echo>
 	</target>
 
 	<target name="zip-portal-war-2.4">
-		<delete file="dist/liferay-portal-${lp.version}.war" failonerror="false" />
+		<delete failonerror="false" file="dist/liferay-portal-${lp.version}.war" />
 
 		<zip
 			basedir="${app.server.portal.dir}"
@@ -3348,7 +3348,7 @@ plugins.includes=</echo>
 		/>
 
 		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 		</tstamp>
 
 		<!--
@@ -3373,7 +3373,7 @@ plugins.includes=</echo>
 
 	<target name="zip-portal-war-2.4-with-dependencies">
 		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 		</tstamp>
 
 		<copy todir="${tstamp.value}/WEB-INF/lib">
@@ -3383,7 +3383,7 @@ plugins.includes=</echo>
 			/>
 		</copy>
 
-		<delete file="dist/liferay-portal-${lp.version}-with-dependencies.war" failonerror="false" />
+		<delete failonerror="false" file="dist/liferay-portal-${lp.version}-with-dependencies.war" />
 
 		<copy
 			file="dist/liferay-portal-${lp.version}.war"
@@ -3408,7 +3408,7 @@ plugins.includes=</echo>
 	</target>
 
 	<target name="zip-sql">
-		<delete file="dist/liferay-portal-sql-${lp.version}.zip" failonerror="false" />
+		<delete failonerror="false" file="dist/liferay-portal-sql-${lp.version}.zip" />
 
 		<zip destfile="dist/liferay-portal-sql-${lp.version}.zip">
 			<zipfileset
@@ -3420,7 +3420,7 @@ plugins.includes=</echo>
 	</target>
 
 	<target name="zip-src">
-		<delete file="dist/liferay-portal-src-${lp.version}.zip" failonerror="false" />
+		<delete failonerror="false" file="dist/liferay-portal-src-${lp.version}.zip" />
 
 		<zip destfile="dist/liferay-portal-src-${lp.version}.zip">
 			<zipfileset

@@ -7,7 +7,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean id="com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper" class="com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper">
+	<bean class="com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper" id="com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper">
 		<property name="companyProvider">
 			<bean class="com.liferay.portal.kernel.service.persistence.impl.ThreadLocalCompanyProvider" />
 		</property>

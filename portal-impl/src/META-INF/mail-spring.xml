@@ -8,12 +8,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
 >
-	<bean id="com.liferay.mail.kernel.service.MailService" class="com.liferay.mail.service.impl.MailServiceImpl" />
+	<bean class="com.liferay.mail.service.impl.MailServiceImpl" id="com.liferay.mail.kernel.service.MailService" />
 
 	<!-- Messaging -->
 
-	<bean id="messageListener.mail" class="com.liferay.mail.messaging.MailMessageListener" />
-	<bean id="messagingConfigurator.mail" class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator">
+	<bean class="com.liferay.mail.messaging.MailMessageListener" id="messageListener.mail" />
+	<bean class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator" id="messagingConfigurator.mail">
 		<property name="destinationConfigurations">
 			<util:set>
 				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration">

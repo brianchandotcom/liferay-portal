@@ -76,6 +76,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return newContent;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static void sortAttributes(Element element, boolean recursive) {
 		Map<String, Attribute> attributesMap = new TreeMap<>();
 
@@ -104,6 +108,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static String sortAttributes(String content) throws Exception {
 		XMLSourceProcessor xmlSourceProcessor = new XMLSourceProcessor();
 
@@ -227,6 +235,61 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
+	protected void checkAntXMLProjectName(String fileName, Document document) {
+		String baseDirName = sourceFormatterArgs.getBaseDirName();
+
+		int x = baseDirName.length();
+
+		if (fileName.endsWith("-ext/build.xml")) {
+			if (fileName.startsWith(baseDirName + "ext/")) {
+				x += 4;
+			}
+		}
+		else if (fileName.endsWith("-hook/build.xml")) {
+			if (fileName.startsWith(baseDirName + "hooks/")) {
+				x += 6;
+			}
+		}
+		else if (fileName.endsWith("-layouttpl/build.xml")) {
+			if (fileName.startsWith(baseDirName + "layouttpl/")) {
+				x += 10;
+			}
+		}
+		else if (fileName.endsWith("-portlet/build.xml")) {
+			if (fileName.startsWith(baseDirName + "portlets/")) {
+				x += 9;
+			}
+		}
+		else if (fileName.endsWith("-theme/build.xml")) {
+			if (fileName.startsWith(baseDirName + "themes/")) {
+				x += 7;
+			}
+		}
+		else if (fileName.endsWith("-web/build.xml") &&
+				 !fileName.endsWith("/ext-web/build.xml")) {
+
+			if (fileName.startsWith(baseDirName + "webs/")) {
+				x += 5;
+			}
+		}
+		else {
+			return;
+		}
+
+		int y = fileName.indexOf(CharPool.SLASH, x);
+
+		String expectedProjectName = fileName.substring(x, y);
+
+		Element rootElement = document.getRootElement();
+
+		String projectName = rootElement.attributeValue("name");
+
+		if (!projectName.equals(expectedProjectName)) {
+			processErrorMessage(
+				fileName, fileName + " has an incorrect project name");
+		}
+	}
+
 	protected void checkImportFiles(String fileName, String content) {
 		Matcher matcher = _importFilePattern.matcher(content);
 
@@ -338,7 +401,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			formatResourceActionXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("/service.xml")) {
-			newContent = formatServiceXML(fileName, absolutePath, newContent);
+			formatServiceXML(fileName, absolutePath, newContent);
 		}
 		else if (fileName.endsWith("/schema.xml") &&
 				 absolutePath.contains("solr")) {
@@ -359,6 +422,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent = formatWebXML(fileName, newContent);
 		}
 
+		newContent = sortAttributes(fileName, newContent);
+
 		return formatXML(newContent);
 	}
 
@@ -374,73 +439,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		};
 
 		return getFileNames(excludes, getIncludes());
-	}
-
-	protected String fixAntXMLProjectName(String fileName, String content) {
-		String baseDirName = sourceFormatterArgs.getBaseDirName();
-
-		int x = baseDirName.length();
-
-		if (fileName.endsWith("-ext/build.xml")) {
-			if (fileName.startsWith(baseDirName + "ext/")) {
-				x += 4;
-			}
-		}
-		else if (fileName.endsWith("-hook/build.xml")) {
-			if (fileName.startsWith(baseDirName + "hooks/")) {
-				x += 6;
-			}
-		}
-		else if (fileName.endsWith("-layouttpl/build.xml")) {
-			if (fileName.startsWith(baseDirName + "layouttpl/")) {
-				x += 10;
-			}
-		}
-		else if (fileName.endsWith("-portlet/build.xml")) {
-			if (fileName.startsWith(baseDirName + "portlets/")) {
-				x += 9;
-			}
-		}
-		else if (fileName.endsWith("-theme/build.xml")) {
-			if (fileName.startsWith(baseDirName + "themes/")) {
-				x += 7;
-			}
-		}
-		else if (fileName.endsWith("-web/build.xml") &&
-				 !fileName.endsWith("/ext-web/build.xml")) {
-
-			if (fileName.startsWith(baseDirName + "webs/")) {
-				x += 5;
-			}
-		}
-		else {
-			return content;
-		}
-
-		if (content.contains("<project>")) {
-			return content;
-		}
-
-		int y = fileName.indexOf(CharPool.SLASH, x);
-
-		String correctProjectElementText =
-			"<project name=\"" + fileName.substring(x, y) + "\"";
-
-		if (!content.contains(correctProjectElementText)) {
-			x = content.indexOf("<project name=\"");
-
-			y = content.indexOf(CharPool.QUOTE, x) + 1;
-			y = content.indexOf(CharPool.QUOTE, y) + 1;
-
-			content =
-				content.substring(0, x) + correctProjectElementText +
-					content.substring(y);
-
-			processErrorMessage(
-				fileName, fileName + " has an incorrect project name");
-		}
-
-		return content;
 	}
 
 	protected String fixPoshiXMLElementWithNoChild(String content) {
@@ -606,9 +604,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = trimContent(content, true);
 
-		newContent = fixAntXMLProjectName(fileName, newContent);
-
 		Document document = readXML(content);
+
+		checkAntXMLProjectName(fileName, document);
 
 		checkOrder(
 			fileName, document.getRootElement(), "macrodef", null,
@@ -668,8 +666,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		Document document = readXML(content);
 
 		Element rootElement = document.getRootElement();
-
-		sortAttributes(rootElement, true);
 
 		sortElementsByChildElement(rootElement, "structure", "name");
 
@@ -785,8 +781,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		Element rootElement = document.getRootElement();
 
-		sortAttributes(rootElement, true);
-
 		boolean checkNumericalPortletNameElement = !isExcludedPath(
 			_numericalPortletNameElementExcludes, absolutePath);
 
@@ -831,8 +825,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		checkPoshiCharactersAfterDefinition(fileName, content);
 		checkPoshiCharactersBeforeDefinition(fileName, content);
-
-		content = sortPoshiAttributes(fileName, content);
 
 		content = sortPoshiCommands(content);
 
@@ -906,15 +898,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			new ResourceActionPortletResourceElementComparator());
 	}
 
-	protected String formatServiceXML(
+	protected void formatServiceXML(
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		Document document = readXML(content);
 
 		Element rootElement = document.getRootElement();
-
-		sortAttributes(rootElement, true);
 
 		List<Element> entityElements = rootElement.elements("entity");
 
@@ -941,8 +931,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkOrder(
 			fileName, rootElement.element("exceptions"), "exception", null,
 			new ServiceExceptionElementComparator());
-
-		return Dom4jUtil.toString(document);
 	}
 
 	protected void formatSolrSchema(String fileName, String content)
@@ -1174,7 +1162,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		_xmlExcludes = getPropertyList("xml.excludes");
 	}
 
-	protected String sortPoshiAttributes(String fileName, String content)
+	protected String sortAttributes(String fileName, String content)
 		throws Exception {
 
 		StringBundler sb = new StringBundler();
@@ -1196,6 +1184,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				if (sortAttributes) {
 					if (trimmedLine.startsWith(StringPool.LESS_THAN) &&
 						trimmedLine.endsWith(StringPool.GREATER_THAN) &&
+						!trimmedLine.startsWith("<?") &&
 						!trimmedLine.startsWith("<%") &&
 						!trimmedLine.startsWith("<!")) {
 

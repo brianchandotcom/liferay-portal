@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-resin" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project basedir="." default="test" name="portal-test-resin" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
 	<target name="run-resin">
@@ -55,7 +55,7 @@
 
 		<antcall target="prepare-virtual-host-name-properties" />
 
-		<antcall target="run-resin" inheritAll="false">
+		<antcall inheritAll="false" target="run-resin">
 			<param name="test.class" value="${test.class}" />
 		</antcall>
 	</target>

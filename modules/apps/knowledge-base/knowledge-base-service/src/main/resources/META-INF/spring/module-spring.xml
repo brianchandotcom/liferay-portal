@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean id="com.liferay.knowledge.base.service.KBArticleLocalService" class="com.liferay.knowledge.base.service.impl.KBArticleLocalServiceImpl" />
-	<bean id="com.liferay.knowledge.base.service.KBArticleService" class="com.liferay.knowledge.base.service.impl.KBArticleServiceImpl" />
-	<bean id="com.liferay.knowledge.base.service.persistence.KBArticlePersistence" class="com.liferay.knowledge.base.service.persistence.impl.KBArticlePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.knowledge.base.service.persistence.KBArticleFinder" class="com.liferay.knowledge.base.service.persistence.impl.KBArticleFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.knowledge.base.service.KBCommentLocalService" class="com.liferay.knowledge.base.service.impl.KBCommentLocalServiceImpl" />
-	<bean id="com.liferay.knowledge.base.service.KBCommentService" class="com.liferay.knowledge.base.service.impl.KBCommentServiceImpl" />
-	<bean id="com.liferay.knowledge.base.service.persistence.KBCommentPersistence" class="com.liferay.knowledge.base.service.persistence.impl.KBCommentPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.knowledge.base.service.KBFolderLocalService" class="com.liferay.knowledge.base.service.impl.KBFolderLocalServiceImpl" />
-	<bean id="com.liferay.knowledge.base.service.KBFolderService" class="com.liferay.knowledge.base.service.impl.KBFolderServiceImpl" />
-	<bean id="com.liferay.knowledge.base.service.persistence.KBFolderPersistence" class="com.liferay.knowledge.base.service.persistence.impl.KBFolderPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.knowledge.base.service.KBTemplateLocalService" class="com.liferay.knowledge.base.service.impl.KBTemplateLocalServiceImpl" />
-	<bean id="com.liferay.knowledge.base.service.KBTemplateService" class="com.liferay.knowledge.base.service.impl.KBTemplateServiceImpl" />
-	<bean id="com.liferay.knowledge.base.service.persistence.KBTemplatePersistence" class="com.liferay.knowledge.base.service.persistence.impl.KBTemplatePersistenceImpl" parent="basePersistence" />
+	<bean class="com.liferay.knowledge.base.service.impl.KBArticleLocalServiceImpl" id="com.liferay.knowledge.base.service.KBArticleLocalService" />
+	<bean class="com.liferay.knowledge.base.service.impl.KBArticleServiceImpl" id="com.liferay.knowledge.base.service.KBArticleService" />
+	<bean class="com.liferay.knowledge.base.service.persistence.impl.KBArticlePersistenceImpl" id="com.liferay.knowledge.base.service.persistence.KBArticlePersistence" parent="basePersistence" />
+	<bean class="com.liferay.knowledge.base.service.persistence.impl.KBArticleFinderImpl" id="com.liferay.knowledge.base.service.persistence.KBArticleFinder" parent="basePersistence" />
+	<bean class="com.liferay.knowledge.base.service.impl.KBCommentLocalServiceImpl" id="com.liferay.knowledge.base.service.KBCommentLocalService" />
+	<bean class="com.liferay.knowledge.base.service.impl.KBCommentServiceImpl" id="com.liferay.knowledge.base.service.KBCommentService" />
+	<bean class="com.liferay.knowledge.base.service.persistence.impl.KBCommentPersistenceImpl" id="com.liferay.knowledge.base.service.persistence.KBCommentPersistence" parent="basePersistence" />
+	<bean class="com.liferay.knowledge.base.service.impl.KBFolderLocalServiceImpl" id="com.liferay.knowledge.base.service.KBFolderLocalService" />
+	<bean class="com.liferay.knowledge.base.service.impl.KBFolderServiceImpl" id="com.liferay.knowledge.base.service.KBFolderService" />
+	<bean class="com.liferay.knowledge.base.service.persistence.impl.KBFolderPersistenceImpl" id="com.liferay.knowledge.base.service.persistence.KBFolderPersistence" parent="basePersistence" />
+	<bean class="com.liferay.knowledge.base.service.impl.KBTemplateLocalServiceImpl" id="com.liferay.knowledge.base.service.KBTemplateLocalService" />
+	<bean class="com.liferay.knowledge.base.service.impl.KBTemplateServiceImpl" id="com.liferay.knowledge.base.service.KBTemplateService" />
+	<bean class="com.liferay.knowledge.base.service.persistence.impl.KBTemplatePersistenceImpl" id="com.liferay.knowledge.base.service.persistence.KBTemplatePersistence" parent="basePersistence" />
 </beans>

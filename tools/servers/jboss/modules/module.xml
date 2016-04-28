@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<module xmlns="urn:jboss:module:1.0" name="com.liferay.portal">
+<module name="com.liferay.portal" xmlns="urn:jboss:module:1.0">
 	<resources>
 		<resource-root path="com.liferay.registry.api.jar" />
 		<resource-root path="hsql.jar" />

@@ -1,340 +1,340 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-	<bean id="com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsDeliveryLocalServiceImpl" />
-	<bean id="com.liferay.announcements.kernel.service.AnnouncementsDeliveryService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsDeliveryServiceImpl" />
-	<bean id="com.liferay.announcements.kernel.service.persistence.AnnouncementsDeliveryPersistence" class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsDeliveryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsEntryLocalServiceImpl" />
-	<bean id="com.liferay.announcements.kernel.service.AnnouncementsEntryService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsEntryServiceImpl" />
-	<bean id="com.liferay.announcements.kernel.service.persistence.AnnouncementsEntryPersistence" class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsEntryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.announcements.kernel.service.persistence.AnnouncementsEntryFinder" class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsEntryFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsFlagLocalServiceImpl" />
-	<bean id="com.liferay.announcements.kernel.service.AnnouncementsFlagService" class="com.liferay.portlet.announcements.service.impl.AnnouncementsFlagServiceImpl" />
-	<bean id="com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence" class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsFlagPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.asset.kernel.service.AssetCategoryLocalService" class="com.liferay.portlet.asset.service.impl.AssetCategoryLocalServiceImpl" />
-	<bean id="com.liferay.asset.kernel.service.AssetCategoryService" class="com.liferay.portlet.asset.service.impl.AssetCategoryServiceImpl" />
-	<bean id="com.liferay.asset.kernel.service.persistence.AssetCategoryPersistence" class="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.asset.kernel.service.persistence.AssetCategoryFinder" class="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.asset.kernel.service.AssetCategoryPropertyLocalService" class="com.liferay.portlet.asset.service.impl.AssetCategoryPropertyLocalServiceImpl" />
-	<bean id="com.liferay.asset.kernel.service.AssetCategoryPropertyService" class="com.liferay.portlet.asset.service.impl.AssetCategoryPropertyServiceImpl" />
-	<bean id="com.liferay.asset.kernel.service.persistence.AssetCategoryPropertyPersistence" class="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryPropertyPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.asset.kernel.service.persistence.AssetCategoryPropertyFinder" class="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryPropertyFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.asset.kernel.service.AssetEntryLocalService" class="com.liferay.portlet.asset.service.impl.AssetEntryLocalServiceImpl" />
-	<bean id="com.liferay.asset.kernel.service.AssetEntryService" class="com.liferay.portlet.asset.service.impl.AssetEntryServiceImpl" />
-	<bean id="com.liferay.asset.kernel.service.persistence.AssetEntryPersistence" class="com.liferay.portlet.asset.service.persistence.impl.AssetEntryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.asset.kernel.service.persistence.AssetEntryFinder" class="com.liferay.portlet.asset.service.persistence.impl.AssetEntryFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.asset.kernel.service.AssetLinkLocalService" class="com.liferay.portlet.asset.service.impl.AssetLinkLocalServiceImpl" />
-	<bean id="com.liferay.asset.kernel.service.persistence.AssetLinkPersistence" class="com.liferay.portlet.asset.service.persistence.impl.AssetLinkPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.asset.kernel.service.AssetTagLocalService" class="com.liferay.portlet.asset.service.impl.AssetTagLocalServiceImpl" />
-	<bean id="com.liferay.asset.kernel.service.AssetTagService" class="com.liferay.portlet.asset.service.impl.AssetTagServiceImpl" />
-	<bean id="com.liferay.asset.kernel.service.persistence.AssetTagPersistence" class="com.liferay.portlet.asset.service.persistence.impl.AssetTagPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.asset.kernel.service.persistence.AssetTagFinder" class="com.liferay.portlet.asset.service.persistence.impl.AssetTagFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.asset.kernel.service.AssetTagStatsLocalService" class="com.liferay.portlet.asset.service.impl.AssetTagStatsLocalServiceImpl" />
-	<bean id="com.liferay.asset.kernel.service.persistence.AssetTagStatsPersistence" class="com.liferay.portlet.asset.service.persistence.impl.AssetTagStatsPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.asset.kernel.service.AssetVocabularyLocalService" class="com.liferay.portlet.asset.service.impl.AssetVocabularyLocalServiceImpl" />
-	<bean id="com.liferay.asset.kernel.service.AssetVocabularyService" class="com.liferay.portlet.asset.service.impl.AssetVocabularyServiceImpl" />
-	<bean id="com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence" class="com.liferay.portlet.asset.service.persistence.impl.AssetVocabularyPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.asset.kernel.service.persistence.AssetVocabularyFinder" class="com.liferay.portlet.asset.service.persistence.impl.AssetVocabularyFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.blogs.kernel.service.BlogsEntryLocalService" class="com.liferay.portlet.blogs.service.impl.BlogsEntryLocalServiceImpl" />
-	<bean id="com.liferay.blogs.kernel.service.BlogsEntryService" class="com.liferay.portlet.blogs.service.impl.BlogsEntryServiceImpl" />
-	<bean id="com.liferay.blogs.kernel.service.persistence.BlogsEntryPersistence" class="com.liferay.portlet.blogs.service.persistence.impl.BlogsEntryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.blogs.kernel.service.persistence.BlogsEntryFinder" class="com.liferay.portlet.blogs.service.persistence.impl.BlogsEntryFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.blogs.kernel.service.BlogsStatsUserLocalService" class="com.liferay.portlet.blogs.service.impl.BlogsStatsUserLocalServiceImpl" />
-	<bean id="com.liferay.blogs.kernel.service.persistence.BlogsStatsUserPersistence" class="com.liferay.portlet.blogs.service.persistence.impl.BlogsStatsUserPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.blogs.kernel.service.persistence.BlogsStatsUserFinder" class="com.liferay.portlet.blogs.service.persistence.impl.BlogsStatsUserFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.document.library.kernel.service.DLAppLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLAppLocalServiceImpl" />
-	<bean id="com.liferay.document.library.kernel.service.DLAppService" class="com.liferay.portlet.documentlibrary.service.impl.DLAppServiceImpl" />
-	<bean id="com.liferay.document.library.kernel.service.DLAppHelperLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLAppHelperLocalServiceImpl" />
-	<bean id="com.liferay.document.library.kernel.service.DLContentLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLContentLocalServiceImpl" />
-	<bean id="com.liferay.document.library.kernel.service.persistence.DLContentPersistence" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLContentPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.document.library.kernel.service.DLFileEntryLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl" />
-	<bean id="com.liferay.document.library.kernel.service.DLFileEntryService" class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryServiceImpl" />
-	<bean id="com.liferay.document.library.kernel.service.persistence.DLFileEntryPersistence" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryMetadataLocalServiceImpl" />
-	<bean id="com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataPersistence" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryMetadataPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataFinder" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryMetadataFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryTypeLocalServiceImpl" />
-	<bean id="com.liferay.document.library.kernel.service.DLFileEntryTypeService" class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryTypeServiceImpl" />
-	<bean id="com.liferay.document.library.kernel.service.persistence.DLFileEntryTypePersistence" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryTypePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.document.library.kernel.service.persistence.DLFileEntryTypeFinder" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryTypeFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.document.library.kernel.service.DLFileRankLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLFileRankLocalServiceImpl" />
-	<bean id="com.liferay.document.library.kernel.service.persistence.DLFileRankPersistence" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileRankPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.document.library.kernel.service.persistence.DLFileRankFinder" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileRankFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.document.library.kernel.service.DLFileShortcutLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLFileShortcutLocalServiceImpl" />
-	<bean id="com.liferay.document.library.kernel.service.DLFileShortcutService" class="com.liferay.portlet.documentlibrary.service.impl.DLFileShortcutServiceImpl" />
-	<bean id="com.liferay.document.library.kernel.service.persistence.DLFileShortcutPersistence" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileShortcutPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.document.library.kernel.service.DLFileVersionLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLFileVersionLocalServiceImpl" />
-	<bean id="com.liferay.document.library.kernel.service.DLFileVersionService" class="com.liferay.portlet.documentlibrary.service.impl.DLFileVersionServiceImpl" />
-	<bean id="com.liferay.document.library.kernel.service.persistence.DLFileVersionPersistence" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileVersionPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.document.library.kernel.service.DLFolderLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLFolderLocalServiceImpl" />
-	<bean id="com.liferay.document.library.kernel.service.DLFolderService" class="com.liferay.portlet.documentlibrary.service.impl.DLFolderServiceImpl" />
-	<bean id="com.liferay.document.library.kernel.service.persistence.DLFolderPersistence" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFolderPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFolderFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.document.library.kernel.service.DLSyncEventLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLSyncEventLocalServiceImpl" />
-	<bean id="com.liferay.document.library.kernel.service.persistence.DLSyncEventPersistence" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLSyncEventPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.document.library.kernel.service.DLTrashLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLTrashLocalServiceImpl" />
-	<bean id="com.liferay.document.library.kernel.service.DLTrashService" class="com.liferay.portlet.documentlibrary.service.impl.DLTrashServiceImpl" />
-	<bean id="com.liferay.expando.kernel.service.ExpandoColumnLocalService" class="com.liferay.portlet.expando.service.impl.ExpandoColumnLocalServiceImpl" />
-	<bean id="com.liferay.expando.kernel.service.ExpandoColumnService" class="com.liferay.portlet.expando.service.impl.ExpandoColumnServiceImpl" />
-	<bean id="com.liferay.expando.kernel.service.persistence.ExpandoColumnPersistence" class="com.liferay.portlet.expando.service.persistence.impl.ExpandoColumnPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.expando.kernel.service.ExpandoRowLocalService" class="com.liferay.portlet.expando.service.impl.ExpandoRowLocalServiceImpl" />
-	<bean id="com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence" class="com.liferay.portlet.expando.service.persistence.impl.ExpandoRowPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.expando.kernel.service.ExpandoTableLocalService" class="com.liferay.portlet.expando.service.impl.ExpandoTableLocalServiceImpl" />
-	<bean id="com.liferay.expando.kernel.service.persistence.ExpandoTablePersistence" class="com.liferay.portlet.expando.service.persistence.impl.ExpandoTablePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.expando.kernel.service.ExpandoValueLocalService" class="com.liferay.portlet.expando.service.impl.ExpandoValueLocalServiceImpl" />
-	<bean id="com.liferay.expando.kernel.service.ExpandoValueService" class="com.liferay.portlet.expando.service.impl.ExpandoValueServiceImpl" />
-	<bean id="com.liferay.expando.kernel.service.persistence.ExpandoValuePersistence" class="com.liferay.portlet.expando.service.persistence.impl.ExpandoValuePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.exportimport.kernel.service.ExportImportLocalService" class="com.liferay.portlet.exportimport.service.impl.ExportImportLocalServiceImpl" />
-	<bean id="com.liferay.exportimport.kernel.service.ExportImportService" class="com.liferay.portlet.exportimport.service.impl.ExportImportServiceImpl" />
-	<bean id="com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService" class="com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationLocalServiceImpl" />
-	<bean id="com.liferay.exportimport.kernel.service.ExportImportConfigurationService" class="com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationServiceImpl" />
-	<bean id="com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationPersistence" class="com.liferay.portlet.exportimport.service.persistence.impl.ExportImportConfigurationPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationFinder" class="com.liferay.portlet.exportimport.service.persistence.impl.ExportImportConfigurationFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.exportimport.kernel.service.StagingLocalService" class="com.liferay.portlet.exportimport.service.impl.StagingLocalServiceImpl" />
-	<bean id="com.liferay.exportimport.kernel.service.StagingService" class="com.liferay.portlet.exportimport.service.impl.StagingServiceImpl" />
-	<bean id="com.liferay.message.boards.kernel.service.MBBanLocalService" class="com.liferay.portlet.messageboards.service.impl.MBBanLocalServiceImpl" />
-	<bean id="com.liferay.message.boards.kernel.service.MBBanService" class="com.liferay.portlet.messageboards.service.impl.MBBanServiceImpl" />
-	<bean id="com.liferay.message.boards.kernel.service.persistence.MBBanPersistence" class="com.liferay.portlet.messageboards.service.persistence.impl.MBBanPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.message.boards.kernel.service.MBCategoryLocalService" class="com.liferay.portlet.messageboards.service.impl.MBCategoryLocalServiceImpl" />
-	<bean id="com.liferay.message.boards.kernel.service.MBCategoryService" class="com.liferay.portlet.messageboards.service.impl.MBCategoryServiceImpl" />
-	<bean id="com.liferay.message.boards.kernel.service.persistence.MBCategoryPersistence" class="com.liferay.portlet.messageboards.service.persistence.impl.MBCategoryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.message.boards.kernel.service.persistence.MBCategoryFinder" class="com.liferay.portlet.messageboards.service.persistence.impl.MBCategoryFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.message.boards.kernel.service.MBDiscussionLocalService" class="com.liferay.portlet.messageboards.service.impl.MBDiscussionLocalServiceImpl" />
-	<bean id="com.liferay.message.boards.kernel.service.persistence.MBDiscussionPersistence" class="com.liferay.portlet.messageboards.service.persistence.impl.MBDiscussionPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.message.boards.kernel.service.MBMailingListLocalService" class="com.liferay.portlet.messageboards.service.impl.MBMailingListLocalServiceImpl" />
-	<bean id="com.liferay.message.boards.kernel.service.persistence.MBMailingListPersistence" class="com.liferay.portlet.messageboards.service.persistence.impl.MBMailingListPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.message.boards.kernel.service.MBMessageLocalService" class="com.liferay.portlet.messageboards.service.impl.MBMessageLocalServiceImpl" />
-	<bean id="com.liferay.message.boards.kernel.service.MBMessageService" class="com.liferay.portlet.messageboards.service.impl.MBMessageServiceImpl" />
-	<bean id="com.liferay.message.boards.kernel.service.persistence.MBMessagePersistence" class="com.liferay.portlet.messageboards.service.persistence.impl.MBMessagePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.message.boards.kernel.service.persistence.MBMessageFinder" class="com.liferay.portlet.messageboards.service.persistence.impl.MBMessageFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.message.boards.kernel.service.MBStatsUserLocalService" class="com.liferay.portlet.messageboards.service.impl.MBStatsUserLocalServiceImpl" />
-	<bean id="com.liferay.message.boards.kernel.service.persistence.MBStatsUserPersistence" class="com.liferay.portlet.messageboards.service.persistence.impl.MBStatsUserPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.message.boards.kernel.service.MBThreadLocalService" class="com.liferay.portlet.messageboards.service.impl.MBThreadLocalServiceImpl" />
-	<bean id="com.liferay.message.boards.kernel.service.MBThreadService" class="com.liferay.portlet.messageboards.service.impl.MBThreadServiceImpl" />
-	<bean id="com.liferay.message.boards.kernel.service.persistence.MBThreadPersistence" class="com.liferay.portlet.messageboards.service.persistence.impl.MBThreadPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.message.boards.kernel.service.persistence.MBThreadFinder" class="com.liferay.portlet.messageboards.service.persistence.impl.MBThreadFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.message.boards.kernel.service.MBThreadFlagLocalService" class="com.liferay.portlet.messageboards.service.impl.MBThreadFlagLocalServiceImpl" />
-	<bean id="com.liferay.message.boards.kernel.service.persistence.MBThreadFlagPersistence" class="com.liferay.portlet.messageboards.service.persistence.impl.MBThreadFlagPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.AccountLocalService" class="com.liferay.portal.service.impl.AccountLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.AccountService" class="com.liferay.portal.service.impl.AccountServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.AccountPersistence" class="com.liferay.portal.service.persistence.impl.AccountPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.AddressLocalService" class="com.liferay.portal.service.impl.AddressLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.AddressService" class="com.liferay.portal.service.impl.AddressServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.AddressPersistence" class="com.liferay.portal.service.persistence.impl.AddressPersistenceImpl2" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.BrowserTrackerLocalService" class="com.liferay.portal.service.impl.BrowserTrackerLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.BrowserTrackerPersistence" class="com.liferay.portal.service.persistence.impl.BrowserTrackerPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.ClassNameLocalService" class="com.liferay.portal.service.impl.ClassNameLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.ClassNameService" class="com.liferay.portal.service.impl.ClassNameServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.ClassNamePersistence" class="com.liferay.portal.service.persistence.impl.ClassNamePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.ClusterGroupLocalService" class="com.liferay.portal.service.impl.ClusterGroupLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.ClusterGroupPersistence" class="com.liferay.portal.service.persistence.impl.ClusterGroupPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.CompanyLocalService" class="com.liferay.portal.service.impl.CompanyLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.CompanyService" class="com.liferay.portal.service.impl.CompanyServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.CompanyPersistence" class="com.liferay.portal.service.persistence.impl.CompanyPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.ContactLocalService" class="com.liferay.portal.service.impl.ContactLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.ContactService" class="com.liferay.portal.service.impl.ContactServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.ContactPersistence" class="com.liferay.portal.service.persistence.impl.ContactPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.CountryService" class="com.liferay.portal.service.impl.CountryServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.CountryPersistence" class="com.liferay.portal.service.persistence.impl.CountryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.EmailAddressLocalService" class="com.liferay.portal.service.impl.EmailAddressLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.EmailAddressService" class="com.liferay.portal.service.impl.EmailAddressServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.EmailAddressPersistence" class="com.liferay.portal.service.persistence.impl.EmailAddressPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.GroupLocalService" class="com.liferay.portal.service.impl.GroupLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.GroupService" class="com.liferay.portal.service.impl.GroupServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.GroupPersistence" class="com.liferay.portal.service.persistence.impl.GroupPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.persistence.GroupFinder" class="com.liferay.portal.service.persistence.impl.GroupFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.ImageLocalService" class="com.liferay.portal.service.impl.ImageLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.ImageService" class="com.liferay.portal.service.impl.ImageServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.ImagePersistence" class="com.liferay.portal.service.persistence.impl.ImagePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.LayoutLocalService" class="com.liferay.portal.service.impl.LayoutLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.LayoutService" class="com.liferay.portal.service.impl.LayoutServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.LayoutPersistence" class="com.liferay.portal.service.persistence.impl.LayoutPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.persistence.LayoutFinder" class="com.liferay.portal.service.persistence.impl.LayoutFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.LayoutBranchLocalService" class="com.liferay.portal.service.impl.LayoutBranchLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.LayoutBranchService" class="com.liferay.portal.service.impl.LayoutBranchServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.LayoutBranchPersistence" class="com.liferay.portal.service.persistence.impl.LayoutBranchPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService" class="com.liferay.portal.service.impl.LayoutFriendlyURLLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.LayoutFriendlyURLPersistence" class="com.liferay.portal.service.persistence.impl.LayoutFriendlyURLPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.LayoutPrototypeLocalService" class="com.liferay.portal.service.impl.LayoutPrototypeLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.LayoutPrototypeService" class="com.liferay.portal.service.impl.LayoutPrototypeServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.LayoutPrototypePersistence" class="com.liferay.portal.service.persistence.impl.LayoutPrototypePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.LayoutRevisionLocalService" class="com.liferay.portal.service.impl.LayoutRevisionLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.LayoutRevisionService" class="com.liferay.portal.service.impl.LayoutRevisionServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.LayoutRevisionPersistence" class="com.liferay.portal.service.persistence.impl.LayoutRevisionPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.LayoutSetLocalService" class="com.liferay.portal.service.impl.LayoutSetLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.LayoutSetService" class="com.liferay.portal.service.impl.LayoutSetServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.LayoutSetPersistence" class="com.liferay.portal.service.persistence.impl.LayoutSetPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.LayoutSetBranchLocalService" class="com.liferay.portal.service.impl.LayoutSetBranchLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.LayoutSetBranchService" class="com.liferay.portal.service.impl.LayoutSetBranchServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.LayoutSetBranchPersistence" class="com.liferay.portal.service.persistence.impl.LayoutSetBranchPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService" class="com.liferay.portal.service.impl.LayoutSetPrototypeLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.LayoutSetPrototypeService" class="com.liferay.portal.service.impl.LayoutSetPrototypeServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.LayoutSetPrototypePersistence" class="com.liferay.portal.service.persistence.impl.LayoutSetPrototypePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.LayoutTemplateLocalService" class="com.liferay.portal.service.impl.LayoutTemplateLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.ListTypeLocalService" class="com.liferay.portal.service.impl.ListTypeLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.ListTypeService" class="com.liferay.portal.service.impl.ListTypeServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.ListTypePersistence" class="com.liferay.portal.service.persistence.impl.ListTypePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.MembershipRequestLocalService" class="com.liferay.portal.service.impl.MembershipRequestLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.MembershipRequestService" class="com.liferay.portal.service.impl.MembershipRequestServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.MembershipRequestPersistence" class="com.liferay.portal.service.persistence.impl.MembershipRequestPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.OrganizationLocalService" class="com.liferay.portal.service.impl.OrganizationLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.OrganizationService" class="com.liferay.portal.service.impl.OrganizationServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.OrganizationPersistence" class="com.liferay.portal.service.persistence.impl.OrganizationPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.persistence.OrganizationFinder" class="com.liferay.portal.service.persistence.impl.OrganizationFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.persistence.OrgGroupRolePersistence" class="com.liferay.portal.service.persistence.impl.OrgGroupRolePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.OrgLaborLocalService" class="com.liferay.portal.service.impl.OrgLaborLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.OrgLaborService" class="com.liferay.portal.service.impl.OrgLaborServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.OrgLaborPersistence" class="com.liferay.portal.service.persistence.impl.OrgLaborPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.PasswordPolicyLocalService" class="com.liferay.portal.service.impl.PasswordPolicyLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.PasswordPolicyService" class="com.liferay.portal.service.impl.PasswordPolicyServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.PasswordPolicyPersistence" class="com.liferay.portal.service.persistence.impl.PasswordPolicyPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.persistence.PasswordPolicyFinder" class="com.liferay.portal.service.persistence.impl.PasswordPolicyFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.PasswordPolicyRelLocalService" class="com.liferay.portal.service.impl.PasswordPolicyRelLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.PasswordPolicyRelPersistence" class="com.liferay.portal.service.persistence.impl.PasswordPolicyRelPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.PasswordTrackerLocalService" class="com.liferay.portal.service.impl.PasswordTrackerLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.PasswordTrackerPersistence" class="com.liferay.portal.service.persistence.impl.PasswordTrackerPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.PermissionService" class="com.liferay.portal.service.impl.PermissionServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.PhoneLocalService" class="com.liferay.portal.service.impl.PhoneLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.PhoneService" class="com.liferay.portal.service.impl.PhoneServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.PhonePersistence" class="com.liferay.portal.service.persistence.impl.PhonePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.PluginSettingLocalService" class="com.liferay.portal.service.impl.PluginSettingLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.PluginSettingService" class="com.liferay.portal.service.impl.PluginSettingServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.PluginSettingPersistence" class="com.liferay.portal.service.persistence.impl.PluginSettingPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.PortalLocalService" class="com.liferay.portal.service.impl.PortalLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.PortalService" class="com.liferay.portal.service.impl.PortalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.PortalPreferencesLocalService" class="com.liferay.portal.service.impl.PortalPreferencesLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.PortalPreferencesPersistence" class="com.liferay.portal.service.persistence.impl.PortalPreferencesPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.PortletLocalService" class="com.liferay.portal.service.impl.PortletLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.PortletService" class="com.liferay.portal.service.impl.PortletServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.PortletPersistence" class="com.liferay.portal.service.persistence.impl.PortletPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.PortletItemLocalService" class="com.liferay.portal.service.impl.PortletItemLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.PortletItemPersistence" class="com.liferay.portal.service.persistence.impl.PortletItemPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.PortletPreferencesLocalService" class="com.liferay.portal.service.impl.PortletPreferencesLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.PortletPreferencesService" class="com.liferay.portal.service.impl.PortletPreferencesServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence" class="com.liferay.portal.service.persistence.impl.PortletPreferencesPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.persistence.PortletPreferencesFinder" class="com.liferay.portal.service.persistence.impl.PortletPreferencesFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.RecentLayoutBranchLocalService" class="com.liferay.portal.service.impl.RecentLayoutBranchLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.RecentLayoutBranchPersistence" class="com.liferay.portal.service.persistence.impl.RecentLayoutBranchPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.RecentLayoutRevisionLocalService" class="com.liferay.portal.service.impl.RecentLayoutRevisionLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.RecentLayoutRevisionPersistence" class="com.liferay.portal.service.persistence.impl.RecentLayoutRevisionPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.RecentLayoutSetBranchLocalService" class="com.liferay.portal.service.impl.RecentLayoutSetBranchLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.RecentLayoutSetBranchPersistence" class="com.liferay.portal.service.persistence.impl.RecentLayoutSetBranchPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.RegionService" class="com.liferay.portal.service.impl.RegionServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.RegionPersistence" class="com.liferay.portal.service.persistence.impl.RegionPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.ReleaseLocalService" class="com.liferay.portal.service.impl.ReleaseLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.ReleasePersistence" class="com.liferay.portal.service.persistence.impl.ReleasePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.RepositoryLocalService" class="com.liferay.portal.service.impl.RepositoryLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.RepositoryService" class="com.liferay.portal.service.impl.RepositoryServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.RepositoryPersistence" class="com.liferay.portal.service.persistence.impl.RepositoryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.RepositoryEntryLocalService" class="com.liferay.portal.service.impl.RepositoryEntryLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.RepositoryEntryPersistence" class="com.liferay.portal.service.persistence.impl.RepositoryEntryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.ResourceLocalService" class="com.liferay.portal.service.impl.ResourceLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.ResourceActionLocalService" class="com.liferay.portal.service.impl.ResourceActionLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.ResourceActionPersistence" class="com.liferay.portal.service.persistence.impl.ResourceActionPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.ResourceBlockLocalService" class="com.liferay.portal.service.impl.ResourceBlockLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.ResourceBlockService" class="com.liferay.portal.service.impl.ResourceBlockServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.ResourceBlockPersistence" class="com.liferay.portal.service.persistence.impl.ResourceBlockPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.persistence.ResourceBlockFinder" class="com.liferay.portal.service.persistence.impl.ResourceBlockFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.ResourceBlockPermissionLocalService" class="com.liferay.portal.service.impl.ResourceBlockPermissionLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.ResourceBlockPermissionPersistence" class="com.liferay.portal.service.persistence.impl.ResourceBlockPermissionPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.ResourcePermissionLocalService" class="com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.ResourcePermissionService" class="com.liferay.portal.service.impl.ResourcePermissionServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence" class="com.liferay.portal.service.persistence.impl.ResourcePermissionPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.persistence.ResourcePermissionFinder" class="com.liferay.portal.service.persistence.impl.ResourcePermissionFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.ResourceTypePermissionLocalService" class="com.liferay.portal.service.impl.ResourceTypePermissionLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.ResourceTypePermissionPersistence" class="com.liferay.portal.service.persistence.impl.ResourceTypePermissionPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.persistence.ResourceTypePermissionFinder" class="com.liferay.portal.service.persistence.impl.ResourceTypePermissionFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.RoleLocalService" class="com.liferay.portal.service.impl.RoleLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.RoleService" class="com.liferay.portal.service.impl.RoleServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.RolePersistence" class="com.liferay.portal.service.persistence.impl.RolePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.persistence.RoleFinder" class="com.liferay.portal.service.persistence.impl.RoleFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.ServiceComponentLocalService" class="com.liferay.portal.service.impl.ServiceComponentLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.ServiceComponentPersistence" class="com.liferay.portal.service.persistence.impl.ServiceComponentPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.persistence.ServiceComponentFinder" class="com.liferay.portal.service.persistence.impl.ServiceComponentFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.SubscriptionLocalService" class="com.liferay.portal.service.impl.SubscriptionLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.SubscriptionPersistence" class="com.liferay.portal.service.persistence.impl.SubscriptionPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.SystemEventLocalService" class="com.liferay.portal.service.impl.SystemEventLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.SystemEventPersistence" class="com.liferay.portal.service.persistence.impl.SystemEventPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.TeamLocalService" class="com.liferay.portal.service.impl.TeamLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.TeamService" class="com.liferay.portal.service.impl.TeamServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.TeamPersistence" class="com.liferay.portal.service.persistence.impl.TeamPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.persistence.TeamFinder" class="com.liferay.portal.service.persistence.impl.TeamFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.ThemeLocalService" class="com.liferay.portal.service.impl.ThemeLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.ThemeService" class="com.liferay.portal.service.impl.ThemeServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.TicketLocalService" class="com.liferay.portal.service.impl.TicketLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.TicketPersistence" class="com.liferay.portal.service.persistence.impl.TicketPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.UserLocalService" class="com.liferay.portal.service.impl.UserLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.UserService" class="com.liferay.portal.service.impl.UserServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.UserPersistence" class="com.liferay.portal.service.persistence.impl.UserPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.persistence.UserFinder" class="com.liferay.portal.service.persistence.impl.UserFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.UserGroupLocalService" class="com.liferay.portal.service.impl.UserGroupLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.UserGroupService" class="com.liferay.portal.service.impl.UserGroupServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.UserGroupPersistence" class="com.liferay.portal.service.persistence.impl.UserGroupPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.persistence.UserGroupFinder" class="com.liferay.portal.service.persistence.impl.UserGroupFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService" class="com.liferay.portal.service.impl.UserGroupGroupRoleLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.UserGroupGroupRoleService" class="com.liferay.portal.service.impl.UserGroupGroupRoleServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePersistence" class="com.liferay.portal.service.persistence.impl.UserGroupGroupRolePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.persistence.UserGroupGroupRoleFinder" class="com.liferay.portal.service.persistence.impl.UserGroupGroupRoleFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.UserGroupRoleLocalService" class="com.liferay.portal.service.impl.UserGroupRoleLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.UserGroupRoleService" class="com.liferay.portal.service.impl.UserGroupRoleServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence" class="com.liferay.portal.service.persistence.impl.UserGroupRolePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.persistence.UserGroupRoleFinder" class="com.liferay.portal.service.persistence.impl.UserGroupRoleFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.UserIdMapperLocalService" class="com.liferay.portal.service.impl.UserIdMapperLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.UserIdMapperPersistence" class="com.liferay.portal.service.persistence.impl.UserIdMapperPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService" class="com.liferay.portal.service.impl.UserNotificationDeliveryLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.UserNotificationDeliveryPersistence" class="com.liferay.portal.service.persistence.impl.UserNotificationDeliveryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.UserNotificationEventLocalService" class="com.liferay.portal.service.impl.UserNotificationEventLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.UserNotificationEventPersistence" class="com.liferay.portal.service.persistence.impl.UserNotificationEventPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.UserTrackerLocalService" class="com.liferay.portal.service.impl.UserTrackerLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.UserTrackerPersistence" class="com.liferay.portal.service.persistence.impl.UserTrackerPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.UserTrackerPathLocalService" class="com.liferay.portal.service.impl.UserTrackerPathLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.UserTrackerPathPersistence" class="com.liferay.portal.service.persistence.impl.UserTrackerPathPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.VirtualHostLocalService" class="com.liferay.portal.service.impl.VirtualHostLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.VirtualHostPersistence" class="com.liferay.portal.service.persistence.impl.VirtualHostPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.WebDAVPropsLocalService" class="com.liferay.portal.service.impl.WebDAVPropsLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.WebDAVPropsPersistence" class="com.liferay.portal.service.persistence.impl.WebDAVPropsPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.WebsiteLocalService" class="com.liferay.portal.service.impl.WebsiteLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.WebsiteService" class="com.liferay.portal.service.impl.WebsiteServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.WebsitePersistence" class="com.liferay.portal.service.persistence.impl.WebsitePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService" class="com.liferay.portal.service.impl.WorkflowDefinitionLinkLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersistence" class="com.liferay.portal.service.persistence.impl.WorkflowDefinitionLinkPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService" class="com.liferay.portal.service.impl.WorkflowInstanceLinkLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence" class="com.liferay.portal.service.persistence.impl.WorkflowInstanceLinkPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.ratings.kernel.service.RatingsEntryLocalService" class="com.liferay.portlet.ratings.service.impl.RatingsEntryLocalServiceImpl" />
-	<bean id="com.liferay.ratings.kernel.service.RatingsEntryService" class="com.liferay.portlet.ratings.service.impl.RatingsEntryServiceImpl" />
-	<bean id="com.liferay.ratings.kernel.service.persistence.RatingsEntryPersistence" class="com.liferay.portlet.ratings.service.persistence.impl.RatingsEntryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.ratings.kernel.service.persistence.RatingsEntryFinder" class="com.liferay.portlet.ratings.service.persistence.impl.RatingsEntryFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.ratings.kernel.service.RatingsStatsLocalService" class="com.liferay.portlet.ratings.service.impl.RatingsStatsLocalServiceImpl" />
-	<bean id="com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence" class="com.liferay.portlet.ratings.service.persistence.impl.RatingsStatsPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.ratings.kernel.service.persistence.RatingsStatsFinder" class="com.liferay.portlet.ratings.service.persistence.impl.RatingsStatsFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.social.kernel.service.SocialActivityLocalService" class="com.liferay.portlet.social.service.impl.SocialActivityLocalServiceImpl" />
-	<bean id="com.liferay.social.kernel.service.SocialActivityService" class="com.liferay.portlet.social.service.impl.SocialActivityServiceImpl" />
-	<bean id="com.liferay.social.kernel.service.persistence.SocialActivityPersistence" class="com.liferay.portlet.social.service.persistence.impl.SocialActivityPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.social.kernel.service.persistence.SocialActivityFinder" class="com.liferay.portlet.social.service.persistence.impl.SocialActivityFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.social.kernel.service.SocialActivityAchievementLocalService" class="com.liferay.portlet.social.service.impl.SocialActivityAchievementLocalServiceImpl" />
-	<bean id="com.liferay.social.kernel.service.persistence.SocialActivityAchievementPersistence" class="com.liferay.portlet.social.service.persistence.impl.SocialActivityAchievementPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.social.kernel.service.SocialActivityCounterLocalService" class="com.liferay.portlet.social.service.impl.SocialActivityCounterLocalServiceImpl" />
-	<bean id="com.liferay.social.kernel.service.persistence.SocialActivityCounterPersistence" class="com.liferay.portlet.social.service.persistence.impl.SocialActivityCounterPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.social.kernel.service.persistence.SocialActivityCounterFinder" class="com.liferay.portlet.social.service.persistence.impl.SocialActivityCounterFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.social.kernel.service.SocialActivityInterpreterLocalService" class="com.liferay.portlet.social.service.impl.SocialActivityInterpreterLocalServiceImpl" />
-	<bean id="com.liferay.social.kernel.service.SocialActivityLimitLocalService" class="com.liferay.portlet.social.service.impl.SocialActivityLimitLocalServiceImpl" />
-	<bean id="com.liferay.social.kernel.service.persistence.SocialActivityLimitPersistence" class="com.liferay.portlet.social.service.persistence.impl.SocialActivityLimitPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.social.kernel.service.SocialActivitySetLocalService" class="com.liferay.portlet.social.service.impl.SocialActivitySetLocalServiceImpl" />
-	<bean id="com.liferay.social.kernel.service.persistence.SocialActivitySetPersistence" class="com.liferay.portlet.social.service.persistence.impl.SocialActivitySetPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.social.kernel.service.persistence.SocialActivitySetFinder" class="com.liferay.portlet.social.service.persistence.impl.SocialActivitySetFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.social.kernel.service.SocialActivitySettingLocalService" class="com.liferay.portlet.social.service.impl.SocialActivitySettingLocalServiceImpl" />
-	<bean id="com.liferay.social.kernel.service.SocialActivitySettingService" class="com.liferay.portlet.social.service.impl.SocialActivitySettingServiceImpl" />
-	<bean id="com.liferay.social.kernel.service.persistence.SocialActivitySettingPersistence" class="com.liferay.portlet.social.service.persistence.impl.SocialActivitySettingPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.social.kernel.service.SocialRelationLocalService" class="com.liferay.portlet.social.service.impl.SocialRelationLocalServiceImpl" />
-	<bean id="com.liferay.social.kernel.service.persistence.SocialRelationPersistence" class="com.liferay.portlet.social.service.persistence.impl.SocialRelationPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.social.kernel.service.SocialRequestLocalService" class="com.liferay.portlet.social.service.impl.SocialRequestLocalServiceImpl" />
-	<bean id="com.liferay.social.kernel.service.SocialRequestService" class="com.liferay.portlet.social.service.impl.SocialRequestServiceImpl" />
-	<bean id="com.liferay.social.kernel.service.persistence.SocialRequestPersistence" class="com.liferay.portlet.social.service.persistence.impl.SocialRequestPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.social.kernel.service.SocialRequestInterpreterLocalService" class="com.liferay.portlet.social.service.impl.SocialRequestInterpreterLocalServiceImpl" />
-	<bean id="com.liferay.trash.kernel.service.TrashEntryLocalService" class="com.liferay.portlet.trash.service.impl.TrashEntryLocalServiceImpl" />
-	<bean id="com.liferay.trash.kernel.service.TrashEntryService" class="com.liferay.portlet.trash.service.impl.TrashEntryServiceImpl" />
-	<bean id="com.liferay.trash.kernel.service.persistence.TrashEntryPersistence" class="com.liferay.portlet.trash.service.persistence.impl.TrashEntryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.trash.kernel.service.TrashVersionLocalService" class="com.liferay.portlet.trash.service.impl.TrashVersionLocalServiceImpl" />
-	<bean id="com.liferay.trash.kernel.service.persistence.TrashVersionPersistence" class="com.liferay.portlet.trash.service.persistence.impl.TrashVersionPersistenceImpl" parent="basePersistence" />
+	<bean class="com.liferay.portlet.announcements.service.impl.AnnouncementsDeliveryLocalServiceImpl" id="com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService" />
+	<bean class="com.liferay.portlet.announcements.service.impl.AnnouncementsDeliveryServiceImpl" id="com.liferay.announcements.kernel.service.AnnouncementsDeliveryService" />
+	<bean class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsDeliveryPersistenceImpl" id="com.liferay.announcements.kernel.service.persistence.AnnouncementsDeliveryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.announcements.service.impl.AnnouncementsEntryLocalServiceImpl" id="com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService" />
+	<bean class="com.liferay.portlet.announcements.service.impl.AnnouncementsEntryServiceImpl" id="com.liferay.announcements.kernel.service.AnnouncementsEntryService" />
+	<bean class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsEntryPersistenceImpl" id="com.liferay.announcements.kernel.service.persistence.AnnouncementsEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsEntryFinderImpl" id="com.liferay.announcements.kernel.service.persistence.AnnouncementsEntryFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.announcements.service.impl.AnnouncementsFlagLocalServiceImpl" id="com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService" />
+	<bean class="com.liferay.portlet.announcements.service.impl.AnnouncementsFlagServiceImpl" id="com.liferay.announcements.kernel.service.AnnouncementsFlagService" />
+	<bean class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsFlagPersistenceImpl" id="com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.asset.service.impl.AssetCategoryLocalServiceImpl" id="com.liferay.asset.kernel.service.AssetCategoryLocalService" />
+	<bean class="com.liferay.portlet.asset.service.impl.AssetCategoryServiceImpl" id="com.liferay.asset.kernel.service.AssetCategoryService" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryPersistenceImpl" id="com.liferay.asset.kernel.service.persistence.AssetCategoryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryFinderImpl" id="com.liferay.asset.kernel.service.persistence.AssetCategoryFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.asset.service.impl.AssetCategoryPropertyLocalServiceImpl" id="com.liferay.asset.kernel.service.AssetCategoryPropertyLocalService" />
+	<bean class="com.liferay.portlet.asset.service.impl.AssetCategoryPropertyServiceImpl" id="com.liferay.asset.kernel.service.AssetCategoryPropertyService" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryPropertyPersistenceImpl" id="com.liferay.asset.kernel.service.persistence.AssetCategoryPropertyPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryPropertyFinderImpl" id="com.liferay.asset.kernel.service.persistence.AssetCategoryPropertyFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.asset.service.impl.AssetEntryLocalServiceImpl" id="com.liferay.asset.kernel.service.AssetEntryLocalService" />
+	<bean class="com.liferay.portlet.asset.service.impl.AssetEntryServiceImpl" id="com.liferay.asset.kernel.service.AssetEntryService" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetEntryPersistenceImpl" id="com.liferay.asset.kernel.service.persistence.AssetEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetEntryFinderImpl" id="com.liferay.asset.kernel.service.persistence.AssetEntryFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.asset.service.impl.AssetLinkLocalServiceImpl" id="com.liferay.asset.kernel.service.AssetLinkLocalService" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetLinkPersistenceImpl" id="com.liferay.asset.kernel.service.persistence.AssetLinkPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.asset.service.impl.AssetTagLocalServiceImpl" id="com.liferay.asset.kernel.service.AssetTagLocalService" />
+	<bean class="com.liferay.portlet.asset.service.impl.AssetTagServiceImpl" id="com.liferay.asset.kernel.service.AssetTagService" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetTagPersistenceImpl" id="com.liferay.asset.kernel.service.persistence.AssetTagPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetTagFinderImpl" id="com.liferay.asset.kernel.service.persistence.AssetTagFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.asset.service.impl.AssetTagStatsLocalServiceImpl" id="com.liferay.asset.kernel.service.AssetTagStatsLocalService" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetTagStatsPersistenceImpl" id="com.liferay.asset.kernel.service.persistence.AssetTagStatsPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.asset.service.impl.AssetVocabularyLocalServiceImpl" id="com.liferay.asset.kernel.service.AssetVocabularyLocalService" />
+	<bean class="com.liferay.portlet.asset.service.impl.AssetVocabularyServiceImpl" id="com.liferay.asset.kernel.service.AssetVocabularyService" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetVocabularyPersistenceImpl" id="com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetVocabularyFinderImpl" id="com.liferay.asset.kernel.service.persistence.AssetVocabularyFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.blogs.service.impl.BlogsEntryLocalServiceImpl" id="com.liferay.blogs.kernel.service.BlogsEntryLocalService" />
+	<bean class="com.liferay.portlet.blogs.service.impl.BlogsEntryServiceImpl" id="com.liferay.blogs.kernel.service.BlogsEntryService" />
+	<bean class="com.liferay.portlet.blogs.service.persistence.impl.BlogsEntryPersistenceImpl" id="com.liferay.blogs.kernel.service.persistence.BlogsEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.blogs.service.persistence.impl.BlogsEntryFinderImpl" id="com.liferay.blogs.kernel.service.persistence.BlogsEntryFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.blogs.service.impl.BlogsStatsUserLocalServiceImpl" id="com.liferay.blogs.kernel.service.BlogsStatsUserLocalService" />
+	<bean class="com.liferay.portlet.blogs.service.persistence.impl.BlogsStatsUserPersistenceImpl" id="com.liferay.blogs.kernel.service.persistence.BlogsStatsUserPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.blogs.service.persistence.impl.BlogsStatsUserFinderImpl" id="com.liferay.blogs.kernel.service.persistence.BlogsStatsUserFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLAppLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLAppLocalService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLAppServiceImpl" id="com.liferay.document.library.kernel.service.DLAppService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLAppHelperLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLAppHelperLocalService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLContentLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLContentLocalService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLContentPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLContentPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLFileEntryLocalService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryServiceImpl" id="com.liferay.document.library.kernel.service.DLFileEntryService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryFinderImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryMetadataLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryMetadataPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryMetadataFinderImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryTypeLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileEntryTypeServiceImpl" id="com.liferay.document.library.kernel.service.DLFileEntryTypeService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryTypePersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileEntryTypePersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileEntryTypeFinderImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileEntryTypeFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileRankLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLFileRankLocalService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileRankPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileRankPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileRankFinderImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileRankFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileShortcutLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLFileShortcutLocalService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileShortcutServiceImpl" id="com.liferay.document.library.kernel.service.DLFileShortcutService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileShortcutPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileShortcutPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileVersionLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLFileVersionLocalService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFileVersionServiceImpl" id="com.liferay.document.library.kernel.service.DLFileVersionService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFileVersionPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLFileVersionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFolderLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLFolderLocalService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLFolderServiceImpl" id="com.liferay.document.library.kernel.service.DLFolderService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFolderPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLFolderPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFolderFinderImpl" id="com.liferay.document.library.kernel.service.persistence.DLFolderFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLSyncEventLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLSyncEventLocalService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLSyncEventPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLSyncEventPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLTrashLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLTrashLocalService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLTrashServiceImpl" id="com.liferay.document.library.kernel.service.DLTrashService" />
+	<bean class="com.liferay.portlet.expando.service.impl.ExpandoColumnLocalServiceImpl" id="com.liferay.expando.kernel.service.ExpandoColumnLocalService" />
+	<bean class="com.liferay.portlet.expando.service.impl.ExpandoColumnServiceImpl" id="com.liferay.expando.kernel.service.ExpandoColumnService" />
+	<bean class="com.liferay.portlet.expando.service.persistence.impl.ExpandoColumnPersistenceImpl" id="com.liferay.expando.kernel.service.persistence.ExpandoColumnPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.expando.service.impl.ExpandoRowLocalServiceImpl" id="com.liferay.expando.kernel.service.ExpandoRowLocalService" />
+	<bean class="com.liferay.portlet.expando.service.persistence.impl.ExpandoRowPersistenceImpl" id="com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.expando.service.impl.ExpandoTableLocalServiceImpl" id="com.liferay.expando.kernel.service.ExpandoTableLocalService" />
+	<bean class="com.liferay.portlet.expando.service.persistence.impl.ExpandoTablePersistenceImpl" id="com.liferay.expando.kernel.service.persistence.ExpandoTablePersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.expando.service.impl.ExpandoValueLocalServiceImpl" id="com.liferay.expando.kernel.service.ExpandoValueLocalService" />
+	<bean class="com.liferay.portlet.expando.service.impl.ExpandoValueServiceImpl" id="com.liferay.expando.kernel.service.ExpandoValueService" />
+	<bean class="com.liferay.portlet.expando.service.persistence.impl.ExpandoValuePersistenceImpl" id="com.liferay.expando.kernel.service.persistence.ExpandoValuePersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.exportimport.service.impl.ExportImportLocalServiceImpl" id="com.liferay.exportimport.kernel.service.ExportImportLocalService" />
+	<bean class="com.liferay.portlet.exportimport.service.impl.ExportImportServiceImpl" id="com.liferay.exportimport.kernel.service.ExportImportService" />
+	<bean class="com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationLocalServiceImpl" id="com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService" />
+	<bean class="com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationServiceImpl" id="com.liferay.exportimport.kernel.service.ExportImportConfigurationService" />
+	<bean class="com.liferay.portlet.exportimport.service.persistence.impl.ExportImportConfigurationPersistenceImpl" id="com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.exportimport.service.persistence.impl.ExportImportConfigurationFinderImpl" id="com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.exportimport.service.impl.StagingLocalServiceImpl" id="com.liferay.exportimport.kernel.service.StagingLocalService" />
+	<bean class="com.liferay.portlet.exportimport.service.impl.StagingServiceImpl" id="com.liferay.exportimport.kernel.service.StagingService" />
+	<bean class="com.liferay.portlet.messageboards.service.impl.MBBanLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBBanLocalService" />
+	<bean class="com.liferay.portlet.messageboards.service.impl.MBBanServiceImpl" id="com.liferay.message.boards.kernel.service.MBBanService" />
+	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBBanPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBBanPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.messageboards.service.impl.MBCategoryLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBCategoryLocalService" />
+	<bean class="com.liferay.portlet.messageboards.service.impl.MBCategoryServiceImpl" id="com.liferay.message.boards.kernel.service.MBCategoryService" />
+	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBCategoryPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBCategoryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBCategoryFinderImpl" id="com.liferay.message.boards.kernel.service.persistence.MBCategoryFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.messageboards.service.impl.MBDiscussionLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBDiscussionLocalService" />
+	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBDiscussionPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBDiscussionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.messageboards.service.impl.MBMailingListLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBMailingListLocalService" />
+	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBMailingListPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBMailingListPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.messageboards.service.impl.MBMessageLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBMessageLocalService" />
+	<bean class="com.liferay.portlet.messageboards.service.impl.MBMessageServiceImpl" id="com.liferay.message.boards.kernel.service.MBMessageService" />
+	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBMessagePersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBMessagePersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBMessageFinderImpl" id="com.liferay.message.boards.kernel.service.persistence.MBMessageFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.messageboards.service.impl.MBStatsUserLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBStatsUserLocalService" />
+	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBStatsUserPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBStatsUserPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.messageboards.service.impl.MBThreadLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBThreadLocalService" />
+	<bean class="com.liferay.portlet.messageboards.service.impl.MBThreadServiceImpl" id="com.liferay.message.boards.kernel.service.MBThreadService" />
+	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBThreadPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBThreadPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBThreadFinderImpl" id="com.liferay.message.boards.kernel.service.persistence.MBThreadFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.messageboards.service.impl.MBThreadFlagLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBThreadFlagLocalService" />
+	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBThreadFlagPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBThreadFlagPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.AccountLocalServiceImpl" id="com.liferay.portal.kernel.service.AccountLocalService" />
+	<bean class="com.liferay.portal.service.impl.AccountServiceImpl" id="com.liferay.portal.kernel.service.AccountService" />
+	<bean class="com.liferay.portal.service.persistence.impl.AccountPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.AccountPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.AddressLocalServiceImpl" id="com.liferay.portal.kernel.service.AddressLocalService" />
+	<bean class="com.liferay.portal.service.impl.AddressServiceImpl" id="com.liferay.portal.kernel.service.AddressService" />
+	<bean class="com.liferay.portal.service.persistence.impl.AddressPersistenceImpl2" id="com.liferay.portal.kernel.service.persistence.AddressPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.BrowserTrackerLocalServiceImpl" id="com.liferay.portal.kernel.service.BrowserTrackerLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.BrowserTrackerPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.BrowserTrackerPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.ClassNameLocalServiceImpl" id="com.liferay.portal.kernel.service.ClassNameLocalService" />
+	<bean class="com.liferay.portal.service.impl.ClassNameServiceImpl" id="com.liferay.portal.kernel.service.ClassNameService" />
+	<bean class="com.liferay.portal.service.persistence.impl.ClassNamePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ClassNamePersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.ClusterGroupLocalServiceImpl" id="com.liferay.portal.kernel.service.ClusterGroupLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.ClusterGroupPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ClusterGroupPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.CompanyLocalServiceImpl" id="com.liferay.portal.kernel.service.CompanyLocalService" />
+	<bean class="com.liferay.portal.service.impl.CompanyServiceImpl" id="com.liferay.portal.kernel.service.CompanyService" />
+	<bean class="com.liferay.portal.service.persistence.impl.CompanyPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.CompanyPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.ContactLocalServiceImpl" id="com.liferay.portal.kernel.service.ContactLocalService" />
+	<bean class="com.liferay.portal.service.impl.ContactServiceImpl" id="com.liferay.portal.kernel.service.ContactService" />
+	<bean class="com.liferay.portal.service.persistence.impl.ContactPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ContactPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.CountryServiceImpl" id="com.liferay.portal.kernel.service.CountryService" />
+	<bean class="com.liferay.portal.service.persistence.impl.CountryPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.CountryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.EmailAddressLocalServiceImpl" id="com.liferay.portal.kernel.service.EmailAddressLocalService" />
+	<bean class="com.liferay.portal.service.impl.EmailAddressServiceImpl" id="com.liferay.portal.kernel.service.EmailAddressService" />
+	<bean class="com.liferay.portal.service.persistence.impl.EmailAddressPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.EmailAddressPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.GroupLocalServiceImpl" id="com.liferay.portal.kernel.service.GroupLocalService" />
+	<bean class="com.liferay.portal.service.impl.GroupServiceImpl" id="com.liferay.portal.kernel.service.GroupService" />
+	<bean class="com.liferay.portal.service.persistence.impl.GroupPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.GroupPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.persistence.impl.GroupFinderImpl" id="com.liferay.portal.kernel.service.persistence.GroupFinder" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.ImageLocalServiceImpl" id="com.liferay.portal.kernel.service.ImageLocalService" />
+	<bean class="com.liferay.portal.service.impl.ImageServiceImpl" id="com.liferay.portal.kernel.service.ImageService" />
+	<bean class="com.liferay.portal.service.persistence.impl.ImagePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ImagePersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.LayoutLocalServiceImpl" id="com.liferay.portal.kernel.service.LayoutLocalService" />
+	<bean class="com.liferay.portal.service.impl.LayoutServiceImpl" id="com.liferay.portal.kernel.service.LayoutService" />
+	<bean class="com.liferay.portal.service.persistence.impl.LayoutPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.LayoutPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.persistence.impl.LayoutFinderImpl" id="com.liferay.portal.kernel.service.persistence.LayoutFinder" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.LayoutBranchLocalServiceImpl" id="com.liferay.portal.kernel.service.LayoutBranchLocalService" />
+	<bean class="com.liferay.portal.service.impl.LayoutBranchServiceImpl" id="com.liferay.portal.kernel.service.LayoutBranchService" />
+	<bean class="com.liferay.portal.service.persistence.impl.LayoutBranchPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.LayoutBranchPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.LayoutFriendlyURLLocalServiceImpl" id="com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.LayoutFriendlyURLPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.LayoutFriendlyURLPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.LayoutPrototypeLocalServiceImpl" id="com.liferay.portal.kernel.service.LayoutPrototypeLocalService" />
+	<bean class="com.liferay.portal.service.impl.LayoutPrototypeServiceImpl" id="com.liferay.portal.kernel.service.LayoutPrototypeService" />
+	<bean class="com.liferay.portal.service.persistence.impl.LayoutPrototypePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.LayoutPrototypePersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.LayoutRevisionLocalServiceImpl" id="com.liferay.portal.kernel.service.LayoutRevisionLocalService" />
+	<bean class="com.liferay.portal.service.impl.LayoutRevisionServiceImpl" id="com.liferay.portal.kernel.service.LayoutRevisionService" />
+	<bean class="com.liferay.portal.service.persistence.impl.LayoutRevisionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.LayoutRevisionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.LayoutSetLocalServiceImpl" id="com.liferay.portal.kernel.service.LayoutSetLocalService" />
+	<bean class="com.liferay.portal.service.impl.LayoutSetServiceImpl" id="com.liferay.portal.kernel.service.LayoutSetService" />
+	<bean class="com.liferay.portal.service.persistence.impl.LayoutSetPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.LayoutSetPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.LayoutSetBranchLocalServiceImpl" id="com.liferay.portal.kernel.service.LayoutSetBranchLocalService" />
+	<bean class="com.liferay.portal.service.impl.LayoutSetBranchServiceImpl" id="com.liferay.portal.kernel.service.LayoutSetBranchService" />
+	<bean class="com.liferay.portal.service.persistence.impl.LayoutSetBranchPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.LayoutSetBranchPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.LayoutSetPrototypeLocalServiceImpl" id="com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService" />
+	<bean class="com.liferay.portal.service.impl.LayoutSetPrototypeServiceImpl" id="com.liferay.portal.kernel.service.LayoutSetPrototypeService" />
+	<bean class="com.liferay.portal.service.persistence.impl.LayoutSetPrototypePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.LayoutSetPrototypePersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.LayoutTemplateLocalServiceImpl" id="com.liferay.portal.kernel.service.LayoutTemplateLocalService" />
+	<bean class="com.liferay.portal.service.impl.ListTypeLocalServiceImpl" id="com.liferay.portal.kernel.service.ListTypeLocalService" />
+	<bean class="com.liferay.portal.service.impl.ListTypeServiceImpl" id="com.liferay.portal.kernel.service.ListTypeService" />
+	<bean class="com.liferay.portal.service.persistence.impl.ListTypePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ListTypePersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.MembershipRequestLocalServiceImpl" id="com.liferay.portal.kernel.service.MembershipRequestLocalService" />
+	<bean class="com.liferay.portal.service.impl.MembershipRequestServiceImpl" id="com.liferay.portal.kernel.service.MembershipRequestService" />
+	<bean class="com.liferay.portal.service.persistence.impl.MembershipRequestPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.MembershipRequestPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.OrganizationLocalServiceImpl" id="com.liferay.portal.kernel.service.OrganizationLocalService" />
+	<bean class="com.liferay.portal.service.impl.OrganizationServiceImpl" id="com.liferay.portal.kernel.service.OrganizationService" />
+	<bean class="com.liferay.portal.service.persistence.impl.OrganizationPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.OrganizationPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.persistence.impl.OrganizationFinderImpl" id="com.liferay.portal.kernel.service.persistence.OrganizationFinder" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.persistence.impl.OrgGroupRolePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.OrgGroupRolePersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.OrgLaborLocalServiceImpl" id="com.liferay.portal.kernel.service.OrgLaborLocalService" />
+	<bean class="com.liferay.portal.service.impl.OrgLaborServiceImpl" id="com.liferay.portal.kernel.service.OrgLaborService" />
+	<bean class="com.liferay.portal.service.persistence.impl.OrgLaborPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.OrgLaborPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.PasswordPolicyLocalServiceImpl" id="com.liferay.portal.kernel.service.PasswordPolicyLocalService" />
+	<bean class="com.liferay.portal.service.impl.PasswordPolicyServiceImpl" id="com.liferay.portal.kernel.service.PasswordPolicyService" />
+	<bean class="com.liferay.portal.service.persistence.impl.PasswordPolicyPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.PasswordPolicyPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.persistence.impl.PasswordPolicyFinderImpl" id="com.liferay.portal.kernel.service.persistence.PasswordPolicyFinder" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.PasswordPolicyRelLocalServiceImpl" id="com.liferay.portal.kernel.service.PasswordPolicyRelLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.PasswordPolicyRelPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.PasswordPolicyRelPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.PasswordTrackerLocalServiceImpl" id="com.liferay.portal.kernel.service.PasswordTrackerLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.PasswordTrackerPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.PasswordTrackerPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.PermissionServiceImpl" id="com.liferay.portal.kernel.service.PermissionService" />
+	<bean class="com.liferay.portal.service.impl.PhoneLocalServiceImpl" id="com.liferay.portal.kernel.service.PhoneLocalService" />
+	<bean class="com.liferay.portal.service.impl.PhoneServiceImpl" id="com.liferay.portal.kernel.service.PhoneService" />
+	<bean class="com.liferay.portal.service.persistence.impl.PhonePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.PhonePersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.PluginSettingLocalServiceImpl" id="com.liferay.portal.kernel.service.PluginSettingLocalService" />
+	<bean class="com.liferay.portal.service.impl.PluginSettingServiceImpl" id="com.liferay.portal.kernel.service.PluginSettingService" />
+	<bean class="com.liferay.portal.service.persistence.impl.PluginSettingPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.PluginSettingPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.PortalLocalServiceImpl" id="com.liferay.portal.kernel.service.PortalLocalService" />
+	<bean class="com.liferay.portal.service.impl.PortalServiceImpl" id="com.liferay.portal.kernel.service.PortalService" />
+	<bean class="com.liferay.portal.service.impl.PortalPreferencesLocalServiceImpl" id="com.liferay.portal.kernel.service.PortalPreferencesLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.PortalPreferencesPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.PortalPreferencesPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.PortletLocalServiceImpl" id="com.liferay.portal.kernel.service.PortletLocalService" />
+	<bean class="com.liferay.portal.service.impl.PortletServiceImpl" id="com.liferay.portal.kernel.service.PortletService" />
+	<bean class="com.liferay.portal.service.persistence.impl.PortletPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.PortletPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.PortletItemLocalServiceImpl" id="com.liferay.portal.kernel.service.PortletItemLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.PortletItemPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.PortletItemPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.PortletPreferencesLocalServiceImpl" id="com.liferay.portal.kernel.service.PortletPreferencesLocalService" />
+	<bean class="com.liferay.portal.service.impl.PortletPreferencesServiceImpl" id="com.liferay.portal.kernel.service.PortletPreferencesService" />
+	<bean class="com.liferay.portal.service.persistence.impl.PortletPreferencesPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.PortletPreferencesPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.persistence.impl.PortletPreferencesFinderImpl" id="com.liferay.portal.kernel.service.persistence.PortletPreferencesFinder" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.RecentLayoutBranchLocalServiceImpl" id="com.liferay.portal.kernel.service.RecentLayoutBranchLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.RecentLayoutBranchPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.RecentLayoutBranchPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.RecentLayoutRevisionLocalServiceImpl" id="com.liferay.portal.kernel.service.RecentLayoutRevisionLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.RecentLayoutRevisionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.RecentLayoutRevisionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.RecentLayoutSetBranchLocalServiceImpl" id="com.liferay.portal.kernel.service.RecentLayoutSetBranchLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.RecentLayoutSetBranchPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.RecentLayoutSetBranchPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.RegionServiceImpl" id="com.liferay.portal.kernel.service.RegionService" />
+	<bean class="com.liferay.portal.service.persistence.impl.RegionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.RegionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.ReleaseLocalServiceImpl" id="com.liferay.portal.kernel.service.ReleaseLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.ReleasePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ReleasePersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.RepositoryLocalServiceImpl" id="com.liferay.portal.kernel.service.RepositoryLocalService" />
+	<bean class="com.liferay.portal.service.impl.RepositoryServiceImpl" id="com.liferay.portal.kernel.service.RepositoryService" />
+	<bean class="com.liferay.portal.service.persistence.impl.RepositoryPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.RepositoryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.RepositoryEntryLocalServiceImpl" id="com.liferay.portal.kernel.service.RepositoryEntryLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.RepositoryEntryPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.RepositoryEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.ResourceLocalServiceImpl" id="com.liferay.portal.kernel.service.ResourceLocalService" />
+	<bean class="com.liferay.portal.service.impl.ResourceActionLocalServiceImpl" id="com.liferay.portal.kernel.service.ResourceActionLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.ResourceActionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ResourceActionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.ResourceBlockLocalServiceImpl" id="com.liferay.portal.kernel.service.ResourceBlockLocalService" />
+	<bean class="com.liferay.portal.service.impl.ResourceBlockServiceImpl" id="com.liferay.portal.kernel.service.ResourceBlockService" />
+	<bean class="com.liferay.portal.service.persistence.impl.ResourceBlockPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ResourceBlockPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.persistence.impl.ResourceBlockFinderImpl" id="com.liferay.portal.kernel.service.persistence.ResourceBlockFinder" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.ResourceBlockPermissionLocalServiceImpl" id="com.liferay.portal.kernel.service.ResourceBlockPermissionLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.ResourceBlockPermissionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ResourceBlockPermissionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl" id="com.liferay.portal.kernel.service.ResourcePermissionLocalService" />
+	<bean class="com.liferay.portal.service.impl.ResourcePermissionServiceImpl" id="com.liferay.portal.kernel.service.ResourcePermissionService" />
+	<bean class="com.liferay.portal.service.persistence.impl.ResourcePermissionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.persistence.impl.ResourcePermissionFinderImpl" id="com.liferay.portal.kernel.service.persistence.ResourcePermissionFinder" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.ResourceTypePermissionLocalServiceImpl" id="com.liferay.portal.kernel.service.ResourceTypePermissionLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.ResourceTypePermissionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ResourceTypePermissionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.persistence.impl.ResourceTypePermissionFinderImpl" id="com.liferay.portal.kernel.service.persistence.ResourceTypePermissionFinder" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.RoleLocalServiceImpl" id="com.liferay.portal.kernel.service.RoleLocalService" />
+	<bean class="com.liferay.portal.service.impl.RoleServiceImpl" id="com.liferay.portal.kernel.service.RoleService" />
+	<bean class="com.liferay.portal.service.persistence.impl.RolePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.RolePersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.persistence.impl.RoleFinderImpl" id="com.liferay.portal.kernel.service.persistence.RoleFinder" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.ServiceComponentLocalServiceImpl" id="com.liferay.portal.kernel.service.ServiceComponentLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.ServiceComponentPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.ServiceComponentPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.persistence.impl.ServiceComponentFinderImpl" id="com.liferay.portal.kernel.service.persistence.ServiceComponentFinder" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.SubscriptionLocalServiceImpl" id="com.liferay.portal.kernel.service.SubscriptionLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.SubscriptionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.SubscriptionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.SystemEventLocalServiceImpl" id="com.liferay.portal.kernel.service.SystemEventLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.SystemEventPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.SystemEventPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.TeamLocalServiceImpl" id="com.liferay.portal.kernel.service.TeamLocalService" />
+	<bean class="com.liferay.portal.service.impl.TeamServiceImpl" id="com.liferay.portal.kernel.service.TeamService" />
+	<bean class="com.liferay.portal.service.persistence.impl.TeamPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.TeamPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.persistence.impl.TeamFinderImpl" id="com.liferay.portal.kernel.service.persistence.TeamFinder" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.ThemeLocalServiceImpl" id="com.liferay.portal.kernel.service.ThemeLocalService" />
+	<bean class="com.liferay.portal.service.impl.ThemeServiceImpl" id="com.liferay.portal.kernel.service.ThemeService" />
+	<bean class="com.liferay.portal.service.impl.TicketLocalServiceImpl" id="com.liferay.portal.kernel.service.TicketLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.TicketPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.TicketPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.UserLocalServiceImpl" id="com.liferay.portal.kernel.service.UserLocalService" />
+	<bean class="com.liferay.portal.service.impl.UserServiceImpl" id="com.liferay.portal.kernel.service.UserService" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.UserPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserFinderImpl" id="com.liferay.portal.kernel.service.persistence.UserFinder" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.UserGroupLocalServiceImpl" id="com.liferay.portal.kernel.service.UserGroupLocalService" />
+	<bean class="com.liferay.portal.service.impl.UserGroupServiceImpl" id="com.liferay.portal.kernel.service.UserGroupService" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserGroupPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.UserGroupPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserGroupFinderImpl" id="com.liferay.portal.kernel.service.persistence.UserGroupFinder" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.UserGroupGroupRoleLocalServiceImpl" id="com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService" />
+	<bean class="com.liferay.portal.service.impl.UserGroupGroupRoleServiceImpl" id="com.liferay.portal.kernel.service.UserGroupGroupRoleService" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserGroupGroupRolePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserGroupGroupRoleFinderImpl" id="com.liferay.portal.kernel.service.persistence.UserGroupGroupRoleFinder" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.UserGroupRoleLocalServiceImpl" id="com.liferay.portal.kernel.service.UserGroupRoleLocalService" />
+	<bean class="com.liferay.portal.service.impl.UserGroupRoleServiceImpl" id="com.liferay.portal.kernel.service.UserGroupRoleService" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserGroupRolePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserGroupRoleFinderImpl" id="com.liferay.portal.kernel.service.persistence.UserGroupRoleFinder" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.UserIdMapperLocalServiceImpl" id="com.liferay.portal.kernel.service.UserIdMapperLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserIdMapperPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.UserIdMapperPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.UserNotificationDeliveryLocalServiceImpl" id="com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserNotificationDeliveryPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.UserNotificationDeliveryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.UserNotificationEventLocalServiceImpl" id="com.liferay.portal.kernel.service.UserNotificationEventLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserNotificationEventPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.UserNotificationEventPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.UserTrackerLocalServiceImpl" id="com.liferay.portal.kernel.service.UserTrackerLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserTrackerPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.UserTrackerPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.UserTrackerPathLocalServiceImpl" id="com.liferay.portal.kernel.service.UserTrackerPathLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.UserTrackerPathPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.UserTrackerPathPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.VirtualHostLocalServiceImpl" id="com.liferay.portal.kernel.service.VirtualHostLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.VirtualHostPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.VirtualHostPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.WebDAVPropsLocalServiceImpl" id="com.liferay.portal.kernel.service.WebDAVPropsLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.WebDAVPropsPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.WebDAVPropsPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.WebsiteLocalServiceImpl" id="com.liferay.portal.kernel.service.WebsiteLocalService" />
+	<bean class="com.liferay.portal.service.impl.WebsiteServiceImpl" id="com.liferay.portal.kernel.service.WebsiteService" />
+	<bean class="com.liferay.portal.service.persistence.impl.WebsitePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.WebsitePersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.WorkflowDefinitionLinkLocalServiceImpl" id="com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.WorkflowDefinitionLinkPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.WorkflowInstanceLinkLocalServiceImpl" id="com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService" />
+	<bean class="com.liferay.portal.service.persistence.impl.WorkflowInstanceLinkPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.ratings.service.impl.RatingsEntryLocalServiceImpl" id="com.liferay.ratings.kernel.service.RatingsEntryLocalService" />
+	<bean class="com.liferay.portlet.ratings.service.impl.RatingsEntryServiceImpl" id="com.liferay.ratings.kernel.service.RatingsEntryService" />
+	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsEntryPersistenceImpl" id="com.liferay.ratings.kernel.service.persistence.RatingsEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsEntryFinderImpl" id="com.liferay.ratings.kernel.service.persistence.RatingsEntryFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.ratings.service.impl.RatingsStatsLocalServiceImpl" id="com.liferay.ratings.kernel.service.RatingsStatsLocalService" />
+	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsStatsPersistenceImpl" id="com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsStatsFinderImpl" id="com.liferay.ratings.kernel.service.persistence.RatingsStatsFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.social.service.impl.SocialActivityLocalServiceImpl" id="com.liferay.social.kernel.service.SocialActivityLocalService" />
+	<bean class="com.liferay.portlet.social.service.impl.SocialActivityServiceImpl" id="com.liferay.social.kernel.service.SocialActivityService" />
+	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivityPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialActivityPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivityFinderImpl" id="com.liferay.social.kernel.service.persistence.SocialActivityFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.social.service.impl.SocialActivityAchievementLocalServiceImpl" id="com.liferay.social.kernel.service.SocialActivityAchievementLocalService" />
+	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivityAchievementPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialActivityAchievementPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.social.service.impl.SocialActivityCounterLocalServiceImpl" id="com.liferay.social.kernel.service.SocialActivityCounterLocalService" />
+	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivityCounterPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialActivityCounterPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivityCounterFinderImpl" id="com.liferay.social.kernel.service.persistence.SocialActivityCounterFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.social.service.impl.SocialActivityInterpreterLocalServiceImpl" id="com.liferay.social.kernel.service.SocialActivityInterpreterLocalService" />
+	<bean class="com.liferay.portlet.social.service.impl.SocialActivityLimitLocalServiceImpl" id="com.liferay.social.kernel.service.SocialActivityLimitLocalService" />
+	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivityLimitPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialActivityLimitPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.social.service.impl.SocialActivitySetLocalServiceImpl" id="com.liferay.social.kernel.service.SocialActivitySetLocalService" />
+	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivitySetPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialActivitySetPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivitySetFinderImpl" id="com.liferay.social.kernel.service.persistence.SocialActivitySetFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.social.service.impl.SocialActivitySettingLocalServiceImpl" id="com.liferay.social.kernel.service.SocialActivitySettingLocalService" />
+	<bean class="com.liferay.portlet.social.service.impl.SocialActivitySettingServiceImpl" id="com.liferay.social.kernel.service.SocialActivitySettingService" />
+	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivitySettingPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialActivitySettingPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.social.service.impl.SocialRelationLocalServiceImpl" id="com.liferay.social.kernel.service.SocialRelationLocalService" />
+	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialRelationPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialRelationPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.social.service.impl.SocialRequestLocalServiceImpl" id="com.liferay.social.kernel.service.SocialRequestLocalService" />
+	<bean class="com.liferay.portlet.social.service.impl.SocialRequestServiceImpl" id="com.liferay.social.kernel.service.SocialRequestService" />
+	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialRequestPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialRequestPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.social.service.impl.SocialRequestInterpreterLocalServiceImpl" id="com.liferay.social.kernel.service.SocialRequestInterpreterLocalService" />
+	<bean class="com.liferay.portlet.trash.service.impl.TrashEntryLocalServiceImpl" id="com.liferay.trash.kernel.service.TrashEntryLocalService" />
+	<bean class="com.liferay.portlet.trash.service.impl.TrashEntryServiceImpl" id="com.liferay.trash.kernel.service.TrashEntryService" />
+	<bean class="com.liferay.portlet.trash.service.persistence.impl.TrashEntryPersistenceImpl" id="com.liferay.trash.kernel.service.persistence.TrashEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.trash.service.impl.TrashVersionLocalServiceImpl" id="com.liferay.trash.kernel.service.TrashVersionLocalService" />
+	<bean class="com.liferay.portlet.trash.service.persistence.impl.TrashVersionPersistenceImpl" id="com.liferay.trash.kernel.service.persistence.TrashVersionPersistence" parent="basePersistence" />
 </beans>

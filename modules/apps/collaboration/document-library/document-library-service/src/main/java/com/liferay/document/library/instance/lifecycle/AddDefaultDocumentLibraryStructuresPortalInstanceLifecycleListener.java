@@ -323,9 +323,10 @@ public class AddDefaultDocumentLibraryStructuresPortalInstanceLifecycleListener
 
 		sb.append("<?xml version=\"1.0\"?><root>");
 
-		for (String key : fields.keySet()) {
+		for (Map.Entry<String, Field[]> entry : fields.entrySet()) {
 			sb.append(
-				buildDLRawMetadataStructureXML(key, fields.get(key), locale));
+				buildDLRawMetadataStructureXML(
+					entry.getKey(), entry.getValue(), locale));
 		}
 
 		sb.append("</root>");

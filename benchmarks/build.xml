@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="benchmarks" basedir="." default="run">
+<project basedir="." default="run" name="benchmarks">
 	<import file="../build-common.xml" />
 
 	<target name="build-sample-sql">

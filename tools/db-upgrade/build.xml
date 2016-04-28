@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="db-upgrade" basedir="." default="upgrade">
+<project basedir="." default="upgrade" name="db-upgrade">
 	<target name="upgrade">
 		<path id="lib.classpath">
 			<fileset dir="lib" includes="*.jar" />

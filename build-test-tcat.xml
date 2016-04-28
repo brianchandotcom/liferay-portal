@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-tcat" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project basedir="." default="test" name="portal-test-tcat" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
 	<target name="run-selenium-tcat">
@@ -8,7 +8,7 @@
 			app.server.type=tomcat
 		</app-server-properties-update>
 
-		<echo file="test.${user.name}.properties" append="true">
+		<echo append="true" file="test.${user.name}.properties">
 			tcat.enabled=true
 		</echo>
 
@@ -60,7 +60,7 @@ plugins.includes=marketplace-portlet</echo>
 
 		<antcall target="record-test-generated-properties" />
 
-		<antcall target="run-tcat" inheritAll="false">
+		<antcall inheritAll="false" target="run-tcat">
 			<param name="test.class" value="${test.class}" />
 		</antcall>
 	</target>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <root available-locales="en_US,pt_BR" default-locale="en_US">
-	<dynamic-element instance-id="Okhyj7Ni" name="text" type="text" index-type="keyword">
+	<dynamic-element index-type="keyword" instance-id="Okhyj7Ni" name="text" type="text">
 		<dynamic-content><![CDATA[one]]></dynamic-content>
 	</dynamic-element>
 </root>

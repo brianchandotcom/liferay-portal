@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean id="com.liferay.bookmarks.service.BookmarksEntryLocalService" class="com.liferay.bookmarks.service.impl.BookmarksEntryLocalServiceImpl" />
-	<bean id="com.liferay.bookmarks.service.BookmarksEntryService" class="com.liferay.bookmarks.service.impl.BookmarksEntryServiceImpl" />
-	<bean id="com.liferay.bookmarks.service.persistence.BookmarksEntryPersistence" class="com.liferay.bookmarks.service.persistence.impl.BookmarksEntryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.bookmarks.service.persistence.BookmarksEntryFinder" class="com.liferay.bookmarks.service.persistence.impl.BookmarksEntryFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.bookmarks.service.BookmarksFolderLocalService" class="com.liferay.bookmarks.service.impl.BookmarksFolderLocalServiceImpl" />
-	<bean id="com.liferay.bookmarks.service.BookmarksFolderService" class="com.liferay.bookmarks.service.impl.BookmarksFolderServiceImpl" />
-	<bean id="com.liferay.bookmarks.service.persistence.BookmarksFolderPersistence" class="com.liferay.bookmarks.service.persistence.impl.BookmarksFolderPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.bookmarks.service.persistence.BookmarksFolderFinder" class="com.liferay.bookmarks.service.persistence.impl.BookmarksFolderFinderImpl" parent="basePersistence" />
+	<bean class="com.liferay.bookmarks.service.impl.BookmarksEntryLocalServiceImpl" id="com.liferay.bookmarks.service.BookmarksEntryLocalService" />
+	<bean class="com.liferay.bookmarks.service.impl.BookmarksEntryServiceImpl" id="com.liferay.bookmarks.service.BookmarksEntryService" />
+	<bean class="com.liferay.bookmarks.service.persistence.impl.BookmarksEntryPersistenceImpl" id="com.liferay.bookmarks.service.persistence.BookmarksEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.bookmarks.service.persistence.impl.BookmarksEntryFinderImpl" id="com.liferay.bookmarks.service.persistence.BookmarksEntryFinder" parent="basePersistence" />
+	<bean class="com.liferay.bookmarks.service.impl.BookmarksFolderLocalServiceImpl" id="com.liferay.bookmarks.service.BookmarksFolderLocalService" />
+	<bean class="com.liferay.bookmarks.service.impl.BookmarksFolderServiceImpl" id="com.liferay.bookmarks.service.BookmarksFolderService" />
+	<bean class="com.liferay.bookmarks.service.persistence.impl.BookmarksFolderPersistenceImpl" id="com.liferay.bookmarks.service.persistence.BookmarksFolderPersistence" parent="basePersistence" />
+	<bean class="com.liferay.bookmarks.service.persistence.impl.BookmarksFolderFinderImpl" id="com.liferay.bookmarks.service.persistence.BookmarksFolderFinder" parent="basePersistence" />
 </beans>

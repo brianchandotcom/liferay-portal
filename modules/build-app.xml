@@ -10,11 +10,11 @@
 		</sequential>
 	</macrodef>
 
-	<target name="build-app" depends="dist-module-artifacts,write-app-change-log">
+	<target depends="dist-module-artifacts,write-app-change-log" name="build-app">
 		<delete file="${dist.dir}/ticket.list.tmp" />
 	</target>
 
-	<target name="build-app-lpkg" depends="dist-module-artifacts-lpkg,write-lpkg-marketplace-properties">
+	<target depends="dist-module-artifacts-lpkg,write-lpkg-marketplace-properties" name="build-app-lpkg">
 		<zip basedir="${osgi.dir}/marketplace" destfile="${osgi.dir}/marketplace/${app.name}.lpkg" includes="*.jar,liferay-marketplace.properties" />
 
 		<delete>
@@ -32,7 +32,7 @@
 		</fail>
 	</target>
 
-	<target name="check-stale-artifacts" depends="check-app-version,init-build-app">
+	<target depends="check-app-version,init-build-app" name="check-stale-artifacts">
 		<exec executable="${gradle.wrapper.path}" outputproperty="stale.artifacts.output">
 			<arg value="printStaleArtifact" />
 			<arg value="-q" />
@@ -56,21 +56,21 @@
 		</fail>
 	</target>
 
-	<target name="clean-app" depends="init-build-app">
+	<target depends="init-build-app" name="clean-app">
 		<delete dir="${dist.dir}" />
 
-		<exec executable="git" dir="${releng.app.dir}">
+		<exec dir="${releng.app.dir}" executable="git">
 			<arg line="clean" />
 			<arg line="-f" />
 		</exec>
 
-		<exec executable="git" dir="${releng.app.dir}">
+		<exec dir="${releng.app.dir}" executable="git">
 			<arg line="checkout" />
 			<arg line="app.changelog" />
 		</exec>
 	</target>
 
-	<target name="dist-module-artifacts" depends="check-stale-artifacts,get-artifact-versions-previous-release">
+	<target depends="check-stale-artifacts,get-artifact-versions-previous-release" name="dist-module-artifacts">
 
 		<mkdir dir="${dist.dir}" />
 
@@ -83,7 +83,7 @@
 		</subant>
 	</target>
 
-	<target name="dist-module-artifacts-lpkg" depends="init-build-app">
+	<target depends="init-build-app" name="dist-module-artifacts-lpkg">
 		<subant genericantfile="${basedir}/build-app-module.xml" target="dist-module-artifact-lpkg">
 			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
 			<property name="app.dir" value="${basedir}" />
@@ -91,8 +91,8 @@
 		</subant>
 	</target>
 
-	<target name="get-app-artifacts" depends="init-build-app">
-		<pathconvert property="module.versions.list" pathsep=",\${line.separator}&#x0009;">
+	<target depends="init-build-app" name="get-app-artifacts">
+		<pathconvert pathsep=",\${line.separator}&#x0009;" property="module.versions.list">
 			<flattenmapper />
 
 			<path>
@@ -103,7 +103,7 @@
 		<property name="app.artifacts" value="app.artifacts-${app.version}=\${line.separator}&#x0009;${module.versions.list}" />
 	</target>
 
-	<target name="get-app-change-log" depends="init-build-app">
+	<target depends="init-build-app" name="get-app-change-log">
 		<loadfile failonerror="false" property="app.ticket.list" srcfile="${dist.dir}/ticket.list.tmp">
 			<filterchain>
 				<tokenfilter>
@@ -127,7 +127,7 @@
 	</target>
 
 	<target name="get-app-change-log-header">
-		<condition property="app.change.log.version.separator" value="" else="${line.separator}${line.separator}">
+		<condition else="${line.separator}${line.separator}" property="app.change.log.version.separator" value="">
 			<istrue value="${app.first.version}" />
 		</condition>
 
@@ -143,7 +143,7 @@
 		<property name="app.git.id" value="app.git.id-${app.version}=${git.rev.parse.output}" />
 	</target>
 
-	<target name="get-app-version-previous-release" depends="init-build-app">
+	<target depends="init-build-app" name="get-app-version-previous-release">
 		<loadfile failonerror="false" property="app.version.previous.release" srcfile="${releng.app.dir}/app.changelog">
 			<filterchain>
 				<linecontains>
@@ -163,14 +163,14 @@
 		<property name="app.version.previous" value="0.0.0" />
 	</target>
 
-	<target name="get-artifact-versions-previous-release" depends="get-app-version-previous-release">
+	<target depends="get-app-version-previous-release" name="get-artifact-versions-previous-release">
 		<property file="${releng.app.dir}/app.changelog" />
 
 		<set-artifact-versions-previous-release app.version.previous.release="${app.version.previous.release}" />
 	</target>
 
-	<target name="get-lpkg-artifacts-list" depends="dist-module-artifacts-lpkg">
-		<pathconvert property="lpkg.artifacts.list" pathsep=",">
+	<target depends="dist-module-artifacts-lpkg" name="get-lpkg-artifacts-list">
+		<pathconvert pathsep="," property="lpkg.artifacts.list">
 			<chainedmapper>
 				<flattenmapper />
 
@@ -217,7 +217,7 @@
 		<property file="${basedir}/../build.properties" />
 	</target>
 
-	<target name="reset-lpkg" depends="init-build-app">
+	<target depends="init-build-app" name="reset-lpkg">
 		<subant genericantfile="${basedir}/build-app-module.xml" target="reset-artifact">
 			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
 			<property name="app.dir" value="${basedir}" />
@@ -225,7 +225,7 @@
 		</subant>
 	</target>
 
-	<target name="write-app-change-log" depends="dist-module-artifacts,get-app-artifacts,get-app-change-log,get-app-change-log-header,get-app-git-id">
+	<target depends="dist-module-artifacts,get-app-artifacts,get-app-change-log,get-app-change-log-header,get-app-git-id" name="write-app-change-log">
 		<property name="double.space" value="${line.separator}${line.separator}" />
 
 		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.change.log.header}" />
@@ -243,7 +243,7 @@
 		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.git.id}" />
 	</target>
 
-	<target name="write-lpkg-marketplace-properties" depends="get-lpkg-artifacts-list">
+	<target depends="get-lpkg-artifacts-list" name="write-lpkg-marketplace-properties">
 		<echo file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="bundles=${lpkg.artifacts.list}" />
 
 		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="${line.separator}" />

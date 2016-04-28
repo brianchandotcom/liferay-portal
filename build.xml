@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+<project basedir="." default="compile" name="portal" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
 	<import file="build-common.xml" />
 
 	<macrodef name="setup-jrebel">
@@ -71,22 +71,22 @@
 
 	<target name="clean">
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
-			<ant dir="benchmarks" target="clean" inheritAll="false" />
+			<ant dir="benchmarks" inheritAll="false" target="clean" />
 
-			<ant dir="classes" target="clean" inheritAll="false" />
+			<ant dir="classes" inheritAll="false" target="clean" />
 
-			<ant dir="portal-kernel" target="clean" inheritAll="false" />
+			<ant dir="portal-kernel" inheritAll="false" target="clean" />
 
-			<ant dir="util-bridges" target="clean" inheritAll="false" />
-			<ant dir="util-java" target="clean" inheritAll="false" />
-			<ant dir="util-slf4j" target="clean" inheritAll="false" />
-			<ant dir="util-taglib" target="clean" inheritAll="false" />
+			<ant dir="util-bridges" inheritAll="false" target="clean" />
+			<ant dir="util-java" inheritAll="false" target="clean" />
+			<ant dir="util-slf4j" inheritAll="false" target="clean" />
+			<ant dir="util-taglib" inheritAll="false" target="clean" />
 
-			<ant dir="portal-impl" target="clean" inheritAll="false" />
-			<ant dir="portal-test" target="clean" inheritAll="false" />
-			<ant dir="portal-test-integration" target="clean" inheritAll="false" />
+			<ant dir="portal-impl" inheritAll="false" target="clean" />
+			<ant dir="portal-test" inheritAll="false" target="clean" />
+			<ant dir="portal-test-integration" inheritAll="false" target="clean" />
 
-			<ant dir="sql" target="clean" inheritAll="false" />
+			<ant dir="sql" inheritAll="false" target="clean" />
 
 			<sequential>
 				<delete dir="${sdk.dir}" />
@@ -129,7 +129,7 @@
 			<if>
 				<available file="support-${app.server.type}" />
 				<then>
-					<ant dir="support-${app.server.type}" target="clean" inheritAll="false" />
+					<ant dir="support-${app.server.type}" inheritAll="false" target="clean" />
 				</then>
 			</if>
 
@@ -170,7 +170,7 @@
 				</not>
 				<then>
 					<delete dir="${app.server.portal.dir}" failonerror="false" />
-					<delete file="${app.server.portal.dir}" failonerror="false" />
+					<delete failonerror="false" file="${app.server.portal.dir}" />
 				</then>
 				<else>
 					<delete failonerror="false">
@@ -197,7 +197,7 @@
 			</if>
 		</parallel>
 
-		<ant dir="portal-web" target="clean" inheritAll="false" />
+		<ant dir="portal-web" inheritAll="false" target="clean" />
 
 		<print-current-time />
 	</target>
@@ -211,29 +211,29 @@
 			<arg value="--parallel" />
 		</gradle-execute>
 
-		<ant dir="portal-kernel" target="compile" inheritAll="false" />
+		<ant dir="portal-kernel" inheritAll="false" target="compile" />
 
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
-			<ant dir="portal-test" target="compile" inheritAll="false" />
-			<ant dir="support-tomcat" target="compile" inheritAll="false" />
-			<ant dir="util-bridges" target="compile" inheritAll="false" />
+			<ant dir="portal-test" inheritAll="false" target="compile" />
+			<ant dir="support-tomcat" inheritAll="false" target="compile" />
+			<ant dir="util-bridges" inheritAll="false" target="compile" />
 
 			<sequential>
-				<ant dir="util-java" target="compile" inheritAll="false" />
-				<ant dir="util-taglib" target="compile" inheritAll="false" />
+				<ant dir="util-java" inheritAll="false" target="compile" />
+				<ant dir="util-taglib" inheritAll="false" target="compile" />
 			</sequential>
 
-			<ant dir="util-slf4j" target="compile" inheritAll="false" />
+			<ant dir="util-slf4j" inheritAll="false" target="compile" />
 		</parallel>
 
-		<ant dir="portal-impl" target="compile" inheritAll="false" />
+		<ant dir="portal-impl" inheritAll="false" target="compile" />
 
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
-			<ant dir="portal-test-integration" target="compile" inheritAll="false" />
+			<ant dir="portal-test-integration" inheritAll="false" target="compile" />
 
 			<sequential>
-				<ant dir="sql" target="build-db" inheritAll="false" />
-				<ant dir="sql" target="rebuild-hypersonic" inheritAll="false" />
+				<ant dir="sql" inheritAll="false" target="build-db" />
+				<ant dir="sql" inheritAll="false" target="rebuild-hypersonic" />
 			</sequential>
 		</parallel>
 
@@ -248,10 +248,10 @@
 	</target>
 
 	<target name="compile-test">
-		<ant dir="portal-impl" target="compile-test" inheritAll="false" />
-		<ant dir="portal-kernel" target="compile-test" inheritAll="false" />
-		<ant dir="portal-web" target="compile-test" inheritAll="false" />
-		<ant dir="util-java" target="compile-test" inheritAll="false" />
+		<ant dir="portal-impl" inheritAll="false" target="compile-test" />
+		<ant dir="portal-kernel" inheritAll="false" target="compile-test" />
+		<ant dir="portal-web" inheritAll="false" target="compile-test" />
+		<ant dir="util-java" inheritAll="false" target="compile-test" />
 	</target>
 
 	<target name="deploy">
@@ -279,18 +279,18 @@
 			</then>
 		</if>
 
-		<ant dir="portal-kernel" target="deploy" inheritAll="false" />
+		<ant dir="portal-kernel" inheritAll="false" target="deploy" />
 
-		<ant dir="util-bridges" target="deploy" inheritAll="false" />
-		<ant dir="util-java" target="deploy" inheritAll="false" />
-		<ant dir="util-slf4j" target="deploy" inheritAll="false" />
-		<ant dir="util-taglib" target="deploy" inheritAll="false" />
+		<ant dir="util-bridges" inheritAll="false" target="deploy" />
+		<ant dir="util-java" inheritAll="false" target="deploy" />
+		<ant dir="util-slf4j" inheritAll="false" target="deploy" />
+		<ant dir="util-taglib" inheritAll="false" target="deploy" />
 
-		<ant dir="portal-impl" target="deploy" inheritAll="false" />
-		<ant dir="portal-test" target="deploy" inheritAll="false" />
-		<ant dir="portal-test-integration" target="deploy" inheritAll="false" />
+		<ant dir="portal-impl" inheritAll="false" target="deploy" />
+		<ant dir="portal-test" inheritAll="false" target="deploy" />
+		<ant dir="portal-test-integration" inheritAll="false" target="deploy" />
 
-		<ant dir="portal-web" target="deploy" inheritAll="false" />
+		<ant dir="portal-web" inheritAll="false" target="deploy" />
 
 		<copy todir="${liferay.home}/data/hypersonic">
 			<fileset dir="sql">
@@ -321,11 +321,11 @@
 
 				<mkdir dir="${app.server.portal.dir}" />
 
-				<unzip src="${app.server.portal.war.name}-tmp" dest="${app.server.portal.dir}" />
+				<unzip dest="${app.server.portal.dir}" src="${app.server.portal.war.name}-tmp" />
 			</then>
 		</if>
 
-		<ant dir="portal-web" target="war" inheritAll="false" />
+		<ant dir="portal-web" inheritAll="false" target="war" />
 
 		<antcall target="install-portal-snapshots" />
 
@@ -442,7 +442,7 @@
 		<if>
 			<equals arg1="${app.server.type}" arg2="resin" />
 			<then>
-				<ant dir="support-resin" target="deploy" inheritAll="false" />
+				<ant dir="support-resin" inheritAll="false" target="deploy" />
 
 				<copy todir="${app.server.lib.global.dir}">
 					<fileset
@@ -462,11 +462,11 @@
 				<if>
 					<equals arg1="${app.server.type}" arg2="tomcat" />
 					<then>
-						<ant dir="support-tomcat" target="deploy" inheritAll="false" />
+						<ant dir="support-tomcat" inheritAll="false" target="deploy" />
 					</then>
 				</if>
 
-				<copy todir="${app.server.lib.endorsed.dir}" flatten="true">
+				<copy flatten="true" todir="${app.server.lib.endorsed.dir}">
 					<fileset
 						dir="lib"
 						includes="${endorsed.libraries}"
@@ -515,7 +515,7 @@
 			</or>
 			<then>
 				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+					<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 				</tstamp>
 
 				<jar
@@ -532,20 +532,20 @@
 		<if>
 			<equals arg1="${app.server.type}" arg2="websphere" />
 			<then>
-				<ant dir="support-websphere" target="deploy" inheritAll="false" />
+				<ant dir="support-websphere" inheritAll="false" target="deploy" />
 			</then>
 		</if>
 	</target>
 
 	<target name="dist">
-		<ant antfile="build-dist.xml" target="dist" inheritAll="false" />
+		<ant antfile="build-dist.xml" inheritAll="false" target="dist" />
 	</target>
 
 	<target name="doc">
 		<antcall target="dtddoc" />
 		<antcall target="javadoc" />
 		<antcall target="propertiesdoc" />
-		<ant dir="util-taglib" target="taglibdoc" inheritAll="false" />
+		<ant dir="util-taglib" inheritAll="false" target="taglibdoc" />
 	</target>
 
 	<target name="dtddoc">
@@ -569,32 +569,32 @@
 	</target>
 
 	<target name="install-portal-snapshots">
-		<ant dir="portal-impl" target="install-portal-snapshot" inheritAll="false" />
-		<ant dir="portal-kernel" target="install-portal-snapshot" inheritAll="false" />
-		<ant dir="portal-test" target="install-portal-snapshot" inheritAll="false" />
-		<ant dir="portal-test-integration" target="install-portal-snapshot" inheritAll="false" />
-		<ant dir="portal-web" target="install-portal-snapshot" inheritAll="false" />
-		<ant dir="util-bridges" target="install-portal-snapshot" inheritAll="false" />
-		<ant dir="util-java" target="install-portal-snapshot" inheritAll="false" />
-		<ant dir="util-slf4j" target="install-portal-snapshot" inheritAll="false" />
-		<ant dir="util-taglib" target="install-portal-snapshot" inheritAll="false" />
+		<ant dir="portal-impl" inheritAll="false" target="install-portal-snapshot" />
+		<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
+		<ant dir="portal-test" inheritAll="false" target="install-portal-snapshot" />
+		<ant dir="portal-test-integration" inheritAll="false" target="install-portal-snapshot" />
+		<ant dir="portal-web" inheritAll="false" target="install-portal-snapshot" />
+		<ant dir="util-bridges" inheritAll="false" target="install-portal-snapshot" />
+		<ant dir="util-java" inheritAll="false" target="install-portal-snapshot" />
+		<ant dir="util-slf4j" inheritAll="false" target="install-portal-snapshot" />
+		<ant dir="util-taglib" inheritAll="false" target="install-portal-snapshot" />
 	</target>
 
 	<target name="jar">
-		<ant dir="portal-kernel" target="jar" inheritAll="false" />
+		<ant dir="portal-kernel" inheritAll="false" target="jar" />
 
-		<ant dir="util-bridges" target="jar" inheritAll="false" />
-		<ant dir="util-java" target="jar" inheritAll="false" />
-		<ant dir="util-slf4j" target="jar" inheritAll="false" />
-		<ant dir="util-taglib" target="jar" inheritAll="false" />
+		<ant dir="util-bridges" inheritAll="false" target="jar" />
+		<ant dir="util-java" inheritAll="false" target="jar" />
+		<ant dir="util-slf4j" inheritAll="false" target="jar" />
+		<ant dir="util-taglib" inheritAll="false" target="jar" />
 
-		<ant dir="portal-impl" target="jar" inheritAll="false" />
-		<ant dir="portal-test" target="jar" inheritAll="false" />
-		<ant dir="portal-test-integration" target="jar" inheritAll="false" />
+		<ant dir="portal-impl" inheritAll="false" target="jar" />
+		<ant dir="portal-test" inheritAll="false" target="jar" />
+		<ant dir="portal-test-integration" inheritAll="false" target="jar" />
 
-		<ant dir="portal-web" target="war" inheritAll="false" />
+		<ant dir="portal-web" inheritAll="false" target="war" />
 
-		<ant dir="support-tomcat" target="jar" inheritAll="false" />
+		<ant dir="support-tomcat" inheritAll="false" target="jar" />
 	</target>
 
 	<target name="javadoc">
@@ -667,7 +667,7 @@
 
 			<packageset dir="${module.dir}/src" />
 
-			<tag name="generated" description="{$generated.description}" />
+			<tag description="{$generated.description}" name="generated" />
 		</javadoc>
 	</target>
 
@@ -695,9 +695,9 @@
 				<param name="-linksource" />
 			</doclet>
 
-			<group title="Portal Services" packages="com.liferay.portal.*:com.liferay.counter.*:com.liferay.mail.*" />
-			<group title="Portal Kernel" packages="com.liferay.portal.kernel.*" />
-			<group title="Portlet Services" packages="com.liferay.*" />
+			<group packages="com.liferay.portal.*:com.liferay.counter.*:com.liferay.mail.*" title="Portal Services" />
+			<group packages="com.liferay.portal.kernel.*" title="Portal Kernel" />
+			<group packages="com.liferay.*" title="Portlet Services" />
 
 			<link href="http://docs.liferay.com/portlet-api/2.0/javadocs" />
 			<link href="http://java.sun.com/javase/6/docs/api" />
@@ -705,12 +705,12 @@
 
 			<packageset dir="${module.dir}/src" />
 
-			<tag name="generated" description="{$generated.description}" />
+			<tag description="{$generated.description}" name="generated" />
 		</javadoc>
 	</target>
 
 	<target name="prepare-generated-files">
-		<ant antfile="build-dist.xml" target="prepare-generated-files" inheritAll="false" />
+		<ant antfile="build-dist.xml" inheritAll="false" target="prepare-generated-files" />
 	</target>
 
 	<target name="propertiesdoc">
@@ -809,15 +809,15 @@
 	</target>
 
 	<target name="test-integration">
-		<ant antfile="build-test.xml" target="test-integration" inheritAll="false" />
+		<ant antfile="build-test.xml" inheritAll="false" target="test-integration" />
 	</target>
 
 	<target name="test-package">
-		<ant antfile="build-test.xml" target="test-package" inheritAll="false" />
+		<ant antfile="build-test.xml" inheritAll="false" target="test-package" />
 	</target>
 
 	<target name="test-unit">
-		<ant antfile="build-test.xml" target="test-unit" inheritAll="false" />
+		<ant antfile="build-test.xml" inheritAll="false" target="test-unit" />
 	</target>
 
 	<target name="update-app-server-scripts">
@@ -996,7 +996,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 			<arg value="-Dmaven.local.ignore=true" />
 		</gradle-execute>
 
-		<ant dir="portal-web" target="update-gradle-cache" inheritAll="false" />
+		<ant dir="portal-web" inheritAll="false" target="update-gradle-cache" />
 	</target>
 
 	<target name="validate-xml">

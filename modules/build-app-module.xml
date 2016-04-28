@@ -26,9 +26,9 @@
 		</path>
 	</pathconvert>
 
-	<target name="dist-module-artifact" depends="download-artifact,record-artifact-change-log" />
+	<target depends="download-artifact,record-artifact-change-log" name="dist-module-artifact" />
 
-	<target name="dist-module-artifact-lpkg" depends="move-artifact" />
+	<target depends="move-artifact" name="dist-module-artifact-lpkg" />
 
 	<target name="download-artifact">
 		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
@@ -47,7 +47,7 @@
 			</filterchain>
 		</loadproperties>
 
-		<get src="${artifact.url}" dest="${dist.dir}" />
+		<get dest="${dist.dir}" src="${artifact.url}" />
 	</target>
 
 	<target

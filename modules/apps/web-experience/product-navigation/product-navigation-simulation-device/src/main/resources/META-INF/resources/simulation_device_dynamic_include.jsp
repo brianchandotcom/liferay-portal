@@ -16,9 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
-
-<aui:script use="aui-base" position="inline">
+<aui:script position="inline" use="aui-base">
 	var frameElement = window.frameElement;
 
 	if (frameElement && frameElement.getAttribute('id') === 'simulationDeviceIframe') {

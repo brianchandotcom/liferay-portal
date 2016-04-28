@@ -27,12 +27,13 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Carlos Lancha
  */
-@Component(
-	immediate = true,
-	service = DynamicInclude.class
-)
-public class SimulationDeviceDynamicInclude
-	extends BaseJSPDynamicInclude {
+@Component(immediate = true, service = DynamicInclude.class)
+public class SimulationDeviceDynamicInclude extends BaseJSPDynamicInclude {
+
+	@Override
+	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
+		dynamicIncludeRegistry.register("/html/common/themes/bottom.jsp#post");
+	}
 
 	@Override
 	protected String getJspPath() {
@@ -42,12 +43,6 @@ public class SimulationDeviceDynamicInclude
 	@Override
 	protected Log getLog() {
 		return _log;
-	}
-
-	@Override
-	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register(
-			"/html/common/themes/bottom.jsp#post");
 	}
 
 	@Override

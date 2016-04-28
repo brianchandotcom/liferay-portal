@@ -98,7 +98,7 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testVisibleFields1() throws Exception {
 		String serializedDDMForm = read(
-			"ddm-form-evaluator-form-visible-fields-test-data.json");
+			"ddm-form-evaluator-form-visible-fields-test-data-1.json");
 
 		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
 			serializedDDMForm);
@@ -131,7 +131,7 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testVisibleFields2() throws Exception {
 		String serializedDDMForm = read(
-			"ddm-form-evaluator-form-visible-fields-test-data.json");
+			"ddm-form-evaluator-form-visible-fields-test-data-1.json");
 
 		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
 			serializedDDMForm);

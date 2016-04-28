@@ -167,19 +167,19 @@
 			<%
 			String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
-			boolean showCreateAccountIcon = false;
+			boolean showCreateAccountLink = false;
 
 			if (!mvcRenderCommandName.equals("/login/create_account") && company.isStrangers() && !portletName.equals(PortletKeys.FAST_LOGIN)) {
-				showCreateAccountIcon = true;
+				showCreateAccountLink = true;
 			}
 			%>
 
-			<c:if test="<%= showCreateAccountIcon %>">
-				<liferay-ui:icon
-					iconCssClass="icon-plus"
-					message="create-account"
-					url="<%= PortalUtil.getCreateAccountURL(request, themeDisplay) %>"
-				/>
+			<c:if test="<%= showCreateAccountLink %>">
+				<div class="separator"><!-- --></div>
+
+				<liferay-ui:message key="new-to-this-site" />
+
+				<aui:a href="<%= PortalUtil.getCreateAccountURL(request, themeDisplay) %>" label="create-account" />
 			</c:if>
 		</aui:form>
 

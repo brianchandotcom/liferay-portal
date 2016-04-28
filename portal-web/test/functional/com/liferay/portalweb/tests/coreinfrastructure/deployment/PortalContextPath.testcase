@@ -1,0 +1,19 @@
+<definition component-name="core-infrastructure">
+	<property name="testray.main.component.name" value="Deployment" />
+
+	<set-up>
+		<execute macro="SignIn#signInTestSetup" />
+	</set-up>
+
+	<command description="Runs the smoke test on a non-root portal context." name="Smoke" priority="5">
+		<property name="portal.acceptance" value="true" />
+		<property name="portal.context" value="liferay" />
+		<property name="skip.clean-app-server-deploy-dir" value="true" />
+		<property name="test.assert.warning.exceptions" value="true" />
+		<property name="test.name.skip.portal.instance" value="PortalContext#Smoke" />
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+</definition>

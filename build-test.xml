@@ -731,6 +731,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 	<macrodef name="get-test-url">
 		<sequential>
+			<get-test-class />
 			<get-testcase-property property.name="testcase.url" />
 
 			<if>
@@ -757,7 +758,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					</then>
 				</elseif>
 				<elseif>
-					<equals arg1="${test.portal.instance}" arg2="true" />
+					<contains string="${test.class}" substring="," />
 					<then>
 						<if>
 							<os family="unix" />

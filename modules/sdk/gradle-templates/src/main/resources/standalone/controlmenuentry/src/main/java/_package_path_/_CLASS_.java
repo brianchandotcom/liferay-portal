@@ -1,4 +1,4 @@
-package _package_;
+package _package_.control.menu;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;

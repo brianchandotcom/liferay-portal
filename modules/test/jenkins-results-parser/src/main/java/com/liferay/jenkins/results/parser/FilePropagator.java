@@ -60,6 +60,7 @@ public class FilePropagator {
 	public void start(int threadCount) {
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			threadCount);
+
 		System.out.println(
 			"File Propagation starting with " + threadCount + " threads.");
 
@@ -281,6 +282,7 @@ public class FilePropagator {
 	private String _getMkdirCommand(String filePath) {
 		String directoryPath = filePath.substring(
 			0, (filePath.lastIndexOf("/") + 1));
+
 		return "mkdir -pv " + directoryPath;
 	}
 
@@ -360,6 +362,7 @@ public class FilePropagator {
 
 		private FilePropagatorTask(String filePath, String originFilePath) {
 			_filePath = filePath;
+
 			_originFilePath = originFilePath;
 		}
 

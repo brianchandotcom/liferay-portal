@@ -50,12 +50,11 @@ public class FilePropagator {
 	}
 
 	public long getAverageThreadDuration() {
-		if (_filePropogatorThreadCompletedCount == 0) {
+		if (_threadsCompletedCount == 0) {
 			return 0;
 		}
 
-		return _totalFilePropogatorThreadsDuration /
-			_filePropogatorThreadCompletedCount;
+		return _totalThreadsDuration / _threadsCompletedCount;
 	}
 
 	public void start(int threadCount) {
@@ -289,10 +288,9 @@ public class FilePropagator {
 		FilePropagatorThread filePropagatorThread) {
 
 		synchronized(this) {
-			_filePropogatorThreadCompletedCount++;
+			_threadsCompletedCount++;
 
-			_totalFilePropogatorThreadsDuration +=
-				filePropagatorThread._duration;
+			_totalThreadsDuration += filePropagatorThread._duration;
 
 			_busySlaves.remove(filePropagatorThread._sourceSlave);
 			_busySlaves.remove(filePropagatorThread._targetSlave);
@@ -353,10 +351,10 @@ public class FilePropagator {
 	private final List<String> _errorSlaves = new ArrayList<>();
 	private final List<FilePropagatorTask> _filePropagatorTasks =
 		new ArrayList<>();
-	private int _filePropogatorThreadCompletedCount;
 	private final List<String> _sourceSlaves = new ArrayList<>();
 	private final List<String> _targetSlaves = new ArrayList<>();
-	private long _totalFilePropogatorThreadsDuration = 0;
+	private int _threadsCompletedCount;
+	private long _totalThreadsDuration = 0;
 
 	private static class FilePropagatorTask {
 

@@ -397,6 +397,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		_setUpInitialBundles();
 
+		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
+			FrameworkStartLevel.class);
+
+		frameworkStartLevel.setStartLevel(
+			PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL);
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Started the OSGi framework");
 		}
@@ -627,6 +633,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		properties.put(
 			FrameworkPropsKeys.FELIX_FILEINSTALL_POLL,
 			String.valueOf(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_INTERVAL));
+		properties.put(
+			FrameworkPropsKeys.FELIX_FILEINSTALL_START_LEVEL,
+			String.valueOf(
+				PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL));
 		properties.put(
 			FrameworkPropsKeys.FELIX_FILEINSTALL_TMPDIR,
 			SystemProperties.get(SystemProperties.TMP_DIR));

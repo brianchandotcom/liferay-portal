@@ -5,7 +5,7 @@
 	<property name="import.shared" value="json-web-service-client-shared,lcs-shared" />
 	<property name="hyperic.sigar.zip.file" value="hyperic-sigar-1.6.4.zip" />
 
-	<import file="../build-common-portlet.xml" />
+	<import file="../../../../tools/sdk/portlets/build-common-portlet.xml" />
 
 	<macrodef name="checkout-dependencies">
 		<sequential>

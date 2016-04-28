@@ -54,7 +54,7 @@ public class IndexingProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public String getIconCssClass(HttpServletRequest request) {
+	public String getIcon(HttpServletRequest request) {
 		return "icon-refresh";
 	}
 

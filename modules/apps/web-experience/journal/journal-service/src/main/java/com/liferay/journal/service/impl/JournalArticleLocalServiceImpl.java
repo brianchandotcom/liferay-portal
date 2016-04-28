@@ -2439,6 +2439,41 @@ public class JournalArticleLocalServiceImpl
 		return journalArticlePersistence.findBySmallImageId(smallImageId);
 	}
 
+	@Override
+	public List<JournalArticle> getArticlesByStructureId(
+		long groupId, long classNameId, String ddmStructureKey, int status,
+		int start, int end, OrderByComparator<JournalArticle> obc) {
+
+		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
+			status, start, end, obc);
+
+		return journalArticleFinder.findByG_C_S(
+			groupId, classNameId, ddmStructureKey, queryDefinition);
+	}
+
+	@Override
+	public List<JournalArticle> getArticlesByStructureId(
+		long groupId, String ddmStructureKey, int status, int start, int end,
+		OrderByComparator<JournalArticle> obc) {
+
+		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
+			status, start, end, obc);
+
+		return journalArticleFinder.findByG_C_S(
+			groupId, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			ddmStructureKey, queryDefinition);
+	}
+
+	@Override
+	public List<JournalArticle> getArticlesByStructureId(
+		long groupId, String ddmStructureKey, int start, int end,
+		OrderByComparator<JournalArticle> obc) {
+
+		return getArticlesByStructureId(
+			groupId, ddmStructureKey, WorkflowConstants.STATUS_ANY, start, end,
+			obc);
+	}
+
 	/**
 	 * Returns the number of web content articles belonging to the group.
 	 *

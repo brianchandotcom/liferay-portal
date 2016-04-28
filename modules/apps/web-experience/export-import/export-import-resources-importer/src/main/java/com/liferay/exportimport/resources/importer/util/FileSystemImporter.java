@@ -43,7 +43,6 @@ import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -131,7 +130,6 @@ public class FileSystemImporter extends BaseImporter {
 		DLFolderLocalService dlFolderLocalService,
 		IndexStatusManager indexStatusManager, IndexerRegistry indexerRegistry,
 		JournalArticleLocalService journalArticleLocalService,
-		JournalArticleService journalArticleService,
 		LayoutLocalService layoutLocalService,
 		LayoutPrototypeLocalService layoutPrototypeLocalService,
 		LayoutSetLocalService layoutSetLocalService,
@@ -154,7 +152,6 @@ public class FileSystemImporter extends BaseImporter {
 		this.indexStatusManager = indexStatusManager;
 		this.indexerRegistry = indexerRegistry;
 		this.journalArticleLocalService = journalArticleLocalService;
-		this.journalArticleService = journalArticleService;
 		this.layoutLocalService = layoutLocalService;
 		this.layoutPrototypeLocalService = layoutPrototypeLocalService;
 		this.layoutSetLocalService = layoutSetLocalService;
@@ -1171,6 +1168,19 @@ public class FileSystemImporter extends BaseImporter {
 			throw new ImporterException("portletId is not specified");
 		}
 
+		PortletPreferencesTranslator portletPreferencesTranslator =
+			portletPreferencesTranslators.get(rootPortletId);
+
+		if (portletPreferencesTranslator == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"No PortletPreferenceRetriever configured for : " +
+						rootPortletId);
+			}
+
+			return;
+		}
+
 		String portletId = layoutTypePortlet.addPortletId(
 			userId, rootPortletId, columnId, -1, false);
 
@@ -1194,19 +1204,6 @@ public class FileSystemImporter extends BaseImporter {
 
 		while (iterator.hasNext()) {
 			String key = iterator.next();
-
-			PortletPreferencesTranslator portletPreferencesTranslator =
-				portletPreferencesTranslators.get(key);
-
-			if (portletPreferencesTranslator == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"No portlet preferences translator for portlet " +
-							rootPortletId);
-				}
-
-				continue;
-			}
 
 			portletPreferencesTranslator.translate(
 				portletPreferencesJSONObject, key, portletSetup);
@@ -1620,7 +1617,7 @@ public class FileSystemImporter extends BaseImporter {
 
 		for (String ddmStructureKey : _ddmStructureKeys) {
 			List<JournalArticle> journalArticles =
-				journalArticleService.getArticlesByStructureId(
+				journalArticleLocalService.getArticlesByStructureId(
 					getGroupId(), ddmStructureKey, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null);
 
@@ -1893,7 +1890,6 @@ public class FileSystemImporter extends BaseImporter {
 	protected final IndexerRegistry indexerRegistry;
 	protected final IndexStatusManager indexStatusManager;
 	protected final JournalArticleLocalService journalArticleLocalService;
-	protected final JournalArticleService journalArticleService;
 	protected final LayoutLocalService layoutLocalService;
 	protected final LayoutPrototypeLocalService layoutPrototypeLocalService;
 	protected final LayoutSetLocalService layoutSetLocalService;
@@ -1932,6 +1928,8 @@ public class FileSystemImporter extends BaseImporter {
 			},
 			{"rss_feed", "com.liferay.rss.web.util.RSSFeed"},
 			{"site_map", "com.liferay.portal.kernel.model.LayoutSet"},
+			{"site_navigation", "com.liferay.portal.kernel.theme.NavItem"},
+
 			{"wiki_page", "com.liferay.wiki.model.WikiPage"}
 		};
 

@@ -2964,6 +2964,32 @@ public class JournalArticleLocalServiceWrapper
 		return _journalArticleLocalService.getArticlesBySmallImageId(smallImageId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.journal.model.JournalArticle> getArticlesByStructureId(
+		long groupId, java.lang.String ddmStructureKey, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticle> obc) {
+		return _journalArticleLocalService.getArticlesByStructureId(groupId,
+			ddmStructureKey, start, end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.journal.model.JournalArticle> getArticlesByStructureId(
+		long groupId, java.lang.String ddmStructureKey, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticle> obc) {
+		return _journalArticleLocalService.getArticlesByStructureId(groupId,
+			ddmStructureKey, status, start, end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.journal.model.JournalArticle> getArticlesByStructureId(
+		long groupId, long classNameId, java.lang.String ddmStructureKey,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticle> obc) {
+		return _journalArticleLocalService.getArticlesByStructureId(groupId,
+			classNameId, ddmStructureKey, status, start, end, obc);
+	}
+
 	/**
 	* Returns an ordered range of all the web content articles matching the
 	* company, version, and workflow status.

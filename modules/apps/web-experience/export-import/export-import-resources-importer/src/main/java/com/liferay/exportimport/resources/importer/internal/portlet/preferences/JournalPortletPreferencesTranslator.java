@@ -44,13 +44,16 @@ public class JournalPortletPreferencesTranslator
 
 		String value = portletPreferencesJSONObject.getString(key);
 
-		String portletPreferencesKey = FileUtil.stripExtension(value);
+		if (key.equals("articleId")) {
+			String articleId = FileUtil.stripExtension(value);
 
-		portletPreferencesKey = StringUtil.replace(
-			portletPreferencesKey, CharPool.SPACE, CharPool.DASH);
-		portletPreferencesKey = StringUtil.toUpperCase(portletPreferencesKey);
+			articleId = StringUtil.toUpperCase(articleId);
 
-		portletPreferences.setValue(portletPreferencesKey, value);
+			value = StringUtil.replace(
+				articleId, CharPool.SPACE, CharPool.DASH);
+		}
+
+		portletPreferences.setValue(key, value);
 	}
 
 }

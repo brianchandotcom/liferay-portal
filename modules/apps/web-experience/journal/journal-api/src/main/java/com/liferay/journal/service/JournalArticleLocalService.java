@@ -2509,6 +2509,21 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getArticlesBySmallImageId(long smallImageId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getArticlesByStructureId(long groupId,
+		java.lang.String ddmStructureKey, int start, int end,
+		OrderByComparator<JournalArticle> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getArticlesByStructureId(long groupId,
+		java.lang.String ddmStructureKey, int status, int start, int end,
+		OrderByComparator<JournalArticle> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getArticlesByStructureId(long groupId,
+		long classNameId, java.lang.String ddmStructureKey, int status,
+		int start, int end, OrderByComparator<JournalArticle> obc);
+
 	/**
 	* Returns an ordered range of all the web content articles matching the
 	* company, version, and workflow status.

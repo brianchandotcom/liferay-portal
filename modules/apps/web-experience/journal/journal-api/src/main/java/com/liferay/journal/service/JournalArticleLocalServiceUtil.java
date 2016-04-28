@@ -2840,6 +2840,32 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getArticlesBySmallImageId(smallImageId);
 	}
 
+	public static java.util.List<com.liferay.journal.model.JournalArticle> getArticlesByStructureId(
+		long groupId, java.lang.String ddmStructureKey, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticle> obc) {
+		return getService()
+				   .getArticlesByStructureId(groupId, ddmStructureKey, start,
+			end, obc);
+	}
+
+	public static java.util.List<com.liferay.journal.model.JournalArticle> getArticlesByStructureId(
+		long groupId, java.lang.String ddmStructureKey, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticle> obc) {
+		return getService()
+				   .getArticlesByStructureId(groupId, ddmStructureKey, status,
+			start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.journal.model.JournalArticle> getArticlesByStructureId(
+		long groupId, long classNameId, java.lang.String ddmStructureKey,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticle> obc) {
+		return getService()
+				   .getArticlesByStructureId(groupId, classNameId,
+			ddmStructureKey, status, start, end, obc);
+	}
+
 	/**
 	* Returns an ordered range of all the web content articles matching the
 	* company, version, and workflow status.

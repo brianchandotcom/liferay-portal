@@ -94,7 +94,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 		</c:choose>
 	</c:if>
 
-	<aui:input autoFocus="<%= (((article != null) && !article.isNew()) && !journalWebConfiguration.journalArticleForceAutogenerateId() && windowState.equals(WindowState.MAXIMIZED)) || windowState.equals(LiferayWindowState.POP_UP) %>" ignoreRequestValue="<%= changeStructure %>" name="title" wrapperCssClass="article-content-title">
+	<aui:input autoFocus="<%= (((article != null) && !article.isNew()) || !journalWebConfiguration.journalArticleForceAutogenerateId()) && (windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP)) %>" ignoreRequestValue="<%= changeStructure %>" name="title" wrapperCssClass="article-content-title">
 		<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 			<aui:validator name="required" />
 		</c:if>

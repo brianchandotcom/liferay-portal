@@ -7936,11 +7936,13 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		if (smallImage && Validator.isNull(smallImageURL) &&
-			ArrayUtil.isEmpty(smallImageBytes) &&
-			Validator.isNull(
-				imageLocalService.fetchImage(smallImageId))) {
+			ArrayUtil.isEmpty(smallImageBytes)) {
 
-			throw new NoSuchImageException();
+			Image image = imageLocalService.fetchImage(smallImageId);
+
+			if (image == null) {
+				throw new NoSuchImageException();
+			}
 		}
 
 		ExportImportContentProcessor exportImportContentProcessor =

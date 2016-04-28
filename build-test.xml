@@ -597,15 +597,6 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		<sequential>
 			<fail message="Please set the property ${test.class}." unless="test.class" />
 
-			<var name="test.batch.run.type" unset="true" />
-			<var name="test.portal.instance" unset="true" />
-
-			<property name="test.batch.run.type" value="sequential" />
-			<property name="test.portal.instance" value="true" />
-
-			<propertycopy from="test.batch.run.property.names[${test.batch.name}]" name="test.batch.run.property.names" override="true" />
-			<propertycopy from="test.batch.run.property.values[${test.batch.name}]" name="test.batch.run.property.values" override="true" />
-
 			<if>
 				<and>
 					<matches pattern="[0-9]+_[0-9]+" string="${test.class}" />
@@ -614,19 +605,6 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					</not>
 				</and>
 				<then>
-					<if>
-						<not>
-							<available file="${project.dir}/test.case.method.names.properties" />
-						</not>
-						<then>
-							<antcall target="record-test-case-method-names">
-								<param name="test.batch.max.group.size" value="25" />
-								<param name="test.batch.property.names" value="${test.batch.run.property.names}" />
-								<param name="test.batch.property.values" value="${test.batch.run.property.values}" />
-							</antcall>
-						</then>
-					</if>
-
 					<loadproperties srcFile="${project.dir}/test.case.method.names.properties">
 						<filterchain>
 							<linecontains>
@@ -753,6 +731,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 	<macrodef name="get-test-url">
 		<sequential>
+			<get-test-class />
 			<get-testcase-property property.name="testcase.url" />
 
 			<if>
@@ -779,7 +758,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					</then>
 				</elseif>
 				<elseif>
-					<equals arg1="${test.portal.instance}" arg2="true" />
+					<contains string="${test.class}" substring="," />
 					<then>
 						<if>
 							<os family="unix" />
@@ -5365,29 +5344,26 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
-			<isset property="test.portal.instance" />
+			<contains string="${test.class}" substring="," />
 			<then>
-				<if>
-					<contains string="${test.class}" substring="," />
-					<then>
-						<propertyregex
-							input="${test.class}"
-							override="false"
-							property="test.name.skip.portal.instance"
-							regexp="(.*?),.*"
-							replace="\1"
-						/>
+				<propertyregex
+					input="${test.class}"
+					override="false"
+					property="test.name.skip.portal.instance"
+					regexp="(.*?),.*"
+					replace="\1"
+				/>
 
-						<echo append="true" file="${test.ext.properties.file}">
-							test.name.skip.portal.instance=${test.name.skip.portal.instance}
-						</echo>
-					</then>
-				</if>
-
+				<echo append="true" file="${test.ext.properties.file}">
+					test.portal.instance=true
+					test.name.skip.portal.instance=${test.name.skip.portal.instance}
+				</echo>
+			</then>
+			<else>
 				<echo append="true" file="${test.ext.properties.file}">
 					test.portal.instance=${test.portal.instance}
 				</echo>
-			</then>
+			</else>
 		</if>
 	</target>
 

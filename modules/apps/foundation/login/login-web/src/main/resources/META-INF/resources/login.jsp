@@ -158,6 +158,28 @@
 				<c:if test="<%= company.isAutoLogin() && !PropsValues.SESSION_DISABLED %>">
 					<aui:input checked="<%= rememberMe %>" name="rememberMe" type="checkbox" />
 				</c:if>
+
+				<%
+				String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
+
+				boolean showForgotPasswordIcon = false;
+
+				if (!mvcRenderCommandName.equals("/login/forgot_password") && (company.isSendPassword() || company.isSendPasswordResetLink())) {
+					showForgotPasswordIcon = true;
+				}
+				%>
+
+				<c:if test="<%= showForgotPasswordIcon %>">
+					<portlet:renderURL var="forgotPasswordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+						<portlet:param name="mvcRenderCommandName" value="/login/forgot_password" />
+					</portlet:renderURL>
+
+					<liferay-ui:icon
+						iconCssClass="icon-question-sign"
+						message="forgot-password"
+						url="<%= forgotPasswordURL %>"
+					/>
+				</c:if>
 			</aui:fieldset>
 
 			<aui:button-row>

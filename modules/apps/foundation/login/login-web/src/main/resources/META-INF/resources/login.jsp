@@ -33,6 +33,8 @@
 	</c:when>
 	<c:otherwise>
 
+		<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
+
 		<%
 		String formName = "loginForm";
 
@@ -162,8 +164,6 @@
 				<aui:button cssClass="btn-lg" type="submit" value="sign-in" />
 			</aui:button-row>
 		</aui:form>
-
-		<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
 
 		<aui:script sandbox="<%= true %>">
 			var form = AUI.$(document.<portlet:namespace /><%= formName %>);

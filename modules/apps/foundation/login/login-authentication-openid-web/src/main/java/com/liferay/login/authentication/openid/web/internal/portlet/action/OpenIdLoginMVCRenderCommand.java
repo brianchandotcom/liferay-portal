@@ -86,7 +86,7 @@ public class OpenIdLoginMVCRenderCommand implements MVCRenderCommand {
 			throw new PortletException("Unable to include JSP " + _JSP_PATH, e);
 		}
 
-		return "/navigation.jsp";
+		return "/null.jsp";
 	}
 
 	@Reference(unbind = "-")

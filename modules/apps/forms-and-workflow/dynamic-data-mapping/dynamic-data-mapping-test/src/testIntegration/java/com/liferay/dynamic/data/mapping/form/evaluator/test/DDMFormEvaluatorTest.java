@@ -161,6 +161,138 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 		Assert.assertTrue(checkboxDDMFormFieldEvaluationResult.isVisible());
 	}
 
+	@Test
+	public void testVisibleFields3() throws Exception {
+		String serializedDDMForm = read(
+			"ddm-form-evaluator-form-visible-fields-test-data-2.json");
+
+		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
+			serializedDDMForm);
+
+		String serializedDDMFormValues = read(
+			"ddm-form-evaluator-form-values-visible-fields-test-data-3.json");
+
+		DDMFormValues ddmFormValues =
+			_ddmFormValuesJSONDeserializer.deserialize(
+				ddmForm, serializedDDMFormValues);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		DDMFormEvaluator ddmFormEvaluator = registry.getService(
+			DDMFormEvaluator.class);
+
+		DDMFormEvaluationResult ddmFormEvaluationResult =
+			ddmFormEvaluator.evaluate(ddmForm, ddmFormValues, LocaleUtil.US);
+
+		Map<String, DDMFormFieldEvaluationResult>
+			ddmFormFieldEvaluationResultMap =
+				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
+
+		DDMFormFieldEvaluationResult phoneDDMFormFieldEvaluationResult =
+			ddmFormFieldEvaluationResultMap.get("Phone");
+
+		Assert.assertFalse(phoneDDMFormFieldEvaluationResult.isVisible());
+	}
+
+	@Test
+	public void testVisibleFields4() throws Exception {
+		String serializedDDMForm = read(
+			"ddm-form-evaluator-form-visible-fields-test-data-2.json");
+
+		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
+			serializedDDMForm);
+
+		String serializedDDMFormValues = read(
+			"ddm-form-evaluator-form-values-visible-fields-test-data-4.json");
+
+		DDMFormValues ddmFormValues =
+			_ddmFormValuesJSONDeserializer.deserialize(
+				ddmForm, serializedDDMFormValues);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		DDMFormEvaluator ddmFormEvaluator = registry.getService(
+			DDMFormEvaluator.class);
+
+		DDMFormEvaluationResult ddmFormEvaluationResult =
+			ddmFormEvaluator.evaluate(ddmForm, ddmFormValues, LocaleUtil.US);
+
+		Map<String, DDMFormFieldEvaluationResult>
+			ddmFormFieldEvaluationResultMap =
+				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
+
+		DDMFormFieldEvaluationResult phoneDDMFormFieldEvaluationResult =
+			ddmFormFieldEvaluationResultMap.get("Phone");
+
+		Assert.assertTrue(phoneDDMFormFieldEvaluationResult.isVisible());
+	}
+
+	@Test
+	public void testVisibleFields5() throws Exception {
+		String serializedDDMForm = read(
+			"ddm-form-evaluator-form-visible-fields-test-data-3.json");
+
+		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
+			serializedDDMForm);
+
+		String serializedDDMFormValues = read(
+			"ddm-form-evaluator-form-values-visible-fields-test-data-3.json");
+
+		DDMFormValues ddmFormValues =
+			_ddmFormValuesJSONDeserializer.deserialize(
+				ddmForm, serializedDDMFormValues);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		DDMFormEvaluator ddmFormEvaluator = registry.getService(
+			DDMFormEvaluator.class);
+
+		DDMFormEvaluationResult ddmFormEvaluationResult =
+			ddmFormEvaluator.evaluate(ddmForm, ddmFormValues, LocaleUtil.US);
+
+		Map<String, DDMFormFieldEvaluationResult>
+			ddmFormFieldEvaluationResultMap =
+				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
+
+		DDMFormFieldEvaluationResult phoneDDMFormFieldEvaluationResult =
+			ddmFormFieldEvaluationResultMap.get("Phone");
+
+		Assert.assertFalse(phoneDDMFormFieldEvaluationResult.isVisible());
+	}
+
+	@Test
+	public void testVisibleFields6() throws Exception {
+		String serializedDDMForm = read(
+			"ddm-form-evaluator-form-visible-fields-test-data-3.json");
+
+		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
+			serializedDDMForm);
+
+		String serializedDDMFormValues = read(
+			"ddm-form-evaluator-form-values-visible-fields-test-data-4.json");
+
+		DDMFormValues ddmFormValues =
+			_ddmFormValuesJSONDeserializer.deserialize(
+				ddmForm, serializedDDMFormValues);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		DDMFormEvaluator ddmFormEvaluator = registry.getService(
+			DDMFormEvaluator.class);
+
+		DDMFormEvaluationResult ddmFormEvaluationResult =
+			ddmFormEvaluator.evaluate(ddmForm, ddmFormValues, LocaleUtil.US);
+
+		Map<String, DDMFormFieldEvaluationResult>
+			ddmFormFieldEvaluationResultMap =
+				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
+
+		DDMFormFieldEvaluationResult phoneDDMFormFieldEvaluationResult =
+			ddmFormFieldEvaluationResultMap.get("Phone");
+
+		Assert.assertTrue(phoneDDMFormFieldEvaluationResult.isVisible());
+	}
+
 	protected void setUpDDMFormJSONDeserializer() {
 		Registry registry = RegistryUtil.getRegistry();
 

@@ -563,7 +563,7 @@
 			showFixmeTags="false"
 			showHiddenTags="false"
 			sourceDir="${definitions.dir}"
-            stylesheet="${project.dir}/tools/styles/${lp.style.edition}/DTDDocStyle.css"
+                        stylesheet="${project.dir}/tools/styles/${lp.style.edition}/DTDDocStyle.css"
 		>
 			<include name="liferay-*${lp.version.dtd}.dtd" />
 		</DTDDoc>
@@ -776,11 +776,11 @@
 			<arg value="properties.title=${properties.title}" />
 			<arg value="properties.toc=${properties.toc}" />
 		</java>
-        <copy
-            file="${project.dir}/tools/styles/${lp.style.edition}/propertiesdoc.css"
-            tofile="${doc.dir}/propertiesdoc/propertiesdoc.css"
-            overwrite="true"
-        />
+                <copy
+                    file="${project.dir}/tools/styles/${lp.style.edition}/propertiesdoc.css"
+                    tofile="${doc.dir}/propertiesdoc/propertiesdoc.css"
+                    overwrite="true"
+                />
 	</target>
 
 	<target name="setup-jrebel">

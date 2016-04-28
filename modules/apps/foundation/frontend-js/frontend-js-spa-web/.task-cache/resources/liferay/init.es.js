@@ -32,9 +32,9 @@ define("frontend-js-spa-web@1.0.6/liferay/init.es", ['exports', './screen/Action
 		path: function path(url) {
 			var uri = new _Uri2.default(url);
 
-			var redirect = new _Uri2.default(uri.getParameterValue('redirect'));
+			var loginRedirect = new _Uri2.default(Liferay.SPA.loginRedirect);
 
-			var hostname = redirect.getHostname() || window.location.hostname;
+			var hostname = loginRedirect.getHostname() || window.location.hostname;
 
 			if (!app.isLinkSameOrigin_(hostname)) {
 				return false;

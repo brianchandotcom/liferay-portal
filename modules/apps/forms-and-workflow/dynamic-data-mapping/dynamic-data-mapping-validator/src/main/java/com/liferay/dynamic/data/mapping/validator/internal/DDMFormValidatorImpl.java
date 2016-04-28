@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetDefaultLocale;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetDefaultLocaleAsAvailableLocale;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetFieldType;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetFieldsForForm;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetOptionsForField;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidAvailableLocalesForProperty;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidCharactersForFieldName;
@@ -64,9 +65,15 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 	public void validate(DDMForm ddmForm) throws DDMFormValidationException {
 		validateDDMFormLocales(ddmForm);
 
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+		if (ddmFormFields.isEmpty()) {
+			throw new MustSetFieldsForForm();
+		}
+
 		validateDDMFormFields(
-			ddmForm.getDDMFormFields(), new HashSet<String>(),
-			ddmForm.getAvailableLocales(), ddmForm.getDefaultLocale());
+			ddmFormFields, new HashSet<String>(), ddmForm.getAvailableLocales(),
+			ddmForm.getDefaultLocale());
 	}
 
 	@Reference(unbind = "-")

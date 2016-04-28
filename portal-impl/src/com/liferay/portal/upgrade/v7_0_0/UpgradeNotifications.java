@@ -12,33 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.upgrade;
+package com.liferay.portal.upgrade.v7_0_0;
 
+import com.liferay.portal.kernel.dao.db.DBMetadata;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.upgrade.v7_0_0.UpgradeNotifications;
-import com.liferay.portal.upgrade.v7_0_1.UpgradeCompany;
-import com.liferay.portal.upgrade.v7_0_1.UpgradeMessageBoards;
-import com.liferay.portal.upgrade.v7_0_1.UpgradeModules;
+import com.liferay.portal.upgrade.v7_0_0.util.UserNotificationEventTable;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Adolfo Pérez
  */
-public class UpgradeProcess_7_0_1 extends UpgradeProcess {
-
-	@Override
-	public int getThreshold() {
-		return ReleaseInfo.RELEASE_7_0_1_BUILD_NUMBER;
-	}
+public class UpgradeNotifications extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgrade(UpgradeCompany.class);
-		upgrade(UpgradeMessageBoards.class);
-		upgrade(UpgradeModules.class);
-		upgrade(UpgradeNotifications.class);
+		DBMetadata dbMetadata = new DBMetadata(connection);
 
-		clearIndexesCache();
+		if (!dbMetadata.hasType(
+				UserNotificationEventTable.class, "type_",
+				"VARCHAR(200) null")) {
+
+			alter(
+				UserNotificationEventTable.class,
+				new AlterColumnType("type_", "VARCHAR(200) null"));
+		}
 	}
 
 }

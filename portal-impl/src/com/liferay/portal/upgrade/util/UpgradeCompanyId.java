@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.util;
 
+import com.liferay.portal.kernel.dao.db.DBMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -42,10 +43,14 @@ public abstract class UpgradeCompanyId extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		DBMetadata dbMetadata = new DBMetadata(connection);
+
 		List<Callable<Void>> callables = new ArrayList<>();
 
 		for (TableUpdater tableUpdater : getTableUpdaters()) {
-			if (!hasColumn(tableUpdater.getTableName(), "companyId")) {
+			if (!dbMetadata.hasColumn(
+					tableUpdater.getTableName(), "companyId")) {
+
 				tableUpdater.setCreateCompanyIdColumn(true);
 			}
 

@@ -14,6 +14,7 @@
 
 package com.liferay.calendar.upgrade.v1_0_1;
 
+import com.liferay.portal.kernel.dao.db.DBMetadata;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -38,7 +39,9 @@ public class UpgradeCalendar extends UpgradeProcess {
 
 	protected void updateCalendarTable() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (!hasColumn("Calendar", "timeZoneId")) {
+			DBMetadata dbMetadata = new DBMetadata(connection);
+
+			if (!dbMetadata.hasColumn("Calendar", "timeZoneId")) {
 				runSQL("alter table Calendar add timeZoneId VARCHAR(75) null");
 			}
 		}

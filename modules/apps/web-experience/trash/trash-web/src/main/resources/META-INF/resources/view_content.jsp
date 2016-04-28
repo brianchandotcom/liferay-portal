@@ -144,7 +144,6 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-jsp
-								cssClass="entry-action-column"
 								path="/view_content_action.jsp"
 							/>
 						</c:when>
@@ -195,7 +194,6 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 						</c:when>
 						<c:when test="<%= trashDisplayContext.isListView() %>">
 							<liferay-ui:search-container-column-text
-								cssClass="content-column name-column title-column"
 								name="name"
 								truncate="<%= true %>"
 							>
@@ -216,7 +214,6 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-jsp
-								cssClass="entry-action-column"
 								path="/view_content_action.jsp"
 							/>
 						</c:when>

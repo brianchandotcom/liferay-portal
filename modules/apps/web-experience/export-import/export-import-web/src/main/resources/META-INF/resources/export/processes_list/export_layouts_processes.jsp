@@ -222,7 +222,6 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						cssClass="content-column title-column"
 						name="title"
 						truncate="<%= true %>"
 					>
@@ -232,27 +231,23 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-jsp
-						cssClass="status-column text-column"
 						name="status"
 						path="/publish_process_message.jsp"
 					/>
 
 					<liferay-ui:search-container-column-date
-						cssClass="create-date-column text-column"
 						name="create-date"
 						orderable="<%= true %>"
 						value="<%= backgroundTask.getCreateDate() %>"
 					/>
 
 					<liferay-ui:search-container-column-date
-						cssClass="completion-date-column text-column"
 						name="completion-date"
 						orderable="<%= true %>"
 						value="<%= backgroundTask.getCompletionDate() %>"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="content-column download-column"
 						name="download"
 						truncate="<%= true %>"
 					>

@@ -67,6 +67,7 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="portlet"
+			truncate="<%= true %>"
 		>
 			<aui:a href="<%= showEditPluginHREF ? rowURL.toString() : null %>">
 				<strong>
@@ -91,8 +92,6 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 		/>
 
 		<liferay-ui:search-container-column-text
-			align="right"
-			cssClass="entry-action"
 			name=""
 		>
 			<liferay-ui:icon-menu

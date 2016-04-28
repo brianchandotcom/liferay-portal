@@ -63,33 +63,28 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
-			cssClass="content-column name-column title-column"
+			cssClass="table-cell-content"
 			href="<%= rowURL %>"
 			name="name"
 			orderable="<%= true %>"
 			property="name"
-			truncate="<%= true %>"
 		/>
 
 		<liferay-ui:search-container-column-text
-			cssClass="content-column description-column"
+			cssClass="table-cell-content"
 			href="<%= rowURL %>"
 			name="description"
 			orderable="<%= true %>"
 			property="description"
-			truncate="<%= true %>"
 		/>
 
 		<liferay-ui:search-container-column-text
-			cssClass="text-column users-column"
 			name="users"
 		>
 			<%= LanguageUtil.format(request, usersCount > 1 ? "x-users" : "x-user", usersCount, false) %>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-jsp
-			align="right"
-			cssClass="entry-action"
 			path="/user_group_action.jsp"
 		/>
 	</c:otherwise>

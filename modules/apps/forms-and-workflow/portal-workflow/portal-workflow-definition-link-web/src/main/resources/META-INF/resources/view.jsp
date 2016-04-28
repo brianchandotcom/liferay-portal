@@ -40,17 +40,17 @@ WorkflowDefinitionLinkSearch workflowDefinitionLinkSearchContainer = workflowDef
 
 			<liferay-ui:search-container-column-text
 				name="resource"
+				truncate="<%= true %>"
 				value="<%= workflowDefinitionLinkSearchEntry.getResource() %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				name="workflow"
+				truncate="<%= true %>"
 				value="<%= workflowDefinitionLinkSearchEntry.getWorkflowDefinitionLabel() %>"
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				align="right"
-				cssClass="entry-action"
 				path="/workflow_definition_link_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

@@ -164,7 +164,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 				</c:when>
 				<c:when test='<%= Objects.equals(assetCategoriesDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="content-column name-column title-column"
 						href="<%= rowURL %>"
 						name="name"
 						truncate="<%= true %>"
@@ -172,32 +171,27 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="content-column description-column"
 						name="description"
 						truncate="<%= true %>"
 						value="<%= HtmlUtil.escape(vocabulary.getDescription(locale)) %>"
 					/>
 
 					<liferay-ui:search-container-column-date
-						cssClass="create-date-column text-column"
 						name="create-date"
 						property="createDate"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="number-of-categories-column"
 						name="number-of-categories"
 						value="<%= String.valueOf(vocabulary.getCategoriesCount()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="asset-type-column text-column"
 						name="asset-type"
 						value="<%= assetCategoriesDisplayContext.getAssetType(vocabulary) %>"
 					/>
 
 					<liferay-ui:search-container-column-jsp
-						cssClass="entry-action-column"
 						path="/vocabulary_action.jsp"
 					/>
 				</c:when>

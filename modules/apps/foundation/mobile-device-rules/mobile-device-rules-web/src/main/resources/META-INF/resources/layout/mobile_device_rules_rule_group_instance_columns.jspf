@@ -19,7 +19,6 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(mdrRuleG
 %>
 
 <liferay-ui:search-container-column-text
-	cssClass="content-column name-column title-column"
 	name="name"
 	truncate="<%= true %>"
 >
@@ -35,7 +34,6 @@ List<MDRAction> mdrActions = MDRActionLocalServiceUtil.getActions(mdrRuleGroupIn
 %>
 
 <liferay-ui:search-container-column-text
-	cssClass="actions-column content-column"
 	name="actions"
 	truncate="<%= true %>"
 	value="<%= HtmlUtil.escape(ListUtil.toString(mdrActions, MDRAction.NAME_ACCESSOR, StringPool.COMMA_AND_SPACE)) %>"
@@ -43,12 +41,10 @@ List<MDRAction> mdrActions = MDRActionLocalServiceUtil.getActions(mdrRuleGroupIn
 
 <c:if test="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) > 1 %>">
 	<liferay-ui:search-container-column-text
-		cssClass="priority-column text-column"
 		property="priority"
 	/>
 </c:if>
 
 <liferay-ui:search-container-column-jsp
-	cssClass="entry-action-column"
 	path="/layout/mobile_device_rules_rule_group_instance_action.jsp"
 />

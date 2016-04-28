@@ -93,8 +93,6 @@ List themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId());
 		/>
 
 		<liferay-ui:search-container-column-text
-			align="right"
-			cssClass="entry-action"
 			name=""
 		>
 			<liferay-ui:icon-menu

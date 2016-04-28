@@ -47,11 +47,13 @@
 			href="<%= rowURL %>"
 			name="web-id"
 			property="webId"
+			truncate="<%= true %>"
 		/>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="virtual-host"
+			truncate="<%= true %>"
 			value="<%= curCompany.getVirtualHostname() %>"
 		/>
 
@@ -59,6 +61,7 @@
 			href="<%= rowURL %>"
 			name="mail-domain"
 			property="mx"
+			truncate="<%= true %>"
 		/>
 
 		<liferay-ui:search-container-column-text
@@ -84,7 +87,6 @@
 		/>
 
 		<liferay-ui:search-container-column-jsp
-			cssClass="list-group-item-field"
 			path="/instance_actions.jsp"
 		/>
 	</liferay-ui:search-container-row>

@@ -15,7 +15,6 @@
 --%>
 
 <liferay-ui:search-container-column-text
-	cssClass="content-column name-column title-column"
 	name="name"
 	orderable="<%= true %>"
 	truncate="<%= true %>"
@@ -70,7 +69,6 @@
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
-	cssClass="content-column child-sites-column"
 	name="child-sites"
 	truncate="<%= true %>"
 >
@@ -87,13 +85,11 @@
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
-	cssClass="membership-type-column text-column"
 	name="membership-type"
 	value="<%= LanguageUtil.get(request, curGroup.getTypeLabel()) %>"
 />
 
 <liferay-ui:search-container-column-text
-	cssClass="members-column text-column"
 	name="members"
 >
 	<span onmouseover="Liferay.Portal.ToolTip.show(this, '<liferay-ui:message key="inherited-memberships-are-not-included-in-members-count" unicode="<%= true %>" />');">
@@ -136,19 +132,16 @@
 
 <c:if test="<%= PropsValues.LIVE_USERS_ENABLED %>">
 	<liferay-ui:search-container-column-text
-		cssClass="online-now-column"
 		name="online-now"
 		value="<%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), curGroup.getGroupId())) %>"
 	/>
 </c:if>
 
 <liferay-ui:search-container-column-text
-	cssClass="group-active-column"
 	name="active"
 	value='<%= LanguageUtil.get(request, (curGroup.isActive() ? "yes" : "no")) %>'
 />
 
 <liferay-ui:search-container-column-jsp
-	cssClass="entry-action-column"
 	path="/site_action.jsp"
 />

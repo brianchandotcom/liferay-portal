@@ -141,7 +141,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 				</portlet:renderURL>
 
 				<liferay-ui:search-container-column-text
-					cssClass="content-column name-column title-column"
 					href="<%= rowURL %>"
 					name="name"
 					property="name"
@@ -149,7 +148,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="content-column description-column"
 					href="<%= rowURL %>"
 					name="description"
 					orderable="<%= true %>"
@@ -158,7 +156,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 				/>
 
 				<liferay-ui:search-container-column-jsp
-					cssClass="entry-action-column"
 					path="/password_policy_action.jsp"
 				/>
 			</liferay-ui:search-container-row>

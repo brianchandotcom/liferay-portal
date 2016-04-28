@@ -168,7 +168,6 @@
 				</c:when>
 				<c:when test="<%= layoutPrototypeDisplayContext.isListView() %>">
 					<liferay-ui:search-container-column-text
-						cssClass="content-column name-column title-column"
 						name="name"
 						truncate="<%= true %>"
 					>
@@ -184,26 +183,22 @@
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						cssClass="content-column description-column"
 						name="description"
 						truncate="<%= true %>"
 						value="<%= layoutPrototype.getDescription(locale) %>"
 					/>
 
 					<liferay-ui:search-container-column-date
-						cssClass="create-date-column text-column"
 						name="create-date"
 						property="createDate"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="page-active-column"
 						name="active"
 						value='<%= LanguageUtil.get(request, layoutPrototype.isActive()? "yes" : "no") %>'
 					/>
 
 					<liferay-ui:search-container-column-jsp
-						cssClass="entry-action-column"
 						path="/layout_prototype_action.jsp"
 					/>
 				</c:when>

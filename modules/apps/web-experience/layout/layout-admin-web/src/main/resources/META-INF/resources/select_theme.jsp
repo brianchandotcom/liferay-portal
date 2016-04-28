@@ -158,7 +158,6 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="content-column name-column title-column"
 						name="name"
 						truncate="<%= true %>"
 					>
@@ -183,7 +182,6 @@ themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")
 					%>
 
 					<liferay-ui:search-container-column-text
-						cssClass="author-column text-column"
 						name="author"
 						value="<%= author %>"
 					/>

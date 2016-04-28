@@ -105,7 +105,6 @@ previewURL.setParameter("membershipRequestId", String.valueOf(membershipRequest.
 	</c:when>
 	<c:when test='<%= displayStyle.equals("list") %>'>
 		<liferay-ui:search-container-column-text
-			cssClass="content-column user-column title-column"
 			name="user"
 			truncate="<%= true %>"
 		>
@@ -115,25 +114,21 @@ previewURL.setParameter("membershipRequestId", String.valueOf(membershipRequest.
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
-			cssClass="content-column email-address-column"
 			name="email-address"
 			value="<%= membershipRequestUser.getEmailAddress() %>"
 		/>
 
 		<liferay-ui:search-container-column-date
-			cssClass="date-column text-column"
 			name="date"
 			value="<%= membershipRequest.getCreateDate() %>"
 		/>
 
 		<liferay-ui:search-container-column-text
-			cssClass="replier-comments text-column"
 			name="replier"
 			value="<%= replier %>"
 		/>
 
 		<liferay-ui:search-container-column-date
-			cssClass="reply-date-column text-column"
 			name="reply-date"
 			value="<%= membershipRequest.getReplyDate() %>"
 		/>

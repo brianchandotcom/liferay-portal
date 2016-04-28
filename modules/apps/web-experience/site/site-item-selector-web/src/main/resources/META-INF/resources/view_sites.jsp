@@ -179,7 +179,6 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="content-column name-column title-column"
 						name="name"
 						truncate="<%= true %>"
 					>
@@ -190,7 +189,6 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 
 					<c:if test="<%= siteItemSelectorViewDisplayContext.isShowChildSitesLink() %>">
 						<liferay-ui:search-container-column-text
-							cssClass="child-sites-column content-column"
 							name="child-sites"
 							truncate="<%= true %>"
 						>
@@ -201,7 +199,6 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 					</c:if>
 
 					<liferay-ui:search-container-column-text
-						cssClass="text-column type-column"
 						name="type"
 						value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
 					/>

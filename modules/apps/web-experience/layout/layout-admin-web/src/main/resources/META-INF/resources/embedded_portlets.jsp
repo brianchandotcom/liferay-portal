@@ -186,27 +186,23 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 					</c:when>
 					<c:when test='<%= displayStyle.equals("list") %>'>
 						<liferay-ui:search-container-column-text
-							cssClass="content-column name-column title-column"
 							name="title"
 							truncate="<%= true %>"
 							value="<%= PortalUtil.getPortletTitle(portlet, application, locale) %>"
 						/>
 
 						<liferay-ui:search-container-column-text
-							cssClass="content-column portlet-id-column"
 							name="portlet-id"
 							property="portletId"
 							truncate="<%= true %>"
 						/>
 
 						<liferay-ui:search-container-column-text
-							cssClass="status-column text-column"
 							name="status"
 							value="<%= status %>"
 						/>
 
 						<liferay-ui:search-container-column-jsp
-							cssClass="entry-action-column"
 							path="/embedded_portlets_action.jsp"
 						/>
 					</c:when>

@@ -72,7 +72,6 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 						%>
 
 						<liferay-ui:search-container-column-text
-							cssClass="content-column title-column"
 							name="title"
 							truncate="<%= true %>"
 						>
@@ -90,19 +89,16 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
-							cssClass="text-column type-column"
 							name="type"
 							value="<%= assetRendererFactory.getTypeName(locale) %>"
 						/>
 
 						<liferay-ui:search-container-column-date
-							cssClass="modified-date-column text-column"
 							name="modified-date"
 							value="<%= assetEntry.getModifiedDate() %>"
 						/>
 
 						<liferay-ui:search-container-column-jsp
-							cssClass="entry-action-column"
 							path="/asset_selection_action.jsp"
 						/>
 

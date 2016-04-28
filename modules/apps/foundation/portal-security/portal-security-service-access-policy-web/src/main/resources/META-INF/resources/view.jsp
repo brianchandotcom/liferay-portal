@@ -99,12 +99,14 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
 				name="name"
+				truncate="<%= true %>"
 			>
 				<strong><%= sapEntry.getName() %></strong>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				name="title"
+				name="description"
+				truncate="<%= true %>"
 				value="<%= sapEntry.getTitle(locale) %>"
 			/>
 
@@ -119,7 +121,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="list-group-item-field"
 				path="/entry_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

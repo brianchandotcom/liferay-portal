@@ -194,31 +194,26 @@ JournalArticle article = journalDisplayContext.getArticle();
 						</c:when>
 						<c:when test='<%= displayStyle.equals("list") %>'>
 							<liferay-ui:search-container-column-text
-								cssClass="id-column text-column"
 								name="id"
 								value="<%= HtmlUtil.escape(articleVersion.getArticleId()) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
-								cssClass="content-column title-column"
 								name="title"
 								truncate="<%= true %>"
 								value="<%= HtmlUtil.escape(articleVersion.getTitle(locale)) %>"
 							/>
 
 							<liferay-ui:search-container-column-text
-								cssClass="text-column version-column"
 								name="version"
 								orderable="<%= true %>"
 							/>
 
 							<liferay-ui:search-container-column-status
-								cssClass="text-column status-column"
 								name="status"
 							/>
 
 							<liferay-ui:search-container-column-date
-								cssClass="modified-date-column text-column"
 								name="modified-date"
 								orderable="<%= true %>"
 								property="modifiedDate"
@@ -226,7 +221,6 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 							<c:if test="<%= article.getDisplayDate() != null %>">
 								<liferay-ui:search-container-column-date
-									cssClass="display-date-column text-column"
 									name="display-date"
 									orderable="<%= true %>"
 									property="displayDate"
@@ -234,13 +228,11 @@ JournalArticle article = journalDisplayContext.getArticle();
 							</c:if>
 
 							<liferay-ui:search-container-column-text
-								cssClass="author-column text-column"
 								name="author"
 								value="<%= HtmlUtil.escape(PortalUtil.getUserName(articleVersion)) %>"
 							/>
 
 							<liferay-ui:search-container-column-jsp
-								cssClass="entry-action-column"
 								path="/article_version_action.jsp"
 							/>
 						</c:when>

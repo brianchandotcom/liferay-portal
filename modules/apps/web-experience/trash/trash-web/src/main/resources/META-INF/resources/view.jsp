@@ -240,7 +240,6 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-jsp
-								cssClass="entry-action-column"
 								path="<%= actionPath %>"
 							/>
 						</c:when>
@@ -276,7 +275,6 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 						</c:when>
 						<c:when test="<%= trashDisplayContext.isListView() %>">
 							<liferay-ui:search-container-column-text
-								cssClass="content-column name-column title-column"
 								name="name"
 								truncate="<%= true %>"
 							>
@@ -330,25 +328,21 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text
-								cssClass="text-column type-column"
 								name="type"
 								value="<%= ResourceActionsUtil.getModelResource(locale, trashEntry.getClassName()) %>"
 							/>
 
 							<liferay-ui:search-container-column-date
-								cssClass="removed-date-column text-column"
 								name="removed-date"
 								value="<%= trashEntry.getCreateDate() %>"
 							/>
 
 							<liferay-ui:search-container-column-text
-								cssClass="removed-by-column text-column"
 								name="removed-by"
 								value="<%= HtmlUtil.escape(trashEntry.getUserName()) %>"
 							/>
 
 							<liferay-ui:search-container-column-jsp
-								cssClass="entry-action-column"
 								path="<%= actionPath %>"
 							/>
 						</c:when>

@@ -360,14 +360,19 @@ AUI.add(
 									}
 
 									if (updateSessionState) {
-										if (expirationMoment) {
+										if (!instance.display._banner) {
+											if (hasExpired) {
+												instance.expire();
+											}
+											else if (hasWarned) {
+												instance.warn();
+											}
+											else if (extend) {
+												instance.extend();
+											}
+										}
+										else if (hasExpired) {
 											instance.expire();
-										}
-										else if (warningMoment) {
-											instance.warn();
-										}
-										else if (extend) {
-											instance.extend();
 										}
 									}
 								}

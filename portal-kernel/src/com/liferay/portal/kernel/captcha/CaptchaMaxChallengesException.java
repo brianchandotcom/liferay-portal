@@ -16,7 +16,9 @@ package com.liferay.portal.kernel.captcha;
 
 /**
  * @author Jack Li
+ * @deprecated As of 7.0.1 no longer needed
  */
+@Deprecated
 public class CaptchaMaxChallengesException extends CaptchaException {
 
 	public CaptchaMaxChallengesException() {

@@ -39,22 +39,22 @@
 		</div>
 
 		<div class="lfr-image-editor-history-container">
-			<div class="history-controls btn-group" role="group">
+			<div class="btn-group" role="group">
 				<a class="btn btn-link {$history and $history.canUndo ? '' : 'disabled'} icon-monospaced" data-onclick="undo" href="javascript:;">
 					<svg class="lexicon-icon">
-					    <use xlink:href="{$pathThemeImages}/lexicon/icons.svg#angle-left"></use>
+						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#angle-left"></use>
 					</svg>
 				</a>
 
 				<a class="btn btn-link {$history and $history.canReset ? '' : 'disabled'} icon-monospaced" data-onclick="reset" href="javascript:;">
 					<svg class="lexicon-icon">
-					    <use xlink:href="{$pathThemeImages}/lexicon/icons.svg#restore"></use>
+					 	<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#restore"></use>
 					</svg>
 				</a>
 
 				<a class="btn btn-link {$history and $history.canRedo ? '' : 'disabled'} icon-monospaced" data-onclick="redo" href="javascript:;">
 					<svg class="lexicon-icon">
-					    <use xlink:href="{$pathThemeImages}/lexicon/icons.svg#angle-right"></use>
+						<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#angle-right"></use>
 					</svg>
 				</a>
 			</div>
@@ -72,7 +72,7 @@
 	<div class="controls text-center">
 		<ul class="list-inline">
 			{foreach $tool in $capabilities.tools}
-				<li class="{$selectedTool == 'tool-' + index($tool) ? 'open' : ''}" style="display:inline">
+				<li class="{$selectedTool == 'tool-' + index($tool) ? 'open' : ''}">
 					{call .tool data="all"}
 						{param tool: $tool /}
 						{param toolIndex: index($tool) /}
@@ -102,7 +102,7 @@
 
 		<a class="btn" data-onclick="requestEditorEdit" data-control="{$control.variant}" data-tool="tool-{$toolIndex}" href="javascript:;">
 			<svg class="icon-monospaced lexicon-icon">
-			    <use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$tool.icon}"></use>
+				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$tool.icon}"></use>
 			</svg>
 		</a>
 
@@ -125,7 +125,7 @@
 		{param header kind="html"}
 			<a class="btn" data-onclick="toggle" href="javascript:;">
 				<svg class="icon-monospaced lexicon-icon">
-				    <use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$tool.icon}"></use>
+					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$tool.icon}"></use>
 				</svg>
 			</a>
 		{/param}
@@ -159,11 +159,11 @@
  * @param strings
  */
 {template .tool_control}
-	<div class="filters {$selectedControl and $selectedControl.label == $control.label ? 'open' : ''}">
+	<div class="controls-container {$selectedControl and $selectedControl.label == $control.label ? 'open' : ''}">
 		<div class="col-md-2 col-sm-2 col-xs-2 btn-space">
 			<button class="btn btn-link" data-onclick="accept">{$strings['apply']}</a>
 		</div>
-		<div class="col-md-8 col-sm-8 col-xs-8 filters-list">
+		<div class="col-md-8 col-sm-8 col-xs-8 tool-controls">
 			{if $selectedControl and $selectedControl.label == $control.label}
 				{call .active_controls data="all"}
 					{param modulePath: $control.modulePath /}

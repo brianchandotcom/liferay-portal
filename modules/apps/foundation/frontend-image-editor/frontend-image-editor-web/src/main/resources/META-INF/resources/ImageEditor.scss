@@ -4,24 +4,24 @@
 $imageeditor-btn-padding: 8px 4px !default;
 $imageeditor-btn-space: 24px !default;
 $imageeditor-controls-height: 52px !default;
+$imageeditor-filters-border-width: 4px;
 $imageeditor-filters-height: 90px !default;
 $imageeditor-history-controls-top: 30px;
+$slider-height: 20px;
 
 // Skin
 
 $brand-primary: darken(#428BCA, 6.5%) !default; // #337ab7
 
 $imageeditor-bg: #111314 !default;
+$imageeditor-filters-text-color: #57636A !default;
 $imageeditor-history-controls-btn-color: #4E6371 !default;
 $imageeditor-link-color: $brand-primary !default;
 $imageeditor-text-color: #FFF !default;
-$imageeditor-filters-text-color: #57636A !default;
 
 $gray-base: #000 !default;
 $gray-light: lighten($gray-base, 46.7%) !default; // #777
 $gray-lighter: lighten($gray-base, 93.5%) !default; // #eee
-
-$slider-height: 20px;
 
 body {
 	background-color: $imageeditor-bg !important;
@@ -42,16 +42,11 @@ body {
 		top: 40%;
 	}
 
-	.lfr-image-editor-image-container, .lfr-image-editor-tools-container, .lfr-image-editor-history-container {
-		position: relative;
-	}
-
 	.lfr-image-editor-image-container {
+		align-items: center;
+		display: flex;
+		justify-content: center;
 		padding: 20px;
-	}
-
-	.lfr-image-editor-tools-container {
-		height: 142px;
 	}
 
 	.lfr-image-editor-history-container {
@@ -72,10 +67,8 @@ body {
 		}
 	}
 
-	.lfr-image-editor-image-container {
-		align-items: center;
-		display: flex;
-		justify-content: center;
+	.lfr-image-editor-tools-container {
+		height: 142px;
 	}
 
 	.controls {
@@ -85,13 +78,16 @@ body {
 		position: absolute;
 		width: 100%;
 
+		.list-inline > li {
+			display: inline;
+		}
+
 		.btn {
 			color: $imageeditor-text-color;
 			padding: $imageeditor-btn-padding;
 		}
 
-		.filters {
-			background-color: $imageeditor-bg;
+		.controls-container {
 			bottom: $imageeditor-controls-height;
 			height: 0;
 			left: 0;
@@ -106,32 +102,38 @@ body {
 				margin-top: $imageeditor-btn-space;
 			}
 
-			.filters-list {
+			.tool-controls {
 				overflow: auto;
 				padding: 10px 0 0;
 
-				.list-table {
+				ul.list-table {
 					display: table;
 
 					li {
 						display: table-cell;
-						padding: 0 5px;
+						padding: 0 1px;
+
+						a {
+							color: $imageeditor-filters-text-color;
+
+							canvas {
+								border: $imageeditor-filters-border-width solid $imageeditor-bg;
+								margin-top: -8px;
+							}
+
+							&.active {
+								color: $imageeditor-link-color;
+
+								canvas {
+									border: $imageeditor-filters-border-width solid $imageeditor-link-color;
+									border-radius: $imageeditor-filters-border-width;
+								}
+							}
+						}
 
 						&:hover a {
 							color: $imageeditor-link-color;
 							text-decoration: none;
-						}
-					}
-
-					a {
-						color: $imageeditor-filters-text-color;
-
-						&.active {
-							color: $imageeditor-link-color;
-						}
-
-						&.active canvas {
-							outline: 3px solid $imageeditor-link-color;
 						}
 					}
 
@@ -149,7 +151,7 @@ body {
 				color: $imageeditor-link-color;
 			}
 
-			.filters.open {
+			.controls-container.open {
 				height: $imageeditor-filters-height;
 			}
 		}
@@ -165,6 +167,7 @@ body {
 		.rail {
 			border-radius: $slider-height / 2;
 			height: $slider-height;
+			margin-top: 5px;
 			position: relative;
 
 			&::after {
@@ -207,7 +210,7 @@ body {
 		input.form-control {
 			float: none;
 			margin: 0 15px;
-			width: 30%;
+			width: 100px;
 
 			&:not(:focus) {
 				color: $imageeditor-text-color;

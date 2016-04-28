@@ -35,7 +35,6 @@ page import="com.liferay.dynamic.data.mapping.exception.NoSuchStructureLayoutExc
 page import="com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult" %><%@
 page import="com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException" %><%@
 page import="com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException" %><%@
-page import="com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException" %><%@
 page import="com.liferay.portal.kernel.captcha.CaptchaTextException" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

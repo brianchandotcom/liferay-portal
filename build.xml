@@ -563,7 +563,7 @@
 			showFixmeTags="false"
 			showHiddenTags="false"
 			sourceDir="${definitions.dir}"
-            stylesheet="./styles/DTDDocStyle.css"
+            stylesheet="${project.dir}/tools/styles/${lp.style.edition}/DTDDocStyle.css"
 		>
 			<include name="liferay-*${lp.version.dtd}.dtd" />
 		</DTDDoc>
@@ -653,7 +653,7 @@
 			maxmemory="2048m"
 			noqualifier="java.*"
 			overview="${module.dir}/src/overview.html"
-			stylesheetfile="./styles/stylesheet.css"
+			stylesheetfile="${project.dir}/tools/styles/${lp.style.edition}/stylesheet.css"
 			useexternalfile="yes"
 			use="yes"
 			windowtitle="Liferay ${lp.version} ${module.dir} API"
@@ -687,7 +687,7 @@
 			maxmemory="2048m"
 			noqualifier="java.*"
 			overview="${module.dir}/src/overview.html"
-			stylesheetfile="./styles/stylesheet.css"
+			stylesheetfile="${project.dir}/tools/styles/${lp.style.edition}/stylesheet.css"
 			useexternalfile="yes"
 			use="yes"
 			windowtitle="Liferay ${lp.version} ${module.dir} API"
@@ -776,6 +776,11 @@
 			<arg value="properties.title=${properties.title}" />
 			<arg value="properties.toc=${properties.toc}" />
 		</java>
+        <copy
+            file="${project.dir}/tools/styles/${lp.style.edition}/propertiesdoc.css"
+            tofile="${doc.dir}/propertiesdoc/propertiesdoc.css"
+            overwrite="true"
+        />
 	</target>
 
 	<target name="setup-jrebel">

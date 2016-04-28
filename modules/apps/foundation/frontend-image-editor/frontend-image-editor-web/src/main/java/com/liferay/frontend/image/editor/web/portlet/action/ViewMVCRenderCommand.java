@@ -18,12 +18,14 @@ import com.liferay.frontend.image.editor.capability.ImageEditorCapability;
 import com.liferay.frontend.image.editor.web.constants.ImageEditorPortletKeys;
 import com.liferay.frontend.image.editor.web.portlet.tracker.ImageEditorCapabilityTracker;
 import com.liferay.frontend.image.editor.web.portlet.tracker.ImageEditorCapabilityTracker.ImageEditorCapabilityInformation;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -31,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -78,6 +81,18 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		template.put("capabilities", capabilitiesContext);
 		template.put("image", imageUrl);
 		template.put("pathThemeImages", themeDisplay.getPathThemeImages());
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				themeDisplay.getLanguageId());
+
+		Map<String, Object> strings = new HashMap<>();
+
+		for (String key : resourceBundle.keySet()) {
+			strings.put(key, LanguageUtil.get(resourceBundle, key));
+		}
+
+		template.put("strings", strings);
 
 		return "ImageEditor";
 	}
@@ -200,5 +215,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ImageEditorCapabilityTracker _imageEditorCapabilityTracker;
+
+	@Reference(target = "(bundle.symbolic.name=com.liferay.frontend.image.editor.web)")
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

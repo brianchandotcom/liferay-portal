@@ -10,6 +10,7 @@
  * @param? selectedControl
  * @param? selectedTool
  * @param? pathThemeImages
+ * @param? strings
  *
  * Function References
  *
@@ -155,11 +156,12 @@
  *
  * @param control
  * @param selectedControl
+ * @param strings
  */
 {template .tool_control}
 	<div class="filters {$selectedControl and $selectedControl.label == $control.label ? 'open' : ''}">
 		<div class="col-md-2 col-sm-2 col-xs-2 btn-space">
-			<button class="btn btn-link" data-onclick="accept">Apply</a>
+			<button class="btn btn-link" data-onclick="accept">{$strings['apply']}</a>
 		</div>
 		<div class="col-md-8 col-sm-8 col-xs-8 filters-list">
 			{if $selectedControl and $selectedControl.label == $control.label}
@@ -170,7 +172,7 @@
 			{/if}
 		</div>
 		<div class="col-md-2 col-sm-2 col-xs-2 btn-space">
-			<button class="btn btn-link" data-onclick="discard">Cancel</a>
+			<button class="btn btn-link" data-onclick="discard">{$strings['cancel']}</a>
 		</div>
 	</div>
 {/template}

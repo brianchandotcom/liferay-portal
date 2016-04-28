@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
@@ -76,7 +77,6 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -109,6 +109,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -389,16 +390,26 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			selPlid = layout.getPlid();
 		}
 
+		Layout deletedLayout = LayoutLocalServiceUtil.getLayout(selPlid);
+
 		Object[] returnValue = SitesUtil.deleteLayout(
 			actionRequest, actionResponse);
 
 		if (selPlid == themeDisplay.getRefererPlid()) {
 			long newRefererPlid = (Long)returnValue[2];
 
-			redirect = HttpUtil.setParameter(
-				redirect, "refererPlid", newRefererPlid);
-			redirect = HttpUtil.setParameter(
-				redirect, actionResponse.getNamespace() + "selPlid", 0);
+			Layout redirectLayout = LayoutLocalServiceUtil.fetchLayout(
+				newRefererPlid);
+
+			if (redirectLayout != null) {
+				redirect = PortalUtil.getLayoutFullURL(
+					redirectLayout, themeDisplay);
+			}
+			else {
+				redirect = getEmptyLayoutSetURL(
+					actionRequest, deletedLayout.getGroupId(),
+					deletedLayout.isPrivateLayout());
+			}
 		}
 
 		MultiSessionMessages.add(actionRequest, "layoutDeleted", selPlid);
@@ -774,6 +785,25 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		}
 
 		return colorSchemeId;
+	}
+
+	protected String getEmptyLayoutSetURL(
+		PortletRequest portletRequest, long groupId, boolean privateLayout) {
+
+		PortletURL emptyLayoutSetURL = PortalUtil.getControlPanelPortletURL(
+			portletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			PortletRequest.RENDER_PHASE);
+
+		emptyLayoutSetURL.setParameter("mvcPath", "/empty_layout_set.jsp");
+
+		emptyLayoutSetURL.setParameter(
+			"selPlid", String.valueOf(LayoutConstants.DEFAULT_PLID));
+
+		emptyLayoutSetURL.setParameter("groupId", String.valueOf(groupId));
+		emptyLayoutSetURL.setParameter(
+			"privateLayout", String.valueOf(privateLayout));
+
+		return emptyLayoutSetURL.toString();
 	}
 
 	protected Group getGroup(PortletRequest portletRequest) throws Exception {

@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetBranchException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -28,7 +30,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -44,8 +46,6 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.WindowStateException;
 
 /**
  * @author Julio Camarero
@@ -78,38 +78,24 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 	}
 
 	public PortletURL getDeleteLayoutURL(long selPlid) {
-		PortletURL deleteLayoutURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-			PortletRequest.ACTION_PHASE);
+		LiferayPortletURL deleteLayoutURL =
+			(LiferayPortletURL)PortalUtil.getControlPanelPortletURL(
+				liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+				PortletRequest.ACTION_PHASE);
+
+		deleteLayoutURL.setRefererPlid(themeDisplay.getPlid());
 
 		deleteLayoutURL.setParameter(ActionRequest.ACTION_NAME, "deleteLayout");
-		deleteLayoutURL.setParameter("mvcPath", "/panel/app/layouts_tree.jsp");
-
-		try {
-			deleteLayoutURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-		}
-		catch (WindowStateException wse) {
-		}
-
-		PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(
-			liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-			RenderRequest.RENDER_PHASE);
-
-		redirectURL.setParameter(
-			"selPlid", String.valueOf(LayoutConstants.DEFAULT_PLID));
-		redirectURL.setParameter("mvcPath", "/panel/app/layouts_tree.jsp");
-
-		try {
-			redirectURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-		}
-		catch (WindowStateException wse) {
-		}
-
-		deleteLayoutURL.setParameter("redirect", redirectURL.toString());
+		deleteLayoutURL.setParameter("mvcPath", "/edit_layout.jsp");
 
 		if (selPlid >= LayoutConstants.DEFAULT_PLID) {
 			deleteLayoutURL.setParameter("selPlid", String.valueOf(selPlid));
 		}
+
+		String redirect = PortalUtil.getCurrentURL(
+			PortalUtil.getHttpServletRequest(liferayPortletRequest));
+
+		deleteLayoutURL.setParameter("redirect", redirect);
 
 		try {
 			LayoutSetBranch layoutSetBranch = getLayoutSetBranch();
@@ -513,6 +499,9 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutsTreeDisplayContext.class);
 
 	private LayoutSetBranch _layoutSetBranch;
 	private List<LayoutSetBranch> _layoutSetBranches;

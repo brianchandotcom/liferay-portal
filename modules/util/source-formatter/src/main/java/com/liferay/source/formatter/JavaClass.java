@@ -614,8 +614,8 @@ public class JavaClass {
 			else {
 				_javaSourceProcessor.processErrorMessage(
 					_fileName,
-					"Rename " + javaTermName + " to " + newName + " " +
-						javaTerm.getLineCount());
+					"Rename " + javaTermName + " to " + newName + ": " +
+						_fileName + " " + javaTerm.getLineCount());
 			}
 		}
 	}

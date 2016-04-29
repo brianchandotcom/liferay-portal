@@ -196,6 +196,15 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			},
 			new Integer[] {22, 28});
 		test("IncorrectVariableNames2.testjava");
+		test(
+			"IncorrectVariableNames3.testjava",
+			new String[] {
+				"Variable TestMapWithARatherLongName should not start with " +
+					"uppercase:",
+				"Variable TestString should not start with uppercase:"
+			},
+			new Integer[] {26, 29});
+
 	}
 
 	@Test

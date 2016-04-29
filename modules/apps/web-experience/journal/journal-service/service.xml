@@ -121,7 +121,7 @@
 		</finder>
 		<finder name="G_NotL" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column comparator="!=" name="layoutUuid" />
+			<finder-column arrayable-operator="AND" comparator="!=" name="layoutUuid" />
 		</finder>
 		<finder name="G_ST" return-type="Collection">
 			<finder-column name="groupId" />

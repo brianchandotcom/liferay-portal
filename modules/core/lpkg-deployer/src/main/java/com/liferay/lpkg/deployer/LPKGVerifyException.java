@@ -12,33 +12,23 @@
  * details.
  */
 
-package com.liferay.marketplace.deployer.transformer;
-
-import java.io.File;
-
-import java.net.URL;
-
-import org.apache.felix.fileinstall.ArtifactUrlTransformer;
+package com.liferay.lpkg.deployer;
 
 /**
- * @author Miguel Pastor
+ * @author Shuyang Zhou
  */
-public class LiferayPackageURLTransformer implements ArtifactUrlTransformer {
+public class LPKGVerifyException extends RuntimeException {
 
-	@Override
-	public boolean canHandle(File artifact) {
-		String name = artifact.getName();
-
-		if (name.endsWith(".lpkg")) {
-			return true;
-		}
-
-		return false;
+	public LPKGVerifyException(String message) {
+		super(message);
 	}
 
-	@Override
-	public URL transform(URL artifact) throws Exception {
-		return new URL("lpkg", null, artifact.toString());
+	public LPKGVerifyException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public LPKGVerifyException(Throwable cause) {
+		super(cause);
 	}
 
 }

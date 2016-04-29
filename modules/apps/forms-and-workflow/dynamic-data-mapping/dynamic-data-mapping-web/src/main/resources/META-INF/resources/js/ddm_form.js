@@ -225,9 +225,10 @@ AUI.add(
 			_getTemplateResourceURL: function() {
 				var instance = this;
 
-				var portletURL = Liferay.PortletURL.createResourceURL();
+				var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
 
 				portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
+				portletURL.setLifecycle(Liferay.PortletURL.RESOURCE_PHASE);
 				portletURL.setParameter('fieldName', instance.get('name'));
 				portletURL.setParameter('mode', instance.get('mode'));
 				portletURL.setParameter('namespace', instance.get('fieldsNamespace'));

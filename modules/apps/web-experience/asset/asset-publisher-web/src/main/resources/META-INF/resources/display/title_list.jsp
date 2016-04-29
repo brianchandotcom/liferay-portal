@@ -42,7 +42,7 @@ String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, lif
 		<ul class="list-unstyled">
 	</c:if>
 
-	<li class="<%= assetRendererFactory.getType() %>">
+	<li class="h3 <%= assetRendererFactory.getType() %>">
 		<aui:a href="<%= viewURL %>">
 			<%= HtmlUtil.escape(title) %>
 		</aui:a>

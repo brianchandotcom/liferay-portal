@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.form.web.portlet;
 
+import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormWebKeys;
 import com.liferay.dynamic.data.lists.form.web.display.context.DDLFormDisplayContext;
@@ -157,6 +158,11 @@ public class DDLFormPortlet extends MVCPortlet {
 				hideDefaultErrorMessage(renderRequest);
 
 				SessionErrors.add(renderRequest, e.getClass());
+			}
+			else if (e instanceof NoSuchRecordSetException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(e, e);
+				}
 			}
 			else {
 				throw new PortletException(e);

@@ -139,6 +139,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSIGN_FORM</td>
+	<td>//a[@role='menuitem' and contains(.,'Assign Form')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSIGNED_TO_ME</td>
 	<td>//a[@role='menuitem' and contains(.,'Assigned to Me')]</td>
 	<td></td>

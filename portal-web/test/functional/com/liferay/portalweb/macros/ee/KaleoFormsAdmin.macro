@@ -78,7 +78,7 @@
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#FORMS_TABLE_ASSIGN_FORM_BUTTON" value1="Assign Form" />
+		<execute function="AssertClick" locator1="MenuItem#ASSIGN_FORM" value1="Assign Form" />
 	</command>
 
 	<command name="cancelProcessRecordDetailsView">

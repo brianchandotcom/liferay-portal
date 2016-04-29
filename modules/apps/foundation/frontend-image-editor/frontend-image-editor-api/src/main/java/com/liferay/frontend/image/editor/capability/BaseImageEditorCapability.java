@@ -90,14 +90,12 @@ public abstract class BaseImageEditorCapability
 		_resourceURLs = new ArrayList<>();
 
 		Enumeration<URL> enumeration = getBundle().findEntries(
-			"META-INF/resources", _ES_JS_FILE_EXTENSION, true);
+			"META-INF/resources", "*.es.js", true);
 
 		if (enumeration != null) {
 			_resourceURLs.addAll(Collections.list(enumeration));
 		}
 	}
-
-	private static final String _ES_JS_FILE_EXTENSION = "*.es.js";
 
 	private String _moduleName;
 	private List<URL> _resourceURLs;

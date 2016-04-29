@@ -14,7 +14,7 @@
 	<bean class="com.liferay.portal.poller.PollerRequestHandlerUtil" id="com.liferay.portal.poller.PollerRequestHandlerUtil">
 		<property name="pollerRequestHandler" ref="messageListener.pollerRequestHandler" />
 	</bean>
-	<bean class="com.liferay.portal.poller.comet.PollerCometDelayedJobUtil" id="ccom.liferay.portal.poller.comet.PollerCometDelayedJobUtil">
+	<bean class="com.liferay.portal.poller.comet.PollerCometDelayedJobUtil" id="com.liferay.portal.poller.comet.PollerCometDelayedJobUtil">
 		<property name="pollerCometDelayedJob" ref="messageListener.PollerCometDelayedJob" />
 	</bean>
 

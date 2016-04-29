@@ -398,10 +398,12 @@
 
 			<execute function="AssertTextEquals#assertPartialText" locator1="EditUserSegment#USER_SEGMENT_RULE_APPLIED" value1="${usersegmentRuleName}" />
 
+			<var name="key_fieldName" value="${usersegmentRuleName}" />
+
 			<if>
-				<condition function="IsElementPresent" locator1="EditUserSegment#USER_SEGMENT_RULES_UNCOLLAPSED" />
+				<condition function="IsElementPresent" locator1="ContentTargeting#FORM_FIELD_COLLAPSED" />
 				<then>
-					<execute function="Click" locator1="EditUserSegment#USER_SEGMENT_RULES_UNCOLLAPSED" />
+					<execute function="Click" locator1="ContentTargeting#FORM_FIELD_COLLAPSED" />
 				</then>
 			</if>
 

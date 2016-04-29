@@ -30,11 +30,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>USER_SEGMENT_RULES_UNCOLLAPSED</td>
-	<td>//div[contains(.,'${key_userSegmentRuleName}') and contains(@class,'toggler-header-collapsed')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -106,69 +106,71 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		List<ImageEditorCapabilityInformation> imageEditorToolInformations =
 			_imageEditorCapabilityTracker.getCapabilities("tool");
 
-		if (imageEditorToolInformations != null) {
-			List<List<ImageEditorCapabilityInformation>> toolCategories =
-				groupCapabilities(imageEditorToolInformations);
+		if (imageEditorToolInformations == null) {
+			return imageEditorToolsContext;
+		}
 
-			for (List<ImageEditorCapabilityInformation> toolCategory :
-					toolCategories) {
+		List<List<ImageEditorCapabilityInformation>> toolCategories =
+			groupCapabilities(imageEditorToolInformations);
 
-				Map<String, Object> toolContext = new HashMap<>();
+		for (List<ImageEditorCapabilityInformation> toolCategory :
+				toolCategories) {
 
-				List<Map<String, Object>> categoryControls = new ArrayList();
-				String categoryIcon = StringPool.BLANK;
+			Map<String, Object> toolContext = new HashMap<>();
 
-				for (ImageEditorCapabilityInformation
-						imageEditorCapabilityInformation :
-							toolCategory) {
+			List<Map<String, Object>> categoryControls = new ArrayList();
+			String categoryIcon = StringPool.BLANK;
 
-					Map<String, Object> capabilityProperties =
-						imageEditorCapabilityInformation.getProperties();
+			for (ImageEditorCapabilityInformation
+					imageEditorCapabilityInformation :
+						toolCategory) {
 
-					String icon = GetterUtil.getString(
-						capabilityProperties.get(
-							"com.liferay.frontend.image.editor.capability." +
-								"icon"));
+				Map<String, Object> capabilityProperties =
+					imageEditorCapabilityInformation.getProperties();
 
-					categoryIcon = icon;
+				String icon = GetterUtil.getString(
+					capabilityProperties.get(
+						"com.liferay.frontend.image.editor.capability." +
+							"icon"));
 
-					ImageEditorCapability imageEditorCapability =
-						imageEditorCapabilityInformation.
-							getImageEditorCapability();
+				categoryIcon = icon;
 
-					String label = imageEditorCapability.getLabel(
-						themeDisplay.getLocale());
+				ImageEditorCapability imageEditorCapability =
+					imageEditorCapabilityInformation.
+						getImageEditorCapability();
 
-					ServletContext imageEditorCapabilityServletContext =
-						imageEditorCapability.getServletContext();
+				String label = imageEditorCapability.getLabel(
+					themeDisplay.getLocale());
 
-					String variant = GetterUtil.getString(
-						capabilityProperties.get(
-							"com.liferay.frontend.image.editor.capability." +
-								"controls"));
+				ServletContext imageEditorCapabilityServletContext =
+					imageEditorCapability.getServletContext();
 
-					Map<String, Object> controlContext = new HashMap<>();
+				String variant = GetterUtil.getString(
+					capabilityProperties.get(
+						"com.liferay.frontend.image.editor.capability." +
+							"controls"));
 
-					controlContext.put("label", label);
-					controlContext.put(
-						"modulePath",
-						imageEditorCapabilityServletContext.getContextPath());
-					controlContext.put("variant", variant);
+				Map<String, Object> controlContext = new HashMap<>();
 
-					HttpServletRequest httpServletRequest =
-						PortalUtil.getHttpServletRequest(renderRequest);
+				controlContext.put("label", label);
+				controlContext.put(
+					"modulePath",
+					imageEditorCapabilityServletContext.getContextPath());
+				controlContext.put("variant", variant);
 
-					imageEditorCapability.prepareContext(
-						controlContext, httpServletRequest);
+				HttpServletRequest httpServletRequest =
+					PortalUtil.getHttpServletRequest(renderRequest);
 
-					categoryControls.add(controlContext);
-				}
+				imageEditorCapability.prepareContext(
+					controlContext, httpServletRequest);
 
-				toolContext.put("controls", categoryControls);
-				toolContext.put("icon", categoryIcon);
-
-				imageEditorToolsContext.add(toolContext);
+				categoryControls.add(controlContext);
 			}
+
+			toolContext.put("controls", categoryControls);
+			toolContext.put("icon", categoryIcon);
+
+			imageEditorToolsContext.add(toolContext);
 		}
 
 		return imageEditorToolsContext;

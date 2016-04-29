@@ -1291,7 +1291,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	@Override
 	public List<JournalArticle> getLayoutArticles(long groupId) {
 		return journalArticlePersistence.filterFindByG_NotL(
-			groupId, StringPool.BLANK);
+			groupId, new String[] {null, StringPool.BLANK});
 	}
 
 	/**

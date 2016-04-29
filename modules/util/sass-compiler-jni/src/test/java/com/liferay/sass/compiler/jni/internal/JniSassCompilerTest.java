@@ -15,7 +15,6 @@
 package com.liferay.sass.compiler.jni.internal;
 
 import com.liferay.sass.compiler.SassCompiler;
-import com.liferay.sass.compiler.jni.internal.util.test.JniSassCompilerTestUtil;
 
 import java.io.File;
 
@@ -36,8 +35,6 @@ public class JniSassCompilerTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		System.setProperty("jna.nosys", Boolean.TRUE.toString());
-
-		JniSassCompilerTestUtil.addSearchPath();
 	}
 
 	@Test

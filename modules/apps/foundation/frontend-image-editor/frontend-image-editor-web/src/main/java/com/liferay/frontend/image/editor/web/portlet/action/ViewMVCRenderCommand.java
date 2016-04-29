@@ -98,10 +98,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	protected List<Map<String, Object>> getImageEditorToolsContext(
 		RenderRequest renderRequest) {
 
+		List<Map<String, Object>> imageEditorToolsContext = new ArrayList();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		List<Map<String, Object>> imageEditorToolsContext = new ArrayList();
 
 		List<ImageEditorCapabilityInformation> imageEditorToolInformations =
 			_imageEditorCapabilityTracker.getCapabilities("tool");

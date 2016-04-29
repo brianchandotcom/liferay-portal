@@ -7,12 +7,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean class="com.liferay.portal.notifications.NotificationEventFactoryImpl" id="com.liferay.portal.kernel.notifications.NotificationEventFactory" />
-	<bean class="com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil" id="com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil">
-		<property name="notificationEventFactory" ref="com.liferay.portal.kernel.notifications.NotificationEventFactory" />
-	</bean>
 	<bean class="com.liferay.portal.notifications.ChannelHubManagerImpl" id="com.liferay.portal.kernel.notifications.ChannelHubManager" />
 	<bean class="com.liferay.portal.kernel.notifications.ChannelHubManagerUtil" id="com.liferay.portal.kernel.notifications.ChannelHubManagerUtil">
 		<property name="channelHubManager" ref="com.liferay.portal.kernel.notifications.ChannelHubManager" />
+	</bean>
+	<bean class="com.liferay.portal.notifications.NotificationEventFactoryImpl" id="com.liferay.portal.kernel.notifications.NotificationEventFactory" />
+	<bean class="com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil" id="com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil">
+		<property name="notificationEventFactory" ref="com.liferay.portal.kernel.notifications.NotificationEventFactory" />
 	</bean>
 </beans>

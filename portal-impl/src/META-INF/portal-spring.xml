@@ -178,14 +178,14 @@
 	<bean class="com.liferay.portal.service.impl.MembershipRequestLocalServiceImpl" id="com.liferay.portal.kernel.service.MembershipRequestLocalService" />
 	<bean class="com.liferay.portal.service.impl.MembershipRequestServiceImpl" id="com.liferay.portal.kernel.service.MembershipRequestService" />
 	<bean class="com.liferay.portal.service.persistence.impl.MembershipRequestPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.MembershipRequestPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portal.service.impl.OrganizationLocalServiceImpl" id="com.liferay.portal.kernel.service.OrganizationLocalService" />
-	<bean class="com.liferay.portal.service.impl.OrganizationServiceImpl" id="com.liferay.portal.kernel.service.OrganizationService" />
-	<bean class="com.liferay.portal.service.persistence.impl.OrganizationPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.OrganizationPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portal.service.persistence.impl.OrganizationFinderImpl" id="com.liferay.portal.kernel.service.persistence.OrganizationFinder" parent="basePersistence" />
 	<bean class="com.liferay.portal.service.persistence.impl.OrgGroupRolePersistenceImpl" id="com.liferay.portal.kernel.service.persistence.OrgGroupRolePersistence" parent="basePersistence" />
 	<bean class="com.liferay.portal.service.impl.OrgLaborLocalServiceImpl" id="com.liferay.portal.kernel.service.OrgLaborLocalService" />
 	<bean class="com.liferay.portal.service.impl.OrgLaborServiceImpl" id="com.liferay.portal.kernel.service.OrgLaborService" />
 	<bean class="com.liferay.portal.service.persistence.impl.OrgLaborPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.OrgLaborPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.impl.OrganizationLocalServiceImpl" id="com.liferay.portal.kernel.service.OrganizationLocalService" />
+	<bean class="com.liferay.portal.service.impl.OrganizationServiceImpl" id="com.liferay.portal.kernel.service.OrganizationService" />
+	<bean class="com.liferay.portal.service.persistence.impl.OrganizationPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.OrganizationPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.persistence.impl.OrganizationFinderImpl" id="com.liferay.portal.kernel.service.persistence.OrganizationFinder" parent="basePersistence" />
 	<bean class="com.liferay.portal.service.impl.PasswordPolicyLocalServiceImpl" id="com.liferay.portal.kernel.service.PasswordPolicyLocalService" />
 	<bean class="com.liferay.portal.service.impl.PasswordPolicyServiceImpl" id="com.liferay.portal.kernel.service.PasswordPolicyService" />
 	<bean class="com.liferay.portal.service.persistence.impl.PasswordPolicyPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.PasswordPolicyPersistence" parent="basePersistence" />

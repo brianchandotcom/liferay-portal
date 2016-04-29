@@ -197,20 +197,24 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			Map<String, Object> properties =
 				imageEditorCapabilityInformation.getProperties();
 
-			String imageEditorCapabilityCategory = GetterUtil.getString(
+			String category = GetterUtil.getString(
 				properties.get(
 					"com.liferay.frontend.image.editor.capability.category"));
 
-			if (imageEditorCapabilityInformationsMap.get(imageEditorCapabilityCategory) == null) {
+			if (!imageEditorCapabilityInformationsMap.containsKey(
+					category)) {
+
 				imageEditorCapabilityInformationsMap.put(
-					imageEditorCapabilityCategory,
+					category,
 					new ArrayList<ImageEditorCapabilityInformation>());
 			}
 
-			List<ImageEditorCapabilityInformation> imageEditorCapabilityList =
-				imageEditorCapabilityInformationsMap.get(imageEditorCapabilityCategory);
+			List<ImageEditorCapabilityInformation>
+				curImageEditorCapabilityInformations =
+					imageEditorCapabilityInformationsMap.get(category);
 
-			imageEditorCapabilityList.add(imageEditorCapabilityInformation);
+			curImageEditorCapabilityInformations.add(
+				imageEditorCapabilityInformation);
 		}
 
 		return new ArrayList<>(imageEditorCapabilityInformationsMap.values());

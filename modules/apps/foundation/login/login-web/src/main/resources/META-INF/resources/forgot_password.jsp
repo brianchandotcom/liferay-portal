@@ -166,5 +166,3 @@ if (reminderAttempts == null) {
 		</c:choose>
 	</aui:fieldset>
 </aui:form>
-
-<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />

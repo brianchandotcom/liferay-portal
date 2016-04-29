@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class _CLASS_
+public class _CLASS_ProductNavigationControlMenuEntry
 	extends BaseProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 

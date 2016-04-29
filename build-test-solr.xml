@@ -48,7 +48,12 @@ writeURL=http://localhost:8983/solr/liferay</echo>
 	</target>
 
 	<target name="delete-elasticseach-osgi-bundle">
-		<delete failonerror="false" file="${liferay.home}/osgi/portal/com.liferay.portal.search.elasticsearch.jar" />
+		<delete failonerror="false">
+			<fileset
+				dir="${liferay.home}/osgi/portal"
+				includes="com.liferay.portal.search.elasticsearch*.jar"
+			/>
+		</delete>
 	</target>
 
 	<target name="start-solr">

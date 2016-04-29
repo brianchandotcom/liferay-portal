@@ -121,6 +121,7 @@ public class JavaClass {
 			if (javaTerm.isMethod() || javaTerm.isConstructor()) {
 				checkChaining(javaTerm);
 				checkLineBreak(javaTerm);
+				checkParameterNames(javaTerm);
 			}
 
 			if (_fileName.endsWith("LocalServiceImpl.java") &&
@@ -616,6 +617,20 @@ public class JavaClass {
 					_fileName,
 					"Rename " + javaTermName + " to " + newName + " " +
 						javaTerm.getLineCount());
+			}
+		}
+	}
+
+	protected void checkParameterNames(JavaTerm javaTerm) {
+		for (String parameterName : javaTerm.getParameterNames()) {
+			if (Validator.isVariableName(parameterName) &&
+				parameterName.matches("_?[A-Z].+")) {
+
+				_javaSourceProcessor.processErrorMessage(
+					_fileName,
+					"Parameter " + parameterName +
+						" should not start with uppercase: " + _fileName + " " +
+							javaTerm.getLineCount());
 			}
 		}
 	}

@@ -10,10 +10,10 @@ ext {
 }
 
 task buildLibSass_Darwin(type: BuildLibSassTask)
+task buildLibSass_Linux_x64(type: BuildLibSassTask)
 task buildLibSass_Linux_x86(type: BuildLibSassTask)
-task buildLibSass_Linux_x86_64(type: BuildLibSassTask)
-task buildLibSass_Win32_x86(type: BuildLibSassTask)
-task buildLibSass_Win32_x86_64(type: BuildLibSassTask)
+task buildLibSass_Win32(type: BuildLibSassTask)
+task buildLibSass_Win64(type: BuildLibSassTask)
 task downloadSassSpec(type: Copy)
 task generateJNALibrary
 
@@ -36,35 +36,35 @@ make -j5""")
 	inputFileName = "libsass.dylib"
 	makeExecutable = "./build.sh"
 	outputFileName = "libliferaysass.dylib"
-	resourcesDirName = "darwin"
+	resourcesDirName = "darwin_universal"
+}
+
+buildLibSass_Linux_x64 {
+	inputFileName = "libsass.so"
+	makeExecutable = "make CXX=g++-4.6 CC=gcc-4.4 shared"
+	outputFileName = "libliferaysass.so"
+	resourcesDirName = "linux_x64"
 }
 
 buildLibSass_Linux_x86 {
 	inputFileName = "libsass.so"
 	makeExecutable = "make CXX=g++-4.6 CC=gcc-4.4 shared"
 	outputFileName = "libliferaysass.so"
-	resourcesDirName = "linux-x86"
+	resourcesDirName = "linux_x86"
 }
 
-buildLibSass_Linux_x86_64 {
-	inputFileName = "libsass.so"
-	makeExecutable = "make CXX=g++-4.6 CC=gcc-4.4 shared"
-	outputFileName = "libliferaysass.so"
-	resourcesDirName = "linux-x86-64"
-}
-
-buildLibSass_Win32_x86 {
+buildLibSass_Win32 {
 	inputFileName = "libsass.dll"
 	makeExecutable = "mingw32-make.exe CC=gcc shared"
 	outputFileName = "liferaysass.dll"
-	resourcesDirName = "win32-x86"
+	resourcesDirName = "win32"
 }
 
-buildLibSass_Win32_x86_64 {
+buildLibSass_Win64 {
 	inputFileName = "libsass.dll"
 	makeExecutable = "mingw32-make.exe CC=gcc shared"
 	outputFileName = "liferaysass.dll"
-	resourcesDirName = "win32-x86-64"
+	resourcesDirName = "win64"
 }
 
 compileJava {

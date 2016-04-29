@@ -78,11 +78,9 @@ configurations {
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.sass.compiler.api", version: "2.0.0"
 
-	jnaerator classifier: "shaded", group: "com.nativelibs4java", name: "jnaerator", transitive: false, version: "0.11"
+	jnaerator classifier: "shaded", group: "com.nativelibs4java", name: "jnaerator", transitive: false, version: "0.12"
 
-	provided group: "com.nativelibs4java", name: "jnaerator-runtime", transitive: false, version: "0.11"
-	provided group: "com.nativelibs4java", name: "ochafik-util", transitive: false, version: "0.11"
-	provided group: "net.java.dev.jna", name: "jna", transitive: false, version: "4.1.0"
+	provided group: "com.nativelibs4java", name: "bridj", transitive: false, version: "0.7.0"
 }
 
 downloadSassSpec {
@@ -124,7 +122,7 @@ generateJNALibrary {
 			args "-mode", "Directory"
 			args "-o", FileUtil.relativize(file("src/main/java"), libSassDir)
 			args "-package", "com.liferay.sass.compiler.jni.internal.libsass"
-			args "-runtime", "JNAerator"
+			args "-beautifyNames"
 			args "sass/context.h"
 
 			main = "-jar"

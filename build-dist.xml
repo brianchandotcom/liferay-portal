@@ -2929,52 +2929,17 @@ plugins.includes=</echo>
 			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 		</tstamp>
 
-		<mkdir dir="${tstamp.value}/lib" />
+		<mkdir dir="${tstamp.value}" />
 
 		<copy todir="${tstamp.value}">
 			<fileset
-				dir="tools/db-upgrade"
-			/>
-		</copy>
-
-		<copy todir="${tstamp.value}/lib">
-			<fileset
-				dir="portal-impl"
-				includes="portal-impl.jar"
-			/>
-			<fileset
-				dir="portal-kernel"
-				includes="portal-kernel.jar"
-			/>
-			<fileset
-				dir="lib/development"
-			/>
-			<fileset
-				dir="lib/global"
-			/>
-			<fileset
-				dir="lib/portal"
-			/>
-			<fileset
-				dir="util-java"
-				includes="util-java.jar"
-			/>
-			<fileset
-				dir="util-taglib"
-				includes="util-taglib.jar"
+				dir="${liferay.home}/tools/portal-tools-db-upgrade-client"
 			/>
 		</copy>
 
 		<zip destfile="dist/liferay-portal-db-upgrade-${lp.version}.zip">
 			<zipfileset
 				dir="${tstamp.value}"
-				excludes="run.sh"
-				prefix="liferay-portal-db-upgrade-${lp.version}"
-			/>
-			<zipfileset
-				dir="${tstamp.value}"
-				filemode="744"
-				includes="run.sh"
 				prefix="liferay-portal-db-upgrade-${lp.version}"
 			/>
 		</zip>

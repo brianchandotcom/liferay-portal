@@ -136,8 +136,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				categoryIcon = icon;
 
 				ImageEditorCapability imageEditorCapability =
-					imageEditorCapabilityInformation.
-						getImageEditorCapability();
+					imageEditorCapabilityInformation.getImageEditorCapability();
 
 				String label = imageEditorCapability.getLabel(
 					themeDisplay.getLocale());
@@ -181,7 +180,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	protected List<List<ImageEditorCapabilityInformation>> groupCapabilities(
-		List<ImageEditorCapabilityInformation> imageEditorCapabilityInformations) {
+		List<ImageEditorCapabilityInformation>
+			imageEditorCapabilityInformations) {
 
 		Map<String, List<ImageEditorCapabilityInformation>>
 			groupedCapabilities = new HashMap<>();

@@ -193,6 +193,10 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 		JavaExec javaExec = GradleUtil.addTask(
 			project, taskName, JavaExec.class);
 
+		GenerateOptions generateOptions = buildWSDLTask.getGenerateOptions();
+
+		javaExec.args(generateOptions.getArgs());
+
 		javaExec.args("--output=" + FileUtil.getAbsolutePath(destinationDir));
 
 		javaExec.args(FileUtil.getAbsolutePath(inputFile));

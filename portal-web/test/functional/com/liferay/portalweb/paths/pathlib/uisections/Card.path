@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>SPECIFIC_SMALL_TEXT</td>
-	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//span[@class='lfr-card-workflow-text']</td>
+	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//span[contains(@class,'lfr-card-workflow-text')]</td>
 	<td></td>
 </tr>
 <tr>

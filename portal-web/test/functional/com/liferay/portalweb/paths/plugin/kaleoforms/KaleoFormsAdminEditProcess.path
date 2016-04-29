@@ -35,43 +35,13 @@
 </tr>
 <!--FORM_NAVIGATOR-->
 <tr>
-	<td>FORM_NAVIGATOR_1</td>
-	<td>//ul[contains(@class,'nav-list')]//span[contains(.,'1')]</td>
+	<td>FORM_NAVIGATOR_PROGRESS_BAR_NAME</td>
+	<td>//ul[contains(@class,'nav-list')]/li[contains(@id,'${key_kfProgressName}Tab')]//div[@class='progress-bar-title']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_NAVIGATOR_DETAILS</td>
-	<td>//ul[contains(@class,'nav-list')]//span[contains(.,'Details')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FORM_NAVIGATOR_2</td>
-	<td>//ul[contains(@class,'nav-list')]//span[contains(.,'2')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FORM_NAVIGATOR_FIELD_SET</td>
-	<td>//ul[contains(@class,'nav-list')]//span[contains(.,'Fields')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FORM_NAVIGATOR_3</td>
-	<td>//ul[contains(@class,'nav-list')]//span[contains(.,'3')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FORM_NAVIGATOR_WORKFLOW</td>
-	<td>//ul[contains(@class,'nav-list')]//span[contains(.,'Workflow')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FORM_NAVIGATOR_4</td>
-	<td>//ul[contains(@class,'nav-list')]//span[contains(.,'4')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FORM_NAVIGATOR_FORMS</td>
-	<td>//ul[contains(@class,'nav-list')]//span[contains(.,'Forms')]</td>
+	<td>FORM_NAVIGATOR_PROGRESS_BAR_STEP</td>
+	<td>//ul[contains(@class,'nav-list')]/li[contains(@id,'${key_kfProgressName}Tab')]//div[@class='progress-bar-step']</td>
 	<td></td>
 </tr>
 <tr>

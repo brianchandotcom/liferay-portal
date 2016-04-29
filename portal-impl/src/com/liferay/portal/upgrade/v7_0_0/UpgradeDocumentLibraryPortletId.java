@@ -98,7 +98,7 @@ public class UpgradeDocumentLibraryPortletId
 		super.updatePortlet(oldRootPortletId, newRootPortletId);
 	}
 
-	private static final String _PORTLET_ID_DL_DISPLAY = "100";
+	private static final String _PORTLET_ID_DL_DISPLAY = "110";
 
 	private static final String _PORTLET_ID_DOCUMENT_LIBRARY = "20";
 

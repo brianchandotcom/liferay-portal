@@ -106,7 +106,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		List<ImageEditorCapabilityInformation>
 			toolImageEditorCapabilityInformations =
-				_imageEditorCapabilityTracker.getCapabilities("tool");
+				_imageEditorCapabilityTracker.getImageEditorCapabilityInformations("tool");
 
 		if (toolImageEditorCapabilityInformations == null) {
 			return imageEditorToolsContext;

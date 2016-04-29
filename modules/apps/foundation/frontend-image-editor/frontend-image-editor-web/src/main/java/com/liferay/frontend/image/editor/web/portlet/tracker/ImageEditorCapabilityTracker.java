@@ -46,10 +46,10 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(immediate = true, service = ImageEditorCapabilityTracker.class)
 public class ImageEditorCapabilityTracker {
 
-	public List<ImageEditorCapabilityInformation> getCapabilities(
-		String capabilityType) {
+	public List<ImageEditorCapabilityInformation>
+		getImageEditorCapabilityInformations(String capabilityType) {
 
-		return _informationTrackerMap.getService(capabilityType);
+		return _serviceTrackerMap.getService(capabilityType);
 	}
 
 	public Set<String> getCapabilitiesRequirements() {
@@ -83,7 +83,7 @@ public class ImageEditorCapabilityTracker {
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_informationTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, ImageEditorCapability.class,
 			"(com.liferay.frontend.image.editor.capability.type=*)",
 			new PropertyServiceReferenceMapper<String, ImageEditorCapability>(
@@ -96,7 +96,7 @@ public class ImageEditorCapabilityTracker {
 
 	@Deactivate
 	protected void deactivate() {
-		_informationTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private String _getJavaScriptFileName(String fileName) {
@@ -153,7 +153,7 @@ public class ImageEditorCapabilityTracker {
 	private volatile Set<String> _capabilitiesRequirements =
 		Collections.emptySet();
 	private ServiceTrackerMap<String, List<ImageEditorCapabilityInformation>>
-		_informationTrackerMap;
+		_serviceTrackerMap;
 
 	private class CapabilityServiceTrackerMapListener implements
 		ServiceTrackerMapListener

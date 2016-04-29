@@ -103,15 +103,15 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<ImageEditorCapabilityInformation> imageEditorToolInformations =
+		List<ImageEditorCapabilityInformation> imageEditorCapabilityInformations =
 			_imageEditorCapabilityTracker.getCapabilities("tool");
 
-		if (imageEditorToolInformations == null) {
+		if (imageEditorCapabilityInformations == null) {
 			return imageEditorToolsContext;
 		}
 
 		List<List<ImageEditorCapabilityInformation>> toolCategories =
-			groupCapabilities(imageEditorToolInformations);
+			groupCapabilities(imageEditorCapabilityInformations);
 
 		for (List<ImageEditorCapabilityInformation> toolCategory :
 				toolCategories) {
@@ -181,16 +181,16 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	protected List<List<ImageEditorCapabilityInformation>> groupCapabilities(
-		List<ImageEditorCapabilityInformation> imageEditorCapabilities) {
+		List<ImageEditorCapabilityInformation> imageEditorCapabilityInformations) {
 
 		Map<String, List<ImageEditorCapabilityInformation>>
 			groupedCapabilities = new HashMap<>();
 
-		for (ImageEditorCapabilityInformation imageEditorCapability :
-				imageEditorCapabilities) {
+		for (ImageEditorCapabilityInformation imageEditorCapabilityInformation :
+				imageEditorCapabilityInformations) {
 
 			Map<String, Object> capabilityProperties =
-				imageEditorCapability.getProperties();
+				imageEditorCapabilityInformation.getProperties();
 
 			String imageEditorCapabilityCategory = GetterUtil.getString(
 				capabilityProperties.get(
@@ -207,7 +207,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			List<ImageEditorCapabilityInformation> imageEditorCapabilityList =
 				groupedCapabilities.get(imageEditorCapabilityCategory);
 
-			imageEditorCapabilityList.add(imageEditorCapability);
+			imageEditorCapabilityList.add(imageEditorCapabilityInformation);
 		}
 
 		return new ArrayList<>(groupedCapabilities.values());

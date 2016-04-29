@@ -7308,17 +7308,12 @@
 			<var name="pageName" value="Kaleo Forms Page" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#updateProcessDueDate">
-			<var name="assignedToMyRoles" value="true" />
-			<var name="kfProcessDueDateDate" value="04/01/2017" />
-			<var name="kfProcessDueDateTime" value="05:30 PM" />
-			<var name="kfProcessName" value="${kfProcessName}" />
-		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewProcessDueDate">
-			<var name="assignedToMyRoles" value="true" />
-			<var name="kfProcessDueDateFormatted" value="4/1/17 5:30 PM" />
-			<var name="kfProcessName" value="${kfProcessName}" />
+		<execute macro="Workflow#updateDueDateTaskByActions">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDueDate" value="04/01/2017" />
+			<var name="workflowDueDateTime" value="05:30 PM" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -7338,10 +7333,12 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#viewProcessDueDate">
-			<var name="assignedToMe" value="true" />
-			<var name="kfProcessDueDateFormatted" value="9/30/17 4:30 PM" />
-			<var name="kfProcessName" value="${kfProcessName}" />
+		<execute macro="Workflow#updateDueDateTaskByActions">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDueDate" value="09/30/2017" />
+			<var name="workflowDueDateTime" value="04:30 PM" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 	</command>
 
@@ -8801,12 +8798,13 @@
 			<var name="pageName" value="Kaleo Forms Page" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#updateProcessDueDate">
-			<var name="assignedToMyRoles" value="true" />
-			<var name="comment" value="Updating the due date on a process assigned to my roles." />
-			<var name="kfProcessDueDateDate" value="04/01/2017" />
-			<var name="kfProcessDueDateTime" value="05:30 PM" />
-			<var name="kfProcessName" value="${kfProcessName}" />
+		<execute macro="Workflow#updateDueDateTaskByActions">
+			<var name="workflowActivityComment" value="Updating the due date on a process assigned to my roles." />
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowTaskwAssetType" value="${workflowAssetType}" />
+			<var name="workflowDueDate" value="04/01/2017" />
+			<var name="workflowDueDateTime" value="05:30 PM" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
@@ -8816,12 +8814,13 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-	<execute macro="KaleoFormsPortlet#updateProcessDueDate">
-			<var name="assignedToMe" value="true" />
-			<var name="comment" value="Updating the due date on a process assigned to me." />
-			<var name="kfProcessDueDateDate" value="09/30/2017" />
-			<var name="kfProcessDueDateTime" value="04:30 PM" />
-			<var name="kfProcessName" value="${kfProcessName}" />
+		<execute macro="Workflow#updateDueDateTaskByActions">
+			<var name="workflowActivityComment" value="Updating the due date on a process assigned to me." />
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDueDate" value="09/30/2017" />
+			<var name="workflowDueDateTime" value="04:30 PM" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#rejectTaskByActions">

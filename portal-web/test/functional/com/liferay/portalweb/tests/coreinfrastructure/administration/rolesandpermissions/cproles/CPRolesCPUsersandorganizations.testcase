@@ -57,6 +57,10 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations">
+			<var name="noOrganizationsExist" value="true" />
+		</execute>
+
 		<execute function="AssertElementNotPresent" locator1="UsersAndOrganizations#ADD" />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="You do not belong to an organization and are not allowed to view other organizations." />
 
@@ -116,6 +120,10 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations">
+			<var name="noOrganizationsExist" value="true" />
+		</execute>
+
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="You do not belong to an organization and are not allowed to view other organizations." />
 		<execute function="AssertElementNotPresent" locator1="UsersAndOrganizations#ADD" />
 
@@ -148,6 +156,10 @@
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations">
+			<var name="noOrganizationsExist" value="true" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="You do not belong to an organization and are not allowed to view other organizations." />

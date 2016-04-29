@@ -27,7 +27,7 @@ public class _CLASS_
 	implements ProductNavigationControlMenuEntry {
 
 	@Override
-	public String getIconCssClass(HttpServletRequest request) {
+	public String getIcon(HttpServletRequest request) {
 		return "link";
 	}
 

@@ -24,7 +24,7 @@
 	</#if>
 
 	<div class="asset-abstract">
-		<div class="lfr-meta-actions asset-actions">
+		<div class="pull-right">
 			<@getPrintIcon />
 
 			<@getFlagsIcon />

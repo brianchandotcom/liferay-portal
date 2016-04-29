@@ -1171,9 +1171,10 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#rejectProcess">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="workflowTask" value="review" />
+		<execute macro="Workflow#rejectTaskByActions">
+			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -2263,9 +2264,10 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#rejectProcess">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="review" />
+		<execute macro="Workflow#rejectTaskByActions">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -6974,9 +6976,10 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#rejectProcess">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="review" />
+		<execute macro="Workflow#rejectTaskByActions">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -7143,9 +7146,10 @@
 			<var name="notificationCount" value="2" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#rejectProcess">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="review" />
+		<execute macro="Workflow#rejectTaskByActions">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -8248,9 +8252,10 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#rejectProcess">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="review" />
+		<execute macro="Workflow#rejectTaskByActions">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Gmail#login">
@@ -8811,7 +8816,7 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#updateProcessDueDate">
+	<execute macro="KaleoFormsPortlet#updateProcessDueDate">
 			<var name="assignedToMe" value="true" />
 			<var name="comment" value="Updating the due date on a process assigned to me." />
 			<var name="kfProcessDueDateDate" value="09/30/2017" />
@@ -8819,10 +8824,11 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#rejectProcess">
-			<var name="comment" value="Please make changes and resubmit." />
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="review" />
+		<execute macro="Workflow#rejectTaskByActions">
+			<var name="workflowActivityComment" value="Please make changes and resubmit." />
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -8897,7 +8903,6 @@
 		<execute macro="KaleoFormsAdmin#submitNewProcess">
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
-
 
 		<execute macro="KaleoFormsAdmin#next" />
 
@@ -8990,9 +8995,10 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#rejectProcess">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="workflowTask" value="review" />
+		<execute macro="Workflow#rejectTaskByActions">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

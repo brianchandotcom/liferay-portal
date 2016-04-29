@@ -20,8 +20,6 @@ import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Co
 import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_File_Context;
 import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Options;
 import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_Output_Style;
-import org.bridj.Platform;
-import org.bridj.Pointer;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,11 +29,15 @@ import java.io.Writer;
 
 import java.nio.file.Files;
 
+import org.bridj.Platform;
+import org.bridj.Pointer;
+
 /**
  * @author Gregory Amerson
  * @author David Truong
  */
 public class JniSassCompiler implements SassCompiler {
+
 	public JniSassCompiler() {
 		this(_PRECISION_DEFAULT);
 	}

@@ -1640,6 +1640,6 @@ public class JavaClass {
 	private final Pattern _returnPattern2 = Pattern.compile(
 		".* (==|!=|<|>|>=|<=)[ \n].*");
 	private final Pattern _variableNameStartingWithUpperCasePattern =
-		Pattern.compile("\t[\\w\\s<>]+ ([A-Z]\\w+) =");
+		Pattern.compile("\t[\\w\\s<>,]+ ([A-Z]\\w+) =");
 
 }

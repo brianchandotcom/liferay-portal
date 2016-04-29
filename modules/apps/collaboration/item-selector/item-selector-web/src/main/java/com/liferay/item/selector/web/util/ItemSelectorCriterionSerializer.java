@@ -243,7 +243,7 @@ public class ItemSelectorCriterionSerializer {
 		@Override
 		public void modifiedService(
 			ServiceReference<ItemSelectorView> serviceReference,
-			ItemSelectorView ItemSelectorView) {
+			ItemSelectorView itemSelectorView) {
 		}
 
 		@Override

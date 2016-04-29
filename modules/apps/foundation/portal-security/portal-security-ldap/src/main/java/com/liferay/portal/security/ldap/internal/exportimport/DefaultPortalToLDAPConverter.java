@@ -575,9 +575,9 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 	)
 	protected void setLDAPAuthConfigurationProvider(
 		ConfigurationProvider<LDAPAuthConfiguration>
-			LDAPAuthConfigurationProvider) {
+			ldapAuthConfigurationProvider) {
 
-		_ldapAuthConfigurationProvider = LDAPAuthConfigurationProvider;
+		_ldapAuthConfigurationProvider = ldapAuthConfigurationProvider;
 	}
 
 	@Reference(

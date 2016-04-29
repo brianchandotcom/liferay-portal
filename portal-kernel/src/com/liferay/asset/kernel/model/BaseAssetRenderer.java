@@ -136,7 +136,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	@Deprecated
 	@Override
 	public String getPreviewPath(
-			PortletRequest portletRequest, PortletResponse PortletResponse)
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
 		return StringPool.BLANK;

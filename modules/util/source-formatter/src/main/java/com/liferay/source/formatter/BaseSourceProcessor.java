@@ -452,6 +452,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
+		elementComparator.setRootElementContent(rootElement.asXML());
+
 		List<Element> elements = rootElement.elements(elementName);
 
 		Element previousElement = null;

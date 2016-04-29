@@ -2933,7 +2933,7 @@ plugins.includes=</echo>
 
 		<copy todir="${tstamp.value}">
 			<fileset
-				dir="tools/db-upgrade"
+				dir="${liferay.home}/tools/portal-tools-db-upgrade-client"
 			/>
 		</copy>
 

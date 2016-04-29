@@ -69,7 +69,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			PortalUtil.getHttpServletRequest(renderRequest);
 
 		String imageUrl = ParamUtil.getString(
-			httpServletRequest, ImageEditorPortletKeys.IMAGE_EDITOR_URL);
+			httpServletRequest, "image_editor_url");
 
 		capabilitiesContext.put(
 			"tools", getImageEditorToolsContext(renderRequest));

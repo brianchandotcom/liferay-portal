@@ -22,6 +22,4 @@ public class ImageEditorPortletKeys {
 	public static final String IMAGE_EDITOR =
 		"com_liferay_image_editor_web_portlet_ImageEditorPortlet";
 
-	public static final String IMAGE_EDITOR_URL = "image_editor_url";
-
 }

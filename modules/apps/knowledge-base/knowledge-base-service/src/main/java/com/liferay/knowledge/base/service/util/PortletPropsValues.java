@@ -34,121 +34,121 @@ public class PortletPropsValues {
 
 	public static final boolean ADMIN_EMAIL_KB_ARTICLE_ADDED_ENABLED =
 		GetterUtil.getBoolean(
-			ServiceProps.get(
+			PortletProps.get(
 				PortletPropsKeys.ADMIN_EMAIL_KB_ARTICLE_ADDED_ENABLED));
 
 	public static final String ADMIN_EMAIL_KB_ARTICLE_ADDED_SUBJECT =
-		ServiceProps.get(PortletPropsKeys.ADMIN_EMAIL_KB_ARTICLE_ADDED_SUBJECT);
+		PortletProps.get(PortletPropsKeys.ADMIN_EMAIL_KB_ARTICLE_ADDED_SUBJECT);
 
 	public static final String
-		ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_IN_PROGRESS_BODY = ServiceProps.get(
+		ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_IN_PROGRESS_BODY = PortletProps.get(
 			PortletPropsKeys.
 				ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_IN_PROGRESS_BODY);
 
 	public static final boolean
 		ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_IN_PROGRESS_ENABLED =
 			GetterUtil.getBoolean(
-				ServiceProps.get(
+				PortletProps.get(
 					PortletPropsKeys.
 						ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_IN_PROGRESS_ENABLED));
 
 	public static final String
 		ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_IN_PROGRESS_SUBJECT =
-			ServiceProps.get(
+			PortletProps.get(
 				PortletPropsKeys.
 					ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_IN_PROGRESS_SUBJECT);
 
 	public static final String ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RECEIVED_BODY =
-		ServiceProps.get(
+		PortletProps.get(
 			PortletPropsKeys.ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RECEIVED_BODY);
 
 	public static final boolean
 		ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RECEIVED_ENABLED =
 			GetterUtil.getBoolean(
-				ServiceProps.get(
+				PortletProps.get(
 					PortletPropsKeys.
 						ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RECEIVED_ENABLED));
 
 	public static final String
-		ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RECEIVED_SUBJECT = ServiceProps.get(
+		ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RECEIVED_SUBJECT = PortletProps.get(
 			PortletPropsKeys.
 				ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RECEIVED_SUBJECT);
 
 	public static final String ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RESOLVED_BODY =
-		ServiceProps.get(
+		PortletProps.get(
 			PortletPropsKeys.ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RESOLVED_BODY);
 
 	public static final boolean
 		ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RESOLVED_ENABLED =
 			GetterUtil.getBoolean(
-				ServiceProps.get(
+				PortletProps.get(
 					PortletPropsKeys.
 						ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RESOLVED_ENABLED));
 
 	public static final String
-		ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RESOLVED_SUBJECT = ServiceProps.get(
+		ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RESOLVED_SUBJECT = PortletProps.get(
 			PortletPropsKeys.
 				ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RESOLVED_SUBJECT);
 
 	public static final String ADMIN_EMAIL_KB_ARTICLE_UPDATED_BODY =
-		ServiceProps.get(PortletPropsKeys.ADMIN_EMAIL_KB_ARTICLE_UPDATED_BODY);
+		PortletProps.get(PortletPropsKeys.ADMIN_EMAIL_KB_ARTICLE_UPDATED_BODY);
 
 	public static final boolean ADMIN_EMAIL_KB_ARTICLE_UPDATED_ENABLED =
 		GetterUtil.getBoolean(
-			ServiceProps.get(
+			PortletProps.get(
 				PortletPropsKeys.ADMIN_EMAIL_KB_ARTICLE_UPDATED_ENABLED));
 
 	public static final String ADMIN_EMAIL_KB_ARTICLE_UPDATED_SUBJECT =
-		ServiceProps.get(
+		PortletProps.get(
 			PortletPropsKeys.ADMIN_EMAIL_KB_ARTICLE_UPDATED_SUBJECT);
-
-	public static final String[] ADMIN_KB_ARTICLE_DEFAULT_SECTIONS =
-		ServiceProps.getArray(
-			PortletPropsKeys.ADMIN_KB_ARTICLE_DEFAULT_SECTIONS);
 
 	public static final boolean ADMIN_KB_ARTICLE_INCREMENT_PRIORITY_ENABLED =
 		GetterUtil.getBoolean(
-			ServiceProps.get(
+			PortletProps.get(
 				PortletPropsKeys.ADMIN_KB_ARTICLE_INCREMENT_PRIORITY_ENABLED));
 
 	public static final String[] ADMIN_KB_ARTICLE_SECTIONS =
-		ServiceProps.getArray(PortletPropsKeys.ADMIN_KB_ARTICLE_SECTIONS);
+		PortletProps.getArray(PortletPropsKeys.ADMIN_KB_ARTICLE_SECTIONS);
+
+	public static final String[] ADMIN_KB_ARTICLE_SECTIONS_DEFAULT =
+		PortletProps.getArray(
+			PortletPropsKeys.ADMIN_KB_ARTICLE_SECTIONS_DEFAULT);
 
 	public static final int KNOWLEDGE_BASE_RATINGS_NUMBER_OF_STARS =
 		GetterUtil.getInteger(
-			ServiceProps.get(
+			PortletProps.get(
 				PortletPropsKeys.
 					KNOWLEDGE_BASE_RATINGS_NUMBER_OF_STARS),
 			GetterUtil.getInteger(
 				PropsUtil.get(PropsKeys.RATINGS_DEFAULT_NUMBER_OF_STARS)));
 
 	public static final String KNOWLEDGE_BASE_SOCIAL_BOOKMARKS_DISPLAY_STYLE =
-		ServiceProps.get(
+		PortletProps.get(
 			PortletPropsKeys.KNOWLEDGE_BASE_SOCIAL_BOOKMARKS_DISPLAY_STYLE);
 
 	public static final String KNOWLEDGE_BASE_SOURCE_URL_EDIT_MESSAGE_KEY =
-		ServiceProps.get(
+		PortletProps.get(
 			PortletPropsKeys.KNOWLEDGE_BASE_SOURCE_URL_EDIT_MESSAGE_KEY);
 
 	public static final boolean KNOWLEDGE_BASE_SOURCE_URL_ENABLED =
 		GetterUtil.getBoolean(
-			ServiceProps.get(
+			PortletProps.get(
 				PortletPropsKeys.KNOWLEDGE_BASE_SOURCE_URL_ENABLED));
 
 	public static final String[] MARKDOWN_IMPORTER_ARTICLE_EXTENSIONS =
-		ServiceProps.getArray(
+		PortletProps.getArray(
 			PortletPropsKeys.MARKDOWN_IMPORTER_ARTICLE_EXTENSIONS);
 
 	public static final String MARKDOWN_IMPORTER_ARTICLE_INTRO =
 		GetterUtil.getString(
-			ServiceProps.get(PortletPropsKeys.MARKDOWN_IMPORTER_ARTICLE_INTRO));
+			PortletProps.get(PortletPropsKeys.MARKDOWN_IMPORTER_ARTICLE_INTRO));
 
 	public static final String[] MARKDOWN_IMPORTER_IMAGE_FILE_EXTENSIONS =
-		ServiceProps.getArray(
+		PortletProps.getArray(
 			PortletPropsKeys.MARKDOWN_IMPORTER_IMAGE_FILE_EXTENSIONS);
 
 	public static final String MARKDOWN_IMPORTER_IMAGE_FOLDER =
 		GetterUtil.getString(
-			ServiceProps.get(PortletPropsKeys.MARKDOWN_IMPORTER_IMAGE_FOLDER));
+			PortletProps.get(PortletPropsKeys.MARKDOWN_IMPORTER_IMAGE_FOLDER));
 
 }

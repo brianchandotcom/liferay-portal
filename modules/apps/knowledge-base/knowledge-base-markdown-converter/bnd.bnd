@@ -5,12 +5,18 @@ Export-Package:\
 	com.liferay.knowledge.base.markdown.converter,\
 	com.liferay.knowledge.base.markdown.converter.factory
 Import-Package:\
+	!org.objectweb.*,\
+	\
 	!org.parboiled.*,\
 	\
 	!org.pegdown.*,\
 	*
 Private-Package: com.liferay.knowledge.base.markdown.converter.internal.*
 -liferay-includeresource:\
-	@parboiled-core*.jar,\
-	@parboiled-java*.jar,\
-	@pegdown*.java
+	@asm-*.jar,\
+	@asm-analysis-*.jar,\
+	@asm-tree-*.jar,\
+	@asm-util-*.jar,\
+	@parboiled-core-*.jar,\
+	@parboiled-java-*.jar,\
+	@pegdown-*.jar

@@ -1,5 +1,9 @@
 dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.2.0"
+	provided group: "org.ow2.asm", name: "asm", version: "4.1"
+	provided group: "org.ow2.asm", name: "asm-analysis", version: "4.1"
+	provided group: "org.ow2.asm", name: "asm-tree", version: "4.1"
+	provided group: "org.ow2.asm", name: "asm-util", version: "4.1"
 	provided group: "org.parboiled", name: "parboiled-core", version: "1.1.6"
 	provided group: "org.parboiled", name: "parboiled-java", version: "1.1.6"
 	provided group: "org.pegdown", name: "pegdown", version: "1.1.0"

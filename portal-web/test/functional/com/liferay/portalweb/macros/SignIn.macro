@@ -203,4 +203,38 @@
 
 		<execute macro="GoogleLogin#acceptConditions" />
 	</command>
+
+	<command name="viewSignInError">
+		<if>
+			<isset var="nodePort" />
+			<then>
+				<execute function="Open" locator1="http://localhost:${nodePort}" />
+			</then>
+			<elseif>
+				<isset var="specificURL" />
+				<then>
+					<execute macro="Navigator#openSpecificURL">
+						<var name="url" value="${specificURL}" />
+					</execute>
+				</then>
+			</elseif>
+			<else>
+				<execute macro="Navigator#openURL" />
+			</else>
+		</if>
+
+		<execute macro="SignIn#_signIn">
+			<var name="rememberMe" value="${rememberMe}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
+
+		<if>
+			<equals arg1="${error}" arg2="internalServerError" />
+			<then>
+				<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_ALERT_ERROR" value1="Internal Server Error" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#URL_ERROR" value1="${urlErrorMessage}" />
+			</then>
+		</if>
+	</command>
 </definition>

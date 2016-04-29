@@ -28,7 +28,7 @@
 	<command name="AddAndDeleteBlogEntriesOnSeparateNodes" priority="4">
 		<property name="app.server.bundles.size" value="1" />
 		<property name="custom.properties" value="dl.store.impl=com.liferay.portal.store.db.DBStore" />
-		<property name="test.name.skip.portal.instance" value="Clustering#AddAndDeleteBlogEntriesOnSeparateNodes" />
+		<property name="test.name.skip.portal.instance" value="ClusteringEE#AddAndDeleteBlogEntriesOnSeparateNodes" />
 
 		<execute macro="Page#assertNodePortPG">
 			<var name="nodePort" value="8080" />
@@ -191,7 +191,7 @@
 	<command name="ValidateDocumentOnSeparateNodes" priority="4">
 		<property name="app.server.bundles.size" value="1" />
 		<property name="custom.properties" value="dl.store.impl=com.liferay.portal.store.db.DBStore" />
-		<property name="test.name.skip.portal.instance" value="Clustering#ValidateDocumentOnSeparateNodes" />
+		<property name="test.name.skip.portal.instance" value="ClusteringEE#ValidateDocumentOnSeparateNodes" />
 
 		<execute macro="Page#assertNodePortPG">
 			<var name="nodePort" value="8080" />
@@ -263,7 +263,7 @@
 	<command name="ValidateSchedulerOnSeparateNodes" priority="4">
 		<property name="app.server.bundles.size" value="1" />
 		<property name="custom.properties" value="dl.store.impl=com.liferay.portal.store.db.DBStore" />
-		<property name="test.name.skip.portal.instance" value="Clustering#ValidateSchedulerOnSeparateNodes" />
+		<property name="test.name.skip.portal.instance" value="ClusteringEE#ValidateSchedulerOnSeparateNodes" />
 
 		<var name="pageName" value="Home" />
 

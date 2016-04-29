@@ -53,7 +53,7 @@ public class ImageEditorCapabilityTracker {
 	}
 
 	public Set<String> getCapabilitiesRequirements() {
-		return _capabilitiesRequirementes;
+		return _capabilitiesRequirements;
 	}
 
 	public static class ImageEditorCapabilityInformation {
@@ -150,7 +150,7 @@ public class ImageEditorCapabilityTracker {
 	}
 
 	private BundleContext _bundleContext;
-	private volatile Set<String> _capabilitiesRequirementes =
+	private volatile Set<String> _capabilitiesRequirements =
 		Collections.emptySet();
 	private ServiceTrackerMap<String, List<ImageEditorCapabilityInformation>>
 		_informationTrackerMap;
@@ -160,19 +160,20 @@ public class ImageEditorCapabilityTracker {
 			<String, ImageEditorCapabilityInformation,
 				List<ImageEditorCapabilityInformation>> {
 
+		@Override
 		public synchronized void keyEmitted(
-			ServiceTrackerMap
-				<String, List<ImageEditorCapabilityInformation>>
-					serviceTrackerMap,
+			ServiceTrackerMap<String, List<ImageEditorCapabilityInformation>>
+				serviceTrackerMap,
 			String key,
 			ImageEditorCapabilityInformation imageEditorCapabilityInformation,
 			List<ImageEditorCapabilityInformation>
 				imageEditorCapabilityInformations) {
 
-			_capabilitiesRequirementes = _rebuildCapabilitiesRequirements(
+			_capabilitiesRequirements = _rebuildCapabilitiesRequirements(
 				serviceTrackerMap);
 		}
 
+		@Override
 		public synchronized void keyRemoved(
 			ServiceTrackerMap<String, List<ImageEditorCapabilityInformation>>
 				serviceTrackerMap,
@@ -181,7 +182,7 @@ public class ImageEditorCapabilityTracker {
 			List<ImageEditorCapabilityInformation>
 				imageEditorCapabilityInformations) {
 
-			_capabilitiesRequirementes = _rebuildCapabilitiesRequirements(
+			_capabilitiesRequirements = _rebuildCapabilitiesRequirements(
 				serviceTrackerMap);
 		}
 
@@ -191,20 +192,21 @@ public class ImageEditorCapabilityTracker {
 		implements ServiceTrackerCustomizer
 			<ImageEditorCapability, ImageEditorCapabilityInformation> {
 
+		@Override
 		public ImageEditorCapabilityInformation addingService(
 			ServiceReference<ImageEditorCapability> serviceReference) {
 
-			String[] propertyKeys = serviceReference.getPropertyKeys();
+			ImageEditorCapability imageEditorCapability =
+				_bundleContext.getService(serviceReference);
 
 			Map<String, Object> properties = new HashMap<>();
+
+			String[] propertyKeys = serviceReference.getPropertyKeys();
 
 			for (String propertyKey : propertyKeys) {
 				properties.put(
 					propertyKey, serviceReference.getProperty(propertyKey));
 			}
-
-			ImageEditorCapability imageEditorCapability =
-				_bundleContext.getService(serviceReference);
 
 			try {
 				return new ImageEditorCapabilityInformation(
@@ -217,14 +219,17 @@ public class ImageEditorCapabilityTracker {
 			}
 		}
 
+		@Override
 		public void modifiedService(
 			ServiceReference<ImageEditorCapability> serviceReference,
 			ImageEditorCapabilityInformation imageEditorCapabilityInformation) {
 
 			removedService(serviceReference, imageEditorCapabilityInformation);
+
 			addingService(serviceReference);
 		}
 
+		@Override
 		public void removedService(
 			ServiceReference<ImageEditorCapability> serviceReference,
 			ImageEditorCapabilityInformation imageEditorCapabilityInformation) {

@@ -14,8 +14,8 @@ else {
 		include "*/**/build.gradle"
 
 		if (!Boolean.getBoolean("modules.only.build")) {
+			include "**/apps/foundation/frontend-theme/*/gulpfile.js"
 			include "*/**/build.xml"
-			include "apps/foundation/frontend-theme/*/gulpfile.js"
 		}
 	}
 }

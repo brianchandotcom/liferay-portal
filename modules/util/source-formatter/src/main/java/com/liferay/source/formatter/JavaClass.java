@@ -122,6 +122,7 @@ public class JavaClass {
 				checkChaining(javaTerm);
 				checkLineBreak(javaTerm);
 				checkParameterNames(javaTerm);
+				checkVariableNames(javaTerm);
 			}
 
 			if (_fileName.endsWith("LocalServiceImpl.java") &&
@@ -685,6 +686,24 @@ public class JavaClass {
 					"Unused parameter " + parameterName + ": " + _fileName +
 						" " + javaTerm.getLineCount());
 			}
+		}
+	}
+
+	protected void checkVariableNames(JavaTerm javaTerm) {
+		Matcher matcher = _variableNameStartingWithUpperCasePattern.matcher(
+			javaTerm.getContent());
+
+		while (matcher.find()) {
+			int lineCount =
+				javaTerm.getLineCount() +
+					_javaSourceProcessor.getLineCount(
+						javaTerm.getContent(), matcher.start(1)) - 1;
+
+			_javaSourceProcessor.processErrorMessage(
+				_fileName,
+				"Variable " + matcher.group(1) +
+					" should not start with uppercase: " + _fileName + " " +
+						lineCount);
 		}
 	}
 
@@ -1620,5 +1639,7 @@ public class JavaClass {
 		"\n(\t+)return (.*?);\n", Pattern.DOTALL);
 	private final Pattern _returnPattern2 = Pattern.compile(
 		".* (==|!=|<|>|>=|<=)[ \n].*");
+	private final Pattern _variableNameStartingWithUpperCasePattern =
+		Pattern.compile("\t[\\w\\s<>]+ ([A-Z]\\w+) =");
 
 }

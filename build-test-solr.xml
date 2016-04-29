@@ -43,7 +43,7 @@
 	</macrodef>
 
 	<target name="configure-solr-osgi-bundle-properties">
-		<echo file="${liferay.home}/osgi/portal/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg">readURL=http://localhost:8983/solr/liferay
+		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg">readURL=http://localhost:8983/solr/liferay
 writeURL=http://localhost:8983/solr/liferay</echo>
 	</target>
 

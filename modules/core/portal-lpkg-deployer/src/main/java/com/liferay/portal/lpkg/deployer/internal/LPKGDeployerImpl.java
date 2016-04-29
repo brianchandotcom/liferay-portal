@@ -79,9 +79,7 @@ public class LPKGDeployerImpl implements LPKGDeployer {
 
 		Path deploymentDirPath = Paths.get(deploymentDir);
 
-		if (Files.notExists(deploymentDirPath)) {
-			return;
-		}
+		Files.createDirectories(deploymentDirPath);
 
 		Files.walkFileTree(
 			deploymentDirPath,

@@ -753,6 +753,17 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			// There are no custom permissions defined for portlet, use defaults
 
 			newIndividualResourcePrimKey = name;
+
+			if (_log.isDebugEnabled()) {
+				StringBundler sb = new StringBundler(9);
+
+				sb.append("Custom permissions for portlet resource ");
+				sb.append(name);
+				sb.append(" are not defined, using defaults.");
+
+				_log.debug(
+					sb.toString(), new IllegalArgumentException(sb.toString()));
+			}
 		}
 
 		else if ((groupId > 0) &&
@@ -762,6 +773,17 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			// use defaults
 
 			newIndividualResourcePrimKey = name;
+
+			if (_log.isDebugEnabled()) {
+				StringBundler sb = new StringBundler(9);
+
+				sb.append("Custom permissions for root model resource ");
+				sb.append(name);
+				sb.append(" are not defined, using defaults.");
+
+				_log.debug(
+					sb.toString(), new IllegalArgumentException(sb.toString()));
+			}
 		}
 
 		else if (((primKey.length() == 1) && (primKey.charAt(0) == 48)) ||

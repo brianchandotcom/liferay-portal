@@ -65,11 +65,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		Map<String, Object> capabilitiesContext = new HashMap<>();
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(renderRequest);
-
 		String imageEditorURL = ParamUtil.getString(
-			httpServletRequest, "imageEditorURL");
+			renderRequest, "imageEditorURL");
 
 		capabilitiesContext.put(
 			"tools", getImageEditorToolsContext(renderRequest));

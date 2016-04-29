@@ -187,7 +187,7 @@ if (portletTitleBasedNavigation) {
 												WorkflowDefinitionLink workflowDefinitionLink = null;
 
 												try {
-													workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), repositoryId, DLFolderConstants.getClassName(), folderId, dlFileEntryType.getFileEntryTypeId(), true);
+													workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), scopeGroupId, DLFolderConstants.getClassName(), folderId, dlFileEntryType.getFileEntryTypeId(), true);
 												}
 												catch (NoSuchWorkflowDefinitionLinkException nswdle) {
 												}
@@ -261,7 +261,7 @@ if (portletTitleBasedNavigation) {
 								WorkflowDefinitionLink workflowDefinitionLink = null;
 
 								try {
-									workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), repositoryId, DLFolderConstants.getClassName(), folderId, DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
+									workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), scopeGroupId, DLFolderConstants.getClassName(), folderId, DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
 								}
 								catch (NoSuchWorkflowDefinitionLinkException nswdle) {
 								}

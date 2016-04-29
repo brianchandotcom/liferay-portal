@@ -55,6 +55,7 @@ public abstract class BaseImageEditorCapability
 		return _resourceURLs;
 	}
 
+	@Override
 	public void prepareContext(
 		Map<String, Object> context, HttpServletRequest request) {
 	}

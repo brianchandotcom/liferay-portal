@@ -98,78 +98,82 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 	protected List<Map<String, Object>> getImageEditorToolsContext(
 		RenderRequest renderRequest) {
 
-		List<Map<String, Object>> imageEditorToolsContext = new ArrayList();
+		List<Map<String, Object>> imageEditorToolsContext =
+			new ArrayList<Map<String, Object>>();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<ImageEditorCapabilityInformation> imageEditorCapabilityInformations =
-			_imageEditorCapabilityTracker.getCapabilities("tool");
+		List<ImageEditorCapabilityInformation>
+			toolImageEditorCapabilityInformations =
+				_imageEditorCapabilityTracker.getCapabilities("tool");
 
-		if (imageEditorCapabilityInformations == null) {
+		if (toolImageEditorCapabilityInformations == null) {
 			return imageEditorToolsContext;
 		}
 
-		List<List<ImageEditorCapabilityInformation>> toolCategories =
-			groupCapabilities(imageEditorCapabilityInformations);
+		List<List<ImageEditorCapabilityInformation>>
+			imageEditorCapabilityInformationsList =
+				getImageEditorCapabilityInformationsList(
+					toolImageEditorCapabilityInformations);
 
-		for (List<ImageEditorCapabilityInformation> toolCategory :
-				toolCategories) {
+		for (List<ImageEditorCapabilityInformation>
+				imageEditorCapabilityInformations :
+					imageEditorCapabilityInformationsList) {
 
-			Map<String, Object> toolContext = new HashMap<>();
+			Map<String, Object> context = new HashMap<>();
 
-			List<Map<String, Object>> categoryControls = new ArrayList();
-			String categoryIcon = StringPool.BLANK;
+			List<Map<String, Object>> controls =
+				new ArrayList<Map<String, Object>>();
+			String icon = StringPool.BLANK;
 
 			for (ImageEditorCapabilityInformation
 					imageEditorCapabilityInformation :
-						toolCategory) {
+						imageEditorCapabilityInformations) {
 
-				Map<String, Object> capabilityProperties =
-					imageEditorCapabilityInformation.getProperties();
-
-				String icon = GetterUtil.getString(
-					capabilityProperties.get(
-						"com.liferay.frontend.image.editor.capability." +
-							"icon"));
-
-				categoryIcon = icon;
+				Map<String, Object> control = new HashMap<>();
 
 				ImageEditorCapability imageEditorCapability =
 					imageEditorCapabilityInformation.getImageEditorCapability();
 
-				String label = imageEditorCapability.getLabel(
-					themeDisplay.getLocale());
+				control.put(
+					"label",
+					imageEditorCapability.getLabel(themeDisplay.getLocale()));
 
-				ServletContext imageEditorCapabilityServletContext =
+				ServletContext servletContext =
 					imageEditorCapability.getServletContext();
 
+				control.put(
+					"modulePath",
+					servletContext.getContextPath());
+
+				Map<String, Object> properties =
+					imageEditorCapabilityInformation.getProperties();
+
 				String variant = GetterUtil.getString(
-					capabilityProperties.get(
+					properties.get(
 						"com.liferay.frontend.image.editor.capability." +
 							"controls"));
 
-				Map<String, Object> controlContext = new HashMap<>();
-
-				controlContext.put("label", label);
-				controlContext.put(
-					"modulePath",
-					imageEditorCapabilityServletContext.getContextPath());
-				controlContext.put("variant", variant);
+				control.put("variant", variant);
 
 				HttpServletRequest httpServletRequest =
 					PortalUtil.getHttpServletRequest(renderRequest);
 
 				imageEditorCapability.prepareContext(
-					controlContext, httpServletRequest);
+					control, httpServletRequest);
 
-				categoryControls.add(controlContext);
+				controls.add(control);
+
+				icon = GetterUtil.getString(
+					properties.get(
+						"com.liferay.frontend.image.editor.capability.icon"));
 			}
 
-			toolContext.put("controls", categoryControls);
-			toolContext.put("icon", categoryIcon);
+			context.put("controls", controls);
+			context.put("icon", icon);
 
-			imageEditorToolsContext.add(toolContext);
+			imageEditorToolsContext.add(context);
 		}
 
 		return imageEditorToolsContext;
@@ -179,44 +183,45 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return (Template)renderRequest.getAttribute(WebKeys.TEMPLATE);
 	}
 
-	protected List<List<ImageEditorCapabilityInformation>> groupCapabilities(
-		List<ImageEditorCapabilityInformation>
-			imageEditorCapabilityInformations) {
+	protected List<List<ImageEditorCapabilityInformation>>
+		getImageEditorCapabilityInformationsList(
+			List<ImageEditorCapabilityInformation>
+				imageEditorCapabilityInformations) {
 
 		Map<String, List<ImageEditorCapabilityInformation>>
-			groupedCapabilities = new HashMap<>();
+			imageEditorCapabilityInformationsMap = new HashMap<>();
 
 		for (ImageEditorCapabilityInformation imageEditorCapabilityInformation :
 				imageEditorCapabilityInformations) {
 
-			Map<String, Object> capabilityProperties =
+			Map<String, Object> properties =
 				imageEditorCapabilityInformation.getProperties();
 
 			String imageEditorCapabilityCategory = GetterUtil.getString(
-				capabilityProperties.get(
+				properties.get(
 					"com.liferay.frontend.image.editor.capability.category"));
 
-			if (groupedCapabilities.get(imageEditorCapabilityCategory) ==
-					null) {
-
-				groupedCapabilities.put(
+			if (imageEditorCapabilityInformationsMap.get(imageEditorCapabilityCategory) == null) {
+				imageEditorCapabilityInformationsMap.put(
 					imageEditorCapabilityCategory,
 					new ArrayList<ImageEditorCapabilityInformation>());
 			}
 
 			List<ImageEditorCapabilityInformation> imageEditorCapabilityList =
-				groupedCapabilities.get(imageEditorCapabilityCategory);
+				imageEditorCapabilityInformationsMap.get(imageEditorCapabilityCategory);
 
 			imageEditorCapabilityList.add(imageEditorCapabilityInformation);
 		}
 
-		return new ArrayList<>(groupedCapabilities.values());
+		return new ArrayList<>(imageEditorCapabilityInformationsMap.values());
 	}
 
 	@Reference
 	private ImageEditorCapabilityTracker _imageEditorCapabilityTracker;
 
-	@Reference(target = "(bundle.symbolic.name=com.liferay.frontend.image.editor.web)")
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.frontend.image.editor.web)"
+	)
 	private ResourceBundleLoader _resourceBundleLoader;
 
 }

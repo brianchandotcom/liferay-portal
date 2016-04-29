@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.exportimport.UserGroupImportTransactionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -333,11 +334,13 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	public UserGroup deleteUserGroup(UserGroup userGroup)
 		throws PortalException {
 
-		int count = userLocalService.getUserGroupUsersCount(
-			userGroup.getUserGroupId(), WorkflowConstants.STATUS_APPROVED);
+		if (!CompanyThreadLocal.isDeleteInProcess()) {
+			int count = userLocalService.getUserGroupUsersCount(
+				userGroup.getUserGroupId(), WorkflowConstants.STATUS_APPROVED);
 
-		if (count > 0) {
-			throw new RequiredUserGroupException();
+			if (count > 0) {
+				throw new RequiredUserGroupException();
+			}
 		}
 
 		// Expando

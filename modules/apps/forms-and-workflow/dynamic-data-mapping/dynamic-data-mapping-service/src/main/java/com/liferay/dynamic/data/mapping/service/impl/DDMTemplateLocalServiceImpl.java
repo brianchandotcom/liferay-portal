@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.persistence.ImageUtil;
@@ -405,8 +406,9 @@ public class DDMTemplateLocalServiceImpl
 
 		// Template
 
-		if (ddmTemplateLinkPersistence.countByTemplateId(
-				template.getTemplateId()) > 0) {
+		if (!CompanyThreadLocal.isDeleteInProcess() &&
+			(ddmTemplateLinkPersistence.countByTemplateId(
+				template.getTemplateId()) > 0)) {
 
 			throw new RequiredTemplateException.
 				MustNotDeleteTemplateReferencedByTemplateLinks(

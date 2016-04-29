@@ -15,6 +15,7 @@
 package com.liferay.lpkg.deployer.internal;
 
 import com.liferay.lpkg.deployer.LPKGDeployer;
+import com.liferay.lpkg.deployer.LPKGVerifier;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -55,6 +56,7 @@ import org.osgi.framework.startlevel.BundleStartLevel;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.BundleTracker;
 
 /**
@@ -127,11 +129,38 @@ public class LPKGDeployerImpl implements LPKGDeployer {
 	public List<Bundle> deploy(BundleContext bundleContext, File lpkgFile)
 		throws IOException {
 
+		String canonicalPath = lpkgFile.getCanonicalPath();
+
+		for (Bundle bundle : _lpkgVerifier.verify(lpkgFile)) {
+			try {
+				bundle.uninstall();
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Uninstalled older version LPKG bundle " + bundle +
+							" in order to install " + lpkgFile);
+				}
+
+				String location = bundle.getLocation();
+
+				if (!location.equals(canonicalPath) &&
+					Files.deleteIfExists(Paths.get(bundle.getLocation())) &&
+					_log.isInfoEnabled()) {
+
+					_log.info("Removed old lpkg file " + bundle.getLocation());
+				}
+			}
+			catch (BundleException be) {
+				_log.error(
+					"Unable to uninstall " + bundle + " for " + lpkgFile, be);
+			}
+		}
+
 		try {
 			List<Bundle> bundles = new ArrayList<>();
 
 			Bundle lpkgBundle = bundleContext.installBundle(
-				lpkgFile.getCanonicalPath(), _lpkgToOSGiBundle(lpkgFile));
+				canonicalPath, _lpkgToOSGiBundle(lpkgFile));
 
 			BundleStartLevel bundleStartLevel = lpkgBundle.adapt(
 				BundleStartLevel.class);
@@ -232,5 +261,8 @@ public class LPKGDeployerImpl implements LPKGDeployer {
 		LPKGDeployerImpl.class);
 
 	private BundleTracker<List<Bundle>> _lpkgBundleTracker;
+
+	@Reference
+	private LPKGVerifier _lpkgVerifier;
 
 }

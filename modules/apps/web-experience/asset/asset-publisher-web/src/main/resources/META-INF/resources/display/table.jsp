@@ -46,11 +46,13 @@ request.setAttribute("view.jsp-showIconLabel", false);
 %>
 
 <c:if test="<%= assetEntryIndex == 0 %>">
-	<table class="table table-bordered table-hover table-striped">
-	<thead class="table-columns">
+	<table class="table table-list">
+	<thead>
 	<tr>
-		<th class="table-header table-sortable-column">
-			<liferay-ui:message key="title" />
+		<th class="clamp-horizontal content-column table-cell-content title-column">
+			<div class="clamp-container">
+				<span class="truncate-text"><liferay-ui:message key="title" /></span>
+			</div>
 		</th>
 
 		<%
@@ -59,7 +61,7 @@ request.setAttribute("view.jsp-showIconLabel", false);
 		for (int m = 0; m < metadataFields.length; m++) {
 		%>
 
-			<th class="table-header">
+			<th class="metadata-column table-cell-field text-column">
 				<liferay-ui:message key="<%= metadataFields[m] %>" />
 			</th>
 
@@ -68,24 +70,28 @@ request.setAttribute("view.jsp-showIconLabel", false);
 		%>
 
 		<c:if test="<%= !stageableGroup.hasStagingGroup() %>">
-			<th class="table-header"></th>
+			<th class="entry-action-column table-cell-field"></th>
 		</c:if>
 	</tr>
 	</thead>
 
-	<tbody class="table-data">
+	<tbody>
 </c:if>
 
 <tr>
-	<td class="table-cell">
-		<c:choose>
-			<c:when test="<%= Validator.isNotNull(viewURL) %>">
-				<a href="<%= viewURL %>"><%= HtmlUtil.escape(title) %></a>
-			</c:when>
-			<c:otherwise>
-				<%= HtmlUtil.escape(title) %>
-			</c:otherwise>
-		</c:choose>
+	<td class="clamp-horizontal content-column table-cell-content title-column" colspan="1">
+		<div class="clamp-container">
+			<span class="truncate-text">
+				<c:choose>
+					<c:when test="<%= Validator.isNotNull(viewURL) %>">
+						<a href="<%= viewURL %>"><%= HtmlUtil.escape(title) %></a>
+					</c:when>
+					<c:otherwise>
+						<%= HtmlUtil.escape(title) %>
+					</c:otherwise>
+				</c:choose>
+			</span>
+		</div>
 	</td>
 
 	<%
@@ -130,7 +136,7 @@ request.setAttribute("view.jsp-showIconLabel", false);
 		else if (metadataFields[m].equals("categories")) {
 		%>
 
-			<td class="table-cell">
+			<td class="metadata-column scope-column table-cell-field" colspan="1">
 				<liferay-ui:asset-categories-summary
 					className="<%= assetEntry.getClassName() %>"
 					classPK="<%= assetEntry.getClassPK() %>"
@@ -143,7 +149,7 @@ request.setAttribute("view.jsp-showIconLabel", false);
 		else if (metadataFields[m].equals("tags")) {
 		%>
 
-			<td class="table-cell">
+			<td class="metadata-column scope-column table-cell-field" colspan="1">
 				<liferay-ui:asset-tags-summary
 					className="<%= assetEntry.getClassName() %>"
 					classPK="<%= assetEntry.getClassPK() %>"
@@ -157,7 +163,7 @@ request.setAttribute("view.jsp-showIconLabel", false);
 		if (value != null) {
 	%>
 
-			<td class="table-cell">
+			<td class="metadata-column scope-column table-cell-field" colspan="1">
 				<liferay-ui:message key="<%= value %>" />
 			</td>
 
@@ -167,7 +173,7 @@ request.setAttribute("view.jsp-showIconLabel", false);
 	%>
 
 	<c:if test="<%= !stageableGroup.hasStagingGroup() %>">
-		<td class="table-cell">
+		<td class="entry-action-column table-cell-field" colspan="1">
 			<c:if test="<%= assetRenderer.hasEditPermission(permissionChecker) && (editPortletURL != null) %>">
 				<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
 			</c:if>

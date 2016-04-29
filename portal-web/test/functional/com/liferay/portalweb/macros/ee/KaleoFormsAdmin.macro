@@ -652,7 +652,7 @@
 	</command>
 
 	<command name="viewProcessNoRecords">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No records were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No ${kfProcessName} records were found" />
 	</command>
 
 	<command name="viewProcessRecord">

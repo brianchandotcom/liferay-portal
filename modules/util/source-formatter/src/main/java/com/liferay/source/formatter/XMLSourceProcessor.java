@@ -943,19 +943,12 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		SolrElementComparator solrElementComparator =
 			new SolrElementComparator();
 
-		Element typesElement = rootElement.element("types");
-
-		_solrElementsContent = typesElement.asXML();
-
 		checkOrder(
-			fileName, typesElement, "fieldType", null, solrElementComparator);
-
-		Element fieldsElement = rootElement.element("fields");
-
-		_solrElementsContent = fieldsElement.asXML();
-
+			fileName, rootElement.element("types"), "fieldType", null,
+			solrElementComparator);
 		checkOrder(
-			fileName, fieldsElement, "field", null, solrElementComparator);
+			fileName, rootElement.element("fields"), "field", null,
+			solrElementComparator);
 	}
 
 	protected void formatStrutsConfigXML(String fileName, String content)
@@ -1396,7 +1389,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			"(?:(?:\\n){1,}+|\\</execute\\>)");
 	private final Pattern _poshiWholeTagPattern = Pattern.compile(
 		"<[^\\>^/]*\\/>");
-	private String _solrElementsContent;
 	private String _tablesContent;
 	private final Map<String, String> _tablesContentMap = new HashMap<>();
 	private final Pattern _whereNotInSQLPattern = Pattern.compile(
@@ -1585,30 +1577,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		public int compare(Element solrElement1, Element solrElement2) {
 			int value = super.compare(solrElement1, solrElement2);
 
-			if (value <= 0) {
-				return value;
-			}
+			if ((value > 0) &&
+				isSeparatedByComment(solrElement1, solrElement2)) {
 
-			String solrElementContent1 = solrElement1.asXML();
-			String solrElementContent2 = solrElement2.asXML();
-
-			int x =
-				_solrElementsContent.indexOf(solrElementContent1) +
-					solrElementContent1.length();
-			int y = _solrElementsContent.indexOf(solrElementContent2);
-
-			if (x > y) {
 				return -1;
 			}
 
-			String betweenElementsContent = _solrElementsContent.substring(
-				x, y);
-
-			if (betweenElementsContent.contains("<!--")) {
-				return -1;
-			}
-
-			return 1;
+			return value;
 		}
 
 	}

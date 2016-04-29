@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ImportPackage;
 import com.liferay.source.formatter.util.FileUtil;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.xml.Dom4jUtil;
@@ -407,6 +408,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				 absolutePath.contains("solr")) {
 
 			formatSolrSchema(fileName, newContent);
+		}
+		else if (fileName.endsWith("-spring.xml")) {
+			formatSpringXML(fileName, newContent);
 		}
 		else if (portalSource && fileName.endsWith("/struts-config.xml")) {
 			formatStrutsConfigXML(fileName, newContent);
@@ -949,6 +953,16 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkOrder(
 			fileName, rootElement.element("fields"), "field", null,
 			solrElementComparator);
+	}
+
+	protected void formatSpringXML(String fileName, String content)
+		throws Exception {
+
+		Document document = readXML(content);
+
+		checkOrder(
+			fileName, document.getRootElement(), "bean", null,
+			new SpringBeanElementComparator("id"));
 	}
 
 	protected void formatStrutsConfigXML(String fileName, String content)
@@ -1585,6 +1599,76 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			return value;
 		}
+
+	}
+
+	private static class SpringBeanElementComparator extends ElementComparator {
+
+		public SpringBeanElementComparator(String nameAttribute) {
+			super(nameAttribute);
+		}
+
+		@Override
+		public int compare(Element beanElement1, Element beanElement2) {
+			String className1 = getElementName(beanElement1);
+			String className2 = getElementName(beanElement2);
+
+			if ((className1 == null) || (className2 == null)) {
+				return 0;
+			}
+
+			if (!className1.contains(StringPool.PERIOD) ||
+				!className2.contains(StringPool.PERIOD)) {
+
+				return 0;
+			}
+
+			int value = _compare(className1, className2);
+
+			Matcher matcher1 = _serviceClassPattern.matcher(className1);
+			Matcher matcher2 = _serviceClassPattern.matcher(className2);
+
+			if (matcher1.find() && matcher2.find()) {
+				String servicePackage1 = matcher1.group(1);
+				String servicePackage2 = matcher2.group(1);
+
+				if (servicePackage1.equals(servicePackage2)) {
+					String serviceObjectName1 = matcher1.group(3);
+					String serviceObjectName2 = matcher2.group(3);
+
+					if (!serviceObjectName1.equals(serviceObjectName2)) {
+						value = serviceObjectName1.compareTo(
+							serviceObjectName2);
+					}
+					else if ((matcher1.group(2) != null) &&
+							 (matcher2.group(2) != null)) {
+
+						value = -value;
+					}
+				}
+			}
+
+			if ((value > 0) &&
+				isSeparatedByComment(beanElement1, beanElement2)) {
+
+				return -1;
+			}
+
+			return value;
+		}
+
+		private int _compare(String className1, String className2) {
+			ImportPackage importPackage1 = new ImportPackage(
+				className1, false, className1);
+			ImportPackage importPackage2 = new ImportPackage(
+				className2, false, className2);
+
+			return importPackage1.compareTo(importPackage2);
+		}
+
+		private Pattern _serviceClassPattern = Pattern.compile(
+			"(.*\\.service)\\.(persistence\\.)?([A-Za-z]+?)" +
+				"(Finder|(Local)?Service|Persistence)$");
 
 	}
 

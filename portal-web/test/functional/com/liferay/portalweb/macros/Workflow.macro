@@ -408,6 +408,15 @@
 
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="MenuItem#REJECT" value1="Reject" />
 
+		<if>
+			<isset var="workflowActivityComment" />
+			<then>
+				<var name="key_workflowActivityComment" value="${workflowActivityComment}" />
+
+				<execute function="Type#clickAtType" locator1="MyWorkflowTasks#DIALOG_BOX_COMMENT_FIELD" value1="${workflowActivityComment}" />
+			</then>
+		</if>
+
 		<execute macro="Workflow#confirmAndViewSucessMessageViaActions" />
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -624,6 +633,15 @@
 
 		<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE" value1="${workflowDueDate}" />
 		<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME" value1="${workflowDueDateTime}" />
+
+		<if>
+			<isset var="workflowActivityComment" />
+			<then>
+				<var name="key_workflowActivityComment" value="${workflowActivityComment}" />
+
+				<execute function="Type#clickAtType" locator1="MyWorkflowTasks#DIALOG_BOX_COMMENT_FIELD" value1="${workflowActivityComment}" />
+			</then>
+		</if>
 
 		<execute macro="Workflow#confirmAndViewSucessMessageViaActions" />
 

@@ -143,7 +143,7 @@
 </tr>
 <tr>
 	<td>USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_WEB_CONTENT_TITLE</td>
-	<td>//span[contains(@class,'lfr-card-title-text')]//a</td>
+	<td>//span[contains(@class,'lfr-card-title-text')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -98,7 +98,7 @@
 			<#assign title = languageUtil.format(locale, "edit-x", entryTitle, false) />
 
 			<@liferay_ui["icon"]
-				cssClass="icon-monospaced"
+				cssClass="icon-monospaced visible-interaction"
 				icon="pencil"
 				markupView="lexicon"
 				message=title

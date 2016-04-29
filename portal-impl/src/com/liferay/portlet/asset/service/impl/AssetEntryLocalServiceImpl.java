@@ -439,29 +439,13 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		int[] statuses, int start, int end) {
 
 		try {
-			Indexer<?> indexer = AssetSearcher.getInstance();
-
-			AssetSearcher assetSearcher = (AssetSearcher)indexer;
-
-			AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
-
-			assetEntryQuery.setClassNameIds(
-				getClassNameIds(companyId, className));
-
 			SearchContext searchContext = buildSearchContext(
 				companyId, groupIds, userId, classTypeId, null, null,
 				showNonindexable, statuses, false, start, end);
 
 			searchContext.setKeywords(keywords);
 
-			QueryConfig queryConfig = searchContext.getQueryConfig();
-
-			queryConfig.setHighlightEnabled(false);
-			queryConfig.setScoreEnabled(false);
-
-			assetSearcher.setAssetEntryQuery(assetEntryQuery);
-
-			return assetSearcher.search(searchContext);
+			return doSearch(companyId, className, searchContext);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -499,15 +483,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		int[] statuses, boolean andSearch, int start, int end) {
 
 		try {
-			Indexer<?> indexer = AssetSearcher.getInstance();
-
-			AssetSearcher assetSearcher = (AssetSearcher)indexer;
-
-			AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
-
-			assetEntryQuery.setClassNameIds(
-				getClassNameIds(companyId, className));
-
 			SearchContext searchContext = buildSearchContext(
 				companyId, groupIds, userId, classTypeId, assetCategoryIds,
 				assetTagNames, showNonindexable, statuses, andSearch, start,
@@ -517,14 +492,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			searchContext.setAttribute(Field.TITLE, title);
 			searchContext.setAttribute(Field.USER_NAME, userName);
 
-			QueryConfig queryConfig = searchContext.getQueryConfig();
-
-			queryConfig.setHighlightEnabled(false);
-			queryConfig.setScoreEnabled(false);
-
-			assetSearcher.setAssetEntryQuery(assetEntryQuery);
-
-			return assetSearcher.search(searchContext);
+			return doSearch(companyId, className, searchContext);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -1093,6 +1061,28 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		}
 
 		return categoryIds;
+	}
+
+	protected Hits doSearch(
+			long companyId, String className, SearchContext searchContext)
+		throws Exception {
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		assetEntryQuery.setClassNameIds(getClassNameIds(companyId, className));
+
+		Indexer<?> indexer = AssetSearcher.getInstance();
+
+		AssetSearcher assetSearcher = (AssetSearcher)indexer;
+
+		assetSearcher.setAssetEntryQuery(assetEntryQuery);
+
+		return assetSearcher.search(searchContext);
 	}
 
 	protected AssetEntryQuery getAssetEntryQuery(

@@ -1,4 +1,4 @@
-package _package_;
+package _package_.portlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;

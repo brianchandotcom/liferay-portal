@@ -1,4 +1,4 @@
-package _package_;
+package _package_.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 

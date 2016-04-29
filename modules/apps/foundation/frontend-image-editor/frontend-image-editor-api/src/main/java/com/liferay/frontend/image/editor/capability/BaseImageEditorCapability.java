@@ -89,11 +89,11 @@ public abstract class BaseImageEditorCapability
 	protected void initResourceURLs() {
 		_resourceURLs = new ArrayList<>();
 
-		Enumeration<URL> urls = getBundle().findEntries(
+		Enumeration<URL> enumeration = getBundle().findEntries(
 			"META-INF/resources", _ES_JS_FILE_EXTENSION, true);
 
-		if (urls != null) {
-			_resourceURLs.addAll(Collections.list(urls));
+		if (enumeration != null) {
+			_resourceURLs.addAll(Collections.list(enumeration));
 		}
 	}
 

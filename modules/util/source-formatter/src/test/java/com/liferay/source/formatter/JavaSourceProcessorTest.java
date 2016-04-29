@@ -165,6 +165,17 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testIncorrectParameterNames() throws Exception {
+		test(
+			"IncorrectParameterNames.testjava",
+			new String[] {
+				"Parameter StringMap should not start with uppercase:",
+				"Parameter TestString should not start with uppercase:"
+			},
+			new Integer[] {24, 28});
+	}
+
+	@Test
 	public void testIncorrectTabs() throws Exception {
 		test(
 			"IncorrectTabs.testjava",

@@ -106,6 +106,11 @@
 </tr>
 <tr>
 	<td>ICON_DOCUMENT_TITLE</td>
+	<td>//div[contains(@class,'toggle-card')]//span[contains(@class,'lfr-card-title-text') and contains(.,'${key_dmDocumentTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ICON_DOCUMENT_TITLE_LINK</td>
 	<td>//div[contains(@class,'toggle-card')]//span[contains(@class,'lfr-card-title-text') and contains(.,'${key_dmDocumentTitle}')]//a</td>
 	<td></td>
 </tr>

@@ -45,7 +45,8 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
-		<execute macro="User#loginUserFailWithClusteringPG">
+		<execute macro="SignIn#viewSignInError">
+			<var name="error" value="internalServerError" />
 			<var name="nodePort" value="9080" />
 			<var name="password" value="test" />
 			<var name="urlErrorMessage" value="com_liferay_login_web_portlet_LoginPortlet" />

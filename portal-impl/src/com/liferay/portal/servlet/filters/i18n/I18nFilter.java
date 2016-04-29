@@ -217,12 +217,8 @@ public class I18nFilter extends BasePortalFilter {
 		}
 
 		if (prependFriendlyUrlStyle == 1) {
-			if (!defaultLanguageId.equals(guestLanguageId)) {
-				return guestLanguageId;
-			}
-			else {
-				return null;
-			}
+			return _prependIfRequestedLocaleDiffersFromDefaultLocale(
+				defaultLanguageId, guestLanguageId);
 		}
 		else if (prependFriendlyUrlStyle == 2) {
 			return LocaleUtil.toLanguageId(PortalUtil.getLocale(request));
@@ -232,6 +228,10 @@ public class I18nFilter extends BasePortalFilter {
 				HttpSession session = request.getSession();
 
 				session.setAttribute(Globals.LOCALE_KEY, user.getLocale());
+			}
+			else {
+				return _prependIfRequestedLocaleDiffersFromDefaultLocale(
+					defaultLanguageId, guestLanguageId);
 			}
 
 			return null;
@@ -262,6 +262,13 @@ public class I18nFilter extends BasePortalFilter {
 		}
 
 		response.sendRedirect(redirect);
+	}
+
+	private String _prependIfRequestedLocaleDiffersFromDefaultLocale(
+		String defaultLanguageId, String guestLanguageId) {
+
+		return (!defaultLanguageId.equals(guestLanguageId)) ?
+			guestLanguageId : null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(I18nFilter.class);

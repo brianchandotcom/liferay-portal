@@ -48,10 +48,10 @@ public class ThemeFactoryUtil {
 		return _ThemeFactory;
 	}
 
-	public void setThemeFactory(ThemeFactory ThemeFactory) {
+	public void setThemeFactory(ThemeFactory themeFactory) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_ThemeFactory = ThemeFactory;
+		_ThemeFactory = themeFactory;
 	}
 
 	private static ThemeFactory _ThemeFactory;

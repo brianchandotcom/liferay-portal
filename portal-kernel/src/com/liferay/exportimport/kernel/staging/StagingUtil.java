@@ -97,17 +97,17 @@ public class StagingUtil {
 			serviceContext);
 	}
 
-	public static long copyFromLive(PortletRequest PortletRequest)
+	public static long copyFromLive(PortletRequest portletRequest)
 		throws PortalException {
 
-		return _staging.copyFromLive(PortletRequest);
+		return _staging.copyFromLive(portletRequest);
 	}
 
 	public static long copyFromLive(
-			PortletRequest PortletRequest, Portlet portlet)
+			PortletRequest portletRequest, Portlet portlet)
 		throws PortalException {
 
-		return _staging.copyFromLive(PortletRequest, portlet);
+		return _staging.copyFromLive(portletRequest, portlet);
 	}
 
 	/**
@@ -116,13 +116,13 @@ public class StagingUtil {
 	 */
 	@Deprecated
 	public static long copyPortlet(
-			PortletRequest PortletRequest, long sourceGroupId,
+			PortletRequest portletRequest, long sourceGroupId,
 			long targetGroupId, long sourcePlid, long targetPlid,
 			String portletId)
 		throws PortalException {
 
 		return _staging.copyPortlet(
-			PortletRequest, sourceGroupId, targetGroupId, sourcePlid,
+			portletRequest, sourceGroupId, targetGroupId, sourcePlid,
 			targetPlid, portletId);
 	}
 
@@ -348,9 +348,9 @@ public class StagingUtil {
 	 */
 	@Deprecated
 	public static Map<String, String[]> getStagingParameters(
-		PortletRequest PortletRequest) {
+		PortletRequest portletRequest) {
 
-		return _staging.getStagingParameters(PortletRequest);
+		return _staging.getStagingParameters(portletRequest);
 	}
 
 	public static JSONArray getWarningMessagesJSONArray(
@@ -539,41 +539,41 @@ public class StagingUtil {
 			portletId, parameterMap);
 	}
 
-	public static long publishToLive(PortletRequest PortletRequest)
+	public static long publishToLive(PortletRequest portletRequest)
 		throws PortalException {
 
-		return _staging.publishToLive(PortletRequest);
+		return _staging.publishToLive(portletRequest);
 	}
 
 	public static long publishToLive(
-			PortletRequest PortletRequest, Portlet portlet)
+			PortletRequest portletRequest, Portlet portlet)
 		throws PortalException {
 
-		return _staging.publishToLive(PortletRequest, portlet);
+		return _staging.publishToLive(portletRequest, portlet);
 	}
 
-	public static long publishToRemote(PortletRequest PortletRequest)
+	public static long publishToRemote(PortletRequest portletRequest)
 		throws PortalException {
 
-		return _staging.publishToRemote(PortletRequest);
+		return _staging.publishToRemote(portletRequest);
 	}
 
-	public static void scheduleCopyFromLive(PortletRequest PortletRequest)
+	public static void scheduleCopyFromLive(PortletRequest portletRequest)
 		throws PortalException {
 
-		_staging.scheduleCopyFromLive(PortletRequest);
+		_staging.scheduleCopyFromLive(portletRequest);
 	}
 
-	public static void schedulePublishToLive(PortletRequest PortletRequest)
+	public static void schedulePublishToLive(PortletRequest portletRequest)
 		throws PortalException {
 
-		_staging.schedulePublishToLive(PortletRequest);
+		_staging.schedulePublishToLive(portletRequest);
 	}
 
-	public static void schedulePublishToRemote(PortletRequest PortletRequest)
+	public static void schedulePublishToRemote(PortletRequest portletRequest)
 		throws PortalException {
 
-		_staging.schedulePublishToRemote(PortletRequest);
+		_staging.schedulePublishToRemote(portletRequest);
 	}
 
 	public static void setRecentLayoutBranchId(
@@ -641,22 +641,22 @@ public class StagingUtil {
 		_staging.unlockGroup(groupId);
 	}
 
-	public static void unscheduleCopyFromLive(PortletRequest PortletRequest)
+	public static void unscheduleCopyFromLive(PortletRequest portletRequest)
 		throws PortalException {
 
-		_staging.unscheduleCopyFromLive(PortletRequest);
+		_staging.unscheduleCopyFromLive(portletRequest);
 	}
 
-	public static void unschedulePublishToLive(PortletRequest PortletRequest)
+	public static void unschedulePublishToLive(PortletRequest portletRequest)
 		throws PortalException {
 
-		_staging.unschedulePublishToLive(PortletRequest);
+		_staging.unschedulePublishToLive(portletRequest);
 	}
 
-	public static void unschedulePublishToRemote(PortletRequest PortletRequest)
+	public static void unschedulePublishToRemote(PortletRequest portletRequest)
 		throws PortalException {
 
-		_staging.unschedulePublishToRemote(PortletRequest);
+		_staging.unschedulePublishToRemote(portletRequest);
 	}
 
 	public static void updateLastImportSettings(
@@ -700,10 +700,10 @@ public class StagingUtil {
 	}
 
 	public static void updateStaging(
-			PortletRequest PortletRequest, Group liveGroup)
+			PortletRequest portletRequest, Group liveGroup)
 		throws PortalException {
 
-		_staging.updateStaging(PortletRequest, liveGroup);
+		_staging.updateStaging(portletRequest, liveGroup);
 	}
 
 	public static void validateRemote(

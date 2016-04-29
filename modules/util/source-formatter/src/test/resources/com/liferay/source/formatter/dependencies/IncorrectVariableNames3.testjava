@@ -12,16 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.convert.documentlibrary;
+package com.liferay.source.formatter.dependencies;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * @author Iván Zaera
+ * @author Hugo Huijser
  */
-public interface DLStoreConvertProcess {
+public class IncorrectVariableNames3 {
 
-	public void migrate(DLStoreConverter dlStoreConverter)
-		throws PortalException;
+	private void method(Map<String, String> stringMap) {
+		Map<String, Map<String, String>> TestMapWithARatherLongName =
+			new HashMap<>();
+
+		String TestString = "Hello World";
+
+		TestMapWithAVeryLongName.put(TestString, stringMap);
+	}
 
 }

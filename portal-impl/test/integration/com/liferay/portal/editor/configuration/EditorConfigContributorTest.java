@@ -246,11 +246,11 @@ public class EditorConfigContributorTest {
 		properties.put("editor.name", _EDITOR_NAME_2);
 		properties.put("service.ranking", 1000);
 
-		EditorConfigContributor ImageEditorConfigContributor =
+		EditorConfigContributor imageEditorConfigContributor =
 			new ImageEditorConfigContributor();
 
 		_editorConfigContributorServiceRegistration2 = registry.registerService(
-			EditorConfigContributor.class, ImageEditorConfigContributor,
+			EditorConfigContributor.class, imageEditorConfigContributor,
 			properties);
 
 		EditorConfiguration editorConfiguration =

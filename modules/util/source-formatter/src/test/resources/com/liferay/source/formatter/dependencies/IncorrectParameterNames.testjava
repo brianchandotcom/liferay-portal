@@ -12,16 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.convert.documentlibrary;
+package com.liferay.source.formatter.dependencies;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import java.util.Map;
 
 /**
- * @author Iván Zaera
+ * @author Hugo Huijser
  */
-public interface DLStoreConvertProcess {
+public class IncorrectParameterNames {
 
-	public void migrate(DLStoreConverter dlStoreConverter)
-		throws PortalException;
+	public Map<String, String> method1(Map<String, String> StringMap) {
+		return StringMap;
+	}
+
+	public String method2(String TestString) {
+		return TestString;
+	}
 
 }

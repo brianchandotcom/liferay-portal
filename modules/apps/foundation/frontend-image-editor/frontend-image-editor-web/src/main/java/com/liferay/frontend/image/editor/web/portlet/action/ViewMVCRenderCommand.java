@@ -68,7 +68,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		HttpServletRequest httpServletRequest =
 			PortalUtil.getHttpServletRequest(renderRequest);
 
-		String imageUrl = ParamUtil.getString(
+		String imageEditorURL = ParamUtil.getString(
 			httpServletRequest, "imageEditorURL");
 
 		capabilitiesContext.put(
@@ -79,7 +79,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				WebKeys.THEME_DISPLAY);
 
 		template.put("capabilities", capabilitiesContext);
-		template.put("image", imageUrl);
+		template.put("image", imageEditorURL);
 		template.put("pathThemeImages", themeDisplay.getPathThemeImages());
 
 		ResourceBundle resourceBundle =

@@ -32,11 +32,21 @@
 <!--CARD-->
 <tr>
 	<td>CARD_CONTENT_TITLE_GENERIC</td>
+	<td>//span[contains(@class,'lfr-card-title-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARD_CONTENT_TITLE_GENERIC_LINK</td>
 	<td>//span[contains(@class,'lfr-card-title-text')]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CARD_CONTENT_TITLE</td>
+	<td>//span[contains(@class,'lfr-card-title-text') and contains(.,'${key_contentTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARD_CONTENT_TITLE_LINK</td>
 	<td>//span[contains(@class,'lfr-card-title-text') and contains(.,'${key_contentTitle}')]//a</td>
 	<td></td>
 </tr>
@@ -73,7 +83,7 @@
 </tr>
 <tr>
 	<td>OTHERWISE_PANEL_SELECTED_CONTENT_TITLE</td>
-	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//span[contains(@class,'lfr-card-title-text') and contains(.,'${key_contentTitle}')]//a</td>
+	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//span[contains(@class,'lfr-card-title-text') and contains(.,'${key_contentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

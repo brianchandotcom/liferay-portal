@@ -958,6 +958,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected void formatSpringXML(String fileName, String content)
 		throws Exception {
 
+		if (fileName.endsWith("portal-spring.xml")) {
+			return;
+		}
+
 		Document document = readXML(content);
 
 		checkOrder(

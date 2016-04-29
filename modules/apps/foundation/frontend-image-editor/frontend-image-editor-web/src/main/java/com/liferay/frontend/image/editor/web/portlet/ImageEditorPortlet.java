@@ -56,14 +56,14 @@ public class ImageEditorPortlet extends SoyPortlet {
 
 	@Override
 	protected Set<String> getJavaScriptRequiredModules(String path) {
-		Set<String> requiredModules = new HashSet<>();
+		Set<String> javaScriptRequiredModules = new HashSet<>();
 
-		requiredModules.addAll(super.getJavaScriptRequiredModules(path));
-
-		requiredModules.addAll(
+		javaScriptRequiredModules.addAll(
+			super.getJavaScriptRequiredModules(path));
+		javaScriptRequiredModules.addAll(
 			_capabilityTracker.getCapabilitiesRequirements());
 
-		return requiredModules;
+		return javaScriptRequiredModules;
 	}
 
 	@Reference

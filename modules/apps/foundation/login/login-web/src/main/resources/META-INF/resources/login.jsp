@@ -51,6 +51,8 @@
 		if (Validator.isNull(authType)) {
 			authType = company.getAuthType();
 		}
+
+		portletDisplay.setShowBackIcon(false);
 		%>
 
 		<portlet:actionURL name="/login/login" secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="loginURL">

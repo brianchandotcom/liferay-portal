@@ -2968,13 +2968,6 @@ plugins.includes=</echo>
 		<zip destfile="dist/liferay-portal-db-upgrade-${lp.version}.zip">
 			<zipfileset
 				dir="${tstamp.value}"
-				excludes="run.sh"
-				prefix="liferay-portal-db-upgrade-${lp.version}"
-			/>
-			<zipfileset
-				dir="${tstamp.value}"
-				filemode="744"
-				includes="run.sh"
 				prefix="liferay-portal-db-upgrade-${lp.version}"
 			/>
 		</zip>

@@ -2,7 +2,7 @@
 	<command name="deletePGDocumentVersion">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE_LINK" value1="${dmDocumentTitle}" />
 
 		<var name="key_dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
 
@@ -14,7 +14,7 @@
 	<command name="revertPGDocumentVersion">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE_LINK" value1="${dmDocumentTitle}" />
 
 		<var name="key_dmDocumentVersionNumber" value="${dmDocumentRevertVersionNumber}" />
 
@@ -250,7 +250,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE_LINK" value1="${dmDocumentTitle}" />
 
 		<execute macro="SODocuments#viewPGDocumentDetailView" />
 	</command>
@@ -371,7 +371,7 @@
 	</command>
 
 	<command name="viewPGDocumentSpecificVersionDetails">
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" />
+		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE_LINK" />
 
 		<var name="key_dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
 

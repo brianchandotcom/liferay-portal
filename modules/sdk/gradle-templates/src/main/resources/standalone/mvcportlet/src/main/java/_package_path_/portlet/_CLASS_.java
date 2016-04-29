@@ -19,5 +19,5 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = Portlet.class
 )
-public class _CLASS_ extends MVCPortlet {
+public class _CLASS_Portlet extends MVCPortlet {
 }

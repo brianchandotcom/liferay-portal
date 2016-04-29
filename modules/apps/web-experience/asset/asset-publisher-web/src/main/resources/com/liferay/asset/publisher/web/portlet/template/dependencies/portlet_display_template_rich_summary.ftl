@@ -98,7 +98,9 @@
 			<#assign title = languageUtil.format(locale, "edit-x", entryTitle, false) />
 
 			<@liferay_ui["icon"]
-				iconCssClass="icon-edit-sign"
+				cssClass="icon-monospaced"
+				icon="pencil"
+				markupView="lexicon"
 				message=title
 				url="javascript:Liferay.Util.openWindow({id:'" + renderResponse.getNamespace() + "editAsset', title: '" + title + "', uri:'" + htmlUtil.escapeURL(editPortletURL.toString()) + "'});"
 			/>

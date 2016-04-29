@@ -42,7 +42,7 @@ public abstract class BaseImageEditorCapability
 	public BaseImageEditorCapability() {
 		initModuleName();
 
-		initResourceUrls();
+		initResourceURLs();
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public abstract class BaseImageEditorCapability
 
 	@Override
 	public List<URL> getResourceURLs() {
-		return _resourceUrls;
+		return _resourceURLs;
 	}
 
 	public void prepareContext(
@@ -64,7 +64,9 @@ public abstract class BaseImageEditorCapability
 	}
 
 	protected void initModuleName() {
-		URL url = getBundle().getEntry("package.json");
+		Bundle bundle = getBundle();
+
+		URL url = bundle.getEntry("package.json");
 
 		if (url == null) {
 			_moduleName = StringPool.BLANK;
@@ -84,20 +86,20 @@ public abstract class BaseImageEditorCapability
 		}
 	}
 
-	protected void initResourceUrls() {
-		_resourceUrls = new ArrayList<>();
+	protected void initResourceURLs() {
+		_resourceURLs = new ArrayList<>();
 
 		Enumeration<URL> urls = getBundle().findEntries(
 			"META-INF/resources", _ES_JS_FILE_EXTENSION, true);
 
 		if (urls != null) {
-			_resourceUrls.addAll(Collections.list(urls));
+			_resourceURLs.addAll(Collections.list(urls));
 		}
 	}
 
 	private static final String _ES_JS_FILE_EXTENSION = "*.es.js";
 
 	private String _moduleName;
-	private List<URL> _resourceUrls;
+	private List<URL> _resourceURLs;
 
 }

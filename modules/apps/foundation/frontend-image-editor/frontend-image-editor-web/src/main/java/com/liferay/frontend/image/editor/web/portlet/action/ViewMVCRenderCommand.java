@@ -65,18 +65,19 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		Map<String, Object> capabilitiesContext = new HashMap<>();
 
-		String imageEditorURL = ParamUtil.getString(
-			renderRequest, "imageEditorURL");
-
 		capabilitiesContext.put(
 			"tools", getImageEditorToolsContext(renderRequest));
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		template.put("capabilities", capabilitiesContext);
+
+		String imageEditorURL = ParamUtil.getString(
+			renderRequest, "imageEditorURL");
+
 		template.put("image", imageEditorURL);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		template.put("pathThemeImages", themeDisplay.getPathThemeImages());
 
 		ResourceBundle resourceBundle =

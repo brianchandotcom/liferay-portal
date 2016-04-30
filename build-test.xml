@@ -1783,6 +1783,15 @@ tell application "Safari" to quit
 			</if>
 
 			<if>
+				<equals arg1="${test.build.bundle.jbosseap6.4}" arg2="true" />
+				<then>
+					<ant antfile="build-dist.xml" inheritAll="false" target="build-dist-jboss">
+						<property name="app.server.jboss.version" value="6.4.0" />
+					</ant>
+				</then>
+			</if>
+
+			<if>
 				<matches pattern="http" string="${test.build.bundle.jetty.zip.url}" />
 				<then>
 					<antcall inheritAll="false" target="prepare-test-bundle">

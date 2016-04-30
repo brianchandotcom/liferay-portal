@@ -19,6 +19,7 @@ import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -140,7 +141,8 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 			});
 
 		buildWSDLTask.setGroup(BasePlugin.BUILD_GROUP);
-		buildWSDLTask.setInputDir("wsdl");
+		buildWSDLTask.setIncludes(Collections.singleton("**/*.wsdl"));
+		buildWSDLTask.setSource("wsdl");
 
 		PluginContainer pluginContainer = project.getPlugins();
 
@@ -282,13 +284,13 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 	protected void configureTaskBuildWSDL(
 		BuildWSDLTask buildWSDLTask, Configuration wsdlBuilderConfiguration) {
 
-		FileCollection inputFiles = buildWSDLTask.getInputFiles();
+		FileCollection fileCollection = buildWSDLTask.getSource();
 
-		if (inputFiles.isEmpty()) {
+		if (fileCollection.isEmpty()) {
 			return;
 		}
 
-		for (File inputFile : inputFiles) {
+		for (File inputFile : fileCollection) {
 			addTaskBuildWSDLTasks(
 				buildWSDLTask, inputFile, wsdlBuilderConfiguration);
 		}
@@ -322,7 +324,7 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 
 			});
 
-		buildWSDLTask.setInputDir(
+		buildWSDLTask.setSource(
 			new Callable<File>() {
 
 				@Override

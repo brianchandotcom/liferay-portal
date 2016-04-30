@@ -8008,7 +8008,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<delete file="${liferay.home}/build-db-upgrade.xml" />
 		<delete file="${liferay.home}/db_upgrade_log" />
 		<delete file="${liferay.home}/portal-ext.properties" />
-		<delete file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexWriterHelperConfiguration.cfg" />
+		<delete file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexStatusManagerConfiguration.cfg" />
 
 		<copy
 			file="tools/db-upgrade/build.xml"
@@ -8035,7 +8035,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 			tofile="${liferay.home}/portal-ext.properties"
 		/>
 
-		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexWriterHelperConfiguration.cfg">index.read.only=true</echo>
+		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexStatusManagerConfiguration.cfg">indexReadOnly=true</echo>
 
 		<record action="start" name="${liferay.home}/db_upgrade_log" />
 
@@ -8106,7 +8106,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<delete file="${liferay.home}/build-db-upgrade.xml" />
 		<delete file="${liferay.home}/db_upgrade_log" />
 		<delete file="${liferay.home}/portal-ext.properties" />
-		<delete file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexWriterHelperConfiguration.cfg" />
+
+		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexStatusManagerConfiguration.cfg">indexReadOnly=false</echo>
 	</target>
 
 	<target name="wait-for-plugins-deployment">

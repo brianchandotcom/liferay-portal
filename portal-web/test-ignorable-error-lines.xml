@@ -217,6 +217,10 @@
 			<contains></contains>
 			<matches>.*\{0\} error\(s\), \{1\} warning\(s\).*</matches>
 		</ignore-error>
+		<ignore-error description="LRQA-24859">
+			<contains>No binary licenses found</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="WCM-202">
 			<contains>No score point assigners available</contains>
 			<matches></matches>

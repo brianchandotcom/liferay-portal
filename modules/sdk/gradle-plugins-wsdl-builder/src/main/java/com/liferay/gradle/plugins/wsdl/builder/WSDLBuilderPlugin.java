@@ -17,6 +17,8 @@ package com.liferay.gradle.plugins.wsdl.builder;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
+import groovy.lang.Closure;
+
 import java.io.File;
 
 import java.util.Collections;
@@ -30,6 +32,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
@@ -219,7 +222,7 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 
 	protected Task addTaskBuildWSDLJar(
 		BuildWSDLTask buildWSDLTask, File inputFile, Task compileTask,
-		Task generateTask) {
+		final Task generateTask) {
 
 		String taskName = GradleUtil.getTaskName(
 			buildWSDLTask.getName(), inputFile);
@@ -230,7 +233,16 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 		jar.from(compileTask.getOutputs());
 
 		if (buildWSDLTask.isIncludeSource()) {
-			jar.from(generateTask.getOutputs());
+			jar.into(
+				"OSGI-OPT/src",
+				new Closure<Void>(null) {
+
+					@SuppressWarnings("unused")
+					public void doCall(CopySpec copySpec) {
+						copySpec.from(generateTask.getOutputs());
+					}
+
+				});
 		}
 
 		jar.setDestinationDir(buildWSDLTask.getDestinationDir());

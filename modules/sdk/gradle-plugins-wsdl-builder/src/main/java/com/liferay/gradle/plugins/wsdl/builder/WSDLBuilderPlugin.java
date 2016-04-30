@@ -188,7 +188,7 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 
 	protected Task addTaskBuildWSDLGenerate(
 		BuildWSDLTask buildWSDLTask, FileCollection classpath, File inputFile,
-		File destinationDir) {
+		final File destinationDir) {
 
 		Project project = buildWSDLTask.getProject();
 
@@ -205,6 +205,18 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 		javaExec.args("--output=" + FileUtil.getAbsolutePath(destinationDir));
 
 		javaExec.args(FileUtil.getAbsolutePath(inputFile));
+
+		javaExec.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					project.delete(destinationDir);
+				}
+
+			});
 
 		javaExec.setClasspath(classpath);
 		javaExec.setMain("org.apache.axis.wsdl.WSDL2Java");

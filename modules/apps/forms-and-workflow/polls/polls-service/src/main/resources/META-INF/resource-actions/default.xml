@@ -5,8 +5,8 @@
 	<model-resource>
 		<model-name>com.liferay.polls</model-name>
 		<portlet-ref>
-			<portlet-name>25_WAR_pollsweb</portlet-name>
-			<portlet-name>59_WAR_pollsweb</portlet-name>
+			<portlet-name>com_liferay_polls_web_portlet_PollsPortlet</portlet-name>
+			<portlet-name>com_liferay_polls_web_portlet_PollsDisplayPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -24,8 +24,8 @@
 	<model-resource>
 		<model-name>com.liferay.polls.model.PollsQuestion</model-name>
 		<portlet-ref>
-			<portlet-name>25_WAR_pollsweb</portlet-name>
-			<portlet-name>59_WAR_pollsweb</portlet-name>
+			<portlet-name>com_liferay_polls_web_portlet_PollsPortlet</portlet-name>
+			<portlet-name>com_liferay_polls_web_portlet_PollsDisplayPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

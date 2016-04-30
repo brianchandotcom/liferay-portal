@@ -1,34 +1,10 @@
 Bundle-Name: Liferay Polls Web
 Bundle-SymbolicName: com.liferay.polls.web
 Bundle-Version: 2.0.2
-Import-Package:\
-	!javax.accessibility.*,\
-	\
-	com.liferay.portal.kernel.servlet.filters.invoker,\
-	com.liferay.portlet,\
-	\
-	javax.swing.*,\
-	\
-	org.apache.commons.chain,\
-	org.apache.commons.chain.generic,\
-	org.apache.commons.chain.impl,\
-	org.apache.struts,\
-	org.apache.struts.action,\
-	org.apache.struts.chain,\
-	org.apache.struts.chain.commands,\
-	org.apache.struts.chain.commands.servlet,\
-	org.apache.struts.config,\
-	org.apache.struts.config.impl,\
-	org.apache.struts.util,\
-	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Polls
 Web-ContextPath: /polls-web
--donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
+-dsannotations-options: inherit
 -liferay-includeresource:\
-	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
-	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class
--wab: docroot
--wablib:\
-	../../../../../lib/portal/jcommon.jar,\
-	../../../../../lib/portal/jfreechart.jar
+	@jcommon-*.jar,\
+	@jfreechart-*.jar

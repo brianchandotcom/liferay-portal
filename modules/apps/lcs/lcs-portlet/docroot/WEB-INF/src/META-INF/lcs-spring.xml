@@ -1,0 +1,249 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+>
+
+	<!-- Advisors -->
+
+	<bean id="com.liferay.lcs.advisor.LCSAlertAdvisor" class="com.liferay.lcs.advisor.LCSAlertAdvisor" />
+	<bean id="com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor" class="com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor">
+		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
+		<property name="LCSAlertAdvisor" ref="com.liferay.lcs.advisor.LCSAlertAdvisor" />
+		<property name="LCSClusterEntryTokenService" ref="com.liferay.lcs.rest.LCSClusterEntryTokenService" />
+	</bean>
+
+	<!-- Command -->
+
+	<bean id="com.liferay.lcs.command.CheckHeartbeatCommand" class="com.liferay.lcs.command.CheckHeartbeatCommand">
+		<property name="heartbeatTask" ref="com.liferay.lcs.task.HeartbeatTask" />
+	</bean>
+	<bean id="com.liferay.lcs.command.DeregisterCommand" class="com.liferay.lcs.command.DeregisterCommand">
+		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+	</bean>
+	<bean id="com.liferay.lcs.command.DownloadPatchesCommand" class="com.liferay.lcs.command.DownloadPatchesCommand">
+		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+	</bean>
+	<bean id="com.liferay.lcs.command.ExecuteScriptCommand" class="com.liferay.lcs.command.ExecuteScriptCommand">
+		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+	</bean>
+	<bean id="com.liferay.lcs.command.ScheduleMessageListenersCommand" class="com.liferay.lcs.command.ScheduleMessageListenersCommand">
+		<property name="messageListenerSchedulerService" ref="com.liferay.lcs.messaging.scheduler.impl.MessageListenerSchedulerService" />
+	</bean>
+	<bean id="com.liferay.lcs.command.ScheduleTasksCommand" class="com.liferay.lcs.command.ScheduleTasksCommand">
+		<property name="taskSchedulerService" ref="com.liferay.lcs.scheduler.TaskSchedulerService" />
+	</bean>
+	<bean id="com.liferay.lcs.command.SendInstallationEnvironmentCommand" class="com.liferay.lcs.command.SendInstallationEnvironmentCommand">
+		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+	</bean>
+	<bean id="com.liferay.lcs.command.SendPatchesCommand" class="com.liferay.lcs.command.SendPatchesCommand">
+		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+	</bean>
+	<bean id="com.liferay.lcs.command.SendPortalPropertiesCommand" class="com.liferay.lcs.command.SendPortalPropertiesCommand">
+		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+	</bean>
+
+	<!-- Exception -->
+
+	<bean id="com.liferay.lcs.exception.LCSExceptionSender" class="com.liferay.lcs.exception.LCSExceptionSender">
+		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
+	</bean>
+
+	<!-- JSON -->
+
+	<bean id="osbLCSGatewayWebJSONWebServiceClient" class="com.liferay.petra.json.web.service.client.JSONWebServiceClientImpl">
+		<property name="headers">
+			<map>
+				<entry key="OSB_LCS_API_Token" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_GATEWAY_WEB_SECURE_API_TOKEN}" />
+			</map>
+		</property>
+		<property name="hostName" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_GATEWAY_WEB_HOST_NAME}" />
+		<property name="hostPort" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_GATEWAY_WEB_HOST_PORT}" />
+		<property name="keyStore">
+			<bean class="com.liferay.lcs.security.KeyStoreFactory" factory-method="getInstance">
+				<constructor-arg type="java.lang.String" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_GATEWAY_WEB_KEY_STORE_PATH}" />
+				<constructor-arg type="java.lang.String" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_GATEWAY_WEB_KEY_STORE_TYPE}" />
+				<constructor-arg type="java.lang.String" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_GATEWAY_WEB_KEY_STORE_PASSWORD}" />
+			</bean>
+		</property>
+		<property name="protocol" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_GATEWAY_WEB_PROTOCOL}" />
+		<property name="proxyHostName" value="#{T(com.liferay.lcs.util.ProxyHostUtil).getProxyHostName()}" />
+		<property name="proxyHostPort" value="#{T(com.liferay.lcs.util.ProxyHostUtil).getProxyHostPort()}" />
+		<property name="proxyLogin" value="#{T(com.liferay.lcs.util.ProxyHostUtil).getProxyHostLogin()}" />
+		<property name="proxyPassword" value="#{T(com.liferay.lcs.util.ProxyHostUtil).getProxyHostPassword()}" />
+	</bean>
+	<bean id="osbLCSPortletJSONWebServiceClient" class="com.liferay.lcs.jsonwebserviceclient.OAuthJSONWebServiceClientImpl">
+		<property name="hostName" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_PORTLET_HOST_NAME}" />
+		<property name="hostPort" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_PORTLET_HOST_PORT}" />
+		<property name="keyStore">
+			<bean class="com.liferay.lcs.security.KeyStoreFactory" factory-method="getInstance">
+				<constructor-arg type="java.lang.String" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_PORTLET_KEY_STORE_PATH}" />
+				<constructor-arg type="java.lang.String" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_PORTLET_KEY_STORE_TYPE}" />
+				<constructor-arg type="java.lang.String" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_PORTLET_KEY_STORE_PASSWORD}" />
+			</bean>
+		</property>
+		<property name="protocol" value="#{T(com.liferay.lcs.util.PortletPropsValues).OSB_LCS_PORTLET_PROTOCOL}" />
+		<property name="proxyHostName" value="#{T(com.liferay.lcs.util.ProxyHostUtil).getProxyHostName()}" />
+		<property name="proxyHostPort" value="#{T(com.liferay.lcs.util.ProxyHostUtil).getProxyHostPort()}" />
+		<property name="proxyLogin" value="#{T(com.liferay.lcs.util.ProxyHostUtil).getProxyHostLogin()}" />
+		<property name="proxyPassword" value="#{T(com.liferay.lcs.util.ProxyHostUtil).getProxyHostPassword()}" />
+	</bean>
+
+	<!-- Management -->
+
+	<bean id="com.liferay.lcs.management.MBeanServerService" class="com.liferay.lcs.management.MBeanServerServiceImpl">
+		<property name="MBeanServer">
+			<bean class="org.springframework.jmx.support.MBeanServerFactoryBean">
+				<property name="locateExistingServerIfPossible" value="true" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- REST -->
+
+	<bean id="com.liferay.lcs.rest.LCSClusterNodeService" class="com.liferay.lcs.rest.LCSClusterNodeServiceImpl">
+		<property name="JSONWebServiceClient" ref="osbLCSPortletJSONWebServiceClient" />
+	</bean>
+	<bean id="com.liferay.lcs.rest.LCSClusterNodeServiceUtil" class="com.liferay.lcs.rest.LCSClusterNodeServiceUtil">
+		<property name="LCSClusterNodeService" ref="com.liferay.lcs.rest.LCSClusterNodeService" />
+	</bean>
+	<bean id="com.liferay.lcs.rest.LCSClusterEntryService" class="com.liferay.lcs.rest.LCSClusterEntryServiceImpl">
+		<property name="JSONWebServiceClient" ref="osbLCSPortletJSONWebServiceClient" />
+	</bean>
+	<bean id="com.liferay.lcs.rest.LCSClusterEntryServiceUtil" class="com.liferay.lcs.rest.LCSClusterEntryServiceUtil">
+		<property name="LCSClusterEntryService" ref="com.liferay.lcs.rest.LCSClusterEntryService" />
+	</bean>
+	<bean id="com.liferay.lcs.rest.LCSClusterEntryTokenService" class="com.liferay.lcs.rest.LCSClusterEntryTokenServiceImpl">
+		<property name="JSONWebServiceClient" ref="osbLCSPortletJSONWebServiceClient" />
+	</bean>
+	<bean id="com.liferay.lcs.rest.LCSProjectService" class="com.liferay.lcs.rest.LCSProjectServiceImpl">
+		<property name="JSONWebServiceClient" ref="osbLCSPortletJSONWebServiceClient" />
+	</bean>
+	<bean id="com.liferay.lcs.rest.LCSProjectServiceUtil" class="com.liferay.lcs.rest.LCSProjectServiceUtil">
+		<property name="LCSProjectService" ref="com.liferay.lcs.rest.LCSProjectService" />
+	</bean>
+	<bean id="com.liferay.lcs.rest.LCSRoleService" class="com.liferay.lcs.rest.LCSRoleServiceImpl">
+		<property name="JSONWebServiceClient" ref="osbLCSPortletJSONWebServiceClient" />
+	</bean>
+	<bean id="com.liferay.lcs.rest.LCSRoleServiceUtil" class="com.liferay.lcs.rest.LCSRoleServiceUtil">
+		<property name="LCSRoleService" ref="com.liferay.lcs.rest.LCSRoleService" />
+	</bean>
+	<bean id="com.liferay.lcs.rest.LCSSubscriptionEntryService" class="com.liferay.lcs.rest.LCSSubscriptionEntryServiceImpl">
+		<property name="JSONWebServiceClient" ref="osbLCSPortletJSONWebServiceClient" />
+	</bean>
+	<bean id="com.liferay.osb.lcs.rest.service.LCSSubscriptionEntryServiceUtil" class="com.liferay.lcs.rest.LCSSubscriptionEntryServiceUtil">
+		<property name="LCSSubscriptionEntryService" ref="com.liferay.lcs.rest.LCSSubscriptionEntryService" />
+	</bean>
+
+	<!-- Security -->
+
+	<bean name="com.liferay.lcs.security.DigitalSignature" class="com.liferay.lcs.security.DigitalSignatureImpl">
+		<property name="algorithmProvider" value="#{T(com.liferay.lcs.util.PortletPropsValues).DIGITAL_SIGNATURE_ALGORITHM_PROVIDER}" />
+		<property name="keyName" value="#{T(com.liferay.lcs.util.PortletPropsValues).DIGITAL_SIGNATURE_KEY_NAME}" />
+		<property name="keyStorePassword" value="#{T(com.liferay.lcs.util.PortletPropsValues).DIGITAL_SIGNATURE_KEY_STORE_PASSWORD}" />
+		<property name="keyStorePath" value="#{T(com.liferay.lcs.util.PortletPropsValues).DIGITAL_SIGNATURE_KEY_STORE_PATH}" />
+		<property name="keyStoreType" value="#{T(com.liferay.lcs.util.PortletPropsValues).DIGITAL_SIGNATURE_KEY_STORE_TYPE}" />
+		<property name="signingAlgorithm" value="#{T(com.liferay.lcs.util.PortletPropsValues).DIGITAL_SIGNATURE_SIGNING_ALGORITHM}" />
+	</bean>
+
+	<!-- Service -->
+
+	<bean id="com.liferay.lcs.service.LCSGatewayService" class="com.liferay.lcs.service.impl.LCSGatewayServiceImpl">
+		<property name="JSONWebServiceClient" ref="osbLCSGatewayWebJSONWebServiceClient" />
+	</bean>
+
+	<!-- Task -->
+
+	<bean id="com.liferay.lcs.task.CacheMetricsTask" class="com.liferay.lcs.task.CacheMetricsTask">
+		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
+		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+		<property name="mBeanServerService" ref="com.liferay.lcs.management.MBeanServerService" />
+	</bean>
+	<bean id="com.liferay.lcs.task.ClusterHealthTask" class="com.liferay.lcs.task.ClusterHealthTask">
+		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
+	</bean>
+	<bean id="com.liferay.lcs.task.CommandMessageTask" class="com.liferay.lcs.task.CommandMessageTask">
+		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
+		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+	</bean>
+	<bean id="com.liferay.lcs.task.HandshakeTask" class="com.liferay.lcs.task.HandshakeTask">
+		<property name="handshakeReplyReads" value="#{T(com.liferay.lcs.util.PortletPropsValues).COMMUNICATION_HANDSHAKE_REPLY_READS}" />
+		<property name="handshakeWaitTime" value="#{T(com.liferay.lcs.util.PortletPropsValues).COMMUNICATION_HANDSHAKE_WAIT_TIME}" />
+		<property name="heartbeatInterval" value="#{T(com.liferay.lcs.util.PortletPropsValues).COMMUNICATION_HEARTBEAT_INTERVAL}" />
+		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
+		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+		<property name="uptimeMonitoringAdvisor" ref="com.liferay.lcs.advisor.UptimeMonitoringAdvisor" />
+	</bean>
+	<bean id="com.liferay.lcs.task.HeartbeatTask" class="com.liferay.lcs.task.HeartbeatTask">
+		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
+		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+	</bean>
+	<bean id="com.liferay.lcs.task.JVMMetricsTask" class="com.liferay.lcs.task.JVMMetricsTask">
+		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
+		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+	</bean>
+	<bean id="com.liferay.lcs.task.ServerMetricsTask" factory-bean="com.liferay.lcs.task.ServerMetricsTaskFactory" factory-method="getInstance" />
+	<bean id="com.liferay.lcs.task.ServerMetricsTaskFactory" class="com.liferay.lcs.task.ServerMetricsTaskFactory">
+		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
+		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+		<property name="mBeanServerService" ref="com.liferay.lcs.management.MBeanServerService" />
+	</bean>
+	<bean id="com.liferay.lcs.task.SignOffTask" class="com.liferay.lcs.task.SignOffTask">
+		<property name="heartbeatInterval" value="#{T(com.liferay.lcs.util.PortletPropsValues).COMMUNICATION_HEARTBEAT_INTERVAL}" />
+		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
+		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+		<property name="messageListenerSchedulerService" ref="com.liferay.lcs.messaging.scheduler.impl.MessageListenerSchedulerService" />
+		<property name="taskSchedulerService" ref="com.liferay.lcs.scheduler.TaskSchedulerService" />
+	</bean>
+	<bean id="com.liferay.lcs.task.SiteNamesTask" class="com.liferay.lcs.task.SiteNamesTask">
+		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
+		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+		<property name="pageSize" value="#{T(com.liferay.lcs.util.PortletPropsValues).SCHEDULED_TASK_PAGE_SIZE}" />
+		<property name="pauseInterval" value="#{T(com.liferay.lcs.util.PortletPropsValues).SCHEDULED_TASK_PAUSE_INTERVAL}" />
+	</bean>
+
+	<!--  Task scheduler -->
+
+	<bean id="com.liferay.lcs.scheduler.TaskSchedulerService" class="com.liferay.lcs.task.scheduler.impl.TaskSchedulerServiceImpl" >
+		<property name="defaultInterval" value="#{T(com.liferay.lcs.util.PortletPropsValues).COMMAND_SCHEDULE_DEFAULT_INTERVAL}" />
+		<property name="scheduleDelayMax" value="#{T(com.liferay.lcs.util.PortletPropsValues).COMMAND_SCHEDULE_DELAY_MAX}" />
+	</bean>
+
+	<!-- Uptime -->
+
+	<bean id="com.liferay.lcs.advisor.UptimeMonitoringAdvisor" class="com.liferay.lcs.advisor.UptimeMonitoringAdvisor">
+		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
+	</bean>
+
+	<!-- Util -->
+
+	<bean id="com.liferay.lcs.util.KeyGenerator" class="com.liferay.lcs.util.KeyGeneratorImpl" />
+	<bean id="com.liferay.lcs.util.KeyGeneratorUtil" class="com.liferay.lcs.util.KeyGeneratorUtil">
+		<property name="keyGenerator" ref="com.liferay.lcs.util.KeyGenerator" />
+	</bean>
+	<bean id="com.liferay.lcs.util.LCSConnectionManager" class="com.liferay.lcs.util.LCSConnectionManagerImpl">
+		<property name="commandMessageTask" ref="com.liferay.lcs.task.CommandMessageTask" />
+		<property name="handshakeTask" ref="com.liferay.lcs.task.HandshakeTask" />
+		<property name="handshakeWaitTime" value="#{T(com.liferay.lcs.util.PortletPropsValues).COMMUNICATION_HANDSHAKE_WAIT_TIME}" />
+		<property name="heartbeatInterval" value="#{T(com.liferay.lcs.util.PortletPropsValues).COMMUNICATION_HEARTBEAT_INTERVAL}" />
+		<property name="heartbeatTask" ref="com.liferay.lcs.task.HeartbeatTask" />
+		<property name="LCSClusterEntryTokenAdvisor" ref="com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor" />
+		<property name="LCSGatewayUnavailableWaitTime" value="#{T(com.liferay.lcs.util.PortletPropsValues).COMMUNICATION_LCS_GATEWAY_UNAVAILABLE_WAIT_TIME}" />
+		<property name="LCSExceptionSender" ref="com.liferay.lcs.exception.LCSExceptionSender" />
+		<property name="LCSGatewayService" ref="com.liferay.lcs.service.LCSGatewayService" />
+		<property name="signOffTask" ref="com.liferay.lcs.task.SignOffTask" />
+	</bean>
+	<bean id="com.liferay.lcs.util.LCSConnectionManagerUtil" class="com.liferay.lcs.util.LCSConnectionManagerUtil">
+		<property name="LCSConnectionManager" ref="com.liferay.lcs.util.LCSConnectionManager" />
+	</bean>
+	<bean id="com.liferay.lcs.util.LCSUtil" class="com.liferay.lcs.util.LCSUtil">
+		<property name="JSONWebServiceClient" ref="osbLCSPortletJSONWebServiceClient" />
+		<property name="LCSAlertAdvisor" ref="com.liferay.lcs.advisor.LCSAlertAdvisor" />
+		<property name="LCSClusterEntryTokenAdvisor" ref="com.liferay.lcs.advisor.LCSClusterEntryTokenAdvisor" />
+	</bean>
+</beans>

@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.gradle.plugins</artifactId>
-  <version>1.0.289</version>
+  <version>1.0.290</version>
   <licenses>
     <license>
       <name>LGPL 2.1</name>
@@ -26,44 +26,20 @@
   <dependencies>
     <dependency>
       <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.js.transpiler</artifactId>
-      <version>1.0.26</version>
+      <artifactId>com.liferay.gradle.plugins.soy</artifactId>
+      <version>1.0.3</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>com.liferay.gradle.plugins.wsdl.builder</artifactId>
+      <version>1.0.7</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>com.liferay</groupId>
       <artifactId>com.liferay.gradle.plugins.js.module.config.generator</artifactId>
       <version>1.0.22</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.service.builder</artifactId>
-      <version>1.0.9</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.xml.formatter</artifactId>
-      <version>1.0.4</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.tlddoc.builder</artifactId>
-      <version>1.0.1</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.source.formatter</artifactId>
-      <version>1.0.9</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.whip</artifactId>
-      <version>1.0.2</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -74,38 +50,14 @@
     </dependency>
     <dependency>
       <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.patcher</artifactId>
-      <version>1.0.10</version>
+      <artifactId>com.liferay.gradle.plugins.gulp</artifactId>
+      <version>1.0.2</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.javadoc.formatter</artifactId>
-      <version>1.0.7</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.soy</artifactId>
-      <version>1.0.3</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.wsdd.builder</artifactId>
-      <version>1.0.7</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.alloy.taglib</artifactId>
+      <artifactId>com.liferay.gradle.plugins.change.log.builder</artifactId>
       <version>1.0.1</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.dm.gradle</groupId>
-      <artifactId>gradle-bundle-plugin</artifactId>
-      <version>0.8.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -116,56 +68,8 @@
     </dependency>
     <dependency>
       <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.test.integration</artifactId>
-      <version>1.0.3</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.wsdl.builder</artifactId>
-      <version>1.0.6</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.upgrade.table.builder</artifactId>
-      <version>1.0.2</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.css.builder</artifactId>
-      <version>1.0.10</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.gulp</artifactId>
-      <version>1.0.2</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.liferay</groupId>
       <artifactId>com.liferay.gradle.plugins.jasper.jspc</artifactId>
       <version>1.0.8</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.tld.formatter</artifactId>
-      <version>1.0.3</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.xsd.builder</artifactId>
-      <version>1.0.3</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.util</artifactId>
-      <version>1.0.25</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -176,8 +80,104 @@
     </dependency>
     <dependency>
       <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.gradle.plugins.change.log.builder</artifactId>
+      <artifactId>com.liferay.gradle.plugins.javadoc.formatter</artifactId>
+      <version>1.0.7</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>com.liferay.gradle.plugins.alloy.taglib</artifactId>
       <version>1.0.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>com.liferay.gradle.plugins.whip</artifactId>
+      <version>1.0.2</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>com.liferay.gradle.plugins.service.builder</artifactId>
+      <version>1.0.9</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>com.liferay.gradle.plugins.tld.formatter</artifactId>
+      <version>1.0.3</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>com.liferay.gradle.plugins.patcher</artifactId>
+      <version>1.0.10</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>com.liferay.gradle.util</artifactId>
+      <version>1.0.25</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>com.liferay.gradle.plugins.xml.formatter</artifactId>
+      <version>1.0.4</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>com.liferay.gradle.plugins.wsdd.builder</artifactId>
+      <version>1.0.7</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>com.liferay.gradle.plugins.xsd.builder</artifactId>
+      <version>1.0.3</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>com.liferay.gradle.plugins.test.integration</artifactId>
+      <version>1.0.3</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>com.liferay.gradle.plugins.upgrade.table.builder</artifactId>
+      <version>1.0.2</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>com.liferay.gradle.plugins.source.formatter</artifactId>
+      <version>1.0.9</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>com.liferay.gradle.plugins.js.transpiler</artifactId>
+      <version>1.0.26</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.dm.gradle</groupId>
+      <artifactId>gradle-bundle-plugin</artifactId>
+      <version>0.8.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>com.liferay.gradle.plugins.tlddoc.builder</artifactId>
+      <version>1.0.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>com.liferay.gradle.plugins.css.builder</artifactId>
+      <version>1.0.10</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>

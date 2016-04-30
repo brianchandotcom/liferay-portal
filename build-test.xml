@@ -3026,6 +3026,21 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 										jstack ${bootstrap.pid}
 									</execute>
 
+									<if>
+										<and>
+											<equals arg1="${app.server.type}" arg2="weblogic" />
+											<isset property="env.HOSTNAME" />
+										</and>
+										<then>
+											<replaceregexp
+												file="${app.server.weblogic.bin.dir}/stopWebLogic.sh"
+												flags="g"
+												match="(t3:\/\/)[^:]*(:\d+)"
+												replace="\1${env.HOSTNAME}\2"
+											/>
+										</then>
+									</if>
+
 									<stop-app-server app.server.bundle.index="@{app.server.bundle.index}" />
 								</then>
 							</if>

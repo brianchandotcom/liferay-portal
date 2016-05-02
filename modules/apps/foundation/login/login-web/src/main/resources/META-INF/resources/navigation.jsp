@@ -17,29 +17,27 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-util:buffer var="navigation">
-	<liferay-ui:icon-list>
-		<liferay-util:dynamic-include key="com.liferay.login.web#/navigation.jsp#pre" />
+	<liferay-util:dynamic-include key="com.liferay.login.web#/navigation.jsp#pre" />
 
-		<%
-		for (String section : PropsValues.LOGIN_FORM_NAVIGATION_PRE) {
-		%>
+	<%
+	for (String section : PropsValues.LOGIN_FORM_NAVIGATION_PRE) {
+	%>
 
-			<liferay-util:include page='<%= "/navigation/" + _getSectionJsp(section) + ".jsp" %>' portletId="<%= portletDisplay.getRootPortletId() %>" servletContext="<%= application %>" />
+		<liferay-util:include page='<%= "/navigation/" + _getSectionJsp(section) + ".jsp" %>' portletId="<%= portletDisplay.getRootPortletId() %>" servletContext="<%= application %>" />
 
-		<%
-		}
+	<%
+	}
 
-		for (String section : PropsValues.LOGIN_FORM_NAVIGATION_POST) {
-		%>
+	for (String section : PropsValues.LOGIN_FORM_NAVIGATION_POST) {
+	%>
 
-			<liferay-util:include page='<%= "/navigation/" + _getSectionJsp(section) + ".jsp" %>' portletId="<%= portletDisplay.getRootPortletId() %>" servletContext="<%= application %>" />
+		<liferay-util:include page='<%= "/navigation/" + _getSectionJsp(section) + ".jsp" %>' portletId="<%= portletDisplay.getRootPortletId() %>" servletContext="<%= application %>" />
 
-		<%
-		}
-		%>
+	<%
+	}
+	%>
 
-		<liferay-util:dynamic-include key="com.liferay.login.web#/navigation.jsp#post" />
-	</liferay-ui:icon-list>
+	<liferay-util:dynamic-include key="com.liferay.login.web#/navigation.jsp#post" />
 </liferay-util:buffer>
 
 <%
@@ -47,9 +45,9 @@ navigation = navigation.trim();
 %>
 
 <c:if test="<%= Validator.isNotNull(navigation) %>">
-	<div class="navigation">
+	<ul class="lfr-nav nav nav-tabs nav-tabs-default navigation">
 		<%= navigation %>
-	</div>
+	</ul>
 </c:if>
 
 <%!

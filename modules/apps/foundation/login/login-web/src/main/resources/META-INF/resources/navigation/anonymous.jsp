@@ -31,8 +31,7 @@ if (!mvcRenderCommandName.startsWith("/login/create_anonymous_account") && portl
 		<portlet:param name="mvcRenderCommandName" value="/login/create_anonymous_account" />
 	</portlet:renderURL>
 
-	<liferay-ui:icon
-		message="guest"
-		url="<%= anonymousURL %>"
-	/>
+	<li>
+		<aui:a href="<%= anonymousURL %>" label="guest" />
+	</li>
 </c:if>

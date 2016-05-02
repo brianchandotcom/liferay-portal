@@ -20,7 +20,6 @@
 	<portlet:param name="mvcRenderCommandName" value="/login/openid" />
 </portlet:renderURL>
 
-<liferay-ui:icon
-	message="openid"
-	url="<%= openIdURL %>"
-/>
+<li>
+	<aui:a href="<%= openIdURL %>" label="openid" />
+</li>

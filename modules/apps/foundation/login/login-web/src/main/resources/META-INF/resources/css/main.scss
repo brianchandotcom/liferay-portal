@@ -13,6 +13,10 @@
 		}
 	}
 
+	.navigation > li:first-child > a {
+		padding-left: 0;
+	}
+
 	.separator {
 		border-top: 1px solid #BFBFBF;
 	}

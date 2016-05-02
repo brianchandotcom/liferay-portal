@@ -43,8 +43,7 @@ if (Validator.isNotNull(mvcRenderCommandName) && !mvcRenderCommandName.equals("/
 	}
 	%>
 
-	<liferay-ui:icon
-		message="sign-in"
-		url="<%= signInURL %>"
-	/>
+	<li>
+		<aui:a href="<%= signInURL %>" label="sign-in" />
+	</li>
 </c:if>

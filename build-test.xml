@@ -4739,17 +4739,6 @@ go]]></replacevalue>
 		</if>
 	</target>
 
-	<target name="prepare-extraapps-plugins">
-		<fail message="Please set the property ${jenkins.shared.user.content.dir}." unless="jenkins.shared.user.content.dir" />
-		<fail message="Please set the property ${test.build.extraapps.zip.url}." unless="test.build.extraapps.zip.url" />
-		<fail message="Please set the property ${top.level.build.number}." unless="top.level.build.number" />
-		<fail message="Please set the property ${top.level.job.name}." unless="top.level.job.name" />
-
-		<mirrors-get dest="extraapps.zip" src="${test.build.extraapps.zip.url}" />
-
-		<move file="extraapps.zip" todir="${jenkins.shared.user.content.dir}/jobs/${top.level.job.name}/builds/${top.level.build.number}/downloads" />
-	</target>
-
 	<target name="prepare-lcs-gateway-bundle">
 		<ant antfile="build-dist.xml" inheritAll="false" target="unzip-tomcat">
 			<property name="app.server.parent.dir" value="${app.server.parent.dir}/gateway" />

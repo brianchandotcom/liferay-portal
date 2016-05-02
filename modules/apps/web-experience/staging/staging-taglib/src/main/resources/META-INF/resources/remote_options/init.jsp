@@ -17,6 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
+boolean disableInputs = GetterUtil.getBoolean(request.getAttribute("liferay-staging:remote-options:disableInputs"));
 long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("liferay-staging:remote-options:exportImportConfigurationId"));
 privateLayout = GetterUtil.getBoolean(request.getAttribute("liferay-staging:remote-options:privateLayout"), privateLayout);
 

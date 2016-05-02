@@ -25,6 +25,10 @@ import javax.servlet.jsp.PageContext;
  */
 public class RemoteOptionsTag extends IncludeTag {
 
+	public void setDisableInputs(boolean disableInputs) {
+		_disableInputs = disableInputs;
+	}
+
 	public void setExportImportConfigurationId(
 		long exportImportConfigurationId) {
 
@@ -44,6 +48,7 @@ public class RemoteOptionsTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_disableInputs = false;
 		_exportImportConfigurationId = 0;
 		_privateLayout = false;
 	}
@@ -56,6 +61,8 @@ public class RemoteOptionsTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
+			"liferay-staging:remote-options:disableInputs", _disableInputs);
+		request.setAttribute(
 			"liferay-staging:remote-options:exportImportConfigurationId",
 			_exportImportConfigurationId);
 		request.setAttribute(
@@ -64,6 +71,7 @@ public class RemoteOptionsTag extends IncludeTag {
 
 	private static final String _PAGE = "/remote_options/page.jsp";
 
+	private boolean _disableInputs;
 	private long _exportImportConfigurationId;
 	private boolean _privateLayout;
 

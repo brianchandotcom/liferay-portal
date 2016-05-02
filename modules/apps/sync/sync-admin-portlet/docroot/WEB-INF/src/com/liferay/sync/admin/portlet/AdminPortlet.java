@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sync.admin.exception.OAuthPortletUndeployedException;
+import com.liferay.sync.constants.PortletPropsKeys;
 import com.liferay.sync.service.SyncPreferencesLocalServiceUtil;
-import com.liferay.sync.shared.util.PortletPropsKeys;
 
 import java.io.IOException;
 

@@ -46,9 +46,9 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.sync.admin.exception.OAuthPortletUndeployedException" %><%@
-page import="com.liferay.sync.service.SyncPreferencesLocalServiceUtil" %><%@
-page import="com.liferay.sync.shared.util.PortletPropsKeys" %><%@
-page import="com.liferay.sync.shared.util.SyncPermissionsConstants" %>
+page import="com.liferay.sync.constants.PortletPropsKeys" %><%@
+page import="com.liferay.sync.constants.SyncPermissionsConstants" %><%@
+page import="com.liferay.sync.service.SyncPreferencesLocalServiceUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.LinkedHashMap" %><%@

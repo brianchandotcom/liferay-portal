@@ -87,6 +87,20 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 	}
 
 	@Override
+	public BooleanFilter getFacetBooleanFilter(
+			String className, SearchContext searchContext)
+		throws Exception {
+
+		BooleanFilter booleanFilter = super.getFacetBooleanFilter(
+			DDLRecordSet.class.getName(), searchContext);
+
+		booleanFilter.addTerm(
+			Field.ENTRY_CLASS_NAME, DDLRecord.class.getName());
+
+		return booleanFilter;
+	}
+
+	@Override
 	public void postProcessContextBooleanFilter(
 			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {

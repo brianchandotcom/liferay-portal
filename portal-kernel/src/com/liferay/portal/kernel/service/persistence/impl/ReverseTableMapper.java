@@ -39,18 +39,18 @@ public class ReverseTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public boolean addTableMappings(
-		long companyId, long leftPrimaryKey, long[] newRightPrimaryKeys) {
+		long companyId, long leftPrimaryKey, long[] rightPrimaryKeys) {
 
 		return _tableMapper.addTableMappings(
-			companyId, newRightPrimaryKeys, leftPrimaryKey);
+			companyId, rightPrimaryKeys, leftPrimaryKey);
 	}
 
 	@Override
 	public boolean addTableMappings(
-		long companyId, long[] newLeftPrimaryKeys, long rightPrimaryKey) {
+		long companyId, long[] leftPrimaryKeys, long rightPrimaryKey) {
 
 		return _tableMapper.addTableMappings(
-			companyId, rightPrimaryKey, newLeftPrimaryKeys);
+			companyId, rightPrimaryKey, leftPrimaryKeys);
 	}
 
 	@Override
@@ -80,18 +80,18 @@ public class ReverseTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public boolean deleteTableMappings(
-		long leftPrimaryKey, long[] oldRightPrimaryKeys) {
+		long leftPrimaryKey, long[] rightPrimaryKeys) {
 
 		return _tableMapper.deleteTableMappings(
-			oldRightPrimaryKeys, leftPrimaryKey);
+			rightPrimaryKeys, leftPrimaryKey);
 	}
 
 	@Override
 	public boolean deleteTableMappings(
-		long[] oldLeftPrimaryKeys, long rightPrimaryKey) {
+		long[] leftPrimaryKeys, long rightPrimaryKey) {
 
 		return _tableMapper.deleteTableMappings(
-			rightPrimaryKey, oldLeftPrimaryKeys);
+			rightPrimaryKey, leftPrimaryKeys);
 	}
 
 	@Override

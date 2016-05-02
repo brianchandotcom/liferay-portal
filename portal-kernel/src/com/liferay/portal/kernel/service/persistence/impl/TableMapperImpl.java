@@ -219,9 +219,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		boolean updated = false;
 
 		for (long rightPrimaryKey : rightPrimaryKeys) {
-			if (0 <=
-					Arrays.binarySearch(
-						currentRightPrimaryKeys, rightPrimaryKey)) {
+			if (Arrays.binarySearch(currentRightPrimaryKeys, rightPrimaryKey) >=
+					0) {
 
 				rightToLeftPortalCache.remove(rightPrimaryKey);
 
@@ -247,9 +246,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		boolean updated = false;
 
 		for (long leftPrimaryKey : leftPrimaryKeys) {
-			if (0 <=
-					Arrays.binarySearch(
-						currentLeftPrimaryKeys, leftPrimaryKey)) {
+			if (Arrays.binarySearch(currentLeftPrimaryKeys, leftPrimaryKey) >=
+					0) {
 
 				leftToRightPortalCache.remove(leftPrimaryKey);
 

@@ -29,6 +29,8 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngine;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -96,6 +99,67 @@ public class DDLRecordSearchTest {
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 
 		PrincipalThreadLocal.setName(_originalName);
+	}
+
+	@Test
+	public void testBasicSearchWithDefaultUser() throws Exception {
+		long companyId = TestPropsValues.getCompanyId();
+
+		User user = UserLocalServiceUtil.getDefaultUser(companyId);
+
+		Group group = GroupTestUtil.addGroup(
+			companyId, user.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		DDLRecordSetTestHelper recordSetTestHelper = new DDLRecordSetTestHelper(
+			group);
+
+		DDMStructureTestHelper ddmStructureTestHelper =
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(DDLRecordSet.class), group);
+
+		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
+			createDDMForm(), StorageType.JSON.toString());
+
+		DDLRecordSet recordSet = recordSetTestHelper.addRecordSet(ddmStructure);
+
+		final SearchContext searchContext = getSearchContext(group, recordSet);
+
+		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
+			group, recordSet);
+
+		DDMFormValues ddmFormValues = createDDMFormValues();
+
+		DDMFormFieldValue nameDDMFormFieldValue =
+			createLocalizedDDMFormFieldValue("name", "Joe Bloggs");
+
+		ddmFormValues.addDDMFormFieldValue(nameDDMFormFieldValue);
+
+		DDMFormFieldValue descriptionDDMFormFieldValue =
+			createLocalizedDDMFormFieldValue(
+				"description", "Simple description");
+
+		ddmFormValues.addDDMFormFieldValue(descriptionDDMFormFieldValue);
+
+		recordTestHelper.addRecord(
+			ddmFormValues, WorkflowConstants.ACTION_PUBLISH);
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					searchContext.setKeywords("description");
+
+					Hits hits = DDLRecordLocalServiceUtil.search(searchContext);
+
+					Assert.assertEquals(1, hits.getLength());
+
+					return null;
+				}
+
+			});
 	}
 
 	@Test

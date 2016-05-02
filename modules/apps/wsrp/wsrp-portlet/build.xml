@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="wsrp-portlet" basedir="." default="deploy">
+	<import file="../../../../tools/sdk/portlets/build-common-portlet.xml" />
+
+	<!--
+	See http://wiki.oasis-open.org/wsrp/WSRP_Producers for a list of demo
+	producers.
+	-->
+
+</project>

@@ -17,33 +17,20 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
+String signInURL = themeDisplay.getURLSignIn();
 
-boolean showSignInIcon = false;
+if (portletName.equals(PortletKeys.FAST_LOGIN)) {
+	PortletURL fastLoginURL = PortletURLFactoryUtil.create(request, PortletKeys.FAST_LOGIN, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
-if (Validator.isNotNull(mvcRenderCommandName) && !mvcRenderCommandName.equals("/login/login")) {
-	showSignInIcon = true;
+	fastLoginURL.setParameter("saveLastPath", Boolean.FALSE.toString());
+	fastLoginURL.setParameter("mvcRenderCommandName", "/login/login");
+	fastLoginURL.setPortletMode(PortletMode.VIEW);
+	fastLoginURL.setWindowState(LiferayWindowState.POP_UP);
+
+	signInURL = fastLoginURL.toString();
 }
 %>
 
-<c:if test="<%= showSignInIcon %>">
-
-	<%
-	String signInURL = themeDisplay.getURLSignIn();
-
-	if (portletName.equals(PortletKeys.FAST_LOGIN)) {
-		PortletURL fastLoginURL = PortletURLFactoryUtil.create(request, PortletKeys.FAST_LOGIN, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-		fastLoginURL.setParameter("saveLastPath", Boolean.FALSE.toString());
-		fastLoginURL.setParameter("mvcRenderCommandName", "/login/login");
-		fastLoginURL.setPortletMode(PortletMode.VIEW);
-		fastLoginURL.setWindowState(LiferayWindowState.POP_UP);
-
-		signInURL = fastLoginURL.toString();
-	}
-	%>
-
-	<li>
-		<aui:a href="<%= signInURL %>" label="sign-in" />
-	</li>
-</c:if>
+<li>
+	<aui:a href="<%= signInURL %>" label="email" />
+</li>

@@ -776,11 +776,6 @@
 			<arg value="properties.title=${properties.title}" />
 			<arg value="properties.toc=${properties.toc}" />
 		</java>
-                <copy
-                    file="${project.dir}/tools/styles/${lp.style.edition}/propertiesdoc.css"
-                    tofile="${doc.dir}/propertiesdoc/propertiesdoc.css"
-                    overwrite="true"
-                />
 	</target>
 
 	<target name="setup-jrebel">

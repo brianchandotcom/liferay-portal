@@ -2,7 +2,5 @@
 <!DOCTYPE project>
 
 <project name="sync-web" basedir="." default="deploy">
-	<property name="import.shared" value="sync-shared" />
-
 	<import file="../../../../tools/sdk/webs/build-common-web.xml" />
 </project>

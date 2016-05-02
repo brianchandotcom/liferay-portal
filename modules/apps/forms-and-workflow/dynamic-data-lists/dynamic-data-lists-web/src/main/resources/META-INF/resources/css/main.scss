@@ -30,6 +30,16 @@
 
 }
 
+.portlet-dynamic-data-lists {
+	.sidebar-header {
+		text-align: right;
+	}
+
+	.sidenav-close {
+		display: inline-block;
+	}
+}
+
 .portlet-dynamic-data-lists-display {
 	.view-records-container {
 		overflow: auto;

@@ -480,6 +480,20 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		}
 	}
 
+	protected SqlUpdate addTableMappingSqlUpdate;
+	protected SqlUpdate deleteLeftPrimaryKeyTableMappingsSqlUpdate;
+	protected SqlUpdate deleteRightPrimaryKeyTableMappingsSqlUpdate;
+	protected SqlUpdate deleteTableMappingSqlUpdate;
+	protected MappingSqlQuery<Long> getLeftPrimaryKeysSqlQuery;
+	protected MappingSqlQuery<Long> getRightPrimaryKeysSqlQuery;
+	protected BasePersistence<L> leftBasePersistence;
+	protected String leftColumnName;
+	protected PortalCache<Long, long[]> leftToRightPortalCache;
+	protected TableMapper<R, L> reverseTableMapper;
+	protected BasePersistence<R> rightBasePersistence;
+	protected String rightColumnName;
+	protected PortalCache<Long, long[]> rightToLeftPortalCache;
+
 	private void _doAddTableMapping(
 		long companyId, long leftPrimaryKey, long rightPrimaryKey) {
 
@@ -571,19 +585,5 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 		return false;
 	}
-
-	protected SqlUpdate addTableMappingSqlUpdate;
-	protected SqlUpdate deleteLeftPrimaryKeyTableMappingsSqlUpdate;
-	protected SqlUpdate deleteRightPrimaryKeyTableMappingsSqlUpdate;
-	protected SqlUpdate deleteTableMappingSqlUpdate;
-	protected MappingSqlQuery<Long> getLeftPrimaryKeysSqlQuery;
-	protected MappingSqlQuery<Long> getRightPrimaryKeysSqlQuery;
-	protected BasePersistence<L> leftBasePersistence;
-	protected String leftColumnName;
-	protected PortalCache<Long, long[]> leftToRightPortalCache;
-	protected TableMapper<R, L> reverseTableMapper;
-	protected BasePersistence<R> rightBasePersistence;
-	protected String rightColumnName;
-	protected PortalCache<Long, long[]> rightToLeftPortalCache;
 
 }

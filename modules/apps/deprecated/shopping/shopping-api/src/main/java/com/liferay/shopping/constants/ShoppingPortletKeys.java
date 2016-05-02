@@ -19,8 +19,10 @@ package com.liferay.shopping.constants;
  */
 public class ShoppingPortletKeys {
 
-	public static final String SHOPPING = "34_WAR_shoppingweb";
+	public static final String SHOPPING =
+		"com_liferay_shopping_web_portlet_ShoppingPortlet";
 
-	public static final String SHOPPING_ADMIN = "197_WAR_shoppingweb";
+	public static final String SHOPPING_ADMIN =
+		"com_liferay_shopping_web_portlet_ShoppingAdminPortlet";
 
 }

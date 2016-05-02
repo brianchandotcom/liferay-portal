@@ -1350,7 +1350,7 @@ public class TableMapperTest {
 
 				@Override
 				public boolean contains(Object o) {
-					return false;
+					return true;
 				}
 
 			});

@@ -145,7 +145,7 @@ public class CheckoutMVCActionCommand extends BaseMVCActionCommand {
 					SessionErrors.add(actionRequest, e.getClass());
 
 					actionResponse.setRenderParameter(
-						"mvcPath", "checkout_first.jsp");
+						"mvcPath", "/checkout_first.jsp");
 				}
 				else if (e instanceof PrincipalException) {
 					actionResponse.setRenderParameter("mvcPath", "/error.jsp");

@@ -2,6 +2,8 @@
 <!DOCTYPE project>
 
 <project name="build-app">
+	<property name="osgi.dir" value="${basedir}/../../bundles/osgi" />
+
 	<macrodef name="set-artifact-versions-previous-release">
 		<attribute name="app.version.previous.release" />
 
@@ -14,12 +16,29 @@
 		<delete file="${dist.dir}/ticket.list.tmp" />
 	</target>
 
-	<target depends="dist-module-artifacts-lpkg,write-lpkg-marketplace-properties" name="build-app-lpkg">
-		<zip basedir="${osgi.dir}/marketplace" destfile="${osgi.dir}/marketplace/${app.name}.lpkg" includes="*.jar,liferay-marketplace.properties" />
+	<target depends="dist-module-artifacts-lpkg,write-lpkg-marketplace-properties" name="build-app-lpkg" unless="module.dirs.null">
+		<zip basedir="${osgi.dir}/marketplace" destfile="${osgi.dir}/marketplace/${app.name}.lpkg" includes="*.jar,*.war,liferay-marketplace.properties" />
 
 		<delete>
 			<fileset dir="${osgi.dir}/marketplace" includes="*.jar,liferay-marketplace.properties" />
 		</delete>
+	</target>
+
+	<target name="build-app-lpkg-all">
+		<pathconvert pathsep="," property="app.names">
+			<globmapper from="${modules.dir}${file.separator}apps${file.separator}*" to="*" />
+			<path>
+				<dirset dir="${basedir}" includes="apps/*" />
+			</path>
+		</pathconvert>
+
+		<for list="${app.names}" param="app.name">
+			<sequential>
+				<antcall target="build-app-lpkg" inheritall="false">
+					<param name="app.name" value="@{app.name}" />
+				</antcall>
+			</sequential>
+		</for>
 	</target>
 
 	<target name="check-app-version">
@@ -71,23 +90,21 @@
 	</target>
 
 	<target depends="check-stale-artifacts,get-artifact-versions-previous-release" name="dist-module-artifacts">
-
 		<mkdir dir="${dist.dir}" />
 
 		<subant genericantfile="${basedir}/build-app-module.xml" target="dist-module-artifact">
 			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
-			<property name="app.dir" value="${basedir}" />
 			<property name="app.first.version" value="${app.first.version}" />
 			<property name="artifact.versions.previous.release" value="${artifact.versions.previous.release}" />
 			<property name="dist.dir" value="${dist.dir}" />
 		</subant>
 	</target>
 
-	<target depends="init-build-app" name="dist-module-artifacts-lpkg">
-		<subant genericantfile="${basedir}/build-app-module.xml" target="dist-module-artifact-lpkg">
+	<target depends="init-build-app" name="dist-module-artifacts-lpkg" unless="module.dirs.null">
+		<subant genericantfile="${modules.dir}/build-app-module.xml" target="dist-module-artifact-lpkg">
 			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
-			<property name="app.dir" value="${basedir}" />
 			<property name="osgi.dir" value="${osgi.dir}" />
+			<property name="osgi.static.modules" value="${osgi.static.modules}" />
 		</subant>
 	</target>
 
@@ -127,7 +144,7 @@
 	</target>
 
 	<target name="get-app-change-log-header">
-		<condition else="${line.separator}${line.separator}" property="app.change.log.version.separator" value="">
+		<condition property="app.change.log.version.separator" value="" else="${line.separator}${line.separator}">
 			<istrue value="${app.first.version}" />
 		</condition>
 
@@ -169,7 +186,7 @@
 		<set-artifact-versions-previous-release app.version.previous.release="${app.version.previous.release}" />
 	</target>
 
-	<target depends="dist-module-artifacts-lpkg" name="get-lpkg-artifacts-list">
+	<target depends="dist-module-artifacts-lpkg" name="get-lpkg-artifacts-list" unless="module.dirs.null">
 		<pathconvert pathsep="," property="lpkg.artifacts.list">
 			<chainedmapper>
 				<flattenmapper />
@@ -184,29 +201,41 @@
 		<fail message="Please specify a value for &quot;app.name&quot; when running this command.">
 			<condition>
 				<not>
-					<isset property="app.name" />
+					<or>
+						<isset property="app.name" />
+						<istrue value="${build.all}" />
+					</or>
 				</not>
 			</condition>
 		</fail>
 
-		<property name="app.dir" value="${basedir}/apps/${app.name}" />
+		<basename file="${basedir}" property="app.name" />
 
-		<property name="dist.dir" value="${releng.app.dir}/dist" />
+		<property name="app.dir" value="${basedir}/apps/${app.name}" />
 
 		<property name="releng.app.dir" value="${basedir}/.releng/apps/${app.name}" />
 
-		<property name="osgi.dir" value="${basedir}/../../bundles/osgi" />
+		<property name="dist.dir" value="${releng.app.dir}/dist" />
 
 		<pathconvert pathsep="," property="app.module.dirs">
 			<globmapper from="${modules.dir}${file.separator}*" to="*" />
 			<path>
-				<dirset dir="${basedir}" includes="apps/${app.name}/**">
+				<dirset dir="${basedir}" excludes="**/*-test*" includes="apps/${app.name}/**">
 					<present targetdir="${basedir}">
 						<mapper from="*" to="*/portal.build" type="glob" />
 					</present>
 				</dirset>
 			</path>
 		</pathconvert>
+
+		<condition property="module.dirs.null">
+			<or>
+				<equals arg1="${app.module.dirs}" arg2="" />
+				<not>
+					<isset property="app.module.dirs" />
+				</not>
+			</or>
+		</condition>
 
 		<condition property="app.first.version">
 			<not>
@@ -215,12 +244,45 @@
 		</condition>
 
 		<property file="${basedir}/../build.properties" />
+
+		<pathconvert property="osgi.static.modules">
+			<fileset dir="${osgi.dir}/static" includes="*.jar" />
+
+			<flattenmapper />
+		</pathconvert>
 	</target>
 
-	<target depends="init-build-app" name="reset-lpkg">
+	<target name="reset-all">
+		<property name="deploy.dir.absolute" location="${osgi.dir}/../deploy" />
+		<property name="osgi.dir.absolute" location="${osgi.dir}" />
+
+		<fail message="${osgi.dir.absolute} and ${deploy.dir.absolute} cannot be reset if ${osgi.dir.absolute}_backup and/or ${deploy.dir.absolute}_backup are not present.">
+			<condition>
+				<not>
+					<or>
+						<available file="${deploy.dir.absolute}_backup" />
+						<available file="${osgi.dir.absolute}_backup" />
+					</or>
+				</not>
+			</condition>
+		</fail>
+
+		<delete dir="${deploy.dir.absolute}" />
+
+		<copy todir="${deploy.dir.absolute}">
+			<fileset dir="${deploy.dir.absolute}_backup" includes="**/*" />
+		</copy>
+
+		<delete dir="${osgi.dir.absolute}" />
+
+		<copy todir="${osgi.dir.absolute}">
+			<fileset dir="${osgi.dir.absolute}_backup" includes="**/*" />
+		</copy>
+	</target>
+
+	<target name="reset-lpkg">
 		<subant genericantfile="${basedir}/build-app-module.xml" target="reset-artifact">
 			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
-			<property name="app.dir" value="${basedir}" />
 			<property name="osgi.dir" value="${osgi.dir}" />
 		</subant>
 	</target>
@@ -243,7 +305,7 @@
 		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.git.id}" />
 	</target>
 
-	<target depends="get-lpkg-artifacts-list" name="write-lpkg-marketplace-properties">
+	<target depends="get-lpkg-artifacts-list" name="write-lpkg-marketplace-properties" unless="module.dirs.null">
 		<echo file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="bundles=${lpkg.artifacts.list}" />
 
 		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="${line.separator}" />

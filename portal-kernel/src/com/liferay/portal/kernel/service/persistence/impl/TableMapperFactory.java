@@ -42,13 +42,13 @@ public class TableMapperFactory {
 		if (tableMapper == null) {
 			TableMapperImpl<L, R> tableMapperImpl = null;
 
-			if (cacheMappingTableNames.contains(tableName)) {
-				tableMapperImpl = new TableMapperImpl<>(
+			if (_cachelessMappingTableNames.contains(tableName)) {
+				tableMapperImpl = new CachelessTableMapperImpl<>(
 					tableName, companyColumnName, leftColumnName,
 					rightColumnName, leftPersistence, rightPersistence);
 			}
 			else {
-				tableMapperImpl = new CachelessTableMapperImpl<>(
+				tableMapperImpl = new TableMapperImpl<>(
 					tableName, companyColumnName, leftColumnName,
 					rightColumnName, leftPersistence, rightPersistence);
 			}
@@ -75,11 +75,15 @@ public class TableMapperFactory {
 		}
 	}
 
-	protected static final Set<String> cacheMappingTableNames =
-		SetUtil.fromArray(
-			PropsUtil.getArray(
-				PropsKeys.TABLE_MAPPER_CACHE_MAPPING_TABLE_NAMES));
+	@Deprecated
+	protected static final Set<String> cacheMappingTableNames = null;
+
 	protected static final Map<String, TableMapper<?, ?>> tableMappers =
 		new ConcurrentHashMap<>();
+
+	private static final Set<String> _cachelessMappingTableNames =
+		SetUtil.fromArray(
+			PropsUtil.getArray(
+				PropsKeys.TABLE_MAPPER_CACHELESS_MAPPING_TABLE_NAMES));
 
 }

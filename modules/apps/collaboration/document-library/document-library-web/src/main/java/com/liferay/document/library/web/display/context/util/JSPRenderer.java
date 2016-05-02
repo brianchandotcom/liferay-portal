@@ -39,10 +39,11 @@ public class JSPRenderer {
 		Map<String, Object> savedAttributes = new HashMap<>();
 
 		for (Map.Entry<String, Object> entry : _attributes.entrySet()) {
-			savedAttributes.put(
-				entry.getKey(), request.getAttribute(entry.getKey()));
+			String key = entry.getKey();
 
-			request.setAttribute(entry.getKey(), entry.getValue());
+			savedAttributes.put(key, request.getAttribute(key));
+
+			request.setAttribute(key, entry.getValue());
 		}
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(

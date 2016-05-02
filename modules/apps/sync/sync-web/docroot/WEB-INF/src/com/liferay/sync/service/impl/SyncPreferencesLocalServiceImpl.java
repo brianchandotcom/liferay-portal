@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.sync.constants.PortletPropsKeys;
 import com.liferay.sync.service.base.SyncPreferencesLocalServiceBaseImpl;
-import com.liferay.sync.shared.util.PortletPropsKeys;
 import com.liferay.util.portlet.PortletProps;
 
 import java.io.InputStream;

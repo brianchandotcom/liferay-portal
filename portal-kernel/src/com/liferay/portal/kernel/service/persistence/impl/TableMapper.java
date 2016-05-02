@@ -30,10 +30,10 @@ public interface TableMapper<L extends BaseModel<L>, R extends BaseModel<R>> {
 	public boolean addTableMapping(
 		long companyId, long leftPrimaryKey, long rightPrimaryKey);
 
-	public boolean addTableMappings(
+	public long[] addTableMappings(
 		long companyId, long leftPrimaryKey, long[] rightPrimaryKeys);
 
-	public boolean addTableMappings(
+	public long[] addTableMappings(
 		long companyId, long[] leftPrimaryKeys, long rightPrimaryKey);
 
 	public boolean containsTableMapping(
@@ -46,10 +46,10 @@ public interface TableMapper<L extends BaseModel<L>, R extends BaseModel<R>> {
 	public boolean deleteTableMapping(
 		long leftPrimaryKey, long rightPrimaryKey);
 
-	public boolean deleteTableMappings(
+	public long[] deleteTableMappings(
 		long leftPrimaryKey, long[] rightPrimaryKeys);
 
-	public boolean deleteTableMappings(
+	public long[] deleteTableMappings(
 		long[] leftPrimaryKeys, long rightPrimaryKey);
 
 	public void destroy();

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -114,20 +115,20 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	}
 
 	@Override
-	public boolean addTableMappings(
+	public long[] addTableMappings(
 		long companyId, long leftPrimaryKey, long[] rightPrimaryKeys) {
 
 		long[] currentRightPrimaryKeys = getPrimaryKeys(
 			leftToRightPortalCache, getRightPrimaryKeysSqlQuery, leftPrimaryKey,
 			false);
 
-		boolean updated = false;
+		List<Long> addedRightPrimaryKeys = new ArrayList<>();
 
 		for (long rightPrimaryKey : rightPrimaryKeys) {
 			if (Arrays.binarySearch(currentRightPrimaryKeys, rightPrimaryKey) <
 					0) {
 
-				updated = true;
+				addedRightPrimaryKeys.add(rightPrimaryKey);
 
 				rightToLeftPortalCache.remove(rightPrimaryKey);
 
@@ -135,28 +136,28 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 			}
 		}
 
-		if (updated) {
+		if (!addedRightPrimaryKeys.isEmpty()) {
 			leftToRightPortalCache.remove(leftPrimaryKey);
 		}
 
-		return updated;
+		return ArrayUtil.toLongArray(addedRightPrimaryKeys);
 	}
 
 	@Override
-	public boolean addTableMappings(
+	public long[] addTableMappings(
 		long companyId, long[] leftPrimaryKeys, long rightPrimaryKey) {
 
 		long[] currentLeftPrimaryKeys = getPrimaryKeys(
 			rightToLeftPortalCache, getLeftPrimaryKeysSqlQuery, rightPrimaryKey,
 			false);
 
-		boolean updated = false;
+		List<Long> addedLeftPrimaryKeys = new ArrayList<>();
 
 		for (long leftPrimaryKey : leftPrimaryKeys) {
 			if (Arrays.binarySearch(currentLeftPrimaryKeys, leftPrimaryKey) <
 					0) {
 
-				updated = true;
+				addedLeftPrimaryKeys.add(leftPrimaryKey);
 
 				leftToRightPortalCache.remove(leftPrimaryKey);
 
@@ -164,11 +165,11 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 			}
 		}
 
-		if (updated) {
+		if (!addedLeftPrimaryKeys.isEmpty()) {
 			rightToLeftPortalCache.remove(rightPrimaryKey);
 		}
 
-		return updated;
+		return ArrayUtil.toLongArray(addedLeftPrimaryKeys);
 	}
 
 	@Override
@@ -209,43 +210,49 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	}
 
 	@Override
-	public boolean deleteTableMappings(
+	public long[] deleteTableMappings(
 		long leftPrimaryKey, long[] rightPrimaryKeys) {
 
 		long[] currentRightPrimaryKeys = getPrimaryKeys(
 			leftToRightPortalCache, getRightPrimaryKeysSqlQuery, leftPrimaryKey,
 			false);
 
-		boolean updated = false;
+		List<Long> deletedRightPrimaryKeys = new ArrayList<>();
+
+		boolean clearCache = false;
 
 		for (long rightPrimaryKey : rightPrimaryKeys) {
 			if (Arrays.binarySearch(currentRightPrimaryKeys, rightPrimaryKey) >=
 					0) {
 
+				clearCache = true;
+
 				rightToLeftPortalCache.remove(rightPrimaryKey);
 
-				updated = true;
-
-				_doDeleteTableMapping(leftPrimaryKey, rightPrimaryKey);
+				if (_doDeleteTableMapping(leftPrimaryKey, rightPrimaryKey)) {
+					deletedRightPrimaryKeys.add(rightPrimaryKey);
+				}
 			}
 		}
 
-		if (updated) {
+		if (clearCache) {
 			leftToRightPortalCache.remove(leftPrimaryKey);
 		}
 
-		return updated;
+		return ArrayUtil.toLongArray(deletedRightPrimaryKeys);
 	}
 
 	@Override
-	public boolean deleteTableMappings(
+	public long[] deleteTableMappings(
 		long[] leftPrimaryKeys, long rightPrimaryKey) {
 
 		long[] currentLeftPrimaryKeys = getPrimaryKeys(
 			rightToLeftPortalCache, getLeftPrimaryKeysSqlQuery, rightPrimaryKey,
 			false);
 
-		boolean updated = false;
+		List<Long> deletedLeftPrimaryKeys = new ArrayList<>();
+
+		boolean clearCache = false;
 
 		for (long leftPrimaryKey : leftPrimaryKeys) {
 			if (Arrays.binarySearch(currentLeftPrimaryKeys, leftPrimaryKey) >=
@@ -253,17 +260,19 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 				leftToRightPortalCache.remove(leftPrimaryKey);
 
-				updated = true;
+				clearCache = true;
 
-				_doDeleteTableMapping(leftPrimaryKey, rightPrimaryKey);
+				if (_doDeleteTableMapping(leftPrimaryKey, rightPrimaryKey)) {
+					deletedLeftPrimaryKeys.add(leftPrimaryKey);
+				}
 			}
 		}
 
-		if (updated) {
+		if (clearCache) {
 			rightToLeftPortalCache.remove(rightPrimaryKey);
 		}
 
-		return updated;
+		return ArrayUtil.toLongArray(deletedLeftPrimaryKeys);
 	}
 
 	@Override

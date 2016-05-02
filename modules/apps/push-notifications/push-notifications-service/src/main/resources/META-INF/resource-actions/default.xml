@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.0.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_0_0.dtd">
+
+<resource-action-mapping>
+	<model-resource>
+		<model-name>com.liferay.push.notifications</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_push_notifications_web_portlet_PushNotificationsPortlet</portlet-name>
+		</portlet-ref>
+		<root>true</root>
+		<permissions>
+			<supports>
+				<action-key>MANAGE_DEVICES</action-key>
+				<action-key>SEND_PUSH_NOTIFICATION</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>SEND_PUSH_NOTIFICATION</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+</resource-action-mapping>

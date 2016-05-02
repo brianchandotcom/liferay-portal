@@ -1,0 +1,10 @@
+dependencies {
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.1.4"
+	provided group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.1.4"
+	provided group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.1.4"
+	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	provided group: "com.notnoop.apns", name: "apns", version: "1.0.0.Beta6"
+	provided project(":apps:push-notifications:push-notifications-api")
+}

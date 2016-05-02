@@ -84,6 +84,14 @@
 		<execute function="Click" locator1="FormFields#SWITCHER" />
 	</command>
 
+	<command name="goToEditField">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="MouseOver" locator1="FormFields#FIELD" />
+		<execute function="Click" locator1="FormFields#FIELD_ELLIPSIS" />
+		<execute function="Click" locator1="FormFields#EDIT_BUTTON" />
+	</command>
+
 	<command name="removeRepeatableField">
 		<execute function="Click" locator1="FormFields#FIELD_REMOVE" />
 	</command>
@@ -92,6 +100,12 @@
 		<execute function="Click" locator1="FormFields#FIELD_NAME" />
 
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+	</command>
+
+	<command name="saveEdition">
+		<execute function="Click" locator1="FormFields#FIELD_NAME" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="selectRadioOption">

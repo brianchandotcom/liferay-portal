@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.shared.util;
+package com.liferay.sync.constants;
 
 /**
  * @author Shinn Lok

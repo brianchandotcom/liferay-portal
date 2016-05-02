@@ -1,8 +1,5 @@
 <html>
-	<head>
-		<title>${pageTitle!"Portal Properties"}</title>
-		<style>
-            /*--properties doc--*/
+	<style type="text/css">
             h1 { color: #1b75bb;}/* Blue 1 */
             h2 { color: #124680;}/* Blue 3 */
             h3 { color: #00B8B9;}/* Teal */
@@ -11,6 +8,8 @@
             .defaults { background-color: #8BB8E8  } /* Pantone 278 C Hex match */
             .examples { background-color: #E3E4E5;}/* Liferay Grey 2 */
         </style>
+	<head>
+		<title>${pageTitle!"Portal Properties"}</title>
 	</head>
 	<body>
 		<h1>${pageTitle!"Portal Properties"}</h1>

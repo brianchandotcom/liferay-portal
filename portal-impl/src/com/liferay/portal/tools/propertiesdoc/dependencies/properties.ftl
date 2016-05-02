@@ -1,8 +1,8 @@
 <html>
 	<style type="text/css">
-            h1 { color: #1b75bb;}/* Blue 1 */
-            h2 { color: #124680;}/* Blue 3 */
-            h3 { color: #00B8B9;}/* Teal */
+            h1 { color: #124680;}/* Blue 3 */
+            h2 { color: #1b75bb;}/* Blue 1 */
+            h3 { color: #1b75bb;}/* Blue 1 */
             #toc { border: 1px solid #555; color: #555; width: 700px; padding: 20px;}
             #toc li { font-size: 14px;}
             .defaults { background-color: #8BB8E8  } /* Pantone 278 C Hex match */

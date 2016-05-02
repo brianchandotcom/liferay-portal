@@ -24,6 +24,7 @@
 			<role-name>User</role-name>
 		</roles>
 		<color-scheme id="01" name="Default">
+			<default-cs>true</default-cs>
 			<css-class>default</css-class>
 			<color-scheme-images-path>${images-path}/color_schemes/${css-class}</color-scheme-images-path>
 		</color-scheme>

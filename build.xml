@@ -563,7 +563,7 @@
 			showFixmeTags="false"
 			showHiddenTags="false"
 			sourceDir="${definitions.dir}"
-                        stylesheet="${project.dir}/tools/styles/${lp.style.edition}/dtddoc.css"
+			stylesheet="${project.dir}/tools/styles/${lp.style.edition}/dtddoc.css"
 		>
 			<include name="liferay-*${lp.version.dtd}.dtd" />
 		</DTDDoc>

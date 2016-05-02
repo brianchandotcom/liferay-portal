@@ -388,7 +388,7 @@ public class SyncDLObjectLocalServiceImpl
 		return folder.isDefaultRepository();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SyncDLObjectLocalServiceImpl.class);
 
 }

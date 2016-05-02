@@ -131,7 +131,7 @@ public class SyncPreferencesLocalServiceImpl
 		return true;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SyncPreferencesLocalServiceImpl.class);
 
 }

@@ -76,12 +76,12 @@ public class DownloadServletInputStream extends InputStream {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		DownloadServletInputStream.class);
 
-	private String _fileName;
-	private InputStream _inputStream;
-	private String _mimeType;
-	private long _size;
+	private final String _fileName;
+	private final InputStream _inputStream;
+	private final String _mimeType;
+	private final long _size;
 
 }

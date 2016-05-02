@@ -164,7 +164,7 @@ public class SyncDLObjectUpgradeTableListener extends BaseUpgradeTableListener {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SyncDLObjectUpgradeTableListener.class);
 
 	private Map<Long, Long> _syncDLObjectIds;

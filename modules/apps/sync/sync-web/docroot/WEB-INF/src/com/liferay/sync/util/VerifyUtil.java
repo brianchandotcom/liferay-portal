@@ -333,7 +333,7 @@ public class VerifyUtil {
 			"Sync DL objects");
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(VerifyUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(VerifyUtil.class);
 
 	private long _dlFoldersAndFileEntriesCount;
 	private long _dlFoldersAndFileEntriesTotalCount;

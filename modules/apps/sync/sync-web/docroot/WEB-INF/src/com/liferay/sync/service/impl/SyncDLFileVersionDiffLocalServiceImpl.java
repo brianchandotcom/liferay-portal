@@ -177,7 +177,7 @@ public class SyncDLFileVersionDiffLocalServiceImpl
 		return sb.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		SyncDLFileVersionDiffLocalServiceImpl.class);
 
 }

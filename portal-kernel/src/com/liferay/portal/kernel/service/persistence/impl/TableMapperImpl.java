@@ -108,7 +108,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		leftToRightPortalCache.remove(leftPrimaryKey);
 		rightToLeftPortalCache.remove(rightPrimaryKey);
 
-		doAddTableMapping(companyId, leftPrimaryKey, rightPrimaryKey);
+		_doAddTableMapping(companyId, leftPrimaryKey, rightPrimaryKey);
 
 		return true;
 	}
@@ -129,7 +129,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 				rightToLeftPortalCache.remove(rightPrimaryKey);
 
-				doAddTableMapping(companyId, leftPrimaryKey, rightPrimaryKey);
+				_doAddTableMapping(companyId, leftPrimaryKey, rightPrimaryKey);
 			}
 		}
 
@@ -156,7 +156,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 				leftToRightPortalCache.remove(leftPrimaryKey);
 
-				doAddTableMapping(companyId, leftPrimaryKey, rightPrimaryKey);
+				_doAddTableMapping(companyId, leftPrimaryKey, rightPrimaryKey);
 			}
 		}
 
@@ -201,7 +201,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		leftToRightPortalCache.remove(leftPrimaryKey);
 		rightToLeftPortalCache.remove(rightPrimaryKey);
 
-		return doDeleteTableMapping(leftPrimaryKey, rightPrimaryKey);
+		return _doDeleteTableMapping(leftPrimaryKey, rightPrimaryKey);
 	}
 
 	@Override
@@ -218,7 +218,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 			if (0 <= Arrays.binarySearch(rightPrimaryKeys, rightPrimaryKey)) {
 				rightToLeftPortalCache.remove(rightPrimaryKey);
 
-				if (doDeleteTableMapping(leftPrimaryKey, rightPrimaryKey)) {
+				if (_doDeleteTableMapping(leftPrimaryKey, rightPrimaryKey)) {
 					updated = true;
 				}
 			}
@@ -243,7 +243,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 			if (0 <= Arrays.binarySearch(leftPrimaryKeys, leftPrimaryKey)) {
 				leftToRightPortalCache.remove(leftPrimaryKey);
 
-				if (doDeleteTableMapping(leftPrimaryKey, rightPrimaryKey)) {
+				if (_doDeleteTableMapping(leftPrimaryKey, rightPrimaryKey)) {
 					updated = true;
 				}
 			}
@@ -480,7 +480,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		}
 	}
 
-	protected void doAddTableMapping(
+	private void _doAddTableMapping(
 		long companyId, long leftPrimaryKey, long rightPrimaryKey) {
 
 		Class<R> rightModelClass = rightBasePersistence.getModelClass();
@@ -522,7 +522,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		}
 	}
 
-	protected boolean doDeleteTableMapping(
+	private boolean _doDeleteTableMapping(
 		long leftPrimaryKey, long rightPrimaryKey) {
 
 		Class<R> rightModelClass = rightBasePersistence.getModelClass();

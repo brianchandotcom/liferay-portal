@@ -16,6 +16,7 @@ package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -3989,28 +3990,38 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return getModuleClassContent(superClassFullClassName);
 	}
 
+	protected String[] getPluginExcludes(String pluginDirectoryName) {
+		return new String[] {
+			pluginDirectoryName + "**/model/*Clp.java",
+			pluginDirectoryName + "**/model/impl/*BaseImpl.java",
+			pluginDirectoryName + "**/model/impl/*Model.java",
+			pluginDirectoryName + "**/model/impl/*ModelImpl.java",
+			pluginDirectoryName + "**/service/**/service/*Service.java",
+			pluginDirectoryName + "**/service/**/service/*ServiceClp.java",
+			pluginDirectoryName + "**/service/**/service/*ServiceFactory.java",
+			pluginDirectoryName + "**/service/**/service/*ServiceUtil.java",
+			pluginDirectoryName + "**/service/**/service/*ServiceWrapper.java",
+			pluginDirectoryName + "**/service/**/service/ClpSerializer.java",
+			pluginDirectoryName +
+				"**/service/**/service/messaging/*ClpMessageListener.java",
+			pluginDirectoryName +
+				"**/service/**/service/persistence/*Finder.java",
+			pluginDirectoryName +
+				"**/service/**/service/persistence/*Util.java",
+			pluginDirectoryName + "**/service/base/*ServiceBaseImpl.java",
+			pluginDirectoryName + "**/service/base/*ServiceClpInvoker.java",
+			pluginDirectoryName + "**/service/http/*JSONSerializer.java",
+			pluginDirectoryName + "**/service/http/*ServiceHttp.java",
+			pluginDirectoryName + "**/service/http/*ServiceJSON.java",
+			pluginDirectoryName + "**/service/http/*ServiceSoap.java",
+			pluginDirectoryName + "**/tools/templates/**"
+		};
+	}
+
 	protected Collection<String> getPluginJavaFiles() throws Exception {
 		Collection<String> fileNames = new TreeSet<>();
 
-		String[] excludes = new String[] {
-			"**/model/*Clp.java", "**/model/impl/*BaseImpl.java",
-			"**/model/impl/*Model.java", "**/model/impl/*ModelImpl.java",
-			"**/service/**/service/*Service.java",
-			"**/service/**/service/*ServiceClp.java",
-			"**/service/**/service/*ServiceFactory.java",
-			"**/service/**/service/*ServiceUtil.java",
-			"**/service/**/service/*ServiceWrapper.java",
-			"**/service/**/service/ClpSerializer.java",
-			"**/service/**/service/messaging/*ClpMessageListener.java",
-			"**/service/**/service/persistence/*Finder.java",
-			"**/service/**/service/persistence/*Util.java",
-			"**/service/base/*ServiceBaseImpl.java",
-			"**/service/base/*ServiceClpInvoker.java",
-			"**/service/http/*JSONSerializer.java",
-			"**/service/http/*ServiceHttp.java",
-			"**/service/http/*ServiceJSON.java",
-			"**/service/http/*ServiceSoap.java", "**/tools/templates/**"
-		};
+		String[] excludes = getPluginExcludes(StringPool.BLANK);
 		String[] includes = new String[] {"**/*.java"};
 
 		fileNames.addAll(getFileNames(excludes, includes));
@@ -4029,6 +4040,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**/portal-web/test/**/*Test.java", "**/portlet/**/service/**",
 			"**/test/*-generated/**", "**/source/formatter/**"
 		};
+
+		for (String directoryName : getPluginsInsideModulesDirectoryNames()) {
+			excludes = ArrayUtil.append(
+				excludes, getPluginExcludes("**" + directoryName));
+		}
+
 		String[] includes = getIncludes();
 
 		fileNames.addAll(getFileNames(excludes, includes));

@@ -187,15 +187,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void checkDefineObjectsVariables(
-		String line, String fileName, int lineCount) {
-
-		if (portalSource) {
-			for (String[] defineObject : _LIFERAY_FRONTEND_DEFINE_OBJECTS) {
-				checkDefineObjectsVariable(
-					line, fileName, lineCount, defineObject[0], defineObject[1],
-					defineObject[2], "liferay-frontend");
-			}
-		}
+		String line, String fileName, String absolutePath, int lineCount) {
 
 		for (String[] defineObject : _LIFERAY_THEME_DEFINE_OBJECTS) {
 			checkDefineObjectsVariable(
@@ -207,6 +199,28 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			checkDefineObjectsVariable(
 				line, fileName, lineCount, defineObject[0], defineObject[1],
 				defineObject[2], "portlet");
+		}
+
+		if (!portalSource) {
+			return;
+		}
+
+		try {
+			for (String directoryName :
+					getPluginsInsideModulesDirectoryNames()) {
+
+				if (absolutePath.contains(directoryName)) {
+					return;
+				}
+			}
+		}
+		catch (Exception e) {
+		}
+
+		for (String[] defineObject : _LIFERAY_FRONTEND_DEFINE_OBJECTS) {
+			checkDefineObjectsVariable(
+				line, fileName, lineCount, defineObject[0], defineObject[1],
+				defineObject[2], "liferay-frontend");
 		}
 	}
 
@@ -816,7 +830,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				checkResourceUtil(line, fileName, lineCount);
 
-				checkDefineObjectsVariables(line, fileName, lineCount);
+				checkDefineObjectsVariables(
+					line, fileName, absolutePath, lineCount);
 
 				if (!fileName.endsWith("test.jsp") &&
 					line.contains("System.out.print")) {

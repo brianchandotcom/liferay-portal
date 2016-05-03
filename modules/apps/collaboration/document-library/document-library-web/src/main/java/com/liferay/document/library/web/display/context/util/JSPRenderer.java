@@ -38,10 +38,12 @@ public class JSPRenderer {
 
 		Map<String, Object> savedAttributes = new HashMap<>();
 
-		for (String key : _attributes.keySet()) {
+		for (Map.Entry<String, Object> entry : _attributes.entrySet()) {
+			String key = entry.getKey();
+
 			savedAttributes.put(key, request.getAttribute(key));
 
-			request.setAttribute(key, _attributes.get(key));
+			request.setAttribute(key, entry.getValue());
 		}
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
@@ -49,8 +51,8 @@ public class JSPRenderer {
 
 		requestDispatcher.include(request, response);
 
-		for (String key : savedAttributes.keySet()) {
-			request.setAttribute(key, savedAttributes.get(key));
+		for (Map.Entry<String, Object> entry : savedAttributes.entrySet()) {
+			request.setAttribute(entry.getKey(), entry.getValue());
 		}
 	}
 

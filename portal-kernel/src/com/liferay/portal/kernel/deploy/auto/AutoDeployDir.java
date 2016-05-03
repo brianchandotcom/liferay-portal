@@ -18,7 +18,10 @@ import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ClassResolverUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.PortalClassInvoker;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -29,6 +32,7 @@ import com.liferay.registry.ServiceTracker;
 import java.io.File;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +66,37 @@ public class AutoDeployDir {
 			}
 		}
 
+		File file = autoDeploymentContext.getFile();
+
+		String fileName = file.getName();
+
+		if (StringUtil.endsWith(fileName, ".lpkg")) {
+			String lpkgDeployerDirString = PropsUtil.get(
+				PropsKeys.MODULE_FRAMEWORK_PROPERTIES.concat(
+					"lpkg.deployer.dir"));
+
+			File lpkgDeployerDir = new File(lpkgDeployerDirString);
+
+			FileUtil.move(file, new File(lpkgDeployerDir, file.getName()));
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Restart is required to complete the installation of " +
+						file.getName());
+			}
+
+			try {
+				PortalClassInvoker.invoke(_shutdownUtilMethodKey, 0);
+			}
+			catch (Exception e) {
+				_log.error(
+					"Unable to automatically shutdown the portal to " +
+						"complete installation.");
+			}
+
+			return;
+		}
+
 		String[] dirNames = PropsUtil.getArray(
 			PropsKeys.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
 
@@ -74,22 +109,9 @@ public class AutoDeployDir {
 
 		String dirName = dirNames[0];
 
-		File file = autoDeploymentContext.getFile();
-
-		String fileName = file.getName();
-
 		if (StringUtil.endsWith(fileName, ".cfg")) {
 			for (String curDirName : dirNames) {
 				if (curDirName.endsWith("/configs")) {
-					dirName = curDirName;
-
-					break;
-				}
-			}
-		}
-		else if (StringUtil.endsWith(fileName, ".lpkg")) {
-			for (String curDirName : dirNames) {
-				if (curDirName.endsWith("/marketplace")) {
 					dirName = curDirName;
 
 					break;
@@ -324,6 +346,10 @@ public class AutoDeployDir {
 	private static AutoDeployScanner _autoDeployScanner;
 	private static final ServiceTracker<AutoDeployListener, AutoDeployListener>
 		_serviceTracker;
+	private static final MethodKey _shutdownUtilMethodKey = new MethodKey(
+		ClassResolverUtil.resolveByPortalClassLoader(
+			"com.liferay.portal.util.ShutdownUtil"),
+		"shutdown", long.class);
 
 	static {
 		Registry registry = RegistryUtil.getRegistry();

@@ -500,6 +500,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected void checkPropertyUtils(String fileName, String content) {
+		if (fileName.endsWith("TypeConvertorUtil.java")) {
+			return;
+		}
+
 		if (content.contains("org.apache.commons.beanutils.PropertyUtils")) {
 			processErrorMessage(
 				fileName,

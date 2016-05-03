@@ -23,6 +23,8 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 
 long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL);
 
+int deltaEntry = ParamUtil.getInteger(request, "deltaEntry");
+
 String orderByCol = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByCol"));
 String orderByType = GetterUtil.getString((String)request.getAttribute("view.jsp-orderByType"));
 
@@ -40,6 +42,10 @@ sortURL.setParameter("mvcRenderCommandName", (folderId == DLFolderConstants.DEFA
 sortURL.setParameter("navigation", navigation);
 sortURL.setParameter("folderId", String.valueOf(folderId));
 sortURL.setParameter("fileEntryTypeId", String.valueOf(fileEntryTypeId));
+
+if (deltaEntry > 0) {
+	sortURL.setParameter("deltaEntry", String.valueOf(deltaEntry));
+}
 %>
 
 <liferay-frontend:management-bar-sort

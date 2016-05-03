@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
+import com.liferay.portal.kernel.service.persistence.PortletPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -681,6 +682,43 @@ public abstract class WSRPProducerLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the portlet local service.
+	 *
+	 * @return the portlet local service
+	 */
+	public com.liferay.portal.kernel.service.PortletLocalService getPortletLocalService() {
+		return portletLocalService;
+	}
+
+	/**
+	 * Sets the portlet local service.
+	 *
+	 * @param portletLocalService the portlet local service
+	 */
+	public void setPortletLocalService(
+		com.liferay.portal.kernel.service.PortletLocalService portletLocalService) {
+		this.portletLocalService = portletLocalService;
+	}
+
+	/**
+	 * Returns the portlet persistence.
+	 *
+	 * @return the portlet persistence
+	 */
+	public PortletPersistence getPortletPersistence() {
+		return portletPersistence;
+	}
+
+	/**
+	 * Sets the portlet persistence.
+	 *
+	 * @param portletPersistence the portlet persistence
+	 */
+	public void setPortletPersistence(PortletPersistence portletPersistence) {
+		this.portletPersistence = portletPersistence;
+	}
+
+	/**
 	 * Returns the resource local service.
 	 *
 	 * @return the resource local service
@@ -839,6 +877,10 @@ public abstract class WSRPProducerLocalServiceBaseImpl
 	protected com.liferay.portal.kernel.service.LayoutLocalService layoutLocalService;
 	@BeanReference(type = LayoutPersistence.class)
 	protected LayoutPersistence layoutPersistence;
+	@BeanReference(type = com.liferay.portal.kernel.service.PortletLocalService.class)
+	protected com.liferay.portal.kernel.service.PortletLocalService portletLocalService;
+	@BeanReference(type = PortletPersistence.class)
+	protected PortletPersistence portletPersistence;
 	@BeanReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
 	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)

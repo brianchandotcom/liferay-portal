@@ -239,7 +239,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 
 							request.setAttribute("info_panel.jsp-folder", curFolder);
 
-							request.setAttribute("view_entries.jsp-repositoryId", String.valueOf(curFolder.getRepositoryId()));
+							request.setAttribute("view.jsp-repositoryId", String.valueOf(curFolder.getRepositoryId()));
 							%>
 
 							<liferay-ui:app-view-search-entry

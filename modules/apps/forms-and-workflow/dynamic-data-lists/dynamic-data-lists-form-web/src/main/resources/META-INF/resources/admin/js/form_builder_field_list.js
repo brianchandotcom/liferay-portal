@@ -25,13 +25,38 @@ AUI.add(
 
 				prototype: {
 					TPL_ADD_FIELD: '<div class="' + CSS_FIELD_LIST_ADD_CONTAINER + '">' +
-							'<button class="' + CSS_FIELD_LIST_ADD_BUTTON + ' ' + CSS_FIELD_LIST_ADD_BUTTON_VISIBLE + '" type="button">' +
+							'<button class="btn ' + CSS_FIELD_LIST_ADD_BUTTON + ' ' + CSS_FIELD_LIST_ADD_BUTTON_VISIBLE + '" type="button">' +
 								'<span class="' + CSS_FIELD_LIST_ADD_BUTTON_ICON + ' ' + CSS_FIELD_LIST_ADD_BUTTON_PLUS_ICON + '">' +
 									Liferay.Util.getLexiconIconTpl('plus') +
 								'</span>' +
 								'<label class="' + CSS_FIELD_LIST_ADD_BUTTON_LABEL + '"> {addField} </label>' +
 							'</button>' +
 						'</div>',
+
+					initializer: function() {
+						var instance = this;
+
+						instance.after(instance._afterUiToggleDisableAddField, instance, '_uiToggleDisableAddField');
+					},
+
+					_afterUiToggleDisableAddField: function() {
+						if (!this.get('enableAddFields')) {
+							this.get('content').one('.' + CSS_FIELD_LIST_ADD_BUTTON).setAttribute('disabled', '');
+						}
+						else {
+							this.get('content').one('.' + CSS_FIELD_LIST_ADD_BUTTON).removeAttribute('disabled');
+						}
+					},
+
+					_onClickAddField: function(event) {
+						var instance = this;
+
+						if (!this.get('enableAddFields')) {
+							event.stopPropagation();
+						}
+
+						FormBuilderFieldList.superclass._onClickAddField.apply(instance, arguments);
+					},
 
 					_uiSetField: function(container, field, index) {
 						var instance = this;

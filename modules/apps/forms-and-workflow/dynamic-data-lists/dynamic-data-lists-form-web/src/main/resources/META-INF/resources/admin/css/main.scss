@@ -781,8 +781,22 @@ $horizontal-spacing: 35px;
 	}
 
 	.form-builder-field-list-add-button {
-		cursor: pointer;
+		border-width: 0;
 		width: 100%;
+	}
+
+	.form-builder-field-list-add-button.disabled,
+	.form-builder-field-list-add-button[disabled] {
+		.form-builder-field-list-add-button-label,
+		.form-builder-field-list-add-button-icon {
+			opacity: 1;
+		}
+	}
+
+	.form-builder-field-list-add-button-icon,
+	.form-builder-field-list-add-button-label {
+		cursor: inherit;
+		transition: opacity 0.5s;
 	}
 
 	.form-builder-field-list-add-button-icon {

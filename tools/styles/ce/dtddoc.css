@@ -60,7 +60,7 @@ table.attributeTitle {
 }
 
 td.leftAttributeTitle {
-    font-size: medium;
+	font-size: medium;
 	font-weight: bold;
 }
 
@@ -144,7 +144,7 @@ pre#dtd_source {
 .dtd_processing_instruction {
 	color: #000;
 	font-style: italic;
-    font-weight: bold;
+	font-weight: bold;
 }
 
 .dtd_attribute_value {

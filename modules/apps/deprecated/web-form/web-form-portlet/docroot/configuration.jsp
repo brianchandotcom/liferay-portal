@@ -51,7 +51,7 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 	<liferay-ui:error exception="<%= ColumnNameException.class %>" message="please-enter-valid-field-names" />
 	<liferay-ui:error exception="<%= DuplicateColumnNameException.class %>" message="please-enter-unique-field-names" />
 
-	<liferay-ui:panel-container extended="<%= Boolean.TRUE %>" id="webFormConfiguration" persistState="<%= true %>">
+	<liferay-ui:panel-container extended="<%= true %>" id="webFormConfiguration" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="webFormGeneral" persistState="<%= true %>" title="form-information">
 			<aui:fieldset>
 				<liferay-ui:error key="successURLInvalid" message="please-enter-a-valid-url" />
@@ -88,7 +88,6 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 				<aui:input helpMessage="add-email-addresses-separated-by-commas" label="addresses-to" name="preferences--emailAddress--" value="<%= emailAddress %>" wrapperCssClass="lfr-input-text-container" />
 
 				<aui:input name="preferences--subject--" value="<%= subject %>" wrapperCssClass="lfr-input-text-container" />
-
 			</aui:fieldset>
 
 			<aui:fieldset cssClass="handle-data" label="database">

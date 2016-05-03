@@ -276,6 +276,6 @@ public class WebFormUtil {
 		return validationResult;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(WebFormUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(WebFormUtil.class);
 
 }

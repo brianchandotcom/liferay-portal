@@ -56,6 +56,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.mail.internet.InternetAddress;
@@ -498,7 +499,7 @@ public class WebFormPortlet extends MVCPortlet {
 				preferences.getValue(
 					"fieldOptional" + (i + 1), StringPool.BLANK));
 
-			if (Validator.equals(fieldType, "paragraph")) {
+			if (Objects.equals(fieldType, "paragraph")) {
 				continue;
 			}
 
@@ -531,6 +532,6 @@ public class WebFormPortlet extends MVCPortlet {
 		return validationErrors;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(WebFormPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(WebFormPortlet.class);
 
 }

@@ -23,7 +23,6 @@ import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLSyncEvent;
-import com.liferay.document.library.kernel.service.DLSyncEventLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -48,7 +47,6 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -1117,12 +1115,12 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 	protected SyncDLObject checkModifiedTime(
 		SyncDLObject syncDLObject, long typePk) {
 
-		DynamicQuery dynamicQuery = DLSyncEventLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = dlSyncEventLocalService.dynamicQuery();
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("typePK", typePk));
 
-		List<DLSyncEvent> dlSyncEvents =
-			DLSyncEventLocalServiceUtil.dynamicQuery(dynamicQuery);
+		List<DLSyncEvent> dlSyncEvents = dlSyncEventLocalService.dynamicQuery(
+			dynamicQuery);
 
 		if (dlSyncEvents.isEmpty()) {
 			return syncDLObject;
@@ -1286,17 +1284,17 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 			return false;
 		}
 
-		if (ResourcePermissionLocalServiceUtil.hasResourcePermission(
+		if (resourcePermissionLocalService.hasResourcePermission(
 				permissionChecker.getCompanyId(), name,
 				ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(permissionChecker.getCompanyId()), roleIds,
 				ActionKeys.VIEW) ||
-			ResourcePermissionLocalServiceUtil.hasResourcePermission(
+			resourcePermissionLocalService.hasResourcePermission(
 				permissionChecker.getCompanyId(), name,
 				ResourceConstants.SCOPE_GROUP_TEMPLATE,
 				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID), roleIds,
 				ActionKeys.VIEW) ||
-			ResourcePermissionLocalServiceUtil.hasResourcePermission(
+			resourcePermissionLocalService.hasResourcePermission(
 				permissionChecker.getCompanyId(), name,
 				ResourceConstants.SCOPE_GROUP, String.valueOf(groupId), roleIds,
 				ActionKeys.VIEW)) {

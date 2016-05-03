@@ -16,11 +16,14 @@ package com.liferay.portal.cache.single.internal.activator;
 
 import com.liferay.portal.cache.single.internal.bootstrap.SinglePortalCacheBootstrapLoaderFactory;
 import com.liferay.portal.cache.single.internal.distribution.SinglePortalCacheReplicatorFactory;
-import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.profile.activator.ProfileActivator;
+
+import java.util.Collections;
 
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
@@ -30,16 +33,14 @@ public class GatekeeperActivator {
 
 	@Activate
 	public void activate(ComponentContext componentContext) {
-		String name = ReleaseInfo.getName();
-
-		if (!name.contains("Community")) {
-			return;
-		}
-
-		componentContext.enableComponent(
-			SinglePortalCacheBootstrapLoaderFactory.class.getName());
-		componentContext.enableComponent(
+		_profileActivator.activateByProfiles(
+			componentContext,
+			Collections.singleton(ProfileActivator.CE_PROFILE),
+			SinglePortalCacheBootstrapLoaderFactory.class.getName(),
 			SinglePortalCacheReplicatorFactory.class.getName());
 	}
+
+	@Reference
+	private ProfileActivator _profileActivator;
 
 }

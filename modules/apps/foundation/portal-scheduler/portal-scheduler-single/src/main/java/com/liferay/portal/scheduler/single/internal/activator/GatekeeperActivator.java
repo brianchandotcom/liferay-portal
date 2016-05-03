@@ -14,12 +14,15 @@
 
 package com.liferay.portal.scheduler.single.internal.activator;
 
-import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.profile.activator.ProfileActivator;
 import com.liferay.portal.scheduler.single.internal.SingleSchedulerEngineConfigurator;
+
+import java.util.Collections;
 
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
@@ -29,14 +32,13 @@ public class GatekeeperActivator {
 
 	@Activate
 	public void activate(ComponentContext componentContext) {
-		String name = ReleaseInfo.getName();
-
-		if (!name.contains("Community")) {
-			return;
-		}
-
-		componentContext.enableComponent(
+		_profileActivator.activateByProfiles(
+			componentContext,
+			Collections.singleton(ProfileActivator.CE_PROFILE),
 			SingleSchedulerEngineConfigurator.class.getName());
 	}
+
+	@Reference
+	private ProfileActivator _profileActivator;
 
 }

@@ -867,7 +867,7 @@
 			<var name="formName" value="Created Form Name" />
 		</execute>
 
-		<execute macro="FormFields#goToEditField">
+		<execute macro="FormsAdminNavigator#gotoEditField">
 			<var name="fieldName" value="Paragraph" />
 		</execute>
 
@@ -881,7 +881,7 @@
 
 		<execute macro="FormFields#saveEdit" />
 
-		<execute macro="FormFields#goToEditField">
+		<execute macro="FormsAdminNavigator#gotoEditField">
 			<var name="fieldName" value="Text" />
 		</execute>
 
@@ -891,7 +891,7 @@
 
 		<execute macro="FormFields#saveEdit" />
 
-		<execute macro="FormFields#goToEditField">
+		<execute macro="FormsAdminNavigator#gotoEditField">
 			<var name="fieldName" value="Select" />
 		</execute>
 
@@ -912,7 +912,7 @@
 
 		<execute macro="FormFields#saveEdit" />
 
-		<execute macro="FormFields#goToEditField">
+		<execute macro="FormsAdminNavigator#gotoEditField">
 			<var name="fieldName" value="Radio" />
 		</execute>
 
@@ -933,7 +933,7 @@
 
 		<execute macro="FormFields#saveEdit" />
 
-		<execute macro="FormFields#goToEditField">
+		<execute macro="FormsAdminNavigator#gotoEditField">
 			<var name="fieldName" value="Date" />
 		</execute>
 
@@ -943,7 +943,7 @@
 
 		<execute macro="FormFields#saveEdit" />
 
-		<execute macro="FormFields#goToEditField">
+		<execute macro="FormsAdminNavigator#gotoEditField">
 			<var name="fieldName" value="Checkbox" />
 		</execute>
 

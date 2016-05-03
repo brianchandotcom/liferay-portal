@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
+import com.liferay.portal.kernel.service.persistence.PortletPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -262,6 +263,62 @@ public abstract class GadgetServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the portlet local service.
+	 *
+	 * @return the portlet local service
+	 */
+	public com.liferay.portal.kernel.service.PortletLocalService getPortletLocalService() {
+		return portletLocalService;
+	}
+
+	/**
+	 * Sets the portlet local service.
+	 *
+	 * @param portletLocalService the portlet local service
+	 */
+	public void setPortletLocalService(
+		com.liferay.portal.kernel.service.PortletLocalService portletLocalService) {
+		this.portletLocalService = portletLocalService;
+	}
+
+	/**
+	 * Returns the portlet remote service.
+	 *
+	 * @return the portlet remote service
+	 */
+	public com.liferay.portal.kernel.service.PortletService getPortletService() {
+		return portletService;
+	}
+
+	/**
+	 * Sets the portlet remote service.
+	 *
+	 * @param portletService the portlet remote service
+	 */
+	public void setPortletService(
+		com.liferay.portal.kernel.service.PortletService portletService) {
+		this.portletService = portletService;
+	}
+
+	/**
+	 * Returns the portlet persistence.
+	 *
+	 * @return the portlet persistence
+	 */
+	public PortletPersistence getPortletPersistence() {
+		return portletPersistence;
+	}
+
+	/**
+	 * Sets the portlet persistence.
+	 *
+	 * @param portletPersistence the portlet persistence
+	 */
+	public void setPortletPersistence(PortletPersistence portletPersistence) {
+		this.portletPersistence = portletPersistence;
+	}
+
+	/**
 	 * Returns the resource local service.
 	 *
 	 * @return the resource local service
@@ -430,6 +487,12 @@ public abstract class GadgetServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
 	@BeanReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
+	@BeanReference(type = com.liferay.portal.kernel.service.PortletLocalService.class)
+	protected com.liferay.portal.kernel.service.PortletLocalService portletLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.PortletService.class)
+	protected com.liferay.portal.kernel.service.PortletService portletService;
+	@BeanReference(type = PortletPersistence.class)
+	protected PortletPersistence portletPersistence;
 	@BeanReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
 	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)

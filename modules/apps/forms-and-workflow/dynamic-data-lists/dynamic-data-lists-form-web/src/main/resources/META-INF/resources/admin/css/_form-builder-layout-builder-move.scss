@@ -6,6 +6,20 @@
 	margin-top: -12px;
 }
 
+.form-builder-moving-message {
+	background-color: rgba(234, 238, 240, 0.8);
+	border-radius: 3px;
+	height: 100%;
+	position: absolute;
+	text-align: center;
+	top: 0;
+	width: 100%;
+}
+
+.form-builder-moving-message-dismiss-button {
+	margin-top: 33px;
+}
+
 .layout-builder-move-cut-button.layout-builder-move-cut-row-button {
 	background: #FFF;
 	border: 1px solid #65B6F0;

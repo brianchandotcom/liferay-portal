@@ -13,13 +13,13 @@
 			<bean class="com.liferay.portal.model.DefaultModelHintsImpl" depends-on="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil" />
 		</property>
 	</bean>
+	<bean class="com.liferay.portal.kernel.security.auth.AuthTokenUtil" id="com.liferay.portal.kernel.security.auth.AuthTokenUtil" />
+	<bean class="com.liferay.portal.security.auth.AuthTokenWhitelistImpl" id="com.liferay.portal.kernel.security.auth.AuthTokenWhitelist" />
 	<bean class="com.liferay.portal.kernel.security.auth.AuthenticatedUserUUIDStoreUtil" id="com.liferay.portal.kernel.security.auth.AuthenticatedUserUUIDStoreUtil">
 		<property name="authenticatedUserUUIDStore">
 			<bean class="com.liferay.portal.security.auth.DefaultAuthenticatedUserUUIDStoreImpl" />
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.security.auth.AuthTokenWhitelistImpl" id="com.liferay.portal.kernel.security.auth.AuthTokenWhitelist" />
-	<bean class="com.liferay.portal.kernel.security.auth.AuthTokenUtil" id="com.liferay.portal.kernel.security.auth.AuthTokenUtil" />
 	<bean class="com.liferay.portal.kernel.security.auth.DefaultEmailAddressGenerator" id="com.liferay.portal.kernel.security.auth.DefaultEmailAddressGenerator" />
 	<bean class="com.liferay.portal.kernel.security.auth.DefaultEmailAddressValidator" id="com.liferay.portal.kernel.security.auth.DefaultEmailAddressValidator" />
 	<bean class="com.liferay.portal.kernel.security.auth.DefaultFullNameGenerator" id="com.liferay.portal.kernel.security.auth.DefaultFullNameGenerator" />
@@ -84,6 +84,15 @@
 	<bean class="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil" id="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil">
 		<property name="secureXMLFactoryProvider" ref="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider" />
 	</bean>
+	<bean class="com.liferay.portal.kernel.webdav.methods.MethodFactoryRegistryUtil" id="com.liferay.portal.kernel.webdav.methods.MethodFactoryRegistryUtil">
+		<property name="methodFactoryRegistry">
+			<bean class="com.liferay.portal.webdav.methods.MethodFactoryRegistryImpl">
+				<property name="defaultMethodFactory">
+					<bean class="com.liferay.portal.webdav.methods.MethodFactoryImpl" depends-on="com.liferay.portal.kernel.xml.SAXReaderUtil" />
+				</property>
+			</bean>
+		</property>
+	</bean>
 	<bean class="com.liferay.portal.xml.SAXReaderImpl" id="com.liferay.portal.kernel.xml.SAXReader">
 		<property name="secure" value="true" />
 		<property name="secureXMLFactoryProvider" ref="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider" />
@@ -96,15 +105,6 @@
 			<bean class="com.liferay.portal.xml.SAXReaderImpl">
 				<property name="secure" value="false" />
 				<property name="secureXMLFactoryProvider" ref="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider" />
-			</bean>
-		</property>
-	</bean>
-	<bean class="com.liferay.portal.kernel.webdav.methods.MethodFactoryRegistryUtil" id="com.liferay.portal.kernel.webdav.methods.MethodFactoryRegistryUtil">
-		<property name="methodFactoryRegistry">
-			<bean class="com.liferay.portal.webdav.methods.MethodFactoryRegistryImpl">
-				<property name="defaultMethodFactory">
-					<bean class="com.liferay.portal.webdav.methods.MethodFactoryImpl" depends-on="com.liferay.portal.kernel.xml.SAXReaderUtil" />
-				</property>
 			</bean>
 		</property>
 	</bean>

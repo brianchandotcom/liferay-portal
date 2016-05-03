@@ -7,6 +7,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean class="com.liferay.portal.comment.action.GetCommentsStrutsAction" id="com.liferay.portal.comment.action.GetCommentsStrutsAction" />
 	<bean class="com.liferay.portal.comment.action.EditDiscussionStrutsAction" id="com.liferay.portal.comment.action.EditDiscussionStrutsAction" />
+	<bean class="com.liferay.portal.comment.action.GetCommentsStrutsAction" id="com.liferay.portal.comment.action.GetCommentsStrutsAction" />
 </beans>

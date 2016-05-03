@@ -85,6 +85,7 @@ public class UserServiceTest {
 		@Before
 		public void setUp() throws Exception {
 			_group = GroupTestUtil.addGroup();
+			_organization = OrganizationTestUtil.addOrganization(true);
 			_siteRole = RoleTestUtil.addRole(RoleConstants.TYPE_SITE);
 
 			UnicodeProperties properties = new UnicodeProperties();
@@ -92,6 +93,12 @@ public class UserServiceTest {
 			properties.put(
 				PropsKeys.ADMIN_DEFAULT_GROUP_NAMES,
 				_group.getDescriptiveName());
+
+			Group organizationGroup = _organization.getGroup();
+
+			properties.put(
+				PropsKeys.ADMIN_DEFAULT_ORGANIZATION_GROUP_NAMES,
+				organizationGroup.getDescriptiveName());
 
 			CompanyLocalServiceUtil.updatePreferences(
 				_group.getCompanyId(), properties);
@@ -104,13 +111,23 @@ public class UserServiceTest {
 
 			GroupLocalServiceUtil.updateGroup(
 				_group.getGroupId(), typeSettingsProperties.toString());
+
+			_user = UserTestUtil.addUser();
+		}
+
+		@Test
+		public void shouldInheritDefaultOrganizationSiteMembership() {
+			Group organizationGroup = _organization.getGroup();
+
+			long organizationGroupId = organizationGroup.getGroupId();
+
+			Assert.assertTrue(
+				ArrayUtil.contains(_user.getGroupIds(), organizationGroupId));
 		}
 
 		@Test
 		public void shouldInheritDefaultSiteRolesFromDefaultSite()
 			throws Exception {
-
-			_user = UserTestUtil.addUser();
 
 			long groupId = _group.getGroupId();
 
@@ -130,6 +147,9 @@ public class UserServiceTest {
 
 		@DeleteAfterTestRun
 		private Group _group;
+
+		@DeleteAfterTestRun
+		private Organization _organization;
 
 		@DeleteAfterTestRun
 		private Role _siteRole;

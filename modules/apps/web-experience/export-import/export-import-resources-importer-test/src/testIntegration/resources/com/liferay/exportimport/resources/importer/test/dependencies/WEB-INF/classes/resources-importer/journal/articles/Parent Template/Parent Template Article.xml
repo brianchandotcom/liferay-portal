@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element name="Datecdah" type="ddm-date" index-type="keyword" instance-id="gysp">
+		<dynamic-content language-id="en_US"><![CDATA[2016-05-06]]></dynamic-content>
+	</dynamic-element>
+</root>

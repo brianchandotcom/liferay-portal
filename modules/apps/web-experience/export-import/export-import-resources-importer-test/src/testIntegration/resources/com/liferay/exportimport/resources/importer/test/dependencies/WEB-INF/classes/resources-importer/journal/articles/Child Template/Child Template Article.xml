@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element name="Title" type="text" index-type="keyword" instance-id="wfak">
+		<dynamic-content language-id="en_US"><![CDATA[Test Title]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="Description" type="text_box" index-type="keyword" instance-id="rqch">
+		<dynamic-content language-id="en_US"><![CDATA[Test Description]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="Datecdah" type="ddm-date" index-type="keyword" instance-id="wrfl">
+		<dynamic-content language-id="en_US"><![CDATA[2016-05-06]]></dynamic-content>
+	</dynamic-element>
+</root>

@@ -1229,9 +1229,11 @@
 
 		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="Button#clickSave" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS_1" value1="Your email verification code has been sent and the new email address will be applied to your account once it is verified." />
+
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="editPasswordCP">

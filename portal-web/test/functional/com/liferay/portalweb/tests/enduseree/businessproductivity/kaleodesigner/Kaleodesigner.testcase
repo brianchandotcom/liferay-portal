@@ -626,7 +626,7 @@
 		<execute macro="KaleoDesigner#viewNoWorkflowDefinitionsViaKDCP" />
 	</command>
 
-	<command name="EditSingleApproverDefinitionDeleteTaskNode" priority="4">
+	<command name="EditSingleApproverDefinitionDeleteTaskNode" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Workflow Definition" />
 		</execute>

@@ -272,7 +272,7 @@
 		</execute>
 	</command>
 
-	<command name="AddProcessWithPredefinedFieldSetAndSingleApproverWorkflow" priority="2">
+	<command name="AddProcessWithPredefinedFieldSetAndSingleApproverWorkflow" priority="5">
 		<var name="kfProcessDescription" value="Kaleo Forms Process Predefined Description" />
 		<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
 
@@ -1023,7 +1023,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteProcess" priority="3">
+	<command name="DeleteProcess" priority="5">
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Text" />
@@ -1683,7 +1683,7 @@
 		</execute>
 	</command>
 
-	<command name="EditProcessForms" priority="3">
+	<command name="EditProcessForms" priority="5">
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
 		<execute macro="Navigator#openURL" />
@@ -1996,7 +1996,7 @@
 		</execute>
 	</command>
 
-	<command name="EditProcessNewWorkflowViaSourceTab" priority="3">
+	<command name="EditProcessNewWorkflowViaSourceTab" priority="5">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
@@ -2175,7 +2175,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSingleApproverWorkflowViaSourceTabViaAddProcess" priority="3">
+	<command name="EditSingleApproverWorkflowViaSourceTabViaAddProcess" priority="5">
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
 		<execute macro="Navigator#openURL" />

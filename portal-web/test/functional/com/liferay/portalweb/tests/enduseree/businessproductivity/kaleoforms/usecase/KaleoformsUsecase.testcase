@@ -609,7 +609,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignRolePermissionsApprovePG" priority="3">
+	<command name="AssignRolePermissionsApprovePG" priority="5">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -984,7 +984,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignRolePermissionsRejectPG" priority="3">
+	<command name="AssignRolePermissionsRejectPG" priority="5">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -2367,7 +2367,7 @@
 		</execute>
 	</command>
 
-	<command name="CompleteProcessAndViewNotifications" priority="4">
+	<command name="CompleteProcessAndViewNotifications" priority="5">
 		<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet,notifications-portlet" />
 
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
@@ -4253,7 +4253,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
-	<command name="CompleteProcessWithUploadedDefinition" priority="4">
+	<command name="CompleteProcessWithUploadedDefinition" priority="5">
 		<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">

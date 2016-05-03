@@ -1364,7 +1364,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignRolePermissionsViewPG" priority="4">
+	<command name="AssignRolePermissionsViewPG" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Roles" />
 		</execute>
@@ -1455,7 +1455,7 @@
 		</execute>
 	</command>
 
-	<command name="CompleteFormWithMultipleAssignedProcessRecordsAndViewChanges" priority="4">
+	<command name="CompleteFormWithMultipleAssignedProcessRecordsAndViewChanges" priority="3">
 		<description message="This is a use case for LPS-43482." />
 
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
@@ -1688,7 +1688,7 @@
 		</execute>
 	</command>
 
-	<command name="CompleteProcessAndAssertFieldOrder" priority="4">
+	<command name="CompleteProcessAndAssertFieldOrder" priority="3">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -2943,7 +2943,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
-	<command name="CompleteProcessPredefinedContacts" priority="4">
+	<command name="CompleteProcessPredefinedContacts" priority="3">
 		<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
 
 		<execute macro="Navigator#openURL" />
@@ -3126,7 +3126,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
-	<command name="CompleteProcessPredefinedEvents" priority="4">
+	<command name="CompleteProcessPredefinedEvents" priority="3">
 		<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
 
 		<execute macro="Navigator#openURL" />
@@ -3290,7 +3290,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
-	<command name="CompleteProcessPredefinedInventory" priority="4">
+	<command name="CompleteProcessPredefinedInventory" priority="3">
 		<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
 
 		<execute macro="Navigator#openURL" />
@@ -3443,7 +3443,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
-	<command name="CompleteProcessPredefinedIssuesTracking" priority="4">
+	<command name="CompleteProcessPredefinedIssuesTracking" priority="3">
 		<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
 
 		<execute macro="Navigator#openURL" />
@@ -3627,7 +3627,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
-	<command name="CompleteProcessPredefinedMeetingMinutes" priority="4">
+	<command name="CompleteProcessPredefinedMeetingMinutes" priority="3">
 		<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
 
 		<execute macro="Navigator#openURL" />
@@ -3791,7 +3791,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
-	<command name="CompleteProcessPredefinedToDo" priority="4">
+	<command name="CompleteProcessPredefinedToDo" priority="3">
 		<var name="kfProcessName" value="Kaleo Forms Process Predefined" />
 
 		<execute macro="Navigator#openURL" />
@@ -4619,7 +4619,7 @@
 		</execute>
 	</command>
 
-	<command name="EditProcessEditFormAfterFormSubmission" priority="4">
+	<command name="EditProcessEditFormAfterFormSubmission" priority="3">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -4825,7 +4825,7 @@
 		</execute>
 	</command>
 
-	<command name="EditProcessFieldSetAfterFormSubmission" priority="4">
+	<command name="EditProcessFieldSetAfterFormSubmission" priority="3">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -4992,7 +4992,7 @@
 		<execute macro="KaleoFormsPortlet#viewNoTasks" />
 	</command>
 
-	<command name="EditProcessFieldSetBeforeFormSubmission" priority="4">
+	<command name="EditProcessFieldSetBeforeFormSubmission" priority="3">
 		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -5205,7 +5205,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
-	<command name="EditProcessNewDetailsAfterFormApproved" priority="4">
+	<command name="EditProcessNewDetailsAfterFormApproved" priority="3">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -5352,7 +5352,7 @@
 		</execute>
 	</command>
 
-	<command name="EditProcessNewDetailsAfterFormSubmission" priority="4">
+	<command name="EditProcessNewDetailsAfterFormSubmission" priority="3">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -5909,7 +5909,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
-	<command name="ProcessUsesCreateFormWhenAllFormsAreMissing" priority="4">
+	<command name="ProcessUsesCreateFormWhenAllFormsAreMissing" priority="3">
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
 		<execute macro="Navigator#openURL" />
@@ -6171,7 +6171,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
-	<command name="ProcessUsesCreateFormWhenEditFormIsMissing" priority="4">
+	<command name="ProcessUsesCreateFormWhenEditFormIsMissing" priority="3">
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
 		<execute macro="Navigator#openURL" />
@@ -6433,7 +6433,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
-	<command name="ProcessUsesCreateFormWhenNoEditFormIsDefined" priority="4">
+	<command name="ProcessUsesCreateFormWhenNoEditFormIsDefined" priority="3">
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
 		<execute macro="Navigator#openURL" />
@@ -6793,7 +6793,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
-	<command name="RejectAndResubmitProcess" priority="4">
+	<command name="RejectAndResubmitProcess" priority="3">
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Text" />
@@ -7247,7 +7247,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewApprovedProcessNotificationWithComments" priority="4">
+	<command name="ViewApprovedProcessNotificationWithComments" priority="3">
 		<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet,notifications-portlet" />
 
 		<var name="comment" value="Process is approved" />
@@ -7519,7 +7519,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewApprovedProcessRecordsSeparateAuthor" priority="5">
+	<command name="ViewApprovedProcessRecordsSeparateAuthor" priority="3">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -8197,7 +8197,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewKaleoProcessNameOpenedViaNotifications" priority="5">
+	<command name="ViewKaleoProcessNameOpenedViaNotifications" priority="3">
 		<description message="This is a use case for LPS-51098." />
 
 		<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet,notifications-portlet" />
@@ -8366,7 +8366,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
-	<command name="ViewMultipleProcessRecords" priority="5">
+	<command name="ViewMultipleProcessRecords" priority="3">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -8512,7 +8512,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNoDuplicatesCreatedByAddFormSaveAndContinue" priority="5">
+	<command name="ViewNoDuplicatesCreatedByAddFormSaveAndContinue" priority="3">
 		<description message="This is a use case for LPS-48995." />
 
 		<var name="kfFieldSetName" value="Field Set Data Definition" />

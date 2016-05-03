@@ -173,7 +173,7 @@
 		</execute>
 	</command>
 
-	<command name="AddJoinXORWorkflowDefinitionViaViewTab" priority="4">
+	<command name="AddJoinXORWorkflowDefinitionViaViewTab" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Workflow Definition" />
 		</execute>
@@ -377,7 +377,7 @@
 		</execute>
 	</command>
 
-	<command name="AddStateNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="4">
+	<command name="AddStateNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="3">
 		<var name="nodeNodeLabel" value="State" />
 		<var name="nodeType" value="state" />
 
@@ -602,7 +602,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteWorkflowDefinitionDraftViaKDCP" priority="4">
+	<command name="DeleteWorkflowDefinitionDraftViaKDCP" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelApps">
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>
@@ -680,7 +680,7 @@
 		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaWorkflowCP" />
 	</command>
 
-	<command name="PublishFromSourceTabAndViewNameChange" priority="5">
+	<command name="PublishFromSourceTabAndViewNameChange" priority="3">
 		<description message="This is a use case for LPS-43214 and LPS-50269." />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -765,7 +765,7 @@
 		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
 	</command>
 
-	<command name="PublishWorkflowDefinitionWithInvalidConditionNodeAndViewErrorMessage" priority="4">
+	<command name="PublishWorkflowDefinitionWithInvalidConditionNodeAndViewErrorMessage" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Workflow Definition" />
 		</execute>
@@ -945,7 +945,7 @@
 		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
 	</command>
 
-	<command name="PublishWorkflowDefinitionWithInvalidJoinNodeAndViewErrorMessage" priority="4">
+	<command name="PublishWorkflowDefinitionWithInvalidJoinNodeAndViewErrorMessage" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Workflow Definition" />
 		</execute>
@@ -1112,7 +1112,7 @@
 		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
 	</command>
 
-	<command name="RedoDraftDefinition" priority="4">
+	<command name="RedoDraftDefinition" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelApps">
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>

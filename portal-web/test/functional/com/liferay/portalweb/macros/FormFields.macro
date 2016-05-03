@@ -102,7 +102,7 @@
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 	</command>
 
-	<command name="saveEdition">
+	<command name="saveEdit">
 		<execute function="Click" locator1="FormFields#FIELD_NAME" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />

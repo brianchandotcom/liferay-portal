@@ -879,7 +879,7 @@
 			<var name="fieldValue" value="New Paragraph body text." />
 		</execute>
 
-		<execute macro="FormFields#saveEdition" />
+		<execute macro="FormFields#saveEdit" />
 
 		<execute macro="FormFields#goToEditField">
 			<var name="fieldName" value="Text" />
@@ -889,7 +889,7 @@
 			<var name="fieldValue" value="New Text" />
 		</execute>
 
-		<execute macro="FormFields#saveEdition" />
+		<execute macro="FormFields#saveEdit" />
 
 		<execute macro="FormFields#goToEditField">
 			<var name="fieldName" value="Select" />
@@ -910,7 +910,7 @@
 			<var name="rowNumber" value="2" />
 		</execute>
 
-		<execute macro="FormFields#saveEdition" />
+		<execute macro="FormFields#saveEdit" />
 
 		<execute macro="FormFields#goToEditField">
 			<var name="fieldName" value="Radio" />
@@ -931,7 +931,7 @@
 			<var name="rowNumber" value="2" />
 		</execute>
 
-		<execute macro="FormFields#saveEdition" />
+		<execute macro="FormFields#saveEdit" />
 
 		<execute macro="FormFields#goToEditField">
 			<var name="fieldName" value="Date" />
@@ -941,7 +941,7 @@
 			<var name="fieldValue" value="New Date" />
 		</execute>
 
-		<execute macro="FormFields#saveEdition" />
+		<execute macro="FormFields#saveEdit" />
 
 		<execute macro="FormFields#goToEditField">
 			<var name="fieldName" value="Checkbox" />
@@ -951,7 +951,7 @@
 			<var name="fieldValue" value="New Checkbox" />
 		</execute>
 
-		<execute macro="FormFields#saveEdition" />
+		<execute macro="FormFields#saveEdit" />
 
 		<execute macro="Form#save" />
 

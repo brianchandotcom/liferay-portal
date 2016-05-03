@@ -1,0 +1,58 @@
+BODY {
+	background-color: #FFF;
+}
+
+.TableHeadingColor {
+	background: #8BB8E8;
+}
+
+.TableSubHeadingColor {
+	background: #1B75BB;
+}
+
+.TableRowColor {
+	background: #FFF;
+}
+
+.FrameTitleFont  {
+	font-family: Helvetica, Arial, san-serif;
+	font-size: 10pts;
+}
+
+.FrameHeadingFont {
+	font-family: Helvetica, Arial, san-serif;
+	font-size: 10pts;
+}
+
+.FrameItemFont {
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 10pt;
+}
+
+.NavBarCell1 {
+	background-color: #1B75BB;
+}
+
+.NavBarCell1Rev {
+	background-color: #8BB8E8;
+}
+
+.NavBarFont1 {
+	color: #000;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.NavBarFont1Rev {
+	color: #FFF;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.NavBarCell2 {
+	background-color: #FFF;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.NavBarCell3 {
+	background-color: #FFF;
+	font-family: Arial, Helvetica, sans-serif;
+}

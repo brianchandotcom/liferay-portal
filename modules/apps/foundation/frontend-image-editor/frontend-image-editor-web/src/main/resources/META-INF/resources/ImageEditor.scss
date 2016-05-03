@@ -9,7 +9,7 @@ $imageeditor-filters-height: 90px !default;
 $imageeditor-history-controls-top: 30px;
 $slider-height: 20px;
 
-// Skin
+// Skin Variables
 
 $brand-primary: darken(#428BCA, 6.5%) !default; // #337ab7
 
@@ -21,11 +21,7 @@ $imageeditor-text-color: #FFF !default;
 
 $gray-base: #000 !default;
 $gray-light: lighten($gray-base, 46.7%) !default; // #777
-$gray-lighter: lighten($gray-base, 93.5%) !default; // #eee
-
-body {
-	background-color: $imageeditor-bg !important;
-}
+$gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 
 .image-editor {
 	background-color: $imageeditor-bg;

@@ -50,9 +50,11 @@ class ImageEditor extends Component {
 		 * @protected
 		 */
 		this.history_ = [
-			new ImageEditorHistoryEntry({
-				url: this.image
-			})
+			new ImageEditorHistoryEntry(
+				{
+					url: this.image
+				}
+			)
 		];
 
 		// Load the first entry imageData and render it on the app.

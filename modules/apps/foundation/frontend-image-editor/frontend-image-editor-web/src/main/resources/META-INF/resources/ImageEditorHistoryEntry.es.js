@@ -36,10 +36,10 @@ class ImageEditorHistoryEntry {
 
 			bufferImage.onload = () => {
 				let bufferCanvas = document.createElement('canvas');
-	            let bufferContext = bufferCanvas.getContext('2d');
+				let bufferContext = bufferCanvas.getContext('2d');
 
-	            let height = bufferImage.height;
-	            let width = bufferImage.width;
+				let height = bufferImage.height;
+				let width = bufferImage.width;
 
 				bufferCanvas.width = width;
 				bufferCanvas.height = height;

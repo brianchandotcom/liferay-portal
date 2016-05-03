@@ -96,7 +96,7 @@ public class WeatherWebCacheItem implements WebCacheItem {
 
 	private static final long _REFRESH_TIME = Time.MINUTE * 60;
 
-	private String _apiKey;
-	private String _zip;
+	private final String _apiKey;
+	private final String _zip;
 
 }

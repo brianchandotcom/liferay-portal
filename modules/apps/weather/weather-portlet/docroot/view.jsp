@@ -19,53 +19,49 @@
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(apiKey) %>">
 		<form name="<portlet:namespace />fm" onSubmit="submitForm(document.<portlet:namespace />fm, 'http://openweathermap.org/find?q=', false); return false;" target="_blank">
+			<table class="lfr-table">
 
-		<table class="lfr-table">
+				<%
+				for (String zip : zips) {
+					Weather weather = WeatherUtil.getWeather(zip, apiKey);
 
-		<%
-		for (String zip : zips) {
-			Weather weather = WeatherUtil.getWeather(zip, apiKey);
+					if (weather != null) {
+				%>
 
-			if (weather != null) {
-		%>
+						<tr>
+							<td>
+								<a href="http://www.openweathermap.org/city/<%= HtmlUtil.escapeURL(weather.getCityId()) %>" style="font-size: xx-small; font-weight: bold;" target="_blank"><%= HtmlUtil.escape(weather.getZip()) %></a>
+							</td>
+							<td align="right">
+								<span style="font-size: xx-small;">
+									<c:if test="<%= fahrenheit %>">
+										<%= weather.getCurrentTemp() %> &deg;F
+									</c:if>
 
-				<tr>
-					<td>
-						<a href="http://www.openweathermap.org/city/<%= HtmlUtil.escapeURL(weather.getCityId()) %>" style="font-size: xx-small; font-weight: bold;" target="_blank"><%= HtmlUtil.escape(weather.getZip()) %></a>
-					</td>
-					<td align="right">
-						<span style="font-size: xx-small;">
+									<c:if test="<%= !fahrenheit %>">
+										<%= Math.round((.5555555555 * (weather.getCurrentTemp() + 459.67)) - 273.15) %> &deg;C
+									</c:if>
+								</span>
+							</td>
+							<td align="right">
+								<img alt="" src="<%= weather.getIconURL() %>" />
+							</td>
+						</tr>
 
-						<c:if test="<%= fahrenheit %>">
-							<%= weather.getCurrentTemp() %> &deg;F
-						</c:if>
+				<%
+					}
+				}
+				%>
 
-						<c:if test="<%= !fahrenheit %>">
-							<%= Math.round((.5555555555 * (weather.getCurrentTemp() + 459.67)) - 273.15) %> &deg;C
-						</c:if>
+			</table>
 
-						</span>
-					</td>
-					<td align="right">
-						<img alt="" src="<%= weather.getIconURL() %>" />
-					</td>
-				</tr>
+			<br />
 
-		<%
-			}
-		}
-		%>
+			<liferay-ui:message key="city-or-zip-code" />
 
-		</table>
+			<input name="q" size="23" type="text" />
 
-		<br />
-
-		<liferay-ui:message key="city-or-zip-code" />
-
-		<input name="q" size="23" type="text" />
-
-		<input type="submit" value="<liferay-ui:message key="search" />" />
-
+			<input type="submit" value="<liferay-ui:message key="search" />" />
 		</form>
 
 		<br />

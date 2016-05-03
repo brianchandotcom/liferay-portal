@@ -224,13 +224,15 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 				rightToLeftPortalCache.remove(rightPrimaryKey);
 
-				if (_doDeleteTableMapping(leftPrimaryKey, rightPrimaryKey)) {
-					updated = true;
-				}
+				updated = true;
+
+				_doDeleteTableMapping(leftPrimaryKey, rightPrimaryKey);
 			}
 		}
 
-		leftToRightPortalCache.remove(leftPrimaryKey);
+		if (updated) {
+			leftToRightPortalCache.remove(leftPrimaryKey);
+		}
 
 		return updated;
 	}
@@ -251,13 +253,15 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 				leftToRightPortalCache.remove(leftPrimaryKey);
 
-				if (_doDeleteTableMapping(leftPrimaryKey, rightPrimaryKey)) {
-					updated = true;
-				}
+				updated = true;
+
+				_doDeleteTableMapping(leftPrimaryKey, rightPrimaryKey);
 			}
 		}
 
-		rightToLeftPortalCache.remove(rightPrimaryKey);
+		if (updated) {
+			rightToLeftPortalCache.remove(rightPrimaryKey);
+		}
 
 		return updated;
 	}

@@ -1,7 +1,28 @@
+apply plugin: 'java'
+
+def jamwikiVersion = "1.0.7"
+
+task unzip(type: Copy) {
+	from zipTree('jamwiki-' + jamwikiVersion + '-src.zip')
+	into 'src/main/resources'
+	include 'jamwiki-' + jamwikiVersion + '/jamwiki-war/src/main/resources/ApplicationResources*.properties'
+	include 'jamwiki-' + jamwikiVersion + '/jamwiki-war/src/main/resources/jamwiki-configuration.dtd'
+	include 'jamwiki-' + jamwikiVersion + '/jamwiki-war/src/main/resources/jamwiki-configuration.xml'
+	eachFile {
+		it.path = it.path.substring(it.path.lastIndexOf('/'))
+	}
+
+	def rootDir = new File('src/main/resources/jamwiki-' + jamwikiVersion)
+
+	rootDir.deleteDir()
+}
+
+deploy.dependsOn unzip
+
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.wiki.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.wiki.engine.input.editor.common", version: "2.0.0"
-	provided group: "com.liferay", name: "org.jamwiki", version: "1.0.7"
+	provided group: "com.liferay", name: "org.jamwiki", version: jamwikiVersion
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"

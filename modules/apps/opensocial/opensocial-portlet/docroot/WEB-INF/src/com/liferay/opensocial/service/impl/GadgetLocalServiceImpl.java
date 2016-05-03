@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -161,7 +160,7 @@ public class GadgetLocalServiceImpl extends GadgetLocalServiceBaseImpl {
 			Portlet portlet = _portletsPool.remove(uuid);
 
 			if (portlet == null) {
-				portlet = PortletLocalServiceUtil.getPortletById(
+				portlet = portletLocalService.getPortletById(
 					companyId, getPortletId(uuid));
 			}
 
@@ -224,7 +223,7 @@ public class GadgetLocalServiceImpl extends GadgetLocalServiceBaseImpl {
 			String[] portletCategoryNamesArray = StringUtil.split(
 				portletCategoryNames);
 
-			PortletLocalServiceUtil.deployRemotePortlet(
+			portletLocalService.deployRemotePortlet(
 				portlet, portletCategoryNamesArray);
 		}
 		catch (PortalException pe) {
@@ -301,12 +300,12 @@ public class GadgetLocalServiceImpl extends GadgetLocalServiceBaseImpl {
 
 		String portletId = getPortletId(uuid);
 
-		portlet = PortletLocalServiceUtil.clonePortlet(_GADGET_PORTLET_ID);
+		portlet = portletLocalService.clonePortlet(_GADGET_PORTLET_ID);
 
 		portlet.setCompanyId(companyId);
 		portlet.setPortletId(portletId);
 
-		PortletApp portletApp = PortletLocalServiceUtil.getPortletApp(
+		PortletApp portletApp = portletLocalService.getPortletApp(
 			ClpSerializer.getServletContextName());
 
 		portlet.setPortletApp(portletApp);

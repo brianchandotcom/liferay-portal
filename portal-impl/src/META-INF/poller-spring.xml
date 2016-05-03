@@ -15,13 +15,13 @@
 		<property name="pollerRequestHandler" ref="messageListener.pollerRequestHandler" />
 	</bean>
 	<bean class="com.liferay.portal.poller.comet.PollerCometDelayedJobUtil" id="com.liferay.portal.poller.comet.PollerCometDelayedJobUtil">
-		<property name="pollerCometDelayedJob" ref="messageListener.PollerCometDelayedJob" />
+		<property name="pollerCometDelayedJob" ref="messageListener.pollerCometDelayedJob" />
 	</bean>
 
 	<!-- Messaging -->
 
 	<bean class="com.liferay.portal.poller.messaging.PollerRequestMessageListener" id="messageListener.poller" />
-	<bean class="com.liferay.portal.poller.comet.PollerCometDelayedJobImpl" id="messageListener.PollerCometDelayedJob" />
+	<bean class="com.liferay.portal.poller.comet.PollerCometDelayedJobImpl" id="messageListener.pollerCometDelayedJob" />
 	<bean class="com.liferay.portal.poller.messaging.PollerNotificationsBridgeMessageListener" id="messageListener.pollerNotificationsBridge" />
 	<bean class="com.liferay.portal.poller.PollerRequestHandlerImpl" id="messageListener.pollerRequestHandler" />
 	<bean class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator" id="messagingConfigurator.poller">
@@ -62,7 +62,7 @@
 				</entry>
 				<entry key="liferay/poller_comet_response">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.PollerCometDelayedJob" />
+						<ref bean="messageListener.pollerCometDelayedJob" />
 					</list>
 				</entry>
 				<entry key="liferay/poller_response">

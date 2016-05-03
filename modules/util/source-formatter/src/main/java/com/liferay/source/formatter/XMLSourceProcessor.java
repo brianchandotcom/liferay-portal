@@ -236,49 +236,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void checkAntXMLProjectName(String fileName, Document document) {
-		String baseDirName = sourceFormatterArgs.getBaseDirName();
+		Matcher matcher = _projectNamePattern.matcher(fileName);
 
-		int x = baseDirName.length();
-
-		if (fileName.endsWith("-ext/build.xml")) {
-			if (fileName.startsWith(baseDirName + "ext/")) {
-				x += 4;
-			}
-		}
-		else if (fileName.endsWith("-hook/build.xml")) {
-			if (fileName.startsWith(baseDirName + "hooks/")) {
-				x += 6;
-			}
-		}
-		else if (fileName.endsWith("-layouttpl/build.xml")) {
-			if (fileName.startsWith(baseDirName + "layouttpl/")) {
-				x += 10;
-			}
-		}
-		else if (fileName.endsWith("-portlet/build.xml")) {
-			if (fileName.startsWith(baseDirName + "portlets/")) {
-				x += 9;
-			}
-		}
-		else if (fileName.endsWith("-theme/build.xml")) {
-			if (fileName.startsWith(baseDirName + "themes/")) {
-				x += 7;
-			}
-		}
-		else if (fileName.endsWith("-web/build.xml") &&
-				 !fileName.endsWith("/ext-web/build.xml")) {
-
-			if (fileName.startsWith(baseDirName + "webs/")) {
-				x += 5;
-			}
-		}
-		else {
+		if (!matcher.find()) {
 			return;
 		}
 
-		int y = fileName.indexOf(CharPool.SLASH, x);
-
-		String expectedProjectName = fileName.substring(x, y);
+		String expectedProjectName = matcher.group(1);
 
 		Element rootElement = document.getRootElement();
 
@@ -1396,6 +1360,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			"(?:(?:\\n){1,}+|\\</execute\\>)");
 	private final Pattern _poshiWholeTagPattern = Pattern.compile(
 		"<[^\\>^/]*\\/>");
+	private final Pattern _projectNamePattern = Pattern.compile(
+		"/(\\w*-(ext|hooks|layouttpl|portlet|theme|web))/build\\.xml$");
 	private String _solrElementsContent;
 	private String _tablesContent;
 	private final Map<String, String> _tablesContentMap = new HashMap<>();

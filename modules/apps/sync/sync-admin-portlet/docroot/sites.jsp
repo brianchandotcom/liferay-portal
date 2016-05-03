@@ -154,7 +154,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 
 			<liferay-ui:search-container-column-text
 				name="enabled"
-				translate="true"
+				translate="<%= true %>"
 				value='<%= syncSiteEnabled ? "yes" : "no" %>'
 			/>
 

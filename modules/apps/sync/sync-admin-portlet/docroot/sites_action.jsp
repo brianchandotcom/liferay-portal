@@ -45,7 +45,7 @@ String currentURL = currentURLObj.toString();
 
 			<portlet:actionURL name="updateSites" var="disableSiteURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="enabled" value="false" />
+				<portlet:param name="enabled" value="<%= Boolean.FALSE.toString() %>" />
 				<portlet:param name="groupIds" value="<%= groupId %>" />
 			</portlet:actionURL>
 
@@ -59,7 +59,7 @@ String currentURL = currentURLObj.toString();
 		<c:otherwise>
 			<portlet:actionURL name="updateSites" var="enableSiteURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="enabled" value="true" />
+				<portlet:param name="enabled" value="<%= Boolean.TRUE.toString() %>" />
 				<portlet:param name="groupIds" value="<%= groupId %>" />
 			</portlet:actionURL>
 

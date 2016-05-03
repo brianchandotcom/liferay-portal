@@ -2332,6 +2332,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected boolean isModulesFile(String absolutePath) {
+		return isModulesFile(absolutePath, false);
+	}
+
+	protected boolean isModulesFile(
+		String absolutePath, boolean includePlugins) {
+
+		if (includePlugins) {
+			return absolutePath.contains("/modules/");
+		}
+
 		try {
 			for (String directoryName :
 					getPluginsInsideModulesDirectoryNames()) {

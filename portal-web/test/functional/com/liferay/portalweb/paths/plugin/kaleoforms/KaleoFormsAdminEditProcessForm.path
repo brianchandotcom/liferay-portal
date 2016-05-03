@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHOOSE_FORM_BUTTON</td>
+	<td>//button[@data-name='${key_kfFormName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

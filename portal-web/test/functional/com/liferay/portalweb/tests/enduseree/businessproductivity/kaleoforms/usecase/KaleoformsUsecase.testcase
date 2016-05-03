@@ -2518,7 +2518,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
-	<command name="CompleteProcessLargeFieldSet" priority="4">
+	<command name="CompleteProcessLargeFieldSet" priority="2">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 

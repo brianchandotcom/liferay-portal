@@ -1596,7 +1596,7 @@
 		<execute macro="DDLDataDefinition#save" />
 	</command>
 
-	<command name="EditProcessFieldSetPaginationAndViewSelectedForm" priority="3">
+	<command name="EditProcessFieldSetPaginationAndViewSelectedForm" priority="2">
 		<description message="This is a use case for LPS-49037." />
 
 		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
@@ -3347,7 +3347,7 @@
 		<execute macro="KaleoFormsAdmin#viewInvalidDefinitionMessage" />
 	</command>
 
-	<command name="ViewFieldSetCreateHeaderTitle" priority="3">
+	<command name="ViewFieldSetCreateHeaderTitle" priority="2">
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
 		<execute macro="Navigator#openURL" />
@@ -3393,7 +3393,7 @@
 		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 	</command>
 
-	<command name="ViewFieldSetParentDefinitionIframeTitle" priority="3">
+	<command name="ViewFieldSetParentDefinitionIframeTitle" priority="2">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
@@ -3691,7 +3691,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 	</command>
 
-	<command name="ViewUnpublishedWorkflowDefinitionsMenulist" priority="3">
+	<command name="ViewUnpublishedWorkflowDefinitionsMenulist" priority="2">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

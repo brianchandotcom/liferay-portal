@@ -461,6 +461,15 @@ public class JournalArticlePersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_NotLArrayable() throws Exception {
+		_persistence.countByG_NotL(RandomTestUtil.nextLong(),
+			new String[] {
+				RandomTestUtil.randomString(), StringPool.BLANK, StringPool.NULL,
+				null, null
+			});
+	}
+
+	@Test
 	public void testCountByG_ST() throws Exception {
 		_persistence.countByG_ST(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt());

@@ -21,6 +21,8 @@ String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName
 
 String signInURL = themeDisplay.getURLSignIn();
 
+signInURL = HttpUtil.setParameter(signInURL, "windowState", LiferayWindowState.NORMAL.toString());
+
 if (portletName.equals(PortletKeys.FAST_LOGIN)) {
 	PortletURL fastLoginURL = PortletURLFactoryUtil.create(request, PortletKeys.FAST_LOGIN, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 

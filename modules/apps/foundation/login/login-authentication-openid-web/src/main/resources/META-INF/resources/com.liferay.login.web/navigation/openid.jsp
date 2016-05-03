@@ -20,7 +20,7 @@
 String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 %>
 
-<portlet:renderURL var="openIdURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+<portlet:renderURL var="openIdURL" windowState="<%= WindowState.NORMAL.toString() %>">
 	<portlet:param name="mvcRenderCommandName" value="/login/openid" />
 </portlet:renderURL>
 

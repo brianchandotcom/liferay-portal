@@ -152,7 +152,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 							icon="categories"
 							resultRow="<%= row %>"
 							rowChecker="<%= searchContainer.getRowChecker() %>"
-							subtitle="<%= curCategory.getDescription() %>"
+							subtitle="<%= curCategory.getDescription(locale) %>"
 							title="<%= curCategory.getName() %>"
 							url="<%= rowURL != null ? rowURL.toString() : null %>"
 						>

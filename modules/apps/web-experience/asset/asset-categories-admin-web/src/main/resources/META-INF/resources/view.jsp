@@ -148,7 +148,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 							icon="categories"
 							resultRow="<%= row %>"
 							rowChecker="<%= searchContainer.getRowChecker() %>"
-							subtitle="<%= vocabulary.getDescription() %>"
+							subtitle="<%= vocabulary.getDescription(locale) %>"
 							title="<%= vocabulary.getName() %>"
 							url="<%= rowURL != null ? rowURL.toString() : null %>"
 						>

@@ -45,10 +45,18 @@ navigation = navigation.trim();
 %>
 
 <c:if test="<%= Validator.isNotNull(navigation) %>">
-	<ul class="lfr-nav nav nav-tabs nav-tabs-default navigation">
+	<ul class="lfr-nav nav nav-tabs nav-tabs-default navigation" id="<portlet:namespace />navigation">
 		<%= navigation %>
 	</ul>
 </c:if>
+
+<aui:script>
+	var navigation = $('#<portlet:namespace />navigation');
+
+	if (navigation && navigation.children().length <= 1) {
+		navigation.remove();
+	}
+</aui:script>
 
 <%!
 private String _getSectionJsp(String name) {

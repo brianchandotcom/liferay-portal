@@ -36,7 +36,7 @@ portletDisplay.setShowBackIcon(false);
 	<portlet:param name="mvcRenderCommandName" value="/login/forgot_password" />
 </portlet:actionURL>
 
-<aui:form action="<%= forgotPasswordURL %>" method="post" name="fm">
+<aui:form action="<%= forgotPasswordURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
 
 	<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />

@@ -104,6 +104,16 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
 	}
 
 	@Override
+	public PushNotificationsDevice toEscapedModel() {
+		return new PushNotificationsDeviceWrapper(_pushNotificationsDevice.toEscapedModel());
+	}
+
+	@Override
+	public PushNotificationsDevice toUnescapedModel() {
+		return new PushNotificationsDeviceWrapper(_pushNotificationsDevice.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _pushNotificationsDevice.isCachedModel();
 	}
@@ -124,23 +134,12 @@ public class PushNotificationsDeviceWrapper implements PushNotificationsDevice,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.push.notifications.model.PushNotificationsDevice> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<PushNotificationsDevice> toCacheModel() {
 		return _pushNotificationsDevice.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.push.notifications.model.PushNotificationsDevice toEscapedModel() {
-		return new PushNotificationsDeviceWrapper(_pushNotificationsDevice.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.push.notifications.model.PushNotificationsDevice toUnescapedModel() {
-		return new PushNotificationsDeviceWrapper(_pushNotificationsDevice.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.push.notifications.model.PushNotificationsDevice pushNotificationsDevice) {
+	public int compareTo(PushNotificationsDevice pushNotificationsDevice) {
 		return _pushNotificationsDevice.compareTo(pushNotificationsDevice);
 	}
 

@@ -525,7 +525,7 @@ public abstract class PushNotificationsDeviceLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.push.notifications.service.PushNotificationsDeviceLocalService.class)
+	@BeanReference(type = PushNotificationsDeviceLocalService.class)
 	protected PushNotificationsDeviceLocalService pushNotificationsDeviceLocalService;
 	@BeanReference(type = PushNotificationsDevicePersistence.class)
 	protected PushNotificationsDevicePersistence pushNotificationsDevicePersistence;

@@ -1,0 +1,111 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
+String orderByCol = ParamUtil.getString(request, "orderByCol", "platform");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+OrderByComparator<PushNotificationsDevice> orderByComparator = PushNotificationsUtil.getPushNotificationsDeviceOrderByComparator(orderByCol, orderByType);
+
+int pushNotificationsDevicesCount = PushNotificationsDeviceLocalServiceUtil.getPushNotificationsDevicesCount();
+
+ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoaderProvider)request.getAttribute(PushNotificationsWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER);
+%>
+
+<c:if test="<%= pushNotificationsDevicesCount > 0 %>">
+	<liferay-frontend:management-bar>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-display-buttons
+				displayViews='<%= new String[] {"list"} %>'
+				portletURL="<%= renderResponse.createRenderURL() %>"
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+		</liferay-frontend:management-bar-buttons>
+
+		<%
+		PortletURL iteratorURL = renderResponse.createRenderURL();
+
+		iteratorURL.setParameter("displayStyle", displayStyle);
+		%>
+
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
+				portletURL="<%= renderResponse.createRenderURL() %>"
+			/>
+
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= orderByCol %>"
+				orderByType="<%= orderByType %>"
+				orderColumns='<%= new String[] {"platform"} %>'
+				portletURL="<%= iteratorURL %>"
+			/>
+		</liferay-frontend:management-bar-filters>
+	</liferay-frontend:management-bar>
+</c:if>
+
+<div class="container-fluid-1280">
+	<liferay-ui:search-container
+		emptyResultsMessage="there-are-no-devices"
+		iteratorURL="<%= portletURL %>"
+		total="<%= pushNotificationsDevicesCount %>"
+	>
+		<liferay-ui:search-container-results
+			results="<%= PushNotificationsDeviceLocalServiceUtil.getPushNotificationsDevices(searchContainer.getStart(), searchContainer.getEnd(), orderByComparator) %>"
+		/>
+
+		<liferay-ui:search-container-row
+			className="com.liferay.push.notifications.model.PushNotificationsDevice"
+			escapedModel="<%= true %>"
+			keyProperty="pushNotificationsDeviceId"
+			modelVar="pushNotificationsDevice"
+		>
+
+			<%
+			User deviceUser = UserLocalServiceUtil.getUser(pushNotificationsDevice.getUserId());
+			%>
+
+			<liferay-ui:search-container-column-text
+				name="full-name"
+				value="<%= deviceUser.getFullName() %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				property="token"
+			/>
+
+			<%
+			ResourceBundleLoader platformResourceBundleLoader = resourceBundleLoaderProvider.getResourceBundleLoader(pushNotificationsDevice.getPlatform());
+
+			ResourceBundle platformResourceBundle = platformResourceBundleLoader.loadResourceBundle(LanguageUtil.getLanguageId(request));
+			%>
+
+			<liferay-ui:search-container-column-text
+				name="platform"
+				value="<%= LanguageUtil.get(platformResourceBundle, pushNotificationsDevice.getPlatform()) %>"
+			/>
+
+			<liferay-ui:search-container-column-jsp
+				cssClass="list-group-item-field"
+				path="/push_notifications_device_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
+</div>

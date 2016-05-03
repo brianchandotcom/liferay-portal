@@ -129,6 +129,12 @@ buildLiferayAMDLoader {
 buildLodash {
 	eachFile new StripPathSegmentsAction(5)
 
+	filter {
+		String line ->
+
+		line.replace("typeof define == 'function'", "false && typeof define == 'function'")
+	}
+
 	from {
 		zipTree(configurations.lodash.singleFile)
 	}

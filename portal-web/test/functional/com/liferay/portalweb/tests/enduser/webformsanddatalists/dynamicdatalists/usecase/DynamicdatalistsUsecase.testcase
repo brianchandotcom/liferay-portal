@@ -348,7 +348,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRecordWithRepeatableField" priority="4">
+	<command name="AddRecordWithRepeatableTextField" priority="4">
 		<description message="This is a use case for LPS-65069." />
 
 		<execute macro="Navigator#openURL" />

@@ -1037,7 +1037,7 @@
 		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
 	</command>
 
-	<command name="PublishWorkflowDefinitionWithMultipleStartNodesAndViewErrorMessage" priority="3">
+	<command name="PublishWorkflowDefinitionWithMultipleStartNodesAndViewErrorMessage" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Workflow Definition" />
 		</execute>
@@ -1056,7 +1056,7 @@
 		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
 	</command>
 
-	<command name="PublishWorkflowDefinitionWithNoConnectorsAndViewErrorMessage" priority="3">
+	<command name="PublishWorkflowDefinitionWithNoConnectorsAndViewErrorMessage" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Workflow Definition" />
 		</execute>
@@ -1072,7 +1072,7 @@
 		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
 	</command>
 
-	<command name="PublishWorkflowDefinitionWithNoEndNodeAndViewErrorMessage" priority="5">
+	<command name="PublishWorkflowDefinitionWithNoEndNodeAndViewErrorMessage" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Workflow Definition" />
 		</execute>
@@ -1391,7 +1391,7 @@
 		<execute macro="KaleoDesigner#saveAsDraftWorkflowDefinitionViaKDCP" />
 	</command>
 
-	<command name="ViewAndPublishWorkflowDefinitionDraftViaKDCP" priority="5">
+	<command name="ViewAndPublishWorkflowDefinitionDraftViaKDCP" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelApps">
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>

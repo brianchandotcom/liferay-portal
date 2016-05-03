@@ -51,7 +51,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AssertCanEditPendingForm" priority="3">
+	<command name="AssertCanEditPendingForm" priority="4">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
@@ -302,7 +302,7 @@
 		</execute>
 	</command>
 
-	<command name="AssertPendingFormPresentAfterDeletingDifferentProcessDefinition" priority="3">
+	<command name="AssertPendingFormPresentAfterDeletingDifferentProcessDefinition" priority="4">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcess1Description" value="Kaleo Forms Process 1 Description" />
 		<var name="kfProcess1Name" value="Kaleo Forms 1 Process" />
@@ -471,7 +471,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignRolePermissionsAddProcessCP" priority="3">
+	<command name="AssignRolePermissionsAddProcessCP" priority="4">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -789,7 +789,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignRolePermissionsCompleteFormPG" priority="3">
+	<command name="AssignRolePermissionsCompleteFormPG" priority="4">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -1164,7 +1164,7 @@
 		</execute>
 	</command>
 
-	<command name="AssignRolePermissionsSubmitProcessPG" priority="3">
+	<command name="AssignRolePermissionsSubmitProcessPG" priority="4">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -7691,7 +7691,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewAssignedProcessRecords" priority="5">
+	<command name="ViewAssignedProcessRecords" priority="4">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -7815,7 +7815,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewEmailNotificationSentToTaskAssignees" priority="5">
+	<command name="ViewEmailNotificationSentToTaskAssignees" priority="4">
 		<description message="This is a use case for LPS-50688 and LPS-35263." />
 
 		<property name="test.assert.javascript.errors" value="false" />
@@ -8580,7 +8580,7 @@
 		<execute function="AssertElementNotPresent" locator1="KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME_2" />
 	</command>
 
-	<command name="ViewProcessWithComments" priority="5">
+	<command name="ViewProcessWithComments" priority="4">
 		<var name="commentList" value="Assigned initial task.,Updating the due date on a process assigned to my roles.,Assign process to Test Test.,Updating the due date on a process assigned to me.,Please make changes and resubmit.,Assigned initial task.,Resubmitting.,Assigned initial task.,Assign process to Test Test again.,Process is approved." />
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
@@ -8764,7 +8764,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewRejectedProcessRecords" priority="5">
+	<command name="ViewRejectedProcessRecords" priority="4">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -8893,7 +8893,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSubmittedProcessRecords" priority="5">
+	<command name="ViewSubmittedProcessRecords" priority="4">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 

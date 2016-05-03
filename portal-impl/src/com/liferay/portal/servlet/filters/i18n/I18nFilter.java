@@ -227,14 +227,16 @@ public class I18nFilter extends BasePortalFilter {
 			if (user != null) {
 				HttpSession session = request.getSession();
 
-				session.setAttribute(Globals.LOCALE_KEY, user.getLocale());
+				Locale locale = (Locale)session.getAttribute(
+					Globals.LOCALE_KEY);
+
+				return !userLanguageId.equals(LocaleUtil.toLanguageId(locale)) ?
+					LocaleUtil.toLanguageId(locale) : null;
 			}
 			else {
 				return _prependIfRequestedLocaleDiffersFromDefaultLocale(
 					defaultLanguageId, guestLanguageId);
 			}
-
-			return null;
 		}
 
 		return null;

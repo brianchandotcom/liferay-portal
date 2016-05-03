@@ -264,37 +264,36 @@ public class TableMapperTest {
 		long rightPrimaryKey1 = 3;
 		long rightPrimaryKey2 = 4;
 
-		Assert.assertTrue(
+		Assert.assertArrayEquals(
+			new long[] {rightPrimaryKey1},
 			_tableMapperImpl.addTableMappings(
 				companyId, leftPrimaryKey1, new long[] {rightPrimaryKey1}));
-
-		Assert.assertFalse(
+		Assert.assertArrayEquals(
+			new long[0],
 			_tableMapperImpl.addTableMappings(
 				companyId, leftPrimaryKey1, new long[] {rightPrimaryKey1}));
-
-		Assert.assertTrue(
+		Assert.assertArrayEquals(
+			new long[] {rightPrimaryKey2},
 			_tableMapperImpl.addTableMappings(
 				companyId, leftPrimaryKey1,
 				new long[] {rightPrimaryKey1, rightPrimaryKey2}));
-
 		Assert.assertEquals(
 			2,
 			_tableMapperImpl.deleteLeftPrimaryKeyTableMappings(
 				leftPrimaryKey1));
-
-		Assert.assertTrue(
+		Assert.assertArrayEquals(
+			new long[] {leftPrimaryKey1},
 			_tableMapperImpl.addTableMappings(
 				companyId, new long[] {leftPrimaryKey1}, rightPrimaryKey1));
-
-		Assert.assertFalse(
+		Assert.assertArrayEquals(
+			new long[0],
 			_tableMapperImpl.addTableMappings(
 				companyId, new long[] {leftPrimaryKey1}, rightPrimaryKey1));
-
-		Assert.assertTrue(
+		Assert.assertArrayEquals(
+			new long[] {leftPrimaryKey2},
 			_tableMapperImpl.addTableMappings(
 				companyId, new long[] {leftPrimaryKey1, leftPrimaryKey2},
 				rightPrimaryKey1));
-
 		Assert.assertEquals(
 			2,
 			_tableMapperImpl.deleteRightPrimaryKeyTableMappings(
@@ -867,15 +866,15 @@ public class TableMapperTest {
 		long rightPrimaryKey1 = 3;
 		long rightPrimaryKey2 = 4;
 
-		Assert.assertFalse(
+		Assert.assertArrayEquals(
+			new long[0],
 			_tableMapperImpl.deleteTableMappings(
 				leftPrimaryKey1, new long[] {rightPrimaryKey1}));
-
 		Assert.assertTrue(
 			_tableMapperImpl.addTableMapping(
 				companyId, leftPrimaryKey1, rightPrimaryKey1));
-
-		Assert.assertTrue(
+		Assert.assertArrayEquals(
+			new long[] {rightPrimaryKey1},
 			_tableMapperImpl.deleteTableMappings(
 				leftPrimaryKey1,
 				new long[] {rightPrimaryKey1, rightPrimaryKey2}));
@@ -886,15 +885,15 @@ public class TableMapperTest {
 		leftToRightPortalCache.put(
 			leftPrimaryKey1, new long[] {rightPrimaryKey1});
 
-		Assert.assertFalse(
+		Assert.assertArrayEquals(
+			new long[0],
 			_tableMapperImpl.deleteTableMappings(
 				leftPrimaryKey1, new long[] {rightPrimaryKey1}));
-
 		Assert.assertTrue(
 			_tableMapperImpl.addTableMapping(
 				companyId, leftPrimaryKey1, rightPrimaryKey1));
-
-		Assert.assertTrue(
+		Assert.assertArrayEquals(
+			new long[] {leftPrimaryKey1},
 			_tableMapperImpl.deleteTableMappings(
 				new long[] {leftPrimaryKey1, leftPrimaryKey2},
 				rightPrimaryKey1));
@@ -905,7 +904,8 @@ public class TableMapperTest {
 		rightToLeftPortalCache.put(
 			rightPrimaryKey1, new long[] {leftPrimaryKey1});
 
-		Assert.assertFalse(
+		Assert.assertArrayEquals(
+			new long[0],
 			_tableMapperImpl.deleteTableMappings(
 				new long[] {leftPrimaryKey1}, rightPrimaryKey1));
 	}

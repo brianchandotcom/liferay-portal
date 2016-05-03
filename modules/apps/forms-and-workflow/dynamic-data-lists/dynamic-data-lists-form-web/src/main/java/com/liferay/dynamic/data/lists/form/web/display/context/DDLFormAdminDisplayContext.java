@@ -47,7 +47,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerge;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -99,7 +99,7 @@ public class DDLFormAdminDisplayContext {
 		DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer,
 		DDMFormRenderer ddmFormRenderer,
 		DDMFormValuesFactory ddmFormValuesFactory,
-		DDMFormValuesMerge ddmFormValuesMerge,
+		DDMFormValuesMerger ddmFormValuesMerger,
 		DDMStructureLocalService ddmStructureLocalService,
 		JSONFactory jsonFactory, StorageEngine storageEngine,
 		WorkflowEngineManager workflowEngineManager) {
@@ -118,7 +118,7 @@ public class DDLFormAdminDisplayContext {
 		_ddmFormLayoutJSONSerializer = ddmFormLayoutJSONSerializer;
 		_ddmFormRenderer = ddmFormRenderer;
 		_ddmFormValuesFactory = ddmFormValuesFactory;
-		_ddmFormValuesMerge = ddmFormValuesMerge;
+		_ddmFormValuesMerger = ddmFormValuesMerger;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_jsonFactory = jsonFactory;
 		_storageEngine = storageEngine;
@@ -135,7 +135,7 @@ public class DDLFormAdminDisplayContext {
 			PortalUtil.getHttpServletRequest(_renderRequest),
 			PortalUtil.getHttpServletResponse(_renderResponse),
 			_ddlRecordLocalService, _ddmFormRenderer, _ddmFormValuesFactory,
-			_ddmFormValuesMerge, _ddmStructureLocalService);
+			_ddmFormValuesMerger, _ddmStructureLocalService);
 	}
 
 	public DDLFormViewRecordsDisplayContext
@@ -622,7 +622,7 @@ public class DDLFormAdminDisplayContext {
 	private final DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer;
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
-	private final DDMFormValuesMerge _ddmFormValuesMerge;
+	private final DDMFormValuesMerger _ddmFormValuesMerger;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private DDMStructure _ddmStucture;
 	private String _displayStyle;

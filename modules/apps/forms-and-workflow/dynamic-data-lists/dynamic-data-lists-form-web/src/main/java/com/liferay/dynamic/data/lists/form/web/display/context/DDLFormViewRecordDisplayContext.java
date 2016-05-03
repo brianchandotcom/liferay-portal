@@ -30,7 +30,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerge;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -51,14 +51,14 @@ public class DDLFormViewRecordDisplayContext {
 		DDLRecordLocalService ddlRecordLocalService,
 		DDMFormRenderer ddmFormRenderer,
 		DDMFormValuesFactory ddmFormValuesFactory,
-		DDMFormValuesMerge ddmFormValuesMerge,
+		DDMFormValuesMerger ddmFormValuesMerger,
 		DDMStructureLocalService ddmStructureLocalService) {
 
 		_httpServletResponse = httpServletResponse;
 		_ddlRecordLocalService = ddlRecordLocalService;
 		_ddmFormRenderer = ddmFormRenderer;
 		_ddmFormValuesFactory = ddmFormValuesFactory;
-		_ddmFormValuesMerge = ddmFormValuesMerge;
+		_ddmFormValuesMerger = ddmFormValuesMerger;
 		_ddmStructureLocalService = ddmStructureLocalService;
 
 		_ddlFormAdminRequestHelper = new DDLFormAdminRequestHelper(
@@ -77,7 +77,7 @@ public class DDLFormViewRecordDisplayContext {
 		DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
 			renderRequest, ddmForm);
 
-		ddmFormValues = _ddmFormValuesMerge.mergeDDMFormValues(
+		ddmFormValues = _ddmFormValuesMerger.merge(
 			record.getDDMFormValues(), ddmFormValues);
 
 		DDMFormRenderingContext ddmFormRenderingContext =
@@ -176,7 +176,7 @@ public class DDLFormViewRecordDisplayContext {
 	private final DDLRecordLocalService _ddlRecordLocalService;
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
-	private final DDMFormValuesMerge _ddmFormValuesMerge;
+	private final DDMFormValuesMerger _ddmFormValuesMerger;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private DDMStructure _ddmStucture;
 	private final HttpServletResponse _httpServletResponse;

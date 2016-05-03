@@ -289,11 +289,16 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 				continue;
 			}
 
-			portalCache.unregisterPortalCacheListeners();
+			removePortalCacheListenersRegisteredByPortalCacheConfiguration(
+				portalCache);
 
 			_initPortalCacheListeners(portalCache, portalCacheConfiguration);
 		}
 	}
+
+	protected abstract void
+		removePortalCacheListenersRegisteredByPortalCacheConfiguration(
+			PortalCache<K, V> portalCache);
 
 	protected final AggregatedPortalCacheManagerListener
 		aggregatedPortalCacheManagerListener =

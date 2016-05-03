@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import com.liferay.sync.exception.NoSuchDLObjectException;
 import com.liferay.sync.model.SyncDLObject;
@@ -56,6 +55,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -1807,7 +1807,7 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 			if ((list != null) && !list.isEmpty()) {
 				for (SyncDLObject syncDLObject : list) {
 					if ((repositoryId != syncDLObject.getRepositoryId()) ||
-							Validator.equals(event, syncDLObject.getEvent())) {
+							Objects.equals(event, syncDLObject.getEvent())) {
 						list = null;
 
 						break;
@@ -2393,7 +2393,7 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 			if ((list != null) && !list.isEmpty()) {
 				for (SyncDLObject syncDLObject : list) {
 					if ((repositoryId != syncDLObject.getRepositoryId()) ||
-							!Validator.equals(type, syncDLObject.getType())) {
+							!Objects.equals(type, syncDLObject.getType())) {
 						list = null;
 
 						break;
@@ -2963,7 +2963,7 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 								syncDLObject.getTreePath(), treePath,
 								CharPool.UNDERLINE, CharPool.PERCENT,
 								CharPool.BACK_SLASH, true) ||
-							Validator.equals(event, syncDLObject.getEvent())) {
+							Objects.equals(event, syncDLObject.getEvent())) {
 						list = null;
 
 						break;
@@ -3593,8 +3593,8 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SyncDLObject syncDLObject : list) {
-					if (!Validator.equals(version, syncDLObject.getVersion()) ||
-							!Validator.equals(type, syncDLObject.getType())) {
+					if (!Objects.equals(version, syncDLObject.getVersion()) ||
+							!Objects.equals(type, syncDLObject.getType())) {
 						list = null;
 
 						break;
@@ -4186,7 +4186,7 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 		if (result instanceof SyncDLObject) {
 			SyncDLObject syncDLObject = (SyncDLObject)result;
 
-			if (!Validator.equals(type, syncDLObject.getType()) ||
+			if (!Objects.equals(type, syncDLObject.getType()) ||
 					(typePK != syncDLObject.getTypePK())) {
 				result = null;
 			}
@@ -4478,7 +4478,7 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 				for (SyncDLObject syncDLObject : list) {
 					if ((modifiedTime >= syncDLObject.getModifiedTime()) ||
 							(repositoryId != syncDLObject.getRepositoryId()) ||
-							Validator.equals(event, syncDLObject.getEvent())) {
+							Objects.equals(event, syncDLObject.getEvent())) {
 						list = null;
 
 						break;
@@ -5457,7 +5457,7 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 				for (SyncDLObject syncDLObject : list) {
 					if ((repositoryId != syncDLObject.getRepositoryId()) ||
 							(parentFolderId != syncDLObject.getParentFolderId()) ||
-							!Validator.equals(type, syncDLObject.getType())) {
+							!Objects.equals(type, syncDLObject.getType())) {
 						list = null;
 
 						break;

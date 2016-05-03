@@ -58,6 +58,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -201,7 +202,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SyncDevice syncDevice : list) {
-					if (!Validator.equals(uuid, syncDevice.getUuid())) {
+					if (!Objects.equals(uuid, syncDevice.getUuid())) {
 						list = null;
 
 						break;
@@ -756,7 +757,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (SyncDevice syncDevice : list) {
-					if (!Validator.equals(uuid, syncDevice.getUuid()) ||
+					if (!Objects.equals(uuid, syncDevice.getUuid()) ||
 							(companyId != syncDevice.getCompanyId())) {
 						list = null;
 

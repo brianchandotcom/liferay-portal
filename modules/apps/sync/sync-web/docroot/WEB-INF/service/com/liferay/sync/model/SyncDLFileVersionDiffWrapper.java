@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -117,6 +117,16 @@ public class SyncDLFileVersionDiffWrapper implements SyncDLFileVersionDiff,
 	}
 
 	@Override
+	public SyncDLFileVersionDiff toEscapedModel() {
+		return new SyncDLFileVersionDiffWrapper(_syncDLFileVersionDiff.toEscapedModel());
+	}
+
+	@Override
+	public SyncDLFileVersionDiff toUnescapedModel() {
+		return new SyncDLFileVersionDiffWrapper(_syncDLFileVersionDiff.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _syncDLFileVersionDiff.isCachedModel();
 	}
@@ -137,23 +147,12 @@ public class SyncDLFileVersionDiffWrapper implements SyncDLFileVersionDiff,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.sync.model.SyncDLFileVersionDiff> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<SyncDLFileVersionDiff> toCacheModel() {
 		return _syncDLFileVersionDiff.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.sync.model.SyncDLFileVersionDiff toEscapedModel() {
-		return new SyncDLFileVersionDiffWrapper(_syncDLFileVersionDiff.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.sync.model.SyncDLFileVersionDiff toUnescapedModel() {
-		return new SyncDLFileVersionDiffWrapper(_syncDLFileVersionDiff.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.sync.model.SyncDLFileVersionDiff syncDLFileVersionDiff) {
+	public int compareTo(SyncDLFileVersionDiff syncDLFileVersionDiff) {
 		return _syncDLFileVersionDiff.compareTo(syncDLFileVersionDiff);
 	}
 
@@ -390,7 +389,7 @@ public class SyncDLFileVersionDiffWrapper implements SyncDLFileVersionDiff,
 
 		SyncDLFileVersionDiffWrapper syncDLFileVersionDiffWrapper = (SyncDLFileVersionDiffWrapper)obj;
 
-		if (Validator.equals(_syncDLFileVersionDiff,
+		if (Objects.equals(_syncDLFileVersionDiff,
 					syncDLFileVersionDiffWrapper._syncDLFileVersionDiff)) {
 			return true;
 		}

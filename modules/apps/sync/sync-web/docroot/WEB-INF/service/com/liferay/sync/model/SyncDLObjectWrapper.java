@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -256,6 +256,16 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	}
 
 	@Override
+	public SyncDLObject toEscapedModel() {
+		return new SyncDLObjectWrapper(_syncDLObject.toEscapedModel());
+	}
+
+	@Override
+	public SyncDLObject toUnescapedModel() {
+		return new SyncDLObjectWrapper(_syncDLObject.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _syncDLObject.isCachedModel();
 	}
@@ -276,22 +286,12 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.sync.model.SyncDLObject> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<SyncDLObject> toCacheModel() {
 		return _syncDLObject.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.sync.model.SyncDLObject toEscapedModel() {
-		return new SyncDLObjectWrapper(_syncDLObject.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.sync.model.SyncDLObject toUnescapedModel() {
-		return new SyncDLObjectWrapper(_syncDLObject.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(com.liferay.sync.model.SyncDLObject syncDLObject) {
+	public int compareTo(SyncDLObject syncDLObject) {
 		return _syncDLObject.compareTo(syncDLObject);
 	}
 
@@ -988,7 +988,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 
 		SyncDLObjectWrapper syncDLObjectWrapper = (SyncDLObjectWrapper)obj;
 
-		if (Validator.equals(_syncDLObject, syncDLObjectWrapper._syncDLObject)) {
+		if (Objects.equals(_syncDLObject, syncDLObjectWrapper._syncDLObject)) {
 			return true;
 		}
 

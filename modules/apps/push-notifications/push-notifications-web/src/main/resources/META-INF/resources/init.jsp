@@ -47,6 +47,6 @@ page import="com.liferay.push.notifications.web.util.ResourceBundleLoaderProvide
 
 <liferay-frontend:defineObjects />
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />

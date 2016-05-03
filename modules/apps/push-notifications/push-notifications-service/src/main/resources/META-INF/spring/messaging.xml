@@ -11,7 +11,7 @@
 
 	<!-- Configurator -->
 
-	<bean id="messagingConfigurator.misc" class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator">
+	<bean class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator" id="messagingConfigurator.misc">
 		<property name="destinationConfigurations">
 			<util:set>
 				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration">

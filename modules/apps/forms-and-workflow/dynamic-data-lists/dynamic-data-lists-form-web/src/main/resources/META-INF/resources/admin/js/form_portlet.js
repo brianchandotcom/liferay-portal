@@ -105,7 +105,11 @@ AUI.add(
 
 						editForm.set('onSubmit', A.bind('_onSubmitEditForm', instance));
 
+						var formBuilder = instance.get('formBuilder');
+
 						instance._eventHandlers = [
+							formBuilder._layoutBuilder.after('layout-builder:moveEnd', A.bind(instance._afterFormBuilderLayoutBuilderMoveEnd, instance)),
+							formBuilder._layoutBuilder.after('layout-builder:moveStart', A.bind(instance._afterFormBuilderLayoutBuilderMoveStart, instance)),
 							instance.one('.btn-cancel').on('click', A.bind('_onCancel', instance)),
 							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
 						];
@@ -137,6 +141,38 @@ AUI.add(
 								}
 							);
 						}
+					},
+
+					disableFormDescription: function() {
+						var instance = this;
+
+						var formDescriptionEditor = CKEDITOR.instances[instance.ns('descriptionEditor')];
+
+						formDescriptionEditor.element.$.contentEditable = false;
+					},
+
+					disableFormTitle: function() {
+						var instance = this;
+
+						var formTitleEditor = CKEDITOR.instances[instance.ns('nameEditor')];
+
+						formTitleEditor.element.$.contentEditable = false;
+					},
+
+					enableFormDescription: function() {
+						var instance = this;
+
+						var formDescriptionEditor = CKEDITOR.instances[instance.ns('descriptionEditor')];
+
+						formDescriptionEditor.element.$.contentEditable = true;
+					},
+
+					enableFormTitle: function() {
+						var instance = this;
+
+						var formTitleEditor = CKEDITOR.instances[instance.ns('nameEditor')];
+
+						formTitleEditor.element.$.contentEditable = true;
 					},
 
 					getState: function() {
@@ -295,6 +331,20 @@ AUI.add(
 						var editForm = instance.get('editForm');
 
 						submitForm(editForm.form);
+					},
+
+					_afterFormBuilderLayoutBuilderMoveEnd: function() {
+						var instance = this;
+
+						instance.enableFormDescription();
+						instance.enableFormTitle();
+					},
+
+					_afterFormBuilderLayoutBuilderMoveStart: function() {
+						var instance = this;
+
+						instance.disableFormDescription();
+						instance.disableFormTitle();
 					},
 
 					_getDescription: function() {

@@ -86,6 +86,7 @@ AUI.add(
 							];
 						}
 
+						instance.after('disabledChange', A.bind(instance._afterDisabledChange, instance));
 						instance.on('selectedChange', A.bind(instance._afterSelectionChange, instance));
 					},
 
@@ -129,6 +130,14 @@ AUI.add(
 						instance.set('items', items);
 					},
 
+					_afterDisabledChange: function() {
+						var instance = this;
+
+						var itemsNode = instance.get('itemsNodeList');
+
+						itemsNode.addClass('disabled');
+					},
+
 					_afterSelectionChange: function(event) {
 						var instance = this;
 
@@ -168,6 +177,13 @@ AUI.add(
 						var currentTarget = event.currentTarget;
 
 						var index = items.indexOf(currentTarget);
+
+						if (instance.get('disabled')) {
+							event.stopPropagation();
+							event.preventDefault();
+
+							return;
+						}
 
 						instance.set('selected', index);
 					},

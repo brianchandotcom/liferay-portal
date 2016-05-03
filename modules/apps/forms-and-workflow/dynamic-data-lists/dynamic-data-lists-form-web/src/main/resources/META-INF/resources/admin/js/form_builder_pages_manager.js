@@ -89,6 +89,58 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandlers)).detach();
 					},
 
+					disablePaginations: function() {
+						var instance = this;
+
+						FormBuilderPagesManager.superclass.disablePaginations.apply(instance, arguments);
+
+						instance._toggleDisableWizard(true);
+					},
+
+					enablePaginations: function() {
+						var instance = this;
+
+						FormBuilderPagesManager.superclass.enablePaginations.apply(instance, arguments);
+
+						instance._toggleDisableWizard(false);
+					},
+
+					toggleDisablePageControlTrigger: function(disabled) {
+						var instance = this;
+
+						var builder = instance.get('builder');
+
+						var boundingBox = builder.get('boundingBox');
+
+						boundingBox.all('.' + CSS_FORM_BUILDER_CONTROLS_TRIGGER).toggleClass('disabled', disabled);
+					},
+
+					toggleDisablePageDescription: function(disabled) {
+						var instance = this;
+
+						var pageDescriptionField = instance.get('pageHeader').one('.' + CSS_PAGE_HEADER_DESCRIPTION);
+
+						if (disabled) {
+							pageDescriptionField.setAttribute('disabled', '');
+						}
+						else {
+							pageDescriptionField.removeAttribute('disabled');
+						}
+					},
+
+					toggleDisablePageTitle: function(disabled) {
+						var instance = this;
+
+						var pageTitleField = instance.get('pageHeader').one('.' + CSS_PAGE_HEADER_TITLE);
+
+						if (disabled) {
+							pageTitleField.setAttribute('disabled', '');
+						}
+						else {
+							pageTitleField.removeAttribute('disabled');
+						}
+					},
+
 					_addWizardPage: function() {
 						var instance = this;
 
@@ -264,6 +316,10 @@ AUI.add(
 						var popover = this._getPopover();
 
 						event.stopPropagation();
+
+						if (event.currentTarget.hasClass('disabled')) {
+							return;
+						}
 
 						popover.set(
 							'align',
@@ -484,6 +540,12 @@ AUI.add(
 
 						wizard.set('selected', instance.get('activePageNumber') - 1);
 						wizard.set('items', instance._createWizardItems());
+					},
+
+					_toggleDisableWizard: function(disabled) {
+						var instance = this;
+
+						instance._getWizard().set('disabled', disabled);
 					},
 
 					_uiSetActivePageNumber: function(event) {

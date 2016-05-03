@@ -91,6 +91,10 @@ AUI.add(
 				var instance = this;
 
 				instance._removeMovingMessage();
+
+				instance._pageManager.toggleDisablePageControlTrigger(false);
+				instance._pageManager.toggleDisablePageDescription(false);
+				instance._pageManager.toggleDisablePageTitle(false);
 			},
 
 			_onLayoutMoveStart: function(event) {
@@ -101,6 +105,10 @@ AUI.add(
 				if (A.instanceOf(row, A.LayoutRow)) {
 					instance._showMovingRowMessage(row);
 				}
+
+				instance._pageManager.toggleDisablePageControlTrigger(true);
+				instance._pageManager.toggleDisablePageDescription(true);
+				instance._pageManager.toggleDisablePageTitle(true);
 			},
 
 			_removeMovingMessage: function() {

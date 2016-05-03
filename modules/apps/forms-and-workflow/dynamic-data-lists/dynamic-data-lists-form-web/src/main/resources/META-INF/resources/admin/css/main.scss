@@ -62,12 +62,6 @@ $horizontal-spacing: 35px;
 		top: 0;
 	}
 
-	.liferay-ddm-form-renderer-wizard-navigation-allowed {
-		> li {
-			cursor: pointer;
-		}
-	}
-
 	select.form-control[multiple] {
 		height: auto;
 	}
@@ -755,8 +749,12 @@ $horizontal-spacing: 35px;
 		}
 	}
 
-	.form-builder-controls-trigger {
+	.form-builder-controls-trigger,
+	.form-builder-controls-trigger.disabled:hover {
 		color: #B0BEC9;
+	}
+
+	.form-builder-controls-trigger {
 		display: block;
 		font-size: 20px;
 		line-height: 0;
@@ -765,6 +763,10 @@ $horizontal-spacing: 35px;
 		right: 0;
 		text-decoration: none;
 		top: 0;
+
+		&.disabled {
+			cursor: not-allowed;
+		}
 
 		&:hover {
 			color: #4A90E2;
@@ -1037,10 +1039,14 @@ $horizontal-spacing: 35px;
 		top: 0;
 	}
 
-	.liferay-ddm-form-renderer-wizard-navigation-allowed {
-		> li {
-			cursor: pointer;
+	.liferay-ddm-form-renderer-wizard-disabled {
+		.liferay-ddm-form-renderer-wizard-navigation-allowed > li {
+			cursor: not-allowed;
 		}
+	}
+
+	.liferay-ddm-form-renderer-wizard-navigation-allowed > li {
+		cursor: pointer;
 	}
 
 	.toggle-switch {

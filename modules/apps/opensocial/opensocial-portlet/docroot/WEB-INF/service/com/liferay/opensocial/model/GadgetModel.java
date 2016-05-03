@@ -239,19 +239,19 @@ public interface GadgetModel extends BaseModel<Gadget>, ShardedModel, StagedMode
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.opensocial.model.Gadget gadget);
+	public int compareTo(Gadget gadget);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.opensocial.model.Gadget> toCacheModel();
+	public CacheModel<Gadget> toCacheModel();
 
 	@Override
-	public com.liferay.opensocial.model.Gadget toEscapedModel();
+	public Gadget toEscapedModel();
 
 	@Override
-	public com.liferay.opensocial.model.Gadget toUnescapedModel();
+	public Gadget toUnescapedModel();
 
 	@Override
 	public String toString();

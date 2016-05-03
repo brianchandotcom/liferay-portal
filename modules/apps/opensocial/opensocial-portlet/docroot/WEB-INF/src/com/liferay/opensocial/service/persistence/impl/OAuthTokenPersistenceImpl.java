@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -55,6 +54,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -210,8 +210,8 @@ public class OAuthTokenPersistenceImpl extends BasePersistenceImpl<OAuthToken>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (OAuthToken oAuthToken : list) {
-					if (!Validator.equals(gadgetKey, oAuthToken.getGadgetKey()) ||
-							!Validator.equals(serviceName,
+					if (!Objects.equals(gadgetKey, oAuthToken.getGadgetKey()) ||
+							!Objects.equals(serviceName,
 								oAuthToken.getServiceName())) {
 						list = null;
 
@@ -841,10 +841,10 @@ public class OAuthTokenPersistenceImpl extends BasePersistenceImpl<OAuthToken>
 			OAuthToken oAuthToken = (OAuthToken)result;
 
 			if ((userId != oAuthToken.getUserId()) ||
-					!Validator.equals(gadgetKey, oAuthToken.getGadgetKey()) ||
-					!Validator.equals(serviceName, oAuthToken.getServiceName()) ||
+					!Objects.equals(gadgetKey, oAuthToken.getGadgetKey()) ||
+					!Objects.equals(serviceName, oAuthToken.getServiceName()) ||
 					(moduleId != oAuthToken.getModuleId()) ||
-					!Validator.equals(tokenName, oAuthToken.getTokenName())) {
+					!Objects.equals(tokenName, oAuthToken.getTokenName())) {
 				result = null;
 			}
 		}

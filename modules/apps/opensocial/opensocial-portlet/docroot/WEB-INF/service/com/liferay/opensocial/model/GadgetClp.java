@@ -593,7 +593,7 @@ public class GadgetClp extends BaseModelImpl<Gadget> implements Gadget {
 	private String _portletCategoryNames;
 	private Date _lastPublishDate;
 	private BaseModel<?> _gadgetRemoteModel;
-	private Class<?> _clpSerializerClass = com.liferay.opensocial.service.ClpSerializer.class;
+	private Class<?> _clpSerializerClass = ClpSerializer.class;
 	private boolean _entityCacheEnabled;
 	private boolean _finderCacheEnabled;
 }

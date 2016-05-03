@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -163,6 +163,16 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	}
 
 	@Override
+	public OAuthToken toEscapedModel() {
+		return new OAuthTokenWrapper(_oAuthToken.toEscapedModel());
+	}
+
+	@Override
+	public OAuthToken toUnescapedModel() {
+		return new OAuthTokenWrapper(_oAuthToken.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _oAuthToken.isCachedModel();
 	}
@@ -183,22 +193,12 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	}
 
 	@Override
-	public com.liferay.opensocial.model.OAuthToken toEscapedModel() {
-		return new OAuthTokenWrapper(_oAuthToken.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.opensocial.model.OAuthToken toUnescapedModel() {
-		return new OAuthTokenWrapper(_oAuthToken.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.opensocial.model.OAuthToken> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<OAuthToken> toCacheModel() {
 		return _oAuthToken.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(com.liferay.opensocial.model.OAuthToken oAuthToken) {
+	public int compareTo(OAuthToken oAuthToken) {
 		return _oAuthToken.compareTo(oAuthToken);
 	}
 
@@ -595,7 +595,7 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 
 		OAuthTokenWrapper oAuthTokenWrapper = (OAuthTokenWrapper)obj;
 
-		if (Validator.equals(_oAuthToken, oAuthTokenWrapper._oAuthToken)) {
+		if (Objects.equals(_oAuthToken, oAuthTokenWrapper._oAuthToken)) {
 			return true;
 		}
 

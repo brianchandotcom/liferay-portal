@@ -210,19 +210,19 @@ public interface EntryModel extends BaseModel<Entry> {
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.chat.model.Entry entry);
+	public int compareTo(Entry entry);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.chat.model.Entry> toCacheModel();
+	public CacheModel<Entry> toCacheModel();
 
 	@Override
-	public com.liferay.chat.model.Entry toEscapedModel();
+	public Entry toEscapedModel();
 
 	@Override
-	public com.liferay.chat.model.Entry toUnescapedModel();
+	public Entry toUnescapedModel();
 
 	@Override
 	public String toString();

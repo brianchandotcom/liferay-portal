@@ -20,12 +20,12 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -106,6 +106,16 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
+	public Entry toEscapedModel() {
+		return new EntryWrapper(_entry.toEscapedModel());
+	}
+
+	@Override
+	public Entry toUnescapedModel() {
+		return new EntryWrapper(_entry.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _entry.isCachedModel();
 	}
@@ -121,27 +131,17 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	}
 
 	@Override
-	public com.liferay.chat.model.Entry toEscapedModel() {
-		return new EntryWrapper(_entry.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.chat.model.Entry toUnescapedModel() {
-		return new EntryWrapper(_entry.toUnescapedModel());
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _entry.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.chat.model.Entry> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<Entry> toCacheModel() {
 		return _entry.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(com.liferay.chat.model.Entry entry) {
+	public int compareTo(Entry entry) {
 		return _entry.compareTo(entry);
 	}
 
@@ -398,7 +398,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 
 		EntryWrapper entryWrapper = (EntryWrapper)obj;
 
-		if (Validator.equals(_entry, entryWrapper._entry)) {
+		if (Objects.equals(_entry, entryWrapper._entry)) {
 			return true;
 		}
 

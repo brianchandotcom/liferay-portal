@@ -615,7 +615,7 @@ public abstract class StatusLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected EntryPersistence entryPersistence;
 	@BeanReference(type = EntryFinder.class)
 	protected EntryFinder entryFinder;
-	@BeanReference(type = com.liferay.chat.service.StatusLocalService.class)
+	@BeanReference(type = StatusLocalService.class)
 	protected StatusLocalService statusLocalService;
 	@BeanReference(type = StatusPersistence.class)
 	protected StatusPersistence statusPersistence;

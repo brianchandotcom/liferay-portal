@@ -459,7 +459,7 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	public long[] getCategoryIds(java.lang.String className, long classPK);
 
 	public void addAssetEntryAssetCategories(long entryId,
-		List<AssetCategory> AssetCategories);
+		List<AssetCategory> assetCategories);
 
 	public void addAssetEntryAssetCategories(long entryId, long[] categoryIds);
 
@@ -478,7 +478,7 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	public void clearAssetEntryAssetCategories(long entryId);
 
 	public void deleteAssetEntryAssetCategories(long entryId,
-		List<AssetCategory> AssetCategories);
+		List<AssetCategory> assetCategories);
 
 	public void deleteAssetEntryAssetCategories(long entryId, long[] categoryIds);
 

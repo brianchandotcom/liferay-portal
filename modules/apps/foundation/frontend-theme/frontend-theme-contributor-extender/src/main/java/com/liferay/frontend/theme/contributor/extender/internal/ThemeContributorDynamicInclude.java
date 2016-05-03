@@ -248,8 +248,8 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 			for (String resourceURL : resourceURLs) {
 				String staticResourceURL = PortalUtil.getStaticResourceURL(
 					request,
-					themeDisplay.getPortalURL() +
-						themeDisplay.getPathContext() + resourceURL,
+					themeDisplay.getPortalURL() + PortalUtil.getPathProxy() +
+						resourceURL,
 					_themeLastModified);
 
 				linkRenderer.render(printWriter, staticResourceURL);

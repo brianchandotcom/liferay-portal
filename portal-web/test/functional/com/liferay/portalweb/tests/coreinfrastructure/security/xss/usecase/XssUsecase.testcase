@@ -1,4 +1,5 @@
 <definition component-name="portal-security">
+	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="XSS" />
 
 	<set-up>
@@ -26,27 +27,29 @@
 	<command name="ValidateXSSVulnerabilities" priority="5">
 		<property name="portal.acceptance" value="true" />
 
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
 		<var name="maliciousURL1">
 			<![CDATA[
-				http://localhost:8080/group/guest/home?p_p_id=82&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_82_struts_action=%2Flanguage%2Fview&languageId=&lt;/script&gt;&lt;script&gt;alert(document.domain)&lt;/script>
+				${portalURL}/group/guest/home?p_p_id=82&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_82_struts_action=%2Flanguage%2Fview&languageId=&lt;/script&gt;&lt;script&gt;alert(document.domain)&lt;/script>
 			]]>
 		</var>
 
 		<var name="maliciousURL2">
 			<![CDATA[
-				http://localhost:8080/group/guest/home?p_p_id=82&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_82_struts_action=%2Flanguage%2Fview&languageId=&lt;/script&gt;&lt;script&gt;alert(document.domain)&lt;/script&gt;
+				${portalURL}/group/guest/home?p_p_id=82&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_82_struts_action=%2Flanguage%2Fview&languageId=&lt;/script&gt;&lt;script&gt;alert(document.domain)&lt;/script&gt;
 			]]>
 		</var>
 
 		<var name="maliciousURL3">
 			<![CDATA[
-				http://localhost:8080/group/guest/home?p_p_id=82&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_82_struts_action=%2Flanguage%2Fview&languageId=%3C/script%3E%3Cscript%3Ealert(document.domain)%3C/script%3E
+				${portalURL}/group/guest/home?p_p_id=82&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_82_struts_action=%2Flanguage%2Fview&languageId=%3C/script%3E%3Cscript%3Ealert(document.domain)%3C/script%3E
 			]]>
 		</var>
 
 		<var name="maliciousURL4">
 			<![CDATA[
-				http://localhost:8080/group/guest/home?p_p_id=82&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_82_struts_action=%2Flanguage%2Fview&languageId=</script><script>alert(document.domain)</script>
+				${portalURL}/group/guest/home?p_p_id=82&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_pos=1&p_p_col_count=2&_82_struts_action=%2Flanguage%2Fview&languageId=</script><script>alert(document.domain)</script>
 			]]>
 		</var>
 

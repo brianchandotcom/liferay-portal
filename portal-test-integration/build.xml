@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-integration" basedir="." default="compile">
+<project basedir="." default="compile" name="portal-test-integration">
 	<import file="../build-common-java.xml" />
 
 	<property name="deploy.dir" value="${liferay.home}/osgi/test" />
@@ -21,7 +21,7 @@
 				src.dir="@{src.dir}"
 			>
 				<deploy-post>
-					<copy file="@{jar.file}.jar" tofile="@{deploy.dir}/${manifest.bundle.symbolic.name}.jar" preservelastmodified="true" />
+					<copy file="@{jar.file}.jar" preservelastmodified="true" tofile="@{deploy.dir}/${manifest.bundle.symbolic.name}.jar" />
 				</deploy-post>
 			</deploy-cmd>
 		</sequential>

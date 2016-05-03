@@ -1963,7 +1963,7 @@ public interface GroupLocalService extends BaseLocalService,
 
 	public void addOrganizationGroup(long organizationId, long groupId);
 
-	public void addOrganizationGroups(long organizationId, List<Group> Groups);
+	public void addOrganizationGroups(long organizationId, List<Group> groups);
 
 	public void addOrganizationGroups(long organizationId, long[] groupIds);
 
@@ -1971,7 +1971,7 @@ public interface GroupLocalService extends BaseLocalService,
 
 	public void addRoleGroup(long roleId, long groupId);
 
-	public void addRoleGroups(long roleId, List<Group> Groups);
+	public void addRoleGroups(long roleId, List<Group> groups);
 
 	public void addRoleGroups(long roleId, long[] groupIds);
 
@@ -1983,11 +1983,11 @@ public interface GroupLocalService extends BaseLocalService,
 
 	public void addUserGroupGroup(long userGroupId, long groupId);
 
-	public void addUserGroupGroups(long userGroupId, List<Group> Groups);
+	public void addUserGroupGroups(long userGroupId, List<Group> groups);
 
 	public void addUserGroupGroups(long userGroupId, long[] groupIds);
 
-	public void addUserGroups(long userId, List<Group> Groups);
+	public void addUserGroups(long userId, List<Group> groups);
 
 	public void addUserGroups(long userId, long[] groupIds);
 
@@ -2024,7 +2024,7 @@ public interface GroupLocalService extends BaseLocalService,
 
 	public void deleteOrganizationGroup(long organizationId, long groupId);
 
-	public void deleteOrganizationGroups(long organizationId, List<Group> Groups);
+	public void deleteOrganizationGroups(long organizationId, List<Group> groups);
 
 	public void deleteOrganizationGroups(long organizationId, long[] groupIds);
 
@@ -2032,7 +2032,7 @@ public interface GroupLocalService extends BaseLocalService,
 
 	public void deleteRoleGroup(long roleId, long groupId);
 
-	public void deleteRoleGroups(long roleId, List<Group> Groups);
+	public void deleteRoleGroups(long roleId, List<Group> groups);
 
 	public void deleteRoleGroups(long roleId, long[] groupIds);
 
@@ -2044,11 +2044,11 @@ public interface GroupLocalService extends BaseLocalService,
 
 	public void deleteUserGroupGroup(long userGroupId, long groupId);
 
-	public void deleteUserGroupGroups(long userGroupId, List<Group> Groups);
+	public void deleteUserGroupGroups(long userGroupId, List<Group> groups);
 
 	public void deleteUserGroupGroups(long userGroupId, long[] groupIds);
 
-	public void deleteUserGroups(long userId, List<Group> Groups);
+	public void deleteUserGroups(long userId, List<Group> groups);
 
 	public void deleteUserGroups(long userId, long[] groupIds);
 

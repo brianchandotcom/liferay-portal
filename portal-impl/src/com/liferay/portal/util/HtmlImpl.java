@@ -111,10 +111,12 @@ public class HtmlImpl implements Html {
 
 		return StringUtil.replace(
 			text,
-			new char[] {'<', '>', '&', '"', '\'', '\u00bb', '\u2013', '\u2014'},
+			new char[] {
+				'<', '>', '&', '"', '\'', '\u00bb', '\u2013', '\u2014', '\u2028'
+			},
 			new String[] {
 				"&lt;", "&gt;", "&amp;", "&#034;", "&#039;", "&#187;",
-				"&#x2013;", "&#x2014;"
+				"&#x2013;", "&#x2014;", "&#x2028;"
 			});
 	}
 

@@ -2328,10 +2328,51 @@ public class ServiceBuilder {
 					newContent.substring(lastImport);
 		}
 
-		int firstClass = newContent.indexOf(
+		int firstClass = -1;
+
+		int firstClass1 = newContent.indexOf(
+			"<class dynamic-update=\"true\" name=\"" + _packagePath +
+				".model.");
+		int firstClass2 = newContent.indexOf(
 			"<class name=\"" + _packagePath + ".model.");
-		int lastClass = newContent.lastIndexOf(
+
+		if ((firstClass1 != -1) && (firstClass2 != -1)) {
+			if (firstClass2 < firstClass1) {
+				firstClass = firstClass2;
+			}
+			else {
+				firstClass = firstClass1;
+			}
+		}
+		else if (firstClass1 != -1) {
+			firstClass = firstClass1;
+		}
+		else if (firstClass2 != -1) {
+			firstClass = firstClass2;
+		}
+
+		int lastClass = -1;
+
+		int lastClass1 = newContent.lastIndexOf(
+			"<class dynamic-update=\"true\" name=\"" + _packagePath +
+				".model.");
+		int lastClass2 = newContent.lastIndexOf(
 			"<class name=\"" + _packagePath + ".model.");
+
+		if ((lastClass1 != -1) && (lastClass2 != -1)) {
+			if (lastClass2 > lastClass1) {
+				lastClass = lastClass2;
+			}
+			else {
+				lastClass = lastClass1;
+			}
+		}
+		else if (lastClass1 != -1) {
+			lastClass = lastClass1;
+		}
+		else if (lastClass2 != -1) {
+			lastClass = lastClass2;
+		}
 
 		if (firstClass == -1) {
 			int x = newContent.indexOf("</hibernate-mapping>");
@@ -3215,17 +3256,17 @@ public class ServiceBuilder {
 		int y = oldContent.lastIndexOf("</beans>");
 
 		int firstSession = newContent.indexOf(
-			"<bean id=\"" + _packagePath + ".service.", x);
+			"<bean class=\"" + _packagePath + ".service.", x);
 
 		int lastSession = newContent.lastIndexOf(
-			"<bean id=\"" + _packagePath + ".service.", y);
+			"<bean class=\"" + _packagePath + ".service.", y);
 
 		if (firstSession == -1) {
 			firstSession = newContent.indexOf(
-				"<bean id=\"" + _apiPackagePath + ".service.", x);
+				"<bean class=\"" + _apiPackagePath + ".service.", x);
 
 			lastSession = newContent.lastIndexOf(
-				"<bean id=\"" + _apiPackagePath + ".service.", y);
+				"<bean class=\"" + _apiPackagePath + ".service.", y);
 		}
 
 		if ((firstSession == -1) || (firstSession > y)) {
@@ -3238,7 +3279,7 @@ public class ServiceBuilder {
 			firstSession = newContent.lastIndexOf("<bean", firstSession) - 1;
 
 			int tempLastSession = newContent.indexOf(
-				"<bean id=\"", lastSession + 1);
+				"<bean class=\"", lastSession + 1);
 
 			if (tempLastSession == -1) {
 				tempLastSession = newContent.indexOf("</beans>", lastSession);
@@ -4555,7 +4596,7 @@ public class ServiceBuilder {
 			final List<Path> updateSQLFilePaths = new ArrayList<>();
 
 			try (DirectoryStream<Path> paths = Files.newDirectoryStream(
-					Paths.get(_sqlDirName), "update-6.2.0-7.0.0*.sql")) {
+					Paths.get(_sqlDirName), "update-7.0.0-7.0.1*.sql")) {
 
 				for (Path path : paths) {
 					updateSQLFilePaths.add(path);

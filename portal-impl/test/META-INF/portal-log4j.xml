@@ -2,7 +2,7 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+	<appender class="org.apache.log4j.ConsoleAppender" name="CONSOLE">
 		<layout class="org.apache.log4j.EnhancedPatternLayout">
 			<param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%t][%c{1}:%L] %m%n" />
 		</layout>

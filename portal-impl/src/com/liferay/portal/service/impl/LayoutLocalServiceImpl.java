@@ -2156,7 +2156,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			userId, layout.getGroupId(), layout.getCreateDate(),
 			layout.getModifiedDate(), Layout.class.getName(), layout.getPlid(),
 			layout.getUuid(), 0, assetCategoryIds, assetTagNames, true, false,
-			null, null, null, ContentTypes.TEXT_HTML,
+			null, null, null, null, ContentTypes.TEXT_HTML,
 			layout.getName(LocaleUtil.getDefault()), null, null, null, null, 0,
 			0, null);
 	}

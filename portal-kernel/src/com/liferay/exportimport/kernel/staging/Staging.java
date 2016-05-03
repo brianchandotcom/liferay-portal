@@ -78,10 +78,10 @@ public interface Staging {
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public long copyFromLive(PortletRequest PortletRequest)
+	public long copyFromLive(PortletRequest portletRequest)
 		throws PortalException;
 
-	public long copyFromLive(PortletRequest PortletRequest, Portlet portlet)
+	public long copyFromLive(PortletRequest portletRequest, Portlet portlet)
 		throws PortalException;
 
 	/**
@@ -90,7 +90,7 @@ public interface Staging {
 	 */
 	@Deprecated
 	public long copyPortlet(
-			PortletRequest PortletRequest, long sourceGroupId,
+			PortletRequest portletRequest, long sourceGroupId,
 			long targetGroupId, long sourcePlid, long targetPlid,
 			String portletId)
 		throws PortalException;
@@ -228,7 +228,7 @@ public interface Staging {
 	 */
 	@Deprecated
 	public Map<String, String[]> getStagingParameters(
-		PortletRequest PortletRequest);
+		PortletRequest portletRequest);
 
 	public JSONArray getWarningMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences);
@@ -339,22 +339,22 @@ public interface Staging {
 			Map<String, String[]> parameterMap)
 		throws PortalException;
 
-	public long publishToLive(PortletRequest PortletRequest)
+	public long publishToLive(PortletRequest portletRequest)
 		throws PortalException;
 
-	public long publishToLive(PortletRequest PortletRequest, Portlet portlet)
+	public long publishToLive(PortletRequest portletRequest, Portlet portlet)
 		throws PortalException;
 
-	public long publishToRemote(PortletRequest PortletRequest)
+	public long publishToRemote(PortletRequest portletRequest)
 		throws PortalException;
 
-	public void scheduleCopyFromLive(PortletRequest PortletRequest)
+	public void scheduleCopyFromLive(PortletRequest portletRequest)
 		throws PortalException;
 
-	public void schedulePublishToLive(PortletRequest PortletRequest)
+	public void schedulePublishToLive(PortletRequest portletRequest)
 		throws PortalException;
 
-	public void schedulePublishToRemote(PortletRequest PortletRequest)
+	public void schedulePublishToRemote(PortletRequest portletRequest)
 		throws PortalException;
 
 	public void setRecentLayoutBranchId(
@@ -394,13 +394,13 @@ public interface Staging {
 	@Deprecated
 	public void unlockGroup(long groupId);
 
-	public void unscheduleCopyFromLive(PortletRequest PortletRequest)
+	public void unscheduleCopyFromLive(PortletRequest portletRequest)
 		throws PortalException;
 
-	public void unschedulePublishToLive(PortletRequest PortletRequest)
+	public void unschedulePublishToLive(PortletRequest portletRequest)
 		throws PortalException;
 
-	public void unschedulePublishToRemote(PortletRequest PortletRequest)
+	public void unschedulePublishToRemote(PortletRequest portletRequest)
 		throws PortalException;
 
 	public void updateLastImportSettings(
@@ -431,7 +431,7 @@ public interface Staging {
 			Date lastPublishDate)
 		throws PortalException;
 
-	public void updateStaging(PortletRequest PortletRequest, Group liveGroup)
+	public void updateStaging(PortletRequest portletRequest, Group liveGroup)
 		throws PortalException;
 
 	public void validateRemote(

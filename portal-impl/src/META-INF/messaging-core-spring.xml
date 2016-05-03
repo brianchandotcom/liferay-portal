@@ -11,14 +11,14 @@
 
 	<!-- Message bus -->
 
-	<bean id="com.liferay.portal.kernel.messaging.MessageBusUtil" class="com.liferay.portal.kernel.messaging.MessageBusUtil">
+	<bean class="com.liferay.portal.kernel.messaging.MessageBusUtil" id="com.liferay.portal.kernel.messaging.MessageBusUtil">
 		<property name="synchronousMessageSenderMode" value="DEFAULT" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil" class="com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil" />
+	<bean class="com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil" id="com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil" />
 
 	<!-- Configurator -->
 
-	<bean id="messagingConfigurator.core" class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator">
+	<bean class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator" id="messagingConfigurator.core">
 		<property name="destinationConfigurations">
 			<util:set>
 				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration">

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping default-lazy="false" auto-import="false">
+<hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.polls.model.PollsChoice" />
 	<import class="com.liferay.polls.model.PollsQuestion" />
 	<import class="com.liferay.polls.model.PollsVote" />
@@ -9,7 +9,7 @@
 		<id name="choiceId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -25,7 +25,7 @@
 		<id name="questionId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -42,7 +42,7 @@
 		<id name="voteId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

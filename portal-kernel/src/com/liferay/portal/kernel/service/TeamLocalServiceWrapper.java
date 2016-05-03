@@ -504,8 +504,8 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 
 	@Override
 	public void addUserGroupTeams(long userGroupId,
-		java.util.List<com.liferay.portal.kernel.model.Team> Teams) {
-		_teamLocalService.addUserGroupTeams(userGroupId, Teams);
+		java.util.List<com.liferay.portal.kernel.model.Team> teams) {
+		_teamLocalService.addUserGroupTeams(userGroupId, teams);
 	}
 
 	@Override
@@ -526,8 +526,8 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 
 	@Override
 	public void addUserTeams(long userId,
-		java.util.List<com.liferay.portal.kernel.model.Team> Teams) {
-		_teamLocalService.addUserTeams(userId, Teams);
+		java.util.List<com.liferay.portal.kernel.model.Team> teams) {
+		_teamLocalService.addUserTeams(userId, teams);
 	}
 
 	@Override
@@ -564,8 +564,8 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 
 	@Override
 	public void deleteUserGroupTeams(long userGroupId,
-		java.util.List<com.liferay.portal.kernel.model.Team> Teams) {
-		_teamLocalService.deleteUserGroupTeams(userGroupId, Teams);
+		java.util.List<com.liferay.portal.kernel.model.Team> teams) {
+		_teamLocalService.deleteUserGroupTeams(userGroupId, teams);
 	}
 
 	@Override
@@ -586,8 +586,8 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 
 	@Override
 	public void deleteUserTeams(long userId,
-		java.util.List<com.liferay.portal.kernel.model.Team> Teams) {
-		_teamLocalService.deleteUserTeams(userId, Teams);
+		java.util.List<com.liferay.portal.kernel.model.Team> teams) {
+		_teamLocalService.deleteUserTeams(userId, teams);
 	}
 
 	@Override

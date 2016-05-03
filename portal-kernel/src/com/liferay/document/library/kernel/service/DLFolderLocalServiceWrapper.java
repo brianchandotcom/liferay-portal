@@ -785,9 +785,9 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 
 	@Override
 	public void addDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		java.util.List<com.liferay.document.library.kernel.model.DLFolder> DLFolders) {
+		java.util.List<com.liferay.document.library.kernel.model.DLFolder> dlFolders) {
 		_dlFolderLocalService.addDLFileEntryTypeDLFolders(fileEntryTypeId,
-			DLFolders);
+			dlFolders);
 	}
 
 	@Override
@@ -840,9 +840,9 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 
 	@Override
 	public void deleteDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		java.util.List<com.liferay.document.library.kernel.model.DLFolder> DLFolders) {
+		java.util.List<com.liferay.document.library.kernel.model.DLFolder> dlFolders) {
 		_dlFolderLocalService.deleteDLFileEntryTypeDLFolders(fileEntryTypeId,
-			DLFolders);
+			dlFolders);
 	}
 
 	@Override

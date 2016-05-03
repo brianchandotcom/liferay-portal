@@ -1,4 +1,5 @@
 <definition component-name="portal-search-ee">
+	<property name="portal.release" value="true" />
 	<property name="solr.enabled" value="true" />
 	<property name="testray.main.component.name" value="SOLR Impl" />
 

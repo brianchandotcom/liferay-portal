@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean id="com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService" class="com.liferay.portal.security.service.access.policy.service.impl.SAPEntryLocalServiceImpl" />
-	<bean id="com.liferay.portal.security.service.access.policy.service.SAPEntryService" class="com.liferay.portal.security.service.access.policy.service.impl.SAPEntryServiceImpl" />
-	<bean id="com.liferay.portal.security.service.access.policy.service.persistence.SAPEntryPersistence" class="com.liferay.portal.security.service.access.policy.service.persistence.impl.SAPEntryPersistenceImpl" parent="basePersistence" />
+	<bean class="com.liferay.portal.security.service.access.policy.service.impl.SAPEntryLocalServiceImpl" id="com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService" />
+	<bean class="com.liferay.portal.security.service.access.policy.service.impl.SAPEntryServiceImpl" id="com.liferay.portal.security.service.access.policy.service.SAPEntryService" />
+	<bean class="com.liferay.portal.security.service.access.policy.service.persistence.impl.SAPEntryPersistenceImpl" id="com.liferay.portal.security.service.access.policy.service.persistence.SAPEntryPersistence" parent="basePersistence" />
 </beans>

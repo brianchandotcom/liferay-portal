@@ -1,27 +1,8 @@
 Bundle-Name: Liferay Shopping Web
 Bundle-SymbolicName: com.liferay.shopping.web
 Bundle-Version: 1.0.3
-Import-Package:\
-	com.liferay.portal.kernel.servlet.filters.invoker,\
-	\
-	org.apache.commons.chain,\
-	org.apache.commons.chain.generic,\
-	org.apache.commons.chain.impl,\
-	org.apache.struts,\
-	org.apache.struts.action,\
-	org.apache.struts.chain,\
-	org.apache.struts.chain.commands,\
-	org.apache.struts.chain.commands.servlet,\
-	org.apache.struts.config,\
-	org.apache.struts.config.impl,\
-	org.apache.struts.util,\
-	*
 Web-ContextPath: /shopping-web
--donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
 -liferay-includeresource:\
-	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/CreditCard.class,\
-	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/State.class,\
-	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/StateUtil.class,\
-	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
-	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class
--wab: docroot
+	@com.liferay.util.java-*.jar!/com/liferay/util/CreditCard.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/State.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/StateUtil.class

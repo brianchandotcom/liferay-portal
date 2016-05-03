@@ -419,8 +419,7 @@ public class UpgradeDynamicDataMappingTest {
 		long resourcePermissionId = RandomTestUtil.randomLong();
 
 		addResourcePermission(
-			resourcePermissionId, _structureId,
-			"com.liferay.portlet.dynamicdatamapping.DDMStructure");
+			resourcePermissionId, _structureId, DDMStructure.class.getName());
 
 		_upgradeDynamicDataMapping.upgrade();
 
@@ -844,6 +843,66 @@ public class UpgradeDynamicDataMappingTest {
 	}
 
 	@Test
+	public void testUpgradeTemplateFreemarkerScriptDateFields()
+		throws Exception {
+
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-with-two-date-fields.xsd"), "xml");
+
+		addTemplate(
+			_templateId, _structureId, null,
+			read("ddm-template-with-two-date-fields.ftl"), "ftl",
+			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String actualDefinition = getTemplateScript(_templateId);
+
+		String[] dateFieldNames = new String[] {"date1", "date2"};
+
+		StringBundler sb = null;
+
+		for (String dateFieldName : dateFieldNames) {
+
+			// Assign statement
+
+			sb = new StringBundler(5);
+
+			sb.append("<#assign ");
+			sb.append(dateFieldName);
+			sb.append("_Data = getterUtil.getString(");
+			sb.append(dateFieldName);
+			sb.append(".getData())>");
+
+			Assert.assertTrue(actualDefinition.contains(sb.toString()));
+
+			// If statement
+
+			sb = new StringBundler(3);
+
+			sb.append("<#if validator.isNotNull(");
+			sb.append(dateFieldName);
+			sb.append("_Data)>");
+
+			Assert.assertTrue(actualDefinition.contains(sb.toString()));
+
+			// Date parse statement
+
+			sb = new StringBundler(5);
+
+			sb.append("<#assign ");
+			sb.append(dateFieldName);
+			sb.append("_DateObj = dateUtil.parseDate(\"yyyy-MM-dd\", ");
+			sb.append(dateFieldName);
+			sb.append("_Data, locale)>");
+
+			Assert.assertTrue(actualDefinition.contains(sb.toString()));
+		}
+	}
+
+	@Test
 	public void testUpgradeTemplatePermissions() throws Exception {
 		addStructure(
 			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
@@ -857,8 +916,7 @@ public class UpgradeDynamicDataMappingTest {
 		long resourcePermissionId = RandomTestUtil.randomLong();
 
 		addResourcePermission(
-			resourcePermissionId, _templateId,
-			"com.liferay.portlet.dynamicdatamapping.DDMTemplate");
+			resourcePermissionId, _templateId, DDMTemplate.class.getName());
 
 		_upgradeDynamicDataMapping.upgrade();
 
@@ -920,6 +978,64 @@ public class UpgradeDynamicDataMappingTest {
 		String actualDefinition = getTemplateScript(_templateId);
 
 		Assert.assertEquals(expectedDefinition, actualDefinition);
+	}
+
+	@Test
+	public void testUpgradeTemplateVelocityScriptDateFields() throws Exception {
+		addStructure(
+			_structureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			DDMStructureConstants.VERSION_DEFAULT,
+			read("ddm-structure-with-two-date-fields.xsd"), "xml");
+
+		addTemplate(
+			_templateId, _structureId, null,
+			read("ddm-template-with-two-date-fields.vm"), "vm",
+			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
+
+		_upgradeDynamicDataMapping.upgrade();
+
+		String actualDefinition = getTemplateScript(_templateId);
+
+		String[] dateFieldNames = new String[] {"$date1", "$date2"};
+
+		StringBundler sb = null;
+
+		for (String dateFieldName : dateFieldNames) {
+
+			// Assign statement
+
+			sb = new StringBundler(5);
+
+			sb.append("#set (");
+			sb.append(dateFieldName);
+			sb.append("_Data = $getterUtil.getString(");
+			sb.append(dateFieldName);
+			sb.append(".getData()))");
+
+			Assert.assertTrue(actualDefinition.contains(sb.toString()));
+
+			// If statement
+
+			sb = new StringBundler(3);
+
+			sb.append("#if ($validator.isNotNull(");
+			sb.append(dateFieldName);
+			sb.append("_Data))");
+
+			Assert.assertTrue(actualDefinition.contains(sb.toString()));
+
+			// Date parse statement
+
+			sb = new StringBundler(5);
+
+			sb.append("#set (");
+			sb.append(dateFieldName);
+			sb.append("_DateObj = $dateUtil.parseDate(\"yyyy-MM-dd\", ");
+			sb.append(dateFieldName);
+			sb.append("_Data, $locale))");
+
+			Assert.assertTrue(actualDefinition.contains(sb.toString()));
+		}
 	}
 
 	@Test

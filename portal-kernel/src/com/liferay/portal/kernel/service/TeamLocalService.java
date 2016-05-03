@@ -380,7 +380,7 @@ public interface TeamLocalService extends BaseLocalService,
 
 	public void addUserGroupTeam(long userGroupId, long teamId);
 
-	public void addUserGroupTeams(long userGroupId, List<Team> Teams);
+	public void addUserGroupTeams(long userGroupId, List<Team> teams);
 
 	public void addUserGroupTeams(long userGroupId, long[] teamIds);
 
@@ -388,7 +388,7 @@ public interface TeamLocalService extends BaseLocalService,
 
 	public void addUserTeam(long userId, long teamId);
 
-	public void addUserTeams(long userId, List<Team> Teams);
+	public void addUserTeams(long userId, List<Team> teams);
 
 	public void addUserTeams(long userId, long[] teamIds);
 
@@ -402,7 +402,7 @@ public interface TeamLocalService extends BaseLocalService,
 
 	public void deleteUserGroupTeam(long userGroupId, long teamId);
 
-	public void deleteUserGroupTeams(long userGroupId, List<Team> Teams);
+	public void deleteUserGroupTeams(long userGroupId, List<Team> teams);
 
 	public void deleteUserGroupTeams(long userGroupId, long[] teamIds);
 
@@ -410,7 +410,7 @@ public interface TeamLocalService extends BaseLocalService,
 
 	public void deleteUserTeam(long userId, long teamId);
 
-	public void deleteUserTeams(long userId, List<Team> Teams);
+	public void deleteUserTeams(long userId, List<Team> teams);
 
 	public void deleteUserTeams(long userId, long[] teamIds);
 

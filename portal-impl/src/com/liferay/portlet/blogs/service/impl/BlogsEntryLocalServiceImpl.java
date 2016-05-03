@@ -985,7 +985,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			userId, entry.getGroupId(), entry.getCreateDate(),
 			entry.getModifiedDate(), BlogsEntry.class.getName(),
 			entry.getEntryId(), entry.getUuid(), 0, assetCategoryIds,
-			assetTagNames, true, visible, null, null, null,
+			assetTagNames, true, visible, null, null, null, null,
 			ContentTypes.TEXT_HTML, entry.getTitle(), entry.getDescription(),
 			summary, null, null, 0, 0, priority);
 

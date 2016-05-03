@@ -1062,7 +1062,7 @@ public interface OrganizationLocalService extends BaseLocalService,
 	public void addGroupOrganization(long groupId, long organizationId);
 
 	public void addGroupOrganizations(long groupId,
-		List<Organization> Organizations);
+		List<Organization> organizations);
 
 	public void addGroupOrganizations(long groupId, long[] organizationIds);
 
@@ -1091,7 +1091,7 @@ public interface OrganizationLocalService extends BaseLocalService,
 	public void addUserOrganization(long userId, long organizationId);
 
 	public void addUserOrganizations(long userId,
-		List<Organization> Organizations);
+		List<Organization> organizations);
 
 	public void addUserOrganizations(long userId, long[] organizationIds);
 
@@ -1104,7 +1104,7 @@ public interface OrganizationLocalService extends BaseLocalService,
 	public void deleteGroupOrganization(long groupId, long organizationId);
 
 	public void deleteGroupOrganizations(long groupId,
-		List<Organization> Organizations);
+		List<Organization> organizations);
 
 	public void deleteGroupOrganizations(long groupId, long[] organizationIds);
 
@@ -1120,7 +1120,7 @@ public interface OrganizationLocalService extends BaseLocalService,
 	public void deleteUserOrganization(long userId, long organizationId);
 
 	public void deleteUserOrganizations(long userId,
-		List<Organization> Organizations);
+		List<Organization> organizations);
 
 	public void deleteUserOrganizations(long userId, long[] organizationIds);
 

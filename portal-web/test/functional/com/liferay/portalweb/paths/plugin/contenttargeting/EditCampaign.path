@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>SELECT_USER_SEGMENT_CHECKBOX</td>
-	<td>//div[contains(.,'${key_userSegmentName}')]//span[contains(@class,'checkbox-container')]</td>
+	<td>//div[contains(.,'${key_userSegmentName}') and contains(@class,'tree-node')]//span[contains(@class,'checkbox-container')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,12 +51,12 @@
 <!--CAMPAIGN_TABLE-->
 <tr>
 	<td>CAMPAIGN_TABLE_PRIORITY</td>
-	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]/td[6]</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]/td[7]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CAMPAIGN_TABLE_STATUS</td>
-	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]/td[7]</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]/td[8]</td>
 	<td></td>
 </tr>
 <tr>
@@ -67,7 +67,7 @@
 <!--CAMPAIGN_TRACKING_ACTIONS-->
 <tr>
 	<td>CAMPAIGN_TRACKING_ACTIONS</td>
-	<td>//li[contains(@id,'${key_campaignTrackingAction}TrackingAction')]//div[@class='field-title']</td>
+	<td>//li[contains(@id,'${key_campaignTrackingAction}TrackingAction')]//h5[@class='field-title']</td>
 	<td></td>
 </tr>
 <tr>
@@ -108,7 +108,7 @@
 </tr>
 <!--CAMPAIGN_TRACKING_ACTIONS_FORM-->
 <tr>
-	<td>CAMPAIGN_TRACKING_ACTIONS_FORM_ALIAS_FIELD</td>
+	<td>CAMPAIGN_TRACKING_ACTIONS_FORM_NAME_FIELD</td>
 	<td>//div[contains(@class,'formtrackingaction')]//input[contains(@id,'alias')]</td>
 	<td></td>
 </tr>
@@ -150,13 +150,13 @@
 </tr>
 <!--CAMPAIGN_TRACKING_ACTIONS_CONTENT-->
 <tr>
-	<td>CAMPAIGN_TRACKING_ACTIONS_CONTENT_ALIAS_FIELD</td>
+	<td>CAMPAIGN_TRACKING_ACTIONS_CONTENT_NAME_FIELD</td>
 	<td>//div[contains(@class,'contenttrackingaction')]//input[contains(@id,'alias')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_BUTTON</td>
-	<td>//div[contains(@class,'contenttrackingaction')]//a[@title='Select Content']/span</td>
+	<td>//div[contains(@class,'contenttrackingaction')]//a[@title='Select Content']</td>
 	<td></td>
 </tr>
 <tr>

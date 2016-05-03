@@ -70,9 +70,7 @@ public class UpgradeKernelPackage
 	};
 
 	private static final String[][] _RESOURCE_NAMES = new String[][] {
-		{
-			"com.liferay.portlet.shopping", "com.liferay.shopping"
-		}
+		{"com.liferay.portlet.shopping", "com.liferay.shopping"}
 	};
 
 }

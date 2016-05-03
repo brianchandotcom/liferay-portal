@@ -61,7 +61,7 @@ public class ToggleControlsProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public String getIconCssClass(HttpServletRequest request) {
+	public String getIcon(HttpServletRequest request) {
 		String stateCss = null;
 
 		String toggleControls = GetterUtil.getString(

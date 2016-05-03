@@ -101,6 +101,10 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Date getDisplayDate() {
 		return null;
@@ -132,7 +136,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	@Deprecated
 	@Override
 	public String getPreviewPath(
-			PortletRequest portletRequest, PortletResponse PortletResponse)
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
 		return StringPool.BLANK;

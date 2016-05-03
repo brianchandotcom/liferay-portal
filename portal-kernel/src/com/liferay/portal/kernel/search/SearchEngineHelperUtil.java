@@ -45,6 +45,10 @@ public class SearchEngineHelperUtil {
 		return _searchEngineHelper.getSearchEngine(searchEngineId);
 	}
 
+	public static SearchEngineHelper getSearchEngineHelper() {
+		return _searchEngineHelper;
+	}
+
 	public static String getSearchEngineId(Collection<Document> documents) {
 		return _searchEngineHelper.getSearchEngineId(documents);
 	}

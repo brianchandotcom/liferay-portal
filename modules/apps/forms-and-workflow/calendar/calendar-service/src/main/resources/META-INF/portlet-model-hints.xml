@@ -12,8 +12,8 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="resourceBlockId" type="long" />
 		<field name="calendarResourceId" type="long" />
-		<field name="name" type="String" localized="true" />
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="name" type="String" />
+		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="timeZoneId" type="String" />
@@ -39,8 +39,8 @@
 		<field name="vEventUid" type="String">
 			<hint name="max-length">255</hint>
 		</field>
-		<field name="title" type="String" localized="true" />
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="title" type="String" />
+		<field localized="true" name="description" type="String">
 			<hint-collection name="EDITOR" />
 		</field>
 		<field name="location" type="String">
@@ -99,8 +99,8 @@
 		<field name="classPK" type="long" />
 		<field name="classUuid" type="String" />
 		<field name="code" type="String" />
-		<field name="name" type="String" localized="true" />
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="name" type="String" />
+		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="active" type="boolean" />

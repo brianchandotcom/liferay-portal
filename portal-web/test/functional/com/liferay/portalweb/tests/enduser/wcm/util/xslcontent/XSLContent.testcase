@@ -1,4 +1,5 @@
 <definition component-name="portal-xsl">
+	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="XSL" />
 
 	<set-up>

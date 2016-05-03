@@ -151,8 +151,6 @@ AUI.add(
 
 							instance._updateSessionTreeOpenedState(treeId, layoutId, expanded);
 						}
-
-						instance._matchParentNode(target);
 					},
 
 					_onNodeIOSuccess: function(event) {

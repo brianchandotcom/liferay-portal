@@ -16,7 +16,7 @@ package com.liferay.social.user.statistics.web.upgrade;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.util.UpgradePortletId;
+import com.liferay.social.user.statistics.web.upgrade.v1_0_0.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
 

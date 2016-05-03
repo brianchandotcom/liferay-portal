@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-sharepoint" basedir="." default="clean-sharepoint-repository" xmlns:antelope="antlib:ise.antelope.tasks">
+<project basedir="." default="clean-sharepoint-repository" name="portal-test-sharepoint" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
 	<target name="clean-sharepoint-repository">

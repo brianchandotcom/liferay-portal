@@ -1620,7 +1620,7 @@ public class OrganizationLocalServiceImpl
 			userId, companyGroup.getGroupId(), null, null,
 			Organization.class.getName(), organization.getOrganizationId(),
 			organization.getUuid(), 0, assetCategoryIds, assetTagNames, true,
-			false, null, null, null, null, organization.getName(),
+			false, null, null, null, null, null, organization.getName(),
 			StringPool.BLANK, null, null, null, 0, 0, null);
 	}
 

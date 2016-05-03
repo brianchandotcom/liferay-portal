@@ -84,7 +84,7 @@
 			<var name="userSegmentSelect" value="User Segment Name" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -151,15 +151,7 @@
 			<var name="userSegmentSelect" value="User Segment Name" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#addTrackingActionContentCP">
-			<var name="contentAlias" value="Content Alias" />
-			<var name="contentTitle" value="DM Document Title" />
-			<var name="contentTrackingActionSelect" value="View" />
-			<var name="linkId" value="Content id" />
-			<var name="menulistContent" value="Document" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -169,13 +161,42 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
+		<execute macro="ContentTargetingCampaign#gotoAddReport">
 			<var name="campaignName" value="Campaign Name" />
-			<var name="contentAlias" value="Content Alias" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addReportName">
+			<var name="reportDescription" value="Content Report Description" />
+			<var name="reportName" value="Content Report Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addTrackingActionContentCP">
+			<var name="contentMetricName" value="Content Metric Name" />
 			<var name="contentTitle" value="DM Document Title" />
 			<var name="contentTrackingActionSelect" value="View" />
+			<var name="menulistContent" value="Document" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#gotoEditReport">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="reportName" value="Content Report Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="contentMetricName" value="Content Metric Name" />
+			<var name="contentTitle" value="DM Document Title" />
 			<var name="viewTrackingActionsList" value="Content" />
-			<var name="youtubeVideoId" value="Content id" />
 		</execute>
 	</command>
 
@@ -214,13 +235,7 @@
 			<var name="userSegmentSelect" value="User Segment Name" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#addTrackingActionFormCP">
-			<var name="formAlias" value="Form Alias" />
-			<var name="formId" value="Form id" />
-			<var name="formTrackingActionSelect" value="Submit" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -228,6 +243,36 @@
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
 			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#gotoAddReport">
+			<var name="campaignName" value="Campaign Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addReportName">
+			<var name="reportDescription" value="Content Report Description" />
+			<var name="reportName" value="Content Report Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addTrackingActionFormCP">
+			<var name="formAlias" value="Form Alias" />
+			<var name="formId" value="Form id" />
+			<var name="formTrackingActionSelect" value="Submit" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#gotoEditReport">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="reportName" value="Content Report Name" />
 		</execute>
 
 		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
@@ -274,13 +319,32 @@
 			<var name="userSegmentSelect" value="User Segment Name" />
 		</execute>
 
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#gotoAddReport">
+			<var name="campaignName" value="Campaign Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addReportName">
+			<var name="reportDescription" value="Content Report Description" />
+			<var name="reportName" value="Content Report Name" />
+		</execute>
+
 		<execute macro="ContentTargetingCampaign#addTrackingActionLinkCP">
 			<var name="linkAlias" value="Link Alias" />
 			<var name="linkId" value="Link id" />
 			<var name="linkTrackingActionSelect" value="Click" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -334,12 +398,7 @@
 			<var name="userSegmentSelect" value="User Segment Name" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#addTrackingActionPageCP">
-			<var name="pageAlias" value="Page Alias" />
-			<var name="pageFriendlyURL" value="/test-page-name" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -347,6 +406,35 @@
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
 			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#gotoAddReport">
+			<var name="campaignName" value="Campaign Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addReportName">
+			<var name="reportDescription" value="Content Report Description" />
+			<var name="reportName" value="Content Report Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addTrackingActionPageCP">
+			<var name="pageAlias" value="Page Alias" />
+			<var name="pageFriendlyURL" value="/test-page-name" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#gotoEditReport">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="reportName" value="Content Report Name" />
 		</execute>
 
 		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
@@ -393,13 +481,7 @@
 			<var name="userSegmentSelect" value="User Segment Name" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#addTrackingActionYoutubevideosCP">
-			<var name="youtubeAlias" value="Youtube Alias" />
-			<var name="youtubeTrackingActionSelect" value="Playing" />
-			<var name="youtubeVideoId" value="Youtube id" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -407,6 +489,36 @@
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
 			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#gotoAddReport">
+			<var name="campaignName" value="Campaign Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addReportName">
+			<var name="reportDescription" value="Content Report Description" />
+			<var name="reportName" value="Content Report Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addTrackingActionYoutubevideosCP">
+			<var name="youtubeAlias" value="Youtube Alias" />
+			<var name="youtubeTrackingActionSelect" value="Playing" />
+			<var name="youtubeVideoId" value="Youtube id" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#gotoEditReport">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="reportName" value="Content Report Name" />
 		</execute>
 
 		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
@@ -453,7 +565,7 @@
 			<var name="userSegmentSelect" value="User Segment Name" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -510,13 +622,7 @@
 			<var name="userSegmentSelect" value="User Segment Name" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#addTrackingActionFormCP">
-			<var name="formAlias" value="Form Alias" />
-			<var name="formId" value="Form id" />
-			<var name="formTrackingActionSelect" value="Submit" />
-		</execute>
-
-		<execute macro="ContentTargetingCampaign#saveCP" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
@@ -524,6 +630,36 @@
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
 			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#gotoAddReport">
+			<var name="campaignName" value="Campaign Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addReportName">
+			<var name="reportDescription" value="Content Report Description" />
+			<var name="reportName" value="Content Report Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#addTrackingActionFormCP">
+			<var name="formAlias" value="Form Alias" />
+			<var name="formId" value="Form id" />
+			<var name="formTrackingActionSelect" value="Submit" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#gotoEditReport">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="reportName" value="Content Report Name" />
 		</execute>
 
 		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
@@ -551,15 +687,7 @@
 			<var name="campaignPriorityFieldEdit" value="5" />
 			<var name="campaignStartDateEdit" value="1/1/2015" />
 			<var name="campaignStartTimeEdit" value="12:00 PM" />
-			<var name="linkAlias" value="Link Alias" />
-			<var name="linkId" value="Link id" />
-			<var name="linkTrackingActionSelect" value="Click" />
-			<var name="trackingActionAddList" value="youtube,link" />
-			<var name="trackingActionDeleteList" value="form" />
 			<var name="userSegmentSelectEdit" value="New US Name" />
-			<var name="youtubeAlias" value="Youtube Alias" />
-			<var name="youtubeTrackingActionSelect" value="Playing" />
-			<var name="youtubeVideoId" value="Youtube id" />
 		</execute>
 
 		<execute macro="PortletEntry#save" />
@@ -572,12 +700,37 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="ContentTargetingCampaign#gotoEditReport">
+			<var name="campaignName" value="Campaign Name Edit" />
+			<var name="reportName" value="Content Report Name" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#editCustomReport">
+			<var name="trackingActionAddList" value="youtube,link" />
+			<var name="trackingActionDeleteList" value="form" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="ContentTargetingCampaign#gotoEditReport">
+			<var name="campaignName" value="Campaign Name Edit" />
+			<var name="reportName" value="Content Report Name" />
+		</execute>
+
 		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
-			<var name="campaignName" value="Campaign Name" />
+			<var name="campaignName" value="Campaign Name Edit" />
 			<var name="linkAlias" value="Link Alias" />
 			<var name="linkId" value="Link id" />
 			<var name="linkTrackingActionSelect" value="Click" />
-			<var name="viewTrackingActionsList" value="Link,Youtube" />
+			<var name="viewTrackingActionsList" value="Link,YouTube" />
 			<var name="youtubeAlias" value="Youtube Alias" />
 			<var name="youtubeTrackingActionSelect" value="Playing" />
 			<var name="youtubeVideoId" value="Youtube id" />
@@ -620,7 +773,15 @@
 			<var name="userSegmentSelect" value="User Segment Name" />
 		</execute>
 
-		<execute macro="ContentTargetingCampaign#saveCP" />
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
 
 		<execute macro="ContentTargetingCampaign#viewCampaignCP">
 			<var name="campaignDescription" value="Campaign Description" />

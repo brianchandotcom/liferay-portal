@@ -2594,9 +2594,9 @@ public class UserLocalServiceUtil {
 	* @throws PortalException
 	*/
 	public static void addGroupUsers(long groupId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users)
+		java.util.List<com.liferay.portal.kernel.model.User> users)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addGroupUsers(groupId, Users);
+		getService().addGroupUsers(groupId, users);
 	}
 
 	/**
@@ -2620,9 +2620,9 @@ public class UserLocalServiceUtil {
 	* @throws PortalException
 	*/
 	public static void addOrganizationUsers(long organizationId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users)
+		java.util.List<com.liferay.portal.kernel.model.User> users)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addOrganizationUsers(organizationId, Users);
+		getService().addOrganizationUsers(organizationId, users);
 	}
 
 	/**
@@ -2658,9 +2658,9 @@ public class UserLocalServiceUtil {
 	* @throws PortalException
 	*/
 	public static void addRoleUsers(long roleId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users)
+		java.util.List<com.liferay.portal.kernel.model.User> users)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addRoleUsers(roleId, Users);
+		getService().addRoleUsers(roleId, users);
 	}
 
 	/**
@@ -2684,9 +2684,9 @@ public class UserLocalServiceUtil {
 	* @throws PortalException
 	*/
 	public static void addTeamUsers(long teamId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users)
+		java.util.List<com.liferay.portal.kernel.model.User> users)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addTeamUsers(teamId, Users);
+		getService().addTeamUsers(teamId, users);
 	}
 
 	/**
@@ -2710,9 +2710,9 @@ public class UserLocalServiceUtil {
 	* @throws PortalException
 	*/
 	public static void addUserGroupUsers(long userGroupId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users)
+		java.util.List<com.liferay.portal.kernel.model.User> users)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().addUserGroupUsers(userGroupId, Users);
+		getService().addUserGroupUsers(userGroupId, users);
 	}
 
 	/**
@@ -2844,8 +2844,8 @@ public class UserLocalServiceUtil {
 	}
 
 	public static void deleteGroupUsers(long groupId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users) {
-		getService().deleteGroupUsers(groupId, Users);
+		java.util.List<com.liferay.portal.kernel.model.User> users) {
+		getService().deleteGroupUsers(groupId, users);
 	}
 
 	public static void deleteGroupUsers(long groupId, long[] userIds) {
@@ -2862,8 +2862,8 @@ public class UserLocalServiceUtil {
 	}
 
 	public static void deleteOrganizationUsers(long organizationId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users) {
-		getService().deleteOrganizationUsers(organizationId, Users);
+		java.util.List<com.liferay.portal.kernel.model.User> users) {
+		getService().deleteOrganizationUsers(organizationId, users);
 	}
 
 	public static void deleteOrganizationUsers(long organizationId,
@@ -2899,8 +2899,8 @@ public class UserLocalServiceUtil {
 	}
 
 	public static void deleteRoleUsers(long roleId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users) {
-		getService().deleteRoleUsers(roleId, Users);
+		java.util.List<com.liferay.portal.kernel.model.User> users) {
+		getService().deleteRoleUsers(roleId, users);
 	}
 
 	public static void deleteRoleUsers(long roleId, long[] userIds) {
@@ -2917,8 +2917,8 @@ public class UserLocalServiceUtil {
 	}
 
 	public static void deleteTeamUsers(long teamId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users) {
-		getService().deleteTeamUsers(teamId, Users);
+		java.util.List<com.liferay.portal.kernel.model.User> users) {
+		getService().deleteTeamUsers(teamId, users);
 	}
 
 	public static void deleteTeamUsers(long teamId, long[] userIds) {
@@ -2943,8 +2943,8 @@ public class UserLocalServiceUtil {
 	}
 
 	public static void deleteUserGroupUsers(long userGroupId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users) {
-		getService().deleteUserGroupUsers(userGroupId, Users);
+		java.util.List<com.liferay.portal.kernel.model.User> users) {
+		getService().deleteUserGroupUsers(userGroupId, users);
 	}
 
 	public static void deleteUserGroupUsers(long userGroupId, long[] userIds) {

@@ -37,10 +37,10 @@ public class WorkflowPermissionUtil {
 			permissionChecker, groupId, className, classPK, actionId);
 	}
 
-	public void setWorkflowPermission(WorkflowPermission WorkflowPermission) {
+	public void setWorkflowPermission(WorkflowPermission workflowPermission) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_workflowPermission = WorkflowPermission;
+		_workflowPermission = workflowPermission;
 	}
 
 	private static WorkflowPermission _workflowPermission;

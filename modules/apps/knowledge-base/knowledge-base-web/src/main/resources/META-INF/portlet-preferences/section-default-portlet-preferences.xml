@@ -22,10 +22,6 @@
 		<value>title</value>
 	</preference>
 	<preference>
-		<name>kbArticleWindowState</name>
-		<value>maximized</value>
-	</preference>
-	<preference>
 		<name>kbArticlesDelta</name>
 		<value>10</value>
 	</preference>
@@ -40,6 +36,10 @@
 	<preference>
 		<name>kbArticlesSections</name>
 		<value>general</value>
+	</preference>
+	<preference>
+		<name>kbArticleWindowState</name>
+		<value>maximized</value>
 	</preference>
 	<preference>
 		<name>rssDelta</name>

@@ -2723,9 +2723,9 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	*/
 	@Override
 	public void addGroupUsers(long groupId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users)
+		java.util.List<com.liferay.portal.kernel.model.User> users)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_userLocalService.addGroupUsers(groupId, Users);
+		_userLocalService.addGroupUsers(groupId, users);
 	}
 
 	/**
@@ -2753,9 +2753,9 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	*/
 	@Override
 	public void addOrganizationUsers(long organizationId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users)
+		java.util.List<com.liferay.portal.kernel.model.User> users)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_userLocalService.addOrganizationUsers(organizationId, Users);
+		_userLocalService.addOrganizationUsers(organizationId, users);
 	}
 
 	/**
@@ -2795,9 +2795,9 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	*/
 	@Override
 	public void addRoleUsers(long roleId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users)
+		java.util.List<com.liferay.portal.kernel.model.User> users)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_userLocalService.addRoleUsers(roleId, Users);
+		_userLocalService.addRoleUsers(roleId, users);
 	}
 
 	/**
@@ -2825,9 +2825,9 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	*/
 	@Override
 	public void addTeamUsers(long teamId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users)
+		java.util.List<com.liferay.portal.kernel.model.User> users)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_userLocalService.addTeamUsers(teamId, Users);
+		_userLocalService.addTeamUsers(teamId, users);
 	}
 
 	/**
@@ -2855,9 +2855,9 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	*/
 	@Override
 	public void addUserGroupUsers(long userGroupId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users)
+		java.util.List<com.liferay.portal.kernel.model.User> users)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_userLocalService.addUserGroupUsers(userGroupId, Users);
+		_userLocalService.addUserGroupUsers(userGroupId, users);
 	}
 
 	/**
@@ -3004,8 +3004,8 @@ public class UserLocalServiceWrapper implements UserLocalService,
 
 	@Override
 	public void deleteGroupUsers(long groupId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users) {
-		_userLocalService.deleteGroupUsers(groupId, Users);
+		java.util.List<com.liferay.portal.kernel.model.User> users) {
+		_userLocalService.deleteGroupUsers(groupId, users);
 	}
 
 	@Override
@@ -3026,8 +3026,8 @@ public class UserLocalServiceWrapper implements UserLocalService,
 
 	@Override
 	public void deleteOrganizationUsers(long organizationId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users) {
-		_userLocalService.deleteOrganizationUsers(organizationId, Users);
+		java.util.List<com.liferay.portal.kernel.model.User> users) {
+		_userLocalService.deleteOrganizationUsers(organizationId, users);
 	}
 
 	@Override
@@ -3067,8 +3067,8 @@ public class UserLocalServiceWrapper implements UserLocalService,
 
 	@Override
 	public void deleteRoleUsers(long roleId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users) {
-		_userLocalService.deleteRoleUsers(roleId, Users);
+		java.util.List<com.liferay.portal.kernel.model.User> users) {
+		_userLocalService.deleteRoleUsers(roleId, users);
 	}
 
 	@Override
@@ -3089,8 +3089,8 @@ public class UserLocalServiceWrapper implements UserLocalService,
 
 	@Override
 	public void deleteTeamUsers(long teamId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users) {
-		_userLocalService.deleteTeamUsers(teamId, Users);
+		java.util.List<com.liferay.portal.kernel.model.User> users) {
+		_userLocalService.deleteTeamUsers(teamId, users);
 	}
 
 	@Override
@@ -3119,8 +3119,8 @@ public class UserLocalServiceWrapper implements UserLocalService,
 
 	@Override
 	public void deleteUserGroupUsers(long userGroupId,
-		java.util.List<com.liferay.portal.kernel.model.User> Users) {
-		_userLocalService.deleteUserGroupUsers(userGroupId, Users);
+		java.util.List<com.liferay.portal.kernel.model.User> users) {
+		_userLocalService.deleteUserGroupUsers(userGroupId, users);
 	}
 
 	@Override

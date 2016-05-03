@@ -773,8 +773,12 @@ public class CalendarBookingLocalServiceImpl
 
 		boolean visible = false;
 
+		Date publishDate = null;
+
 		if (calendarBooking.isApproved()) {
 			visible = true;
+
+			publishDate = calendarBooking.getCreateDate();
 		}
 
 		String summary = HtmlUtil.extractText(
@@ -785,10 +789,10 @@ public class CalendarBookingLocalServiceImpl
 			calendarBooking.getCreateDate(), calendarBooking.getModifiedDate(),
 			CalendarBooking.class.getName(),
 			calendarBooking.getCalendarBookingId(), calendarBooking.getUuid(),
-			0, assetCategoryIds, assetTagNames, true, visible, null, null, null,
-			ContentTypes.TEXT_HTML, calendarBooking.getTitle(),
-			calendarBooking.getDescription(), summary, null, null, 0, 0,
-			priority);
+			0, assetCategoryIds, assetTagNames, true, visible, null, null,
+			publishDate, null, ContentTypes.TEXT_HTML,
+			calendarBooking.getTitle(), calendarBooking.getDescription(),
+			summary, null, null, 0, 0, priority);
 
 		assetLinkLocalService.updateLinks(
 			userId, assetEntry.getEntryId(), assetLinkEntryIds,

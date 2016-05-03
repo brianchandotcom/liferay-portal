@@ -909,18 +909,24 @@ public interface RoleLocalService extends BaseLocalService,
 
 	public void addGroupRole(long groupId, long roleId);
 
-	public void addGroupRoles(long groupId, List<Role> Roles);
+	public void addGroupRoles(long groupId, List<Role> roles);
 
 	public void addGroupRoles(long groupId, long[] roleIds);
-
-	public void addUserRole(long userId, Role role);
-
-	public void addUserRole(long userId, long roleId);
 
 	/**
 	* @throws PortalException
 	*/
-	public void addUserRoles(long userId, List<Role> Roles)
+	public void addUserRole(long userId, Role role) throws PortalException;
+
+	/**
+	* @throws PortalException
+	*/
+	public void addUserRole(long userId, long roleId) throws PortalException;
+
+	/**
+	* @throws PortalException
+	*/
+	public void addUserRoles(long userId, List<Role> roles)
 		throws PortalException;
 
 	/**
@@ -946,23 +952,42 @@ public interface RoleLocalService extends BaseLocalService,
 
 	public void clearGroupRoles(long groupId);
 
-	public void clearUserRoles(long userId);
+	/**
+	* @throws PortalException
+	*/
+	public void clearUserRoles(long userId) throws PortalException;
 
 	public void deleteGroupRole(long groupId, Role role);
 
 	public void deleteGroupRole(long groupId, long roleId);
 
-	public void deleteGroupRoles(long groupId, List<Role> Roles);
+	public void deleteGroupRoles(long groupId, List<Role> roles);
 
 	public void deleteGroupRoles(long groupId, long[] roleIds);
 
-	public void deleteUserRole(long userId, Role role);
+	/**
+	* @throws PortalException
+	*/
+	public void deleteUserRole(long userId, Role role)
+		throws PortalException;
 
-	public void deleteUserRole(long userId, long roleId);
+	/**
+	* @throws PortalException
+	*/
+	public void deleteUserRole(long userId, long roleId)
+		throws PortalException;
 
-	public void deleteUserRoles(long userId, List<Role> Roles);
+	/**
+	* @throws PortalException
+	*/
+	public void deleteUserRoles(long userId, List<Role> roles)
+		throws PortalException;
 
-	public void deleteUserRoles(long userId, long[] roleIds);
+	/**
+	* @throws PortalException
+	*/
+	public void deleteUserRoles(long userId, long[] roleIds)
+		throws PortalException;
 
 	public void setGroupRoles(long groupId, long[] roleIds);
 

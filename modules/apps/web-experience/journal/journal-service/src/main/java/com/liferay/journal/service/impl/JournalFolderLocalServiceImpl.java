@@ -790,7 +790,7 @@ public class JournalFolderLocalServiceImpl
 			userId, folder.getGroupId(), folder.getCreateDate(),
 			folder.getModifiedDate(), JournalFolder.class.getName(),
 			folder.getFolderId(), folder.getUuid(), 0, assetCategoryIds,
-			assetTagNames, true, true, null, null, null,
+			assetTagNames, true, true, null, null, folder.getCreateDate(), null,
 			ContentTypes.TEXT_PLAIN, folder.getName(), folder.getDescription(),
 			null, null, null, 0, 0, priority);
 

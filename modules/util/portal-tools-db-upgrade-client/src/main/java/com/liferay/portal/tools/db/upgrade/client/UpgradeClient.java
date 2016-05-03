@@ -97,7 +97,14 @@ public class UpgradeClient {
 				logFile = new File(logFileName);
 			}
 
-			UpgradeClient upgradeClient = new UpgradeClient(jvmOpts, logFile);
+			boolean noShell = false;
+
+			if (commandLine.hasOption("noShell")) {
+				noShell = true;
+			}
+
+			UpgradeClient upgradeClient = new UpgradeClient(
+				jvmOpts, logFile, noShell);
 
 			upgradeClient.upgrade();
 		}
@@ -113,9 +120,12 @@ public class UpgradeClient {
 		}
 	}
 
-	public UpgradeClient(String jvmOpts, File logFile) throws IOException {
+	public UpgradeClient(String jvmOpts, File logFile, boolean noShell)
+		throws IOException {
+
 		_jvmOpts = jvmOpts;
 		_logFile = logFile;
+		_noShell = noShell;
 
 		_appServerPropertiesFile = new File("app-server.properties");
 
@@ -175,6 +185,10 @@ public class UpgradeClient {
 						"Running modules upgrades. Connect to Gogo shell to " +
 							"check the status.")) {
 
+					if (_noShell) {
+						System.out.println(line);
+					}
+
 					break;
 				}
 				else {
@@ -188,7 +202,7 @@ public class UpgradeClient {
 			ioe.printStackTrace();
 		}
 
-		boolean upgrading = true;
+		boolean upgrading = !_noShell;
 
 		while (upgrading) {
 			try (GogoTelnetClient gogoTelnetClient = new GogoTelnetClient()) {
@@ -242,7 +256,9 @@ public class UpgradeClient {
 			}
 		}
 
-		System.out.println("Exiting from Gogo shell.");
+		if (!_noShell) {
+			System.out.println("Exiting from Gogo shell.");
+		}
 
 		_close(process.getErrorStream());
 		_close(process.getInputStream());
@@ -275,6 +291,8 @@ public class UpgradeClient {
 				"Set the JVM_OPTS used for the upgrade."));
 		options.addOption(
 			new Option("l", "logFile", true, "Set the name of log file."));
+		options.addOption(
+			new Option("n", "noShell", false, "Do not connect to GoGo shell."));
 
 		return options;
 	}
@@ -680,6 +698,7 @@ public class UpgradeClient {
 	private final ConsoleReader _consoleReader = new ConsoleReader();
 	private final String _jvmOpts;
 	private final File _logFile;
+	private final boolean _noShell;
 	private final Properties _portalUpgradeDatabaseProperties;
 	private final File _portalUpgradeDatabasePropertiesFile;
 	private final Properties _portalUpgradeExtProperties;

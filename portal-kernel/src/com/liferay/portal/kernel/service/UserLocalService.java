@@ -2167,7 +2167,7 @@ public interface UserLocalService extends BaseLocalService,
 	/**
 	* @throws PortalException
 	*/
-	public void addGroupUsers(long groupId, List<User> Users)
+	public void addGroupUsers(long groupId, List<User> users)
 		throws PortalException;
 
 	/**
@@ -2183,7 +2183,7 @@ public interface UserLocalService extends BaseLocalService,
 	/**
 	* @throws PortalException
 	*/
-	public void addOrganizationUsers(long organizationId, List<User> Users)
+	public void addOrganizationUsers(long organizationId, List<User> users)
 		throws PortalException;
 
 	/**
@@ -2208,7 +2208,7 @@ public interface UserLocalService extends BaseLocalService,
 	/**
 	* @throws PortalException
 	*/
-	public void addRoleUsers(long roleId, List<User> Users)
+	public void addRoleUsers(long roleId, List<User> users)
 		throws PortalException;
 
 	/**
@@ -2224,7 +2224,7 @@ public interface UserLocalService extends BaseLocalService,
 	/**
 	* @throws PortalException
 	*/
-	public void addTeamUsers(long teamId, List<User> Users)
+	public void addTeamUsers(long teamId, List<User> users)
 		throws PortalException;
 
 	/**
@@ -2240,7 +2240,7 @@ public interface UserLocalService extends BaseLocalService,
 	/**
 	* @throws PortalException
 	*/
-	public void addUserGroupUsers(long userGroupId, List<User> Users)
+	public void addUserGroupUsers(long userGroupId, List<User> users)
 		throws PortalException;
 
 	/**
@@ -2332,7 +2332,7 @@ public interface UserLocalService extends BaseLocalService,
 
 	public void deleteGroupUser(long groupId, long userId);
 
-	public void deleteGroupUsers(long groupId, List<User> Users);
+	public void deleteGroupUsers(long groupId, List<User> users);
 
 	public void deleteGroupUsers(long groupId, long[] userIds);
 
@@ -2340,7 +2340,7 @@ public interface UserLocalService extends BaseLocalService,
 
 	public void deleteOrganizationUser(long organizationId, long userId);
 
-	public void deleteOrganizationUsers(long organizationId, List<User> Users);
+	public void deleteOrganizationUsers(long organizationId, List<User> users);
 
 	public void deleteOrganizationUsers(long organizationId, long[] userIds);
 
@@ -2363,7 +2363,7 @@ public interface UserLocalService extends BaseLocalService,
 	public void deleteRoleUser(long roleId, long userId)
 		throws PortalException;
 
-	public void deleteRoleUsers(long roleId, List<User> Users);
+	public void deleteRoleUsers(long roleId, List<User> users);
 
 	public void deleteRoleUsers(long roleId, long[] userIds);
 
@@ -2371,7 +2371,7 @@ public interface UserLocalService extends BaseLocalService,
 
 	public void deleteTeamUser(long teamId, long userId);
 
-	public void deleteTeamUsers(long teamId, List<User> Users);
+	public void deleteTeamUsers(long teamId, List<User> users);
 
 	public void deleteTeamUsers(long teamId, long[] userIds);
 
@@ -2387,7 +2387,7 @@ public interface UserLocalService extends BaseLocalService,
 	public void deleteUserGroupUser(long userGroupId, long userId)
 		throws PortalException;
 
-	public void deleteUserGroupUsers(long userGroupId, List<User> Users);
+	public void deleteUserGroupUsers(long userGroupId, List<User> users);
 
 	public void deleteUserGroupUsers(long userGroupId, long[] userIds);
 

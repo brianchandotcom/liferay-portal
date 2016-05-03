@@ -17,11 +17,13 @@ package com.liferay.portlet.layoutsadmin.util;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -305,6 +307,30 @@ public class LayoutsTreeUtil {
 		return paginationJSONObject.getInt(String.valueOf(layoutId), 0);
 	}
 
+	private static boolean _isDeleteable(
+			Layout layout, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (!LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), layout,
+				ActionKeys.DELETE)) {
+
+			return false;
+		}
+
+		Group group = layout.getGroup();
+
+		if (group.isGuest() && !layout.isPrivateLayout() &&
+			layout.isRootLayout() &&
+			(LayoutLocalServiceUtil.getLayoutsCount(
+				group, false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) == 1)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private static boolean _isExpandableLayout(
 		HttpServletRequest request, List<Layout> ancestorLayouts,
 		long[] expandedLayoutIds, Layout layout) {
@@ -416,11 +442,7 @@ public class LayoutsTreeUtil {
 			Layout layout = layoutTreeNode.getLayout();
 
 			jsonObject.put("contentDisplayPage", layout.isContentDisplayPage());
-			jsonObject.put(
-				"deleteable",
-				LayoutPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), layout,
-					ActionKeys.DELETE));
+			jsonObject.put("deleteable", _isDeleteable(layout, themeDisplay));
 			jsonObject.put("friendlyURL", layout.getFriendlyURL());
 
 			if (layout instanceof VirtualLayout) {

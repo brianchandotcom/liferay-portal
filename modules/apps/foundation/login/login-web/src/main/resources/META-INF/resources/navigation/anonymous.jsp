@@ -21,7 +21,7 @@ String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName
 
 boolean showAnonymousIcon = false;
 
-if (!mvcRenderCommandName.startsWith("/login/create_anonymous_account") && company.isStrangers() && portletName.equals(PortletKeys.FAST_LOGIN)) {
+if (!mvcRenderCommandName.startsWith("/login/create_anonymous_account") && portletName.equals(PortletKeys.FAST_LOGIN)) {
 	showAnonymousIcon = true;
 }
 %>

@@ -42,6 +42,10 @@ public class BundleUtil {
 		}
 
 		if (fileName.length() == 0) {
+			if (!dirName.equals("/")) {
+				dirName = dirName + "/";
+			}
+
 			return bundle.getEntry(dirName);
 		}
 

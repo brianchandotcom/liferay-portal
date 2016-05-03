@@ -29,6 +29,9 @@ import java.io.Writer;
 
 import java.nio.file.Files;
 
+import org.bridj.Platform;
+import org.bridj.Pointer;
+
 /**
  * @author Gregory Amerson
  * @author David Truong
@@ -44,6 +47,8 @@ public class JniSassCompiler implements SassCompiler {
 	}
 
 	public JniSassCompiler(int precision, String tmpDirName) {
+		Platform.addEmbeddedLibraryResourceRoot("/");
+
 		_precision = precision;
 		_tmpDirName = tmpDirName;
 	}
@@ -71,7 +76,7 @@ public class JniSassCompiler implements SassCompiler {
 			boolean generateSourceMap, String sourceMapFileName)
 		throws JniSassCompilerException {
 
-		Sass_File_Context sassFileContext = null;
+		Pointer<Sass_File_Context> sassFileContextPointer = null;
 
 		try {
 			File inputFile = new File(inputFileName);
@@ -83,54 +88,56 @@ public class JniSassCompiler implements SassCompiler {
 				sourceMapFileName = getOutputFileName(inputFileName) + ".map";
 			}
 
-			sassFileContext = createSassFileContext(
+			sassFileContextPointer = createSassFileContext(
 				inputFileName, includeDirNames, generateSourceMap,
 				sourceMapFileName);
 
-			Sass_Context sassContext =
-				_liferaysassLibrary.sass_file_context_get_context(
-					sassFileContext);
+			Pointer<Sass_Context> sassContextPointer =
+				LiferaysassLibrary.sassFileContextGetContext(
+					sassFileContextPointer);
 
-			int errorStatus = _liferaysassLibrary.sass_context_get_error_status(
-				sassContext);
+			int errorStatus = LiferaysassLibrary.sassContextGetErrorStatus(
+				sassContextPointer);
 
 			if (errorStatus != 0) {
-				String errorMessage =
-					_liferaysassLibrary.sass_context_get_error_message(
-						sassContext);
+				Pointer<Byte> errorMessagePointer =
+					LiferaysassLibrary.sassContextGetErrorMessage(
+						sassContextPointer);
 
-				throw new JniSassCompilerException(errorMessage);
+				throw new JniSassCompilerException(
+					errorMessagePointer.getCString());
 			}
 
-			String output = _liferaysassLibrary.sass_context_get_output_string(
-				sassContext);
+			Pointer<Byte> outputPointer =
+				LiferaysassLibrary.sassContextGetOutputString(
+					sassContextPointer);
 
 			if (generateSourceMap) {
 				try {
 					File sourceMapFile = new File(sourceMapFileName);
 
-					String sourceMapOutput =
-						_liferaysassLibrary.sass_context_get_source_map_string(
-							sassContext);
+					Pointer<Byte> sourceMapOutputPointer =
+						LiferaysassLibrary.sassContextGetSourceMapString(
+							sassContextPointer);
 
-					write(sourceMapFile, sourceMapOutput);
+					write(sourceMapFile, sourceMapOutputPointer.getCString());
 				}
 				catch (Exception e) {
 					System.out.println("Unable to create source map");
 				}
 			}
 
-			if (output == null) {
+			if (outputPointer == null) {
 				throw new JniSassCompilerException("Null output");
 			}
 
-			return output;
+			return outputPointer.getCString();
 		}
 		finally {
 			try {
-				if (sassFileContext != null) {
-					_liferaysassLibrary.sass_delete_file_context(
-						sassFileContext);
+				if (sassFileContextPointer != null) {
+					LiferaysassLibrary.sassDeleteFileContext(
+						sassFileContextPointer);
 				}
 			}
 			catch (Throwable t) {
@@ -221,47 +228,54 @@ public class JniSassCompiler implements SassCompiler {
 		}
 	}
 
-	protected Sass_File_Context createSassFileContext(
+	protected Pointer<Sass_File_Context> createSassFileContext(
 		String inputFileName, String includeDirNames, boolean generateSourceMap,
 		String sourceMapFileName) {
 
-		Sass_File_Context sassFileContext =
-			_liferaysassLibrary.sass_make_file_context(inputFileName);
+		Pointer<Sass_File_Context> sassFileContextPointer =
+			LiferaysassLibrary.sassMakeFileContext(toPointer(inputFileName));
 
-		Sass_Options sassOptions = _liferaysassLibrary.sass_make_options();
+		Pointer<Sass_Options> sassOptionsPointer =
+			LiferaysassLibrary.sassMakeOptions();
 
-		_liferaysassLibrary.sass_option_set_include_path(
-			sassOptions, includeDirNames);
-		_liferaysassLibrary.sass_option_set_input_path(
-			sassOptions, inputFileName);
-		_liferaysassLibrary.sass_option_set_output_path(sassOptions, "");
-		_liferaysassLibrary.sass_option_set_output_style(
-			sassOptions, Sass_Output_Style.SASS_STYLE_NESTED);
-		_liferaysassLibrary.sass_option_set_precision(sassOptions, _precision);
-		_liferaysassLibrary.sass_option_set_source_comments(
-			sassOptions, (byte)0);
+		LiferaysassLibrary.sassOptionSetIncludePath(
+			sassOptionsPointer, toPointer(includeDirNames));
+		LiferaysassLibrary.sassOptionSetInputPath(
+			sassOptionsPointer, toPointer(inputFileName));
+		LiferaysassLibrary.sassOptionSetOutputPath(
+			sassOptionsPointer, toPointer(""));
+		LiferaysassLibrary.sassOptionSetOutputStyle(
+			sassOptionsPointer, Sass_Output_Style.SASS_STYLE_NESTED);
+		LiferaysassLibrary.sassOptionSetPrecision(
+			sassOptionsPointer, _precision);
+		LiferaysassLibrary.sassOptionSetSourceComments(
+			sassOptionsPointer, false);
 
 		if (generateSourceMap) {
-			_liferaysassLibrary.sass_option_set_source_map_contents(
-				sassOptions, (byte)0);
-			_liferaysassLibrary.sass_option_set_source_map_embed(
-				sassOptions, (byte)0);
-			_liferaysassLibrary.sass_option_set_source_map_file(
-				sassOptions, sourceMapFileName);
-			_liferaysassLibrary.sass_option_set_omit_source_map_url(
-				sassOptions, (byte)0);
+			LiferaysassLibrary.sassOptionSetSourceMapContents(
+				sassOptionsPointer, false);
+			LiferaysassLibrary.sassOptionSetSourceMapEmbed(
+				sassOptionsPointer, false);
+			LiferaysassLibrary.sassOptionSetSourceMapFile(
+				sassOptionsPointer, toPointer(sourceMapFileName));
+			LiferaysassLibrary.sassOptionSetOmitSourceMapUrl(
+				sassOptionsPointer, false);
 		}
 
-		_liferaysassLibrary.sass_file_context_set_options(
-			sassFileContext, sassOptions);
+		LiferaysassLibrary.sassFileContextSetOptions(
+			sassFileContextPointer, sassOptionsPointer);
 
-		_liferaysassLibrary.sass_compile_file_context(sassFileContext);
+		LiferaysassLibrary.sassCompileFileContext(sassFileContextPointer);
 
-		return sassFileContext;
+		return sassFileContextPointer;
 	}
 
 	protected String getOutputFileName(String fileName) {
 		return fileName.replaceAll("scss$", "css");
+	}
+
+	protected Pointer<Byte> toPointer(String s) {
+		return Pointer.pointerToCString(s);
 	}
 
 	protected void write(File file, String string) throws IOException {
@@ -281,9 +295,6 @@ public class JniSassCompiler implements SassCompiler {
 	}
 
 	private static final int _PRECISION_DEFAULT = 5;
-
-	private static final LiferaysassLibrary _liferaysassLibrary =
-		LiferaysassLibrary.INSTANCE;
 
 	private final int _precision;
 	private final String _tmpDirName;

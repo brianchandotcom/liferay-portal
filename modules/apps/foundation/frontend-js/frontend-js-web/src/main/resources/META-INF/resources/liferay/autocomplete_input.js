@@ -38,8 +38,10 @@ AUI.add(
 			},
 
 			regExp: {
-				validator: Lang.isRegExp || Lang.isString,
-				value: '(?:\\strigger|^trigger)([^\\s]+)'
+				validator: function(newVal) {
+					return Lang.isRegExp(newVal) || Lang.isString(newVal);
+				},
+				value: '(?:\\strigger|^trigger)(\\w[\\s\\w]*)'
 			},
 
 			source: {

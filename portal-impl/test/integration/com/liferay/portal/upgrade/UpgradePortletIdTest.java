@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourcePermissionServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -153,9 +152,10 @@ public class UpgradePortletIdTest extends UpgradePortletId {
 			String portletPrimaryKey = PortletPermissionUtil.getPrimaryKey(
 				layout.getPlid(), portletId);
 
-			ResourcePermissionServiceUtil.setIndividualResourcePermissions(
-				layout.getGroupId(), TestPropsValues.getCompanyId(),
-				oldPortletId, portletPrimaryKey, roleIdsToActionIds);
+			ResourcePermissionLocalServiceUtil.setResourcePermissions(
+				TestPropsValues.getCompanyId(), oldPortletId,
+				ResourceConstants.SCOPE_INDIVIDUAL, portletPrimaryKey,
+				roleIdsToActionIds);
 
 			PortletLocalServiceUtil.destroyPortlet(portlet);
 		}

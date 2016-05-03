@@ -90,8 +90,8 @@ public class VerifyOrganization extends VerifyProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			StringBundler sb = new StringBundler();
 
-			sb.append("select distinct AssetEntry.classPK, ");
-			sb.append("Organization_.uuid_ from ");
+			sb.append("select distinct AssetEntry.classPK as classPK, ");
+			sb.append("Organization_.uuid_ as uuid from ");
 			sb.append(
 				"AssetEntry, Organization_ where AssetEntry.classNameId = ");
 
@@ -115,8 +115,8 @@ public class VerifyOrganization extends VerifyProcess {
 									"classPK = ? and classNameId = ?"))) {
 
 					while (rs.next()) {
-						long classPK = rs.getLong("AssetEntry.classPK");
-						String uuid = rs.getString("Organization_.uuid_");
+						long classPK = rs.getLong("classPK");
+						String uuid = rs.getString("uuid");
 
 						ps2.setString(1, uuid);
 						ps2.setLong(2, classPK);

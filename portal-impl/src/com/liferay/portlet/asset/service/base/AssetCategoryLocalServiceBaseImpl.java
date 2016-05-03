@@ -466,8 +466,8 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	 */
 	@Override
 	public void addAssetEntryAssetCategories(long entryId,
-		List<AssetCategory> AssetCategories) {
-		assetEntryPersistence.addAssetCategories(entryId, AssetCategories);
+		List<AssetCategory> assetCategories) {
+		assetEntryPersistence.addAssetCategories(entryId, assetCategories);
 	}
 
 	/**
@@ -503,8 +503,8 @@ public abstract class AssetCategoryLocalServiceBaseImpl
 	 */
 	@Override
 	public void deleteAssetEntryAssetCategories(long entryId,
-		List<AssetCategory> AssetCategories) {
-		assetEntryPersistence.removeAssetCategories(entryId, AssetCategories);
+		List<AssetCategory> assetCategories) {
+		assetEntryPersistence.removeAssetCategories(entryId, assetCategories);
 	}
 
 	/**

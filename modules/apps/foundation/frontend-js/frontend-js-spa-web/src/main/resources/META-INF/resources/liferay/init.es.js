@@ -17,16 +17,27 @@ app.addRoutes(
 			path: function(url) {
 				var uri = new Uri(url);
 
+				var loginRedirect = new Uri(Liferay.SPA.loginRedirect);
+
+				var hostname = loginRedirect.getHostname() || window.location.hostname;
+
+				if (!app.isLinkSameOrigin_(hostname)) {
+					return false;
+				}
+
 				return uri.getParameterValue('p_p_lifecycle') === '1';
 			}
 		},
 		{
 			handler: RenderURLScreen,
 			path: function(url) {
-				if (url.indexOf(themeDisplay.getPathMain()) === 0 ||
-					url.indexOf('/documents') === 0 ||
-					url.indexOf('/image') === 0) {
+				if (url.indexOf(themeDisplay.getPathMain()) === 0) {
+					return false;
+				}
 
+				var excluded = Liferay.SPA.excludedPaths.find((excludedPath) => url.indexOf(excludedPath) === 0);
+
+				if (excluded !== undefined) {
 					return false;
 				}
 

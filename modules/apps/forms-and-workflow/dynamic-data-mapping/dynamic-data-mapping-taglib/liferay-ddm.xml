@@ -4,7 +4,7 @@
 	<authors>
 		<author>Bruno Basto</author>
 	</authors>
-	<component name="HTML" bodyContent="true" writeJSP="true">
+	<component bodyContent="true" name="HTML" writeJSP="true">
 		<attributes>
 			<attribute>
 				<name>checkRequired</name>
@@ -65,7 +65,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="HTMLField" bodyContent="true" writeJSP="true">
+	<component bodyContent="true" name="HTMLField" writeJSP="true">
 		<attributes>
 			<attribute>
 				<name>classNameId</name>
@@ -114,7 +114,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="TemplateRenderer" bodyContent="true" writeEndJSP="false" writeJSP="true">
+	<component bodyContent="true" name="TemplateRenderer" writeEndJSP="false" writeJSP="true">
 		<attributes>
 			<attribute>
 				<name>className</name>
@@ -149,7 +149,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="TemplateSelector" bodyContent="false" writeJSP="true">
+	<component bodyContent="false" name="TemplateSelector" writeJSP="true">
 		<attributes>
 			<attribute>
 				<name>className</name>

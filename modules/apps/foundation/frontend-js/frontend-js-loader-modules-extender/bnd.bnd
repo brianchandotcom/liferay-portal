@@ -4,7 +4,7 @@ Bundle-Version: 1.0.2
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend Infrastructure
 -liferay-includeresource:\
-	@json-*.jar,\
-	@org.apache.felix.utils-*.jar!/org/apache/felix/utils/log/*,\
 	@biz.aQute.bndlib-*.jar!/aQute/lib/base64/*,\
-	@biz.aQute.bndlib-*.jar!/aQute/lib/converter/*
+	@biz.aQute.bndlib-*.jar!/aQute/lib/converter/*,\
+	@json-*.jar,\
+	@org.apache.felix.utils-*.jar!/org/apache/felix/utils/log/*

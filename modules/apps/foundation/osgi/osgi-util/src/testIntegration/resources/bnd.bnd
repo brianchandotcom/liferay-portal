@@ -4,6 +4,6 @@ Bundle-Version: 3.0.0
 Import-Package: !org.junit.experimental.runners,*
 -includeresource:\
 	../../../classes,\
-	com/liferay/osgi/util/test=../../../test-classes/integration/com/liferay/osgi/util/test,\
 	bundle-util=../../../src/testIntegration/resources/bundle-util,\
+	com/liferay/osgi/util/test=../../../test-classes/integration/com/liferay/osgi/util/test,\
 	fileInRoot.properties=../../../src/testIntegration/resources/fileInRoot.properties

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal-web" basedir="." default="war" xmlns:antelope="antlib:ise.antelope.tasks">
+<project basedir="." default="war" name="portal-web" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="../build-common-web.xml" />
 
 	<property name="artifact.version" value="1.0.0" />
@@ -52,7 +52,7 @@
 		</copy>
 	</target>
 
-	<target name="clean" depends="build-common-web.clean,clean-tlds">
+	<target depends="build-common-web.clean,clean-tlds" name="clean">
 		<delete dir="classes" />
 		<delete dir="docroot/dtd" />
 		<delete dir="docroot/html/portal/aui" />
@@ -195,7 +195,7 @@ ${oversize.files.jsp}</fail>
 			<pathelement location="${app.server.dir}/repositories/maven2-internal/org/ow2/jonas/osgi/javaee-api/${app.server.jonas.version}/javaee-api-${app.server.jonas.version}.jar" />
 		</path>
 
-		<antcall target="compile-common-jsp" inheritrefs="true">
+		<antcall inheritrefs="true" target="compile-common-jsp">
 			<param name="arg.line" value="-d ${jspc.classes.dir} -webapp ${jsp.precompile.dir}" />
 		</antcall>
 	</target>
@@ -283,12 +283,12 @@ ${oversize.files.jsp}</fail>
 			<pathelement location="${app.server.bin.dir}/tomcat-juli.jar" />
 		</path>
 
-		<antcall target="compile-common-jsp" inheritrefs="true">
+		<antcall inheritrefs="true" target="compile-common-jsp">
 			<param name="arg.line" value="-d ${jspc.classes.dir} -webapp ${jsp.precompile.dir}" />
 		</antcall>
 	</target>
 
-	<target name="deploy" depends="build-dtd">
+	<target depends="build-dtd" name="deploy">
 		<manifest-macro />
 
 		<antcall target="build-common-web.deploy" />
@@ -301,7 +301,7 @@ ${oversize.files.jsp}</fail>
 					<then>
 						<antcall target="compile-jonas" />
 
-						<copy todir="${app.server.dir}/work/jonas/localhost/_" preservelastmodified="true">
+						<copy preservelastmodified="true" todir="${app.server.dir}/work/jonas/localhost/_">
 							<fileset dir="classes/${app.server.type}">
 								<exclude name="**/*.jspc_error" />
 								<exclude name="**/*.java" />
@@ -313,7 +313,7 @@ ${oversize.files.jsp}</fail>
 						<then>
 							<antcall target="compile-resin" />
 
-							<copy todir="${app.server.portal.dir}/WEB-INF/work" preservelastmodified="true">
+							<copy preservelastmodified="true" todir="${app.server.portal.dir}/WEB-INF/work">
 								<fileset dir="classes/${app.server.type}">
 									<exclude name="**/*.jspc_error" />
 									<exclude name="**/*.java" />
@@ -326,7 +326,7 @@ ${oversize.files.jsp}</fail>
 						<then>
 							<antcall target="compile-tomcat" />
 
-							<copy todir="${app.server.dir}/work/Catalina/localhost/_" preservelastmodified="true">
+							<copy preservelastmodified="true" todir="${app.server.dir}/work/Catalina/localhost/_">
 								<fileset dir="classes/${app.server.type}">
 									<exclude name="**/*.jspc_error" />
 									<exclude name="**/*.java" />
@@ -346,7 +346,7 @@ ${oversize.files.jsp}</fail>
 		</gradle-execute>
 	</target>
 
-	<target name="war" depends="build-dtd">
+	<target depends="build-dtd" name="war">
 		<manifest-macro />
 
 		<war

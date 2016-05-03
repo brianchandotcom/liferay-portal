@@ -633,9 +633,9 @@ public class AssetCategoryLocalServiceWrapper
 
 	@Override
 	public void addAssetEntryAssetCategories(long entryId,
-		java.util.List<com.liferay.asset.kernel.model.AssetCategory> AssetCategories) {
+		java.util.List<com.liferay.asset.kernel.model.AssetCategory> assetCategories) {
 		_assetCategoryLocalService.addAssetEntryAssetCategories(entryId,
-			AssetCategories);
+			assetCategories);
 	}
 
 	@Override
@@ -682,9 +682,9 @@ public class AssetCategoryLocalServiceWrapper
 
 	@Override
 	public void deleteAssetEntryAssetCategories(long entryId,
-		java.util.List<com.liferay.asset.kernel.model.AssetCategory> AssetCategories) {
+		java.util.List<com.liferay.asset.kernel.model.AssetCategory> assetCategories) {
 		_assetCategoryLocalService.deleteAssetEntryAssetCategories(entryId,
-			AssetCategories);
+			assetCategories);
 	}
 
 	@Override

@@ -203,18 +203,15 @@ Export-Package:\
 	*
 Import-Package: !*
 -includeresource:\
-	@lib/com.liferay.osgi.service.tracker.collections.jar,\
-	@lib/com.liferay.portal.app.license.api.jar,\
-	@lib/com.liferay.registry.api.jar,\
 	@../../../lib/development/jms.jar,\
 	@../../../lib/development/mail.jar,\
 	@../../../lib/development/persistence.jar,\
 	@../../../lib/development/servlet-api.jar,\
 	@../../../lib/global/portlet.jar,\
 	@../../../lib/portal/ant.jar,\
+	@../../../lib/portal/aopalliance.jar,\
 	@../../../lib/portal/asm-debug-all.jar,\
 	@../../../lib/portal/aspectj-rt.jar,\
-	@../../../lib/portal/aopalliance.jar,\
 	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*,\
 	@../../../lib/portal/bnd.jar!/aQute/bnd/header/*,\
 	@../../../lib/portal/bnd.jar!/aQute/bnd/osgi/*,\
@@ -237,15 +234,15 @@ Import-Package: !*
 	@../../../lib/portal/jodd.jar,\
 	@../../../lib/portal/json-java.jar,\
 	@../../../lib/portal/liferay-icu4j.jar,\
-	@../../../lib/portal/log4j.jar,\
 	@../../../lib/portal/log4j-extras.jar,\
+	@../../../lib/portal/log4j.jar,\
 	@../../../lib/portal/rome.jar,\
 	@../../../lib/portal/slf4j-api.jar,\
 	@../../../lib/portal/spring-aop.jar,\
 	@../../../lib/portal/spring-aspects.jar,\
 	@../../../lib/portal/spring-beans.jar,\
-	@../../../lib/portal/spring-context.jar,\
 	@../../../lib/portal/spring-context-support.jar,\
+	@../../../lib/portal/spring-context.jar,\
 	@../../../lib/portal/spring-core.jar,\
 	@../../../lib/portal/spring-expression.jar,\
 	@../../../lib/portal/spring-jdbc.jar,\
@@ -254,8 +251,8 @@ Import-Package: !*
 	@../../../lib/portal/spring-oxm.jar,\
 	@../../../lib/portal/spring-tx.jar,\
 	@../../../lib/portal/spring-web.jar,\
-	@../../../lib/portal/spring-webmvc.jar,\
 	@../../../lib/portal/spring-webmvc-portlet.jar,\
+	@../../../lib/portal/spring-webmvc.jar,\
 	@../../../lib/portal/struts-core.jar,\
 	@../../../lib/portal/struts-extras.jar,\
 	@../../../lib/portal/struts-taglib.jar,\
@@ -266,4 +263,7 @@ Import-Package: !*
 	@../../../lib/portal/xmlsec.jar,\
 	@../../../lib/portal/xstream.jar,\
 	@../../../portal-impl/portal-impl.jar,\
-	@../../../portal-kernel/portal-kernel.jar
+	@../../../portal-kernel/portal-kernel.jar,\
+	@lib/com.liferay.osgi.service.tracker.collections.jar,\
+	@lib/com.liferay.portal.app.license.api.jar,\
+	@lib/com.liferay.registry.api.jar

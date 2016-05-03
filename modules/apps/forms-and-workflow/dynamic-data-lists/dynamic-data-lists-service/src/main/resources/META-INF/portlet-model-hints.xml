@@ -32,10 +32,10 @@
 			<hint name="upper-case">true</hint>
 			<hint name="auto-escape">false</hint>
 		</field>
-		<field name="name" type="String" localized="true">
+		<field localized="true" name="name" type="String">
 			<validator name="required" />
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="minDisplayRows" type="int" />

@@ -37,7 +37,7 @@
 	</command>
 
 	<command name="gotoAddPGViaWCD">
-		<execute function="Click#makeVisibleClickAt" locator1="WCD#ADD_WEB_CONTENT" />
+		<execute function="Click#clickNoWaitForVisible" locator1="WCD#ADD_WEB_CONTENT" />
 
 		<if>
 			<not>

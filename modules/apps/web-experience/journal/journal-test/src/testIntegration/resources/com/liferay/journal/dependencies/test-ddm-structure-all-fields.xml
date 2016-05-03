@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <root available-locales="en_US" default-locale="en_US">
-	<dynamic-element dataType="boolean" name="boolean" repeatable="false" required="false" showLabel="true" type="checkbox" indexType="">
+	<dynamic-element dataType="boolean" indexType="" name="boolean" repeatable="false" required="false" showLabel="true" type="checkbox">
 		<meta-data locale="en_US">
 			<entry name="label"><![CDATA[Boolean Field]]></entry>
 			<entry name="predefinedValue"><![CDATA[]]></entry>

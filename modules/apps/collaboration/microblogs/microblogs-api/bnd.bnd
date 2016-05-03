@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Mircoblogs API
+Bundle-Name: Liferay Microblogs API
 Bundle-SymbolicName: com.liferay.microblogs.api
 Bundle-Version: 2.0.1
 Export-Package: com.liferay.microblogs.*

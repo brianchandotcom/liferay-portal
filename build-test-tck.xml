@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-tck" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project basedir="." default="test" name="portal-test-tck" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
 	<macrodef name="update-tck-war-version">
@@ -8,7 +8,7 @@
 
 		<sequential>
 			<tstamp>
-				<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+				<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 			</tstamp>
 
 			<mkdir dir="${tstamp.value}" />
@@ -19,7 +19,7 @@
 				</patternset>
 			</unwar>
 
-			<fixcrlf file="${tstamp.value}/WEB-INF/web.xml" eol="lf" />
+			<fixcrlf eol="lf" file="${tstamp.value}/WEB-INF/web.xml" />
 
 			<replace file="${tstamp.value}/WEB-INF/web.xml">
 				<replacefilter>
@@ -57,17 +57,17 @@
 			<isset property="portlet.tck.url" />
 			<then>
 				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+					<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 				</tstamp>
 
 				<mirrors-get dest="${tstamp.value}.zip" src="${portlet.tck.url}" />
 
-				<unzip src="${tstamp.value}.zip" dest="tools/tck" />
+				<unzip dest="tools/tck" src="${tstamp.value}.zip" />
 
 				<delete file="${tstamp.value}.zip" />
 			</then>
 			<else>
-				<unzip src="${portlet.tck.zip}" dest="tools/tck" />
+				<unzip dest="tools/tck" src="${portlet.tck.zip}" />
 			</else>
 		</if>
 
@@ -81,7 +81,7 @@
 			<replacefilter token="http://localhost:8080/pluto/tck" value="http://localhost:8080/c/portal/tck" />
 		</replace>
 
-		<echo file="tools/tck/bin/build.properties" append="true">
+		<echo append="true" file="tools/tck/bin/build.properties">
 
 work.dir=${basedir.unix}/tools/tck/work</echo>
 	</target>
@@ -122,7 +122,7 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 					<sequential>
 						<local name="tck.servlet.context.name" />
 
-						<basename property="tck.servlet.context.name" file="@{tck.war.file}" suffix=".war" />
+						<basename file="@{tck.war.file}" property="tck.servlet.context.name" suffix=".war" />
 
 						<if>
 							<equals arg1="${tck.servlet.context.names}" arg2="" />
@@ -252,19 +252,19 @@ servletContextNames=${tck.servlet.context.names}</echo>
 		<echo file="test.tck.package.names.properties">${test.tck.package.names}</echo>
 	</target>
 
-	<target name="run-tck-tomcat" depends="prepare-tck-dependencies">
+	<target depends="prepare-tck-dependencies" name="run-tck-tomcat">
 		<if>
 			<not>
 				<isset property="test.class.group" />
 			</not>
 			<then>
-				<antcall target="clean-up-java-processes" inheritAll="false" />
+				<antcall inheritAll="false" target="clean-up-java-processes" />
 
 				<antcall target="prepare-portal-ext-properties" />
 
 				<antcall target="prepare-system-ext-properties" />
 
-				<antcall target="rebuild-database" inheritAll="false" />
+				<antcall inheritAll="false" target="rebuild-database" />
 			</then>
 		</if>
 
@@ -273,7 +273,7 @@ servletContextNames=${tck.servlet.context.names}</echo>
 		</antcall>
 
 		<waitfor checkevery="100" checkeveryunit="millisecond" maxwait="10" maxwaitunit="minute" timeoutproperty="tck.wars.deployment.timeout">
-			<socket server="localhost" port="${portlet.tck.bridge.handshake.port}" />
+			<socket port="${portlet.tck.bridge.handshake.port}" server="localhost" />
 		</waitfor>
 
 		<if>
@@ -298,8 +298,8 @@ ${logfile.content}</echo>
 			</then>
 		</if>
 
-		<condition property="tsant.file.suffix.bat" value=".bat" else="">
-			<contains string="${os.name}" substring="Windows" casesensitive="false" />
+		<condition else="" property="tsant.file.suffix.bat" value=".bat">
+			<contains casesensitive="false" string="${os.name}" substring="Windows" />
 		</condition>
 
 		<for list="${test.directories}" param="test.directory">

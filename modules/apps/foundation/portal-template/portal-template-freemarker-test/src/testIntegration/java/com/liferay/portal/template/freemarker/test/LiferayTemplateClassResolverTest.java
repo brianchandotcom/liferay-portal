@@ -22,6 +22,7 @@ import freemarker.template.TemplateException;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.concurrent.CountDownLatch;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -33,6 +34,8 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceEvent;
+import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -103,9 +106,7 @@ public class LiferayTemplateClassResolverTest {
 			"allowedClasses", "freemarker.template.utility.ClassUtil");
 		properties.put("restrictedClasses", "");
 
-		_freemarkerTemplateConfiguration.update(properties);
-
-		Thread.sleep(_SLEEP);
+		_updateProperties(properties);
 
 		_liferayTemplateClassResolver.resolve(
 			"freemarker.template.utility.ClassUtil", null, null);
@@ -118,9 +119,7 @@ public class LiferayTemplateClassResolverTest {
 		properties.put("allowedClasses", "freemarker.template.utility.*");
 		properties.put("restrictedClasses", "");
 
-		_freemarkerTemplateConfiguration.update(properties);
-
-		Thread.sleep(_SLEEP);
+		_updateProperties(properties);
 
 		_liferayTemplateClassResolver.resolve(
 			"freemarker.template.utility.ClassUtil", null, null);
@@ -133,9 +132,7 @@ public class LiferayTemplateClassResolverTest {
 		properties.put("allowedClasses", "freemarker.template.utility.*");
 		properties.put("restrictedClasses", "");
 
-		_freemarkerTemplateConfiguration.update(properties);
-
-		Thread.sleep(_SLEEP);
+		_updateProperties(properties);
 
 		_liferayTemplateClassResolver.resolve(
 			"freemarker.template.utility.Execute", null, null);
@@ -148,9 +145,7 @@ public class LiferayTemplateClassResolverTest {
 		properties.put("allowedClasses", "freemarker.template.utility.*");
 		properties.put("restrictedClasses", "");
 
-		_freemarkerTemplateConfiguration.update(properties);
-
-		Thread.sleep(_SLEEP);
+		_updateProperties(properties);
 
 		_liferayTemplateClassResolver.resolve(
 			"freemarker.template.utility.ObjectConstructor", null, null);
@@ -163,9 +158,7 @@ public class LiferayTemplateClassResolverTest {
 		properties.put(
 			"allowedClasses", "com.liferay.portal.kernel.model.User");
 
-		_freemarkerTemplateConfiguration.update(properties);
-
-		Thread.sleep(_SLEEP);
+		_updateProperties(properties);
 
 		_liferayTemplateClassResolver.resolve(
 			"com.liferay.portal.kernel.model.User", null, null);
@@ -182,9 +175,7 @@ public class LiferayTemplateClassResolverTest {
 		properties.put(
 			"restrictedClasses", "com.liferay.portal.kernel.model.*");
 
-		_freemarkerTemplateConfiguration.update(properties);
-
-		Thread.sleep(_SLEEP);
+		_updateProperties(properties);
 
 		_liferayTemplateClassResolver.resolve(
 			"com.liferay.portal.kernel.model.User", null, null);
@@ -224,7 +215,47 @@ public class LiferayTemplateClassResolverTest {
 		_liferayTemplateClassResolver.resolve("java.lang.Thread", null, null);
 	}
 
-	private static final long _SLEEP = 1000;
+	private void _updateProperties(Dictionary<String, Object> dictionary)
+		throws Exception {
+
+		final CountDownLatch countDownLatch = new CountDownLatch(1);
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			_liferayTemplateClassResolver.getClass());
+
+		final BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceListener serviceListener = new ServiceListener() {
+
+			@Override
+			public void serviceChanged(ServiceEvent serviceEvent) {
+				if (serviceEvent.getType() != ServiceEvent.MODIFIED) {
+					return;
+				}
+
+				ServiceReference<?> serviceReference =
+					serviceEvent.getServiceReference();
+
+				Object service = bundleContext.getService(serviceReference);
+
+				if (service == _liferayTemplateClassResolver) {
+					countDownLatch.countDown();
+				}
+			}
+
+		};
+
+		bundleContext.addServiceListener(serviceListener);
+
+		try {
+			_freemarkerTemplateConfiguration.update(dictionary);
+
+			countDownLatch.await();
+		}
+		finally {
+			bundleContext.removeServiceListener(serviceListener);
+		}
+	}
 
 	private static TemplateClassResolver _liferayTemplateClassResolver;
 	private static ServiceTracker<TemplateClassResolver, TemplateClassResolver>

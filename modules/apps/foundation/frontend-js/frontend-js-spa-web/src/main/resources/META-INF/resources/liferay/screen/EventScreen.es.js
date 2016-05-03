@@ -38,6 +38,12 @@ class EventScreen extends HtmlScreen {
 		);
 	}
 
+	addCache(content) {
+		super.addCache(content);
+
+		this.cacheLastModified = (new Date()).getTime();
+	}
+
 	deactivate() {
 		super.deactivate();
 
@@ -75,6 +81,10 @@ class EventScreen extends HtmlScreen {
 					}
 				);
 			});
+	}
+
+	getCacheLastModified() {
+		return this.cacheLastModified;
 	}
 
 	isValidResponseStatusCode(statusCode) {

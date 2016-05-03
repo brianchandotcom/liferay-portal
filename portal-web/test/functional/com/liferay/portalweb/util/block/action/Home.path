@@ -95,7 +95,7 @@
 </tr>
 <tr>
 	<td>USER_NAME_HEADER</td>
-	<td>//div[@id='heading']//div[@class='site-name']</td>
+	<td>//div[@id='heading']//span[@class='site-name']</td>
 	<td></td>
 </tr>
 <tr>

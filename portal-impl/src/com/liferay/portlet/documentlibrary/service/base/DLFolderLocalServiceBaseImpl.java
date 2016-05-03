@@ -509,8 +509,8 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public void addDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		List<DLFolder> DLFolders) {
-		dlFileEntryTypePersistence.addDLFolders(fileEntryTypeId, DLFolders);
+		List<DLFolder> dlFolders) {
+		dlFileEntryTypePersistence.addDLFolders(fileEntryTypeId, dlFolders);
 	}
 
 	/**
@@ -548,8 +548,8 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Override
 	public void deleteDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		List<DLFolder> DLFolders) {
-		dlFileEntryTypePersistence.removeDLFolders(fileEntryTypeId, DLFolders);
+		List<DLFolder> dlFolders) {
+		dlFileEntryTypePersistence.removeDLFolders(fileEntryTypeId, dlFolders);
 	}
 
 	/**

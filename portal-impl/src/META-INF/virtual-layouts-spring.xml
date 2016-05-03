@@ -8,8 +8,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean id="com.liferay.portal.kernel.portlet.VirtualLayoutFriendlyURLResolver" class="com.liferay.portal.kernel.portlet.VirtualLayoutFriendlyURLResolver" />
-	<bean id="com.liferay.portal.service.impl.LayoutLocalServiceVirtualLayoutsAdvice" class="com.liferay.portal.service.impl.LayoutLocalServiceVirtualLayoutsAdvice" />
+	<bean class="com.liferay.portal.kernel.portlet.VirtualLayoutFriendlyURLResolver" id="com.liferay.portal.kernel.portlet.VirtualLayoutFriendlyURLResolver" />
+	<bean class="com.liferay.portal.service.impl.LayoutLocalServiceVirtualLayoutsAdvice" id="com.liferay.portal.service.impl.LayoutLocalServiceVirtualLayoutsAdvice" />
 	<aop:config proxy-target-class="false">
 		<aop:advisor advice-ref="com.liferay.portal.service.impl.LayoutLocalServiceVirtualLayoutsAdvice" pointcut="bean(com.liferay.portal.kernel.service.LayoutLocalService)" />
 	</aop:config>

@@ -80,10 +80,10 @@
 		<field name="leftCategoryId" type="long" />
 		<field name="rightCategoryId" type="long" />
 		<field name="name" type="String" />
-		<field name="title" type="String" localized="true">
+		<field localized="true" name="title" type="String">
 			<validator name="required" />
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 			<hint name="display-width">350</hint>
 		</field>
@@ -124,13 +124,13 @@
 		<field name="publishDate" type="Date" />
 		<field name="expirationDate" type="Date" />
 		<field name="mimeType" type="String" />
-		<field name="title" type="String" localized="true">
+		<field localized="true" name="title" type="String">
 			<hint name="max-length">4000</hint>
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="summary" type="String" localized="true">
+		<field localized="true" name="summary" type="String">
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="url" type="String">
@@ -185,10 +185,10 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" />
-		<field name="title" type="String" localized="true">
+		<field localized="true" name="title" type="String">
 			<validator name="required" />
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 			<hint name="display-width">350</hint>
 		</field>
@@ -341,11 +341,11 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="fileEntryTypeKey" type="String" />
-		<field name="name" type="String" localized="true">
+		<field localized="true" name="name" type="String">
 			<hint name="max-length">4000</hint>
 			<validator name="required" />
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="lastPublishDate" type="Date" />
@@ -865,12 +865,12 @@
 		<field name="groupKey" type="String">
 			<hint name="max-length">150</hint>
 		</field>
-		<field name="name" type="String" localized="true">
+		<field localized="true" name="name" type="String">
 			<hint name="display-width">210</hint>
 			<hint name="max-length">4000</hint>
 			<validator name="required" />
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="type" type="int" />
@@ -910,24 +910,24 @@
 		<field name="privateLayout" type="boolean" />
 		<field name="layoutId" type="long" />
 		<field name="parentLayoutId" type="long" />
-		<field name="name" type="String" localized="true">
+		<field localized="true" name="name" type="String">
 			<hint name="display-width">210</hint>
 			<hint name="max-length">4000</hint>
 			<validator name="required" />
 		</field>
-		<field name="title" type="String" localized="true">
+		<field localized="true" name="title" type="String">
 			<hint name="display-width">210</hint>
 			<hint name="max-length">4000</hint>
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 			<hint name="display-width">300</hint>
 		</field>
-		<field name="keywords" type="String" localized="true">
+		<field localized="true" name="keywords" type="String">
 			<hint-collection name="TEXTAREA" />
 			<hint name="display-width">300</hint>
 		</field>
-		<field name="robots" type="String" localized="true">
+		<field localized="true" name="robots" type="String">
 			<hint-collection name="TEXTAREA" />
 			<hint name="display-width">300</hint>
 		</field>
@@ -997,10 +997,10 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" localized="true">
+		<field localized="true" name="name" type="String">
 			<validator name="required" />
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="settings" type="String">
@@ -1024,18 +1024,18 @@
 		<field name="major" type="boolean" />
 		<field name="plid" type="long" />
 		<field name="privateLayout" type="boolean" />
-		<field name="name" type="String" localized="true">
+		<field localized="true" name="name" type="String">
 			<hint-collection name="TEXTAREA" />
 			<validator name="required" />
 		</field>
-		<field name="title" type="String" localized="true">
+		<field localized="true" name="title" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
-		<field name="keywords" type="String" localized="true" />
-		<field name="robots" type="String" localized="true" />
+		<field localized="true" name="keywords" type="String" />
+		<field localized="true" name="robots" type="String" />
 		<field name="typeSettings" type="String">
 			<hint-collection name="CLOB" />
 		</field>
@@ -1110,11 +1110,11 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" localized="true">
+		<field localized="true" name="name" type="String">
 			<hint name="max-length">4000</hint>
 			<validator name="required" />
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="settings" type="String">
@@ -1517,10 +1517,10 @@
 			<hint name="display-width">210</hint>
 			<validator name="required" />
 		</field>
-		<field name="title" type="String" localized="true">
+		<field localized="true" name="title" type="String">
 			<hint name="max-length">4000</hint>
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="type" type="int" />

@@ -10,7 +10,7 @@ class LiferayApp extends App {
 	constructor() {
 		super();
 
-		this.blacklist = {};
+		this.portletsBlacklist = {};
 		this.validStatusCodes = [];
 
 		var exceptionsSelector = ':not([target="_blank"]):not([data-senna-off]):not([data-resource-href])';
@@ -36,8 +36,32 @@ class LiferayApp extends App {
 		dom.append(body, '<div class="lfr-spa-loading-bar"></div>');
 	}
 
+	createScreenInstance(path, route) {
+		var screen = super.createScreenInstance(path, route);
+
+		if (this.isCacheEnabled() && this.isScreenCacheExpired(screen)) {
+			screen.clearCache();
+		}
+
+		return screen;
+	}
+
+	getCacheExpirationTime() {
+		return Liferay.SPA.cacheExpirationTime;
+	}
+
 	getValidStatusCodes() {
 		return this.validStatusCodes;
+	}
+
+	isCacheEnabled() {
+		return this.getCacheExpirationTime() > -1;
+	}
+
+	isScreenCacheExpired(screen) {
+		var lastModifiedInterval = (new Date()).getTime() - screen.getCacheLastModified();
+
+		return lastModifiedInterval > this.getCacheExpirationTime();
 	}
 
 	onBeforeNavigate(event) {
@@ -55,18 +79,18 @@ class LiferayApp extends App {
 	}
 
 	onDocClickDelegate_(event) {
-		var inBlacklist = false;
+		var inPortletsBlacklist = false;
 
-		Object.keys(this.blacklist).forEach(
+		Object.keys(this.portletsBlacklist).forEach(
 			(portletId) => {
 				var boundaryId = Utils.getPortletBoundaryId(portletId);
 				var portlets = document.querySelectorAll('[id^="' + boundaryId + '"]');
 
-				inBlacklist = Array.prototype.slice.call(portlets).some(portlet => dom.contains(portlet, event.delegateTarget));
+				inPortletsBlacklist = Array.prototype.slice.call(portlets).some(portlet => dom.contains(portlet, event.delegateTarget));
 			}
 		);
 
-		if (inBlacklist) {
+		if (inPortletsBlacklist) {
 			return;
 		}
 
@@ -116,8 +140,8 @@ class LiferayApp extends App {
 		);
 	}
 
-	setBlacklist(blacklist) {
-		this.blacklist = blacklist;
+	setPortletsBlacklist(portletsBlacklist) {
+		this.portletsBlacklist = portletsBlacklist;
 	}
 
 	setValidStatusCodes(validStatusCodes) {

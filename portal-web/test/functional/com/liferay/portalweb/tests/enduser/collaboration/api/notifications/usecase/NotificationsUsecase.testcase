@@ -1,4 +1,5 @@
 <definition component-name="portal-collaboration">
+	<property name="portal.release" value="true" />
 	<property name="custom.properties" value="default.layout.template.id=1_column" />
 	<property name="portlet.plugins.includes" value="notifications-portlet" />
 	<property name="testray.main.component.name" value="Notifications" />
@@ -30,8 +31,6 @@
 	</tear-down>
 
 	<command name="MarkNotificationAsReadAndAcceptRequest" priority="4">
-		<property name="portlet.plugins.includes" value="contacts-portlet,microblogs-portlet,notifications-portlet,private-messaging-portlet,so-portlet" />
-
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -88,7 +87,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Public Pages" />
+			<var name="pageName" value="Home" />
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
@@ -97,7 +96,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Public Pages" />
+			<var name="pageName" value="Home" />
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
@@ -119,12 +118,8 @@
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
-		<execute macro="SOMembersPortlet#inviteMember">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userMiddleName" value="" />
-			<var name="userName" value="userfn userln" />
+		<execute macro="InviteMembers#inviteMembers">
+			<var name="inviteUserFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -176,32 +171,18 @@
 		</execute>
 
 		<execute macro="Notifications#viewRequest">
-			<var name="requestsContent" value="Test Test invited you to join Community Site Name." />
-		</execute>
-
-		<execute macro="Notifications#markAllAsRead" />
-
-		<execute macro="Notifications#viewBadgeCount" >
-			<var name="notificationCount" value="1" />
-		</execute>
-
-		<execute macro="Notifications#viewRequest">
-			<var name="requestsContent" value="Test Test invited you to join Community Site Name." />
+			<var name="requestsTitle" value="Test Test invited you to join Community Site Name." />
 		</execute>
 
 		<execute macro="Notifications#acceptRequest" >
-			<var name="requestsContent" value="Test Test invited you to join Community Site Name." />
+			<var name="requestsTitle" value="Test Test invited you to join Community Site Name." />
 		</execute>
 
-		<execute macro="Notifications#viewBadgeCount" >
-			<var name="notificationCount" value="0" />
-		</execute>
+		<execute function="Refresh" />
 
 		<execute macro="Notifications#viewNoRequest" />
 
-		<execute macro="Notifications#viewBadgeCount" >
-			<var name="notificationCount" value="0" />
-		</execute>
+		<execute macro="Notifications#viewNoNotifications" />
 
 		<execute macro="User#logoutPG" />
 

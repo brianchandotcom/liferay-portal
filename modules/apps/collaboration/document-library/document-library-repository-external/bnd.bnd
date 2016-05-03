@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Document Library Repository External
+Bundle-SymbolicName: com.liferay.document.library.repository.external
+Bundle-Version: 1.0.2
+Export-Package:\
+	com.liferay.document.library.repository.external,\
+	com.liferay.document.library.repository.external.cache,\
+	com.liferay.document.library.repository.external.model,\
+	com.liferay.document.library.repository.external.search
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Document Library

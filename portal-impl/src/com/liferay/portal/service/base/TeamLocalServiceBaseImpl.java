@@ -450,8 +450,8 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	/**
 	 */
 	@Override
-	public void addUserTeams(long userId, List<Team> Teams) {
-		userPersistence.addTeams(userId, Teams);
+	public void addUserTeams(long userId, List<Team> teams) {
+		userPersistence.addTeams(userId, teams);
 	}
 
 	/**
@@ -485,8 +485,8 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	/**
 	 */
 	@Override
-	public void deleteUserTeams(long userId, List<Team> Teams) {
-		userPersistence.removeTeams(userId, Teams);
+	public void deleteUserTeams(long userId, List<Team> teams) {
+		userPersistence.removeTeams(userId, teams);
 	}
 
 	/**
@@ -574,8 +574,8 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	/**
 	 */
 	@Override
-	public void addUserGroupTeams(long userGroupId, List<Team> Teams) {
-		userGroupPersistence.addTeams(userGroupId, Teams);
+	public void addUserGroupTeams(long userGroupId, List<Team> teams) {
+		userGroupPersistence.addTeams(userGroupId, teams);
 	}
 
 	/**
@@ -609,8 +609,8 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	/**
 	 */
 	@Override
-	public void deleteUserGroupTeams(long userGroupId, List<Team> Teams) {
-		userGroupPersistence.removeTeams(userGroupId, Teams);
+	public void deleteUserGroupTeams(long userGroupId, List<Team> teams) {
+		userGroupPersistence.removeTeams(userGroupId, teams);
 	}
 
 	/**

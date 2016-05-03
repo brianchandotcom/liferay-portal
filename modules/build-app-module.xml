@@ -2,20 +2,6 @@
 <!DOCTYPE project>
 
 <project name="build-app-module">
-	<property file="bnd.bnd" />
-
-	<property name="artifact.location.new" value="${osgi.dir}/marketplace/${Bundle-SymbolicName}-${Bundle-Version}.jar" />
-
-	<condition property="artifact.location.old" value="${osgi.dir}/portal/${Bundle-SymbolicName}.jar">
-		<contains string="${Bundle-SymbolicName}" substring="com.liferay.portal" />
-	</condition>
-
-	<condition property="artifact.location.old" value="${osgi.dir}/test/${Bundle-SymbolicName}.jar">
-		<contains string="${Bundle-SymbolicName}" substring=".test" />
-	</condition>
-
-	<property name="artifact.location.old" value="${osgi.dir}/modules/${Bundle-SymbolicName}.jar" />
-
 	<pathconvert property="releng.module.dir">
 		<filtermapper>
 			<replacestring from="modules${file.separator}apps" to="modules${file.separator}.releng${file.separator}apps" />
@@ -26,9 +12,13 @@
 		</path>
 	</pathconvert>
 
-	<target name="dist-module-artifact" depends="download-artifact,record-artifact-change-log" />
+	<condition property="artifact.bnd">
+		<available file="bnd.bnd" />
+	</condition>
 
-	<target name="dist-module-artifact-lpkg" depends="move-artifact" />
+	<target depends="download-artifact,record-artifact-change-log" name="dist-module-artifact" />
+
+	<target depends="move-artifact" name="dist-module-artifact-lpkg" />
 
 	<target name="download-artifact">
 		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
@@ -47,19 +37,18 @@
 			</filterchain>
 		</loadproperties>
 
-		<get src="${artifact.url}" dest="${dist.dir}" />
+		<get dest="${dist.dir}" src="${artifact.url}" />
 	</target>
 
 	<target
-		name="get-artifact-change-log-ticket-list"
 		depends="get-artifact-version-previous-release,get-artifact-change-log-ticket-list-since-previous-release,get-artifact-change-log-ticket-list-full"
 		description="Get an aggregated list of tickets from the change logs of all versions of the current module since the version present in the previous release of this app."
 		if="${app.has.artifact.previous.release}"
+		name="get-artifact-change-log-ticket-list"
 	/>
 
 	<target
 		name="get-artifact-change-log-ticket-list-full"
-		description=""
 		unless="${app.has.artifact.previous.release}"
 	>
 		<loadfile failonerror="false" property="artifact.change.log.ticket.list" srcfile="${releng.module.dir}/liferay-releng.changelog">
@@ -84,10 +73,10 @@
 	</target>
 
 	<target
-		name="get-artifact-change-log-ticket-list-since-previous-release"
 		depends="get-artifact-version-previous-release"
 		description="Get an aggregated list of tickets from the change logs of all versions of the current module since the version present in the previous release of this app."
 		if="${app.has.artifact.previous.release}"
+		name="get-artifact-change-log-ticket-list-since-previous-release"
 	>
 		<loadfile failonerror="false" property="artifact.change.log.ticket.list" srcfile="${releng.module.dir}/liferay-releng.changelog">
 			<filterchain>
@@ -118,9 +107,67 @@
 		</condition>
 	</target>
 
+	<target depends="get-artifact-properties-bnd,get-artifact-properties-json" name="get-artifact-properties" />
+
+	<target if="artifact.bnd" name="get-artifact-properties-bnd">
+		<property file="bnd.bnd" />
+
+		<property name="artifact.location.dest" value="${osgi.dir}/marketplace/${Bundle-SymbolicName}-${Bundle-Version}.jar" />
+
+		<condition property="artifact.location.src" value="${osgi.dir}/portal/${Bundle-SymbolicName}.jar">
+			<contains string="${Bundle-SymbolicName}" substring="com.liferay.portal" />
+		</condition>
+
+		<property name="artifact.location.src" value="${osgi.dir}/modules/${Bundle-SymbolicName}.jar" />
+
+		<basename file="${artifact.location.src}" property="artifact.file.name" />
+
+		<condition property="osgi.static">
+			<contains string="${osgi.static.modules}" substring="${artifact.file.name}" />
+		</condition>
+	</target>
+
+	<target name="get-artifact-properties-json" unless="artifact.bnd">
+		<basename file="${basedir}" property="app.dir.name" />
+
+		<loadfile property="artifact.name" srcfile="package.json">
+			<filterchain>
+				<linecontains>
+					<contains value="&quot;name&quot;:" />
+				</linecontains>
+
+				<tokenfilter>
+					<replaceregex pattern="\s.*&quot;name&quot;: &quot;([a-z-]+)&quot;," replace="\1" />
+				</tokenfilter>
+
+				<striplinebreaks />
+			</filterchain>
+		</loadfile>
+
+		<loadfile property="artifact.version" srcfile="package.json">
+			<filterchain>
+				<linecontains>
+					<contains value="&quot;version&quot;:" />
+				</linecontains>
+
+				<tailfilter lines="1" />
+
+				<tokenfilter>
+					<replaceregex pattern="\t&quot;version&quot;: &quot;([\d.]+)&quot;,?" replace="\1" />
+				</tokenfilter>
+
+				<striplinebreaks />
+			</filterchain>
+		</loadfile>
+
+		<property name="artifact.location.dest" value="${osgi.dir}/marketplace/${artifact.name}-${artifact.version}.war" />
+
+		<property name="artifact.location.src" value="${osgi.dir}/../deploy/${artifact.name}.war" />
+	</target>
+
 	<target
-		name="get-artifact-version-previous-release"
 		description="Get the version of the current module that was present in the previous release of this app."
+		name="get-artifact-version-previous-release"
 		unless="${app.first.version}"
 	>
 		<loadfile property="artifact.version.previous.release">
@@ -148,20 +195,20 @@
 		</condition>
 	</target>
 
-	<target name="move-artifact">
-		<move file="${artifact.location.old}" tofile="${artifact.location.new}" />
+	<target depends="get-artifact-properties" name="move-artifact" unless="osgi.static">
+		<move file="${artifact.location.src}" tofile="${artifact.location.dest}" />
 	</target>
 
 	<target
-		name="record-artifact-change-log"
 		depends="get-artifact-change-log-ticket-list"
 		description="Record the change log tickets for the current module to app.changelog."
 		if="${artifact.has.change.log.ticket.list}"
+		name="record-artifact-change-log"
 	>
 		<echo append="true" file="${dist.dir}/ticket.list.tmp">${artifact.change.log.ticket.list} </echo>
 	</target>
 
 	<target name="reset-artifact">
-		<move failonerror="false" file="${artifact.location.new}" tofile="${artifact.location.old}" />
+		<move failonerror="false" file="${artifact.location.dest}" tofile="${artifact.location.src}" />
 	</target>
 </project>

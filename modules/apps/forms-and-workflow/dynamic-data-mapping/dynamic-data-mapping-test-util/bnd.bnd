@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Dynamic Data Mapping Test Util
+Bundle-Name: Liferay Dynamic Data Mapping Test Utilities
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.test.util
 Bundle-Version: 2.0.2
 Export-Package:\

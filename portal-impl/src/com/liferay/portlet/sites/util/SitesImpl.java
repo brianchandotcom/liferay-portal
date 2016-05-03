@@ -560,17 +560,44 @@ public class SitesImpl implements Sites {
 		LayoutServiceUtil.deleteLayout(
 			groupId, privateLayout, layoutId, serviceContext);
 
-		long newPlid = layout.getParentPlid();
+		long newPlid = LayoutConstants.DEFAULT_PLID;
 
-		if (newPlid <= 0) {
-			LayoutSet layoutSet = layout.getLayoutSet();
+		if (selPlid == themeDisplay.getRefererPlid()) {
+			if (layout.getParentLayoutId() !=
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 
-			Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+				Layout parentLayout = LayoutLocalServiceUtil.fetchLayout(
+					layout.getGroupId(), layout.isPrivateLayout(),
+					layout.getParentLayoutId());
 
-			if (firstLayout != null) {
-				newPlid = firstLayout.getPlid();
+				if (parentLayout != null) {
+					newPlid = parentLayout.getPlid();
+				}
+			}
+
+			if (newPlid <= 0) {
+				Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
+					layout.getGroupId(), layout.isPrivateLayout(),
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+				if ((firstLayout != null) &&
+					(firstLayout.getPlid() != selPlid)) {
+
+					newPlid = firstLayout.getPlid();
+				}
+
+				if (newPlid <= 0) {
+					Layout otherLayoutSetFirstLayout =
+						LayoutLocalServiceUtil.fetchFirstLayout(
+							layout.getGroupId(), !layout.isPrivateLayout(),
+							LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+					if ((otherLayoutSetFirstLayout != null) &&
+						(otherLayoutSetFirstLayout.getPlid() != selPlid)) {
+
+						newPlid = otherLayoutSetFirstLayout.getPlid();
+					}
+				}
 			}
 		}
 

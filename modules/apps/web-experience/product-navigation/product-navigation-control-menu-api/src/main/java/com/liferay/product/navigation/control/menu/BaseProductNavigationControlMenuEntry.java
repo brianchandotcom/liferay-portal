@@ -61,6 +61,11 @@ public abstract class BaseProductNavigationControlMenuEntry
 	}
 
 	@Override
+	public String getIcon(HttpServletRequest request) {
+		return StringPool.BLANK;
+	}
+
+	@Override
 	public String getIconCssClass(HttpServletRequest request) {
 		return StringPool.BLANK;
 	}
@@ -75,6 +80,11 @@ public abstract class BaseProductNavigationControlMenuEntry
 	@Override
 	public String getLinkCssClass(HttpServletRequest request) {
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public String getMarkupView(HttpServletRequest request) {
+		return "lexicon";
 	}
 
 	@Override

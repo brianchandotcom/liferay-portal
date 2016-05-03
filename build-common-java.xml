@@ -19,10 +19,10 @@
 			<delete dir="test-results" />
 			<delete dir="woven-classes" />
 			<delete dir="${doc.dir}/${ant.project.name}/javadocs" />
-			<delete file="${deploy.dir}/${jar.file}.jar" failonerror="false" />
-			<delete file="${jar.file}.jar" failonerror="false" />
-			<delete file="${jar.file}-javadoc.jar" failonerror="false" />
-			<delete file="${jar.file}-sources.jar" failonerror="false" />
+			<delete failonerror="false" file="${deploy.dir}/${jar.file}.jar" />
+			<delete failonerror="false" file="${jar.file}.jar" />
+			<delete failonerror="false" file="${jar.file}-javadoc.jar" />
+			<delete failonerror="false" file="${jar.file}-sources.jar" />
 
 			<clean-post />
 		</sequential>
@@ -48,7 +48,7 @@
 					</uptodate>
 				</not>
 				<then>
-					<copy todir="@{javac.destdir}" preservelastmodified="true">
+					<copy preservelastmodified="true" todir="@{javac.destdir}">
 						<fileset dir="@{javac.srcdir}" excludes="**/*.java" />
 					</copy>
 
@@ -201,7 +201,7 @@
 							<if>
 								<isset property="-baseline" />
 								<then>
-									<antelope:stringutil string="${-baseline}" property="baseline.file.beginindex">
+									<antelope:stringutil property="baseline.file.beginindex" string="${-baseline}">
 										<indexof string="=" />
 									</antelope:stringutil>
 
@@ -213,13 +213,13 @@
 										result="baseline.file.beginindex"
 									/>
 
-									<antelope:stringutil string="${-baseline}" property="baseline.file">
+									<antelope:stringutil property="baseline.file" string="${-baseline}">
 										<substring beginindex="${baseline.file.beginindex}" />
 									</antelope:stringutil>
 
 									<var name="-baseline" unset="true" />
 
-									<antelope:stringutil string="${baseline.file}" property="baseline.file.name.beginindex">
+									<antelope:stringutil property="baseline.file.name.beginindex" string="${baseline.file}">
 										<lastindexof string="/" />
 									</antelope:stringutil>
 
@@ -231,11 +231,11 @@
 										result="baseline.file.name.beginindex"
 									/>
 
-									<antelope:stringutil string="${baseline.file}" property="baseline.file.name.endindex">
+									<antelope:stringutil property="baseline.file.name.endindex" string="${baseline.file}">
 										<lastindexof string="-" />
 									</antelope:stringutil>
 
-									<antelope:stringutil string="${baseline.file}" property="baseline.file.name">
+									<antelope:stringutil property="baseline.file.name" string="${baseline.file}">
 										<substring beginindex="${baseline.file.name.beginindex}" endindex="${baseline.file.name.endindex}" />
 									</antelope:stringutil>
 
@@ -247,11 +247,11 @@
 										result="baseline.file.version.beginindex"
 									/>
 
-									<antelope:stringutil string="${baseline.file}" property="baseline.file.version.endindex">
+									<antelope:stringutil property="baseline.file.version.endindex" string="${baseline.file}">
 										<lastindexof string="." />
 									</antelope:stringutil>
 
-									<antelope:stringutil string="${baseline.file}" property="baseline.file.version">
+									<antelope:stringutil property="baseline.file.version" string="${baseline.file}">
 										<substring beginindex="${baseline.file.version.beginindex}" endindex="${baseline.file.version.endindex}" />
 									</antelope:stringutil>
 
@@ -314,13 +314,13 @@
 		/>
 	</target>
 
-	<target name="install-portal-release" depends="jar,jar-sources">
+	<target depends="jar,jar-sources" name="install-portal-release">
 		<install-portal-artifact>
 			<attach classifier="sources" file="${artifact.name}-sources.jar" />
 		</install-portal-artifact>
 	</target>
 
-	<target name="install-portal-snapshot" depends="jar,jar-sources">
+	<target depends="jar,jar-sources" name="install-portal-snapshot">
 		<install-portal-artifact snapshot="true">
 			<attach classifier="sources" file="${artifact.name}-sources.jar" />
 		</install-portal-artifact>
@@ -330,7 +330,7 @@
 		<jar-macro />
 	</target>
 
-	<target name="jar-javadoc" depends="javadoc">
+	<target depends="javadoc" name="jar-javadoc">
 		<jar
 			basedir="${doc.dir}/${ant.project.name}/javadocs"
 			jarfile="${jar.file}-javadoc.jar"
@@ -373,7 +373,7 @@
 				<mkdir dir="classes/META-INF" />
 
 				<tstamp>
-					<format property="build.time" pattern="EEE MMM d HH:mm:ss z yyyy" />
+					<format pattern="EEE MMM d HH:mm:ss z yyyy" property="build.time" />
 				</tstamp>
 
 				<manifest file="classes/META-INF/MANIFEST.MF">
@@ -426,21 +426,21 @@
 		</if>
 	</target>
 
-	<target name="publish-portal-release" depends="jar,jar-javadoc,jar-sources">
+	<target depends="jar,jar-javadoc,jar-sources" name="publish-portal-release">
 		<publish-portal-artifact >
 			<attach classifier="javadoc" file="${artifact.name}-javadoc.jar" />
 			<attach classifier="sources" file="${artifact.name}-sources.jar" />
 		</publish-portal-artifact>
 	</target>
 
-	<target name="publish-portal-snapshot" depends="jar,jar-javadoc,jar-sources">
+	<target depends="jar,jar-javadoc,jar-sources" name="publish-portal-snapshot">
 		<publish-portal-artifact snapshot="true">
 			<attach classifier="javadoc" file="${artifact.name}-javadoc.jar" />
 			<attach classifier="sources" file="${artifact.name}-sources.jar" />
 		</publish-portal-artifact>
 	</target>
 
-	<target name="release" depends="jar">
+	<target depends="jar" name="release">
 		<if>
 			<available file="bnd.bnd" />
 			<then>

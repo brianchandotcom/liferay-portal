@@ -6,33 +6,32 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean id="com.liferay.portal.kernel.portlet.InvokerPortletFactory" class="com.liferay.portlet.InvokerPortletFactoryImpl" />
-	<bean id="com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil" class="com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil">
+	<bean class="com.liferay.portlet.InvokerPortletFactoryImpl" id="com.liferay.portal.kernel.portlet.InvokerPortletFactory" />
+	<bean class="com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil" id="com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil">
 		<property name="portletConfigFactory">
 			<bean class="com.liferay.portlet.PortletConfigFactoryImpl">
 				<property name="portletContextFactory" ref="com.liferay.portal.kernel.portlet.PortletContextFactory" />
 			</bean>
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.portlet.PortletContextFactory" class="com.liferay.portlet.PortletContextFactoryImpl" />
-	<bean id="com.liferay.portal.kernel.portlet.PortletContextFactoryUtil" class="com.liferay.portal.kernel.portlet.PortletContextFactoryUtil">
+	<bean class="com.liferay.portlet.PortletContextFactoryImpl" id="com.liferay.portal.kernel.portlet.PortletContextFactory" />
+	<bean class="com.liferay.portal.kernel.portlet.PortletContextFactoryUtil" id="com.liferay.portal.kernel.portlet.PortletContextFactoryUtil">
 		<property name="portletContextFactory" ref="com.liferay.portal.kernel.portlet.PortletContextFactory" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.portlet.PortletInstanceFactory" class="com.liferay.portlet.PortletInstanceFactoryImpl" />
-	<bean id="com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil" class="com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil">
+	<bean class="com.liferay.portlet.PortletInstanceFactoryImpl" id="com.liferay.portal.kernel.portlet.PortletInstanceFactory" />
+	<bean class="com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil" id="com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil">
 		<property name="portletInstanceFactory" ref="com.liferay.portal.kernel.portlet.PortletInstanceFactory" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" class="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil">
-		<property name="portletPreferencesFactory">
-			<bean class="com.liferay.portlet.PortletPreferencesFactoryImpl" />
-		</property>
+	<bean class="com.liferay.portlet.PortletPreferencesFactoryImpl" id="com.liferay.portal.kernel.portlet.PortletPreferencesFactory" />
+	<bean class="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" id="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil">
+		<property name="portletPreferencesFactory" ref="com.liferay.portal.kernel.portlet.PortletPreferencesFactory" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.portlet.PortletQNameUtil" class="com.liferay.portal.kernel.portlet.PortletQNameUtil">
+	<bean class="com.liferay.portal.kernel.portlet.PortletQNameUtil" id="com.liferay.portal.kernel.portlet.PortletQNameUtil">
 		<property name="portletQName">
 			<bean class="com.liferay.portlet.PortletQNameImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" class="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil">
+	<bean class="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" id="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil">
 		<property name="portletURLFactory">
 			<bean class="com.liferay.portlet.PortletURLFactoryImpl" />
 		</property>

@@ -19,7 +19,6 @@ deployDependencies {
 
 	from configurations.provided
 
-	include "com.liferay.osgi.service.tracker.collections-*.jar"
 	include "org.eclipse.osgi-*.jar"
 
 	into {

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-performance" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project basedir="." default="test" name="portal-test-performance" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
 	<target name="run-performance-test">

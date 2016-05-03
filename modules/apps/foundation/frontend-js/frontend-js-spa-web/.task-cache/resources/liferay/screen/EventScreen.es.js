@@ -80,6 +80,12 @@ define("frontend-js-spa-web@1.0.6/liferay/screen/EventScreen.es", ['exports', 'm
 			});
 		};
 
+		EventScreen.prototype.addCache = function addCache(content) {
+			_HtmlScreen.prototype.addCache.call(this, content);
+
+			this.cacheLastModified = new Date().getTime();
+		};
+
 		EventScreen.prototype.deactivate = function deactivate() {
 			_HtmlScreen.prototype.deactivate.call(this);
 
@@ -107,6 +113,10 @@ define("frontend-js-spa-web@1.0.6/liferay/screen/EventScreen.es", ['exports', 'm
 					screen: _this2
 				});
 			});
+		};
+
+		EventScreen.prototype.getCacheLastModified = function getCacheLastModified() {
+			return this.cacheLastModified;
 		};
 
 		EventScreen.prototype.isValidResponseStatusCode = function isValidResponseStatusCode(statusCode) {

@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project name="chat-portlet" basedir="." default="deploy">
+	<import file="../../../../tools/sdk/portlets/build-common-portlet.xml" />
+</project>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element dataType="date" fieldNamespace="ddm" indexType="keyword" localizable="true" name="date1" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-date" width="small">
+		<meta-data locale="en_US">
+			<entry name="label"><![CDATA[Date Label 1]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="tip"><![CDATA[]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element dataType="date" fieldNamespace="ddm" indexType="keyword" localizable="true" name="date2" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-date" width="small">
+		<meta-data locale="en_US">
+			<entry name="label"><![CDATA[Date Label 2]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+			<entry name="tip"><![CDATA[]]></entry>
+		</meta-data>
+	</dynamic-element>
+</root>

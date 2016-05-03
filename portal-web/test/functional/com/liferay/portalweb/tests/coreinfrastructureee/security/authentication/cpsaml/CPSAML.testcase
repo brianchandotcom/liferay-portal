@@ -1,4 +1,5 @@
 <definition component-name="portal-authentication-ee">
+	<property name="portal.release" value="true" />
 	<property name="app.server.bundles.size" value="1" />
 	<property name="databases.size" value="1" />
 	<property name="portlet.plugins.includes" value="saml-portlet" />

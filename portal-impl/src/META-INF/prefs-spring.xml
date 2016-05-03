@@ -7,9 +7,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean id="com.liferay.portal.kernel.util.PrefsProps" class="com.liferay.portal.util.PrefsPropsImpl" />
-	<bean id="com.liferay.portal.kernel.util.PrefsPropsUtil" class="com.liferay.portal.kernel.util.PrefsPropsUtil">
+	<bean class="com.liferay.portal.util.PrefsPropsImpl" id="com.liferay.portal.kernel.util.PrefsProps" />
+	<bean class="com.liferay.portal.kernel.util.PrefsPropsUtil" id="com.liferay.portal.kernel.util.PrefsPropsUtil">
 		<property name="prefsProps" ref="com.liferay.portal.kernel.util.PrefsProps" />
 	</bean>
-	<bean id="com.liferay.portal.util.PrefsPropsUtil" class="com.liferay.portal.util.PrefsPropsUtil" />
+	<bean class="com.liferay.portal.util.PrefsPropsUtil" id="com.liferay.portal.util.PrefsPropsUtil" />
 </beans>

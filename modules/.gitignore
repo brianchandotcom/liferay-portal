@@ -69,9 +69,6 @@
 /*/*/test-coverage
 /*/*/test-results
 /*/*/tmp
-/apps/foundation/frontend-theme/*/build_gradle
-/apps/foundation/frontend-theme/*/dist
-/apps/foundation/frontend-theme/*/liferay-theme.json
 liferay-hook.xml.processed
 npm-debug.log
 uptodate.properties

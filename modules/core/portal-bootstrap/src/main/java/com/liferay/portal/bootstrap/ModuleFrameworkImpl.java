@@ -18,6 +18,7 @@ import aQute.bnd.header.OSGiHeader;
 import aQute.bnd.header.Parameters;
 import aQute.bnd.version.Version;
 
+import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -82,6 +83,7 @@ import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkEvent;
+import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.launch.Framework;
 import org.osgi.framework.launch.FrameworkFactory;
@@ -397,6 +399,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		_setUpInitialBundles();
 
+		_startDynamicBundles();
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Started the OSGi framework");
 		}
@@ -627,6 +631,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		properties.put(
 			FrameworkPropsKeys.FELIX_FILEINSTALL_POLL,
 			String.valueOf(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_INTERVAL));
+		properties.put(
+			FrameworkPropsKeys.FELIX_FILEINSTALL_START_LEVEL,
+			String.valueOf(
+				PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL));
 		properties.put(
 			FrameworkPropsKeys.FELIX_FILEINSTALL_TMPDIR,
 			SystemProperties.get(SystemProperties.TMP_DIR));
@@ -1110,6 +1118,58 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Registered required services");
+		}
+	}
+
+	private void _startDynamicBundles() throws Exception {
+		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
+			FrameworkStartLevel.class);
+
+		final DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
+
+		frameworkStartLevel.setStartLevel(
+			PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL,
+			new FrameworkListener() {
+
+				@Override
+				public void frameworkEvent(FrameworkEvent fe) {
+					defaultNoticeableFuture.set(fe);
+				}
+
+			});
+
+		FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
+
+		if (frameworkEvent.getType() == FrameworkEvent.ERROR) {
+			ReflectionUtil.throwException(frameworkEvent.getThrowable());
+		}
+
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			if ((bundle.getState() != Bundle.INSTALLED) &&
+				(bundle.getState() != Bundle.RESOLVED)) {
+
+				continue;
+			}
+
+			BundleRevision bundleRevision = bundle.adapt(BundleRevision.class);
+
+			if ((bundleRevision.getTypes() & BundleRevision.TYPE_FRAGMENT) !=
+					0) {
+
+				continue;
+			}
+
+			BundleStartLevel bundleStartLevel = bundle.adapt(
+				BundleStartLevel.class);
+
+			if (bundleStartLevel.getStartLevel() ==
+					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL) {
+
+				bundle.start();
+			}
 		}
 	}
 

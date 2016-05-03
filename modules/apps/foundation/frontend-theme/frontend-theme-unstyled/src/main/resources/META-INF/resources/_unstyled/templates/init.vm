@@ -41,26 +41,6 @@
 	#set ($company_url = $portalUtil.getURLWithSessionId($company_url, $request.getSession().getId()))
 #end
 
-#set ($user_id = $user.getUserId())
-#set ($is_default_user = $user.isDefaultUser())
-#set ($is_setup_complete = $user.isSetupComplete())
-#set ($user_first_name = $user.getFirstName())
-#set ($user_middle_name = $user.getMiddleName())
-#set ($user_last_name = $user.getLastName())
-#set ($user_name = $user.getFullName())
-#set ($is_male = $user.isMale())
-#set ($is_female = $user.isFemale())
-#set ($user_birthday = $user.getBirthday())
-#set ($user_email_address = $user.getEmailAddress())
-#set ($language = $locale.getLanguage())
-#set ($language_id = $user.getLanguageId())
-#set ($w3c_language_id = $localeUtil.toW3cLanguageId($theme_display.getLanguageId()))
-#set ($time_zone = $user.getTimeZoneId())
-#set ($user_greeting = $htmlUtil.escape($user.getGreeting()))
-#set ($user_comments = $user.getComments())
-#set ($user_login_ip = $user.getLoginIP())
-#set ($user_last_login_ip = $user.getLastLoginIP())
-
 #set ($is_login_redirect_required = $portalUtil.isLoginRedirectRequired($request))
 #set ($is_signed_in = $theme_display.isSignedIn())
 

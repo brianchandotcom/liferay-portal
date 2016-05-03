@@ -1342,25 +1342,23 @@ public class TableMapperTest {
 	@Test
 	public void testTableMapperFactoryCache() {
 		Set<String> cacheMappingTableNames =
-			TableMapperFactory.cacheMappingTableNames;
+			ReflectionTestUtil.getAndSetFieldValue(
+				TableMapperFactory.class, "_cachelessMappingTableNames",
+				new HashSet<String>() {
 
-		ReflectionTestUtil.setFieldValue(
-			TableMapperFactory.class, "cacheMappingTableNames",
-			new HashSet<String>() {
+					@Override
+					public boolean contains(Object o) {
+						return true;
+					}
 
-				@Override
-				public boolean contains(Object o) {
-					return true;
-				}
-
-			});
+				});
 
 		try {
 			testTableMapperFactory();
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
-				TableMapperFactory.class, "cacheMappingTableNames",
+				TableMapperFactory.class, "_cachelessMappingTableNames",
 				cacheMappingTableNames);
 		}
 	}

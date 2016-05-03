@@ -143,7 +143,7 @@ for (int i = 0; i < results.size(); i++) {
 	row.addText(_getActionLabel(request, themeDisplay, curResource, actionId));
 
 	if (showScope) {
-		row.addJSP("/edit_role_permissions_resource_scope.jsp");
+		row.addJSP("/edit_role_permissions_resource_scope.jsp", application, request, response);
 	}
 
 	resultRows.add(row);

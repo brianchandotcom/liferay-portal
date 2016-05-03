@@ -30,7 +30,7 @@ public class RulesEngineProxyBean extends BaseProxyBean implements RulesEngine {
 
 	@Override
 	public void add(
-		String domainName, RulesResourceRetriever RulesResourceRetriever) {
+		String domainName, RulesResourceRetriever rulesResourceRetriever) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -42,14 +42,14 @@ public class RulesEngineProxyBean extends BaseProxyBean implements RulesEngine {
 
 	@Override
 	public void execute(
-		RulesResourceRetriever RulesResourceRetriever, List<Fact<?>> facts) {
+		RulesResourceRetriever rulesResourceRetriever, List<Fact<?>> facts) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public Map<String, ?> execute(
-		RulesResourceRetriever RulesResourceRetriever, List<Fact<?>> facts,
+		RulesResourceRetriever rulesResourceRetriever, List<Fact<?>> facts,
 		Query query) {
 
 		throw new UnsupportedOperationException();
@@ -74,7 +74,7 @@ public class RulesEngineProxyBean extends BaseProxyBean implements RulesEngine {
 
 	@Override
 	public void update(
-		String domainName, RulesResourceRetriever RulesResourceRetriever) {
+		String domainName, RulesResourceRetriever rulesResourceRetriever) {
 
 		throw new UnsupportedOperationException();
 	}

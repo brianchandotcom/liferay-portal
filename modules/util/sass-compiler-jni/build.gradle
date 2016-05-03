@@ -2,18 +2,18 @@ import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 ext {
-	libSassVersion = "3.2.5"
-	sassSpecVersion = "f34eb8b4e6c9ba192fc37231a252af1ab79972fd"
+	libSassVersion = "3.3.6"
+	sassSpecVersion = "3.3.3"
 
 	libSassUrl = "https://github.com/sass/libsass/archive/${libSassVersion}.zip"
 	sassSpecUrl = "https://github.com/sass/sass-spec/archive/${sassSpecVersion}.zip"
 }
 
 task buildLibSass_Darwin(type: BuildLibSassTask)
+task buildLibSass_Linux_x64(type: BuildLibSassTask)
 task buildLibSass_Linux_x86(type: BuildLibSassTask)
-task buildLibSass_Linux_x86_64(type: BuildLibSassTask)
-task buildLibSass_Win32_x86(type: BuildLibSassTask)
-task buildLibSass_Win32_x86_64(type: BuildLibSassTask)
+task buildLibSass_Win32(type: BuildLibSassTask)
+task buildLibSass_Win64(type: BuildLibSassTask)
 task downloadSassSpec(type: Copy)
 task generateJNALibrary
 
@@ -32,39 +32,39 @@ autoreconf --force --install
 make -j5""")
 	}
 
-	inputDirName = ".libs"
+	inputDirName = "src/.libs"
 	inputFileName = "libsass.dylib"
 	makeExecutable = "./build.sh"
 	outputFileName = "libliferaysass.dylib"
-	resourcesDirName = "darwin"
+	resourcesDirName = "darwin_universal"
+}
+
+buildLibSass_Linux_x64 {
+	inputFileName = "libsass.so"
+	makeExecutable = "make CXX=g++-4.6 CC=gcc-4.4 shared"
+	outputFileName = "libliferaysass.so"
+	resourcesDirName = "linux_x64"
 }
 
 buildLibSass_Linux_x86 {
 	inputFileName = "libsass.so"
 	makeExecutable = "make CXX=g++-4.6 CC=gcc-4.4 shared"
 	outputFileName = "libliferaysass.so"
-	resourcesDirName = "linux-x86"
+	resourcesDirName = "linux_x86"
 }
 
-buildLibSass_Linux_x86_64 {
-	inputFileName = "libsass.so"
-	makeExecutable = "make CXX=g++-4.6 CC=gcc-4.4 shared"
-	outputFileName = "libliferaysass.so"
-	resourcesDirName = "linux-x86-64"
-}
-
-buildLibSass_Win32_x86 {
-	inputFileName = "sass.dll"
+buildLibSass_Win32 {
+	inputFileName = "libsass.dll"
 	makeExecutable = "mingw32-make.exe CC=gcc shared"
 	outputFileName = "liferaysass.dll"
-	resourcesDirName = "win32-x86"
+	resourcesDirName = "win32"
 }
 
-buildLibSass_Win32_x86_64 {
-	inputFileName = "sass.dll"
+buildLibSass_Win64 {
+	inputFileName = "libsass.dll"
 	makeExecutable = "mingw32-make.exe CC=gcc shared"
 	outputFileName = "liferaysass.dll"
-	resourcesDirName = "win32-x86-64"
+	resourcesDirName = "win64"
 }
 
 compileJava {
@@ -78,11 +78,9 @@ configurations {
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.sass.compiler.api", version: "2.0.0"
 
-	jnaerator classifier: "shaded", group: "com.nativelibs4java", name: "jnaerator", transitive: false, version: "0.11"
+	jnaerator classifier: "shaded", group: "com.nativelibs4java", name: "jnaerator", transitive: false, version: "0.12"
 
-	provided group: "com.nativelibs4java", name: "jnaerator-runtime", transitive: false, version: "0.11"
-	provided group: "com.nativelibs4java", name: "ochafik-util", transitive: false, version: "0.11"
-	provided group: "net.java.dev.jna", name: "jna", transitive: false, version: "4.1.0"
+	provided group: "com.nativelibs4java", name: "bridj", transitive: false, version: "0.7.0"
 }
 
 downloadSassSpec {
@@ -115,17 +113,17 @@ generateJNALibrary {
 			into temporaryDir
 		}
 
-		File libSassDir = new File(temporaryDir, "libsass-${project.libSassVersion}")
+		File libSassDir = new File(temporaryDir, "libsass-${project.libSassVersion}/include")
 
 		javaexec {
 			args configurations.jnaerator.singleFile
+			args "-beautifyNames"
 			args "-f"
 			args "-library", "liferaysass"
 			args "-mode", "Directory"
 			args "-o", FileUtil.relativize(file("src/main/java"), libSassDir)
 			args "-package", "com.liferay.sass.compiler.jni.internal.libsass"
-			args "-runtime", "JNAerator"
-			args "sass_context.h"
+			args "sass/context.h"
 
 			main = "-jar"
 

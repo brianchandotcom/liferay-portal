@@ -36,6 +36,7 @@ import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
+import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
 import com.liferay.gradle.plugins.xml.formatter.XMLFormatterPlugin;
 import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
@@ -319,9 +320,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 							deployedPluginDirName,
 							"WEB-INF/liferay-web.xml,WEB-INF/web.xml"
 						},
-						{
-							deployedPluginDirName, "WEB-INF/tld/*"
-						}
+						{deployedPluginDirName, "WEB-INF/tld/*"}
 					};
 
 					FileUtil.jar(project, warFile, "preserve", true, filesets);
@@ -705,6 +704,15 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					if (GradleUtil.hasPlugin(project, "com.liferay.cache") &&
 						taskName.startsWith("save") &&
 						taskName.endsWith("Cache")) {
+
+						continue;
+					}
+
+					if (GradleUtil.hasPlugin(
+							project, WSDLBuilderPlugin.class) &&
+						taskName.startsWith(
+							WSDLBuilderPlugin.BUILD_WSDL_TASK_NAME +
+								"Generate")) {
 
 						continue;
 					}

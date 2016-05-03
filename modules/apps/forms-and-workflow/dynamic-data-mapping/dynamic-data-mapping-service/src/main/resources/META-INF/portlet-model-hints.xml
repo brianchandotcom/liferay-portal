@@ -10,7 +10,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" localized="true">
+		<field localized="true" name="name" type="String">
 			<validator name="required" />
 		</field>
 		<field name="description" type="String">
@@ -29,10 +29,10 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" localized="true">
+		<field localized="true" name="name" type="String">
 			<validator name="required" />
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="definition" type="String">
@@ -72,10 +72,10 @@
 			<hint name="auto-escape">false</hint>
 		</field>
 		<field name="version" type="String" />
-		<field name="name" type="String" localized="true">
+		<field localized="true" name="name" type="String">
 			<validator name="required" />
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="definition" type="String">
@@ -116,10 +116,10 @@
 		<field name="structureId" type="long" />
 		<field name="version" type="String" />
 		<field name="parentStructureId" type="long" />
-		<field name="name" type="String" localized="true">
+		<field localized="true" name="name" type="String">
 			<validator name="required" />
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="definition" type="String">
@@ -151,13 +151,13 @@
 			<hint name="auto-escape">false</hint>
 		</field>
 		<field name="version" type="String" />
-		<field name="name" type="String" localized="true">
+		<field localized="true" name="name" type="String">
 			<hint-collection name="CLOB" />
 			<hint name="display-height">15</hint>
 			<hint name="display-width">150</hint>
 			<validator name="required" />
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="CLOB" />
 			<hint name="autoSize">true</hint>
 		</field>
@@ -191,13 +191,13 @@
 		<field name="classPK" type="long" />
 		<field name="templateId" type="long" />
 		<field name="version" type="String" />
-		<field name="name" type="String" localized="true">
+		<field localized="true" name="name" type="String">
 			<hint-collection name="CLOB" />
 			<hint name="display-height">15</hint>
 			<hint name="display-width">150</hint>
 			<validator name="required" />
 		</field>
-		<field name="description" type="String" localized="true">
+		<field localized="true" name="description" type="String">
 			<hint-collection name="CLOB" />
 			<hint name="autoSize">true</hint>
 		</field>

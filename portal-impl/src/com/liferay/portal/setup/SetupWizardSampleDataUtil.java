@@ -315,21 +315,11 @@ public class SetupWizardSampleDataUtil {
 			"Chicago", 19014L, 19L, OrganizationConstants.TYPE_ORGANIZATION,
 			"ORD"
 		},
-		{
-			"Consulting", 19005L, 19L, OrganizationConstants.TYPE_ORGANIZATION
-		},
-		{
-			"Dalian", 0L, 2L, OrganizationConstants.TYPE_ORGANIZATION, "DLC"
-		},
-		{
-			"Engineering", 19005L, 19L, OrganizationConstants.TYPE_ORGANIZATION
-		},
-		{
-			"Frankfurt", 0L, 4L, OrganizationConstants.TYPE_ORGANIZATION, "FRA"
-		},
-		{
-			"Hong Kong", 0L, 2L, OrganizationConstants.TYPE_ORGANIZATION, "HKG"
-		},
+		{"Consulting", 19005L, 19L, OrganizationConstants.TYPE_ORGANIZATION},
+		{"Dalian", 0L, 2L, OrganizationConstants.TYPE_ORGANIZATION, "DLC"},
+		{"Engineering", 19005L, 19L, OrganizationConstants.TYPE_ORGANIZATION},
+		{"Frankfurt", 0L, 4L, OrganizationConstants.TYPE_ORGANIZATION, "FRA"},
+		{"Hong Kong", 0L, 2L, OrganizationConstants.TYPE_ORGANIZATION, "HKG"},
 		{
 			"Kuala Lumpur", 0L, 135L, OrganizationConstants.TYPE_ORGANIZATION,
 			"KUL"
@@ -338,12 +328,8 @@ public class SetupWizardSampleDataUtil {
 			"Los Angeles", 19005L, 19L, OrganizationConstants.TYPE_ORGANIZATION,
 			"LAX"
 		},
-		{
-			"Madrid", 0L, 15L, OrganizationConstants.TYPE_ORGANIZATION, "MAD"
-		},
-		{
-			"Marketing", 19005L, 19L, OrganizationConstants.TYPE_ORGANIZATION
-		},
+		{"Madrid", 0L, 15L, OrganizationConstants.TYPE_ORGANIZATION, "MAD"},
+		{"Marketing", 19005L, 19L, OrganizationConstants.TYPE_ORGANIZATION},
 		{
 			"New York", 19033L, 19L, OrganizationConstants.TYPE_ORGANIZATION,
 			"NYC"
@@ -352,16 +338,12 @@ public class SetupWizardSampleDataUtil {
 			"Saint Paulo", 0L, 48L, OrganizationConstants.TYPE_ORGANIZATION,
 			"GRU"
 		},
-		{
-			"Sales", 19005L, 19L, OrganizationConstants.TYPE_ORGANIZATION
-		},
+		{"Sales", 19005L, 19L, OrganizationConstants.TYPE_ORGANIZATION},
 		{
 			"San Francisco", 19005L, 19L,
 			OrganizationConstants.TYPE_ORGANIZATION, "SFO"
 		},
-		{
-			"Support", 19005L, 19L, OrganizationConstants.TYPE_ORGANIZATION
-		}
+		{"Support", 19005L, 19L, OrganizationConstants.TYPE_ORGANIZATION}
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

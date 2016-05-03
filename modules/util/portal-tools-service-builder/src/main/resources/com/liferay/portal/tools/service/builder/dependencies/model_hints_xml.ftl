@@ -17,11 +17,13 @@
 
 			<#list entity.columnList as column>
 				<#if !column.isCollection()>
-					<field name="${column.name}" type="${column.type}"
+					<field
 
 					<#if column.localized>
 						localized="true"
 					</#if>
+
+					name="${column.name}" type="${column.type}"
 
 					<#assign closeField = false>
 

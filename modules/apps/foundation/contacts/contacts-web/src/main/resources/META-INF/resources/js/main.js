@@ -437,8 +437,6 @@ AUI.add(
 					_createContactList: function(config) {
 						var instance = this;
 
-						var contactsResultContainer = config.contactsResultContainer;
-
 						var contactsResult = config.contactsResult;
 						var contactsResultURL = config.contactsResultURL;
 						var contactsSearchInput = config.contactsSearchInput;
@@ -862,9 +860,7 @@ AUI.add(
 					_showButton: function(node) {
 						node.show();
 
-						if (node.hasClass('hidden')) {
-							node.removeClass('hidden');
-						}
+						node.removeClass('hidden');
 					},
 
 					_updateContactsResult: function(event) {

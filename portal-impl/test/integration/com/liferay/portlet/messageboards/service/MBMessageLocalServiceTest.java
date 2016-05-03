@@ -85,6 +85,50 @@ public class MBMessageLocalServiceTest {
 	}
 
 	@Test
+	public void testAddXSSMessageWithInvalidFormat() throws Exception {
+		String subject = "<script>alert(1)</script>";
+		String body = "<script>alert(2)</script>";
+		String format = "text/plain";
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			Collections.emptyList();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		MBMessage message = MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			subject, body, format, inputStreamOVPs, false, 0.0, false,
+			serviceContext);
+
+		Assert.assertEquals(subject, message.getSubject());
+		Assert.assertEquals(StringPool.BLANK, message.getBody());
+		Assert.assertEquals("html", message.getFormat());
+	}
+
+	@Test
+	public void testAddXSSSubjectWithEmptyBodyMessage() throws Exception {
+		String subject = "<script>alert(1)</script>";
+		String body = StringPool.BLANK;
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			Collections.emptyList();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		MBMessage message = MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			subject, body, "html", inputStreamOVPs, false, 0.0, false,
+			serviceContext);
+
+		Assert.assertEquals(subject, message.getSubject());
+		Assert.assertEquals(StringPool.BLANK, message.getBody());
+	}
+
+	@Test
 	public void testDeleteAttachmentsWhenUpdatingMessageAndTrashDisabled()
 		throws Exception {
 

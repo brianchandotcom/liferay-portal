@@ -714,8 +714,8 @@ public class AssetTagLocalServiceUtil {
 	}
 
 	public static void addAssetEntryAssetTags(long entryId,
-		java.util.List<com.liferay.asset.kernel.model.AssetTag> AssetTags) {
-		getService().addAssetEntryAssetTags(entryId, AssetTags);
+		java.util.List<com.liferay.asset.kernel.model.AssetTag> assetTags) {
+		getService().addAssetEntryAssetTags(entryId, assetTags);
 	}
 
 	public static void addAssetEntryAssetTags(long entryId, long[] tagIds) {
@@ -736,8 +736,8 @@ public class AssetTagLocalServiceUtil {
 	}
 
 	public static void deleteAssetEntryAssetTags(long entryId,
-		java.util.List<com.liferay.asset.kernel.model.AssetTag> AssetTags) {
-		getService().deleteAssetEntryAssetTags(entryId, AssetTags);
+		java.util.List<com.liferay.asset.kernel.model.AssetTag> assetTags) {
+		getService().deleteAssetEntryAssetTags(entryId, assetTags);
 	}
 
 	public static void deleteAssetEntryAssetTags(long entryId, long[] tagIds) {

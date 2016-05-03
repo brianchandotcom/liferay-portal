@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-tomcat" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project basedir="." default="test" name="portal-test-tomcat" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
 	<target name="run-selenium-tomcat">
@@ -39,13 +39,13 @@
 		<if>
 			<isset property="test.base.dir.name" />
 			<then>
-				<antcall target="run-tomcat" inheritAll="false">
+				<antcall inheritAll="false" target="run-tomcat">
 					<param name="test.base.dir.name" value="${test.base.dir.name}" />
 					<param name="test.class" value="${test.class}" />
 				</antcall>
 			</then>
 			<else>
-				<antcall target="run-tomcat" inheritAll="false">
+				<antcall inheritAll="false" target="run-tomcat">
 					<param name="test.class" value="${test.class}" />
 				</antcall>
 			</else>

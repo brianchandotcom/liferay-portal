@@ -1189,7 +1189,15 @@ public class Validator {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean isUrl(String url) {
+		return isUrl(url, false);
+	}
+
+	public static boolean isUrl(String url, boolean acceptRootRelative) {
 		if (isNotNull(url)) {
+			if (acceptRootRelative && (url.charAt(0) == '/')) {
+				return true;
+			}
+
 			if (url.indexOf(CharPool.COLON) == -1) {
 				return false;
 			}

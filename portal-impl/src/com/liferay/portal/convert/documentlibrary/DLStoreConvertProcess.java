@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface DLStoreConvertProcess {
 
-	public void migrate(DLStoreConverter DLStoreConverter)
+	public void migrate(DLStoreConverter dlStoreConverter)
 		throws PortalException;
 
 }

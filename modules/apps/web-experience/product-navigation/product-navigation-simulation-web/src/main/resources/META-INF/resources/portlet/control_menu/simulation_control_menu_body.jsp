@@ -23,12 +23,14 @@
 	%>
 
 	<div class="closed lfr-admin-panel lfr-product-menu-panel lfr-simulation-panel sidenav-fixed sidenav-menu-slider sidenav-right" id="<%= portletNamespace %>simulationPanelId">
-		<div class="product-menu sidebar sidebar-body sidebar-inverse">
+		<div class="product-menu sidebar sidebar-inverse">
 			<h4 class="sidebar-header">
 				<span><liferay-ui:message key="simulation" /></span>
 
 				<aui:icon cssClass="close icon-monospaced" id='<%= portletNamespace + "closeSimulationPanel" %>' image="times" markupView="lexicon" url="javascript:;" />
 			</h4>
+
+			<div class="sidebar-body"></div>
 		</div>
 	</div>
 

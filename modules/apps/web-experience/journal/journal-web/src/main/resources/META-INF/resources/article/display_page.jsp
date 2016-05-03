@@ -28,9 +28,9 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 <c:choose>
 	<c:when test="<%= group.isLayout() %>">
-		<div class="alert alert-info">
+		<p class="text-muted">
 			<liferay-ui:message key="the-display-page-cannot-be-set-when-the-scope-of-the-web-content-is-a-page" />
-		</div>
+		</p>
 	</c:when>
 	<c:otherwise>
 
@@ -41,47 +41,45 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 			layoutUuid = article.getLayoutUuid();
 		}
 
-		Layout selLayout = null;
-
 		String layoutBreadcrumb = StringPool.BLANK;
 
 		if (Validator.isNotNull(layoutUuid)) {
-			selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getSiteGroupId(), false);
+			Layout selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getSiteGroupId(), false);
+
+			if (selLayout == null) {
+				selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getSiteGroupId(), true);
+			}
 
 			if (selLayout != null) {
 				layoutBreadcrumb = _getLayoutBreadcrumb(request, selLayout, locale);
 			}
-			else {
-				selLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(layoutUuid, themeDisplay.getSiteGroupId(), true);
-
-				if (selLayout != null) {
-					layoutBreadcrumb = _getLayoutBreadcrumb(request, selLayout, locale);
-				}
-			}
 		}
-
-		Group parentGroup = themeDisplay.getSiteGroup();
 		%>
 
 		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="display-page" />
 
-		<div class="alert alert-info">
+		<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
+
+		<p class="text-muted">
 			<liferay-ui:message key="default-display-page-help" />
-		</div>
+		</p>
 
-		<div id="<portlet:namespace />pagesContainer">
-			<aui:input id="pagesContainerInput" ignoreRequestValue="<%= true %>" name="layoutUuid" type="hidden" value="<%= layoutUuid %>" />
+		<p class="text-default">
+			<span class="<%= Validator.isNull(layoutBreadcrumb) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemRemove" role="button">
+				<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
+			</span>
 
-			<div class="display-page-item-container <%= Validator.isNull(layoutBreadcrumb) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />displayPageItemContainer">
-				<span class="display-page-item">
-					<span>
-						<span id="<portlet:namespace />displayPageNameInput"><%= layoutBreadcrumb %></span>
-
-						<span class="display-page-item-remove icon icon-remove" id="<portlet:namespace />displayPageItemRemove" tabindex="0"></span>
-					</span>
-				</span>
-			</div>
-		</div>
+			<span id="<portlet:namespace />displayPageNameInput">
+				<c:choose>
+					<c:when test="<%= Validator.isNull(layoutBreadcrumb) %>">
+						<span class="text-muted"><liferay-ui:message key="none" /></span>
+					</c:when>
+					<c:otherwise>
+						<%= layoutBreadcrumb %>
+					</c:otherwise>
+				</c:choose>
+			</span>
+		</p>
 
 		<aui:button name="chooseDisplayPage" value="choose" />
 
@@ -102,9 +100,9 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 			%>
 
 			<c:if test="<%= Validator.isNotNull(urlViewInContext) %>">
-				<a href="<%= urlViewInContext %>" target="blank">
+				<aui:a href="<%= urlViewInContext %>" target="blank">
 					<liferay-ui:message arguments="<%= HtmlUtil.escape(defaultDisplayLayout.getName(locale)) %>" key="view-content-in-x" translateArguments="<%= false %>" />
-				</a>
+				</aui:a>
 			</c:if>
 		</c:if>
 
@@ -126,43 +124,49 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest), eventName, layoutItemSelectorCriterion);
 		%>
 
-		<aui:script sandbox="<%= true %>">
+		<aui:script use="liferay-item-selector-dialog">
 			var displayPageItemContainer = $('#<portlet:namespace />displayPageItemContainer');
+			var displayPageItemRemove = $('#<portlet:namespace />displayPageItemRemove');
 			var displayPageNameInput = $('#<portlet:namespace />displayPageNameInput');
 			var pagesContainerInput = $('#<portlet:namespace />pagesContainerInput');
 
 			$('#<portlet:namespace />chooseDisplayPage').on(
 				'click',
 				function(event) {
-					Liferay.Util.selectEntity(
+					var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 						{
-							dialog: {
-								constrain: true,
-								destroyOnHide: true,
-								modal: true
-							},
 							eventName: '<%= eventName %>',
-							id: '<portlet:namespace />selectDisplayPage',
+							on: {
+								selectedItemChange: function(event) {
+									var selectedItem = event.newVal;
+
+									if (selectedItem) {
+										pagesContainerInput.val(selectedItem.value);
+
+										displayPageNameInput.html(selectedItem.layoutpath);
+
+										displayPageItemRemove.removeClass('hide');
+									}
+								}
+							},
+							'strings.add': '<liferay-ui:message key="done" />',
 							title: '<liferay-ui:message key="select-page" />',
-							uri: '<%= itemSelectorURL.toString() %>'
-						},
-						function(event) {
-							pagesContainerInput.val(event.value);
-
-							displayPageNameInput.html(event.layoutpath);
-
-							displayPageItemContainer.removeClass('hide');
+							url: '<%= itemSelectorURL.toString() %>'
 						}
 					);
+
+					itemSelectorDialog.open();
 				}
 			);
 
-			$('#<portlet:namespace />displayPageItemRemove').on(
+			displayPageItemRemove.on(
 				'click',
 				function(event) {
+					displayPageNameInput.html('<liferay-ui:message key="none" />');
+
 					pagesContainerInput.val('');
 
-					displayPageItemContainer.addClass('hide');
+					displayPageItemRemove.addClass('hide');
 				}
 			);
 		</aui:script>

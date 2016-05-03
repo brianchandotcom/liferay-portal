@@ -1,0 +1,30 @@
+import com.liferay.gradle.util.copy.RenameDependencyClosure
+
+task copyTestLibs(type: Copy)
+
+copyTestLibs {
+	from configurations.provided
+	into "test-lib"
+	rename new RenameDependencyClosure(project, configurations.provided.name)
+}
+
+dependencies {
+	provided group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
+	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	provided group: "org.osgi", name: "org.osgi.service.log", version: "1.3.0"
+
+	testCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-deployment-generator-bnd", version: "1.0.3"
+	testCompile group: "org.apache.felix", name: "org.apache.felix.framework", version: "5.4.0"
+	testCompile group: "org.apache.felix", name: "org.apache.felix.main", version: "5.4.0"
+	testCompile group: "org.jboss.arquillian.container", name: "arquillian-container-felix-embedded", version: "2.1.0.Final"
+	testCompile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.10.Final"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/core")
+}
+
+testIntegration {
+	dependsOn copyTestLibs
+	finalizedBy cleanCopyTestLibs
+}

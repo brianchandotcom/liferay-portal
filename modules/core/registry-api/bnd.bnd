@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Portal Registry API
+Bundle-Name: Liferay Registry API
 Bundle-SymbolicName: com.liferay.registry.api
 Bundle-Version: 1.0.4
 Export-Package:\

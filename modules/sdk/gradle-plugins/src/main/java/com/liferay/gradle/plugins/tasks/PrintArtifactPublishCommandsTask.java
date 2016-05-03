@@ -141,11 +141,8 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 
 		// Change log
 
-		TaskContainer taskContainer = project.getTasks();
-
-		BuildChangeLogTask buildChangeLogTask =
-			(BuildChangeLogTask)taskContainer.findByName(
-				ChangeLogBuilderPlugin.BUILD_CHANGE_LOG_TASK_NAME);
+		BuildChangeLogTask buildChangeLogTask = (BuildChangeLogTask)getTask(
+			ChangeLogBuilderPlugin.BUILD_CHANGE_LOG_TASK_NAME);
 
 		if (buildChangeLogTask != null) {
 			commands.add(getGradleCommand(buildChangeLogTask));
@@ -159,10 +156,10 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 
 		// Baseline
 
-		BaselineTask baselineTask = (BaselineTask)taskContainer.findByName(
+		Task baselineTask = getTask(
 			LiferayOSGiDefaultsPlugin.BASELINE_TASK_NAME);
 
-		if (baselineTask != null) {
+		if (baselineTask instanceof BaselineTask) {
 			commands.add(getGradleCommand(baselineTask));
 
 			commands.add(
@@ -242,10 +239,10 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		String[] arguments = new String[0];
 
 		if (firstPublish) {
-			String taskName = getFirstPublishExcludedTaskName();
+			Task task = getTask(getFirstPublishExcludedTaskName());
 
-			if (Validator.isNotNull(taskName)) {
-				arguments = new String[] {"-x", taskName};
+			if (task != null) {
+				arguments = new String[] {"-x", task.getPath()};
 			}
 		}
 
@@ -366,6 +363,18 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		Project rootProject = project.getRootProject();
 
 		return rootProject.relativePath(file);
+	}
+
+	protected Task getTask(String name) {
+		if (Validator.isNull(name)) {
+			return null;
+		}
+
+		Project project = getProject();
+
+		TaskContainer taskContainer = project.getTasks();
+
+		return taskContainer.findByName(name);
 	}
 
 	protected boolean isPublished() {

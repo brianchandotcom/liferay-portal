@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+
+<service-builder package-path="com.liferay.chat">
+	<namespace>Chat</namespace>
+	<entity name="Entry" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="entryId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="createDate" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="fromUserId" type="long" />
+		<column name="toUserId" type="long" />
+		<column name="content" type="String" />
+		<column name="flag" type="int" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CreateDate" return-type="Collection">
+			<finder-column name="createDate" />
+		</finder>
+		<finder name="FromUserId" return-type="Collection">
+			<finder-column name="fromUserId" />
+		</finder>
+		<finder name="ToUserId" return-type="Collection">
+			<finder-column name="toUserId" />
+		</finder>
+		<finder name="C_F" return-type="Collection">
+			<finder-column name="createDate" />
+			<finder-column name="fromUserId" />
+		</finder>
+		<finder name="C_T" return-type="Collection">
+			<finder-column name="createDate" />
+			<finder-column name="toUserId" />
+		</finder>
+		<finder name="F_T" return-type="Collection">
+			<finder-column name="fromUserId" />
+			<finder-column name="toUserId" />
+		</finder>
+		<finder name="C_F_T" return-type="Collection">
+			<finder-column name="createDate" />
+			<finder-column name="fromUserId" />
+			<finder-column name="toUserId" />
+		</finder>
+		<finder name="F_T_C" return-type="Collection">
+			<finder-column name="fromUserId" />
+			<finder-column name="toUserId" />
+			<finder-column name="content" />
+		</finder>
+	</entity>
+	<entity name="Status" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="statusId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="userId" type="long" />
+		<column name="modifiedDate" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="online" type="boolean" />
+		<column name="awake" type="boolean" />
+		<column name="activePanelIds" type="String" />
+		<column name="message" type="String" />
+		<column name="playSound" type="boolean" />
+
+		<!-- Finder methods -->
+
+		<finder name="UserId" return-type="Status" unique="true">
+			<finder-column name="userId" />
+		</finder>
+		<finder name="ModifiedDate" return-type="Collection">
+			<finder-column name="modifiedDate" />
+		</finder>
+		<finder name="Online" return-type="Collection">
+			<finder-column name="online" />
+		</finder>
+		<finder name="M_O" return-type="Collection">
+			<finder-column name="modifiedDate" />
+			<finder-column name="online" />
+		</finder>
+	</entity>
+</service-builder>

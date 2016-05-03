@@ -24,7 +24,7 @@ PortletURL simulationPanelURL = PortletURLFactoryUtil.create(request, ProductNav
 simulationPanelURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 %>
 
-<li class="control-menu-nav-item hidden-xs">
+<li class="control-menu-nav-item hidden-xs simulation-icon">
 	<a class="control-menu-icon product-menu-toggle sidenav-toggler" data-content="body" data-open-class="lfr-has-simulation-panel open-admin-panel" data-qa-id="simulation" data-target="#<%= portletNamespace %>simulationPanelId" data-title="<%= HtmlUtil.escape(LanguageUtil.get(request, "simulation")) %>" data-toggle="sidenav" data-type="fixed-push" data-type-mobile="fixed" data-url="<%= simulationPanelURL.toString() %>" href="javascript:;" id="<%= portletNamespace %>simulationToggleId" onmouseover="Liferay.Portal.ToolTip.show(this, '<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "simulation")) %>', {constrain: 'true', position: 'bottom'})">
 		<aui:icon image="simulation-menu-closed" markupView="lexicon" />
 	</a>

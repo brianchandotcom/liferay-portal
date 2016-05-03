@@ -201,6 +201,7 @@ public class JournalConverterImpl implements JournalConverter {
 		}
 	}
 
+	@Override
 	public DDMFormValues getDDMFormValues(
 			DDMStructure ddmStructure, Fields fields)
 		throws PortalException {

@@ -1,4 +1,5 @@
 <definition component-name="portal-wcm">
+	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="Content and Application Templates" />
 	<property name="custom.properties" value="default.layout.template.id=1_column" />
 
@@ -45,7 +46,7 @@
 	</tear-down>
 
 	<command name="AddRSSADTViaPortletConfiguration" priority="5">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="ADT Test Page" />
@@ -70,6 +71,8 @@
 			<var name="siteName" value="Test Site Name" />
 		</execute>
 
+		<execute macro="RSS#waitForRSSLoad" />
+
 		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
 			<var name="adtType" value="RSS" />
 		</execute>
@@ -78,6 +81,8 @@
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
 		</execute>
+
+		<execute macro="RSS#waitForRSSLoad" />
 
 		<execute macro="RSS#viewCustomADT">
 			<var name="feedContentTitle" value="Technology" />

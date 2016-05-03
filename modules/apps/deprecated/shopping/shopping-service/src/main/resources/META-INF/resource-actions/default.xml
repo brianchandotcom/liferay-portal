@@ -5,8 +5,8 @@
 	<model-resource>
 		<model-name>com.liferay.shopping</model-name>
 		<portlet-ref>
-			<portlet-name>34_WAR_shoppingweb</portlet-name>
-			<portlet-name>197_WAR_shoppingweb</portlet-name>
+			<portlet-name>com_liferay_shopping_web_portlet_ShoppingAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_shopping_web_portlet_ShoppingPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -37,8 +37,8 @@
 	<model-resource>
 		<model-name>com.liferay.shopping.model.ShoppingCategory</model-name>
 		<portlet-ref>
-			<portlet-name>34_WAR_shoppingweb</portlet-name>
-			<portlet-name>197_WAR_shoppingweb</portlet-name>
+			<portlet-name>com_liferay_shopping_web_portlet_ShoppingAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_shopping_web_portlet_ShoppingPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>
@@ -66,8 +66,8 @@
 	<model-resource>
 		<model-name>com.liferay.shopping.model.ShoppingItem</model-name>
 		<portlet-ref>
-			<portlet-name>34_WAR_shoppingweb</portlet-name>
-			<portlet-name>197_WAR_shoppingweb</portlet-name>
+			<portlet-name>com_liferay_shopping_web_portlet_ShoppingAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_shopping_web_portlet_ShoppingPortlet</portlet-name>
 		</portlet-ref>
 		<weight>3</weight>
 		<permissions>
@@ -91,8 +91,8 @@
 	<model-resource>
 		<model-name>com.liferay.shopping.model.ShoppingOrder</model-name>
 		<portlet-ref>
-			<portlet-name>34_WAR_shoppingweb</portlet-name>
-			<portlet-name>197_WAR_shoppingweb</portlet-name>
+			<portlet-name>com_liferay_shopping_web_portlet_ShoppingAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_shopping_web_portlet_ShoppingPortlet</portlet-name>
 		</portlet-ref>
 		<weight>4</weight>
 		<permissions>

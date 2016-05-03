@@ -1,4 +1,5 @@
 <definition component-name="portal-test-plugins">
+	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="Test Plugins" />
 	<property name="portlet.plugins.includes" value="test-log-portlet" />
 

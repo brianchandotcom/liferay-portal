@@ -1,5 +1,6 @@
 <definition component-name="portal-knowledge-base">
-	<property name="portlet.plugins.includes" value="knowledge-base-portlet" />
+	<property name="portal.release" value="true" />
+	<property name="osgi.modules.includes" value="knowledge-base-portlet" />
 	<property name="testray.main.component.name" value="Knowledge Base" />
 
 	<set-up>
@@ -497,7 +498,7 @@
 		<execute macro="KBArticle#viewDefaultCP" />
 	</command>
 
-	<command name="DeleteKBFolder" priority ="4">
+	<command name="DeleteKBFolder" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

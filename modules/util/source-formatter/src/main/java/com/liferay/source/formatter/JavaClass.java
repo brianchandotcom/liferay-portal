@@ -121,6 +121,8 @@ public class JavaClass {
 			if (javaTerm.isMethod() || javaTerm.isConstructor()) {
 				checkChaining(javaTerm);
 				checkLineBreak(javaTerm);
+				checkParameterNames(javaTerm);
+				checkVariableNames(javaTerm);
 			}
 
 			if (_fileName.endsWith("LocalServiceImpl.java") &&
@@ -233,7 +235,7 @@ public class JavaClass {
 
 	protected void checkAnnotationForMethod(
 		JavaTerm javaTerm, String annotation, String requiredMethodNameRegex,
-		int requiredMethodType, String fileName) {
+		int requiredMethodType) {
 
 		String methodName = javaTerm.getName();
 
@@ -244,22 +246,22 @@ public class JavaClass {
 		if (javaTerm.hasAnnotation(annotation)) {
 			if (!matcher.find()) {
 				_javaSourceProcessor.processErrorMessage(
-					fileName,
+					_fileName,
 					"LPS-36303: Incorrect method name: " + methodName + " " +
-						fileName);
+						_fileName);
 			}
 			else if (javaTerm.getType() != requiredMethodType) {
 				_javaSourceProcessor.processErrorMessage(
-					fileName,
+					_fileName,
 					"LPS-36303: Incorrect method type for " + methodName + " " +
-						fileName);
+						_fileName);
 			}
 		}
 		else if (matcher.find() && !javaTerm.hasAnnotation("Override")) {
 			_javaSourceProcessor.processErrorMessage(
-				fileName,
+				_fileName,
 				"Annotation @" + annotation + " required for " + methodName +
-					" " + fileName);
+					" " + _fileName);
 		}
 	}
 
@@ -614,8 +616,22 @@ public class JavaClass {
 			else {
 				_javaSourceProcessor.processErrorMessage(
 					_fileName,
-					"Rename " + javaTermName + " to " + newName + " " +
-						javaTerm.getLineCount());
+					"Rename " + javaTermName + " to " + newName + ": " +
+						_fileName + " " + javaTerm.getLineCount());
+			}
+		}
+	}
+
+	protected void checkParameterNames(JavaTerm javaTerm) {
+		for (String parameterName : javaTerm.getParameterNames()) {
+			if (Validator.isVariableName(parameterName) &&
+				parameterName.matches("_?[A-Z].+")) {
+
+				_javaSourceProcessor.processErrorMessage(
+					_fileName,
+					"Parameter " + parameterName +
+						" should not start with uppercase: " + _fileName + " " +
+							javaTerm.getLineCount());
 			}
 		}
 	}
@@ -643,19 +659,18 @@ public class JavaClass {
 
 		checkAnnotationForMethod(
 			javaTerm, "After", "\\btearDown(?!Class)",
-			JavaTerm.TYPE_METHOD_PUBLIC, _fileName);
+			JavaTerm.TYPE_METHOD_PUBLIC);
 		checkAnnotationForMethod(
 			javaTerm, "AfterClass", "\\btearDownClass",
-			JavaTerm.TYPE_METHOD_PUBLIC_STATIC, _fileName);
+			JavaTerm.TYPE_METHOD_PUBLIC_STATIC);
 		checkAnnotationForMethod(
 			javaTerm, "Before", "\\bsetUp(?!Class)",
-			JavaTerm.TYPE_METHOD_PUBLIC, _fileName);
+			JavaTerm.TYPE_METHOD_PUBLIC);
 		checkAnnotationForMethod(
 			javaTerm, "BeforeClass", "\\bsetUpClass",
-			JavaTerm.TYPE_METHOD_PUBLIC_STATIC, _fileName);
+			JavaTerm.TYPE_METHOD_PUBLIC_STATIC);
 		checkAnnotationForMethod(
-			javaTerm, "Test", "^.*test", JavaTerm.TYPE_METHOD_PUBLIC,
-			_fileName);
+			javaTerm, "Test", "^.*test", JavaTerm.TYPE_METHOD_PUBLIC);
 	}
 
 	protected void checkUnusedParameters(JavaTerm javaTerm) {
@@ -670,6 +685,24 @@ public class JavaClass {
 					"Unused parameter " + parameterName + ": " + _fileName +
 						" " + javaTerm.getLineCount());
 			}
+		}
+	}
+
+	protected void checkVariableNames(JavaTerm javaTerm) {
+		Matcher matcher = _variableNameStartingWithUpperCasePattern.matcher(
+			javaTerm.getContent());
+
+		while (matcher.find()) {
+			int lineCount =
+				javaTerm.getLineCount() +
+					_javaSourceProcessor.getLineCount(
+						javaTerm.getContent(), matcher.start(1)) - 1;
+
+			_javaSourceProcessor.processErrorMessage(
+				_fileName,
+				"Variable " + matcher.group(1) +
+					" should not start with uppercase: " + _fileName + " " +
+						lineCount);
 		}
 	}
 
@@ -1605,5 +1638,7 @@ public class JavaClass {
 		"\n(\t+)return (.*?);\n", Pattern.DOTALL);
 	private final Pattern _returnPattern2 = Pattern.compile(
 		".* (==|!=|<|>|>=|<=)[ \n].*");
+	private final Pattern _variableNameStartingWithUpperCasePattern =
+		Pattern.compile("\t[\\w\\s<>,]+ ([A-Z]\\w+) =");
 
 }

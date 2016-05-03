@@ -8,57 +8,57 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
 >
-	<bean id="counterHibernateSessionFactory" class="com.liferay.portal.spring.hibernate.PortalHibernateConfiguration">
+	<bean class="com.liferay.portal.spring.hibernate.PortalHibernateConfiguration" id="counterHibernateSessionFactory">
 		<property name="dataSource" ref="counterDataSource" />
 		<property name="mvccEnabled" value="false" />
 	</bean>
-	<bean id="counterSessionFactory" class="com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl">
+	<bean class="com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl" id="counterSessionFactory">
 		<property name="sessionFactoryClassLoader">
 			<bean class="com.liferay.portal.kernel.util.PortalClassLoaderUtil" factory-method="getClassLoader" />
 		</property>
 		<property name="sessionFactoryImplementor" ref="counterHibernateSessionFactory" />
 	</bean>
-	<bean id="liferayHibernateSessionFactory" class="com.liferay.portal.spring.hibernate.PortalHibernateConfiguration">
+	<bean class="com.liferay.portal.spring.hibernate.PortalHibernateConfiguration" id="liferayHibernateSessionFactory">
 		<property name="dataSource" ref="liferayDataSource" />
 	</bean>
-	<bean id="liferaySessionFactory" class="com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl">
+	<bean class="com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl" id="liferaySessionFactory">
 		<property name="sessionFactoryClassLoader">
 			<bean class="com.liferay.portal.kernel.util.PortalClassLoaderUtil" factory-method="getClassLoader" />
 		</property>
 		<property name="sessionFactoryImplementor" ref="liferayHibernateSessionFactory" />
 	</bean>
-	<bean id="counterTransactionManager" class="com.liferay.portal.spring.transaction.TransactionManagerFactory" factory-method="createTransactionManager">
+	<bean class="com.liferay.portal.spring.transaction.TransactionManagerFactory" factory-method="createTransactionManager" id="counterTransactionManager">
 		<constructor-arg ref="counterDataSource" />
 		<constructor-arg ref="counterHibernateSessionFactory" />
 	</bean>
-	<bean id="liferayTransactionManager" class="com.liferay.portal.spring.transaction.TransactionManagerFactory" factory-method="createTransactionManager">
+	<bean class="com.liferay.portal.spring.transaction.TransactionManagerFactory" factory-method="createTransactionManager" id="liferayTransactionManager">
 		<constructor-arg ref="liferayDataSource" />
 		<constructor-arg ref="liferayHibernateSessionFactory" />
 	</bean>
-	<bean id="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsService" class="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsService">
+	<bean class="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsService" id="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsService">
 		<property name="sessionFactory" ref="liferaySessionFactory" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil" class="com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil">
+	<bean class="com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil" id="com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil">
 		<property name="dynamicQueryFactory">
 			<bean class="com.liferay.portal.dao.orm.hibernate.DynamicQueryFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.dao.orm.OrderFactoryUtil" class="com.liferay.portal.kernel.dao.orm.OrderFactoryUtil">
+	<bean class="com.liferay.portal.kernel.dao.orm.OrderFactoryUtil" id="com.liferay.portal.kernel.dao.orm.OrderFactoryUtil">
 		<property name="orderFactory">
 			<bean class="com.liferay.portal.dao.orm.hibernate.OrderFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil" class="com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil">
+	<bean class="com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil" id="com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil">
 		<property name="projectionFactory">
 			<bean class="com.liferay.portal.dao.orm.hibernate.ProjectionFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil" class="com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil">
+	<bean class="com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil" id="com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil">
 		<property name="propertyFactory">
 			<bean class="com.liferay.portal.dao.orm.hibernate.PropertyFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil" class="com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil">
+	<bean class="com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil" id="com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil">
 		<property name="restrictionsFactory">
 			<bean class="com.liferay.portal.dao.orm.hibernate.RestrictionsFactoryImpl" />
 		</property>

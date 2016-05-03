@@ -574,8 +574,8 @@ public class AssetCategoryLocalServiceUtil {
 	}
 
 	public static void addAssetEntryAssetCategories(long entryId,
-		java.util.List<com.liferay.asset.kernel.model.AssetCategory> AssetCategories) {
-		getService().addAssetEntryAssetCategories(entryId, AssetCategories);
+		java.util.List<com.liferay.asset.kernel.model.AssetCategory> assetCategories) {
+		getService().addAssetEntryAssetCategories(entryId, assetCategories);
 	}
 
 	public static void addAssetEntryAssetCategories(long entryId,
@@ -613,8 +613,8 @@ public class AssetCategoryLocalServiceUtil {
 	}
 
 	public static void deleteAssetEntryAssetCategories(long entryId,
-		java.util.List<com.liferay.asset.kernel.model.AssetCategory> AssetCategories) {
-		getService().deleteAssetEntryAssetCategories(entryId, AssetCategories);
+		java.util.List<com.liferay.asset.kernel.model.AssetCategory> assetCategories) {
+		getService().deleteAssetEntryAssetCategories(entryId, assetCategories);
 	}
 
 	public static void deleteAssetEntryAssetCategories(long entryId,

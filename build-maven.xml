@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 
-<project name="portal-maven" default="zip-maven" xmlns:antelope="antlib:ise.antelope.tasks">
+<project default="zip-maven" name="portal-maven" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-common.xml" />
 
 	<taskdef classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpathref="lib.classpath" name="xmltask" />
 
-	<condition property="gpg.extension" value=".exe" else="">
-		<contains string="${os.name}" substring="Windows" casesensitive="false" />
+	<condition else="" property="gpg.extension" value=".exe">
+		<contains casesensitive="false" string="${os.name}" substring="Windows" />
 	</condition>
 
 	<property name="gpg.executable" value="gpg${gpg.extension}" />
 
-	<condition property="maven.extension" value=".bat" else="">
-		<contains string="${os.name}" substring="Windows" casesensitive="false" />
+	<condition else="" property="maven.extension" value=".bat">
+		<contains casesensitive="false" string="${os.name}" substring="Windows" />
 	</condition>
 
 	<property name="maven.executable" value="mvn${maven.extension}" />
@@ -34,14 +34,14 @@ for GPG setup instructions.
 		</if>
 
 		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 		</tstamp>
 
 		<antcall target="prepare-maven">
 			<param name="tstamp.value" value="${tstamp.value}" />
 		</antcall>
 
-		<ant dir="${tstamp.value}" target="deploy" inheritall="false" />
+		<ant dir="${tstamp.value}" inheritall="false" target="deploy" />
 
 		<delete dir="${tstamp.value}" />
 	</target>
@@ -64,7 +64,7 @@ for GPG setup instructions.
 
 	<target name="install-artifacts">
 		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 		</tstamp>
 
 		<antcall target="prepare-maven">
@@ -74,7 +74,7 @@ for GPG setup instructions.
 			<param name="tstamp.value" value="${tstamp.value}" />
 		</antcall>
 
-		<ant dir="${tstamp.value}" target="install" inheritall="false" />
+		<ant dir="${tstamp.value}" inheritall="false" target="install" />
 
 		<delete dir="${tstamp.value}" />
 	</target>
@@ -92,25 +92,25 @@ for GPG setup instructions.
 	</target>
 
 	<target name="jar-javadoc">
-		<ant dir="portal-client" target="jar-javadoc" inheritAll="false" />
-		<ant dir="portal-impl" target="jar-javadoc" inheritAll="false" />
-		<ant dir="portal-kernel" target="jar-javadoc" inheritAll="false" />
-		<ant dir="support-tomcat" target="jar-javadoc" inheritAll="false" />
-		<ant dir="util-bridges" target="jar-javadoc" inheritAll="false" />
-		<ant dir="util-java" target="jar-javadoc" inheritAll="false" />
-		<ant dir="util-slf4j" target="jar-javadoc" inheritAll="false" />
-		<ant dir="util-taglib" target="jar-javadoc" inheritAll="false" />
+		<ant dir="portal-client" inheritAll="false" target="jar-javadoc" />
+		<ant dir="portal-impl" inheritAll="false" target="jar-javadoc" />
+		<ant dir="portal-kernel" inheritAll="false" target="jar-javadoc" />
+		<ant dir="support-tomcat" inheritAll="false" target="jar-javadoc" />
+		<ant dir="util-bridges" inheritAll="false" target="jar-javadoc" />
+		<ant dir="util-java" inheritAll="false" target="jar-javadoc" />
+		<ant dir="util-slf4j" inheritAll="false" target="jar-javadoc" />
+		<ant dir="util-taglib" inheritAll="false" target="jar-javadoc" />
 	</target>
 
 	<target name="jar-sources">
-		<ant dir="portal-client" target="jar-sources" inheritAll="false" />
-		<ant dir="portal-impl" target="jar-sources" inheritAll="false" />
-		<ant dir="portal-kernel" target="jar-sources" inheritAll="false" />
-		<ant dir="support-tomcat" target="jar-sources" inheritAll="false" />
-		<ant dir="util-bridges" target="jar-sources" inheritAll="false" />
-		<ant dir="util-java" target="jar-sources" inheritAll="false" />
-		<ant dir="util-slf4j" target="jar-sources" inheritAll="false" />
-		<ant dir="util-taglib" target="jar-sources" inheritAll="false" />
+		<ant dir="portal-client" inheritAll="false" target="jar-sources" />
+		<ant dir="portal-impl" inheritAll="false" target="jar-sources" />
+		<ant dir="portal-kernel" inheritAll="false" target="jar-sources" />
+		<ant dir="support-tomcat" inheritAll="false" target="jar-sources" />
+		<ant dir="util-bridges" inheritAll="false" target="jar-sources" />
+		<ant dir="util-java" inheritAll="false" target="jar-sources" />
+		<ant dir="util-slf4j" inheritAll="false" target="jar-sources" />
+		<ant dir="util-taglib" inheritAll="false" target="jar-sources" />
 	</target>
 
 	<target name="prepare-maven">
@@ -132,7 +132,7 @@ Run "ant -f build-dist.xml all zip-portal-war" to generate that file.
 		<antcall target="jar-javadoc" />
 		<antcall target="jar-sources" />
 
-		<ant dir="util-taglib" target="taglibdoc" inheritAll="false" />
+		<ant dir="util-taglib" inheritAll="false" target="taglibdoc" />
 
 		<mkdir dir="${tstamp.value}" />
 
@@ -210,7 +210,7 @@ Run "ant -f build-dist.xml all zip-portal-war" to generate that file.
 			</filterset>
 			<mapper>
 				<chainedmapper>
-					<mapper type="glob" from="*.xml" to="*.pom" />
+					<mapper from="*.xml" to="*.pom" type="glob" />
 				</chainedmapper>
 			</mapper>
 		</copy>
@@ -240,7 +240,7 @@ Run "ant -f build-dist.xml all zip-portal-war" to generate that file.
 
 	<target name="zip-maven">
 		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 		</tstamp>
 
 		<antcall target="prepare-maven">

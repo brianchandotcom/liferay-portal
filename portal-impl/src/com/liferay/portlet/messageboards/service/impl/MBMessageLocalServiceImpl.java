@@ -252,6 +252,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subject = ModelHintsUtil.trimString(
 			MBMessage.class.getName(), "subject", subject);
 
+		if (!MBUtil.isValidMessageFormat(format)) {
+			format = "html";
+		}
+
 		MBGroupServiceSettings mbGroupServiceSettings =
 			MBGroupServiceSettings.getInstance(groupId);
 
@@ -272,6 +276,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		long messageId = counterLocalService.increment();
 
+		subject = getSubject(subject, body);
+		body = getBody(subject, body);
+
 		Map<String, Object> options = new HashMap<>();
 
 		boolean discussion = false;
@@ -287,9 +294,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			messageId, "text/" + format, Sanitizer.MODE_ALL, body, options);
 
 		validate(subject, body);
-
-		subject = getSubject(subject, body);
-		body = getBody(subject, body);
 
 		MBMessage message = mbMessagePersistence.create(messageId);
 
@@ -1605,6 +1609,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subject = ModelHintsUtil.trimString(
 			MBMessage.class.getName(), "subject", subject);
 
+		subject = getSubject(subject, body);
+		body = getBody(subject, body);
+
 		Map<String, Object> options = new HashMap<>();
 
 		options.put("discussion", message.isDiscussion());
@@ -1615,9 +1622,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			Sanitizer.MODE_ALL, body, options);
 
 		validate(subject, body);
-
-		subject = getSubject(subject, body);
-		body = getBody(subject, body);
 
 		message.setModifiedDate(modifiedDate);
 		message.setSubject(subject);
@@ -2434,19 +2438,21 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		throws PortalException {
 
 		boolean visible = false;
+		Date publishDate = null;
 
 		if (assetEntryVisible && message.isApproved() &&
 			((message.getClassNameId() == 0) ||
 			 (message.getParentMessageId() != 0))) {
 
 			visible = true;
+			publishDate = message.getModifiedDate();
 		}
 
 		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
 			userId, message.getGroupId(), message.getCreateDate(),
 			message.getModifiedDate(), message.getWorkflowClassName(),
 			message.getMessageId(), message.getUuid(), 0, assetCategoryIds,
-			assetTagNames, true, visible, null, null, null,
+			assetTagNames, true, visible, null, null, publishDate, null,
 			ContentTypes.TEXT_HTML, message.getSubject(), null, null, null,
 			null, 0, 0, message.getPriority());
 

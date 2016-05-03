@@ -244,15 +244,19 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 			Liferay.detach('showTab', afterShowTab);
 			Liferay.detach('destroyPortlet', onDestroyPortlet);
 
-			formBuilder.propertyList.get('data').each(
-				function(model) {
-					var editor = model.get('editor');
+			var propertyList = formBuilder.propertyList;
 
-					if (editor) {
-						editor.destroy();
+			if (propertyList) {
+				propertyList.get('data').each(
+					function(model) {
+						var editor = model.get('editor');
+
+						if (editor) {
+							editor.destroy();
+						}
 					}
-				}
-			);
+				);
+			}
 
 			formBuilder.destroy();
 		}

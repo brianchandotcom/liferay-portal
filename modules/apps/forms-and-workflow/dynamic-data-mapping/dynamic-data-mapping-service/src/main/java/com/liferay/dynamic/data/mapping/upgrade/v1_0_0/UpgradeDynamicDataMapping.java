@@ -39,6 +39,8 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -111,6 +113,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -244,6 +247,22 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		upgradeTemplatesPermissions();
 	}
 
+	protected List<String> getDDMDateFieldNames(DDMForm ddmForm)
+		throws Exception {
+
+		List<String> ddmDateFieldNames = new ArrayList<>();
+
+		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
+			String dataType = ddmFormField.getType();
+
+			if (dataType.equals("ddm-date")) {
+				ddmDateFieldNames.add(ddmFormField.getName());
+			}
+		}
+
+		return ddmDateFieldNames;
+	}
+
 	protected DDMForm getDDMForm(long structureId) throws Exception {
 		DDMForm ddmForm = _ddmForms.get(structureId);
 
@@ -321,6 +340,33 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			new DDMFormValuesXSDDeserializer(companyId);
 
 		return ddmFormValuesXSDDeserializer.deserialize(ddmForm, xml);
+	}
+
+	protected Map<String, String> getDDMTemplateScriptMap(long structureId)
+		throws Exception {
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select * from DDMTemplate where classPK = ? and type_ = ?")) {
+
+			ps.setLong(1, structureId);
+			ps.setString(2, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				Map<String, String> ddmTemplateScriptMap = new HashMap<>();
+
+				while (rs.next()) {
+					long templateId = rs.getLong("templateId");
+					String language = rs.getString("language");
+					String script = rs.getString("script");
+
+					String key = templateId + StringPool.DOLLAR + language;
+
+					ddmTemplateScriptMap.put(key, script);
+				}
+
+				return ddmTemplateScriptMap;
+			}
+		}
 	}
 
 	protected String getDefaultDDMFormLayoutDefinition(DDMForm ddmForm) {
@@ -592,6 +638,179 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				"storageType = 'xml'");
 	}
 
+	protected void updateTemplateScript(long templateId, String script)
+		throws Exception {
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update DDMTemplate set script = ? where templateId = ?")) {
+
+			ps.setString(1, script);
+			ps.setLong(2, templateId);
+
+			ps.executeUpdate();
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to update dynamic data mapping template with " +
+					"template ID " + templateId);
+
+			throw e;
+		}
+	}
+
+	protected String updateTemplateScriptDateAssignStatement(
+		String dateFieldName, String language, String script) {
+
+		StringBundler oldTemplateScriptSB = new StringBundler(7);
+		StringBundler newTemplateScriptSB = new StringBundler(5);
+
+		if (language.equals("ftl")) {
+			oldTemplateScriptSB.append("<#assign\\s+");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append("_Data\\s*=\\s*getterUtil\\s*");
+			oldTemplateScriptSB.append(".\\s*getLong\\s*\\(\\s*");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append(".\\s*getData\\s*\\(\\s*\\)");
+			oldTemplateScriptSB.append("\\s*\\)\\s*>");
+
+			newTemplateScriptSB.append("<#assign ");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append("_Data = getterUtil.getString(");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append(".getData())>");
+		}
+		else if (language.equals("vm")) {
+			dateFieldName =
+				StringPool.BACK_SLASH + StringPool.DOLLAR + dateFieldName;
+
+			oldTemplateScriptSB.append("#set\\s+\\(\\s*");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append("_Data\\s*=\\s*\\$getterUtil");
+			oldTemplateScriptSB.append(".getLong\\(\\s*");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append(".getData\\(\\)\\s*\\)");
+			oldTemplateScriptSB.append("\\s*\\)");
+
+			newTemplateScriptSB.append("#set (");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append("_Data = \\$getterUtil.getString(");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append(".getData()))");
+		}
+
+		return script.replaceAll(
+			oldTemplateScriptSB.toString(), newTemplateScriptSB.toString());
+	}
+
+	protected void updateTemplateScriptDateFields(
+			long structureId, DDMForm ddmForm)
+		throws Exception {
+
+		List<String> ddmDateFieldNames = getDDMDateFieldNames(ddmForm);
+
+		if (ddmDateFieldNames.isEmpty()) {
+			return;
+		}
+
+		Map<String, String> ddmTemplateScriptMap = getDDMTemplateScriptMap(
+			structureId);
+
+		for (Entry<String, String> entrySet : ddmTemplateScriptMap.entrySet()) {
+			String[] templateIdAndLanguage = StringUtil.split(
+				entrySet.getKey(), StringPool.DOLLAR);
+
+			long ddmTemplateId = Long.parseLong(templateIdAndLanguage[0]);
+			String language = templateIdAndLanguage[1];
+
+			String script = entrySet.getValue();
+
+			for (String ddmDateFieldName : ddmDateFieldNames) {
+				script = updateTemplateScriptDateAssignStatement(
+					ddmDateFieldName, language, script);
+
+				script = updateTemplateScriptDateIfStatement(
+					ddmDateFieldName, language, script);
+
+				script = updateTemplateScriptDateParseStatement(
+					ddmDateFieldName, language, script);
+			}
+
+			updateTemplateScript(ddmTemplateId, script);
+		}
+	}
+
+	protected String updateTemplateScriptDateIfStatement(
+		String dateFieldName, String language, String script) {
+
+		String oldTemplateScript = StringPool.BLANK;
+		String newTemplateScript = StringPool.BLANK;
+
+		if (language.equals("ftl")) {
+			oldTemplateScript =
+				"<#if\\s*\\(?\\s*" + dateFieldName + "_Data\\s*>\\s*0\\s*\\)?" +
+					"\\s*>";
+
+			newTemplateScript =
+				"<#if validator.isNotNull(" + dateFieldName + "_Data)>";
+		}
+		else if (language.equals("vm")) {
+			dateFieldName =
+				StringPool.BACK_SLASH + StringPool.DOLLAR + dateFieldName;
+
+			oldTemplateScript =
+				"#if\\s*\\(\\s*" + dateFieldName + "_Data\\s*>\\s*0\\s*\\)";
+
+			newTemplateScript =
+				"#if (\\$validator.isNotNull(" + dateFieldName + "_Data))";
+		}
+
+		return script.replaceAll(oldTemplateScript, newTemplateScript);
+	}
+
+	protected String updateTemplateScriptDateParseStatement(
+		String dateFieldName, String language, String script) {
+
+		StringBundler oldTemplateScriptSB = new StringBundler(6);
+		StringBundler newTemplateScriptSB = new StringBundler(5);
+
+		if (language.equals("ftl")) {
+			oldTemplateScriptSB.append("<#assign\\s+");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append("_DateObj\\s*=\\s*dateUtil\\s*");
+			oldTemplateScriptSB.append(".\\s*newDate\\(\\s*");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append("_Data\\s*\\)\\s*>");
+
+			newTemplateScriptSB.append("<#assign ");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append(
+				"_DateObj = dateUtil.parseDate(\"yyyy-MM-dd\", ");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append("_Data, locale)>");
+		}
+		else if (language.equals("vm")) {
+			dateFieldName =
+				StringPool.BACK_SLASH + StringPool.DOLLAR + dateFieldName;
+
+			oldTemplateScriptSB.append("#set\\s*\\(");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append("_DateObj\\s*=\\s*\\$dateUtil");
+			oldTemplateScriptSB.append(".newDate\\(\\s*");
+			oldTemplateScriptSB.append(dateFieldName);
+			oldTemplateScriptSB.append("_Data\\s*\\)\\s*\\)");
+
+			newTemplateScriptSB.append("#set (");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append(
+				"_DateObj = \\$dateUtil.parseDate(\"yyyy-MM-dd\", ");
+			newTemplateScriptSB.append(dateFieldName);
+			newTemplateScriptSB.append("_Data, \\$locale))");
+		}
+
+		return script.replaceAll(
+			oldTemplateScriptSB.toString(), newTemplateScriptSB.toString());
+	}
+
 	protected void upgradeDDLFieldTypeReferences() throws Exception {
 		StringBundler sb = new StringBundler(7);
 
@@ -790,8 +1009,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		List<ResourcePermission> resourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
-				companyId,
-				"com.liferay.portlet.dynamicdatamapping.DDMStructure",
+				companyId, DDMStructure.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				StringUtil.valueOf(structureId));
 
@@ -881,6 +1099,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				ps2.addBatch();
 
+				updateTemplateScriptDateFields(structureId, ddmForm);
+
 				// Structure version
 
 				if (hasStructureVersion(structureId, version)) {
@@ -957,7 +1177,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		List<ResourcePermission> resourcePermissions =
 			_resourcePermissionLocalService.getResourcePermissions(
-				companyId, "com.liferay.portlet.dynamicdatamapping.DDMTemplate",
+				companyId, DDMTemplate.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				StringUtil.valueOf(templateId));
 

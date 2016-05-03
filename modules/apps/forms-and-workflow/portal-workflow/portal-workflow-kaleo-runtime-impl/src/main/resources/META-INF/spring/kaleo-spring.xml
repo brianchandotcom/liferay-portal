@@ -47,7 +47,7 @@
 
 	<!-- Manager -->
 
-	<bean id="com.liferay.portal.workflow.kaleo.manager.PortalKaleoManager" class="com.liferay.portal.workflow.kaleo.runtime.internal.manager.DefaultPortalKaleoManager">
+	<bean class="com.liferay.portal.workflow.kaleo.runtime.internal.manager.DefaultPortalKaleoManager" id="com.liferay.portal.workflow.kaleo.manager.PortalKaleoManager">
 		<property name="defaultDefinitionName" value="Single Approver" />
 		<property name="definitionFiles">
 			<util:map>
@@ -58,12 +58,12 @@
 
 	<!-- Runtime -->
 
-	<bean id="com.liferay.portal.workflow.kaleo.runtime.KaleoSignaler" class="com.liferay.portal.workflow.kaleo.runtime.internal.DefaultKaleoSignaler">
+	<bean class="com.liferay.portal.workflow.kaleo.runtime.internal.DefaultKaleoSignaler" id="com.liferay.portal.workflow.kaleo.runtime.KaleoSignaler">
 		<property name="destinationName" value="liferay/kaleo_graph_walker" />
 	</bean>
-	<bean id="com.liferay.portal.workflow.kaleo.runtime.TaskManager" class="com.liferay.portal.workflow.kaleo.runtime.internal.DefaultTaskManagerImpl" />
-	<bean id="com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine" class="com.liferay.portal.workflow.kaleo.runtime.internal.DefaultWorkflowEngineImpl">
+	<bean class="com.liferay.portal.workflow.kaleo.runtime.internal.DefaultTaskManagerImpl" id="com.liferay.portal.workflow.kaleo.runtime.TaskManager" />
+	<bean class="com.liferay.portal.workflow.kaleo.runtime.internal.DefaultWorkflowEngineImpl" id="com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine">
 		<property name="kaleoSignaler" ref="com.liferay.portal.workflow.kaleo.runtime.KaleoSignaler" />
 	</bean>
-	<bean id="com.liferay.portal.workflow.kaleo.runtime.graph.GraphWalker" class="com.liferay.portal.workflow.kaleo.runtime.internal.graph.DefaultGraphWalker" />
+	<bean class="com.liferay.portal.workflow.kaleo.runtime.internal.graph.DefaultGraphWalker" id="com.liferay.portal.workflow.kaleo.runtime.graph.GraphWalker" />
 </beans>

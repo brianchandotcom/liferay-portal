@@ -55,7 +55,7 @@
 	</target>
 
 	<target name="clean">
-		<delete includeemptydirs="true" failonerror="false">
+		<delete failonerror="false" includeemptydirs="true">
 			<fileset
 				dir="."
 				excludes="*.sql,*.vm"
@@ -95,10 +95,10 @@
 	</target>
 
 	<target name="rebuild-hypersonic">
-		<delete file="${database.name}.lck" failonerror="false" />
-		<delete file="${database.name}.log" failonerror="false" />
-		<delete file="${database.name}.properties" failonerror="false" />
-		<delete file="${database.name}.script" failonerror="false" />
+		<delete failonerror="false" file="${database.name}.lck" />
+		<delete failonerror="false" file="${database.name}.log" />
+		<delete failonerror="false" file="${database.name}.properties" />
+		<delete failonerror="false" file="${database.name}.script" />
 
 		<java
 			classname="com.liferay.portal.tools.HypersonicLoader"

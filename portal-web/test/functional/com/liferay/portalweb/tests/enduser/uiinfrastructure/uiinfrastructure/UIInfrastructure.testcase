@@ -1,4 +1,5 @@
 <definition component-name="portal-user-interface">
+	<property name="portal.release" value="true" />
 	<property name="testray.component.names" value="Mobile Web" />
 	<property name="testray.main.component.name" value="User Interface" />
 

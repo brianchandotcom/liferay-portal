@@ -30,7 +30,7 @@ long parentResourceClassNameId = BeanParamUtil.getLong(kbArticle, request, "pare
 long parentResourcePrimKey = BeanParamUtil.getLong(kbArticle, request, "parentResourcePrimKey", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 String content = BeanParamUtil.getString(kbArticle, request, "content", BeanPropertiesUtil.getString(kbTemplate, "content"));
-String[] sections = AdminUtil.unescapeSections(BeanPropertiesUtil.getString(kbArticle, "sections", StringUtil.merge(PortletPropsValues.ADMIN_KB_ARTICLE_DEFAULT_SECTIONS)));
+String[] sections = AdminUtil.unescapeSections(BeanPropertiesUtil.getString(kbArticle, "sections", StringUtil.merge(PortletPropsValues.ADMIN_KB_ARTICLE_SECTIONS_DEFAULT)));
 %>
 
 <liferay-ui:header
@@ -129,7 +129,7 @@ String[] sections = AdminUtil.unescapeSections(BeanPropertiesUtil.getString(kbAr
 
 			sb.append("/-/");
 
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY);
 
 			sb.append(portlet.getFriendlyURLMapping());
 

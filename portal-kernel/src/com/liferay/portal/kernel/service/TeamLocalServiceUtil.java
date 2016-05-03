@@ -462,8 +462,8 @@ public class TeamLocalServiceUtil {
 	}
 
 	public static void addUserGroupTeams(long userGroupId,
-		java.util.List<com.liferay.portal.kernel.model.Team> Teams) {
-		getService().addUserGroupTeams(userGroupId, Teams);
+		java.util.List<com.liferay.portal.kernel.model.Team> teams) {
+		getService().addUserGroupTeams(userGroupId, teams);
 	}
 
 	public static void addUserGroupTeams(long userGroupId, long[] teamIds) {
@@ -480,8 +480,8 @@ public class TeamLocalServiceUtil {
 	}
 
 	public static void addUserTeams(long userId,
-		java.util.List<com.liferay.portal.kernel.model.Team> Teams) {
-		getService().addUserTeams(userId, Teams);
+		java.util.List<com.liferay.portal.kernel.model.Team> teams) {
+		getService().addUserTeams(userId, teams);
 	}
 
 	public static void addUserTeams(long userId, long[] teamIds) {
@@ -511,8 +511,8 @@ public class TeamLocalServiceUtil {
 	}
 
 	public static void deleteUserGroupTeams(long userGroupId,
-		java.util.List<com.liferay.portal.kernel.model.Team> Teams) {
-		getService().deleteUserGroupTeams(userGroupId, Teams);
+		java.util.List<com.liferay.portal.kernel.model.Team> teams) {
+		getService().deleteUserGroupTeams(userGroupId, teams);
 	}
 
 	public static void deleteUserGroupTeams(long userGroupId, long[] teamIds) {
@@ -529,8 +529,8 @@ public class TeamLocalServiceUtil {
 	}
 
 	public static void deleteUserTeams(long userId,
-		java.util.List<com.liferay.portal.kernel.model.Team> Teams) {
-		getService().deleteUserTeams(userId, Teams);
+		java.util.List<com.liferay.portal.kernel.model.Team> teams) {
+		getService().deleteUserTeams(userId, teams);
 	}
 
 	public static void deleteUserTeams(long userId, long[] teamIds) {

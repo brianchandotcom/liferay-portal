@@ -384,7 +384,7 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	public void addDLFolderDLFileEntryType(long folderId, long fileEntryTypeId);
 
 	public void addDLFolderDLFileEntryTypes(long folderId,
-		List<DLFileEntryType> DLFileEntryTypes);
+		List<DLFileEntryType> dlFileEntryTypes);
 
 	public void addDLFolderDLFileEntryTypes(long folderId,
 		long[] fileEntryTypeIds);
@@ -401,7 +401,7 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 		long fileEntryTypeId);
 
 	public void deleteDLFolderDLFileEntryTypes(long folderId,
-		List<DLFileEntryType> DLFileEntryTypes);
+		List<DLFileEntryType> dlFileEntryTypes);
 
 	public void deleteDLFolderDLFileEntryTypes(long folderId,
 		long[] fileEntryTypeIds);

@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-wildfly-mariadb" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project basedir="." default="test" name="portal-test-wildfly-mariadb" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test-wildfly.xml" />
 
 	<target name="run-selenium-wildfly-mariadb">
 		<echo file="test.${user.name}.properties">database.type=mariadb</echo>
 
-		<antcall target="run-selenium-wildfly" inheritAll="false">
+		<antcall inheritAll="false" target="run-selenium-wildfly">
 			<param name="test.class" value="${test.class}" />
 		</antcall>
 	</target>

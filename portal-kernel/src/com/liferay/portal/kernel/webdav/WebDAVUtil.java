@@ -305,8 +305,6 @@ public class WebDAVUtil {
 	}
 
 	public static long getTimeout(HttpServletRequest request) {
-		final String TIME_PREFIX = "Second-";
-
 		long timeout = 0;
 
 		String value = GetterUtil.getString(request.getHeader("Timeout"));
@@ -315,10 +313,10 @@ public class WebDAVUtil {
 			_log.debug("\"Timeout\" header is " + value);
 		}
 
-		int index = value.indexOf(TIME_PREFIX);
+		int index = value.indexOf(_TIME_PREFIX);
 
 		if (index >= 0) {
-			index += TIME_PREFIX.length();
+			index += _TIME_PREFIX.length();
 
 			if (index < value.length()) {
 				timeout = GetterUtil.getLong(value.substring(index));
@@ -445,6 +443,8 @@ public class WebDAVUtil {
 			return true;
 		}
 	}
+
+	private static final String _TIME_PREFIX = "Second-";
 
 	private static final Log _log = LogFactoryUtil.getLog(WebDAVUtil.class);
 

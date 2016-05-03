@@ -85,7 +85,7 @@
 				</parameter>
 			</parameters>
 			<configuration>
-				<baseDir implementation="java$io$File" default-value="${project.basedir}" />
+				<baseDir default-value="${project.basedir}" implementation="java$io$File" />
 			</configuration>
 		</mojo>
 	</mojos>

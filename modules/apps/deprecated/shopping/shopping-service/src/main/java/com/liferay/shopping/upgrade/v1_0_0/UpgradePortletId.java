@@ -14,6 +14,8 @@
 
 package com.liferay.shopping.upgrade.v1_0_0;
 
+import com.liferay.shopping.constants.ShoppingPortletKeys;
+
 /**
  * @author Peter Fellwock
  */
@@ -23,8 +25,8 @@ public class UpgradePortletId
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {"34", "34_WAR_shoppingweb"},
-			new String[] {"197", "197_WAR_shoppingweb"}
+			new String[] {"34", ShoppingPortletKeys.SHOPPING},
+			new String[] {"97", ShoppingPortletKeys.SHOPPING_ADMIN}
 		};
 	}
 

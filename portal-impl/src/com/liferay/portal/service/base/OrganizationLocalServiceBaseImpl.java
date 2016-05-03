@@ -451,8 +451,8 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 */
 	@Override
 	public void addGroupOrganizations(long groupId,
-		List<Organization> Organizations) {
-		groupPersistence.addOrganizations(groupId, Organizations);
+		List<Organization> organizations) {
+		groupPersistence.addOrganizations(groupId, organizations);
 	}
 
 	/**
@@ -487,8 +487,8 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 */
 	@Override
 	public void deleteGroupOrganizations(long groupId,
-		List<Organization> Organizations) {
-		groupPersistence.removeOrganizations(groupId, Organizations);
+		List<Organization> organizations) {
+		groupPersistence.removeOrganizations(groupId, organizations);
 	}
 
 	/**
@@ -579,8 +579,8 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 */
 	@Override
 	public void addUserOrganizations(long userId,
-		List<Organization> Organizations) {
-		userPersistence.addOrganizations(userId, Organizations);
+		List<Organization> organizations) {
+		userPersistence.addOrganizations(userId, organizations);
 	}
 
 	/**
@@ -615,8 +615,8 @@ public abstract class OrganizationLocalServiceBaseImpl
 	 */
 	@Override
 	public void deleteUserOrganizations(long userId,
-		List<Organization> Organizations) {
-		userPersistence.removeOrganizations(userId, Organizations);
+		List<Organization> organizations) {
+		userPersistence.removeOrganizations(userId, organizations);
 	}
 
 	/**

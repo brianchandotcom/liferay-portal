@@ -904,7 +904,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				public void execute(Project project) {
 					File moduleConfigFile = getModuleConfigFile(project);
 
-					if (moduleConfigFile == null) {
+					if ((moduleConfigFile == null) ||
+						!moduleConfigFile.exists()) {
+
 						return;
 					}
 
@@ -1241,7 +1243,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		if (projectPath.startsWith(":apps:") ||
 			projectPath.startsWith(":core:") ||
-			projectPath.startsWith(":private:") ||
+			projectPath.startsWith(":private:apps:") ||
+			projectPath.startsWith(":private:core:") ||
 			FileUtil.exists(project.getRootProject(), ".gitrepo")) {
 
 			configureConfigurationTransitive(

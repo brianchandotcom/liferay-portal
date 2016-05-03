@@ -100,9 +100,7 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 		"com.liferay.portlet.calendar.model.CalEvent";
 
 	private static final String[][] _RESOURCE_NAMES = new String[][] {
-		{
-			"com.liferay.portlet.calendar", "com.liferay.calendar"
-		}
+		{"com.liferay.portlet.calendar", "com.liferay.calendar"}
 	};
 
 }

@@ -233,8 +233,6 @@
 		<execute function="Type#typeEditor" locator1="AlloyEditor#DESCRIPTION_FIELD" value1="${entryAbstractDescription}" />
 
 		<execute macro="PortletEntry#publish" />
-
-		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="addWithCustomAbstractImage">

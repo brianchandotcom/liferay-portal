@@ -20,6 +20,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_FIELD_COLLAPSED</td>
+	<td>//div[contains(.,'${key_fieldName}') and contains(@class,'toggler-header-collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -163,10 +163,10 @@ public class WebDAVServlet extends HttpServlet {
 	protected String getRootPath(HttpServletRequest request) {
 		String contextPath = HttpUtil.fixPath(
 			PortalUtil.getPathContext(request), false, true);
-		String ServletPath = HttpUtil.fixPath(
+		String servletPath = HttpUtil.fixPath(
 			request.getServletPath(), false, true);
 
-		return contextPath.concat(ServletPath);
+		return contextPath.concat(servletPath);
 	}
 
 	protected WebDAVStorage getStorage(HttpServletRequest request) {

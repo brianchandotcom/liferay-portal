@@ -1,4 +1,5 @@
 <definition component-name="portal-upgrades">
+	<property name="portal.release" value="true" />
 	<property name="data.archive.type" value="data-archive-portal" />
 	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
 	<property name="portal.version" value="6.0.6" />

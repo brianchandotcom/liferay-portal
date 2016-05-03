@@ -1,0 +1,8 @@
+Bundle-SymbolicName: oasis.names.tc.wsrp
+Bundle-Version: 1.0.1
+Export-Package:\
+	oasis.names.tc.wsrp.v1.*,\
+	oasis.names.tc.wsrp.v2.*
+-includeresource:\
+	@lib/wsrp-1.0-service-ws.jar,\
+	@lib/wsrp-2.0-service-ws.jar

@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 
-<project name="portal-client" basedir="." default="compile">
+<project basedir="." default="compile" name="portal-client">
 	<import file="../build-common-java.xml" />
 
 	<property name="jar.file" value="${ant.project.name}" />
 	<property name="client.url" value="http://localhost:8080/api/axis" />
 
-	<target name="build-client" depends="clean">
+	<target depends="clean" name="build-client">
 		<remake-dir dir="src" />
 
 		<!--
@@ -48,7 +48,7 @@
 		<antcall target="jar" />
 	</target>
 
-	<target name="jar" depends="compile">
+	<target depends="compile" name="jar">
 		<jar
 			jarfile="${jar.file}.jar"
 		>
@@ -56,12 +56,12 @@
 			<fileset dir="src" />
 		</jar>
 
-		<copy file="portal-client.jar" todir="${project.dir}/lib/portal" preservelastmodified="true" />
+		<copy file="portal-client.jar" preservelastmodified="true" todir="${project.dir}/lib/portal" />
 	</target>
 
 	<target name="jar-sources">
 		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 		</tstamp>
 
 		<unzip
@@ -81,7 +81,7 @@
 	<target name="java2html">
 		<remake-dir dir="src" />
 
-		<unjar src="${jar.file}.jar" dest="src" />
+		<unjar dest="src" src="${jar.file}.jar" />
 
 		<antcall target="build-common-java.java2html" />
 	</target>
@@ -89,7 +89,7 @@
 	<target name="javadoc">
 		<remake-dir dir="src" />
 
-		<unjar src="${project.dir}/lib/portal/${jar.file}.jar" dest="src" />
+		<unjar dest="src" src="${project.dir}/lib/portal/${jar.file}.jar" />
 
 		<antcall target="build-common-java.javadoc" />
 	</target>

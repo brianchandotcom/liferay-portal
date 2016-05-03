@@ -80,15 +80,15 @@ if (user2 != null) {
 		new A.Button(
 			{
 				cssClass: '<%= showAddAsConnectionButton ? "" : "hidden" %>',
+				icon: 'icon-plus-sign',
+				id: '<portlet:namespace />addConnectionButton',
+				label: '<%= UnicodeLanguageUtil.get(request, "connect") %>',
 				on: {
 					click: function(event) {
 						<portlet:namespace />relationAction(event, '<portlet:actionURL name="requestSocialRelation" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="type" value="<%= String.valueOf(SocialRelationConstants.TYPE_BI_CONNECTION) %>" /></portlet:actionURL>');
 					}
 				},
-				icon: 'icon-plus-sign',
-				id: '<portlet:namespace />addConnectionButton',
-				label: '<%= UnicodeLanguageUtil.get(request, "connect") %>',
-				render: true,
+				render: true
 			}
 		)
 	);
@@ -97,15 +97,15 @@ if (user2 != null) {
 		new A.Button(
 			{
 				cssClass: '<%= showRemoveAsConnectionButton ? "" : "hidden" %>',
+				icon: 'icon-minus-sign',
+				id: '<portlet:namespace />removeConnectionButton',
+				label: '<%= UnicodeLanguageUtil.get(request, "disconnect") %>',
 				on: {
 					click: function(event) {
 						<portlet:namespace />relationAction(event, '<portlet:actionURL name="deleteSocialRelation" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="type" value="<%= String.valueOf(SocialRelationConstants.TYPE_BI_CONNECTION) %>" /></portlet:actionURL>');
 					}
 				},
-				icon: 'icon-minus-sign',
-				id: '<portlet:namespace />removeConnectionButton',
-				label: '<%= UnicodeLanguageUtil.get(request, "disconnect") %>',
-				render: true,
+				render: true
 			}
 		)
 	);
@@ -114,15 +114,15 @@ if (user2 != null) {
 		new A.Button(
 			{
 				cssClass: 'more <%= showFollowButton ? "" : "hidden" %>',
+				icon: 'icon-plus-sign',
+				id: '<portlet:namespace />followButton',
+				label: '<%= UnicodeLanguageUtil.get(request, "follow") %>',
 				on: {
 					click: function(event) {
 						<portlet:namespace />relationAction(event, '<portlet:actionURL name="addSocialRelation" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="type" value="<%= String.valueOf(SocialRelationConstants.TYPE_UNI_FOLLOWER) %>" /></portlet:actionURL>');
 					}
 				},
-				icon: 'icon-plus-sign',
-				id: '<portlet:namespace />followButton',
-				label: '<%= UnicodeLanguageUtil.get(request, "follow") %>',
-				render: true,
+				render: true
 			}
 		)
 	);
@@ -131,15 +131,15 @@ if (user2 != null) {
 		new A.Button(
 			{
 				cssClass: 'more <%= showUnFollowButton ? "" : "hidden" %>',
+				icon: 'icon-minus-sign',
+				id: '<portlet:namespace />unfollowButton',
+				label: '<%= UnicodeLanguageUtil.get(request, "unfollow") %>',
 				on: {
 					click: function(event) {
 						<portlet:namespace />relationAction(event, '<portlet:actionURL name="deleteSocialRelation" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="type" value="<%= String.valueOf(SocialRelationConstants.TYPE_UNI_FOLLOWER) %>" /></portlet:actionURL>');
 					}
 				},
-				icon: 'icon-minus-sign',
-				id: '<portlet:namespace />unfollowButton',
-				label: '<%= UnicodeLanguageUtil.get(request, "unfollow") %>',
-				render: true,
+				render: true
 			}
 		)
 	);
@@ -148,15 +148,15 @@ if (user2 != null) {
 		new A.Button(
 			{
 				cssClass: 'more <%= showBlockButton ? "" : "hidden" %>',
+				icon: 'icon-ban-circle',
+				id: '<portlet:namespace />blockButton',
+				label: '<%= UnicodeLanguageUtil.get(request, "block") %>',
 				on: {
 					click: function(event) {
 						<portlet:namespace />relationAction(event, '<portlet:actionURL name="addSocialRelation" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="type" value="<%= String.valueOf(SocialRelationConstants.TYPE_UNI_ENEMY) %>" /></portlet:actionURL>');
 					}
 				},
-				icon: 'icon-ban-circle',
-				id: '<portlet:namespace />blockButton',
-				label: '<%= UnicodeLanguageUtil.get(request, "block") %>',
-				render: true,
+				render: true
 			}
 		)
 	);
@@ -165,15 +165,15 @@ if (user2 != null) {
 		new A.Button(
 			{
 				cssClass: 'more <%= showUnBlockButton ? "" : "hidden" %>',
+				icon: 'icon-ok',
+				id: '<portlet:namespace />unblockButton',
+				label: '<%= UnicodeLanguageUtil.get(request, "unblock") %>',
 				on: {
 					click: function(event) {
 						<portlet:namespace />relationAction(event, '<portlet:actionURL name="deleteSocialRelation" windowState="<%= LiferayWindowState.NORMAL.toString() %>"><portlet:param name="type" value="<%= String.valueOf(SocialRelationConstants.TYPE_UNI_ENEMY) %>" /></portlet:actionURL>');
 					}
 				},
-				icon: 'icon-ok',
-				id: '<portlet:namespace />unblockButton',
-				label: '<%= UnicodeLanguageUtil.get(request, "unblock") %>',
-				render: true,
+				render: true
 			}
 		)
 	);

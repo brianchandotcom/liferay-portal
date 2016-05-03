@@ -6,7 +6,7 @@
 
 	<property file="nexus.report.properties" />
 
-	<target name="build-module-availability-report" depends="get-repository-index,init-report-files">
+	<target depends="get-repository-index,init-report-files" name="build-module-availability-report">
 		<subant target="build-module-availability-report">
 			<fileset dir=".">
 				<exclude name="**/samples/**/*" />
@@ -19,7 +19,7 @@
 		</subant>
 	</target>
 
-	<target name="build-module-stale-report" depends="get-repository-index,init-report-files">
+	<target depends="get-repository-index,init-report-files" name="build-module-stale-report">
 		<loadfile property="modules.symbolic.names.list" srcFile="${nexus.reports.dir}/modules.symbolic.names.list" />
 
 		<delete file="${nexus.reports.dir}/modules.symbolic.names.list" />
@@ -42,13 +42,13 @@
 		</for>
 	</target>
 
-	<target name="build-nexus-report" depends="build-module-availability-report,build-module-stale-report" />
+	<target depends="build-module-availability-report,build-module-stale-report" name="build-nexus-report" />
 
 	<target name="clean">
 		<delete dir="${basedir}/nexus-reports" />
 	</target>
 
-	<target name="get-repository-index" depends="prepare-report-dir">
+	<target depends="prepare-report-dir" name="get-repository-index">
 		<get
 			dest="${nexus.reports.dir}/${repository.name}.index"
 			src="https://repository.liferay.com/nexus/content/repositories/${repository.name}/com/liferay"
@@ -73,7 +73,7 @@
 		<delete file="${nexus.reports.dir}/${repository.name}.index" />
 	</target>
 
-	<target name="init-report-files" depends="prepare-report-dir">
+	<target depends="prepare-report-dir" name="init-report-files">
 		<echo
 			file="${nexus.reports.dir}/available.modules.txt"
 			message="The following modules were found in ${repository.name}:${line.separator}"

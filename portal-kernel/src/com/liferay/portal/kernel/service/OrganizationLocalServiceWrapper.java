@@ -1275,8 +1275,8 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 
 	@Override
 	public void addGroupOrganizations(long groupId,
-		java.util.List<com.liferay.portal.kernel.model.Organization> Organizations) {
-		_organizationLocalService.addGroupOrganizations(groupId, Organizations);
+		java.util.List<com.liferay.portal.kernel.model.Organization> organizations) {
+		_organizationLocalService.addGroupOrganizations(groupId, organizations);
 	}
 
 	@Override
@@ -1325,8 +1325,8 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 
 	@Override
 	public void addUserOrganizations(long userId,
-		java.util.List<com.liferay.portal.kernel.model.Organization> Organizations) {
-		_organizationLocalService.addUserOrganizations(userId, Organizations);
+		java.util.List<com.liferay.portal.kernel.model.Organization> organizations) {
+		_organizationLocalService.addUserOrganizations(userId, organizations);
 	}
 
 	@Override
@@ -1358,9 +1358,9 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 
 	@Override
 	public void deleteGroupOrganizations(long groupId,
-		java.util.List<com.liferay.portal.kernel.model.Organization> Organizations) {
+		java.util.List<com.liferay.portal.kernel.model.Organization> organizations) {
 		_organizationLocalService.deleteGroupOrganizations(groupId,
-			Organizations);
+			organizations);
 	}
 
 	@Override
@@ -1393,8 +1393,8 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 
 	@Override
 	public void deleteUserOrganizations(long userId,
-		java.util.List<com.liferay.portal.kernel.model.Organization> Organizations) {
-		_organizationLocalService.deleteUserOrganizations(userId, Organizations);
+		java.util.List<com.liferay.portal.kernel.model.Organization> organizations) {
+		_organizationLocalService.deleteUserOrganizations(userId, organizations);
 	}
 
 	@Override

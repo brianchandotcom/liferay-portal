@@ -233,6 +233,13 @@ public class AssetEntryLocalServiceUtil {
 			categoryIds, tagNames);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
+	Date, Date, String, long, String, long, long[], String[],
+	boolean, boolean, Date, Date, Date, Date, String, String,
+	String, String, String, String, int, int, Double)}
+	*/
+	@Deprecated
 	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
 		long userId, long groupId, java.util.Date createDate,
 		java.util.Date modifiedDate, java.lang.String className, long classPK,
@@ -253,11 +260,31 @@ public class AssetEntryLocalServiceUtil {
 			priority);
 	}
 
+	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
+		long userId, long groupId, java.util.Date createDate,
+		java.util.Date modifiedDate, java.lang.String className, long classPK,
+		java.lang.String classUuid, long classTypeId, long[] categoryIds,
+		java.lang.String[] tagNames, boolean listable, boolean visible,
+		java.util.Date startDate, java.util.Date endDate,
+		java.util.Date publishDate, java.util.Date expirationDate,
+		java.lang.String mimeType, java.lang.String title,
+		java.lang.String description, java.lang.String summary,
+		java.lang.String url, java.lang.String layoutUuid, int height,
+		int width, java.lang.Double priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateEntry(userId, groupId, createDate, modifiedDate,
+			className, classPK, classUuid, classTypeId, categoryIds, tagNames,
+			listable, visible, startDate, endDate, publishDate, expirationDate,
+			mimeType, title, description, summary, url, layoutUuid, height,
+			width, priority);
+	}
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
 	Date, Date, String, long, String, long, long[], String[],
-	boolean, boolean, Date, Date, Date, String, String, String,
-	String, String, String, int, int, Double)}
+	boolean, boolean, Date, Date, Date, Date, String, String,
+	String, String, String, String, int, int, Double)}
 	*/
 	@Deprecated
 	public static com.liferay.asset.kernel.model.AssetEntry updateEntry(
@@ -672,8 +699,8 @@ public class AssetEntryLocalServiceUtil {
 	}
 
 	public static void addAssetCategoryAssetEntries(long categoryId,
-		java.util.List<com.liferay.asset.kernel.model.AssetEntry> AssetEntries) {
-		getService().addAssetCategoryAssetEntries(categoryId, AssetEntries);
+		java.util.List<com.liferay.asset.kernel.model.AssetEntry> assetEntries) {
+		getService().addAssetCategoryAssetEntries(categoryId, assetEntries);
 	}
 
 	public static void addAssetCategoryAssetEntries(long categoryId,
@@ -691,8 +718,8 @@ public class AssetEntryLocalServiceUtil {
 	}
 
 	public static void addAssetTagAssetEntries(long tagId,
-		java.util.List<com.liferay.asset.kernel.model.AssetEntry> AssetEntries) {
-		getService().addAssetTagAssetEntries(tagId, AssetEntries);
+		java.util.List<com.liferay.asset.kernel.model.AssetEntry> assetEntries) {
+		getService().addAssetTagAssetEntries(tagId, assetEntries);
 	}
 
 	public static void addAssetTagAssetEntries(long tagId, long[] entryIds) {
@@ -717,8 +744,8 @@ public class AssetEntryLocalServiceUtil {
 	}
 
 	public static void deleteAssetCategoryAssetEntries(long categoryId,
-		java.util.List<com.liferay.asset.kernel.model.AssetEntry> AssetEntries) {
-		getService().deleteAssetCategoryAssetEntries(categoryId, AssetEntries);
+		java.util.List<com.liferay.asset.kernel.model.AssetEntry> assetEntries) {
+		getService().deleteAssetCategoryAssetEntries(categoryId, assetEntries);
 	}
 
 	public static void deleteAssetCategoryAssetEntries(long categoryId,
@@ -737,8 +764,8 @@ public class AssetEntryLocalServiceUtil {
 	}
 
 	public static void deleteAssetTagAssetEntries(long tagId,
-		java.util.List<com.liferay.asset.kernel.model.AssetEntry> AssetEntries) {
-		getService().deleteAssetTagAssetEntries(tagId, AssetEntries);
+		java.util.List<com.liferay.asset.kernel.model.AssetEntry> assetEntries) {
+		getService().deleteAssetTagAssetEntries(tagId, assetEntries);
 	}
 
 	public static void deleteAssetTagAssetEntries(long tagId, long[] entryIds) {

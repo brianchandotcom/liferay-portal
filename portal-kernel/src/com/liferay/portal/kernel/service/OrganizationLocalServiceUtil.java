@@ -1208,8 +1208,8 @@ public class OrganizationLocalServiceUtil {
 	}
 
 	public static void addGroupOrganizations(long groupId,
-		java.util.List<com.liferay.portal.kernel.model.Organization> Organizations) {
-		getService().addGroupOrganizations(groupId, Organizations);
+		java.util.List<com.liferay.portal.kernel.model.Organization> organizations) {
+		getService().addGroupOrganizations(groupId, organizations);
 	}
 
 	public static void addGroupOrganizations(long groupId,
@@ -1253,8 +1253,8 @@ public class OrganizationLocalServiceUtil {
 	}
 
 	public static void addUserOrganizations(long userId,
-		java.util.List<com.liferay.portal.kernel.model.Organization> Organizations) {
-		getService().addUserOrganizations(userId, Organizations);
+		java.util.List<com.liferay.portal.kernel.model.Organization> organizations) {
+		getService().addUserOrganizations(userId, organizations);
 	}
 
 	public static void addUserOrganizations(long userId, long[] organizationIds) {
@@ -1279,8 +1279,8 @@ public class OrganizationLocalServiceUtil {
 	}
 
 	public static void deleteGroupOrganizations(long groupId,
-		java.util.List<com.liferay.portal.kernel.model.Organization> Organizations) {
-		getService().deleteGroupOrganizations(groupId, Organizations);
+		java.util.List<com.liferay.portal.kernel.model.Organization> organizations) {
+		getService().deleteGroupOrganizations(groupId, organizations);
 	}
 
 	public static void deleteGroupOrganizations(long groupId,
@@ -1308,8 +1308,8 @@ public class OrganizationLocalServiceUtil {
 	}
 
 	public static void deleteUserOrganizations(long userId,
-		java.util.List<com.liferay.portal.kernel.model.Organization> Organizations) {
-		getService().deleteUserOrganizations(userId, Organizations);
+		java.util.List<com.liferay.portal.kernel.model.Organization> organizations) {
+		getService().deleteUserOrganizations(userId, organizations);
 	}
 
 	public static void deleteUserOrganizations(long userId,

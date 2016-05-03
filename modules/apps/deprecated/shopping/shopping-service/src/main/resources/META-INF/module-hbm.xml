@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping default-lazy="false" auto-import="false">
+<hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.shopping.model.ShoppingCart" />
 	<import class="com.liferay.shopping.model.ShoppingCategory" />
 	<import class="com.liferay.shopping.model.ShoppingCoupon" />
@@ -49,12 +49,12 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="code" type="com.liferay.portal.dao.orm.hibernate.StringType" column="code_" />
+		<property column="code_" name="code" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="startDate" type="org.hibernate.type.TimestampType" />
 		<property name="endDate" type="org.hibernate.type.TimestampType" />
-		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
+		<property column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="limitCategories" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="limitSkus" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="minOrder" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
@@ -76,7 +76,7 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="properties" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="fields" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="fields_" />
+		<property column="fields_" name="fields" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="fieldsQuantities" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="minQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="maxQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
@@ -87,8 +87,8 @@
 		<property name="useShippingFormula" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="requiresShipping" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="stockQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="featured" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="featured_" />
-		<property name="sale" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="sale_" />
+		<property column="featured_" name="featured" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property column="sale_" name="sale" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="smallImage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="smallImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="smallImageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -106,7 +106,7 @@
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="itemId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="values" type="com.liferay.portal.dao.orm.hibernate.StringType" column="values_" />
+		<property column="values_" name="values" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.shopping.model.impl.ShoppingItemPriceImpl" table="ShoppingItemPrice">
@@ -134,7 +134,7 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="number" type="com.liferay.portal.dao.orm.hibernate.StringType" column="number_" />
+		<property column="number_" name="number" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="tax" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="shipping" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="altShipping" type="com.liferay.portal.dao.orm.hibernate.StringType" />

@@ -228,7 +228,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Action
 
-	row.addJSP("/permission_action.jsp", "entry-action");
+	row.addJSP("/permission_action.jsp", "entry-action", application, request, response);
 
 	resultRows.add(row);
 }

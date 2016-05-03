@@ -1,0 +1,56 @@
+<definition component-name="portal-performance-and-fault-tolerance">
+	<property name="cluster.enabled" value="true" />
+	<property name="testray.main.component.name" value="Clustering" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Page#tearDownPG" />
+
+				<execute macro="BlogsEntry#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="ClusteringSmoke" priority="4">
+		<property name="app.server.bundles.size" value="1" />
+		<property name="custom.properties" value="dl.store.impl=com.liferay.portal.store.db.DBStore" />
+		<property name="test.name.skip.portal.instance" value="ClusteringCE#ClusteringSmoke" />
+
+		<execute function="AssertConsoleTextNotPresent" value1="cluster=liferay-channel-control" />
+		<execute function="AssertConsoleTextNotPresent" value1="com.liferay.portal.cluster.multiple" />
+
+		<execute macro="Page#assertNodePortPG">
+			<var name="nodePort" value="8080" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Smoke#runSmoke" />
+
+		<execute macro="User#logoutPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="SignIn#viewSignInError">
+			<var name="error" value="internalServerError" />
+			<var name="nodePort" value="9080" />
+			<var name="password" value="test" />
+			<var name="urlErrorMessage" value="com_liferay_login_web_portlet_LoginPortlet" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+	</command>
+</definition>

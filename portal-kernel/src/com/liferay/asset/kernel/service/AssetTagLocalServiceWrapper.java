@@ -770,8 +770,8 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 
 	@Override
 	public void addAssetEntryAssetTags(long entryId,
-		java.util.List<com.liferay.asset.kernel.model.AssetTag> AssetTags) {
-		_assetTagLocalService.addAssetEntryAssetTags(entryId, AssetTags);
+		java.util.List<com.liferay.asset.kernel.model.AssetTag> assetTags) {
+		_assetTagLocalService.addAssetEntryAssetTags(entryId, assetTags);
 	}
 
 	@Override
@@ -797,8 +797,8 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 
 	@Override
 	public void deleteAssetEntryAssetTags(long entryId,
-		java.util.List<com.liferay.asset.kernel.model.AssetTag> AssetTags) {
-		_assetTagLocalService.deleteAssetEntryAssetTags(entryId, AssetTags);
+		java.util.List<com.liferay.asset.kernel.model.AssetTag> assetTags) {
+		_assetTagLocalService.deleteAssetEntryAssetTags(entryId, assetTags);
 	}
 
 	@Override

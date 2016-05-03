@@ -136,6 +136,17 @@
 	<td>//div[contains(@id,'${key_contentType}')]//table//tr[5]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REQUESTS-->
+<tr>
+	<td>REQUESTS_LIST_TAB</td>
+	<td>//a[@title='Requests List']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

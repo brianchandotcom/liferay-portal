@@ -299,6 +299,10 @@ public class Validator_IW {
 		return Validator.isUrl(url);
 	}
 
+	public boolean isUrl(java.lang.String url, boolean acceptRootRelative) {
+		return Validator.isUrl(url, acceptRootRelative);
+	}
+
 	public boolean isVariableName(java.lang.String variableName) {
 		return Validator.isVariableName(variableName);
 	}

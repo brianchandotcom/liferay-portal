@@ -246,6 +246,13 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 			classPK, categoryIds, tagNames);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
+	Date, Date, String, long, String, long, long[], String[],
+	boolean, boolean, Date, Date, Date, Date, String, String,
+	String, String, String, String, int, int, Double)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.asset.kernel.model.AssetEntry updateEntry(long userId,
 		long groupId, java.util.Date createDate, java.util.Date modifiedDate,
@@ -265,11 +272,31 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 			layoutUuid, height, width, priority);
 	}
 
+	@Override
+	public com.liferay.asset.kernel.model.AssetEntry updateEntry(long userId,
+		long groupId, java.util.Date createDate, java.util.Date modifiedDate,
+		java.lang.String className, long classPK, java.lang.String classUuid,
+		long classTypeId, long[] categoryIds, java.lang.String[] tagNames,
+		boolean listable, boolean visible, java.util.Date startDate,
+		java.util.Date endDate, java.util.Date publishDate,
+		java.util.Date expirationDate, java.lang.String mimeType,
+		java.lang.String title, java.lang.String description,
+		java.lang.String summary, java.lang.String url,
+		java.lang.String layoutUuid, int height, int width,
+		java.lang.Double priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetEntryLocalService.updateEntry(userId, groupId, createDate,
+			modifiedDate, className, classPK, classUuid, classTypeId,
+			categoryIds, tagNames, listable, visible, startDate, endDate,
+			publishDate, expirationDate, mimeType, title, description, summary,
+			url, layoutUuid, height, width, priority);
+	}
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
 	Date, Date, String, long, String, long, long[], String[],
-	boolean, boolean, Date, Date, Date, String, String, String,
-	String, String, String, int, int, Double)}
+	boolean, boolean, Date, Date, Date, Date, String, String,
+	String, String, String, String, int, int, Double)}
 	*/
 	@Deprecated
 	@Override
@@ -731,9 +758,9 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public void addAssetCategoryAssetEntries(long categoryId,
-		java.util.List<com.liferay.asset.kernel.model.AssetEntry> AssetEntries) {
+		java.util.List<com.liferay.asset.kernel.model.AssetEntry> assetEntries) {
 		_assetEntryLocalService.addAssetCategoryAssetEntries(categoryId,
-			AssetEntries);
+			assetEntries);
 	}
 
 	@Override
@@ -756,8 +783,8 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public void addAssetTagAssetEntries(long tagId,
-		java.util.List<com.liferay.asset.kernel.model.AssetEntry> AssetEntries) {
-		_assetEntryLocalService.addAssetTagAssetEntries(tagId, AssetEntries);
+		java.util.List<com.liferay.asset.kernel.model.AssetEntry> assetEntries) {
+		_assetEntryLocalService.addAssetTagAssetEntries(tagId, assetEntries);
 	}
 
 	@Override
@@ -788,9 +815,9 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public void deleteAssetCategoryAssetEntries(long categoryId,
-		java.util.List<com.liferay.asset.kernel.model.AssetEntry> AssetEntries) {
+		java.util.List<com.liferay.asset.kernel.model.AssetEntry> assetEntries) {
 		_assetEntryLocalService.deleteAssetCategoryAssetEntries(categoryId,
-			AssetEntries);
+			assetEntries);
 	}
 
 	@Override
@@ -814,8 +841,8 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 
 	@Override
 	public void deleteAssetTagAssetEntries(long tagId,
-		java.util.List<com.liferay.asset.kernel.model.AssetEntry> AssetEntries) {
-		_assetEntryLocalService.deleteAssetTagAssetEntries(tagId, AssetEntries);
+		java.util.List<com.liferay.asset.kernel.model.AssetEntry> assetEntries) {
+		_assetEntryLocalService.deleteAssetTagAssetEntries(tagId, assetEntries);
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal-maven" default="install" xmlns:antelope="antlib:ise.antelope.tasks">
+<project default="install" name="portal-maven" xmlns:antelope="antlib:ise.antelope.tasks">
 	<property name="project.dir" value="." />
 
 	<property environment="env" />
@@ -11,8 +11,8 @@
 	<property file="${project.dir}/build.${env.HOSTNAME}.properties" />
 	<property file="${project.dir}/build.properties" />
 
-	<condition property="gpg.extension" value=".exe" else="">
-		<contains string="${os.name}" substring="Windows" casesensitive="false" />
+	<condition else="" property="gpg.extension" value=".exe">
+		<contains casesensitive="false" string="${os.name}" substring="Windows" />
 	</condition>
 
 	<property name="gpg.executable" value="gpg${gpg.extension}" />
@@ -20,8 +20,8 @@
 	<property name="mvn.goal.install-file" value="install:install-file" />
 	<property name="mvn.goal.sign-and-deploy" value="org.apache.maven.plugins:maven-gpg-plugin:1.4:sign-and-deploy-file" />
 
-	<condition property="maven.extension" value=".bat" else="">
-		<contains string="${os.name}" substring="Windows" casesensitive="false" />
+	<condition else="" property="maven.extension" value=".bat">
+		<contains casesensitive="false" string="${os.name}" substring="Windows" />
 	</condition>
 
 	<property name="maven.executable" value="mvn${maven.extension}" />

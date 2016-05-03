@@ -1,4 +1,5 @@
 <definition component-name="portal-application-standards">
+	<property name="portal.release" value="true" />
 	<property name="portlet.plugins.includes" value="wsrp-portlet" />
 	<property name="testray.main.component.name" value="WSRP" />
 

@@ -613,7 +613,7 @@ public interface AssetTagLocalService extends BaseLocalService,
 
 	public void addAssetEntryAssetTag(long entryId, long tagId);
 
-	public void addAssetEntryAssetTags(long entryId, List<AssetTag> AssetTags);
+	public void addAssetEntryAssetTags(long entryId, List<AssetTag> assetTags);
 
 	public void addAssetEntryAssetTags(long entryId, long[] tagIds);
 
@@ -623,7 +623,7 @@ public interface AssetTagLocalService extends BaseLocalService,
 
 	public void deleteAssetEntryAssetTag(long entryId, long tagId);
 
-	public void deleteAssetEntryAssetTags(long entryId, List<AssetTag> AssetTags);
+	public void deleteAssetEntryAssetTags(long entryId, List<AssetTag> assetTags);
 
 	public void deleteAssetEntryAssetTags(long entryId, long[] tagIds);
 

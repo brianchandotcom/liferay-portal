@@ -82,7 +82,7 @@ public class ItemSelectorURLView
 	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
-			URLItemSelectorCriterion URLItemSelectorCriterion,
+			URLItemSelectorCriterion urlItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 

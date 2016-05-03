@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Portal Servlet Context Helper
+Bundle-Name: Liferay Portal OSGi Web Servlet Context Helper
 Bundle-SymbolicName: com.liferay.portal.osgi.web.servlet.context.helper
 Bundle-Version: 2.1.0
 Export-Package:\

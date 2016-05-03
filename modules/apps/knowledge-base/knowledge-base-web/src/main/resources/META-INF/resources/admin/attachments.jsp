@@ -99,7 +99,7 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 			metadataExplanationContainer: '#<portlet:namespace />metadataExplanationContainer',
 			namespace: '<portlet:namespace />',
 			tempFileURL: {
-				method: Liferay.Service.bind('/knowledge-base-portlet.kbarticle/get-temp-attachment-names'),
+				method: Liferay.Service.bind('/kb.kbarticle/get-temp-attachment-names'),
 				params: {
 					groupId: <%= scopeGroupId %>,
 					tempFolderName: 'com.liferay.knowledge.base.admin'

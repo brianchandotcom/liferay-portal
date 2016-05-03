@@ -282,6 +282,13 @@ public class PortletPermissionImpl implements PortletPermission {
 			boolean checkStagingPermission)
 		throws PortalException {
 
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			permissionChecker.getCompanyId(), portletId);
+
+		if ((portlet == null) || portlet.isUndeployedPortlet()) {
+			return false;
+		}
+
 		String name = null;
 		String resourcePermissionPrimKey = null;
 

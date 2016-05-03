@@ -325,7 +325,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		long[] groupIds = ArrayUtil.toArray(
 			groupIdsSet.toArray(new Long[groupIdsSet.size()]));
 
-		userPersistence.addUserGroups(userId, groupIds);
+		userPersistence.addGroups(userId, groupIds);
 
 		for (long groupId : groupIds) {
 			addDefaultRolesAndTeams(groupId, new long[] {userId});
@@ -4068,8 +4068,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			userId, companyGroup.getGroupId(), user.getCreateDate(),
 			user.getModifiedDate(), User.class.getName(), user.getUserId(),
 			user.getUuid(), 0, assetCategoryIds, assetTagNames, true, false,
-			null, null, null, null, user.getFullName(), null, null, null, null,
-			0, 0, null);
+			null, null, null, null, null, user.getFullName(), null, null, null,
+			null, 0, 0, null);
 	}
 
 	/**

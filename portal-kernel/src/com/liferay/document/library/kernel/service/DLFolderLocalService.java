@@ -533,7 +533,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 	public void addDLFileEntryTypeDLFolder(long fileEntryTypeId, long folderId);
 
 	public void addDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		List<DLFolder> DLFolders);
+		List<DLFolder> dlFolders);
 
 	public void addDLFileEntryTypeDLFolders(long fileEntryTypeId,
 		long[] folderIds);
@@ -558,7 +558,7 @@ public interface DLFolderLocalService extends BaseLocalService,
 		long folderId);
 
 	public void deleteDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		List<DLFolder> DLFolders);
+		List<DLFolder> dlFolders);
 
 	public void deleteDLFileEntryTypeDLFolders(long fileEntryTypeId,
 		long[] folderIds);

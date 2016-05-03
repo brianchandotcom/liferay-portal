@@ -154,6 +154,10 @@ public class ResultRow
 		_searchEntries.add(index, dateSearchEntry);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public void addJSP(int index, String path) {
 		addJSP(
@@ -172,6 +176,10 @@ public class ResultRow
 			response);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public void addJSP(
 		int index, String align, String valign, int colspan, String path) {
@@ -205,6 +213,10 @@ public class ResultRow
 		_searchEntries.add(index, jspSearchEntry);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public void addJSP(String path) {
 		addJSP(_searchEntries.size(), path);
@@ -218,6 +230,10 @@ public class ResultRow
 		addJSP(_searchEntries.size(), path, servletContext, request, response);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public void addJSP(String path, String cssClass) {
 		JSPSearchEntry jspSearchEntry = new JSPSearchEntry();
@@ -231,6 +247,10 @@ public class ResultRow
 		_searchEntries.add(_searchEntries.size(), jspSearchEntry);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public void addJSP(String align, String valign, int colspan, String path) {
 		addJSP(_searchEntries.size(), align, valign, colspan, path);
@@ -266,6 +286,10 @@ public class ResultRow
 		_searchEntries.add(_searchEntries.size(), jspSearchEntry);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public void addJSP(String align, String valign, String path) {
 		addJSP(

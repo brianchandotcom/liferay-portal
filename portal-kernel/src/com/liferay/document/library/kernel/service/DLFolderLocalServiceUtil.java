@@ -716,8 +716,8 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	public static void addDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		java.util.List<com.liferay.document.library.kernel.model.DLFolder> DLFolders) {
-		getService().addDLFileEntryTypeDLFolders(fileEntryTypeId, DLFolders);
+		java.util.List<com.liferay.document.library.kernel.model.DLFolder> dlFolders) {
+		getService().addDLFileEntryTypeDLFolders(fileEntryTypeId, dlFolders);
 	}
 
 	public static void addDLFileEntryTypeDLFolders(long fileEntryTypeId,
@@ -759,8 +759,8 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	public static void deleteDLFileEntryTypeDLFolders(long fileEntryTypeId,
-		java.util.List<com.liferay.document.library.kernel.model.DLFolder> DLFolders) {
-		getService().deleteDLFileEntryTypeDLFolders(fileEntryTypeId, DLFolders);
+		java.util.List<com.liferay.document.library.kernel.model.DLFolder> dlFolders) {
+		getService().deleteDLFileEntryTypeDLFolders(fileEntryTypeId, dlFolders);
 	}
 
 	public static void deleteDLFileEntryTypeDLFolders(long fileEntryTypeId,

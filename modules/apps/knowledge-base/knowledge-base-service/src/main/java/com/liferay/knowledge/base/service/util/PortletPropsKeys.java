@@ -76,14 +76,14 @@ public class PortletPropsKeys {
 	public static final String ADMIN_EMAIL_KB_ARTICLE_UPDATED_SUBJECT =
 		"admin.email.kb.article.updated.subject";
 
-	public static final String ADMIN_KB_ARTICLE_DEFAULT_SECTIONS =
-		"admin.kb.article.default.sections";
-
 	public static final String ADMIN_KB_ARTICLE_INCREMENT_PRIORITY_ENABLED =
 		"admin.kb.article.increment.priority.enabled";
 
 	public static final String ADMIN_KB_ARTICLE_SECTIONS =
 		"admin.kb.article.sections";
+
+	public static final String ADMIN_KB_ARTICLE_SECTIONS_DEFAULT =
+		"admin.kb.article.sections.default";
 
 	public static final String KNOWLEDGE_BASE_DISPLAY_SELECTOR =
 		"knowledge.base.display.selector";

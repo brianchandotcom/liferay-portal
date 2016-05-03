@@ -20,6 +20,7 @@ import com.liferay.message.boards.kernel.model.MBBan;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.message.boards.kernel.model.MBStatsUser;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
@@ -817,6 +818,10 @@ public class MBUtil {
 		if (messageFormat.equals("bbcode") &&
 			!editorName.equals("ckeditor_bbcode")) {
 
+			return false;
+		}
+
+		if (!ArrayUtil.contains(MBMessageConstants.FORMATS, messageFormat)) {
 			return false;
 		}
 

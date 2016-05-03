@@ -31,15 +31,11 @@ public class UpgradeKernelPackage
 	}
 
 	private static final String[][] _CLASS_NAMES = new String[][] {
-		{
-			"com.liferay.portlet.polls.model.", "com.liferay.polls.model."
-		}
+		{"com.liferay.portlet.polls.model.", "com.liferay.polls.model."}
 	};
 
 	private static final String[][] _RESOURCE_NAMES = new String[][] {
-		{
-			"com.liferay.portlet.polls", "com.liferay.polls"
-		}
+		{"com.liferay.portlet.polls", "com.liferay.polls"}
 	};
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping default-lazy="false" auto-import="false">
+<hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.portal.workflow.kaleo.model.KaleoAction" />
 	<import class="com.liferay.portal.workflow.kaleo.model.KaleoCondition" />
 	<import class="com.liferay.portal.workflow.kaleo.model.KaleoDefinition" />
@@ -71,7 +71,7 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="version" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
+		<property column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="startKaleoNodeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.workflow.kaleo.model.impl.KaleoInstanceImpl" table="KaleoInstance">
@@ -141,8 +141,8 @@
 		<property name="previousAssigneeClassPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="currentAssigneeClassName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="currentAssigneeClassPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
-		<property name="comment" type="com.liferay.portal.dao.orm.hibernate.StringClobType" column="comment_" />
+		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="comment_" name="comment" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="startDate" type="org.hibernate.type.TimestampType" />
 		<property name="endDate" type="org.hibernate.type.TimestampType" />
 		<property name="duration" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -162,8 +162,8 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="metadata" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
-		<property name="initial" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="initial_" />
+		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="initial_" name="initial" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="terminal" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portal.workflow.kaleo.model.impl.KaleoNotificationImpl" table="KaleoNotification">

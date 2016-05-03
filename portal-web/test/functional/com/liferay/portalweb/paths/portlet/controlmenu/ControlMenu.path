@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>USER_NAME</td>
-	<td>//span[@class='user-full-name']</td>
+	<td>//span[contains(@class,'user-name')]</td>
 	<td></td>
 </tr>
 <tr>

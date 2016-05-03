@@ -26,6 +26,7 @@ import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.TaskContainer;
 
 /**
@@ -53,11 +54,11 @@ public class XMLFormatterDefaultsPlugin
 		formatXMLTask.setIncludes(Collections.singleton("**/*.wsdl"));
 
 		formatXMLTask.source(
-			new Callable<File>() {
+			new Callable<FileCollection>() {
 
 				@Override
-				public File call() throws Exception {
-					return buildWSDLTask.getInputDir();
+				public FileCollection call() throws Exception {
+					return buildWSDLTask.getSource();
 				}
 
 			});

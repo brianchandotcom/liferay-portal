@@ -11,20 +11,20 @@
 
 	<!-- Util -->
 
-	<bean id="com.liferay.portal.poller.PollerRequestHandlerUtil" class="com.liferay.portal.poller.PollerRequestHandlerUtil">
+	<bean class="com.liferay.portal.poller.PollerRequestHandlerUtil" id="com.liferay.portal.poller.PollerRequestHandlerUtil">
 		<property name="pollerRequestHandler" ref="messageListener.pollerRequestHandler" />
 	</bean>
-	<bean id="ccom.liferay.portal.poller.comet.PollerCometDelayedJobUtil" class="com.liferay.portal.poller.comet.PollerCometDelayedJobUtil">
+	<bean class="com.liferay.portal.poller.comet.PollerCometDelayedJobUtil" id="ccom.liferay.portal.poller.comet.PollerCometDelayedJobUtil">
 		<property name="pollerCometDelayedJob" ref="messageListener.PollerCometDelayedJob" />
 	</bean>
 
 	<!-- Messaging -->
 
-	<bean id="messageListener.poller" class="com.liferay.portal.poller.messaging.PollerRequestMessageListener" />
-	<bean id="messageListener.PollerCometDelayedJob" class="com.liferay.portal.poller.comet.PollerCometDelayedJobImpl" />
-	<bean id="messageListener.pollerNotificationsBridge" class="com.liferay.portal.poller.messaging.PollerNotificationsBridgeMessageListener" />
-	<bean id="messageListener.pollerRequestHandler" class="com.liferay.portal.poller.PollerRequestHandlerImpl" />
-	<bean id="messagingConfigurator.poller" class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator">
+	<bean class="com.liferay.portal.poller.messaging.PollerRequestMessageListener" id="messageListener.poller" />
+	<bean class="com.liferay.portal.poller.comet.PollerCometDelayedJobImpl" id="messageListener.PollerCometDelayedJob" />
+	<bean class="com.liferay.portal.poller.messaging.PollerNotificationsBridgeMessageListener" id="messageListener.pollerNotificationsBridge" />
+	<bean class="com.liferay.portal.poller.PollerRequestHandlerImpl" id="messageListener.pollerRequestHandler" />
+	<bean class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator" id="messagingConfigurator.poller">
 		<property name="destinationConfigurations">
 			<util:set>
 				<bean class="com.liferay.portal.kernel.messaging.DestinationConfiguration">

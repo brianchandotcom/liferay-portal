@@ -559,12 +559,12 @@ public class PermissionCacheUtil {
 
 		@Override
 		public boolean equals(Object obj) {
-			UserPrimaryKeyRoleKey UserPrimaryKeyRoleKey =
+			UserPrimaryKeyRoleKey userPrimaryKeyRoleKey =
 				(UserPrimaryKeyRoleKey)obj;
 
-			if ((UserPrimaryKeyRoleKey._userId == _userId) &&
-				(UserPrimaryKeyRoleKey._primaryKey == _primaryKey) &&
-				Objects.equals(UserPrimaryKeyRoleKey._name, _name)) {
+			if ((userPrimaryKeyRoleKey._userId == _userId) &&
+				(userPrimaryKeyRoleKey._primaryKey == _primaryKey) &&
+				Objects.equals(userPrimaryKeyRoleKey._name, _name)) {
 
 				return true;
 			}

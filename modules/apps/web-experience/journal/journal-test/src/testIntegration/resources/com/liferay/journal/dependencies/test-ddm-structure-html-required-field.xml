@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <root available-locales="en_US" default-locale="en_US">
-	<dynamic-element dataType="html" fieldNamespace="ddm" name="HTML2030" readOnly="false" repeatable="false" required="true" showLabel="true" type="ddm-text-html" width="small" indexType="keyword">
+	<dynamic-element dataType="html" fieldNamespace="ddm" indexType="keyword" name="HTML2030" readOnly="false" repeatable="false" required="true" showLabel="true" type="ddm-text-html" width="small">
 		<meta-data locale="en_US">
 			<entry name="label">
 				<![CDATA[HTML]]>

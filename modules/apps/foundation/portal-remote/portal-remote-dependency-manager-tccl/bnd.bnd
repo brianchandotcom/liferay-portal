@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Portal Remote Dependency Manager TCCL Fragment
+Bundle-Name: Liferay Portal Remote Dependency Manager TCCL
 Bundle-SymbolicName: com.liferay.portal.remote.dependency.manager.tccl
 Bundle-Version: 2.0.1
 Export-Package: com.liferay.portal.remote.dependency.manager.tccl

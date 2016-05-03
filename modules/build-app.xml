@@ -314,7 +314,7 @@
 
 		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="${line.separator}" />
 
-		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="remote-app-id=71921962" />
+		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="remote-app-id=${app.name}" />
 
 		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="${line.separator}" />
 
@@ -322,15 +322,15 @@
 
 		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="${line.separator}" />
 
-		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="category=Communication" />
+		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="category=${app.name}" />
 
 		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="${line.separator}" />
 
-		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="description=asdf" />
+		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="description=${app.name}" />
 
 		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="${line.separator}" />
 
-		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="title=Liferay CE Collaboration" />
+		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="title=${app.name}" />
 
 		<echo append="true" file="${osgi.dir}/marketplace/liferay-marketplace.properties" message="${line.separator}" />
 

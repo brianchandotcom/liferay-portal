@@ -23,6 +23,7 @@ WSRPConsumerPortlet wsrpConsumerPortlet = (WSRPConsumerPortlet)row.getObject();
 %>
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+
 	<%--
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcPath" value="/admin/edit_consumer_portlet.jsp" />

@@ -34,15 +34,11 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 
 <%@ page import="java.util.Properties" %>
 
-<%@ page import="javax.portlet.WindowState" %>
+<liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
-<liferay-theme:defineObjects />
-
 <%
-WindowState windowState = renderRequest.getWindowState();
-
 String movie = portletPreferences.getValue("movie", StringPool.BLANK);
 String flashAttributes = portletPreferences.getValue("flashAttributes", StringPool.BLANK);
 String flashVariables = portletPreferences.getValue("flashVariables", StringPool.BLANK);

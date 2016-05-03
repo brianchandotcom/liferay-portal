@@ -23,7 +23,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
-import com.liferay.dynamic.data.mapping.util.impl.DDMFormValuesMergeImpl;
+import com.liferay.dynamic.data.mapping.util.impl.DDMFormValuesMergerImpl;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -37,12 +37,12 @@ import org.junit.Test;
 /**
  * @author Inácio Nery
  */
-public class DDMFormValuesMergeTest extends BaseDDMTestCase {
+public class DDMFormValuesMergerTest extends BaseDDMTestCase {
 
 	@Before
 	public void setUp() throws Exception {
 		_ddmForm = DDMFormTestUtil.createDDMForm();
-		_ddmFormValuesMerge = new DDMFormValuesMergeImpl();
+		_ddmFormValuesMerger = new DDMFormValuesMergerImpl();
 	}
 
 	@Test
@@ -67,7 +67,7 @@ public class DDMFormValuesMergeTest extends BaseDDMTestCase {
 		DDMFormValues newTextFormValues = createTextDDMFormValues(
 			"text", textValue);
 
-		DDMFormValues mergeFormValues = _ddmFormValuesMerge.mergeDDMFormValues(
+		DDMFormValues mergeFormValues = _ddmFormValuesMerger.merge(
 			newTextFormValues, textFormValues);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
@@ -99,7 +99,7 @@ public class DDMFormValuesMergeTest extends BaseDDMTestCase {
 		DDMFormValues newTextFormValues = createTextDDMFormValues(
 			"text", textValue);
 
-		DDMFormValues mergeFormValues = _ddmFormValuesMerge.mergeDDMFormValues(
+		DDMFormValues mergeFormValues = _ddmFormValuesMerger.merge(
 			newTextFormValues, textFormValues);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
@@ -129,7 +129,7 @@ public class DDMFormValuesMergeTest extends BaseDDMTestCase {
 		DDMFormValues newTextFormValues = createTextDDMFormValues(
 			"text", textValue);
 
-		DDMFormValues mergeFormValues = _ddmFormValuesMerge.mergeDDMFormValues(
+		DDMFormValues mergeFormValues = _ddmFormValuesMerger.merge(
 			newTextFormValues, textFormValues);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
@@ -164,7 +164,7 @@ public class DDMFormValuesMergeTest extends BaseDDMTestCase {
 		DDMFormValues separatorFormValues = createSeparatorDDMFormValues(
 			"separator", textValue);
 
-		DDMFormValues mergeFormValues = _ddmFormValuesMerge.mergeDDMFormValues(
+		DDMFormValues mergeFormValues = _ddmFormValuesMerger.merge(
 			separatorFormValues, textFormValues);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
@@ -194,7 +194,7 @@ public class DDMFormValuesMergeTest extends BaseDDMTestCase {
 		DDMFormValues separatorFormValues = createSeparatorDDMFormValues(
 			"separator", textValue);
 
-		DDMFormValues mergeFormValues = _ddmFormValuesMerge.mergeDDMFormValues(
+		DDMFormValues mergeFormValues = _ddmFormValuesMerger.merge(
 			separatorFormValues, textFormValues);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
@@ -223,7 +223,7 @@ public class DDMFormValuesMergeTest extends BaseDDMTestCase {
 		DDMFormValues newTextFormValues = createTextDDMFormValues(
 			"newText", textValue);
 
-		DDMFormValues mergeFormValues = _ddmFormValuesMerge.mergeDDMFormValues(
+		DDMFormValues mergeFormValues = _ddmFormValuesMerger.merge(
 			newTextFormValues, textFormValues);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
@@ -312,6 +312,6 @@ public class DDMFormValuesMergeTest extends BaseDDMTestCase {
 	}
 
 	private DDMForm _ddmForm;
-	private DDMFormValuesMerge _ddmFormValuesMerge;
+	private DDMFormValuesMerger _ddmFormValuesMerger;
 
 }

@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.util.impl;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerge;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +29,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Inácio Nery
  */
 @Component(immediate = true)
-public class DDMFormValuesMergeImpl implements DDMFormValuesMerge {
+public class DDMFormValuesMergerImpl implements DDMFormValuesMerger {
 
 	@Override
-	public DDMFormValues mergeDDMFormValues(
+	public DDMFormValues merge(
 		DDMFormValues newDDMFormValues, DDMFormValues existingDDMFormValues) {
 
 		List<DDMFormFieldValue> mergeDDMFormFieldValues =

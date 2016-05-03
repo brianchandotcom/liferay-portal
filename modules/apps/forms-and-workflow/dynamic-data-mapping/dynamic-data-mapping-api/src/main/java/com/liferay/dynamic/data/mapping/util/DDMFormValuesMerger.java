@@ -19,9 +19,9 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 /**
  * @author Inácio Nery
  */
-public interface DDMFormValuesMerge {
+public interface DDMFormValuesMerger {
 
-	public DDMFormValues mergeDDMFormValues(
+	public DDMFormValues merge(
 		DDMFormValues newDDMFormValues, DDMFormValues existingDDMFormValues);
 
 }

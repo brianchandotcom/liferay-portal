@@ -3,4 +3,4 @@ Bundle-SymbolicName: com.liferay.push.notifications.api
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.push.notifications.*
 Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Push Notifications
+Liferay-Releng-Module-Group-Title:

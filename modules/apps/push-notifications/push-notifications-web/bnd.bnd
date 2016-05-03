@@ -2,4 +2,4 @@ Bundle-Name: Liferay Push Notifications Web
 Bundle-SymbolicName: com.liferay.push.notifications.web
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Push Notifications
+Liferay-Releng-Module-Group-Title:

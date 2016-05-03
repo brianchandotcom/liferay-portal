@@ -8895,14 +8895,6 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#submitNewProcess">
-			<var name="kfProcessName" value="${kfProcessName}" />
-		</execute>
-
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#addFieldSet">

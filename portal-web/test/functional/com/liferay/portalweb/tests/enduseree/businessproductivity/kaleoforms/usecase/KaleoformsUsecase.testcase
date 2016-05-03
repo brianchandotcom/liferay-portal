@@ -9236,13 +9236,15 @@
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Kaleo Forms Page" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Submissions" />
 		</execute>
 
-		<execute macro="KaleoFormsPortlet#withdrawSubmission">
-			<var name="kfProcessName" value="${kfProcessName}" />
-			<var name="kfProcessStatus" value="Review" />
+		<execute macro="Workflow#withdrawTaskByActions">
+			<var name="workflowAssetTitle" value="${kfProcessName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 	</command>
 </definition>

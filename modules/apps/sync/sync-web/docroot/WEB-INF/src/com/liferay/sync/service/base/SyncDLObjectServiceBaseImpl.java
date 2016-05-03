@@ -16,6 +16,7 @@ package com.liferay.sync.service.base;
 
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFileVersionPersistence;
+import com.liferay.document.library.kernel.service.persistence.DLSyncEventPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
 import com.liferay.portal.kernel.service.persistence.RepositoryPersistence;
+import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -515,6 +517,63 @@ public abstract class SyncDLObjectServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the resource permission local service.
+	 *
+	 * @return the resource permission local service
+	 */
+	public com.liferay.portal.kernel.service.ResourcePermissionLocalService getResourcePermissionLocalService() {
+		return resourcePermissionLocalService;
+	}
+
+	/**
+	 * Sets the resource permission local service.
+	 *
+	 * @param resourcePermissionLocalService the resource permission local service
+	 */
+	public void setResourcePermissionLocalService(
+		com.liferay.portal.kernel.service.ResourcePermissionLocalService resourcePermissionLocalService) {
+		this.resourcePermissionLocalService = resourcePermissionLocalService;
+	}
+
+	/**
+	 * Returns the resource permission remote service.
+	 *
+	 * @return the resource permission remote service
+	 */
+	public com.liferay.portal.kernel.service.ResourcePermissionService getResourcePermissionService() {
+		return resourcePermissionService;
+	}
+
+	/**
+	 * Sets the resource permission remote service.
+	 *
+	 * @param resourcePermissionService the resource permission remote service
+	 */
+	public void setResourcePermissionService(
+		com.liferay.portal.kernel.service.ResourcePermissionService resourcePermissionService) {
+		this.resourcePermissionService = resourcePermissionService;
+	}
+
+	/**
+	 * Returns the resource permission persistence.
+	 *
+	 * @return the resource permission persistence
+	 */
+	public ResourcePermissionPersistence getResourcePermissionPersistence() {
+		return resourcePermissionPersistence;
+	}
+
+	/**
+	 * Sets the resource permission persistence.
+	 *
+	 * @param resourcePermissionPersistence the resource permission persistence
+	 */
+	public void setResourcePermissionPersistence(
+		ResourcePermissionPersistence resourcePermissionPersistence) {
+		this.resourcePermissionPersistence = resourcePermissionPersistence;
+	}
+
+	/**
 	 * Returns the user local service.
 	 *
 	 * @return the user local service
@@ -723,6 +782,44 @@ public abstract class SyncDLObjectServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the d l sync event local service.
+	 *
+	 * @return the d l sync event local service
+	 */
+	public com.liferay.document.library.kernel.service.DLSyncEventLocalService getDLSyncEventLocalService() {
+		return dlSyncEventLocalService;
+	}
+
+	/**
+	 * Sets the d l sync event local service.
+	 *
+	 * @param dlSyncEventLocalService the d l sync event local service
+	 */
+	public void setDLSyncEventLocalService(
+		com.liferay.document.library.kernel.service.DLSyncEventLocalService dlSyncEventLocalService) {
+		this.dlSyncEventLocalService = dlSyncEventLocalService;
+	}
+
+	/**
+	 * Returns the d l sync event persistence.
+	 *
+	 * @return the d l sync event persistence
+	 */
+	public DLSyncEventPersistence getDLSyncEventPersistence() {
+		return dlSyncEventPersistence;
+	}
+
+	/**
+	 * Sets the d l sync event persistence.
+	 *
+	 * @param dlSyncEventPersistence the d l sync event persistence
+	 */
+	public void setDLSyncEventPersistence(
+		DLSyncEventPersistence dlSyncEventPersistence) {
+		this.dlSyncEventPersistence = dlSyncEventPersistence;
+	}
+
+	/**
 	 * Returns the d l trash local service.
 	 *
 	 * @return the d l trash local service
@@ -880,6 +977,12 @@ public abstract class SyncDLObjectServiceBaseImpl extends BaseServiceImpl
 	protected RepositoryPersistence repositoryPersistence;
 	@BeanReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourcePermissionLocalService.class)
+	protected com.liferay.portal.kernel.service.ResourcePermissionLocalService resourcePermissionLocalService;
+	@BeanReference(type = com.liferay.portal.kernel.service.ResourcePermissionService.class)
+	protected com.liferay.portal.kernel.service.ResourcePermissionService resourcePermissionService;
+	@BeanReference(type = ResourcePermissionPersistence.class)
+	protected ResourcePermissionPersistence resourcePermissionPersistence;
 	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
 	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@BeanReference(type = com.liferay.portal.kernel.service.UserService.class)
@@ -902,6 +1005,10 @@ public abstract class SyncDLObjectServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.document.library.kernel.service.DLFileVersionService dlFileVersionService;
 	@BeanReference(type = DLFileVersionPersistence.class)
 	protected DLFileVersionPersistence dlFileVersionPersistence;
+	@BeanReference(type = com.liferay.document.library.kernel.service.DLSyncEventLocalService.class)
+	protected com.liferay.document.library.kernel.service.DLSyncEventLocalService dlSyncEventLocalService;
+	@BeanReference(type = DLSyncEventPersistence.class)
+	protected DLSyncEventPersistence dlSyncEventPersistence;
 	@BeanReference(type = com.liferay.document.library.kernel.service.DLTrashLocalService.class)
 	protected com.liferay.document.library.kernel.service.DLTrashLocalService dlTrashLocalService;
 	@BeanReference(type = com.liferay.document.library.kernel.service.DLTrashService.class)

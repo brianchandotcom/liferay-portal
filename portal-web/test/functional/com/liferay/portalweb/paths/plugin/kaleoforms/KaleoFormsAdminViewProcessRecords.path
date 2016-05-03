@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_AUTHOR</td>
-	<td>//td[@class='table-cell entry-action last']//preceding-sibling::td[contains(.,'${key_kfAuthor}')]</td>
+	<td>//td[contains(@class,'table-cell') and contains(.,'${key_kfAuthor}')]</td>
 	<td></td>
 </tr>
 <tr>

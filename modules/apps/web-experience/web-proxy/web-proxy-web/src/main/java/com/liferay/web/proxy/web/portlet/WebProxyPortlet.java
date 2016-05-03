@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.RenderResponseImpl;
+import com.liferay.web.proxy.web.constants.WebProxyPortletKeys;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -79,6 +80,7 @@ import org.portletbridge.portlet.PortletBridgeServlet;
 		"javax.portlet.init-param.parserClassName=org.cyberneko.html.parsers.SAXParser",
 		"javax.portlet.init-param.servletName=pbhs",
 		"javax.portlet.init-param.stylesheetUrl=classpath:/org/portletbridge/xsl/default.xsl",
+		"javax.portlet.name=" + WebProxyPortletKeys.WEB_PROXY,
 		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-portlet-preferences.xml",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"

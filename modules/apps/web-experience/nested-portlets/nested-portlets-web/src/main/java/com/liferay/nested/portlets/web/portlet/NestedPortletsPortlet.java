@@ -14,6 +14,7 @@
 
 package com.liferay.nested.portlets.web.portlet;
 
+import com.liferay.nested.portlets.web.constants.NestedPortletsPortletKeys;
 import com.liferay.nested.portlets.web.constants.NestedPortletsWebKeys;
 import com.liferay.nested.portlets.web.display.context.NestedPortletsDisplayContext;
 import com.liferay.portal.kernel.log.Log;
@@ -74,6 +75,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + NestedPortletsPortletKeys.NESTED_PORTLETS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user"
 	},

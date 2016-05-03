@@ -14,6 +14,7 @@
 
 package com.liferay.asset.display.web.portlet;
 
+import com.liferay.asset.display.web.constants.AssetDisplayPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -36,6 +37,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.display-name=Asset Display",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + AssetDisplayPortletKeys.ASSET_DISPLAY,
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},

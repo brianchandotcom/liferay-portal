@@ -17,6 +17,7 @@ package com.liferay.rss.web.portlet;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.rss.web.configuration.RSSWebCacheConfiguration;
+import com.liferay.rss.web.constants.RSSPortletKeys;
 
 import java.io.IOException;
 
@@ -51,6 +52,7 @@ import org.osgi.service.component.annotations.Modified;
 		"javax.portlet.display-name=RSS", "javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + RSSPortletKeys.RSS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},

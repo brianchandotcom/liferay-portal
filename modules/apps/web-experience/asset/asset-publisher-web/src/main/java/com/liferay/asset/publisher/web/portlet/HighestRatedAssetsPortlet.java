@@ -14,6 +14,8 @@
 
 package com.liferay.asset.publisher.web.portlet;
 
+import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,6 +41,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS,
 		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/highest-rated-assets-default-portlet-preferences.xml",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",

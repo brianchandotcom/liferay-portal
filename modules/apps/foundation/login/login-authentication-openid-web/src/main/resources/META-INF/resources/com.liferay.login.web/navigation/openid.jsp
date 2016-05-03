@@ -16,10 +16,14 @@
 
 <%@ include file="/com.liferay.login.web/init.jsp" %>
 
+<%
+String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
+%>
+
 <portlet:renderURL var="openIdURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 	<portlet:param name="mvcRenderCommandName" value="/login/openid" />
 </portlet:renderURL>
 
-<li>
+<li class='<%= mvcRenderCommandName.startsWith("/login/openid") ? "active" : "" %>'>
 	<aui:a href="<%= openIdURL %>" label="openid" />
 </li>

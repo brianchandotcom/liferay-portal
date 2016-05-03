@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
+
 String signInURL = themeDisplay.getURLSignIn();
 
 if (portletName.equals(PortletKeys.FAST_LOGIN)) {
@@ -31,6 +33,6 @@ if (portletName.equals(PortletKeys.FAST_LOGIN)) {
 }
 %>
 
-<li>
+<li class='<%= (Validator.isNull(mvcRenderCommandName) || mvcRenderCommandName.startsWith("/login/login")) ? "active" : "" %>'>
 	<aui:a href="<%= signInURL %>" label="email" />
 </li>

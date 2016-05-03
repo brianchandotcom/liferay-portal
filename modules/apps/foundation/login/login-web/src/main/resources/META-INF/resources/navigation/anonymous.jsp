@@ -31,7 +31,7 @@ if (!mvcRenderCommandName.startsWith("/login/create_anonymous_account") && portl
 		<portlet:param name="mvcRenderCommandName" value="/login/create_anonymous_account" />
 	</portlet:renderURL>
 
-	<li>
+	<li class='<%= mvcRenderCommandName.startsWith("/login/create_anonymous_account") ? "active" : "" %>'>
 		<aui:a href="<%= anonymousURL %>" label="guest" />
 	</li>
 </c:if>

@@ -25,6 +25,16 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 	</command>
 
+	<command name="gotoEditField">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="MouseOver" locator1="FormFields#FIELD" />
+
+		<execute function="Click" locator1="FormFields#FIELD_ELLIPSIS" />
+
+		<execute function="Click" locator1="FormFields#EDIT_BUTTON" />
+	</command>
+
 	<command name="gotoEditFormByName">
 		<var name="key_formName" value="${formName}" />
 

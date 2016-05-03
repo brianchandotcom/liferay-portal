@@ -349,6 +349,8 @@
 	</command>
 
 	<command name="AddRecordWithRepeatableField" priority="4">
+		<description message="This is a use case for LPS-65069." />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

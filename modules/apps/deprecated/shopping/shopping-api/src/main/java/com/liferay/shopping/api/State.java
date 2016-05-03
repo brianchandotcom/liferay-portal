@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util;
+package com.liferay.shopping.api;
 
 import com.liferay.portal.kernel.util.HashCode;
 import com.liferay.portal.kernel.util.HashCodeFactoryUtil;
@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
 public class State {
 

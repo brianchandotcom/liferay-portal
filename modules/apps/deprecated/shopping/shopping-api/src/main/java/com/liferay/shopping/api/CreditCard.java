@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util;
+package com.liferay.shopping.api;
 
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
@@ -27,6 +27,7 @@ import java.util.Calendar;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
 public class CreditCard {
 

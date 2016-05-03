@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.util;
+package com.liferay.shopping.api;
 
 import java.util.Arrays;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
 public class StateUtil {
 

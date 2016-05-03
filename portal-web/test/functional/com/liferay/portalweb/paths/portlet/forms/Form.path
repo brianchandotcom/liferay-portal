@@ -127,6 +127,27 @@
 	<td>//input[@class='form-control' and @type='text']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FIELD-->
+<tr>
+	<td>FIELD</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_ELLIPSIS</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//div[contains(@class,'toolbar')]//button[contains(@class,'toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_EDIT_BUTTON</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//div[contains(@class,'toolbar')]//button[contains(@class,'item')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder auto-namespace-tables="false" package-path="com.liferay.push.notifications">
+	<author>Bruno Farache</author>
+	<namespace>PushNotifications</namespace>
+	<entity local-service="true" name="PushNotificationsDevice" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="pushNotificationsDeviceId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="userId" type="long" />
+		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="platform" type="String" />
+		<column name="token" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="Token" return-type="Device" unique="true">
+			<finder-column name="token" />
+		</finder>
+		<finder name="U_P" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="userId" />
+			<finder-column name="platform" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>PushNotifications</exception>
+	</exceptions>
+</service-builder>

@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Push Notifications Sender Android
+Bundle-SymbolicName: com.liferay.push.notifications.sender.android
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-liferay-includeresource:\
+	@gcm-server-*.jar,\
+	@json-simple-*.jar

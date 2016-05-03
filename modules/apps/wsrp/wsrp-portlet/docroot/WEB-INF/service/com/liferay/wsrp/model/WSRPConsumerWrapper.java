@@ -22,13 +22,13 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -171,6 +171,16 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	@Override
+	public WSRPConsumer toEscapedModel() {
+		return new WSRPConsumerWrapper(_wsrpConsumer.toEscapedModel());
+	}
+
+	@Override
+	public WSRPConsumer toUnescapedModel() {
+		return new WSRPConsumerWrapper(_wsrpConsumer.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _wsrpConsumer.isCachedModel();
 	}
@@ -191,7 +201,7 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.wsrp.model.WSRPConsumer> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<WSRPConsumer> toCacheModel() {
 		return _wsrpConsumer.toCacheModel();
 	}
 
@@ -201,17 +211,7 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	@Override
-	public com.liferay.wsrp.model.WSRPConsumer toEscapedModel() {
-		return new WSRPConsumerWrapper(_wsrpConsumer.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.wsrp.model.WSRPConsumer toUnescapedModel() {
-		return new WSRPConsumerWrapper(_wsrpConsumer.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(com.liferay.wsrp.model.WSRPConsumer wsrpConsumer) {
+	public int compareTo(WSRPConsumer wsrpConsumer) {
 		return _wsrpConsumer.compareTo(wsrpConsumer);
 	}
 
@@ -607,7 +607,7 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 
 		WSRPConsumerWrapper wsrpConsumerWrapper = (WSRPConsumerWrapper)obj;
 
-		if (Validator.equals(_wsrpConsumer, wsrpConsumerWrapper._wsrpConsumer)) {
+		if (Objects.equals(_wsrpConsumer, wsrpConsumerWrapper._wsrpConsumer)) {
 			return true;
 		}
 

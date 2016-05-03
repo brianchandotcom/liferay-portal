@@ -719,7 +719,7 @@ public abstract class WSRPConsumerPortletLocalServiceBaseImpl
 	protected com.liferay.wsrp.service.WSRPConsumerLocalService wsrpConsumerLocalService;
 	@BeanReference(type = WSRPConsumerPersistence.class)
 	protected WSRPConsumerPersistence wsrpConsumerPersistence;
-	@BeanReference(type = com.liferay.wsrp.service.WSRPConsumerPortletLocalService.class)
+	@BeanReference(type = WSRPConsumerPortletLocalService.class)
 	protected WSRPConsumerPortletLocalService wsrpConsumerPortletLocalService;
 	@BeanReference(type = WSRPConsumerPortletPersistence.class)
 	protected WSRPConsumerPortletPersistence wsrpConsumerPortletPersistence;

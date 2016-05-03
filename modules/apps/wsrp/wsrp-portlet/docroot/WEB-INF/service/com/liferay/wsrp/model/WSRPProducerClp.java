@@ -649,7 +649,7 @@ public class WSRPProducerClp extends BaseModelImpl<WSRPProducer>
 	private String _portletIds;
 	private Date _lastPublishDate;
 	private BaseModel<?> _wsrpProducerRemoteModel;
-	private Class<?> _clpSerializerClass = com.liferay.wsrp.service.ClpSerializer.class;
+	private Class<?> _clpSerializerClass = ClpSerializer.class;
 	private boolean _entityCacheEnabled;
 	private boolean _finderCacheEnabled;
 }

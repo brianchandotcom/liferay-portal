@@ -22,13 +22,13 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -138,6 +138,16 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	@Override
+	public WSRPProducer toEscapedModel() {
+		return new WSRPProducerWrapper(_wsrpProducer.toEscapedModel());
+	}
+
+	@Override
+	public WSRPProducer toUnescapedModel() {
+		return new WSRPProducerWrapper(_wsrpProducer.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _wsrpProducer.isCachedModel();
 	}
@@ -158,22 +168,12 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.wsrp.model.WSRPProducer> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<WSRPProducer> toCacheModel() {
 		return _wsrpProducer.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.wsrp.model.WSRPProducer toEscapedModel() {
-		return new WSRPProducerWrapper(_wsrpProducer.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.wsrp.model.WSRPProducer toUnescapedModel() {
-		return new WSRPProducerWrapper(_wsrpProducer.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(com.liferay.wsrp.model.WSRPProducer wsrpProducer) {
+	public int compareTo(WSRPProducer wsrpProducer) {
 		return _wsrpProducer.compareTo(wsrpProducer);
 	}
 
@@ -475,7 +475,7 @@ public class WSRPProducerWrapper implements WSRPProducer,
 
 		WSRPProducerWrapper wsrpProducerWrapper = (WSRPProducerWrapper)obj;
 
-		if (Validator.equals(_wsrpProducer, wsrpProducerWrapper._wsrpProducer)) {
+		if (Objects.equals(_wsrpProducer, wsrpProducerWrapper._wsrpProducer)) {
 			return true;
 		}
 

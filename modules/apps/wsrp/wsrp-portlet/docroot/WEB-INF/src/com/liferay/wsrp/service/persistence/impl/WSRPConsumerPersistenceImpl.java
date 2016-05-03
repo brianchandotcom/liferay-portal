@@ -56,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -200,7 +201,7 @@ public class WSRPConsumerPersistenceImpl extends BasePersistenceImpl<WSRPConsume
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WSRPConsumer wsrpConsumer : list) {
-					if (!Validator.equals(uuid, wsrpConsumer.getUuid())) {
+					if (!Objects.equals(uuid, wsrpConsumer.getUuid())) {
 						list = null;
 
 						break;
@@ -756,7 +757,7 @@ public class WSRPConsumerPersistenceImpl extends BasePersistenceImpl<WSRPConsume
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WSRPConsumer wsrpConsumer : list) {
-					if (!Validator.equals(uuid, wsrpConsumer.getUuid()) ||
+					if (!Objects.equals(uuid, wsrpConsumer.getUuid()) ||
 							(companyId != wsrpConsumer.getCompanyId())) {
 						list = null;
 

@@ -597,7 +597,7 @@ public class WSRPConsumerPortletClp extends BaseModelImpl<WSRPConsumerPortlet>
 	private String _portletHandle;
 	private Date _lastPublishDate;
 	private BaseModel<?> _wsrpConsumerPortletRemoteModel;
-	private Class<?> _clpSerializerClass = com.liferay.wsrp.service.ClpSerializer.class;
+	private Class<?> _clpSerializerClass = ClpSerializer.class;
 	private boolean _entityCacheEnabled;
 	private boolean _finderCacheEnabled;
 }

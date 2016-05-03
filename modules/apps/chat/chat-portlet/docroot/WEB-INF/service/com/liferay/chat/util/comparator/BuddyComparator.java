@@ -75,6 +75,6 @@ public class BuddyComparator implements Comparator<Object[]> {
 		}
 	}
 
-	private boolean _asc;
+	private final boolean _asc;
 
 }

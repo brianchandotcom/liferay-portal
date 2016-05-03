@@ -93,7 +93,6 @@
 											boolean male = (Boolean)buddy[4];
 											String middleName = (String)buddy[5];
 											long portraitId = (Long)buddy[6];
-											String screenName = (String)buddy[7];
 											long userId = (Long)buddy[8];
 											String userUuid = (String)buddy[9];
 

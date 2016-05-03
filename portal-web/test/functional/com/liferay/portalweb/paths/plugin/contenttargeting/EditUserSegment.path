@@ -279,7 +279,7 @@
 <!--USER_SEGMENT_RULE_USER_ATTRIBUTES_REGULAR_ROLE-->
 <tr>
 	<td>USER_SEGMENT_RULE_USER_ATTRIBUTES_REGULAR_ROLE_SELECT</td>
-	<td>//div[@id='fields_field_RegularRoleRule']//select[contains(@id,'roleId')]</td>
+	<td>//select[contains(@id,'roleId')]</td>
 	<td></td>
 </tr>
 <tr>

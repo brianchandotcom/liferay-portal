@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORY_SELECT_CHILD_SITE</td>
+	<td>//label[text()=' ${key_vocabularyName} ']/following-sibling::div//button[contains(@title,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY_SELECTED</td>
 	<td>//li[contains(@id,'category')]/div[contains(@class,'tree-node-selected')]/span[contains(.,'${key_categoryName}')]</td>
 	<td></td>

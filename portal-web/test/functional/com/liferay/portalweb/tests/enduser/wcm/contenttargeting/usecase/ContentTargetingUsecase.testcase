@@ -189,8 +189,6 @@
 			<var name="portletName" value="Campaign Content Display" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
@@ -300,8 +298,6 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Campaign Content Display" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
@@ -503,8 +499,6 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Campaign Content Display" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
@@ -740,8 +734,6 @@
 			<var name="portletName" value="Campaign Content Display" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
@@ -848,8 +840,6 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Campaign Content Display" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
@@ -1060,8 +1050,6 @@
 			<var name="portletName" value="Campaign Content Display" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
@@ -1182,8 +1170,6 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="User Segment Content Display" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
@@ -1417,16 +1403,12 @@
 			<var name="viewEntryContentList" value="Web Content Content" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
 			<var name="entryContentText" value="Web Content Content" />
 			<var name="preview1Text" value="User Segment Name" />
 			<var name="preview2Text" value="Default" />
 			<var name="viewUserSegmentSelected" value="User Segment Name" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="CampaignDisplayPortlet#viewPG">
 			<var name="entryContentText" value="Web Content Content" />
@@ -2110,13 +2092,9 @@
 			<var name="portletName" value="Campaign Content Display" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="User Segment Content Display" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="User Segment Content List" />
@@ -2179,8 +2157,6 @@
 			<var name="viewEntryContentList" value="Web Content Content" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
 			<var name="entryContentText" value="Web Content Content" />
 			<var name="preview1Text" value="Male Users" />
@@ -2188,16 +2164,12 @@
 			<var name="viewUserSegmentSelected" value="Male Users" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="CampaignDisplayPortlet#viewPG">
 			<var name="entryContentText" value="Web Content Content" />
 			<var name="preview1Text" value="Campaign Name" />
 			<var name="preview2Text" value="Default" />
 			<var name="viewCampaignSelected" value="Campaign Name" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="Staging#gotoPublishToLive" />
 
@@ -2212,16 +2184,12 @@
 			<var name="viewEntryContentList" value="Web Content Content" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
 			<var name="entryContentText" value="Web Content Content" />
 			<var name="preview1Text" value="Male Users" />
 			<var name="preview2Text" value="Default" />
 			<var name="viewUserSegmentSelected" value="Male Users" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="CampaignDisplayPortlet#viewPG">
 			<var name="entryContentText" value="Web Content Content" />
@@ -2492,8 +2460,6 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="User Segment Content List" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Test Page Name" />
@@ -3163,8 +3129,6 @@
 			<var name="portletName" value="User Segment Content Display" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
@@ -3389,8 +3353,6 @@
 			<var name="portletName" value="User Segment Content Display" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
@@ -3515,8 +3477,6 @@
 			<var name="portletName" value="User Segment Content Display" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
@@ -3605,8 +3565,6 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="User Segment Content Display" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
@@ -3758,8 +3716,6 @@
 			<var name="portletName" value="User Segment Content Display" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
@@ -3891,8 +3847,6 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="User Segment Content Display" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
@@ -4068,8 +4022,6 @@
 			<var name="portletName" value="User Segment Content Display" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
@@ -4166,8 +4118,6 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="User Segment Content List" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="UserSegmentContentListPortlet#viewContent">
 			<var name="viewEntryContentList" value="Web Content Content" />
@@ -4342,13 +4292,9 @@
 			<var name="portletName" value="User Segment Content List" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="UserSegmentContentListPortlet#configureDisplayFilter">
 			<var name="assetTypeFilter" value="Web Content Article" />
 		</execute>
-
-		<execute function="Refresh" />
 
 		<execute macro="UserSegmentContentListPortlet#viewContent">
 			<var name="viewEntryContentList" value="Web Content Content" />

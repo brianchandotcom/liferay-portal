@@ -432,6 +432,7 @@
 		<execute macro="WebContent#selectCategory">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="userSegmentDetailTitle" value="${userSegmentDetailTitle}" />
+			<var name="userSegmentSelectChildSite" value="${userSegmentSelectChildSite}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
@@ -1180,10 +1181,28 @@
 			</then>
 		</if>
 
-		<execute macro="AssetCategorization#addCategory">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="vocabularyName" value="${vocabularyName}" />
-		</execute>
+		<if>
+			<equals arg1="${userSegmentSelectChildSite}" arg2="true" />
+			<then>
+				<var name="key_vocabularyName" value="${vocabularyName}" />
+
+				<execute function="AssertClick" locator1="AssetCategorization#CATEGORY_SELECT_CHILD_SITE" value1="Select" />
+
+				<var name="key_categoryName" value="${categoryName}" />
+
+				<execute function="Click" locator1="AssetCategorization#CATEGORIES_CATEGORY_CHECKBOX" />
+
+				<execute function="AssertVisible" locator1="AssetCategorization#CATEGORIES_CATEGORY_CHECKBOX_CHECKED" />
+
+				<execute function="Click" locator1="Icon#CLOSE" />
+			</then>
+			<else>
+				<execute macro="AssetCategorization#addCategory">
+					<var name="categoryName" value="${categoryName}" />
+					<var name="vocabularyName" value="${vocabularyName}" />
+				</execute>
+			</else>
+		</if>
 	</command>
 
 	<command name="selectTemplateCP">

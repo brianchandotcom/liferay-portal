@@ -98,7 +98,7 @@
 <!--RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT-->
 <tr>
 	<td>RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX</td>
-	<td>//div[contains(.,'${key_userSegmentName}')]//span[contains(@class,'checkbox-container')]</td>
+	<td>//div[contains(.,'${key_userSegmentName}')]/span[@class='tree-label']</td>
 	<td></td>
 </tr>
 <tr>

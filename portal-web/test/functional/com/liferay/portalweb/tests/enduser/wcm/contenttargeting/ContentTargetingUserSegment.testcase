@@ -104,8 +104,6 @@
 			<var name="portletName" value="User Segment Content Display" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
@@ -206,8 +204,9 @@
 
 		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="Male Non Users" />
+			<var name="userSegmentSelectChildSite" value="true" />
 			<var name="vocabularyName" value="User Segment" />
-			<var name="webContentContent" value="Web Content targeted to a User Segment" />
+			<var name="webContentContent" value="Targeted Web Content Content" />
 			<var name="webContentTitle" value="Targeted Web Content Title" />
 		</execute>
 
@@ -229,7 +228,10 @@
 			<var name="portletName" value="User Segment Content Display" />
 		</execute>
 
-		<execute function="Refresh" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Child SiteName" />
+		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
@@ -277,7 +279,7 @@
 		<execute macro="PortletEntry#publish" />
 
 		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
@@ -1286,8 +1288,6 @@
 			<var name="portletName" value="User Segment Content Display" />
 		</execute>
 
-		<execute function="Refresh" />
-
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
 		</execute>
@@ -1420,7 +1420,10 @@
 			<var name="portletName" value="User Segment Content Display" />
 		</execute>
 
-		<execute function="Refresh" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
@@ -1450,10 +1453,10 @@
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewConfiguredDisplayContent">
 			<var name="contentTitle" value="Targeted Web Content Title" />
-			<var name="contentType" value="Basic Web Content" />
+			<var name="contentType" value="Web Content Article" />
 			<var name="doesNotBelong" value="true" />
 			<var name="otherwiseContentTitle" value="Targeted Web Content Title 2" />
-			<var name="otherwiseContentType" value="Basic Web Content" />
+			<var name="otherwiseContentType" value="Web Content Article" />
 			<var name="rowNumber" value="1" />
 			<var name="toAny" value="true" />
 			<var name="userSegmentName" value="Female Users" />

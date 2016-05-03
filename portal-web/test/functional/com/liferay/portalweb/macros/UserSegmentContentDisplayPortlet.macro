@@ -47,6 +47,8 @@
 
 		<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_BUTTON" />
 
+		<execute function="SelectFrame" value1="relative=top" />
+
 		<for list="${userSegmentName}" param="userSegmentName">
 			<var name="key_userSegmentName" value="${userSegmentName}" />
 
@@ -58,11 +60,14 @@
 			<then>
 				<var name="key_siteScope" value="${siteScope}" />
 
-				<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_SCOPE" value1="User Segment (${siteScope})" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_SCOPE" value1="User Segment (${siteScope})" />
 			</then>
 		</if>
 
-		<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CLOSE_BUTTON" />
+		<execute function="Click" locator1="Icon#CLOSE" />
+
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
 		<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT" />
 
 		<var name="key_menuItem" value="${contentType}" />
@@ -70,7 +75,7 @@
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${contentType}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<var name="key_rowEntry" value="${contentTitle}" />
 
@@ -97,7 +102,7 @@
 				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
 
 				<execute function="SelectFrame" value1="relative=top" />
-				<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 				<var name="key_rowEntry" value="${otherwiseContentTitle}" />
 
@@ -170,7 +175,7 @@
 
 		<var name="key_contentType" value="${contentType}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="ContentTargeting#CARD_CONTENT_TYPE" value1="Type: ${contentType}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="ContentTargeting#CARD_CONTENT_TYPE" value1="${contentType}" />
 
 		<if>
 			<isset var="otherwiseContentType" />
@@ -180,7 +185,7 @@
 
 				<var name="key_contentType" value="${otherwiseContentType}" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="ContentTargeting#OTHERWISE_PANEL_SELECTED_CONTENT_TYPE" value1="Type: ${otherwiseContentType}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="ContentTargeting#OTHERWISE_PANEL_SELECTED_CONTENT_TYPE" value1="${otherwiseContentType}" />
 
 				<var name="key_contentTitle" value="${otherwiseContentTitle}" />
 

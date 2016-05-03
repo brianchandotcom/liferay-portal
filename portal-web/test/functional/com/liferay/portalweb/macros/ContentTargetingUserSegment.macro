@@ -166,7 +166,7 @@
 
 	<command name="addSystemAttributesTimeRuleCP">
 		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
-			<var name="userSegmentRule" value="Time" />
+			<var name="userSegmentRule" value="Access Time" />
 		</execute>
 
 		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_OPERATING_START_TIME_FIELD" value1="${startTime}" />
@@ -223,6 +223,8 @@
 			<var name="userSegmentRule" value="Regular Role" />
 		</execute>
 
+		<execute function="AssertSelectedLabel" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_REGULAR_ROLE_SELECT" value1="Administrator" />
+
 		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_REGULAR_ROLE_SELECT" value1="${regularRole}" />
 	</command>
 
@@ -245,7 +247,7 @@
 
 	<command name="addUserAttributesUserGroupMemberRuleCP">
 		<execute macro="ContentTargetingUserSegment#addRuleCmdCP">
-			<var name="userSegmentRule" value="UserGroup Member" />
+			<var name="userSegmentRule" value="User Group Member" />
 		</execute>
 
 		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_USERGROUP_MEMBER_SELECT" value1="${userGroupName}" />
@@ -354,7 +356,7 @@
 
 		<var name="key_rowEntry" value="${userSegmentName}" />
 
-		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX" value1="${userSegmentName}" />
+		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userSegmentName}" />
 
 		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_DESCRIPTION_TD3" value1="${userSegmentDescription}" />
 	</command>

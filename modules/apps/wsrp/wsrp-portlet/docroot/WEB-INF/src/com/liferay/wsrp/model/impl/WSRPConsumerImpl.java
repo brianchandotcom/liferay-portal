@@ -83,7 +83,8 @@ public class WSRPConsumerImpl extends WSRPConsumerBaseImpl {
 		_registrationProperties = registrationProperties;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(WSRPConsumerImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		WSRPConsumerImpl.class);
 
 	private RegistrationContext _registrationContext;
 	private UnicodeProperties _registrationProperties;

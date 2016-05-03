@@ -91,10 +91,10 @@ public class ConsumerRequestExtensionsHelper {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ConsumerRequestExtensionsHelper.class);
 
-	private static ConsumerRequestExtensionsHelper _instance =
+	private static final ConsumerRequestExtensionsHelper _instance =
 		new ConsumerRequestExtensionsHelper();
 
 	private List<ConsumerRequestExtension> _consumerRequestExtensions =

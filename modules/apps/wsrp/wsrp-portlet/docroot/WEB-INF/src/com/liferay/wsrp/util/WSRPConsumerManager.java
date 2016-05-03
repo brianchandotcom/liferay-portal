@@ -346,7 +346,8 @@ public class WSRPConsumerManager {
 	private static final String _WSRP_V2_SERVICE_DESCRIPTION_BINDING =
 		"WSRP_v2_ServiceDescription_Binding_SOAP";
 
-	private static Log _log = LogFactoryUtil.getLog(WSRPConsumerManager.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		WSRPConsumerManager.class);
 
 	private Map<String, QName> _events;
 	private URL _markupServiceURL;
@@ -354,10 +355,10 @@ public class WSRPConsumerManager {
 	private WSRP_v2_PortletManagement_PortType _portletManagementService;
 	private Map<String, PropertyDescription> _propertyDescriptions;
 	private WSRP_v2_Registration_PortType _registrationService;
-	private WSRP_v2_Service _service;
+	private final WSRP_v2_Service _service;
 	private ServiceDescription _serviceDescription;
 	private WSRP_v2_ServiceDescription_PortType _serviceDescriptionService;
-	private String _wsdl;
-	private Namespace _wsdlNamespace;
+	private final String _wsdl;
+	private final Namespace _wsdlNamespace;
 
 }

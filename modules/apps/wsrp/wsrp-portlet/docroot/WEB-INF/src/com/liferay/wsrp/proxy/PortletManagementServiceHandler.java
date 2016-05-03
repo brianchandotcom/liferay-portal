@@ -56,9 +56,9 @@ public class PortletManagementServiceHandler implements InvocationHandler {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PortletManagementServiceHandler.class);
 
-	private WSRP_v1_PortletManagement_PortType _portletManagementService;
+	private final WSRP_v1_PortletManagement_PortType _portletManagementService;
 
 }

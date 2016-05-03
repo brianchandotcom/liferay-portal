@@ -264,6 +264,7 @@ public class TypeConvertorUtil {
 
 	private static final String _V2_PACKAGE = "oasis.names.tc.wsrp.v2.types.";
 
-	private static Log _log = LogFactoryUtil.getLog(TypeConvertorUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		TypeConvertorUtil.class);
 
 }

@@ -2082,13 +2082,14 @@ public class ConsumerPortlet extends GenericPortlet {
 		"wsrp-requiresRewrite={wsrp-requiresRewrite}&" +
 		"wsrp-resourceCacheability={wsrp-resourceCacheability}/wsrp_rewrite";
 
-	private static Log _log = LogFactoryUtil.getLog(ConsumerPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ConsumerPortlet.class);
 
-	private static Pattern _navigationalValuesPattern = Pattern.compile(
+	private static final Pattern _navigationalValuesPattern = Pattern.compile(
 		"(?:([^&=]+)(?:=([^&=]*))?)&?");
-	private static Pattern _parameterPattern = Pattern.compile(
+	private static final Pattern _parameterPattern = Pattern.compile(
 		"(?:([^&]+)=([^&]*))(?:&amp;|&)?");
-	private static Pattern _rewritePattern = Pattern.compile(
+	private static final Pattern _rewritePattern = Pattern.compile(
 		"(wsrp_rewrite_)|(?:wsrp_rewrite\\?([^\\s/]+)/wsrp_rewrite)|" +
 			"(?:location\\.href\\s*=\\s*'(/widget/c/portal/layout(?:[^']+))')" +
 				"|(?:href\\s*=\\s*\"(/widget/c/portal/layout(?:[^\"]+))\")");

@@ -104,8 +104,9 @@ public class MarkupServiceHandler implements InvocationHandler {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MarkupServiceHandler.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		MarkupServiceHandler.class);
 
-	private WSRP_v1_Markup_PortType _markupService;
+	private final WSRP_v1_Markup_PortType _markupService;
 
 }

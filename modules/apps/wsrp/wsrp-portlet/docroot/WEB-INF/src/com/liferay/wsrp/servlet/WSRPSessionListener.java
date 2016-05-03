@@ -94,6 +94,7 @@ public class WSRPSessionListener implements HttpSessionListener {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(WSRPSessionListener.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		WSRPSessionListener.class);
 
 }

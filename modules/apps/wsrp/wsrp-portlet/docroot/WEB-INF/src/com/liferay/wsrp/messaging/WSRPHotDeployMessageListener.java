@@ -66,7 +66,7 @@ public class WSRPHotDeployMessageListener extends HotDeployMessageListener {
 		WSRPConsumerPortletLocalServiceUtil.destroyWSRPConsumerPortlets();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		WSRPHotDeployMessageListener.class);
 
 	private ServiceTracker<MBeanServer, MBeanServer> _serviceTracker;

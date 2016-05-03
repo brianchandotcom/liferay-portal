@@ -23,7 +23,8 @@ WSRPConsumerPortlet wsrpConsumerPortlet = (WSRPConsumerPortlet)row.getObject();
 %>
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
-	<%--<portlet:renderURL var="editURL">
+	<%--
+	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcPath" value="/admin/edit_consumer_portlet.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="wsrpConsumerPortletId" value="<%= String.valueOf(wsrpConsumerPortlet.getWsrpConsumerPortletId()) %>" />
@@ -33,7 +34,8 @@ WSRPConsumerPortlet wsrpConsumerPortlet = (WSRPConsumerPortlet)row.getObject();
 		iconCssClass="icon-edit"
 		message="edit"
 		url="<%= editURL %>"
-	/>--%>
+	/>
+	--%>
 
 	<portlet:actionURL name="deleteWSRPConsumerPortlet" var="deleteURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />

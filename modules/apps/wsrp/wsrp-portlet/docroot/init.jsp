@@ -69,9 +69,9 @@ page import="java.util.List" %>
 page import="oasis.names.tc.wsrp.v2.types.PropertyDescription" %><%@
 page import="oasis.names.tc.wsrp.v2.types.ServiceDescription" %>
 
-<portlet:defineObjects />
-
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 String currentURL = PortalUtil.getCurrentURL(request);

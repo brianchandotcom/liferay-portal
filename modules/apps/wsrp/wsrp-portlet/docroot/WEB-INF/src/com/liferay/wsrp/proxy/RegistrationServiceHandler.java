@@ -69,9 +69,9 @@ public class RegistrationServiceHandler implements InvocationHandler {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		RegistrationServiceHandler.class);
 
-	private WSRP_v1_Registration_PortType _registrationDescriptionService;
+	private final WSRP_v1_Registration_PortType _registrationDescriptionService;
 
 }

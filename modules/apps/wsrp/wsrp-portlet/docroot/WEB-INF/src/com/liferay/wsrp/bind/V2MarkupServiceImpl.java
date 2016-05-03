@@ -880,6 +880,7 @@ public class V2MarkupServiceImpl
 
 	private static final String _PATH_WIDGET = "/widget/c/portal/layout";
 
-	private static Log _log = LogFactoryUtil.getLog(V2MarkupServiceImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		V2MarkupServiceImpl.class);
 
 }

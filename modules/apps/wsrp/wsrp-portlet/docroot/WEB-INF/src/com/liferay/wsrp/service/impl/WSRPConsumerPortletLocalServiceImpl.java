@@ -675,14 +675,14 @@ public class WSRPConsumerPortletLocalServiceImpl
 
 	private static final String _WSRP_CATEGORY = "category.wsrp";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		WSRPConsumerPortletLocalServiceImpl.class);
 
-	private static Map<String, Portlet> _portletsPool =
+	private static final Map<String, Portlet> _portletsPool =
 		new ConcurrentHashMap<>();
 
 	private Class<ConsumerPortlet> _consumerPortletClass;
-	private Map<Long, Tuple> _failedWSRPConsumerPortlets =
+	private final Map<Long, Tuple> _failedWSRPConsumerPortlets =
 		new ConcurrentHashMap<>();
 
 }

@@ -179,6 +179,6 @@ public class ProxyServlet extends HttpServlet {
 		ServletResponseUtil.write(response, urlConnection.getInputStream());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ProxyServlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(ProxyServlet.class);
 
 }

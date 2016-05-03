@@ -72,7 +72,8 @@ public class ExtensionHelperUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ExtensionHelperUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExtensionHelperUtil.class);
 
 	private static ExtensionHelper _extensionHelper;
 

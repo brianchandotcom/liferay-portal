@@ -335,10 +335,10 @@ public class V2ServiceDescriptionServiceImpl
 			ExtensionHelperUtil.getExtensions(messageElements));
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		V2ServiceDescriptionServiceImpl.class);
 
-	private static CookieProtocol _cookieProtocol = CookieProtocol.fromString(
-		CookieProtocol._perGroup);
+	private static final CookieProtocol _cookieProtocol =
+		CookieProtocol.fromString(CookieProtocol._perGroup);
 
 }

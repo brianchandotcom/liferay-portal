@@ -31,7 +31,7 @@ public class HttpServletRequestThreadLocal {
 		_httpServletRequest.set(httpServletRequest);
 	}
 
-	private static ThreadLocal<HttpServletRequest> _httpServletRequest =
+	private static final ThreadLocal<HttpServletRequest> _httpServletRequest =
 		new ThreadLocal<>();
 
 }

@@ -370,7 +370,7 @@ public class GadgetLocalServiceImpl extends GadgetLocalServiceBaseImpl {
 
 	private static final String _GADGET_PORTLET_NAME = "2";
 
-	private static Map<String, Portlet> _portletsPool =
+	private static final Map<String, Portlet> _portletsPool =
 		new ConcurrentHashMap<>();
 
 }

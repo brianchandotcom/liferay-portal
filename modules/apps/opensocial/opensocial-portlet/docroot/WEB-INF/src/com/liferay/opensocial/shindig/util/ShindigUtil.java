@@ -470,16 +470,16 @@ public class ShindigUtil {
 	@Inject
 	private static ContainerConfig _containerConfig;
 
-	private static AutoResetThreadLocal<String> _host =
+	private static final AutoResetThreadLocal<String> _host =
 		new AutoResetThreadLocal<>(
 			ShindigUtil.class + "._host", StringPool.BLANK);
-	private static Set<String> _ignoreGadgetSpecCache =
+	private static final Set<String> _ignoreGadgetSpecCache =
 		new ConcurrentHashSet<>();
 
 	@Inject
 	private static Processor _processor;
 
-	private static AutoResetThreadLocal<String> _scheme =
+	private static final AutoResetThreadLocal<String> _scheme =
 		new AutoResetThreadLocal<>(
 			ShindigUtil.class + "._scheme", StringPool.BLANK);
 

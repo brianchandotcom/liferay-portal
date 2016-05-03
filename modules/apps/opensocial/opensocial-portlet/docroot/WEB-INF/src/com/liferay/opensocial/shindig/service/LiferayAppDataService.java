@@ -283,7 +283,7 @@ public class LiferayAppDataService implements AppDataService {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayAppDataService.class);
 
 }

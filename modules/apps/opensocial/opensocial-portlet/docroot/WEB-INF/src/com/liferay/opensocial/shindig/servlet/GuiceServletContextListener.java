@@ -54,7 +54,7 @@ public class GuiceServletContextListener
 	private static ServletContextEvent _initializedServletContextEvent;
 
 	private ServletContextEvent _destroyedServletContextEvent;
-	private ServletContextListener _guiceServletContextListener =
+	private final ServletContextListener _guiceServletContextListener =
 		new org.apache.shindig.common.servlet.GuiceServletContextListener();
 
 }

@@ -26,7 +26,7 @@ Map<String, UserPref> userPrefs = (Map<String, UserPref>)renderRequest.getAttrib
 Map<String, OAuthService> oAuthServices = (Map<String, OAuthService>)renderRequest.getAttribute(WebKeys.OAUTH_SERVICES);
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE project>
 
-<project name="opensocial-portlet" basedir="." default="deploy">
+<project basedir="." default="deploy" name="opensocial-portlet">
 	<property name="compile.jsp.docroot.dir" value="tmp" />
 	<property name="original.war.file" value="shindig-server-2.0.2.war" />
 
@@ -205,7 +205,7 @@
 			<replacevalue></replacevalue>
 		</replace>
 
-		<replaceregexp match="(&quot;gadgets\.uri\.iframe\.basePath&quot; : &quot;.*?&quot;[\s\S]*)&quot;gadgets\.uri\.iframe\.basePath&quot; : &quot;.*?&quot;," replace="\1" flags="g" byline="false">
+		<replaceregexp byline="false" flags="g" match="(&quot;gadgets\.uri\.iframe\.basePath&quot; : &quot;.*?&quot;[\s\S]*)&quot;gadgets\.uri\.iframe\.basePath&quot; : &quot;.*?&quot;," replace="\1">
 			<fileset
 				dir="tmp/WEB-INF/classes/containers/default/"
 				includes="container.js"
@@ -266,7 +266,7 @@
 		<!-- Fix canonicaldb.json -->
 
 		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 		</tstamp>
 
 		<unjar
@@ -291,7 +291,7 @@
 		<!-- Fix shiro.tld -->
 
 		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 		</tstamp>
 
 		<unjar

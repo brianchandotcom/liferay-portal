@@ -27,7 +27,11 @@ import java.util.Calendar;
 
 /**
  * @author Brian Wing Shun Chan
+ *
+ * @deprecated As of 7.0.0, with direct replacement
+ * @shopping-api/com.liferay.shopping.util
  */
+@Deprecated
 public class CreditCard {
 
 	public static String hide(String number) {

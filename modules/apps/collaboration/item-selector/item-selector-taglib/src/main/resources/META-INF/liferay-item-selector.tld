@@ -83,65 +83,78 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>A user interface to show file entries. <![CDATA[<br /><br />Example:<br /><img src="../images/item-selector/repository-entry-browser.png"/>]]></description>
 		<name>repository-entry-browser</name>
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.RepositoryEntryBrowserTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>A list of the ItemSelectorReturnTypes that the client of the taglib could handle.</description>
 			<name>desiredItemSelectorReturnTypes</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The style of the element list. The default value is the icon style.</description>
 			<name>displayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A message to be shown if there are no results.</description>
 			<name>emptyResultsMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The name of the event that will be thrown once an image is selected.</description>
 			<name>itemSelectedEventName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The max file size that the backend could handle. Will be used to generate error messages.</description>
 			<name>maxFileSize</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The URL of the dialog. This is used as a base url in order to be populated with needed params.</description>
 			<name>portletURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A list of the RepositoryEntries that are going to be rendered.</description>
 			<name>repositoryEntries</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The amount of the RepositoryEntries that are going to be rendered.</description>
 			<name>repositoryEntriesCount</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A flag to specify if the breadcrumb should be shown or not. The default value is false.</description>
 			<name>showBreadcrumb</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A flag to specify if the drag and drop zone should be shown or not. The default value is true.</description>
 			<name>showDragAndDropZone</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The title of the current dialog tab.</description>
 			<name>tabName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The target URL for the new files that are uploaded.</description>
 			<name>uploadURL</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

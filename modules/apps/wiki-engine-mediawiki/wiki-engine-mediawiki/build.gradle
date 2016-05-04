@@ -1,6 +1,6 @@
 task unzip(type: Copy)
 
-def jamwikiVersion = "1.0.7"
+String jamwikiVersion = "1.0.7"
 
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.wiki.api", version: "2.0.0"
@@ -31,7 +31,7 @@ unzip {
 
 	into "src/main/resources"
 
-	def rootDir = new File("src/main/resources/jamwiki-${jamwikiVersion}")
+	File rootDir = new File("src/main/resources/jamwiki-${jamwikiVersion}")
 
 	rootDir.deleteDir()
 }

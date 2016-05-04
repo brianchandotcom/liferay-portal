@@ -37,6 +37,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
@@ -104,14 +105,22 @@ public class LPKGDeployerImpl implements LPKGDeployer {
 							bundleContext, filePath.toFile());
 
 						for (Bundle bundle : bundles) {
-							try {
-								bundle.start();
-							}
-							catch (BundleException be) {
-								_log.error(
-									"Unable to start " + bundle + " for " +
-										filePath,
-									be);
+							Dictionary<String, String> headers =
+								bundle.getHeaders();
+
+							String fragmentHost = headers.get(
+								Constants.FRAGMENT_HOST);
+
+							if (fragmentHost == null) {
+								try {
+									bundle.start();
+								}
+								catch (BundleException be) {
+									_log.error(
+										"Unable to start " + bundle + " for " +
+											filePath,
+										be);
+								}
 							}
 						}
 					}

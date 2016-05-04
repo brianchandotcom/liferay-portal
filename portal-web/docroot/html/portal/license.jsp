@@ -450,7 +450,7 @@ dateFormatDateTime.setTimeZone(timeZone);
 							}
 						);
 					},
-					['aui-io-request']
+					['aui-base', 'aui-io-request']
 				);
 
 				<%

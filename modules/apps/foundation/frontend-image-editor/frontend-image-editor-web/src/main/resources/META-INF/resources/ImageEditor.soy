@@ -14,10 +14,10 @@
  *
  * Function References
  *
- * @param getEditorCanvas
- * @param getEditorImageData
- * @param requestEditorEdit
- * @param requestEditorPreview
+ * @param getImageEditorCanvas
+ * @param getImageEditorImageData
+ * @param requestImageEditorEdit
+ * @param requestImageEditorPreview
  */
 {template .render}
 	<div id="{$id}">
@@ -31,10 +31,10 @@
 
 		<div class="lfr-image-editor-tools-container">
 			{call .tools data="all"}
-				{param getEditorCanvas: $getEditorCanvas /}
-				{param getEditorImageData: $getEditorImageData /}
-				{param requestEditorEdit: $requestEditorEdit /}
-				{param requestEditorPreview: $requestEditorPreview /}
+				{param getImageEditorCanvas: $getImageEditorCanvas /}
+				{param getImageEditorImageData: $getImageEditorImageData /}
+				{param requestImageEditorEdit: $requestImageEditorEdit /}
+				{param requestImageEditorPreview: $requestImageEditorPreview /}
 			{/call}
 		</div>
 
@@ -100,7 +100,7 @@
 	{else}
 		{let $control : $tool.controls[0] /}
 
-		<a class="btn" data-control="{$control.variant}" data-onclick="requestEditorEdit" data-tool="tool-{$toolIndex}" href="javascript:;">
+		<a class="btn" data-control="{$control.variant}" data-onclick="requestImageEditorEdit" data-tool="tool-{$toolIndex}" href="javascript:;">
 			<svg class="icon-monospaced lexicon-icon">
 				<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$tool.icon}"></use>
 			</svg>
@@ -116,7 +116,7 @@
  * Renders a dropdown with all the available controls for this tool category
  *
  * @param? pathThemeImages
- * @param? requestEditorEdit
+ * @param? requestImageEditorEdit
  * @param tool
  * @param toolIndex
  */
@@ -133,7 +133,7 @@
 		{param body kind="html"}
 			{foreach $control in $tool.controls}
 				<li data-onclick="toggle">
-					<a data-control="{$control.variant}" data-onclick="{$requestEditorEdit}" data-tool="tool-{$toolIndex}">{$control.label}</a>
+					<a data-control="{$control.variant}" data-onclick="{$requestImageEditorEdit}" data-tool="tool-{$toolIndex}">{$control.label}</a>
 				</li>
 			{/foreach}
 		{/param}

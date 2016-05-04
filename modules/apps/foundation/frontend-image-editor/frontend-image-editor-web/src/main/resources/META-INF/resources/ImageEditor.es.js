@@ -118,7 +118,7 @@ class ImageEditor extends Component {
 	 *
 	 * @return {Element} The canvas element.
 	 */
-	getEditorCanvas() {
+	getImageEditorCanvas() {
 		return this.element.querySelector('.lfr-image-editor-image-container canvas');
 	}
 
@@ -127,7 +127,7 @@ class ImageEditor extends Component {
 	 *
 	 * @return {CancellablePromise} A promise that will resolve with the image data.
 	 */
-	getEditorImageData() {
+	getImageEditorImageData() {
 		return this.history_[this.historyIndex_].getImageData();
 	}
 
@@ -146,7 +146,7 @@ class ImageEditor extends Component {
 	 *
 	 * @param  {MouseEvent} event
 	 */
-	requestEditorEdit(event) {
+	requestImageEditorEdit(event) {
 		let controls = this.imageEditorCapabilities.tools.reduce(
 			(prev, curr) => prev.concat(curr.controls), []);
 
@@ -165,7 +165,7 @@ class ImageEditor extends Component {
 	 * Queues a request for a preview process of the current image by the
 	 * currently selected control.
 	 */
-	requestEditorPreview() {
+	requestImageEditorPreview() {
 		let selectedControl = this.components[this.id + '_selected_control_' + this.selectedControl.variant];
 
 		this.history_[this.historyIndex_].getImageData()
@@ -211,8 +211,8 @@ class ImageEditor extends Component {
 	/**
 	 * Updates the image data showed in the editable area
 	 *
-	 * @protected
 	 * @param  {ImageData} imageData The new ImageData value to show on the editor
+	 * @protected
 	 */
 	syncImageData_(imageData) {
 		let width = imageData.width;
@@ -228,7 +228,7 @@ class ImageEditor extends Component {
 		offscreenContext.clearRect(0, 0, width, height);
 		offscreenContext.putImageData(imageData, 0, 0);
 
-		let canvas = this.element.querySelector('.lfr-image-editor-image-container canvas');
+		let canvas = this.getImageEditorCanvas();
 
 		let boundingBox = dom.closest(this.element, '#main-content');
 		let availableWidth = boundingBox.offsetWidth;

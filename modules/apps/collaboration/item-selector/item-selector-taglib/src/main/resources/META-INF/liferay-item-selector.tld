@@ -11,90 +11,90 @@
 	<short-name>liferay-item-selector</short-name>
 	<uri>http://liferay.com/tld/item-selector</uri>
 	<tag>
-		<description>Creates a user interface to select groups.<![CDATA[<br /><br />Example:<br /><img src="../images/group-selector.png"/>]]></description>
+		<description>Creates a UI to select groups.<![CDATA[<br /><br />Example:<br /><img src="../images/group-selector.png"/>]]></description>
 		<name>group-selector</name>
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.GroupSelectorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>A list of the groups to be shown. By default taglib will show the sites and the user groups that the current user could access.</description>
+			<description>A list of the groups to be shown. The sites and the user groups that the current user can access are shown by default.</description>
 			<name>groups</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A count of the groups that are going to be shown. By default taglib will show the count of the sites and the user groups that the current user could access.</description>
+			<description>The total number of groups to be shown. The default value is the total number of sites and user groups that the current user can access.</description>
 			<name>groupsCount</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a user interface to add images. Renders a drag and drop area and a button to open a selection dialog. It works as an image viewer if an image is selected.<![CDATA[<br /><br />Example:<br /><img src="../images/image-selector.png"/>]]></description>
+		<description>Creates a UI to add images. It renders a drag and drop area and a button to open a selection dialog. It works as an image viewer if an image is selected.<![CDATA[<br /><br />Example:<br /><img src="../images/image-selector.png"/>]]></description>
 		<name>image-selector</name>
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.ImageSelectorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>A CSS class to specify the direction of the image drag. Could be vertical, horizontal, both, or none.</description>
+			<description>A CSS class to specify the direction of the image drag. Possible values are <![CDATA[<code>vertical</code>]]>, <![CDATA[<code>horizontal</code>]]>, <![CDATA[<code>both</code>]]>, or <![CDATA[<code>none</code>]]>.</description>
 			<name>draggableImage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The Id of a previously selected fileEntry.</description>
+			<description>The ID of a previously selected file entry.</description>
 			<name>fileEntryId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The name of the event that the item selector dialog will throw, in order to allow the image selector tag capture and show the selected image.</description>
+			<description>The name of the event that the item selector dialog throws, in order to allow the image selector tag capture and show the selected image.</description>
 			<name>itemSelectorEventName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The URL of the selection dialog that will be shown on the user clicking the select button.</description>
+			<description>The URL of the selection dialog to be shown on the user clicking the select button.</description>
 			<name>itemSelectorURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The max file size that the backend could handle.</description>
+			<description>The maximum file size that the backend can handle.</description>
 			<name>maxFileSize</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A prefix to the parameters that will be sent to the server.</description>
+			<description>A prefix to the parameters to be sent to the server.</description>
 			<name>paramName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The target url for the new files that are uplodaded.</description>
+			<description>The target URL for the new files that are uploaded.</description>
 			<name>uploadURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A list of valid extensions that the server could handle.</description>
+			<description>A list of valid extensions that the server can handle.</description>
 			<name>validExtensions</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a user interface to show file entries.<![CDATA[<br /><br />Example:<br /><img src="../images/repository-entry-browser.png"/>]]></description>
+		<description>Creates a UI to show file entries.<![CDATA[<br /><br />Example:<br /><img src="../images/repository-entry-browser.png"/>]]></description>
 		<name>repository-entry-browser</name>
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.RepositoryEntryBrowserTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>A list of the ItemSelectorReturnTypes that the client of the taglib could handle.</description>
+			<description>A list of the <![CDATA[<code>ItemSelectorReturnType</code>]]> objects that the client of the taglib can handle.</description>
 			<name>desiredItemSelectorReturnTypes</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The style of the element list. The default value is the icon style.</description>
+			<description>The style of the element list. The icon style is used by default.</description>
 			<name>displayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -106,43 +106,43 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The name of the event that will be thrown once an image is selected.</description>
+			<description>The name of the event to be thrown once an image is selected.</description>
 			<name>itemSelectedEventName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The max file size that the backend could handle. Will be used to generate error messages.</description>
+			<description>The maximum file size that the backend can handle. It is used in generating error messages.</description>
 			<name>maxFileSize</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The URL of the dialog. This is used as a base url in order to be populated with needed params.</description>
+			<description>The URL of the dialog. This is used as a base URL in order to be populated with needed parameters.</description>
 			<name>portletURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A list of the RepositoryEntries that are going to be rendered.</description>
+			<description>A list of the <![CDATA[<code>RepositoryEntry</code>]]> objects to be rendered.</description>
 			<name>repositoryEntries</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The amount of the RepositoryEntries that are going to be rendered.</description>
+			<description>The total number of the <![CDATA[<code>RepositoryEntry</code>]]> objects to be rendered.</description>
 			<name>repositoryEntriesCount</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A flag to specify if the breadcrumb should be shown or not. The default value is false.</description>
+			<description>Whether to show the breadcrumb. The default value is false.</description>
 			<name>showBreadcrumb</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A flag to specify if the drag and drop zone should be shown or not. The default value is true.</description>
+			<description>Whether to show the drag and drop zone. The default value is true.</description>
 			<name>showDragAndDropZone</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

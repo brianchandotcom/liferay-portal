@@ -101,6 +101,7 @@ public interface DestinationNames {
 
 	public static final String POLLER_RESPONSE = "liferay/poller_response";
 
+	@Deprecated
 	public static final String PUSH_NOTIFICATION = "liferay/push_notification";
 
 	public static final String SCHEDULER_DISPATCH =

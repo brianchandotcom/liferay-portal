@@ -90,7 +90,9 @@ public abstract class BaseImageEditorCapability
 	protected void initResourceURLs() {
 		_resourceURLs = new ArrayList<>();
 
-		Enumeration<URL> enumeration = getBundle().findEntries(
+		Bundle bundle = getBundle();
+
+		Enumeration<URL> enumeration = bundle.findEntries(
 			"META-INF/resources", "*.es.js", true);
 
 		if (enumeration != null) {

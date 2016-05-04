@@ -14,7 +14,7 @@
 
 package com.liferay.push.notifications.messaging;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.push.notifications.sender.Response;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -41,7 +42,7 @@ public class PushNotificationsResponseMessageListener
 	protected void doReceive(Message message) throws Exception {
 		Response response = (Response)message.getPayload();
 
-		String json = JSONFactoryUtil.serialize(response);
+		String json = _jsonFactory.serialize(response);
 
 		if (!response.isSucceeded()) {
 			_log.error(json);
@@ -53,5 +54,8 @@ public class PushNotificationsResponseMessageListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PushNotificationsResponseMessageListener.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

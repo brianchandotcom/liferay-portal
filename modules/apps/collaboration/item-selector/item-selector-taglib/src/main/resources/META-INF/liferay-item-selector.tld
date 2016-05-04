@@ -11,15 +11,18 @@
 	<short-name>liferay-item-selector</short-name>
 	<uri>http://liferay.com/tld/item-selector</uri>
 	<tag>
+		<description>A User interface to select groups<![CDATA[<br /><br />Example:<br /><img src="../images/item-selector/group-selector.png"/>]]></description>
 		<name>group-selector</name>
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.GroupSelectorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>A list of the groups to be shown. By default taglib will show the sites and the user groups that the current user could access.</description>
 			<name>groups</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A count of the groups that are going to be shown. By default taglib will show the count of the sites and the user groups that the current user could access.</description>
 			<name>groupsCount</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

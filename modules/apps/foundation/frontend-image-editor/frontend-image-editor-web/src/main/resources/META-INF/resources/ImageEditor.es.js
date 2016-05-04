@@ -58,6 +58,13 @@ class ImageEditor extends Component {
 			)
 		];
 
+		// Polyfill svg usage for lexicon icons
+		svg4everybody(
+			{
+				polyfill: true
+			}
+		);
+
 		// Load the first entry imageData and render it on the app.
 		this.history_[0].getImageData()
 			.then((imageData) => this.syncImageData_(imageData));

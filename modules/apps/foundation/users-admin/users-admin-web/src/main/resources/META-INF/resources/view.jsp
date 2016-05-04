@@ -98,7 +98,7 @@ else {
 		<liferay-util:include page="/view_tree.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test="<%= portletName.equals(UsersAdminPortletKeys.MY_ORGANIZATIONS) || usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">
-		<liferay-util:include page="/view_flat_organizations.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/view_organizations.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) %>">
 

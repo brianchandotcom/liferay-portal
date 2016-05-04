@@ -920,6 +920,27 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 	<macrodef name="get-testray-logs-dir-name">
 		<sequential>
+			<var name="build.flow.time.stamp" unset="true" />
+
+			<beanshell>
+				<![CDATA[
+					import java.text.SimpleDateFormat;
+
+					String buildFlowTimeStamp = project.getProperty("env.BUILD_FLOW_TIME_STAMP");
+
+					if (buildFlowTimeStamp != null && buildFlowTimeStamp.matches("\\d+-\\d+-\\d+\\[\\d+:\\d+:\\d+\\]")) {
+						SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd[HH:mm:ss]");
+
+					    Date date = simpleDateFormat.parse(buildFlowTimeStamp);
+
+					    project.setProperty("build.flow.time.stamp", Long.toString(date.getTime()));
+					}
+					else {
+					    project.setProperty("build.flow.time.stamp", Long.toString(System.currentTimeMillis()));
+					}
+				]]>
+			</beanshell>
+
 			<if>
 				<isset property="test.class" />
 				<then>
@@ -941,7 +962,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 				<antelope:replace regex="#" replacement="_" />
 			</antelope:stringutil>
 
-			<var name="testray.logs.dir.name" value="${env.HOSTNAME}/${env.BUILD_FLOW_JOB_NAME}/${env.BUILD_FLOW_BUILD_NUMBER}/${batch.dir.name}/${test.dir.name}" />
+			<var name="testray.logs.dir.name" value="${env.HOSTNAME}/${build.flow.time.stamp}/${env.BUILD_FLOW_JOB_NAME}/${env.BUILD_FLOW_BUILD_NUMBER}/${batch.dir.name}/${test.dir.name}" />
 		</sequential>
 	</macrodef>
 
@@ -7125,7 +7146,7 @@ if (ppstate.equals("normal")) {
 			gzip -r testray-logs/
 		</execute>
 
-		<for list="production,uat" param="testray.base.dir.name">
+		<for list="production" param="testray.base.dir.name">
 			<sequential>
 				<rsync rsync.dest="testray-results/@{testray.base.dir.name}/logs" rsync.src="testray-logs/." />
 			</sequential>

@@ -1,5 +1,3 @@
-apply plugin: 'java'
-
 def jamwikiVersion = "1.0.7"
 
 task unzip(type: Copy) {

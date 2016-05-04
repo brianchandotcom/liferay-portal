@@ -17,7 +17,7 @@ package com.liferay.frontend.image.editor.web.portlet.action;
 import com.liferay.frontend.image.editor.capability.ImageEditorCapability;
 import com.liferay.frontend.image.editor.web.constants.ImageEditorPortletKeys;
 import com.liferay.frontend.image.editor.web.portlet.tracker.ImageEditorCapabilityTracker;
-import com.liferay.frontend.image.editor.web.portlet.tracker.ImageEditorCapabilityTracker.ImageEditorCapabilityInformation;
+import com.liferay.frontend.image.editor.web.portlet.tracker.ImageEditorCapabilityTracker.ImageEditorCapabilityDescriptor;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.template.Template;
@@ -95,46 +95,79 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return "ImageEditor";
 	}
 
+	protected List<List<ImageEditorCapabilityDescriptor>>
+		getImageEditorCapabilityDescriptorsList(
+			List<ImageEditorCapabilityDescriptor>
+				imageEditorCapabilityDescriptors) {
+
+		Map<String, List<ImageEditorCapabilityDescriptor>>
+			imageEditorCapabilityDescriptorsMap = new HashMap<>();
+
+		for (ImageEditorCapabilityDescriptor imageEditorCapabilityDescriptor :
+				imageEditorCapabilityDescriptors) {
+
+			Map<String, Object> properties =
+				imageEditorCapabilityDescriptor.getProperties();
+
+			String category = GetterUtil.getString(
+				properties.get(
+					"com.liferay.frontend.image.editor.capability.category"));
+
+			if (!imageEditorCapabilityDescriptorsMap.containsKey(category)) {
+				imageEditorCapabilityDescriptorsMap.put(
+					category, new ArrayList<ImageEditorCapabilityDescriptor>());
+			}
+
+			List<ImageEditorCapabilityDescriptor>
+				curImageEditorCapabilityDescriptors =
+					imageEditorCapabilityDescriptorsMap.get(category);
+
+			curImageEditorCapabilityDescriptors.add(
+				imageEditorCapabilityDescriptor);
+		}
+
+		return new ArrayList<>(imageEditorCapabilityDescriptorsMap.values());
+	}
+
 	protected List<Map<String, Object>> getImageEditorToolsContext(
 		RenderRequest renderRequest) {
 
-		List<Map<String, Object>> imageEditorToolsContext =
-			new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> imageEditorToolsContext = new ArrayList<>();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<ImageEditorCapabilityInformation>
-			toolImageEditorCapabilityInformations =
-				_imageEditorCapabilityTracker.getImageEditorCapabilityInformations("tool");
+		List<ImageEditorCapabilityDescriptor>
+			toolImageEditorCapabilityDescriptors =
+				_imageEditorCapabilityTracker.
+					getImageEditorCapabilityDescriptors("tool");
 
-		if (toolImageEditorCapabilityInformations == null) {
+		if (toolImageEditorCapabilityDescriptors == null) {
 			return imageEditorToolsContext;
 		}
 
-		List<List<ImageEditorCapabilityInformation>>
-			imageEditorCapabilityInformationsList =
-				getImageEditorCapabilityInformationsList(
-					toolImageEditorCapabilityInformations);
+		List<List<ImageEditorCapabilityDescriptor>>
+			imageEditorCapabilityDescriptorsList =
+				getImageEditorCapabilityDescriptorsList(
+					toolImageEditorCapabilityDescriptors);
 
-		for (List<ImageEditorCapabilityInformation>
-				imageEditorCapabilityInformations :
-					imageEditorCapabilityInformationsList) {
+		for (List<ImageEditorCapabilityDescriptor>
+				imageEditorCapabilityDescriptors :
+					imageEditorCapabilityDescriptorsList) {
 
 			Map<String, Object> context = new HashMap<>();
 
-			List<Map<String, Object>> controls =
-				new ArrayList<Map<String, Object>>();
+			List<Map<String, Object>> controls = new ArrayList<>();
 			String icon = StringPool.BLANK;
 
-			for (ImageEditorCapabilityInformation
-					imageEditorCapabilityInformation :
-						imageEditorCapabilityInformations) {
+			for (ImageEditorCapabilityDescriptor
+					imageEditorCapabilityDescriptor :
+						imageEditorCapabilityDescriptors) {
 
 				Map<String, Object> control = new HashMap<>();
 
 				ImageEditorCapability imageEditorCapability =
-					imageEditorCapabilityInformation.getImageEditorCapability();
+					imageEditorCapabilityDescriptor.getImageEditorCapability();
 
 				control.put(
 					"label",
@@ -143,12 +176,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				ServletContext servletContext =
 					imageEditorCapability.getServletContext();
 
-				control.put(
-					"modulePath",
-					servletContext.getContextPath());
+				control.put("modulePath", servletContext.getContextPath());
 
 				Map<String, Object> properties =
-					imageEditorCapabilityInformation.getProperties();
+					imageEditorCapabilityDescriptor.getProperties();
 
 				String variant = GetterUtil.getString(
 					properties.get(
@@ -181,43 +212,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	protected Template getTemplate(RenderRequest renderRequest) {
 		return (Template)renderRequest.getAttribute(WebKeys.TEMPLATE);
-	}
-
-	protected List<List<ImageEditorCapabilityInformation>>
-		getImageEditorCapabilityInformationsList(
-			List<ImageEditorCapabilityInformation>
-				imageEditorCapabilityInformations) {
-
-		Map<String, List<ImageEditorCapabilityInformation>>
-			imageEditorCapabilityInformationsMap = new HashMap<>();
-
-		for (ImageEditorCapabilityInformation imageEditorCapabilityInformation :
-				imageEditorCapabilityInformations) {
-
-			Map<String, Object> properties =
-				imageEditorCapabilityInformation.getProperties();
-
-			String category = GetterUtil.getString(
-				properties.get(
-					"com.liferay.frontend.image.editor.capability.category"));
-
-			if (!imageEditorCapabilityInformationsMap.containsKey(
-					category)) {
-
-				imageEditorCapabilityInformationsMap.put(
-					category,
-					new ArrayList<ImageEditorCapabilityInformation>());
-			}
-
-			List<ImageEditorCapabilityInformation>
-				curImageEditorCapabilityInformations =
-					imageEditorCapabilityInformationsMap.get(category);
-
-			curImageEditorCapabilityInformations.add(
-				imageEditorCapabilityInformation);
-		}
-
-		return new ArrayList<>(imageEditorCapabilityInformationsMap.values());
 	}
 
 	@Reference

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.net.URL;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -47,19 +48,19 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(immediate = true, service = ImageEditorCapabilityTracker.class)
 public class ImageEditorCapabilityTracker {
 
-	public List<ImageEditorCapabilityInformation>
-		getImageEditorCapabilityInformations(String capabilityType) {
-
-		return _serviceTrackerMap.getService(capabilityType);
-	}
-
 	public Set<String> getCapabilitiesRequirements() {
 		return _capabilitiesRequirements;
 	}
 
-	public static class ImageEditorCapabilityInformation {
+	public List<ImageEditorCapabilityDescriptor>
+		getImageEditorCapabilityDescriptors(String capabilityType) {
 
-		public ImageEditorCapabilityInformation(
+		return _serviceTrackerMap.getService(capabilityType);
+	}
+
+	public static class ImageEditorCapabilityDescriptor {
+
+		public ImageEditorCapabilityDescriptor(
 			ImageEditorCapability imageEditorCapability,
 			Map<String, Object> properties) {
 
@@ -89,7 +90,7 @@ public class ImageEditorCapabilityTracker {
 			"(com.liferay.frontend.image.editor.capability.type=*)",
 			new PropertyServiceReferenceMapper<String, ImageEditorCapability>(
 				"com.liferay.frontend.image.editor.capability.type"),
-			new ImageEditorCapabilityInformationServiceTrackerCustomizer(),
+			new ImageEditorCapabilityDescriptorServiceTrackerCustomizer(),
 			new PropertyServiceReferenceComparator<ImageEditorCapability>(
 				"service.ranking"),
 			new CapabilityServiceTrackerMapListener());
@@ -107,23 +108,23 @@ public class ImageEditorCapabilityTracker {
 	}
 
 	private Set<String> _rebuildCapabilitiesRequirements(
-		ServiceTrackerMap<String, List<ImageEditorCapabilityInformation>>
+		ServiceTrackerMap<String, List<ImageEditorCapabilityDescriptor>>
 			serviceTrackerMap) {
 
 		Set<String> requiredModules = new HashSet<>();
 
 		for (String key : serviceTrackerMap.keySet()) {
-			List<ImageEditorCapabilityInformation>
-				imageEditorCapabilityInformations =
-					serviceTrackerMap.getService(key);
+			List<ImageEditorCapabilityDescriptor>
+				imageEditorCapabilityDescriptors = serviceTrackerMap.getService(
+					key);
 
-			for (ImageEditorCapabilityInformation
-					imageEditorCapabilityInformation :
-						imageEditorCapabilityInformations) {
+			for (ImageEditorCapabilityDescriptor
+					imageEditorCapabilityDescriptor :
+						imageEditorCapabilityDescriptors) {
 
 				try {
 					ImageEditorCapability imageEditorCapability =
-						imageEditorCapabilityInformation.
+						imageEditorCapabilityDescriptor.
 							getImageEditorCapability();
 
 					String moduleName = imageEditorCapability.getModuleName();
@@ -150,25 +151,28 @@ public class ImageEditorCapabilityTracker {
 		return requiredModules;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ImageEditorCapabilityTracker.class);
+
 	private BundleContext _bundleContext;
 	private volatile Set<String> _capabilitiesRequirements =
 		Collections.emptySet();
-	private ServiceTrackerMap<String, List<ImageEditorCapabilityInformation>>
+	private ServiceTrackerMap<String, List<ImageEditorCapabilityDescriptor>>
 		_serviceTrackerMap;
 
 	private class CapabilityServiceTrackerMapListener implements
 		ServiceTrackerMapListener
-			<String, ImageEditorCapabilityInformation,
-				List<ImageEditorCapabilityInformation>> {
+			<String, ImageEditorCapabilityDescriptor,
+				List<ImageEditorCapabilityDescriptor>> {
 
 		@Override
 		public synchronized void keyEmitted(
-			ServiceTrackerMap<String, List<ImageEditorCapabilityInformation>>
+			ServiceTrackerMap<String, List<ImageEditorCapabilityDescriptor>>
 				serviceTrackerMap,
 			String key,
-			ImageEditorCapabilityInformation imageEditorCapabilityInformation,
-			List<ImageEditorCapabilityInformation>
-				imageEditorCapabilityInformations) {
+			ImageEditorCapabilityDescriptor imageEditorCapabilityDescriptor,
+			List<ImageEditorCapabilityDescriptor>
+				imageEditorCapabilityDescriptors) {
 
 			_capabilitiesRequirements = _rebuildCapabilitiesRequirements(
 				serviceTrackerMap);
@@ -176,12 +180,12 @@ public class ImageEditorCapabilityTracker {
 
 		@Override
 		public synchronized void keyRemoved(
-			ServiceTrackerMap<String, List<ImageEditorCapabilityInformation>>
+			ServiceTrackerMap<String, List<ImageEditorCapabilityDescriptor>>
 				serviceTrackerMap,
 			String key,
-			ImageEditorCapabilityInformation imageEditorCapabilityInformation,
-			List<ImageEditorCapabilityInformation>
-				imageEditorCapabilityInformations) {
+			ImageEditorCapabilityDescriptor imageEditorCapabilityDescriptor,
+			List<ImageEditorCapabilityDescriptor>
+				imageEditorCapabilityDescriptors) {
 
 			_capabilitiesRequirements = _rebuildCapabilitiesRequirements(
 				serviceTrackerMap);
@@ -189,12 +193,12 @@ public class ImageEditorCapabilityTracker {
 
 	}
 
-	private class ImageEditorCapabilityInformationServiceTrackerCustomizer
+	private class ImageEditorCapabilityDescriptorServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
-			<ImageEditorCapability, ImageEditorCapabilityInformation> {
+			<ImageEditorCapability, ImageEditorCapabilityDescriptor> {
 
 		@Override
-		public ImageEditorCapabilityInformation addingService(
+		public ImageEditorCapabilityDescriptor addingService(
 			ServiceReference<ImageEditorCapability> serviceReference) {
 
 			ImageEditorCapability imageEditorCapability =
@@ -210,7 +214,7 @@ public class ImageEditorCapabilityTracker {
 			}
 
 			try {
-				return new ImageEditorCapabilityInformation(
+				return new ImageEditorCapabilityDescriptor(
 					imageEditorCapability, properties);
 			}
 			catch (Exception e) {
@@ -223,9 +227,9 @@ public class ImageEditorCapabilityTracker {
 		@Override
 		public void modifiedService(
 			ServiceReference<ImageEditorCapability> serviceReference,
-			ImageEditorCapabilityInformation imageEditorCapabilityInformation) {
+			ImageEditorCapabilityDescriptor imageEditorCapabilityDescriptor) {
 
-			removedService(serviceReference, imageEditorCapabilityInformation);
+			removedService(serviceReference, imageEditorCapabilityDescriptor);
 
 			addingService(serviceReference);
 		}
@@ -233,14 +237,11 @@ public class ImageEditorCapabilityTracker {
 		@Override
 		public void removedService(
 			ServiceReference<ImageEditorCapability> serviceReference,
-			ImageEditorCapabilityInformation imageEditorCapabilityInformation) {
+			ImageEditorCapabilityDescriptor imageEditorCapabilityDescriptor) {
 
 			_bundleContext.ungetService(serviceReference);
 		}
 
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ImageEditorCapabilityTracker.class);
 
 }

@@ -501,7 +501,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteConnectors" priority="3">
+	<command name="DeleteConnectors" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelApps">
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>
@@ -1112,7 +1112,7 @@
 		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP" />
 	</command>
 
-	<command name="RedoDraftDefinition" priority="3">
+	<command name="RedoDraftDefinition" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelApps">
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>

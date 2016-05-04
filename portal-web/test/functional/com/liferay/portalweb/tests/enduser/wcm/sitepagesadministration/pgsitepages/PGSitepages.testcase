@@ -51,6 +51,36 @@
 		</for>
 	</command>
 
+	<command name="DeletePages" priority="5">
+		<property name="portal.acceptance" value="true" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Page1" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Page2" />
+		</execute>
+
+		<execute macro="Page#deletePG">
+			<var name="pageName" value="Page1" />
+		</execute>
+
+		<execute macro="Page#viewDeletedPage">
+			<var name="pageName" value="Page1" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Page#deleteViaX">
+			<var name="pageName" value="Page2" />
+		</execute>
+
+		<execute macro="Page#viewDeletedPage">
+			<var name="pageName" value="Page2" />
+		</execute>
+	</command>
+
 	<command name="EditSitePage" priority="4">
 		<execute macro="Navigator#openURL" />
 

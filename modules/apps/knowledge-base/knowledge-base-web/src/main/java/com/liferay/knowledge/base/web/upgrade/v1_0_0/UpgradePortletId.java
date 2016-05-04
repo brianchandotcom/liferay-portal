@@ -20,6 +20,7 @@ package com.liferay.knowledge.base.web.upgrade.v1_0_0;
 public class UpgradePortletId
 	extends com.liferay.portal.upgrade.util.UpgradePortletId {
 
+	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
 			{

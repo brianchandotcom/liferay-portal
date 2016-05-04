@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -78,7 +79,7 @@ public class MessageImpl extends MessageBaseImpl {
 
 	protected String normalizeAddress(String address) {
 		return StringUtil.replace(
-			address, StringPool.COMMA, StringPool.COMMA_AND_SPACE);
+			address, CharPool.COMMA, StringPool.COMMA_AND_SPACE);
 	}
 
 	private static final String _MULTIPART_MIXED = "multipart/MIXED";

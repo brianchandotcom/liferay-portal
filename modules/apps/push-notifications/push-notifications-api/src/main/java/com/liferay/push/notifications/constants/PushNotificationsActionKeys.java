@@ -17,8 +17,7 @@ package com.liferay.push.notifications.constants;
 /**
  * @author Bruno Farache
  */
-public class PushNotificationsActionKeys
-	extends com.liferay.portal.kernel.security.permission.ActionKeys {
+public class PushNotificationsActionKeys {
 
 	public static final String MANAGE_DEVICES = "MANAGE_DEVICES";
 

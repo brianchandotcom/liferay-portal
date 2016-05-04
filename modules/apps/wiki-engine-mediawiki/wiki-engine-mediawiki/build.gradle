@@ -1,11 +1,11 @@
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
+
 task copyJAMWiki(type: Copy)
 
 String jamWikiVersion = "1.0.7"
 
 copyJAMWiki {
-	eachFile {
-		it.path = it.path.substring(it.path.lastIndexOf("/"))
-	}
+	eachFile new StripPathSegmentsAction(5)
 
 	from zipTree("jamwiki-${jamWikiVersion}-src.zip")
 
@@ -13,11 +13,8 @@ copyJAMWiki {
 	include "jamwiki-${jamWikiVersion}/jamwiki-war/src/main/resources/jamwiki-configuration.dtd"
 	include "jamwiki-${jamWikiVersion}/jamwiki-war/src/main/resources/jamwiki-configuration.xml"
 
-	into "src/main/resources"
-
-	File rootDir = file("src/main/resources/jamwiki-${jamWikiVersion}")
-
-	rootDir.deleteDir()
+	includeEmptyDirs = false
+	into sourceSets.main.output.resourcesDir
 }
 
 dependencies {
@@ -32,6 +29,6 @@ dependencies {
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 }
 
-deploy {
+processResources {
 	dependsOn copyJAMWiki
 }

@@ -193,7 +193,7 @@
 		<if>
 			<condition function="IsElementNotPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No processes were found." />
+				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No processes were found." />
 			</then>
 			<else>
 				<execute function="AssertTextNotPresent" locator1="KaleoFormsAdmin#PROCESS_TABLE_NAME" value1="${kfProcessName}" />
@@ -526,7 +526,7 @@
 			</then>
 		</while>
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No processes were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No processes were found." />
 	</command>
 
 	<command name="viewFormsNotPresent">

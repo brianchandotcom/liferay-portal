@@ -82,7 +82,7 @@ public class DDLRecordTestHelper {
 			serviceContext);
 	}
 
-	public DDMFormValues getEmptyDDMFormValues() throws PortalException {
+	public DDMFormValues createEmptyDDMFormValues() throws PortalException {
 		return DDMFormValuesTestUtil.createDDMFormValues(getDDMForm());
 	}
 

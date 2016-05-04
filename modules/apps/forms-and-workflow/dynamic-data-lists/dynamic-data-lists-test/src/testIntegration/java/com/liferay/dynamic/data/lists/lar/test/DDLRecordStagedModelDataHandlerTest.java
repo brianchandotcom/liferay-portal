@@ -35,6 +35,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -52,7 +53,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -85,19 +85,20 @@ public class DDLRecordStagedModelDataHandlerTest
 			TransactionalTestRule.INSTANCE);
 
 	@Test
-	public void testWithDocumentLibraryField() throws Exception {
+	public void testExportImportWithDocumentLibraryField() throws Exception {
 		String documentLibraryFieldName = "Attachment";
 
-		DDLRecordSet recordSet = getRecordSetWithDocumentLibraryField(
+		DDLRecordSet recordSet = addRecordSetWithDocumentLibraryField(
 			documentLibraryFieldName);
 
 		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
 			stagingGroup, recordSet);
 
-		DDMFormValues ddmFormValues = recordTestHelper.getEmptyDDMFormValues();
+		DDMFormValues ddmFormValues =
+			recordTestHelper.createEmptyDDMFormValues();
 
 		DDMFormFieldValue ddmFormFieldValue =
-			getDocumentLibraryDDMFormFieldValue(
+			createDocumentLibraryDDMFormFieldValue(
 				ddmFormValues.getDefaultLocale(), documentLibraryFieldName);
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
@@ -115,19 +116,22 @@ public class DDLRecordStagedModelDataHandlerTest
 	}
 
 	@Test
-	public void testWithEmptyDocumentLibraryField() throws Exception {
+	public void testExportImpotWithEmptyDocumentLibraryField()
+		throws Exception {
+
 		String documentLibraryFieldName = "Attachment";
 
-		DDLRecordSet recordSet = getRecordSetWithDocumentLibraryField(
+		DDLRecordSet recordSet = addRecordSetWithDocumentLibraryField(
 			documentLibraryFieldName);
 
 		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
 			stagingGroup, recordSet);
 
-		DDMFormValues ddmFormValues = recordTestHelper.getEmptyDDMFormValues();
+		DDMFormValues ddmFormValues =
+			recordTestHelper.createEmptyDDMFormValues();
 
 		DDMFormFieldValue ddmFormFieldValue =
-			getEmptyDocumentLibraryDDMFormFieldValue(
+			createEmptyDocumentLibraryDDMFormFieldValue(
 				ddmFormValues.getDefaultLocale(), documentLibraryFieldName);
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
@@ -183,76 +187,7 @@ public class DDLRecordStagedModelDataHandlerTest
 		return dependentStagedModelsMap;
 	}
 
-	@Override
-	protected StagedModel addStagedModel(
-			Group group,
-			Map<String, List<StagedModel>> dependentStagedModelsMap)
-		throws Exception {
-
-		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			DDLRecordSet.class.getSimpleName());
-
-		DDLRecordSet recordSet = (DDLRecordSet)dependentStagedModels.get(0);
-
-		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
-			group, recordSet);
-
-		return recordTestHelper.addRecord();
-	}
-
-	protected DDMFormFieldValue getDocumentLibraryDDMFormFieldValue(
-			Locale locale, String fieldName)
-		throws Exception {
-
-		String fileName = "attachment.txt";
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				stagingGroup.getGroupId(), TestPropsValues.getUserId());
-
-		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
-			ContentTypes.TEXT_PLAIN,
-			FileUtil.getBytes(getClass(), "dependencies/" + fileName),
-			serviceContext);
-
-		DDMFormFieldValue ddmFormFieldValue =
-			getEmptyDocumentLibraryDDMFormFieldValue(locale, fieldName);
-
-		JSONObject fieldValueJSONObject = JSONFactoryUtil.createJSONObject();
-
-		fieldValueJSONObject.put(
-			"groupId", String.valueOf(fileEntry.getGroupId()));
-		fieldValueJSONObject.put("uuid", fileEntry.getUuid());
-
-		Value value = ddmFormFieldValue.getValue();
-
-		value.addString(locale, fieldValueJSONObject.toJSONString());
-
-		return ddmFormFieldValue;
-	}
-
-	protected DDMFormFieldValue getEmptyDocumentLibraryDDMFormFieldValue(
-			Locale locale, String fieldName)
-		throws Exception {
-
-		JSONObject fieldValueJSONObject = JSONFactoryUtil.createJSONObject();
-
-		LocalizedValue localizedValue = new LocalizedValue();
-
-		localizedValue.addString(locale, fieldValueJSONObject.toJSONString());
-
-		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
-
-		ddmFormFieldValue.setInstanceId(StringUtil.randomString());
-		ddmFormFieldValue.setName(fieldName);
-		ddmFormFieldValue.setValue(localizedValue);
-
-		return ddmFormFieldValue;
-	}
-
-	protected DDLRecordSet getRecordSetWithDocumentLibraryField(
+	protected DDLRecordSet addRecordSetWithDocumentLibraryField(
 			String documentLibraryFieldName)
 		throws Exception {
 
@@ -272,6 +207,70 @@ public class DDLRecordStagedModelDataHandlerTest
 			stagingGroup);
 
 		return recordSetTestHelper.addRecordSet(ddmStructure);
+	}
+
+	@Override
+	protected StagedModel addStagedModel(
+			Group group,
+			Map<String, List<StagedModel>> dependentStagedModelsMap)
+		throws Exception {
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			DDLRecordSet.class.getSimpleName());
+
+		DDLRecordSet recordSet = (DDLRecordSet)dependentStagedModels.get(0);
+
+		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
+			group, recordSet);
+
+		return recordTestHelper.addRecord();
+	}
+
+	protected DDMFormFieldValue createDocumentLibraryDDMFormFieldValue(
+			Locale locale, String fieldName)
+		throws Exception {
+
+		String fileName = "attachment.txt";
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), TestPropsValues.getUserId());
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+			ContentTypes.TEXT_PLAIN,
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName),
+			serviceContext);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			createEmptyDocumentLibraryDDMFormFieldValue(locale, fieldName);
+
+		JSONObject fieldValueJSONObject = JSONFactoryUtil.createJSONObject();
+
+		fieldValueJSONObject.put(
+			"groupId", String.valueOf(fileEntry.getGroupId()));
+		fieldValueJSONObject.put("uuid", fileEntry.getUuid());
+
+		Value value = ddmFormFieldValue.getValue();
+
+		value.addString(locale, fieldValueJSONObject.toJSONString());
+
+		return ddmFormFieldValue;
+	}
+
+	protected DDMFormFieldValue createEmptyDocumentLibraryDDMFormFieldValue(
+			Locale locale, String fieldName)
+		throws Exception {
+
+		LocalizedValue localizedValue = new LocalizedValue();
+
+		JSONObject fieldValueJSONObject = JSONFactoryUtil.createJSONObject();
+
+		localizedValue.addString(locale, fieldValueJSONObject.toJSONString());
+
+		return DDMFormValuesTestUtil.createDDMFormFieldValue(
+			fieldName, localizedValue);
 	}
 
 	@Override

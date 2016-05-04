@@ -226,7 +226,7 @@ public class DDMFormValuesExportImportContentProcessor
 				long groupId = GetterUtil.getLong(jsonObject.get("groupId"));
 				String uuid = jsonObject.getString("uuid");
 
-				if (Validator.isNull(groupId) || Validator.isNull(uuid)) {
+				if ((groupId == 0) || Validator.isNull(uuid)) {
 					continue;
 				}
 
@@ -298,7 +298,6 @@ public class DDMFormValuesExportImportContentProcessor
 				PortletDataContext portletDataContext, JSONObject jsonObject)
 			throws PortalException {
 
-			FileEntry fileEntry = null;
 			Map<Long, Long> groupIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					Group.class);
@@ -308,9 +307,9 @@ public class DDMFormValuesExportImportContentProcessor
 
 			groupId = MapUtil.getLong(groupIds, groupId, groupId);
 
-			if (Validator.isNotNull(groupId) && Validator.isNotNull(uuid)) {
+			if ((groupId > 0) && Validator.isNotNull(uuid)) {
 				try {
-					fileEntry = _dlAppService.getFileEntryByUuidAndGroupId(
+					return _dlAppService.getFileEntryByUuidAndGroupId(
 						uuid, groupId);
 				}
 				catch (NoSuchFileEntryException nsfee) {
@@ -322,7 +321,7 @@ public class DDMFormValuesExportImportContentProcessor
 				}
 			}
 
-			return fileEntry;
+			return null;
 		}
 
 		protected String toJSON(FileEntry fileEntry, String type) {

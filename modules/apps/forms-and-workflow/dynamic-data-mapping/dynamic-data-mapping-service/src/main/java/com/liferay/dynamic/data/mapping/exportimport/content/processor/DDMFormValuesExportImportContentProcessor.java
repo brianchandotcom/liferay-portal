@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.Locale;
@@ -225,6 +226,10 @@ public class DDMFormValuesExportImportContentProcessor
 				long groupId = GetterUtil.getLong(jsonObject.get("groupId"));
 				String uuid = jsonObject.getString("uuid");
 
+				if ((groupId == 0) || Validator.isNull(uuid)) {
+					continue;
+				}
+
 				FileEntry fileEntry =
 					_dlAppService.getFileEntryByUuidAndGroupId(uuid, groupId);
 
@@ -302,19 +307,21 @@ public class DDMFormValuesExportImportContentProcessor
 
 			groupId = MapUtil.getLong(groupIds, groupId, groupId);
 
-			try {
-				return _dlAppService.getFileEntryByUuidAndGroupId(
-					uuid, groupId);
-			}
-			catch (NoSuchFileEntryException nsfee) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to find file entry with uuid " + uuid +
-							" and groupId " + groupId);
+			if ((groupId > 0) && Validator.isNotNull(uuid)) {
+				try {
+					return _dlAppService.getFileEntryByUuidAndGroupId(
+						uuid, groupId);
 				}
-
-				return null;
+				catch (NoSuchFileEntryException nsfee) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to find file entry with uuid " + uuid +
+								" and groupId " + groupId);
+					}
+				}
 			}
+
+			return null;
 		}
 
 		protected String toJSON(FileEntry fileEntry, String type) {

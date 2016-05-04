@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,9 +46,7 @@ public class DDLRecordTestHelper {
 	}
 
 	public DDLRecord addRecord() throws Exception {
-		DDMStructure ddmStructure = _recordSet.getDDMStructure();
-
-		DDMForm ddmForm = ddmStructure.getDDMForm();
+		DDMForm ddmForm = getDDMForm();
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm,
@@ -83,6 +82,10 @@ public class DDLRecordTestHelper {
 			serviceContext);
 	}
 
+	public DDMFormValues createEmptyDDMFormValues() throws PortalException {
+		return DDMFormValuesTestUtil.createDDMFormValues(getDDMForm());
+	}
+
 	public DDLRecordSet getRecordSet() {
 		return _recordSet;
 	}
@@ -99,6 +102,12 @@ public class DDLRecordTestHelper {
 
 		return DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 			name, value);
+	}
+
+	protected DDMForm getDDMForm() throws PortalException {
+		DDMStructure ddmStructure = _recordSet.getDDMStructure();
+
+		return ddmStructure.getDDMForm();
 	}
 
 	private final Group _group;

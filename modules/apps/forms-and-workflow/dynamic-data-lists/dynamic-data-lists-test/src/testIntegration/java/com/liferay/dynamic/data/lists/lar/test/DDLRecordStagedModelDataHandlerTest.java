@@ -15,35 +15,57 @@
 package com.liferay.dynamic.data.lists.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
 import com.liferay.dynamic.data.lists.helper.DDLRecordTestHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -61,6 +83,70 @@ public class DDLRecordStagedModelDataHandlerTest
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE,
 			TransactionalTestRule.INSTANCE);
+
+	@Test
+	public void testExportImportWithDocumentLibraryField() throws Exception {
+		String documentLibraryFieldName = "Attachment";
+
+		DDLRecordSet recordSet = addRecordSetWithDocumentLibraryField(
+			documentLibraryFieldName);
+
+		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
+			stagingGroup, recordSet);
+
+		DDMFormValues ddmFormValues =
+			recordTestHelper.createEmptyDDMFormValues();
+
+		DDMFormFieldValue ddmFormFieldValue =
+			createDocumentLibraryDDMFormFieldValue(
+				ddmFormValues.getDefaultLocale(), documentLibraryFieldName);
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		DDLRecord ddlRecord = recordTestHelper.addRecord(
+			ddmFormValues, WorkflowConstants.ACTION_PUBLISH);
+
+		exportImportStagedModel(ddlRecord);
+
+		DDLRecord importedDDLRecord =
+			DDLRecordLocalServiceUtil.getDDLRecordByUuidAndGroupId(
+				ddlRecord.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertNotNull(importedDDLRecord);
+	}
+
+	@Test
+	public void testExportImpotWithEmptyDocumentLibraryField()
+		throws Exception {
+
+		String documentLibraryFieldName = "Attachment";
+
+		DDLRecordSet recordSet = addRecordSetWithDocumentLibraryField(
+			documentLibraryFieldName);
+
+		DDLRecordTestHelper recordTestHelper = new DDLRecordTestHelper(
+			stagingGroup, recordSet);
+
+		DDMFormValues ddmFormValues =
+			recordTestHelper.createEmptyDDMFormValues();
+
+		DDMFormFieldValue ddmFormFieldValue =
+			createEmptyDocumentLibraryDDMFormFieldValue(
+				ddmFormValues.getDefaultLocale(), documentLibraryFieldName);
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		DDLRecord ddlRecord = recordTestHelper.addRecord(
+			ddmFormValues, WorkflowConstants.ACTION_PUBLISH);
+
+		exportImportStagedModel(ddlRecord);
+
+		DDLRecord importedDDLRecord =
+			DDLRecordLocalServiceUtil.getDDLRecordByUuidAndGroupId(
+				ddlRecord.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertNotNull(importedDDLRecord);
+	}
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
@@ -101,6 +187,28 @@ public class DDLRecordStagedModelDataHandlerTest
 		return dependentStagedModelsMap;
 	}
 
+	protected DDLRecordSet addRecordSetWithDocumentLibraryField(
+			String documentLibraryFieldName)
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField fileEntryFormField = DDMFormTestUtil.createDDMFormField(
+			documentLibraryFieldName, documentLibraryFieldName,
+			DDMFormFieldType.DOCUMENT_LIBRARY, "document-library", true, false,
+			false);
+
+		ddmForm.addDDMFormField(fileEntryFormField);
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			stagingGroup.getGroupId(), DDLRecordSet.class.getName(), ddmForm);
+
+		DDLRecordSetTestHelper recordSetTestHelper = new DDLRecordSetTestHelper(
+			stagingGroup);
+
+		return recordSetTestHelper.addRecordSet(ddmStructure);
+	}
+
 	@Override
 	protected StagedModel addStagedModel(
 			Group group,
@@ -116,6 +224,53 @@ public class DDLRecordStagedModelDataHandlerTest
 			group, recordSet);
 
 		return recordTestHelper.addRecord();
+	}
+
+	protected DDMFormFieldValue createDocumentLibraryDDMFormFieldValue(
+			Locale locale, String fieldName)
+		throws Exception {
+
+		String fileName = "attachment.txt";
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), TestPropsValues.getUserId());
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+			ContentTypes.TEXT_PLAIN,
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName),
+			serviceContext);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			createEmptyDocumentLibraryDDMFormFieldValue(locale, fieldName);
+
+		JSONObject fieldValueJSONObject = JSONFactoryUtil.createJSONObject();
+
+		fieldValueJSONObject.put(
+			"groupId", String.valueOf(fileEntry.getGroupId()));
+		fieldValueJSONObject.put("uuid", fileEntry.getUuid());
+
+		Value value = ddmFormFieldValue.getValue();
+
+		value.addString(locale, fieldValueJSONObject.toJSONString());
+
+		return ddmFormFieldValue;
+	}
+
+	protected DDMFormFieldValue createEmptyDocumentLibraryDDMFormFieldValue(
+			Locale locale, String fieldName)
+		throws Exception {
+
+		LocalizedValue localizedValue = new LocalizedValue();
+
+		JSONObject fieldValueJSONObject = JSONFactoryUtil.createJSONObject();
+
+		localizedValue.addString(locale, fieldValueJSONObject.toJSONString());
+
+		return DDMFormValuesTestUtil.createDDMFormFieldValue(
+			fieldName, localizedValue);
 	}
 
 	@Override

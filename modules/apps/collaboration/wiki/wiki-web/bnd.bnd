@@ -5,4 +5,3 @@ Export-Package: com.liferay.wiki.web.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki
 Web-ContextPath: /wiki-web
--liferay-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class

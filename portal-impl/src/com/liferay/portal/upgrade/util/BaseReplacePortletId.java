@@ -21,7 +21,7 @@ import java.sql.SQLException;
 /**
  * @author Adolfo Pérez
  */
-public class ReplacePortletId extends UpgradePortletId {
+public class BaseReplacePortletId extends UpgradePortletId {
 
 	protected boolean hasPortlet(String portletId) throws SQLException {
 		return hasRow(

@@ -18,7 +18,7 @@ import com.liferay.notifications.web.constants.NotificationsPortletKeys;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.util.ReplacePortletId;
+import com.liferay.portal.upgrade.util.BaseReplacePortletId;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
@@ -61,7 +61,7 @@ public class NotificationsWebUpgrade implements UpgradeStepRegistrator {
 				UpgradeUserNotificationEvent(
 					_userNotificationEventLocalService));
 
-		UpgradePortletId upgradePortletId = new ReplacePortletId() {
+		UpgradeStep upgradePortletId = new BaseReplacePortletId() {
 
 			@Override
 			protected String[][] getRenamePortletIdsArray() {

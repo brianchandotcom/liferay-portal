@@ -72,6 +72,7 @@ page import="com.liferay.portal.kernel.util.comparator.LayoutRevisionCreateDateC
 page import="com.liferay.portal.kernel.util.comparator.LayoutRevisionIdComparator" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowTask" %><%@
+page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.staging.constants.StagingProcessesWebKeys" %>
 
 <%@ page import="java.util.ArrayList" %><%@

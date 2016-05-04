@@ -27,10 +27,13 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -219,7 +222,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 			group = layout.getGroup();
 		}
 
-		if (group.hasStagingGroup()) {
+		if (group.hasStagingGroup() && !_STAGING_DISABLE_LIVE_SITE_LOCKING) {
 			return null;
 		}
 
@@ -425,6 +428,10 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	}
 
 	private static final String[] _AVAILABLE_LANGUAGE_IDS = new String[0];
+
+	private static final boolean _STAGING_DISABLE_LIVE_SITE_LOCKING =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.STAGING_DISABLE_LIVE_SITE_LOCKING));
 
 	private static final DDMFormValuesReader _nullDDMFormValuesReader =
 		new NullDDMFormValuesReader();

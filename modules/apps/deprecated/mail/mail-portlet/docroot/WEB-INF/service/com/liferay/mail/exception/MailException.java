@@ -56,10 +56,11 @@ public class MailException extends PortalException {
 	public static final int MESSAGE_NOT_SELECTED = 17;
 
 	public MailException() {
+		this(0);
 	}
 
 	public MailException(int type) {
-		_type = type;
+		this(type, (String)null);
 	}
 
 	public MailException(int type, String value) {
@@ -68,9 +69,7 @@ public class MailException extends PortalException {
 	}
 
 	public MailException(int type, Throwable cause) {
-		super(cause);
-
-		_type = type;
+		this(type, cause, null);
 	}
 
 	public MailException(int type, Throwable cause, String value) {
@@ -82,14 +81,23 @@ public class MailException extends PortalException {
 
 	public MailException(String msg) {
 		super(msg);
+
+		_type = 0;
+		_value = null;
 	}
 
 	public MailException(String msg, Throwable cause) {
 		super(msg, cause);
+
+		_type = 0;
+		_value = null;
 	}
 
 	public MailException(Throwable cause) {
 		super(cause);
+
+		_type = 0;
+		_value = null;
 	}
 
 	public int getType() {

@@ -69,6 +69,9 @@ public class IMAPMailbox extends BaseMailbox {
 		if (account != null) {
 			_imapAccessor = new IMAPAccessor(user, account, password);
 		}
+		else {
+			_imapAccessor = null;
+		}
 	}
 
 	public Folder addFolder(String displayName) throws PortalException {

@@ -22,6 +22,7 @@ import java.io.File;
 public class MailFile {
 
 	public MailFile(File file, String fileName, long size) {
+		_contentPath = null;
 		_file = file;
 		_fileName = fileName;
 		_size = size;
@@ -29,6 +30,7 @@ public class MailFile {
 
 	public MailFile(String contentPath, String fileName, long size) {
 		_contentPath = contentPath;
+		_file = null;
 		_fileName = fileName;
 		_size = size;
 	}

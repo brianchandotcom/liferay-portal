@@ -31,7 +31,7 @@ unzip {
 
 	into "src/main/resources"
 
-	File rootDir = new File("src/main/resources/jamwiki-${jamwikiVersion}")
+	File rootDir = file("src/main/resources/jamwiki-${jamwikiVersion}")
 
 	rootDir.deleteDir()
 }

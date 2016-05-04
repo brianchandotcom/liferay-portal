@@ -84,12 +84,6 @@ public class ContactsCenterUserNotificationHandler
 			return null;
 		}
 
-		if (socialRequest.getStatus() !=
-				SocialRequestConstants.STATUS_PENDING) {
-
-			return StringPool.BLANK;
-		}
-
 		String title = StringPool.BLANK;
 
 		if (socialRequest.getType() ==
@@ -106,6 +100,16 @@ public class ContactsCenterUserNotificationHandler
 				resourceBundle, serviceContext.getLocale(),
 				"request-social-networking-summary-add-connection",
 				new Object[] {creatorUserName});
+		}
+
+		if ((socialRequest.getStatus() !=
+				SocialRequestConstants.STATUS_PENDING) ||
+			(socialRequest.getCreateDate() >
+				userNotificationEvent.getTimestamp())) {
+
+			return StringUtil.replace(
+				_BODY_TEMPLATE_DEFAULT, new String[] {"[$BODY$]", "[$TITLE$]"},
+				new String[] {StringPool.BLANK, title});
 		}
 
 		LiferayPortletResponse liferayPortletResponse =
@@ -194,6 +198,10 @@ public class ContactsCenterUserNotificationHandler
 		_resourceBundleLoader = new AggregateResourceBundleLoader(
 			resourceBundleLoader, LanguageResources.RESOURCE_BUNDLE_LOADER);
 	}
+
+	private static final String _BODY_TEMPLATE_DEFAULT =
+		"<div class=\"title\">[$TITLE$]</div><div class=\"body\">[$BODY$]" +
+			"</div>";
 
 	private ResourceBundleLoader _resourceBundleLoader;
 

@@ -20,23 +20,22 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
 import com.liferay.push.notifications.service.PushNotificationsDeviceLocalService;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Silvio Santos
  * @author Bruno Farache
  */
-@Component(
-	immediate = true,
-	property = {"destination.name=" + DestinationNames.PUSH_NOTIFICATION},
-	service = MessageListener.class
-)
 public class PushNotificationsMessageListener extends BaseMessageListener {
+
+	public PushNotificationsMessageListener(
+		PushNotificationsDeviceLocalService
+			pushNotificationsDeviceLocalService) {
+
+		_pushNotificationsDeviceLocalService =
+			pushNotificationsDeviceLocalService;
+	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
@@ -62,19 +61,10 @@ public class PushNotificationsMessageListener extends BaseMessageListener {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setPushNotificationsDeviceLocalService(
-		PushNotificationsDeviceLocalService
-			pushNotificationsDeviceLocalService) {
-
-		_pushNotificationsDeviceLocalService =
-			pushNotificationsDeviceLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		PushNotificationsMessageListener.class);
 
-	private PushNotificationsDeviceLocalService
+	private final PushNotificationsDeviceLocalService
 		_pushNotificationsDeviceLocalService;
 
 }

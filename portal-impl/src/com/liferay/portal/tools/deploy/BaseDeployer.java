@@ -764,7 +764,9 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 			excludes += "/WEB-INF/web.xml";
 
-			WarTask.war(srcFile, tempDir, excludes, webXml);
+			WarTask.war(
+				srcFile, new File(tempDir, displayName + ".war"), excludes,
+				webXml);
 
 			if (isJEEDeploymentEnabled()) {
 				File tempWarDir = new File(

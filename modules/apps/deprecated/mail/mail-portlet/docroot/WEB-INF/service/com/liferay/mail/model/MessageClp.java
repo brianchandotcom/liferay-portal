@@ -711,15 +711,15 @@ public class MessageClp extends BaseModelImpl<Message> implements Message {
 	}
 
 	@Override
-	public boolean hasFlag(int flag) {
+	public long getGroupId() {
 		try {
-			String methodName = "hasFlag";
+			String methodName = "getGroupId";
 
-			Class<?>[] parameterTypes = new Class<?>[] { int.class };
+			Class<?>[] parameterTypes = new Class<?>[] {  };
 
-			Object[] parameterValues = new Object[] { flag };
+			Object[] parameterValues = new Object[] {  };
 
-			Boolean returnObj = (Boolean)invokeOnRemoteModel(methodName,
+			Long returnObj = (Long)invokeOnRemoteModel(methodName,
 					parameterTypes, parameterValues);
 
 			return returnObj;
@@ -730,15 +730,15 @@ public class MessageClp extends BaseModelImpl<Message> implements Message {
 	}
 
 	@Override
-	public long getGroupId() {
+	public boolean hasFlag(int flag) {
 		try {
-			String methodName = "getGroupId";
+			String methodName = "hasFlag";
 
-			Class<?>[] parameterTypes = new Class<?>[] {  };
+			Class<?>[] parameterTypes = new Class<?>[] { int.class };
 
-			Object[] parameterValues = new Object[] {  };
+			Object[] parameterValues = new Object[] { flag };
 
-			Long returnObj = (Long)invokeOnRemoteModel(methodName,
+			Boolean returnObj = (Boolean)invokeOnRemoteModel(methodName,
 					parameterTypes, parameterValues);
 
 			return returnObj;
@@ -1078,7 +1078,7 @@ public class MessageClp extends BaseModelImpl<Message> implements Message {
 	private long _remoteMessageId;
 	private String _contentType;
 	private BaseModel<?> _messageRemoteModel;
-	private Class<?> _clpSerializerClass = com.liferay.mail.service.ClpSerializer.class;
+	private Class<?> _clpSerializerClass = ClpSerializer.class;
 	private boolean _entityCacheEnabled;
 	private boolean _finderCacheEnabled;
 }

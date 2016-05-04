@@ -418,19 +418,19 @@ public interface MessageModel extends AuditedModel, BaseModel<Message>,
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.mail.model.Message message);
+	public int compareTo(Message message);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.mail.model.Message> toCacheModel();
+	public CacheModel<Message> toCacheModel();
 
 	@Override
-	public com.liferay.mail.model.Message toEscapedModel();
+	public Message toEscapedModel();
 
 	@Override
-	public com.liferay.mail.model.Message toUnescapedModel();
+	public Message toUnescapedModel();
 
 	@Override
 	public String toString();

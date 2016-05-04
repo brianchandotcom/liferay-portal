@@ -242,19 +242,19 @@ public interface AttachmentModel extends BaseModel<Attachment>, ShardedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.mail.model.Attachment attachment);
+	public int compareTo(Attachment attachment);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.mail.model.Attachment> toCacheModel();
+	public CacheModel<Attachment> toCacheModel();
 
 	@Override
-	public com.liferay.mail.model.Attachment toEscapedModel();
+	public Attachment toEscapedModel();
 
 	@Override
-	public com.liferay.mail.model.Attachment toUnescapedModel();
+	public Attachment toUnescapedModel();
 
 	@Override
 	public String toString();

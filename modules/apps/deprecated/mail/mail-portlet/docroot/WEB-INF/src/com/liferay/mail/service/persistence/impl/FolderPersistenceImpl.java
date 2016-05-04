@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -55,6 +54,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -676,7 +676,7 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 			Folder folder = (Folder)result;
 
 			if ((accountId != folder.getAccountId()) ||
-					!Validator.equals(fullName, folder.getFullName())) {
+					!Objects.equals(fullName, folder.getFullName())) {
 				result = null;
 			}
 		}

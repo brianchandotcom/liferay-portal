@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -136,6 +136,16 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	}
 
 	@Override
+	public Folder toEscapedModel() {
+		return new FolderWrapper(_folder.toEscapedModel());
+	}
+
+	@Override
+	public Folder toUnescapedModel() {
+		return new FolderWrapper(_folder.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _folder.isCachedModel();
 	}
@@ -156,22 +166,12 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	}
 
 	@Override
-	public com.liferay.mail.model.Folder toEscapedModel() {
-		return new FolderWrapper(_folder.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.mail.model.Folder toUnescapedModel() {
-		return new FolderWrapper(_folder.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.mail.model.Folder> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<Folder> toCacheModel() {
 		return _folder.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(com.liferay.mail.model.Folder folder) {
+	public int compareTo(Folder folder) {
 		return _folder.compareTo(folder);
 	}
 
@@ -488,7 +488,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 
 		FolderWrapper folderWrapper = (FolderWrapper)obj;
 
-		if (Validator.equals(_folder, folderWrapper._folder)) {
+		if (Objects.equals(_folder, folderWrapper._folder)) {
 			return true;
 		}
 

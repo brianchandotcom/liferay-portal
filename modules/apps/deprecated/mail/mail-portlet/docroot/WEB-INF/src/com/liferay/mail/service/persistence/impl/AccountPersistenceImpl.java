@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -56,6 +55,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -675,7 +675,7 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 			Account account = (Account)result;
 
 			if ((userId != account.getUserId()) ||
-					!Validator.equals(address, account.getAddress())) {
+					!Objects.equals(address, account.getAddress())) {
 				result = null;
 			}
 		}

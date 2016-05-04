@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -246,6 +246,16 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 		}
 	}
 
+	@Override
+	public Account toEscapedModel() {
+		return new AccountWrapper(_account.toEscapedModel());
+	}
+
+	@Override
+	public Account toUnescapedModel() {
+		return new AccountWrapper(_account.toUnescapedModel());
+	}
+
 	/**
 	* Returns the default sender of this account.
 	*
@@ -367,22 +377,12 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	}
 
 	@Override
-	public com.liferay.mail.model.Account toEscapedModel() {
-		return new AccountWrapper(_account.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.mail.model.Account toUnescapedModel() {
-		return new AccountWrapper(_account.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.mail.model.Account> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<Account> toCacheModel() {
 		return _account.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(com.liferay.mail.model.Account account) {
+	public int compareTo(Account account) {
 		return _account.compareTo(account);
 	}
 
@@ -979,7 +979,7 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 
 		AccountWrapper accountWrapper = (AccountWrapper)obj;
 
-		if (Validator.equals(_account, accountWrapper._account)) {
+		if (Objects.equals(_account, accountWrapper._account)) {
 			return true;
 		}
 

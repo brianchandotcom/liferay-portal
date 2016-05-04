@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -205,6 +205,16 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	}
 
 	@Override
+	public Message toEscapedModel() {
+		return new MessageWrapper(_message.toEscapedModel());
+	}
+
+	@Override
+	public Message toUnescapedModel() {
+		return new MessageWrapper(_message.toUnescapedModel());
+	}
+
+	@Override
 	public boolean hasAttachments() {
 		return _message.hasAttachments();
 	}
@@ -235,22 +245,12 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	}
 
 	@Override
-	public com.liferay.mail.model.Message toEscapedModel() {
-		return new MessageWrapper(_message.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.mail.model.Message toUnescapedModel() {
-		return new MessageWrapper(_message.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.mail.model.Message> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<Message> toCacheModel() {
 		return _message.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(com.liferay.mail.model.Message message) {
+	public int compareTo(Message message) {
 		return _message.compareTo(message);
 	}
 
@@ -773,7 +773,7 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 
 		MessageWrapper messageWrapper = (MessageWrapper)obj;
 
-		if (Validator.equals(_message, messageWrapper._message)) {
+		if (Objects.equals(_message, messageWrapper._message)) {
 			return true;
 		}
 

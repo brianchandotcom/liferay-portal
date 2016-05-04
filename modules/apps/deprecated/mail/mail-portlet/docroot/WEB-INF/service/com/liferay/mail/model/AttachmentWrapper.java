@@ -20,12 +20,12 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -127,6 +127,16 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	}
 
 	@Override
+	public Attachment toEscapedModel() {
+		return new AttachmentWrapper(_attachment.toEscapedModel());
+	}
+
+	@Override
+	public Attachment toUnescapedModel() {
+		return new AttachmentWrapper(_attachment.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _attachment.isCachedModel();
 	}
@@ -147,22 +157,12 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	}
 
 	@Override
-	public com.liferay.mail.model.Attachment toEscapedModel() {
-		return new AttachmentWrapper(_attachment.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.mail.model.Attachment toUnescapedModel() {
-		return new AttachmentWrapper(_attachment.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.mail.model.Attachment> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<Attachment> toCacheModel() {
 		return _attachment.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(com.liferay.mail.model.Attachment attachment) {
+	public int compareTo(Attachment attachment) {
 		return _attachment.compareTo(attachment);
 	}
 
@@ -459,7 +459,7 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 
 		AttachmentWrapper attachmentWrapper = (AttachmentWrapper)obj;
 
-		if (Validator.equals(_attachment, attachmentWrapper._attachment)) {
+		if (Objects.equals(_attachment, attachmentWrapper._attachment)) {
 			return true;
 		}
 

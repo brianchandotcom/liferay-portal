@@ -11,7 +11,7 @@
 	<short-name>liferay-item-selector</short-name>
 	<uri>http://liferay.com/tld/item-selector</uri>
 	<tag>
-		<description>Creates a UI to select groups.<![CDATA[<br /><br />Example:<br /><img src="../images/group-selector.png"/>]]></description>
+		<description>Creates a UI to select scope groups (groups).<![CDATA[<br /><br />Example:<br /><img src="../images/group-selector.png"/>]]></description>
 		<name>group-selector</name>
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.GroupSelectorTag</tag-class>
 		<body-content>JSP</body-content>

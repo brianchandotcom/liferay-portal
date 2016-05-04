@@ -628,7 +628,9 @@
 			<var name="kfProgressStep" value="2" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="CPKaleoformsadminEditprocess#SELECTED_FIELD_SET" value1="${kfFieldSetName}" />
+		<var name="key_kfFieldSetName" value="${kfFieldSetName}" />
+
+		<execute function="AssertTextEquals" locator1="KaleoFormsAdminEditProcess#SELECTED_FIELD_SET" value1="${kfFieldSetName}" />
 
 		<execute macro="KaleoFormsAdmin#next" />
 	</command>

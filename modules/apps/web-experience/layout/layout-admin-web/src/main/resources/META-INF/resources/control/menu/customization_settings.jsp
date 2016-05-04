@@ -56,7 +56,7 @@ Map<String, Object> data = new HashMap<>();
 data.put("qa-id", "customizations");
 %>
 
-<li class="active control-menu-link control-menu-nav-item customization-link">
+<li class="active control-menu-link control-menu-nav-item customization-link visible-xs">
 	<liferay-ui:icon
 		data="<%= data %>"
 		icon="pencil"

@@ -461,6 +461,10 @@
 	<command name="publishWorkflow">
 		<execute macro="PortletEntry#publish" />
 
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Click" locator1="Icon#CLOSE" />
+
 		<execute macro="KaleoFormsAdmin#viewSelectedWorkflow">
 			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 			<var name="workflowDefinitionTitleEdit" value="${workflowDefinitionTitleEdit}" />

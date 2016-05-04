@@ -77,6 +77,12 @@ public class ContactsCenterUserNotificationHandler
 			return null;
 		}
 
+		if (socialRequest.getStatus() !=
+			SocialRequestConstants.STATUS_PENDING) {
+
+			return StringPool.BLANK;
+		}
+
 		String title = StringPool.BLANK;
 
 		if (socialRequest.getType() ==

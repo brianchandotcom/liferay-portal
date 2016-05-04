@@ -42,9 +42,21 @@ public class JenkinsStopBuildUtil {
 			TopLevelBuild topLevelBuild, String username, String password)
 		throws Exception {
 
-		_stopDownstreamBuilds(topLevelBuild, username, password);
+		stopDownstreamBuilds(topLevelBuild, username, password);
 
 		_stopBuild(topLevelBuild, username, password);
+	}
+
+	public static void stopDownstreamBuilds(
+			TopLevelBuild topLevelBuild, String username, String password)
+		throws Exception {
+
+		List<DownstreamBuild> downstreamBuilds =
+			topLevelBuild.getDownstreamBuilds("running");
+
+		for (DownstreamBuild downstreamBuild : downstreamBuilds) {
+			_stopBuild(downstreamBuild, username, password);
+		}
 	}
 
 	protected static String encodeAuthorizationFields(
@@ -117,18 +129,6 @@ public class JenkinsStopBuildUtil {
 
 		for (String downstreamURL : downstreamURLs) {
 			_stopBuild(downstreamURL, username, password);
-		}
-	}
-
-	private static void _stopDownstreamBuilds(
-			TopLevelBuild topLevelBuild, String username, String password)
-		throws Exception {
-
-		List<DownstreamBuild> downstreamBuilds =
-			topLevelBuild.getDownstreamBuilds("running");
-
-		for (DownstreamBuild downstreamBuild : downstreamBuilds) {
-			_stopBuild(downstreamBuild, username, password);
 		}
 	}
 

@@ -7,6 +7,7 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.exportimport.resources.importer", version: "1.0.4"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.journal.api", version: "2.0.1"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.shrinkwrap.osgi", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.3.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.3.0"
 }

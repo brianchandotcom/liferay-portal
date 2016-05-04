@@ -31,6 +31,9 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.shrinkwrap.osgi.api.BndProjectBuilder;
+
+import java.io.File;
 
 import java.net.URL;
 
@@ -39,6 +42,14 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.ArchiveAsset;
+import org.jboss.shrinkwrap.api.asset.UrlAsset;
+import org.jboss.shrinkwrap.api.exporter.ZipExporter;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -65,6 +76,25 @@ public class ResourcesImporterTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Deployment
+	public static JavaArchive create() {
+		BndProjectBuilder bndProjectBuilder = ShrinkWrap.create(
+			BndProjectBuilder.class);
+
+		bndProjectBuilder.setBndFile(new File("bnd.bnd"));
+
+		bndProjectBuilder.generateManifest(true);
+
+		JavaArchive javaArchive = bndProjectBuilder.as(JavaArchive.class);
+
+		javaArchive.add(
+			new ArchiveAsset(buildTestWebArchive(), ZipExporter.class),
+			"com/liferay/exportimport/resources/importer/test/dependencies/" +
+				"test.war");
+
+		return javaArchive;
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -161,6 +191,60 @@ public class ResourcesImporterTest {
 
 		Assert.assertEquals(2, portlets.size());
 	}
+
+	protected static void addWebInfResource(
+		WebArchive webArchive, String resourcePath) {
+
+		URL resource = ResourcesImporterTest.class.getResource(
+			_RESOURCES_BASE_PATH.concat(resourcePath));
+
+		webArchive.addAsWebInfResource(new UrlAsset(resource), resourcePath);
+	}
+
+	protected static WebArchive buildTestWebArchive() {
+		WebArchive webArchive = ShrinkWrap.create(WebArchive.class);
+
+		// Generic files
+
+		addWebInfResource(webArchive, "liferay-plugin-package.properties");
+
+		// Site map
+
+		addWebInfResource(
+			webArchive, "classes/resources-importer/sitemap.json");
+
+		// Document Library specific files
+
+		addWebInfResource(
+			webArchive,
+			"classes/resources-importer/document_library/documents/image1.jpg");
+		addWebInfResource(
+			webArchive,
+			"classes/resources-importer/document_library/documents/image2.jpg");
+
+		// Journal specific files
+
+		addWebInfResource(
+			webArchive,
+			"classes/resources-importer/journal/articles/BASIC_WEB_CONTENT/" +
+				"article1.html");
+		addWebInfResource(
+			webArchive,
+			"classes/resources-importer/journal/articles/BASIC_WEB_CONTENT/" +
+				"article2.html");
+		addWebInfResource(
+			webArchive,
+			"classes/resources-importer/journal/structures/" +
+				"BASIC_WEB_CONTENT.json");
+		addWebInfResource(
+			webArchive,
+			"classes/resources-importer/journal/templates/" +
+				"BASIC_WEB_CONTENT/BASIC_WEB_CONTENT.ftl");
+
+		return webArchive;
+	}
+
+	private static final String _RESOURCES_BASE_PATH = "dependencies/WEB-INF/";
 
 	private BundleContext _bundleContext;
 

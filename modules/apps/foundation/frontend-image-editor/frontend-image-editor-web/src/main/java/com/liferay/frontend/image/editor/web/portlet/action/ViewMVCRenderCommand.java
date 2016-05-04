@@ -157,26 +157,27 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 			Map<String, Object> context = new HashMap<>();
 
-			List<Map<String, Object>> controls = new ArrayList<>();
+			List<Map<String, Object>> controlContexts = new ArrayList<>();
 			String icon = StringPool.BLANK;
 
 			for (ImageEditorCapabilityDescriptor
 					imageEditorCapabilityDescriptor :
 						imageEditorCapabilityDescriptors) {
 
-				Map<String, Object> control = new HashMap<>();
+				Map<String, Object> controlContext = new HashMap<>();
 
 				ImageEditorCapability imageEditorCapability =
 					imageEditorCapabilityDescriptor.getImageEditorCapability();
 
-				control.put(
+				controlContext.put(
 					"label",
 					imageEditorCapability.getLabel(themeDisplay.getLocale()));
 
 				ServletContext servletContext =
 					imageEditorCapability.getServletContext();
 
-				control.put("modulePath", servletContext.getContextPath());
+				controlContext.put(
+					"modulePath", servletContext.getContextPath());
 
 				Map<String, Object> properties =
 					imageEditorCapabilityDescriptor.getProperties();
@@ -186,21 +187,21 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 						"com.liferay.frontend.image.editor.capability." +
 							"controls"));
 
-				control.put("variant", variant);
+				controlContext.put("variant", variant);
 
 				HttpServletRequest request = PortalUtil.getHttpServletRequest(
 					renderRequest);
 
-				imageEditorCapability.prepareContext(control, request);
+				imageEditorCapability.prepareContext(controlContext, request);
 
-				controls.add(control);
+				controlContexts.add(controlContext);
 
 				icon = GetterUtil.getString(
 					properties.get(
 						"com.liferay.frontend.image.editor.capability.icon"));
 			}
 
-			context.put("controls", controls);
+			context.put("controls", controlContexts);
 			context.put("icon", icon);
 
 			imageEditorToolsContexts.add(context);

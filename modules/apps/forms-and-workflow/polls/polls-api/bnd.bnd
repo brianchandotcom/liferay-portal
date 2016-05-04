@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Polls API
 Bundle-SymbolicName: com.liferay.polls.api
-Bundle-Version: 2.0.1
+Bundle-Version: 3.0.0
 Export-Package: com.liferay.polls.*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Polls

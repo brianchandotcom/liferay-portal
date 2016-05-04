@@ -179,7 +179,10 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(target = "(javax.portlet.name=59)", unbind = "-")
+	@Reference(
+		target = "(javax.portlet.name=" + PollsPortletKeys.POLLS_DISPLAY + ")",
+		unbind = "-"
+	)
 	protected void setPollsPortlet(Portlet portlet) {
 	}
 

@@ -20,8 +20,10 @@ package com.liferay.polls.constants;
  */
 public class PollsPortletKeys {
 
-	public static final String POLLS = "25_WAR_pollsweb";
+	public static final String POLLS =
+		"com_liferay_polls_web_portlet_PollsPortlet";
 
-	public static final String POLLS_DISPLAY = "59_WAR_pollsweb";
+	public static final String POLLS_DISPLAY =
+		"com_liferay_polls_web_portlet_PollsDisplayPortlet";
 
 }

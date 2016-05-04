@@ -632,7 +632,6 @@ $horizontal-spacing: 35px;
 
 	.control-label {
 		float: none;
-		line-height: 12px;
 		margin-bottom: 0;
 		word-wrap: break-word;
 	}
@@ -812,13 +811,11 @@ $horizontal-spacing: 35px;
 		color: #4A90E2;
 	}
 
-	.form-builder-field + .form-builder-field-list-add-container,
-	.form-builder-field-move-target:last-child {
+	.form-builder-field + .form-builder-field-list-add-container {
 		margin-top: -22px;
 	}
 
-	.form-builder-field-list-add-container.between-fields,
-	.form-builder-field-move-target.between-fields {
+	.form-builder-field-list-add-container.between-fields {
 		margin-top: -12px;
 	}
 
@@ -1000,7 +997,6 @@ $horizontal-spacing: 35px;
 		font-size: 11px;
 	}
 
-	.layout-builder-move-cut-button.layout-builder-move-cut-row-button,
 	.layout-builder-remove-row-button {
 		background: #FFF;
 		border: 1px solid #65B6F0;
@@ -1022,10 +1018,6 @@ $horizontal-spacing: 35px;
 				color: #FFF;
 			}
 		}
-	}
-
-	.layout-builder-move-cut-button.layout-builder-move-cut-row-button {
-		right: 30px;
 	}
 
 	.layout-builder-move-row-target {

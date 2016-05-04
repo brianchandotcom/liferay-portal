@@ -35,27 +35,22 @@ public class DDMFormValuesMergerImpl implements DDMFormValuesMerger {
 	public DDMFormValues merge(
 		DDMFormValues newDDMFormValues, DDMFormValues existingDDMFormValues) {
 
-		List<DDMFormFieldValue> mergeDDMFormFieldValues =
+		List<DDMFormFieldValue> mergedDDMFormFieldValues =
 			mergeDDMFormFieldValues(
 				newDDMFormValues.getDDMFormFieldValues(),
 				existingDDMFormValues.getDDMFormFieldValues());
 
-		existingDDMFormValues.setDDMFormFieldValues(mergeDDMFormFieldValues);
+		existingDDMFormValues.setDDMFormFieldValues(mergedDDMFormFieldValues);
 
 		return existingDDMFormValues;
 	}
 
-	protected DDMFormFieldValue matchDDMFormFieldValueByName(
-		DDMFormFieldValue expectedDDMFormFieldValue,
-		List<DDMFormFieldValue> actualDDMFormFieldValues) {
+	protected DDMFormFieldValue getDDMFormFieldValueByName(
+		List<DDMFormFieldValue> ddmFormFieldValues, String name) {
 
-		for (DDMFormFieldValue actualDDMFormFieldValue :
-				actualDDMFormFieldValues) {
-
-			if (actualDDMFormFieldValue.getName(
-					).equals(expectedDDMFormFieldValue.getName())) {
-
-				return actualDDMFormFieldValue;
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			if (name.equals(ddmFormFieldValue.getName())) {
+				return ddmFormFieldValue;
 			}
 		}
 
@@ -71,21 +66,21 @@ public class DDMFormValuesMergerImpl implements DDMFormValuesMerger {
 
 		for (DDMFormFieldValue newDDMFormFieldValue : newDDMFormFieldValues) {
 			DDMFormFieldValue actualDDMFormFieldValue =
-				matchDDMFormFieldValueByName(
-					newDDMFormFieldValue, existingDDMFormFieldValues);
+				getDDMFormFieldValueByName(
+					existingDDMFormFieldValues, newDDMFormFieldValue.getName());
 
 			if (actualDDMFormFieldValue != null) {
 				mergeValue(
 					newDDMFormFieldValue.getValue(),
 					actualDDMFormFieldValue.getValue());
 
-				List<DDMFormFieldValue> nestedDDMFormFieldValues =
+				List<DDMFormFieldValue> mergedNestedDDMFormFieldValues =
 					mergeDDMFormFieldValues(
 						newDDMFormFieldValue.getNestedDDMFormFieldValues(),
 						actualDDMFormFieldValue.getNestedDDMFormFieldValues());
 
 				newDDMFormFieldValue.setNestedDDMFormFields(
-					nestedDDMFormFieldValues);
+					mergedNestedDDMFormFieldValues);
 
 				mergedDDMFormFieldValues.remove(actualDDMFormFieldValue);
 			}

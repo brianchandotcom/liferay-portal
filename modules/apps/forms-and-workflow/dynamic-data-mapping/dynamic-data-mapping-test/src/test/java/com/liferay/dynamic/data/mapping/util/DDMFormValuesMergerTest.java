@@ -14,9 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.util;
 
-import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -28,290 +26,259 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Inácio Nery
  */
-public class DDMFormValuesMergerTest extends BaseDDMTestCase {
-
-	@Before
-	public void setUp() throws Exception {
-		_ddmForm = DDMFormTestUtil.createDDMForm();
-		_ddmFormValuesMerger = new DDMFormValuesMergerImpl();
-	}
+public class DDMFormValuesMergerTest {
 
 	@Test
-	public void testMergeAddLocaleTextDDMFormValues() {
-		String text = RandomTestUtil.randomString();
+	public void testAddMissingDDMFormFieldValue() {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
-		LocalizedValue textValue = new LocalizedValue();
-
-		textValue.addString(LocaleUtil.US, text);
-
-		DDMFormValues textFormValues = createTextDDMFormValues(
-			"text", textValue);
-
-		String textTranslator = RandomTestUtil.randomString();
-
-		textValue = new LocalizedValue();
-
-		textValue.addString(LocaleUtil.US, text);
-
-		textValue.addString(LocaleUtil.BRAZIL, textTranslator);
-
-		DDMFormValues newTextFormValues = createTextDDMFormValues(
-			"text", textValue);
-
-		DDMFormValues mergeFormValues = _ddmFormValuesMerger.merge(
-			newTextFormValues, textFormValues);
-
-		List<DDMFormFieldValue> ddmFormFieldValues =
-			mergeFormValues.getDDMFormFieldValues();
-
-		testValues(ddmFormFieldValues, LocaleUtil.US, text);
-		testValues(ddmFormFieldValues, LocaleUtil.BRAZIL, textTranslator);
-	}
-
-	@Test
-	public void testMergeLocaleTextDDMFormValues() {
-		String text = RandomTestUtil.randomString();
-
-		LocalizedValue textValue = new LocalizedValue();
-
-		textValue.addString(LocaleUtil.US, text);
-
-		DDMFormValues textFormValues = createTextDDMFormValues(
-			"text", textValue);
-
-		String textTranslator = RandomTestUtil.randomString();
-
-		textValue = new LocalizedValue();
-
-		textValue.addString(LocaleUtil.US, "");
-
-		textValue.addString(LocaleUtil.BRAZIL, textTranslator);
-
-		DDMFormValues newTextFormValues = createTextDDMFormValues(
-			"text", textValue);
-
-		DDMFormValues mergeFormValues = _ddmFormValuesMerger.merge(
-			newTextFormValues, textFormValues);
-
-		List<DDMFormFieldValue> ddmFormFieldValues =
-			mergeFormValues.getDDMFormFieldValues();
-
-		testValues(ddmFormFieldValues, LocaleUtil.US, "");
-		testValues(ddmFormFieldValues, LocaleUtil.BRAZIL, textTranslator);
-	}
-
-	@Test
-	public void testMergeTextDDMFormValues() {
-		String text = RandomTestUtil.randomString();
-
-		LocalizedValue textValue = new LocalizedValue();
-
-		textValue.addString(LocaleUtil.US, text);
-
-		DDMFormValues textFormValues = createTextDDMFormValues(
-			"text", textValue);
-
-		String newValue = RandomTestUtil.randomString();
-
-		textValue = new LocalizedValue();
-
-		textValue.addString(LocaleUtil.US, newValue);
-
-		DDMFormValues newTextFormValues = createTextDDMFormValues(
-			"text", textValue);
-
-		DDMFormValues mergeFormValues = _ddmFormValuesMerger.merge(
-			newTextFormValues, textFormValues);
-
-		List<DDMFormFieldValue> ddmFormFieldValues =
-			mergeFormValues.getDDMFormFieldValues();
-
-		testValues(ddmFormFieldValues, LocaleUtil.US, newValue);
-	}
-
-	@Test
-	public void testMergeTextNestedDDMFormValues() {
-		String text = RandomTestUtil.randomString();
-
-		LocalizedValue textValue = new LocalizedValue();
-
-		textValue.addString(LocaleUtil.US, text);
-
-		String textNested = RandomTestUtil.randomString();
-
-		LocalizedValue textNestedValue = new LocalizedValue();
-
-		textNestedValue.addString(LocaleUtil.US, textNested);
-
-		DDMFormValues textFormValues = createTextWithNestedDDMFormValues(
-			"text", textValue, "textNested", textNestedValue, LocaleUtil.US);
-
-		String newText = RandomTestUtil.randomString();
-
-		textValue = new LocalizedValue();
-
-		textValue.addString(LocaleUtil.US, newText);
-
-		DDMFormValues separatorFormValues = createSeparatorDDMFormValues(
-			"separator", textValue);
-
-		DDMFormValues mergeFormValues = _ddmFormValuesMerger.merge(
-			separatorFormValues, textFormValues);
-
-		List<DDMFormFieldValue> ddmFormFieldValues =
-			mergeFormValues.getDDMFormFieldValues();
-
-		testValues(
-			ddmFormFieldValues, LocaleUtil.US, text, textNested, newText);
-	}
-
-	@Test
-	public void testMergeTextSeparatorDDMFormValues() {
-		String text = RandomTestUtil.randomString();
-
-		LocalizedValue textValue = new LocalizedValue();
-
-		textValue.addString(LocaleUtil.US, text);
-
-		DDMFormValues textFormValues = createTextDDMFormValues(
-			"text", textValue);
-
-		String separatorText = RandomTestUtil.randomString();
-
-		textValue = new LocalizedValue();
-
-		textValue.addString(LocaleUtil.US, separatorText);
-
-		DDMFormValues separatorFormValues = createSeparatorDDMFormValues(
-			"separator", textValue);
-
-		DDMFormValues mergeFormValues = _ddmFormValuesMerger.merge(
-			separatorFormValues, textFormValues);
-
-		List<DDMFormFieldValue> ddmFormFieldValues =
-			mergeFormValues.getDDMFormFieldValues();
-
-		testValues(ddmFormFieldValues, LocaleUtil.US, text, separatorText);
-	}
-
-	@Test
-	public void testMergeTwoTextDDMFormValues() {
-		String text = RandomTestUtil.randomString();
-
-		LocalizedValue textValue = new LocalizedValue();
-
-		textValue.addString(LocaleUtil.US, text);
-
-		DDMFormValues textFormValues = createTextDDMFormValues(
-			"text", textValue);
-
-		String newText = RandomTestUtil.randomString();
-
-		textValue = new LocalizedValue();
-
-		textValue.addString(LocaleUtil.US, newText);
-
-		DDMFormValues newTextFormValues = createTextDDMFormValues(
-			"newText", textValue);
-
-		DDMFormValues mergeFormValues = _ddmFormValuesMerger.merge(
-			newTextFormValues, textFormValues);
-
-		List<DDMFormFieldValue> ddmFormFieldValues =
-			mergeFormValues.getDDMFormFieldValues();
-
-		testValues(ddmFormFieldValues, LocaleUtil.US, text, newText);
-	}
-
-	protected DDMFormValues createSeparatorDDMFormValues(
-		String name, Value value) {
-
-		DDMFormField ddmFormField = DDMFormTestUtil.createSeparatorDDMFormField(
-			name, false);
-
-		_ddmForm.addDDMFormField(ddmFormField);
-
-		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
-			name, value);
-
-		DDMFormValues formValues = DDMFormValuesTestUtil.createDDMFormValues(
-			_ddmForm);
-
-		formValues.addDDMFormFieldValue(ddmFormFieldValue);
-
-		return formValues;
-	}
-
-	protected DDMFormValues createTextDDMFormValues(String name, Value value) {
-		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
-			name, false, false, true);
-
-		_ddmForm.addDDMFormField(ddmFormField);
-
-		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
-			name, value);
-
-		DDMFormValues formValues = DDMFormValuesTestUtil.createDDMFormValues(
-			_ddmForm);
-
-		formValues.addDDMFormFieldValue(ddmFormFieldValue);
-
-		return formValues;
-	}
-
-	protected DDMFormValues createTextWithNestedDDMFormValues(
-		String name, Value value, String nestedName, Value nestedValue,
-		Locale locale) {
-
-		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
-			name, false, false, true);
-
-		DDMFormField nestedDDMFormField =
+		ddmForm.addDDMFormField(
 			DDMFormTestUtil.createTextDDMFormField(
-				nestedName, false, false, true);
+				"text1", false, false, true));
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField(
+				"text2", false, false, true));
 
-		ddmFormField.addNestedDDMFormField(nestedDDMFormField);
+		// Existing ddm form values
 
-		_ddmForm.addDDMFormField(ddmFormField);
+		String text1StringValue = RandomTestUtil.randomString();
 
-		DDMFormValues formValues = DDMFormValuesTestUtil.createDDMFormValues(
-			_ddmForm);
+		LocalizedValue text1LocalizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				text1StringValue, LocaleUtil.US);
 
-		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
-			name, value);
+		DDMFormFieldValue text1DDMFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"text1", text1LocalizedValue);
 
-		formValues.addDDMFormFieldValue(ddmFormFieldValue);
+		DDMFormValues existingDDMFormValues = createDDMFormValues(
+			ddmForm, text1DDMFormFieldValue);
 
-		ddmFormFieldValue = createDDMFormFieldValue(nestedName, nestedValue);
+		// New ddm form values
 
-		formValues.addDDMFormFieldValue(ddmFormFieldValue);
+		String text2StringValue = RandomTestUtil.randomString();
 
-		return formValues;
+		LocalizedValue text2LocalizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				text2StringValue, LocaleUtil.US);
+
+		DDMFormFieldValue text2DDMFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"text2", text2LocalizedValue);
+
+		DDMFormValues newDDMFormValues = createDDMFormValues(
+			ddmForm, text2DDMFormFieldValue);
+
+		DDMFormValues mergedDDMFormValues = _ddmFormValuesMerger.merge(
+			newDDMFormValues, existingDDMFormValues);
+
+		List<DDMFormFieldValue> mergedDDMFormFieldValues =
+			mergedDDMFormValues.getDDMFormFieldValues();
+
+		Assert.assertEquals(2, mergedDDMFormFieldValues.size());
+
+		DDMFormFieldValue mergedText1DDMFormFieldValue =
+			mergedDDMFormFieldValues.get(0);
+
+		Value mergedText1Value = mergedText1DDMFormFieldValue.getValue();
+
+		Assert.assertEquals(
+			text1StringValue, mergedText1Value.getString(LocaleUtil.US));
+
+		DDMFormFieldValue mergedText2DDMFormFieldValue =
+			mergedDDMFormFieldValues.get(1);
+
+		Value mergedText2Value = mergedText2DDMFormFieldValue.getValue();
+
+		Assert.assertEquals(
+			text2StringValue, mergedText2Value.getString(LocaleUtil.US));
 	}
 
-	protected void testValues(
-		List<DDMFormFieldValue> ddmFormFieldValues, Locale locale,
-		String... expectedValues) {
+	@Test
+	public void testAddMissingLocaleToExistingDDMFormFieldValue() {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
-		Assert.assertEquals(expectedValues.length, ddmFormFieldValues.size());
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField("text", false, false, true));
 
-		for (int i = 0; i < expectedValues.length; i++) {
-			Value value = ddmFormFieldValues.get(i).getValue();
+		// Existing ddm form values
 
-			Assert.assertEquals(expectedValues[i], value.getString(locale));
+		String enStringValue = RandomTestUtil.randomString();
+
+		LocalizedValue existingLocalizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				enStringValue, LocaleUtil.US);
+
+		DDMFormFieldValue textDDMFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"text", existingLocalizedValue);
+
+		DDMFormValues existingDDMFormValues = createDDMFormValues(
+			ddmForm, textDDMFormFieldValue);
+
+		// New ddm form values
+
+		String ptStringValue = RandomTestUtil.randomString();
+
+		LocalizedValue newLocalizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				enStringValue, ptStringValue, LocaleUtil.US);
+
+		textDDMFormFieldValue = DDMFormValuesTestUtil.createDDMFormFieldValue(
+			"text", newLocalizedValue);
+
+		DDMFormValues newDDMFormValues = createDDMFormValues(
+			ddmForm, textDDMFormFieldValue);
+
+		DDMFormValues mergedFormValues = _ddmFormValuesMerger.merge(
+			newDDMFormValues, existingDDMFormValues);
+
+		List<DDMFormFieldValue> mergedFormFieldValues =
+			mergedFormValues.getDDMFormFieldValues();
+
+		Assert.assertEquals(1, mergedFormFieldValues.size());
+
+		DDMFormFieldValue mergedDDMFormFieldValue = mergedFormFieldValues.get(
+			0);
+
+		Value mergedValue = mergedDDMFormFieldValue.getValue();
+
+		Assert.assertEquals(
+			enStringValue, mergedValue.getString(LocaleUtil.US));
+		Assert.assertEquals(
+			ptStringValue, mergedValue.getString(LocaleUtil.BRAZIL));
+	}
+
+	@Test
+	public void testReplaceAndAddMissingLocaleToExistingDDMFormFieldValue() {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField("text", false, false, true));
+
+		// Existing ddm form values
+
+		String existingEnStringValue = RandomTestUtil.randomString();
+
+		LocalizedValue existingLocalizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				existingEnStringValue, LocaleUtil.US);
+
+		DDMFormFieldValue textDDMFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"text", existingLocalizedValue);
+
+		DDMFormValues existingDDMFormValues = createDDMFormValues(
+			ddmForm, textDDMFormFieldValue);
+
+		// New ddm form values
+
+		String newEnStringValue = RandomTestUtil.randomString();
+		String newPtStringValue = RandomTestUtil.randomString();
+
+		LocalizedValue newLocalizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				newEnStringValue, newPtStringValue, LocaleUtil.US);
+
+		textDDMFormFieldValue = DDMFormValuesTestUtil.createDDMFormFieldValue(
+			"text", newLocalizedValue);
+
+		DDMFormValues newDDMFormValues = createDDMFormValues(
+			ddmForm, textDDMFormFieldValue);
+
+		DDMFormValues mergedFormValues = _ddmFormValuesMerger.merge(
+			newDDMFormValues, existingDDMFormValues);
+
+		List<DDMFormFieldValue> mergedFormFieldValues =
+			mergedFormValues.getDDMFormFieldValues();
+
+		Assert.assertEquals(1, mergedFormFieldValues.size());
+
+		DDMFormFieldValue mergedDDMFormFieldValue = mergedFormFieldValues.get(
+			0);
+
+		Value mergedValue = mergedDDMFormFieldValue.getValue();
+
+		Assert.assertEquals(
+			newEnStringValue, mergedValue.getString(LocaleUtil.US));
+		Assert.assertEquals(
+			newPtStringValue, mergedValue.getString(LocaleUtil.BRAZIL));
+	}
+
+	@Test
+	public void testReplaceLocaleToExistingDDMFormFieldValue() {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField("text", false, false, true));
+
+		// Existing ddm form values
+
+		String existingEnStringValue = RandomTestUtil.randomString();
+
+		LocalizedValue existingLocalizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				existingEnStringValue, LocaleUtil.US);
+
+		DDMFormFieldValue textDDMFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"text", existingLocalizedValue);
+
+		DDMFormValues existingDDMFormValues = createDDMFormValues(
+			ddmForm, textDDMFormFieldValue);
+
+		// New ddm form values
+
+		String newEnStringValue = RandomTestUtil.randomString();
+
+		LocalizedValue newLocalizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				newEnStringValue, LocaleUtil.US);
+
+		textDDMFormFieldValue = DDMFormValuesTestUtil.createDDMFormFieldValue(
+			"text", newLocalizedValue);
+
+		DDMFormValues newDDMFormValues = createDDMFormValues(
+			ddmForm, textDDMFormFieldValue);
+
+		DDMFormValues mergedFormValues = _ddmFormValuesMerger.merge(
+			newDDMFormValues, existingDDMFormValues);
+
+		List<DDMFormFieldValue> mergedFormFieldValues =
+			mergedFormValues.getDDMFormFieldValues();
+
+		Assert.assertEquals(1, mergedFormFieldValues.size());
+
+		DDMFormFieldValue mergedDDMFormFieldValue = mergedFormFieldValues.get(
+			0);
+
+		Value mergedValue = mergedDDMFormFieldValue.getValue();
+
+		Assert.assertEquals(
+			newEnStringValue, mergedValue.getString(LocaleUtil.US));
+	}
+
+	protected DDMFormValues createDDMFormValues(
+		DDMForm ddmForm, DDMFormFieldValue... ddmFormFieldValues) {
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 		}
+
+		return ddmFormValues;
 	}
 
-	private DDMForm _ddmForm;
-	private DDMFormValuesMerger _ddmFormValuesMerger;
+	private final DDMFormValuesMerger _ddmFormValuesMerger =
+		new DDMFormValuesMergerImpl();
 
 }

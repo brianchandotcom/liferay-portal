@@ -20,7 +20,7 @@
 		<zip basedir="${osgi.dir}/marketplace" destfile="${osgi.dir}/marketplace/${app.name}.lpkg" includes="*.jar,*.war,liferay-marketplace.properties" />
 
 		<delete>
-			<fileset dir="${osgi.dir}/marketplace" includes="*.jar,liferay-marketplace.properties" />
+			<fileset dir="${osgi.dir}/marketplace" includes="*.jar,*.war,liferay-marketplace.properties" />
 		</delete>
 	</target>
 

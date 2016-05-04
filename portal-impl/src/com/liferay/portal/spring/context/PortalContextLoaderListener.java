@@ -229,12 +229,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		_portalServletContextPath = servletContext.getContextPath();
 
-		if (ServerDetector.isWebSphere() &&
-			_portalServletContextPath.isEmpty()) {
-
-			_portalServletContextName = StringPool.BLANK;
-		}
-
 		ClassPathUtil.initializeClassPaths(servletContext);
 
 		File tempDir = (File)servletContext.getAttribute(

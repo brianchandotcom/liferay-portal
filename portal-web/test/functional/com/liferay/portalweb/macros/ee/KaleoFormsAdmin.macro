@@ -343,6 +343,14 @@
 		<execute function="DownloadTempFile" />
 	</command>
 
+	<command name="gotoProgressStep">
+		<var name="key_kfProgressName" value="${kfProgressName}" />
+
+		<var method="StringUtil#lowerCase('${kfProgressName}')" name="key_kfProgressName" />
+
+		<execute function="Click" locator1="KaleoFormsAdminEditProcess#FORM_NAVIGATOR_PROGRESS_BAR_NAME" />
+	</command>
+
 	<command name="next">
 		<execute function="AssertElementNotPresent" locator1="KaleoFormsAdminEditProcess#NEXT_BUTTON_INACTIVE" />
 		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcess#NEXT_BUTTON" value1="Next" />

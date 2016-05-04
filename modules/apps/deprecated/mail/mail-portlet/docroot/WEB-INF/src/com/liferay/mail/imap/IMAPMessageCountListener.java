@@ -105,10 +105,10 @@ public class IMAPMessageCountListener implements MessageCountListener {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		IMAPMessageCountListener.class);
 
-	private Account _account;
-	private IMAPAccessor _imapAccessor;
+	private final Account _account;
+	private final IMAPAccessor _imapAccessor;
 
 }

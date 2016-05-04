@@ -817,10 +817,10 @@ public class MailManager {
 		MessageBusUtil.sendMessage(DestinationNames.MAIL_SYNCHRONIZER, message);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MailManager.class);
+	private static final Log _log = LogFactoryUtil.getLog(MailManager.class);
 
-	private PasswordRetriever _passwordRetriever;
-	private PortletConfig _portletConfig;
-	private User _user;
+	private final PasswordRetriever _passwordRetriever;
+	private final PortletConfig _portletConfig;
+	private final User _user;
 
 }

@@ -56,9 +56,10 @@ public class ConnectionListener implements javax.mail.event.ConnectionListener {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ConnectionListener.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		ConnectionListener.class);
 
-	private String _service;
+	private final String _service;
 	private long _startTime;
 
 }

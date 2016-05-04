@@ -551,8 +551,8 @@ public class IMAPMailbox extends BaseMailbox {
 		return 0;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(IMAPMailbox.class);
+	private static final Log _log = LogFactoryUtil.getLog(IMAPMailbox.class);
 
-	private IMAPAccessor _imapAccessor;
+	private final IMAPAccessor _imapAccessor;
 
 }

@@ -41,8 +41,8 @@ public class MessageDisplay {
 		return _messageCount;
 	}
 
-	private List<Attachment> _attachments;
-	private Message _message;
-	private int _messageCount;
+	private final List<Attachment> _attachments;
+	private final Message _message;
+	private final int _messageCount;
 
 }

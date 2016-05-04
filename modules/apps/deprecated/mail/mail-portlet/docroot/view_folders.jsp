@@ -72,31 +72,31 @@ MailManager mailManager = MailManager.getInstance(request);
 					label='<%= folder.getDisplayName() + " (" + MessageLocalServiceUtil.getFolderUnreadMessagesCount(folder.getFolderId()) + ")" %>'
 				/>
 
-				<%
-				}
-				%>
+			<%
+			}
+			%>
 
-				<aui:nav-item cssClass="divider" />
+			<aui:nav-item cssClass="divider" />
 
-				<aui:nav-item
-					cssClass="manage-folders"
-					data-messageId="0"
-					data-messageType="new"
-					data-replyMessageId="0"
-					href="javascript:;"
-					iconClass="icon-cogs"
-					label="manage-folders"
-				/>
+			<aui:nav-item
+				cssClass="manage-folders"
+				data-messageId="0"
+				data-messageType="new"
+				data-replyMessageId="0"
+				href="javascript:;"
+				iconClass="icon-cogs"
+				label="manage-folders"
+			/>
 
-				<aui:nav-item
-					cssClass="edit-account"
-					data-messageId="0"
-					data-messageType="new"
-					data-replyMessageId="0"
-					href="javascript:;"
-					iconClass="icon-cog"
-					label="edit-account"
-				/>
-			</aui:nav>
+			<aui:nav-item
+				cssClass="edit-account"
+				data-messageId="0"
+				data-messageType="new"
+				data-replyMessageId="0"
+				href="javascript:;"
+				iconClass="icon-cog"
+				label="edit-account"
+			/>
+		</aui:nav>
 	</div>
 </c:if>

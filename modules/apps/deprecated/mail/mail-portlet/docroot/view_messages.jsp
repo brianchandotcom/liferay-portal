@@ -60,7 +60,6 @@ MailManager mailManager = MailManager.getInstance(request);
 				%>
 
 				<%@ include file="/select_folder.jspf" %>
-
 			</aui:nav-item>
 
 			<aui:nav-bar-search cssClass="form-search pull-right search-messages">

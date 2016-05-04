@@ -55,6 +55,7 @@ public class UserModelListener extends BaseModelListener<User> {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UserModelListener.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserModelListener.class);
 
 }

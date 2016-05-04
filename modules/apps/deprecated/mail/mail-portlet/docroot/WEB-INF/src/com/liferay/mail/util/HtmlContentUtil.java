@@ -50,21 +50,21 @@ public class HtmlContentUtil {
 		return html;
 	}
 
-	private static Pattern _bodyTagPattern = Pattern.compile(
+	private static final Pattern _bodyTagPattern = Pattern.compile(
 		"</?body[^>]+>", Pattern.CASE_INSENSITIVE);
-	private static Pattern _doctypeTagPattern = Pattern.compile(
+	private static final Pattern _doctypeTagPattern = Pattern.compile(
 		"<!doctype[^>]+>", Pattern.CASE_INSENSITIVE);
-	private static Pattern _headTagPattern = Pattern.compile(
+	private static final Pattern _headTagPattern = Pattern.compile(
 		"<head.*?</head>", Pattern.CASE_INSENSITIVE + Pattern.DOTALL);
-	private static Pattern _htmlTagPattern = Pattern.compile(
+	private static final Pattern _htmlTagPattern = Pattern.compile(
 		"</?html[^>]+>", Pattern.CASE_INSENSITIVE);
-	private static Pattern _lineBreakPattern = Pattern.compile("[\r\n]+");
-	private static Pattern _linkTagPattern = Pattern.compile(
+	private static final Pattern _lineBreakPattern = Pattern.compile("[\r\n]+");
+	private static final Pattern _linkTagPattern = Pattern.compile(
 		"</?link[^>]+>", Pattern.CASE_INSENSITIVE);
-	private static Pattern _scriptTagPattern = Pattern.compile(
+	private static final Pattern _scriptTagPattern = Pattern.compile(
 		"<script.*?</script>", Pattern.CASE_INSENSITIVE + Pattern.DOTALL);
-	private static Pattern _styleTagPattern = Pattern.compile(
+	private static final Pattern _styleTagPattern = Pattern.compile(
 		"<style.*?</style>", Pattern.CASE_INSENSITIVE + Pattern.DOTALL);
-	private static Pattern _tagPattern = Pattern.compile("<[^>]+>");
+	private static final Pattern _tagPattern = Pattern.compile("<[^>]+>");
 
 }

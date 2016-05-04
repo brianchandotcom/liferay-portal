@@ -182,7 +182,7 @@ public class AttachmentLocalServiceImpl extends AttachmentLocalServiceBaseImpl {
 
 	private static final long _REPOSITORY_ID = CompanyConstants.SYSTEM;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		AttachmentLocalServiceImpl.class);
 
 }

@@ -61,6 +61,6 @@ public class PasswordUtil {
 		return encryptedPassword;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PasswordUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(PasswordUtil.class);
 
 }

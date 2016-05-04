@@ -39,7 +39,7 @@ public class DefaultAttachmentHandler implements AttachmentHandler {
 		return _inputStream;
 	}
 
-	private Folder _folder;
-	private InputStream _inputStream;
+	private final Folder _folder;
+	private final InputStream _inputStream;
 
 }

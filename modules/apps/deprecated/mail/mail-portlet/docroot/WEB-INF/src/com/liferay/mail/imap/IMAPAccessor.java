@@ -1063,11 +1063,11 @@ public class IMAPAccessor {
 		return openFolder(getFolder(folderId));
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(IMAPAccessor.class);
+	private static final Log _log = LogFactoryUtil.getLog(IMAPAccessor.class);
 
-	private Account _account;
-	private IMAPConnection _imapConnection;
-	private String _password;
-	private User _user;
+	private final Account _account;
+	private final IMAPConnection _imapConnection;
+	private final String _password;
+	private final User _user;
 
 }

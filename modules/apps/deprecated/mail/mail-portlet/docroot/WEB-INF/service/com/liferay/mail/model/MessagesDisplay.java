@@ -67,8 +67,8 @@ public class MessagesDisplay {
 	}
 
 	private int _messageCount;
-	private List<Message> _messages;
-	private int _messagesPerPage;
-	private int _pageNumber;
+	private final List<Message> _messages;
+	private final int _messagesPerPage;
+	private final int _pageNumber;
 
 }

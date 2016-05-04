@@ -3,11 +3,11 @@
 
 <service-builder package-path="com.liferay.mail">
 	<namespace>Mail</namespace>
-	<entity name="Account" local-service="true" remote-service="false">
+	<entity local-service="true" name="Account" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="accountId" type="long" primary="true" />
+		<column name="accountId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -56,11 +56,11 @@
 			<finder-column name="address" />
 		</finder>
 	</entity>
-	<entity name="Attachment" local-service="true" remote-service="false">
+	<entity local-service="true" name="Attachment" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="attachmentId" type="long" primary="true" />
+		<column name="attachmentId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -82,11 +82,11 @@
 			<finder-column name="messageId" />
 		</finder>
 	</entity>
-	<entity name="Folder" local-service="true" remote-service="false">
+	<entity local-service="true" name="Folder" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="folderId" type="long" primary="true" />
+		<column name="folderId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 
@@ -120,11 +120,11 @@
 			<finder-column name="fullName" />
 		</finder>
 	</entity>
-	<entity name="Message" local-service="true" remote-service="false">
+	<entity local-service="true" name="Message" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="messageId" type="long" primary="true" />
+		<column name="messageId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 

@@ -65,6 +65,6 @@ public class PasswordRetriever {
 			StringPool.POUND).concat(String.valueOf(accountId));
 	}
 
-	private HttpServletRequest _request;
+	private final HttpServletRequest _request;
 
 }

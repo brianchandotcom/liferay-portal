@@ -55,9 +55,9 @@ public class MailFile {
 		return _size;
 	}
 
-	private String _contentPath;
-	private File _file;
-	private String _fileName;
-	private long _size;
+	private final String _contentPath;
+	private final File _file;
+	private final String _fileName;
+	private final long _size;
 
 }

@@ -69,9 +69,9 @@ public class AccountLock {
 
 	private static final long _EXPIRY_TIME = Time.MINUTE * 15;
 
-	private static Log _log = LogFactoryUtil.getLog(AccountLock.class);
+	private static final Log _log = LogFactoryUtil.getLog(AccountLock.class);
 
-	private static ConcurrentHashMap<String, Long> _locks =
+	private static final ConcurrentHashMap<String, Long> _locks =
 		new ConcurrentHashMap<>();
 
 }

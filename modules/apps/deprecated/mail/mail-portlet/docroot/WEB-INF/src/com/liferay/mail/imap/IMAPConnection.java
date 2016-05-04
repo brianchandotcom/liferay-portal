@@ -257,19 +257,19 @@ public class IMAPConnection {
 
 	private static final String _TRANSPORT = "_TRANSPORT_";
 
-	private static Log _log = LogFactoryUtil.getLog(IMAPConnection.class);
+	private static final Log _log = LogFactoryUtil.getLog(IMAPConnection.class);
 
-	private static ConcurrentHashMap<String, Store> _allStores =
+	private static final ConcurrentHashMap<String, Store> _allStores =
 		new ConcurrentHashMap<>();
 
-	private String _incomingHostName;
-	private int _incomingPort;
-	private boolean _incomingSecure;
-	private String _login;
-	private String _outgoingHostName;
-	private int _outgoingPort;
-	private boolean _outgoingSecure;
-	private String _password;
+	private final String _incomingHostName;
+	private final int _incomingPort;
+	private final boolean _incomingSecure;
+	private final String _login;
+	private final String _outgoingHostName;
+	private final int _outgoingPort;
+	private final boolean _outgoingSecure;
+	private final String _password;
 	private Session _session;
 
 }

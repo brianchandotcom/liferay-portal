@@ -85,6 +85,6 @@ public class MailPortlet extends MVCPortlet {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(MailPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(MailPortlet.class);
 
 }

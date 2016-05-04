@@ -100,7 +100,7 @@ public class MailException extends PortalException {
 		return _value;
 	}
 
-	private int _type;
-	private String _value;
+	private final int _type;
+	private final String _value;
 
 }

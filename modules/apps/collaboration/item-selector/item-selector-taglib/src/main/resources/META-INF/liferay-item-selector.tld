@@ -29,45 +29,54 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>A user interface to add images. Renders a drag and drop area and a button to open a selection dialog. It works as an image viewer if an image is selected. <![CDATA[<br /><br />Example:<br /><img src="../images/item-selector/image-selector.png"/>]]></description>
 		<name>image-selector</name>
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.ImageSelectorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>A CSS class to specify the direction of the image drag. Could be vertical, horizontal, both, or none.</description>
 			<name>draggableImage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The Id of a previously selected fileEntry.</description>
 			<name>fileEntryId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The name of the event that the item selector dialog will throw, in order to allow the image selector tag capture and show the selected image.</description>
 			<name>itemSelectorEventName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The URL of the selection dialog that will be shown on the user clicking the select button.</description>
 			<name>itemSelectorURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The max file size that the backend could handle.</description>
 			<name>maxFileSize</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A prefix to the parameters that will be sent to the server.</description>
 			<name>paramName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The target url for the new files that are uplodaded.</description>
 			<name>uploadURL</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A list of valid extensions that the server could handle.</description>
 			<name>validExtensions</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -23,14 +23,14 @@ import com.liferay.portal.kernel.util.PropsUtil;
  */
 public class PortletPropsValues {
 
-	public static final String ADMIN_EMAIL_FROM_ADDRESS = ServiceProps.get(
+	public static final String ADMIN_EMAIL_FROM_ADDRESS = PortletProps.get(
 		PortletPropsKeys.ADMIN_EMAIL_FROM_ADDRESS);
 
-	public static final String ADMIN_EMAIL_FROM_NAME = ServiceProps.get(
+	public static final String ADMIN_EMAIL_FROM_NAME = PortletProps.get(
 		PortletPropsKeys.ADMIN_EMAIL_FROM_NAME);
 
 	public static final String ADMIN_EMAIL_KB_ARTICLE_ADDED_BODY =
-		ServiceProps.get(PortletPropsKeys.ADMIN_EMAIL_KB_ARTICLE_ADDED_BODY);
+		PortletProps.get(PortletPropsKeys.ADMIN_EMAIL_KB_ARTICLE_ADDED_BODY);
 
 	public static final boolean ADMIN_EMAIL_KB_ARTICLE_ADDED_ENABLED =
 		GetterUtil.getBoolean(

@@ -21,5 +21,5 @@ DDLFormViewRecordDisplayContext ddlFormViewRecordDisplayContext = (DDLFormViewRe
 %>
 
 <div class="container-fluid-1280">
-	<%= ddlFormViewRecordDisplayContext.getDDMFormHTML() %>
+	<%= ddlFormViewRecordDisplayContext.getDDMFormHTML(renderRequest) %>
 </div>

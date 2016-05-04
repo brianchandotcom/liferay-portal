@@ -23,14 +23,19 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
+import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+
+import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,28 +50,40 @@ public class DDLFormViewRecordDisplayContext {
 		HttpServletResponse httpServletResponse,
 		DDLRecordLocalService ddlRecordLocalService,
 		DDMFormRenderer ddmFormRenderer,
+		DDMFormValuesFactory ddmFormValuesFactory,
+		DDMFormValuesMerger ddmFormValuesMerger,
 		DDMStructureLocalService ddmStructureLocalService) {
 
 		_httpServletResponse = httpServletResponse;
 		_ddlRecordLocalService = ddlRecordLocalService;
 		_ddmFormRenderer = ddmFormRenderer;
+		_ddmFormValuesFactory = ddmFormValuesFactory;
+		_ddmFormValuesMerger = ddmFormValuesMerger;
 		_ddmStructureLocalService = ddmStructureLocalService;
 
 		_ddlFormAdminRequestHelper = new DDLFormAdminRequestHelper(
 			httpServletRequest);
 	}
 
-	public String getDDMFormHTML() throws PortalException {
+	public String getDDMFormHTML(RenderRequest renderRequest)
+		throws PortalException {
+
 		DDLRecord record = getRecord();
-
-		DDMFormRenderingContext ddmFormRenderingContext =
-			createDDMFormRenderingContext();
-
-		ddmFormRenderingContext.setDDMFormValues(record.getDDMFormValues());
 
 		DDMStructure ddmStructure = getDDMStructure();
 
 		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
+			renderRequest, ddmForm);
+
+		ddmFormValues = _ddmFormValuesMerger.merge(
+			record.getDDMFormValues(), ddmFormValues);
+
+		DDMFormRenderingContext ddmFormRenderingContext =
+			createDDMFormRenderingContext();
+
+		ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
 
 		for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
 			setDDMFormFieldReadOnly(ddmFormField);
@@ -158,6 +175,8 @@ public class DDLFormViewRecordDisplayContext {
 	private final DDLFormAdminRequestHelper _ddlFormAdminRequestHelper;
 	private final DDLRecordLocalService _ddlRecordLocalService;
 	private final DDMFormRenderer _ddmFormRenderer;
+	private final DDMFormValuesFactory _ddmFormValuesFactory;
+	private final DDMFormValuesMerger _ddmFormValuesMerger;
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private DDMStructure _ddmStucture;
 	private final HttpServletResponse _httpServletResponse;

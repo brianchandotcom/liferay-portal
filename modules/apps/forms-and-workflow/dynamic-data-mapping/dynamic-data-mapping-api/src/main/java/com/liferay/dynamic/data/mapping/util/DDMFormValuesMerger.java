@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,17 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+package com.liferay.dynamic.data.mapping.util;
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 
-<%@ page import="com.liferay.dynamic.data.lists.form.web.display.context.DDLFormViewRecordDisplayContext" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %>
+/**
+ * @author Inácio Nery
+ */
+public interface DDMFormValuesMerger {
 
-<portlet:defineObjects />
+	public DDMFormValues merge(
+		DDMFormValues newDDMFormValues, DDMFormValues existingDDMFormValues);
 
-<aui:script>
-	Liferay.namespace('Forms').portletNamespace = '<portlet:namespace />';
-</aui:script>
+}

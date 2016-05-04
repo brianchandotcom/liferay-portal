@@ -22,7 +22,7 @@ import java.sql.PreparedStatement;
 /**
  * @author Adolfo Pérez
  */
-public abstract class UpgradeRepository extends UpgradeProcess {
+public abstract class BaseUpgradeRepository extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

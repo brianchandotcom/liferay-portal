@@ -172,16 +172,16 @@ public class WSRPHTTPSender extends HTTPSender {
 		_currentCookie.set(cookie);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(WSRPHTTPSender.class);
+	private static final Log _log = LogFactoryUtil.getLog(WSRPHTTPSender.class);
 
-	private static ThreadLocal<String> _currentCookie =
+	private static final ThreadLocal<String> _currentCookie =
 		new InitialThreadLocal<>(
 			SimpleHTTPSender.class + "._currentCookie", StringPool.BLANK);
-	private static ThreadLocal<HttpServletRequest> _currentRequest =
+	private static final ThreadLocal<HttpServletRequest> _currentRequest =
 		new InitialThreadLocal<>(
 			SimpleHTTPSender.class + "._currentRequest", null);
 
-	private String[] _forwardCookies = new String[0];
-	private String[] _forwardHeaders = new String[0];
+	private final String[] _forwardCookies = new String[0];
+	private final String[] _forwardHeaders = new String[0];
 
 }

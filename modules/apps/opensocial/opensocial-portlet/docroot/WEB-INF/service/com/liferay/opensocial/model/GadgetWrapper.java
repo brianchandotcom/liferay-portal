@@ -22,13 +22,13 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -131,6 +131,16 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	}
 
 	@Override
+	public Gadget toEscapedModel() {
+		return new GadgetWrapper(_gadget.toEscapedModel());
+	}
+
+	@Override
+	public Gadget toUnescapedModel() {
+		return new GadgetWrapper(_gadget.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _gadget.isCachedModel();
 	}
@@ -151,22 +161,12 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 	}
 
 	@Override
-	public com.liferay.opensocial.model.Gadget toEscapedModel() {
-		return new GadgetWrapper(_gadget.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.opensocial.model.Gadget toUnescapedModel() {
-		return new GadgetWrapper(_gadget.toUnescapedModel());
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.opensocial.model.Gadget> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<Gadget> toCacheModel() {
 		return _gadget.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(com.liferay.opensocial.model.Gadget gadget) {
+	public int compareTo(Gadget gadget) {
 		return _gadget.compareTo(gadget);
 	}
 
@@ -443,7 +443,7 @@ public class GadgetWrapper implements Gadget, ModelWrapper<Gadget> {
 
 		GadgetWrapper gadgetWrapper = (GadgetWrapper)obj;
 
-		if (Validator.equals(_gadget, gadgetWrapper._gadget)) {
+		if (Objects.equals(_gadget, gadgetWrapper._gadget)) {
 			return true;
 		}
 

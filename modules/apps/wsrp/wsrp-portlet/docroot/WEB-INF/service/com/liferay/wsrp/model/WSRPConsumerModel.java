@@ -316,19 +316,19 @@ public interface WSRPConsumerModel extends BaseModel<WSRPConsumer>, ShardedModel
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.wsrp.model.WSRPConsumer wsrpConsumer);
+	public int compareTo(WSRPConsumer wsrpConsumer);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.wsrp.model.WSRPConsumer> toCacheModel();
+	public CacheModel<WSRPConsumer> toCacheModel();
 
 	@Override
-	public com.liferay.wsrp.model.WSRPConsumer toEscapedModel();
+	public WSRPConsumer toEscapedModel();
 
 	@Override
-	public com.liferay.wsrp.model.WSRPConsumer toUnescapedModel();
+	public WSRPConsumer toUnescapedModel();
 
 	@Override
 	public String toString();

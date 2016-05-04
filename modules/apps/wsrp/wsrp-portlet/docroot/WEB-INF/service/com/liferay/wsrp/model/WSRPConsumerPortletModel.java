@@ -239,20 +239,19 @@ public interface WSRPConsumerPortletModel extends BaseModel<WSRPConsumerPortlet>
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.wsrp.model.WSRPConsumerPortlet wsrpConsumerPortlet);
+	public int compareTo(WSRPConsumerPortlet wsrpConsumerPortlet);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.wsrp.model.WSRPConsumerPortlet> toCacheModel();
+	public CacheModel<WSRPConsumerPortlet> toCacheModel();
 
 	@Override
-	public com.liferay.wsrp.model.WSRPConsumerPortlet toEscapedModel();
+	public WSRPConsumerPortlet toEscapedModel();
 
 	@Override
-	public com.liferay.wsrp.model.WSRPConsumerPortlet toUnescapedModel();
+	public WSRPConsumerPortlet toUnescapedModel();
 
 	@Override
 	public String toString();

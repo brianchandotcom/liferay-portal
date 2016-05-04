@@ -137,86 +137,86 @@ public class WSRPConsumerPortletLocalServiceClpInvoker {
 				"com.liferay.wsrp.model.WSRPConsumerPortlet"
 			};
 
-		_methodName49 = "getOSGiServiceIdentifier";
+		_methodName53 = "getOSGiServiceIdentifier";
 
-		_methodParameterTypes49 = new String[] {  };
+		_methodParameterTypes53 = new String[] {  };
 
-		_methodName54 = "addWSRPConsumerPortlet";
+		_methodName58 = "addWSRPConsumerPortlet";
 
-		_methodParameterTypes54 = new String[] {
+		_methodParameterTypes58 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
-		_methodName55 = "addWSRPConsumerPortlet";
+		_methodName59 = "addWSRPConsumerPortlet";
 
-		_methodParameterTypes55 = new String[] {
+		_methodParameterTypes59 = new String[] {
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.kernel.service.ServiceContext"
 			};
 
-		_methodName56 = "deleteWSRPConsumerPortlet";
+		_methodName60 = "deleteWSRPConsumerPortlet";
 
-		_methodParameterTypes56 = new String[] { "long" };
+		_methodParameterTypes60 = new String[] { "long" };
 
-		_methodName57 = "deleteWSRPConsumerPortlet";
+		_methodName61 = "deleteWSRPConsumerPortlet";
 
-		_methodParameterTypes57 = new String[] { "java.lang.String" };
+		_methodParameterTypes61 = new String[] { "java.lang.String" };
 
-		_methodName58 = "deleteWSRPConsumerPortlet";
+		_methodName62 = "deleteWSRPConsumerPortlet";
 
-		_methodParameterTypes58 = new String[] {
+		_methodParameterTypes62 = new String[] {
 				"com.liferay.wsrp.model.WSRPConsumerPortlet"
 			};
 
-		_methodName59 = "deleteWSRPConsumerPortlets";
+		_methodName63 = "deleteWSRPConsumerPortlets";
 
-		_methodParameterTypes59 = new String[] { "long" };
+		_methodParameterTypes63 = new String[] { "long" };
 
-		_methodName60 = "destroyWSRPConsumerPortlet";
+		_methodName64 = "destroyWSRPConsumerPortlet";
 
-		_methodParameterTypes60 = new String[] {
+		_methodParameterTypes64 = new String[] {
 				"long", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName61 = "destroyWSRPConsumerPortlets";
+		_methodName65 = "destroyWSRPConsumerPortlets";
 
-		_methodParameterTypes61 = new String[] {  };
+		_methodParameterTypes65 = new String[] {  };
 
-		_methodName62 = "getWSRPConsumerPortlet";
+		_methodName66 = "getWSRPConsumerPortlet";
 
-		_methodParameterTypes62 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes66 = new String[] { "long", "java.lang.String" };
 
-		_methodName63 = "getWSRPConsumerPortlet";
+		_methodName67 = "getWSRPConsumerPortlet";
 
-		_methodParameterTypes63 = new String[] { "java.lang.String" };
+		_methodParameterTypes67 = new String[] { "java.lang.String" };
 
-		_methodName64 = "getWSRPConsumerPortlets";
+		_methodName68 = "getWSRPConsumerPortlets";
 
-		_methodParameterTypes64 = new String[] { "long", "int", "int" };
+		_methodParameterTypes68 = new String[] { "long", "int", "int" };
 
-		_methodName65 = "getWSRPConsumerPortletsCount";
+		_methodName69 = "getWSRPConsumerPortletsCount";
 
-		_methodParameterTypes65 = new String[] { "long" };
+		_methodParameterTypes69 = new String[] { "long" };
 
-		_methodName66 = "initFailedWSRPConsumerPortlets";
+		_methodName70 = "initFailedWSRPConsumerPortlets";
 
-		_methodParameterTypes66 = new String[] {  };
+		_methodParameterTypes70 = new String[] {  };
 
-		_methodName67 = "initWSRPConsumerPortlet";
+		_methodName71 = "initWSRPConsumerPortlet";
 
-		_methodParameterTypes67 = new String[] {
+		_methodParameterTypes71 = new String[] {
 				"long", "long", "long", "java.lang.String", "java.lang.String",
 				"java.lang.String"
 			};
 
-		_methodName68 = "initWSRPConsumerPortlets";
+		_methodName72 = "initWSRPConsumerPortlets";
 
-		_methodParameterTypes68 = new String[] {  };
+		_methodParameterTypes72 = new String[] {  };
 
-		_methodName69 = "updateWSRPConsumerPortlet";
+		_methodName73 = "updateWSRPConsumerPortlet";
 
-		_methodParameterTypes69 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes73 = new String[] { "long", "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -340,96 +340,96 @@ public class WSRPConsumerPortletLocalServiceClpInvoker {
 			return WSRPConsumerPortletLocalServiceUtil.updateWSRPConsumerPortlet((com.liferay.wsrp.model.WSRPConsumerPortlet)arguments[0]);
 		}
 
-		if (_methodName49.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes49, parameterTypes)) {
+		if (_methodName53.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes53, parameterTypes)) {
 			return WSRPConsumerPortletLocalServiceUtil.getOSGiServiceIdentifier();
 		}
 
-		if (_methodName54.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
+		if (_methodName58.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
 			return WSRPConsumerPortletLocalServiceUtil.addWSRPConsumerPortlet(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(com.liferay.portal.kernel.service.ServiceContext)arguments[3]);
 		}
 
-		if (_methodName55.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
+		if (_methodName59.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
 			return WSRPConsumerPortletLocalServiceUtil.addWSRPConsumerPortlet((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(com.liferay.portal.kernel.service.ServiceContext)arguments[3]);
 		}
 
-		if (_methodName56.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
-			return WSRPConsumerPortletLocalServiceUtil.deleteWSRPConsumerPortlet(((Long)arguments[0]).longValue());
-		}
-
-		if (_methodName57.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes57, parameterTypes)) {
-			WSRPConsumerPortletLocalServiceUtil.deleteWSRPConsumerPortlet((java.lang.String)arguments[0]);
-
-			return null;
-		}
-
-		if (_methodName58.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
-			return WSRPConsumerPortletLocalServiceUtil.deleteWSRPConsumerPortlet((com.liferay.wsrp.model.WSRPConsumerPortlet)arguments[0]);
-		}
-
-		if (_methodName59.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
-			WSRPConsumerPortletLocalServiceUtil.deleteWSRPConsumerPortlets(((Long)arguments[0]).longValue());
-
-			return null;
-		}
-
 		if (_methodName60.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
-			WSRPConsumerPortletLocalServiceUtil.destroyWSRPConsumerPortlet(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
-
-			return null;
+			return WSRPConsumerPortletLocalServiceUtil.deleteWSRPConsumerPortlet(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName61.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
-			WSRPConsumerPortletLocalServiceUtil.destroyWSRPConsumerPortlets();
+			WSRPConsumerPortletLocalServiceUtil.deleteWSRPConsumerPortlet((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
 		if (_methodName62.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes62, parameterTypes)) {
-			return WSRPConsumerPortletLocalServiceUtil.getWSRPConsumerPortlet(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1]);
+			return WSRPConsumerPortletLocalServiceUtil.deleteWSRPConsumerPortlet((com.liferay.wsrp.model.WSRPConsumerPortlet)arguments[0]);
 		}
 
 		if (_methodName63.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes63, parameterTypes)) {
-			return WSRPConsumerPortletLocalServiceUtil.getWSRPConsumerPortlet((java.lang.String)arguments[0]);
+			WSRPConsumerPortletLocalServiceUtil.deleteWSRPConsumerPortlets(((Long)arguments[0]).longValue());
+
+			return null;
 		}
 
 		if (_methodName64.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes64, parameterTypes)) {
+			WSRPConsumerPortletLocalServiceUtil.destroyWSRPConsumerPortlet(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
+
+			return null;
+		}
+
+		if (_methodName65.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes65, parameterTypes)) {
+			WSRPConsumerPortletLocalServiceUtil.destroyWSRPConsumerPortlets();
+
+			return null;
+		}
+
+		if (_methodName66.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
+			return WSRPConsumerPortletLocalServiceUtil.getWSRPConsumerPortlet(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
+		}
+
+		if (_methodName67.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
+			return WSRPConsumerPortletLocalServiceUtil.getWSRPConsumerPortlet((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName68.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
 			return WSRPConsumerPortletLocalServiceUtil.getWSRPConsumerPortlets(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
-		if (_methodName65.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes65, parameterTypes)) {
+		if (_methodName69.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
 			return WSRPConsumerPortletLocalServiceUtil.getWSRPConsumerPortletsCount(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName66.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
+		if (_methodName70.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes70, parameterTypes)) {
 			WSRPConsumerPortletLocalServiceUtil.initFailedWSRPConsumerPortlets();
 
 			return null;
 		}
 
-		if (_methodName67.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
+		if (_methodName71.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes71, parameterTypes)) {
 			WSRPConsumerPortletLocalServiceUtil.initWSRPConsumerPortlet(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue(),
@@ -439,15 +439,15 @@ public class WSRPConsumerPortletLocalServiceClpInvoker {
 			return null;
 		}
 
-		if (_methodName68.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
+		if (_methodName72.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes72, parameterTypes)) {
 			WSRPConsumerPortletLocalServiceUtil.initWSRPConsumerPortlets();
 
 			return null;
 		}
 
-		if (_methodName69.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
+		if (_methodName73.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes73, parameterTypes)) {
 			return WSRPConsumerPortletLocalServiceUtil.updateWSRPConsumerPortlet(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1]);
 		}
@@ -499,16 +499,8 @@ public class WSRPConsumerPortletLocalServiceClpInvoker {
 	private String[] _methodParameterTypes21;
 	private String _methodName22;
 	private String[] _methodParameterTypes22;
-	private String _methodName49;
-	private String[] _methodParameterTypes49;
-	private String _methodName54;
-	private String[] _methodParameterTypes54;
-	private String _methodName55;
-	private String[] _methodParameterTypes55;
-	private String _methodName56;
-	private String[] _methodParameterTypes56;
-	private String _methodName57;
-	private String[] _methodParameterTypes57;
+	private String _methodName53;
+	private String[] _methodParameterTypes53;
 	private String _methodName58;
 	private String[] _methodParameterTypes58;
 	private String _methodName59;
@@ -533,4 +525,12 @@ public class WSRPConsumerPortletLocalServiceClpInvoker {
 	private String[] _methodParameterTypes68;
 	private String _methodName69;
 	private String[] _methodParameterTypes69;
+	private String _methodName70;
+	private String[] _methodParameterTypes70;
+	private String _methodName71;
+	private String[] _methodParameterTypes71;
+	private String _methodName72;
+	private String[] _methodParameterTypes72;
+	private String _methodName73;
+	private String[] _methodParameterTypes73;
 }

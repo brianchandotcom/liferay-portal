@@ -191,6 +191,6 @@ public class ShindigFilter extends InjectedFilter {
 		injector.injectMembers(this);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ShindigFilter.class);
+	private static final Log _log = LogFactoryUtil.getLog(ShindigFilter.class);
 
 }

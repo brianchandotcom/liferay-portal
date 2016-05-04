@@ -67,9 +67,10 @@ public class ServiceDescriptionServiceHandler implements InvocationHandler {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ServiceDescriptionServiceHandler.class);
 
-	private WSRP_v1_ServiceDescription_PortType _serviceDescriptionService;
+	private final WSRP_v1_ServiceDescription_PortType
+		_serviceDescriptionService;
 
 }

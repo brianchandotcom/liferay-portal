@@ -763,7 +763,7 @@ public class SyncDeviceClp extends BaseModelImpl<SyncDevice>
 	private int _featureSet;
 	private int _status;
 	private BaseModel<?> _syncDeviceRemoteModel;
-	private Class<?> _clpSerializerClass = com.liferay.sync.service.ClpSerializer.class;
+	private Class<?> _clpSerializerClass = ClpSerializer.class;
 	private boolean _entityCacheEnabled;
 	private boolean _finderCacheEnabled;
 }

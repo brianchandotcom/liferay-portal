@@ -109,7 +109,7 @@ public class LiferayOAuthStoreProvider implements Provider<OAuthStore> {
 
 	private static final String _OPEN_SSL_A_Z = "-----[A-Z ]*-----";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayOAuthStoreProvider.class);
 
 	private final OAuthStore _oAuthStore;

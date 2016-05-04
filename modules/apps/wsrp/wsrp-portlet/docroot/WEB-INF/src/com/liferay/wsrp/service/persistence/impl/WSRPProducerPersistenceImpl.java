@@ -56,6 +56,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -200,7 +201,7 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WSRPProducer wsrpProducer : list) {
-					if (!Validator.equals(uuid, wsrpProducer.getUuid())) {
+					if (!Objects.equals(uuid, wsrpProducer.getUuid())) {
 						list = null;
 
 						break;
@@ -718,7 +719,7 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 		if (result instanceof WSRPProducer) {
 			WSRPProducer wsrpProducer = (WSRPProducer)result;
 
-			if (!Validator.equals(uuid, wsrpProducer.getUuid()) ||
+			if (!Objects.equals(uuid, wsrpProducer.getUuid()) ||
 					(groupId != wsrpProducer.getGroupId())) {
 				result = null;
 			}
@@ -1010,7 +1011,7 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WSRPProducer wsrpProducer : list) {
-					if (!Validator.equals(uuid, wsrpProducer.getUuid()) ||
+					if (!Objects.equals(uuid, wsrpProducer.getUuid()) ||
 							(companyId != wsrpProducer.getCompanyId())) {
 						list = null;
 

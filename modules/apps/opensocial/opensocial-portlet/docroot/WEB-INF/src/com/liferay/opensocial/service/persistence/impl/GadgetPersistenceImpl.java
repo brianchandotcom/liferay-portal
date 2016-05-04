@@ -58,6 +58,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -201,7 +202,7 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Gadget gadget : list) {
-					if (!Validator.equals(uuid, gadget.getUuid())) {
+					if (!Objects.equals(uuid, gadget.getUuid())) {
 						list = null;
 
 						break;
@@ -1153,7 +1154,7 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (Gadget gadget : list) {
-					if (!Validator.equals(uuid, gadget.getUuid()) ||
+					if (!Objects.equals(uuid, gadget.getUuid()) ||
 							(companyId != gadget.getCompanyId())) {
 						list = null;
 
@@ -2973,7 +2974,7 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 			Gadget gadget = (Gadget)result;
 
 			if ((companyId != gadget.getCompanyId()) ||
-					!Validator.equals(url, gadget.getUrl())) {
+					!Objects.equals(url, gadget.getUrl())) {
 				result = null;
 			}
 		}

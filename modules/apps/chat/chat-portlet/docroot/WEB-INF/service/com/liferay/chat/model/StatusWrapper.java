@@ -20,12 +20,12 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -119,6 +119,16 @@ public class StatusWrapper implements Status, ModelWrapper<Status> {
 		}
 	}
 
+	@Override
+	public Status toEscapedModel() {
+		return new StatusWrapper(_status.toEscapedModel());
+	}
+
+	@Override
+	public Status toUnescapedModel() {
+		return new StatusWrapper(_status.toUnescapedModel());
+	}
+
 	/**
 	* Returns the awake of this status.
 	*
@@ -195,27 +205,17 @@ public class StatusWrapper implements Status, ModelWrapper<Status> {
 	}
 
 	@Override
-	public com.liferay.chat.model.Status toEscapedModel() {
-		return new StatusWrapper(_status.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.chat.model.Status toUnescapedModel() {
-		return new StatusWrapper(_status.toUnescapedModel());
-	}
-
-	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _status.getExpandoBridge();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.chat.model.Status> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<Status> toCacheModel() {
 		return _status.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(com.liferay.chat.model.Status status) {
+	public int compareTo(Status status) {
 		return _status.compareTo(status);
 	}
 
@@ -462,7 +462,7 @@ public class StatusWrapper implements Status, ModelWrapper<Status> {
 
 		StatusWrapper statusWrapper = (StatusWrapper)obj;
 
-		if (Validator.equals(_status, statusWrapper._status)) {
+		if (Objects.equals(_status, statusWrapper._status)) {
 			return true;
 		}
 

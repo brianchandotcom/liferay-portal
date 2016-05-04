@@ -14,7 +14,6 @@
 
 package com.liferay.wsrp.service.impl;
 
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -23,7 +22,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.PwdGenerator;
@@ -56,7 +54,7 @@ public class WSRPProducerLocalServiceImpl
 
 		validate(name);
 
-		long wsrpProducerId = CounterLocalServiceUtil.increment();
+		long wsrpProducerId = counterLocalService.increment();
 
 		WSRPProducer wsrpProducer = wsrpProducerPersistence.create(
 			wsrpProducerId);
@@ -233,7 +231,7 @@ public class WSRPProducerLocalServiceImpl
 				continue;
 			}
 
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+			Portlet portlet = portletLocalService.getPortletById(portletId);
 
 			if (!portlet.isInstanceable()) {
 				continue;

@@ -18,7 +18,6 @@ import com.liferay.opensocial.model.OAuthToken;
 import com.liferay.opensocial.service.base.OAuthTokenLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -34,7 +33,7 @@ public class OAuthTokenLocalServiceImpl extends OAuthTokenLocalServiceBaseImpl {
 			String sessionHandle, long expiration)
 		throws PortalException {
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = userLocalService.getUser(userId);
 		Date now = new Date();
 
 		long oAuthTokenId = counterLocalService.increment();

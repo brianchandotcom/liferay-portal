@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-	<bean id="com.liferay.opensocial.service.GadgetLocalService" class="com.liferay.opensocial.service.impl.GadgetLocalServiceImpl" />
-	<bean id="com.liferay.opensocial.service.GadgetService" class="com.liferay.opensocial.service.impl.GadgetServiceImpl" />
-	<bean id="com.liferay.opensocial.service.persistence.GadgetPersistence" class="com.liferay.opensocial.service.persistence.impl.GadgetPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.opensocial.service.OAuthConsumerLocalService" class="com.liferay.opensocial.service.impl.OAuthConsumerLocalServiceImpl" />
-	<bean id="com.liferay.opensocial.service.persistence.OAuthConsumerPersistence" class="com.liferay.opensocial.service.persistence.impl.OAuthConsumerPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.opensocial.service.OAuthTokenLocalService" class="com.liferay.opensocial.service.impl.OAuthTokenLocalServiceImpl" />
-	<bean id="com.liferay.opensocial.service.persistence.OAuthTokenPersistence" class="com.liferay.opensocial.service.persistence.impl.OAuthTokenPersistenceImpl" parent="basePersistence" />
+	<bean class="com.liferay.opensocial.service.impl.GadgetLocalServiceImpl" id="com.liferay.opensocial.service.GadgetLocalService" />
+	<bean class="com.liferay.opensocial.service.impl.GadgetServiceImpl" id="com.liferay.opensocial.service.GadgetService" />
+	<bean class="com.liferay.opensocial.service.persistence.impl.GadgetPersistenceImpl" id="com.liferay.opensocial.service.persistence.GadgetPersistence" parent="basePersistence" />
+	<bean class="com.liferay.opensocial.service.impl.OAuthConsumerLocalServiceImpl" id="com.liferay.opensocial.service.OAuthConsumerLocalService" />
+	<bean class="com.liferay.opensocial.service.persistence.impl.OAuthConsumerPersistenceImpl" id="com.liferay.opensocial.service.persistence.OAuthConsumerPersistence" parent="basePersistence" />
+	<bean class="com.liferay.opensocial.service.impl.OAuthTokenLocalServiceImpl" id="com.liferay.opensocial.service.OAuthTokenLocalService" />
+	<bean class="com.liferay.opensocial.service.persistence.impl.OAuthTokenPersistenceImpl" id="com.liferay.opensocial.service.persistence.OAuthTokenPersistence" parent="basePersistence" />
 </beans>

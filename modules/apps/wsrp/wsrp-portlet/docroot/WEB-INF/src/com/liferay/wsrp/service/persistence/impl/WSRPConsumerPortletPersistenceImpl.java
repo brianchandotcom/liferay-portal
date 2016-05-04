@@ -57,6 +57,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -205,7 +206,7 @@ public class WSRPConsumerPortletPersistenceImpl extends BasePersistenceImpl<WSRP
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WSRPConsumerPortlet wsrpConsumerPortlet : list) {
-					if (!Validator.equals(uuid, wsrpConsumerPortlet.getUuid())) {
+					if (!Objects.equals(uuid, wsrpConsumerPortlet.getUuid())) {
 						list = null;
 
 						break;
@@ -770,7 +771,7 @@ public class WSRPConsumerPortletPersistenceImpl extends BasePersistenceImpl<WSRP
 
 			if ((list != null) && !list.isEmpty()) {
 				for (WSRPConsumerPortlet wsrpConsumerPortlet : list) {
-					if (!Validator.equals(uuid, wsrpConsumerPortlet.getUuid()) ||
+					if (!Objects.equals(uuid, wsrpConsumerPortlet.getUuid()) ||
 							(companyId != wsrpConsumerPortlet.getCompanyId())) {
 						list = null;
 
@@ -1845,7 +1846,7 @@ public class WSRPConsumerPortletPersistenceImpl extends BasePersistenceImpl<WSRP
 			WSRPConsumerPortlet wsrpConsumerPortlet = (WSRPConsumerPortlet)result;
 
 			if ((wsrpConsumerId != wsrpConsumerPortlet.getWsrpConsumerId()) ||
-					!Validator.equals(portletHandle,
+					!Objects.equals(portletHandle,
 						wsrpConsumerPortlet.getPortletHandle())) {
 				result = null;
 			}

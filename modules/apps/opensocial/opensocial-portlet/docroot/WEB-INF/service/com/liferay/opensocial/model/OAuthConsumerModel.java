@@ -234,20 +234,19 @@ public interface OAuthConsumerModel extends BaseModel<OAuthConsumer>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.opensocial.model.OAuthConsumer oAuthConsumer);
+	public int compareTo(OAuthConsumer oAuthConsumer);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.opensocial.model.OAuthConsumer> toCacheModel();
+	public CacheModel<OAuthConsumer> toCacheModel();
 
 	@Override
-	public com.liferay.opensocial.model.OAuthConsumer toEscapedModel();
+	public OAuthConsumer toEscapedModel();
 
 	@Override
-	public com.liferay.opensocial.model.OAuthConsumer toUnescapedModel();
+	public OAuthConsumer toUnescapedModel();
 
 	@Override
 	public String toString();

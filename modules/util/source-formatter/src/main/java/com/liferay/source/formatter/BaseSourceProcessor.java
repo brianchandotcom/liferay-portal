@@ -500,6 +500,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected void checkPropertyUtils(String fileName, String content) {
+		if (fileName.endsWith("TypeConvertorUtil.java")) {
+			return;
+		}
+
 		if (content.contains("org.apache.commons.beanutils.PropertyUtils")) {
 			processErrorMessage(
 				fileName,
@@ -2109,6 +2113,32 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return splitParameters(parameters);
 	}
 
+	protected List<String> getPluginsInsideModulesDirectoryNames()
+		throws Exception {
+
+		if (_pluginsInsideModulesDirectoryNames != null) {
+			return _pluginsInsideModulesDirectoryNames;
+		}
+
+		_pluginsInsideModulesDirectoryNames = new ArrayList<>();
+
+		List<String> pluginBuildFileNames = getFileNames(
+			new String[0], new String[] {"**/modules/apps/**/build.xml"});
+
+		for (String pluginBuildFileName : pluginBuildFileNames) {
+			pluginBuildFileName = StringUtil.replace(
+				pluginBuildFileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+			int x = pluginBuildFileName.indexOf("/modules/apps/");
+			int y = pluginBuildFileName.lastIndexOf(StringPool.SLASH);
+
+			_pluginsInsideModulesDirectoryNames.add(
+				pluginBuildFileName.substring(x, y + 1));
+		}
+
+		return _pluginsInsideModulesDirectoryNames;
+	}
+
 	protected String getProperty(String key) {
 		return _properties.getProperty(key);
 	}
@@ -2306,6 +2336,28 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected boolean isModulesFile(String absolutePath) {
+		return isModulesFile(absolutePath, false);
+	}
+
+	protected boolean isModulesFile(
+		String absolutePath, boolean includePlugins) {
+
+		if (includePlugins) {
+			return absolutePath.contains("/modules/");
+		}
+
+		try {
+			for (String directoryName :
+					getPluginsInsideModulesDirectoryNames()) {
+
+				if (absolutePath.contains(directoryName)) {
+					return false;
+				}
+			}
+		}
+		catch (Exception e) {
+		}
+
 		return absolutePath.contains("/modules/");
 	}
 
@@ -2747,6 +2799,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private final Map<String, Properties> _moduleLanguageProperties =
 		new HashMap<>();
 	private String _oldCopyright;
+	private List<String> _pluginsInsideModulesDirectoryNames;
 	private Properties _portalLanguageProperties;
 	private Properties _properties;
 	private List<String> _runOutsidePortalExcludes;

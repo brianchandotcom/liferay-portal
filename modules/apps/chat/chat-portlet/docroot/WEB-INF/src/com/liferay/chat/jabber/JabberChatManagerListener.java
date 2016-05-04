@@ -38,7 +38,7 @@ public class JabberChatManagerListener implements ChatManagerListener {
 		}
 	}
 
-	private long _companyId;
-	private long _userId;
+	private final long _companyId;
+	private final long _userId;
 
 }

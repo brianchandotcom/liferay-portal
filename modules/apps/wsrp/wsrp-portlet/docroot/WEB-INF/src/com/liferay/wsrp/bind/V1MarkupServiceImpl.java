@@ -178,9 +178,10 @@ public class V1MarkupServiceImpl
 		return v1Extensions;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(V1MarkupServiceImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		V1MarkupServiceImpl.class);
 
-	private static WSRP_v2_Markup_PortType _v2MarkupService =
+	private static final WSRP_v2_Markup_PortType _v2MarkupService =
 		new V2MarkupServiceImpl();
 
 }

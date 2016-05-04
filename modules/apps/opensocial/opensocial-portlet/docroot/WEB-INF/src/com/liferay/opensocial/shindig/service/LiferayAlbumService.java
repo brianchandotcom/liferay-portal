@@ -364,6 +364,7 @@ public class LiferayAlbumService implements AlbumService {
 		Album.Field.LOCATION, Album.Field.THUMBNAIL_URL
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(LiferayAlbumService.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LiferayAlbumService.class);
 
 }

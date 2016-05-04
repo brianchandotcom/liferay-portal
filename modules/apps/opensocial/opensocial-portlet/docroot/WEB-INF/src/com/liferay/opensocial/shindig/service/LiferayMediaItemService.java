@@ -556,10 +556,10 @@ public class LiferayMediaItemService implements MediaItemService {
 		MediaItem.Field.THUMBNAIL_URL
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayMediaItemService.class);
 
-	private static Pattern _fileNamePattern = Pattern.compile(
+	private static final Pattern _fileNamePattern = Pattern.compile(
 		".*?filename=\"?([^\";]+)");
 
 }

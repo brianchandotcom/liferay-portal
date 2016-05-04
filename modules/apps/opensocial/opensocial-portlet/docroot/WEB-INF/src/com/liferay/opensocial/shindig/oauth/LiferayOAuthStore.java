@@ -90,7 +90,7 @@ public class LiferayOAuthStore implements OAuthStore {
 
 		String keyName = oAuthConsumer.getKeyName();
 
-		String callbackURL = ShindigUtil.transformURL(_callbackURL);
+		String callbackURL = ShindigUtil.transformURL(_CALLBACK_URL);
 
 		return new ConsumerInfo(netOAuthConsumer, keyName, callbackURL);
 	}
@@ -242,7 +242,9 @@ public class LiferayOAuthStore implements OAuthStore {
 		return oAuthToken;
 	}
 
-	private String _callbackURL = PortletPropsValues.SHINDIG_OAUTH_CALLBACK_URL;
+	private static final String _CALLBACK_URL =
+		PortletPropsValues.SHINDIG_OAUTH_CALLBACK_URL;
+
 	private OAuthConsumer _oAuthConsumer;
 
 }

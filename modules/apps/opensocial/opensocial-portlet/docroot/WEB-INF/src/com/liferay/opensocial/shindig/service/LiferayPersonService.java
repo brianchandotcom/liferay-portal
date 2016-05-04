@@ -357,6 +357,7 @@ public class LiferayPersonService implements PersonService {
 		return person;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(LiferayPersonService.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		LiferayPersonService.class);
 
 }

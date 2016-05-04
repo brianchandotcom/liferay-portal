@@ -476,10 +476,10 @@ public class JabberImpl implements Jabber {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(JabberImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(JabberImpl.class);
 
 	private ConnectionConfiguration _connectionConfiguration;
-	private Map<Long, Connection> _connections = new HashMap<>();
-	private Set<Long> _onlineUserIds = new HashSet<>();
+	private final Map<Long, Connection> _connections = new HashMap<>();
+	private final Set<Long> _onlineUserIds = new HashSet<>();
 
 }

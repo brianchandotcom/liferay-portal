@@ -254,19 +254,19 @@ public interface WSRPProducerModel extends BaseModel<WSRPProducer>, ShardedModel
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.wsrp.model.WSRPProducer wsrpProducer);
+	public int compareTo(WSRPProducer wsrpProducer);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.wsrp.model.WSRPProducer> toCacheModel();
+	public CacheModel<WSRPProducer> toCacheModel();
 
 	@Override
-	public com.liferay.wsrp.model.WSRPProducer toEscapedModel();
+	public WSRPProducer toEscapedModel();
 
 	@Override
-	public com.liferay.wsrp.model.WSRPProducer toUnescapedModel();
+	public WSRPProducer toUnescapedModel();
 
 	@Override
 	public String toString();

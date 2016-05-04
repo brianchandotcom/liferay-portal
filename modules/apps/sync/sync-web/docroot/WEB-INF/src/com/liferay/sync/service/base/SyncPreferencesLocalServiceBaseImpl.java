@@ -401,7 +401,7 @@ public abstract class SyncPreferencesLocalServiceBaseImpl
 	protected SyncDLObjectPersistence syncDLObjectPersistence;
 	@BeanReference(type = SyncDLObjectFinder.class)
 	protected SyncDLObjectFinder syncDLObjectFinder;
-	@BeanReference(type = com.liferay.sync.service.SyncPreferencesLocalService.class)
+	@BeanReference(type = SyncPreferencesLocalService.class)
 	protected SyncPreferencesLocalService syncPreferencesLocalService;
 	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;

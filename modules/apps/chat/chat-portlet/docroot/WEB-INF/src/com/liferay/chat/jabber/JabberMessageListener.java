@@ -65,10 +65,10 @@ public class JabberMessageListener implements MessageListener {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		JabberMessageListener.class);
 
-	private long _companyId;
-	private long _userId;
+	private final long _companyId;
+	private final long _userId;
 
 }

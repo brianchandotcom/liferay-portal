@@ -14,7 +14,6 @@
 
 package com.liferay.wsrp.service.impl;
 
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -89,7 +87,7 @@ public class WSRPConsumerPortletLocalServiceImpl
 
 		validate(name, portletHandle);
 
-		long wsrpConsumerPortletId = CounterLocalServiceUtil.increment();
+		long wsrpConsumerPortletId = counterLocalService.increment();
 
 		WSRPConsumerPortlet wsrpConsumerPortlet =
 			wsrpConsumerPortletPersistence.create(wsrpConsumerPortletId);
@@ -191,7 +189,7 @@ public class WSRPConsumerPortletLocalServiceImpl
 				WSRPConsumerPortlet wsrpConsumerPortlet =
 					getWSRPConsumerPortlet(wsrpConsumerPortletId);
 
-				portlet = PortletLocalServiceUtil.getPortletById(
+				portlet = portletLocalService.getPortletById(
 					wsrpConsumerPortlet.getCompanyId(),
 					getPortletId(wsrpConsumerPortletUuid));
 			}
@@ -311,8 +309,7 @@ public class WSRPConsumerPortletLocalServiceImpl
 				initializationFailed = true;
 			}
 
-			PortletLocalServiceUtil.deployRemotePortlet(
-				portlet, _WSRP_CATEGORY);
+			portletLocalService.deployRemotePortlet(portlet, _WSRP_CATEGORY);
 		}
 		catch (PortalException pe) {
 			initializationFailed = true;
@@ -514,12 +511,12 @@ public class WSRPConsumerPortletLocalServiceImpl
 
 		String portletId = getPortletId(wsrpConsumerPortletUuid);
 
-		portlet = PortletLocalServiceUtil.clonePortlet(_CONSUMER_PORTLET_ID);
+		portlet = portletLocalService.clonePortlet(_CONSUMER_PORTLET_ID);
 
 		portlet.setCompanyId(companyId);
 		portlet.setPortletId(portletId);
 
-		PortletApp portletApp = PortletLocalServiceUtil.getPortletApp(
+		PortletApp portletApp = portletLocalService.getPortletApp(
 			ClpSerializer.getServletContextName());
 
 		portlet.setPortletApp(portletApp);
@@ -675,14 +672,14 @@ public class WSRPConsumerPortletLocalServiceImpl
 
 	private static final String _WSRP_CATEGORY = "category.wsrp";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		WSRPConsumerPortletLocalServiceImpl.class);
 
-	private static Map<String, Portlet> _portletsPool =
+	private static final Map<String, Portlet> _portletsPool =
 		new ConcurrentHashMap<>();
 
 	private Class<ConsumerPortlet> _consumerPortletClass;
-	private Map<Long, Tuple> _failedWSRPConsumerPortlets =
+	private final Map<Long, Tuple> _failedWSRPConsumerPortlets =
 		new ConcurrentHashMap<>();
 
 }

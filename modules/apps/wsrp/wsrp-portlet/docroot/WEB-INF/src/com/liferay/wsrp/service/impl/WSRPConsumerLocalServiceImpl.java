@@ -14,13 +14,11 @@
 
 package com.liferay.wsrp.service.impl;
 
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.SystemEventConstants;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -70,7 +68,7 @@ public class WSRPConsumerLocalServiceImpl
 
 		validate(name);
 
-		long wsrpConsumerId = CounterLocalServiceUtil.increment();
+		long wsrpConsumerId = counterLocalService.increment();
 
 		WSRPConsumer wsrpConsumer = wsrpConsumerPersistence.create(
 			wsrpConsumerId);
@@ -351,7 +349,7 @@ public class WSRPConsumerLocalServiceImpl
 			properties[i] = property;
 		}
 
-		Company company = CompanyLocalServiceUtil.getCompany(
+		Company company = companyLocalService.getCompany(
 			wsrpConsumer.getCompanyId());
 
 		RegistrationData registrationData = new RegistrationData();

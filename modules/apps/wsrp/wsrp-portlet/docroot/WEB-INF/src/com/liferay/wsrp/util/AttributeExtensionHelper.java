@@ -56,7 +56,7 @@ public class AttributeExtensionHelper extends BaseExtensionHelper {
 		return messageElement.getAttributeNS(namespaceURI, "name");
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		AttributeExtensionHelper.class);
 
 }

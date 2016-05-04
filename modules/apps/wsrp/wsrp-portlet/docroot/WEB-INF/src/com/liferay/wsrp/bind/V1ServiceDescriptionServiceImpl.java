@@ -70,10 +70,10 @@ public class V1ServiceDescriptionServiceImpl
 		return v1ServiceDescription;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		V1ServiceDescriptionServiceImpl.class);
 
-	private static WSRP_v2_ServiceDescription_PortType
+	private static final WSRP_v2_ServiceDescription_PortType
 		_v2ServiceDescriptionService = new V2ServiceDescriptionServiceImpl();
 
 }

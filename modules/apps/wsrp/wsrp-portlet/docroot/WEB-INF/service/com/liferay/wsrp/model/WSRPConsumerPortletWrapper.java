@@ -22,13 +22,13 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -132,6 +132,16 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	@Override
+	public WSRPConsumerPortlet toEscapedModel() {
+		return new WSRPConsumerPortletWrapper(_wsrpConsumerPortlet.toEscapedModel());
+	}
+
+	@Override
+	public WSRPConsumerPortlet toUnescapedModel() {
+		return new WSRPConsumerPortletWrapper(_wsrpConsumerPortlet.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _wsrpConsumerPortlet.isCachedModel();
 	}
@@ -152,23 +162,12 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.wsrp.model.WSRPConsumerPortlet> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<WSRPConsumerPortlet> toCacheModel() {
 		return _wsrpConsumerPortlet.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.wsrp.model.WSRPConsumerPortlet toEscapedModel() {
-		return new WSRPConsumerPortletWrapper(_wsrpConsumerPortlet.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.wsrp.model.WSRPConsumerPortlet toUnescapedModel() {
-		return new WSRPConsumerPortletWrapper(_wsrpConsumerPortlet.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		com.liferay.wsrp.model.WSRPConsumerPortlet wsrpConsumerPortlet) {
+	public int compareTo(WSRPConsumerPortlet wsrpConsumerPortlet) {
 		return _wsrpConsumerPortlet.compareTo(wsrpConsumerPortlet);
 	}
 
@@ -445,7 +444,7 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 
 		WSRPConsumerPortletWrapper wsrpConsumerPortletWrapper = (WSRPConsumerPortletWrapper)obj;
 
-		if (Validator.equals(_wsrpConsumerPortlet,
+		if (Objects.equals(_wsrpConsumerPortlet,
 					wsrpConsumerPortletWrapper._wsrpConsumerPortlet)) {
 			return true;
 		}

@@ -234,9 +234,9 @@ public class ServiceHandler implements InvocationHandler {
 
 	private static final String _WSRP_PROXY_PACKAGE = "com.liferay.wsrp.proxy.";
 
-	private EngineConfiguration _engineConfiguration;
-	private Service _serviceLocator;
-	private boolean _v2;
-	private String _version;
+	private final EngineConfiguration _engineConfiguration;
+	private final Service _serviceLocator;
+	private final boolean _v2;
+	private final String _version;
 
 }

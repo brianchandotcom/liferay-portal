@@ -50,8 +50,9 @@ public class ChatExtensionsUtil {
 		_extensions.remove(servletContextName);
 	}
 
-	private static ChatExtensionsUtil _instance = new ChatExtensionsUtil();
+	private static final ChatExtensionsUtil _instance =
+		new ChatExtensionsUtil();
 
-	private Map<String, String> _extensions;
+	private final Map<String, String> _extensions;
 
 }

@@ -246,19 +246,19 @@ public interface StatusModel extends BaseModel<Status> {
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.chat.model.Status status);
+	public int compareTo(Status status);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.chat.model.Status> toCacheModel();
+	public CacheModel<Status> toCacheModel();
 
 	@Override
-	public com.liferay.chat.model.Status toEscapedModel();
+	public Status toEscapedModel();
 
 	@Override
-	public com.liferay.chat.model.Status toUnescapedModel();
+	public Status toUnescapedModel();
 
 	@Override
 	public String toString();

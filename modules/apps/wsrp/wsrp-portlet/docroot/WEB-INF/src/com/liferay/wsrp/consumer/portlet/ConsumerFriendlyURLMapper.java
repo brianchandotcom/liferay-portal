@@ -149,7 +149,7 @@ public class ConsumerFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 	private static final String _MAPPING = "consumer";
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		ConsumerFriendlyURLMapper.class);
 
 }

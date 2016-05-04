@@ -22,7 +22,7 @@ AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.
 AssetRendererFactory assetRendererFactory = (AssetRendererFactory)request.getAttribute(WebKeys.ASSET_RENDERER_FACTORY);
 %>
 
-<div class="card card-dm">
+<div class="card">
 	<c:choose>
 		<c:when test="<%= Validator.isNotNull(assetRenderer.getThumbnailPath(renderRequest)) %>">
 			<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover" style="background-image: url('<%= assetRenderer.getThumbnailPath(renderRequest) %>')">
@@ -36,15 +36,15 @@ AssetRendererFactory assetRendererFactory = (AssetRendererFactory)request.getAtt
 		</c:otherwise>
 	</c:choose>
 
-	<div class="card-footer">
-		<div class="card-dm-details">
-			<div class="card-dm-text-large">
+	<div class="card-row card-row-layout-fixed card-row-padded card-row-valign-top">
+		<div class="card-col-content lfr-card-details-column">
+			<span class="lfr-card-title-text truncate-text">
 				<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
-			</div>
+			</span>
 
-			<div class="card-dm-text">
+			<span class="lfr-card-subtitle-text truncate-text">
 				<%= HtmlUtil.escape(assetRendererFactory.getTypeName(locale)) %>
-			</div>
+			</span>
 		</div>
 	</div>
 </div>

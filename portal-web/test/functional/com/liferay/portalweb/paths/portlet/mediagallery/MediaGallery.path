@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>IMAGE_TITLE</td>
-	<td>//div[contains(@class,'image')]//div[contains(@class,'card-dm-text-large') and contains(.,'${key_mgDocumentTitle}')]</td>
+	<td>//div[contains(@class,'image')]//span[contains(@class,'lfr-card-title-text') and contains(.,'${key_mgDocumentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>FOLDER_NAME</td>
-	<td>//span[@title='${key_mgFolderName}']/a</td>
+	<td>//span//a[@title='${key_mgFolderName}']</td>
 	<td></td>
 </tr>
 <tr>

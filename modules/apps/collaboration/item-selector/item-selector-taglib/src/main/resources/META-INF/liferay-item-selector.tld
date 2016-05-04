@@ -11,7 +11,7 @@
 	<short-name>liferay-item-selector</short-name>
 	<uri>http://liferay.com/tld/item-selector</uri>
 	<tag>
-		<description>A User interface to select groups<![CDATA[<br /><br />Example:<br /><img src="../images/item-selector/group-selector.png"/>]]></description>
+		<description>A User interface to select groups<![CDATA[<br /><br />Example:<br /><img src="../images/group-selector.png"/>]]></description>
 		<name>group-selector</name>
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.GroupSelectorTag</tag-class>
 		<body-content>JSP</body-content>
@@ -29,7 +29,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>A user interface to add images. Renders a drag and drop area and a button to open a selection dialog. It works as an image viewer if an image is selected. <![CDATA[<br /><br />Example:<br /><img src="../images/item-selector/image-selector.png"/>]]></description>
+		<description>A user interface to add images. Renders a drag and drop area and a button to open a selection dialog. It works as an image viewer if an image is selected. <![CDATA[<br /><br />Example:<br /><img src="../images/image-selector.png"/>]]></description>
 		<name>image-selector</name>
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.ImageSelectorTag</tag-class>
 		<body-content>JSP</body-content>
@@ -83,7 +83,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>A user interface to show file entries. <![CDATA[<br /><br />Example:<br /><img src="../images/item-selector/repository-entry-browser.png"/>]]></description>
+		<description>A user interface to show file entries. <![CDATA[<br /><br />Example:<br /><img src="../images/repository-entry-browser.png"/>]]></description>
 		<name>repository-entry-browser</name>
 		<tag-class>com.liferay.item.selector.taglib.servlet.taglib.RepositoryEntryBrowserTag</tag-class>
 		<body-content>JSP</body-content>

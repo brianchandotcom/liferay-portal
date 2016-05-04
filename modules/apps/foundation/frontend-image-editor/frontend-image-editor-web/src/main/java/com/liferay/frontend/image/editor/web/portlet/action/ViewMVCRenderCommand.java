@@ -66,7 +66,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		Map<String, Object> capabilitiesContext = new HashMap<>();
 
 		capabilitiesContext.put(
-			"tools", getImageEditorToolsContext(renderRequest));
+			"tools", getImageEditorToolsContexts(renderRequest));
 
 		template.put("capabilities", capabilitiesContext);
 
@@ -129,10 +129,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		return new ArrayList<>(imageEditorCapabilityDescriptorsMap.values());
 	}
 
-	protected List<Map<String, Object>> getImageEditorToolsContext(
+	protected List<Map<String, Object>> getImageEditorToolsContexts(
 		RenderRequest renderRequest) {
 
-		List<Map<String, Object>> imageEditorToolsContext = new ArrayList<>();
+		List<Map<String, Object>> imageEditorToolsContexts = new ArrayList<>();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -143,7 +143,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 					getImageEditorCapabilityDescriptors("tool");
 
 		if (toolImageEditorCapabilityDescriptors == null) {
-			return imageEditorToolsContext;
+			return imageEditorToolsContexts;
 		}
 
 		List<List<ImageEditorCapabilityDescriptor>>
@@ -204,10 +204,10 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			context.put("controls", controls);
 			context.put("icon", icon);
 
-			imageEditorToolsContext.add(context);
+			imageEditorToolsContexts.add(context);
 		}
 
-		return imageEditorToolsContext;
+		return imageEditorToolsContexts;
 	}
 
 	protected Template getTemplate(RenderRequest renderRequest) {

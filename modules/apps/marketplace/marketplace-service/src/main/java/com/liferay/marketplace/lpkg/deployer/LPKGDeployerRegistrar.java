@@ -101,8 +101,6 @@ public class LPKGDeployerRegistrar {
 				0, app.getAppId(), StringPool.BLANK, StringPool.BLANK,
 				contextName);
 		}
-
-		_appLocalService.processMarketplaceProperties(properties);
 	}
 
 	@Reference

@@ -45,6 +45,10 @@ public class BundleManagerUtil {
 		return _bundleManager.getManifest(file);
 	}
 
+	public static List<Bundle> installLPKG(File file) throws Exception {
+		return _bundleManager.installLPKG(file);
+	}
+
 	public static boolean isInstalled(Bundle bundle) {
 		return _bundleManager.isInstalled(bundle);
 	}

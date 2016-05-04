@@ -40,9 +40,9 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 }
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-<liferay-portlet:renderURL portletConfiguration="true" var="configurationRenderURL" />
+<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="configurationRenderURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
@@ -269,7 +269,7 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 				sortable: true,
 				sortableHandle: '.lfr-form-row',
 
-				<liferay-portlet:renderURL portletConfiguration="true" var="editFieldURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+				<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="editFieldURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 				</liferay-portlet:renderURL>
 

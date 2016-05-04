@@ -24,7 +24,7 @@ zips = StringUtil.split(ParamUtil.getString(request, "zips", zipsString), String
 zipsString = StringUtil.merge(zips, StringPool.NEW_LINE);
 %>
 
-<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
 <aui:form action="<%= configurationActionURL %>" method="post">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />

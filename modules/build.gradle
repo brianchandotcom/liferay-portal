@@ -16,6 +16,11 @@ gradle.beforeProject {
 	configure(project) {
 		apply plugin: "com.liferay.defaults.plugin"
 
+		pluginManager.withPlugin("com.liferay.ant.plugin") {
+			task buildLang(dependsOn: "build-lang")
+			task buildService(dependsOn: "build-service")
+		}
+
 		pluginManager.withPlugin("com.liferay.osgi.plugin") {
 			apply plugin: "pmd"
 

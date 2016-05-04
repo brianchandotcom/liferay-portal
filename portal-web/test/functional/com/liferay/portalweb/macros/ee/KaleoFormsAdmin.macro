@@ -748,7 +748,6 @@
 		<var name="key_kfFormName" value="${kfFormName}" />
 
 		<execute function="AssertElementNotPresent" locator1="KaleoFormsAdminEditProcess#FORMS_TABLE_FORM" />
-		<execute function="AssertElementNotPresent" locator1="KaleoFormsAdminEditProcess#FORMS_TABLE_ASSIGN_FORM_BUTTON" />
 	</command>
 
 	<command name="viewUnpublishedWorkflowDefinitions">

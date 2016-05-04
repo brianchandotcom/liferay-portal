@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -85,6 +86,11 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 				themeDisplay.getLanguageId());
 
 		Map<String, Object> strings = new HashMap<>();
+
+		Locale locale = themeDisplay.getLocale();
+
+		strings.put("apply", LanguageUtil.get(locale, "apply"));
+		strings.put("cancel", LanguageUtil.get(locale, "cancel"));
 
 		for (String key : resourceBundle.keySet()) {
 			strings.put(key, LanguageUtil.get(resourceBundle, key));

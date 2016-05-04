@@ -938,6 +938,23 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					else {
 					    project.setProperty("build.flow.time.stamp", Long.toString(System.currentTimeMillis()));
 					}
+
+					String jenkinsURL = project.getProperty("env.JENKINS_URL");
+
+					if (jenkinsURL != null) {
+						if (jenkinsURL.matches("https:\\/\\/test-\\d+-\\d+.liferay.com\\/")) {
+							int x = jenkinsURL.indexOf("test");
+							int y = jenkinsURL.indexOf(".");
+
+							project.setProperty("master.hostname", jenkinsURL.substring(x, y));
+						}
+						else if (jenkinsURL.matches("https:\\/\\/test.liferay.com\\/\\d+\\/")) {
+							int x = jenkinsURL.indexOf("com/") + 4;
+							int y = jenkinsURL.length() - 1;
+
+							project.setProperty("master.hostname", "test-" + jenkinsURL.substring(x, y));
+						}
+					}
 				]]>
 			</beanshell>
 
@@ -962,7 +979,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 				<antelope:replace regex="#" replacement="_" />
 			</antelope:stringutil>
 
-			<var name="testray.logs.dir.name" value="${env.HOSTNAME}/${build.flow.time.stamp}/${env.BUILD_FLOW_JOB_NAME}/${env.BUILD_FLOW_BUILD_NUMBER}/${batch.dir.name}/${test.dir.name}" />
+			<var name="testray.logs.dir.name" value="${master.hostname}/${build.flow.time.stamp}/${env.BUILD_FLOW_JOB_NAME}/${env.BUILD_FLOW_BUILD_NUMBER}/${batch.dir.name}/${test.dir.name}" />
 		</sequential>
 	</macrodef>
 

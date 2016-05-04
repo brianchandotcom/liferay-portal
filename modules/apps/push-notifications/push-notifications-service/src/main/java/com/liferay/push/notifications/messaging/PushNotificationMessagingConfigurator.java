@@ -14,11 +14,14 @@
 
 package com.liferay.push.notifications.messaging;
 
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.push.notifications.service.PushNotificationsDeviceLocalService;
 
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -48,7 +51,14 @@ public class PushNotificationMessagingConfigurator {
 				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
 				DestinationNames.PUSH_NOTIFICATION);
 
-		registerDestination(pushNotificationDestinationConfiguration);
+		Destination pushNotificationDestination = registerDestination(
+			pushNotificationDestinationConfiguration);
+
+		MessageListener pushNotificationsMessageListener =
+			new PushNotificationsMessageListener(
+				_pushNotificationsDeviceLocalService);
+
+		pushNotificationDestination.register(pushNotificationsMessageListener);
 
 		DestinationConfiguration
 			pushNotificationResponseDestinationConfiguration =
@@ -56,7 +66,14 @@ public class PushNotificationMessagingConfigurator {
 					DestinationConfiguration.DESTINATION_TYPE_SERIAL,
 					DestinationNames.PUSH_NOTIFICATION_RESPONSE);
 
-		registerDestination(pushNotificationResponseDestinationConfiguration);
+		Destination pushNotificationResponseDestination = registerDestination(
+			pushNotificationResponseDestinationConfiguration);
+
+		MessageListener pushNotificationsResponseMessageListener =
+			new PushNotificationsResponseMessageListener(_jsonFactory);
+
+		pushNotificationResponseDestination.register(
+			pushNotificationsResponseMessageListener);
 	}
 
 	@Deactivate
@@ -104,7 +121,14 @@ public class PushNotificationMessagingConfigurator {
 	private DestinationFactory _destinationFactory;
 
 	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
 	private MessageBus _messageBus;
+
+	@Reference
+	private PushNotificationsDeviceLocalService
+		_pushNotificationsDeviceLocalService;
 
 	private final Map<String, ServiceRegistration<Destination>>
 		_serviceRegistrations = new HashMap<>();

@@ -19,24 +19,17 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.push.notifications.sender.Response;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
  */
-@Component(
-	immediate = true,
-	property = {
-		"destination.name=" + DestinationNames.PUSH_NOTIFICATION_RESPONSE
-	},
-	service = MessageListener.class
-)
 public class PushNotificationsResponseMessageListener
 	extends BaseMessageListener {
+
+	public PushNotificationsResponseMessageListener(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
@@ -55,7 +48,6 @@ public class PushNotificationsResponseMessageListener
 	private static final Log _log = LogFactoryUtil.getLog(
 		PushNotificationsResponseMessageListener.class);
 
-	@Reference
-	private JSONFactory _jsonFactory;
+	private final JSONFactory _jsonFactory;
 
 }

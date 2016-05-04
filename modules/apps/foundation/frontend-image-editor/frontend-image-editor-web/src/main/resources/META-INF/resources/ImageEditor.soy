@@ -3,10 +3,10 @@
 /**
  * Image Editor Component
  *
- * @param? capabilities
  * @param? history
  * @param id
  * @param? image
+ * @param? imageEditorCapabilities
  * @param? selectedControl
  * @param? selectedTool
  * @param? pathThemeImages
@@ -65,13 +65,13 @@
 /**
  * Renders the list of tools and associated controls
  *
- * @param capabilities
+ * @param imageEditorCapabilities
  * @param? selectedTool
  */
 {template .tools}
 	<div class="controls text-center">
 		<ul class="list-inline">
-			{foreach $tool in $capabilities.tools}
+			{foreach $tool in $imageEditorCapabilities.tools}
 				<li class="{$selectedTool == 'tool-' + index($tool) ? 'open' : ''}">
 					{call .tool data="all"}
 						{param tool: $tool /}

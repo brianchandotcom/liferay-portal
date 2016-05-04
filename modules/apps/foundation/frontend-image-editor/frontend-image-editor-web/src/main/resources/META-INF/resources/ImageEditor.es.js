@@ -18,10 +18,11 @@ import templates from './ImageEditor.soy';
  * the state and history of the editing process, orchestrating how the different parts
  * of the application work.
  *
- * All image processing is delegated to the different capability implementations. The
+ * All image processing is delegated to the different image editor capability implementations. The
  * editor provides:
  * - A common way of exposing the functionality.
- * - Some registration points which can be used by the capability implementors to provide UI controls.
+ * - Some registration points which can be used by the image editor capability implementors
+ * to provide UI controls.
  */
 class ImageEditor extends Component {
 	/**
@@ -139,7 +140,7 @@ class ImageEditor extends Component {
 	 * @param  {MouseEvent} event
 	 */
 	requestEditorEdit(event) {
-		let controls = this.capabilities.tools.reduce(
+		let controls = this.imageEditorCapabilities.tools.reduce(
 			(prev, curr) => prev.concat(curr.controls), []);
 
 		let target = event.delegateTarget || event.currentTarget;

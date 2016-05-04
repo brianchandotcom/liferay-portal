@@ -68,7 +68,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		imageEditorCapabilitiesContext.put(
 			"tools", getImageEditorToolsContexts(renderRequest));
 
-		template.put("capabilities", imageEditorCapabilitiesContext);
+		template.put("imageEditorCapabilities", imageEditorCapabilitiesContext);
 
 		String imageEditorURL = ParamUtil.getString(
 			renderRequest, "imageEditorURL");

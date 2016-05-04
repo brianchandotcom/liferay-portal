@@ -6,6 +6,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
 >
+	<description>Provides the Liferay Item Selector component tags, prefixed with <![CDATA[<code>liferay-item-selector:</code>]]>.</description>
 	<tlib-version>1.0</tlib-version>
 	<short-name>liferay-item-selector</short-name>
 	<uri>http://liferay.com/tld/item-selector</uri>

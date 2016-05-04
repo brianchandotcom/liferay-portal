@@ -488,6 +488,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String fileName, String className, String content) {
 
 		if (fileName.endsWith("Test.java") ||
+			fileName.endsWith("UpgradeTableListener.java") ||
 			(!className.contains("Upgrade") && !className.contains("Verify"))) {
 
 			return;

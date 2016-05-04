@@ -4230,6 +4230,7 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewTaskNotPresent">
+			<var name="kfFormName" value=" " />
 			<var name="workflowTask" value="update" />
 		</execute>
 

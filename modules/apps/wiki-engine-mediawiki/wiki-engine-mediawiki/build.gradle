@@ -1,21 +1,21 @@
 task copyJAMWiki(type: Copy)
 
-String jamwikiVersion = "1.0.7"
+String jamWikiVersion = "1.0.7"
 
 copyJAMWiki {
 	eachFile {
 		it.path = it.path.substring(it.path.lastIndexOf("/"))
 	}
 
-	from zipTree("jamwiki-${jamwikiVersion}-src.zip")
+	from zipTree("jamwiki-${jamWikiVersion}-src.zip")
 
-	include "jamwiki-${jamwikiVersion}/jamwiki-war/src/main/resources/ApplicationResources*.properties"
-	include "jamwiki-${jamwikiVersion}/jamwiki-war/src/main/resources/jamwiki-configuration.dtd"
-	include "jamwiki-${jamwikiVersion}/jamwiki-war/src/main/resources/jamwiki-configuration.xml"
+	include "jamwiki-${jamWikiVersion}/jamwiki-war/src/main/resources/ApplicationResources*.properties"
+	include "jamwiki-${jamWikiVersion}/jamwiki-war/src/main/resources/jamwiki-configuration.dtd"
+	include "jamwiki-${jamWikiVersion}/jamwiki-war/src/main/resources/jamwiki-configuration.xml"
 
 	into "src/main/resources"
 
-	File rootDir = file("src/main/resources/jamwiki-${jamwikiVersion}")
+	File rootDir = file("src/main/resources/jamwiki-${jamWikiVersion}")
 
 	rootDir.deleteDir()
 }
@@ -23,7 +23,7 @@ copyJAMWiki {
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.wiki.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.wiki.engine.input.editor.common", version: "2.0.0"
-	provided group: "com.liferay", name: "org.jamwiki", version: jamwikiVersion
+	provided group: "com.liferay", name: "org.jamwiki", version: jamWikiVersion
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"

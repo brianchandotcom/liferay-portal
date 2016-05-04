@@ -102,12 +102,7 @@ if (portletTitleBasedNavigation) {
 		<aui:workflow-status markupView="lexicon" model="<%= DLFileEntry.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" version="<%= fileVersion.getVersion() %>" />
 
 		<liferay-frontend:info-bar-buttons>
-			<liferay-frontend:info-bar-sidenav-toggler-button
-				href="javascript:;"
-				icon="info-circle"
-				label="info"
-				sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>'
-			/>
+			<liferay-frontend:info-bar-sidenav-toggler-button />
 		</liferay-frontend:info-bar-buttons>
 	</liferay-frontend:info-bar>
 </c:if>
@@ -145,7 +140,7 @@ if (portletTitleBasedNavigation) {
 
 			</c:if>
 
-			<liferay-frontend:management-bar-sidenav-toggler-button cssClass="btn btn-default" href="javascript:;" label="info" sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>' />
+			<liferay-frontend:management-bar-sidenav-toggler-button />
 		</div>
 	</c:if>
 

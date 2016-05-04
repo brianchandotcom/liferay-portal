@@ -15,17 +15,17 @@
 </tr>
 <tr>
 	<td>GENERIC_LARGE_TEXT</td>
-	<td>//div[contains(@class,'vertical-card')]//div[contains(@class,'text-large')]</td>
+	<td>//div[contains(@class,'vertical-card')]//span[contains(@class,'lfr-card-title-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GENERIC_LARGE_TEXT_LINK</td>
+	<td>//div[contains(@class,'vertical-card')]//span[contains(@class,'lfr-card-title-text')]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>GENERIC_SMALL_TEXT</td>
-	<td>//div[contains(@class,'vertical-card')]//div[@class='card-dm-text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>GENERIC_HORIZONTAL_DETAILS</td>
-	<td>//div[contains(@class,'card-horizontal')]//div[@class='card-dm-details']</td>
+	<td>//div[contains(@class,'vertical-card')]//span[contains(@class,'lfr-card-workflow-text')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -35,22 +35,27 @@
 </tr>
 <tr>
 	<td>SPECIFIC_LARGE_TEXT</td>
-	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//div[contains(@class,'text-large')]</td>
+	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//span[contains(@class,'lfr-card-title-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPECIFIC_LARGE_TEXT_LINK</td>
+	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//span[contains(@class,'lfr-card-title-text')]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SPECIFIC_TEXT</td>
-	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//div[@class='card-dm-text']</td>
+	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//span[contains(@class,'lfr-card-subtitle-text')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SPECIFIC_SMALL_TEXT</td>
-	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//div[@class='card-dm-text-small']</td>
+	<td>//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//span[contains(@class,'lfr-card-workflow-text')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SPECIFIC_SMALL_TEXT_2</td>
-	<td>xpath=(//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//div[@class='card-dm-text-small'])[2]</td>
+	<td>xpath=(//div[contains(@class,'vertical-card') and contains(.,'${key_cardText}')]//span[@class='lfr-card-subtitle-text'])[2]</td>
 	<td></td>
 </tr>
 </tbody>

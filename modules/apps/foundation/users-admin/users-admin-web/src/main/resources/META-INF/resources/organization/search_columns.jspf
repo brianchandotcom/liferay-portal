@@ -16,12 +16,12 @@
 
 <liferay-ui:search-container-column-text
 	cssClass="content-column name-column"
-	href="<%= rowURL %>"
 	name="name"
 	orderable="<%= true %>"
-	property="name"
 	truncate="<%= true %>"
-/>
+>
+	<aui:a href="<%= String.valueOf(rowURL) %>"><strong><%= organization.getName() %></strong></aui:a>
+</liferay-ui:search-container-column-text>
 
 <c:if test="<%= Validator.isNotNull(keywords) %>">
 	<liferay-ui:search-container-column-text

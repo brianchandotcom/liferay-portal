@@ -58,9 +58,15 @@ public class WSRPHTTPSender extends HTTPSender {
 			_forwardCookies = StringUtil.split(
 				StringUtil.toLowerCase(forwardCookies));
 		}
+		else {
+			_forwardCookies = new String[0];
+		}
 
 		if (Validator.isNotNull(forwardHeaders)) {
 			_forwardHeaders = StringUtil.split(forwardHeaders);
+		}
+		else {
+			_forwardHeaders = new String[0];
 		}
 	}
 
@@ -181,7 +187,7 @@ public class WSRPHTTPSender extends HTTPSender {
 		new InitialThreadLocal<>(
 			SimpleHTTPSender.class + "._currentRequest", null);
 
-	private String[] _forwardCookies = new String[0];
-	private String[] _forwardHeaders = new String[0];
+	private final String[] _forwardCookies;
+	private final String[] _forwardHeaders;
 
 }

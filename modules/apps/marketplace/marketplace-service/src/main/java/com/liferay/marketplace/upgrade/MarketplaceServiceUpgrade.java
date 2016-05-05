@@ -20,6 +20,7 @@ import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.marketplace.upgrade.v1_0_0.UpgradeCompanyId;
 import com.liferay.marketplace.upgrade.v1_0_0.UpgradeExpando;
 import com.liferay.marketplace.upgrade.v1_0_0.UpgradeModule;
+import com.liferay.marketplace.upgrade.v2_0_0.UpgradeApp;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,7 +36,7 @@ public class MarketplaceServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.marketplace.service", "0.0.1", "1.0.0",
+			"com.liferay.marketplace.service", "0.0.1", "2.0.0",
 			new UpgradeExpando(
 				_expandoColumnLocalService, _expandoTableLocalService,
 				_expandoValueLocalService));
@@ -47,6 +48,10 @@ public class MarketplaceServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.marketplace.service", "1.0.1", "1.0.2",
 			new UpgradeCompanyId());
+
+		registry.register(
+			"com.liferay.marketplace.service", "1.0.2", "2.0.0",
+			new UpgradeApp());
 	}
 
 	@Reference(unbind = "-")

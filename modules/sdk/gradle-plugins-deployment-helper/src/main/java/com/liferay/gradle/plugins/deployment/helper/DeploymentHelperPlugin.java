@@ -29,6 +29,7 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.Jar;
@@ -113,6 +114,7 @@ public class DeploymentHelperPlugin implements Plugin<Project> {
 
 		buildDeploymentHelperTask.setDescription(
 			"Assembles a war file to deploy one or more apps to a cluster.");
+		buildDeploymentHelperTask.setGroup(BasePlugin.BUILD_GROUP);
 
 		buildDeploymentHelperTask.setOutputFile(
 			new Callable<File>() {

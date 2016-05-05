@@ -88,6 +88,11 @@
 </tr>
 <!--PREVIEW-->
 <tr>
+	<td>PREVIEW</td>
+	<td>//li[contains(@id,'PreviewContent')]//a[contains(.,'${key_currentCampaign}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PREVIEW_1</td>
 	<td>//li[contains(@id,'PreviewContent0')]</td>
 	<td></td>

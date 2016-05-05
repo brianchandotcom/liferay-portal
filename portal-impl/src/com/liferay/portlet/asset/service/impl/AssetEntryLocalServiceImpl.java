@@ -440,10 +440,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		try {
 			SearchContext searchContext = buildSearchContext(
-				companyId, groupIds, userId, classTypeId, null, null,
+				companyId, groupIds, userId, classTypeId, keywords, null, null,
 				showNonindexable, statuses, false, start, end);
-
-			searchContext.setKeywords(keywords);
 
 			return doSearch(companyId, className, searchContext);
 		}
@@ -484,13 +482,9 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		try {
 			SearchContext searchContext = buildSearchContext(
-				companyId, groupIds, userId, classTypeId, assetCategoryIds,
-				assetTagNames, showNonindexable, statuses, andSearch, start,
-				end);
-
-			searchContext.setAttribute(Field.DESCRIPTION, description);
-			searchContext.setAttribute(Field.TITLE, title);
-			searchContext.setAttribute(Field.USER_NAME, userName);
+				companyId, groupIds, userId, classTypeId, userName, title,
+				description, assetCategoryIds, assetTagNames, showNonindexable,
+				statuses, andSearch, start, end);
 
 			return doSearch(companyId, className, searchContext);
 		}
@@ -588,13 +582,9 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 				getClassNameIds(companyId, className));
 
 			SearchContext searchContext = buildSearchContext(
-				companyId, groupIds, userId, classTypeId, assetCategoryIds,
-				assetTagNames, showNonindexable, statuses, andSearch,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			searchContext.setAttribute(Field.DESCRIPTION, description);
-			searchContext.setAttribute(Field.TITLE, title);
-			searchContext.setAttribute(Field.USER_NAME, userName);
+				companyId, groupIds, userId, classTypeId, userName, title,
+				description, assetCategoryIds, assetTagNames, showNonindexable,
+				statuses, andSearch, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			QueryConfig queryConfig = searchContext.getQueryConfig();
 
@@ -1031,6 +1021,38 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		searchContext.setGroupIds(groupIds);
 		searchContext.setStart(start);
 		searchContext.setUserId(userId);
+
+		return searchContext;
+	}
+
+	protected SearchContext buildSearchContext(
+		long companyId, long[] groupIds, long userId, long classTypeId,
+		String keywords, String assetCategoryIds, String assetTagNames,
+		boolean showNonindexable, int[] statuses, boolean andSearch, int start,
+		int end) {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, groupIds, userId, classTypeId, assetCategoryIds,
+			assetTagNames, showNonindexable, statuses, andSearch, start, end);
+
+		searchContext.setKeywords(keywords);
+
+		return searchContext;
+	}
+
+	protected SearchContext buildSearchContext(
+		long companyId, long[] groupIds, long userId, long classTypeId,
+		String userName, String title, String description,
+		String assetCategoryIds, String assetTagNames, boolean showNonindexable,
+		int[] statuses, boolean andSearch, int start, int end) {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, groupIds, userId, classTypeId, assetCategoryIds,
+			assetTagNames, showNonindexable, statuses, andSearch, start, end);
+
+		searchContext.setAttribute(Field.DESCRIPTION, description);
+		searchContext.setAttribute(Field.TITLE, title);
+		searchContext.setAttribute(Field.USER_NAME, userName);
 
 		return searchContext;
 	}

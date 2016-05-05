@@ -125,12 +125,11 @@ public class BuildDeploymentHelperTask extends JavaExec {
 
 		GUtil.addToCollection(completeArgs, getArgs());
 
-		completeArgs.add("deployment.files=" + getDeploymentFileNames());
+		completeArgs.add("--fileNames=" + getDeploymentFileNames());
 		completeArgs.add(
-			"deployment.output.file=" +
-				FileUtil.getAbsolutePath(getOutputFile()));
+			"--outputFile=" + FileUtil.getAbsolutePath(getOutputFile()));
 		completeArgs.add(
-			"deployment.path=" + FileUtil.getAbsolutePath(getDeploymentPath()));
+			"--path=" + FileUtil.getAbsolutePath(getDeploymentPath()));
 
 		return completeArgs;
 	}

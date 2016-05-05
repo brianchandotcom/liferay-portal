@@ -163,7 +163,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 
 			fileName = url.getFile();
 
-			String protocol = "file:/";
+			String protocol = "file:";
 
 			int index = fileName.indexOf(protocol);
 

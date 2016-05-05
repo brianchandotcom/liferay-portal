@@ -8,7 +8,7 @@ AUI.add(
 
 		var REGEX_MATCH_NOTHING = /^[]/;
 
-		var STR_CHECKBOX_SELECTOR = 'input[type=checkbox]';
+		var STR_CHECKBOX_SELECTOR = 'input[type=checkbox]:enabled';
 
 		var STR_CHECKED = 'checked';
 

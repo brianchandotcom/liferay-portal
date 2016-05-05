@@ -227,7 +227,9 @@ public class DeploymentHelper {
 
 		options.addOption(
 			new Option(
-				"p", "path", true, "Set the path the files will be deployed."));
+				"p", "path", true,
+				"Set the path the files will be deployed. If this is not " +
+					"set, it will deploy to auto.deploy.deploy.dir."));
 
 		return options;
 	}

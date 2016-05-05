@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util;
+package com.liferay.shopping.api;
 
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
@@ -27,11 +27,8 @@ import java.util.Calendar;
 
 /**
  * @author Brian Wing Shun Chan
- *
- * @deprecated As of 7.0.0, with direct replacement
- * @shopping-api/com.liferay.shopping.util
+ * @author Peter Fellwock
  */
-@Deprecated
 public class CreditCard {
 
 	public static String hide(String number) {

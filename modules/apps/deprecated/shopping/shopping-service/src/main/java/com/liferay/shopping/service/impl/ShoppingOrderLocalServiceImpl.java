@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.shopping.api.CreditCard;
 import com.liferay.shopping.configuration.ShoppingGroupServiceOverriddenConfiguration;
 import com.liferay.shopping.constants.ShoppingConstants;
 import com.liferay.shopping.constants.ShoppingPortletKeys;
@@ -66,7 +67,6 @@ import com.liferay.shopping.model.impl.ShoppingCartItemImpl;
 import com.liferay.shopping.service.base.ShoppingOrderLocalServiceBaseImpl;
 import com.liferay.shopping.util.ShoppingUtil;
 import com.liferay.shopping.util.comparator.OrderDateComparator;
-import com.liferay.util.CreditCard;
 
 import java.util.Currency;
 import java.util.List;

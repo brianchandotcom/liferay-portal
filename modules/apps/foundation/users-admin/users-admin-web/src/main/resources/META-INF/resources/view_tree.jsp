@@ -291,7 +291,7 @@ if (organization != null) {
 							usersTitle = LanguageUtil.get(request, (active ? "users-without-an-organization" : "inactive-users-without-an-organization"));
 						}
 						else if ((usersCount == 0) && (inactiveUsersCount == 0)) {
-							usersTitle = StringPool.BLANK;
+							usersTitle = LanguageUtil.format(request, (active ? "x-users" : "x-inactive-users"), "0");
 						}
 						else {
 							if ((active && (usersCount == 1)) || (!active && (inactiveUsersCount == 1))) {

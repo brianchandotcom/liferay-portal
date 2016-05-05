@@ -262,7 +262,7 @@
 	</command>
 
 	<command name="deleteAllCP">
-		<execute function="Check#checkAll" locator1="Checkbox#LEXICON_SELECT_ALL" />
+		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 
 		<execute function="ClickNoError" locator1="Icon#DELETE" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />

@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -258,6 +259,40 @@ public class CompanyLocalServiceTest {
 		group = GroupLocalServiceUtil.fetchGroup(group.getGroupId());
 
 		Assert.assertNull(group);
+	}
+
+	@Test
+	public void testAddAndDeleteCompanyWithStagedOrganizationSite()
+		throws Exception {
+
+		Company company = addCompany();
+
+		long companyId = company.getCompanyId();
+
+		User companyAdminUser = UserTestUtil.addCompanyAdminUser(company);
+
+		Organization companyOrganzation =
+			OrganizationLocalServiceUtil.addOrganization(
+				companyAdminUser.getUserId(),
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+				RandomTestUtil.randomString(), true);
+
+		Group companyOrganizationGroup = companyOrganzation.getGroup();
+
+		GroupTestUtil.enableLocalStaging(
+			companyOrganizationGroup, companyAdminUser.getUserId());
+
+		CompanyLocalServiceUtil.deleteCompany(company);
+
+		companyOrganzation = OrganizationLocalServiceUtil.fetchOrganization(
+			companyOrganzation.getOrganizationId());
+
+		Assert.assertNull(companyOrganzation);
+
+		companyOrganizationGroup = GroupLocalServiceUtil.fetchGroup(
+			companyOrganizationGroup.getGroupId());
+
+		Assert.assertNull(companyOrganizationGroup);
 	}
 
 	@Test

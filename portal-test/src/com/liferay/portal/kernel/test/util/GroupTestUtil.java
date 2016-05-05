@@ -161,6 +161,12 @@ public class GroupTestUtil {
 	}
 
 	public static void enableLocalStaging(Group group) throws Exception {
+		enableLocalStaging(group, TestPropsValues.getUserId());
+	}
+
+	public static void enableLocalStaging(Group group, long userId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
@@ -184,7 +190,7 @@ public class GroupTestUtil {
 		}
 
 		StagingLocalServiceUtil.enableLocalStaging(
-			TestPropsValues.getUserId(), group, false, false, serviceContext);
+			userId, group, false, false, serviceContext);
 	}
 
 	public static Group updateDisplaySettings(

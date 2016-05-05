@@ -16,7 +16,6 @@ apply plugin: "com.liferay.deployment.helper"
 
 buildDeploymentHelper {
 	deploymentFiles = ["license.xml"]
-	deploymentPath = "deploy"
 }
 
 repositories {

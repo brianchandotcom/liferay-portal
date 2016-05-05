@@ -6,12 +6,10 @@ Import-Package:\
 	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\
 	*
+JPM-Command: liferay-deployment-helper
 Main-Class: com.liferay.deployment.helper.DeploymentHelper
 -liferay-includeresource:\
-	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
-	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
-	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
-	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/util/Validator.class,\
+	@commons-cli-*.jar,\
 	@slf4j-api-*.jar,\
 	@slf4j-simple-*.jar,\
 	@zt-zip-*.jar

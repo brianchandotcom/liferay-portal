@@ -27,7 +27,9 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.Jar;
@@ -44,10 +46,13 @@ public class DeploymentHelperPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		addConfigurationDeploymentHelper(project);
+		Configuration deploymentHelperConfiguration =
+			addConfigurationDeploymentHelper(project);
+
 		addTaskBuildDeploymentHelper(project);
 
-		configureTasksBuildDeploymentHelper(project);
+		configureTasksBuildDeploymentHelper(
+			project, deploymentHelperConfiguration);
 	}
 
 	protected Configuration addConfigurationDeploymentHelper(
@@ -56,20 +61,19 @@ public class DeploymentHelperPlugin implements Plugin<Project> {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, CONFIGURATION_NAME);
 
-		configuration.setDescription(
-			"Configures Liferay Deployment Helper for this project.");
-		configuration.setVisible(false);
-
-		GradleUtil.executeIfEmpty(
-			configuration,
-			new Action<Configuration>() {
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
 
 				@Override
-				public void execute(Configuration configuration) {
+				public void execute(DependencySet dependencySet) {
 					addDependenciesDeploymentHelper(project);
 				}
 
 			});
+
+		configuration.setDescription(
+			"Configures Liferay Deployment Helper for this project.");
+		configuration.setVisible(false);
 
 		return configuration;
 	}
@@ -113,6 +117,7 @@ public class DeploymentHelperPlugin implements Plugin<Project> {
 
 		buildDeploymentHelperTask.setDescription(
 			"Assembles a war file to deploy one or more apps to a cluster.");
+		buildDeploymentHelperTask.setGroup(BasePlugin.BUILD_GROUP);
 
 		buildDeploymentHelperTask.setOutputFile(
 			new Callable<File>() {
@@ -129,22 +134,15 @@ public class DeploymentHelperPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTaskBuildDeploymentHelperClasspath(
-		BuildDeploymentHelperTask buildDeploymentHelperTask) {
+		BuildDeploymentHelperTask buildDeploymentHelperTask,
+		FileCollection classpath) {
 
-		FileCollection fileCollection =
-			buildDeploymentHelperTask.getClasspath();
-
-		if ((fileCollection != null) && !fileCollection.isEmpty()) {
-			return;
-		}
-
-		Configuration configuration = GradleUtil.getConfiguration(
-			buildDeploymentHelperTask.getProject(), CONFIGURATION_NAME);
-
-		buildDeploymentHelperTask.setClasspath(configuration);
+		buildDeploymentHelperTask.setClasspath(classpath);
 	}
 
-	protected void configureTasksBuildDeploymentHelper(Project project) {
+	protected void configureTasksBuildDeploymentHelper(
+		Project project, final Configuration deploymentHelperConfiguration) {
+
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -156,7 +154,8 @@ public class DeploymentHelperPlugin implements Plugin<Project> {
 					BuildDeploymentHelperTask buildDeploymentHelperTask) {
 
 					configureTaskBuildDeploymentHelperClasspath(
-						buildDeploymentHelperTask);
+						buildDeploymentHelperTask,
+						deploymentHelperConfiguration);
 				}
 
 			});

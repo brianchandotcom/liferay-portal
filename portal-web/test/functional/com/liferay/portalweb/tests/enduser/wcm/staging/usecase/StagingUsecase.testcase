@@ -1207,6 +1207,8 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
+		<execute function="Pause" locator1="3000" />
+
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.doc" />
@@ -2027,6 +2029,8 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
+
+		<execute function="Pause" locator1="3000" />
 
 		<execute macro="WebContent#addWithWorkflowPGViaWCD">
 			<var name="webContentContent" value="Web Content Content" />
@@ -4520,6 +4524,8 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
+
+		<execute function="Pause" locator1="3000" />
 
 		<execute macro="DMDocument#addPGViaAP">
 			<var name="dmDocumentDescription" value="DM Document Description" />

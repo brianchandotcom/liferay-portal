@@ -19,7 +19,9 @@ import java.sql.Types;
 /**
  * @author	  Brian Wing Shun Chan
  * @generated
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class SocialRelationTable {
 
 	public static final String TABLE_NAME = "SocialRelation";

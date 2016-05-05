@@ -26,7 +26,9 @@ import java.sql.ResultSet;
 
 /**
  * @author Jorge Ferrer
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class UpgradeExpando extends UpgradeProcess {
 
 	protected void addRow(

@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Alexander Chow
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class DLFileEntryTitleUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 
 	public DLFileEntryTitleUpgradeColumnImpl(

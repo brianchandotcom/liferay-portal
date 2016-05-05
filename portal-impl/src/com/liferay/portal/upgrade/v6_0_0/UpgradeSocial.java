@@ -31,7 +31,9 @@ import java.sql.ResultSet;
 /**
  * @author Amos Fong
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class UpgradeSocial extends UpgradeProcess {
 
 	@Override

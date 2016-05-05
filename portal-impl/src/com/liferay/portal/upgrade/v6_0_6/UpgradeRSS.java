@@ -26,7 +26,9 @@ import javax.portlet.PortletPreferences;
 
 /**
  * @author Raymond Augé
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class UpgradeRSS extends BaseUpgradePortletPreferences {
 
 	protected String[] getArticleValues(long resourcePrimKey) {

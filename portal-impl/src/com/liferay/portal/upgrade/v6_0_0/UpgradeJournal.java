@@ -21,7 +21,9 @@ import com.liferay.portal.upgrade.v6_0_0.util.JournalTemplateTable;
 
 /**
  * @author Zsigmond Rab
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class UpgradeJournal extends UpgradeProcess {
 
 	@Override

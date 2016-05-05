@@ -25,7 +25,9 @@ import com.liferay.portal.upgrade.v6_0_0.util.BlogsEntryTable;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class UpgradeBlogs extends UpgradeProcess {
 
 	@Override

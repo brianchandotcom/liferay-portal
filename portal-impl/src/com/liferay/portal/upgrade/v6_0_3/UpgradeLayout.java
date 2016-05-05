@@ -23,7 +23,9 @@ import java.sql.ResultSet;
 
 /**
  * @author Jang Kim
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class UpgradeLayout extends UpgradeProcess {
 
 	@Override

@@ -20,7 +20,9 @@ import com.liferay.portal.upgrade.v6_0_0.util.PollsQuestionTable;
 
 /**
  * @author Julio Camarero Puras
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class UpgradePolls extends UpgradeProcess {
 
 	@Override

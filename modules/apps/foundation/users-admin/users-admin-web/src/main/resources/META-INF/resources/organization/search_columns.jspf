@@ -23,13 +23,15 @@
 	truncate="<%= true %>"
 />
 
-<liferay-ui:search-container-column-text
-	cssClass="content-column parent-organization-column"
-	href="<%= rowURL %>"
-	name="parent-organization"
-	truncate="<%= true %>"
-	value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
-/>
+<c:if test="<%= Validator.isNotNull(keywords) %>">
+	<liferay-ui:search-container-column-text
+		cssClass="content-column parent-organization-column"
+		href="<%= rowURL %>"
+		name="parent-organization"
+		truncate="<%= true %>"
+		value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
+	/>
+</c:if>
 
 <liferay-ui:search-container-column-text
 	cssClass="text-column type-column"

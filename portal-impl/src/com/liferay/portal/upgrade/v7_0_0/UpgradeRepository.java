@@ -19,8 +19,7 @@ import com.liferay.portal.upgrade.util.BaseUpgradeRepository;
 /**
  * @author Adolfo Pérez
  */
-public class UpgradeRepository
-	extends BaseUpgradeRepository {
+public class UpgradeRepository extends BaseUpgradeRepository {
 
 	@Override
 	protected String[][] getRenamePortletNamesArray() {

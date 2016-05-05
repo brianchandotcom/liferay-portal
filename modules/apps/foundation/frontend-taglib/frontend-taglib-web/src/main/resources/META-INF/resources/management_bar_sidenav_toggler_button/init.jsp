@@ -25,5 +25,38 @@ String icon = (String)request.getAttribute("liferay-frontend:management-bar-side
 String iconCssClass = (String)request.getAttribute("liferay-frontend:management-bar-sidenav-toggler-button:iconCssClass");
 String id = (String)request.getAttribute("liferay-frontend:management-bar-sidenav-toggler-button:id");
 String label = (String)request.getAttribute("liferay-frontend:management-bar-sidenav-toggler-button:label");
-String sidenavId = (String)request.getAttribute("liferay-frontend:management-bar-sidenav-toggler-button:sidenavId");
+String position = (String)request.getAttribute("liferay-frontend:management-bar-sidenav-toggler-button:position");
+String type = (String)request.getAttribute("liferay-frontend:management-bar-sidenav-toggler-button:type");
+String typeMobile = (String)request.getAttribute("liferay-frontend:management-bar-sidenav-toggler-button:typeMobile");
+String width = (String)request.getAttribute("liferay-frontend:management-bar-sidenav-toggler-button:width");
+
+String sidenavId = liferayPortletResponse.getNamespace() + "infoPanelId";
+
+if (Validator.isNull(href)) {
+	href = "#" + sidenavId;
+}
+
+if (Validator.isNull(icon)) {
+	icon = "info-circle";
+}
+
+if (Validator.isNull(label)) {
+	label = "info";
+}
+
+if (Validator.isNull(position)) {
+	position = "right";
+}
+
+if (Validator.isNull(type)) {
+	type = "relative";
+}
+
+if (Validator.isNull(typeMobile)) {
+	typeMobile = "fixed";
+}
+
+if (Validator.isNull(width)) {
+	width = "320px";
+}
 %>

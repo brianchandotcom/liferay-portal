@@ -16,10 +16,6 @@
 
 <%@ include file="/management_bar_sidenav_toggler_button/init.jsp" %>
 
-<%
-data.put("toggle", sidenavId);
-%>
-
 <liferay-frontend:management-bar-button
 	active="<%= false %>"
 	cssClass="<%= cssClass %>"
@@ -32,20 +28,20 @@ data.put("toggle", sidenavId);
 	label="<%= label %>"
 />
 
-<aui:script>
-	var sidenavSlider = $('#<%= sidenavId %>');
+<aui:script use="liferay-store">
+	var sidenavToggle = $('[href="#<%= sidenavId %>"]');
 
-	if (!sidenavSlider.sideNavigation('instance')) {
-		sidenavSlider.sideNavigation(
+	if (!sidenavToggle.sideNavigation('instance')) {
+		sidenavToggle.sideNavigation(
 			{
-				gutter: 15,
-				position: 'right',
-				toggler: '[data-toggle="<%= sidenavId %>"]',
-				type: 'relative',
-				typeMobile: 'fixed',
-				width: 320
+				position: '<%= position %>',
+				type: '<%= type %>',
+				typeMobile: '<%= typeMobile %>',
+				width: '<%= width %>'
 			}
 		);
+
+		var sidenavSlider = $('#<%= sidenavId %>');
 
 		sidenavSlider.on(
 			'closed.lexicon.sidenav',

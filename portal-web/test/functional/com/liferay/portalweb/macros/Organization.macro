@@ -682,7 +682,7 @@
 	</command>
 
 	<command name="viewNoOrganizationsFoundCP">
-		<execute function="AssertTextEquals" locator1="Card#GENERIC_HORIZONTAL_DETAILS" value1="No organizations were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No organizations were found." />
 	</command>
 
 	<command name="viewParentOrganizationCP">

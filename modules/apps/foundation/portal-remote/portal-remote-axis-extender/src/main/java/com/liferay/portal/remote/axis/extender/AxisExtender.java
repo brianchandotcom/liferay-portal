@@ -165,7 +165,7 @@ public class AxisExtender {
 				"liferay.axis." + bundle.getSymbolicName());
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME,
-				"AuthVerifierFilter");
+				AuthVerifierFilter.class.getName());
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN,
 				"/api/axis/*");
@@ -181,7 +181,7 @@ public class AxisExtender {
 				"liferay.axis." + bundle.getSymbolicName());
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
-				"AxisServlet");
+				AxisServlet.class.getName());
 			properties.put(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
 				"/api/axis/*");

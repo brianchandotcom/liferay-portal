@@ -100,6 +100,7 @@ page import="com.liferay.document.library.web.search.EntriesChecker" %><%@
 page import="com.liferay.document.library.web.search.EntriesMover" %><%@
 page import="com.liferay.document.library.web.settings.internal.DLPortletInstanceSettings" %><%@
 page import="com.liferay.document.library.web.util.DLBreadcrumbUtil" %><%@
+page import="com.liferay.document.library.web.util.DLTrashUtil" %><%@
 page import="com.liferay.document.library.web.util.DLWebComponentProvider" %><%@
 page import="com.liferay.document.library.web.util.IGUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.kernel.DDMStructure" %><%@
@@ -230,8 +231,7 @@ page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.util.PortalIncludeUtil" %><%@
-page import="com.liferay.trash.kernel.model.TrashEntry" %><%@
-page import="com.liferay.trash.kernel.util.TrashUtil" %>
+page import="com.liferay.trash.kernel.model.TrashEntry" %>
 
 <%@ page import="java.io.IOException" %>
 

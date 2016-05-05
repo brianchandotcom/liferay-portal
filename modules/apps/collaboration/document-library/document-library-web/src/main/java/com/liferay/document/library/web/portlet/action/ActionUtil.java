@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.kernel.util.RawMetadataProcessorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
@@ -55,7 +56,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ActionUtil {
 
 	public static List<FileEntry> getFileEntries(HttpServletRequest request)
-		throws Exception {
+		throws PortalException {
 
 		List<FileEntry> fileEntries = new ArrayList<>();
 
@@ -80,7 +81,7 @@ public class ActionUtil {
 	}
 
 	public static List<FileEntry> getFileEntries(PortletRequest portletRequest)
-		throws Exception {
+		throws PortalException {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
@@ -89,7 +90,7 @@ public class ActionUtil {
 	}
 
 	public static FileEntry getFileEntry(HttpServletRequest request)
-		throws Exception {
+		throws PortalException {
 
 		long fileEntryId = ParamUtil.getLong(request, "fileEntryId");
 
@@ -114,7 +115,7 @@ public class ActionUtil {
 	}
 
 	public static FileEntry getFileEntry(PortletRequest portletRequest)
-		throws Exception {
+		throws PortalException {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
@@ -123,7 +124,7 @@ public class ActionUtil {
 	}
 
 	public static FileShortcut getFileShortcut(HttpServletRequest request)
-		throws Exception {
+		throws PortalException {
 
 		long fileShortcutId = ParamUtil.getLong(request, "fileShortcutId");
 
@@ -137,7 +138,7 @@ public class ActionUtil {
 	}
 
 	public static FileShortcut getFileShortcut(PortletRequest portletRequest)
-		throws Exception {
+		throws PortalException {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
@@ -147,7 +148,7 @@ public class ActionUtil {
 
 	public static List<FileShortcut> getFileShortcuts(
 			HttpServletRequest request)
-		throws Exception {
+		throws PortalException {
 
 		long[] fileShortcutIds = ParamUtil.getLongValues(
 			request, "rowIdsDLFileShortcut");
@@ -166,7 +167,7 @@ public class ActionUtil {
 
 	public static List<FileShortcut> getFileShortcuts(
 			PortletRequest portletRequest)
-		throws Exception {
+		throws PortalException {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
@@ -176,7 +177,7 @@ public class ActionUtil {
 
 	public static FileVersion getFileVersion(
 			HttpServletRequest request, FileEntry fileEntry)
-		throws Exception {
+		throws PortalException {
 
 		if (fileEntry == null) {
 			return null;
@@ -202,7 +203,7 @@ public class ActionUtil {
 
 	public static FileVersion getFileVersion(
 			PortletRequest portletRequest, FileEntry fileEntry)
-		throws Exception {
+		throws PortalException {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
@@ -211,7 +212,7 @@ public class ActionUtil {
 	}
 
 	public static Folder getFolder(HttpServletRequest request)
-		throws Exception {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -258,7 +259,7 @@ public class ActionUtil {
 	}
 
 	public static Folder getFolder(PortletRequest portletRequest)
-		throws Exception {
+		throws PortalException {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
@@ -267,7 +268,7 @@ public class ActionUtil {
 	}
 
 	public static List<Folder> getFolders(HttpServletRequest request)
-		throws Exception {
+		throws PortalException {
 
 		long[] folderIds = ParamUtil.getLongValues(request, "rowIdsFolder");
 
@@ -290,7 +291,7 @@ public class ActionUtil {
 	}
 
 	public static List<Folder> getFolders(PortletRequest portletRequest)
-		throws Exception {
+		throws PortalException {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);
@@ -299,7 +300,7 @@ public class ActionUtil {
 	}
 
 	public static Repository getRepository(HttpServletRequest request)
-		throws Exception {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -321,7 +322,7 @@ public class ActionUtil {
 	}
 
 	public static Repository getRepository(PortletRequest portletRequest)
-		throws Exception {
+		throws PortalException {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			portletRequest);

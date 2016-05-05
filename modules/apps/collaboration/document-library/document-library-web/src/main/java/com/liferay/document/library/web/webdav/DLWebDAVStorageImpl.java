@@ -33,6 +33,7 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.document.library.kernel.util.DL;
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.util.DLTrashUtil;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
@@ -68,7 +69,6 @@ import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.webdav.LockException;
 import com.liferay.portlet.documentlibrary.webdav.DLFileEntryResourceImpl;
 import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
-import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -302,7 +302,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				long folderId = folder.getFolderId();
 
 				if ((folder.getModel() instanceof DLFolder) &&
-					TrashUtil.isTrashEnabled(folder.getGroupId())) {
+					DLTrashUtil.isTrashEnabled(
+						folder.getGroupId(), folder.getRepositoryId())) {
 
 					_dlTrashService.moveFolderToTrash(folderId);
 				}
@@ -322,7 +323,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				long fileEntryId = fileEntry.getFileEntryId();
 
 				if ((fileEntry.getModel() instanceof DLFileEntry) &&
-					TrashUtil.isTrashEnabled(fileEntry.getGroupId())) {
+					DLTrashUtil.isTrashEnabled(
+						fileEntry.getGroupId(), fileEntry.getRepositoryId())) {
 
 					_dlTrashService.moveFileEntryToTrash(fileEntryId);
 				}

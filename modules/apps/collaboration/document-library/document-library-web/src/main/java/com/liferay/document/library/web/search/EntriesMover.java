@@ -15,20 +15,22 @@
 package com.liferay.document.library.web.search;
 
 import com.liferay.admin.kernel.util.PortalProductMenuApplicationType;
+import com.liferay.document.library.web.util.DLTrashUtil;
 import com.liferay.portal.kernel.dao.search.RowMover;
 import com.liferay.portal.kernel.dao.search.RowMoverDropTarget;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.trash.kernel.model.TrashEntry;
-import com.liferay.trash.kernel.util.TrashUtil;
 
 /**
  * @author Chema Balsas
  */
 public class EntriesMover extends RowMover {
 
-	public EntriesMover(long scopeGroupId) throws PortalException {
+	public EntriesMover(long scopeGroupId, long repositoryId)
+		throws PortalException {
+
 		RowMoverDropTarget moveToFolderRowMoverDropTarget =
 			new RowMoverDropTarget();
 
@@ -38,7 +40,7 @@ public class EntriesMover extends RowMover {
 
 		addRowMoverDropTarget(moveToFolderRowMoverDropTarget);
 
-		if (TrashUtil.isTrashEnabled(scopeGroupId)) {
+		if (DLTrashUtil.isTrashEnabled(scopeGroupId, repositoryId)) {
 			RowMoverDropTarget moveToTrashRowMoverDropTarget =
 				new RowMoverDropTarget();
 

@@ -47,7 +47,7 @@
 <!--VIEW_ENTRY-->
 <tr>
 	<td>VIEW_ENTRY_CONTENT</td>
-	<td>//div[@class='asset-display'][contains(.,'${key_entryTitle}')]</td>
+	<td>//div[@class='asset-display'][contains(.,'${key_entryContent}')]</td>
 	<td></td>
 </tr>
 <tr>

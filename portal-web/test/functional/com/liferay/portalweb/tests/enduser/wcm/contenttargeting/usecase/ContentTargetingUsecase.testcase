@@ -4062,7 +4062,6 @@
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
 			<var name="entryContentText" value="Web Content Content Female" />
-			<var name="viewUserSegmentSelected" value="Default" />
 		</execute>
 	</command>
 
@@ -4228,9 +4227,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="MobileDevice#previewPG">
-			<var name="deviceType" value="desktop" />
-		</execute>
+		<execute macro="MobileDevice#previewPG" />
 
 		<execute macro="ContentTargetingSimulator#viewUserSegmentsViaSimulator">
 			<var name="userSegments" value="Site Member Name,Male User Segment Name,Age 25 - 50,Site Admin Role Name,Female User Segment Name,Age 50 - 100,Age 18 - 25" />
@@ -4292,8 +4289,18 @@
 			<var name="portletName" value="User Segment Content List" />
 		</execute>
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="UserSegmentContentListPortlet#configureDisplayFilter">
 			<var name="assetTypeFilter" value="Web Content Article" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="UserSegmentContentListPortlet#viewContent">

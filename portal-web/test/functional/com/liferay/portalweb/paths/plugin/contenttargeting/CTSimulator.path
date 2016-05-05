@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>USER_SEGMENT_NOT_MATCHED</td>
-	<td>//div[contains(.,'${key_userSegmentNotMatched}')]//div[contains(@class,'not-matched')]</td>
+	<td>//div[contains(@class,'not-matched')]//div[contains(.,'${key_userSegmentNotMatched}')]</td>
 	<td></td>
 </tr>
 </tbody>

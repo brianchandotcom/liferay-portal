@@ -6,7 +6,12 @@
 				<for list="${configureUserSegmentMatched}" param="userSegmentMatched">
 					<var name="key_userSegmentMatched" value="${userSegmentMatched}" />
 
-					<execute function="Click" locator1="CTSimulator#USER_SEGMENT_MATCHED" />
+					<if>
+						<condition function="IsElementPresent" locator1="CTSimulator#USER_SEGMENT_NOT_MATCHED" />
+						<then>
+							<execute function="Click" locator1="CTSimulator#USER_SEGMENT_MATCHED" />
+						</then>
+					</if>
 				</for>
 			</then>
 		</if>
@@ -17,17 +22,24 @@
 				<for list="${configureUserSegmentNotMatched}" param="userSegmentNotMatched">
 					<var name="key_userSegmentNotMatched" value="${userSegmentNotMatched}" />
 
-					<execute function="Click" locator1="CTSimulator#USER_SEGMENT_NOT_MATCHED" />
+					<if>
+						<condition function="IsElementPresent" locator1="CTSimulator#USER_SEGMENT_MATCHED" />
+						<then>
+							<execute function="Click" locator1="CTSimulator#USER_SEGMENT_NOT_MATCHED" />
+						</then>
+					</if>
 				</for>
 			</then>
 		</if>
 	</command>
 
 	<command name="viewUserSegmentsViaSimulator">
-		<for list="${userSegments}" param="userSegment">
-			<var name="key_userSegmentNotMatched" value="${userSegmentNotMatched}" />
+		<execute function="SelectFrame#selectFrameTop" />
 
-			<execute function="AssertTextEquals" locator1="CTSimulator#USER_SEGMENT_NOT_MATCHED" />
+		<for list="${userSegments}" param="userSegment">
+			<var name="key_userSegmentNotMatched" value="${userSegment}" />
+
+			<execute function="AssertTextEquals" locator1="CTSimulator#USER_SEGMENT_NOT_MATCHED" value1="${userSegment}" />
 		</for>
 	</command>
 </definition>

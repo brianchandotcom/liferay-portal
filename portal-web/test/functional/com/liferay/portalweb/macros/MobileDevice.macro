@@ -85,7 +85,6 @@
 			</elseif>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="ControlMenuPreviewPanel#PREVIEW_MESSAGE" value1="Preview may not be accurate." />
 		<execute function="SelectFrame" locator1="//iframe[@id='simulationDeviceIframe']" />
 	</command>
 </definition>

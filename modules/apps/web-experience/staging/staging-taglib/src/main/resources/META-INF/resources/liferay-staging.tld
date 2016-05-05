@@ -92,7 +92,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Whether to disable all rendered inputs on the screen.</description>
+			<description>Whether to disable all the rendered inputs on the screen.</description>
 			<name>disableInputs</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -237,7 +237,7 @@
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.RemoteOptionsTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>Whether to disable all rendered inputs on the screen.</description>
+			<description>Whether to disable all the rendered inputs on the screen.</description>
 			<name>disableInputs</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

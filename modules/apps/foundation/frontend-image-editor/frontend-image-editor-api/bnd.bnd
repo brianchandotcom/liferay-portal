@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Frontend Image Editor API
+Bundle-SymbolicName: com.liferay.frontend.image.editor.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.frontend.image.editor.*

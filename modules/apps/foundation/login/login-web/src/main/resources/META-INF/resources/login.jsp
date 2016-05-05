@@ -65,12 +65,8 @@
 			<c:choose>
 				<c:when test='<%= SessionMessages.contains(request, "passwordSent") %>'>
 
-					<%
-						String userEmailAddress = (String)SessionMessages.get(request, "passwordSent");
-					%>
-
 					<div class="alert alert-success">
-						<liferay-ui:message arguments="<%= userEmailAddress %>" key="your-password-has-been-sent-to-x" translateArguments="<%= false %>" />
+						<liferay-ui:message key="your-password-has-been-sent-to-the-provided-email-address" />
 					</div>
 				</c:when>
 				<c:when test='<%= SessionMessages.contains(request, "userAdded") %>'>

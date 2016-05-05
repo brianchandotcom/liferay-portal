@@ -14,10 +14,10 @@
 
 package com.liferay.portal.workflow.kaleo.upgrade.v1_1_0;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
+import com.liferay.portal.workflow.kaleo.upgrade.BaseWorkflowContextUpgradeProcess;
 
 import java.io.Serializable;
 
@@ -31,7 +31,7 @@ import org.jabsorb.JSONSerializer;
 /**
  * @author Jang Kim
  */
-public class UpgradeWorkflowContext extends UpgradeProcess {
+public class UpgradeWorkflowContext extends BaseWorkflowContextUpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -56,35 +56,25 @@ public class UpgradeWorkflowContext extends UpgradeProcess {
 
 			while (rs.next()) {
 				long fieldValue = rs.getLong(fieldName);
-				String workflowContext = rs.getString("workflowContext");
+				String workflowContextJSON = rs.getString("workflowContext");
 
-				if (Validator.isNull(workflowContext)) {
+				if (Validator.isNull(workflowContextJSON)) {
 					continue;
 				}
 
-				workflowContext = WorkflowContextUtil.convert(
+				workflowContextJSON = renamePortalJavaClassNames(
+					workflowContextJSON);
+
+				Map<String, Serializable> workflowContext =
 					(Map<String, Serializable>)jsonSerializer.fromJSON(
-						workflowContext));
+						workflowContextJSON);
+
+				replaceEntryClassName(workflowContext);
 
 				updateWorkflowContext(
-					tableName, fieldName, fieldValue, workflowContext);
+					tableName, fieldName, fieldValue,
+					WorkflowContextUtil.convert(workflowContext));
 			}
-		}
-	}
-
-	protected void updateWorkflowContext(
-			String tableName, String fieldName, long fieldValue,
-			String workflowContext)
-		throws Exception {
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"update " + tableName + " set workflowContext = ? where " +
-					fieldName + " = ?")) {
-
-			ps.setString(1, workflowContext);
-			ps.setLong(2, fieldValue);
-
-			ps.executeUpdate();
 		}
 	}
 

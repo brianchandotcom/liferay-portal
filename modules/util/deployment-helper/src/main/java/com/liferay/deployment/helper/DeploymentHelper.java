@@ -64,26 +64,10 @@ public class DeploymentHelper {
 				return;
 			}
 
-			String deploymentFileNames = null;
-
-			if (commandLine.hasOption("fileNames")) {
-				deploymentFileNames = commandLine.getOptionValue("fileNames");
-			}
-
-			String deploymentPath = null;
-
-			if (commandLine.hasOption("path")) {
-				deploymentPath = commandLine.getOptionValue("path");
-			}
-			else {
-				deploymentPath = "";
-			}
-
-			String outputFileName = null;
-
-			if (commandLine.hasOption("outputFile")) {
-				outputFileName = commandLine.getOptionValue("outputFile");
-			}
+			String deploymentFileNames = commandLine.getOptionValue(
+				"fileNames");
+			String deploymentPath = commandLine.getOptionValue("path", "");
+			String outputFileName = commandLine.getOptionValue("outputFile");
 
 			new DeploymentHelper(
 				deploymentFileNames, deploymentPath, outputFileName);

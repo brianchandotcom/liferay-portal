@@ -230,6 +230,7 @@ public class DeploymentHelper {
 		fileNamesOption.setRequired(true);
 
 		options.addOption(fileNamesOption);
+
 		options.addOption(
 			new Option("h", "help", false, "Print this message."));
 
@@ -239,6 +240,7 @@ public class DeploymentHelper {
 		outputFileOption.setRequired(true);
 
 		options.addOption(outputFileOption);
+
 		options.addOption(
 			new Option(
 				"p", "path", true, "Set the path the files will be deployed."));

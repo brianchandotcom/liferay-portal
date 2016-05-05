@@ -9,6 +9,7 @@ Bundle-ClassPath:\
 	lib/guava.jar,\
 	lib/hppc.jar,\
 	lib/jackson-core.jar,\
+	lib/jackson-dataformat-cbor.jar,\
 	lib/jackson-dataformat-smile.jar,\
 	lib/jackson-dataformat-yaml.jar,\
 	lib/joda-convert.jar,\
@@ -113,6 +114,7 @@ Liferay-Releng-Module-Group-Title: Elasticsearch
 	lib/guava.jar=guava-*.jar,\
 	lib/hppc.jar=hppc-*.jar,\
 	lib/jackson-core.jar=jackson-core-*.jar,\
+	lib/jackson-dataformat-cbor.jar=jackson-dataformat-cbor-*.jar,\
 	lib/jackson-dataformat-smile.jar=jackson-dataformat-smile-*.jar,\
 	lib/jackson-dataformat-yaml.jar=jackson-dataformat-yaml-*.jar,\
 	lib/joda-convert.jar=joda-convert-*.jar,\

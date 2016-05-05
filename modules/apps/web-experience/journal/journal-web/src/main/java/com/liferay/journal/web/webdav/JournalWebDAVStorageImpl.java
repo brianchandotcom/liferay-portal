@@ -16,11 +16,12 @@ package com.liferay.journal.web.webdav;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.webdav.DDMWebDav;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolderConstants;
+import com.liferay.journal.service.JournalFolderService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.webdav.BaseWebDAVStorageImpl;
@@ -125,9 +126,10 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		List<Resource> resources = new ArrayList<>();
 
 		List<DDMStructure> ddmStructures =
-			_ddmStructureLocalService.getStructures(
-				webDAVRequest.getGroupId(),
-				PortalUtil.getClassNameId(JournalArticle.class));
+			_journalFolderService.getDDMStructures(
+				new long[] {webDAVRequest.getGroupId()},
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				JournalFolderConstants.RESTRICTION_TYPE_INHERIT);
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			Resource resource = _ddmWebDav.toResource(
@@ -162,13 +164,6 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setDDMTemplateLocalService(
 		DDMTemplateLocalService ddmTemplateLocalService) {
 
@@ -180,8 +175,15 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		_ddmWebDav = ddmWebDav;
 	}
 
-	private DDMStructureLocalService _ddmStructureLocalService;
+	@Reference(unbind = "-")
+	protected void setJournalFolderService(
+		JournalFolderService journalFolderService) {
+
+		_journalFolderService = journalFolderService;
+	}
+
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 	private DDMWebDav _ddmWebDav;
+	private JournalFolderService _journalFolderService;
 
 }

@@ -40,7 +40,7 @@ portletURL.setParameter("eventName", eventName);
 		iteratorURL="<%= portletURL %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= DDMStructureServiceUtil.getStructures(company.getCompanyId(), groupIds, PortalUtil.getClassNameId(JournalArticle.class), WorkflowConstants.STATUS_APPROVED) %>"
+			results="<%= JournalFolderServiceUtil.getDDMStructures(groupIds, journalDisplayContext.getFolderId(), journalDisplayContext.getRestrictionType()) %>"
 		/>
 
 		<liferay-ui:search-container-row

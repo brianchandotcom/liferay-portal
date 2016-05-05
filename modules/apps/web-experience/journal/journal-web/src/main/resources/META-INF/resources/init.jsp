@@ -47,7 +47,6 @@ page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMTemplate" %><%@
 page import="com.liferay.dynamic.data.mapping.model.LocalizedValue" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil" %><%@
-page import="com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission" %><%@

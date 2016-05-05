@@ -15,10 +15,10 @@
 package com.liferay.journal.content.web.portlet.toolbar.contributor;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
-import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolderConstants;
+import com.liferay.journal.service.JournalFolderService;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -93,11 +92,11 @@ public class JournalContentPortletToolbarContributor
 
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-		List<DDMStructure> ddmStructures = _ddmStructureService.getStructures(
-			themeDisplay.getCompanyId(),
-			PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId),
-			PortalUtil.getClassNameId(JournalArticle.class),
-			WorkflowConstants.STATUS_APPROVED);
+		List<DDMStructure> ddmStructures =
+			_journalFolderService.getDDMStructures(
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				JournalFolderConstants.RESTRICTION_TYPE_INHERIT);
 
 		Map<String, Object> data = new HashMap<>();
 
@@ -158,10 +157,10 @@ public class JournalContentPortletToolbarContributor
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMStructureService(
-		DDMStructureService ddmStructureService) {
+	protected void setJournalFolderService(
+		JournalFolderService journalFolderService) {
 
-		_ddmStructureService = ddmStructureService;
+		_journalFolderService = journalFolderService;
 	}
 
 	@Reference(target = "(resource.name=com.liferay.journal)", unbind = "-")
@@ -194,7 +193,7 @@ public class JournalContentPortletToolbarContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentPortletToolbarContributor.class);
 
-	private DDMStructureService _ddmStructureService;
+	private JournalFolderService _journalFolderService;
 	private ResourcePermissionChecker _resourcePermissionChecker;
 
 }

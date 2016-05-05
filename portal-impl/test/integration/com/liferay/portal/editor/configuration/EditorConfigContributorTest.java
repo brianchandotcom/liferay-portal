@@ -20,18 +20,18 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.module.framework.test.ModuleFrameworkTestUtil;
-import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.After;
@@ -53,18 +53,48 @@ public class EditorConfigContributorTest {
 		new LiferayIntegrationTestRule();
 
 	@BeforeClass
-	public static void setUpClass() throws Exception {
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
+	public static void setUpClass() {
+		_editorConfigProvider = ReflectionTestUtil.getFieldValue(
+			EditorConfigurationFactoryImpl.class, "_editorConfigProvider");
 
-		_bundleIds = ModuleFrameworkTestUtil.getBundleIds(
-			EditorConfigContributor.class, null);
+		ReflectionTestUtil.setFieldValue(
+			EditorConfigurationFactoryImpl.class, "_editorConfigProvider",
+			new EditorConfigProvider() {
 
-		ModuleFrameworkTestUtil.stopBundles(_bundleIds);
+				@Override
+				protected List<EditorConfigContributor> getContributors(
+					String portletName, String editorConfigKey,
+					String editorName) {
+
+					List<EditorConfigContributor> editorConfigContributors =
+						super.getContributors(
+							portletName, editorConfigKey, editorName);
+
+					Iterator<EditorConfigContributor> iterator =
+						editorConfigContributors.iterator();
+
+					while (iterator.hasNext()) {
+						EditorConfigContributor editorConfigContributor =
+							iterator.next();
+
+						if (!_editorConfigContributorWhiteList.contains(
+								editorConfigContributor.getClass())) {
+
+							iterator.remove();
+						}
+					}
+
+					return editorConfigContributors;
+				}
+
+			});
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
-		ModuleFrameworkTestUtil.startBundles(_bundleIds);
+		ReflectionTestUtil.setFieldValue(
+			EditorConfigurationFactoryImpl.class, "_editorConfigProvider",
+			_editorConfigProvider);
 	}
 
 	@After
@@ -540,7 +570,14 @@ public class EditorConfigContributorTest {
 
 	private static final String _PORTLET_NAME = "testPortletName";
 
-	private static Collection<Long> _bundleIds;
+	private static final List<Class<? extends EditorConfigContributor>>
+		_editorConfigContributorWhiteList = Arrays.asList(
+			EmoticonsEditorConfigContributor.class,
+			ImageEditorConfigContributor.class,
+			TablesEditorConfigContributor.class,
+			TextFormatEditorConfigContributor.class,
+			VideoEditorConfigContributor.class);
+	private static EditorConfigProvider _editorConfigProvider;
 
 	private ServiceRegistration<EditorConfigContributor>
 		_editorConfigContributorServiceRegistration1;

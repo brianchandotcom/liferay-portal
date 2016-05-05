@@ -1067,18 +1067,18 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			long companyId, String className, SearchContext searchContext)
 		throws Exception {
 
-		QueryConfig queryConfig = searchContext.getQueryConfig();
+		Indexer<?> indexer = AssetSearcher.getInstance();
 
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setScoreEnabled(false);
+		AssetSearcher assetSearcher = (AssetSearcher)indexer;
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
 		assetEntryQuery.setClassNameIds(getClassNameIds(companyId, className));
 
-		Indexer<?> indexer = AssetSearcher.getInstance();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
-		AssetSearcher assetSearcher = (AssetSearcher)indexer;
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
 
 		assetSearcher.setAssetEntryQuery(assetEntryQuery);
 

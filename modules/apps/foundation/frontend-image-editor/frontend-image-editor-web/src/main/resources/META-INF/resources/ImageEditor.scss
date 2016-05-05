@@ -11,7 +11,7 @@ $slider-height: 20px;
 
 // Skin Variables
 
-$brand-primary: darken(#428BCA, 6.5%) !default; // #337ab7
+$brand-primary: darken(#428BCA, 6.5%) !default; // #337AB7
 
 $imageeditor-bg: #111314 !default;
 $imageeditor-filters-text-color: #57636A !default;
@@ -23,8 +23,18 @@ $gray-base: #000 !default;
 $gray-light: lighten($gray-base, 46.7%) !default; // #777
 $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 
+.portlet-layout {
+	background-color: $imageeditor-bg;
+}
+
 .image-editor {
 	background-color: $imageeditor-bg;
+
+	.image-editor-ready {
+		.image-preview, .lfr-image-editor-tools-container, .lfr-image-editor-history-container {
+			opacity: 1;
+		}
+	}
 
 	ul, ol {
 		margin: 0;
@@ -69,7 +79,7 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 
 	.controls {
 		background-color: $imageeditor-bg;
-		bottom: 0;
+		bottom: 10px;
 		height: $imageeditor-controls-height;
 		position: absolute;
 		width: 100%;

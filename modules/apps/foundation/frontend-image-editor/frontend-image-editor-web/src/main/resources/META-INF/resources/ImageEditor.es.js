@@ -1,6 +1,7 @@
 import Component from 'metal-component/src/Component';
 import Soy from 'metal-soy/src/Soy';
 
+import async from 'metal/src/async/async';
 import core from 'metal/src/core';
 import dom from 'metal-dom/src/dom';
 import { CancellablePromise } from 'metal-promise/src/promise/Promise';
@@ -32,8 +33,8 @@ class ImageEditor extends Component {
 		super(opt_config);
 
 		/**
-	 	 * This index points to the current state in the history.
-	 	 *
+		 * This index points to the current state in the history.
+		 *
 		 * @type {Number}
 		 * @protected
 		 */
@@ -46,7 +47,7 @@ class ImageEditor extends Component {
 		 * - History entries are objects with
 		 *     - url (optional): the url representing the image
 		 *     - data: the ImageData object of the image
-	 	 *
+		 *
 		 * @type {Array.<Object>}
 		 * @protected
 		 */
@@ -67,7 +68,13 @@ class ImageEditor extends Component {
 
 		// Load the first entry imageData and render it on the app.
 		this.history_[0].getImageData()
-			.then((imageData) => this.syncImageData_(imageData));
+			.then((imageData) => {
+				async.nextTick(() => {
+					this.imageEditorReady = true;
+
+					this.syncImageData_(imageData);
+				});
+			});
 	}
 
 	/**
@@ -86,6 +93,16 @@ class ImageEditor extends Component {
 				this.selectedControl = null;
 				this.selectedTool = null;
 			});
+	}
+
+	/**
+	 * Notifies the opener app that the user wants to close the
+	 * editor without saving the changes
+	 *
+	 * @protected
+	 */
+	close_() {
+		Liferay.Util.getWindow().hide();
 	}
 
 	/**
@@ -123,12 +140,44 @@ class ImageEditor extends Component {
 	}
 
 	/**
+	 * Retrieves the Blob representation of the current image.
+	 *
+	 * @return {CancellablePromise} A promise that will resolve with the image blob.
+	 */
+	getImageEditorImageBlob() {
+		return new CancellablePromise((resolve, reject) => {
+			this.getImageEditorCanvas().toBlob(resolve);
+		});
+	}
+
+	/**
 	 * Retrieves the ImageData representation of the current image.
 	 *
 	 * @return {CancellablePromise} A promise that will resolve with the image data.
 	 */
 	getImageEditorImageData() {
 		return this.history_[this.historyIndex_].getImageData();
+	}
+
+	/**
+	 * Notifies the opener app of the result of the save action
+	 *
+	 * @param  {Object} result The server response to the save action
+	 * @protected
+	 */
+	notifySaveResult_(result) {
+		this.components.loading.show = false;
+
+		if (result && result.success) {
+			Liferay.Util.getOpener().Liferay.fire(
+				this.saveEventName,
+				{
+					data: result
+				}
+			);
+
+			Liferay.Util.getWindow().hide();
+		}
 	}
 
 	/**
@@ -186,6 +235,55 @@ class ImageEditor extends Component {
 	}
 
 	/**
+	 * Tries to save the current image using the provided save url.
+	 *
+	 * @param {MouseEvent} event The MouseEvent that triggered the save action
+	 * @protected
+	 */
+	save_(event) {
+		if (!event.delegateTarget.disabled) {
+			this.getImageEditorImageBlob()
+				.then(imageBlob => this.submitBlob_(imageBlob))
+				.then(result => this.notifySaveResult_(result));
+		}
+	}
+
+	/**
+	 * Sends a given image blob to the server for processing
+	 * and storing.
+	 *
+	 * @param  {Blob} imageBlob The image blob to send to the server
+	 * @return {CancellablePromise} A promise that follows the xhr submission process
+	 * @protected
+	 */
+	submitBlob_(imageBlob) {
+		let saveFileName = this.saveFileName;
+		let saveParamName = this.saveParamName;
+
+		let promise = new CancellablePromise((resolve, reject) => {
+			let formData = new FormData();
+
+			formData.append(saveParamName, imageBlob, saveFileName);
+
+			$.ajax(
+				{
+					contentType: false,
+					data: formData,
+					error: (error) => reject(error),
+					processData: false,
+					success: (result) => resolve(result),
+					type: 'POST',
+					url: this.saveURL
+				}
+			);
+		});
+
+		this.components.loading.show = true;
+
+		return promise;
+	}
+
+	/**
 	 * Syncs the image and history values after changes to the
 	 * history stack.
 	 *
@@ -230,7 +328,7 @@ class ImageEditor extends Component {
 
 		let canvas = this.getImageEditorCanvas();
 
-		let boundingBox = dom.closest(this.element, '#main-content');
+		let boundingBox = dom.closest(this.element, '.portlet-layout');
 		let availableWidth = boundingBox.offsetWidth;
 		let availableHeight = boundingBox.offsetHeight - 142 - 40;
 		let availableAspectRatio = availableWidth / availableHeight;
@@ -263,6 +361,56 @@ class ImageEditor extends Component {
 		this.syncHistory_();
 	}
 }
+
+/**
+ * State definition.
+ * @type {!Object}
+ * @static
+ */
+ImageEditor.STATE = {
+	/**
+	 * Indicates that the editor is ready for user interaction
+	 * @type {Object}
+	 */
+	imageEditorReady: {
+		validator: core.isBoolean,
+		value: false
+	},
+
+	/**
+	 * Event to dispatch when the edition has been completed
+	 * @type {String}
+	 */
+	saveEventName: {
+		validator: core.isString
+	},
+
+	/**
+	 * Name of the saved image that should be sent
+	 * to the server for the save action
+	 * @type {String}
+	 */
+	saveFileName: {
+		validator: core.isString
+	},
+
+	/**
+	 * Name of the param where the image should be sent
+	 * to the server for the save action
+	 * @type {String}
+	 */
+	saveParamName: {
+		validator: core.isString
+	},
+
+	/**
+	 * Url to save the image changes
+	 * @type {String}
+	 */
+	saveURL: {
+		validator: core.isString
+	}
+};
 
 // Register component
 Soy.register(ImageEditor, templates);

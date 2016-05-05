@@ -1440,6 +1440,74 @@
 
 	Liferay.provide(
 		Util,
+		'editEntity',
+		function(config, callback) {
+			var dialog = Util.getWindow(config.id);
+
+			var eventName = config.eventName || config.id;
+
+			var eventHandles = [Liferay.on(eventName, callback)];
+
+			var detachSelectionOnHideFn = function(event) {
+				if (!event.newVal) {
+					(new A.EventHandle(eventHandles)).detach();
+				}
+			};
+
+			if (dialog) {
+				eventHandles.push(dialog.after(['destroy', 'visibleChange'], detachSelectionOnHideFn));
+
+				dialog.show();
+			}
+			else {
+				var destroyDialog = function(event) {
+					var dialogId = config.id;
+
+					var dialogWindow = Util.getWindow(dialogId);
+
+					if (dialogWindow && Util.getPortletId(dialogId) === event.portletId) {
+						dialogWindow.destroy();
+
+						Liferay.detach('destroyPortlet', destroyDialog);
+					}
+				};
+
+				var editURL = new Liferay.PortletURL.createURL(
+					config.uri,
+					A.merge(
+						{
+							eventName: eventName
+						},
+						config.urlParams
+					)
+				);
+
+				config.uri = editURL.toString();
+
+				config.dialogIframe = A.merge(
+					{
+						bodyCssClass: 'dialog-with-footer'
+					},
+					config.dialogIframe || {}
+				);
+
+				Util.openWindow(
+					config,
+					function(dialogWindow) {
+						eventHandles.push(
+							dialogWindow.after(['destroy', 'visibleChange'], detachSelectionOnHideFn)
+						);
+
+						Liferay.on('destroyPortlet', destroyDialog);
+					}
+				);
+			}
+		},
+		['aui-base', 'liferay-portlet-url', 'liferay-util-window']
+	);
+
+	Liferay.provide(
+		Util,
 		'selectEntity',
 		function(config, callback) {
 			var dialog = Util.getWindow(config.id);

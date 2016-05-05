@@ -31,7 +31,7 @@ AUI.add(
 
 		var CSS_ENTRY_SELECTOR = 'entry-selector';
 
-		var CSS_ENTRY_TITLE_TEXT = 'card-dm-text-large';
+		var CSS_ENTRY_TITLE_TEXT = 'lfr-card-title-text';
 
 		var CSS_ICON = 'icon';
 

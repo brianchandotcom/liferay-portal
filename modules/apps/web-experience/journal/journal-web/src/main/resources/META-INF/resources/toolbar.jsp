@@ -27,13 +27,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 >
 	<liferay-frontend:management-bar-buttons>
 		<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
-			<liferay-frontend:management-bar-sidenav-toggler-button
-				disabled="<%= false %>"
-				href="javascript:;"
-				icon="info-circle"
-				label="info"
-				sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>'
-			/>
+			<liferay-frontend:management-bar-sidenav-toggler-button />
 		</c:if>
 
 		<liferay-frontend:management-bar-display-buttons
@@ -97,13 +91,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 
 	<liferay-frontend:management-bar-action-buttons>
 		<c:if test="<%= journalDisplayContext.isShowInfoPanel() %>">
-			<liferay-frontend:management-bar-sidenav-toggler-button
-				disabled="<%= false %>"
-				href="javascript:;"
-				icon="info-circle"
-				label="info"
-				sidenavId='<%= liferayPortletResponse.getNamespace() + "infoPanelId" %>'
-			/>
+			<liferay-frontend:management-bar-sidenav-toggler-button />
 		</c:if>
 
 		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>' icon='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />

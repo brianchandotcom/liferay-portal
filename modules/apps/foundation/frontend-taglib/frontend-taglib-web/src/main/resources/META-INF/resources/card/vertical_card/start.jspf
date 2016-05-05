@@ -15,5 +15,25 @@
 --%>
 
 <div class="taglib-vertical-card <%= Validator.isNotNull(cssClass) ? cssClass : StringPool.BLANK %> <%= showCheckbox ? "selectable" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
-	<div class="<%= showCheckbox ? "checkbox toggle-card-dm" : StringPool.BLANK %>">
-		<div class="card card-dm">
+	<c:choose>
+		<c:when test="<%= (rowChecker != null) && (resultRow != null) %>">
+			<liferay-util:buffer var="checkboxInput">
+				<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>
+			</liferay-util:buffer>
+
+			<c:if test="<%= Validator.isNotNull(checkboxInput) %>">
+				<div class="checkbox checkbox-card checkbox-top-left">
+					<label>
+						<%= checkboxInput %>
+					</label>
+			</c:if>
+		</c:when>
+		<c:when test="<%= showCheckbox %>">
+			<div class="checkbox checkbox-card checkbox-top-left">
+				<label>
+					<aui:input checked="<%= checkboxChecked %>" cssClass="<%= checkboxCSSClass %>" data="<%= checkboxData %>" disabled="<%= checkboxDisabled %>" id="<%= checkboxId %>" label="" name="<%= checkboxName %>" title='<%= LanguageUtil.format(request, "select-x", new Object[] {HtmlUtil.escape(title)}) %>' type="checkbox" useNamespace="<%= false %>" value="<%= checkboxValue %>" wrappedField="<%= true %>" />
+				</label>
+		</c:when>
+	</c:choose>
+
+		<div class="card">

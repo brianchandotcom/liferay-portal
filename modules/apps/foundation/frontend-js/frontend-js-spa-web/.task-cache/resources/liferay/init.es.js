@@ -49,11 +49,11 @@ define("frontend-js-spa-web@1.0.6/liferay/init.es", ['exports', './screen/Action
 				return false;
 			}
 
-			var excluded = Liferay.SPA.excludedPaths.find(function (excludedPath) {
+			var excluded = Liferay.SPA.excludedPaths.some(function (excludedPath) {
 				return url.indexOf(excludedPath) === 0;
 			});
 
-			if (excluded !== undefined) {
+			if (excluded) {
 				return false;
 			}
 

@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
 
 import java.util.Locale;
 
@@ -44,6 +45,7 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 
 			ddmFormEvaluatorHelper.setDDMExpressionFactory(
 				_ddmExpressionFactory);
+			ddmFormEvaluatorHelper.setJSONFactory(_jsonFactory);
 
 			return ddmFormEvaluatorHelper.evaluate();
 		}
@@ -52,13 +54,10 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMExpressionFactory(
-		DDMExpressionFactory ddmExpressionFactory) {
-
-		_ddmExpressionFactory = ddmExpressionFactory;
-	}
-
+	@Reference
 	private DDMExpressionFactory _ddmExpressionFactory;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

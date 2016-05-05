@@ -28,6 +28,9 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -220,6 +223,17 @@ public class DDMFormEvaluatorHelper {
 		return ddmFormFieldEvaluationResults;
 	}
 
+	protected String getJSONArrayValueString(String valueString) {
+		try {
+			JSONArray jsonArray = _jsonFactory.createJSONArray(valueString);
+
+			return jsonArray.getString(0);
+		}
+		catch (JSONException jsone) {
+			return valueString;
+		}
+	}
+
 	protected String getValidationExpression(
 		DDMFormFieldValidation ddmFormFieldValidation) {
 
@@ -230,12 +244,18 @@ public class DDMFormEvaluatorHelper {
 		return ddmFormFieldValidation.getExpression();
 	}
 
-	protected String getValueString(Value value, Locale locale) {
+	protected String getValueString(Value value, String type) {
 		if (value == null) {
 			return null;
 		}
 
-		return value.getString(_locale);
+		String valueString = value.getString(_locale);
+
+		if (type.equals("select") || type.equals("radio")) {
+			valueString = getJSONArrayValueString(valueString);
+		}
+
+		return valueString;
 	}
 
 	protected boolean isDDMFormFieldValueEmpty(
@@ -290,7 +310,7 @@ public class DDMFormEvaluatorHelper {
 			}
 
 			String valueString = getValueString(
-				ddmFormFieldValue.getValue(), _locale);
+				ddmFormFieldValue.getValue(), ddmFormField.getType());
 
 			if (valueString != null) {
 				setExpressionVariableValue(
@@ -321,11 +341,16 @@ public class DDMFormEvaluatorHelper {
 		}
 	}
 
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormEvaluatorHelper.class);
 
 	private DDMExpressionFactory _ddmExpressionFactory;
 	private final Map<String, DDMFormField> _ddmFormFieldsMap;
+	private JSONFactory _jsonFactory;
 	private final Locale _locale;
 	private final List<DDMFormFieldValue> _rootDDMFormFieldValues;
 

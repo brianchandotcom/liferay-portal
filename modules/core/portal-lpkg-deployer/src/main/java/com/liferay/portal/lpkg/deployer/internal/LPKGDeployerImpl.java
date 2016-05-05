@@ -19,15 +19,19 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.lpkg.deployer.LPKGVerifier;
+import com.liferay.portal.lpkg.deployer.LPKGWarBundleRegistry;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.net.URL;
 
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -42,6 +46,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
@@ -58,6 +63,8 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.url.URLConstants;
+import org.osgi.service.url.URLStreamHandlerService;
 import org.osgi.util.tracker.BundleTracker;
 
 /**
@@ -68,9 +75,24 @@ public class LPKGDeployerImpl implements LPKGDeployer {
 
 	@Activate
 	public void activate(final BundleContext bundleContext) throws IOException {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put(
+			URLConstants.URL_HANDLER_PROTOCOL, new String[] {"lpkg"});
+
+		bundleContext.registerService(
+			URLStreamHandlerService.class.getName(),
+			new LPKGURLStreamHandlerService(_urls), properties);
+
+		_warWrapperBundlerTracker = new BundleTracker<>(
+			bundleContext, ~Bundle.UNINSTALLED,
+			new WarWrapperBundleTrackCustomizer(_lpkgWarBundleRegistry));
+
+		_warWrapperBundlerTracker.open();
+
 		_lpkgBundleTracker = new BundleTracker<>(
 			bundleContext, ~Bundle.UNINSTALLED,
-			new LPKGBundleTrackerCustomizer(bundleContext));
+			new LPKGBundleTrackerCustomizer(bundleContext, _urls));
 
 		_lpkgBundleTracker.open();
 
@@ -203,6 +225,7 @@ public class LPKGDeployerImpl implements LPKGDeployer {
 	@Deactivate
 	protected void deactivate() {
 		_lpkgBundleTracker.close();
+		_warWrapperBundlerTracker.close();
 	}
 
 	private InputStream _toBundle(File lpkgFile) throws IOException {
@@ -275,5 +298,11 @@ public class LPKGDeployerImpl implements LPKGDeployer {
 
 	@Reference
 	private LPKGVerifier _lpkgVerifier;
+
+	@Reference
+	private LPKGWarBundleRegistry _lpkgWarBundleRegistry;
+
+	private final Map<String, URL> _urls = new ConcurrentHashMap<>();
+	private BundleTracker<Bundle> _warWrapperBundlerTracker;
 
 }

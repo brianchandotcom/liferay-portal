@@ -222,7 +222,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			configurationControls.add(
 				new PortletDataHandlerBoolean(
 					null, PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS,
-					"archived-setups", true, false, null, null, null));
+					"configuration-templates", true, false, null, null, null));
 		}
 
 		// User preferences
@@ -300,7 +300,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			configurationControls.add(
 				new PortletDataHandlerBoolean(
 					null, PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS,
-					"archived-setups", true, false, null, null, null));
+					"configuration-templates", true, false, null, null, null));
 		}
 
 		// User preferences

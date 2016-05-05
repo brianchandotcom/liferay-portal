@@ -723,7 +723,7 @@ AUI.add(
 						}
 
 						if (instance._isChecked('archivedSetupsNode')) {
-							selectedGlobalConfiguration.push(Liferay.Language.get('archived-setups'));
+							selectedGlobalConfiguration.push(Liferay.Language.get('configuration-templates'));
 						}
 
 						if (instance._isChecked('userPreferencesNode')) {

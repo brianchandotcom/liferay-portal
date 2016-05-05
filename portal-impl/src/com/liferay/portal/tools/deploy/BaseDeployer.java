@@ -764,9 +764,9 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 			excludes += "/WEB-INF/web.xml";
 
-			WarTask.war(
-				srcFile, new File(tempDir, displayName + ".war"), excludes,
-				webXml);
+			File tempFile = new File(tempDir, displayName + ".war");
+
+			WarTask.war(srcFile, tempFile, excludes, webXml);
 
 			if (isJEEDeploymentEnabled()) {
 				File tempWarDir = new File(
@@ -789,7 +789,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				DeleteTask.deleteDirectory(tempWarDir);
 			}
 			else {
-				if (!tempDir.renameTo(deployDir)) {
+				if (!tempFile.renameTo(deployDir)) {
 					WarTask.war(srcFile, deployDir, excludes, webXml);
 				}
 

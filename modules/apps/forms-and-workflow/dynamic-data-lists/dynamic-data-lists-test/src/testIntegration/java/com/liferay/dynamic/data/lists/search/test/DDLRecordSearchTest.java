@@ -150,7 +150,7 @@ public class DDLRecordSearchTest {
 
 				@Override
 				public Void call() throws Exception {
-					searchContext.setKeywords("description");
+					searchContext.setKeywords("Simple description");
 
 					Hits hits = DDLRecordLocalServiceUtil.search(searchContext);
 

@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -56,7 +57,7 @@ public class DDLRecordRatingsTest extends BaseRatingsTestCase {
 			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
 		throws Exception {
 
-		DDMForm ddmForm = new DDMForm();
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("Field");
 
 		Set<Locale> availableLocales = new HashSet<>();
 

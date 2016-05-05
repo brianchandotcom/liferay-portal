@@ -1,0 +1,11 @@
+Liferay-Releng-App-Description: This app makes it easy to embed Youtube videos into Liferay pages. The size, placement, and user options can be configured to optimize the visual appearance of the video and allow for things like full screen playback.<br /><br />This app will appear in your Application menu once installed.
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} YouTube
+Liferay-Releng-Bundle: false
+Liferay-Releng-Category: Communication
+Liferay-Releng-Demo-Url:
+Liferay-Releng-Labs: true
+Liferay-Releng-Marketplace: false
+Liferay-Releng-Public: ${liferay.releng.public}
+Liferay-Releng-Restart-Required: true
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: ${liferay.releng.supported}

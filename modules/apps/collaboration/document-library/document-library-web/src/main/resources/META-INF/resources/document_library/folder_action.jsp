@@ -44,16 +44,9 @@ if (row != null) {
 	}
 }
 else {
-	if (portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
-		folder = (Folder)request.getAttribute("info_panel.jsp-folder");
+	folder = (Folder)request.getAttribute("info_panel.jsp-folder");
 
-		repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
-	}
-	else {
-		folder = (Folder)request.getAttribute("info_panel.jsp-folder");
-
-		repositoryId = GetterUtil.getLong((String)request.getAttribute("view_entries.jsp-repositoryId"));
-	}
+	repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 }
 
 long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;

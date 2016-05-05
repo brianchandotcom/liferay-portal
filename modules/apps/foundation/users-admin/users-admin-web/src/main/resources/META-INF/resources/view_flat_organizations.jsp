@@ -116,10 +116,13 @@ String keywords = ParamUtil.getString(request, "keywords", null);
 				</c:if>
 
 				<%
-				long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
+				long parentOrganizationId = OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
 
 				if (Validator.isNotNull(keywords)) {
 					parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
+				}
+				else {
+					parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
 				}
 				%>
 

@@ -92,37 +92,37 @@
 <!--INLINE_PERMISSIONS-->
 <tr>
 	<td>INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleName}_ACTION_ADD_DOCUMENT')]</td>
+	<td>//input[@id='${key_roleName}_ACTION_ADD_DOCUMENT']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleName}_ACTION_ADD_ENTRY')]</td>
+	<td>//input[@id='${key_roleName}_ACTION_ADD_ENTRY']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INLINE_PERMISSIONS_PERMISSIONS_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleName}_ACTION_PERMISSIONS')]</td>
+	<td>//input[@id='${key_roleName}_ACTION_PERMISSIONS']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleName}_ACTION_SUBSCRIBE')]</td>
+	<td>//input[@id='${key_roleName}_ACTION_SUBSCRIBE']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INLINE_PERMISSIONS_REPLY_TO_MESSAGE_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleName}_ACTION_REPLY_TO_MESSAGE')]</td>
+	<td>//input[@id='${key_roleName}_ACTION_REPLY_TO_MESSAGE']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INLINE_PERMISSIONS_UPDATE</td>
-	<td>//input[contains(@id,'${key_roleName}_ACTION_UPDATE')]</td>
+	<td>INLINE_PERMISSIONS_UPDATE_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_UPDATE']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INLINE_PERMISSIONS_VIEW</td>
-	<td>//input[contains(@id,'${key_roleName}_ACTION_VIEW')]</td>
+	<td>INLINE_PERMISSIONS_VIEW_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_VIEW']</td>
 	<td></td>
 </tr>
 <tr>

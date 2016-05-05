@@ -1,6 +1,35 @@
 <definition>
 	<var name="assetType" value="Wiki Page" />
 
+	<command name="_checkForRSSTitleCP">
+		<if>
+			<condition function="IsElementNotPresent" locator1="WikiRSS#FEED_TITLE" />
+			<then>
+				<execute macro="ProductMenu#gotoSitesContent">
+					<var name="portlet" value="Wiki" />
+				</execute>
+
+				<execute macro="WikiNavigator#gotoNode">
+					<var name="wikiNodeName" value="${wikiNodeName}" />
+				</execute>
+
+				<execute macro="WikiNavigator#gotoEntryViaPGTable">
+					<var name="wikiPageTitle" value="${wikiPageTitle}" />
+				</execute>
+
+				<execute macro="WikiEntry#viewPageContentBody">
+					<var name="wikiPageContent" value="${wikiPageContent}" />
+				</execute>
+
+				<execute function="Click" locator1="Icon#INFO" />
+
+				<execute function="AssertClick" locator1="WikiRSS#FEED_LINK" value1="Feed" />
+
+				<execute function="Pause" locator1="3000" />
+			</then>
+		</if>
+	</command>
+
 	<command name="_editEmptyFrontPage">
 		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
 
@@ -1431,11 +1460,21 @@
 	</command>
 
 	<command name="viewRSS">
+		<var name="wikiNodeName" value="${wikiNodeName}" />
+		<var name="wikiPageContent" value="${wikiPageContent}" />
+		<var name="wikiPageTitle" value="${wikiPageTitle}" />
+
 		<execute function="Click" locator1="Icon#INFO" />
 
 		<execute function="AssertClick" locator1="WikiRSS#FEED_LINK" value1="Feed" />
 
 		<execute function="Pause" locator1="3000" />
+
+		<execute macro="WikiPage#_checkForRSSTitleCP">
+			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
 
 		<execute function="SelectWindow" locator1="title=${wikiPageTitle}" />
 

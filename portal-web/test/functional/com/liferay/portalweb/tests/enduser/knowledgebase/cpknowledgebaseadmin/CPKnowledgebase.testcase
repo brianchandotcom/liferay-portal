@@ -1,6 +1,6 @@
 <definition component-name="portal-knowledge-base">
 	<property name="portal.release" value="true" />
-	<property name="osgi.modules.includes" value="knowledge-base-portlet" />
+	<property name="osgi.modules.includes" value="knowledge-base-web" />
 	<property name="testray.main.component.name" value="Knowledge Base" />
 
 	<set-up>

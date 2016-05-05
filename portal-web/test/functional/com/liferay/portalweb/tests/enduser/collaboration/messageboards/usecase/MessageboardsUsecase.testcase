@@ -801,7 +801,7 @@
 		</execute>
 
 		<execute macro="Role#removePermissionPG">
-			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_VIEW" />
+			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_VIEW_CHECKBOX" />
 			<var name="roleName" value="Guest" />
 		</execute>
 
@@ -1109,7 +1109,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<for list="INLINE_PERMISSIONS_REPLY_TO_MESSAGE_CHECKBOX,INLINE_PERMISSIONS_VIEW" param="permissionDefinitionKey" >
+		<for list="INLINE_PERMISSIONS_REPLY_TO_MESSAGE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX" param="permissionDefinitionKey" >
 			<execute macro="Role#definePermissionPG">
 				<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
 				<var name="roleName" value="User" />

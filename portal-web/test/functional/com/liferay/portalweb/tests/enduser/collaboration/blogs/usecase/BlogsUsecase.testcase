@@ -1022,10 +1022,6 @@
 		<var name="key_entryTitle" value="Blogs Entry Title 1" />
 
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="Blogs Entry Title 1" />
-
-		<var name="key_entryTitle" value="Blogs Entry Title 2" />
-
-		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE" value1="Blogs Entry Title 2" />
 	</command>
 
 	<command name="StagingBlogsCP" priority="3">

@@ -1,7 +1,7 @@
 <definition component-name="portal-knowledge-base">
 	<property name="portal.release" value="true" />
 	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="osgi.modules.includes" value="knowledge-base-portlet" />
+	<property name="osgi.modules.includes" value="knowledge-base-web" />
 	<property name="testray.main.component.name" value="Knowledge Base" />
 
 	<var name="pageName" value="Knowledge Base Display Page" />

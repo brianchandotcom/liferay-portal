@@ -296,6 +296,10 @@
 			<var name="language" value="French (France)" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Social Activity Page" />
+		</execute>
+
 		<execute macro="Page#gotoSALocalizedCP">
 			<var name="adminLocalized" value="Administration du portail" />
 			<var name="portletCategoryName" value="Paramètres" />

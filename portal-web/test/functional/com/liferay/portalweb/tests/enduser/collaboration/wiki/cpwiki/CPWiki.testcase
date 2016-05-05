@@ -557,6 +557,7 @@
 
 		<execute macro="WikiPage#viewRSS">
 			<var name="version" value="1.0" />
+			<var name="wikiNodeName" value="Main" />
 			<var name="wikiPageContent" value="Wiki Page Content" />
 			<var name="wikiPageTitle" value="Wiki Page RSS" />
 		</execute>

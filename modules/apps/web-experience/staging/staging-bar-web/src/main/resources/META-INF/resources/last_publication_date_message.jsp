@@ -119,7 +119,7 @@ if (Validator.isNull(publisherName)) {
 		</span>
 
 		<span class="staging-live-help">
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>" key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "staging-staging-help-x" : "staging-live-help-x" %>' translateArguments="<%= false %>" />
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>" key='<%= (group.isStagingGroup() || group.isStagedRemotely()) ? "staging-staging-help-x" : !PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED ? "staging-live-help2-x" : "staging-live-help-x" %>' translateArguments="<%= false %>" />
 		</span>
 	</c:otherwise>
 </c:choose>

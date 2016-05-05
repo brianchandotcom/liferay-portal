@@ -2095,6 +2095,8 @@ public interface PropsKeys {
 
 	public static final String STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT = "staging.draft.export.import.configuration.clean.up.count";
 
+	public static final String STAGING_LIVE_GROUP_LOCKING_ENABLED = "staging.live.group.locking.enabled";
+
 	public static final String STAGING_LIVE_GROUP_REMOTE_STAGING_ENABLED = "staging.live.group.remote.staging.enabled";
 
 	public static final String STAGING_REMOTE_TRANSFER_BUFFER_SIZE = "staging.remote.transfer.buffer.size";

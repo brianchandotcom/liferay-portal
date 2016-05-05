@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,6 +75,10 @@ public class StagingPermissionImpl implements StagingPermission {
 			PermissionChecker permissionChecker, Group group, String className,
 			long classPK, String portletId, String actionId)
 		throws Exception {
+
+		if (!PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) {
+			return null;
+		}
 
 		if (!actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL) &&
 			!actionId.equals(ActionKeys.ADD_TO_PAGE) &&

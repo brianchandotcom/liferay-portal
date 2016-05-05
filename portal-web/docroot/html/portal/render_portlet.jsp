@@ -190,7 +190,7 @@ if ((portletParallelRender != null) && (portletParallelRender.booleanValue() == 
 
 Layout curLayout = PortletConfigurationLayoutUtil.getLayout(themeDisplay);
 
-if ((!group.hasStagingGroup() || group.isStagingGroup()) &&
+if ((!group.hasStagingGroup() || group.isStagingGroup() || !PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) &&
 	(PortletPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), curLayout, portlet, ActionKeys.CONFIGURATION))) {
 
 	showConfigurationIcon = true;
@@ -262,7 +262,7 @@ if (responseContentType.equals(ContentTypes.XHTML_MP) && portlet.hasMultipleMime
 // staging is activated, only staging layouts can be updated.
 
 if ((!themeDisplay.isSignedIn()) ||
-	(group.hasStagingGroup() && !group.isStagingGroup()) ||
+	(group.hasStagingGroup() && !group.isStagingGroup() && PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) ||
 	(!LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE))) {
 
 	if (!(!columnDisabled && customizable && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE))) {

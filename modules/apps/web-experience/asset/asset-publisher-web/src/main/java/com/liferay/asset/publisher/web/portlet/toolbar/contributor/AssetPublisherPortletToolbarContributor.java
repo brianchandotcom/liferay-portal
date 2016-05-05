@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.util.ArrayList;
@@ -112,7 +113,8 @@ public class AssetPublisherPortletToolbarContributor
 
 		if (!assetPublisherDisplayContext.isShowAddContentButton() ||
 			(scopeGroup == null) || scopeGroup.isLayoutPrototype() ||
-			(scopeGroup.hasStagingGroup() && !scopeGroup.isStagingGroup()) ||
+			(scopeGroup.hasStagingGroup() && !scopeGroup.isStagingGroup() &&
+			 PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) ||
 			portletName.equals(
 				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) ||
 			portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS) ||

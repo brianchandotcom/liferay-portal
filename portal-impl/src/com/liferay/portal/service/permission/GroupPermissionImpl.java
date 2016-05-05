@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Brian Wing Shun Chan
@@ -88,7 +89,8 @@ public class GroupPermissionImpl
 
 		if ((actionId.equals(ActionKeys.ADD_LAYOUT) ||
 			 actionId.equals(ActionKeys.MANAGE_LAYOUTS)) &&
-			(group.hasLocalOrRemoteStagingGroup() ||
+			((group.hasLocalOrRemoteStagingGroup() &&
+			  PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) ||
 			 group.isLayoutPrototype())) {
 
 			return false;

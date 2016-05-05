@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,7 +39,12 @@ public class GroupDisplayContextHelper {
 			return _group;
 		}
 
-		if (getStagingGroup() != null) {
+		if (!PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED &&
+			(getSelGroup() != null)) {
+
+			_group = getSelGroup();
+		}
+		else if (getStagingGroup() != null) {
 			_group = getStagingGroup();
 		}
 		else {

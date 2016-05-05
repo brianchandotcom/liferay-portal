@@ -13,6 +13,8 @@ Import-Package:\
 	\
 	!org.json.*,\
 	\
+	com.ibm.crypto.provider;resolution:=optional,\
+	\
 	com.liferay.*,\
 	*
 Include-Resource:\

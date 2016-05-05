@@ -472,6 +472,23 @@ public class JournalDisplayContext {
 		return portletURL;
 	}
 
+	public int getRestrictionType() throws PortalException {
+		if (_restrictionType != null) {
+			return _restrictionType;
+		}
+
+		JournalFolder folder = getFolder();
+
+		if (folder != null) {
+			_restrictionType = folder.getRestrictionType();
+		}
+		else {
+			_restrictionType = JournalFolderConstants.RESTRICTION_TYPE_INHERIT;
+		}
+
+		return _restrictionType;
+	}
+
 	public ArticleSearch getSearchContainer() throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -1045,6 +1062,7 @@ public class JournalDisplayContext {
 	private final PortalPreferences _portalPreferences;
 	private final PortletPreferences _portletPreferences;
 	private final HttpServletRequest _request;
+	private Integer _restrictionType;
 	private Boolean _showEditActions;
 	private Integer _status;
 

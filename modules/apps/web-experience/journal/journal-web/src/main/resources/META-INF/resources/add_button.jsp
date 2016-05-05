@@ -16,16 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-JournalFolder folder = journalDisplayContext.getFolder();
-
-int restrictionType = JournalFolderConstants.RESTRICTION_TYPE_INHERIT;
-
-if (folder != null) {
-	restrictionType = folder.getRestrictionType();
-}
-%>
-
 <c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, journalDisplayContext.getFolderId(), ActionKeys.ADD_FOLDER) || JournalFolderPermission.contains(permissionChecker, scopeGroupId, journalDisplayContext.getFolderId(), ActionKeys.ADD_ARTICLE) %>">
 	<liferay-frontend:add-menu>
 		<c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, journalDisplayContext.getFolderId(), ActionKeys.ADD_FOLDER) %>">
@@ -36,13 +26,13 @@ if (folder != null) {
 				<portlet:param name="parentFolderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, (folder != null) ? "subfolder" : "folder") %>' url="<%= addFolderURL.toString() %>" />
+			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, (journalDisplayContext.getFolder() != null) ? "subfolder" : "folder") %>' url="<%= addFolderURL.toString() %>" />
 		</c:if>
 
 		<c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, journalDisplayContext.getFolderId(), ActionKeys.ADD_ARTICLE) %>">
 
 			<%
-			List<DDMStructure> ddmStructures = JournalFolderServiceUtil.getDDMStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), journalDisplayContext.getFolderId(), restrictionType);
+			List<DDMStructure> ddmStructures = JournalFolderServiceUtil.getDDMStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), journalDisplayContext.getFolderId(), journalDisplayContext.getRestrictionType());
 
 			for (DDMStructure ddmStructure : ddmStructures) {
 			%>

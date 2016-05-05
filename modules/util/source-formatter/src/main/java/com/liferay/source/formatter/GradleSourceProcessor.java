@@ -85,7 +85,7 @@ public class GradleSourceProcessor extends BaseSourceProcessor {
 
 			if (configuration.equals("compile") &&
 				(absolutePath.contains("/modules/apps/") ||
-					absolutePath.contains("/modules/private/apps/"))) {
+				 absolutePath.contains("/modules/private/apps/"))) {
 
 				dependency = StringUtil.replaceFirst(
 					dependency, "compile", "provided");

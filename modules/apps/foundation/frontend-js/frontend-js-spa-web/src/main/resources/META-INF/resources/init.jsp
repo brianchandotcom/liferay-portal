@@ -26,7 +26,7 @@ page import="com.liferay.frontend.js.spa.web.servlet.taglib.util.SPAUtil" %>
 SPAUtil spaUtil = (SPAUtil)request.getAttribute(SPAWebKeys.SPA_UTIL);
 %>
 
-<aui:script position="inline" require="frontend-js-spa-web/liferay/init.es">
+<aui:script require="frontend-js-spa-web/liferay/init.es">
 	Liferay.on(
 		'SPAReady',
 		function() {

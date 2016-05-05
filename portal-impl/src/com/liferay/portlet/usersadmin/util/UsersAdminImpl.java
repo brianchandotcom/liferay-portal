@@ -126,6 +126,8 @@ public class UsersAdminImpl implements UsersAdmin {
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcRenderCommandName", "/users_admin/view");
+		portletURL.setParameter("toolbarItem", "view-all-organizations");
+		portletURL.setParameter("usersListView", "tree");
 
 		List<Organization> ancestorOrganizations = organization.getAncestors();
 

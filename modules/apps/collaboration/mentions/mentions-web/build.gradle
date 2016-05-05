@@ -1,6 +1,6 @@
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.blogs.web", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.frontend.taglib.web", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.mentions.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.message.boards.web", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"

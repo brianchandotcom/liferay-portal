@@ -5171,7 +5171,7 @@ public class JournalArticleLocalServiceImpl
 
 				addNewVersion = true;
 
-				version = MathUtil.format(latestVersion + 0.1, 1, 1);
+				version = obtainNextVersionNumber(article);
 			}
 		}
 
@@ -5461,7 +5461,7 @@ public class JournalArticleLocalServiceImpl
 		Locale defaultLocale = getArticleDefaultLocale(content);
 
 		if (incrementVersion) {
-			double newVersion = MathUtil.format(oldVersion + 0.1, 1, 1);
+			double newVersion = obtainNextVersionNumber(oldArticle);
 
 			long id = counterLocalService.increment();
 
@@ -6441,6 +6441,31 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	protected JournalArticle fetchLatestArticleFromLive(JournalArticle article)
+		throws PortalException {
+
+		Group group = groupLocalService.getGroup(article.getGroupId());
+
+		long liveGroupId = group.getLiveGroupId();
+
+		if (liveGroupId == 0) {
+			return null;
+		}
+
+		JournalArticleResource articleResource =
+			journalArticleResourceLocalService.
+				fetchJournalArticleResourceByUuidAndGroupId(
+					article.getArticleResourceUuid(), liveGroupId);
+
+		if (articleResource == null) {
+			return null;
+		}
+
+		return journalArticleLocalService.fetchLatestArticle(
+			articleResource.getResourcePrimKey(), WorkflowConstants.STATUS_ANY,
+			false);
+	}
+
 	protected void format(
 			User user, long groupId, String articleId, double version,
 			boolean incrementVersion, Element root, Map<String, byte[]> images)
@@ -6666,11 +6691,11 @@ public class JournalArticleLocalServiceImpl
 			if ((version > JournalArticleConstants.VERSION_DEFAULT) &&
 				incrementVersion) {
 
-				double oldVersion = MathUtil.format(version - 0.1, 1, 1);
-
 				long oldImageId = 0;
 
-				if ((oldVersion >= 1) && incrementVersion) {
+				if (incrementVersion) {
+					double oldVersion = getLatestVersion(groupId, articleId);
+
 					oldImageId =
 						journalArticleImageLocalService.getArticleImageId(
 							groupId, articleId, oldVersion, elInstanceId,
@@ -7285,6 +7310,23 @@ public class JournalArticleLocalServiceImpl
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		subscriptionSender.flushNotificationsAsync();
+	}
+
+	protected double obtainNextVersionNumber(JournalArticle article)
+		throws PortalException {
+
+		double oldVersion = article.getVersion();
+
+		// The version must also higher than the live version of the article
+		// to avoid some versions not being published
+
+		JournalArticle liveArticle = fetchLatestArticleFromLive(article);
+
+		if ((liveArticle != null) && (liveArticle.getVersion() > oldVersion)) {
+			oldVersion = liveArticle.getVersion();
+		}
+
+		return MathUtil.format(oldVersion + 0.1, 1, 1);
 	}
 
 	protected void saveImages(

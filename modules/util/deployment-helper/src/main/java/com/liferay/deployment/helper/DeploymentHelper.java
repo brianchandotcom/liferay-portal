@@ -14,10 +14,6 @@
 
 package com.liferay.deployment.helper;
 
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.ArgumentsUtil;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +31,14 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 
 import org.zeroturnaround.zip.ByteSource;
 import org.zeroturnaround.zip.FileSource;
@@ -48,31 +51,52 @@ import org.zeroturnaround.zip.ZipUtil;
 public class DeploymentHelper {
 
 	public static void main(String[] args) throws Exception {
-		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
-
-		String deploymentFileNames = arguments.get("deployment.files");
-
-		if (Validator.isNull(deploymentFileNames)) {
-			throw new IllegalArgumentException(
-				"The \"deployment.files\" argument is required");
-		}
-
-		String deploymentPath = GetterUtil.getString(
-			arguments.get("deployment.path"));
-
-		String outputFileName = arguments.get("deployment.output.file");
-
-		if (Validator.isNull(outputFileName)) {
-			throw new IllegalArgumentException(
-				"The \"deployment.output.file\" argument is required");
-		}
-
 		try {
+			Options options = _getOptions();
+
+			CommandLineParser commandLineParser = new DefaultParser();
+
+			CommandLine commandLine = commandLineParser.parse(options, args);
+
+			if (commandLine.hasOption("help")) {
+				_printOptions();
+
+				return;
+			}
+
+			String deploymentFileNames = null;
+
+			if (commandLine.hasOption("fileNames")) {
+				deploymentFileNames = commandLine.getOptionValue("fileNames");
+			}
+
+			String deploymentPath = null;
+
+			if (commandLine.hasOption("path")) {
+				deploymentPath = commandLine.getOptionValue("path");
+			}
+			else {
+				deploymentPath = "";
+			}
+
+			String outputFileName = null;
+
+			if (commandLine.hasOption("outputFile")) {
+				outputFileName = commandLine.getOptionValue("outputFile");
+			}
+
 			new DeploymentHelper(
 				deploymentFileNames, deploymentPath, outputFileName);
 		}
+		catch (ParseException pe) {
+			System.err.println(pe.getMessage());
+
+			_printOptions();
+		}
 		catch (Exception e) {
-			ArgumentsUtil.processMainException(arguments, e);
+			System.err.println("Error running deployment helper");
+
+			e.printStackTrace();
 		}
 	}
 
@@ -194,6 +218,38 @@ public class DeploymentHelper {
 		}
 
 		return byteArrayOutputStream.toByteArray();
+	}
+
+	private static Options _getOptions() {
+		Options options = new Options();
+
+		Option fileNamesOption = new Option(
+			"f", "fileNames", true,
+			"Set the files you would like to include in the war.");
+
+		fileNamesOption.setRequired(true);
+
+		options.addOption(fileNamesOption);
+		options.addOption(
+			new Option("h", "help", false, "Print this message."));
+
+		Option outputFileOption = new Option(
+			"o", "outputFile", true, "Set the name of the output file.");
+
+		outputFileOption.setRequired(true);
+
+		options.addOption(outputFileOption);
+		options.addOption(
+			new Option(
+				"p", "path", true, "Set the path the files will be deployed."));
+
+		return options;
+	}
+
+	private static void _printOptions() {
+		HelpFormatter helpFormatter = new HelpFormatter();
+
+		helpFormatter.printHelp("Liferay Deployment Helper", _getOptions());
 	}
 
 }

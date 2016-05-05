@@ -44,7 +44,7 @@ public class UpgradeStepRegistratorTracker {
 	public static List<ServiceRegistration<UpgradeStep>> register(
 		BundleContext bundleContext, String bundleSymbolicName,
 		String fromSchemaVersionString, String toSchemaVersionString,
-		UpgradeStep... upgradeSteps) {
+		Dictionary<String, Object> properties, UpgradeStep... upgradeSteps) {
 
 		List<ServiceRegistration<UpgradeStep>> serviceRegistrations =
 			new ArrayList<>();
@@ -54,7 +54,7 @@ public class UpgradeStepRegistratorTracker {
 
 		for (UpgradeInfo upgradeInfo : upgradeInfos) {
 			ServiceRegistration<UpgradeStep> serviceRegistration = _register(
-				bundleContext, bundleSymbolicName, upgradeInfo);
+				bundleContext, bundleSymbolicName, upgradeInfo, properties);
 
 			serviceRegistrations.add(serviceRegistration);
 		}
@@ -124,9 +124,7 @@ public class UpgradeStepRegistratorTracker {
 
 	private static ServiceRegistration<UpgradeStep> _register(
 		BundleContext bundleContext, String bundleSymbolicName,
-		UpgradeInfo upgradeInfo) {
-
-		Dictionary<String, Object> properties = new Hashtable<>();
+		UpgradeInfo upgradeInfo, Dictionary<String, Object> properties) {
 
 		properties.put("upgrade.bundle.symbolic.name", bundleSymbolicName);
 		properties.put("upgrade.db.type", "any");
@@ -214,7 +212,8 @@ public class UpgradeStepRegistratorTracker {
 				for (UpgradeInfo upgradeInfo : upgradeInfos) {
 					ServiceRegistration<UpgradeStep> serviceRegistration =
 						_register(
-							_bundleContext, bundleSymbolicName, upgradeInfo);
+							_bundleContext, bundleSymbolicName, upgradeInfo,
+							new Hashtable<String, Object>());
 
 					_serviceRegistrations.add(serviceRegistration);
 				}

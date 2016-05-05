@@ -37,6 +37,7 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -248,9 +249,13 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 				headers.get("Liferay-Require-SchemaVersion"),
 				headers.get("Bundle-Version"));
 
+			Dictionary<String, Object> properties = new Hashtable<>();
+
+			properties.put("upgrade.initial.database.creation", "true");
+
 			return UpgradeStepRegistratorTracker.register(
 				_bundleContext, _bundle.getSymbolicName(), "0.0.0",
-				upgradeToSchemaVersion,
+				upgradeToSchemaVersion, properties,
 				new UpgradeStep() {
 
 					@Override

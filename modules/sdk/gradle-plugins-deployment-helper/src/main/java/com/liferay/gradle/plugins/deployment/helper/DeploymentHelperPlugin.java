@@ -46,10 +46,13 @@ public class DeploymentHelperPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		addConfigurationDeploymentHelper(project);
+		Configuration deploymentHelperConfiguration =
+			addConfigurationDeploymentHelper(project);
+
 		addTaskBuildDeploymentHelper(project);
 
-		configureTasksBuildDeploymentHelper(project);
+		configureTasksBuildDeploymentHelper(
+			project, deploymentHelperConfiguration);
 	}
 
 	protected Configuration addConfigurationDeploymentHelper(
@@ -131,22 +134,15 @@ public class DeploymentHelperPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTaskBuildDeploymentHelperClasspath(
-		BuildDeploymentHelperTask buildDeploymentHelperTask) {
+		BuildDeploymentHelperTask buildDeploymentHelperTask,
+		FileCollection classpath) {
 
-		FileCollection fileCollection =
-			buildDeploymentHelperTask.getClasspath();
-
-		if ((fileCollection != null) && !fileCollection.isEmpty()) {
-			return;
-		}
-
-		Configuration configuration = GradleUtil.getConfiguration(
-			buildDeploymentHelperTask.getProject(), CONFIGURATION_NAME);
-
-		buildDeploymentHelperTask.setClasspath(configuration);
+		buildDeploymentHelperTask.setClasspath(classpath);
 	}
 
-	protected void configureTasksBuildDeploymentHelper(Project project) {
+	protected void configureTasksBuildDeploymentHelper(
+		Project project, final Configuration deploymentHelperConfiguration) {
+
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -158,7 +154,8 @@ public class DeploymentHelperPlugin implements Plugin<Project> {
 					BuildDeploymentHelperTask buildDeploymentHelperTask) {
 
 					configureTaskBuildDeploymentHelperClasspath(
-						buildDeploymentHelperTask);
+						buildDeploymentHelperTask,
+						deploymentHelperConfiguration);
 				}
 
 			});

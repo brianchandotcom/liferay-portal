@@ -254,13 +254,7 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 			Object json)
 		throws IOException {
 
-		String contentType = ContentTypes.APPLICATION_JSON;
-
-		if (BrowserSnifferUtil.isIe(request)) {
-			contentType = ContentTypes.TEXT_HTML;
-		}
-
-		response.setContentType(contentType);
+		response.setContentType(ContentTypes.APPLICATION_JSON);
 
 		ServletResponseUtil.write(response, json.toString());
 

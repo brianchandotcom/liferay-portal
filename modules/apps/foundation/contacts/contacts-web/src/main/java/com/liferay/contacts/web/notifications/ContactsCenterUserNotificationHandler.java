@@ -84,21 +84,27 @@ public class ContactsCenterUserNotificationHandler
 			return null;
 		}
 
+		String creatorUserName = getUserNameLink(
+			socialRequest.getUserId(), serviceContext);
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				LocaleUtil.toLanguageId(serviceContext.getLocale()));
+
 		String title = StringPool.BLANK;
 
 		if (socialRequest.getType() ==
 				SocialRelationConstants.TYPE_BI_CONNECTION) {
 
-			String creatorUserName = getUserNameLink(
-				socialRequest.getUserId(), serviceContext);
-
-			ResourceBundle resourceBundle =
-				_resourceBundleLoader.loadResourceBundle(
-					LocaleUtil.toLanguageId(serviceContext.getLocale()));
-
 			title = ResourceBundleUtil.getString(
 				resourceBundle, serviceContext.getLocale(),
 				"request-social-networking-summary-add-connection",
+				new Object[] {creatorUserName});
+		}
+		else {
+			title = ResourceBundleUtil.getString(
+				resourceBundle, serviceContext.getLocale(),
+				"x-sends-you-a-social-relationship-request",
 				new Object[] {creatorUserName});
 		}
 

@@ -57,8 +57,13 @@ DDMStructure structure = (DDMStructure)row.getObject();
 			<portlet:param name="showHeader" value="<%= Boolean.TRUE.toString() %>" />
 		</portlet:renderURL>
 
+		<%
+		String manageTemplateLabel = LanguageUtil.format(request, "manage-x", ddmDisplay.getViewTemplatesTitle(null, locale));
+		%>
+
 		<liferay-ui:icon
-			message="manage-templates"
+			localizeMessage="<%= false %>"
+			message="<%= manageTemplateLabel %>"
 			url="<%= manageViewURL %>"
 		/>
 	</c:if>

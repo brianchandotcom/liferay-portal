@@ -21,7 +21,8 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.
 
 long classPK = ParamUtil.getLong(request, "classPK");
 String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
-String scopedLabel = Validator.isNull(scopeTitle) ? "structures" : scopeTitle;
+String title = ddmDisplay.getTitle(locale);
+String scopedLabel = Validator.isNull(scopeTitle) ? title : scopeTitle;
 %>
 
 <liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="searchURL">

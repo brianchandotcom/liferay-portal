@@ -1978,6 +1978,22 @@ tell application "Safari" to quit
 					<delete file="plugins.war.zip" />
 				</then>
 			</if>
+
+			<if>
+				<matches pattern="http" string="${test.extra.apps.zip.urls}" />
+				<then>
+					<mkdir dir="extraapps" />
+
+					<for list="${test.extra.apps.zip.urls}" param="test.extra.apps.zip.url">
+						<sequential>
+							<mirrors-get
+								dest="extraapps"
+								src="@{test.extra.apps.zip.url}"
+							/>
+						</sequential>
+					</for>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 

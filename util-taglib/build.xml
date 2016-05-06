@@ -46,7 +46,7 @@
 				src.dir="@{src.dir}"
 			>
 				<deploy-post>
-					<copy file="@{jar.file}.jar" preservelastmodified="true" tofile="${liferay.home}/osgi/portal/${manifest.bundle.symbolic.name}.jar" />
+					<copy file="@{jar.file}.jar" preservelastmodified="true" tofile="${liferay.home}/osgi/static/${manifest.bundle.symbolic.name}.jar" />
 
 					<if>
 						<equals arg1="${app.server.type}" arg2="tomcat" />

@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INFO_MESSAGE</td>
-	<td>//div[contains(@id,'CampaignContentDisplayPortlet')]//div[contains(@class,'alert alert-info')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -53,21 +48,6 @@
 <tr>
 	<td>PREVIEW_BUTTON</td>
 	<td>//div[contains(@class,'portlet-content') and contains(.,'Campaign Content Display')]//div[contains(@class,'preview-button')]/button</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_BUTTON_UNEXPANDED</td>
-	<td>//div[contains(@class,'portlet-content') and contains(.,'Campaign Content Display')]//div[contains(@class,'preview-button')]/button[@aria-expanded='false']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_BUTTON_EXPANDED</td>
-	<td>//div[contains(@class,'portlet-content') and contains(.,'Campaign Content Display')]//div[contains(@class,'preview-button')]/button[@aria-expanded='true']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_CAMPAIGN_SELECTED</td>
-	<td>//li[@class='active'][contains(.,'${key_viewCampaignSelected}')]</td>
 	<td></td>
 </tr>
 </tbody>

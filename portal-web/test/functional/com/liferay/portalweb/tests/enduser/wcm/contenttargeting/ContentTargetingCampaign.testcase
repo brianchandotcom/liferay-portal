@@ -8,10 +8,6 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="Portlet#shutdownServer" />
-
-		<execute macro="Portlet#startServer" />
-
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>

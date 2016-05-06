@@ -89,22 +89,17 @@
 <!--PREVIEW-->
 <tr>
 	<td>PREVIEW</td>
-	<td>//li[contains(@id,'PreviewContent')]//a[contains(.,'${key_currentCampaign}')]</td>
+	<td>//li[contains(@id,'PreviewContent')]//a[contains(.,'${key_previewEntry}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PREVIEW_1</td>
-	<td>//li[contains(@id,'PreviewContent0')]</td>
+	<td>PREVIEW_BUTTON_EXPANDED</td>
+	<td>//div[contains(@class,'preview-button')]/button[@aria-expanded='true']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PREVIEW_2</td>
-	<td>//li[contains(@id,'PreviewContent1')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PREVIEW_3</td>
-	<td>//li[contains(@id,'PreviewContent1')]</td>
+	<td>PREVIEW_ENTRY_SELECTED</td>
+	<td>//li[@class='active'][contains(.,'${key_viewEntrySelected}')]</td>
 	<td></td>
 </tr>
 <tr>

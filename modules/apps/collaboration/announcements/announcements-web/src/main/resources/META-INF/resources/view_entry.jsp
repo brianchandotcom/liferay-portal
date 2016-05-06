@@ -42,7 +42,7 @@ if (flagValue != AnnouncementsFlagConstants.HIDDEN) {
 			<div class="card-col-content card-col-gutters">
 
 				<%
-				String userDisplayText = user.getFullName() + StringPool.COMMA_AND_SPACE + Time.getRelativeTimeDescription(entry.getDisplayDate(), locale, timeZone, announcementsDisplayContext.getDateFormatDate());
+				String userDisplayText = entry.getUserName() + StringPool.COMMA_AND_SPACE + Time.getRelativeTimeDescription(entry.getDisplayDate(), locale, timeZone, announcementsDisplayContext.getDateFormatDate());
 				%>
 
 				<h5 class="text-default" title="<%= userDisplayText %>">

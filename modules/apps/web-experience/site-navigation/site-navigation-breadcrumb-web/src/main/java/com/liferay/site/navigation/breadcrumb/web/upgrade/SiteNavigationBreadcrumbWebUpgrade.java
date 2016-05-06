@@ -16,7 +16,7 @@ package com.liferay.site.navigation.breadcrumb.web.upgrade;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.util.UpgradePortletId;
+import com.liferay.site.navigation.breadcrumb.web.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.site.navigation.breadcrumb.web.upgrade.v1_0_0.UpgradePortletPreferences;
 
 import org.osgi.service.component.annotations.Component;

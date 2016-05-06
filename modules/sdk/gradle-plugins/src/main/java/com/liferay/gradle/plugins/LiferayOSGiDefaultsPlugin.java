@@ -241,7 +241,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project);
 
 		configureBasePlugin(project, portalRootDir);
-		configureBundleDefaultInstructions(project, publishing);
+		configureBundleDefaultInstructions(project, portalRootDir, publishing);
 		configureConfigurations(project);
 		configureDeployDir(project);
 		configureJavaPlugin(project);
@@ -1062,7 +1062,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	protected void configureBundleDefaultInstructions(
-		Project project, boolean publishing) {
+		Project project, File portalRootDir, boolean publishing) {
 
 		LiferayOSGiExtension liferayOSGiExtension = GradleUtil.getExtension(
 			project, LiferayOSGiExtension.class);
@@ -1083,13 +1083,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				"Git-SHA", "${system-allow-fail;git rev-list -1 HEAD}");
 		}
 
-		File appDir = GradleUtil.getRootDir(project, _APP_BND_FILE_NAME);
+		File appBndFile = getAppBndFile(project, portalRootDir);
 
-		if (appDir != null) {
-			File appFile = new File(appDir, _APP_BND_FILE_NAME);
-
+		if (appBndFile != null) {
 			bundleDefaultInstructions.put(
-				Constants.INCLUDE, FileUtil.getRelativePath(project, appFile));
+				Constants.INCLUDE,
+				FileUtil.getRelativePath(project, appBndFile));
 		}
 
 		liferayOSGiExtension.bundleDefaultInstructions(
@@ -1912,6 +1911,45 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					}
 
 				});
+		}
+	}
+
+	protected File getAppBndFile(Project project, File portalRootDir) {
+		File dir = GradleUtil.getRootDir(project, _APP_BND_FILE_NAME);
+
+		if (dir != null) {
+			return new File(dir, _APP_BND_FILE_NAME);
+		}
+
+		File modulesDir = new File(portalRootDir, "modules");
+
+		File modulesPrivateDir = new File(modulesDir, "private");
+
+		if (!FileUtil.isChild(project.getProjectDir(), modulesPrivateDir)) {
+			return null;
+		}
+
+		String path = FileUtil.relativize(
+			project.getProjectDir(), modulesPrivateDir);
+
+		if (File.pathSeparatorChar != '/') {
+			path = path.replace(File.pathSeparatorChar, '/');
+		}
+
+		while (true) {
+			File file = new File(modulesDir, path + "/" + _APP_BND_FILE_NAME);
+
+			if (file.exists()) {
+				return file;
+			}
+
+			int index = path.lastIndexOf('/');
+
+			if (index == -1) {
+				return null;
+			}
+
+			path = path.substring(0, index);
 		}
 	}
 

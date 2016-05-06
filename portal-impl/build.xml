@@ -547,10 +547,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</gradle-execute>
 	</target>
 
-	<target name="build-themes">
-		<ant dir="../portal-web" target="build-themes" />
-	</target>
-
 	<target name="build-upgrade-table">
 		<if>
 			<not>

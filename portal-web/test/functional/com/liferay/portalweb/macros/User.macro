@@ -1098,7 +1098,7 @@
 			</elseif>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="Card#GENERIC_HORIZONTAL_DETAILS" value1="No users were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No users were found." />
 	</command>
 
 	<command name="deleteCP">
@@ -2014,7 +2014,7 @@
 	</command>
 
 	<command name="viewNoUsersFoundCP">
-		<execute function="AssertTextEquals" locator1="Card#GENERIC_HORIZONTAL_DETAILS" value1="No users were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No users were found." />
 	</command>
 
 	<command name="viewUserInfomationOrganizationSitesCP">

@@ -25,13 +25,33 @@ import javax.servlet.http.HttpServletRequest;
 public class ManagementBarSidenavTogglerButtonTag
 	extends ManagementBarButtonTag {
 
-	public void setSidenavId(String sidenavId) {
-		_sidenavId = sidenavId;
+	public void setHref(String href) {
+		_href = href;
+	}
+
+	public void setPosition(String position) {
+		_position = position;
+	}
+
+	public void setType(String type) {
+		_type = type;
+	}
+
+	public void setTypeMobile(String typeMobile) {
+		_typeMobile = typeMobile;
+	}
+
+	public void setWidth(String width) {
+		_width = width;
 	}
 
 	@Override
 	protected void cleanUp() {
-		_sidenavId = null;
+		_href = null;
+		_position = null;
+		_type = null;
+		_typeMobile = null;
+		_width = null;
 
 		super.cleanUp();
 	}
@@ -49,7 +69,11 @@ public class ManagementBarSidenavTogglerButtonTag
 			setId(StringUtil.randomId());
 		}
 
-		setNamespacedAttribute(request, "sidenavId", _sidenavId);
+		setNamespacedAttribute(request, "href", _href);
+		setNamespacedAttribute(request, "position", _position);
+		setNamespacedAttribute(request, "type", _type);
+		setNamespacedAttribute(request, "typeMobile", _typeMobile);
+		setNamespacedAttribute(request, "width", _width);
 
 		super.setAttributes(request);
 	}
@@ -60,6 +84,10 @@ public class ManagementBarSidenavTogglerButtonTag
 	private static final String _PAGE =
 		"/management_bar_sidenav_toggler_button/page.jsp";
 
-	private String _sidenavId;
+	private String _href;
+	private String _position;
+	private String _type;
+	private String _typeMobile;
+	private String _width;
 
 }

@@ -1211,7 +1211,7 @@
 
 		<var name="key_cardText" value="www.able.com" />
 
-		<execute function="AssertClick" locator1="Card#SPECIFIC_LARGE_TEXT" value1="www.able.com" />
+		<execute function="AssertClick" locator1="Card#SPECIFIC_LARGE_TEXT_LINK" value1="www.able.com" />
 
 		<var name="key_siteName" value="www.able.com" />
 
@@ -1256,7 +1256,7 @@
 
 		<var name="key_cardText" value="www.able.com" />
 
-		<execute function="AssertClick" locator1="Card#SPECIFIC_LARGE_TEXT" value1="www.able.com" />
+		<execute function="AssertClick" locator1="Card#SPECIFIC_LARGE_TEXT_LINK" value1="www.able.com" />
 
 		<var name="key_siteName" value="www.able.com" />
 

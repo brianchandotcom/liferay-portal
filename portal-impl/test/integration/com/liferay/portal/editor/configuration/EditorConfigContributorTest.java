@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -30,8 +29,6 @@ import com.liferay.registry.ServiceRegistration;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.After;
@@ -54,47 +51,18 @@ public class EditorConfigContributorTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_editorConfigProvider = ReflectionTestUtil.getFieldValue(
-			EditorConfigurationFactoryImpl.class, "_editorConfigProvider");
-
-		ReflectionTestUtil.setFieldValue(
-			EditorConfigurationFactoryImpl.class, "_editorConfigProvider",
-			new EditorConfigProvider() {
-
-				@Override
-				protected List<EditorConfigContributor> getContributors(
-					String portletName, String editorConfigKey,
-					String editorName) {
-
-					List<EditorConfigContributor> editorConfigContributors =
-						super.getContributors(
-							portletName, editorConfigKey, editorName);
-
-					Iterator<EditorConfigContributor> iterator =
-						editorConfigContributors.iterator();
-
-					while (iterator.hasNext()) {
-						EditorConfigContributor editorConfigContributor =
-							iterator.next();
-
-						if (!_editorConfigContributors.contains(
-								editorConfigContributor.getClass())) {
-
-							iterator.remove();
-						}
-					}
-
-					return editorConfigContributors;
-				}
-
-			});
+		_editorConfigProviderSwapper = new EditorConfigProviderSwapper(
+			Arrays.<Class<?>>asList(
+				EmoticonsEditorConfigContributor.class,
+				ImageEditorConfigContributor.class,
+				TablesEditorConfigContributor.class,
+				TextFormatEditorConfigContributor.class,
+				VideoEditorConfigContributor.class));
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
-		ReflectionTestUtil.setFieldValue(
-			EditorConfigurationFactoryImpl.class, "_editorConfigProvider",
-			_editorConfigProvider);
+		_editorConfigProviderSwapper.close();
 	}
 
 	@After
@@ -570,14 +538,7 @@ public class EditorConfigContributorTest {
 
 	private static final String _PORTLET_NAME = "testPortletName";
 
-	private static final List<Class<? extends EditorConfigContributor>>
-		_editorConfigContributors = Arrays.asList(
-			EmoticonsEditorConfigContributor.class,
-			ImageEditorConfigContributor.class,
-			TablesEditorConfigContributor.class,
-			TextFormatEditorConfigContributor.class,
-			VideoEditorConfigContributor.class);
-	private static EditorConfigProvider _editorConfigProvider;
+	private static EditorConfigProviderSwapper _editorConfigProviderSwapper;
 
 	private ServiceRegistration<EditorConfigContributor>
 		_editorConfigContributorServiceRegistration1;

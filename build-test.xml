@@ -87,7 +87,7 @@
 
 					<echo append="true" file="${tstamp.value}/WEB-INF/classes/portal-ext.properties">
 
-	module.framework.properties.osgi.console=11312</echo>
+module.framework.properties.osgi.console=11312</echo>
 
 					<zip
 						basedir="${tstamp.value}"
@@ -105,7 +105,7 @@
 
 					<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties">
 
-	module.framework.properties.osgi.console=11312</echo>
+module.framework.properties.osgi.console=11312</echo>
 				</else>
 			</if>
 		</sequential>

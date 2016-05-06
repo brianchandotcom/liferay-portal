@@ -863,7 +863,7 @@
 		<antcall target="build-dist-resin" />
 		<antcall target="build-dist-tcat" />
 		<antcall target="build-dist-tomcat" />
-		<antcall target="build-dist-wildlfy" />
+		<antcall target="build-dist-wildfly" />
 
 		<antcall target="zip-glassfish" />
 		<antcall target="zip-jboss" />

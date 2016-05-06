@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.web.portlet.configuration.icon;
 
-import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.portlet.action.ActionUtil;
@@ -107,8 +106,8 @@ public class DeleteFolderPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		if (folder.isMountPoint() ||
-				!isTrashEnabled(
-					themeDisplay.getScopeGroupId(), folder.getRepositoryId())) {
+			!isTrashEnabled(
+				themeDisplay.getScopeGroupId(), folder.getRepositoryId())) {
 
 			portletURL.setParameter(Constants.CMD, Constants.DELETE);
 		}

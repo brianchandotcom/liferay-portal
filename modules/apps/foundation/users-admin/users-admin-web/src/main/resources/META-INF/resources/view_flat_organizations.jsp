@@ -25,8 +25,6 @@ String usersListView = (String)request.getAttribute("view.jsp-usersListView");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 
-String keywords = ParamUtil.getString(request, "keywords");
-
 LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
 boolean showList = true;
@@ -116,13 +114,10 @@ boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionC
 				</c:if>
 
 				<%
-				long parentOrganizationId = OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
+				long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
 
-				if (Validator.isNotNull(keywords)) {
+				if (parentOrganizationId <= 0) {
 					parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
-				}
-				else {
-					parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
 				}
 				%>
 

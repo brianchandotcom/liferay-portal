@@ -15,9 +15,7 @@
 --%>
 
 <liferay-ui:search-container-column-text
-	cssClass="content-column name-column"
 	name="name"
-	truncate="<%= true %>"
 >
 
 	<%

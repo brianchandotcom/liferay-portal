@@ -86,7 +86,7 @@ public class UpgradeClassNames extends BaseWorkflowContextUpgradeProcess {
 				Map<String, Serializable> workflowContext =
 					WorkflowContextUtil.convert(updatedWorkflowContextJSON);
 
-				if (!isChangedEntryClassName(workflowContext) &&
+				if (!isEntryClassNameRenamed(workflowContext) &&
 					workflowContextJSON.equals(updatedWorkflowContextJSON)) {
 
 					continue;

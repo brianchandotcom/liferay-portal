@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
  */
 public abstract class BaseWorkflowContextUpgradeProcess extends UpgradeProcess {
 
-	protected boolean isChangedEntryClassName(
+	protected boolean isEntryClassNameRenamed(
 		Map<String, Serializable> workflowContext) {
 
 		String oldEntryClassName = (String)workflowContext.get(

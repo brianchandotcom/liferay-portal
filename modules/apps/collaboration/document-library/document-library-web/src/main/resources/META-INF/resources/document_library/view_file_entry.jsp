@@ -228,7 +228,7 @@ if (portletTitleBasedNavigation) {
 							</dt>
 
 							<dd>
-								<%= fileEntry.getDescription() %>
+								<%= HtmlUtil.escape(fileEntry.getDescription()) %>
 							</dd>
 						</c:if>
 					</dl>

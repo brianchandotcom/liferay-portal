@@ -61,5 +61,5 @@ downloadDependencyVisitor {
 }
 
 liferay {
-    deployDir = file("${liferayHome}/osgi/static")
+	deployDir = file("${liferayHome}/osgi/static")
 }

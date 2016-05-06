@@ -11,12 +11,4 @@
 	</condition>
 
 	<property name="gradle.wrapper.path" relative="yes" value="${modules.dir}/../gradlew${gradlew.suffix}" />
-
-	<macrodef name="print-gradle-alternative">
-		<attribute name="args" />
-
-		<sequential>
-			<echo>Please run this command instead: ${gradle.wrapper.path} @{args}</echo>
-		</sequential>
-	</macrodef>
 </project>

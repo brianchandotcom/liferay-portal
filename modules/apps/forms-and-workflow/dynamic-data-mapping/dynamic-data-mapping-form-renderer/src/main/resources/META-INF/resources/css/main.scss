@@ -104,12 +104,15 @@
 
 .liferay-ddm-form-field-paragraph, .liferay-ddm-form-field-tip {
 	color: #869CAD;
-	font-size: 14px;
 	line-height: 16px;
 }
 
+.liferay-ddm-form-field-paragraph {
+	font-size: 14px;
+}
+
 .liferay-ddm-form-field-tip {
-	font-size: 12px;
+	font-size: 11px;
 	font-weight: 400;
 }
 

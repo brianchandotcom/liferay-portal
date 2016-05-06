@@ -1257,6 +1257,20 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 						<math
 							datatype="int"
 							operand1="${app.server.bundle.index}"
+							operand2="11312"
+							operation="+"
+							result="osgi.console.port"
+						/>
+
+						<replace
+							file="${test.app.server.classes.portal.dir}/portal-ext.properties"
+							token="module.framework.properties.osgi.console=11312"
+							value="module.framework.properties.osgi.console=${osgi.console.port}"
+						/>
+
+						<math
+							datatype="int"
+							operand1="${app.server.bundle.index}"
 							operand2="1"
 							operation="+"
 							result="app.server.bundle.index"

@@ -1,6 +1,6 @@
 {
     "frontend-image-editor-web@1.0.0/ImageEditor.es": {
-        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy", "metal/src/core", "metal-dom/src/dom", "metal-promise/src/promise/Promise", "metal-dropdown/src/Dropdown", "./ImageEditorHistoryEntry.es", "./ImageEditorLoading.es", "./ImageEditor.soy"]
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy", "metal/src/async/async", "metal/src/core", "metal-dom/src/dom", "metal-promise/src/promise/Promise", "metal-dropdown/src/Dropdown", "./ImageEditorHistoryEntry.es", "./ImageEditorLoading.es", "./ImageEditor.soy"]
     },
     "frontend-image-editor-web@1.0.0/ImageEditor.soy": {
         "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]

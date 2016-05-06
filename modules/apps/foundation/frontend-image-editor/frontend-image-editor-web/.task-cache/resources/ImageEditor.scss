@@ -11,7 +11,7 @@ $slider-height: 20px;
 
 // Skin Variables
 
-$brand-primary: darken(#428BCA, 6.5%) !default; // #337ab7
+$brand-primary: darken(#428BCA, 6.5%) !default; // #337AB7
 
 $imageeditor-bg: #111314 !default;
 $imageeditor-filters-text-color: #57636A !default;
@@ -23,8 +23,18 @@ $gray-base: #000 !default;
 $gray-light: lighten($gray-base, 46.7%) !default; // #777
 $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 
+.portlet-layout {
+	background-color: $imageeditor-bg;
+}
+
 .image-editor {
 	background-color: $imageeditor-bg;
+
+	.image-editor-ready {
+		.image-preview, .lfr-image-editor-tools-container, .lfr-image-editor-history-container {
+			opacity: 1;
+		}
+	}
 
 	ul, ol {
 		margin: 0;
@@ -69,7 +79,7 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 
 	.controls {
 		background-color: $imageeditor-bg;
-		bottom: 0;
+		bottom: 10px;
 		height: $imageeditor-controls-height;
 		position: absolute;
 		width: 100%;
@@ -102,10 +112,35 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 				overflow: auto;
 				padding: 10px 0 0;
 
-				ul.list-table {
+				> * {
+					align-items: center;
+					display: flex;
+					justify-content: center;
+				}
+
+				.lexicon-icon {
+					&.max-value {
+						color: rgba(255, 255, 255, 0.9);
+						height: 28px;
+						width: 28px;
+					}
+
+					&.min-value {
+						color: rgba(255, 255, 255, 0.5);
+						height: 20px;
+						width: 20px;
+					}
+				}
+
+				.centered {
+					flex-grow: 1;
+					margin: 0 32px;
+				}
+
+				.carousel {
 					display: table;
 
-					li {
+					.item {
 						display: table-cell;
 						padding: 0 1px;
 
@@ -155,10 +190,9 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 
 	.slider {
 		color: $imageeditor-link-color;
-		margin: 0 auto;
+		height: 74px;
 		position: relative;
 		text-align: center;
-		width: 80%;
 
 		.rail {
 			border-radius: $slider-height / 2;

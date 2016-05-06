@@ -1,4 +1,4 @@
-define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy', 'metal/src/core', 'metal-dom/src/dom', 'metal-promise/src/promise/Promise', 'metal-dropdown/src/Dropdown', './ImageEditorHistoryEntry.es', './ImageEditorLoading.es', './ImageEditor.soy'], function (exports, _Component2, _Soy, _core, _dom, _Promise, _Dropdown, _ImageEditorHistoryEntry, _ImageEditorLoading, _ImageEditor) {
+define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy', 'metal/src/async/async', 'metal/src/core', 'metal-dom/src/dom', 'metal-promise/src/promise/Promise', 'metal-dropdown/src/Dropdown', './ImageEditorHistoryEntry.es', './ImageEditorLoading.es', './ImageEditor.soy'], function (exports, _Component2, _Soy, _async, _core, _dom, _Promise, _Dropdown, _ImageEditorHistoryEntry, _ImageEditorLoading, _ImageEditor) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -8,6 +8,8 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 	var _Component3 = _interopRequireDefault(_Component2);
 
 	var _Soy2 = _interopRequireDefault(_Soy);
+
+	var _async2 = _interopRequireDefault(_async);
 
 	var _core2 = _interopRequireDefault(_core);
 
@@ -70,8 +72,8 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 			var _this = _possibleConstructorReturn(this, _Component.call(this, opt_config));
 
 			/**
-   	 * This index points to the current state in the history.
-   	 *
+    * This index points to the current state in the history.
+    *
     * @type {Number}
     * @protected
     */
@@ -84,7 +86,7 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
     * - History entries are objects with
     *     - url (optional): the url representing the image
     *     - data: the ImageData object of the image
-   	 *
+    *
     * @type {Array.<Object>}
     * @protected
     */
@@ -99,7 +101,11 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 
 			// Load the first entry imageData and render it on the app.
 			_this.history_[0].getImageData().then(function (imageData) {
-				return _this.syncImageData_(imageData);
+				_async2.default.nextTick(function () {
+					_this.imageEditorReady = true;
+
+					_this.syncImageData_(imageData);
+				});
 			});
 			return _this;
 		}
@@ -128,6 +134,10 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 			});
 		};
 
+		ImageEditor.prototype.close_ = function close_() {
+			Liferay.Util.getWindow().hide();
+		};
+
 		ImageEditor.prototype.createHistoryEntry_ = function createHistoryEntry_(imageData) {
 			// Push new state and discard stale redo states
 			this.historyIndex_++;
@@ -147,8 +157,28 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 			return this.element.querySelector('.lfr-image-editor-image-container canvas');
 		};
 
+		ImageEditor.prototype.getImageEditorImageBlob = function getImageEditorImageBlob() {
+			var _this3 = this;
+
+			return new _Promise.CancellablePromise(function (resolve, reject) {
+				_this3.getImageEditorCanvas().toBlob(resolve);
+			});
+		};
+
 		ImageEditor.prototype.getImageEditorImageData = function getImageEditorImageData() {
 			return this.history_[this.historyIndex_].getImageData();
+		};
+
+		ImageEditor.prototype.notifySaveResult_ = function notifySaveResult_(result) {
+			this.components.loading.show = false;
+
+			if (result && result.success) {
+				Liferay.Util.getOpener().Liferay.fire(this.saveEventName, {
+					data: result
+				});
+
+				Liferay.Util.getWindow().hide();
+			}
 		};
 
 		ImageEditor.prototype.redo = function redo() {
@@ -157,7 +187,7 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 		};
 
 		ImageEditor.prototype.requestImageEditorEdit = function requestImageEditorEdit(event) {
-			var _this3 = this;
+			var _this4 = this;
 
 			var controls = this.imageEditorCapabilities.tools.reduce(function (prev, curr) {
 				return prev.concat(curr.controls);
@@ -168,22 +198,22 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 			var targetTool = target.getAttribute('data-tool');
 
 			this.syncHistory_().then(function () {
-				_this3.selectedControl = controls.filter(function (tool) {
+				_this4.selectedControl = controls.filter(function (tool) {
 					return tool.variant === targetControl;
 				})[0];
-				_this3.selectedTool = targetTool;
+				_this4.selectedTool = targetTool;
 			});
 		};
 
 		ImageEditor.prototype.requestImageEditorPreview = function requestImageEditorPreview() {
-			var _this4 = this;
+			var _this5 = this;
 
 			var selectedControl = this.components[this.id + '_selected_control_' + this.selectedControl.variant];
 
 			this.history_[this.historyIndex_].getImageData().then(function (imageData) {
 				return selectedControl.preview(imageData);
 			}).then(function (imageData) {
-				return _this4.syncImageData_(imageData);
+				return _this5.syncImageData_(imageData);
 			});
 
 			this.components.loading.show = true;
@@ -195,17 +225,60 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 			this.syncHistory_();
 		};
 
+		ImageEditor.prototype.save_ = function save_(event) {
+			var _this6 = this;
+
+			if (!event.delegateTarget.disabled) {
+				this.getImageEditorImageBlob().then(function (imageBlob) {
+					return _this6.submitBlob_(imageBlob);
+				}).then(function (result) {
+					return _this6.notifySaveResult_(result);
+				});
+			}
+		};
+
+		ImageEditor.prototype.submitBlob_ = function submitBlob_(imageBlob) {
+			var _this7 = this;
+
+			var saveFileName = this.saveFileName;
+			var saveParamName = this.saveParamName;
+
+			var promise = new _Promise.CancellablePromise(function (resolve, reject) {
+				var formData = new FormData();
+
+				formData.append(saveParamName, imageBlob, saveFileName);
+
+				$.ajax({
+					contentType: false,
+					data: formData,
+					error: function error(_error) {
+						return reject(_error);
+					},
+					processData: false,
+					success: function success(result) {
+						return resolve(result);
+					},
+					type: 'POST',
+					url: _this7.saveURL
+				});
+			});
+
+			this.components.loading.show = true;
+
+			return promise;
+		};
+
 		ImageEditor.prototype.syncHistory_ = function syncHistory_() {
-			var _this5 = this;
+			var _this8 = this;
 
 			return new _Promise.CancellablePromise(function (resolve, reject) {
-				_this5.history_[_this5.historyIndex_].getImageData().then(function (imageData) {
-					_this5.syncImageData_(imageData);
+				_this8.history_[_this8.historyIndex_].getImageData().then(function (imageData) {
+					_this8.syncImageData_(imageData);
 
-					_this5.history = {
-						canRedo: _this5.historyIndex_ < _this5.history_.length - 1,
-						canReset: _this5.history_.length > 1,
-						canUndo: _this5.historyIndex_ > 0
+					_this8.history = {
+						canRedo: _this8.historyIndex_ < _this8.history_.length - 1,
+						canReset: _this8.history_.length > 1,
+						canUndo: _this8.historyIndex_ > 0
 					};
 
 					resolve();
@@ -229,7 +302,7 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 
 			var canvas = this.getImageEditorCanvas();
 
-			var boundingBox = _dom2.default.closest(this.element, '#main-content');
+			var boundingBox = _dom2.default.closest(this.element, '.portlet-layout');
 			var availableWidth = boundingBox.offsetWidth;
 			var availableHeight = boundingBox.offsetHeight - 142 - 40;
 			var availableAspectRatio = availableWidth / availableHeight;
@@ -259,6 +332,56 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 
 		return ImageEditor;
 	}(_Component3.default);
+
+	/**
+  * State definition.
+  * @type {!Object}
+  * @static
+  */
+	ImageEditor.STATE = {
+		/**
+   * Indicates that the editor is ready for user interaction
+   * @type {Object}
+   */
+		imageEditorReady: {
+			validator: _core2.default.isBoolean,
+			value: false
+		},
+
+		/**
+   * Event to dispatch when the edition has been completed
+   * @type {String}
+   */
+		saveEventName: {
+			validator: _core2.default.isString
+		},
+
+		/**
+   * Name of the saved image that should be sent
+   * to the server for the save action
+   * @type {String}
+   */
+		saveFileName: {
+			validator: _core2.default.isString
+		},
+
+		/**
+   * Name of the param where the image should be sent
+   * to the server for the save action
+   * @type {String}
+   */
+		saveParamName: {
+			validator: _core2.default.isString
+		},
+
+		/**
+   * Url to save the image changes
+   * @type {String}
+   */
+		saveURL: {
+			validator: _core2.default.isString
+		}
+	};
 
 	// Register component
 	_Soy2.default.register(ImageEditor, _ImageEditor2.default);

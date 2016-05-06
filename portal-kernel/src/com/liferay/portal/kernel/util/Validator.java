@@ -1194,10 +1194,10 @@ public class Validator {
 
 	/**
 	 * Returns <code>true</code> if the string is a valid URL based on the rules
-	 * in {@link URL}. Can also validate root relative URLs.
+	 * in {@link URL}. This method can also validate root relative URLs.
 	 *
 	 * @param  url the string to check
-	 * @param  acceptRootRelative if root relative URLs should be accepted
+	 * @param  acceptRootRelative whether a root relative URL should be accepted
 	 * @return <code>true</code> if the string is a valid URL;
 	 *         <code>false</code> otherwise
 	 */

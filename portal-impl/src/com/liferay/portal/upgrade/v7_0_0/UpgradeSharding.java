@@ -15,6 +15,8 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -35,9 +37,11 @@ import com.liferay.portal.upgrade.v7_0_0.util.ServiceComponentTable;
 import com.liferay.portal.upgrade.v7_0_0.util.VirtualHostTable;
 import com.liferay.portal.util.PropsUtil;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +57,8 @@ public class UpgradeSharding extends UpgradeProcess {
 			Connection sourceConnection, Connection targetConnection,
 			String tableName, Object[][] columns, String createSQL)
 		throws Exception {
+
+		dropTable(targetConnection, tableName);
 
 		UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 			tableName, columns);
@@ -146,6 +152,14 @@ public class UpgradeSharding extends UpgradeProcess {
 		}
 
 		copyControlTables(shardNames);
+	}
+
+	protected void dropTable(Connection connection, String tableName)
+		throws IOException, SQLException {
+
+		DB db = DBManagerUtil.getDB();
+
+		db.runSQL(connection, "drop table " + tableName);
 	}
 
 	protected List<String> getShardNames() throws Exception {

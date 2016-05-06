@@ -2133,16 +2133,20 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			pluginBuildFileName = StringUtil.replace(
 				pluginBuildFileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-			int x = pluginBuildFileName.indexOf("/modules/apps/");
+			File file = new File(pluginBuildFileName);
+
+			String absolutePath = getAbsolutePath(file);
+
+			int x = absolutePath.indexOf("/modules/apps/");
 
 			if (x == -1) {
-				x = pluginBuildFileName.indexOf("/modules/private/apps/");
+				x = absolutePath.indexOf("/modules/private/apps/");
 			}
 
-			int y = pluginBuildFileName.lastIndexOf(StringPool.SLASH);
+			int y = absolutePath.lastIndexOf(StringPool.SLASH);
 
 			_pluginsInsideModulesDirectoryNames.add(
-				pluginBuildFileName.substring(x, y + 1));
+				absolutePath.substring(x, y + 1));
 		}
 
 		return _pluginsInsideModulesDirectoryNames;

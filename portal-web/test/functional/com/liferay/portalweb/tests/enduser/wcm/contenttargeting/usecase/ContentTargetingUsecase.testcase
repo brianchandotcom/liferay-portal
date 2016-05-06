@@ -8,10 +8,6 @@
 
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="Portlet#shutdownServer" />
-
-		<execute macro="Portlet#startServer" />
-
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -795,7 +791,7 @@
 		<execute macro="CampaignDisplayPortlet#viewPG">
 			<var name="entryContentText" value="Web Content Content Otherwise" />
 			<var name="previewCampaignList" value="Campaign Name,default" />
-			<var name="viewUserSegmentSelected" value="Default" />
+			<var name="viewUserSegmentSelected" value="default" />
 		</execute>
 	</command>
 
@@ -895,8 +891,8 @@
 
 		<execute macro="CampaignDisplayPortlet#viewPG">
 			<var name="previewCampaignList" value="Campaign Name,default" />
-			<var name="viewDontDisplay" value="PREVIEW_2" />
-			<var name="viewUserSegmentSelected" value="Default" />
+			<var name="viewDontDisplay" value="true" />
+			<var name="viewUserSegmentSelected" value="default" />
 		</execute>
 	</command>
 
@@ -1438,8 +1434,7 @@
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
 			<var name="entryContentText" value="Web Content Content" />
-			<var name="preview1Text" value="User Segment Name" />
-			<var name="preview2Text" value="Default" />
+			<var name="previewUserSegmentList" value="User Segment Name,default" />
 			<var name="viewUserSegmentSelected" value="User Segment Name" />
 		</execute>
 
@@ -2191,8 +2186,7 @@
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
 			<var name="entryContentText" value="Web Content Content" />
-			<var name="preview1Text" value="Male Users" />
-			<var name="preview2Text" value="Default" />
+			<var name="previewUserSegmentList" value="Male Users,default" />
 			<var name="viewUserSegmentSelected" value="Male Users" />
 		</execute>
 
@@ -2217,8 +2211,7 @@
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
 			<var name="entryContentText" value="Web Content Content" />
-			<var name="preview1Text" value="Male Users" />
-			<var name="preview2Text" value="Default" />
+			<var name="previewUserSegmentList" value="Male Users,default" />
 			<var name="viewUserSegmentSelected" value="Male Users" />
 		</execute>
 
@@ -3410,9 +3403,8 @@
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
 			<var name="entryContentText" value="Web Content Content Otherwise" />
-			<var name="preview1Text" value="User Segment Name Age and User Segment Name Reg Role" />
-			<var name="preview2Text" value="Default" />
-			<var name="viewUserSegmentSelected" value="Default" />
+			<var name="previewUserSegmentList" value="User Segment Name Age and User Segment Name Reg Role,default" />
+			<var name="viewUserSegmentSelected" value="default" />
 		</execute>
 	</command>
 
@@ -3534,8 +3526,7 @@
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
 			<var name="entryContentText" value="Web Content Content Any" />
-			<var name="preview1Text" value="User Segment Name Age or User Segment Name Reg Role" />
-			<var name="preview2Text" value="Default" />
+			<var name="previewUserSegmentList" value="User Segment Name Age or User Segment Name Reg Role,default" />
 		</execute>
 	</command>
 
@@ -3622,8 +3613,7 @@
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
-			<var name="preview1Text" value="User Segment Name" />
-			<var name="preview2Text" value="Default" />
+			<var name="previewUserSegmentList" value="User Segment Name,default" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -3773,8 +3763,7 @@
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
 			<var name="entryContentText" value="Web Content Content Male" />
-			<var name="preview1Text" value="not User Segment Name" />
-			<var name="preview2Text" value="Default" />
+			<var name="previewUserSegmentList" value="not User Segment Name,default" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -3899,10 +3888,9 @@
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
-			<var name="preview1Text" value="User Segment Name" />
-			<var name="preview2Text" value="Default" />
-			<var name="viewDontDisplay" value="PREVIEW_2" />
-			<var name="viewUserSegmentSelected" value="Default" />
+			<var name="previewUserSegmentList" value="User Segment Name,default" />
+			<var name="viewDontDisplay" value="true" />
+			<var name="viewUserSegmentSelected" value="default" />
 		</execute>
 	</command>
 

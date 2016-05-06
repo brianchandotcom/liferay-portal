@@ -119,7 +119,9 @@ public class DownstreamBuild extends BaseBuild {
 			else {
 				JSONObject queueItemJSONObject = getQueueItemJSONObject();
 
-				if (status.equals("starting") && (queueItemJSONObject != null)) {
+				if (status.equals("starting") &&
+					(queueItemJSONObject != null)) {
+
 					setStatus("queued");
 				}
 				else if (status.equals("queued") &&

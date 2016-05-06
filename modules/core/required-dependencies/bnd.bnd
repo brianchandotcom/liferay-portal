@@ -1,4 +1,4 @@
-Bundle-SymbolicName: required.dependencies
+Bundle-SymbolicName: com.liferay.required.dependencies
 Bundle-Version: 1.0.0
 -fixupmessages:\
 	"The JAR is empty: ...";is:=ignore,\

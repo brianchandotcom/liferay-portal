@@ -312,14 +312,20 @@ $horizontal-spacing: 35px;
 
 		.settings-toggler {
 			background-color: #F5F8FA;
-			bottom: 81px;
 			color: #879CB5;
-			display: block;
 			font-weight: 500;
 			padding: 18px $horizontal-spacing;
 			position: static;
-			text-decoration: none;
-			width: auto;
+			text-align: left;
+			width: 100%;
+
+			.settings-toggle-label {
+				float: left;
+			}
+
+			.settings-toggle-icon {
+				float: right;
+			}
 		}
 	}
 

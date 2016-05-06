@@ -5,7 +5,7 @@ AUI.add(
 
 		var CSS_FIELD_SETTINGS_SAVE = A.getClassName('lfr', 'ddl', 'field', 'settings', 'save');
 
-		var TPL_MODE_TOGGLER = '<a class="settings-toggler" href="javascript:;"></a>';
+		var TPL_MODE_TOGGLER = '<button class="btn settings-toggler" type="button"><span class="settings-toggle-label"></span><span class="settings-toggle-icon"></span></button>';
 
 		var TPL_OPTION = '<option {status} value="{value}">{label}</option>';
 
@@ -322,11 +322,13 @@ AUI.add(
 
 						if (advancedSettingsNode.hasClass('active')) {
 							modeToggler.addClass('active');
-							modeToggler.html(Liferay.Language.get('hide-options'));
+							modeToggler.one('.settings-toggle-label').html(Liferay.Language.get('hide-options'));
+							modeToggler.one('.settings-toggle-icon').html(Liferay.Util.getLexiconIconTpl('angle-up'));
 						}
 						else {
 							modeToggler.removeClass('active');
-							modeToggler.html(Liferay.Language.get('show-more-options'));
+							modeToggler.one('.settings-toggle-label').html(Liferay.Language.get('show-more-options'));
+							modeToggler.one('.settings-toggle-icon').html(Liferay.Util.getLexiconIconTpl('angle-down'));
 						}
 					},
 

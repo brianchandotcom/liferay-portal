@@ -485,8 +485,7 @@ public class DDMStructureLocalServiceImpl
 			long classNameId = classNameLocalService.getClassNameId(
 				DDMStructure.class);
 
-			if (ddmTemplatePersistence.countByG_C_C(
-					structure.getGroupId(), classNameId,
+			if (ddmTemplatePersistence.countByClassPK(
 					structure.getPrimaryKey()) > 0) {
 
 				throw new RequiredStructureException.

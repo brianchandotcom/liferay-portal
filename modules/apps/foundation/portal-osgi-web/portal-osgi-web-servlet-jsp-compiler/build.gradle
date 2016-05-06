@@ -38,3 +38,7 @@ downloadSchemas {
 		!schemasDir.exists()
 	}
 }
+
+liferay {
+    deployDir = file("${liferayHome}/osgi/static")
+}

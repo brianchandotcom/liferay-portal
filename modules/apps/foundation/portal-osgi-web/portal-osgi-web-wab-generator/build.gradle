@@ -59,3 +59,7 @@ downloadDependencyVisitor {
 
 	workingDir = file("src/main/java")
 }
+
+liferay {
+    deployDir = file("${liferayHome}/osgi/static")
+}

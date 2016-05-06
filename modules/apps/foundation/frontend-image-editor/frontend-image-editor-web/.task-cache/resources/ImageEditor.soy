@@ -7,6 +7,7 @@
  * @param id
  * @param? image
  * @param? imageEditorCapabilities
+ * @param? imageEditorReady
  * @param? selectedControl
  * @param? selectedTool
  * @param? pathThemeImages
@@ -20,16 +21,17 @@
  * @param requestImageEditorPreview
  */
 {template .render}
-	<div id="{$id}">
+	<div class="{$imageEditorReady ? 'image-editor-ready' : ''}" id="{$id}">
 		<div class="lfr-image-editor-image-container" id="{$id}ImageContainer">
 			<img class="hide img-responsive" src="{$image}">
-			<canvas class="image-preview"></canvas>
+			<canvas class="fade image-preview"></canvas>
+
 			{call ImageEditorLoading.render data="all"}
 				{param key: 'loading' /}
 			{/call}
 		</div>
 
-		<div class="lfr-image-editor-tools-container">
+		<div class="fade lfr-image-editor-tools-container">
 			{call .tools data="all"}
 				{param getImageEditorCanvas: $getImageEditorCanvas /}
 				{param getImageEditorImageData: $getImageEditorImageData /}
@@ -38,7 +40,7 @@
 			{/call}
 		</div>
 
-		<div class="lfr-image-editor-history-container">
+		<div class="fade lfr-image-editor-history-container">
 			<div class="btn-group" role="group">
 				<a class="btn btn-link {$history and $history.canUndo ? '' : 'disabled'} icon-monospaced" data-onclick="undo" href="javascript:;">
 					<svg class="lexicon-icon">
@@ -58,6 +60,27 @@
 					</svg>
 				</a>
 			</div>
+		</div>
+
+		<div class="button-holder dialog-footer">
+			{let $hasChanges: $history and $history.canUndo /}
+
+			{let $saveButtonAttributes kind="attributes"}
+				class="btn btn-default btn-lg btn-primary {$hasChanges ? '' : 'disabled'}"
+				data-onclick="save_"
+
+				{if not $hasChanges}
+					disabled="disabled"
+				{/if}
+			{/let}
+
+			<button {$saveButtonAttributes}>
+				<span class="lfr-btn-label">{$strings['save']}</span>
+			</button>
+
+			<button class="btn btn-cancel btn-default btn-lg btn-link" data-onclick="close_">
+				<span class="lfr-btn-label">{$strings['cancel']}</span>
+			</button>
 		</div>
 	</div>
 {/template}
@@ -124,7 +147,7 @@
 	{call Dropdown.render}
 		{param header kind="html"}
 			<a class="btn" data-onclick="toggle" href="javascript:;">
-				<svg class="icon-monospaced lexicon-icon">
+				<svg class="icon-monospaced lexicon-icon" data-icon="{$tool.icon}">
 					<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#{$tool.icon}"></use>
 				</svg>
 			</a>

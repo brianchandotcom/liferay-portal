@@ -351,7 +351,9 @@
 					'liferay-item-viewer': {
 						path: 'item_viewer.js',
 						requires: [
-							'aui-image-viewer'
+							'aui-component',
+							'aui-image-viewer',
+							'liferay-portlet-url'
 						]
 					},
 					'liferay-language': {

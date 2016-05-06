@@ -169,8 +169,9 @@ define(['exports', 'metal/src/metal', 'metal-component/src/all/component', 'html
 		};
 
 		Soy.prototype.shouldUpdate = function shouldUpdate(changes) {
-			if (!_IncrementalDomRender.prototype.shouldUpdate.call(this, changes)) {
-				return false;
+			var should = _IncrementalDomRender.prototype.shouldUpdate.call(this, changes);
+			if (!should || this.component_.shouldUpdate) {
+				return should;
 			}
 
 			var fn = this.component_.constructor.TEMPLATE;

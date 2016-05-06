@@ -71,15 +71,32 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		template.put("imageEditorCapabilities", imageEditorCapabilitiesContext);
 
-		String imageEditorURL = ParamUtil.getString(
-			renderRequest, "imageEditorURL");
+		String entityURL = ParamUtil.getString(renderRequest, "entityURL");
 
-		template.put("image", imageEditorURL);
+		template.put("image", entityURL);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		template.put("pathThemeImages", themeDisplay.getPathThemeImages());
+
+		String eventName = ParamUtil.getString(renderRequest, "eventName");
+
+		template.put("saveEventName", eventName);
+
+		String saveFileName = ParamUtil.getString(
+			renderRequest, "saveFileName");
+
+		template.put("saveFileName", saveFileName);
+
+		String saveParamName = ParamUtil.getString(
+			renderRequest, "saveParamName");
+
+		template.put("saveParamName", saveParamName);
+
+		String saveURL = ParamUtil.getString(renderRequest, "saveURL");
+
+		template.put("saveURL", saveURL);
 
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(
@@ -91,6 +108,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		strings.put("apply", LanguageUtil.get(locale, "apply"));
 		strings.put("cancel", LanguageUtil.get(locale, "cancel"));
+		strings.put("save", LanguageUtil.get(locale, "save"));
 
 		for (String key : resourceBundle.keySet()) {
 			strings.put(key, LanguageUtil.get(resourceBundle, key));

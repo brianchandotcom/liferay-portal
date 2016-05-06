@@ -171,10 +171,13 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './ComponentRegis
 		};
 
 		Component.prototype.attach = function attach(opt_parentElement, opt_siblingElement) {
-			if (!this.inDocument && this.element) {
+			if (!this.inDocument) {
 				this.renderElement_(opt_parentElement, opt_siblingElement);
 				this.inDocument = true;
-				this.emit('attached');
+				this.emit('attached', {
+					parent: opt_parentElement,
+					sibling: opt_siblingElement
+				});
 				this.attached();
 			}
 			return this;
@@ -344,7 +347,7 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './ComponentRegis
 
 		Component.prototype.renderElement_ = function renderElement_(opt_parentElement, opt_siblingElement) {
 			var element = this.element;
-			if (opt_siblingElement || !element.parentNode) {
+			if (element && (opt_siblingElement || !element.parentNode)) {
 				var parent = _dom.dom.toElement(opt_parentElement) || this.DEFAULT_ELEMENT_PARENT;
 				parent.insertBefore(element, _dom.dom.toElement(opt_siblingElement));
 			}

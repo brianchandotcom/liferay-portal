@@ -68,11 +68,14 @@ define(['exports', './dom', 'metal-events/src/events'], function (exports, _dom,
 		};
 
 		DomEventEmitterProxy.prototype.isSupportedDomEvent_ = function isSupportedDomEvent_(event) {
+			if (!this.originEmitter_ || !this.originEmitter_.addEventListener) {
+				return true;
+			}
 			return event.startsWith('delegate:') && event.indexOf(':', 9) !== -1 || _dom2.default.supportsEvent(this.originEmitter_, event);
 		};
 
 		DomEventEmitterProxy.prototype.shouldProxyEvent_ = function shouldProxyEvent_(event) {
-			return _EventEmitterProxy.prototype.shouldProxyEvent_.call(this, event) && (!this.originEmitter_.addEventListener || this.isSupportedDomEvent_(event));
+			return _EventEmitterProxy.prototype.shouldProxyEvent_.call(this, event) && this.isSupportedDomEvent_(event);
 		};
 
 		return DomEventEmitterProxy;

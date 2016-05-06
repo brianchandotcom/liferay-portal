@@ -10,7 +10,7 @@ cache {
 
 		testFile "build.gradle"
 		testFile "package.json"
-		testFile fileTree(dir: "src/main/resources/META-INF/resources")
+		testFile fileTree(dir: "src/main/resources/META-INF/resources", exclude: "**/.sass-cache/")
 	}
 }
 

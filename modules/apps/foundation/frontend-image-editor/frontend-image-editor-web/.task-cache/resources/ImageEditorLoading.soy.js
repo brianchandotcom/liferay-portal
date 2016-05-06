@@ -85,7 +85,7 @@ define("frontend-image-editor-web@1.0.0/ImageEditorLoading.soy", ['exports', 'me
      */
     function $render(opt_data, opt_ignored, opt_ijData) {
       opt_data = opt_data || {};
-      ie_void('div', null, null, 'class', 'loading-animation ' + (opt_data.show ? '' : 'hide'));
+      ie_void('div', null, null, 'class', (opt_data.show ? '' : 'fade') + ' loading-animation');
     }
     exports.render = $render;
     if (goog.DEBUG) {

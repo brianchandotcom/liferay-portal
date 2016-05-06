@@ -438,7 +438,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -466,7 +466,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -775,7 +775,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -803,7 +803,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -948,7 +948,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -1043,7 +1043,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -1071,7 +1071,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -1205,7 +1205,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -1302,7 +1302,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -1318,7 +1318,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -1356,7 +1356,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -1372,7 +1372,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -1739,7 +1739,7 @@
 			<var name="dmFolderName" value="${dmFolder2Name}" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolder1Name}" />
 		</execute>
 
@@ -1801,7 +1801,7 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -1885,7 +1885,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -1900,7 +1900,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -1915,7 +1915,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -2005,7 +2005,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName1}" />
 		</execute>
 
@@ -2030,7 +2030,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName2}" />
 		</execute>
 

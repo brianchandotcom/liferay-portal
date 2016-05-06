@@ -57,6 +57,8 @@
 
 		<execute macro="PortletEntry#save" />
 
+		<execute macro="ProductMenuHelper#closeProductMenu" />
+
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
@@ -157,11 +159,11 @@
 			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
-		<execute macro="DMFolder#addSubfolderPG">
+		<execute macro="DMFolder#addSubfolderCP">
 			<var name="dmSubFolderName" value="DM Folder2 Name" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="DM Folder2 Name" />
 		</execute>
 
@@ -180,7 +182,7 @@
 			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="DM Folder2 Name" />
 		</execute>
 
@@ -198,7 +200,7 @@
 			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
-		<execute macro="DMFolder#addSubfolderPG">
+		<execute macro="DMFolder#addSubfolderCP">
 			<var name="dmSubFolderName" value="DM Folder Name" />
 		</execute>
 
@@ -336,7 +338,7 @@
 			<var name="dmSubFolderName" value="DM Folder3 Name" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="DM Folder3 Name" />
 		</execute>
 
@@ -355,7 +357,7 @@
 			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="DM Folder3 Name" />
 		</execute>
 
@@ -370,7 +372,7 @@
 			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="DM Folder3 Name" />
 		</execute>
 
@@ -796,7 +798,7 @@
 			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 
-		<execute macro="DMRepository#viewCP">
+		<execute macro="DMRepository#viewBreadcrumb">
 			<var name="dmRepositoryName" value="DOCUMENTUM REPOSITORY NAME" />
 		</execute>
 	</command>

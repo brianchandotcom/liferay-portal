@@ -13,6 +13,19 @@
 		</if>
 	</command>
 
+	<command name="closeProductMenu">
+		<if>
+			<condition function="IsElementPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
+			<then>
+				<execute function="Click" locator1="ProductMenu#TOGGLE" />
+			</then>
+		</if>
+
+		<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_CLOSED" />
+
+		<execute function="AssertNotVisible" locator1="ProductMenu#PRODUCT_MENU_BODY" />
+	</command>
+
 	<command name="expandCategory">
 		<var name="key_category" value="${category}" />
 

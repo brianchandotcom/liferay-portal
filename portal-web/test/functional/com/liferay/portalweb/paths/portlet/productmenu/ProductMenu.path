@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_MENU_CLOSED</td>
+	<td>//div[contains(@id,'sidenavSliderId') and (contains(@class,'closed')) and not(contains(@class,'transition'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TAB</td>
 	<td>//div[contains(.,'${key_tab}')]/../div[contains(@class,'tab-icon')]</td>
 	<td></td>

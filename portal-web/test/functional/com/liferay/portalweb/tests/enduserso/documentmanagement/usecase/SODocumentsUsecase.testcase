@@ -230,7 +230,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName1}" />
 		</execute>
 
@@ -262,7 +262,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName2}" />
 		</execute>
 
@@ -294,7 +294,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName3}" />
 		</execute>
 
@@ -326,7 +326,7 @@
 			<var name="soPage" value="true" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName4}" />
 		</execute>
 
@@ -354,7 +354,7 @@
 		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle3}" />
 		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle4}" />
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName1}" />
 		</execute>
 
@@ -406,7 +406,7 @@
 		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle3}" />
 		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle4}" />
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName2}" />
 		</execute>
 
@@ -458,7 +458,7 @@
 		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle2}" />
 		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle4}" />
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName3}" />
 		</execute>
 
@@ -511,7 +511,7 @@
 		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle2}" />
 		<execute function="AssertTextNotPresent" value1="${dmDocumentTitle3}" />
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName4}" />
 		</execute>
 

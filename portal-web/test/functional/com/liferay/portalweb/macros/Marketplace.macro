@@ -334,7 +334,7 @@
 			<var name="viewableBy" value="${viewableBy}" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -364,7 +364,7 @@
 			<var name="pageName" value="${pageName2}" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -394,7 +394,7 @@
 			<var name="pageName" value="${pageName2}" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 

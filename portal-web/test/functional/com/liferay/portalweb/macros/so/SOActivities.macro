@@ -101,7 +101,7 @@
 			<var name="soPage" value="${soPage}" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
@@ -421,7 +421,7 @@
 			<var name="soPage" value="${soPage}" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="${dmFolderNameEdit}" />
 		</execute>
 

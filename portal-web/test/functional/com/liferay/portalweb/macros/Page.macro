@@ -130,17 +130,7 @@
 			</else>
 		</if>
 
-		<if>
-			<isset var="localized" />
-			<then>
-				<execute macro="Alert#viewSuccessMessage">
-					<var name="localized" value="${localized}" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="Alert#viewSuccessMessage" />
-			</else>
-		</if>
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="addChild">

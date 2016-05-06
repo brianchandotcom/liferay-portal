@@ -469,7 +469,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="Folder1" />
 		</execute>
 
@@ -482,7 +482,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="Folder1" />
 		</execute>
 
@@ -495,7 +495,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="Folder1" />
 		</execute>
 
@@ -508,7 +508,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="Folder1" />
 		</execute>
 
@@ -811,6 +811,8 @@
 			<var name="roleType" value="Site" />
 		</execute>
 
+		<execute function="Refresh" />
+
 		<execute macro="Role#viewPermissionCP">
 			<var name="permissionDefinitionValue" value="Delete" />
 			<var name="permissionNavigationValue" value="Document" />
@@ -845,6 +847,8 @@
 			<var name="permissionDefinitionValue" value="Update" />
 			<var name="permissionNavigationValue" value="Documents Folder" />
 		</execute>
+
+		<execute function="Refresh" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -889,14 +893,7 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="User#unassignRegularRoleCP">
-			<var name="roleName" value="Power User" />
-			<var name="userScreenName" value="usersn" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		<execute function="Pause" locator1="3000" />
 
 		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="userea2@liferay.com" />
@@ -1078,7 +1075,7 @@
 			<var name="pageName" value="Documents and Media Page - Global" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="DM SubFolder Name" />
 		</execute>
 
@@ -1157,7 +1154,7 @@
 			<var name="siteName" value="DM Site Name" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoFolderPG">
+		<execute macro="DMNavigator#gotoFolder">
 			<var name="dmFolderName" value="DM SubFolder Name" />
 		</execute>
 

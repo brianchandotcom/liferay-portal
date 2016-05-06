@@ -33,72 +33,76 @@ public class DLRequestHelper extends BaseRequestHelper {
 	}
 
 	public DLGroupServiceSettings getDLGroupServiceSettings() {
-		if (_dlGroupServiceSettings == null) {
-			HttpServletRequest request = getRequest();
+		if (_dlGroupServiceSettings != null) {
+			return _dlGroupServiceSettings;
+		}
 
-			_dlGroupServiceSettings =
-				(DLGroupServiceSettings)request.getAttribute(
-					"DL_GROUP_SERVICE_SETTINGS");
+		HttpServletRequest request = getRequest();
 
-			if (_dlGroupServiceSettings == null) {
-				String portletResource = getPortletResource();
+		_dlGroupServiceSettings =
+			(DLGroupServiceSettings)request.getAttribute(
+				"DL_GROUP_SERVICE_SETTINGS");
 
-				try {
-					if (Validator.isNotNull(portletResource)) {
-						_dlGroupServiceSettings =
-							DLGroupServiceSettings.getInstance(
-								getScopeGroupId(), request.getParameterMap());
-					}
-					else {
-						_dlGroupServiceSettings =
-							DLGroupServiceSettings.getInstance(
-								getScopeGroupId());
-					}
-				}
-				catch (PortalException pe) {
-					throw new SystemException(pe);
-				}
+		if (_dlGroupServiceSettings != null) {
+			return _dlGroupServiceSettings;
+		}
 
-				request.setAttribute(
-					"DL_GROUP_SERVICE_SETTINGS", _dlGroupServiceSettings);
+		String portletResource = getPortletResource();
+
+		try {
+			if (Validator.isNotNull(portletResource)) {
+				_dlGroupServiceSettings =
+					DLGroupServiceSettings.getInstance(
+						getScopeGroupId(), request.getParameterMap());
 			}
+			else {
+				_dlGroupServiceSettings =
+					DLGroupServiceSettings.getInstance(getScopeGroupId());
+			}
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
 		}
 
 		return _dlGroupServiceSettings;
 	}
 
 	public DLPortletInstanceSettings getDLPortletInstanceSettings() {
-		if (_dlPortletInstanceSettings == null) {
-			HttpServletRequest request = getRequest();
+		if (_dlGroupServiceSettings != null) {
+			return _dlPortletInstanceSettings;
+		}
 
-			_dlPortletInstanceSettings =
-				(DLPortletInstanceSettings)request.getAttribute(
-					"DL_PORTLET_INSTANCE_SETTINGS");
+		HttpServletRequest request = getRequest();
 
-			if (_dlPortletInstanceSettings == null) {
-				String portletResource = getPortletResource();
+		_dlPortletInstanceSettings =
+			(DLPortletInstanceSettings)request.getAttribute(
+				"DL_PORTLET_INSTANCE_SETTINGS");
 
-				try {
-					if (Validator.isNotNull(portletResource)) {
-						_dlPortletInstanceSettings =
-							DLPortletInstanceSettings.getInstance(
-								getLayout(), getResourcePortletId(),
-								request.getParameterMap());
-					}
-					else {
-						_dlPortletInstanceSettings =
-							DLPortletInstanceSettings.getInstance(
-								getLayout(), getPortletId());
-					}
-				}
-				catch(PortalException pe){
-					throw new SystemException(pe);
-				}
+		if (_dlPortletInstanceSettings != null) {
+			return _dlPortletInstanceSettings;
+		}
 
-				request.setAttribute(
-					"DL_PORTLET_INSTANCE_SETTINGS", _dlPortletInstanceSettings);
+		String portletResource = getPortletResource();
+
+		try {
+			if (Validator.isNotNull(portletResource)) {
+				_dlPortletInstanceSettings =
+					DLPortletInstanceSettings.getInstance(
+						getLayout(), getResourcePortletId(),
+						request.getParameterMap());
+			}
+			else {
+				_dlPortletInstanceSettings =
+					DLPortletInstanceSettings.getInstance(
+						getLayout(), getPortletId());
 			}
 		}
+		catch(PortalException pe){
+			throw new SystemException(pe);
+		}
+
+		request.setAttribute(
+			"DL_PORTLET_INSTANCE_SETTINGS", _dlPortletInstanceSettings);
 
 		return _dlPortletInstanceSettings;
 	}

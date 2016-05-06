@@ -41,7 +41,7 @@ public class DLRequestHelper extends BaseRequestHelper {
 
 		_dlGroupServiceSettings =
 			(DLGroupServiceSettings)request.getAttribute(
-				"DL_GROUP_SERVICE_SETTINGS");
+				_DL_GROUP_SERVICE_SETTINGS_KEY);
 
 		if (_dlGroupServiceSettings != null) {
 			return _dlGroupServiceSettings;
@@ -64,6 +64,9 @@ public class DLRequestHelper extends BaseRequestHelper {
 			throw new SystemException(pe);
 		}
 
+		request.setAttribute(
+			_DL_GROUP_SERVICE_SETTINGS_KEY, _dlGroupServiceSettings);
+
 		return _dlGroupServiceSettings;
 	}
 
@@ -76,7 +79,7 @@ public class DLRequestHelper extends BaseRequestHelper {
 
 		_dlPortletInstanceSettings =
 			(DLPortletInstanceSettings)request.getAttribute(
-				"DL_PORTLET_INSTANCE_SETTINGS");
+				_DL_PORTLET_INSTANCE_SETTINGS_KEY);
 
 		if (_dlPortletInstanceSettings != null) {
 			return _dlPortletInstanceSettings;
@@ -102,11 +105,15 @@ public class DLRequestHelper extends BaseRequestHelper {
 		}
 
 		request.setAttribute(
-			"DL_PORTLET_INSTANCE_SETTINGS", _dlPortletInstanceSettings);
+			_DL_PORTLET_INSTANCE_SETTINGS_KEY, _dlPortletInstanceSettings);
 
 		return _dlPortletInstanceSettings;
 	}
 
+	private static final String _DL_GROUP_SERVICE_SETTINGS_KEY =
+		"DL_GROUP_SERVICE_SETTINGS";
+	private static final String _DL_PORTLET_INSTANCE_SETTINGS_KEY =
+		"DL_PORTLET_INSTANCE_SETTINGS";
 	private DLGroupServiceSettings _dlGroupServiceSettings;
 	private DLPortletInstanceSettings _dlPortletInstanceSettings;
 

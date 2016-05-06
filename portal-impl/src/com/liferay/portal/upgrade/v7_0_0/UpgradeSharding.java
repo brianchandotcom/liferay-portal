@@ -58,6 +58,15 @@ public class UpgradeSharding extends UpgradeProcess {
 			String tableName, Object[][] columns, String createSQL)
 		throws Exception {
 
+		if (!isTableEmpty(targetConnection, tableName)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Control table " + tableName + " is present on shard and " +
+						"contains data, when it should not. Proceeding to " +
+						"delete it");
+			}
+		}
+
 		dropTable(targetConnection, tableName);
 
 		UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
@@ -175,6 +184,23 @@ public class UpgradeSharding extends UpgradeProcess {
 			}
 
 			return shardNames;
+		}
+	}
+
+	protected boolean isTableEmpty(Connection connection, String tableName)
+		throws SQLException {
+
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select 1 from " + tableName);
+			ResultSet rs = preparedStatement.executeQuery()) {
+
+			if (rs.next()) {
+				return false;
+			}
+			else {
+				return true;
+			}
 		}
 	}
 

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -64,11 +65,14 @@ public class BlogsContentEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		jsonObject.put(
-			"allowedContent",
-			"b strong i em u hr h1 h2 h3 h4 h5 h6 em ul ol li pre " +
-				"table[border,cellpadding,cellspacing]{width}; thead tbody " +
-					"tr[scope]; th[scope]; td img a[*]");
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("p{text-align}; b strong i em u hr h1 h2 h3 h4 h5 h6 em ul ");
+		sb.append("ol li pre table[border,cellpadding,cellspacing]{width}; ");
+		sb.append("thead tbody tr[scope]; th[scope]; td ");
+		sb.append("img[!src,class]{width,height}; a[*];");
+
+		jsonObject.put("allowedContent", sb.toString());
 
 		String namespace = GetterUtil.getString(
 			inputEditorTaglibAttributes.get(

@@ -70,7 +70,7 @@ public class SearchDisplayContext {
 		_renderResponse = renderResponse;
 		_portletPreferences = portletPreferences;
 
-		if (Validator.isNull(getKeywords())) {
+		if ((getKeywords() == null) || (getKeywords().length() == 0)) {
 			_hits = null;
 			_searchContext = null;
 			_searchContainer = null;

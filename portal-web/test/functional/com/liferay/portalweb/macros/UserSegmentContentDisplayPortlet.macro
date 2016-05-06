@@ -196,14 +196,6 @@
 
 	<command name="viewEntryPG">
 		<if>
-			<isset var="viewUserSegmentSelected" />
-			<then>
-				<var name="key_viewUserSegmentSelected" value="${viewUserSegmentSelected}" />
-				<execute function="AssertElementPresent" locator1="UserSegmentContentDisplay#PREVIEW_USER_SEGMENT_SELECTED" value1="${viewUserSegmentSelected}" />
-			</then>
-		</if>
-
-		<if>
 			<isset var="entryContentText" />
 			<then>
 				<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#ENTRY_CONTENT" value1="${entryContentText}" />
@@ -211,28 +203,55 @@
 		</if>
 
 		<if>
-			<isset var="preview1Text" />
+			<equals arg1="viewDontDisplay" arg2="true" />
 			<then>
-				<execute function="MouseOver" locator1="ContentTargeting#PREVIEW_1" />
-				<execute function="AssertTextEquals" locator1="ContentTargeting#PREVIEW_1" value1="${preview1Text}" />
-			</then>
-		</if>
-
-		<execute function="Pause" locator1="5000" />
-
-		<if>
-			<isset var="preview2Text" />
-			<then>
-				<execute function="MouseOver" locator1="ContentTargeting#PREVIEW_2" />
-				<execute function="AssertTextEquals" locator1="ContentTargeting#PREVIEW_2" value1="${preview2Text}" />
+				<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#ENTRY_CONTENT" value1="There are no matching rules" />
 			</then>
 		</if>
 
 		<if>
-			<isset var="viewDontDisplay" />
+			<isset var="viewUserSegmentSelected" />
 			<then>
-				<execute function="MouseOverNoError" locator1="PGUsersegmentcontentdisplay#${viewDontDisplay}" />
-				<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#ENTRY_CONTENT" value1="" />
+				<if>
+					<condition function="IsElementNotPresent" locator1="ContentTargeting#PREVIEW_BUTTON_EXPANDED" />
+					<then>
+						<var name="key_portletName" value="User Segment Content Display" />
+
+						<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_BAR" />
+
+						<execute function="Click" locator1="UserSegmentContentDisplay#PREVIEW_BUTTON" />
+
+						<execute function="AssertElementPresent" locator1="ContentTargeting#PREVIEW_BUTTON_EXPANDED" />
+					</then>
+				</if>
+
+				<var name="key_viewEntrySelected" value="${viewUserSegmentSelected}" />
+
+				<execute function="AssertElementPresent" locator1="ContentTargeting#PREVIEW_ENTRY_SELECTED" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="previewUserSegmentList" />
+			<then>
+				<if>
+					<condition function="IsElementNotPresent" locator1="ContentTargeting#PREVIEW_BUTTON_EXPANDED" />
+					<then>
+						<var name="key_portletName" value="User Segment Content Display" />
+
+						<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_BAR" />
+
+						<execute function="Click" locator1="UserSegmentContentDisplay#PREVIEW_BUTTON" />
+
+						<execute function="AssertElementPresent" locator1="ContentTargeting#PREVIEW_BUTTON_EXPANDED" />
+					</then>
+				</if>
+
+				<for list="${previewUserSegmentList}" param="previewEntry">
+					<var name="key_previewEntry" value="${previewEntry}" />
+
+					<execute function="AssertTextEquals" locator1="ContentTargeting#PREVIEW" value1="${previewEntry}" />
+				</for>
 			</then>
 		</if>
 	</command>

@@ -1013,8 +1013,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					/>
 				</try>
 				<catch>
-					<ant dir="../portal-kernel" inheritAll="false" target="compile" />
-					<ant dir="../util-java" inheritAll="false" target="compile" />
+					<ant dir="${project.dir}/portal-kernel" inheritAll="false" target="compile" />
+					<ant dir="${project.dir}/util-java" inheritAll="false" target="compile" />
 
 					<taskdef
 						classname="com.liferay.util.ant.ManifestHelperTask"

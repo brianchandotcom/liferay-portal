@@ -13,8 +13,6 @@ AUI.add(
 
 		var STR_SELECT_ALL_CHECKBOXES_SELECTOR = 'selectAllCheckBoxesSelector';
 
-		var STR_SELECTED_PARTIAL = 'selected-partial';
-
 		var ManagementBar = A.Component.create(
 			{
 				ATTRS: {
@@ -223,7 +221,7 @@ AUI.add(
 						selectAllCheckBoxesCheckBox.attr(ATTR_CHECKED, onscreenSelectedItems);
 
 						if (onscreenSelectedItems !== checkBoxes.size()) {
-							selectAllCheckBoxesCheckBox.addClass(STR_SELECTED_PARTIAL);
+							selectAllCheckBoxesCheckBox.attr('indeterminate', true);
 						}
 					}
 				},

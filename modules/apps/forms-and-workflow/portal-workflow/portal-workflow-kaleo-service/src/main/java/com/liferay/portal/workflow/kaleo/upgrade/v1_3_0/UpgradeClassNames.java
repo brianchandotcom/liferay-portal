@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upgrade.util.Table;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
-import com.liferay.portal.workflow.kaleo.upgrade.BaseWorkflowContextUpgradeProcess;
 
 import java.io.Serializable;
 

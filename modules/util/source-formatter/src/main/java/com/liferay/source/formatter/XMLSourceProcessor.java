@@ -303,6 +303,83 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkTargetName(
+			String targetName, String buildFileName, String fileName)
+		throws Exception {
+
+		List<String> targetNames = getTargetNames(
+			buildFileName, fileName, null, false);
+
+		if ((targetNames == null) || targetNames.contains(targetName)) {
+			return;
+		}
+
+		int x = targetName.lastIndexOf(CharPool.PERIOD);
+
+		if (x != -1) {
+			targetName = targetName.substring(x + 1);
+		}
+
+		if (!targetNames.contains(targetName)) {
+			processErrorMessage(
+				fileName,
+				"Target '" + targetName + "' does not exist: " + fileName);
+		}
+	}
+
+	protected void checkTargetNames(
+			String fileName, String absolutePath, String content)
+		throws Exception {
+
+		Document document = readXML(content);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> antCallElements = getElementsByName(
+			"antcall", rootElement, null);
+
+		for (Element antCallElement : antCallElements) {
+			checkTargetName(
+				antCallElement.attributeValue("target"), absolutePath,
+				fileName);
+		}
+
+		String fileDirName = fileName.substring(
+			0, fileName.lastIndexOf(CharPool.SLASH) + 1);
+
+		List<Element> antElements = getElementsByName("ant", rootElement, null);
+
+		for (Element antElement : antElements) {
+			String targetName = antElement.attributeValue("target");
+
+			if ((targetName == null) ||
+				targetName.contains(StringPool.OPEN_CURLY_BRACE)) {
+
+				continue;
+			}
+
+			String fullDirName = fileDirName;
+
+			String dirName = antElement.attributeValue("dir");
+
+			if (dirName != null) {
+				if (dirName.contains(StringPool.OPEN_CURLY_BRACE)) {
+					continue;
+				}
+
+				fullDirName = fullDirName + dirName + StringPool.SLASH;
+			}
+
+			String antFileName = antElement.attributeValue("antfile");
+
+			if (antFileName == null) {
+				antFileName = "build.xml";
+			}
+
+			checkTargetName(targetName, fullDirName + antFileName, fileName);
+		}
+	}
+
 	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
@@ -325,7 +402,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				sourceFormatterArgs.getBaseDirName() + "build") ||
 			(fileName.contains("/build") && !fileName.contains("/tools/"))) {
 
-			newContent = formatAntXML(fileName, newContent);
+			newContent = formatAntXML(fileName, absolutePath, newContent);
 		}
 		else if (fileName.contains("/custom-sql/")) {
 			formatCustomSQLXML(fileName, newContent);
@@ -563,7 +640,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String formatAntXML(String fileName, String content)
+	protected String formatAntXML(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		String newContent = trimContent(content, true);
@@ -595,6 +673,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		checkImportFiles(fileName, newContent);
+
+		checkTargetNames(fileName, absolutePath, content);
 
 		return newContent;
 	}
@@ -1075,6 +1155,28 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return columnNames;
 	}
 
+	protected List<Element> getElementsByName(
+		String name, Element element, List<Element> elements) {
+
+		if (elements == null) {
+			elements = new ArrayList<>();
+		}
+
+		List<Element> childElements = element.elements();
+
+		for (Element childElement : childElements) {
+			String elementName = childElement.getName();
+
+			if (elementName.equals(name)) {
+				elements.add(childElement);
+			}
+
+			elements = getElementsByName(name, childElement, elements);
+		}
+
+		return elements;
+	}
+
 	protected String getTablesContent(String fileName, String absolutePath)
 		throws Exception {
 
@@ -1117,6 +1219,54 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		_tablesContentMap.put(fileName, tablesContent);
 
 		return tablesContent;
+	}
+
+	protected List<String> getTargetNames(
+			String buildfileName, String fileName, List<String> targetNames,
+			boolean importFile)
+		throws Exception {
+
+		File file = new File(buildfileName);
+
+		if (!file.exists()) {
+			if (!importFile) {
+				processErrorMessage(
+					fileName,
+					fileName + " contains an ant element pointing to " +
+						"non-existing " + buildfileName);
+			}
+
+			return null;
+		}
+
+		Document document = readXML(FileUtil.read(file));
+
+		Element rootElement = document.getRootElement();
+
+		if (targetNames == null) {
+			targetNames = new ArrayList<>();
+		}
+
+		List<Element> targetElements = rootElement.elements("target");
+
+		for (Element targetElement : targetElements) {
+			targetNames.add(targetElement.attributeValue("name"));
+		}
+
+		List<Element> importElements = rootElement.elements("import");
+
+		for (Element importElement : importElements) {
+			String buildDirName = buildfileName.substring(
+				0, buildfileName.lastIndexOf(CharPool.SLASH) + 1);
+
+			String importFileName =
+				buildDirName + importElement.attributeValue("file");
+
+			targetNames = getTargetNames(
+				importFileName, fileName, targetNames, true);
+		}
+
+		return targetNames;
 	}
 
 	@Override

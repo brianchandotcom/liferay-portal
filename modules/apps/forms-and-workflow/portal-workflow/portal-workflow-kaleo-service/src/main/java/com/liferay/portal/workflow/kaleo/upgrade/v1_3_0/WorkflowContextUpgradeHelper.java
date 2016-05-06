@@ -16,13 +16,10 @@ package com.liferay.portal.workflow.kaleo.upgrade.v1_3_0;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
-
-import java.sql.PreparedStatement;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,22 +31,31 @@ import java.util.regex.Pattern;
 /**
  * @author Lino Alves
  */
-public abstract class BaseWorkflowContextUpgradeProcess extends UpgradeProcess {
+public class WorkflowContextUpgradeHelper {
 
-	protected boolean isEntryClassNameRenamed(
+	public Set<Map.Entry<String, String>> getRenamedClassNamesEntrySet() {
+		return _classNamesMap.entrySet();
+	}
+
+	public Map<String, Serializable> renameEntryClassName(
 		Map<String, Serializable> workflowContext) {
+
+		Map<String, Serializable> newWorkflowContext = new HashMap<>(
+			workflowContext);
 
 		String oldEntryClassName = (String)workflowContext.get(
 			"entryClassName");
 
-		if (classNamesMap.get(oldEntryClassName) != null) {
-			return true;
+		String newEntryClassName = _classNamesMap.get(oldEntryClassName);
+
+		if (newEntryClassName != null) {
+			newWorkflowContext.put("entryClassName", newEntryClassName);
 		}
 
-		return false;
+		return newWorkflowContext;
 	}
 
-	protected String renamePortalJavaClassNames(String workflowContextJSON) {
+	public String renamePortalClassNames(String workflowContextJSON) {
 		Matcher matcher = _javaClassPattern.matcher(workflowContextJSON);
 
 		Set<String> oldSubs = new TreeSet<>();
@@ -91,83 +97,66 @@ public abstract class BaseWorkflowContextUpgradeProcess extends UpgradeProcess {
 			ArrayUtil.toStringArray(newSubs));
 	}
 
-	protected void replaceEntryClassName(
+	protected boolean isEntryClassNameRenamed(
 		Map<String, Serializable> workflowContext) {
 
 		String oldEntryClassName = (String)workflowContext.get(
 			"entryClassName");
 
-		String newEntryClassName = classNamesMap.get(oldEntryClassName);
-
-		if (newEntryClassName != null) {
-			workflowContext.put("entryClassName", newEntryClassName);
+		if (_classNamesMap.get(oldEntryClassName) != null) {
+			return true;
 		}
-	}
 
-	protected void updateWorkflowContext(
-			String tableName, String primaryKeyName, long primaryKeyValue,
-			String workflowContext)
-		throws Exception {
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"update " + tableName + " set workflowContext = ? where " +
-					primaryKeyName + " = ?")) {
-
-			ps.setString(1, workflowContext);
-			ps.setLong(2, primaryKeyValue);
-
-			ps.executeUpdate();
-		}
-	}
-
-	protected static final Map<String, String> classNamesMap = new HashMap<>();
-
-	static {
-		classNamesMap.put(
-			"com.liferay.portal.model.Company",
-			"com.liferay.portal.kernel.model.Company");
-		classNamesMap.put(
-			"com.liferay.portal.model.Group",
-			"com.liferay.portal.kernel.model.Group");
-		classNamesMap.put(
-			"com.liferay.portal.model.LayoutRevision",
-			"com.liferay.portal.kernel.model.LayoutRevision");
-		classNamesMap.put(
-			"com.liferay.portal.model.Role",
-			"com.liferay.portal.kernel.model.Role");
-		classNamesMap.put(
-			"com.liferay.portal.model.User",
-			"com.liferay.portal.kernel.model.User");
-		classNamesMap.put(
-			"com.liferay.portal.model.UserGroup",
-			"com.liferay.portal.kernel.model.UserGroup");
-		classNamesMap.put(
-			"com.liferay.portlet.blogs.model.BlogsEntry",
-			"com.liferay.blogs.kernel.model.BlogsEntry");
-		classNamesMap.put(
-			"com.liferay.portlet.documentlibrary.model.DLFileEntry",
-			"com.liferay.document.library.kernel.model.DLFileEntry");
-		classNamesMap.put(
-			"com.liferay.portlet.dynamicdatalists.model.DDLRecord",
-			"com.liferay.dynamic.data.lists.model.DDLRecord");
-		classNamesMap.put(
-			"com.liferay.portlet.journal.model.JournalArticle",
-			"com.liferay.journal.model.JournalArticle");
-		classNamesMap.put(
-			"com.liferay.portlet.messageboards.model.MBDiscussion",
-			"com.liferay.message.boards.kernel.model.MBDiscussion");
-		classNamesMap.put(
-			"com.liferay.portlet.messageboards.model.MBMessage",
-			"com.liferay.message.boards.kernel.model.MBMessage");
-		classNamesMap.put(
-			"com.liferay.portlet.wiki.model.WikiPage",
-			"com.liferay.wiki.model.WikiPage");
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseWorkflowContextUpgradeProcess.class);
+		WorkflowContextUpgradeHelper.class);
 
+	private static final Map<String, String> _classNamesMap = new HashMap<>();
 	private static final Pattern _javaClassPattern = Pattern.compile(
 		"\"javaClass\":\"(com.liferay.portal.[^\"]+)\"");
+
+	static {
+		_classNamesMap.put(
+			"com.liferay.portal.model.Company",
+			"com.liferay.portal.kernel.model.Company");
+		_classNamesMap.put(
+			"com.liferay.portal.model.Group",
+			"com.liferay.portal.kernel.model.Group");
+		_classNamesMap.put(
+			"com.liferay.portal.model.LayoutRevision",
+			"com.liferay.portal.kernel.model.LayoutRevision");
+		_classNamesMap.put(
+			"com.liferay.portal.model.Role",
+			"com.liferay.portal.kernel.model.Role");
+		_classNamesMap.put(
+			"com.liferay.portal.model.User",
+			"com.liferay.portal.kernel.model.User");
+		_classNamesMap.put(
+			"com.liferay.portal.model.UserGroup",
+			"com.liferay.portal.kernel.model.UserGroup");
+		_classNamesMap.put(
+			"com.liferay.portlet.blogs.model.BlogsEntry",
+			"com.liferay.blogs.kernel.model.BlogsEntry");
+		_classNamesMap.put(
+			"com.liferay.portlet.documentlibrary.model.DLFileEntry",
+			"com.liferay.document.library.kernel.model.DLFileEntry");
+		_classNamesMap.put(
+			"com.liferay.portlet.dynamicdatalists.model.DDLRecord",
+			"com.liferay.dynamic.data.lists.model.DDLRecord");
+		_classNamesMap.put(
+			"com.liferay.portlet.journal.model.JournalArticle",
+			"com.liferay.journal.model.JournalArticle");
+		_classNamesMap.put(
+			"com.liferay.portlet.messageboards.model.MBDiscussion",
+			"com.liferay.message.boards.kernel.model.MBDiscussion");
+		_classNamesMap.put(
+			"com.liferay.portlet.messageboards.model.MBMessage",
+			"com.liferay.message.boards.kernel.model.MBMessage");
+		_classNamesMap.put(
+			"com.liferay.portlet.wiki.model.WikiPage",
+			"com.liferay.wiki.model.WikiPage");
+	}
 
 }

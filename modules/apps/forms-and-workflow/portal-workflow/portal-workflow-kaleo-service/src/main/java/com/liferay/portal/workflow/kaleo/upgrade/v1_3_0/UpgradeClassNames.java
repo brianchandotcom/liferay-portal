@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.upgrade.v1_3_0;
 
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upgrade.util.Table;
@@ -29,7 +30,7 @@ import java.util.Map;
 /**
  * @author Lino Alves
  */
-public class UpgradeClassNames extends BaseWorkflowContextUpgradeProcess {
+public class UpgradeClassNames extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -54,10 +55,29 @@ public class UpgradeClassNames extends BaseWorkflowContextUpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
 			Table table = new Table(tableName);
 
-			for (Map.Entry<String, String> entry : classNamesMap.entrySet()) {
+			for (Map.Entry<String, String> entry :
+					_workflowContextUpgradeHelper.
+						getRenamedClassNamesEntrySet()) {
+
 				table.updateColumnValue(
 					columnName, entry.getKey(), entry.getValue());
 			}
+		}
+	}
+
+	protected void updateWorkflowContext(
+			String tableName, String primaryKeyName, long primaryKeyValue,
+			String workflowContext)
+		throws Exception {
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update " + tableName + " set workflowContext = ? where " +
+					primaryKeyName + " = ?")) {
+
+			ps.setString(1, workflowContext);
+			ps.setLong(2, primaryKeyValue);
+
+			ps.executeUpdate();
 		}
 	}
 
@@ -79,19 +99,23 @@ public class UpgradeClassNames extends BaseWorkflowContextUpgradeProcess {
 					continue;
 				}
 
-				String updatedWorkflowContextJSON = renamePortalJavaClassNames(
-					workflowContextJSON);
+				String updatedWorkflowContextJSON =
+					_workflowContextUpgradeHelper.renamePortalClassNames(
+						workflowContextJSON);
 
 				Map<String, Serializable> workflowContext =
 					WorkflowContextUtil.convert(updatedWorkflowContextJSON);
 
-				if (!isEntryClassNameRenamed(workflowContext) &&
-					workflowContextJSON.equals(updatedWorkflowContextJSON)) {
+				if (workflowContextJSON.equals(updatedWorkflowContextJSON) &&
+					!_workflowContextUpgradeHelper.isEntryClassNameRenamed(
+						workflowContext)) {
 
 					continue;
 				}
 
-				replaceEntryClassName(workflowContext);
+				workflowContext =
+					_workflowContextUpgradeHelper.renameEntryClassName(
+						workflowContext);
 
 				updateWorkflowContext(
 					tableName, primaryKeyName, primaryKeyValue,
@@ -99,5 +123,8 @@ public class UpgradeClassNames extends BaseWorkflowContextUpgradeProcess {
 			}
 		}
 	}
+
+	private final WorkflowContextUpgradeHelper _workflowContextUpgradeHelper =
+		new WorkflowContextUpgradeHelper();
 
 }

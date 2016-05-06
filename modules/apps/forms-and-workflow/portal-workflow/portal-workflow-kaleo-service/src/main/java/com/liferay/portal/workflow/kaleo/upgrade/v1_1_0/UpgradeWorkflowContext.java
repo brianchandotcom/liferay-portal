@@ -15,10 +15,11 @@
 package com.liferay.portal.workflow.kaleo.upgrade.v1_1_0;
 
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
-import com.liferay.portal.workflow.kaleo.upgrade.v1_3_0.BaseWorkflowContextUpgradeProcess;
+import com.liferay.portal.workflow.kaleo.upgrade.v1_3_0.WorkflowContextUpgradeHelper;
 
 import java.io.Serializable;
 
@@ -39,7 +40,7 @@ import org.json.JSONObject;
 /**
  * @author Jang Kim
  */
-public class UpgradeWorkflowContext extends BaseWorkflowContextUpgradeProcess {
+public class UpgradeWorkflowContext extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -81,14 +82,17 @@ public class UpgradeWorkflowContext extends BaseWorkflowContextUpgradeProcess {
 					continue;
 				}
 
-				workflowContextJSON = renamePortalJavaClassNames(
-					workflowContextJSON);
+				workflowContextJSON =
+					_workflowContextUpgradeHelper.renamePortalClassNames(
+						workflowContextJSON);
 
 				Map<String, Serializable> workflowContext =
 					(Map<String, Serializable>)jsonSerializer.fromJSON(
 						workflowContextJSON);
 
-				replaceEntryClassName(workflowContext);
+				workflowContext =
+					_workflowContextUpgradeHelper.renameEntryClassName(
+						workflowContext);
 
 				updateWorkflowContext(
 					tableName, fieldName, fieldValue,
@@ -97,7 +101,25 @@ public class UpgradeWorkflowContext extends BaseWorkflowContextUpgradeProcess {
 		}
 	}
 
+	protected void updateWorkflowContext(
+			String tableName, String primaryKeyName, long primaryKeyValue,
+			String workflowContext)
+		throws Exception {
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"update " + tableName + " set workflowContext = ? where " +
+					primaryKeyName + " = ?")) {
+
+			ps.setString(1, workflowContext);
+			ps.setLong(2, primaryKeyValue);
+
+			ps.executeUpdate();
+		}
+	}
+
 	private JSONSerializer _jsonSerializer;
+	private final WorkflowContextUpgradeHelper _workflowContextUpgradeHelper =
+		new WorkflowContextUpgradeHelper();
 
 	private static class PortletPreferencesIdsSerializer
 		extends AbstractSerializer {

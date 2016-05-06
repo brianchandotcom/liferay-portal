@@ -38,6 +38,7 @@ import com.liferay.portal.upgrade.v7_0_0.util.VirtualHostTable;
 import com.liferay.portal.util.PropsUtil;
 
 import java.io.IOException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -62,9 +63,9 @@ public class UpgradeSharding extends UpgradeProcess {
 			if (!isTableEmpty(targetConnection, tableName)) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Control table " + tableName + " is present on shard and " +
-							"contains data, when it should not. Proceeding to " +
-							"delete it");
+						"Control table " + tableName + " is present on shard " +
+							"and contains data, when it should not. " +
+							"Proceeding to delete it");
 				}
 			}
 

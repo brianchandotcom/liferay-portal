@@ -4076,13 +4076,11 @@ go]]></replacevalue>
 	</target>
 
 	<target name="deploy-extra-apps">
-		<var name="extra.apps.zip.file.name" value="${jenkins.shared.user.content.dir}/jobs/${top.level.job.name}/builds/${top.level.build.number}/downloads/extraapps.zip" />
-
 		<if>
-			<available file="${extra.apps.zip.file.name}" />
+			<available file="${extra.apps.zip.file.path}" />
 			<then>
 				<ant antfile="build-test-plugins.xml" target="deploy-extra-apps">
-					<property name="extra.apps.zip.file.name" value="${extra.apps.zip.file.name}" />
+					<property name="extra.apps.zip.file.name" value="${extra.apps.zip.file.path}" />
 				</ant>
 			</then>
 		</if>
@@ -4739,17 +4737,6 @@ go]]></replacevalue>
 				<echo message="File ${file} does not exist." />
 			</else>
 		</if>
-	</target>
-
-	<target name="prepare-extraapps-plugins">
-		<fail message="Please set the property ${jenkins.shared.user.content.dir}." unless="jenkins.shared.user.content.dir" />
-		<fail message="Please set the property ${test.build.extraapps.zip.url}." unless="test.build.extraapps.zip.url" />
-		<fail message="Please set the property ${top.level.build.number}." unless="top.level.build.number" />
-		<fail message="Please set the property ${top.level.job.name}." unless="top.level.job.name" />
-
-		<mirrors-get dest="extraapps.zip" src="${test.build.extraapps.zip.url}" />
-
-		<move file="extraapps.zip" todir="${jenkins.shared.user.content.dir}/jobs/${top.level.job.name}/builds/${top.level.build.number}/downloads" />
 	</target>
 
 	<target name="prepare-lcs-gateway-bundle">

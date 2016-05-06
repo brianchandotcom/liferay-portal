@@ -24,7 +24,7 @@
 		</if>
 	</tear-down>
 
-	<command name="ClusteringSmoke" priority="4">
+	<command name="ClusteringSmoke" priority="5">
 		<property name="app.server.bundles.size" value="1" />
 		<property name="custom.properties" value="dl.store.impl=com.liferay.portal.store.db.DBStore" />
 		<property name="test.name.skip.portal.instance" value="ClusteringCE#ClusteringSmoke" />

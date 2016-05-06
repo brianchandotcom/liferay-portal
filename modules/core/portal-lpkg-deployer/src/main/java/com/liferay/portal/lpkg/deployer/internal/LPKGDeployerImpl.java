@@ -193,7 +193,7 @@ public class LPKGDeployerImpl implements LPKGDeployer {
 			List<Bundle> bundles = new ArrayList<>();
 
 			Bundle lpkgBundle = bundleContext.installBundle(
-				lpkgFile.getCanonicalPath(), _toBundle(lpkgFile));
+				lpkgFile.getCanonicalPath(), toBundle(lpkgFile));
 
 			BundleStartLevel bundleStartLevel = lpkgBundle.adapt(
 				BundleStartLevel.class);
@@ -221,13 +221,8 @@ public class LPKGDeployerImpl implements LPKGDeployer {
 		return _lpkgBundleTracker.getTracked();
 	}
 
-	@Deactivate
-	protected void deactivate() {
-		_lpkgBundleTracker.close();
-		_warWrapperBundlerTracker.close();
-	}
-
-	private InputStream _toBundle(File lpkgFile) throws IOException {
+	@Override
+	public InputStream toBundle(File lpkgFile) throws IOException {
 		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream()) {
 
@@ -257,6 +252,12 @@ public class LPKGDeployerImpl implements LPKGDeployer {
 				unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
 				unsyncByteArrayOutputStream.size());
 		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_lpkgBundleTracker.close();
+		_warWrapperBundlerTracker.close();
 	}
 
 	private void _writeManifest(

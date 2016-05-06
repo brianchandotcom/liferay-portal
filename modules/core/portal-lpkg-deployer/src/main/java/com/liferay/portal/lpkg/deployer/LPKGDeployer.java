@@ -16,6 +16,7 @@ package com.liferay.portal.lpkg.deployer;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.List;
 import java.util.Map;
@@ -32,5 +33,7 @@ public interface LPKGDeployer {
 		throws IOException;
 
 	public Map<Bundle, List<Bundle>> getDeployedLPKGBundles();
+
+	public InputStream toBundle(File lpkgFile) throws IOException;
 
 }

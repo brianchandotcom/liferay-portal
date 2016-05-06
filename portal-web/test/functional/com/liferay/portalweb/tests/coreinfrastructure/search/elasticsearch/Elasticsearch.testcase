@@ -31,6 +31,8 @@
 
 		<property name="app.server.bundles.size" value="1" />
 		<property name="cluster.enabled" value="true" />
+		<property name="custom.properties" value="dl.store.impl=com.liferay.portal.store.db.DBStore" />
+		<property name="test.name.skip.portal.instance" value="Elasticsearch#ElasticsearchClusterSmokeTest" />
 
 		<!-- Verify the total number of Elasticsearch replicas is two as there are two nodes/bundles running -->
 
@@ -39,10 +41,6 @@
 		</execute>
 
 		<execute macro="Elasticsearch#viewReplicaAddedInConsole" />
-
-		<execute macro="Page#add">
-			<var name="pageName" value="Elasticsearch Page" />
-		</execute>
 
 		<execute macro="Navigator#openURL" />
 
@@ -75,9 +73,7 @@
 			<var name="actionsDescription" value="Reindex all search indexes." />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Elasticsearch Page" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Search#searchPG">
 			<var name="searchTerm" value="Apple" />
@@ -86,13 +82,11 @@
 		<execute macro="Search#viewSearchResultsPG">
 			<var name="searchAssetTitle1" value="Apple" />
 			<var name="searchAssetTitle2" value="Apple" />
-			<var name="searchAssetType1" value="Message Boards Message" />
-			<var name="searchAssetType2" value="Document" />
+			<var name="searchAssetType1" value="Document" />
+			<var name="searchAssetType2" value="Message Boards Message" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Elasticsearch Page" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Search#searchPG">
 			<var name="searchTerm" value="Orange" />
@@ -101,8 +95,8 @@
 		<execute macro="Search#viewSearchResultsPG">
 			<var name="searchAssetTitle1" value="Apple" />
 			<var name="searchAssetTitle2" value="Apple" />
-			<var name="searchAssetType1" value="Message Boards Message" />
-			<var name="searchAssetType2" value="Document" />
+			<var name="searchAssetType1" value="Document" />
+			<var name="searchAssetType2" value="Message Boards Message" />
 		</execute>
 
 		<execute macro="Portlet#shutdownSpecificServer">
@@ -119,9 +113,7 @@
 
 		<!-- Verify search functionality after a replica has been removed -->
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Elasticsearch Page" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Search#searchPG">
 			<var name="searchTerm" value="Apple" />
@@ -130,13 +122,11 @@
 		<execute macro="Search#viewSearchResultsPG">
 			<var name="searchAssetTitle1" value="Apple" />
 			<var name="searchAssetTitle2" value="Apple" />
-			<var name="searchAssetType1" value="Message Boards Message" />
-			<var name="searchAssetType2" value="Document" />
+			<var name="searchAssetType1" value="Document" />
+			<var name="searchAssetType2" value="Message Boards Message" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Elasticsearch Page" />
-		</execute>
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Search#searchPG">
 			<var name="searchTerm" value="Orange" />
@@ -145,8 +135,8 @@
 		<execute macro="Search#viewSearchResultsPG">
 			<var name="searchAssetTitle1" value="Apple" />
 			<var name="searchAssetTitle2" value="Apple" />
-			<var name="searchAssetType1" value="Message Boards Message" />
-			<var name="searchAssetType2" value="Document" />
+			<var name="searchAssetType1" value="Document" />
+			<var name="searchAssetType2" value="Message Boards Message" />
 		</execute>
 	</command>
 </definition>

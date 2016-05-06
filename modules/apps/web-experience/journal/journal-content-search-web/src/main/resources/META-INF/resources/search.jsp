@@ -125,9 +125,11 @@ journalContentSearch.setResults(documents);
 					</h6>
 				</c:if>
 
-				<h6 class="text-default">
-					<%@ include file="/article_content.jspf" %>
-				</h6>
+				<c:if test="<%= Validator.isNotNull(summary.getContent()) %>">
+					<h6 class="text-default">
+						<%@ include file="/article_content.jspf" %>
+					</h6>
+				</c:if>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

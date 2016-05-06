@@ -15,16 +15,6 @@
 package com.liferay.dynamic.data.mapping.upgrade.v1_0_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
-import com.liferay.document.library.kernel.service.DLFolderLocalService;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMContent;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLink;
@@ -41,18 +31,13 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeDynamicDataMapping;
-import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoRow;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
-import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalServiceUtil;
-import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
-import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -60,8 +45,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -69,6 +52,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -76,6 +60,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
@@ -1457,62 +1442,30 @@ public class UpgradeDynamicDataMappingTest {
 	protected void setUpUpgradeDynamicDataMapping() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		AssetEntryLocalService assetEntryLocalService = registry.getService(
-			AssetEntryLocalService.class);
+		UpgradeStepRegistrator ddmUpgradeStepRegistror = registry.getService(
+			"com.liferay.dynamic.data.mapping.upgrade.DDMServiceUpgrade");
 
-		DLFileEntryLocalService dlFileEntryLocalService = registry.getService(
-			DLFileEntryLocalService.class);
+		ddmUpgradeStepRegistror.register(
+			new UpgradeStepRegistrator.Registry() {
 
-		DLFileVersionLocalService dlFileVersionLocalService =
-			registry.getService(DLFileVersionLocalService.class);
+				@Override
+				public void register(
+					String bundleSymbolicName, String fromSchemaVersionString,
+					String toSchemaVersionString, UpgradeStep... upgradeSteps) {
 
-		DDM ddm = registry.getService(DDM.class);
+					for (UpgradeStep upgradeStep : upgradeSteps) {
+						Class<?> clazz = upgradeStep.getClass();
 
-		DDMFormJSONDeserializer ddmFormJSONDeserializer = registry.getService(
-			DDMFormJSONDeserializer.class);
+						String className = clazz.getName();
 
-		DDMFormJSONSerializer ddmFormJSONSerializer = registry.getService(
-			DDMFormJSONSerializer.class);
+						if (className.contains("UpgradeDynamicDataMapping")) {
+							_upgradeDynamicDataMapping =
+								(UpgradeProcess)upgradeStep;
+						}
+					}
+				}
 
-		DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer =
-			registry.getService(DDMFormLayoutJSONSerializer.class);
-
-		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer =
-			registry.getService(DDMFormValuesJSONDeserializer.class);
-
-		DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer =
-			registry.getService(DDMFormValuesJSONSerializer.class);
-
-		DDMFormXSDDeserializer ddmFormXSDDeserializer = registry.getService(
-			DDMFormXSDDeserializer.class);
-
-		DLFolderLocalService dlFolderLocalService = registry.getService(
-			DLFolderLocalService.class);
-
-		ExpandoRowLocalService expandoRowLocalService = registry.getService(
-			ExpandoRowLocalService.class);
-
-		ExpandoTableLocalService expandoTableLocalService = registry.getService(
-			ExpandoTableLocalService.class);
-
-		ExpandoValueLocalService expandoValueLocalService = registry.getService(
-			ExpandoValueLocalService.class);
-
-		ResourceActionLocalService resourceActionLocalService =
-			registry.getService(ResourceActionLocalService.class);
-
-		ResourcePermissionLocalService resourcePermissionLocalService =
-			registry.getService(ResourcePermissionLocalService.class);
-
-		_upgradeDynamicDataMapping = new UpgradeDynamicDataMapping(
-			assetEntryLocalService, ddm, ddmFormJSONDeserializer,
-			ddmFormJSONSerializer, ddmFormLayoutJSONSerializer,
-			ddmFormValuesJSONDeserializer, ddmFormValuesJSONSerializer,
-			ddmFormXSDDeserializer, dlFileEntryLocalService,
-			dlFileVersionLocalService, dlFolderLocalService,
-			expandoRowLocalService, expandoTableLocalService,
-			expandoValueLocalService, resourceActionLocalService,
-			resourcePermissionLocalService);
+			});
 	}
 
 	private static final Map<String, String> _structureModelResourceNames =
@@ -1569,6 +1522,6 @@ public class UpgradeDynamicDataMappingTest {
 	private long _structureId;
 	private long _templateId;
 	private Timestamp _timestamp;
-	private UpgradeDynamicDataMapping _upgradeDynamicDataMapping;
+	private UpgradeProcess _upgradeDynamicDataMapping;
 
 }

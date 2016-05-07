@@ -2,6 +2,8 @@
 <!DOCTYPE project>
 
 <project name="build-app-module">
+	<import file="build-common.xml" />
+
 	<pathconvert property="releng.module.dir">
 		<filtermapper>
 			<replacestring from="modules${file.separator}apps" to="modules${file.separator}.releng${file.separator}apps" />
@@ -16,6 +18,14 @@
 		<available file="bnd.bnd" />
 	</condition>
 
+	<loadfile failonerror="false" property="artifact.deploy.dependencies" srcFile="build.gradle">
+		<filterchain>
+			<linecontains>
+				<contains value="task deployDependencies(type: Copy)" />
+			</linecontains>
+		</filterchain>
+	</loadfile>
+
 	<condition property="artifact.json">
 		<available file="package.json" />
 	</condition>
@@ -26,7 +36,7 @@
 
 	<target depends="download-artifact,record-artifact-change-log" name="dist-module-artifact" />
 
-	<target depends="move-artifact" name="dist-module-artifact-lpkg" />
+	<target depends="move-artifact,move-artifact-dependencies" name="dist-module-artifact-lpkg" />
 
 	<target name="download-artifact">
 		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
@@ -128,6 +138,7 @@
 
 		<property name="artifact.location.src" value="${osgi.dir}/modules/${Bundle-SymbolicName}.jar" />
 
+		<dirname file="${artifact.location.src}" property="artifact.dir.name" />
 		<basename file="${artifact.location.src}" property="artifact.file.name" />
 
 		<condition property="osgi.static">
@@ -215,6 +226,31 @@
 
 	<target depends="get-artifact-properties" name="move-artifact" unless="osgi.static">
 		<move file="${artifact.location.src}" tofile="${artifact.location.dest}" />
+	</target>
+
+	<target depends="get-artifact-properties" if="artifact.deploy.dependencies" name="move-artifact-dependencies" unless="osgi.static">
+		<tempfile destdir="tmp" prefix="deployDependencies" property="artifact.dependencies.tmp.dir" />
+
+		<exec dir="${modules.dir}" executable="${modules.dir}/../gradlew${gradlew.suffix}">
+			<arg value="${gradle.project.path}:deployDependencies" />
+			<arg value="-Pforced.deploy.dir=${artifact.dependencies.tmp.dir}" />
+		</exec>
+
+		<fileset dir="${artifact.dependencies.tmp.dir}" id="artifact.dependencies.files" />
+
+		<pathconvert pathsep="," property="artifact.dependencies.file.names" refid="artifact.dependencies.files">
+			<map from="${artifact.dependencies.tmp.dir}${file.separator}" to="" />
+		</pathconvert>
+
+		<delete>
+			<fileset dir="${artifact.dir.name}" includes="${artifact.dependencies.file.names}" />
+		</delete>
+
+		<move todir="${osgi.dir}/marketplace">
+			<fileset refid="artifact.dependencies.files" />
+		</move>
+
+		<delete dir="artifact.dependencies.tmp.dir" quiet="true" />
 	</target>
 
 	<target

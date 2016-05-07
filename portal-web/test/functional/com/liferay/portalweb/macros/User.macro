@@ -1403,13 +1403,13 @@
 	</command>
 
 	<command name="editUserGenderCP">
-		<var name="key_userScreenName" value="${userScreenName}" />
+		<var name="key_rowEntry" value="${userFirstName}" />
 
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userFirstName}" />
 
-		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userFirstName}" />
 
 		<execute function="Select" locator1="UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT" value1="${userGender}" />
 
@@ -1751,6 +1751,8 @@
 
 	<command name="logoutAndLoginPG">
 		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenuHelper#expandPanelUser" />
 
 		<if>
 			<condition function="IsTextNotEqual" locator1="ControlMenu#USER_NAME" value1="${userLoginFullName}" />

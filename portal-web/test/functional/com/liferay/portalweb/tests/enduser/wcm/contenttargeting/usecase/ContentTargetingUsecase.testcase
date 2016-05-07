@@ -2970,7 +2970,7 @@
 			<var name="campaignPriorityField" value="2" />
 			<var name="campaignStartDate" value="1/1/2015" />
 			<var name="campaignStartTime" value="12:00 AM" />
-			<var name="userSegmentSelect" value="User Segment Name (Site Name)" />
+			<var name="userSegmentSelect" value="User Segment Name" />
 		</execute>
 
 		<execute macro="ContentTargetingCampaign#saveCP" />
@@ -2988,7 +2988,7 @@
 			<var name="campaignName" value="Campaign Name" />
 			<var name="campaignPriority" value="2" />
 			<var name="campaignStatus" value="Started" />
-			<var name="userSegmentSelect" value="User Segment Name (Site Name)" />
+			<var name="userSegmentSelect" value="User Segment Name"/>
 		</execute>
 	</command>
 
@@ -3032,12 +3032,16 @@
 	</command>
 
 	<command name="UserSegmentAddMultipleViaUserContentDisplayPortletPG" priority="4">
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Site Page Name" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<for list="Admin,Page Visited,Male,Person" param="ruleName">
+		<for list="Admin,Page Visited,Male,Female" param="ruleName">
 			<execute macro="ProductMenu#gotoSite">
 				<var name="site" value="Site Name" />
 			</execute>
@@ -3107,10 +3111,10 @@
 		</execute>
 
 		<execute macro="User#addMultipleCP">
-			<var name="usersEmailsList" value="male@liferay.com,person@liferay.com,wcmuser@liferay.com" />
+			<var name="usersEmailsList" value="male@liferay.com,female@liferay.com,wcmuser@liferay.com" />
 		</execute>
 
-		<for list="male,person,wcmuser" param="userScreenName">
+		<for list="male,female,wcmuser" param="userScreenName">
 			<execute macro="ProductMenu#gotoControlPanelUsers">
 				<var name="portlet" value="Users and Organizations" />
 			</execute>
@@ -3141,7 +3145,7 @@
 
 		<execute macro="User#editUserGenderCP">
 			<var name="userGender" value="Female" />
-			<var name="userScreenName" value="person" />
+			<var name="userFirstName" value="female" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">
@@ -3184,7 +3188,7 @@
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#configureOtherwiseContenDisplayRule">
-			<var name="otherwiseContentTitle" value="WC Title Person" />
+			<var name="otherwiseContentTitle" value="WC Title Female" />
 			<var name="otherwiseContentType" value="Web Content Article" />
 		</execute>
 
@@ -3192,7 +3196,7 @@
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="male@liferay.com" />
-			<var name="userLoginFullName" value="male male" />
+			<var name="userLoginFullName" value="male" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">
@@ -3223,8 +3227,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="person@liferay.com" />
-			<var name="userLoginFullName" value="person person" />
+			<var name="userLoginEmailAddress" value="female@liferay.com" />
+			<var name="userLoginFullName" value="female" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -3233,7 +3237,7 @@
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
-			<var name="entryContentText" value="WC Content Person" />
+			<var name="entryContentText" value="WC Content Female" />
 		</execute>
 	</command>
 

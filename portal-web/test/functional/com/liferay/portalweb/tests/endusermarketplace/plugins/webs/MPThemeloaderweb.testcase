@@ -1,4 +1,4 @@
-<definition component-name="marketplace-plugins-theme-loader-web">
+<definition component-name="portal-plugins-deployment">
 	<property name="testray.main.component.name" value="Plugin Installer" />
 
 	<set-up>

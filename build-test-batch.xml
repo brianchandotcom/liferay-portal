@@ -694,6 +694,12 @@ app.server.type=@{app.server.type}]]></echo>
 							<trycatch>
 								<try>
 									<antcall inheritall="false" target="start-app-server" />
+
+									<delete dir="${app.server.parent.dir}/osgi/test" />
+
+									<gradle-execute dir="modules/core/portal-lpkg-deployer-test" task="testIntegration">
+										<arg value="-Dmodules.only.build=true" />
+									</gradle-execute>
 								</try>
 
 								<finally>

@@ -29,6 +29,9 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -84,11 +87,7 @@ public class DefaultDDMStructureHelperImpl
 
 			String ddmStructureKey = name;
 
-			DDMStructure ddmStructure =
-				_ddmStructureLocalService.fetchStructure(
-					groupId, classNameId, ddmStructureKey);
-
-			if (ddmStructure != null) {
+			if (hasDDMStructure(groupId, classNameId, ddmStructureKey)) {
 				continue;
 			}
 
@@ -117,7 +116,7 @@ public class DefaultDDMStructureHelperImpl
 			serviceContext.setAttribute(
 				"status", WorkflowConstants.STATUS_APPROVED);
 
-			ddmStructure = _ddmStructureLocalService.addStructure(
+			DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
 				userId, groupId,
 				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
 				ddmStructureKey, nameMap, descriptionMap, ddmForm,
@@ -231,6 +230,34 @@ public class DefaultDDMStructureHelperImpl
 		Element rootElement = document.getRootElement();
 
 		return rootElement.elements("structure");
+	}
+
+	protected boolean hasDDMStructure(
+		long groupId, long classNameId, String ddmStructureKey) {
+
+		DynamicQuery dynamicQuery = _ddmStructureLocalService.dynamicQuery();
+
+		Property groupIdProperty = PropertyFactoryUtil.forName("groupId");
+
+		dynamicQuery.add(groupIdProperty.eq(groupId));
+
+		Property classNameIdProperty = PropertyFactoryUtil.forName(
+			"classNameId");
+
+		dynamicQuery.add(classNameIdProperty.eq(classNameId));
+
+		Property ddmStructureKeyProperty = PropertyFactoryUtil.forName(
+			"structureKey");
+
+		dynamicQuery.add(ddmStructureKeyProperty.eq(ddmStructureKey));
+
+		long count = _ddmStructureLocalService.dynamicQueryCount(dynamicQuery);
+
+		if (count == 0) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Reference(unbind = "-")

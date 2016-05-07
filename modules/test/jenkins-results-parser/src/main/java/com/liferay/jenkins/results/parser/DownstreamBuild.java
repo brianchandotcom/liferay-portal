@@ -18,9 +18,11 @@ import java.io.UnsupportedEncodingException;
 
 import java.net.URLDecoder;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -79,6 +81,19 @@ public class DownstreamBuild extends BaseBuild {
 
 	public TopLevelBuild getTopLevelBuild() {
 		return topLevelBuild;
+	}
+
+	public void reinvoke() throws Exception {
+		badBuildNumbers.add(buildNumber);
+
+		buildNumber = -1;
+		result = null;
+		setStatus("starting");
+
+		JenkinsResultsParserUtil.toString(
+			JenkinsResultsParserUtil.getLocalURL(invocationURL));
+
+		System.out.println("Reinvoked build: " + invocationURL);
 	}
 
 	@Override
@@ -290,7 +305,9 @@ public class DownstreamBuild extends BaseBuild {
 		for (int i = 0; i < buildsJSONArray.length(); i++) {
 			JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
 
-			if (parameters.equals(getParameters(buildJSONObject))) {
+			if (parameters.equals(getParameters(buildJSONObject)) &&
+				!badBuildNumbers.contains(buildJSONObject.getInt("number"))) {
+
 				return buildJSONObject;
 			}
 		}
@@ -298,6 +315,7 @@ public class DownstreamBuild extends BaseBuild {
 		return null;
 	}
 
+	protected List<Integer> badBuildNumbers = new ArrayList<>();
 	protected String invocationURL;
 	protected Map<String, String> parameters;
 	protected TopLevelBuild topLevelBuild;

@@ -331,12 +331,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (fileName.endsWith("build-test.xml") ||
-			fileName.endsWith("build-test-tcat.xml")) {
-
-			return;
-		}
-
 		Document document = readXML(content);
 
 		Element rootElement = document.getRootElement();

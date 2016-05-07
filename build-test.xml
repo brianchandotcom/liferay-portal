@@ -6362,19 +6362,14 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<prepare-test-bundles unit="false" />
 
 		<if>
-			<not>
-				<equals arg1="${test.build.unit}" arg2="true" />
-			</not>
+			<and>
+				<not>
+					<equals arg1="${test.build.unit}" arg2="true" />
+				</not>
+				<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
+			</and>
 			<then>
-				<if>
-					<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
-					<then>
-						<antcall target="record-test-case-method-names" />
-					</then>
-					<else>
-						<ant dir="portal-impl" inheritAll="false" target="build-selenium-block" />
-					</else>
-				</if>
+				<antcall target="record-test-case-method-names" />
 			</then>
 		</if>
 
@@ -7816,13 +7811,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
-		<if>
-			<equals arg1="${test.ant.script.actions}" arg2="db-failover" />
-			<then>
-				<ant antfile="build-test-db-failover.xml" target="run-db-failover" />
-			</then>
-		</if>
-
 		<antcall target="run-selenium-test" />
 
 		<get-testcase-property property.name="cmis.repository.type" />
@@ -7928,13 +7916,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<start-lcs-app-server />
 	</target>
 
-	<target name="start-ldap">
-		<exec dir="${app.server.parent.dir}/apacheds_1.5.7" executable="cmd">
-			<arg value="/c" />
-			<arg value="apacheds.bat" />
-		</exec>
-	</target>
-
 	<target name="start-test-smtp-server">
 		<start-test-smtp-server />
 	</target>
@@ -7968,49 +7949,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 		/>
 
 		<stop-lcs-app-server />
-	</target>
-
-	<target name="stop-ldap">
-		<exec executable="/bin/sh" os="${os.unix}">
-			<arg line="-c jps -l" />
-		</exec>
-
-		<exec executable="cmd.exe" os="${os.windows}">
-			<arg line="/c jps -l > java-processes" />
-		</exec>
-
-		<loadfile property="java-processes.content" srcfile="java-processes" />
-
-		<delete file="java-processes" />
-
-		<beanshell>
-			String javaProcessesNewContent = project.getProperty("java-processes.content");
-
-			if (javaProcessesNewContent.contains("File Not Found")) {
-				javaProcessesNewContent = "";
-			}
-
-			String javaProcessList = javaProcessesNewContent.replaceAll("\r\n", ",");
-
-			if (javaProcessList.endsWith(",")) {
-				javaProcessList = javaProcessList.substring(0, javaProcessList.length() - 1);
-			}
-
-			project.setProperty("java.process.list", javaProcessList);
-		</beanshell>
-
-		<for list="${java.process.list}" param="java.process">
-			<sequential>
-				<if>
-					<contains string="@{java.process}" substring="org.apache.directory.server.UberjarMain" />
-					<then>
-						<antcall target="kill-java-process">
-							<param name="java.process.to.kill" value="@{java.process}" />
-						</antcall>
-					</then>
-				</if>
-			</sequential>
-		</for>
 	</target>
 
 	<target name="test-integration">

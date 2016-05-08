@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
@@ -61,11 +63,12 @@ public class MultiLanguageTaskAssignmentSelector
 				assigneeClassName);
 		}
 		else {
-			String assigneeScriptLanguage =
-				kaleoTaskAssignment.getAssigneeScriptLanguage();
+			String taskAssignmentSelectorKey = getTaskAssignmentSelectKey(
+				kaleoTaskAssignment.getAssigneeScriptLanguage(),
+				kaleoTaskAssignment.getAssigneeScript());
 
 			taskAssignmentSelector = _taskAssignmentSelectors.get(
-				assigneeScriptLanguage);
+				taskAssignmentSelectorKey);
 		}
 
 		if (taskAssignmentSelector == null) {
@@ -104,8 +107,12 @@ public class MultiLanguageTaskAssignmentSelector
 			taskAssignmentSelector, properties);
 
 		for (String scriptingLanguage : scriptingLanguages) {
+			String taskAssignmentSelectorKey = getTaskAssignmentSelectKey(
+				scriptingLanguage,
+				ClassUtil.getClassName(taskAssignmentSelector));
+
 			_taskAssignmentSelectors.put(
-				scriptingLanguage, taskAssignmentSelector);
+				taskAssignmentSelectorKey, taskAssignmentSelector);
 		}
 	}
 
@@ -127,6 +134,20 @@ public class MultiLanguageTaskAssignmentSelector
 		return scriptingLanguages;
 	}
 
+	protected String getTaskAssignmentSelectKey(
+		String language, String taskAssignmentSelectorClassName) {
+
+		ScriptLanguage scriptLanguage = ScriptLanguage.parse(language);
+
+		if (scriptLanguage.equals(ScriptLanguage.JAVA)) {
+			return
+				language + StringPool.COLON + taskAssignmentSelectorClassName;
+		}
+		else {
+			return language;
+		}
+	}
+
 	protected void removeTaskAssignmentSelector(
 		TaskAssignmentSelector taskAssignmentSelector,
 		Map<String, Object> properties) {
@@ -135,7 +156,11 @@ public class MultiLanguageTaskAssignmentSelector
 			taskAssignmentSelector, properties);
 
 		for (String scriptingLanguage : scriptingLanguages) {
-			_taskAssignmentSelectors.remove(scriptingLanguage);
+			String taskAssignmentSelectorKey = getTaskAssignmentSelectKey(
+				scriptingLanguage,
+				ClassUtil.getClassName(taskAssignmentSelector));
+
+			_taskAssignmentSelectors.remove(taskAssignmentSelectorKey);
 		}
 	}
 

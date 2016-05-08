@@ -14,8 +14,6 @@
 
 package com.liferay.portal.scripting.python.internal;
 
-import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.scripting.ExecutionException;
 import com.liferay.portal.kernel.scripting.ScriptingException;
@@ -27,7 +25,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import org.python.core.CompileMode;
 import org.python.core.Py;
@@ -49,11 +46,6 @@ import org.python.util.InteractiveInterpreter;
 public class PythonExecutor extends BaseScriptingExecutor {
 
 	public static final String LANGUAGE = "python";
-
-	@Override
-	public void clearCache() {
-		_portalCache.removeAll();
-	}
 
 	@Override
 	public Map<String, Object> eval(
@@ -118,11 +110,7 @@ public class PythonExecutor extends BaseScriptingExecutor {
 
 	@Override
 	public ScriptingExecutor newInstance(boolean executeInSeparateThread) {
-		PythonExecutor pythonExecutor = new PythonExecutor();
-
-		pythonExecutor._portalCache = _portalCache;
-
-		return pythonExecutor;
+		return new PythonExecutor();
 	}
 
 	protected PyCode getCompiledScript(String script) {
@@ -136,29 +124,10 @@ public class PythonExecutor extends BaseScriptingExecutor {
 			}
 		}
 
-		String key = String.valueOf(script.hashCode());
-
-		PyCode compiledScript = _portalCache.get(key);
-
-		if (compiledScript == null) {
-			compiledScript = Py.compile_flags(
-				script, "<string>", CompileMode.exec, Py.getCompilerFlags());
-
-			_portalCache.put(key, compiledScript);
-		}
-
-		return compiledScript;
+		return Py.compile_flags(
+			script, "<string>", CompileMode.exec, Py.getCompilerFlags());
 	}
-
-	@Reference(unbind = "-")
-	protected void setSingleVMPool(SingleVMPool singleVMPool) {
-		_portalCache = (PortalCache<String, PyCode>)singleVMPool.getPortalCache(
-			_CACHE_NAME);
-	}
-
-	private static final String _CACHE_NAME = PythonExecutor.class.getName();
 
 	private volatile boolean _initialized;
-	private PortalCache<String, PyCode> _portalCache;
 
 }

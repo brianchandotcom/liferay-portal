@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.internal.assignment;
+package com.liferay.portal.workflow.kaleo.runtime.scripting.internal.assignment;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.scripting.Scripting;

@@ -96,7 +96,7 @@ public class ConditionNodeExecutor extends BaseNodeExecutor {
 		List<PathElement> remainingPathElements) {
 	}
 
-	@Reference
+	@Reference(target = "(!(scripting.language=*))")
 	private ConditionEvaluator _conditionEvaluator;
 
 	@Reference

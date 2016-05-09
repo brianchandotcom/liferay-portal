@@ -19,6 +19,8 @@ import aQute.bnd.osgi.resource.ResourceBuilder;
 import biz.aQute.resolve.ResolverValidator;
 import biz.aQute.resolve.ResolverValidator.Resolution;
 
+import com.liferay.portal.util.PropsValues;
+
 import java.io.File;
 import java.io.FilenameFilter;
 
@@ -96,8 +98,42 @@ public class IndexValidator implements Validator {
 		}
 	}
 
+	public void includeTargetPlatform(boolean includeTargetPlatform) {
+		_includeTargetPlatform = includeTargetPlatform;
+	}
+
 	@Override
 	public List<String> validate(List<URI> indexes) throws Exception {
+		if (_includeTargetPlatform) {
+			indexes = new ArrayList<>(indexes);
+
+			File targetPlatformDir = new File(
+				PropsValues.MODULE_FRAMEWORK_BASE_DIR, Indexer.TARGET_PLATFORM);
+
+			if (targetPlatformDir.exists() && targetPlatformDir.canRead()) {
+				File[] targetPlatformIndexes = targetPlatformDir.listFiles(
+					new FilenameFilter() {
+
+						@Override
+						public boolean accept(File dir, String name) {
+							if (name.endsWith(".xml") ||
+								name.endsWith(".xml.gz")) {
+
+								return true;
+							}
+
+							return false;
+						}
+
+					}
+				);
+
+				for (File index : targetPlatformIndexes) {
+					indexes.add(index.toURI());
+				}
+			}
+		}
+
 		try (ResolverValidator validator = new ResolverValidator()) {
 			ResourceBuilder system = new ResourceBuilder();
 
@@ -132,5 +168,7 @@ public class IndexValidator implements Validator {
 
 	private static final String _MESSAGE_PREFIX =
 		"Unable to resolve <<INITIAL>> version=null: ";
+
+	private boolean _includeTargetPlatform = false;
 
 }

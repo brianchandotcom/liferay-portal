@@ -527,25 +527,6 @@ public class WSRPConsumerClp extends BaseModelImpl<WSRPConsumer>
 	}
 
 	@Override
-	public void setRegistrationContext(
-		oasis.names.tc.wsrp.v2.types.RegistrationContext registrationContext) {
-		try {
-			String methodName = "setRegistrationContext";
-
-			Class<?>[] parameterTypes = new Class<?>[] {
-					oasis.names.tc.wsrp.v2.types.RegistrationContext.class
-				};
-
-			Object[] parameterValues = new Object[] { registrationContext };
-
-			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getRegistrationProperties() {
 		try {
 			String methodName = "getRegistrationProperties";
@@ -575,6 +556,25 @@ public class WSRPConsumerClp extends BaseModelImpl<WSRPConsumer>
 				};
 
 			Object[] parameterValues = new Object[] { registrationProperties };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public void setRegistrationContext(
+		oasis.names.tc.wsrp.v2.types.RegistrationContext registrationContext) {
+		try {
+			String methodName = "setRegistrationContext";
+
+			Class<?>[] parameterTypes = new Class<?>[] {
+					oasis.names.tc.wsrp.v2.types.RegistrationContext.class
+				};
+
+			Object[] parameterValues = new Object[] { registrationContext };
 
 			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
 		}

@@ -214,6 +214,16 @@ AUI.add(
 													}
 												}
 											);
+
+											var controlMenuSelector = '#' + instance.ns('controlMenu');
+
+											var responseControlMenu = responseDataNode.one(controlMenuSelector);
+
+											var currentControlMenu = A.one(document).one(controlMenuSelector);
+
+											if (responseControlMenu && currentControlMenu) {
+												currentControlMenu.replace(responseControlMenu);
+											}
 										}
 									}
 								}

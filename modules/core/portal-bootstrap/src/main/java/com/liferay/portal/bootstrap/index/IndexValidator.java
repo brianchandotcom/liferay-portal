@@ -125,8 +125,7 @@ public class IndexValidator implements Validator {
 							return false;
 						}
 
-					}
-				);
+					});
 
 				for (File index : targetPlatformIndexes) {
 					indexes.add(index.toURI());
@@ -169,6 +168,6 @@ public class IndexValidator implements Validator {
 	private static final String _MESSAGE_PREFIX =
 		"Unable to resolve <<INITIAL>> version=null: ";
 
-	private boolean _includeTargetPlatform = false;
+	private boolean _includeTargetPlatform;
 
 }

@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.test.integration.tasks;
 import com.liferay.gradle.plugins.test.integration.util.GradleUtil;
 import com.liferay.gradle.plugins.test.integration.util.StringUtil;
 import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.copy.ExcludeExistingFileAction;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
 import groovy.xml.DOMBuilder;
@@ -151,6 +152,11 @@ public class SetupTestableTomcatTask
 		return _jmxRemoteSsl;
 	}
 
+	@Input
+	public boolean isOverwriteTestModules() {
+		return _overwriteTestModules;
+	}
+
 	public void setDebugLogging(boolean debugLogging) {
 		_debugLogging = debugLogging;
 	}
@@ -184,6 +190,10 @@ public class SetupTestableTomcatTask
 
 	public void setModuleFrameworkBaseDir(Object moduleFrameworkBaseDir) {
 		_moduleFrameworkBaseDir = moduleFrameworkBaseDir;
+	}
+
+	public void setOverwriteTestModules(boolean overwriteTestModules) {
+		_overwriteTestModules = overwriteTestModules;
 	}
 
 	@TaskAction
@@ -417,8 +427,16 @@ public class SetupTestableTomcatTask
 				public void execute(CopySpec copySpec) {
 					File moduleFrameworkBaseDir = getModuleFrameworkBaseDir();
 
+					File modulesDir = new File(
+						moduleFrameworkBaseDir, "modules");
+
+					if (!isOverwriteTestModules()) {
+						copySpec.eachFile(
+							new ExcludeExistingFileAction(modulesDir));
+					}
+
 					copySpec.from(new File(moduleFrameworkBaseDir, "test"));
-					copySpec.into(new File(moduleFrameworkBaseDir, "modules"));
+					copySpec.into(modulesDir);
 				}
 
 			});
@@ -437,6 +455,7 @@ public class SetupTestableTomcatTask
 	private Object _managerPassword;
 	private Object _managerUserName;
 	private Object _moduleFrameworkBaseDir;
+	private boolean _overwriteTestModules;
 	private final DateFormat _timestampDateFormat = new SimpleDateFormat(
 		"yyyyMMddkkmmssSSS");
 	private Object _zipUrl;

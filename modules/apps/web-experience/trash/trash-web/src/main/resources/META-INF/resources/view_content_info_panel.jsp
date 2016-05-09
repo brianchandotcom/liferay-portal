@@ -32,7 +32,7 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 			</li>
 		</ul>
 
-		<h4><%= trashRenderer.getTitle(locale) %></h4>
+		<h4><%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %></h4>
 	</div>
 
 	<aui:nav-bar>

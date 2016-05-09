@@ -215,15 +215,16 @@ public class TargetPlatformIndexer implements Indexer {
 			if (!verifier.isOk()) {
 				List<String> errors = verifier.getErrors();
 
-				sb = new StringBundler((errors.size() * 3) + 3);
+				sb = new StringBundler((errors.size() * 4) + 3);
 
-				sb.append(_shortName);
+				sb.append(_SHORT_NAME);
 				sb.append(" failed with {");
 
 				for (String error : verifier.getErrors()) {
 					sb.append("[");
 					sb.append(error);
-					sb.append("],");
+					sb.append("]");
+					sb.append(",");
 				}
 
 				sb.setIndex(sb.index() - 1);
@@ -345,6 +346,9 @@ public class TargetPlatformIndexer implements Indexer {
 		}
 	}
 
+	private static final String _SHORT_NAME =
+		TargetPlatformIndexer.class.getName();
+
 	private static final Set<String> _ignoredNamespaces = new HashSet<>();
 
 	static {
@@ -354,9 +358,6 @@ public class TargetPlatformIndexer implements Indexer {
 		_ignoredNamespaces.add(IdentityNamespace.IDENTITY_NAMESPACE);
 		_ignoredNamespaces.add(PackageNamespace.PACKAGE_NAMESPACE);
 	}
-
-	private static final String _shortName =
-		TargetPlatformIndexer.class.getName();
 
 	private final String _bsn;
 	private final Map<String, String> _indexerConfig;

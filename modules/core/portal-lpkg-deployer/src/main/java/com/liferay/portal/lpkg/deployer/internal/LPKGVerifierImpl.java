@@ -14,12 +14,20 @@
 
 package com.liferay.portal.lpkg.deployer.internal;
 
+import com.liferay.portal.bootstrap.index.IndexValidator;
+import com.liferay.portal.bootstrap.index.Indexer;
+import com.liferay.portal.bootstrap.index.LPKGIndexer;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.LPKGVerifier;
 import com.liferay.portal.lpkg.deployer.LPKGVerifyException;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
+
+import java.net.URI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +54,63 @@ public class LPKGVerifierImpl implements LPKGVerifier {
 
 	@Override
 	public List<Bundle> verify(File lpkgFile) {
+		File tmpDir = null;
+
+		try {
+			tmpDir = FileUtil.createTempFolder();
+
+			LPKGIndexer lpkgIndexer = new LPKGIndexer(lpkgFile);
+
+			File indexFile = lpkgIndexer.index(tmpDir);
+
+			List<URI> uris = new ArrayList<>();
+
+			uris.add(indexFile.toURI());
+
+			IndexValidator indexValidator = new IndexValidator();
+
+			indexValidator.includeTargetPlatform(true);
+
+			List<String> errors = indexValidator.validate(uris);
+
+			if (!errors.isEmpty()) {
+				StringBundler sb = new StringBundler((errors.size() * 4) + 2);
+
+				sb.append("LPKG validation failed with {");
+
+				for (String error : errors) {
+					sb.append("[");
+					sb.append(error);
+					sb.append("]");
+					sb.append(",");
+				}
+
+				sb.setIndex(sb.index() - 1);
+
+				sb.append("}");
+
+				throw new LPKGVerifyException(sb.toString());
+			}
+
+			File targetPlatformDir = new File(
+				PropsValues.MODULE_FRAMEWORK_BASE_DIR, Indexer.TARGET_PLATFORM);
+
+			FileUtil.copyFile(
+				indexFile, new File(targetPlatformDir, indexFile.getName()));
+		}
+		catch (Exception e) {
+			if (e instanceof LPKGVerifyException) {
+				throw (LPKGVerifyException)e;
+			}
+
+			throw new LPKGVerifyException(e);
+		}
+		finally {
+			if (tmpDir != null) {
+				FileUtil.deltree(tmpDir);
+			}
+		}
+
 		try (ZipFile zipFile = new ZipFile(lpkgFile)) {
 			ZipEntry zipEntry = zipFile.getEntry(
 				"liferay-marketplace.properties");

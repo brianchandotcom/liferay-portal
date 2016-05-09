@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
@@ -1073,6 +1074,8 @@ public class FileSystemImporter extends BaseImporter {
 					friendlyURLMap, serviceContext);
 			}
 			else {
+				resetTypeSettings(layout);
+
 				layout = layoutLocalService.updateLayout(
 					groupId, privateLayout, layout.getLayoutId(),
 					parentLayoutId, nameMap, titleMap,
@@ -1702,6 +1705,11 @@ public class FileSystemImporter extends BaseImporter {
 		}
 
 		return content;
+	}
+
+	protected void resetTypeSettings(Layout layout) {
+		layout.setTypeSettings(StringPool.BLANK);
+		layoutLocalService.updateLayout(layout);
 	}
 
 	protected void setServiceContext(String name) {

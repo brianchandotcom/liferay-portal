@@ -6058,10 +6058,11 @@ public class JournalArticleLocalServiceImpl
 		searchContext.setEnd(end);
 		searchContext.setFolderIds(folderIds);
 		searchContext.setGroupIds(new long[] {groupId});
-		searchContext.setIncludeDiscussions(
-			GetterUtil.getBoolean(params.get("includeDiscussions")));
 
 		if (params != null) {
+			searchContext.setIncludeDiscussions(
+				GetterUtil.getBoolean(params.get("includeDiscussions")));
+
 			String keywords = (String)params.remove("keywords");
 
 			if (Validator.isNotNull(keywords)) {

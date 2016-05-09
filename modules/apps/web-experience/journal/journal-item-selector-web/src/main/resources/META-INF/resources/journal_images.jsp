@@ -45,7 +45,7 @@ JournalItemSelectorViewDisplayContext journalItemSelectorViewDisplayContext = (J
 			},
 			rootNode: '#itemSelectorUploadContainer',
 			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(UploadableFileReturnType.class.getName()) %>',
-			uploadItemUrl: '<%= journalItemSelectorViewDisplayContext.getUploadURL(liferayPortletResponse) %>'
+			uploadItemURL: '<%= journalItemSelectorViewDisplayContext.getUploadURL(liferayPortletResponse) %>'
 		}
 	);
 </aui:script>

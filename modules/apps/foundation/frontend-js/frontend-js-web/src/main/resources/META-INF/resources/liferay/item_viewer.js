@@ -49,7 +49,7 @@ AUI.add(
 
 		var TPL_EDIT_DIALOG_TITLE = '{edit} {title} ({copy})';
 
-		var TPL_EDIT_ICON = '<a class="lfr-item-viewer-icon-info-link" href="{editItemUrl}" style="right: 60px;"><span class="' + CSS_ICON_MONOSPACED + ' lfr-item-viewer-icon-info">' + Liferay.Util.getLexiconIconTpl('pencil') + '</span></a>';
+		var TPL_EDIT_ICON = '<a class="lfr-item-viewer-icon-info-link" href="{editItemURL}" style="right: 60px;"><span class="' + CSS_ICON_MONOSPACED + ' lfr-item-viewer-icon-info">' + Liferay.Util.getLexiconIconTpl('pencil') + '</span></a>';
 
 		var TPL_INFO_ICON = '<a class="lfr-item-viewer-icon-info-link" data-content=".image-viewer-focused" data-target=".image-viewer-sidenav" data-toggle="sidenav" data-type="fixed-push" href=""><span class="' + CSS_ICON_MONOSPACED + ' lfr-item-viewer-icon-info">' + Liferay.Util.getLexiconIconTpl('info-circle') + '</span></a>';
 
@@ -71,7 +71,7 @@ AUI.add(
 						value: true
 					},
 
-					editItemUrl: {
+					editItemURL: {
 						validator: Lang.isString
 					},
 
@@ -102,7 +102,7 @@ AUI.add(
 						value: false
 					},
 
-					uploadItemUrl: {
+					uploadItemURL: {
 						validator: Lang.isString
 					},
 
@@ -220,16 +220,16 @@ AUI.add(
 
 						link = link || instance.get('links').item(instance.get('currentIndex'));
 
-						var imageUrl = imageData.file.url;
+						var imageURL = imageData.file.url;
 
 						var image = instance._getCurrentImage();
 
-						image.attr('src', imageUrl);
+						image.attr('src', imageURL);
 
 						var returnType = link.attr('data-returnType');
 
 						if (returnType === 'com.liferay.item.selector.criteria.URLItemSelectorReturnType') {
-							link.setData('value', imageUrl);
+							link.setData('value', imageURL);
 						}
 						else {
 							var imageValue = {
@@ -237,7 +237,7 @@ AUI.add(
 								groupId: imageData.file.groupId,
 								title: imageData.file.title,
 								type: imageData.file.type,
-								url: imageUrl,
+								url: imageURL,
 								uuid: imageData.file.uuid
 							};
 
@@ -345,7 +345,7 @@ AUI.add(
 						var item = instance.get('links').item(instance.get('currentIndex'));
 
 						var itemTitle = item.getAttribute('data-title');
-						var itemUrl = item.getAttribute('data-url');
+						var itemURL = item.getAttribute('data-url');
 
 						var editDialogTitle = Lang.sub(
 							TPL_EDIT_DIALOG_TITLE,
@@ -365,12 +365,12 @@ AUI.add(
 								id: instance.get('id'),
 								stack: false,
 								title: editDialogTitle,
-								uri: instance.get('editItemUrl'),
+								uri: instance.get('editItemURL'),
 								urlParams: {
-									entityURL: itemUrl,
+									entityURL: itemURL,
 									saveFileName: itemTitle,
 									saveParamName: 'imageSelectorFileName',
-									saveURL: instance.get('uploadItemUrl')
+									saveURL: instance.get('uploadItemURL')
 								}
 							},
 							A.bind('_onSaveEditSuccess', instance)
@@ -500,12 +500,12 @@ AUI.add(
 								instance._infoIconEl = infoIconEl;
 							}
 
-							if (instance.get('editItemUrl')) {
+							if (instance.get('editItemURL')) {
 								var editIconEl = A.Node.create(
 									Lang.sub(
 										TPL_EDIT_ICON,
 										{
-											editItemUrl: instance.get('editItemUrl')
+											editItemURL: instance.get('editItemURL')
 										}
 									)
 								);

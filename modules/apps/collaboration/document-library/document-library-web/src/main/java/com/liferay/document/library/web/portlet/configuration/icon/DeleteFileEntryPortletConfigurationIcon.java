@@ -15,7 +15,6 @@
 package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
 import com.liferay.document.library.web.portlet.action.ActionUtil;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -37,7 +35,6 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -57,33 +54,22 @@ public class DeleteFileEntryPortletConfigurationIcon
 	public String getMessage(PortletRequest portletRequest) {
 		String key = "delete";
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long repositoryId = getRepositoryId(portletRequest);
-
-		if (isTrashEnabled(themeDisplay.getScopeGroupId(), repositoryId)) {
-			key = "move-to-the-recycle-bin";
-		}
-
-		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), key);
-	}
-
-	protected long getRepositoryId(PortletRequest portletRequest) {
 		try {
-			long repositoryId = ParamUtil.getLong(
-				portletRequest, "repositoryId");
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-			if (repositoryId != 0) {
-				return repositoryId;
+			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
+
+			if (isTrashEnabled(
+					themeDisplay.getScopeGroupId(),
+					fileEntry.getRepositoryId())) {
+
+				key = "move-to-the-recycle-bin";
 			}
 
-			long fileEntryId = ParamUtil.getLong(portletRequest, "fileEntryId");
-
-			FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
-
-			return fileEntry.getRepositoryId();
+			return LanguageUtil.get(
+				getResourceBundle(getLocale(portletRequest)), key);
 		}
 		catch (PortalException pe) {
 			throw new RuntimeException(pe);
@@ -104,9 +90,18 @@ public class DeleteFileEntryPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long repositoryId =  getRepositoryId(portletRequest);
+		FileEntry fileEntry = null;
 
-		if (isTrashEnabled(themeDisplay.getScopeGroupId(), repositoryId)) {
+		try {
+			fileEntry = ActionUtil.getFileEntry(portletRequest);
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
+
+		if (isTrashEnabled(
+				themeDisplay.getScopeGroupId(), fileEntry.getRepositoryId())) {
+
 			portletURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);
 		}
 		else {
@@ -116,15 +111,6 @@ public class DeleteFileEntryPortletConfigurationIcon
 		PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortletRequest.RENDER_PHASE);
-
-		FileEntry fileEntry = null;
-
-		try {
-			fileEntry = ActionUtil.getFileEntry(portletRequest);
-		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
-		}
 
 		long folderId = fileEntry.getFolderId();
 
@@ -184,12 +170,5 @@ public class DeleteFileEntryPortletConfigurationIcon
 			throw new RuntimeException(pe);
 		}
 	}
-
-	@Reference(unbind = "-")
-	protected void setDLAppService(DLAppService dlAppService) {
-		_dlAppService = dlAppService;
-	}
-
-	private DLAppService _dlAppService;
 
 }

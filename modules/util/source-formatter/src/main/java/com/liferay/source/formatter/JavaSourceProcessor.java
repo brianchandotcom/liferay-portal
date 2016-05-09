@@ -548,6 +548,53 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 			}
 		}
+
+		// LPS-65685
+
+		Matcher matcher1 = _registryRegisterPattern.matcher(content);
+
+		while (matcher1.find()) {
+			List<String> parametersList = getParameterList(
+				content.substring(matcher1.start()));
+
+			if (parametersList.size() <= 4) {
+				continue;
+			}
+
+			String previousUpgradeClassName = null;
+
+			for (int i = 3; i < parametersList.size(); i++) {
+				String parameter = parametersList.get(i);
+
+				Matcher matcher2 = _upgradeClassNamePattern.matcher(parameter);
+
+				if (!matcher2.find()) {
+					break;
+				}
+
+				String upgradeClassName = matcher2.group(1);
+
+				if ((previousUpgradeClassName != null) &&
+					(previousUpgradeClassName.compareTo(
+						upgradeClassName) > 0)) {
+
+					StringBundler sb = new StringBundler(6);
+
+					sb.append("LPS-65685: Break up Upgrade classes with a ");
+					sb.append("minor version increment or order ");
+					sb.append("alphabetically: ");
+					sb.append(fileName);
+					sb.append(StringPool.SPACE);
+					sb.append(getLineCount(content, matcher1.start()));
+
+					processErrorMessage(fileName, sb.toString());
+
+					break;
+				}
+
+				previousUpgradeClassName = upgradeClassName;
+			}
+		}
 	}
 
 	protected void checkVerifyUpgradeConnection(
@@ -4550,6 +4597,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
 	private final Pattern _registryImportPattern = Pattern.compile(
 		"\nimport (com\\.liferay\\.registry\\..+);");
+	private final Pattern _registryRegisterPattern = Pattern.compile(
+		"registry\\.register\\((.*?)\\);\n", Pattern.DOTALL);
 	private List<String> _secureDeserializationExcludes;
 	private List<String> _secureRandomExcludes;
 	private List<String> _secureXmlExcludes;
@@ -4563,6 +4612,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _testAnnotationsExcludes;
 	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
+	private final Pattern _upgradeClassNamePattern = Pattern.compile(
+		"new .*?(\\w+)\\(", Pattern.DOTALL);
 	private List<String> _upgradeDataAccessConnectionExcludes;
 	private List<String> _upgradeServiceUtilExcludes;
 

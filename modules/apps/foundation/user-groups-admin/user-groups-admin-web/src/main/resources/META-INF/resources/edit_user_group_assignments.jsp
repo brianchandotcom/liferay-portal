@@ -182,7 +182,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, userGroup.getName(), null);
 							}
 						}
 					},
-					title: '<liferay-ui:message arguments="<%= userGroup.getName() %>" key="add-users-to-x" />',
+					title: '<liferay-ui:message arguments="<%= HtmlUtil.escape(userGroup.getName()) %>" key="add-users-to-x" />',
 					url: '<%= selectUsersURL %>'
 				}
 			);

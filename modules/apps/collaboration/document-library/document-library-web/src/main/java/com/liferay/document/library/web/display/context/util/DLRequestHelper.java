@@ -39,9 +39,8 @@ public class DLRequestHelper extends BaseRequestHelper {
 
 		HttpServletRequest request = getRequest();
 
-		_dlGroupServiceSettings =
-			(DLGroupServiceSettings)request.getAttribute(
-				_DL_GROUP_SERVICE_SETTINGS_KEY);
+		_dlGroupServiceSettings = (DLGroupServiceSettings)request.getAttribute(
+			_DL_GROUP_SERVICE_SETTINGS_KEY);
 
 		if (_dlGroupServiceSettings != null) {
 			return _dlGroupServiceSettings;
@@ -51,13 +50,12 @@ public class DLRequestHelper extends BaseRequestHelper {
 
 		try {
 			if (Validator.isNotNull(portletResource)) {
-				_dlGroupServiceSettings =
-					DLGroupServiceSettings.getInstance(
-						getScopeGroupId(), request.getParameterMap());
+				_dlGroupServiceSettings = DLGroupServiceSettings.getInstance(
+					getScopeGroupId(), request.getParameterMap());
 			}
 			else {
-				_dlGroupServiceSettings =
-					DLGroupServiceSettings.getInstance(getScopeGroupId());
+				_dlGroupServiceSettings = DLGroupServiceSettings.getInstance(
+					getScopeGroupId());
 			}
 		}
 		catch (PortalException pe) {
@@ -100,7 +98,7 @@ public class DLRequestHelper extends BaseRequestHelper {
 						getLayout(), getPortletId());
 			}
 		}
-		catch(PortalException pe){
+		catch (PortalException pe) {
 			throw new SystemException(pe);
 		}
 
@@ -112,8 +110,10 @@ public class DLRequestHelper extends BaseRequestHelper {
 
 	private static final String _DL_GROUP_SERVICE_SETTINGS_KEY =
 		"DL_GROUP_SERVICE_SETTINGS";
+
 	private static final String _DL_PORTLET_INSTANCE_SETTINGS_KEY =
 		"DL_PORTLET_INSTANCE_SETTINGS";
+
 	private DLGroupServiceSettings _dlGroupServiceSettings;
 	private DLPortletInstanceSettings _dlPortletInstanceSettings;
 

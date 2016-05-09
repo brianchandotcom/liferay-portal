@@ -70,7 +70,7 @@ public class LPKGIndexer implements Indexer {
 		PropsUtil.setProps(new PropsImpl());
 
 		File targetPlatformDir = new File(
-			PropsValues.MODULE_FRAMEWORK_BASE_DIR, "target-platform");
+			PropsValues.MODULE_FRAMEWORK_BASE_DIR, TARGET_PLATFORM);
 
 		if (!targetPlatformDir.exists() && !targetPlatformDir.mkdirs()) {
 			System.err.printf(

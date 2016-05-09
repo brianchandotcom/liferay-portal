@@ -21,6 +21,8 @@ import java.io.File;
  */
 public interface Indexer {
 
+	public static final String TARGET_PLATFORM = "target-platform";
+
 	public void index(File output) throws Exception;
 
 }

@@ -4077,11 +4077,13 @@ go]]></replacevalue>
 	</target>
 
 	<target name="deploy-extra-apps">
+		<get-testcase-property property.name="extraapps.plugins.includes" />
+
 		<if>
-			<available file="${extra.apps.zip.file.path}" />
+			<isset property="extraapps.plugins.includes" />
 			<then>
 				<ant antfile="build-test-plugins.xml" target="deploy-extra-apps">
-					<property name="extra.apps.zip.file.name" value="${extra.apps.zip.file.path}" />
+					<property name="plugins.includes" value="${extraapps.plugins.includes}" />
 				</ant>
 			</then>
 		</if>

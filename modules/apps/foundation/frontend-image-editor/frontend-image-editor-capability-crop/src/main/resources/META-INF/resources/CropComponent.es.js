@@ -20,7 +20,7 @@ class CropComponent extends Component {
 	 * finishes processing the image for preview.
 	 */
 	process(imageData) {
-		let imageCanvas = this.getEditorCanvas();
+		let imageCanvas = this.getImageEditorCanvas();
 
 		var horizontalRatio = imageData.width / imageCanvas.offsetWidth;
 		var verticalRatio = imageData.height / imageCanvas.offsetHeight;
@@ -67,7 +67,7 @@ CropComponent.STATE = {
 	 * Injected helper to get the editor canvas
 	 * @type {Function}
 	 */
-	getEditorCanvas: {
+	getImageEditorCanvas: {
 		validator: core.isFunction
 	}
 };

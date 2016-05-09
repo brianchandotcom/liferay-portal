@@ -22,6 +22,7 @@ import aQute.bnd.osgi.Verifier;
 import aQute.bnd.osgi.resource.CapabilityBuilder;
 
 import com.liferay.portal.bootstrap.ModuleFrameworkImpl;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -36,6 +37,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 
 import java.net.URI;
@@ -243,10 +245,38 @@ public class TargetPlatformIndexer implements Indexer {
 
 			fileList.add(outputJar);
 
+			String baseDir = PropsValues.MODULE_FRAMEWORK_BASE_DIR + "/static/";
+
 			for (String initialBundle :
 					PropsValues.MODULE_FRAMEWORK_INITIAL_BUNDLES) {
 
-				addInitialBundle(initialBundle, tempFolder, fileList);
+				addBundleToIndex(initialBundle, baseDir, tempFolder, fileList);
+			}
+
+			String[] autoDeployDirs = ArrayUtil.append(
+				new String[] {PropsValues.MODULE_FRAMEWORK_PORTAL_DIR},
+				PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
+
+			for (String autoDeployDir : autoDeployDirs) {
+				File dir = new File(autoDeployDir);
+
+				if (!dir.isDirectory() || !dir.canRead()) {
+					continue;
+				}
+
+				File[] additionalBundles = dir.listFiles(
+					new FilenameFilter() {
+
+						@Override
+						public boolean accept(File dir, String name) {
+							return name.endsWith(".jar");
+						}
+
+					});
+
+				for (File additionalBundle : additionalBundles) {
+					addBundleToIndex(additionalBundle, tempFolder, fileList);
+				}
 			}
 
 			File tempIndexFile = new File(
@@ -271,8 +301,19 @@ public class TargetPlatformIndexer implements Indexer {
 		}
 	}
 
-	protected void addInitialBundle(
-			String location, File tempDir, Set<File> fileList)
+	protected void addBundleToIndex(
+			File initialBundleFile, File tempDir, Set<File> fileList)
+		throws IOException {
+
+		File copy = new File(tempDir, initialBundleFile.getName());
+
+		FileUtil.copyFile(initialBundleFile, copy);
+
+		fileList.add(copy);
+	}
+
+	protected void addBundleToIndex(
+			String location, String baseDir, File tempDir, Set<File> fileList)
 		throws IOException {
 
 		int pos = location.indexOf('@');
@@ -282,9 +323,11 @@ public class TargetPlatformIndexer implements Indexer {
 		}
 
 		if (!location.startsWith("file:")) {
-			location =
-				"file:" + PropsValues.MODULE_FRAMEWORK_BASE_DIR + "/static/" +
-					location;
+			location = "file:" + baseDir + location;
+		}
+
+		if (!location.endsWith(".jar")) {
+			return;
 		}
 
 		URI uri = URI.create(location);

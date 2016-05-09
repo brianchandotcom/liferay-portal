@@ -479,7 +479,7 @@ if (Validator.isNotNull(keywords)) {
 						<liferay-portlet:param name="mvcRenderCommandName" value="/image_editor/view" />
 					</liferay-portlet:renderURL>
 
-					editItemUrl: '<%= viewImageEditorURL.toString() %>',
+					editItemURL: '<%= viewImageEditorURL.toString() %>',
 				</c:if>
 			</c:if>
 
@@ -493,7 +493,7 @@ if (Validator.isNotNull(keywords)) {
 
 			<c:if test="<%= uploadURL != null %>">
 				, uploadItemReturnType: '<%= ClassUtil.getClassName(existingFileEntryReturnType) %>',
-				uploadItemUrl: '<%= uploadURL.toString() %>'
+				uploadItemURL: '<%= uploadURL.toString() %>'
 			</c:if>
 		}
 	);

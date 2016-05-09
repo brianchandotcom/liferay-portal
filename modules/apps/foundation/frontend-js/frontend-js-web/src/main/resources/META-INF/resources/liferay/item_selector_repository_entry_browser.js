@@ -33,7 +33,7 @@ AUI.add(
 						validator: Lang.isString,
 						value: ''
 					},
-					editItemUrl: {
+					editItemURL: {
 						validator: Lang.isString,
 						value: ''
 					},
@@ -45,7 +45,7 @@ AUI.add(
 						validator: Lang.isString,
 						value: ''
 					},
-					uploadItemUrl: {
+					uploadItemURL: {
 						validator: Lang.isString,
 						value: ''
 					}
@@ -64,19 +64,19 @@ AUI.add(
 						instance._itemViewer = new A.LiferayItemViewer(
 							{
 								btnCloseCaption: instance.get('closeCaption'),
-								editItemUrl: instance.get('editItemUrl'),
+								editItemURL: instance.get('editItemURL'),
 								links: instance.all('.item-preview'),
-								uploadItemUrl: instance.get('uploadItemUrl')
+								uploadItemURL: instance.get('uploadItemURL')
 							}
 						);
 
 						instance._uploadItemViewer = new A.LiferayItemViewer(
 							{
 								btnCloseCaption: instance.get('closeCaption'),
-								editItemUrl: instance.get('editItemUrl'),
+								editItemURL: instance.get('editItemURL'),
 								links: '',
 								renderControls: false,
-								uploadItemUrl: instance.get('uploadItemUrl')
+								uploadItemURL: instance.get('uploadItemURL')
 							}
 						);
 
@@ -341,7 +341,7 @@ AUI.add(
 						instance._uploadItemViewer.set(STR_LINKS, new A.NodeList(linkNode));
 						instance._uploadItemViewer.show();
 
-						instance._itemSelectorUploader.startUpload(file, instance.get('uploadItemUrl'));
+						instance._itemSelectorUploader.startUpload(file, instance.get('uploadItemURL'));
 					}
 				}
 			}

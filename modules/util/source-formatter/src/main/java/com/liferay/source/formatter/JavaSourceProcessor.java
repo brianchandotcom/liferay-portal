@@ -485,6 +485,71 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkUpgradeClass(
+		String fileName, String absolutePath, String className,
+		String content) {
+
+		if (!fileName.contains("/upgrade/")) {
+			return;
+		}
+
+		// LPS-41205
+
+		int pos = content.indexOf("LocaleUtil.getDefault()");
+
+		if (pos != -1) {
+			processErrorMessage(
+				fileName,
+				"Use UpgradeProcessUtil.getDefaultLanguageId(companyId) " +
+					"instead of LocaleUtil.getDefault(): " + fileName + " " +
+						getLineCount(content, pos));
+		}
+
+		pos = content.indexOf("rs.getDate(");
+
+		if (pos != -1) {
+			processErrorMessage(
+				fileName,
+				"Use rs.getTimeStamp: " + fileName + " " +
+					getLineCount(content, pos));
+		}
+
+		// LPS-34911
+
+		if (portalSource &&
+			!isExcludedPath(_upgradeServiceUtilExcludes, absolutePath) &&
+			fileName.contains("/portal/upgrade/") &&
+			!fileName.contains("/test/") &&
+			!fileName.contains("/testIntegration/")) {
+
+			pos = content.indexOf("ServiceUtil.");
+
+			if (pos != -1) {
+				processErrorMessage(fileName, "ServiceUtil: " + fileName + " " +
+					getLineCount(content, pos));
+			}
+		}
+
+		if (!fileName.endsWith("Upgrade.java")) {
+			return;
+		}
+
+		// LPS-59828
+
+		if (content.contains("implements UpgradeStepRegistrator")) {
+			Matcher matcher = _componentAnnotationPattern.matcher(content);
+
+			if (matcher.find()) {
+				String componentAnnotation = matcher.group();
+
+				if (!componentAnnotation.contains("service =")) {
+					processErrorMessage(
+						fileName, "Missing service in @Component " + fileName);
+				}
+			}
+		}
+	}
+
 	protected void checkVerifyUpgradeConnection(
 		String fileName, String className, String content) {
 
@@ -679,18 +744,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(fileName, "ServiceUtil: " + fileName);
 		}
 
-		// LPS-34911
-
-		if (portalSource &&
-			!isExcludedPath(_upgradeServiceUtilExcludes, absolutePath) &&
-			fileName.contains("/portal/upgrade/") &&
-			!fileName.contains("/test/") &&
-			!fileName.contains("/testIntegration/") &&
-			newContent.contains("ServiceUtil.")) {
-
-			processErrorMessage(fileName, "ServiceUtil: " + fileName);
-		}
-
 		boolean isRunOutsidePortalExclusion = isExcludedPath(
 			getRunOutsidePortalExcludes(), absolutePath);
 
@@ -799,17 +852,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		checkSystemEventAnnotations(newContent, fileName);
 
-		// LPS-41205
-
-		if (fileName.contains("/upgrade/") &&
-			newContent.contains("LocaleUtil.getDefault()")) {
-
-			processErrorMessage(
-				fileName,
-				"Use UpgradeProcessUtil.getDefaultLanguageId(companyId) " +
-					"instead of LocaleUtil.getDefault(): " + fileName);
-		}
-
 		// LPS-46017
 
 		newContent = StringUtil.replace(
@@ -890,23 +932,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = checkPrincipalException(newContent);
 
-		// LPS-59828
-
-		if (fileName.endsWith("Upgrade.java") &&
-			newContent.contains("implements UpgradeStepRegistrator")) {
-
-			matcher = _componentAnnotationPattern.matcher(newContent);
-
-			if (matcher.find()) {
-				String componentAnnotation = matcher.group();
-
-				if (!componentAnnotation.contains("service =")) {
-					processErrorMessage(
-						fileName, "Missing service in @Component " + fileName);
-				}
-			}
-		}
-
 		// LPS-60473
 
 		if (newContent.contains(".supportsBatchUpdates()") &&
@@ -959,6 +984,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-65213
 
 		checkVerifyUpgradeConnection(fileName, className, newContent);
+
+		checkUpgradeClass(fileName, absolutePath, className, newContent);
 
 		newContent = formatAssertEquals(fileName, newContent);
 
@@ -2261,14 +2288,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						fileName,
 						"Rename mapping to ActionMapping: " + fileName + " " +
 							lineCount);
-				}
-
-				if (fileName.contains("/upgrade/") &&
-					line.contains("rs.getDate(")) {
-
-					processErrorMessage(
-						fileName,
-						"Use rs.getTimeStamp: " + fileName + " " + lineCount);
 				}
 
 				if (!trimmedLine.equals("{") && line.endsWith("{") &&

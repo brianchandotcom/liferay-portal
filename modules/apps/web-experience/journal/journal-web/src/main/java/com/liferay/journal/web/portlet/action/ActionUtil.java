@@ -450,8 +450,10 @@ public class ActionUtil {
 
 			Map<Locale, List<Serializable>> valuesMap = field.getValuesMap();
 
-			for (Locale locale : valuesMap.keySet()) {
-				List<Serializable> values = valuesMap.get(locale);
+			for (Map.Entry<Locale, List<Serializable>> entry :
+					valuesMap.entrySet()) {
+
+				List<Serializable> values = entry.getValue();
 
 				for (int i = 0; i < values.size(); i++) {
 					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
@@ -474,7 +476,7 @@ public class ActionUtil {
 						sb.append(StringPool.UNDERLINE);
 						sb.append(field.getName());
 						sb.append(StringPool.UNDERLINE);
-						sb.append(LanguageUtil.getLanguageId(locale));
+						sb.append(LanguageUtil.getLanguageId(entry.getKey()));
 
 						FileEntry fileEntry =
 							DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(

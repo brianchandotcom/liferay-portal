@@ -199,14 +199,19 @@ public class UploadPortletRequestImpl
 		Map<String, FileItem[]> multipartParameterMap =
 			uploadServletRequestImpl.getMultipartParameterMap();
 
-		for (String name : multipartParameterMap.keySet()) {
+		for (Map.Entry<String, FileItem[]> entry :
+				multipartParameterMap.entrySet()) {
+
+			String name = entry.getKey();
+			FileItem[] fileItems = entry.getValue();
+
 			if (name.startsWith(_namespace)) {
 				map.put(
 					name.substring(_namespace.length(), name.length()),
-					multipartParameterMap.get(name));
+					fileItems);
 			}
 			else {
-				map.put(name, multipartParameterMap.get(name));
+				map.put(name, fileItems);
 			}
 		}
 
@@ -291,14 +296,19 @@ public class UploadPortletRequestImpl
 		Map<String, List<String>> regularParameterMap =
 			uploadServletRequestImpl.getRegularParameterMap();
 
-		for (String name : regularParameterMap.keySet()) {
+		for (Map.Entry<String, List<String>> entry :
+				regularParameterMap.entrySet()) {
+
+			String name = entry.getKey();
+			List<String> parameters = entry.getValue();
+
 			if (name.startsWith(_namespace)) {
 				map.put(
 					name.substring(_namespace.length(), name.length()),
-					regularParameterMap.get(name));
+					parameters);
 			}
 			else {
-				map.put(name, regularParameterMap.get(name));
+				map.put(name, parameters);
 			}
 		}
 

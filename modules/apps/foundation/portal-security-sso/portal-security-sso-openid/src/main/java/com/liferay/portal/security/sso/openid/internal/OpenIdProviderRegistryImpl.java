@@ -90,7 +90,9 @@ public class OpenIdProviderRegistryImpl implements OpenIdProviderRegistry {
 
 		Map<String, OpenIdProvider> openIdProviders = new HashMap<>(2);
 
-		for (String key : properties.keySet()) {
+		for (Map.Entry<String, Object> entry : properties.entrySet()) {
+			String key = entry.getKey();
+
 			int index = key.indexOf("[");
 
 			if (index < 0) {
@@ -109,7 +111,7 @@ public class OpenIdProviderRegistryImpl implements OpenIdProviderRegistry {
 				openIdProviders.put(name, openIdProvider);
 			}
 
-			String value = GetterUtil.getString(properties.get(key));
+			String value = GetterUtil.getString(entry.getValue());
 
 			if (key.startsWith(_OPEN_ID_AX_SCHEMA)) {
 				openIdProvider.setAxSchema(StringUtil.split(value));

@@ -1046,10 +1046,10 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		UnicodeProperties typeSettingsProperties =
 			group.getTypeSettingsProperties();
 
-		for (String stagedPortletId : stagedPortletIds.keySet()) {
+		for (Map.Entry<String, String> entry : stagedPortletIds.entrySet()) {
 			typeSettingsProperties.setProperty(
-				StagingUtil.getStagedPortletId(stagedPortletId),
-				stagedPortletIds.get(stagedPortletId));
+				StagingUtil.getStagedPortletId(entry.getKey()),
+				entry.getValue());
 		}
 
 		groupLocalService.updateGroup(group);

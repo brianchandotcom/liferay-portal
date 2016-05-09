@@ -50,12 +50,14 @@ public class CustomSQLPool {
 	}
 
 	public String get(String id) {
-		for (BundleContext bundleContext : _maps.keySet()) {
-			if (bundleContext == null) {
+		for (Map.Entry<BundleContext, Map<String, String>> entry :
+				_maps.entrySet()) {
+
+			if (entry.getKey() == null) {
 				continue;
 			}
 
-			Map<String, String> map = _maps.get(bundleContext);
+			Map<String, String> map = entry.getValue();
 
 			if (map == null) {
 				continue;

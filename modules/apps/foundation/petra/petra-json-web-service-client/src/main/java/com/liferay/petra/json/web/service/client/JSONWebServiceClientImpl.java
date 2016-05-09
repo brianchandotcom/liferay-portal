@@ -199,12 +199,12 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 
 		HttpDelete httpDelete = new HttpDelete(url);
 
-		for (String key : headers.keySet()) {
-			httpDelete.addHeader(key, headers.get(key));
+		for (Map.Entry<String, String> entry : headers.entrySet()) {
+			httpDelete.addHeader(entry.getKey(), entry.getValue());
 		}
 
-		for (String key : _headers.keySet()) {
-			httpDelete.addHeader(key, _headers.get(key));
+		for (Map.Entry<String, String> entry : _headers.entrySet()) {
+			httpDelete.addHeader(entry.getKey(), entry.getValue());
 		}
 
 		return execute(httpDelete);
@@ -243,12 +243,12 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 
 		HttpGet httpGet = new HttpGet(url);
 
-		for (String key : headers.keySet()) {
-			httpGet.addHeader(key, headers.get(key));
+		for (Map.Entry<String, String> entry : headers.entrySet()) {
+			httpGet.addHeader(entry.getKey(), entry.getValue());
 		}
 
-		for (String key : _headers.keySet()) {
-			httpGet.addHeader(key, _headers.get(key));
+		for (Map.Entry<String, String> entry : _headers.entrySet()) {
+			httpGet.addHeader(entry.getKey(), entry.getValue());
 		}
 
 		return execute(httpGet);
@@ -283,12 +283,12 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 		HttpEntity httpEntity = new UrlEncodedFormEntity(
 			nameValuePairs, StandardCharsets.UTF_8);
 
-		for (String key : headers.keySet()) {
-			httpPost.addHeader(key, headers.get(key));
+		for (Map.Entry<String, String> entry : headers.entrySet()) {
+			httpPost.addHeader(entry.getKey(), entry.getValue());
 		}
 
-		for (String key : _headers.keySet()) {
-			httpPost.addHeader(key, _headers.get(key));
+		for (Map.Entry<String, String> entry : _headers.entrySet()) {
+			httpPost.addHeader(entry.getKey(), entry.getValue());
 		}
 
 		httpPost.setEntity(httpEntity);
@@ -310,12 +310,12 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 
 		HttpPost httpPost = new HttpPost(url);
 
-		for (String key : headers.keySet()) {
-			httpPost.addHeader(key, headers.get(key));
+		for (Map.Entry<String, String> entry : headers.entrySet()) {
+			httpPost.addHeader(entry.getKey(), entry.getValue());
 		}
 
-		for (String key : _headers.keySet()) {
-			httpPost.addHeader(key, _headers.get(key));
+		for (Map.Entry<String, String> entry : _headers.entrySet()) {
+			httpPost.addHeader(entry.getKey(), entry.getValue());
 		}
 
 		StringEntity stringEntity = new StringEntity(
@@ -357,12 +357,12 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 		HttpEntity httpEntity = new UrlEncodedFormEntity(
 			nameValuePairs, StandardCharsets.UTF_8);
 
-		for (String key : headers.keySet()) {
-			httpPut.addHeader(key, headers.get(key));
+		for (Map.Entry<String, String> entry : headers.entrySet()) {
+			httpPut.addHeader(entry.getKey(), entry.getValue());
 		}
 
-		for (String key : _headers.keySet()) {
-			httpPut.addHeader(key, _headers.get(key));
+		for (Map.Entry<String, String> entry : _headers.entrySet()) {
+			httpPut.addHeader(entry.getKey(), entry.getValue());
 		}
 
 		httpPut.setEntity(httpEntity);

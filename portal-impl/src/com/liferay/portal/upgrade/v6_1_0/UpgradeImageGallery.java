@@ -502,11 +502,11 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 		List<String> actionIds = new ArrayList<>();
 
-		for (String actionId : bitwiseValues.keySet()) {
-			long bitwiseValue = bitwiseValues.get(actionId);
+		for (Map.Entry<String, Long> entry : bitwiseValues.entrySet()) {
+			long bitwiseValue = entry.getValue();
 
 			if ((actionIdsLong & bitwiseValue) == bitwiseValue) {
-				actionIds.add(actionId);
+				actionIds.add(entry.getKey());
 			}
 		}
 

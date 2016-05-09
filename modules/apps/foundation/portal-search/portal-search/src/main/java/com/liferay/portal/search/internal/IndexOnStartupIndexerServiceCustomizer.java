@@ -130,13 +130,16 @@ public class IndexOnStartupIndexerServiceCustomizer
 		Set<String> removedIndexerClassNames = new HashSet<>();
 
 		synchronized (_serviceRegistrations) {
-			for (String className : _serviceRegistrations.keySet()) {
-				ServiceRegistration<?> serviceRegistration =
-					_serviceRegistrations.get(className);
+			for (Map.Entry
+					<String, ServiceRegistration
+						<PortalInstanceLifecycleListener>> entry :
+							_serviceRegistrations.entrySet()) {
+
+				ServiceRegistration<?> serviceRegistration = entry.getValue();
 
 				serviceRegistration.unregister();
 
-				removedIndexerClassNames.add(className);
+				removedIndexerClassNames.add(entry.getKey());
 			}
 
 			for (String removedIndexerClassName : removedIndexerClassNames) {

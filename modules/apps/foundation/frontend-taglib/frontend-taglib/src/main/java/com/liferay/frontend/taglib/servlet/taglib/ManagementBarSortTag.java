@@ -105,13 +105,14 @@ public class ManagementBarSortTag extends IncludeTag implements BodyTag {
 
 			orderByColURL.setParameter("orderByType", _orderByType);
 
-			for (String orderColumn : _orderColumns.keySet()) {
+			for (Map.Entry<String, String> entry : _orderColumns.entrySet()) {
+				String orderColumn = entry.getKey();
+
 				orderByColURL.setParameter("orderByCol", orderColumn);
 
 				managementBarFilterItems.add(
 					new ManagementBarFilterItem(
-						_orderByCol.equals(orderColumn),
-						_orderColumns.get(orderColumn),
+						_orderByCol.equals(orderColumn), entry.getValue(),
 						orderByColURL.toString()));
 			}
 		}

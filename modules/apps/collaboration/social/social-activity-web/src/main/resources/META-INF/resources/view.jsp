@@ -37,10 +37,12 @@ Map<String, Boolean> activitySettingsMap = (Map<String, Boolean>)request.getAttr
 		<aui:col cssClass="social-activity-items" width="<%= 20 %>">
 
 			<%
-			for (String className : activitySettingsMap.keySet()) {
+			for (Map.Entry<String, Boolean> entry : activitySettingsMap.entrySet()) {
+				String className = entry.getKey();
+
 				String localizedClassName = ResourceActionsUtil.getModelResource(locale, className);
 
-				boolean enabled = activitySettingsMap.get(className);
+				boolean enabled = entry.getValue();
 			%>
 
 				<h4 class="social-activity-item" data-modelName="<%= className %>" title="<%= localizedClassName %>">

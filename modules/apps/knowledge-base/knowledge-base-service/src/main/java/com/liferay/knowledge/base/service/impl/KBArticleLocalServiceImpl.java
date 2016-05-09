@@ -1812,15 +1812,15 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		Map<String, String> kbArticleDiffs = getEmailKBArticleDiffs(kbArticle);
 
-		for (String key : kbArticleDiffs.keySet()) {
+		for (Map.Entry<String, String> entry : kbArticleDiffs.entrySet()) {
 			String value = StringUtil.replace(
-				kbArticleDiffs.get(key), new String[] {"href=\"/", "src=\"/"},
+				entry.getValue(), new String[] {"href=\"/", "src=\"/"},
 				new String[] {
 					"href=\"" + serviceContext.getPortalURL() + "/",
 					"src=\"" + serviceContext.getPortalURL() + "/"
 				});
 
-			kbArticleDiffs.put(key, value);
+			kbArticleDiffs.put(entry.getKey(), value);
 		}
 
 		String subject = null;

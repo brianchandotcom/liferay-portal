@@ -77,10 +77,9 @@ public class AuthVerifierFilter extends BasePortalFilter {
 			Properties properties = PropsUtil.getProperties(
 				portalPropertyPrefix, true);
 
-			for (Object name : properties.keySet()) {
-				Object value = properties.get(name);
-
-				_initParametersMap.put((String)name, value);
+			for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+				_initParametersMap.put(
+					(String)entry.getKey(), entry.getValue());
 			}
 		}
 

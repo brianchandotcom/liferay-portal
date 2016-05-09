@@ -150,8 +150,9 @@ public class SoyPortlet extends MVCPortlet {
 	protected void propagateRequestParameters(PortletRequest portletRequest) {
 		Map<String, String[]> parametersMap = portletRequest.getParameterMap();
 
-		for (String parameterName : parametersMap.keySet()) {
-			String[] parameterValues = parametersMap.get(parameterName);
+		for (Map.Entry<String, String[]> entry : parametersMap.entrySet()) {
+			String parameterName = entry.getKey();
+			String[] parameterValues = entry.getValue();
 
 			if (parameterValues.length == 1) {
 				template.put(parameterName, parameterValues[0]);

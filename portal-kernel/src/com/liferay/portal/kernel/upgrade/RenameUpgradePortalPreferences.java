@@ -32,10 +32,10 @@ public abstract class RenameUpgradePortalPreferences extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		Map<String, String> preferenceNamesMap = getPreferenceNamesMap();
 
-		for (String oldName : preferenceNamesMap.keySet()) {
+		for (Map.Entry<String, String> entry : preferenceNamesMap.entrySet()) {
 			updatePreferences(
-				"PortalPreferences", "portalPreferencesId", oldName,
-				preferenceNamesMap.get(oldName));
+				"PortalPreferences", "portalPreferencesId", entry.getKey(),
+				entry.getValue());
 		}
 	}
 

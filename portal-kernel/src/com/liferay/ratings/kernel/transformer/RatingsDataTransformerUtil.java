@@ -87,7 +87,11 @@ public class RatingsDataTransformerUtil {
 				PortletRatingsDefinitionUtil.
 					getPortletRatingsDefinitionValuesMap();
 
-		for (String className : portletRatingsDefinitionValuesMap.keySet()) {
+		for (Map.Entry<String, PortletRatingsDefinitionValues> entry :
+				portletRatingsDefinitionValuesMap.entrySet()) {
+
+			String className = entry.getKey();
+
 			String propertyKey = getPropertyKey(className);
 
 			RatingsType fromRatingsType = RatingsType.parse(
@@ -95,7 +99,7 @@ public class RatingsDataTransformerUtil {
 
 			if (fromRatingsType == null) {
 				PortletRatingsDefinitionValues portletRatingsDefinitionValues =
-					portletRatingsDefinitionValuesMap.get(className);
+					entry.getValue();
 
 				fromRatingsType =
 					portletRatingsDefinitionValues.getDefaultRatingsType();
@@ -127,7 +131,11 @@ public class RatingsDataTransformerUtil {
 				PortletRatingsDefinitionUtil.
 					getPortletRatingsDefinitionValuesMap();
 
-		for (String className : portletRatingsDefinitionValuesMap.keySet()) {
+		for (Map.Entry<String, PortletRatingsDefinitionValues> entry :
+				portletRatingsDefinitionValuesMap.entrySet()) {
+
+			String className = entry.getKey();
+
 			String propertyKey = getPropertyKey(className);
 
 			RatingsType fromRatingsType = RatingsType.parse(
@@ -135,7 +143,7 @@ public class RatingsDataTransformerUtil {
 
 			if (fromRatingsType == null) {
 				PortletRatingsDefinitionValues portletRatingsDefinitionValues =
-					portletRatingsDefinitionValuesMap.get(className);
+					entry.getValue();
 
 				fromRatingsType =
 					portletRatingsDefinitionValues.getDefaultRatingsType();

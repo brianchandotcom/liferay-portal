@@ -68,12 +68,14 @@ public class ComponentTag extends BaseComponentTag {
 		Map<String, String> afterEventOptions = new HashMap<>();
 		Map<String, String> onEventOptions = new HashMap<>();
 
-		for (String key : options.keySet()) {
+		for (Map.Entry<String, Object> entry : options.entrySet()) {
+			String key = entry.getKey();
+
 			if (!isValidAttribute(key)) {
 				continue;
 			}
 
-			Object value = options.get(key);
+			Object value = entry.getValue();
 
 			String originalKey = ReservedAttributeUtil.getOriginalName(
 				getName(), key);

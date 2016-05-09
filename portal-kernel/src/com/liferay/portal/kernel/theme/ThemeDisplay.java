@@ -855,8 +855,9 @@ public class ThemeDisplay
 
 		Map<String, ThemeSetting> themeSettings = theme.getSettings();
 
-		for (String key : themeSettings.keySet()) {
-			ThemeSetting themeSetting = themeSettings.get(key);
+		for (Map.Entry<String, ThemeSetting> entry : themeSettings.entrySet()) {
+			String key = entry.getKey();
+			ThemeSetting themeSetting = entry.getValue();
 
 			String value = null;
 

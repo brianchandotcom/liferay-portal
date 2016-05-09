@@ -63,9 +63,11 @@ public class CompanyPortletRatingsDefinitionDisplayContext {
 				PortletRatingsDefinitionUtil.
 					getPortletRatingsDefinitionValuesMap();
 
-		for (String className : portletRatingsDefinitionValuesMap.keySet()) {
+		for (Map.Entry<String, PortletRatingsDefinitionValues> entry :
+				portletRatingsDefinitionValuesMap.entrySet()) {
+
 			PortletRatingsDefinitionValues portletRatingsDefinitionValues =
-				portletRatingsDefinitionValuesMap.get(className);
+				entry.getValue();
 
 			if (portletRatingsDefinitionValues == null) {
 				continue;
@@ -81,6 +83,8 @@ public class CompanyPortletRatingsDefinitionDisplayContext {
 
 				continue;
 			}
+
+			String className = entry.getKey();
 
 			Map<String, RatingsType> ratingsTypeMap = new HashMap<>();
 

@@ -41,7 +41,9 @@ public abstract class RenameUpgradePortletPreferences
 
 		Map<String, String> preferenceNamesMap = getPreferenceNamesMap();
 
-		for (String name : preferenceNamesMap.keySet()) {
+		for (Map.Entry<String, String> entry : preferenceNamesMap.entrySet()) {
+			String name = entry.getKey();
+
 			String[] values = preferencesMap.get(name);
 
 			if (values == null) {
@@ -50,7 +52,7 @@ public abstract class RenameUpgradePortletPreferences
 
 			preferences.reset(name);
 
-			preferences.setValues(preferenceNamesMap.get(name), values);
+			preferences.setValues(entry.getValue(), values);
 		}
 
 		return PortletPreferencesFactoryUtil.toXML(preferences);

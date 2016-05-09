@@ -30,6 +30,7 @@ import com.liferay.portal.util.PropsUtil;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Future;
 
@@ -207,15 +208,17 @@ public class ImageMagickImpl implements ImageMagick {
 			return resourceLimits;
 		}
 
-		for (Object key : _resourceLimitsProperties.keySet()) {
-			String value = (String)_resourceLimitsProperties.get(key);
+		for (Map.Entry<Object, Object> entry :
+				_resourceLimitsProperties.entrySet()) {
+
+			String value = (String)entry.getValue();
 
 			if (Validator.isNull(value)) {
 				continue;
 			}
 
 			resourceLimits.add("-limit");
-			resourceLimits.add((String)key);
+			resourceLimits.add((String)entry.getKey());
 			resourceLimits.add(value);
 		}
 

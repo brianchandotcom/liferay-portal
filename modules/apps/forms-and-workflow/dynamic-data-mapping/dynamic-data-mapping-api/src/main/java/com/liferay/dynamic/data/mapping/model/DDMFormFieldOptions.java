@@ -38,12 +38,12 @@ public class DDMFormFieldOptions implements Serializable {
 
 		Map<String, LocalizedValue> options = ddmFormFieldOptions._options;
 
-		for (String optionValue : options.keySet()) {
-			LocalizedValue localizedValue = options.get(optionValue);
+		for (Map.Entry<String, LocalizedValue> entry : options.entrySet()) {
+			LocalizedValue localizedValue = entry.getValue();
 
 			for (Locale locale : localizedValue.getAvailableLocales()) {
 				addOptionLabel(
-					optionValue, locale, localizedValue.getString(locale));
+					entry.getKey(), locale, localizedValue.getString(locale));
 			}
 		}
 	}

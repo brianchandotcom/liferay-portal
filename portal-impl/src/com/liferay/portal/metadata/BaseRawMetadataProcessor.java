@@ -142,8 +142,8 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 			return ddmFormValuesMap;
 		}
 
-		for (String key : fieldsMap.keySet()) {
-			Field[] fields = fieldsMap.get(key);
+		for (Map.Entry<String, Field[]> entry : fieldsMap.entrySet()) {
+			Field[] fields = entry.getValue();
 
 			DDMFormValues ddmFormValues = createDDMFormValues(metadata, fields);
 
@@ -156,7 +156,7 @@ public abstract class BaseRawMetadataProcessor implements RawMetadataProcessor {
 				continue;
 			}
 
-			ddmFormValuesMap.put(key, ddmFormValues);
+			ddmFormValuesMap.put(entry.getKey(), ddmFormValues);
 		}
 
 		return ddmFormValuesMap;

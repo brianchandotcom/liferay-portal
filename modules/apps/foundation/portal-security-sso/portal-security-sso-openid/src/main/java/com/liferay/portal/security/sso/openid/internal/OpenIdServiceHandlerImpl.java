@@ -385,9 +385,9 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 
 			Map<String, String> openIdAXTypes = openIdProvider.getAxTypes();
 
-			for (String openIdAXType : openIdAXTypes.keySet()) {
+			for (Map.Entry<String, String> entry : openIdAXTypes.entrySet()) {
 				fetchRequest.addAttribute(
-					openIdAXType, openIdAXTypes.get(openIdAXType), true);
+					entry.getKey(), entry.getValue(), true);
 			}
 
 			authRequest.addExtension(fetchRequest);

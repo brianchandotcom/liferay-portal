@@ -195,9 +195,11 @@ public class AuthVerifierPipeline {
 		Properties mergedProperties = new Properties(
 			authVerifierConfiguration.getProperties());
 
-		for (String settingsKey : settings.keySet()) {
+		for (Map.Entry<String, Object> entry : settings.entrySet()) {
+			String settingsKey = entry.getKey();
+
 			if (settingsKey.startsWith(authVerifierSettingsKey)) {
-				Object settingsValue = settings.get(settingsKey);
+				Object settingsValue = entry.getValue();
 
 				if (settingsValue instanceof String) {
 					String propertiesKey = settingsKey.substring(
@@ -389,17 +391,18 @@ public class AuthVerifierPipeline {
 			Map<String, Object> serviceReferenceProperties =
 				serviceReference.getProperties();
 
-			for (String key : serviceReferenceProperties.keySet()) {
-				String propertiesKey = key;
+			for (Map.Entry<String, Object> entry :
+					serviceReferenceProperties.entrySet()) {
+
+				String key = entry.getKey();
 
 				if (key.startsWith(authVerifierPropertyName)) {
-					propertiesKey = key.substring(
-						authVerifierPropertyName.length());
+					key = key.substring(authVerifierPropertyName.length());
 				}
 
-				Object value = serviceReferenceProperties.get(key);
+				Object value = entry.getValue();
 
-				properties.setProperty(propertiesKey, String.valueOf(value));
+				properties.setProperty(key, String.valueOf(value));
 			}
 
 			return properties;

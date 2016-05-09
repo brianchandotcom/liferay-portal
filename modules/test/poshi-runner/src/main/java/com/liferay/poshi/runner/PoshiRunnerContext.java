@@ -492,8 +492,8 @@ public class PoshiRunnerContext {
 		int classCommandNameIndex = 0;
 		Map<Set<String>, Collection<String>> map = multimap.asMap();
 
-		for (Set<String> key : map.keySet()) {
-			List<String> classCommandNameGroup = new ArrayList(map.get(key));
+		for (Collection<String> value : map.values()) {
+			List<String> classCommandNameGroup = new ArrayList(value);
 
 			Collections.sort(classCommandNameGroup);
 

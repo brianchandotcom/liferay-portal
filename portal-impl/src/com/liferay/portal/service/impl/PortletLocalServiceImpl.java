@@ -963,11 +963,15 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		String portletId = _portletIdsByStrutsPath.get(securityPath);
 
 		if (Validator.isNull(portletId)) {
-			for (String strutsPath : _portletIdsByStrutsPath.keySet()) {
+			for (Map.Entry<String, String> entry :
+					_portletIdsByStrutsPath.entrySet()) {
+
+				String strutsPath = entry.getKey();
+
 				if (securityPath.startsWith(
 						strutsPath.concat(StringPool.SLASH))) {
 
-					portletId = _portletIdsByStrutsPath.get(strutsPath);
+					portletId = entry.getValue();
 
 					break;
 				}

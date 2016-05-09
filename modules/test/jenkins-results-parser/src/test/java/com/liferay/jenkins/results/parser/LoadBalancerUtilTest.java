@@ -19,6 +19,7 @@ import java.io.File;
 import java.net.URL;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.junit.After;
@@ -151,12 +152,14 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 	protected Properties getTestProperties(String baseInvocationHostName) {
 		Properties properties = getDownloadProperties(baseInvocationHostName);
 
-		for (Object key : properties.keySet()) {
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+			Object key = entry.getKey();
+
 			if (key.equals("base.invocation.url")) {
 				continue;
 			}
 
-			String value = (String)properties.get(key);
+			String value = (String)entry.getValue();
 
 			if (value.contains("http://")) {
 				Class<?> clazz = getClass();
@@ -166,7 +169,7 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 					"${dependencies.url}" + clazz.getSimpleName() + "/" +
 						baseInvocationHostName + "/");
 
-				properties.put(key, value);
+				entry.setValue(value);
 			}
 		}
 

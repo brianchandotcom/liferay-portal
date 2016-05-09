@@ -100,12 +100,14 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 	protected synchronized void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		for (String className : _templateHandlers.keySet()) {
-			if (_serviceRegistrations.containsKey(className)) {
+		for (Map.Entry<String, TemplateHandler> entry :
+				_templateHandlers.entrySet()) {
+
+			if (_serviceRegistrations.containsKey(entry.getKey())) {
 				continue;
 			}
 
-			TemplateHandler templateHandler = _templateHandlers.get(className);
+			TemplateHandler templateHandler = entry.getValue();
 
 			registerPortalInstanceLifecycleListener(templateHandler);
 		}

@@ -44,12 +44,14 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 
 		Map<String, String> variableMap = tokenExtractor.getVariableMap();
 
-		for (String variableName : variableMap.keySet()) {
+		for (Map.Entry<String, String> entry : variableMap.entrySet()) {
+			String variableName = entry.getKey();
+
 			Variable variable = new Variable(variableName);
 
 			_variables.put(variableName, variable);
 
-			String token = variableMap.get(variableName);
+			String token = entry.getValue();
 
 			if (token != null) {
 				setStringVariableValue(variableName, token);

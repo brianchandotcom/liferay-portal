@@ -680,11 +680,10 @@ public class JournalArticleServiceTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		for (String requiredFieldName : requiredFields.keySet()) {
-			Assert.assertTrue(ddmStructure.getFieldRequired(requiredFieldName));
+		for (Map.Entry<String, String> entry : requiredFields.entrySet()) {
+			Assert.assertTrue(ddmStructure.getFieldRequired(entry.getKey()));
 
-			serviceContext.setAttribute(
-				requiredFieldName, requiredFields.get(requiredFieldName));
+			serviceContext.setAttribute(entry.getKey(), entry.getValue());
 		}
 
 		JournalTestUtil.addArticleWithXMLContent(

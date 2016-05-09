@@ -184,10 +184,8 @@ public class Log4JUtil {
 			_logger.error(e, e);
 		}
 
-		for (String name : customLogSettings.keySet()) {
-			String priority = customLogSettings.get(name);
-
-			setLevel(name, priority, false);
+		for (Map.Entry<String, String> entry : customLogSettings.entrySet()) {
+			setLevel(entry.getKey(), entry.getValue(), false);
 		}
 	}
 

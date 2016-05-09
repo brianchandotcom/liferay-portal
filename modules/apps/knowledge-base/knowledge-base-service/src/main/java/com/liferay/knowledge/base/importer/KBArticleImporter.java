@@ -229,8 +229,9 @@ public class KBArticleImporter {
 
 			Map<String, String> metadata = new HashMap<>(properties.size());
 
-			for (Object key : properties.keySet()) {
-				Object value = properties.get(key);
+			for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+				Object key = entry.getKey();
+				Object value = entry.getValue();
 
 				if (value != null) {
 					metadata.put(key.toString(), value.toString());

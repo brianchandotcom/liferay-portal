@@ -543,9 +543,11 @@ public class StagingImpl implements Staging {
 
 		JSONArray errorMessagesJSONArray = JSONFactoryUtil.createJSONArray();
 
-		for (String missingReferenceDisplayName : missingReferences.keySet()) {
-			MissingReference missingReference = missingReferences.get(
-				missingReferenceDisplayName);
+		for (Map.Entry<String, MissingReference> missingReferenceEntry :
+				missingReferences.entrySet()) {
+
+			MissingReference missingReference =
+				missingReferenceEntry.getValue();
 
 			JSONObject errorMessageJSONObject =
 				JSONFactoryUtil.createJSONObject();
@@ -598,7 +600,7 @@ public class StagingImpl implements Staging {
 						true));
 			}
 
-			errorMessageJSONObject.put("name", missingReferenceDisplayName);
+			errorMessageJSONObject.put("name", missingReferenceEntry.getKey());
 
 			Group group = _groupLocalService.fetchGroup(
 				missingReference.getGroupId());

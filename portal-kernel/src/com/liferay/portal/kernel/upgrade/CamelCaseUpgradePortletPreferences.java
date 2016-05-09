@@ -39,14 +39,14 @@ public class CamelCaseUpgradePortletPreferences
 
 		Map<String, String[]> preferencesMap = portletPreferences.getMap();
 
-		for (String oldName : preferencesMap.keySet()) {
-			String[] values = preferencesMap.get(oldName);
+		for (Map.Entry<String, String[]> entry : preferencesMap.entrySet()) {
+			String oldName = entry.getKey();
 
 			String newName = TextFormatter.format(oldName, TextFormatter.M);
 
 			portletPreferences.reset(oldName);
 
-			portletPreferences.setValues(newName, values);
+			portletPreferences.setValues(newName, entry.getValue());
 		}
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);

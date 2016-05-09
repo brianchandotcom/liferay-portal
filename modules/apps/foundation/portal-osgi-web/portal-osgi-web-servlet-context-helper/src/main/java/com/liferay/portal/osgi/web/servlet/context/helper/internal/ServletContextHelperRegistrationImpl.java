@@ -214,7 +214,9 @@ public class ServletContextHelperRegistrationImpl
 	protected ServiceRegistration<Servlet> createJspServlet() {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		for (String key : _properties.keySet()) {
+		for (Map.Entry<String, Object> entry : _properties.entrySet()) {
+			String key = entry.getKey();
+
 			if (!key.startsWith(_JSP_SERVLET_INIT_PARAM_PREFIX)) {
 				continue;
 			}
@@ -223,7 +225,7 @@ public class ServletContextHelperRegistrationImpl
 				_SERVLET_INIT_PARAM_PREFIX +
 					key.substring(_JSP_SERVLET_INIT_PARAM_PREFIX.length());
 
-			properties.put(name, _properties.get(key));
+			properties.put(name, entry.getValue());
 		}
 
 		properties.put(

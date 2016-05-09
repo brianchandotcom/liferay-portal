@@ -249,13 +249,16 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 		Map<String, com.liferay.dynamic.data.mapping.kernel.LocalizedValue>
 			options = ddmFormFieldOptions.getOptions();
 
-		for (String optionValue : options.keySet()) {
+		for (Map.Entry
+				<String, com.liferay.dynamic.data.mapping.kernel.LocalizedValue>
+					entry : options.entrySet()) {
+
 			com.liferay.dynamic.data.mapping.kernel.LocalizedValue
-				localizedValue = options.get(optionValue);
+				localizedValue = entry.getValue();
 
 			for (Locale locale : localizedValue.getAvailableLocales()) {
 				translatedDDMFormFieldOptions.addOptionLabel(
-					optionValue, locale, localizedValue.getString(locale));
+					entry.getKey(), locale, localizedValue.getString(locale));
 			}
 		}
 
@@ -321,12 +324,12 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 
 		Map<String, LocalizedValue> options = ddmFormFieldOptions.getOptions();
 
-		for (String optionValue : options.keySet()) {
-			LocalizedValue localizedValue = options.get(optionValue);
+		for (Map.Entry<String, LocalizedValue> entry : options.entrySet()) {
+			LocalizedValue localizedValue = entry.getValue();
 
 			for (Locale locale : localizedValue.getAvailableLocales()) {
 				translatedDDMFormFieldOptions.addOptionLabel(
-					optionValue, locale, localizedValue.getString(locale));
+					entry.getKey(), locale, localizedValue.getString(locale));
 			}
 		}
 
@@ -387,11 +390,9 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 
 		translatedLocalizedValue.setDefaultLocale(value.getDefaultLocale());
 
-		Map<Locale, String> values = value.getValues();
+		Map<Locale, String> values = translatedLocalizedValue.getValues();
 
-		for (Locale locale : values.keySet()) {
-			translatedLocalizedValue.addString(locale, values.get(locale));
-		}
+		values.putAll(value.getValues());
 
 		return translatedLocalizedValue;
 	}
@@ -409,11 +410,9 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 
 		translatedLocalizedValue.setDefaultLocale(value.getDefaultLocale());
 
-		Map<Locale, String> values = value.getValues();
+		Map<Locale, String> values = translatedLocalizedValue.getValues();
 
-		for (Locale locale : values.keySet()) {
-			translatedLocalizedValue.addString(locale, values.get(locale));
-		}
+		values.putAll(value.getValues());
 
 		return translatedLocalizedValue;
 	}

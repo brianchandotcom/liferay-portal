@@ -289,9 +289,7 @@ public class JournalTransformer {
 				templateId, tokens, languageId, document, script, langType);
 
 			if (contextObjects != null) {
-				for (String key : contextObjects.keySet()) {
-					template.put(key, contextObjects.get(key));
-				}
+				template.putAll(contextObjects);
 			}
 
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();

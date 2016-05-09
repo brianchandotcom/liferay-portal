@@ -82,13 +82,14 @@ public class AppLicenseVerifierTest {
 		Map<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
 			serviceReferences = _serviceTracker.getTracked();
 
-		for (ServiceReference serviceReference : serviceReferences.keySet()) {
-			if (!filter.match(serviceReference)) {
+		for (Map.Entry<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
+				entry : serviceReferences.entrySet()) {
+
+			if (!filter.match(entry.getKey())) {
 				continue;
 			}
 
-			AppLicenseVerifier appLicenseVerifier = serviceReferences.get(
-				serviceReference);
+			AppLicenseVerifier appLicenseVerifier = entry.getValue();
 
 			appLicenseVerifier.verify(bundle, "", "", "");
 
@@ -103,13 +104,16 @@ public class AppLicenseVerifierTest {
 		Map<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
 			serviceReferences = _serviceTracker.getTracked();
 
-		for (ServiceReference serviceReference : serviceReferences.keySet()) {
+		for (Map.Entry<ServiceReference<AppLicenseVerifier>, AppLicenseVerifier>
+				entry : serviceReferences.entrySet()) {
+
+			ServiceReference serviceReference = entry.getKey();
+
 			if (!filter.match(serviceReference)) {
 				continue;
 			}
 
-			AppLicenseVerifier appLicenseVerifier = serviceReferences.get(
-				serviceReference);
+			AppLicenseVerifier appLicenseVerifier = entry.getValue();
 
 			appLicenseVerifier.verify(bundle, "", "", "");
 

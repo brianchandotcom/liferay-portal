@@ -1010,8 +1010,9 @@ public class LayoutAdminPortlet extends MVCPortlet {
 				groupId, privateLayout, layoutId);
 		}
 
-		for (String key : themeSettings.keySet()) {
-			ThemeSetting themeSetting = themeSettings.get(key);
+		for (Map.Entry<String, ThemeSetting> entry : themeSettings.entrySet()) {
+			String key = entry.getKey();
+			ThemeSetting themeSetting = entry.getValue();
 
 			String property =
 				device + "ThemeSettingsProperties--" + key +

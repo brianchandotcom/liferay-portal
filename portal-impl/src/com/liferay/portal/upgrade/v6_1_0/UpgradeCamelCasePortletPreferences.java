@@ -80,7 +80,8 @@ public class UpgradeCamelCasePortletPreferences
 
 		Map<String, String[]> preferencesMap = portletPreferences.getMap();
 
-		for (String oldName : preferencesMap.keySet()) {
+		for (Map.Entry<String, String[]> entry : preferencesMap.entrySet()) {
+			String oldName = entry.getKey();
 			String newName = _camelCasePreferenceNames.get(oldName);
 
 			if (Validator.isNull(newName)) {
@@ -99,7 +100,7 @@ public class UpgradeCamelCasePortletPreferences
 			}
 
 			if (Validator.isNotNull(newName)) {
-				String[] values = preferencesMap.get(oldName);
+				String[] values = entry.getValue();
 
 				portletPreferences.reset(oldName);
 				portletPreferences.setValues(newName, values);

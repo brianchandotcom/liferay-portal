@@ -27,7 +27,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,6 +56,10 @@ public class MicroblogsUserNotificationHandler
 		JSONObject jsonObject, AssetRenderer<?> assetRenderer,
 		ServiceContext serviceContext) {
 
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				serviceContext.getLanguageId());
+
 		MicroblogsEntry microblogsEntry =
 			_microblogsEntryLocalService.fetchMicroblogsEntry(
 				assetRenderer.getClassPK());
@@ -67,8 +75,8 @@ public class MicroblogsUserNotificationHandler
 		if (notificationType ==
 				MicroblogsEntryConstants.NOTIFICATION_TYPE_REPLY) {
 
-			title = serviceContext.translate(
-				"x-commented-on-your-post", userFullName);
+			title = ResourceBundleUtil.getString(
+				resourceBundle, "x-commented-on-your-post", userFullName);
 		}
 		else if (notificationType ==
 					MicroblogsEntryConstants.
@@ -81,23 +89,24 @@ public class MicroblogsUserNotificationHandler
 				parentMicroblogsEntryUserId);
 
 			if (user != null) {
-				title = serviceContext.translate(
-					"x-also-commented-on-x's-post", userFullName,
-					user.getFullName());
+				title = ResourceBundleUtil.getString(
+					resourceBundle, "x-also-commented-on-x's-post",
+					userFullName, user.getFullName());
 			}
 		}
 		else if (notificationType ==
 					MicroblogsEntryConstants.
 						NOTIFICATION_TYPE_REPLY_TO_TAGGED) {
 
-			title = serviceContext.translate(
-				"x-commented-on-a-post-you-are-tagged-in", userFullName);
+			title = ResourceBundleUtil.getString(
+				resourceBundle, "x-commented-on-a-post-you-are-tagged-in",
+				userFullName);
 		}
 		else if (notificationType ==
 					MicroblogsEntryConstants.NOTIFICATION_TYPE_TAG) {
 
-			title = serviceContext.translate(
-				"x-tagged-you-in-a-post", userFullName);
+			title = ResourceBundleUtil.getString(
+				resourceBundle, "x-tagged-you-in-a-post", userFullName);
 		}
 
 		return title;
@@ -110,12 +119,23 @@ public class MicroblogsUserNotificationHandler
 		_microblogsEntryLocalService = microblogsEntryLocalService;
 	}
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.microblogs.web)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = resourceBundleLoader;
+	}
+
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
 
 	private MicroblogsEntryLocalService _microblogsEntryLocalService;
+	private ResourceBundleLoader _resourceBundleLoader;
 	private UserLocalService _userLocalService;
 
 }

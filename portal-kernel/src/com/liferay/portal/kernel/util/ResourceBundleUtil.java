@@ -113,27 +113,16 @@ public class ResourceBundleUtil {
 		return new ClassResourceBundleLoader(baseName, classLoader);
 	}
 
+	/**
+	 * @deprecated As of 7.0.1, replaced by {@link #getString(ResourceBundle,
+	 *             String, Object...)}
+	 */
+	@Deprecated
 	public static String getString(
 		ResourceBundle resourceBundle, Locale locale, String key,
 		Object[] arguments) {
 
-		String value = getString(resourceBundle, key);
-
-		if (value == null) {
-			return null;
-		}
-
-		// Get the value associated with the specified key, and substitute any
-		// arguments like {0}, {1}, {2}, etc. with the specified argument
-		// values.
-
-		if (ArrayUtil.isNotEmpty(arguments)) {
-			MessageFormat messageFormat = new MessageFormat(value, locale);
-
-			value = messageFormat.format(arguments);
-		}
-
-		return value;
+		return getString(resourceBundle, key, arguments);
 	}
 
 	public static String getString(ResourceBundle resourceBundle, String key) {
@@ -147,6 +136,29 @@ public class ResourceBundleUtil {
 		catch (MissingResourceException mre) {
 			return null;
 		}
+	}
+
+	public static String getString(
+		ResourceBundle resourceBundle, String key, Object... arguments) {
+
+		String value = getString(resourceBundle, key);
+
+		if (value == null) {
+			return null;
+		}
+
+		// Get the value associated with the specified key, and substitute any
+		// arguments like {0}, {1}, {2}, etc. with the specified argument
+		// values.
+
+		if (ArrayUtil.isNotEmpty(arguments)) {
+			MessageFormat messageFormat = new MessageFormat(
+				value, resourceBundle.getLocale());
+
+			value = messageFormat.format(arguments);
+		}
+
+		return value;
 	}
 
 	public static void loadResourceBundles(

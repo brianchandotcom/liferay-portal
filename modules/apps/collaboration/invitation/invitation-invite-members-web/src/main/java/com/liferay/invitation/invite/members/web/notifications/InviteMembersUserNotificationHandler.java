@@ -106,13 +106,9 @@ public class InviteMembersUserNotificationHandler
 				LocaleUtil.toLanguageId(serviceContext.getLocale()));
 
 		String title = ResourceBundleUtil.getString(
-			resourceBundle, serviceContext.getLocale(),
-			"x-invited-you-to-join-x",
-			new Object[] {
-				getUserNameLink(memberRequest.getUserId(), serviceContext),
-				getSiteDescriptiveName(
-					memberRequest.getGroupId(), serviceContext)
-			});
+			resourceBundle, "x-invited-you-to-join-x",
+			getUserNameLink(memberRequest.getUserId(), serviceContext),
+			getSiteDescriptiveName(memberRequest.getGroupId(), serviceContext));
 
 		LiferayPortletResponse liferayPortletResponse =
 			serviceContext.getLiferayPortletResponse();

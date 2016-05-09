@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.util;
+package com.liferay.petra.collection.stack;
 
 /**
  * @author Brian Wing Shun Chan
- * @see com.liferay.petra.collection.stack.FiniteStack
+ * @see com.liferay.util.FiniteUniqueStack
  */
 public class FiniteUniqueStack<E> extends FiniteStack<E> {
 

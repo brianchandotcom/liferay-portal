@@ -1083,23 +1083,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/backport-concurrent.jar</file-name>
-				<version>3.1</version>
-				<project-name>Concurrent (Backport)</project-name>
-				<project-url>http://backport-jsr166.sourceforge.net</project-url>
-				<project-description>Backport of JSR 166 concurrent API to Java 1.4</project-description>
-				<licenses>
-					<license>
-						<license-name>Creative Commons Public Domain</license-name>
-						<license-url>http://creativecommons.org/publicdomain/zero/1.0/legalcode</license-url>
-					</license>
-					<license>
-						<license-name>Technology License From Sun Microsystems Inc. To Doug Lea</license-name>
-						<license-url>http://gee.cs.oswego.edu/dl/classes/EDU/oswego/cs/dl/util/sun-u.c.license.pdf</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/bcmail.jar</file-name>
 				<version>1.45</version>
 				<project-name>Bouncy Castle</project-name>

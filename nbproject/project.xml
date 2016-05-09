@@ -336,7 +336,6 @@
 				<classpath mode="compile">lib/portal/axiom-impl.jar</classpath>
 				<classpath mode="compile">lib/portal/axis-ant.jar</classpath>
 				<classpath mode="compile">lib/portal/axis.jar</classpath>
-				<classpath mode="compile">lib/portal/backport-concurrent.jar</classpath>
 				<classpath mode="compile">lib/portal/bcmail.jar</classpath>
 				<classpath mode="compile">lib/portal/bcprov.jar</classpath>
 				<classpath mode="compile">lib/portal/bnd.jar</classpath>

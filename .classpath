@@ -110,7 +110,6 @@
 	<classpathentry kind="lib" path="lib/portal/axiom-impl.jar"/>
 	<classpathentry kind="lib" path="lib/portal/axis.jar"/>
 	<classpathentry kind="lib" path="lib/portal/axis-ant.jar"/>
-	<classpathentry kind="lib" path="lib/portal/backport-concurrent.jar"/>
 	<classpathentry kind="lib" path="lib/portal/bcmail.jar"/>
 	<classpathentry kind="lib" path="lib/portal/bcprov.jar"/>
 	<classpathentry kind="lib" path="lib/portal/bnd.jar"/>

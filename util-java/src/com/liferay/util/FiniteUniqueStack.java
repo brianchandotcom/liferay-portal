@@ -16,6 +16,7 @@ package com.liferay.util;
 
 /**
  * @author Brian Wing Shun Chan
+ * @see com.liferay.petra.collection.stack.FiniteStack
  */
 public class FiniteUniqueStack<E> extends FiniteStack<E> {
 

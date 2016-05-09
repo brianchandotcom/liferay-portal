@@ -18,6 +18,7 @@ import java.util.Stack;
 
 /**
  * @author Brian Wing Shun Chan
+ * @see com.liferay.util.FiniteStack
  */
 public class FiniteStack<E> extends Stack<E> {
 

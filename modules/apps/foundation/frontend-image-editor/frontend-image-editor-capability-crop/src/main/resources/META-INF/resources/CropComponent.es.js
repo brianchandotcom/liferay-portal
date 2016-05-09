@@ -27,10 +27,10 @@ class CropComponent extends Component {
 
 		let cropHandles = this.components[this.key + 'CropHandles'];
 		let selection = {
-			top: cropHandles.element.offsetTop - imageCanvas.offsetTop,
+			height: cropHandles.element.offsetHeight,
 			left: cropHandles.element.offsetLeft - imageCanvas.offsetLeft,
-			width: cropHandles.element.offsetWidth,
-			height: cropHandles.element.offsetHeight
+			top: cropHandles.element.offsetTop - imageCanvas.offsetTop,
+			width: cropHandles.element.offsetWidth
 		};
 
 		let rawCanvas = document.createElement('canvas');

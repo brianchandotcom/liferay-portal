@@ -37,6 +37,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
 
@@ -49,7 +51,10 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	public String[] getIncludes() {
 		if (portalSource) {
 			return new String[] {
-				"**/Language.properties", "**/portal.properties",
+				"**/Language.properties",
+				"**/modules/apps/**/liferay-plugin-package.properties",
+				"**/modules/private/apps/**/liferay-plugin-package.properties",
+				"**/portal.properties",
 				"**/portal-ext.properties", "**/portal-legacy-*.properties",
 				"**/portlet.properties", "**/source-formatter.properties"
 			};
@@ -166,6 +171,9 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 			checkLanguageProperties(fileName);
 		}
+		else if (fileName.endsWith("liferay-plugin-package.properties")) {
+			newContent = formatPluginPackageProperties(fileName, content);
+		}
 		else if (fileName.endsWith("portlet.properties")) {
 			newContent = formatPortletProperties(fileName, content);
 		}
@@ -248,6 +256,32 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			coreLanguagePropertiesFile,
 			"portal-impl/src/content/Language.properties",
 			coreLanguagePropertiesContent, newCoreLanguagePropertiesContent);
+	}
+
+	protected String formatPluginPackageProperties(
+		String fileName, String content) {
+
+		Matcher matcher = _licensesPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String licenses = matcher.group(1);
+
+		String expectedLicenses = "LGPL";
+
+		if (fileName.contains("modules/private/apps")) {
+			expectedLicenses = "DXP";
+		}
+
+		if (licenses.equals(expectedLicenses)) {
+			return content;
+		}
+
+		return StringUtil.replace(
+			content, "licenses=" + licenses, "licenses=" + expectedLicenses,
+			matcher.start());
 	}
 
 	protected void formatPortalProperties(String fileName, String content)
@@ -576,6 +610,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	private final Map<String, Set<String>> _duplicateLanguageKeyLinesMap =
 		new HashMap<>();
 	private Map<String, Properties> _languagePropertiesMap;
+	private final Pattern _licensesPattern = Pattern.compile(
+		"\nlicenses=(\\w+)\n");
 	private String _portalPortalPropertiesContent;
 
 }

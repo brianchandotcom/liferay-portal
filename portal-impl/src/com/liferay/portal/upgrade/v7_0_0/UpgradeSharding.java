@@ -15,6 +15,8 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -35,9 +37,12 @@ import com.liferay.portal.upgrade.v7_0_0.util.ServiceComponentTable;
 import com.liferay.portal.upgrade.v7_0_0.util.VirtualHostTable;
 import com.liferay.portal.util.PropsUtil;
 
+import java.io.IOException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +58,25 @@ public class UpgradeSharding extends UpgradeProcess {
 			Connection sourceConnection, Connection targetConnection,
 			String tableName, Object[][] columns, String createSQL)
 		throws Exception {
+
+		try {
+			if (!isTableEmpty(targetConnection, tableName)) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Control table " + tableName + " should not contain " +
+							"data in a non-default shard.");
+				}
+			}
+
+			dropTable(targetConnection, tableName);
+		}
+		catch (SQLException sqle) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Skip dropping control table " + tableName + " because it" +
+						" does not exist in the target shard");
+			}
+		}
 
 		UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 			tableName, columns);
@@ -148,6 +172,18 @@ public class UpgradeSharding extends UpgradeProcess {
 		copyControlTables(shardNames);
 	}
 
+	protected void dropTable(Connection connection, String tableName)
+		throws IOException, SQLException {
+
+		DB db = DBManagerUtil.getDB();
+
+		db.runSQL(connection, "drop table " + tableName);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Deleted table " + tableName);
+		}
+	}
+
 	protected List<String> getShardNames() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps = connection.prepareStatement(
@@ -161,6 +197,23 @@ public class UpgradeSharding extends UpgradeProcess {
 			}
 
 			return shardNames;
+		}
+	}
+
+	protected boolean isTableEmpty(Connection connection, String tableName)
+		throws SQLException {
+
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select 1 from " + tableName);
+			ResultSet rs = preparedStatement.executeQuery()) {
+
+			if (rs.next()) {
+				return false;
+			}
+			else {
+				return true;
+			}
 		}
 	}
 

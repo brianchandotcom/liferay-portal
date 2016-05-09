@@ -64,14 +64,30 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 	configurationPid = "com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
-		"osgi.command.function=dryRun", "osgi.command.function=execute",
+		"osgi.command.function=incomplete", "osgi.command.function=execute",
 		"osgi.command.function=list", "osgi.command.scope=upgrade"
 	},
 	service = Object.class
 )
 public class ReleaseManager {
 
-	public void dryRun() {
+	public void execute(String bundleSymbolicName) {
+		doExecute(bundleSymbolicName, _serviceTrackerMap);
+	}
+
+	public void execute(String bundleSymbolicName, String toVersionString) {
+		String schemaVersionString = getSchemaVersionString(bundleSymbolicName);
+
+		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
+			_serviceTrackerMap.getService(bundleSymbolicName));
+
+		executeUpgradeInfos(
+			bundleSymbolicName,
+			releaseGraphManager.getUpgradeInfos(
+				schemaVersionString, toVersionString));
+	}
+
+	public void incomplete() {
 		Set<String> bundleSymbolicNames = _serviceTrackerMap.keySet();
 
 		for (String bundleSymbolicName : bundleSymbolicNames) {
@@ -115,22 +131,6 @@ public class ReleaseManager {
 
 			System.out.println(sb.toString());
 		}
-	}
-
-	public void execute(String bundleSymbolicName) {
-		doExecute(bundleSymbolicName, _serviceTrackerMap);
-	}
-
-	public void execute(String bundleSymbolicName, String toVersionString) {
-		String schemaVersionString = getSchemaVersionString(bundleSymbolicName);
-
-		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			_serviceTrackerMap.getService(bundleSymbolicName));
-
-		executeUpgradeInfos(
-			bundleSymbolicName,
-			releaseGraphManager.getUpgradeInfos(
-				schemaVersionString, toVersionString));
 	}
 
 	public void list() {

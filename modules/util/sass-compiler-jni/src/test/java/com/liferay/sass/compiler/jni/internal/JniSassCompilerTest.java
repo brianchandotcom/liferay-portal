@@ -185,6 +185,19 @@ public class JniSassCompilerTest {
 			stripNewLines(expectedOutput), stripNewLines(actualOutput));
 	}
 
+	@Test
+	public void testSassVariableWithUnicode() throws Exception {
+		SassCompiler sassCompiler = new JniSassCompiler();
+
+		String expectedOutput =
+			"@charset \"UTF-8\";.foo { content: '\\f105'; }";
+		String actualOutput = sassCompiler.compileString(
+			".foo { $icon-var: '\\f105'; content: '#{$icon-var}'; }", "");
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
+	}
+
 	protected String read(Path filePath) throws Exception {
 		return new String(Files.readAllBytes(filePath));
 	}

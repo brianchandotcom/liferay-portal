@@ -71,6 +71,22 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 )
 public class ReleaseManager {
 
+	public void execute(String bundleSymbolicName) {
+		doExecute(bundleSymbolicName, _serviceTrackerMap);
+	}
+
+	public void execute(String bundleSymbolicName, String toVersionString) {
+		String schemaVersionString = getSchemaVersionString(bundleSymbolicName);
+
+		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
+			_serviceTrackerMap.getService(bundleSymbolicName));
+
+		executeUpgradeInfos(
+			bundleSymbolicName,
+			releaseGraphManager.getUpgradeInfos(
+				schemaVersionString, toVersionString));
+	}
+
 	public void incomplete() {
 		Set<String> bundleSymbolicNames = _serviceTrackerMap.keySet();
 
@@ -115,22 +131,6 @@ public class ReleaseManager {
 
 			System.out.println(sb.toString());
 		}
-	}
-
-	public void execute(String bundleSymbolicName) {
-		doExecute(bundleSymbolicName, _serviceTrackerMap);
-	}
-
-	public void execute(String bundleSymbolicName, String toVersionString) {
-		String schemaVersionString = getSchemaVersionString(bundleSymbolicName);
-
-		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			_serviceTrackerMap.getService(bundleSymbolicName));
-
-		executeUpgradeInfos(
-			bundleSymbolicName,
-			releaseGraphManager.getUpgradeInfos(
-				schemaVersionString, toVersionString));
 	}
 
 	public void list() {

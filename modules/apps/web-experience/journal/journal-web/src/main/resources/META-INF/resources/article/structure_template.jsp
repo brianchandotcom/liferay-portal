@@ -28,8 +28,6 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 
 <aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 <aui:input name="ddmStructureKey" type="hidden" value="<%= ddmStructure.getStructureKey() %>" />
-<aui:input name="structureName" type="hidden" value="<%= ddmStructure.getName(locale) %>" />
-<aui:input name="structureDescription" type="hidden" value="<%= ddmStructure.getDescription(locale) %>" />
 <aui:input name="ddmTemplateKey" type="hidden" value="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateKey() : StringPool.BLANK %>" />
 
 <div class="article-structure">

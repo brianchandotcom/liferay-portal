@@ -1,0 +1,14 @@
+{namespace ImageEditorCropComponent}
+
+/**
+ * Image Editor Crop Component
+ *
+ * @param key
+ */
+{template .render}
+	<div id="{$key}">
+		{call ImageEditorCropHandles.render data="all"}
+			{param key: $key + 'CropHandles' /}
+		{/call}
+	</div>
+{/template}

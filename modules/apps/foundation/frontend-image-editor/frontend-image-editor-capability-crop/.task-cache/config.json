@@ -1,0 +1,17 @@
+{
+    "frontend-image-editor-capability-crop@1.0.0/CropComponent.es": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy", "metal/src/core", "metal-promise/src/promise/Promise", "./CropComponent.soy", "./CropControls.soy"]
+    },
+    "frontend-image-editor-capability-crop@1.0.0/CropComponent.soy": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]
+    },
+    "frontend-image-editor-capability-crop@1.0.0/CropControls.soy": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]
+    },
+    "frontend-image-editor-capability-crop@1.0.0/CropHandles.es": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy", "metal/src/async/async", "metal/src/core", "metal-dom/src/dom", "metal-drag-drop/src/Drag", "metal-position/src/Position", "./CropHandles.soy"]
+    },
+    "frontend-image-editor-capability-crop@1.0.0/CropHandles.soy": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]
+    }
+}

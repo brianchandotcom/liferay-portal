@@ -25,14 +25,16 @@ import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
+import com.liferay.portal.search.test.util.AssertUtils;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -83,20 +85,27 @@ public class AssetTagNamesFacetTest extends BaseFacetedSearcherTestCase {
 
 					FacetCollector facetCollector = facet.getFacetCollector();
 
-					List<TermCollector> termCollectors =
-						facetCollector.getTermCollectors();
-
-					Assert.assertEquals(1, termCollectors.size());
-
-					TermCollector termCollector = termCollectors.get(0);
-
-					Assert.assertEquals(tag, termCollector.getTerm());
-					Assert.assertEquals(1, termCollector.getFrequency());
+					AssertUtils.assertEquals(
+						searchContext.getKeywords(),
+						Collections.singletonMap(tag, 1),
+						toMap(facetCollector.getTermCollectors()));
 
 					return null;
 				}
 
 			});
+	}
+
+	protected static Map<String, Integer> toMap(
+		List<TermCollector> termCollectors) {
+
+		Map<String, Integer> map = new HashMap<>(termCollectors.size());
+
+		for (TermCollector termCollector : termCollectors) {
+			map.put(termCollector.getTerm(), termCollector.getFrequency());
+		}
+
+		return map;
 	}
 
 	protected SearchContext getSearchContext(String keywords) throws Exception {

@@ -60,7 +60,8 @@ import org.w3c.dom.NodeList;
  * @author Andrea Di Giorgi
  */
 public class SetupTestableTomcatTask
-	extends DefaultTask implements JmxRemotePortSpec, ManagerSpec {
+	extends DefaultTask
+	implements JmxRemotePortSpec, ManagerSpec, ModuleFrameworkBaseDirSpec {
 
 	public SetupTestableTomcatTask() {
 		_zipUrl = new Callable<String>() {
@@ -128,6 +129,7 @@ public class SetupTestableTomcatTask
 	}
 
 	@Input
+	@Override
 	public File getModuleFrameworkBaseDir() {
 		return GradleUtil.toFile(getProject(), _moduleFrameworkBaseDir);
 	}
@@ -188,6 +190,7 @@ public class SetupTestableTomcatTask
 		_managerUserName = managerUserName;
 	}
 
+	@Override
 	public void setModuleFrameworkBaseDir(Object moduleFrameworkBaseDir) {
 		_moduleFrameworkBaseDir = moduleFrameworkBaseDir;
 	}

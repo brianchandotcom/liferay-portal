@@ -146,7 +146,7 @@ public class LPKGIndexer implements Indexer {
 	}
 
 	@Override
-	public void index(File output) throws Exception {
+	public File index(File output) throws Exception {
 		File tempFolder = FileUtil.createTempFolder();
 
 		_indexerConfig.put("root.url", tempFolder.getCanonicalPath());
@@ -194,15 +194,13 @@ public class LPKGIndexer implements Indexer {
 				resourceIndexer.index(fileList, fos, _indexerConfig);
 			}
 
-			File indexFile = new File(output, tempIndexFile.getName());
+			if (output.isDirectory()) {
+				output = new File(output, tempIndexFile.getName());
+			}
 
-			FileUtil.copyFile(tempIndexFile, indexFile);
+			FileUtil.copyFile(tempIndexFile, output);
 
-			System.out.println(
-				"Wrote index file " + indexFile.getAbsolutePath());
-		}
-		catch (Exception e) {
-			e.printStackTrace();
+			return output;
 		}
 		finally {
 			FileUtil.deltree(tempFolder);

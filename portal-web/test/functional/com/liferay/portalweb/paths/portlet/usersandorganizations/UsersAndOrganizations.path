@@ -61,28 +61,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ORGANIZATION_TABLE_PARENT_ORGANIZATION</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[count(//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'Parent Organization')]/preceding-sibling::th) + 1]//a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ORGANIZATION_TABLE_TYPE</td>
 	<td>//tr[contains(.,'${key_orgName}')]/td[count(//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'Type')]/preceding-sibling::th) + 1]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ORGANIZATION_TABLE_CITY</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[count(//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'City')]/preceding-sibling::th) + 1]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ORGANIZATION_TABLE_REGION</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[count(//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'Region')]/preceding-sibling::th) + 1]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ORGANIZATION_TABLE_COUNTRY</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[count(//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'Country')]/preceding-sibling::th) + 1]//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -100,17 +80,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ORGANIZATION_TABLE_HEADER-->
-<tr>
-	<td>ORGANIZATION_TABLE_HEADER_PARENT_ORGANIZATION</td>
-	<td>//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'Parent Organization')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_CHECKBOX</td>
@@ -118,28 +87,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>USER_TABLE_FIRST_NAME</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[2]//a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_TABLE_LAST_NAME</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[3]//a</td>
+	<td>USER_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[2]//strong</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_SCREEN_NAME</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[4]//a</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[3]//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[8]//div/a</td>
+	<td>//tr[contains(.,'usersn')]/td[7]//div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_IMPERSONATE</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td[8]//span/a[contains(.,'Impersonate User')]</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[7]//span/a[contains(.,'Impersonate User')]</td>
 	<td></td>
 </tr>
 <tr>

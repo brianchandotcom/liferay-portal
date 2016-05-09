@@ -2,8 +2,10 @@
 
 ## Executing the tool
 
-To execute this tool, you must add your JDBC driver to the execution classpath,
-so that the tool can successfully perform its operations.
+To execute this tool, you must add both your JDBC driver and your database
+data partitioning module (MySQL, PostgreSQL, Oracle, DB2, Sybase, SQL Server)
+to the execution classpath, so that the tool can successfully perform its
+operations.
 
 Once the classpath is satisfied, you must provide **four or five arguments** to the
 tool:

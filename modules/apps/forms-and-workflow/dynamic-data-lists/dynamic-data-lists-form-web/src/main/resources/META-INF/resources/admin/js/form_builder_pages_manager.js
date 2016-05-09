@@ -94,7 +94,7 @@ AUI.add(
 
 						FormBuilderPagesManager.superclass.disablePaginations.apply(instance, arguments);
 
-						instance._toggleDisableWizard(true);
+						instance._toggleWizardDisabled(true);
 					},
 
 					enablePaginations: function() {
@@ -102,10 +102,10 @@ AUI.add(
 
 						FormBuilderPagesManager.superclass.enablePaginations.apply(instance, arguments);
 
-						instance._toggleDisableWizard(false);
+						instance._toggleWizardDisabled(false);
 					},
 
-					toggleDisablePageControlTrigger: function(disabled) {
+					toggleControlsTriggerDisabled: function(disabled) {
 						var instance = this;
 
 						var builder = instance.get('builder');
@@ -115,30 +115,20 @@ AUI.add(
 						boundingBox.all('.' + CSS_FORM_BUILDER_CONTROLS_TRIGGER).toggleClass('disabled', disabled);
 					},
 
-					toggleDisablePageDescription: function(disabled) {
+					toggleDescriptionDisabled: function(disabled) {
 						var instance = this;
 
-						var pageDescriptionField = instance.get('pageHeader').one('.' + CSS_PAGE_HEADER_DESCRIPTION);
+						var descriptionNode = instance.get('pageHeader').one('.' + CSS_PAGE_HEADER_DESCRIPTION);
 
-						if (disabled) {
-							pageDescriptionField.setAttribute('disabled', '');
-						}
-						else {
-							pageDescriptionField.removeAttribute('disabled');
-						}
+						instance._toggleNodeDisabled(descriptionNode, disabled);
 					},
 
-					toggleDisablePageTitle: function(disabled) {
+					toggleTitleDisabled: function(disabled) {
 						var instance = this;
 
-						var pageTitleField = instance.get('pageHeader').one('.' + CSS_PAGE_HEADER_TITLE);
+						var titleNode = instance.get('pageHeader').one('.' + CSS_PAGE_HEADER_TITLE);
 
-						if (disabled) {
-							pageTitleField.setAttribute('disabled', '');
-						}
-						else {
-							pageTitleField.removeAttribute('disabled');
-						}
+						instance._toggleNodeDisabled(titleNode, disabled);
 					},
 
 					_addWizardPage: function() {
@@ -317,21 +307,19 @@ AUI.add(
 
 						event.stopPropagation();
 
-						if (event.currentTarget.hasClass('disabled')) {
-							return;
+						if (!event.currentTarget.hasClass('disabled')) {
+							popover.set(
+								'align',
+								{
+									node: event.currentTarget,
+									points: [A.WidgetPositionAlign.RC, A.WidgetPositionAlign.TC]
+								}
+							);
+
+							popover.set('position', event.currentTarget.getData('position'));
+
+							popover.toggle();
 						}
-
-						popover.set(
-							'align',
-							{
-								node: event.currentTarget,
-								points: [A.WidgetPositionAlign.RC, A.WidgetPositionAlign.TC]
-							}
-						);
-
-						popover.set('position', event.currentTarget.getData('position'));
-
-						popover.toggle();
 					},
 
 					_onRemovePageClick: function() {
@@ -542,7 +530,16 @@ AUI.add(
 						wizard.set('items', instance._createWizardItems());
 					},
 
-					_toggleDisableWizard: function(disabled) {
+					_toggleNodeDisabled: function(node, disabled) {
+						if (disabled) {
+							node.setAttribute('disabled', '');
+						}
+						else {
+							node.removeAttribute('disabled');
+						}
+					},
+
+					_toggleWizardDisabled: function(disabled) {
 						var instance = this;
 
 						instance._getWizard().set('disabled', disabled);

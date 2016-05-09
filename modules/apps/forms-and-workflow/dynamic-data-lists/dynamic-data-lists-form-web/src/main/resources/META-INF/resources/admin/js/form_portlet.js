@@ -143,36 +143,36 @@ AUI.add(
 						}
 					},
 
-					disableFormDescription: function() {
+					disableDescriptionEditor: function() {
 						var instance = this;
 
-						var formDescriptionEditor = CKEDITOR.instances[instance.ns('descriptionEditor')];
+						var descriptionEditor = CKEDITOR.instances[instance.ns('descriptionEditor')];
 
-						formDescriptionEditor.element.$.contentEditable = false;
+						descriptionEditor.element.$.contentEditable = false;
 					},
 
-					disableFormTitle: function() {
+					disableNameEditor: function() {
 						var instance = this;
 
-						var formTitleEditor = CKEDITOR.instances[instance.ns('nameEditor')];
+						var nameEditor = CKEDITOR.instances[instance.ns('nameEditor')];
 
-						formTitleEditor.element.$.contentEditable = false;
+						nameEditor.element.$.contentEditable = false;
 					},
 
-					enableFormDescription: function() {
+					enableDescriptionEditor: function() {
 						var instance = this;
 
-						var formDescriptionEditor = CKEDITOR.instances[instance.ns('descriptionEditor')];
+						var descriptionEditor = CKEDITOR.instances[instance.ns('descriptionEditor')];
 
-						formDescriptionEditor.element.$.contentEditable = true;
+						descriptionEditor.element.$.contentEditable = true;
 					},
 
-					enableFormTitle: function() {
+					enableNameEditor: function() {
 						var instance = this;
 
-						var formTitleEditor = CKEDITOR.instances[instance.ns('nameEditor')];
+						var nameEditor = CKEDITOR.instances[instance.ns('nameEditor')];
 
-						formTitleEditor.element.$.contentEditable = true;
+						nameEditor.element.$.contentEditable = true;
 					},
 
 					getState: function() {
@@ -336,15 +336,15 @@ AUI.add(
 					_afterFormBuilderLayoutBuilderMoveEnd: function() {
 						var instance = this;
 
-						instance.enableFormDescription();
-						instance.enableFormTitle();
+						instance.enableDescriptionEditor();
+						instance.enableNameEditor();
 					},
 
 					_afterFormBuilderLayoutBuilderMoveStart: function() {
 						var instance = this;
 
-						instance.disableFormDescription();
-						instance.disableFormTitle();
+						instance.disableDescriptionEditor();
+						instance.disableNameEditor();
 					},
 
 					_getDescription: function() {

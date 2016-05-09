@@ -17,6 +17,7 @@ AUI.add(
 			TPL_MOVE_MESSAGE: '<div class="' + CSS_FORM_BUILDER_MOVING_MESSAGE + '">' +
 				'<button class="btn btn-lg btn-default ' + CSS_FORM_BUILDER_MOVING_MESSAGE_DISMISS_BUTTOM + '" type="button">{dismiss-operation}</button>' +
 			'</div>',
+
 			initializer: function() {
 				var instance = this;
 
@@ -61,7 +62,7 @@ AUI.add(
 			_createPopoverHelperMessage: function() {
 				var instance = this;
 
-				var popOver = new A.Popover(
+				var popover = new A.Popover(
 					{
 						constrain: true,
 						position: 'top',
@@ -70,7 +71,7 @@ AUI.add(
 					}
 				).render();
 
-				instance._popoverHelperMessage = popOver;
+				instance._popoverHelperMessage = popover;
 			},
 
 			_hideCutRowHelperMessage: function() {
@@ -90,15 +91,19 @@ AUI.add(
 			_onLayoutMoveEnd: function(event) {
 				var instance = this;
 
+				var pageManager = instance._pageManager;
+
 				instance._removeMovingMessage();
 
-				instance._pageManager.toggleDisablePageControlTrigger(false);
-				instance._pageManager.toggleDisablePageDescription(false);
-				instance._pageManager.toggleDisablePageTitle(false);
+				pageManager.toggleControlsTriggerDisabled(false);
+				pageManager.toggleDescriptionDisabled(false);
+				pageManager.toggleTitleDisabled(false);
 			},
 
 			_onLayoutMoveStart: function(event) {
 				var instance = this;
+
+				var pageManager = instance._pageManager;
 
 				var row = event.moveElement;
 
@@ -106,15 +111,17 @@ AUI.add(
 					instance._showMovingRowMessage(row);
 				}
 
-				instance._pageManager.toggleDisablePageControlTrigger(true);
-				instance._pageManager.toggleDisablePageDescription(true);
-				instance._pageManager.toggleDisablePageTitle(true);
+				pageManager.toggleControlsTriggerDisabled(true);
+				pageManager.toggleDescriptionDisabled(true);
+				pageManager.toggleTitleDisabled(true);
 			},
 
 			_removeMovingMessage: function() {
 				var instance = this;
 
-				var movingMessageNode = instance.get('boundingBox').one('.' + CSS_FORM_BUILDER_MOVING_MESSAGE);
+				var boundingBox = instance.get('boundingBox');
+
+				var movingMessageNode = boundingBox.one('.' + CSS_FORM_BUILDER_MOVING_MESSAGE);
 
 				if (movingMessageNode) {
 					movingMessageNode.remove();
@@ -129,9 +136,12 @@ AUI.add(
 					points: [A.WidgetPositionAlign.RC, A.WidgetPositionAlign.TC]
 				};
 
-				instance._popoverHelperMessage.set('bodyContent', Liferay.Language.get('click-to-cut-row'));
-				instance._popoverHelperMessage.set('align', alignToNode);
-				instance._popoverHelperMessage.show();
+				var popoverHelperMessage = instance._popoverHelperMessage;
+
+				popoverHelperMessage.set('bodyContent', Liferay.Language.get('click-to-cut-row'));
+				popoverHelperMessage.set('align', alignToNode);
+
+				popoverHelperMessage.show();
 			},
 
 			_showMovingRowMessage: function(row) {

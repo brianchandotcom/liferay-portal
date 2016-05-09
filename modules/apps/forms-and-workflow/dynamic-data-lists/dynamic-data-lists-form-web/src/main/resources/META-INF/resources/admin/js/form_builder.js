@@ -81,7 +81,7 @@ AUI.add(
 					}
 				},
 
-				AUGMENTS: [Liferay.DDM.Renderer.NestedFieldsSupport, Liferay.DDL.FormBuilderLayoutBuilderSupport],
+				AUGMENTS: [Liferay.DDL.FormBuilderLayoutBuilderSupport, Liferay.DDM.Renderer.NestedFieldsSupport],
 
 				CSS_PREFIX: 'form-builder',
 

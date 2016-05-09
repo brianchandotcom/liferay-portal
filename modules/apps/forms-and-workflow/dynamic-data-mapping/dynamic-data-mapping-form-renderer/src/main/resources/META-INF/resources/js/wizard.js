@@ -172,20 +172,19 @@ AUI.add(
 					_onClickItem: function(event) {
 						var instance = this;
 
-						var items = instance.get('contentBox').all('li');
-
 						var currentTarget = event.currentTarget;
+
+						var items = instance.get('contentBox').all('li');
 
 						var index = items.indexOf(currentTarget);
 
 						if (instance.get('disabled')) {
 							event.stopPropagation();
 							event.preventDefault();
-
-							return;
 						}
-
-						instance.set('selected', index);
+						else {
+							instance.set('selected', index);
+						}
 					},
 
 					_removeItem: function(index) {

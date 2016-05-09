@@ -17,6 +17,7 @@ package com.liferay.journal.upgrade;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
@@ -78,9 +79,10 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.journal.service", "0.0.4", "0.0.5",
 			new UpgradeCompanyId(),
 			new UpgradeJournal(
-				_companyLocalService, _ddmTemplateLinkLocalService,
-				_defaultDDMStructureHelper, _groupLocalService,
-				_resourceActions, _resourceActionLocalService,
+				_companyLocalService, _ddmStorageLinkLocalService,
+				_ddmTemplateLinkLocalService, _defaultDDMStructureHelper,
+				_groupLocalService, _resourceActions,
+				_resourceActionLocalService,
 				_userLocalService),
 			new UpgradeJournalArticles(
 				_assetCategoryLocalService, _ddmStructureLocalService,
@@ -154,6 +156,13 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMStorageLinkLocalService(
+		DDMStorageLinkLocalService ddmStorageLinkLocalService) {
+
+		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
 
@@ -215,6 +224,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	private AssetEntryLocalService _assetEntryLocalService;
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 	private CompanyLocalService _companyLocalService;
+	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;

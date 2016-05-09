@@ -15,6 +15,7 @@
 package com.liferay.journal.upgrade.v0_0_5;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -23,6 +24,7 @@ import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -66,6 +68,7 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	public UpgradeJournal(
 		CompanyLocalService companyLocalService,
+		DDMStorageLinkLocalService ddmStorageLinkLocalService,
 		DDMTemplateLinkLocalService ddmTemplateLinkLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		GroupLocalService groupLocalService, ResourceActions resourceActions,
@@ -73,6 +76,7 @@ public class UpgradeJournal extends UpgradeProcess {
 		UserLocalService userLocalService) {
 
 		_companyLocalService = companyLocalService;
+		_ddmStorageLinkLocalService = ddmStorageLinkLocalService;
 		_ddmTemplateLinkLocalService = ddmTemplateLinkLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 		_groupLocalService = groupLocalService;
@@ -110,6 +114,43 @@ public class UpgradeJournal extends UpgradeProcess {
 		Element structureElement = structureElements.get(0);
 
 		return structureElement.elementText("name");
+	}
+
+	protected void addDDMStorageLinks() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			long journalArticleClassNameId = PortalUtil.getClassNameId(
+				JournalArticle.class.getName());
+
+			StringBundler sb = new StringBundler(8);
+
+			sb.append("select DDMStructure.structureId, JournalArticle.id_ ");
+			sb.append("from JournalArticle inner join DDMStructure on (");
+			sb.append("DDMStructure.groupId in (select distinct Group_.");
+			sb.append("groupId from Group_ where (Group_.groupId = ");
+			sb.append("JournalArticle.groupId) or (Group_.companyId = ");
+			sb.append("JournalArticle.companyId and Group_.friendlyURL = ?)) ");
+			sb.append("and DDMStructure.structureKey = JournalArticle.");
+			sb.append("ddmStructureKey and JournalArticle.classNameId != ?)");
+
+			try (PreparedStatement ps = connection.prepareStatement(
+					sb.toString())) {
+
+				ps.setString(1, GroupConstants.GLOBAL_FRIENDLY_URL);
+				ps.setLong(
+					2, PortalUtil.getClassNameId(DDMStructure.class.getName()));
+
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						long structureId = rs.getLong("structureId");
+						long id = rs.getLong("id_");
+
+						_ddmStorageLinkLocalService.addStorageLink(
+							journalArticleClassNameId, id, structureId,
+							new ServiceContext());
+					}
+				}
+			}
+		}
 	}
 
 	protected void addDDMTemplateLinks() throws Exception {
@@ -207,6 +248,7 @@ public class UpgradeJournal extends UpgradeProcess {
 		updateJournalArticles();
 
 		addDDMTemplateLinks();
+		addDDMStorageLinks();
 	}
 
 	protected String getContent(String fileName) {
@@ -429,6 +471,7 @@ public class UpgradeJournal extends UpgradeProcess {
 		DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd");
 
 	private final CompanyLocalService _companyLocalService;
+	private final DDMStorageLinkLocalService _ddmStorageLinkLocalService;
 	private final DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private final GroupLocalService _groupLocalService;

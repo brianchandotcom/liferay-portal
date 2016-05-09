@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.util;
+package com.liferay.petra.collection.stack;
 
 import java.util.Stack;
 

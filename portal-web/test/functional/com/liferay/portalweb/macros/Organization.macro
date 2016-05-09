@@ -297,9 +297,6 @@
 
 					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
-					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_CITY" value1="${orgAddressCity}" />
-					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_REGION" value1="${orgAddressRegion}" />
-					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_COUNTRY" value1="${orgAddressCountry}" />
 				</then>
 			</elseif>
 			<elseif>
@@ -312,9 +309,6 @@
 
 					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
-					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_CITY" value1="${orgAddressCity}" />
-					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_REGION" value1="${orgAddressRegion}" />
-					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_COUNTRY" value1="${orgAddressCountry}" />
 				</then>
 			</elseif>
 			<elseif>
@@ -327,9 +321,6 @@
 
 					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
-					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_CITY" value1="${orgAddressCity}" />
-					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_REGION" value1="${orgAddressRegion}" />
-					<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_COUNTRY" value1="${orgAddressCountry}" />
 				</then>
 			</elseif>
 			<else>
@@ -655,8 +646,7 @@
 	<command name="viewAssignMemberCP">
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_FIRST_NAME" value1="${userFirstName}" />
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_LAST_NAME" value1="${userLastName}" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_NAME" value1="${userName}" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
 

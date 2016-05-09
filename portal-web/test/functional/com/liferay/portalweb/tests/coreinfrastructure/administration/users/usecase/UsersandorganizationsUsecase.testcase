@@ -594,22 +594,19 @@
 
 		<execute macro="User#basicSearchCP">
 			<var name="userBasicSearch" value="Basic" />
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
+			<var name="userName" value="userfn1 userln1" />
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="User#basicSearchCP">
 			<var name="userBasicSearch" value="Basic" />
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
+			<var name="userName" value="userfn2 userln2" />
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 
 		<execute macro="User#basicSearchCP">
 			<var name="userBasicSearch" value="Basic" />
-			<var name="userFirstName" value="userfn3" />
-			<var name="userLastName" value="userln3" />
+			<var name="userName" value="userfn3 userln3" />
 			<var name="userScreenName" value="usersn3" />
 		</execute>
 
@@ -763,8 +760,7 @@
 		</execute>
 
 		<execute macro="User#activateCP">
-			<var name="userFirstName" value="userfn2" />
-			<var name="userLastName" value="userln2" />
+			<var name="userName" value="userfn2 userln2" />
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 

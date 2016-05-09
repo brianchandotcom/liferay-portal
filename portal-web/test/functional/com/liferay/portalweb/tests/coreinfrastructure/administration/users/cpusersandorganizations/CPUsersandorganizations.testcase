@@ -60,8 +60,7 @@
 		</execute>
 
 		<execute macro="User#activateCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
+			<var name="userName" value="userfn userln" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
@@ -177,8 +176,7 @@
 		</execute>
 
 		<execute macro="Organization#viewAssignMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
+			<var name="userName" value="userfn userln" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 	</command>
@@ -1226,9 +1224,7 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations">
-			<var name="noOrganizationsExist" value="true" />
-		</execute>
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
 
 		<execute macro="Organization#viewNoOrganizationsFoundCP" />
 	</command>
@@ -1679,8 +1675,7 @@
 		<execute macro="User#basicSearchCP">
 			<var name="userBasicSearch" value="Basic" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
+			<var name="userName" value="userfn userln" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 	</command>
@@ -1704,8 +1699,7 @@
 		<execute macro="User#basicSearchCP">
 			<var name="userBasicSearch" value="Full Name" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
+			<var name="userName" value="userfn userln" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 	</command>
@@ -1739,28 +1733,24 @@
 
 		<var name="key_userScreenName" value="usersn1" />
 
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_FIRST_NAME" value1="userfn1" />
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_LAST_NAME" value1="userln1" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_NAME" value1="userfn1 userln1" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="usersn1" />
 
 		<var name="key_userScreenName" value="usersn2" />
 
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_FIRST_NAME" value1="userfn2" />
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_LAST_NAME" value1="userln2" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_NAME" value1="userfn2 userln2" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="usersn2" />
 
 		<execute macro="User#basicSearchCP">
 			<var name="userBasicSearch" value="Quotes" />
 			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userFirstName" value="userfn1" />
-			<var name="userLastName" value="userln1" />
+			<var name="userName" value="userfn1 userln1" />
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<var name="key_userScreenName" value="usersn2" />
 
-		<execute function="AssertTextNotPresent" locator1="UsersAndOrganizations#USER_TABLE_FIRST_NAME" value1="userfn2" />
-		<execute function="AssertTextNotPresent" locator1="UsersAndOrganizations#USER_TABLE_LAST_NAME" value1="userln2" />
+		<execute function="AssertTextNotPresent" locator1="UsersAndOrganizations#USER_TABLE_NAME" value1="userfn2 userln2" />
 		<execute function="AssertTextNotPresent" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="usersn2" />
 	</command>
 
@@ -1814,8 +1804,7 @@
 		</execute>
 
 		<execute macro="Organization#viewAssignMemberCP">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
+			<var name="userName" value="userfn userln" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 

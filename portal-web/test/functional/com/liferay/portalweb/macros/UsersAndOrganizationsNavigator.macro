@@ -8,15 +8,6 @@
 				<execute function="AssertClick" locator1="NavBar#ORGANIZATIONS" value1="Organizations" />
 			</then>
 		</if>
-
-		<if>
-			<not>
-				<equals arg1="${noOrganizationsExist}" arg2="true" />
-			</not>
-			<then>
-				<execute function="AssertVisible" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_HEADER_PARENT_ORGANIZATION" />
-			</then>
-		</if>
 	</command>
 
 	<command name="gotoUsers">

@@ -18,11 +18,13 @@
 
 <%
 String productMenuState = SessionClicks.get(request, ProductNavigationProductMenuWebKeys.PRODUCT_NAVIGATION_PRODUCT_MENU_STATE, "closed");
+
+Group group = themeDisplay.getScopeGroup();
 %>
 
 <div class="lfr-product-menu-sidebar" id="productMenuSidebar">
 	<h4 class="sidebar-header">
-		<a href="<%= themeDisplay.getURLPortal() %>">
+		<a href="<%= HtmlUtil.escape(group.getDisplayURL(themeDisplay, layout.isPrivateLayout())) %>">
 			<span class="company-details">
 				<img alt="" class="company-logo" src="<%= themeDisplay.getRealCompanyLogo() %>" />
 				<span class="company-name"><%= company.getName() %></span>

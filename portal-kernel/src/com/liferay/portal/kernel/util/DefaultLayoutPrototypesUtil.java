@@ -81,14 +81,11 @@ public class DefaultLayoutPrototypesUtil {
 		throws Exception {
 
 		String name = nameMap.get(LocaleUtil.getDefault());
-		String description = descriptionMap.get(LocaleUtil.getDefault());
 
 		for (LayoutPrototype layoutPrototype : layoutPrototypes) {
 			String curName = layoutPrototype.getName(LocaleUtil.getDefault());
-			String curDescription = layoutPrototype.getDescription(
-				LocaleUtil.getDefault());
 
-			if (name.equals(curName) && description.equals(curDescription)) {
+			if (name.equals(curName)) {
 				return null;
 			}
 		}

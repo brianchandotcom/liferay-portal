@@ -14,8 +14,8 @@
 
 package com.liferay.frontend.taglib.servlet.taglib.base;
 
-import com.liferay.frontend.taglib.web.servlet.ServletContextUtil;
 import com.liferay.frontend.taglib.servlet.taglib.BarTag;
+import com.liferay.frontend.taglib.web.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.jsp.PageContext;

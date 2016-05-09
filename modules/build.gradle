@@ -18,7 +18,10 @@ gradle.beforeProject {
 
 		pluginManager.withPlugin("com.liferay.ant.plugin") {
 			task buildLang(dependsOn: "build-lang")
-			task buildService(dependsOn: "build-service")
+
+			if (FileUtil.exists(project, "docroot/WEB-INF/service.xml")) {
+				task buildService(dependsOn: "build-service")
+			}
 		}
 
 		pluginManager.withPlugin("com.liferay.osgi.plugin") {

@@ -127,7 +127,9 @@ public class LPKGIndexer implements Indexer {
 		for (File lpkgFile : lpkgFiles) {
 			LPKGIndexer lpkgIndexer = new LPKGIndexer(lpkgFile);
 
-			lpkgIndexer.index(targetPlatformDir);
+			File indexFile = lpkgIndexer.index(targetPlatformDir);
+
+			System.out.println("Wrote index file " + indexFile);
 		}
 	}
 

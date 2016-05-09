@@ -262,7 +262,13 @@
 		<echo append="true" file="${dist.dir}/ticket.list.tmp">${artifact.change.log.ticket.list} </echo>
 	</target>
 
-	<target name="reset-artifact">
+	<target depends="reset-artifact-dependencies" name="reset-artifact">
 		<move failonerror="false" file="${artifact.location.dest}" tofile="${artifact.location.src}" />
+	</target>
+
+	<target if="artifact.deploy.dependencies" name="reset-artifact-dependencies">
+		<exec dir="${modules.dir}" executable="${modules.dir}/../gradlew${gradlew.suffix}">
+			<arg value="${gradle.project.path}:deployDependencies" />
+		</exec>
 	</target>
 </project>

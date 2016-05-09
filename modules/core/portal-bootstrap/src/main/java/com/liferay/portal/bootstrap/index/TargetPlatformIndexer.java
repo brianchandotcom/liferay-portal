@@ -122,7 +122,9 @@ public class TargetPlatformIndexer implements Indexer {
 			bsn, version);
 
 		try {
-			targetPlatformIndexer.index(targetPlatformDir);
+			File indexFile = targetPlatformIndexer.index(targetPlatformDir);
+
+			System.out.println("Wrote index file " + indexFile);
 		}
 		finally {
 			FileUtil.deltree(tempFolder);

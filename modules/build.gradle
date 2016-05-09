@@ -21,6 +21,7 @@ gradle.beforeProject {
 
 			if (FileUtil.exists(project, "docroot/WEB-INF/service.xml")) {
 				task buildService(dependsOn: "build-service")
+				task buildWSDD(dependsOn: "build-wsdd")
 			}
 		}
 

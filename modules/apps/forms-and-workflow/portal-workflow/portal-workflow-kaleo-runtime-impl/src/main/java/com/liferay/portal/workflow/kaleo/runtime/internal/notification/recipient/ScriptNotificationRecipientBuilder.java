@@ -95,7 +95,7 @@ public class ScriptNotificationRecipientBuilder
 		throws Exception {
 	}
 
-	@Reference
+	@Reference(target = "(!(scripting.language=*))")
 	private NotificationRecipientEvaluator _notificationRecipientEvaluator;
 
 	@Reference

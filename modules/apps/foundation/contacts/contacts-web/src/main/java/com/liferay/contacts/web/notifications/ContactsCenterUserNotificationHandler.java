@@ -110,7 +110,7 @@ public class ContactsCenterUserNotificationHandler
 
 		if ((socialRequest.getStatus() !=
 				SocialRequestConstants.STATUS_PENDING) ||
-			(socialRequest.getCreateDate() >
+			(socialRequest.getModifiedDate() >
 				userNotificationEvent.getTimestamp())) {
 
 			return StringUtil.replace(

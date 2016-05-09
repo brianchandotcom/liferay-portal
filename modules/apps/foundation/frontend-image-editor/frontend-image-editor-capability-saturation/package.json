@@ -1,0 +1,7 @@
+{
+	"devDependencies": {
+		"metal-components": "1.0.0-rc.19"
+	},
+	"name": "frontend-image-editor-capability-saturation",
+	"version": "1.0.0"
+}

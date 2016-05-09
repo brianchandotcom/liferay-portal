@@ -16,6 +16,9 @@ package com.liferay.portal.search.facet.faceted.searcher.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
@@ -26,12 +29,17 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.test.util.AssertUtils;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -57,35 +65,64 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 		String tag = RandomTestUtil.randomString();
 
-		userSearchFixture.addUser(group, tag);
+		User user = userSearchFixture.addUser(group, tag);
 
-		assertSearch(tag, 1);
+		assertSearch(tag, toMap(user, tag));
 	}
 
 	@Test
 	public void testSearchByKeywordsIgnoresInactiveSites() throws Exception {
 		Group group1 = userSearchFixture.addGroup();
 
-		userSearchFixture.addUser(
-			group1, "Liferay " + RandomTestUtil.randomString());
+		String prefix = RandomTestUtil.randomString();
+
+		final String tag1 = prefix + " " + RandomTestUtil.randomString();
+
+		final User user1 = userSearchFixture.addUser(group1, tag1);
 
 		Group group2 = userSearchFixture.addGroup();
 
-		userSearchFixture.addUser(
-			group2, "Liferay " + RandomTestUtil.randomString());
+		final String tag2 = prefix + " " + RandomTestUtil.randomString();
 
-		assertSearch("Liferay", 2);
+		final User user2 = userSearchFixture.addUser(group2, tag2);
+
+		assertSearch(
+			prefix,
+			new HashMap<String, String>() {
+				{
+					putAll(toMap(user1, tag1));
+					putAll(toMap(user2, tag2));
+				}
+			});
 
 		deactivate(group1);
 
-		assertSearch("Liferay", 1);
+		assertSearch(prefix, toMap(user2, tag2));
 
 		deactivate(group2);
 
-		assertSearch("Liferay", 0);
+		assertSearch(prefix, Collections.<String, String>emptyMap());
 	}
 
-	protected void assertSearch(final String tag, final int count)
+	protected static Map<String, String> toMap(List<Document> list) {
+		Map<String, String> map = new HashMap<>(list.size());
+
+		for (Document document : list) {
+			map.put(
+				document.get("screenName"),
+				document.get(Field.ASSET_TAG_NAMES));
+		}
+
+		return map;
+	}
+
+	protected static Map<String, String> toMap(User user, String tag) {
+		return Collections.singletonMap(
+			user.getScreenName(), StringUtil.toLowerCase(tag));
+	}
+
+	protected void assertSearch(
+			final String tag, final Map<String, String> expected)
 		throws Exception {
 
 		IdempotentRetryAssert.retryAssert(
@@ -98,7 +135,8 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 					Hits hits = facetedSearcher.search(getSearchContext(tag));
 
-					Assert.assertEquals(count, hits.getLength());
+					AssertUtils.assertEquals(
+						tag, expected, toMap(hits.toList()));
 
 					return null;
 				}

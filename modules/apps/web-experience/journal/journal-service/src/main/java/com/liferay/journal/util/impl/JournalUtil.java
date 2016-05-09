@@ -939,9 +939,11 @@ public class JournalUtil {
 				"available-locales");
 
 			if (availableLocalesAttribute == null) {
-				availableLocalesAttribute =
-					(Attribute)newRootElement.addAttribute(
-						"available-locales", StringPool.BLANK);
+				newRootElement = newRootElement.addAttribute(
+					"available-locales", StringPool.BLANK);
+
+				availableLocalesAttribute = newRootElement.attribute(
+					"available-locales");
 			}
 
 			String defaultImportLanguageId = LocaleUtil.toLanguageId(
@@ -971,8 +973,11 @@ public class JournalUtil {
 				"default-locale");
 
 			if (defaultLocaleAttribute == null) {
-				defaultLocaleAttribute = (Attribute)newRootElement.addAttribute(
+				newRootElement = newRootElement.addAttribute(
 					"default-locale", StringPool.BLANK);
+
+				defaultLocaleAttribute = newRootElement.attribute(
+					"default-locale");
 			}
 
 			Locale defaultContentLocale = LocaleUtil.fromLanguageId(

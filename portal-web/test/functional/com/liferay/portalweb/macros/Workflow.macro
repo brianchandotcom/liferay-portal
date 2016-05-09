@@ -333,6 +333,12 @@
 		<execute function="AssertClick" locator1="MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE" value1="${workflowAssetTitle}" />
 	</command>
 
+	<command name="gotoAssignedToMe">
+		<execute function="Click" locator1="MenuItem#ASSIGNED_TO_ME" />
+
+		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_ACTIVE" />
+	</command>
+
 	<command name="gotoAssignedToMyRoles">
 		<execute function="Click" locator1="MenuItem#ASSIGNED_TO_MY_ROLES" />
 

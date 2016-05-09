@@ -47,7 +47,7 @@ if (resourceClassNameId == 0) {
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="templates" selected="<%= true %>" />
+		<aui:nav-item label="<%= ddmDisplay.getViewTemplatesTitle(null, locale) %>" selected="<%= true %>" />
 	</aui:nav>
 
 	<aui:nav-bar-search>

@@ -482,11 +482,8 @@ public class DDMStructureLocalServiceImpl
 						structure.getStructureId());
 			}
 
-			long classNameId = classNameLocalService.getClassNameId(
-				DDMStructure.class);
-
 			if (ddmTemplatePersistence.countByClassPK(
-					structure.getPrimaryKey()) > 0) {
+					structure.getStructureId()) > 0) {
 
 				throw new RequiredStructureException.
 					MustNotDeleteStructureReferencedByTemplates(

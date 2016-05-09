@@ -146,7 +146,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 			<h5><liferay-ui:message key="url" /></h5>
 
 			<p>
-				<%= entry.getUrl() %>
+				<%= HtmlUtil.escape(entry.getUrl()) %>
 			</p>
 
 			<h5><liferay-ui:message key="visits" /></h5>

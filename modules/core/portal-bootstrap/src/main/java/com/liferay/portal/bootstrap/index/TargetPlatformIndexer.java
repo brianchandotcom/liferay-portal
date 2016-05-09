@@ -107,7 +107,7 @@ public class TargetPlatformIndexer implements Indexer {
 		String version = ReleaseInfo.getVersion();
 
 		File targetPlatformDir = new File(
-			PropsValues.MODULE_FRAMEWORK_BASE_DIR, "target-platform");
+			PropsValues.MODULE_FRAMEWORK_BASE_DIR, TARGET_PLATFORM);
 
 		if (!targetPlatformDir.exists() && !targetPlatformDir.mkdirs()) {
 			System.err.printf(

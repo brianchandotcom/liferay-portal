@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Sync Service
+Bundle-SymbolicName: com.liferay.sync.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.io.delta,\
+	com.liferay.sync.*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Sync Connector
+Liferay-Require-SchemaVersion: 1.0.2
+Liferay-Service: true

@@ -22,13 +22,13 @@ class CropHandles extends Component {
 
 		this.resizer = this.element.querySelector('.resize-handle');
 
-		this.selectionBorderWidth_ = parseInt(this.element.style.borderWidth);
+		this.selectionBorderWidth_ = parseInt(this.element.style.borderWidth, 10);
 
 		this.croppedPreview_ = this.element.querySelector('.cropped-image-preview');
 
 		this.croppedPreviewContext_ = this.croppedPreview_.getContext('2d');
 
-		async.nextTick(() => {
+		async.nextTick(() => {
 			let canvas = this.getImageEditorCanvas();
 
 			this.setSelectionInitialStyle_();
@@ -140,19 +140,23 @@ class CropHandles extends Component {
 		constrain.top = selection.top + this.resizer.offsetHeight + this.selectionBorderWidth_ * 2;
 		constrain.width = constrain.right - constrain.left;
 		constrain.height = constrain.bottom - constrain.top;
-		constrain.right += this.resizer.offsetWidth / 2 - this.selectionBorderWidth_
-		constrain.bottom += this.resizer.offsetHeight / 2 - this.selectionBorderWidth_
+		constrain.right += this.resizer.offsetWidth / 2 - this.selectionBorderWidth_;
+		constrain.bottom += this.resizer.offsetHeight / 2 - this.selectionBorderWidth_;
 
 		if (region.left < constrain.left) {
 			region.left = constrain.left;
-		} else if (region.right > constrain.right) {
+		}
+		else if (region.right > constrain.right) {
 			region.left -= region.right - constrain.right;
 		}
+
 		if (region.top < constrain.top) {
 			region.top = constrain.top;
-		} else if (region.bottom > constrain.bottom) {
+		}
+		else if (region.bottom > constrain.bottom) {
 			region.top -= region.bottom - constrain.bottom;
 		}
+
 		region.right = region.left + region.width;
 		region.bottom = region.top + region.height;
 	}
@@ -165,17 +169,21 @@ class CropHandles extends Component {
 	initializeDrags_() {
 		let canvas = this.getImageEditorCanvas();
 
-		this.selectionDrag_ = new Drag({
-			constrain: canvas,
-			handles: this.element,
-			sources: this.element
-		});
+		this.selectionDrag_ = new Drag(
+			{
+				constrain: canvas,
+				handles: this.element,
+				sources: this.element
+			}
+		);
 
-		this.sizeDrag_ = new Drag({
-			constrain: this.getSizeDragConstrain_.bind(this),
-			handles: this.resizer,
-			sources: this.resizer
-		});
+		this.sizeDrag_ = new Drag(
+			{
+				constrain: this.getSizeDragConstrain_.bind(this),
+				handles: this.resizer,
+				sources: this.resizer
+			}
+		);
 
 		this.bindDrags_();
 	}

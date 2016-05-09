@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.portlet.configuration.icon;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.display.context.logic.FileEntryDisplayContextHelper;
 import com.liferay.document.library.web.portlet.action.ActionUtil;
@@ -36,6 +37,7 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -58,7 +60,7 @@ public class DeleteFileEntryPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long repositoryId = ParamUtil.getLong(portletRequest, "repositoryId");
+		long repositoryId = getRepositoryId(portletRequest);
 
 		if (isTrashEnabled(themeDisplay.getScopeGroupId(), repositoryId)) {
 			key = "move-to-the-recycle-bin";
@@ -66,6 +68,26 @@ public class DeleteFileEntryPortletConfigurationIcon
 
 		return LanguageUtil.get(
 			getResourceBundle(getLocale(portletRequest)), key);
+	}
+
+	protected long getRepositoryId(PortletRequest portletRequest) {
+		try {
+			long repositoryId = ParamUtil.getLong(
+				portletRequest, "repositoryId");
+
+			if (repositoryId != 0) {
+				return repositoryId;
+			}
+
+			long fileEntryId = ParamUtil.getLong(portletRequest, "fileEntryId");
+
+			FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+			return fileEntry.getRepositoryId();
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
 	}
 
 	@Override
@@ -82,7 +104,7 @@ public class DeleteFileEntryPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long repositoryId = ParamUtil.getLong(portletRequest, "repositoryId");
+		long repositoryId =  getRepositoryId(portletRequest);
 
 		if (isTrashEnabled(themeDisplay.getScopeGroupId(), repositoryId)) {
 			portletURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);
@@ -162,5 +184,12 @@ public class DeleteFileEntryPortletConfigurationIcon
 			throw new RuntimeException(pe);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
+	private DLAppService _dlAppService;
 
 }

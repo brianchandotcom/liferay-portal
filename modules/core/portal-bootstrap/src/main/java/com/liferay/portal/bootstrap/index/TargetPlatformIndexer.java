@@ -147,7 +147,7 @@ public class TargetPlatformIndexer implements Indexer {
 	}
 
 	@Override
-	public void index(File output) throws Exception {
+	public File index(File output) throws Exception {
 		File tempFolder = FileUtil.createTempFolder();
 
 		_indexerConfig.put("root.url", tempFolder.getCanonicalPath());
@@ -246,8 +246,7 @@ public class TargetPlatformIndexer implements Indexer {
 
 			FileUtil.copyFile(tempIndexFile, indexFile);
 
-			System.out.println(
-				"Wrote index file " + indexFile.getAbsolutePath());
+			return indexFile;
 		}
 		finally {
 			FileUtil.deltree(tempFolder);

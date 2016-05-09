@@ -121,11 +121,11 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 				</li>
 			</ul>
 
-			<h4><%= assetEntry.getTitle(locale) %></h4>
+			<h4><%= HtmlUtil.escape(assetEntry.getTitle(locale)) %></h4>
 
 			<c:if test="<%= ddmStructure != null %>">
 				<h6 class="text-default">
-					<%= ddmStructure.getName(locale) %>
+					<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>
 				</h6>
 			</c:if>
 		</div>
@@ -158,7 +158,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 			<h5><liferay-ui:message key="title" /></h5>
 
 			<p>
-				<%= article.getTitle(locale) %>
+				<%= HtmlUtil.escape(article.getTitle(locale)) %>
 			</p>
 
 			<c:if test="<%= ddmTemplate != null %>">

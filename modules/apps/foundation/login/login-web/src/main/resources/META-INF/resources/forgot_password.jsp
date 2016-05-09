@@ -178,8 +178,37 @@ portletDisplay.setShowBackIcon(false);
 				cssClass: 'btn-lg btn-primary',
 				label: Liferay.Langauge.get('send-password-reset-link'),
 				on: {
-					click: function() {
-						submitForm(document.<portlet:namespace />fm);
+					click: function(event) {
+						var form = AUI.$(document.<portlet:namespace />fm);
+
+						var formValidator = Liferay.Form.get('<portlet:namespace />fm').formValidator;
+
+						formValidator.validate();
+
+						if (!formValidator.hasErrors()) {
+							form.ajaxSubmit(
+								{
+									success: function(responseData) {
+										document.open();
+										document.write(responseData);
+										document.close();
+
+										var alert = $(responseData).find('.lfr-alert-container');
+
+										var alertSuccess = alert.find('.alert-success');
+
+										if (alertSuccess.length) {
+											dialog.fire(
+												'closeWindow',
+												{
+													alert: alert
+												}
+											);
+										}
+									}
+								}
+							);
+						}
 					}
 				}
 			},

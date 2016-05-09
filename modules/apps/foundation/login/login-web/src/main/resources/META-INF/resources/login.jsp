@@ -216,8 +216,26 @@
 						dialog: {
 							centered: true,
 							destroyOnHide: true,
+							on: {
+								closeWindow: function(event) {
+
+									var alert = $(document).find('.lfr-alert-container');
+
+									alert.replaceWith(event.alert);
+
+									alert.find('.lfr-alert-wrapper').css('height', '58px');
+
+									Liferay.fire(
+										'closeWindow',
+										{
+											id: '<portlet:namespace />popup'
+										}
+									);
+								}
+							},
 							visible: false
 						},
+						id: '<portlet:namespace />popup',
 						title: event.target.text.trim(),
 						uri: event.target.href
 					}

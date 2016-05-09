@@ -63,9 +63,8 @@ public class UpgradeSharding extends UpgradeProcess {
 			if (!isTableEmpty(targetConnection, tableName)) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Control table " + tableName + " is present on shard " +
-							"and contains data, when it should not. " +
-							"Proceeding to delete it");
+						"Control table " + tableName + " should not contain " +
+							"data in a non-default shard.");
 				}
 			}
 
@@ -179,6 +178,10 @@ public class UpgradeSharding extends UpgradeProcess {
 		DB db = DBManagerUtil.getDB();
 
 		db.runSQL(connection, "drop table " + tableName);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Deleted table " + tableName);
+		}
 	}
 
 	protected List<String> getShardNames() throws Exception {

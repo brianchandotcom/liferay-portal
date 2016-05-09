@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 
+import java.text.Collator;
+
 import java.util.Locale;
 
 /**
@@ -39,6 +41,7 @@ public class WorkflowDefinitionTitleComparator
 	public WorkflowDefinitionTitleComparator(boolean ascending, Locale locale) {
 		_ascending = ascending;
 		_languageId = LocaleUtil.toLanguageId(locale);
+		_locale = locale;
 	}
 
 	@Override
@@ -51,8 +54,10 @@ public class WorkflowDefinitionTitleComparator
 		String workflowDefinitionTitle2 = workflowDefinition2.getTitle(
 			_languageId);
 
-		int value = workflowDefinitionTitle1.compareTo(
-			workflowDefinitionTitle2);
+		Collator collator = Collator.getInstance(_locale);
+
+		int value = collator.compare(
+			workflowDefinitionTitle1, workflowDefinitionTitle2);
 
 		if (_ascending) {
 			return value;
@@ -84,5 +89,6 @@ public class WorkflowDefinitionTitleComparator
 
 	private final boolean _ascending;
 	private final String _languageId;
+	private final Locale _locale;
 
 }

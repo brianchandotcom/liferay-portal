@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.text.Collator;
+
 import java.util.Comparator;
 import java.util.Locale;
 
@@ -73,7 +75,9 @@ public class PortletTitleComparator
 			return -1;
 		}
 
-		return portletTitle1.compareTo(portletTitle2);
+		Collator collator = Collator.getInstance(_locale);
+
+		return collator.compare(portletTitle1, portletTitle2);
 	}
 
 	private final Locale _locale;

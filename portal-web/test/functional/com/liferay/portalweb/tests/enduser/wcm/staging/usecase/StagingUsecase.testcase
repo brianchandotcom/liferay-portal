@@ -1547,14 +1547,14 @@
 			<var name="pageName" value="Wiki" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Home" />
+			<var name="siteName" value="Community Site Name" />
 		</execute>
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Page Name" />
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="Community Site Name" />
 		</execute>
 
 		<execute macro="Staging#changeSitePageVariationPG">
@@ -1841,14 +1841,14 @@
 
 		<execute function="AssertTextNotPresent" locator1="Home#PAGE_2" value1="Wiki" />
 
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Home" />
+			<var name="siteName" value="Community Site Name" />
 		</execute>
 
 		<execute macro="Page#add">
 			<var name="pageName" value="New Page Name" />
 			<var name="pageStaging" value="true" />
-			<var name="siteName" value="Community Site Name" />
 		</execute>
 
 		<execute macro="Staging#schedulePublishToLivePG">

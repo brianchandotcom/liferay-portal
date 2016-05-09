@@ -70,14 +70,14 @@ public class ModifiedFacetTest extends BaseFacetedSearcherTestCase {
 		final String configRange2 = "[19990202020202 TO 22220202020202]";
 		final String customRange = "[11110101010101 TO 22220202020202]";
 
-		final Collection<String> frequencies = toEntryStrings(
+		final HashMap<String, Integer> frequencies =
 			new HashMap<String, Integer>() {
 				{
 					put(configRange1, 0);
 					put(configRange2, 1);
 					put(customRange, 1);
 				}
-			});
+			};
 
 		IdempotentRetryAssert.retryAssert(
 			10, TimeUnit.SECONDS,
@@ -166,16 +166,6 @@ public class ModifiedFacetTest extends BaseFacetedSearcherTestCase {
 		return list.toString();
 	}
 
-	protected static List<String> toEntryStrings(Map<?, ?> map) {
-		List<String> strings = new ArrayList<>(map.size());
-
-		for (Map.Entry<?, ?> entry : map.entrySet()) {
-			strings.add(entry.toString());
-		}
-
-		return strings;
-	}
-
 	protected static Map<String, Integer> toMap(
 		List<TermCollector> termCollectors) {
 
@@ -189,7 +179,7 @@ public class ModifiedFacetTest extends BaseFacetedSearcherTestCase {
 	}
 
 	protected void assertRanges(
-			Collection<String> expected, ModifiedFacet modifiedFacet,
+			Map<String, Integer> expected, ModifiedFacet modifiedFacet,
 			SearchContext searchContext)
 		throws SearchException {
 
@@ -203,9 +193,9 @@ public class ModifiedFacetTest extends BaseFacetedSearcherTestCase {
 
 		FacetCollector facetCollector = facet.getFacetCollector();
 
-		assertEquals(
-			expected,
-			toEntryStrings(toMap(facetCollector.getTermCollectors())));
+		AssertUtil.assertEquals(
+			searchContext.getKeywords(), expected,
+			toMap(facetCollector.getTermCollectors()));
 	}
 
 }

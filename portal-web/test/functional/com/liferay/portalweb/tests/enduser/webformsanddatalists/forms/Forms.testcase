@@ -1328,7 +1328,7 @@
 		</execute>
 	</command>
 
-	<command name="SubmitFormWithConditionalVisibilityTextFields" priority="3">
+	<command name="ViewEntryWithConditionalVisibilityFromSelectAndRadio" priority="3">
 		<description message="This is a use case for LPS-65270." />
 
 		<execute macro="Navigator#openURL" />

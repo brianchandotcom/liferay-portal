@@ -2450,7 +2450,7 @@ public class ServiceBuilder {
 		JavaClass modelImplJavaClass = _getJavaClass(
 			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 
-		Map<String, JavaMethod> methods = new HashMap<>();
+		Map<String, JavaMethod> methods = new LinkedHashMap<>();
 
 		for (JavaMethod method : modelImplJavaClass.getMethods()) {
 			methods.put(method.getDeclarationSignature(false), method);

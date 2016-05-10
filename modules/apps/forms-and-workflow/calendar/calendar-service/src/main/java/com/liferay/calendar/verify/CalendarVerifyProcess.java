@@ -14,6 +14,7 @@
 
 package com.liferay.calendar.verify;
 
+
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.notification.NotificationType;
@@ -24,6 +25,7 @@ import com.liferay.calendar.recurrence.RecurrenceSerializer;
 import com.liferay.calendar.recurrence.Weekday;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarResourceLocalService;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.cal.DayAndPosition;
 import com.liferay.portal.kernel.cal.TZSRecurrence;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,12 +42,16 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.verify.VerifyProcess;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Timestamp;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -280,6 +286,95 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		}
 	}
 
+	protected CalendarBooking importCalEvent(
+			String uuid, long eventId, long groupId, long companyId,
+			long userId, String userName, Timestamp createDate,
+			Timestamp modifiedDate, String title, String description,
+			String location, Timestamp startDate, int durationHour,
+			int durationMinute, boolean allDay, String type, String recurrence,
+			int firstReminder, int secondReminder)
+		throws Exception {
+
+		CalendarResource calendarResource = getCalendarResource(
+			companyId, groupId);
+
+		CalendarBooking calendarBooking =
+			_calendarBookingLocalService.fetchCalendarBookingByUuidAndGroupId(
+				uuid, calendarResource.getGroupId());
+
+		if (calendarBooking != null) {
+			return calendarBooking;
+		}
+
+		long calendarBookingId = _counterLocalService.increment();
+
+		long startTime = startDate.getTime();
+		long endTime =
+			startTime + durationHour * Time.HOUR + durationMinute * Time.MINUTE;
+
+		if (allDay) {
+			endTime = endTime - 1;
+		}
+
+		return addCalendarBooking(
+			uuid, calendarBookingId, companyId, groupId, userId, userName,
+			createDate, modifiedDate, calendarResource.getDefaultCalendarId(),
+			calendarResource.getCalendarResourceId(), title, description,
+			location, startTime, endTime, allDay, convertRecurrence(recurrence),
+			firstReminder, NotificationType.EMAIL, secondReminder,
+			NotificationType.EMAIL);
+	}
+
+	protected void importCalEvents() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("select uuid_, eventId, groupId, companyId, userId, ");
+			sb.append("userName, createDate, modifiedDate, title, ");
+			sb.append("description, location, startDate, endDate, ");
+			sb.append("durationHour, durationMinute, allDay, type_, ");
+			sb.append("repeating, recurrence, firstReminder, secondReminder ");
+			sb.append("from CalEvent ");
+
+			try (PreparedStatement ps =
+					connection.prepareStatement(sb.toString())) {
+
+				ResultSet rs = ps.executeQuery();
+
+				while (rs.next()) {
+					String uuid = rs.getString("uuid_");
+					long eventId = rs.getLong("eventId");
+					long groupId = rs.getLong("groupId");
+					long companyId = rs.getLong("companyId");
+					long userId = rs.getLong("userId");
+					String userName = rs.getString("userName");
+					Timestamp createDate = rs.getTimestamp("createDate");
+					Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+					String title = rs.getString("title");
+					String description = rs.getString("description");
+					String location = rs.getString("location");
+					Timestamp startDate = rs.getTimestamp("startDate");
+					int durationHour = rs.getInt("durationHour");
+					int durationMinute = rs.getInt("durationMinute");
+					boolean allDay = rs.getBoolean("allDay");
+					String type = rs.getString("type_");
+
+					// boolean repeatiing = rs.getBoolean("repeating");
+
+					String recurrence = rs.getString("recurrence");
+					int firstReminder = rs.getInt("firstReminder");
+					int secondReminder = rs.getInt("secondReminder");
+
+					importCalEvent(
+						uuid, eventId, groupId, companyId, userId, userName,
+						createDate, modifiedDate, title, description, location,
+						startDate, durationHour, durationMinute, allDay, type,
+						recurrence, firstReminder, secondReminder);
+				}
+			}
+		}
+	}
+
 	@Reference(unbind = "-")
 	protected void setCalendarBookingLocalService(
 		CalendarBookingLocalService calendarBookingLocalService) {
@@ -302,6 +397,13 @@ public class CalendarVerifyProcess extends VerifyProcess {
 	}
 
 	@Reference(unbind = "-")
+	protected void setCounterLocalService(
+		CounterLocalService counterLocalService) {
+
+		_counterLocalService = counterLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
 	}
@@ -317,6 +419,9 @@ public class CalendarVerifyProcess extends VerifyProcess {
 	}
 
 	protected void verifyCalEvent() throws Exception {
+		if (hasTable("CalEvent")) {
+			importCalEvents();
+		}
 	}
 
 	private static final Map<Integer, Frequency> _frequencyMap =
@@ -341,6 +446,7 @@ public class CalendarVerifyProcess extends VerifyProcess {
 	private CalendarBookingLocalService _calendarBookingLocalService;
 	private CalendarResourceLocalService _calendarResourceLocalService;
 	private ClassNameLocalService _classNameLocalService;
+	private CounterLocalService _counterLocalService;
 	private GroupLocalService _groupLocalService;
 	private RoleLocalService _roleLocalService;
 	private UserLocalService _userLocalService;

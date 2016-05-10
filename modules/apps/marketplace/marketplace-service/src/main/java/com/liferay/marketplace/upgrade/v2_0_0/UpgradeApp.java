@@ -29,7 +29,7 @@ public class UpgradeApp extends UpgradeProcess {
 
 		runSQL("alter table Marketplace_App add column required BOOLEAN");
 
-		runSQL("update Marketplace_App set required = FALSE");
+		runSQL("update Marketplace_App set required = [$FALSE$]");
 	}
 
 }

@@ -86,6 +86,7 @@ AUI.add(
 							];
 						}
 
+						instance.after('disabledChange', A.bind(instance._afterDisabledChange, instance));
 						instance.on('selectedChange', A.bind(instance._afterSelectionChange, instance));
 					},
 
@@ -129,6 +130,14 @@ AUI.add(
 						instance.set('items', items);
 					},
 
+					_afterDisabledChange: function() {
+						var instance = this;
+
+						var itemsNode = instance.get('itemsNodeList');
+
+						itemsNode.addClass('disabled');
+					},
+
 					_afterSelectionChange: function(event) {
 						var instance = this;
 
@@ -163,13 +172,19 @@ AUI.add(
 					_onClickItem: function(event) {
 						var instance = this;
 
-						var items = instance.get('contentBox').all('li');
-
 						var currentTarget = event.currentTarget;
+
+						var items = instance.get('contentBox').all('li');
 
 						var index = items.indexOf(currentTarget);
 
-						instance.set('selected', index);
+						if (instance.get('disabled')) {
+							event.stopPropagation();
+							event.preventDefault();
+						}
+						else {
+							instance.set('selected', index);
+						}
 					},
 
 					_removeItem: function(index) {

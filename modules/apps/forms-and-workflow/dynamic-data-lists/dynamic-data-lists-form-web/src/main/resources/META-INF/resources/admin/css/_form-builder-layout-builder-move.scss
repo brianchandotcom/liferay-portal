@@ -1,0 +1,62 @@
+.form-builder-field-move-target:last-child {
+	margin-top: -22px;
+}
+
+.form-builder-field-move-target.between-fields {
+	margin-top: -12px;
+}
+
+.form-builder-moving-message {
+	background-color: rgba(234, 238, 240, 0.8);
+	border-radius: 3px;
+	height: 100%;
+	position: absolute;
+	text-align: center;
+	top: 0;
+	width: 100%;
+}
+
+.form-builder-moving-message-dismiss-button {
+	margin-top: 33px;
+}
+
+.layout-builder-move-cut-button.layout-builder-move-cut-row-button {
+	background: #FFF;
+	border: 1px solid #65B6F0;
+	height: auto;
+	padding: 0;
+	right: 30px;
+	top: -22px;
+	width: auto;
+	z-index: 10;
+
+	.lexicon-icon {
+		color: #65B6F0;
+		margin: 10px;
+	}
+
+	&:hover {
+		background: #65B6F0;
+
+		.lexicon-icon {
+			color: #FFF;
+		}
+	}
+}
+
+.layout-builder-moving:hover .layout-builder-move-cut-row-button.layout-builder-move-cancel {
+	display: none;
+}
+
+.tool-tip-cut-row.tool-tip-white {
+	.tooltip-content {
+		background-color: #FFF;
+		color: #869CAD;
+	}
+
+	&.top {
+		.tooltip-arrow {
+			border-top-color: #FFF;
+		}
+	}
+}

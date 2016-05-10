@@ -89,6 +89,48 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandlers)).detach();
 					},
 
+					disablePaginations: function() {
+						var instance = this;
+
+						FormBuilderPagesManager.superclass.disablePaginations.apply(instance, arguments);
+
+						instance._toggleWizardDisabled(true);
+					},
+
+					enablePaginations: function() {
+						var instance = this;
+
+						FormBuilderPagesManager.superclass.enablePaginations.apply(instance, arguments);
+
+						instance._toggleWizardDisabled(false);
+					},
+
+					toggleControlsTriggerDisabled: function(disabled) {
+						var instance = this;
+
+						var builder = instance.get('builder');
+
+						var boundingBox = builder.get('boundingBox');
+
+						boundingBox.all('.' + CSS_FORM_BUILDER_CONTROLS_TRIGGER).toggleClass('disabled', disabled);
+					},
+
+					toggleDescriptionDisabled: function(disabled) {
+						var instance = this;
+
+						var descriptionNode = instance.get('pageHeader').one('.' + CSS_PAGE_HEADER_DESCRIPTION);
+
+						instance._toggleNodeDisabled(descriptionNode, disabled);
+					},
+
+					toggleTitleDisabled: function(disabled) {
+						var instance = this;
+
+						var titleNode = instance.get('pageHeader').one('.' + CSS_PAGE_HEADER_TITLE);
+
+						instance._toggleNodeDisabled(titleNode, disabled);
+					},
+
 					_addWizardPage: function() {
 						var instance = this;
 
@@ -265,17 +307,19 @@ AUI.add(
 
 						event.stopPropagation();
 
-						popover.set(
-							'align',
-							{
-								node: event.currentTarget,
-								points: [A.WidgetPositionAlign.RC, A.WidgetPositionAlign.TC]
-							}
-						);
+						if (!event.currentTarget.hasClass('disabled')) {
+							popover.set(
+								'align',
+								{
+									node: event.currentTarget,
+									points: [A.WidgetPositionAlign.RC, A.WidgetPositionAlign.TC]
+								}
+							);
 
-						popover.set('position', event.currentTarget.getData('position'));
+							popover.set('position', event.currentTarget.getData('position'));
 
-						popover.toggle();
+							popover.toggle();
+						}
 					},
 
 					_onRemovePageClick: function() {
@@ -484,6 +528,21 @@ AUI.add(
 
 						wizard.set('selected', instance.get('activePageNumber') - 1);
 						wizard.set('items', instance._createWizardItems());
+					},
+
+					_toggleNodeDisabled: function(node, disabled) {
+						if (disabled) {
+							node.setAttribute('disabled', '');
+						}
+						else {
+							node.removeAttribute('disabled');
+						}
+					},
+
+					_toggleWizardDisabled: function(disabled) {
+						var instance = this;
+
+						instance._getWizard().set('disabled', disabled);
 					},
 
 					_uiSetActivePageNumber: function(event) {

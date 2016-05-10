@@ -105,7 +105,11 @@ AUI.add(
 
 						editForm.set('onSubmit', A.bind('_onSubmitEditForm', instance));
 
+						var formBuilder = instance.get('formBuilder');
+
 						instance._eventHandlers = [
+							formBuilder._layoutBuilder.after('layout-builder:moveEnd', A.bind(instance._afterFormBuilderLayoutBuilderMoveEnd, instance)),
+							formBuilder._layoutBuilder.after('layout-builder:moveStart', A.bind(instance._afterFormBuilderLayoutBuilderMoveStart, instance)),
 							instance.one('.btn-cancel').on('click', A.bind('_onCancel', instance)),
 							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
 						];
@@ -137,6 +141,38 @@ AUI.add(
 								}
 							);
 						}
+					},
+
+					disableDescriptionEditor: function() {
+						var instance = this;
+
+						var descriptionEditor = CKEDITOR.instances[instance.ns('descriptionEditor')];
+
+						descriptionEditor.element.$.contentEditable = false;
+					},
+
+					disableNameEditor: function() {
+						var instance = this;
+
+						var nameEditor = CKEDITOR.instances[instance.ns('nameEditor')];
+
+						nameEditor.element.$.contentEditable = false;
+					},
+
+					enableDescriptionEditor: function() {
+						var instance = this;
+
+						var descriptionEditor = CKEDITOR.instances[instance.ns('descriptionEditor')];
+
+						descriptionEditor.element.$.contentEditable = true;
+					},
+
+					enableNameEditor: function() {
+						var instance = this;
+
+						var nameEditor = CKEDITOR.instances[instance.ns('nameEditor')];
+
+						nameEditor.element.$.contentEditable = true;
 					},
 
 					getState: function() {
@@ -295,6 +331,20 @@ AUI.add(
 						var editForm = instance.get('editForm');
 
 						submitForm(editForm.form);
+					},
+
+					_afterFormBuilderLayoutBuilderMoveEnd: function() {
+						var instance = this;
+
+						instance.enableDescriptionEditor();
+						instance.enableNameEditor();
+					},
+
+					_afterFormBuilderLayoutBuilderMoveStart: function() {
+						var instance = this;
+
+						instance.disableDescriptionEditor();
+						instance.disableNameEditor();
 					},
 
 					_getDescription: function() {

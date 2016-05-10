@@ -17,11 +17,13 @@ package com.liferay.calendar.verify;
 import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.calendar.exception.NoSuchBookingException;
+import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.calendar.exception.NoSuchBookingException;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.notification.NotificationType;
@@ -69,6 +71,7 @@ import com.liferay.portal.verify.VerifyProcess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -128,6 +131,24 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		assetEntry.setViewCount(viewCount);
 
 		_assetEntryLocalService.updateAssetEntry(assetEntry);
+	}
+
+	protected void addAssetLink(
+		long linkId, long companyId, long userId, String userName,
+		Date createDate, long entryId1, long entryId2, int type, int weight) {
+
+		AssetLink assetLink = _assetLinkLocalService.createAssetLink(linkId);
+
+		assetLink.setCompanyId(companyId);
+		assetLink.setUserId(userId);
+		assetLink.setUserName(userName);
+		assetLink.setCreateDate(createDate);
+		assetLink.setEntryId1(entryId1);
+		assetLink.setEntryId2(entryId2);
+		assetLink.setType(type);
+		assetLink.setWeight(weight);
+
+		_assetLinkLocalService.updateAssetLink(assetLink);
 	}
 
 	protected CalendarBooking addCalendarBooking(
@@ -451,6 +472,62 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		}
 	}
 
+	protected void importAssetLink(
+			AssetLink assetLink, long oldEntryId, long newEntryId)
+		throws Exception {
+
+		long entryId1 = 0;
+		long entryId2 = 0;
+
+		AssetEntry linkedAssetEntry;
+
+		if (assetLink.getEntryId1() == oldEntryId) {
+			entryId1 = newEntryId;
+			entryId2 = assetLink.getEntryId2();
+
+			linkedAssetEntry = _assetEntryLocalService.fetchAssetEntry(
+				entryId2);
+		}
+		else {
+			entryId1 = assetLink.getEntryId1();
+			entryId2 = newEntryId;
+
+			linkedAssetEntry = _assetEntryLocalService.fetchAssetEntry(
+				entryId2);
+		}
+
+		if (linkedAssetEntry.getClassNameId() ==
+				_classNameLocalService.getClassNameId(_CAL_EVENT_CLASS_NAME)) {
+
+			CalendarBooking calendarBooking = importCalEvent(
+				linkedAssetEntry.getClassPK());
+
+			CalendarResource calendarResource = getCalendarResource(
+				calendarBooking.getCompanyId(), calendarBooking.getGroupId());
+
+			linkedAssetEntry = _assetEntryLocalService.getEntry(
+				calendarResource.getGroupId(), calendarBooking.getUuid());
+
+			if (assetLink.getEntryId1() == oldEntryId) {
+				entryId2 = linkedAssetEntry.getEntryId();
+			}
+			else {
+				entryId1 = linkedAssetEntry.getEntryId();
+			}
+
+			if (isAssetLinkImported(entryId1, entryId2, assetLink.getType())) {
+				return;
+			}
+		}
+
+		long linkId = _counterLocalService.increment();
+
+		addAssetLink(
+			linkId, assetLink.getCompanyId(), assetLink.getUserId(),
+			assetLink.getUserName(), assetLink.getCreateDate(), entryId1,
+			entryId2, assetLink.getType(), assetLink.getWeight());
+	}
+
 	protected void importAssets(
 			String uuid, long companyId, long groupId, long userId, String type,
 			long eventId, long calendarBookingId)
@@ -496,6 +573,15 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		for (AssetCategory assetCategory : assetCategories) {
 			_assetEntryLocalService.addAssetCategoryAssetEntry(
 				assetCategory.getCategoryId(), entryId);
+		}
+
+		// Asset links
+
+		List<AssetLink> assetLinks = _assetLinkLocalService.getLinks(
+			assetEntry.getEntryId());
+
+		for (AssetLink assetLink : assetLinks) {
+			importAssetLink(assetLink, assetEntry.getEntryId(), entryId);
 		}
 	}
 
@@ -713,6 +799,39 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		}
 	}
 
+	protected boolean isAssetLinkImported(
+			long entryId1, long entryId2, int type)
+		throws SQLException {
+
+		StringBundler sb = new StringBundler(128);
+
+		sb.append("select count(*) from AssetLink where ((entryId1 = ? and ");
+		sb.append("entryId2 = ?) or (entryId2 = ? and entryId1 = ?)) and ");
+		sb.append("type_ = ?");
+
+		String sql = sb.toString();
+
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setLong(1, entryId1);
+			ps.setLong(2, entryId2);
+			ps.setLong(3, entryId1);
+			ps.setLong(4, entryId2);
+			ps.setInt(5, type);
+
+			ResultSet rs = ps.executeQuery();
+
+			rs.next();
+
+			int count = rs.getInt(1);
+
+			if (count > 0) {
+				return true;
+			}
+
+			return false;
+		}
+	}
+
 	@Reference(unbind = "-")
 	protected void setAssetCategoryLocalService(
 		AssetCategoryLocalService assetCategoryLocalService) {
@@ -725,6 +844,13 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		AssetEntryLocalService assetEntryLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetLinkLocalService(
+		AssetLinkLocalService assetLinkLocalService) {
+
+		_assetLinkLocalService = assetLinkLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -837,6 +963,7 @@ public class CalendarVerifyProcess extends VerifyProcess {
 
 	private AssetCategoryLocalService _assetCategoryLocalService;
 	private AssetEntryLocalService _assetEntryLocalService;
+	private AssetLinkLocalService _assetLinkLocalService;
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 	private CalendarBookingLocalService _calendarBookingLocalService;
 	private CalendarResourceLocalService _calendarResourceLocalService;

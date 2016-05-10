@@ -337,9 +337,9 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		return true;
 	}
 
-	protected void
-		removePortalCacheListenersRegisteredByPortalCacheConfiguration(
-			PortalCache<K, V> portalCache) {
+	@Override
+	protected void removeConfigurableEhcachePortalCacheListeners(
+		PortalCache<K, V> portalCache) {
 
 		EhcachePortalCache<K, V> ehcachePortalCache =
 			(EhcachePortalCache<K, V>)

@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.internal.condition;
+package com.liferay.portal.workflow.kaleo.runtime.scripting.internal.action;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.scripting.Scripting;
-import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
+import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.condition.ConditionEvaluator;
+import com.liferay.portal.workflow.kaleo.runtime.action.executor.ActionExecutor;
+import com.liferay.portal.workflow.kaleo.runtime.action.executor.ActionExecutorException;
 import com.liferay.portal.workflow.kaleo.runtime.util.ScriptingContextBuilder;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
@@ -37,25 +37,47 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"scripting.language=beanshell", "scripting.language=groovy",
-		"scripting.language=javascript", "scripting.language=python",
-		"scripting.language=ruby"
+		"com.liferay.portal.workflow.kaleo.runtime.action.executor.language=beanshell",
+		"com.liferay.portal.workflow.kaleo.runtime.action.executor.language=groovy",
+		"com.liferay.portal.workflow.kaleo.runtime.action.executor.language=javascript",
+		"com.liferay.portal.workflow.kaleo.runtime.action.executor.language=python",
+		"com.liferay.portal.workflow.kaleo.runtime.action.executor.language=ruby"
 	},
-	service = ConditionEvaluator.class
+	service = ActionExecutor.class
 )
-public class ScriptingConditionEvaluator implements ConditionEvaluator {
+public class ScriptActionExecutor implements ActionExecutor {
+
+	public ScriptActionExecutor() {
+		_outputObjects.add(WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
+	}
 
 	@Override
-	public String evaluate(
-			KaleoCondition kaleoCondition, ExecutionContext executionContext)
-		throws PortalException {
+	public void execute(
+			KaleoAction kaleoAction, ExecutionContext executionContext)
+		throws ActionExecutorException {
+
+		try {
+			doExecute(kaleoAction, executionContext);
+		}
+		catch (Exception e) {
+			throw new ActionExecutorException(e);
+		}
+	}
+
+	public void setOutputObjects(Set<String> outputObjects) {
+		_outputObjects.addAll(outputObjects);
+	}
+
+	protected void doExecute(
+			KaleoAction kaleoAction, ExecutionContext executionContext)
+		throws Exception {
 
 		Map<String, Object> inputObjects =
 			_scriptingContextBuilder.buildScriptingContext(executionContext);
 
 		Map<String, Object> results = _scripting.eval(
-			null, inputObjects, _outputNames,
-			kaleoCondition.getScriptLanguage(), kaleoCondition.getScript());
+			null, inputObjects, _outputObjects, kaleoAction.getScriptLanguage(),
+			kaleoAction.getScript());
 
 		Map<String, Serializable> resultsWorkflowContext =
 			(Map<String, Serializable>)results.get(
@@ -63,26 +85,9 @@ public class ScriptingConditionEvaluator implements ConditionEvaluator {
 
 		WorkflowContextUtil.mergeWorkflowContexts(
 			executionContext, resultsWorkflowContext);
-
-		String returnValue = (String)results.get(_RETURN_VALUE);
-
-		if (returnValue != null) {
-			return returnValue;
-		}
-
-		throw new IllegalStateException(
-			"Conditional did not return value for script " +
-				kaleoCondition.getScript());
 	}
 
-	private static final String _RETURN_VALUE = "returnValue";
-
-	private static final Set<String> _outputNames = new HashSet<>();
-
-	static {
-		_outputNames.add(_RETURN_VALUE);
-		_outputNames.add(WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
-	}
+	private final Set<String> _outputObjects = new HashSet<>();
 
 	@Reference
 	private Scripting _scripting;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.internal.condition;
+package com.liferay.portal.workflow.kaleo.runtime.scripting.internal.notification.recipient.script;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.resource.StringResourceRetriever;
@@ -20,13 +20,10 @@ import com.liferay.portal.rules.engine.Fact;
 import com.liferay.portal.rules.engine.Query;
 import com.liferay.portal.rules.engine.RulesEngine;
 import com.liferay.portal.rules.engine.RulesResourceRetriever;
-import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
+import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.condition.ConditionEvaluator;
+import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.script.NotificationRecipientEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.util.RulesContextBuilder;
-import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
-
-import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
@@ -39,46 +36,27 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true, property = {"scripting.language=drl"},
-	service = ConditionEvaluator.class
+	service = NotificationRecipientEvaluator.class
 )
-public class DRLConditionEvaluator implements ConditionEvaluator {
+public class DRLNotificationRecipientEvaluator
+	implements NotificationRecipientEvaluator {
 
 	@Override
-	public String evaluate(
-			KaleoCondition kaleoCondition, ExecutionContext executionContext)
+	public Map<String, ?> evaluate(
+			KaleoNotificationRecipient kaleoNotificationRecipient,
+			ExecutionContext executionContext)
 		throws PortalException {
-
-		List<Fact<?>> facts = _rulesContextBuilder.buildRulesContext(
-			executionContext);
 
 		RulesResourceRetriever rulesResourceRetriever =
 			new RulesResourceRetriever(
-				new StringResourceRetriever(kaleoCondition.getScript()));
-
+				new StringResourceRetriever(
+					kaleoNotificationRecipient.getRecipientScript()));
+		List<Fact<?>> facts = _rulesContextBuilder.buildRulesContext(
+			executionContext);
 		Query query = Query.createStandardQuery();
 
-		Map<String, ?> results = _rulesEngine.execute(
-			rulesResourceRetriever, facts, query);
-
-		String returnValue = (String)results.get(_RETURN_VALUE);
-
-		Map<String, Serializable> resultsWorkflowContext =
-			(Map<String, Serializable>)results.get(
-				WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
-
-		WorkflowContextUtil.mergeWorkflowContexts(
-			executionContext, resultsWorkflowContext);
-
-		if (returnValue != null) {
-			return returnValue;
-		}
-
-		throw new IllegalStateException(
-			"Conditional did not return value for script " +
-				kaleoCondition.getScript());
+		return _rulesEngine.execute(rulesResourceRetriever, facts, query);
 	}
-
-	private static final String _RETURN_VALUE = "returnValue";
 
 	@Reference
 	private RulesContextBuilder _rulesContextBuilder;

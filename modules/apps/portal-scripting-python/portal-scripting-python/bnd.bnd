@@ -4,7 +4,6 @@ Bundle-ClassPath:\
 Bundle-Name: Liferay Portal Scripting Python
 Bundle-SymbolicName: com.liferay.portal.scripting.python
 Bundle-Version: 2.0.2
-DynamicImport-Package: *
 Import-Package:\
 	!com.informix.*,\
 	\

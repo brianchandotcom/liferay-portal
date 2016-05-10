@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -582,6 +583,15 @@ public class CalendarVerifyProcess extends VerifyProcess {
 
 		for (AssetLink assetLink : assetLinks) {
 			importAssetLink(assetLink, assetEntry.getEntryId(), entryId);
+		}
+
+		// Asset tags
+
+		List<AssetTag> assetTags = assetEntry.getTags();
+
+		for (AssetTag assetTag : assetTags) {
+			_assetEntryLocalService.addAssetTagAssetEntry(
+				assetTag.getTagId(), entryId);
 		}
 	}
 

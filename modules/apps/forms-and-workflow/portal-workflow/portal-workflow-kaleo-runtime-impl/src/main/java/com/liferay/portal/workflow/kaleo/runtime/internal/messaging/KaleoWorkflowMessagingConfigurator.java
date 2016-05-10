@@ -62,57 +62,20 @@ public class KaleoWorkflowMessagingConfigurator {
 
 		registerWorkflowDefinitionLinkDestination();
 
-		wireKaleoWorkflowMessageListeners();
+		registerWorkflowMessageListeners();
 
 		registerWorkflowTimerDestination();
 
-		SchedulerEventMessageListenerWrapper
-			schedulerEventMessageListenerWrapper =
-				new SchedulerEventMessageListenerWrapper();
-
-		schedulerEventMessageListenerWrapper.setMessageListener(
-			_timerMessageListener);
-
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put("destination.name", DestinationNames.WORKFLOW_TIMER);
-
-		_schedulerEventMessageListenerServiceRegistration =
-			_bundleContext.registerService(
-				MessageListener.class, schedulerEventMessageListenerWrapper,
-				properties);
+		registerSchedulerEventMessageListener();
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		unregisterKaleoWorkflowDestinations();
 
-		for (Map.Entry<String, MessageListener> entry:
-				_proxyMessageListeners.entrySet()) {
+		unregisterWorkflowMessageListeners();
 
-			_messageBus.unregisterMessageListener(
-				entry.getKey(), entry.getValue());
-		}
-
-		if (!_serviceRegistrations.isEmpty()) {
-			for (ServiceRegistration<Destination> serviceRegistration :
-					_serviceRegistrations.values()) {
-
-				Destination destination = _bundleContext.getService(
-					serviceRegistration.getReference());
-
-				serviceRegistration.unregister();
-
-				destination.destroy();
-			}
-
-			_serviceRegistrations.clear();
-		}
-
-		if (_schedulerEventMessageListenerServiceRegistration != null) {
-			_schedulerEventMessageListenerServiceRegistration.unregister();
-
-			_schedulerEventMessageListenerServiceRegistration = null;
-		}
+		unregisterSchedulerEventMessageListener();
 
 		_bundleContext = null;
 	}
@@ -183,6 +146,24 @@ public class KaleoWorkflowMessagingConfigurator {
 		return proxyMessageListener;
 	}
 
+	protected void registerSchedulerEventMessageListener() {
+		SchedulerEventMessageListenerWrapper
+			schedulerEventMessageListenerWrapper =
+				new SchedulerEventMessageListenerWrapper();
+
+		schedulerEventMessageListenerWrapper.setMessageListener(
+			_timerMessageListener);
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("destination.name", DestinationNames.WORKFLOW_TIMER);
+
+		_schedulerEventMessageListenerServiceRegistration =
+			_bundleContext.registerService(
+				MessageListener.class, schedulerEventMessageListenerWrapper,
+				properties);
+	}
+
 	protected void registerWorkflowDefinitionLinkDestination() {
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
@@ -192,40 +173,7 @@ public class KaleoWorkflowMessagingConfigurator {
 		registerDestination(destinationConfiguration);
 	}
 
-	protected void registerWorkflowTimerDestination() {
-		DestinationConfiguration destinationConfiguration =
-			new DestinationConfiguration(
-				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
-				DestinationNames.WORKFLOW_TIMER);
-
-		destinationConfiguration.setMaximumQueueSize(_MAXIMUM_QUEUE_SIZE);
-
-		RejectedExecutionHandler rejectedExecutionHandler =
-			new CallerRunsPolicy() {
-
-				@Override
-				public void rejectedExecution(
-					Runnable runnable, ThreadPoolExecutor threadPoolExecutor) {
-
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"The current thread will handle the request " +
-								"because the workflow timer task queue is at " +
-									"its maximum capacity");
-					}
-
-					super.rejectedExecution(runnable, threadPoolExecutor);
-				}
-
-			};
-
-		destinationConfiguration.setRejectedExecutionHandler(
-			rejectedExecutionHandler);
-
-		registerDestination(destinationConfiguration);
-	}
-
-	protected void wireKaleoWorkflowMessageListeners() {
+	protected void registerWorkflowMessageListeners() {
 		DefaultWorkflowDestinationEventListener
 			defaultWorkflowDestinationEventListener =
 				new DefaultWorkflowDestinationEventListener();
@@ -295,6 +243,75 @@ public class KaleoWorkflowMessagingConfigurator {
 			defaultWorkflowDestinationEventListener);
 	}
 
+	protected void registerWorkflowTimerDestination() {
+		DestinationConfiguration destinationConfiguration =
+			new DestinationConfiguration(
+				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
+				DestinationNames.WORKFLOW_TIMER);
+
+		destinationConfiguration.setMaximumQueueSize(_MAXIMUM_QUEUE_SIZE);
+
+		RejectedExecutionHandler rejectedExecutionHandler =
+			new CallerRunsPolicy() {
+
+				@Override
+				public void rejectedExecution(
+					Runnable runnable, ThreadPoolExecutor threadPoolExecutor) {
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"The current thread will handle the request " +
+								"because the workflow timer task queue is at " +
+									"its maximum capacity");
+					}
+
+					super.rejectedExecution(runnable, threadPoolExecutor);
+				}
+
+			};
+
+		destinationConfiguration.setRejectedExecutionHandler(
+			rejectedExecutionHandler);
+
+		registerDestination(destinationConfiguration);
+	}
+
+	protected void unregisterKaleoWorkflowDestinations() {
+		for (ServiceRegistration<Destination> serviceRegistration :
+				_serviceRegistrations.values()) {
+
+			Destination destination = _bundleContext.getService(
+				serviceRegistration.getReference());
+
+			serviceRegistration.unregister();
+
+			destination.destroy();
+		}
+
+		_serviceRegistrations.clear();
+	}
+
+	protected void unregisterSchedulerEventMessageListener() {
+		if (_schedulerEventMessageListenerServiceRegistration == null) {
+			return;
+		}
+
+		_schedulerEventMessageListenerServiceRegistration.unregister();
+
+		_schedulerEventMessageListenerServiceRegistration = null;
+	}
+
+	protected void unregisterWorkflowMessageListeners() {
+		for (Map.Entry<String, MessageListener> entry :
+				_proxyMessageListeners.entrySet()) {
+
+			_messageBus.unregisterMessageListener(
+				entry.getKey(), entry.getValue());
+		}
+
+		_proxyMessageListeners.clear();
+	}
+
 	private static final int _MAXIMUM_QUEUE_SIZE = 200;
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -308,6 +325,8 @@ public class KaleoWorkflowMessagingConfigurator {
 	@Reference
 	private MessageBus _messageBus;
 
+	private final Map<String, MessageListener> _proxyMessageListeners =
+		new HashMap<>();
 	private ServiceRegistration<MessageListener>
 		_schedulerEventMessageListenerServiceRegistration;
 	private final Map<String, ServiceRegistration<Destination>>
@@ -338,8 +357,5 @@ public class KaleoWorkflowMessagingConfigurator {
 
 	@Reference(target = "(proxy.bean=false)")
 	private WorkflowTaskManager _workflowTaskManager;
-
-	private Map<String, MessageListener> _proxyMessageListeners =
-		new HashMap<>();
 
 }

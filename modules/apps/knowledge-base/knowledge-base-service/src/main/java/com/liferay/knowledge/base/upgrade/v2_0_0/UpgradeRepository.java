@@ -12,13 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.util;
+package com.liferay.knowledge.base.upgrade.v2_0_0;
+
+import com.liferay.portal.upgrade.util.BaseUpgradeRepository;
 
 /**
  * @author Adolfo Pérez
- *
- * @deprecated As of 7.0.1, replaced by {@link BaseReplacePortletId}
  */
-@Deprecated
-public class ReplacePortletId extends BaseReplacePortletId {
+public class UpgradeRepository extends BaseUpgradeRepository {
+
+	@Override
+	protected String[][] getRenamePortletNamesArray() {
+		return new String[][] {
+			{
+				"com.liferay.knowledgebase.admin.portlet.AdminPortlet",
+				"com.liferay.knowledge.base.admin"
+			}
+		};
+	}
+
 }

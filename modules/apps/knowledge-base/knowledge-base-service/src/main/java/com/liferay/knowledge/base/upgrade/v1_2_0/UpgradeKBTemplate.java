@@ -12,13 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.util;
+package com.liferay.knowledge.base.upgrade.v1_2_0;
+
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
- * @author Adolfo Pérez
- *
- * @deprecated As of 7.0.1, replaced by {@link BaseReplacePortletId}
+ * @author Peter Shin
  */
-@Deprecated
-public class ReplacePortletId extends BaseReplacePortletId {
+public class UpgradeKBTemplate extends UpgradeProcess {
+
+	@Override
+	protected void doUpgrade() throws Exception {
+		if (hasColumn("KBTemplate", "engineType")) {
+			runSQL("alter table KBTemplate drop column engineType");
+		}
+
+		if (hasColumn("KBTemplate", "cacheable")) {
+			runSQL("alter table KBTemplate drop column cacheable");
+		}
+	}
+
 }

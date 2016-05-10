@@ -12,13 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.util;
+package com.liferay.knowledge.base.upgrade.v1_3_1;
+
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 /**
  * @author Adolfo Pérez
- *
- * @deprecated As of 7.0.1, replaced by {@link BaseReplacePortletId}
  */
-@Deprecated
-public class ReplacePortletId extends BaseReplacePortletId {
+public class UpgradeKBComment extends UpgradeProcess {
+
+	@Override
+	protected void doUpgrade() throws Exception {
+		upgradeIndexes();
+	}
+
+	protected void upgradeIndexes() throws Exception {
+		runSQL("drop index IX_FD56A55D on KBComment");
+
+		runSQL(
+			"create index IX_FD56A55D on KBComment(userId, classNameId, " +
+				"classPK)");
+	}
+
 }

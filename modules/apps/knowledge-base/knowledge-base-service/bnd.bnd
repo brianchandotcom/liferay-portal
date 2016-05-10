@@ -7,6 +7,6 @@ Export-Package:\
 	com.liferay.knowledge.base.service.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Knowledge Base
-Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Require-SchemaVersion: 2.0.0
 Liferay-Service: true
 -liferay-includeresource: @jericho-html-*.jar

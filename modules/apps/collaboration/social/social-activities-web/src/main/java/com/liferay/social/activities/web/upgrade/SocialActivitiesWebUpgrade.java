@@ -15,9 +15,9 @@
 package com.liferay.social.activities.web.upgrade;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.util.ReplacePortletId;
-import com.liferay.portal.upgrade.util.UpgradePortletId;
+import com.liferay.portal.upgrade.util.BaseReplacePortletId;
 import com.liferay.social.activities.web.constants.SocialActivitiesPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,7 +35,7 @@ public class SocialActivitiesWebUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.social.activities.web", "0.0.0", "1.0.0",
 			new DummyUpgradeStep());
 
-		UpgradePortletId upgradePortletId = new ReplacePortletId() {
+		UpgradeStep upgradePortletId = new BaseReplacePortletId() {
 
 			@Override
 			protected String[][] getRenamePortletIdsArray() {

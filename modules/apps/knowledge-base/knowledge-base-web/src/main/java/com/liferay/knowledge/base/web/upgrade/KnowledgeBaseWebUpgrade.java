@@ -12,13 +12,9 @@
  * details.
  */
 
-package com.liferay.announcements.web.upgrade;
+package com.liferay.knowledge.base.web.upgrade;
 
-import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.portal.upgrade.util.BaseReplacePortletId;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,32 +22,14 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
+public class KnowledgeBaseWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.announcements.web", "0.0.0", "1.0.0",
-			new DummyUpgradeStep());
-
-		UpgradeStep upgradePortletId = new BaseReplacePortletId() {
-
-			@Override
-			protected String[][] getRenamePortletIdsArray() {
-				return new String[][] {
-					new String[] {
-						"1_WAR_soannouncementsportlet",
-						PortletKeys.ANNOUNCEMENTS
-					},
-					new String[] {"84", PortletKeys.ANNOUNCEMENTS}
-				};
-			}
-
-		};
-
-		registry.register(
-			"com.liferay.announcements.web", "0.0.1", "1.0.0",
-			upgradePortletId);
+			"com.liferay.knowledge.base.web", "0.0.0", "1.0.0",
+			new com.liferay.knowledge.base.web.upgrade.v1_0_0.
+				UpgradePortletId());
 	}
 
 }

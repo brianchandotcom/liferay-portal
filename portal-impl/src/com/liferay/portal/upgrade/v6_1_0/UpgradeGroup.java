@@ -109,7 +109,7 @@ public class UpgradeGroup extends UpgradeProcess {
 				"com.liferay.portal.model.Group");
 
 			runSQL(
-				"update Group_ set site = TRUE where classNameId = " +
+				"update Group_ set site = [$TRUE$] where classNameId = " +
 					groupClassNameId);
 
 			long organizationClassNameId = getClassNameId(
@@ -127,8 +127,8 @@ public class UpgradeGroup extends UpgradeProcess {
 						long groupId = rs.getLong("groupId");
 
 						runSQL(
-							"update Group_ set site = TRUE where groupId = " +
-								groupId);
+							"update Group_ set site = [$TRUE$] where " +
+								"groupId = " + groupId);
 					}
 				}
 			}

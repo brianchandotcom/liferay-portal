@@ -39,7 +39,7 @@ public class UpgradeGroup extends UpgradeProcess {
 				"com.liferay.portal.model.Company");
 
 			runSQL(
-				"update Group_ set site = TRUE where classNameId = " +
+				"update Group_ set site = [$TRUE$] where classNameId = " +
 					classNameId);
 		}
 	}

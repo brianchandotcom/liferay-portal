@@ -471,26 +471,29 @@ public class JenkinsResultsParserUtil {
 			String body, String from, String subject, String to)
 		throws Exception {
 
-		File file = new File("/tmp/notification_email_body.txt");
-
-		if (file.exists()) {
-			file.delete();
-		}
+		File file = new File("/tmp/" + body.hashCode() + ".txt");
 
 		write(file, body);
 
-		StringBuffer sb = new StringBuffer();
+		try {
+			StringBuffer sb = new StringBuffer();
 
-		sb.append("cat /tmp/notification_email_body.txt | mail -v -s ");
-		sb.append("\"");
-		sb.append(subject);
-		sb.append("\" -r \"");
-		sb.append(from);
-		sb.append("\" \"");
-		sb.append(to);
-		sb.append("\"\n");
+			sb.append("cat ");
+			sb.append(file.getAbsolutePath());
+			sb.append(" | mail -v -s ");
+			sb.append("\"");
+			sb.append(subject);
+			sb.append("\" -r \"");
+			sb.append(from);
+			sb.append("\" \"");
+			sb.append(to);
+			sb.append("\"");
 
-		executeBashCommands(sb.toString());
+			executeBashCommands(sb.toString());
+		}
+		finally {
+			file.delete();
+		}
 	}
 
 	public static void sleep(long duration) {

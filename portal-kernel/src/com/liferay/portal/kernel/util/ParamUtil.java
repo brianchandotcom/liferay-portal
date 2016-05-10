@@ -39,7 +39,12 @@ public class ParamUtil {
 
 	/**
 	 * Returns the boolean parameter from the request. If the parameter is
-	 * missing or not convertible to boolean, the default value is returned.
+	 * missing, the default value is returned.
+	 *
+	 * <p>
+	 * If the value is not convertible to boolean, <code>false</code> is
+	 * returned.
+	 * </p>
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -184,7 +189,12 @@ public class ParamUtil {
 
 	/**
 	 * Returns the boolean parameter from the portlet request. If the parameter
-	 * is missing or not convertible to boolean, the default value is returned.
+	 * is missing, the default value is returned.
+	 *
+	 * <p>
+	 * If the value is not convertible to boolean, <code>false</code> is
+	 * returned.
+	 * </p>
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -338,7 +348,12 @@ public class ParamUtil {
 
 	/**
 	 * Returns the boolean parameter from the service context. If the parameter
-	 * is missing or not convertible to boolean, the default value is returned.
+	 * is missing, the default value is returned.
+	 *
+	 * <p>
+	 * If the value is not convertible to boolean, <code>false</code> is
+	 * returned.
+	 * </p>
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -504,7 +519,12 @@ public class ParamUtil {
 
 	/**
 	 * Returns the boolean parameter from the request. If the parameter is
-	 * missing or not convertible to boolean, the default value is returned.
+	 * missing, the default value is returned.
+	 *
+	 * <p>
+	 * If the value is not convertible to boolean, <code>false</code> is
+	 * returned.
+	 * </p>
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -534,7 +554,12 @@ public class ParamUtil {
 
 	/**
 	 * Returns the boolean parameter from the portlet request. If the parameter
-	 * is missing or not convertible to boolean, the default value is returned.
+	 * is missing, the default value is returned.
+	 *
+	 * <p>
+	 * If the value is not convertible to boolean, <code>false</code> is
+	 * returned.
+	 * </p>
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -565,7 +590,12 @@ public class ParamUtil {
 
 	/**
 	 * Returns the boolean parameter from the service context. If the parameter
-	 * is missing or not convertible to boolean, the default value is returned.
+	 * is missing, the default value is returned.
+	 *
+	 * <p>
+	 * If the value is not convertible to boolean, <code>false</code> is
+	 * returned.
+	 * </p>
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter

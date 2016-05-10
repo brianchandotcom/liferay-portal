@@ -1285,6 +1285,7 @@ ${output.content}</echo>
 
 				<replace file="${project.dir}/build.services.output.txt" token="Writing src/main/resources/service.properties" value="" />
 				<replace file="${project.dir}/build.services.output.txt" token="Writing src/service.properties" value="" />
+				<replaceregexp byline="true" file="${project.dir}/build.services.output.txt" match="Writing \/.+\/docroot\/WEB-INF\/src\/service\.properties" replace="" />
 
 				<loadfile property="build.services.output.txt.content" srcfile="${project.dir}/build.services.output.txt" />
 

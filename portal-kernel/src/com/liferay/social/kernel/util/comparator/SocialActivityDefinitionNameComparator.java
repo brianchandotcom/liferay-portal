@@ -16,6 +16,8 @@ package com.liferay.social.kernel.util.comparator;
 
 import com.liferay.social.kernel.model.SocialActivityDefinition;
 
+import java.text.Collator;
+
 import java.util.Comparator;
 import java.util.Locale;
 
@@ -37,7 +39,9 @@ public class SocialActivityDefinitionNameComparator
 		String name1 = activityDefinition1.getName(_locale);
 		String name2 = activityDefinition2.getName(_locale);
 
-		return name1.compareTo(name2);
+		Collator collator = Collator.getInstance(_locale);
+
+		return collator.compare(name1, name2);
 	}
 
 	private final Locale _locale;

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.PortletCategory;
 
 import java.io.Serializable;
 
+import java.text.Collator;
+
 import java.util.Comparator;
 import java.util.Locale;
 
@@ -51,7 +53,9 @@ public class PortletCategoryComparator
 		name1 = LanguageUtil.get(_locale, name1);
 		name2 = LanguageUtil.get(_locale, name2);
 
-		return name1.compareTo(name2);
+		Collator collator = Collator.getInstance(_locale);
+
+		return collator.compare(name1, name2);
 	}
 
 	private final Locale _locale;

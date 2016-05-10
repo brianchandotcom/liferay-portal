@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 
 import java.io.Serializable;
 
+import java.text.Collator;
+
 import java.util.Comparator;
 import java.util.Locale;
 
@@ -38,7 +40,9 @@ public class TemplateHandlerComparator
 		String templateHandlerName1 = templateHandler1.getName(_locale);
 		String templateHandlerName2 = templateHandler2.getName(_locale);
 
-		return templateHandlerName1.compareTo(templateHandlerName2);
+		Collator collator = Collator.getInstance(_locale);
+
+		return collator.compare(templateHandlerName1, templateHandlerName2);
 	}
 
 	private final Locale _locale;

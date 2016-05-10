@@ -16,7 +16,9 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.exception.OldServiceComponentException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ServiceComponent;
 import com.liferay.portal.kernel.service.configuration.ServiceComponentConfiguration;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableListener;
@@ -39,8 +42,14 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.service.base.ServiceComponentLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Filter;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerList;
 
 import java.io.IOException;
+import java.io.OutputStream;
 
 import java.lang.reflect.Field;
 
@@ -54,6 +63,25 @@ import java.util.List;
  */
 public class ServiceComponentLocalServiceImpl
 	extends ServiceComponentLocalServiceBaseImpl {
+
+	public ServiceComponentLocalServiceImpl() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter(
+			"(&(&(upgrade.from.schema.version=0.0.0)" + "(objectClass=" +
+				UpgradeStep.class.getName() + "))" +
+					"(upgrade.initial.database.creation=true))");
+
+		_serviceTrackerList = ServiceTrackerCollections.openList(
+			UpgradeStep.class, filter);
+	}
+
+	@Override
+	public void destroy() {
+		super.destroy();
+
+		_serviceTrackerList.close();
+	}
 
 	@Override
 	public void destroyServiceComponent(
@@ -201,19 +229,22 @@ public class ServiceComponentLocalServiceImpl
 
 	@Override
 	public void verifyDB() {
-		List<ServiceComponent> serviceComponents =
-			serviceComponentPersistence.findAll();
-
-		for (ServiceComponent serviceComponent : serviceComponents) {
-			String buildNamespace = serviceComponent.getBuildNamespace();
-			String tablesSQL = serviceComponent.getTablesSQL();
-			String sequencesSQL = serviceComponent.getSequencesSQL();
-			String indexesSQL = serviceComponent.getIndexesSQL();
-
+		for (UpgradeStep upgradeStep : _serviceTrackerList) {
 			try {
-				serviceComponentLocalService.upgradeDB(
-					null, buildNamespace, 0, false, null, tablesSQL,
-					sequencesSQL, indexesSQL);
+				upgradeStep.upgrade(
+					new DBProcessContext() {
+
+						@Override
+						public DBContext getDBContext() {
+							return new DBContext();
+						}
+
+						@Override
+						public OutputStream getOutputStream() {
+							return null;
+						}
+
+					});
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -521,6 +552,8 @@ public class ServiceComponentLocalServiceImpl
 		ServiceComponentLocalServiceImpl.class);
 
 	private static final PACL _pacl = new NoPACL();
+
+	private final ServiceTrackerList<UpgradeStep> _serviceTrackerList;
 
 	private static class NoPACL implements PACL {
 

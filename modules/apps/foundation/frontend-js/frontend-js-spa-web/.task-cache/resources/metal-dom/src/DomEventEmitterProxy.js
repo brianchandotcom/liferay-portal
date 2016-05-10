@@ -1,4 +1,4 @@
-define("frontend-js-spa-web@1.0.6/metal-dom/src/DomEventEmitterProxy", ['exports', './dom', 'metal-events/src/events'], function (exports, _dom, _events) {
+define(['exports', './dom', 'metal-events/src/events'], function (exports, _dom, _events) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

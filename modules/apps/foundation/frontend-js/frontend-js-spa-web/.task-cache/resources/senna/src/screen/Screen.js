@@ -1,4 +1,4 @@
-define("frontend-js-spa-web@1.0.6/senna/src/screen/Screen", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', '../cacheable/Cacheable', 'metal-promise/src/promise/Promise'], function (exports, _metal, _dom, _Cacheable2, _Promise) {
+define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', '../cacheable/Cacheable', 'metal-promise/src/promise/Promise'], function (exports, _metal, _dom, _Cacheable2, _Promise) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

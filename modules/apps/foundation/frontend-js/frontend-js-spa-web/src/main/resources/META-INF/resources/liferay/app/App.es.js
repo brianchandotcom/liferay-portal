@@ -36,16 +36,6 @@ class LiferayApp extends App {
 		dom.append(body, '<div class="lfr-spa-loading-bar"></div>');
 	}
 
-	createScreenInstance(path, route) {
-		var screen = super.createScreenInstance(path, route);
-
-		if (this.isCacheEnabled() && this.isScreenCacheExpired(screen)) {
-			screen.clearCache();
-		}
-
-		return screen;
-	}
-
 	getCacheExpirationTime() {
 		return Liferay.SPA.cacheExpirationTime;
 	}

@@ -1,4 +1,4 @@
-define("frontend-js-spa-web@1.0.6/metal-uri/src/Uri", ['exports', 'metal/src/metal', './parse', 'metal-multimap/src/MultiMap'], function (exports, _metal, _parse, _MultiMap) {
+define(['exports', 'metal/src/metal', './parse', 'metal-multimap/src/MultiMap'], function (exports, _metal, _parse, _MultiMap) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

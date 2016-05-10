@@ -1,4 +1,4 @@
-define("frontend-js-spa-web@1.0.6/metal/src/disposable/Disposable", ['exports'], function (exports) {
+define(['exports'], function (exports) {
 	'use strict';
 
 	/**

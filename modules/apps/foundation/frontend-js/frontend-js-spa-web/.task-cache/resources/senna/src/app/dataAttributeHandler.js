@@ -1,4 +1,4 @@
-define("frontend-js-spa-web@1.0.6/senna/src/app/dataAttributeHandler", ['exports', '../globals/globals', './AppDataAttributeHandler'], function (exports, _globals, _AppDataAttributeHandler) {
+define(['exports', '../globals/globals', './AppDataAttributeHandler'], function (exports, _globals, _AppDataAttributeHandler) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

@@ -9,6 +9,8 @@ AUI.add(
 
 		var CSS_CLOSE = A.getClassName('close');
 
+		var CSS_FIELD_CLASS = A.getClassName('form', 'control');
+
 		var CSS_FIELD_SETTINGS = A.getClassName('form', 'builder', 'field', 'settings');
 
 		var CSS_FIELD_SETTINGS_CANCEL = A.getClassName('lfr', 'ddl', 'field', 'settings', 'cancel');
@@ -78,6 +80,7 @@ AUI.add(
 
 						modal.syncHeight();
 						modal.align();
+						modal.get('boundingBox').one('.' + CSS_FIELD_CLASS).focus();
 
 						instance._previousSettings = JSON.stringify(field.getSettings());
 					},

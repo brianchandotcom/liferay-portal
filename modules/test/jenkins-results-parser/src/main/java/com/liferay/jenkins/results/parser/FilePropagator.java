@@ -147,8 +147,12 @@ public class FilePropagator {
 
 		try {
 			if (_executeRemoteCommands(commands, targetSlave) != 0) {
-				throw new RuntimeException(
-					"Unable to copy from source. Executed: " + commands);
+				_errorSlaves.add(targetSlave);
+				_targetSlaves.remove(targetSlave);
+
+				_copyFromSource();
+
+				targetSlave = null;
 			}
 		}
 		catch (Exception e) {

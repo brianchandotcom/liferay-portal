@@ -249,7 +249,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, passwordPolicy.getName(), null);
 									form.fm('addOrganizationIds').val(result.item);
 								}
 
-
 								submitForm(form);
 							}
 						}

@@ -564,7 +564,7 @@
 			showFixmeTags="false"
 			showHiddenTags="false"
 			sourceDir="${definitions.dir}"
-			stylesheet="${project.dir}/tools/styles/${lp.style.edition}/dtddoc.css"
+			stylesheet="${project.dir}/tools/styles/dtddoc.css"
 		>
 			<include name="liferay-*${lp.version.dtd}.dtd" />
 		</DTDDoc>
@@ -602,6 +602,7 @@
 	<target name="javadoc">
 		<remake-dir dir="${doc.dir}/javadocs" />
 
+		<!--
 		<antcall target="javadoc-portal-cmd">
 			<param name="generated.description" value="" />
 			<param name="module.dir" value="portal-impl" />
@@ -626,6 +627,7 @@
 			<param name="generated.description" value="" />
 			<param name="module.dir" value="util-bridges" />
 		</antcall>
+		-->
 
 		<antcall target="javadoc-cmd">
 			<param name="generated.description" value="" />
@@ -654,7 +656,7 @@
 			maxmemory="2048m"
 			noqualifier="java.*"
 			overview="${module.dir}/src/overview.html"
-			stylesheetfile="${project.dir}/tools/styles/${lp.style.edition}/javadoc.css"
+			stylesheetfile="${project.dir}/tools/styles/javadoc.css"
 			useexternalfile="yes"
 			use="yes"
 			windowtitle="Liferay ${lp.version} ${module.dir} API"
@@ -688,7 +690,7 @@
 			maxmemory="2048m"
 			noqualifier="java.*"
 			overview="${module.dir}/src/overview.html"
-			stylesheetfile="${project.dir}/tools/styles/${lp.style.edition}/javadoc.css"
+			stylesheetfile="${project.dir}/tools/styles/javadoc.css"
 			useexternalfile="yes"
 			use="yes"
 			windowtitle="Liferay ${lp.version} ${module.dir} API"

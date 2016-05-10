@@ -14,22 +14,40 @@
 
 package com.liferay.dynamic.data.lists.form.web.display.context;
 
-import com.liferay.dynamic.data.lists.form.web.constants.DDLFormWebKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
+import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.List;
+
 import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceURL;
 
 /**
  * @author Marcellus Tavares
@@ -37,12 +55,21 @@ import javax.portlet.RenderRequest;
 public class DDLFormDisplayContext {
 
 	public DDLFormDisplayContext(
-			RenderRequest renderRequest,
-			DDLRecordSetLocalService ddlRecordSetLocalService)
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			DDLRecordSetService ddlRecordSetService,
+			DDMFormRenderer ddmFormRenderer,
+			DDMFormValuesFactory ddmFormValuesFactory,
+			WorkflowDefinitionLinkLocalService
+				workflowDefinitionLinkLocalService)
 		throws PortalException {
 
 		_renderRequest = renderRequest;
-		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+		_renderResponse = renderResponse;
+		_ddlRecordSetService = ddlRecordSetService;
+		_ddmFormRenderer = ddmFormRenderer;
+		_ddmFormValuesFactory = ddmFormValuesFactory;
+		_workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
 
 		if (Validator.isNotNull(getPortletResource())) {
 			return;
@@ -56,19 +83,47 @@ public class DDLFormDisplayContext {
 		}
 	}
 
+	public String getDDMFormHTML() throws PortalException {
+		DDLRecordSet recordSet = getRecordSet();
+
+		if (recordSet == null) {
+			return StringPool.BLANK;
+		}
+
+		DDMStructure ddmStructure = recordSet.getDDMStructure();
+		boolean requireCaptcha = isCaptchaRequired(recordSet);
+
+		DDMForm ddmForm = getDDMForm(ddmStructure, requireCaptcha);
+
+		DDMFormLayout ddmFormLayout = getDDMFormLayout(
+			ddmStructure, requireCaptcha);
+
+		DDMFormRenderingContext ddmFormRenderingContext =
+			createDDMFormRenderingContext(ddmForm);
+
+		boolean showSubmitButton = isShowSubmitButton();
+
+		ddmFormRenderingContext.setShowSubmitButton(showSubmitButton);
+
+		String submitLabel = getSubmitLabel(recordSet);
+
+		ddmFormRenderingContext.setSubmitLabel(submitLabel);
+
+		return _ddmFormRenderer.render(
+			ddmForm, ddmFormLayout, ddmFormRenderingContext);
+	}
+
 	public DDLRecordSet getRecordSet() {
 		if (_recordSet != null) {
 			return _recordSet;
 		}
 
-		_recordSet = (DDLRecordSet)_renderRequest.getAttribute(
-			DDLFormWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
-
-		if (_recordSet != null) {
-			return _recordSet;
+		try {
+			_recordSet = _ddlRecordSetService.fetchRecordSet(getRecordSetId());
 		}
-
-		_recordSet = _ddlRecordSetLocalService.fetchRecordSet(getRecordSetId());
+		catch (PortalException pe) {
+			return null;
+		}
 
 		return _recordSet;
 	}
@@ -132,6 +187,95 @@ public class DDLFormDisplayContext {
 		return _showConfigurationIcon;
 	}
 
+	protected String createCaptchaResourceURL() {
+		ResourceURL resourceURL = _renderResponse.createResourceURL();
+
+		resourceURL.setResourceID("captcha");
+
+		return resourceURL.toString();
+	}
+
+	protected DDMFormRenderingContext createDDMFormRenderingContext(
+		DDMForm ddmForm) {
+
+		String languageId = ParamUtil.getString(_renderRequest, "languageId");
+
+		DDMFormRenderingContext ddmFormRenderingContext =
+			new DDMFormRenderingContext();
+
+		ddmFormRenderingContext.setDDMFormValues(
+			_ddmFormValuesFactory.create(_renderRequest, ddmForm));
+		ddmFormRenderingContext.setHttpServletRequest(
+			PortalUtil.getHttpServletRequest(_renderRequest));
+		ddmFormRenderingContext.setHttpServletResponse(
+			PortalUtil.getHttpServletResponse(_renderResponse));
+		ddmFormRenderingContext.setLocale(
+			LocaleUtil.fromLanguageId(languageId));
+		ddmFormRenderingContext.setPortletNamespace(
+			_renderResponse.getNamespace());
+
+		return ddmFormRenderingContext;
+	}
+
+	protected DDMFormLayoutRow createFullColumnDDMFormLayoutRow(
+		String ddmFormFieldName) {
+
+		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
+
+		DDMFormLayoutColumn ddmFormLayoutColumn = new DDMFormLayoutColumn(
+			DDMFormLayoutColumn.FULL, ddmFormFieldName);
+
+		ddmFormLayoutRow.addDDMFormLayoutColumn(ddmFormLayoutColumn);
+
+		return ddmFormLayoutRow;
+	}
+
+	protected DDMForm getDDMForm(
+		DDMStructure ddmStructure, boolean requireCaptcha) {
+
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		if (requireCaptcha) {
+			DDMFormField captchaDDMFormField = new DDMFormField(
+				_DDM_FORM_FIELD_NAME_CAPTCHA, "captcha");
+
+			captchaDDMFormField.setDataType("string");
+			captchaDDMFormField.setProperty("url", createCaptchaResourceURL());
+
+			ddmForm.addDDMFormField(captchaDDMFormField);
+		}
+
+		return ddmForm;
+	}
+
+	protected DDMFormLayout getDDMFormLayout(
+			DDMStructure ddmStructure, boolean requireCaptcha)
+		throws PortalException {
+
+		DDMFormLayout ddmFormLayout = ddmStructure.getDDMFormLayout();
+
+		if (requireCaptcha) {
+			DDMFormLayoutPage lastDDMFormLayoutPage = getLastDDMFormLayoutPage(
+				ddmFormLayout);
+
+			DDMFormLayoutRow ddmFormLayoutRow =
+				createFullColumnDDMFormLayoutRow(_DDM_FORM_FIELD_NAME_CAPTCHA);
+
+			lastDDMFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow);
+		}
+
+		return ddmFormLayout;
+	}
+
+	protected DDMFormLayoutPage getLastDDMFormLayoutPage(
+		DDMFormLayout ddmFormLayout) {
+
+		List<DDMFormLayoutPage> ddmFormLayoutPages =
+			ddmFormLayout.getDDMFormLayoutPages();
+
+		return ddmFormLayoutPages.get(ddmFormLayoutPages.size() - 1);
+	}
+
 	protected String getPortletId() {
 		ThemeDisplay themeDisplay = getThemeDisplay();
 
@@ -146,6 +290,20 @@ public class DDLFormDisplayContext {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.getPortletResource();
+	}
+
+	protected String getSubmitLabel(DDLRecordSet recordSet) {
+		ThemeDisplay themeDisplay = getThemeDisplay();
+
+		boolean workflowEnabled = hasWorkflowEnabled(recordSet, themeDisplay);
+
+		if (workflowEnabled) {
+			return LanguageUtil.get(
+				themeDisplay.getRequest(), "submit-for-publication");
+		}
+		else {
+			return LanguageUtil.get(themeDisplay.getRequest(), "submit");
+		}
 	}
 
 	protected ThemeDisplay getThemeDisplay() {
@@ -173,6 +331,22 @@ public class DDLFormDisplayContext {
 		}
 
 		return _hasViewPermission;
+	}
+
+	protected boolean hasWorkflowEnabled(
+		DDLRecordSet recordSet, ThemeDisplay themeDisplay) {
+
+		return _workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+			themeDisplay.getCompanyId(), recordSet.getGroupId(),
+			DDLRecordSet.class.getName(), recordSet.getRecordSetId());
+	}
+
+	protected boolean isCaptchaRequired(DDLRecordSet recordSet)
+		throws PortalException {
+
+		DDLRecordSetSettings recordSetSettings = recordSet.getSettingsModel();
+
+		return recordSetSettings.requireCaptcha();
 	}
 
 	protected boolean isFormPublished() throws PortalException {
@@ -203,11 +377,28 @@ public class DDLFormDisplayContext {
 		return urlCurrent.contains("/shared");
 	}
 
-	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
+	protected boolean isShowSubmitButton() {
+		boolean preview = ParamUtil.getBoolean(_renderRequest, "preview");
+
+		if (preview) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private static final String _DDM_FORM_FIELD_NAME_CAPTCHA = "_CAPTCHA_";
+
+	private final DDLRecordSetService _ddlRecordSetService;
+	private final DDMFormRenderer _ddmFormRenderer;
+	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private Boolean _hasViewPermission;
 	private DDLRecordSet _recordSet;
 	private long _recordSetId;
 	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
 	private Boolean _showConfigurationIcon;
+	private final WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

@@ -37,7 +37,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
-	protected void checkBundleName(
+	protected void checkDirectoryAndBundleName(
 		String fileName, String absolutePath, String content) {
 
 		if (!portalSource || !isModulesFile(absolutePath) ||
@@ -53,6 +53,14 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		int y = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
 
 		String dirName = absolutePath.substring(y + 1, x);
+
+		if (dirName.endsWith("-taglib-web")) {
+			String newDirName = dirName.substring(0, dirName.length() - 4);
+
+			processErrorMessage(
+				fileName,
+				"Rename module '" + dirName + "' to '" + newDirName + "'");
+		}
 
 		Matcher matcher = _bundleNamePattern.matcher(content);
 
@@ -142,7 +150,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		content = importsFormatter.format(content, _exportsPattern);
 		content = importsFormatter.format(content, _importsPattern);
 
-		checkBundleName(fileName, absolutePath, content);
+		checkDirectoryAndBundleName(fileName, absolutePath, content);
 
 		if (portalSource && isModulesFile(absolutePath) &&
 			!fileName.endsWith("test-bnd.bnd")) {

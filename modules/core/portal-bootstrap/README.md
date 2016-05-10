@@ -16,13 +16,13 @@ module_framework_base_dir=${liferay_home}/osgi
 # This is the classpath common to all functions. Order matters!
 #
 jars=(
+	${module_framework_base_dir}/core/biz.aQute.bnd.jar
 	${module_framework_base_dir}/core/com.liferay.jaxws.osgi.bridge.jar
 	${module_framework_base_dir}/core/com.liferay.osgi.service.tracker.collections.jar
 	${module_framework_base_dir}/core/com.liferay.portal.app.license.api.jar
 	${module_framework_base_dir}/core/com.liferay.portal.bootstrap.jar
 	${module_framework_base_dir}/core/com.liferay.registry.impl.jar
 	${module_framework_base_dir}/core/org.eclipse.osgi.jar
-	${app_server_dir}/webapps/ROOT/WEB-INF/lib/bnd.jar
 	${app_server_dir}/webapps/ROOT/WEB-INF/lib/commons-beanutils.jar
 	${app_server_dir}/webapps/ROOT/WEB-INF/lib/commons-configuration.jar
 	${app_server_dir}/webapps/ROOT/WEB-INF/lib/commons-digester.jar

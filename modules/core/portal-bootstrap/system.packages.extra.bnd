@@ -206,6 +206,10 @@ Export-Package:\
 	*
 Import-Package: !*
 -includeresource:\
+	@../../../lib/development/bnd.jar!/aQute/bnd/annotation/metatype/*,\
+	@../../../lib/development/bnd.jar!/aQute/bnd/header/*,\
+	@../../../lib/development/bnd.jar!/aQute/bnd/osgi/*,\
+	@../../../lib/development/bnd.jar!/aQute/bnd/version/*,\
 	@../../../lib/development/jms.jar,\
 	@../../../lib/development/mail.jar,\
 	@../../../lib/development/persistence.jar,\
@@ -215,10 +219,6 @@ Import-Package: !*
 	@../../../lib/portal/aopalliance.jar,\
 	@../../../lib/portal/asm-debug-all.jar,\
 	@../../../lib/portal/aspectj-rt.jar,\
-	@../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*,\
-	@../../../lib/portal/bnd.jar!/aQute/bnd/header/*,\
-	@../../../lib/portal/bnd.jar!/aQute/bnd/osgi/*,\
-	@../../../lib/portal/bnd.jar!/aQute/bnd/version/*,\
 	@../../../lib/portal/ccpp.jar,\
 	@../../../lib/portal/commons-beanutils.jar,\
 	@../../../lib/portal/commons-chain.jar,\

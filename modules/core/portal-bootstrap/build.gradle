@@ -6,6 +6,7 @@ import org.dm.gradle.plugins.bundle.JarBuilder
 task buildSystemPackagesExtraManifest
 task copySystemPackagesExtraLibs(type: Copy)
 task copySystemPackagesExtraManifest(type: Copy)
+task deployDependencies(type: Copy)
 
 File systemPackagesExtraBndFile = file("system.packages.extra.bnd")
 File systemPackagesExtraManifestFile = file("system.packages.extra.mf")
@@ -70,6 +71,26 @@ dependencies {
 	provided project(":core:portal-app-license-api")
 	provided project(":core:registry-api")
 	provided project(":core:registry-impl")
+}
+
+deploy {
+	finalizedBy deployDependencies
+}
+
+deployDependencies {
+	ext {
+		autoClean = false
+	}
+
+	from configurations.provided
+
+	include "biz.aQute.bnd-*.jar"
+
+	into {
+		liferay.deployDir
+	}
+
+	rename new RenameDependencyClosure(project, configurations.provided.name)
 }
 
 jar {

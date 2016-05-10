@@ -444,9 +444,25 @@ public class SyncDeviceClp extends BaseModelImpl<SyncDevice>
 	}
 
 	@Override
-	public boolean isSupported() {
+	public void checkStatus() {
 		try {
-			String methodName = "isSupported";
+			String methodName = "checkStatus";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public boolean hasSetModifiedDate() {
+		try {
+			String methodName = "hasSetModifiedDate";
 
 			Class<?>[] parameterTypes = new Class<?>[] {  };
 
@@ -463,9 +479,9 @@ public class SyncDeviceClp extends BaseModelImpl<SyncDevice>
 	}
 
 	@Override
-	public boolean hasSetModifiedDate() {
+	public boolean isSupported() {
 		try {
-			String methodName = "hasSetModifiedDate";
+			String methodName = "isSupported";
 
 			Class<?>[] parameterTypes = new Class<?>[] {  };
 
@@ -494,22 +510,6 @@ public class SyncDeviceClp extends BaseModelImpl<SyncDevice>
 					parameterTypes, parameterValues);
 
 			return returnObj;
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
-	public void checkStatus() {
-		try {
-			String methodName = "checkStatus";
-
-			Class<?>[] parameterTypes = new Class<?>[] {  };
-
-			Object[] parameterValues = new Object[] {  };
-
-			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
 		}
 		catch (Exception e) {
 			throw new UnsupportedOperationException(e);

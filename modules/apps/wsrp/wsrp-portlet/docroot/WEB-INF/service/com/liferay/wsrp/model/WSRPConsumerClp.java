@@ -527,18 +527,18 @@ public class WSRPConsumerClp extends BaseModelImpl<WSRPConsumer>
 	}
 
 	@Override
-	public void setRegistrationContext(
-		oasis.names.tc.wsrp.v2.types.RegistrationContext registrationContext) {
+	public oasis.names.tc.wsrp.v2.types.RegistrationContext getRegistrationContext() {
 		try {
-			String methodName = "setRegistrationContext";
+			String methodName = "getRegistrationContext";
 
-			Class<?>[] parameterTypes = new Class<?>[] {
-					oasis.names.tc.wsrp.v2.types.RegistrationContext.class
-				};
+			Class<?>[] parameterTypes = new Class<?>[] {  };
 
-			Object[] parameterValues = new Object[] { registrationContext };
+			Object[] parameterValues = new Object[] {  };
 
-			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+			oasis.names.tc.wsrp.v2.types.RegistrationContext returnObj = (oasis.names.tc.wsrp.v2.types.RegistrationContext)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
 		}
 		catch (Exception e) {
 			throw new UnsupportedOperationException(e);
@@ -565,6 +565,25 @@ public class WSRPConsumerClp extends BaseModelImpl<WSRPConsumer>
 	}
 
 	@Override
+	public void setRegistrationContext(
+		oasis.names.tc.wsrp.v2.types.RegistrationContext registrationContext) {
+		try {
+			String methodName = "setRegistrationContext";
+
+			Class<?>[] parameterTypes = new Class<?>[] {
+					oasis.names.tc.wsrp.v2.types.RegistrationContext.class
+				};
+
+			Object[] parameterValues = new Object[] { registrationContext };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public void setRegistrationProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties registrationProperties) {
 		try {
@@ -577,25 +596,6 @@ public class WSRPConsumerClp extends BaseModelImpl<WSRPConsumer>
 			Object[] parameterValues = new Object[] { registrationProperties };
 
 			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
-	public oasis.names.tc.wsrp.v2.types.RegistrationContext getRegistrationContext() {
-		try {
-			String methodName = "getRegistrationContext";
-
-			Class<?>[] parameterTypes = new Class<?>[] {  };
-
-			Object[] parameterValues = new Object[] {  };
-
-			oasis.names.tc.wsrp.v2.types.RegistrationContext returnObj = (oasis.names.tc.wsrp.v2.types.RegistrationContext)invokeOnRemoteModel(methodName,
-					parameterTypes, parameterValues);
-
-			return returnObj;
 		}
 		catch (Exception e) {
 			throw new UnsupportedOperationException(e);

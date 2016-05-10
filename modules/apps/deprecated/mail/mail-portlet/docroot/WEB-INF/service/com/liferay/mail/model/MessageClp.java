@@ -730,13 +730,13 @@ public class MessageClp extends BaseModelImpl<Message> implements Message {
 	}
 
 	@Override
-	public boolean hasFlag(int flag) {
+	public boolean hasAttachments() {
 		try {
-			String methodName = "hasFlag";
+			String methodName = "hasAttachments";
 
-			Class<?>[] parameterTypes = new Class<?>[] { int.class };
+			Class<?>[] parameterTypes = new Class<?>[] {  };
 
-			Object[] parameterValues = new Object[] { flag };
+			Object[] parameterValues = new Object[] {  };
 
 			Boolean returnObj = (Boolean)invokeOnRemoteModel(methodName,
 					parameterTypes, parameterValues);
@@ -749,13 +749,13 @@ public class MessageClp extends BaseModelImpl<Message> implements Message {
 	}
 
 	@Override
-	public boolean hasAttachments() {
+	public boolean hasFlag(int flag) {
 		try {
-			String methodName = "hasAttachments";
+			String methodName = "hasFlag";
 
-			Class<?>[] parameterTypes = new Class<?>[] {  };
+			Class<?>[] parameterTypes = new Class<?>[] { int.class };
 
-			Object[] parameterValues = new Object[] {  };
+			Object[] parameterValues = new Object[] { flag };
 
 			Boolean returnObj = (Boolean)invokeOnRemoteModel(methodName,
 					parameterTypes, parameterValues);

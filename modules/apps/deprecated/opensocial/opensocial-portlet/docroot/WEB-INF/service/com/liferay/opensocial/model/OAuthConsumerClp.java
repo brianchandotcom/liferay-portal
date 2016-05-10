@@ -362,22 +362,6 @@ public class OAuthConsumerClp extends BaseModelImpl<OAuthConsumer>
 	}
 
 	@Override
-	public void setKeyName(java.lang.String keyName) {
-		try {
-			String methodName = "setKeyName";
-
-			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
-
-			Object[] parameterValues = new Object[] { keyName };
-
-			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
 	public java.lang.String getKeyName() {
 		try {
 			String methodName = "getKeyName";
@@ -390,6 +374,22 @@ public class OAuthConsumerClp extends BaseModelImpl<OAuthConsumer>
 					parameterTypes, parameterValues);
 
 			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public void setKeyName(java.lang.String keyName) {
+		try {
+			String methodName = "setKeyName";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
+
+			Object[] parameterValues = new Object[] { keyName };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
 		}
 		catch (Exception e) {
 			throw new UnsupportedOperationException(e);

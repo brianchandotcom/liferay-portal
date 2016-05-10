@@ -920,22 +920,6 @@ public class AccountClp extends BaseModelImpl<Account> implements Account {
 	}
 
 	@Override
-	public void setPasswordDecrypted(java.lang.String unencryptedPassword) {
-		try {
-			String methodName = "setPasswordDecrypted";
-
-			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
-
-			Object[] parameterValues = new Object[] { unencryptedPassword };
-
-			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
 	public java.lang.String getPasswordDecrypted() {
 		try {
 			String methodName = "getPasswordDecrypted";
@@ -948,6 +932,22 @@ public class AccountClp extends BaseModelImpl<Account> implements Account {
 					parameterTypes, parameterValues);
 
 			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public void setPasswordDecrypted(java.lang.String unencryptedPassword) {
+		try {
+			String methodName = "setPasswordDecrypted";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
+
+			Object[] parameterValues = new Object[] { unencryptedPassword };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
 		}
 		catch (Exception e) {
 			throw new UnsupportedOperationException(e);

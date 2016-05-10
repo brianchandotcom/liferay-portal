@@ -37,7 +37,7 @@ formatXML {
 }
 
 liferay {
-	deployDir = "../../../tools/sdk/tmp/portal-tools/portal-tools-service-builder"
+	deployDir = "../../../tools/sdk/dependencies/com.liferay.portal.tools.service.builder/lib"
 }
 
 updateFileVersions {

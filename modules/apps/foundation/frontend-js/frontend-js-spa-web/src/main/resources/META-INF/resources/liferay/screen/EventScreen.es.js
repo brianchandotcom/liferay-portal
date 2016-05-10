@@ -83,6 +83,15 @@ class EventScreen extends HtmlScreen {
 			});
 	}
 
+	getCache() {
+		var app = Liferay.SPA.app;
+
+		if (app.isCacheEnabled() && !app.isScreenCacheExpired(this)) {
+			return super.getCache();
+		}
+		return null;
+	}
+
 	getCacheLastModified() {
 		return this.cacheLastModified;
 	}

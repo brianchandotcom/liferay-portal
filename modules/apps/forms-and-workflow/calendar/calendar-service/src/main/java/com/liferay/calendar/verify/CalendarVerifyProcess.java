@@ -17,9 +17,17 @@ package com.liferay.calendar.verify;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.notification.NotificationType;
+import com.liferay.calendar.recurrence.Frequency;
+import com.liferay.calendar.recurrence.PositionalWeekday;
+import com.liferay.calendar.recurrence.Recurrence;
+import com.liferay.calendar.recurrence.RecurrenceSerializer;
+import com.liferay.calendar.recurrence.Weekday;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarResourceLocalService;
+import com.liferay.portal.kernel.cal.DayAndPosition;
+import com.liferay.portal.kernel.cal.TZSRecurrence;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -30,13 +38,17 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.verify.VerifyProcess;
 
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -95,6 +107,83 @@ public class CalendarVerifyProcess extends VerifyProcess {
 
 		return _calendarBookingLocalService.updateCalendarBooking(
 			calendarBooking);
+	}
+
+	protected String convertRecurrence(String originalRecurrence) {
+		if (Validator.isNull(originalRecurrence)) {
+			return null;
+		}
+
+		TZSRecurrence tzsRecurrence =
+			(TZSRecurrence)JSONFactoryUtil.deserialize(originalRecurrence);
+
+		if (tzsRecurrence == null) {
+			return null;
+		}
+
+		Recurrence recurrence = new Recurrence();
+
+		Frequency frequency = _frequencyMap.get(tzsRecurrence.getFrequency());
+
+		int interval = tzsRecurrence.getInterval();
+
+		List<PositionalWeekday> positionalWeekdays = new ArrayList<>();
+
+		if ((frequency == Frequency.DAILY) && (interval == 0)) {
+			frequency = Frequency.WEEKLY;
+
+			interval = 1;
+
+			positionalWeekdays.add(new PositionalWeekday(Weekday.MONDAY, 0));
+			positionalWeekdays.add(new PositionalWeekday(Weekday.TUESDAY, 0));
+			positionalWeekdays.add(new PositionalWeekday(Weekday.WEDNESDAY, 0));
+			positionalWeekdays.add(new PositionalWeekday(Weekday.THURSDAY, 0));
+			positionalWeekdays.add(new PositionalWeekday(Weekday.FRIDAY, 0));
+		}
+		else {
+			DayAndPosition[] dayAndPositions = tzsRecurrence.getByDay();
+
+			if (dayAndPositions != null) {
+				for (DayAndPosition dayAndPosition : dayAndPositions) {
+					Weekday weekday = _weekdayMap.get(
+						dayAndPosition.getDayOfWeek());
+
+					PositionalWeekday positionalWeekday = new PositionalWeekday(
+						weekday, dayAndPosition.getDayPosition());
+
+					positionalWeekdays.add(positionalWeekday);
+				}
+			}
+
+			int[] months = tzsRecurrence.getByMonth();
+
+			if (ArrayUtil.isNotEmpty(months)) {
+				List<Integer> monthsList = new ArrayList<>();
+
+				for (int month : months) {
+					monthsList.add(month);
+				}
+
+				recurrence.setMonths(monthsList);
+			}
+		}
+
+		recurrence.setInterval(interval);
+		recurrence.setFrequency(frequency);
+		recurrence.setPositionalWeekdays(positionalWeekdays);
+
+		java.util.Calendar untilJCalendar = tzsRecurrence.getUntil();
+
+		int ocurrence = tzsRecurrence.getOccurrence();
+
+		if (untilJCalendar != null) {
+			recurrence.setUntilJCalendar(untilJCalendar);
+		}
+		else if (ocurrence > 0) {
+			recurrence.setCount(ocurrence);
+		}
+
+		return RecurrenceSerializer.serialize(recurrence);
 	}
 
 	@Override
@@ -228,6 +317,25 @@ public class CalendarVerifyProcess extends VerifyProcess {
 	}
 
 	protected void verifyCalEvent() throws Exception {
+	}
+
+	private static final Map<Integer, Frequency> _frequencyMap =
+		new HashMap<>();
+	private static final Map<Integer, Weekday> _weekdayMap = new HashMap<>();
+
+	static {
+		_frequencyMap.put(TZSRecurrence.DAILY, Frequency.DAILY);
+		_frequencyMap.put(TZSRecurrence.WEEKLY, Frequency.WEEKLY);
+		_frequencyMap.put(TZSRecurrence.MONTHLY, Frequency.MONTHLY);
+		_frequencyMap.put(TZSRecurrence.YEARLY, Frequency.YEARLY);
+
+		_weekdayMap.put(java.util.Calendar.SUNDAY, Weekday.SUNDAY);
+		_weekdayMap.put(java.util.Calendar.MONDAY, Weekday.MONDAY);
+		_weekdayMap.put(java.util.Calendar.TUESDAY, Weekday.TUESDAY);
+		_weekdayMap.put(java.util.Calendar.WEDNESDAY, Weekday.WEDNESDAY);
+		_weekdayMap.put(java.util.Calendar.THURSDAY, Weekday.THURSDAY);
+		_weekdayMap.put(java.util.Calendar.FRIDAY, Weekday.FRIDAY);
+		_weekdayMap.put(java.util.Calendar.SATURDAY, Weekday.SATURDAY);
 	}
 
 	private CalendarBookingLocalService _calendarBookingLocalService;

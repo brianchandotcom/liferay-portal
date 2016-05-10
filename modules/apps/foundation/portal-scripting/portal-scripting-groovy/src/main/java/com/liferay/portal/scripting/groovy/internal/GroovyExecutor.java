@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -54,7 +53,9 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 				"Constrained execution not supported for Groovy");
 		}
 
-		Script compiledScript = _groovyShell.parse(script);
+		GroovyShell groovyShell = new GroovyShell(getClassLoader());
+
+		Script compiledScript = groovyShell.parse(script);
 
 		Binding binding = new Binding(inputObjects);
 
@@ -84,12 +85,5 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 	public ScriptingExecutor newInstance(boolean executeInSeparateThread) {
 		return new GroovyExecutor();
 	}
-
-	@Activate
-	protected void activate() {
-		_groovyShell = new GroovyShell(getClassLoader());
-	}
-
-	private volatile GroovyShell _groovyShell;
 
 }

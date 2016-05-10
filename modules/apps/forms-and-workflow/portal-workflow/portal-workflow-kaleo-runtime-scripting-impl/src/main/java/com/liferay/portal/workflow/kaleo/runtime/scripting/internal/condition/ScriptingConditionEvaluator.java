@@ -12,16 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.internal.notification.recipient.script;
+package com.liferay.portal.workflow.kaleo.runtime.scripting.internal.condition;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.scripting.Scripting;
-import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
+import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.script.NotificationRecipientEvaluator;
-import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.script.ScriptingNotificationRecipientConstants;
+import com.liferay.portal.workflow.kaleo.runtime.condition.ConditionEvaluator;
 import com.liferay.portal.workflow.kaleo.runtime.util.ScriptingContextBuilder;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
+
+import java.io.Serializable;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -40,33 +41,46 @@ import org.osgi.service.component.annotations.Reference;
 		"scripting.language=javascript", "scripting.language=python",
 		"scripting.language=ruby"
 	},
-	service = NotificationRecipientEvaluator.class
+	service = ConditionEvaluator.class
 )
-public class ScriptingNotificationRecipientEvaluator
-	implements NotificationRecipientEvaluator {
+public class ScriptingConditionEvaluator implements ConditionEvaluator {
 
 	@Override
-	public Map<String, ?> evaluate(
-			KaleoNotificationRecipient kaleoNotificationRecipient,
-			ExecutionContext executionContext)
+	public String evaluate(
+			KaleoCondition kaleoCondition, ExecutionContext executionContext)
 		throws PortalException {
 
 		Map<String, Object> inputObjects =
 			_scriptingContextBuilder.buildScriptingContext(executionContext);
 
-		return _scripting.eval(
+		Map<String, Object> results = _scripting.eval(
 			null, inputObjects, _outputNames,
-			kaleoNotificationRecipient.getRecipientScriptLanguage(),
-			kaleoNotificationRecipient.getRecipientScript());
+			kaleoCondition.getScriptLanguage(), kaleoCondition.getScript());
+
+		Map<String, Serializable> resultsWorkflowContext =
+			(Map<String, Serializable>)results.get(
+				WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
+
+		WorkflowContextUtil.mergeWorkflowContexts(
+			executionContext, resultsWorkflowContext);
+
+		String returnValue = (String)results.get(_RETURN_VALUE);
+
+		if (returnValue != null) {
+			return returnValue;
+		}
+
+		throw new IllegalStateException(
+			"Conditional did not return value for script " +
+				kaleoCondition.getScript());
 	}
+
+	private static final String _RETURN_VALUE = "returnValue";
 
 	private static final Set<String> _outputNames = new HashSet<>();
 
 	static {
-		_outputNames.add(
-			ScriptingNotificationRecipientConstants.ROLES_RECIPIENT);
-		_outputNames.add(
-			ScriptingNotificationRecipientConstants.USER_RECIPIENT);
+		_outputNames.add(_RETURN_VALUE);
 		_outputNames.add(WorkflowContextUtil.WORKFLOW_CONTEXT_NAME);
 	}
 

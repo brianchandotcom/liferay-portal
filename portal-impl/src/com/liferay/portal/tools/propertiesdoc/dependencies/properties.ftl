@@ -1,15 +1,15 @@
 <html>
 	<style type="text/css">
 		h1 {
-			color: #124680;
+			color: #31548F;
 		}
 
 		h2 {
-			color: #1B75BB;
+			color: #68708B;
 		}
 
 		h3 {
-			color: #1B75BB;
+			color: #989DA0;
 		}
 
 		#toc {
@@ -24,11 +24,11 @@
 		}
 
 		.defaults {
-			background-color: #8BB8E8;
+			background-color: #8598B9;
 		}
 
 		.examples {
-			background-color: #E3E4E5;
+			background-color: #E4ECF0;
 		}
 	</style>
 	<head>

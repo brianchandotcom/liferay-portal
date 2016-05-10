@@ -1168,7 +1168,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			if (bundleStartLevel.getStartLevel() ==
 					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL) {
 
-				bundle.start();
+				try {
+					bundle.start();
+				}
+				catch (BundleException be) {
+					_log.error(be, be);
+				}
 			}
 		}
 	}

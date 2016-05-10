@@ -41,8 +41,6 @@ public class GroovyExecutorTest extends ScriptingExecutorTestCase {
 	public ScriptingExecutor getScriptingExecutor() {
 		GroovyExecutor groovyExecutor = new GroovyExecutor();
 
-		groovyExecutor.activate();
-
 		return groovyExecutor;
 	}
 

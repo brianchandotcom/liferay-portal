@@ -602,7 +602,6 @@
 	<target name="javadoc">
 		<remake-dir dir="${doc.dir}/javadocs" />
 
-		<!--
 		<antcall target="javadoc-portal-cmd">
 			<param name="generated.description" value="" />
 			<param name="module.dir" value="portal-impl" />
@@ -627,7 +626,6 @@
 			<param name="generated.description" value="" />
 			<param name="module.dir" value="util-bridges" />
 		</antcall>
-		-->
 
 		<antcall target="javadoc-cmd">
 			<param name="generated.description" value="" />

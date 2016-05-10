@@ -70,9 +70,8 @@
 
 	<path id="web.classpath">
 		<pathelement path="${classpath.full}" />
-		<fileset dir="${project.dir}/lib/development" includes="jsp-api.jar,mail.jar,servlet-api.jar" />
+		<fileset dir="${project.dir}/lib/development" includes="bnd.jar,jsp-api.jar,mail.jar,servlet-api.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
-		<fileset dir="${project.dir}/lib/portal" includes="bnd.jar" />
 		<path refid="web-lib.classpath" />
 	</path>
 

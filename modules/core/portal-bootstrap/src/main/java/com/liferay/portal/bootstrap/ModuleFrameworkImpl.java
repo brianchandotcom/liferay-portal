@@ -891,7 +891,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 
 			final Bundle bundle = _addBundle(
-				initialBundleURL.toString(), inputStream, false);
+				"reference:" + initialBundleURL.toString(), inputStream, false);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Added initial bundle " + bundle);
@@ -1168,7 +1168,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			if (bundleStartLevel.getStartLevel() ==
 					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL) {
 
-				bundle.start();
+				try {
+					bundle.start();
+				}
+				catch (BundleException be) {
+					if (_log.isErrorEnabled()) {
+						_log.error(be, be);
+					}
+				}
 			}
 		}
 	}

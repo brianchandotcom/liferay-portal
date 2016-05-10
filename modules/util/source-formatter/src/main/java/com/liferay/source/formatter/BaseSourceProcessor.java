@@ -1924,6 +1924,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _mainReleaseVersion;
 	}
 
+	protected int getMaxLineLength() {
+		return GetterUtil.getInteger(
+			System.getProperty("source.formatter.max.line.length"), 80);
+	}
+
 	protected List<String> getModuleLangDirNames(
 		String moduleLocation, String buildGradleContent) {
 

@@ -68,7 +68,10 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 		}
 		catch (SQLException sqle) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Ignoring unique index constraint violation", sqle);
+				_log.debug(
+					"Ignoring portlet preference with id " +
+						portletPreferencesRow.getPortletPreferencesId(),
+					sqle);
 			}
 		}
 	}

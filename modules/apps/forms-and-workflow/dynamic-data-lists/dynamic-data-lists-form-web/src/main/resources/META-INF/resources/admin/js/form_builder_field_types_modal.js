@@ -43,6 +43,14 @@ AUI.add(
 						return A.Node.create(TPL_ROW);
 					},
 
+					_onClickFieldType: function(event) {
+						var instance = this;
+
+						event.preventDefault();
+
+						FormBuilderFieldTypesModal.superclass._onClickFieldType.apply(instance, arguments);
+					},
+
 					_uiSetFieldTypes: function(fieldTypes) {
 						var instance = this;
 

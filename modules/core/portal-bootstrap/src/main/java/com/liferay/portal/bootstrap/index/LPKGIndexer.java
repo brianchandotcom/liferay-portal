@@ -14,6 +14,7 @@
 
 package com.liferay.portal.bootstrap.index;
 
+import com.liferay.portal.bootstrap.internal.Util;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -26,7 +27,9 @@ import com.liferay.portal.util.PropsValues;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
-import java.io.IOException;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -133,7 +136,7 @@ public class LPKGIndexer implements Indexer {
 		}
 	}
 
-	public LPKGIndexer(File lpkgFile) throws IOException {
+	public LPKGIndexer(File lpkgFile) {
 		_lpkgFile = lpkgFile;
 
 		_indexerConfig = new HashMap<>();
@@ -149,9 +152,9 @@ public class LPKGIndexer implements Indexer {
 
 	@Override
 	public File index(File output) throws Exception {
-		File tempFolder = FileUtil.createTempFolder();
+		Path tempFolder = Files.createTempDirectory(null);
 
-		_indexerConfig.put("root.url", tempFolder.getCanonicalPath());
+		_indexerConfig.put("root.url", tempFolder.toFile().getCanonicalPath());
 
 		String bsn = _lpkgFile.getName();
 		String version = "1.0.0";
@@ -164,9 +167,9 @@ public class LPKGIndexer implements Indexer {
 			while (entries.hasMoreElements()) {
 				ZipEntry entry = entries.nextElement();
 
-				String shortName = FileUtil.getShortFileName(entry.getName());
+				String name = entry.getName();
 
-				if (shortName.endsWith("liferay-marketplace.properties")) {
+				if (name.endsWith("liferay-marketplace.properties")) {
 					Properties properties = new Properties();
 
 					properties.load(zipFile.getInputStream(entry));
@@ -176,19 +179,19 @@ public class LPKGIndexer implements Indexer {
 
 					continue;
 				}
-				else if (!shortName.endsWith(".jar")) {
+				else if (!name.endsWith(".jar")) {
 					continue;
 				}
 
-				File tempFile = new File(tempFolder, shortName);
+				File tempFile = new File(tempFolder.toFile(), name);
 
-				FileUtil.write(tempFile, zipFile.getInputStream(entry));
+				Files.copy(zipFile.getInputStream(entry), tempFile.toPath());
 
 				fileList.add(tempFile);
 			}
 
 			File tempIndexFile = new File(
-				tempFolder, bsn + "-" + version + "-index.xml");
+				tempFolder.toFile(), bsn + "-" + version + "-index.xml");
 
 			ResourceIndexer resourceIndexer = new RepoIndex();
 
@@ -200,12 +203,12 @@ public class LPKGIndexer implements Indexer {
 				output = new File(output, tempIndexFile.getName());
 			}
 
-			FileUtil.copyFile(tempIndexFile, output);
+			Files.copy(tempIndexFile.toPath(), output.toPath());
 
 			return output;
 		}
 		finally {
-			FileUtil.deltree(tempFolder);
+			Util.deltree(tempFolder);
 		}
 	}
 

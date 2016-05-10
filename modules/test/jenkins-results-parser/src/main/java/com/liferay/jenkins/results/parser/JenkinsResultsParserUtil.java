@@ -19,6 +19,7 @@ import java.io.CharArrayWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.Writer;
@@ -32,6 +33,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,6 +102,62 @@ public class JenkinsResultsParserUtil {
 		String uriASCIIString = uri.toASCIIString();
 
 		return new URL(uriASCIIString.replace("#", "%23"));
+	}
+
+	public static Process executeBashCommands(
+			boolean exitOnFirstFail, String... commands)
+		throws InterruptedException, IOException {
+
+		System.out.print("Executing commands: ");
+
+		for (String command : commands) {
+			System.out.println(command);
+		}
+
+		Runtime runtime = Runtime.getRuntime();
+
+		String[] bashCommands = new String[3];
+
+		bashCommands[0] = "/bin/sh";
+		bashCommands[1] = "-c";
+
+		String commandTerminator = ";";
+
+		if (exitOnFirstFail) {
+			commandTerminator = "&&";
+		}
+
+		StringBuffer sb = new StringBuffer();
+
+		for (String command : commands) {
+			sb.append(command);
+			sb.append(commandTerminator);
+			sb.append(" ");
+		}
+
+		sb.append("echo COMPLETE\n");
+
+		bashCommands[2] = sb.toString();
+
+		Process process = runtime.exec(bashCommands);
+
+		System.out.println("Output stream: " + readInputStream(
+			process.getInputStream()));
+
+		int returnCode = process.waitFor();
+
+		if (returnCode != 0) {
+			System.out.println("Error stream: " + readInputStream(
+				process.getErrorStream()));
+		}
+
+		return process;
+	}
+
+	public static Process executeBashCommands(String... commands)
+		throws InterruptedException, IOException {
+
+		return executeBashCommands(true, commands);
 	}
 
 	public static String expandSlaveRange(String value) {
@@ -389,6 +447,50 @@ public class JenkinsResultsParserUtil {
 
 	public static String read(File file) throws IOException {
 		return new String(Files.readAllBytes(Paths.get(file.toURI())));
+	}
+
+	public static String readInputStream(InputStream inputStream)
+		throws IOException {
+
+		StringBuffer sb = new StringBuffer();
+
+		byte[] bytes = new byte[1024];
+
+		int size = inputStream.read(bytes);
+
+		while (size > 0) {
+			sb.append(new String(Arrays.copyOf(bytes, size)));
+
+			size = inputStream.read(bytes);
+		}
+
+		return sb.toString();
+	}
+
+	public static void sendNotification(
+			String body, String from, String subject, String to)
+		throws Exception {
+
+		File file = new File("/tmp/notification_email_body.txt");
+
+		if (file.exists()) {
+			file.delete();
+		}
+
+		write(file, body);
+
+		StringBuffer sb = new StringBuffer();
+
+		sb.append("cat /tmp/notification_email_body.txt | mail -v -s ");
+		sb.append("\"");
+		sb.append(subject);
+		sb.append("\" -r \"");
+		sb.append(from);
+		sb.append("\" \"");
+		sb.append(to);
+		sb.append("\"\n");
+
+		executeBashCommands(sb.toString());
 	}
 
 	public static void sleep(long duration) {

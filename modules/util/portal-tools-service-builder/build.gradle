@@ -1,5 +1,7 @@
 apply plugin: "com.liferay.maven.plugin.builder"
 
+task updateSDKDependencies(type: Copy)
+
 buildPluginDescriptor {
 	ext {
 		autoClean = false
@@ -28,6 +30,10 @@ dependencies {
 	provided group: "xerces", name: "xercesImpl", transitive: false, version: "2.11.0"
 }
 
+deploy {
+	finalizedBy updateSDKDependencies
+}
+
 formatSource {
 	mustRunAfter formatXML
 }
@@ -43,4 +49,14 @@ liferay {
 updateFileVersions {
 	match(/\t\t\t\t<version>(\d.+)<\/version>/, "samples/pom.xml")
 	match(/com\.liferay\.portal\.tools\.service\.builder=(\d.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+}
+
+updateSDKDependencies {
+	dependsOn cleanUpdateSDKDependencies
+
+	from {
+		liferay.deployDir
+	}
+
+	into "../../../tools/sdk/dependencies/com.liferay.portal.tools.service.builder/lib"
 }

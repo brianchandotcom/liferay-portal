@@ -32,11 +32,18 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourceBlockConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourceBlockLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -197,6 +204,44 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		verifyCalEvent();
 	}
 
+	protected long getActionId(
+		ResourceAction oldResourceAction, String newClassName) {
+
+		ResourceAction newResourceAction =
+			_resourceActionLocalService.fetchResourceAction(
+				newClassName, oldResourceAction.getActionId());
+
+		if (newResourceAction == null) {
+			return 0;
+		}
+
+		return newResourceAction.getBitwiseValue();
+	}
+
+	protected long getActionIds(
+		ResourcePermission resourcePermission, String oldClassName,
+		String newClassName) {
+
+		long actionIds = 0;
+
+		List<ResourceAction> oldResourceActions =
+			_resourceActionLocalService.getResourceActions(oldClassName);
+
+		for (ResourceAction oldResourceAction : oldResourceActions) {
+			boolean hasActionId = _resourcePermissionLocalService.hasActionId(
+				resourcePermission, oldResourceAction);
+
+			if (!hasActionId) {
+				continue;
+			}
+
+			actionIds = actionIds | getActionId(
+				oldResourceAction, newClassName);
+		}
+
+		return actionIds;
+	}
+
 	protected CalendarResource getCalendarResource(long companyId, long groupId)
 		throws PortalException {
 
@@ -286,6 +331,39 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		}
 	}
 
+	protected void importCalendarBookingResourcePermission(
+		ResourcePermission resourcePermission,
+		long calendarBookingId) throws PortalException {
+
+		CalendarBooking calendarBooking =
+			_calendarBookingLocalService.getCalendarBooking(calendarBookingId);
+
+		long actionIds = getActionIds(
+			resourcePermission, _CAL_EVENT_CLASS_NAME,
+			CalendarBooking.class.getName());
+
+		_resourceBlockLocalService.updateIndividualScopePermissions(
+			calendarBooking.getCompanyId(), calendarBooking.getGroupId(),
+			CalendarBooking.class.getName(), calendarBooking,
+			resourcePermission.getRoleId(), actionIds,
+			ResourceBlockConstants.OPERATOR_SET);
+	}
+
+	protected void importCalendarBookingResourcePermissions(
+			long companyId, long eventId, long calendarBookingId)
+		throws PortalException {
+
+		List<ResourcePermission> resourcePermissions =
+			_resourcePermissionLocalService.getResourcePermissions(
+				companyId, _CAL_EVENT_CLASS_NAME,
+				ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(eventId));
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			importCalendarBookingResourcePermission(
+				resourcePermission, calendarBookingId);
+		}
+	}
+
 	protected CalendarBooking importCalEvent(
 			String uuid, long eventId, long groupId, long companyId,
 			long userId, String userName, Timestamp createDate,
@@ -316,13 +394,20 @@ public class CalendarVerifyProcess extends VerifyProcess {
 			endTime = endTime - 1;
 		}
 
-		return addCalendarBooking(
+		calendarBooking = addCalendarBooking(
 			uuid, calendarBookingId, companyId, groupId, userId, userName,
 			createDate, modifiedDate, calendarResource.getDefaultCalendarId(),
 			calendarResource.getCalendarResourceId(), title, description,
 			location, startTime, endTime, allDay, convertRecurrence(recurrence),
 			firstReminder, NotificationType.EMAIL, secondReminder,
 			NotificationType.EMAIL);
+
+		// Resources
+
+		importCalendarBookingResourcePermissions(
+			companyId, eventId, calendarBookingId);
+
+		return calendarBooking;
 	}
 
 	protected void importCalEvents() throws Exception {
@@ -409,6 +494,27 @@ public class CalendarVerifyProcess extends VerifyProcess {
 	}
 
 	@Reference(unbind = "-")
+	protected void setResourceActionLocalService(
+		ResourceActionLocalService resourceActionLocalService) {
+
+		_resourceActionLocalService = resourceActionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourceBlockLocalService(
+		ResourceBlockLocalService resourceBlockLocalService) {
+
+		_resourceBlockLocalService = resourceBlockLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourcePermissionLocalService(
+		ResourcePermissionLocalService resourcePermissionLocalService) {
+
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setRoleLocalService(RoleLocalService roleLocalService) {
 		_roleLocalService = roleLocalService;
 	}
@@ -423,6 +529,9 @@ public class CalendarVerifyProcess extends VerifyProcess {
 			importCalEvents();
 		}
 	}
+
+	private static final String _CAL_EVENT_CLASS_NAME =
+		"com.liferay.portlet.calendar.model.CalEvent";
 
 	private static final Map<Integer, Frequency> _frequencyMap =
 		new HashMap<>();
@@ -448,6 +557,9 @@ public class CalendarVerifyProcess extends VerifyProcess {
 	private ClassNameLocalService _classNameLocalService;
 	private CounterLocalService _counterLocalService;
 	private GroupLocalService _groupLocalService;
+	private ResourceActionLocalService _resourceActionLocalService;
+	private ResourceBlockLocalService _resourceBlockLocalService;
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 	private RoleLocalService _roleLocalService;
 	private UserLocalService _userLocalService;
 

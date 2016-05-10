@@ -17,10 +17,11 @@ package com.liferay.gradle.plugins.test.integration;
 import com.liferay.gradle.plugins.test.integration.tasks.BaseAppServerTask;
 import com.liferay.gradle.plugins.test.integration.tasks.JmxRemotePortSpec;
 import com.liferay.gradle.plugins.test.integration.tasks.ManagerSpec;
+import com.liferay.gradle.plugins.test.integration.tasks.ModuleFrameworkBaseDirSpec;
 import com.liferay.gradle.plugins.test.integration.tasks.SetupArquillianTask;
 import com.liferay.gradle.plugins.test.integration.tasks.SetupTestableTomcatTask;
 import com.liferay.gradle.plugins.test.integration.tasks.StartTestableTomcatTask;
-import com.liferay.gradle.plugins.test.integration.tasks.StopAppServerTask;
+import com.liferay.gradle.plugins.test.integration.tasks.StopTestableTomcatTask;
 import com.liferay.gradle.plugins.test.integration.util.GradleUtil;
 import com.liferay.gradle.plugins.test.integration.util.StringUtil;
 import com.liferay.gradle.util.FileUtil;
@@ -94,8 +95,9 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 		SetupTestableTomcatTask setupTestableTomcatTask =
 			addTaskSetupTestableTomcat(project, testIntegrationTomcatExtension);
-		StopAppServerTask stopTestableTomcatTask = addTaskStopTestableTomcat(
-			project, testIntegrationTask, testIntegrationTomcatExtension);
+		StopTestableTomcatTask stopTestableTomcatTask =
+			addTaskStopTestableTomcat(
+				project, testIntegrationTask, testIntegrationTomcatExtension);
 		StartTestableTomcatTask startTestableTomcatTask =
 			addTaskStartTestableTomcat(
 				project, setupTestableTomcatTask, stopTestableTomcatTask,
@@ -199,25 +201,11 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 			});
 
-		setupTestableTomcatTask.setModuleFrameworkBaseDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					File dir = testIntegrationTomcatExtension.getLiferayHome();
-
-					if (dir != null) {
-						dir = new File(dir, "osgi");
-					}
-
-					return dir;
-				}
-
-			});
-
 		configureJmxRemotePortSpec(
 			setupTestableTomcatTask, testIntegrationTomcatExtension);
 		configureManagerSpec(
+			setupTestableTomcatTask, testIntegrationTomcatExtension);
+		configureModuleFrameworkBaseDirSpec(
 			setupTestableTomcatTask, testIntegrationTomcatExtension);
 
 		return setupTestableTomcatTask;
@@ -225,7 +213,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 	protected StartTestableTomcatTask addTaskStartTestableTomcat(
 		Project project, SetupTestableTomcatTask setupTestableTomcatTask,
-		StopAppServerTask stopTestableTomcatTask,
+		StopTestableTomcatTask stopTestableTomcatTask,
 		final TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
 
 		StartTestableTomcatTask startTestableTomcatTask = GradleUtil.addTask(
@@ -332,20 +320,23 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		return startTestableTomcatTask;
 	}
 
-	protected StopAppServerTask addTaskStopTestableTomcat(
+	protected StopTestableTomcatTask addTaskStopTestableTomcat(
 		Project project, Test testIntegrationTask,
 		TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
 
-		final StopAppServerTask stopTestableTomcatTask = GradleUtil.addTask(
-			project, STOP_TESTABLE_TOMCAT_TASK_NAME, StopAppServerTask.class);
+		final StopTestableTomcatTask stopTestableTomcatTask =
+			GradleUtil.addTask(
+				project, STOP_TESTABLE_TOMCAT_TASK_NAME,
+				StopTestableTomcatTask.class);
 
 		Action<Task> action = new Action<Task>() {
 
 			@Override
 			public void execute(Task task) {
-				StopAppServerTask stopAppServerTask = (StopAppServerTask)task;
+				StopTestableTomcatTask setupTestableTomcatTask =
+					(StopTestableTomcatTask)task;
 
-				File binDir = stopAppServerTask.getBinDir();
+				File binDir = setupTestableTomcatTask.getBinDir();
 
 				_startedAppServersReentrantLock.lock();
 
@@ -387,13 +378,14 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 			@Override
 			public void execute(Task task) {
-				StopAppServerTask stopAppServerTask = (StopAppServerTask)task;
+				StopTestableTomcatTask setupTestableTomcatTask =
+					(StopTestableTomcatTask)task;
 
 				_startedAppServersReentrantLock.lock();
 
 				try {
 					_startedAppServerBinDirs.remove(
-						stopAppServerTask.getBinDir());
+						setupTestableTomcatTask.getBinDir());
 				}
 				finally {
 					_startedAppServersReentrantLock.unlock();
@@ -412,6 +404,8 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		stopTestableTomcatTask.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 
 		configureBaseAppServerTask(
+			stopTestableTomcatTask, testIntegrationTomcatExtension);
+		configureModuleFrameworkBaseDirSpec(
 			stopTestableTomcatTask, testIntegrationTomcatExtension);
 
 		Gradle gradle = project.getGradle();
@@ -513,6 +507,27 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 				@Override
 				public String call() throws Exception {
 					return testIntegrationTomcatExtension.getManagerUserName();
+				}
+
+			});
+	}
+
+	protected void configureModuleFrameworkBaseDirSpec(
+		ModuleFrameworkBaseDirSpec moduleFrameworkBaseDirSpec,
+		final TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
+
+		moduleFrameworkBaseDirSpec.setModuleFrameworkBaseDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					File dir = testIntegrationTomcatExtension.getLiferayHome();
+
+					if (dir != null) {
+						dir = new File(dir, "osgi");
+					}
+
+					return dir;
 				}
 
 			});

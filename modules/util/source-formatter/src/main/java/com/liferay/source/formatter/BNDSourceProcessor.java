@@ -37,6 +37,68 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		return _INCLUDES;
 	}
 
+	protected void checkBundleName(
+		String fileName, String absolutePath, String content) {
+
+		if (!portalSource || !isModulesFile(absolutePath) ||
+			!fileName.endsWith("/bnd.bnd") ||
+			absolutePath.contains("/testIntegration/") ||
+			absolutePath.contains("/third-party/")) {
+
+			return;
+		}
+
+		int x = absolutePath.lastIndexOf(StringPool.SLASH);
+
+		int y = absolutePath.lastIndexOf(StringPool.SLASH, x - 1);
+
+		String dirName = absolutePath.substring(y + 1, x);
+
+		Matcher matcher = _bundleNamePattern.matcher(content);
+
+		if (matcher.find()) {
+			String bundleName = matcher.group(1);
+
+			String expectedBundleName =
+				"liferay " +
+					StringUtil.replace(
+						dirName, StringPool.DASH, StringPool.SPACE);
+
+			expectedBundleName = expectedBundleName.replaceAll(
+				" impl$", " implementation");
+			expectedBundleName = expectedBundleName.replace(
+				" jaxrs ", " jax-rs ");
+			expectedBundleName = expectedBundleName.replace(
+				" jaxws ", " jax-ws ");
+			expectedBundleName = expectedBundleName.replaceAll(
+				" util$", " utilities");
+
+			if (!bundleName.equalsIgnoreCase(expectedBundleName)) {
+				processErrorMessage(fileName, "Bundle-Name: " + fileName);
+			}
+		}
+
+		matcher = _bundleSymbolicNamePattern.matcher(content);
+
+		if (matcher.find()) {
+			String bundleSymbolicName = matcher.group(1);
+
+			String expectedBundleSymbolicName =
+				"com.liferay." +
+					StringUtil.replace(
+						dirName, StringPool.DASH, StringPool.PERIOD);
+
+			if (!expectedBundleSymbolicName.contains(".import.") &&
+				!expectedBundleSymbolicName.contains(".private.") &&
+				!bundleSymbolicName.equalsIgnoreCase(
+					expectedBundleSymbolicName)) {
+
+				processErrorMessage(
+					fileName, "Bundle-SymbolicName: " + fileName);
+			}
+		}
+	}
+
 	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
@@ -79,6 +141,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 		content = importsFormatter.format(content, _exportsPattern);
 		content = importsFormatter.format(content, _importsPattern);
+
+		checkBundleName(fileName, absolutePath, content);
 
 		if (portalSource && isModulesFile(absolutePath) &&
 			!fileName.endsWith("test-bnd.bnd")) {
@@ -243,6 +307,10 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 	private final Pattern _bndDefinitionPattern = Pattern.compile(
 		"^[A-Za-z-][\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
+	private final Pattern _bundleNamePattern = Pattern.compile(
+		"^Bundle-Name: (.*)\n", Pattern.MULTILINE);
+	private final Pattern _bundleSymbolicNamePattern = Pattern.compile(
+		"^Bundle-SymbolicName: (.*)\n", Pattern.MULTILINE);
 	private final Pattern _exportsPattern = Pattern.compile(
 		"\nExport-Package:\\\\\n(.*?\n)[^\t]",
 		Pattern.DOTALL | Pattern.MULTILINE);

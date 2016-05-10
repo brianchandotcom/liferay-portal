@@ -888,7 +888,7 @@
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowTask" value="${workflowTask}" />
 
-		<execute function="Click" locator1="MenuItem#ASSIGNED_TO_ME" />
+		<execute macro="Workflow#gotoAssignedToMe" />
 
 		<execute function="AssertElementPresent" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_ACTIVE" />
 
@@ -903,7 +903,7 @@
 	</command>
 
 	<command name="viewTaskAssignedToMeDetails">
-		<execute function="Click" locator1="MenuItem#ASSIGNED_TO_ME" />
+		<execute macro="Workflow#gotoAssignedToMe" />
 
 		<execute macro="Workflow#_gotoPendingFilter" />
 

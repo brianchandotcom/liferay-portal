@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Server Admin Web
 Bundle-SymbolicName: com.liferay.server.admin.web
 Bundle-Version: 1.0.4
+DynamicImport-Package: *
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://struts.apache.org/tags-html";version:Version="${Bundle-Version}"

@@ -574,13 +574,13 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void preFormat() throws Exception {
-		_maxLineLength = getMaxLineLength();
+	protected void postFormat() throws Exception {
+		formatDuplicateLanguageKeys();
 	}
 
 	@Override
-	protected void postFormat() throws Exception {
-		formatDuplicateLanguageKeys();
+	protected void preFormat() throws Exception {
+		_maxLineLength = getMaxLineLength();
 	}
 
 	protected void removeDuplicateKeys(String fileName, Set<String> lines)

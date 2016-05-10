@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.bootstrap.internal;
+package com.liferay.portal.target.platform.indexer.internal;
 
 import java.io.IOException;
 

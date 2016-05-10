@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>net.sourceforge.cobertura</groupId>
+  <artifactId>cobertura</artifactId>
+  <version>1.9.4.1</version>
+  <name>Cobertura</name>
+
+  <description>
+    Cobertura is a free Java tool that calculates the percentage of code accessed by tests.
+    It can be used to identify which parts of your Java program are lacking test coverage. It is based on jcoverage.
+  </description>
+
+  <url>http://cobertura.sourceforge.net</url>
+
+  <licenses>
+    <license>
+      <name>The GNU General Public License, Version 2</name>
+      <url>http://www.gnu.org/licenses/gpl.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <dependencies>
+    <dependency>
+      <groupId>oro</groupId>
+      <artifactId>oro</artifactId>
+      <version>2.0.8</version>
+    </dependency>
+    <dependency>
+      <groupId>asm</groupId>
+      <artifactId>asm</artifactId>
+      <version>3.0</version>
+    </dependency>
+    <dependency>
+      <groupId>asm</groupId>
+      <artifactId>asm-tree</artifactId>
+      <version>3.0</version>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.9</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.ant</groupId>
+      <artifactId>ant</artifactId>
+      <version>1.7.0</version>
+    </dependency>
+  </dependencies>
+
+</project>

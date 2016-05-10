@@ -17,6 +17,8 @@ deploy {
 }
 
 deployDependencies {
+	boolean keepDependencyVersions = Boolean.getBoolean("deploy.dependencies.keep.versions")
+
 	ext {
 		autoClean = false
 	}
@@ -30,6 +32,12 @@ deployDependencies {
 		liferay.deployDir
 	}
 
-	rename(/geoip-api-.+\.jar/, "com.maxmind.geoip.api.jar")
-	rename(/xz-.+\.jar/, "org.tukaani.xz.jar")
+	String renameSuffix = ".jar"
+
+	if (keepDependencyVersions) {
+		renameSuffix = '-$1.jar'
+	}
+
+	rename(/geoip-api-(.+)\.jar/, "com.maxmind.geoip.api" + renameSuffix)
+	rename(/xz-(.+)\.jar/, "org.tukaani.xz" + renameSuffix)
 }

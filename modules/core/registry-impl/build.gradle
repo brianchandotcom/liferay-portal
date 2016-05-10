@@ -13,6 +13,8 @@ deploy {
 }
 
 deployDependencies {
+	boolean keepDependencyVersions = Boolean.getBoolean("deploy.dependencies.keep.versions")
+
 	ext {
 		autoClean = false
 	}
@@ -25,7 +27,9 @@ deployDependencies {
 		liferay.deployDir
 	}
 
-	rename new RenameDependencyClosure(project, configurations.provided.name)
+	if (!keepDependencyVersions) {
+		rename new RenameDependencyClosure(project, configurations.provided.name)
+	}
 }
 
 liferay {

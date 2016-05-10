@@ -64,7 +64,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 	configurationPid = "com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
-		"osgi.command.function=execute", "osgi.command.function=incomplete",
+		"osgi.command.function=check", "osgi.command.function=execute",
 		"osgi.command.function=list", "osgi.command.scope=upgrade"
 	},
 	service = Object.class
@@ -87,7 +87,7 @@ public class ReleaseManager {
 				schemaVersionString, toVersionString));
 	}
 
-	public void incomplete() {
+	public void check() {
 		Set<String> bundleSymbolicNames = _serviceTrackerMap.keySet();
 
 		for (String bundleSymbolicName : bundleSymbolicNames) {

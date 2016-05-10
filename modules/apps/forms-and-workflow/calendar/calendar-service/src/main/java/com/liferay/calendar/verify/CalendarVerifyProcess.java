@@ -14,7 +14,8 @@
 
 package com.liferay.calendar.verify;
 
-
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.notification.NotificationType;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -46,6 +48,7 @@ import com.liferay.portal.kernel.service.ResourceBlockLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -60,6 +63,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -77,6 +81,46 @@ import org.osgi.service.component.annotations.Reference;
 	service = VerifyProcess.class
 )
 public class CalendarVerifyProcess extends VerifyProcess {
+
+	protected void addAssetEntry(
+		long entryId, long groupId, long companyId, long userId,
+		String userName, Date createDate, Date modifiedDate, long classNameId,
+		long classPK, String classUuid, boolean visible, Date startDate,
+		Date endDate, Date publishDate, Date expirationDate, String mimeType,
+		String title, String description, String summary, String url,
+		String layoutUuid, int height, int width, double priority,
+		int viewCount) {
+
+		AssetEntry assetEntry = _assetEntryLocalService.createAssetEntry(
+			entryId);
+
+		assetEntry.setGroupId(groupId);
+		assetEntry.setCompanyId(companyId);
+		assetEntry.setUserId(userId);
+		assetEntry.setUserName(userName);
+		assetEntry.setCreateDate(createDate);
+		assetEntry.setModifiedDate(modifiedDate);
+		assetEntry.setClassNameId(classNameId);
+		assetEntry.setClassPK(classPK);
+		assetEntry.setClassUuid(classUuid);
+		assetEntry.setVisible(visible);
+		assetEntry.setStartDate(startDate);
+		assetEntry.setEndDate(endDate);
+		assetEntry.setPublishDate(publishDate);
+		assetEntry.setExpirationDate(expirationDate);
+		assetEntry.setMimeType(mimeType);
+		assetEntry.setTitle(title);
+		assetEntry.setDescription(description);
+		assetEntry.setSummary(summary);
+		assetEntry.setUrl(url);
+		assetEntry.setLayoutUuid(layoutUuid);
+		assetEntry.setHeight(height);
+		assetEntry.setWidth(width);
+		assetEntry.setPriority(priority);
+		assetEntry.setViewCount(viewCount);
+
+		_assetEntryLocalService.updateAssetEntry(assetEntry);
+	}
 
 	protected CalendarBooking addCalendarBooking(
 		String uuid, long calendarBookingId, long companyId, long groupId,
@@ -120,6 +164,26 @@ public class CalendarVerifyProcess extends VerifyProcess {
 
 		return _calendarBookingLocalService.updateCalendarBooking(
 			calendarBooking);
+	}
+
+	protected void addSubscription(
+		long subscriptionId, long companyId, long userId, String userName,
+		Date createDate, Date modifiedDate, long classNameId, long classPK,
+		String frequency) {
+
+		Subscription subscription =
+			_subscriptionLocalService.createSubscription(subscriptionId);
+
+		subscription.setCompanyId(companyId);
+		subscription.setUserId(userId);
+		subscription.setUserName(userName);
+		subscription.setCreateDate(createDate);
+		subscription.setModifiedDate(modifiedDate);
+		subscription.setClassNameId(classNameId);
+		subscription.setClassPK(classPK);
+		subscription.setFrequency(frequency);
+
+		_subscriptionLocalService.updateSubscription(subscription);
 	}
 
 	protected String convertRecurrence(String originalRecurrence) {
@@ -331,6 +395,38 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		}
 	}
 
+	protected void importAssets(
+			String uuid, long companyId, long groupId, long userId, String type,
+			long eventId, long calendarBookingId)
+		throws Exception {
+
+		// Asset entry
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			_CAL_EVENT_CLASS_NAME, eventId);
+
+		if (assetEntry == null) {
+			return;
+		}
+
+		long entryId = _counterLocalService.increment();
+
+		addAssetEntry(
+			entryId, assetEntry.getGroupId(), assetEntry.getCompanyId(),
+			assetEntry.getUserId(), assetEntry.getUserName(),
+			assetEntry.getCreateDate(), assetEntry.getModifiedDate(),
+			_classNameLocalService.getClassNameId(
+				CalendarBooking.class.getName()),
+			calendarBookingId, uuid, assetEntry.isVisible(),
+			assetEntry.getStartDate(), assetEntry.getEndDate(),
+			assetEntry.getPublishDate(), assetEntry.getExpirationDate(),
+			assetEntry.getMimeType(), assetEntry.getTitle(),
+			assetEntry.getDescription(), assetEntry.getSummary(),
+			assetEntry.getUrl(), assetEntry.getLayoutUuid(),
+			assetEntry.getHeight(), assetEntry.getWidth(),
+			assetEntry.getPriority(), assetEntry.getViewCount());
+	}
+
 	protected void importCalendarBookingResourcePermission(
 		ResourcePermission resourcePermission,
 		long calendarBookingId) throws PortalException {
@@ -407,6 +503,15 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		importCalendarBookingResourcePermissions(
 			companyId, eventId, calendarBookingId);
 
+		// Subscriptions
+
+		importSubscriptions(companyId, eventId, calendarBookingId);
+
+		// Asset
+
+		importAssets(
+			uuid, companyId, groupId, userId, type, eventId, calendarBookingId);
+
 		return calendarBooking;
 	}
 
@@ -458,6 +563,36 @@ public class CalendarVerifyProcess extends VerifyProcess {
 				}
 			}
 		}
+	}
+
+	protected void importSubscription(
+		Subscription subscription, long calendarBookingId) {
+
+		addSubscription(
+			_counterLocalService.increment(), subscription.getCompanyId(),
+			subscription.getUserId(), subscription.getUserName(),
+			subscription.getCreateDate(), subscription.getModifiedDate(),
+			_classNameLocalService.getClassNameId(CalendarBooking.class),
+			calendarBookingId, subscription.getFrequency());
+	}
+
+	protected void importSubscriptions(
+		long companyId, long eventId, long calendarBookingId) {
+
+		List<Subscription> subscriptions =
+			_subscriptionLocalService.getSubscriptions(
+				companyId, _CAL_EVENT_CLASS_NAME, eventId);
+
+		for (Subscription subscription : subscriptions) {
+			importSubscription(subscription, calendarBookingId);
+		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -520,6 +655,13 @@ public class CalendarVerifyProcess extends VerifyProcess {
 	}
 
 	@Reference(unbind = "-")
+	protected void setSubscriptionLocalService(
+		SubscriptionLocalService subscriptionLocalService) {
+
+		_subscriptionLocalService = subscriptionLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
@@ -552,6 +694,7 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		_weekdayMap.put(java.util.Calendar.SATURDAY, Weekday.SATURDAY);
 	}
 
+	private AssetEntryLocalService _assetEntryLocalService;
 	private CalendarBookingLocalService _calendarBookingLocalService;
 	private CalendarResourceLocalService _calendarResourceLocalService;
 	private ClassNameLocalService _classNameLocalService;
@@ -561,6 +704,7 @@ public class CalendarVerifyProcess extends VerifyProcess {
 	private ResourceBlockLocalService _resourceBlockLocalService;
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 	private RoleLocalService _roleLocalService;
+	private SubscriptionLocalService _subscriptionLocalService;
 	private UserLocalService _userLocalService;
 
 }

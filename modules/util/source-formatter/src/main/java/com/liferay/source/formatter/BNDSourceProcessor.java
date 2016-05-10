@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -65,23 +66,18 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		Matcher matcher = _bundleNamePattern.matcher(content);
 
 		if (matcher.find()) {
-			String bundleName = matcher.group(1);
+			String strippedBundleName = StringUtil.removeChars(
+				matcher.group(1), CharPool.DASH, CharPool.SPACE);
+
+			strippedBundleName = strippedBundleName.replaceAll(
+				"Implementation$", "Impl");
+			strippedBundleName = strippedBundleName.replaceAll(
+				"Utilities$", "Util");
 
 			String expectedBundleName =
-				"liferay " +
-					StringUtil.replace(
-						dirName, StringPool.DASH, StringPool.SPACE);
+				"liferay" + StringUtil.removeChars(dirName, CharPool.DASH);
 
-			expectedBundleName = expectedBundleName.replaceAll(
-				" impl$", " implementation");
-			expectedBundleName = expectedBundleName.replace(
-				" jaxrs ", " jax-rs ");
-			expectedBundleName = expectedBundleName.replace(
-				" jaxws ", " jax-ws ");
-			expectedBundleName = expectedBundleName.replaceAll(
-				" util$", " utilities");
-
-			if (!bundleName.equalsIgnoreCase(expectedBundleName)) {
+			if (!strippedBundleName.equalsIgnoreCase(expectedBundleName)) {
 				processErrorMessage(fileName, "Bundle-Name: " + fileName);
 			}
 		}

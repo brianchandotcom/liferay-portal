@@ -36,6 +36,13 @@ import com.liferay.calendar.recurrence.Weekday;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.message.boards.kernel.model.MBDiscussion;
+import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.model.MBMessageConstants;
+import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.message.boards.kernel.service.MBDiscussionLocalService;
+import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.portal.kernel.cal.DayAndPosition;
 import com.liferay.portal.kernel.cal.TZSRecurrence;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -67,6 +74,7 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.verify.VerifyProcess;
 
@@ -74,6 +82,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -194,6 +203,114 @@ public class CalendarVerifyProcess extends VerifyProcess {
 
 		return _calendarBookingLocalService.updateCalendarBooking(
 			calendarBooking);
+	}
+
+	protected void addMBDiscussion(
+		String uuid, long discussionId, long groupId, long companyId,
+		long userId, String userName, Date createDate, Date modifiedDate,
+		long classNameId, long classPK, long threadId) {
+
+		MBDiscussion mbDiscussion =
+			_mbDiscussionLocalService.createMBDiscussion(discussionId);
+
+		mbDiscussion.setUuid(uuid);
+		mbDiscussion.setGroupId(groupId);
+		mbDiscussion.setCompanyId(companyId);
+		mbDiscussion.setUserId(userId);
+		mbDiscussion.setUserName(userName);
+		mbDiscussion.setCreateDate(createDate);
+		mbDiscussion.setModifiedDate(modifiedDate);
+		mbDiscussion.setClassNameId(classNameId);
+		mbDiscussion.setClassPK(classPK);
+		mbDiscussion.setThreadId(threadId);
+
+		_mbDiscussionLocalService.updateMBDiscussion(mbDiscussion);
+	}
+
+	protected void addMBMessage(
+			String uuid, long messageId, long groupId, long companyId,
+			long userId, String userName, Date createDate, Date modifiedDate,
+			long classNameId, long classPK, long categoryId, long threadId,
+			long rootMessageId, long parentMessageId, String subject,
+			String body, String format, boolean anonymous, double priority,
+			boolean allowPingbacks, boolean answer, int status,
+			long statusByUserId, String statusByUserName, Date statusDate,
+			Map<Long, Long> mbMessageIds)
+		throws PortalException {
+
+		if (parentMessageId == MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
+			rootMessageId = messageId;
+		}
+		else {
+			rootMessageId = importMBMessage(
+				rootMessageId, threadId, classPK, mbMessageIds);
+
+			parentMessageId = importMBMessage(
+				parentMessageId, threadId, classPK, mbMessageIds);
+		}
+
+		MBMessage mbMessage = _mbMessageLocalService.createMBMessage(messageId);
+
+		mbMessage.setUuid(uuid);
+		mbMessage.setGroupId(groupId);
+		mbMessage.setCompanyId(companyId);
+		mbMessage.setUserId(userId);
+		mbMessage.setUserName(userName);
+		mbMessage.setCreateDate(createDate);
+		mbMessage.setModifiedDate(modifiedDate);
+		mbMessage.setClassNameId(classNameId);
+		mbMessage.setClassPK(classPK);
+		mbMessage.setCategoryId(categoryId);
+		mbMessage.setThreadId(threadId);
+		mbMessage.setRootMessageId(rootMessageId);
+		mbMessage.setParentMessageId(parentMessageId);
+		mbMessage.setSubject(subject);
+		mbMessage.setBody(body);
+		mbMessage.setFormat(format);
+		mbMessage.setAnonymous(anonymous);
+		mbMessage.setPriority(priority);
+		mbMessage.setAllowPingbacks(allowPingbacks);
+		mbMessage.setAnswer(answer);
+		mbMessage.setStatus(status);
+		mbMessage.setStatusByUserId(statusByUserId);
+		mbMessage.setStatusByUserName(statusByUserName);
+		mbMessage.setStatusDate(statusDate);
+
+		_mbMessageLocalService.updateMBMessage(mbMessage);
+	}
+
+	protected void addMBThread(
+		String uuid, long threadId, long groupId, long companyId, long userId,
+		String userName, Date createDate, Date modifiedDate, long categoryId,
+		long rootMessageId, long rootMessageUserId, int messageCount,
+		int viewCount, long lastPostByUserId, Date lastPostDate,
+		double priority, boolean question, int status, long statusByUserId,
+		String statusByUserName, Date statusDate) {
+
+		MBThread mbThread = _mbThreadLocalService.createMBThread(threadId);
+
+		mbThread.setUuid(uuid);
+		mbThread.setGroupId(groupId);
+		mbThread.setCompanyId(companyId);
+		mbThread.setUserId(userId);
+		mbThread.setUserName(userName);
+		mbThread.setCreateDate(createDate);
+		mbThread.setModifiedDate(modifiedDate);
+		mbThread.setCategoryId(categoryId);
+		mbThread.setRootMessageId(rootMessageId);
+		mbThread.setRootMessageUserId(rootMessageUserId);
+		mbThread.setMessageCount(messageCount);
+		mbThread.setViewCount(viewCount);
+		mbThread.setLastPostByUserId(lastPostByUserId);
+		mbThread.setLastPostDate(lastPostDate);
+		mbThread.setPriority(priority);
+		mbThread.setQuestion(question);
+		mbThread.setStatus(status);
+		mbThread.setStatusByUserId(statusByUserId);
+		mbThread.setStatusByUserName(statusByUserName);
+		mbThread.setStatusDate(statusDate);
+
+		_mbThreadLocalService.updateMBThread(mbThread);
 	}
 
 	protected void addSubscription(
@@ -733,6 +850,10 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		importAssets(
 			uuid, companyId, groupId, userId, type, eventId, calendarBookingId);
 
+		// Message boards
+
+		importMBDiscussion(eventId, calendarBookingId);
+
 		return calendarBooking;
 	}
 
@@ -784,6 +905,115 @@ public class CalendarVerifyProcess extends VerifyProcess {
 				}
 			}
 		}
+	}
+
+	protected void importMBDiscussion(long eventId, long calendarBookingId)
+		throws PortalException {
+
+		MBDiscussion mbDiscussion = _mbDiscussionLocalService.fetchDiscussion(
+			_CAL_EVENT_CLASS_NAME, eventId);
+
+		if (mbDiscussion == null) {
+			return;
+		}
+
+		long threadId = importMBThread(
+			mbDiscussion.getThreadId(), calendarBookingId);
+
+		addMBDiscussion(
+			PortalUUIDUtil.generate(), _counterLocalService.increment(),
+			mbDiscussion.getGroupId(), mbDiscussion.getCompanyId(),
+			mbDiscussion.getUserId(), mbDiscussion.getUserName(),
+			mbDiscussion.getCreateDate(), mbDiscussion.getModifiedDate(),
+			_classNameLocalService.getClassNameId(
+				CalendarBooking.class.getName()),
+			calendarBookingId, threadId);
+	}
+
+	protected long importMBMessage(
+			long messageId, long threadId, long calendarBookingId,
+			Map<Long, Long> mbMessageIds)
+		throws PortalException {
+
+		MBMessage mbMessage = _mbMessageLocalService.getMBMessage(messageId);
+
+		return importMBMessage(
+			mbMessage, threadId, calendarBookingId, mbMessageIds);
+	}
+
+	protected long importMBMessage(
+			MBMessage mbMessage, long threadId, long calendarBookingId,
+			Map<Long, Long> mbMessageIds)
+		throws PortalException {
+
+		Long messageId = mbMessageIds.get(mbMessage.getMessageId());
+
+		if (messageId != null) {
+			return messageId;
+		}
+
+		messageId = _counterLocalService.increment();
+
+		addMBMessage(
+			PortalUUIDUtil.generate(), messageId, mbMessage.getGroupId(),
+			mbMessage.getCompanyId(), mbMessage.getUserId(),
+			mbMessage.getUserName(), mbMessage.getCreateDate(),
+			mbMessage.getModifiedDate(),
+			_classNameLocalService.getClassNameId(
+				CalendarBooking.class.getName()),
+			calendarBookingId, mbMessage.getCategoryId(), threadId,
+			mbMessage.getRootMessageId(), mbMessage.getParentMessageId(),
+			mbMessage.getSubject(), mbMessage.getBody(), mbMessage.getFormat(),
+			mbMessage.isAnonymous(), mbMessage.getPriority(),
+			mbMessage.getAllowPingbacks(), mbMessage.isAnswer(),
+			mbMessage.getStatus(), mbMessage.getStatusByUserId(),
+			mbMessage.getStatusByUserName(), mbMessage.getStatusDate(),
+			mbMessageIds);
+
+		mbMessageIds.put(mbMessage.getMessageId(), messageId);
+
+		return messageId;
+	}
+
+	protected long importMBThread(long threadId, long calendarBookingId)
+		throws PortalException {
+
+		MBThread mbThread = _mbThreadLocalService.fetchMBThread(threadId);
+
+		return importMBThread(mbThread, calendarBookingId);
+	}
+
+	protected long importMBThread(MBThread mbThread, long calendarBookingId)
+		throws PortalException {
+
+		long threadId = _counterLocalService.increment();
+
+		addMBThread(
+			PortalUUIDUtil.generate(), threadId, mbThread.getGroupId(),
+			mbThread.getCompanyId(), mbThread.getUserId(),
+			mbThread.getUserName(), mbThread.getCreateDate(),
+			mbThread.getModifiedDate(), mbThread.getCategoryId(), 0,
+			mbThread.getRootMessageUserId(), mbThread.getMessageCount(),
+			mbThread.getViewCount(), mbThread.getLastPostByUserId(),
+			mbThread.getLastPostDate(), mbThread.getPriority(),
+			mbThread.isQuestion(), mbThread.getStatus(),
+			mbThread.getStatusByUserId(), mbThread.getStatusByUserName(),
+			mbThread.getStatusDate());
+
+		Map<Long, Long> mbMessageIds = new HashMap<>();
+
+		List<MBMessage> mbMessages = _mbMessageLocalService.getThreadMessages(
+			mbThread.getThreadId(), WorkflowConstants.STATUS_ANY);
+
+		for (MBMessage mbMessage : mbMessages) {
+			importMBMessage(
+				mbMessage, threadId, calendarBookingId, mbMessageIds);
+		}
+
+		updateMBThreadRootMessageId(
+			threadId, mbMessageIds.get(mbThread.getRootMessageId()));
+
+		return threadId;
 	}
 
 	protected void importSubscription(
@@ -904,6 +1134,27 @@ public class CalendarVerifyProcess extends VerifyProcess {
 	}
 
 	@Reference(unbind = "-")
+	protected void setMBDiscussionLocalService(
+		MBDiscussionLocalService mbDiscussionLocalService) {
+
+		_mbDiscussionLocalService = mbDiscussionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBThreadLocalService(
+		MBThreadLocalService mbThreadLocalService) {
+
+		_mbThreadLocalService = mbThreadLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setResourceActionLocalService(
 		ResourceActionLocalService resourceActionLocalService) {
 
@@ -939,6 +1190,17 @@ public class CalendarVerifyProcess extends VerifyProcess {
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
+	}
+
+	protected void updateMBThreadRootMessageId(
+			long threadId, long rootMessageId)
+		throws PortalException {
+
+		MBThread mbThread = _mbThreadLocalService.getMBThread(threadId);
+
+		mbThread.setRootMessageId(rootMessageId);
+
+		_mbThreadLocalService.updateMBThread(mbThread);
 	}
 
 	protected void verifyCalEvent() throws Exception {
@@ -980,6 +1242,9 @@ public class CalendarVerifyProcess extends VerifyProcess {
 	private ClassNameLocalService _classNameLocalService;
 	private CounterLocalService _counterLocalService;
 	private GroupLocalService _groupLocalService;
+	private MBDiscussionLocalService _mbDiscussionLocalService;
+	private MBMessageLocalService _mbMessageLocalService;
+	private MBThreadLocalService _mbThreadLocalService;
 	private ResourceActionLocalService _resourceActionLocalService;
 	private ResourceBlockLocalService _resourceBlockLocalService;
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

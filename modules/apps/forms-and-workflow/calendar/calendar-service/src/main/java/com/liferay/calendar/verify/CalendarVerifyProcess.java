@@ -14,9 +14,14 @@
 
 package com.liferay.calendar.verify;
 
+import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.calendar.exception.NoSuchBookingException;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.notification.NotificationType;
@@ -30,6 +35,8 @@ import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.cal.DayAndPosition;
 import com.liferay.portal.kernel.cal.TZSRecurrence;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -307,6 +314,54 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		return actionIds;
 	}
 
+	protected AssetCategory getAssetCategory(
+			long userId, long companyId, long groupId, String name)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setScopeGroupId(groupId);
+
+		User user = null;
+
+		try {
+			user = _userLocalService.getUserById(companyId, userId);
+		}
+		catch (NoSuchUserException nsue) {
+			user = _userLocalService.getDefaultUser(companyId);
+
+			userId = user.getUserId();
+		}
+
+		serviceContext.setUserId(userId);
+
+		AssetVocabulary assetVocabulary = null;
+
+		try {
+			assetVocabulary = _assetVocabularyLocalService.getGroupVocabulary(
+				groupId, _ASSET_VOCABULARY_NAME);
+		}
+		catch (NoSuchVocabularyException nsve) {
+			assetVocabulary = _assetVocabularyLocalService.addVocabulary(
+				userId, groupId, _ASSET_VOCABULARY_NAME, serviceContext);
+		}
+
+		List<AssetCategory> assetCategories =
+			_assetCategoryLocalService.getVocabularyRootCategories(
+				assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		for (AssetCategory assetCategory : assetCategories) {
+			if (name.equals(assetCategory.getName())) {
+				return assetCategory;
+			}
+		}
+
+		return _assetCategoryLocalService.addCategory(
+			userId, groupId, name, assetVocabulary.getVocabularyId(),
+			serviceContext);
+	}
+
 	protected CalendarResource getCalendarResource(long companyId, long groupId)
 		throws PortalException {
 
@@ -426,6 +481,22 @@ public class CalendarVerifyProcess extends VerifyProcess {
 			assetEntry.getUrl(), assetEntry.getLayoutUuid(),
 			assetEntry.getHeight(), assetEntry.getWidth(),
 			assetEntry.getPriority(), assetEntry.getViewCount());
+
+		// Asset categories
+
+		List<AssetCategory> assetCategories = new ArrayList<>();
+
+		assetCategories.addAll(assetEntry.getCategories());
+
+		if (Validator.isNotNull(type)) {
+			assetCategories.add(
+				getAssetCategory(userId, companyId, groupId, type));
+		}
+
+		for (AssetCategory assetCategory : assetCategories) {
+			_assetEntryLocalService.addAssetCategoryAssetEntry(
+				assetCategory.getCategoryId(), entryId);
+		}
 	}
 
 	protected void importCalendarBookingResourcePermission(
@@ -643,10 +714,24 @@ public class CalendarVerifyProcess extends VerifyProcess {
 	}
 
 	@Reference(unbind = "-")
+	protected void setAssetCategoryLocalService(
+		AssetCategoryLocalService assetCategoryLocalService) {
+
+		_assetCategoryLocalService = assetCategoryLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setAssetEntryLocalService(
 		AssetEntryLocalService assetEntryLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setAssetVocabularyLocalService(
+		AssetVocabularyLocalService assetVocabularyLocalService) {
+
+		_assetVocabularyLocalService = assetVocabularyLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -726,6 +811,8 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		}
 	}
 
+	private static final String _ASSET_VOCABULARY_NAME = "Calendar Event Types";
+
 	private static final String _CAL_EVENT_CLASS_NAME =
 		"com.liferay.portlet.calendar.model.CalEvent";
 
@@ -748,7 +835,9 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		_weekdayMap.put(java.util.Calendar.SATURDAY, Weekday.SATURDAY);
 	}
 
+	private AssetCategoryLocalService _assetCategoryLocalService;
 	private AssetEntryLocalService _assetEntryLocalService;
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 	private CalendarBookingLocalService _calendarBookingLocalService;
 	private CalendarResourceLocalService _calendarResourceLocalService;
 	private ClassNameLocalService _classNameLocalService;

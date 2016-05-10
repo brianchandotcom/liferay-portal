@@ -22,6 +22,7 @@ import aQute.bnd.osgi.Verifier;
 import aQute.bnd.osgi.resource.CapabilityBuilder;
 
 import com.liferay.portal.bootstrap.ModuleFrameworkImpl;
+import com.liferay.portal.bootstrap.internal.Util;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -41,6 +42,9 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 
 import java.net.URI;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,11 +86,11 @@ public class TargetPlatformIndexer implements Indexer {
 
 		fileUtil.setFile(new FileImpl());
 
-		File tempFolder = FileUtil.createTempFolder();
+		Path tempFolder = Files.createTempDirectory(null);
 
 		com.liferay.portal.util.PropsUtil.set(
 			PropsKeys.MODULE_FRAMEWORK_STATE_DIR,
-			tempFolder.getCanonicalPath());
+			tempFolder.toFile().getCanonicalPath());
 
 		PropsUtil.setProps(new PropsImpl());
 
@@ -129,7 +133,7 @@ public class TargetPlatformIndexer implements Indexer {
 			System.out.println("Wrote index file " + indexFile);
 		}
 		finally {
-			FileUtil.deltree(tempFolder);
+			Util.deltree(tempFolder);
 		}
 	}
 
@@ -152,9 +156,9 @@ public class TargetPlatformIndexer implements Indexer {
 
 	@Override
 	public File index(File output) throws Exception {
-		File tempFolder = FileUtil.createTempFolder();
+		Path tempFolder = Files.createTempDirectory(null);
 
-		_indexerConfig.put("root.url", tempFolder.getCanonicalPath());
+		_indexerConfig.put("root.url", tempFolder.toFile().getCanonicalPath());
 
 		_moduleFrameworkImpl.initFramework();
 		_moduleFrameworkImpl.startFramework();
@@ -237,7 +241,7 @@ public class TargetPlatformIndexer implements Indexer {
 			}
 
 			File outputJar = new File(
-				tempFolder, _bsn + "-" + _version + ".jar");
+				tempFolder.toFile(), _bsn + "-" + _version + ".jar");
 
 			jar.write(outputJar);
 
@@ -250,7 +254,8 @@ public class TargetPlatformIndexer implements Indexer {
 			for (String initialBundle :
 					PropsValues.MODULE_FRAMEWORK_INITIAL_BUNDLES) {
 
-				addBundleToIndex(initialBundle, baseDir, tempFolder, fileList);
+				addBundleToIndex(
+					initialBundle, baseDir, tempFolder.toFile(), fileList);
 			}
 
 			String[] autoDeployDirs = ArrayUtil.append(
@@ -275,12 +280,13 @@ public class TargetPlatformIndexer implements Indexer {
 					});
 
 				for (File additionalBundle : additionalBundles) {
-					addBundleToIndex(additionalBundle, tempFolder, fileList);
+					addBundleToIndex(
+						additionalBundle, tempFolder.toFile(), fileList);
 				}
 			}
 
 			File tempIndexFile = new File(
-				tempFolder, _bsn + "-" + _version + "-index.xml");
+				tempFolder.toFile(), _bsn + "-" + _version + "-index.xml");
 
 			ResourceIndexer resourceIndexer = new RepoIndex();
 
@@ -290,12 +296,12 @@ public class TargetPlatformIndexer implements Indexer {
 
 			File indexFile = new File(output, tempIndexFile.getName());
 
-			FileUtil.copyFile(tempIndexFile, indexFile);
+			Files.copy(tempIndexFile.toPath(), indexFile.toPath());
 
 			return indexFile;
 		}
 		finally {
-			FileUtil.deltree(tempFolder);
+			Util.deltree(tempFolder);
 
 			_moduleFrameworkImpl.stopFramework(0);
 		}
@@ -307,7 +313,7 @@ public class TargetPlatformIndexer implements Indexer {
 
 		File copy = new File(tempDir, initialBundleFile.getName());
 
-		FileUtil.copyFile(initialBundleFile, copy);
+		Files.copy(initialBundleFile.toPath(), copy.toPath());
 
 		fileList.add(copy);
 	}
@@ -340,7 +346,7 @@ public class TargetPlatformIndexer implements Indexer {
 
 		File copy = new File(tempDir, initialBundleFile.getName());
 
-		FileUtil.copyFile(initialBundleFile, copy);
+		Files.copy(initialBundleFile.toPath(), copy.toPath());
 
 		fileList.add(copy);
 	}

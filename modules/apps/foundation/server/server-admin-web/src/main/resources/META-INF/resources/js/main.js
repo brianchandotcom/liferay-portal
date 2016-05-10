@@ -215,13 +215,13 @@ AUI.add(
 												}
 											);
 
-											var controlMenuSelector = '#' + instance.ns('controlMenu');
+											var controlMenuId = '#' + instance.ns('controlMenu');
 
-											var responseControlMenu = responseDataNode.one(controlMenuSelector);
+											var currentControlMenu = A.one(controlMenuId);
 
-											var currentControlMenu = A.one(document).one(controlMenuSelector);
+											var responseControlMenu = responseDataNode.one(controlMenuId);
 
-											if (responseControlMenu && currentControlMenu) {
+											if (currentControlMenu && responseControlMenu) {
 												currentControlMenu.replace(responseControlMenu);
 											}
 										}

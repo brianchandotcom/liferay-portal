@@ -41,7 +41,7 @@ th.ruler {
 }
 
 table.elementTitle {
-	background-color: #1B75BB;
+	background-color: #8598B9;
 	width: 100%;
 }
 
@@ -55,7 +55,7 @@ td.rightElementTitle {
 }
 
 table.attributeTitle {
-	background-color: #8BB8E8;
+	background-color: ##E4ECF0;
 	width: 100%;
 }
 
@@ -79,7 +79,7 @@ p.model {
 }
 
 p.DTDSource {
-	background-color: #8BB8E8;
+	background-color: #E4ECF0;
 	text-align: right;
 	width: 100%;
 }

@@ -1091,6 +1091,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				FileUtil.getRelativePath(project, appBndFile));
 		}
 
+		File packageJsonFile = project.file("package.json");
+
+		if (packageJsonFile.exists()) {
+			bundleDefaultInstructions.put(
+				Constants.INCLUDERESOURCE + ".packagejson",
+				FileUtil.getRelativePath(project, packageJsonFile));
+		}
+
 		liferayOSGiExtension.bundleDefaultInstructions(
 			bundleDefaultInstructions);
 	}

@@ -182,7 +182,7 @@
 		</execute>
 	</command>
 
-	<command name="CheckApprovedPageAfterStagingDeactivated" priority="4">
+	<command name="ViewApprovedPageAfterStagingDeactivated" priority="4">
 		<description message="This is a use case for LPS-65319." />
 
 		<var name="pageName" value="New Site Page Name" />

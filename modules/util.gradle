@@ -108,6 +108,10 @@ private void _createSetUpTasks() {
 		}
 
 		Task portalToolTask = tasks.create(name: "setUp" + portalToolSuffix, type: Copy) {
+			doLast {
+				ant.checksum file: ivyXmlFile
+			}
+
 			from portalToolConfiguration
 			into new File(portalToolDir, "lib")
 			rename new RenameDependencyClosure(project, portalToolConfiguration.name)

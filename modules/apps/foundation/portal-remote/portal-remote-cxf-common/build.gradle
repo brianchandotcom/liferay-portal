@@ -29,6 +29,8 @@ deploy {
 }
 
 deployDependencies {
+	boolean keepDependencyVersions = Boolean.getBoolean("deploy.dependencies.keep.versions")
+
 	ext {
 		autoClean = false
 	}
@@ -42,6 +44,12 @@ deployDependencies {
 		liferay.deployDir
 	}
 
-	rename(/stax2-api-.+\.jar/, "org.codehaus.stax2.jar")
-	rename(/woodstox-core-asl-.+\.jar/, "com.ctc.wstx.jar")
+	String renameSuffix = ".jar"
+
+	if (keepDependencyVersions) {
+		renameSuffix = '-$1.jar'
+	}
+
+	rename(/stax2-api-(.+)\.jar/, "org.codehaus.stax2" + renameSuffix)
+	rename(/woodstox-core-asl-(.+)\.jar/, "com.ctc.wstx" + renameSuffix)
 }

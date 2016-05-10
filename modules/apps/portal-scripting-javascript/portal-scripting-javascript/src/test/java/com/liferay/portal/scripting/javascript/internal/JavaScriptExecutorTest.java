@@ -66,8 +66,6 @@ public class JavaScriptExecutorTest extends ScriptingExecutorTestCase {
 			portalCache
 		);
 
-		javaScriptExecutor.setSingleVMPool(singleVMPool);
-
 		return javaScriptExecutor;
 	}
 

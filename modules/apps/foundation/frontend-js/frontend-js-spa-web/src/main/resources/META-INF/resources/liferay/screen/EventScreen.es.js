@@ -87,6 +87,7 @@ class EventScreen extends HtmlScreen {
 		if (app.isCacheEnabled() && !app.isScreenCacheExpired(this)) {
 			return super.getCache();
 		}
+
 		return null;
 	}
 

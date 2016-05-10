@@ -1,15 +1,11 @@
-define("frontend-js-spa-web@1.0.6/liferay/screen/EventScreen.es", ['exports', 'metal-dom/src/dom', 'senna/src/screen/HtmlScreen', 'metal-dom/src/globalEval', 'metal-promise/src/promise/Promise', '../util/Utils.es'], function (exports, _dom, _HtmlScreen2, _globalEval, _Promise, _Utils) {
+define("frontend-js-spa-web@1.0.6/liferay/screen/EventScreen.es", ['exports', 'senna/src/screen/HtmlScreen', 'metal-promise/src/promise/Promise', '../util/Utils.es'], function (exports, _HtmlScreen2, _Promise, _Utils) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
 
-	var _dom2 = _interopRequireDefault(_dom);
-
 	var _HtmlScreen3 = _interopRequireDefault(_HtmlScreen2);
-
-	var _globalEval2 = _interopRequireDefault(_globalEval);
 
 	var _Utils2 = _interopRequireDefault(_Utils);
 
@@ -113,6 +109,16 @@ define("frontend-js-spa-web@1.0.6/liferay/screen/EventScreen.es", ['exports', 'm
 					screen: _this2
 				});
 			});
+		};
+
+		EventScreen.prototype.getCache = function getCache() {
+			var app = Liferay.SPA.app;
+
+			if (app.isCacheEnabled() && !app.isScreenCacheExpired(this)) {
+				return _HtmlScreen.prototype.getCache.call(this);
+			}
+
+			return null;
 		};
 
 		EventScreen.prototype.getCacheLastModified = function getCacheLastModified() {

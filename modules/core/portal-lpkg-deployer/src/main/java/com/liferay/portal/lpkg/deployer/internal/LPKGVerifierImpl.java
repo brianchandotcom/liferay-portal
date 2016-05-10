@@ -14,25 +14,12 @@
 
 package com.liferay.portal.lpkg.deployer.internal;
 
-import com.liferay.portal.bootstrap.index.IndexValidator;
-import com.liferay.portal.bootstrap.index.Indexer;
-import com.liferay.portal.bootstrap.index.LPKGIndexer;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.LPKGVerifier;
 import com.liferay.portal.lpkg.deployer.LPKGVerifyException;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
-
-import java.net.URI;
-
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,94 +46,6 @@ public class LPKGVerifierImpl implements LPKGVerifier {
 
 	@Override
 	public List<Bundle> verify(File lpkgFile) {
-		Path tmpDir = null;
-
-		try {
-			tmpDir = Files.createTempDirectory(null);
-
-			LPKGIndexer lpkgIndexer = new LPKGIndexer(lpkgFile);
-
-			File tempIndexFile = lpkgIndexer.index(tmpDir.toFile());
-
-			List<URI> uris = new ArrayList<>();
-
-			uris.add(tempIndexFile.toURI());
-
-			IndexValidator indexValidator = new IndexValidator();
-
-			indexValidator.includeTargetPlatform(true);
-
-			List<String> errors = indexValidator.validate(uris);
-
-			if (!errors.isEmpty()) {
-				StringBundler sb = new StringBundler((errors.size() * 4) + 2);
-
-				sb.append("LPKG validation failed with {");
-
-				for (String error : errors) {
-					sb.append("[");
-					sb.append(error);
-					sb.append("]");
-					sb.append(",");
-				}
-
-				sb.setIndex(sb.index() - 1);
-
-				sb.append("}");
-
-				throw new LPKGVerifyException(sb.toString());
-			}
-
-			File targetPlatformDir = new File(
-				PropsValues.MODULE_FRAMEWORK_BASE_DIR, Indexer.TARGET_PLATFORM);
-
-			File indexFile = new File(
-				targetPlatformDir, tempIndexFile.getName());
-
-			Files.copy(tempIndexFile.toPath(), indexFile.toPath());
-		}
-		catch (Exception e) {
-			if (e instanceof LPKGVerifyException) {
-				throw (LPKGVerifyException)e;
-			}
-
-			throw new LPKGVerifyException(e);
-		}
-		finally {
-			if (tmpDir != null) {
-				try {
-					Files.walkFileTree(
-						tmpDir,
-						new SimpleFileVisitor<Path>() {
-
-							@Override
-							public FileVisitResult postVisitDirectory(
-									Path dir, IOException exc)
-								throws IOException {
-
-								Files.delete(dir);
-
-								return FileVisitResult.CONTINUE;
-							}
-
-							@Override
-							public FileVisitResult visitFile(
-									Path file, BasicFileAttributes attrs)
-								throws IOException {
-
-								Files.delete(file);
-
-								return FileVisitResult.CONTINUE;
-							}
-
-						});
-				}
-				catch (IOException ioe) {
-					throw new LPKGVerifyException(ioe);
-				}
-			}
-		}
-
 		try (ZipFile zipFile = new ZipFile(lpkgFile)) {
 			ZipEntry zipEntry = zipFile.getEntry(
 				"liferay-marketplace.properties");

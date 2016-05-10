@@ -16,6 +16,7 @@ package com.liferay.calendar.verify;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.calendar.exception.NoSuchBookingException;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.notification.NotificationType;
@@ -457,6 +458,59 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			importCalendarBookingResourcePermission(
 				resourcePermission, calendarBookingId);
+		}
+	}
+
+	protected CalendarBooking importCalEvent(long calEventId) throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("select uuid_, eventId, groupId, companyId, userId, ");
+			sb.append("userName, createDate, modifiedDate, title, ");
+			sb.append("description, location, startDate, endDate, ");
+			sb.append("durationHour, durationMinute, allDay, type_, ");
+			sb.append("repeating, recurrence, firstReminder, secondReminder ");
+			sb.append("from CalEvent where eventId = ?");
+
+			try (PreparedStatement ps =
+					connection.prepareStatement(sb.toString())) {
+
+				ps.setLong(1, calEventId);
+
+				ResultSet rs = ps.executeQuery();
+
+				if (rs.next()) {
+					String uuid = rs.getString("uuid_");
+					long eventId = rs.getLong("eventId");
+					long groupId = rs.getLong("groupId");
+					long companyId = rs.getLong("companyId");
+					long userId = rs.getLong("userId");
+					String userName = rs.getString("userName");
+					Timestamp createDate = rs.getTimestamp("createDate");
+					Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+					String title = rs.getString("title");
+					String description = rs.getString("description");
+					String location = rs.getString("location");
+					Timestamp startDate = rs.getTimestamp("startDate");
+					int durationHour = rs.getInt("durationHour");
+					int durationMinute = rs.getInt("durationMinute");
+					boolean allDay = rs.getBoolean("allDay");
+					String type = rs.getString("type_");
+
+					String recurrence = rs.getString("recurrence");
+					int firstReminder = rs.getInt("firstReminder");
+					int secondReminder = rs.getInt("secondReminder");
+
+					return importCalEvent(
+						uuid, eventId, groupId, companyId, userId, userName,
+						createDate, modifiedDate, title, description, location,
+						startDate, durationHour, durationMinute, allDay, type,
+						recurrence, firstReminder, secondReminder);
+				}
+				else {
+					throw new NoSuchBookingException();
+				}
+			}
 		}
 	}
 

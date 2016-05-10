@@ -257,6 +257,68 @@ public class TableMapperTest {
 	}
 
 	@Test
+	public void testAddTableMappings() {
+		long companyId = 0;
+		long leftPrimaryKey1 = 1;
+		long leftPrimaryKey2 = 2;
+		long rightPrimaryKey1 = 3;
+		long rightPrimaryKey2 = 4;
+
+		Assert.assertArrayEquals(
+			new long[] {rightPrimaryKey1},
+			_tableMapperImpl.addTableMappings(
+				companyId, leftPrimaryKey1, new long[] {rightPrimaryKey1}));
+		Assert.assertArrayEquals(
+			new long[0],
+			_tableMapperImpl.addTableMappings(
+				companyId, leftPrimaryKey1, new long[] {rightPrimaryKey1}));
+		Assert.assertArrayEquals(
+			new long[] {rightPrimaryKey2},
+			_tableMapperImpl.addTableMappings(
+				companyId, leftPrimaryKey1,
+				new long[] {rightPrimaryKey1, rightPrimaryKey2}));
+		Assert.assertEquals(
+			2,
+			_tableMapperImpl.deleteLeftPrimaryKeyTableMappings(
+				leftPrimaryKey1));
+		Assert.assertArrayEquals(
+			new long[] {rightPrimaryKey1, rightPrimaryKey2},
+			_tableMapperImpl.addTableMappings(
+				companyId, leftPrimaryKey1,
+				new long[] {rightPrimaryKey1, rightPrimaryKey2}));
+		Assert.assertEquals(
+			2,
+			_tableMapperImpl.deleteLeftPrimaryKeyTableMappings(
+				leftPrimaryKey1));
+		Assert.assertArrayEquals(
+			new long[] {leftPrimaryKey1},
+			_tableMapperImpl.addTableMappings(
+				companyId, new long[] {leftPrimaryKey1}, rightPrimaryKey1));
+		Assert.assertArrayEquals(
+			new long[0],
+			_tableMapperImpl.addTableMappings(
+				companyId, new long[] {leftPrimaryKey1}, rightPrimaryKey1));
+		Assert.assertArrayEquals(
+			new long[] {leftPrimaryKey2},
+			_tableMapperImpl.addTableMappings(
+				companyId, new long[] {leftPrimaryKey1, leftPrimaryKey2},
+				rightPrimaryKey1));
+		Assert.assertEquals(
+			2,
+			_tableMapperImpl.deleteRightPrimaryKeyTableMappings(
+				rightPrimaryKey1));
+		Assert.assertArrayEquals(
+			new long[] {leftPrimaryKey1, leftPrimaryKey2},
+			_tableMapperImpl.addTableMappings(
+				companyId, new long[] {leftPrimaryKey1, leftPrimaryKey2},
+				rightPrimaryKey1));
+		Assert.assertEquals(
+			2,
+			_tableMapperImpl.deleteRightPrimaryKeyTableMappings(
+				rightPrimaryKey1));
+	}
+
+	@Test
 	public void testConstructor() {
 		new TableMapperFactory();
 
@@ -815,6 +877,100 @@ public class TableMapperTest {
 	}
 
 	@Test
+	public void testDeleteTableMappings() {
+		long companyId = 0;
+		long leftPrimaryKey1 = 1;
+		long leftPrimaryKey2 = 2;
+		long rightPrimaryKey1 = 3;
+		long rightPrimaryKey2 = 4;
+
+		Assert.assertArrayEquals(
+			new long[0],
+			_tableMapperImpl.deleteTableMappings(
+				leftPrimaryKey1, new long[] {rightPrimaryKey1}));
+		Assert.assertTrue(
+			_tableMapperImpl.addTableMapping(
+				companyId, leftPrimaryKey1, rightPrimaryKey1));
+		Assert.assertArrayEquals(
+			new long[] {rightPrimaryKey1},
+			_tableMapperImpl.deleteTableMappings(
+				leftPrimaryKey1,
+				new long[] {rightPrimaryKey1, rightPrimaryKey2}));
+		Assert.assertTrue(
+			_tableMapperImpl.addTableMapping(
+				companyId, leftPrimaryKey1, rightPrimaryKey1));
+		Assert.assertTrue(
+			_tableMapperImpl.addTableMapping(
+				companyId, leftPrimaryKey1, rightPrimaryKey2));
+		Assert.assertArrayEquals(
+			new long[] {rightPrimaryKey1, rightPrimaryKey2},
+			_tableMapperImpl.deleteTableMappings(
+				leftPrimaryKey1,
+				new long[] {rightPrimaryKey1, rightPrimaryKey2}));
+		Assert.assertArrayEquals(
+			new long[0],
+			_tableMapperImpl.deleteTableMappings(
+				new long[] {leftPrimaryKey1}, rightPrimaryKey1));
+		Assert.assertTrue(
+			_tableMapperImpl.addTableMapping(
+				companyId, leftPrimaryKey1, rightPrimaryKey1));
+		Assert.assertArrayEquals(
+			new long[] {leftPrimaryKey1},
+			_tableMapperImpl.deleteTableMappings(
+				new long[] {leftPrimaryKey1, leftPrimaryKey2},
+				rightPrimaryKey1));
+		Assert.assertTrue(
+			_tableMapperImpl.addTableMapping(
+				companyId, leftPrimaryKey1, rightPrimaryKey1));
+		Assert.assertTrue(
+			_tableMapperImpl.addTableMapping(
+				companyId, leftPrimaryKey2, rightPrimaryKey1));
+		Assert.assertArrayEquals(
+			new long[] {leftPrimaryKey1, leftPrimaryKey2},
+			_tableMapperImpl.deleteTableMappings(
+				new long[] {leftPrimaryKey1, leftPrimaryKey2},
+				rightPrimaryKey1));
+
+		PortalCache<Long, long[]> leftToRightPortalCache =
+			_tableMapperImpl.leftToRightPortalCache;
+
+		leftToRightPortalCache.put(
+			leftPrimaryKey1, new long[] {rightPrimaryKey1});
+
+		Assert.assertArrayEquals(
+			new long[0],
+			_tableMapperImpl.deleteTableMappings(
+				leftPrimaryKey1, new long[] {rightPrimaryKey1}));
+		Assert.assertTrue(
+			_tableMapperImpl.addTableMapping(
+				companyId, leftPrimaryKey1, rightPrimaryKey1));
+		Assert.assertArrayEquals(
+			new long[] {rightPrimaryKey1},
+			_tableMapperImpl.deleteTableMappings(
+				leftPrimaryKey1,
+				new long[] {rightPrimaryKey1, rightPrimaryKey2}));
+
+		PortalCache<Long, long[]> rightToLeftPortalCache =
+			_tableMapperImpl.rightToLeftPortalCache;
+
+		rightToLeftPortalCache.put(
+			rightPrimaryKey1, new long[] {leftPrimaryKey1});
+
+		Assert.assertArrayEquals(
+			new long[0],
+			_tableMapperImpl.deleteTableMappings(
+				new long[] {leftPrimaryKey1}, rightPrimaryKey1));
+		Assert.assertTrue(
+			_tableMapperImpl.addTableMapping(
+				companyId, leftPrimaryKey1, rightPrimaryKey1));
+		Assert.assertArrayEquals(
+			new long[] {leftPrimaryKey1},
+			_tableMapperImpl.deleteTableMappings(
+				new long[] {leftPrimaryKey1, leftPrimaryKey2},
+				rightPrimaryKey1));
+	}
+
+	@Test
 	public void testDestroy() {
 		testDestroy(_tableMapperImpl);
 	}
@@ -1241,6 +1397,16 @@ public class TableMapperTest {
 
 		recordInvocationHandler.assertCall("addTableMapping", 0L, 2L, 1L);
 
+		reverseTableMapper.addTableMappings(0, 1, new long[] {2});
+
+		recordInvocationHandler.assertCall(
+			"addTableMappings", 0L, new long[] {2}, 1L);
+
+		reverseTableMapper.addTableMappings(0, new long[] {1}, 2L);
+
+		recordInvocationHandler.assertCall(
+			"addTableMappings", 0L, 2L, new long[] {1});
+
 		reverseTableMapper.containsTableMapping(1, 2);
 
 		recordInvocationHandler.assertCall("containsTableMapping", 2L, 1L);
@@ -1258,6 +1424,16 @@ public class TableMapperTest {
 		reverseTableMapper.deleteTableMapping(1, 2);
 
 		recordInvocationHandler.assertCall("deleteTableMapping", 2L, 1L);
+
+		reverseTableMapper.deleteTableMappings(1, new long[] {2});
+
+		recordInvocationHandler.assertCall(
+			"deleteTableMappings", new long[] {2}, 1L);
+
+		reverseTableMapper.deleteTableMappings(new long[] {1}, 2);
+
+		recordInvocationHandler.assertCall(
+			"deleteTableMappings", 2L, new long[] {1});
 
 		reverseTableMapper.getRightBaseModels(1, 2, 3, null);
 

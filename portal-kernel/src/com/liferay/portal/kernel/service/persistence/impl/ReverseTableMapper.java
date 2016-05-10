@@ -38,6 +38,22 @@ public class ReverseTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 	}
 
 	@Override
+	public long[] addTableMappings(
+		long companyId, long leftPrimaryKey, long[] rightPrimaryKeys) {
+
+		return _tableMapper.addTableMappings(
+			companyId, rightPrimaryKeys, leftPrimaryKey);
+	}
+
+	@Override
+	public long[] addTableMappings(
+		long companyId, long[] leftPrimaryKeys, long rightPrimaryKey) {
+
+		return _tableMapper.addTableMappings(
+			companyId, rightPrimaryKey, leftPrimaryKeys);
+	}
+
+	@Override
 	public boolean containsTableMapping(
 		long leftPrimaryKey, long rightPrimaryKey) {
 
@@ -60,6 +76,22 @@ public class ReverseTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
 		long leftPrimaryKey, long rightPrimaryKey) {
 
 		return _tableMapper.deleteTableMapping(rightPrimaryKey, leftPrimaryKey);
+	}
+
+	@Override
+	public long[] deleteTableMappings(
+		long leftPrimaryKey, long[] rightPrimaryKeys) {
+
+		return _tableMapper.deleteTableMappings(
+			rightPrimaryKeys, leftPrimaryKey);
+	}
+
+	@Override
+	public long[] deleteTableMappings(
+		long[] leftPrimaryKeys, long rightPrimaryKey) {
+
+		return _tableMapper.deleteTableMappings(
+			rightPrimaryKey, leftPrimaryKeys);
 	}
 
 	@Override

@@ -19,7 +19,6 @@ import com.liferay.calendar.service.configuration.CalendarServiceConfigurationVa
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
@@ -72,12 +71,6 @@ public class CheckBookingsMessageListener
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
-	}
-
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.calendar.service)(release.schema.version=1.0.3))"
-	)
-	protected void setRelease(Release release) {
 	}
 
 	@Reference(unbind = "-")

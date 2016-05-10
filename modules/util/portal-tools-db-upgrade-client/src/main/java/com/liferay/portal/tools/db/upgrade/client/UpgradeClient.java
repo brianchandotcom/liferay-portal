@@ -70,8 +70,8 @@ public class UpgradeClient {
 
 			String jvmOpts = null;
 
-			if (commandLine.hasOption("jvmOpts")) {
-				jvmOpts = commandLine.getOptionValue("jvmOpts");
+			if (commandLine.hasOption("jvm-opts")) {
+				jvmOpts = commandLine.getOptionValue("jvm-opts");
 			}
 			else {
 				jvmOpts =
@@ -81,8 +81,8 @@ public class UpgradeClient {
 
 			File logFile = null;
 
-			if (commandLine.hasOption("logFile")) {
-				logFile = new File(commandLine.getOptionValue("logFile"));
+			if (commandLine.hasOption("log-file")) {
+				logFile = new File(commandLine.getOptionValue("log-file"));
 			}
 			else {
 				logFile = new File("upgrade.log");
@@ -251,10 +251,10 @@ public class UpgradeClient {
 			new Option("h", "help", false, "Print this message."));
 		options.addOption(
 			new Option(
-				"j", "jvmOpts", true,
+				"j", "jvm-opts", true,
 				"Set the JVM_OPTS used for the upgrade."));
 		options.addOption(
-			new Option("l", "logFile", true, "Set the name of log file."));
+			new Option("l", "log-file", true, "Set the name of log file."));
 		options.addOption(
 			new Option(
 				"s", "shell", false, "Automatically connect to GoGo shell."));

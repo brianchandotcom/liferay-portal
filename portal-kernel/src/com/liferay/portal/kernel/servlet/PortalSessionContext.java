@@ -35,6 +35,14 @@ public class PortalSessionContext {
 		return _instance._get(sessionId);
 	}
 
+	public static void invalidateSession(String sessionId) {
+		HttpSession userSession = _instance._remove(sessionId);
+
+		if (userSession != null) {
+			userSession.invalidate();
+		}
+	}
+
 	public static void put(String sessionId, HttpSession session) {
 		_instance._put(sessionId, session);
 	}

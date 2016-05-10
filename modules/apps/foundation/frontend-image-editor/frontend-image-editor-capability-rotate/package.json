@@ -1,0 +1,7 @@
+{
+	"devDependencies": {
+		"metal-components": "1.0.0-rc.19"
+	},
+	"name": "frontend-image-editor-capability-rotate",
+	"version": "1.0.0"
+}

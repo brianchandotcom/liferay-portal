@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.bootstrap.index;
+package com.liferay.portal.target.platform.indexer.main;
 
 import aQute.bnd.header.Attrs;
 import aQute.bnd.header.Parameters;
@@ -22,7 +22,6 @@ import aQute.bnd.osgi.Verifier;
 import aQute.bnd.osgi.resource.CapabilityBuilder;
 
 import com.liferay.portal.bootstrap.ModuleFrameworkImpl;
-import com.liferay.portal.bootstrap.internal.Util;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -31,6 +30,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.target.platform.indexer.Indexer;
+import com.liferay.portal.target.platform.indexer.internal.Util;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PropsImpl;
@@ -45,6 +46,7 @@ import java.net.URI;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -73,7 +75,7 @@ import org.osgi.service.repository.ContentNamespace;
 /**
  * @author Raymond Augé
  */
-public class TargetPlatformIndexer implements Indexer {
+public class TargetPlatformMain implements Indexer {
 
 	public static void main(String[] args) throws Exception {
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
@@ -117,27 +119,25 @@ public class TargetPlatformIndexer implements Indexer {
 
 		if (!targetPlatformDir.exists() && !targetPlatformDir.mkdirs()) {
 			System.err.printf(
-				"[ERROR] Cannot create directory %s because of file " +
-					"permissions\n",
-				targetPlatformDir);
+				"== Cannot create directory %s\n", targetPlatformDir);
 
 			return;
 		}
 
-		TargetPlatformIndexer targetPlatformIndexer = new TargetPlatformIndexer(
+		TargetPlatformMain targetPlatformIndexer = new TargetPlatformMain(
 			bsn, version);
 
 		try {
 			File indexFile = targetPlatformIndexer.index(targetPlatformDir);
 
-			System.out.println("Wrote index file " + indexFile);
+			System.out.println("== Wrote index file " + indexFile);
 		}
 		finally {
 			Util.deltree(tempFolder);
 		}
 	}
 
-	public TargetPlatformIndexer(String bsn, String version) {
+	public TargetPlatformMain(String bsn, String version) {
 		_bsn = bsn;
 		_version = version;
 
@@ -296,7 +296,10 @@ public class TargetPlatformIndexer implements Indexer {
 
 			File indexFile = new File(output, tempIndexFile.getName());
 
-			Files.copy(tempIndexFile.toPath(), indexFile.toPath());
+			Files.copy(
+				tempIndexFile.toPath(), indexFile.toPath(),
+				StandardCopyOption.COPY_ATTRIBUTES,
+				StandardCopyOption.REPLACE_EXISTING);
 
 			return indexFile;
 		}
@@ -313,7 +316,10 @@ public class TargetPlatformIndexer implements Indexer {
 
 		File copy = new File(tempDir, initialBundleFile.getName());
 
-		Files.copy(initialBundleFile.toPath(), copy.toPath());
+		Files.copy(
+			initialBundleFile.toPath(), copy.toPath(),
+			StandardCopyOption.COPY_ATTRIBUTES,
+			StandardCopyOption.REPLACE_EXISTING);
 
 		fileList.add(copy);
 	}
@@ -346,7 +352,10 @@ public class TargetPlatformIndexer implements Indexer {
 
 		File copy = new File(tempDir, initialBundleFile.getName());
 
-		Files.copy(initialBundleFile.toPath(), copy.toPath());
+		Files.copy(
+			initialBundleFile.toPath(), copy.toPath(),
+			StandardCopyOption.COPY_ATTRIBUTES,
+			StandardCopyOption.REPLACE_EXISTING);
 
 		fileList.add(copy);
 	}
@@ -396,7 +405,7 @@ public class TargetPlatformIndexer implements Indexer {
 	}
 
 	private static final String _SHORT_NAME =
-		TargetPlatformIndexer.class.getName();
+		TargetPlatformMain.class.getName();
 
 	private static final Set<String> _ignoredNamespaces = new HashSet<>();
 

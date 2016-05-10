@@ -12,31 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.bootstrap.index;
+package com.liferay.portal.target.platform.indexer.internal;
 
-import com.liferay.portal.bootstrap.internal.Util;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.util.FastDateFormatFactoryImpl;
-import com.liferay.portal.util.FileImpl;
-import com.liferay.portal.util.PropsImpl;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.target.platform.indexer.Indexer;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -50,91 +40,6 @@ import org.osgi.service.indexer.impl.RepoIndex;
  * @author Raymond Augé
  */
 public class LPKGIndexer implements Indexer {
-
-	public static void main(String[] args) throws Exception {
-		if ((args == null) || (args.length == 0)) {
-			System.err.println(
-				"Usage: <cmd> <list of lpkg files or directories containing " +
-					"lpkg files>");
-
-			return;
-		}
-
-		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
-			new FastDateFormatFactoryUtil();
-
-		fastDateFormatFactoryUtil.setFastDateFormatFactory(
-			new FastDateFormatFactoryImpl());
-
-		FileUtil fileUtil = new FileUtil();
-
-		fileUtil.setFile(new FileImpl());
-
-		PropsUtil.setProps(new PropsImpl());
-
-		File targetPlatformDir = new File(
-			PropsValues.MODULE_FRAMEWORK_BASE_DIR, TARGET_PLATFORM);
-
-		if (!targetPlatformDir.exists() && !targetPlatformDir.mkdirs()) {
-			System.err.printf(
-				"[ERROR] Cannot create directory %s because of file " +
-					"permissions\n",
-				targetPlatformDir);
-
-			return;
-		}
-
-		List<File> lpkgFiles = new ArrayList<>();
-
-		for (String arg : args) {
-			File file = new File(arg);
-
-			if (!file.exists() || !file.canRead()) {
-				continue;
-			}
-
-			if (!file.isDirectory()) {
-				String name = file.getName();
-
-				if (name.endsWith(".lpkg")) {
-					lpkgFiles.add(file);
-				}
-
-				continue;
-			}
-
-			File[] files = file.listFiles(
-				new FilenameFilter() {
-
-					@Override
-					public boolean accept(File dir, String name) {
-						return name.endsWith(".lpkg");
-					}
-
-				});
-
-			for (File entry : files) {
-				if (entry.exists() && entry.canRead()) {
-					lpkgFiles.add(entry);
-				}
-			}
-		}
-
-		if (lpkgFiles.isEmpty()) {
-			System.err.println(
-				"No lpkg files were found in args " + Arrays.toString(args));
-
-			return;
-		}
-
-		for (File lpkgFile : lpkgFiles) {
-			LPKGIndexer lpkgIndexer = new LPKGIndexer(lpkgFile);
-
-			File indexFile = lpkgIndexer.index(targetPlatformDir);
-
-			System.out.println("Wrote index file " + indexFile);
-		}
-	}
 
 	public LPKGIndexer(File lpkgFile) {
 		_lpkgFile = lpkgFile;
@@ -203,7 +108,10 @@ public class LPKGIndexer implements Indexer {
 				output = new File(output, tempIndexFile.getName());
 			}
 
-			Files.copy(tempIndexFile.toPath(), output.toPath());
+			Files.copy(
+				tempIndexFile.toPath(), output.toPath(),
+				StandardCopyOption.COPY_ATTRIBUTES,
+				StandardCopyOption.REPLACE_EXISTING);
 
 			return output;
 		}

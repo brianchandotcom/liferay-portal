@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.bootstrap.index;
+package com.liferay.portal.target.platform.indexer.internal;
 
 import aQute.bnd.osgi.resource.ResourceBuilder;
 
 import biz.aQute.resolve.ResolverValidator;
 import biz.aQute.resolve.ResolverValidator.Resolution;
 
+import com.liferay.portal.target.platform.indexer.Indexer;
+import com.liferay.portal.target.platform.indexer.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -27,76 +29,12 @@ import java.io.FilenameFilter;
 import java.net.URI;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author Raymond Augé
  */
 public class IndexValidator implements Validator {
-
-	public static void main(String[] args) throws Exception {
-		if ((args == null) || (args.length == 0)) {
-			System.err.println(
-				"Usage: <cmd> <list of index files or directories containing " +
-					"index files>");
-
-			return;
-		}
-
-		List<URI> indexFiles = new ArrayList<>();
-
-		for (String arg : args) {
-			File file = new File(arg);
-
-			if (!file.exists() || !file.canRead()) {
-				continue;
-			}
-
-			if (!file.isDirectory()) {
-				String name = file.getName();
-
-				if (name.endsWith(".xml") || name.endsWith(".xml.gz")) {
-					indexFiles.add(file.toURI());
-				}
-
-				continue;
-			}
-
-			File[] files = file.listFiles(
-				new FilenameFilter() {
-
-					@Override
-					public boolean accept(File dir, String name) {
-						if (name.endsWith(".xml") || name.endsWith(".xml.gz")) {
-							return true;
-						}
-
-						return false;
-					}
-
-				});
-
-			for (File entry : files) {
-				if (entry.exists() && entry.canRead()) {
-					indexFiles.add(entry.toURI());
-				}
-			}
-		}
-
-		if (indexFiles.isEmpty()) {
-			System.err.println(
-				"No index files were found in args " + Arrays.toString(args));
-
-			return;
-		}
-
-		IndexValidator indexValidator = new IndexValidator();
-
-		for (String message : indexValidator.validate(indexFiles)) {
-			System.out.println(message);
-		}
-	}
 
 	public void includeTargetPlatform(boolean includeTargetPlatform) {
 		_includeTargetPlatform = includeTargetPlatform;

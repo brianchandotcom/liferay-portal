@@ -135,7 +135,7 @@ public class JenkinsResultsParserUtil {
 			sb.append(" ");
 		}
 
-		sb.append("echo COMPLETE\n");
+		sb.append("echo BASH COMMANDS COMPLETE\n");
 
 		bashCommands[2] = sb.toString();
 

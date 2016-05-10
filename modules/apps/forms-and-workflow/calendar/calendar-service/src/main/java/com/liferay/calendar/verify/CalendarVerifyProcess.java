@@ -81,6 +81,8 @@ import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
+import com.liferay.social.kernel.model.SocialActivity;
+import com.liferay.social.kernel.service.SocialActivityLocalService;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -355,6 +357,28 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		ratingsStats.setAverageScore(averageScore);
 
 		return _ratingsStatsLocalService.updateRatingsStats(ratingsStats);
+	}
+
+	protected void addSocialActivity(
+		long activityId, long groupId, long companyId, long userId,
+		long createDate, long mirrorActivityId, long classNameId, long classPK,
+		int type, String extraData, long receiverUserId) {
+
+		SocialActivity socialActivity =
+			_socialActivityLocalService.createSocialActivity(activityId);
+
+		socialActivity.setGroupId(groupId);
+		socialActivity.setCompanyId(companyId);
+		socialActivity.setUserId(userId);
+		socialActivity.setCreateDate(createDate);
+		socialActivity.setMirrorActivityId(mirrorActivityId);
+		socialActivity.setClassNameId(classNameId);
+		socialActivity.setClassPK(classPK);
+		socialActivity.setType(type);
+		socialActivity.setExtraData(extraData);
+		socialActivity.setReceiverUserId(receiverUserId);
+
+		_socialActivityLocalService.updateSocialActivity(socialActivity);
 	}
 
 	protected void addSubscription(
@@ -898,6 +922,10 @@ public class CalendarVerifyProcess extends VerifyProcess {
 
 		importMBDiscussion(eventId, calendarBookingId);
 
+		// Social
+
+		importSocialActivities(eventId, calendarBookingId);
+
 		return calendarBooking;
 	}
 
@@ -1096,6 +1124,33 @@ public class CalendarVerifyProcess extends VerifyProcess {
 			ratingsStats.getAverageScore());
 	}
 
+	protected void importSocialActivities(
+		long eventId, long calendarBookingId) {
+
+		List<SocialActivity> socialActivities =
+			_socialActivityLocalService.getActivities(
+				_CAL_EVENT_CLASS_NAME, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (SocialActivity socialActivity : socialActivities) {
+			if (socialActivity.getClassPK() == eventId) {
+				importSocialActivity(socialActivity, calendarBookingId);
+			}
+		}
+	}
+
+	protected void importSocialActivity(
+		SocialActivity socialActivity, long calendarBookingId) {
+
+		addSocialActivity(
+			_counterLocalService.increment(SocialActivity.class.getName()),
+			socialActivity.getGroupId(), socialActivity.getCompanyId(),
+			socialActivity.getUserId(), socialActivity.getCreateDate(),
+			socialActivity.getMirrorActivityId(),
+			_classNameLocalService.getClassNameId(CalendarBooking.class),
+			calendarBookingId, socialActivity.getType(),
+			socialActivity.getExtraData(), socialActivity.getReceiverUserId());
+	}
+
 	protected void importSubscription(
 		Subscription subscription, long calendarBookingId) {
 
@@ -1275,6 +1330,13 @@ public class CalendarVerifyProcess extends VerifyProcess {
 	}
 
 	@Reference(unbind = "-")
+	protected void setSocialActivityLocalService(
+		SocialActivityLocalService socialActivityLocalService) {
+
+		_socialActivityLocalService = socialActivityLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setSubscriptionLocalService(
 		SubscriptionLocalService subscriptionLocalService) {
 
@@ -1345,6 +1407,7 @@ public class CalendarVerifyProcess extends VerifyProcess {
 	private ResourceBlockLocalService _resourceBlockLocalService;
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 	private RoleLocalService _roleLocalService;
+	private SocialActivityLocalService _socialActivityLocalService;
 	private SubscriptionLocalService _subscriptionLocalService;
 	private UserLocalService _userLocalService;
 

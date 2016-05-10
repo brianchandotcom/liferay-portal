@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -55,17 +54,26 @@ public class DeleteFileEntryPortletConfigurationIcon
 	public String getMessage(PortletRequest portletRequest) {
 		String key = "delete";
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-		long repositoryId = ParamUtil.getLong(portletRequest, "repositoryId");
+			FileEntry fileEntry = ActionUtil.getFileEntry(portletRequest);
 
-		if (isTrashEnabled(themeDisplay.getScopeGroupId(), repositoryId)) {
-			key = "move-to-the-recycle-bin";
+			if (isTrashEnabled(
+					themeDisplay.getScopeGroupId(),
+					fileEntry.getRepositoryId())) {
+
+				key = "move-to-the-recycle-bin";
+			}
+
+			return LanguageUtil.get(
+				getResourceBundle(getLocale(portletRequest)), key);
 		}
-
-		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), key);
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
 	}
 
 	@Override
@@ -82,9 +90,18 @@ public class DeleteFileEntryPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long repositoryId = ParamUtil.getLong(portletRequest, "repositoryId");
+		FileEntry fileEntry = null;
 
-		if (isTrashEnabled(themeDisplay.getScopeGroupId(), repositoryId)) {
+		try {
+			fileEntry = ActionUtil.getFileEntry(portletRequest);
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
+
+		if (isTrashEnabled(
+				themeDisplay.getScopeGroupId(), fileEntry.getRepositoryId())) {
+
 			portletURL.setParameter(Constants.CMD, Constants.MOVE_TO_TRASH);
 		}
 		else {
@@ -94,15 +111,6 @@ public class DeleteFileEntryPortletConfigurationIcon
 		PortletURL redirectURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 			PortletRequest.RENDER_PHASE);
-
-		FileEntry fileEntry = null;
-
-		try {
-			fileEntry = ActionUtil.getFileEntry(portletRequest);
-		}
-		catch (PortalException pe) {
-			throw new RuntimeException(pe);
-		}
 
 		long folderId = fileEntry.getFolderId();
 

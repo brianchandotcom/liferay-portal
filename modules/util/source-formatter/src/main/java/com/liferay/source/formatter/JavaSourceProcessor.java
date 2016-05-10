@@ -2594,7 +2594,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 							processErrorMessage(
 								fileName,
-								"> 80: " + fileName + " " + lineCount);
+								"> " + _maxLineLength + ": " + fileName + " " +
+									lineCount);
 						}
 					}
 					else {

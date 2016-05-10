@@ -2649,7 +2649,34 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 	</target>
 
 	<target name="unzip-websphere-custom">
-		<remake-dir dir="${app.server.websphere.dir}" />
+		<if>
+			<not>
+				<available file="${app.server.parent.dir}/${app.server.websphere.custom.zip.name}" />
+			</not>
+			<then>
+				<trycatch>
+					<try>
+						<mirrors-get
+							dest="${app.server.parent.dir}"
+							src="http://mirrors/files.liferay.com/private/apps/ibm/websphere/8.5.5/${app.server.websphere.custom.zip.name}"
+							verbose="true"
+						/>
+					</try>
+					<catch>
+						<fail>
+.
+
+Please download the Websphere custom zip file from
+http://mirrors/files.liferay.com/private/apps/ibm/websphere/8.5.5 and
+place it here: ${app.server.parent.dir}/${app.server.websphere.custom.zip.name}. Then rerun
+this task.
+						</fail>
+					</catch>
+				</trycatch>
+			</then>
+		</if>
+
+		<delete dir="${app.server.websphere.dir}" />
 
 		<unzip
 			dest="${app.server.websphere.dir}"

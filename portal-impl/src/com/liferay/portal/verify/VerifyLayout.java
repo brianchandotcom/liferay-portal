@@ -209,7 +209,7 @@ public class VerifyLayout extends VerifyProcess {
 
 		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
 			if (!oldFriendlyURL.equals(layoutFriendlyURL.getFriendlyURL())) {
-				return true;
+				continue;
 			}
 
 			try {
@@ -221,7 +221,7 @@ public class VerifyLayout extends VerifyProcess {
 				int type = lfurle.getType();
 
 				if (type == LayoutFriendlyURLException.DUPLICATE) {
-					return true;
+					continue;
 				}
 				else {
 					throw lfurle;

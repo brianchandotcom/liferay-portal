@@ -23,7 +23,7 @@ buildSystemPackagesExtraManifest {
 
 		properties["-include"] = relativePath(systemPackagesExtraBndFile)
 
-		jarBuilder.withClasspath configurations.runtime.files as File[]
+		jarBuilder.withClasspath new File[0]
 		jarBuilder.withName "system.packages.extra"
 		jarBuilder.withProperties properties
 		jarBuilder.withResources new File[0]
@@ -57,12 +57,12 @@ copySystemPackagesExtraManifest {
 }
 
 dependencies {
-	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
-	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	provided group: "org.springframework", name: "spring-beans", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"

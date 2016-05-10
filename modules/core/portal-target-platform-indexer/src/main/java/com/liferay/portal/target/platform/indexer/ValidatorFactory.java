@@ -12,17 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.bootstrap.index;
+package com.liferay.portal.target.platform.indexer;
 
-import java.io.File;
+import com.liferay.portal.target.platform.indexer.internal.IndexValidator;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Raymond Augé
  */
-public interface Indexer {
+@Component(immediate = true, service = ValidatorFactory.class)
+public class ValidatorFactory {
 
-	public static final String TARGET_PLATFORM = "target-platform";
+	public Validator create() {
+		IndexValidator indexValidator = new IndexValidator();
 
-	public File index(File output) throws Exception;
+		indexValidator.includeTargetPlatform(true);
+
+		return indexValidator;
+	}
 
 }

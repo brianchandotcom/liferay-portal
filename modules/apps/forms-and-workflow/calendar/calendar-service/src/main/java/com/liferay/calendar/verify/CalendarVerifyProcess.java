@@ -14,9 +14,16 @@
 
 package com.liferay.calendar.verify;
 
+import com.liferay.calendar.model.CalendarBooking;
+import com.liferay.calendar.notification.NotificationType;
+import com.liferay.calendar.service.CalendarBookingLocalService;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.verify.VerifyProcess;
 
+import java.sql.Timestamp;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
@@ -28,12 +35,65 @@ import org.osgi.service.component.annotations.Component;
 )
 public class CalendarVerifyProcess extends VerifyProcess {
 
+	protected CalendarBooking addCalendarBooking(
+		String uuid, long calendarBookingId, long companyId, long groupId,
+		long userId, String userName, Timestamp createDate,
+		Timestamp modifiedDate, long calendarId, long calendarResourceId,
+		String title, String description, String location, long startTime,
+		long endTime, boolean allDay, String recurrence, int firstReminder,
+		NotificationType firstReminderType, int secondReminder,
+		NotificationType secondReminderType) {
+
+		CalendarBooking calendarBooking =
+			_calendarBookingLocalService.createCalendarBooking(
+				calendarBookingId);
+
+		calendarBooking.setUuid(uuid);
+		calendarBooking.setCompanyId(companyId);
+		calendarBooking.setGroupId(groupId);
+		calendarBooking.setUserId(userId);
+		calendarBooking.setUserName(userName);
+		calendarBooking.setCreateDate(createDate);
+		calendarBooking.setModifiedDate(modifiedDate);
+		calendarBooking.setCalendarId(calendarId);
+		calendarBooking.setCalendarResourceId(calendarResourceId);
+		calendarBooking.setParentCalendarBookingId(calendarBookingId);
+		calendarBooking.setVEventUid(uuid);
+		calendarBooking.setTitle(title);
+		calendarBooking.setDescription(description);
+		calendarBooking.setLocation(location);
+		calendarBooking.setStartTime(startTime);
+		calendarBooking.setEndTime(endTime);
+		calendarBooking.setAllDay(allDay);
+		calendarBooking.setRecurrence(recurrence);
+		calendarBooking.setFirstReminder(firstReminder);
+		calendarBooking.setFirstReminderType(firstReminderType.toString());
+		calendarBooking.setSecondReminder(secondReminder);
+		calendarBooking.setSecondReminderType(secondReminderType.toString());
+		calendarBooking.setStatus(WorkflowConstants.STATUS_APPROVED);
+		calendarBooking.setStatusByUserId(userId);
+		calendarBooking.setStatusByUserName(userName);
+		calendarBooking.setStatusDate(createDate);
+
+		return _calendarBookingLocalService.updateCalendarBooking(
+			calendarBooking);
+	}
+
 	@Override
 	protected void doVerify() throws Exception {
 		verifyCalEvent();
 	}
 
+	@Reference(unbind = "-")
+	protected void setCalendarBookingLocalService(
+		CalendarBookingLocalService calendarBookingLocalService) {
+
+		_calendarBookingLocalService = calendarBookingLocalService;
+	}
+
 	protected void verifyCalEvent() throws Exception {
 	}
+
+	private CalendarBookingLocalService _calendarBookingLocalService;
 
 }

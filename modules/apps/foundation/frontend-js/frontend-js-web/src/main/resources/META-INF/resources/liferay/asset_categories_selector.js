@@ -623,6 +623,12 @@ AUI.add(
 						);
 					},
 
+					_showPopup: function(event) {
+						Liferay.Util.getTop().AUI().use('aui-tree');
+
+						AssetCategoriesSelector.superclass._showPopup(event);
+					},
+
 					_showSelectPopup: function(event) {
 						var instance = this;
 

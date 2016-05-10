@@ -28,6 +28,7 @@ import com.liferay.portal.upgrade.v7_0_0.util.PortletPreferencesRow;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.Enumeration;
 
@@ -64,6 +65,11 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 			ps.setString(7, portletPreferencesRow.getPreferences());
 
 			ps.executeUpdate();
+		}
+		catch (SQLException sqle) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Ignoring unique index constraint violation", sqle);
+			}
 		}
 	}
 

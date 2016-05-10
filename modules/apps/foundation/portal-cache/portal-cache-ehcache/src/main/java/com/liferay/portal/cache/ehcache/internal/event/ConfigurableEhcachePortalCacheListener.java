@@ -12,13 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache;
-
-import java.io.Serializable;
+package com.liferay.portal.cache.ehcache.internal.event;
 
 /**
- * @author Preston Crary
+ * @author Tina Tian
  */
-public interface PersistentPortalCacheListener<K extends Serializable, V>
-	extends PortalCacheListener<K, V> {
+public interface ConfigurableEhcachePortalCacheListener {
 }

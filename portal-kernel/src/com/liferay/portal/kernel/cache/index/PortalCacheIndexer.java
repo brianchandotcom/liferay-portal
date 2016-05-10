@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.cache.index;
 
-import com.liferay.portal.kernel.cache.PersistentPortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
 
 import java.io.Serializable;
@@ -112,7 +112,7 @@ public class PortalCacheIndexer<I, K extends Serializable, V> {
 	private final PortalCache<K, V> _portalCache;
 
 	private class IndexerPortalCacheListener
-		implements PersistentPortalCacheListener<K, V> {
+		implements PortalCacheListener<K, V> {
 
 		@Override
 		public void dispose() {

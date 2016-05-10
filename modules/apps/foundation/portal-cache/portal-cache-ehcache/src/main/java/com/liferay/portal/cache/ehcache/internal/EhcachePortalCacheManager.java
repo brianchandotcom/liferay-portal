@@ -19,8 +19,11 @@ import com.liferay.portal.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.cache.ehcache.EhcacheUnwrapUtil;
 import com.liferay.portal.cache.ehcache.internal.configurator.BaseEhcachePortalCacheManagerConfigurator;
+import com.liferay.portal.cache.ehcache.internal.event.ConfigurableEhcachePortalCacheListener;
 import com.liferay.portal.cache.ehcache.internal.event.PortalCacheManagerEventListener;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
+import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.configurator.PortalCacheConfiguratorSettings;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -332,6 +335,28 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		}
 
 		return true;
+	}
+
+	@Override
+	protected void removeConfigurableEhcachePortalCacheListeners(
+		PortalCache<K, V> portalCache) {
+
+		EhcachePortalCache<K, V> ehcachePortalCache =
+			(EhcachePortalCache<K, V>)
+				EhcacheUnwrapUtil.getWrappedPortalCache(portalCache);
+
+		Map<PortalCacheListener<K, V>, PortalCacheListenerScope>
+			portalCacheListeners = ehcachePortalCache.getPortalCacheListeners();
+
+		for (PortalCacheListener<K, V> portalCacheListener :
+				portalCacheListeners.keySet()) {
+
+			if (portalCacheListener instanceof
+					ConfigurableEhcachePortalCacheListener) {
+
+				portalCache.unregisterPortalCacheListener(portalCacheListener);
+			}
+		}
 	}
 
 	protected BaseEhcachePortalCacheManagerConfigurator

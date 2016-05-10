@@ -14,16 +14,17 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
-import com.liferay.portal.cache.test.util.TestPersistentPortalCacheListener;
 import com.liferay.portal.cache.test.util.TestPortalCacheListener;
 import com.liferay.portal.cache.test.util.TestPortalCacheManager;
 import com.liferay.portal.cache.test.util.TestPortalCacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import net.sf.ehcache.CacheManager;
@@ -231,31 +232,6 @@ public class EhcachePortalCacheTest {
 		remotePortalCacheListener.assertActionsCount(0);
 		_defaultPortalCacheListener.assertActionsCount(0);
 		_defaultPortalCacheReplicator.assertActionsCount(0);
-
-		// Persistent listener
-
-		TestPersistentPortalCacheListener<String, String>
-			testPersistentPortalCacheListener =
-				new TestPersistentPortalCacheListener<>();
-
-		_ehcachePortalCache.registerPortalCacheListener(
-			testPersistentPortalCacheListener);
-
-		_ehcachePortalCache.unregisterPortalCacheListeners();
-
-		_ehcachePortalCache.put(_KEY_1, _VALUE_2);
-
-		testPersistentPortalCacheListener.assertActionsCount(1);
-		testPersistentPortalCacheListener.assertUpdated(_KEY_1, _VALUE_2);
-
-		testPersistentPortalCacheListener.reset();
-
-		_ehcachePortalCache.unregisterPortalCacheListener(
-			testPersistentPortalCacheListener);
-
-		_ehcachePortalCache.put(_KEY_1, _VALUE_1);
-
-		testPersistentPortalCacheListener.assertActionsCount(0);
 	}
 
 	@Test
@@ -371,13 +347,21 @@ public class EhcachePortalCacheTest {
 	public void testReconfigEhcache() {
 		Assert.assertSame(_ehcache, _ehcachePortalCache.ehcache);
 
-		_cacheManager.addCache(_PORTAL_CACHE_NAME_2);
+		Map<PortalCacheListener<String, String>, PortalCacheListenerScope>
+			oldPortalCacheListeners =
+				_ehcachePortalCache.getPortalCacheListeners();
 
-		Ehcache ehcache2 = _cacheManager.getCache(_PORTAL_CACHE_NAME_2);
+		_cacheManager.addCache(_NEW_PORTAL_CACHE_NAME);
+
+		Ehcache ehcache2 = _cacheManager.getCache(_NEW_PORTAL_CACHE_NAME);
 
 		_ehcachePortalCache.reconfigEhcache(ehcache2);
 
 		Assert.assertSame(ehcache2, _ehcachePortalCache.ehcache);
+
+		Assert.assertEquals(
+			oldPortalCacheListeners,
+			_ehcachePortalCache.getPortalCacheListeners());
 
 		RegisteredEventListeners registeredEventListeners =
 			_ehcache.getCacheEventNotificationService();
@@ -664,16 +648,21 @@ public class EhcachePortalCacheTest {
 
 	private static final String _KEY_2 = "KEY_2";
 
+	private static final String _KEY_3 = "KEY_3";
+
+	private static final String _NEW_PORTAL_CACHE_NAME =
+		"NEW_PORTAL_CACHE_NAME";
+
 	private static final String _PORTAL_CACHE_MANAGER_NAME =
 		"PORTAL_CACHE_MANAGER_NAME";
 
 	private static final String _PORTAL_CACHE_NAME = "PORTAL_CACHE_NAME";
 
-	private static final String _PORTAL_CACHE_NAME_2 = "PORTAL_CACHE_NAME_2";
-
 	private static final String _VALUE_1 = "VALUE_1";
 
 	private static final String _VALUE_2 = "VALUE_2";
+
+	private static final String _VALUE_3 = "VALUE_3";
 
 	private static CacheManager _cacheManager;
 

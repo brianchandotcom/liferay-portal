@@ -3,4 +3,3 @@ Bundle-SymbolicName: com.liferay.frontend.image.editor.capability.crop
 Bundle-Version: 1.0.0
 Provide-Capability: soy;type="image-editor-capability";version:Version="1.0.0"
 Require-Capability: soy;filter:="(type=metal)"
--includeresource: package.json

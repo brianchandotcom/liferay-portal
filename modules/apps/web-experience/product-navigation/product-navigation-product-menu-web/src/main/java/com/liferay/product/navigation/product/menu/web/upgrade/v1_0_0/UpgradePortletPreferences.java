@@ -25,29 +25,18 @@ import java.sql.PreparedStatement;
  */
 public class UpgradePortletPreferences extends UpgradeProcess {
 
-	protected void deleteControlPanelMenuPortletPreferences() throws Exception {
+	protected void deletePortletPreferences(
+			String portletId, String portletName)
+		throws Exception {
+
 		if (_log.isDebugEnabled()) {
-			_log.debug("Delete control panel menu portlet preferences");
+			_log.debug("Delete " + portletName + " portlet preferences");
 		}
 
 		try (PreparedStatement ps2 = connection.prepareStatement(
 				"delete from PortletPreferences where portletId = ?")) {
 
-			ps2.setString(1, _CONTROL_PANEL_MENU_PORTLET);
-
-			ps2.execute();
-		}
-	}
-
-	protected void deleteDockbarPortletPreferences() throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Delete dockbar portlet preferences");
-		}
-
-		try (PreparedStatement ps2 = connection.prepareStatement(
-				"delete from PortletPreferences where portletId = ?")) {
-
-			ps2.setString(1, _DOCKBAR_PORTLET);
+			ps2.setString(1, portletId);
 
 			ps2.execute();
 		}
@@ -55,13 +44,9 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		deleteControlPanelMenuPortletPreferences();
-		deleteDockbarPortletPreferences();
+		deletePortletPreferences("145", "Dockbar");
+		deletePortletPreferences("160", "Control Panel Menu");
 	}
-
-	private static final String _CONTROL_PANEL_MENU_PORTLET = "160";
-
-	private static final String _DOCKBAR_PORTLET = "145";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradePortletPreferences.class);

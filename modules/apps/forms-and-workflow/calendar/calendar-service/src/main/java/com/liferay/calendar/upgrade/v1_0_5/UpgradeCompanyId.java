@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.upgrade.v1_0_3;
+package com.liferay.calendar.upgrade.v1_0_5;
 
 /**
  * @author Inácio Nery

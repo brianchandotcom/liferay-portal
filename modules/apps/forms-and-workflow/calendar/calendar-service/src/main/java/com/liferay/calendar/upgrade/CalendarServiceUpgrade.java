@@ -14,11 +14,11 @@
 
 package com.liferay.calendar.upgrade;
 
-import com.liferay.calendar.upgrade.v1_0_1.UpgradeCalendar;
-import com.liferay.calendar.upgrade.v1_0_3.UpgradeCalendarResource;
-import com.liferay.calendar.upgrade.v1_0_3.UpgradeClassNames;
-import com.liferay.calendar.upgrade.v1_0_3.UpgradeCompanyId;
-import com.liferay.calendar.upgrade.v1_0_3.UpgradeLastPublishDate;
+import com.liferay.calendar.upgrade.v1_0_2.UpgradeCalendar;
+import com.liferay.calendar.upgrade.v1_0_4.UpgradeClassNames;
+import com.liferay.calendar.upgrade.v1_0_5.UpgradeCalendarResource;
+import com.liferay.calendar.upgrade.v1_0_5.UpgradeCompanyId;
+import com.liferay.calendar.upgrade.v1_0_5.UpgradeLastPublishDate;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;

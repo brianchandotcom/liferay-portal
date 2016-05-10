@@ -926,6 +926,12 @@ public class CalendarVerifyProcess extends VerifyProcess {
 
 		importSocialActivities(eventId, calendarBookingId);
 
+		// Ratings
+
+		importRatings(
+			_CAL_EVENT_CLASS_NAME, eventId, CalendarBooking.class.getName(),
+			calendarBookingId);
+
 		return calendarBooking;
 	}
 

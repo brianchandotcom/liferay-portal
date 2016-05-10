@@ -103,7 +103,6 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	@Override
 	public boolean isEnabled(HttpServletRequest request) {
-
 		if (isMaxChallenges(request)) {
 			return false;
 		}
@@ -118,7 +117,6 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	@Override
 	public boolean isEnabled(PortletRequest portletRequest) {
-
 		if (isMaxChallenges(portletRequest)) {
 			return false;
 		}
@@ -165,42 +163,6 @@ public class SimpleCaptchaImpl implements Captcha {
 		CaptchaServletUtil.writeImage(
 			resourceResponse.getPortletOutputStream(),
 			simpleCaptcha.getImage());
-	}
-
-	protected boolean isMaxChallenges(HttpServletRequest request) {
-		if (PropsValues.CAPTCHA_MAX_CHALLENGES > 0) {
-			HttpSession session = request.getSession();
-
-			Integer count = (Integer)session.getAttribute(
-				WebKeys.CAPTCHA_COUNT);
-
-			return isMaxChallenges(count);
-		}
-
-		return false;
-	}
-
-	protected boolean isMaxChallenges(Integer count) {
-
-		if ((count != null) && (count >= PropsValues.CAPTCHA_MAX_CHALLENGES)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isMaxChallenges(PortletRequest portletRequest) {
-
-		if (PropsValues.CAPTCHA_MAX_CHALLENGES > 0) {
-			PortletSession portletSession = portletRequest.getPortletSession();
-
-			Integer count = (Integer)portletSession.getAttribute(
-				WebKeys.CAPTCHA_COUNT);
-
-			return isMaxChallenges(count);
-		}
-
-		return false;
 	}
 
 	protected BackgroundProducer getBackgroundProducer() {
@@ -383,6 +345,40 @@ public class SimpleCaptchaImpl implements Captcha {
 			_wordRenderers[i] = (WordRenderer)InstancePool.get(
 				wordRendererClassName);
 		}
+	}
+
+	protected boolean isMaxChallenges(HttpServletRequest request) {
+		if (PropsValues.CAPTCHA_MAX_CHALLENGES > 0) {
+			HttpSession session = request.getSession();
+
+			Integer count = (Integer)session.getAttribute(
+				WebKeys.CAPTCHA_COUNT);
+
+			return isMaxChallenges(count);
+		}
+
+		return false;
+	}
+
+	protected boolean isMaxChallenges(Integer count) {
+		if ((count != null) && (count >= PropsValues.CAPTCHA_MAX_CHALLENGES)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isMaxChallenges(PortletRequest portletRequest) {
+		if (PropsValues.CAPTCHA_MAX_CHALLENGES > 0) {
+			PortletSession portletSession = portletRequest.getPortletSession();
+
+			Integer count = (Integer)portletSession.getAttribute(
+				WebKeys.CAPTCHA_COUNT);
+
+			return isMaxChallenges(count);
+		}
+
+		return false;
 	}
 
 	protected boolean validateChallenge(HttpServletRequest request)

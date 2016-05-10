@@ -85,6 +85,14 @@ public class KaleoWorkflowMessagingConfigurator {
 
 	@Deactivate
 	protected void deactivate() {
+
+		for (Map.Entry<String, MessageListener> entry:
+				_proxyMessageListeners.entrySet()) {
+
+			_messageBus.unregisterMessageListener(
+				entry.getKey(), entry.getValue());
+		}
+
 		if (!_serviceRegistrations.isEmpty()) {
 			for (ServiceRegistration<Destination> serviceRegistration :
 					_serviceRegistrations.values()) {
@@ -169,6 +177,8 @@ public class KaleoWorkflowMessagingConfigurator {
 
 		_messageBus.registerMessageListener(
 			destinationName, proxyMessageListener);
+
+		_proxyMessageListeners.put(destinationName, proxyMessageListener);
 
 		return proxyMessageListener;
 	}
@@ -328,5 +338,8 @@ public class KaleoWorkflowMessagingConfigurator {
 
 	@Reference(target = "(proxy.bean=false)")
 	private WorkflowTaskManager _workflowTaskManager;
+
+	private Map<String, MessageListener> _proxyMessageListeners =
+		new HashMap<>();
 
 }

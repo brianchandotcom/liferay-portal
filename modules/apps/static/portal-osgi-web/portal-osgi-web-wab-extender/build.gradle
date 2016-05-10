@@ -1,7 +1,7 @@
 task deployDependencies(type: Copy)
 
 dependencies {
-	provided files("lib-patch/org.eclipse.equinox.http.servlet.jar")
+	provided fileTree(dir: "lib-patch", exclude: "*-sources.jar", include: "*.jar")
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
@@ -28,6 +28,8 @@ deploy {
 }
 
 deployDependencies {
+	boolean keepDependencyVersions = Boolean.getBoolean("deploy.dependencies.keep.versions")
+
 	ext {
 		autoClean = false
 	}
@@ -36,12 +38,25 @@ deployDependencies {
 		include "commons-fileupload-*.jar"
 		include "commons-io-*.jar"
 
-		rename(/commons-fileupload-.+\.jar/, "org.apache.commons.fileupload.jar")
-		rename(/commons-io-.+\.jar/, "org.apache.commons.io.jar")
+		String renameSuffix = ".jar"
+
+		if (keepDependencyVersions) {
+			renameSuffix = '-$1.jar'
+		}
+
+		rename(/commons-fileupload-(.+)\.jar/, "org.apache.commons.fileupload" + renameSuffix)
+		rename(/commons-io-(.+)\.jar/, "org.apache.commons.io" + renameSuffix)
 	}
 
 	from("lib-patch") {
-		include "org.eclipse.equinox.http.servlet.jar"
+		exclude "*-sources.jar"
+		include "org.eclipse.equinox.http.servlet-*.jar"
+
+		if (!keepDependencyVersions) {
+			rename {
+				"org.eclipse.equinox.http.servlet.jar"
+			}
+		}
 	}
 
 	into {

@@ -21,14 +21,14 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.journal.upgrade.v0_0_2.UpgradeClassNames;
 import com.liferay.journal.upgrade.v0_0_3.UpgradeJournalArticleType;
-import com.liferay.journal.upgrade.v1_0_0.UpgradeCompanyId;
-import com.liferay.journal.upgrade.v1_0_0.UpgradeJournal;
-import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalArticleImage;
-import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalArticles;
-import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalDisplayPreferences;
-import com.liferay.journal.upgrade.v1_0_0.UpgradeLastPublishDate;
-import com.liferay.journal.upgrade.v1_0_0.UpgradePortletSettings;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeSchema;
+import com.liferay.journal.upgrade.v1_0_1.UpgradeCompanyId;
+import com.liferay.journal.upgrade.v1_0_1.UpgradeJournal;
+import com.liferay.journal.upgrade.v1_0_1.UpgradeJournalArticles;
+import com.liferay.journal.upgrade.v1_0_1.UpgradeJournalDisplayPreferences;
+import com.liferay.journal.upgrade.v1_0_1.UpgradeLastPublishDate;
+import com.liferay.journal.upgrade.v1_0_1.UpgradePortletSettings;
+import com.liferay.journal.upgrade.v1_0_2.UpgradeJournalArticleImage;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
@@ -69,7 +69,11 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.journal.service", "0.0.3", "1.0.0",
-			new UpgradeSchema(), new UpgradeCompanyId(),
+			new UpgradeSchema());
+
+		registry.register(
+			"com.liferay.journal.service", "1.0.0", "1.0.1",
+			new UpgradeCompanyId(),
 			new UpgradeJournal(
 				_companyLocalService, _ddmTemplateLinkLocalService),
 			new UpgradeJournalArticles(
@@ -94,7 +98,10 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 					}
 				}
 
-			},
+			});
+
+		registry.register(
+			"com.liferay.journal.service", "1.0.1", "1.0.2",
 			new UpgradeJournalArticleImage());
 	}
 

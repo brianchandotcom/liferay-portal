@@ -12,23 +12,21 @@
  * details.
  */
 
-package com.liferay.journal.upgrade.v1_0_0;
-
-import com.liferay.journal.constants.JournalPortletKeys;
+package com.liferay.calendar.upgrade.v1_0_5;
 
 /**
- * @author Mate Thurzo
+ * @author Inácio Nery
  */
-public class UpgradeLastPublishDate
-	extends com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate {
+public class UpgradeCompanyId
+	extends com.liferay.portal.upgrade.util.UpgradeCompanyId {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		updateLastPublishDates(JournalPortletKeys.JOURNAL, "JournalArticle");
-
-		updateLastPublishDates(JournalPortletKeys.JOURNAL, "JournalFeed");
-
-		updateLastPublishDates(JournalPortletKeys.JOURNAL, "JournalFolder");
+	protected TableUpdater[] getTableUpdaters() {
+		return new TableUpdater[] {
+			new TableUpdater(
+				"RatingsStats", "classPK",
+				new String[][] {{"CalendarBooking", "calendarBookingId"}})
+		};
 	}
 
 }

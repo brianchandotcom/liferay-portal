@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.upgrade.v1_0_0;
+package com.liferay.journal.upgrade.v1_0_1;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;

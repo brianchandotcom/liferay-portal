@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.quick.note.web.uprade;
+package com.liferay.quick.note.web.upgrade;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

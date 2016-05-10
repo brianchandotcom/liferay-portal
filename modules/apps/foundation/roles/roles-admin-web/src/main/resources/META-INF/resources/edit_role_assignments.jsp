@@ -204,7 +204,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 							}
 						}
 					},
-					title: '<liferay-ui:message arguments="<%= role.getName() %>" key="add-assignees-to-x" />',
+					title: '<liferay-ui:message arguments="<%= HtmlUtil.escape(role.getName()) %>" key="add-assignees-to-x" />',
 					url: '<%= selectAssigneesURL %>'
 				}
 			);

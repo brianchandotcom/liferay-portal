@@ -77,6 +77,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.verify.VerifyProcess;
+import com.liferay.ratings.kernel.model.RatingsEntry;
+import com.liferay.ratings.kernel.model.RatingsStats;
+import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
+import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -311,6 +315,46 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		mbThread.setStatusDate(statusDate);
 
 		_mbThreadLocalService.updateMBThread(mbThread);
+	}
+
+	protected RatingsEntry addRatingsEntry(
+		long entryId, long companyId, long userId, String userName,
+		Date createDate, Date modifiedDate, String className, long classPK,
+		double score) {
+
+		long classNameId = _classNameLocalService.getClassNameId(className);
+
+		RatingsEntry ratingsEntry =
+			_ratingsEntryLocalService.createRatingsEntry(entryId);
+
+		ratingsEntry.setCompanyId(companyId);
+		ratingsEntry.setUserId(userId);
+		ratingsEntry.setUserName(userName);
+		ratingsEntry.setCreateDate(createDate);
+		ratingsEntry.setModifiedDate(modifiedDate);
+		ratingsEntry.setClassNameId(classNameId);
+		ratingsEntry.setClassPK(classPK);
+		ratingsEntry.setScore(score);
+
+		return _ratingsEntryLocalService.updateRatingsEntry(ratingsEntry);
+	}
+
+	protected RatingsStats addRatingsStats(
+		long statsId, String className, long classPK, int totalEntries,
+		double totalScore, double averageScore) {
+
+		RatingsStats ratingsStats =
+			_ratingsStatsLocalService.createRatingsStats(statsId);
+
+		long classNameId = _classNameLocalService.getClassNameId(className);
+		ratingsStats.setClassNameId(classNameId);
+
+		ratingsStats.setClassPK(classPK);
+		ratingsStats.setTotalEntries(totalEntries);
+		ratingsStats.setTotalScore(totalScore);
+		ratingsStats.setAverageScore(averageScore);
+
+		return _ratingsStatsLocalService.updateRatingsStats(ratingsStats);
 	}
 
 	protected void addSubscription(
@@ -970,6 +1014,10 @@ public class CalendarVerifyProcess extends VerifyProcess {
 			mbMessage.getStatusByUserName(), mbMessage.getStatusDate(),
 			mbMessageIds);
 
+		importRatings(
+			MBDiscussion.class.getName(), mbMessage.getMessageId(),
+			MBDiscussion.class.getName(), messageId);
+
 		mbMessageIds.put(mbMessage.getMessageId(), messageId);
 
 		return messageId;
@@ -1014,6 +1062,38 @@ public class CalendarVerifyProcess extends VerifyProcess {
 			threadId, mbMessageIds.get(mbThread.getRootMessageId()));
 
 		return threadId;
+	}
+
+	protected void importRatings(
+		String oldClassName, long oldClassPK, String className, long classPK) {
+
+		List<RatingsEntry> ratingsEntries =
+			_ratingsEntryLocalService.getEntries(oldClassName, oldClassPK);
+
+		for (RatingsEntry ratingsEntry : ratingsEntries) {
+			addRatingsEntry(
+				_counterLocalService.increment(), ratingsEntry.getCompanyId(),
+				ratingsEntry.getUserId(), ratingsEntry.getUserName(),
+				ratingsEntry.getCreateDate(), ratingsEntry.getModifiedDate(),
+				className, classPK, ratingsEntry.getScore());
+		}
+
+		List<Long> oldClassPKs = new ArrayList<>();
+		oldClassPKs.add(oldClassPK);
+
+		List<RatingsStats> ratingsStatsList =
+			_ratingsStatsLocalService.getStats(oldClassName, oldClassPKs);
+
+		if (ratingsStatsList.isEmpty()) {
+			return;
+		}
+
+		RatingsStats ratingsStats = ratingsStatsList.get(0);
+
+		addRatingsStats(
+			_counterLocalService.increment(), className, classPK,
+			ratingsStats.getTotalEntries(), ratingsStats.getTotalScore(),
+			ratingsStats.getAverageScore());
 	}
 
 	protected void importSubscription(
@@ -1155,6 +1235,20 @@ public class CalendarVerifyProcess extends VerifyProcess {
 	}
 
 	@Reference(unbind = "-")
+	protected void setRatingsEntryLocalService(
+		RatingsEntryLocalService ratingsEntryLocalService) {
+
+		_ratingsEntryLocalService = ratingsEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRatingsStatsLocalService(
+		RatingsStatsLocalService ratingsStatsLocalService) {
+
+		_ratingsStatsLocalService = ratingsStatsLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setResourceActionLocalService(
 		ResourceActionLocalService resourceActionLocalService) {
 
@@ -1245,6 +1339,8 @@ public class CalendarVerifyProcess extends VerifyProcess {
 	private MBDiscussionLocalService _mbDiscussionLocalService;
 	private MBMessageLocalService _mbMessageLocalService;
 	private MBThreadLocalService _mbThreadLocalService;
+	private RatingsEntryLocalService _ratingsEntryLocalService;
+	private RatingsStatsLocalService _ratingsStatsLocalService;
 	private ResourceActionLocalService _resourceActionLocalService;
 	private ResourceBlockLocalService _resourceBlockLocalService;
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

@@ -14,17 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -122,27 +114,6 @@ public class FilePropagator {
 		}
 	}
 
-	private static String _readInputStream(InputStream inputStream) {
-		try {
-			StringBuffer sb = new StringBuffer();
-
-			byte[] bytes = new byte[1024];
-
-			int size = inputStream.read(bytes);
-
-			while (size > 0) {
-				sb.append(new String(Arrays.copyOf(bytes, size)));
-
-				size = inputStream.read(bytes);
-			}
-
-			return sb.toString();
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-	}
-
 	private void _copyFromSource() {
 		List<String> commands = new ArrayList<>();
 
@@ -161,7 +132,7 @@ public class FilePropagator {
 
 			if (sourceFileName.startsWith("http")) {
 				commands.add(
-					" curl -o " + targetFileName + " " + sourceFileName);
+					"curl -o " + targetFileName + " " + sourceFileName);
 			}
 			else {
 				commands.add(
@@ -175,7 +146,7 @@ public class FilePropagator {
 		}
 
 		try {
-			if (_executeCommands(commands, true, targetSlave) != 0) {
+			if (_executeRemoteCommands(commands, targetSlave) != 0) {
 				throw new RuntimeException(
 					"Unable to copy from source. Executed: " + commands);
 			}
@@ -194,100 +165,9 @@ public class FilePropagator {
 		System.out.println("Finished copying from source.");
 	}
 
-	private int _executeCommands(
-			List<String> commands, boolean printOutput, String targetSlave)
-		throws IOException {
-
-		File shellFile = _writeShellFile(commands, targetSlave);
-
-		try {
-			FileSystem fileSystem = FileSystems.getDefault();
-
-			System.out.println(
-				"Executing commands:\n" +
-					new String(
-						Files.readAllBytes(
-							fileSystem.getPath(shellFile.getAbsolutePath()))));
-
-			String errorText = null;
-			Integer exitCode = null;
-			Process process = null;
-
-			long start = System.currentTimeMillis();
-
-			while (exitCode == null) {
-				try {
-					Runtime runtime = Runtime.getRuntime();
-
-					process = runtime.exec("./" + shellFile.getName());
-				}
-				catch (IOException ioe) {
-					String message = ioe.getMessage();
-
-					if (message.contains("Text file busy") &&
-						(System.currentTimeMillis() - start) < 2000) {
-
-						JenkinsResultsParserUtil.sleep(100);
-
-						continue;
-					}
-
-					throw ioe;
-				}
-
-				if (printOutput) {
-					System.out.println(
-						_readInputStream(process.getInputStream()));
-				}
-
-				errorText = _readInputStream(process.getErrorStream());
-
-				if (errorText.contains("No buffer space available") ||
-					errorText.contains(
-						"Temporary failure in name resolution")) {
-
-					System.out.println(errorText + "\nRetry in 1 minute.");
-
-					JenkinsResultsParserUtil.sleep(1000 * 60);
-
-					continue;
-				}
-
-				try {
-					exitCode = process.waitFor();
-				}
-				catch (InterruptedException ie) {
-					throw new RuntimeException(ie);
-				}
-
-				process.destroy();
-			}
-
-			errorText = errorText.trim();
-
-			if (!errorText.isEmpty()) {
-				System.out.println(errorText);
-			}
-
-			return exitCode;
-		}
-		finally {
-			if ((shellFile != null) && shellFile.exists()) {
-				shellFile.delete();
-			}
-		}
-	}
-
-	private String _getMkdirCommand(String fileName) {
-		String dirName = fileName.substring(0, fileName.lastIndexOf("/") + 1);
-
-		return "mkdir -pv " + dirName;
-	}
-
-	private File _writeShellFile(List<String> commands, String targetSlave)
-		throws IOException {
-
-		File file = new File(commands.hashCode() + ".sh");
+	private int _executeRemoteCommands(
+			List<String> commands, String targetSlave)
+		throws InterruptedException, IOException {
 
 		StringBuffer sb = new StringBuffer("ssh ");
 
@@ -302,24 +182,18 @@ public class FilePropagator {
 			}
 		}
 
-		sb.append("'\n");
+		sb.append("';");
 
-		try {
-			try (FileWriter fileWriter = new FileWriter(file)) {
-				fileWriter.write(sb.toString());
-			}
+		Process process = JenkinsResultsParserUtil.executeBashCommands(
+			sb.toString());
 
-			file.setExecutable(true);
+		return process.exitValue();
+	}
 
-			return file;
-		}
-		catch (IOException ioe) {
-			if ((file != null) && file.exists()) {
-				file.delete();
-			}
+	private String _getMkdirCommand(String fileName) {
+		String dirName = fileName.substring(0, fileName.lastIndexOf("/") + 1);
 
-			throw ioe;
-		}
+		return "mkdir -pv " + dirName;
 	}
 
 	private final List<String> _busySlaves = new ArrayList<>();
@@ -368,8 +242,8 @@ public class FilePropagator {
 			}
 
 			try {
-				_successful = _filePropagator._executeCommands(
-					commands, false, _targetSlave) == 0;
+				_successful = _filePropagator._executeRemoteCommands(
+					commands, _targetSlave) == 0;
 			}
 			catch (Exception e) {
 				_successful = false;

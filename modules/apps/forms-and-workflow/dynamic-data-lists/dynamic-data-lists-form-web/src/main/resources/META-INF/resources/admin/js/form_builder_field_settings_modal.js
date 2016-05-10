@@ -68,10 +68,9 @@ AUI.add(
 
 						instance._renderSettingsForm(settingsForm);
 
-						var modal = instance._modal;
+						instance._modal.syncHeight();
 
-						modal.syncHeight();
-						modal.align();
+						instance._showFormContainer();
 
 						instance._previousSettings = JSON.stringify(field.getSettings());
 					},
@@ -195,11 +194,7 @@ AUI.add(
 
 						container.appendTo(instance._getBodyNode());
 
-						instance._showDefaultToolbar();
-
 						settingsForm.render();
-
-						settingsForm.getField('label').focus();
 					},
 
 					_showConfirmationMessage: function() {

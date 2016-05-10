@@ -136,26 +136,27 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		int lineLength = getLineLength(line);
 
-		if (lineLength <= _MAX_LINE_LENGTH) {
+		if (lineLength <= _maxLineLength) {
 			return;
 		}
 
 		int x = line.indexOf("# ");
-		int y = line.lastIndexOf(StringPool.SPACE, _MAX_LINE_LENGTH);
+		int y = line.lastIndexOf(StringPool.SPACE, _maxLineLength);
 
 		if ((x + 1) == y) {
 			return;
 		}
 
-		int z = line.indexOf(StringPool.SPACE, _MAX_LINE_LENGTH + 1);
+		int z = line.indexOf(StringPool.SPACE, _maxLineLength + 1);
 
 		if (z == -1) {
 			z = lineLength;
 		}
 
-		if ((z - y + x + 2) <= _MAX_LINE_LENGTH) {
+		if ((z - y + x + 2) <= _maxLineLength) {
 			processErrorMessage(
-				fileName, "> 80: " + fileName + " " + lineCount);
+				fileName,
+				"> " + _maxLineLength + ": " + fileName + " " + lineCount);
 		}
 	}
 
@@ -573,6 +574,11 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
+	protected void preFormat() throws Exception {
+		_maxLineLength = getMaxLineLength();
+	}
+
+	@Override
 	protected void postFormat() throws Exception {
 		formatDuplicateLanguageKeys();
 	}
@@ -605,13 +611,12 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		processFormattedFile(file, fileName, content, newContent);
 	}
 
-	private static final int _MAX_LINE_LENGTH = 80;
-
 	private final Map<String, Set<String>> _duplicateLanguageKeyLinesMap =
 		new HashMap<>();
 	private Map<String, Properties> _languagePropertiesMap;
 	private final Pattern _licensesPattern = Pattern.compile(
 		"\nlicenses=(\\w+)\n");
+	private int _maxLineLength;
 	private String _portalPortalPropertiesContent;
 
 }

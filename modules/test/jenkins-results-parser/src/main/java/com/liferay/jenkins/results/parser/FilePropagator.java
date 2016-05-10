@@ -182,7 +182,7 @@ public class FilePropagator {
 			}
 		}
 
-		sb.append("';");
+		sb.append("'");
 
 		Process process = JenkinsResultsParserUtil.executeBashCommands(
 			sb.toString());

@@ -98,7 +98,8 @@ public class I18nFilterTest {
 		String prependI18nLanguageId = getPrependI18nLanguageId(
 			3, LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.US);
 
-		Assert.assertNull(prependI18nLanguageId);
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN), prependI18nLanguageId);
 	}
 
 	@Test
@@ -108,7 +109,8 @@ public class I18nFilterTest {
 		String prependI18nLanguageId = getPrependI18nLanguageId(
 			3, LocaleUtil.US, LocaleUtil.SPAIN, null);
 
-		Assert.assertNull(prependI18nLanguageId);
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN), prependI18nLanguageId);
 	}
 
 	@Test
@@ -118,7 +120,8 @@ public class I18nFilterTest {
 		String prependI18nLanguageId = getPrependI18nLanguageId(
 			3, LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.SPAIN);
 
-		Assert.assertNull(prependI18nLanguageId);
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN), prependI18nLanguageId);
 	}
 
 	@Test
@@ -138,7 +141,8 @@ public class I18nFilterTest {
 		String prependI18nLanguageId = getPrependI18nLanguageId(
 			3, null, LocaleUtil.US, LocaleUtil.SPAIN);
 
-		Assert.assertNull(prependI18nLanguageId);
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN), prependI18nLanguageId);
 	}
 
 	@Test
@@ -178,7 +182,8 @@ public class I18nFilterTest {
 		String prependI18nLanguageId = getPrependI18nLanguageId(
 			3, null, LocaleUtil.SPAIN, LocaleUtil.SPAIN);
 
-		Assert.assertNull(prependI18nLanguageId);
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN), prependI18nLanguageId);
 	}
 
 	protected String getPrependI18nLanguageId(

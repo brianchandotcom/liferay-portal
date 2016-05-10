@@ -33,7 +33,7 @@ import aQute.lib.io.IO;
 public class JspAnalyzerPluginTest {
 
 	@Test
-	public void tesGetTaglibURIsWithComments() throws Exception {
+	public void testGetTaglibURIsWithComments() throws Exception {
 		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
 
 		URL url = getResource("dependencies/imports_with_comments.jsp");
@@ -77,7 +77,7 @@ public class JspAnalyzerPluginTest {
 	}
 
 	@Test
-	public void tesGetTaglibURIsWithoutComments() throws Exception {
+	public void testGetTaglibURIsWithoutComments() throws Exception {
 		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
 
 		URL url = getResource("dependencies/imports_without_comments.jsp");

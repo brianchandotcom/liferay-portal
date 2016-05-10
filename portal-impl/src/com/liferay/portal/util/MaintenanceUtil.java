@@ -70,15 +70,11 @@ public class MaintenanceUtil {
 	}
 
 	private void _cancel() {
-		HttpSession session = PortalSessionContext.get(_sessionId);
+		HttpSession session = PortalSessionContext.invalidateSession(
+			_sessionId);
 
-		if (session != null) {
-			session.invalidate();
-		}
-		else {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Session " + _sessionId + " is null");
-			}
+		if ((session == null) && _log.isWarnEnabled()) {
+			_log.warn("Session " + _sessionId + " is null");
 		}
 
 		_maintaining = false;

@@ -264,7 +264,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 	<target name="build-lang-cmd">
 		<path id="lang.builder.classpath">
-			<fileset dir="${portal.tools.dir}/lang-builder" includes="*.jar" />
+			<fileset dir="${sdk.dir}/dependencies/com.liferay.lang.builder/lib" includes="*.jar" />
 		</path>
 
 		<java
@@ -396,7 +396,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 	<target name="build-service">
 		<path id="service.builder.classpath">
-			<fileset dir="${portal.tools.dir}/portal-tools-service-builder" includes="*.jar" />
+			<fileset dir="${sdk.dir}/dependencies/com.liferay.portal.tools.service.builder/lib" includes="*.jar" />
 		</path>
 
 		<java
@@ -554,7 +554,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 				<antcall target="prepare-upgrade-table" />
 
 				<path id="upgrade.table.builder.classpath">
-					<fileset dir="${portal.tools.dir}/portal-tools-upgrade-table-builder" includes="*.jar" />
+					<fileset dir="${sdk.dir}/dependencies/com.liferay.portal.tools.upgrade.table.builder/lib" includes="*.jar" />
 				</path>
 
 				<java
@@ -573,7 +573,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 	<target depends="compile" name="build-wsdd">
 		<path id="wsdd.builder.classpath">
-			<fileset dir="${portal.tools.dir}/portal-tools-wsdd-builder" includes="*.jar" />
+			<fileset dir="${sdk.dir}/dependencies/com.liferay.portal.tools.wsdd.builder/lib" includes="*.jar" />
 			<path refid="project.classpath" />
 		</path>
 
@@ -725,7 +725,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 	<target name="format-source">
 		<path id="source.formatter.classpath">
-			<fileset dir="${portal.tools.dir}/source-formatter" includes="*.jar" />
+			<fileset dir="${sdk.dir}/dependencies/com.liferay.source.formatter/lib" includes="*.jar" />
 			<path refid="project.classpath" />
 		</path>
 
@@ -780,7 +780,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 	<target name="format-tld">
 		<path id="tld.formatter.classpath">
-			<fileset dir="${portal.tools.dir}/tld-formatter" includes="*.jar" />
+			<fileset dir="${sdk.dir}/dependencies/com.liferay.tld.formatter/lib" includes="*.jar" />
 		</path>
 
 		<java

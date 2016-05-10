@@ -3,7 +3,7 @@ dependencies {
 }
 
 liferay {
-	deployDir = "../../../tools/sdk/tmp/portal-tools/whip"
+	deployDir = "../../../tools/sdk/dependencies/com.liferay.whip/lib"
 }
 
 updateFileVersions {

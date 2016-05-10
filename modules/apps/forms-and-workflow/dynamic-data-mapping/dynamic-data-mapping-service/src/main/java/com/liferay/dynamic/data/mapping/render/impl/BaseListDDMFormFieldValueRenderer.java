@@ -65,6 +65,10 @@ public abstract class BaseListDDMFormFieldValueRenderer
 					sb.append(StringPool.COMMA_AND_SPACE);
 				}
 
+				if (sb.length() == 0) {
+					return StringPool.BLANK;
+				}
+
 				sb.setIndex(sb.index() - 1);
 
 				return sb.toString();

@@ -17,7 +17,6 @@ package com.liferay.portal.lpkg.deployer.internal;
 import com.liferay.portal.bootstrap.index.IndexValidator;
 import com.liferay.portal.bootstrap.index.Indexer;
 import com.liferay.portal.bootstrap.index.LPKGIndexer;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.LPKGVerifier;
@@ -28,6 +27,12 @@ import java.io.File;
 import java.io.IOException;
 
 import java.net.URI;
+
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,18 +59,18 @@ public class LPKGVerifierImpl implements LPKGVerifier {
 
 	@Override
 	public List<Bundle> verify(File lpkgFile) {
-		File tmpDir = null;
+		Path tmpDir = null;
 
 		try {
-			tmpDir = FileUtil.createTempFolder();
+			tmpDir = Files.createTempDirectory(null);
 
 			LPKGIndexer lpkgIndexer = new LPKGIndexer(lpkgFile);
 
-			File indexFile = lpkgIndexer.index(tmpDir);
+			File tempIndexFile = lpkgIndexer.index(tmpDir.toFile());
 
 			List<URI> uris = new ArrayList<>();
 
-			uris.add(indexFile.toURI());
+			uris.add(tempIndexFile.toURI());
 
 			IndexValidator indexValidator = new IndexValidator();
 
@@ -95,8 +100,10 @@ public class LPKGVerifierImpl implements LPKGVerifier {
 			File targetPlatformDir = new File(
 				PropsValues.MODULE_FRAMEWORK_BASE_DIR, Indexer.TARGET_PLATFORM);
 
-			FileUtil.copyFile(
-				indexFile, new File(targetPlatformDir, indexFile.getName()));
+			File indexFile = new File(
+				targetPlatformDir, tempIndexFile.getName());
+
+			Files.copy(tempIndexFile.toPath(), indexFile.toPath());
 		}
 		catch (Exception e) {
 			if (e instanceof LPKGVerifyException) {
@@ -107,7 +114,36 @@ public class LPKGVerifierImpl implements LPKGVerifier {
 		}
 		finally {
 			if (tmpDir != null) {
-				FileUtil.deltree(tmpDir);
+				try {
+					Files.walkFileTree(
+						tmpDir,
+						new SimpleFileVisitor<Path>() {
+
+							@Override
+							public FileVisitResult postVisitDirectory(
+									Path dir, IOException exc)
+								throws IOException {
+
+								Files.delete(dir);
+
+								return FileVisitResult.CONTINUE;
+							}
+
+							@Override
+							public FileVisitResult visitFile(
+									Path file, BasicFileAttributes attrs)
+								throws IOException {
+
+								Files.delete(file);
+
+								return FileVisitResult.CONTINUE;
+							}
+
+						});
+				}
+				catch (IOException ioe) {
+					throw new LPKGVerifyException(ioe);
+				}
 			}
 		}
 

@@ -30,7 +30,9 @@ AUI.add(
 
 				instance.eachField(
 					function(field) {
-						if (pageNode.contains(field.get('container'))) {
+						var visible = field.get('visible');
+
+						if (visible && pageNode.contains(field.get('container'))) {
 							firstField = field;
 						}
 

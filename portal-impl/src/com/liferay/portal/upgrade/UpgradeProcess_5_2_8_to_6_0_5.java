@@ -34,7 +34,9 @@ import com.liferay.portal.upgrade.v6_0_5.UpgradeLayout;
 
 /**
  * @author Douglas Wong
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class UpgradeProcess_5_2_8_to_6_0_5 extends Pre7UpgradeProcess {
 
 	@Override

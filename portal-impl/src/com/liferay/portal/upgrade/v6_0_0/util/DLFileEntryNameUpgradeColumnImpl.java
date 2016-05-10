@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.util.FileUtil;
 
 /**
  * @author Alexander Chow
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class DLFileEntryNameUpgradeColumnImpl extends BaseUpgradeColumnImpl {
 
 	public static String getNewName(String name) throws Exception {

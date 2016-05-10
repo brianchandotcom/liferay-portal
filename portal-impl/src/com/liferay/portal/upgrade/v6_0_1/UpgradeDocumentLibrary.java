@@ -20,7 +20,9 @@ import com.liferay.portal.upgrade.v6_0_1.util.DLFileVersionTable;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	@Override

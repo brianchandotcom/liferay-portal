@@ -19,7 +19,9 @@ import com.liferay.portal.upgrade.v6_0_0.util.LayoutTable;
 
 /**
  * @author Jorge Ferrer
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class UpgradeLayout extends UpgradeProcess {
 
 	@Override

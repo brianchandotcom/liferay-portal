@@ -27,7 +27,9 @@ import java.util.List;
 
 /**
  * @author Sergio González
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	@Override

@@ -30,7 +30,9 @@ import javax.portlet.PortletPreferences;
 
 /**
  * @author Julio Camarero
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 
 	protected String[] getAssetEntryXmls(String[] assetEntryXmls)

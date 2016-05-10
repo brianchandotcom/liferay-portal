@@ -21,7 +21,9 @@ import com.liferay.portal.upgrade.v6_0_2.UpgradeSchema;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class UpgradeProcess_6_0_2 extends Pre7UpgradeProcess {
 
 	@Override

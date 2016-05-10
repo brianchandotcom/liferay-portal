@@ -40,7 +40,9 @@ import java.sql.Timestamp;
 /**
  * @author Jorge Ferrer
  * @author Alexander Chow
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	protected void addFileVersion(

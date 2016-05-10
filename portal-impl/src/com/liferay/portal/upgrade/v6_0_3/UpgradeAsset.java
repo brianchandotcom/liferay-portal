@@ -26,7 +26,9 @@ import java.sql.ResultSet;
 /**
  * @author Julio Camarero
  * @author Amos Fong
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class UpgradeAsset extends UpgradeProcess {
 
 	protected void createIndex() {

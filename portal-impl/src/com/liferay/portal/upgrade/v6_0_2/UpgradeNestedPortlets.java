@@ -31,7 +31,9 @@ import java.util.regex.Pattern;
  * @author Bijan Vakili
  * @author Douglas Wong
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class UpgradeNestedPortlets extends UpgradeProcess {
 
 	@Override

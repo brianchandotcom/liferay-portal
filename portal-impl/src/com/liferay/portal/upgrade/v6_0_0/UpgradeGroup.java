@@ -27,7 +27,9 @@ import java.sql.Statement;
 
 /**
  * @author Wesley Gong
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class UpgradeGroup extends UpgradeProcess {
 
 	@Override

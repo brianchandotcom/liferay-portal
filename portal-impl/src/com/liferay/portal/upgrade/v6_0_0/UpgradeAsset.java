@@ -27,7 +27,9 @@ import java.sql.Timestamp;
 /**
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class UpgradeAsset extends UpgradeProcess {
 
 	protected void addCategory(

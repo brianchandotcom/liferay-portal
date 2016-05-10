@@ -19,7 +19,9 @@ import com.liferay.portal.upgrade.util.UpgradeMVCCVersion;
 
 /**
  * @author Jorge Ferrer
+ * @deprecated As of 7.0.1, with no direct replacement
  */
+@Deprecated
 public class UpgradeSchema extends UpgradeProcess {
 
 	@Override

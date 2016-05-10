@@ -3,32 +3,32 @@ import com.liferay.gradle.util.StringUtil
 import com.liferay.gradle.util.copy.RenameDependencyClosure
 
 buildscript {
-	apply from: rootProject.file("build-buildscript.gradle"), to: buildscript
+	apply from: file("build-buildscript.gradle"), to: buildscript
 }
 
 task cleanReleng
 task setUpPortalTools
 task wrapper(type: Wrapper)
 
-File portalToolsDir = rootProject.file("../tools/sdk/tmp/portal-tools")
+File portalToolsDir = file("../tools/sdk/tmp/portal-tools")
 Properties portalToolVersions = _getPortalToolVersions()
 
 cleanReleng << {
-	File relengRootDir = rootProject.file(".releng")
+	File relengRootDir = file(".releng")
 
-	FileTree relengFileTree = rootProject.fileTree(dir: relengRootDir, include: "**/artifact.properties")
+	FileTree relengFileTree = fileTree(dir: relengRootDir, include: "**/artifact.properties")
 
 	relengFileTree.each {
 		File relengFile ->
 
 		File relengDir = relengFile.parentFile
 
-		File moduleDir = rootProject.file(FileUtil.relativize(relengDir, relengRootDir))
+		File moduleDir = file(FileUtil.relativize(relengDir, relengRootDir))
 
 		if (!moduleDir.exists()) {
 			delete relengDir
 
-			println "Removed " + rootProject.relativePath(relengDir)
+			println "Removed " + relativePath(relengDir)
 		}
 	}
 }
@@ -80,7 +80,7 @@ repositories {
 }
 
 wrapper {
-	File wrapperDir = rootDir.parentFile
+	File wrapperDir = projectDir.parentFile
 
 	distributionUrl = "../../tools/gradle-${gradle.gradleVersion}.LIFERAY-PATCHED-3-bin.zip"
 

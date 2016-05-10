@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.calendar.upgrade.v1_0_3;
+package com.liferay.journal.upgrade.v0_0_5;
 
 /**
- * @author Inácio Nery
+ * @author Brian Wing Shun Chan
  */
 public class UpgradeCompanyId
 	extends com.liferay.portal.upgrade.util.UpgradeCompanyId {
@@ -23,9 +23,8 @@ public class UpgradeCompanyId
 	@Override
 	protected TableUpdater[] getTableUpdaters() {
 		return new TableUpdater[] {
-			new TableUpdater(
-				"RatingsStats", "classPK",
-				new String[][] {{"CalendarBooking", "calendarBookingId"}})
+			new TableUpdater("JournalArticleImage", "Group_", "groupId"),
+			new TableUpdater("JournalArticleResource", "Group_", "groupId")
 		};
 	}
 

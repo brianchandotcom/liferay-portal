@@ -12,20 +12,23 @@
  * details.
  */
 
-package com.liferay.journal.upgrade.v1_0_0;
+package com.liferay.journal.upgrade.v0_0_5;
+
+import com.liferay.journal.constants.JournalPortletKeys;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Mate Thurzo
  */
-public class UpgradeCompanyId
-	extends com.liferay.portal.upgrade.util.UpgradeCompanyId {
+public class UpgradeLastPublishDate
+	extends com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate {
 
 	@Override
-	protected TableUpdater[] getTableUpdaters() {
-		return new TableUpdater[] {
-			new TableUpdater("JournalArticleImage", "Group_", "groupId"),
-			new TableUpdater("JournalArticleResource", "Group_", "groupId")
-		};
+	protected void doUpgrade() throws Exception {
+		updateLastPublishDates(JournalPortletKeys.JOURNAL, "JournalArticle");
+
+		updateLastPublishDates(JournalPortletKeys.JOURNAL, "JournalFeed");
+
+		updateLastPublishDates(JournalPortletKeys.JOURNAL, "JournalFolder");
 	}
 
 }

@@ -21,14 +21,14 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.journal.upgrade.v0_0_2.UpgradeClassNames;
 import com.liferay.journal.upgrade.v0_0_3.UpgradeJournalArticleType;
-import com.liferay.journal.upgrade.v1_0_0.UpgradeCompanyId;
-import com.liferay.journal.upgrade.v1_0_0.UpgradeJournal;
+import com.liferay.journal.upgrade.v0_0_4.UpgradeSchema;
+import com.liferay.journal.upgrade.v0_0_5.UpgradeCompanyId;
+import com.liferay.journal.upgrade.v0_0_5.UpgradeJournal;
+import com.liferay.journal.upgrade.v0_0_5.UpgradeJournalArticles;
+import com.liferay.journal.upgrade.v0_0_5.UpgradeJournalDisplayPreferences;
+import com.liferay.journal.upgrade.v0_0_5.UpgradeLastPublishDate;
+import com.liferay.journal.upgrade.v0_0_5.UpgradePortletSettings;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalArticleImage;
-import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalArticles;
-import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalDisplayPreferences;
-import com.liferay.journal.upgrade.v1_0_0.UpgradeLastPublishDate;
-import com.liferay.journal.upgrade.v1_0_0.UpgradePortletSettings;
-import com.liferay.journal.upgrade.v1_0_0.UpgradeSchema;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
@@ -68,8 +68,12 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 				_userLocalService));
 
 		registry.register(
-			"com.liferay.journal.service", "0.0.3", "1.0.0",
-			new UpgradeSchema(), new UpgradeCompanyId(),
+			"com.liferay.journal.service", "0.0.3", "0.0.4",
+			new UpgradeSchema());
+
+		registry.register(
+			"com.liferay.journal.service", "0.0.4", "0.0.5",
+			new UpgradeCompanyId(),
 			new UpgradeJournal(
 				_companyLocalService, _ddmTemplateLinkLocalService),
 			new UpgradeJournalArticles(
@@ -94,7 +98,10 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 					}
 				}
 
-			},
+			});
+
+		registry.register(
+			"com.liferay.journal.service", "0.0.5", "1.0.0",
 			new UpgradeJournalArticleImage());
 	}
 

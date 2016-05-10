@@ -14,11 +14,11 @@
 
 package com.liferay.calendar.upgrade;
 
-import com.liferay.calendar.upgrade.v1_0_1.UpgradeCalendar;
-import com.liferay.calendar.upgrade.v1_0_3.UpgradeCalendarResource;
-import com.liferay.calendar.upgrade.v1_0_3.UpgradeClassNames;
-import com.liferay.calendar.upgrade.v1_0_3.UpgradeCompanyId;
-import com.liferay.calendar.upgrade.v1_0_3.UpgradeLastPublishDate;
+import com.liferay.calendar.upgrade.v1_0_2.UpgradeCalendar;
+import com.liferay.calendar.upgrade.v1_0_4.UpgradeClassNames;
+import com.liferay.calendar.upgrade.v1_0_5.UpgradeCalendarResource;
+import com.liferay.calendar.upgrade.v1_0_5.UpgradeCompanyId;
+import com.liferay.calendar.upgrade.v1_0_5.UpgradeLastPublishDate;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -43,16 +43,22 @@ public class CalendarServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.calendar.service", "1.0.0", "1.0.1",
-			new com.liferay.calendar.upgrade.v1_0_1.UpgradeCalendarBooking(),
-			new UpgradeCalendar());
+			new com.liferay.calendar.upgrade.v1_0_1.UpgradeCalendarBooking());
 
 		registry.register(
 			"com.liferay.calendar.service", "1.0.1", "1.0.2",
-			new DummyUpgradeStep());
+			new UpgradeCalendar());
 
 		registry.register(
 			"com.liferay.calendar.service", "1.0.2", "1.0.3",
-			new UpgradeClassNames(),
+			new DummyUpgradeStep());
+
+		registry.register(
+			"com.liferay.calendar.service", "1.0.3", "1.0.4",
+			new UpgradeClassNames());
+
+		registry.register(
+			"com.liferay.calendar.service", "1.0.4", "1.0.5",
 			new UpgradeCalendarResource(
 				_classNameLocalService, _companyLocalService,
 				_userLocalService),

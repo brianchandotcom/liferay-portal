@@ -343,19 +343,19 @@ public class UpgradeClient {
 	private boolean _isFinished(GogoTelnetClient gogoTelnetClient)
 		throws IOException {
 
-		System.out.print(
-			"Checking to see if all upgrades steps have completed...");
+		System.out.print("Checking to see if all upgrades have completed...");
 
-		String unfinishedUpgrades = gogoTelnetClient.send("upgrade:dryRun");
+		String upgradeCheck = gogoTelnetClient.send("upgrade:check");
 
 		String upgradeSteps = gogoTelnetClient.send(
 			"upgrade:list | grep Registered | grep step");
 
-		if (!unfinishedUpgrades.equals("upgrade:dryRun") ||
+		if (!upgradeCheck.equals("upgrade:check") ||
 			upgradeSteps.contains("true")) {
 
 			System.out.println(
-				" one of your upgrades is still running or failed.");
+				" one or more of your upgrades failed, hasn't been started, " +
+					"or is still running.");
 
 			return false;
 		}
@@ -369,7 +369,8 @@ public class UpgradeClient {
 	private void _printHelp() {
 		System.out.println("\nUpgrade commands:");
 		System.out.println("exit or quit - Exit Gogo Shell");
-		System.out.println("upgrade:dryRun - List unfinished upgrades");
+		System.out.println(
+			"upgrade:check - List upgrades that failed or hasn't been started");
 		System.out.println(
 			"upgrade:execute {module_name} - Execute upgrade for specified " +
 				"module");

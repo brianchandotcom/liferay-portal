@@ -16,16 +16,21 @@ package com.liferay.ant.bnd.jsp;
 
 import static org.junit.Assert.assertEquals;
 
+import aQute.bnd.osgi.Builder;
+import aQute.bnd.osgi.Constants;
+
+import aQute.lib.io.IO;
+
+import com.liferay.ant.bnd.jsp.JspAnalyzerPlugin;
+
 import java.io.InputStream;
+
 import java.net.URL;
+
 import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import aQute.bnd.osgi.Builder;
-import aQute.bnd.osgi.Constants;
-import aQute.lib.io.IO;
 
 /**
  * @author Gregory Amerson
@@ -52,31 +57,6 @@ public class JspAnalyzerPluginTest {
 	}
 
 	@Test
-	public void testRemoveDuplicateTaglibRequirements() throws Exception {
-		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
-
-		URL url = getResource("dependencies/imports_without_comments.jsp");
-
-		InputStream inputStream = url.openStream();
-
-		String content = IO.collect(inputStream);
-	
-		Builder b = new Builder();
-
-		b.build();
-
-		jspAnalyzerPlugin.addTaglibRequirements(b, content);
-	
-		String requireCapabilityBefore = b.getProperty(Constants.REQUIRE_CAPABILITY);
-
-		jspAnalyzerPlugin.addTaglibRequirements(b, content);
-
-		String requireCapabilityAfter = b.getProperty(Constants.REQUIRE_CAPABILITY);
-
-		assertEquals(requireCapabilityBefore, requireCapabilityAfter);
-	}
-
-	@Test
 	public void testGetTaglibURIsWithoutComments() throws Exception {
 		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
 
@@ -93,6 +73,33 @@ public class JspAnalyzerPluginTest {
 		int size = taglibURIs.size();
 
 		Assert.assertEquals(8, size);
+	}
+
+	@Test
+	public void testRemoveDuplicateTaglibRequirements() throws Exception {
+		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
+
+		URL url = getResource("dependencies/imports_without_comments.jsp");
+
+		InputStream inputStream = url.openStream();
+
+		String content = IO.collect(inputStream);
+
+		Builder b = new Builder();
+
+		b.build();
+
+		jspAnalyzerPlugin.addTaglibRequirements(b, content);
+
+		String requireCapabilityBefore = b.getProperty(
+			Constants.REQUIRE_CAPABILITY);
+
+		jspAnalyzerPlugin.addTaglibRequirements(b, content);
+
+		String requireCapabilityAfter = b.getProperty(
+			Constants.REQUIRE_CAPABILITY);
+
+		assertEquals(requireCapabilityBefore, requireCapabilityAfter);
 	}
 
 	protected URL getResource(String path) {

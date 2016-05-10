@@ -233,13 +233,18 @@
 
 		<exec dir="${modules.dir}" executable="${modules.dir}/../gradlew${gradlew.suffix}">
 			<arg value="${gradle.project.path}:deployDependencies" />
+			<arg value="-Ddeploy.dependencies.keep.versions=true" />
 			<arg value="-Pforced.deploy.dir=${artifact.dependencies.tmp.dir}" />
 		</exec>
 
 		<fileset dir="${artifact.dependencies.tmp.dir}" id="artifact.dependencies.files" />
 
 		<pathconvert pathsep="," property="artifact.dependencies.file.names" refid="artifact.dependencies.files">
-			<map from="${artifact.dependencies.tmp.dir}${file.separator}" to="" />
+			<chainedmapper>
+				<flattenmapper />
+
+				<regexpmapper from="^(.+?)-(\d.*?)\.jar$" to="\1.jar" />
+			</chainedmapper>
 		</pathconvert>
 
 		<delete>

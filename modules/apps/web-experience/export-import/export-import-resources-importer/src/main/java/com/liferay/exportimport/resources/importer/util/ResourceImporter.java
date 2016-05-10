@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -80,6 +81,7 @@ public class ResourceImporter extends FileSystemImporter {
 		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService,
 		MimeTypes mimeTypes, Portal portal,
 		PortletPreferencesFactory portletPreferencesFactory,
+		PortletPreferencesLocalService portletPreferencesLocalService,
 		Map<String, PortletPreferencesTranslator> portletPreferencesTranslators,
 		RepositoryLocalService repositoryLocalService, SAXReader saxReader,
 		ThemeLocalService themeLocalService) {
@@ -92,8 +94,9 @@ public class ResourceImporter extends FileSystemImporter {
 			indexerRegistry, journalArticleLocalService, layoutLocalService,
 			layoutPrototypeLocalService, layoutSetLocalService,
 			layoutSetPrototypeLocalService, mimeTypes, portal,
-			portletPreferencesFactory, portletPreferencesTranslators,
-			repositoryLocalService, saxReader, themeLocalService);
+			portletPreferencesFactory, portletPreferencesLocalService,
+			portletPreferencesTranslators, repositoryLocalService, saxReader,
+			themeLocalService);
 	}
 
 	@Override

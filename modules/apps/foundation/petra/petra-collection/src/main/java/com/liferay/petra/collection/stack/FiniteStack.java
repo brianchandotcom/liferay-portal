@@ -12,31 +12,33 @@
  * details.
  */
 
-package com.liferay.util;
+package com.liferay.petra.collection.stack;
+
+import java.util.Stack;
 
 /**
  * @author Brian Wing Shun Chan
- * @see com.liferay.petra.collection.stack.FiniteStack
+ * @see com.liferay.util.FiniteStack
  */
-public class FiniteUniqueStack<E> extends FiniteStack<E> {
+public class FiniteStack<E> extends Stack<E> {
 
-	public FiniteUniqueStack(int maxSize) {
-		super(maxSize);
+	public FiniteStack(int maxSize) {
+		_maxSize = maxSize;
 	}
 
 	@Override
 	public E push(E item) {
-		if (!contains(item)) {
-			super.push(item);
-		}
-		else {
-			if (!item.equals(peek())) {
-				remove(item);
-				super.push(item);
-			}
+		super.push(item);
+
+		int size = size();
+
+		if (size > _maxSize) {
+			removeElementAt(size - 1);
 		}
 
 		return item;
 	}
+
+	private final int _maxSize;
 
 }

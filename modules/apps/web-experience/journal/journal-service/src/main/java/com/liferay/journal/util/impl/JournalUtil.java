@@ -31,6 +31,7 @@ import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.transformer.JournalTransformer;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
+import com.liferay.petra.collection.stack.FiniteUniqueStack;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -95,7 +96,6 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.util.PropsUtil;
-import com.liferay.util.FiniteUniqueStack;
 
 import java.util.ArrayList;
 import java.util.Collections;

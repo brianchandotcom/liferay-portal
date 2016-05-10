@@ -537,7 +537,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Whether to include an option to select all component items. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<description>Whether to include an option to select all the component items. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>includeSelectAll</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

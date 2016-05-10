@@ -18,7 +18,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>A comma delimited set of vocabularies to display. By default, all vocabularies that are visible to the current scope are displayed.</description>
+			<description>A comma delimited set of vocabularies to display. By default, all the vocabularies that are visible to the current scope are displayed.</description>
 			<name>vocabularyIds</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

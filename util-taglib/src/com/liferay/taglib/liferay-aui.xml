@@ -188,7 +188,7 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<description>Whether to apply the <![CDATA[<code>btn btn-primary</code>]]> CSS styling to the button. If the <![CDATA[<code>type</code>]]> attribute is set to <![CDATA[<code>submit</code>]]>, this value is set to <![CDATA[<code>true</code>]]>. For all other types, the value is set to <![CDATA[<code>false</code>]]> by default.</description>
+				<description>Whether to apply the <![CDATA[<code>btn btn-primary</code>]]> CSS styling to the button. If the <![CDATA[<code>type</code>]]> attribute is set to <![CDATA[<code>submit</code>]]>, this value is set to <![CDATA[<code>true</code>]]>. For all the other types, the value is set to <![CDATA[<code>false</code>]]> by default.</description>
 				<name>primary</name>
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.Object</outputType>

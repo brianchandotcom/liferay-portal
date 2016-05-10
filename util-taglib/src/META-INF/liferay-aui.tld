@@ -192,7 +192,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to apply the <code>btn btn-primary</code> CSS styling to the button. If the <code>type</code> attribute is set to <code>submit</code>, this value is set to <code>true</code>. For all other types, the value is set to <code>false</code> by default.]]></description>
+			<description><![CDATA[Whether to apply the <code>btn btn-primary</code> CSS styling to the button. If the <code>type</code> attribute is set to <code>submit</code>, this value is set to <code>true</code>. For all the other types, the value is set to <code>false</code> by default.]]></description>
 			<name>primary</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

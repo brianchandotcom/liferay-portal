@@ -1,0 +1,11 @@
+{
+    "frontend-image-editor-capability-rotate@1.0.0/RotateComponent.es": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy", "metal/src/core", "metal-promise/src/promise/Promise", "./RotateComponent.soy", "./RotateControls.soy"]
+    },
+    "frontend-image-editor-capability-rotate@1.0.0/RotateComponent.soy": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]
+    },
+    "frontend-image-editor-capability-rotate@1.0.0/RotateControls.soy": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]
+    }
+}

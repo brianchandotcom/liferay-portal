@@ -2302,55 +2302,6 @@ this task.
 
 	<target name="unzip-websphere">
 		<if>
-			<available file="${app.server.parent.dir}/${app.server.websphere.custom.zip.name}" />
-			<then>
-				<antcall target="unzip-websphere-custom" />
-			</then>
-			<else>
-				<antcall target="unzip-websphere-original" />
-			</else>
-		</if>
-	</target>
-
-	<target name="unzip-websphere-custom">
-		<remake-dir dir="${app.server.websphere.dir}" />
-
-		<unzip
-			dest="${app.server.websphere.dir}"
-			src="${app.server.parent.dir}/${app.server.websphere.custom.zip.name}"
-		/>
-
-		<if>
-			<os family="windows" />
-			<then>
-				<propertyregex
-					input="${app.server.websphere.dir.windows}"
-					property="app.server.websphere.dir.windows.double.slash"
-					regexp="\\"
-					replace="\\\\\\\\"
-				/>
-
-				<propertyregex
-					input="${app.server.websphere.dir.windows.double.slash}"
-					property="app.server.websphere.dir.windows.escaped"
-					regexp=":"
-					replace="\\\\:"
-				/>
-
-				<replace
-					dir="${app.server.websphere.dir}"
-					includes="**/*.bat,**/*.js,**/*.metadata,**/*.properties,**/*.props,**/*.txt,**/*.xml"
-				>
-					<replacefilter token="@app.server.websphere.dir@" value="${app.server.websphere.dir}" />
-					<replacefilter token="@app.server.websphere.dir.windows@" value="${app.server.websphere.dir.windows}" />
-					<replacefilter token="@app.server.websphere.dir.windows.escaped@" value="${app.server.websphere.dir.windows.escaped}" />
-				</replace>
-			</then>
-		</if>
-	</target>
-
-	<target name="unzip-websphere-original">
-		<if>
 			<and>
 				<not>
 					<available file="${app.server.parent.dir}/${app.server.websphere.installation.manager.zip.name.linux}" />
@@ -2695,6 +2646,43 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 			<replacetoken><![CDATA[<secureSessionCookie xmi:id="SecureSessionCookie_1" cookieDomain="*" cookieName="JSESSIONID" cookiePath="/"/>]]></replacetoken>
 			<replacevalue><![CDATA[]]></replacevalue>
 		</replace>
+	</target>
+
+	<target name="unzip-websphere-custom">
+		<remake-dir dir="${app.server.websphere.dir}" />
+
+		<unzip
+			dest="${app.server.websphere.dir}"
+			src="${app.server.parent.dir}/${app.server.websphere.custom.zip.name}"
+		/>
+
+		<if>
+			<os family="windows" />
+			<then>
+				<propertyregex
+					input="${app.server.websphere.dir.windows}"
+					property="app.server.websphere.dir.windows.double.slash"
+					regexp="\\"
+					replace="\\\\\\\\"
+				/>
+
+				<propertyregex
+					input="${app.server.websphere.dir.windows.double.slash}"
+					property="app.server.websphere.dir.windows.escaped"
+					regexp=":"
+					replace="\\\\:"
+				/>
+
+				<replace
+					dir="${app.server.websphere.dir}"
+					includes="**/*.bat,**/*.js,**/*.metadata,**/*.properties,**/*.props,**/*.txt,**/*.xml"
+				>
+					<replacefilter token="@app.server.websphere.dir@" value="${app.server.websphere.dir}" />
+					<replacefilter token="@app.server.websphere.dir.windows@" value="${app.server.websphere.dir.windows}" />
+					<replacefilter token="@app.server.websphere.dir.windows.escaped@" value="${app.server.websphere.dir.windows.escaped}" />
+				</replace>
+			</then>
+		</if>
 	</target>
 
 	<target name="unzip-wildfly">

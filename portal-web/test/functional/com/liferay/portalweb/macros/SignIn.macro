@@ -136,7 +136,7 @@
 		<var method="StringUtil#replace('${portalURL}', 'http://', '')" name="portalURL" />
 		<var method="StringUtil#replace('${portalURL}', ':8080', '')" name="portalURL" />
 
-		<execute macro="PortalInstances#addCP">
+		<execute macro="PortalInstances#addCPTestSetup">
 			<var name="mailDomain" value="liferay.com" />
 			<var name="virtualHost" value="${portalURL}" />
 			<var name="webId" value="${portalURL}" />

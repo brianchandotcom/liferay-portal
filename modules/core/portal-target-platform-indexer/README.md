@@ -16,13 +16,6 @@ module_framework_base_dir=${liferay_home}/osgi
 # This is the classpath common to all functions. Order matters!
 #
 jars=(
-	${module_framework_base_dir}/core/com.liferay.jaxws.osgi.bridge.jar
-	${module_framework_base_dir}/core/com.liferay.osgi.service.tracker.collections.jar
-	${module_framework_base_dir}/core/com.liferay.portal.app.license.api.jar
-	${module_framework_base_dir}/core/com.liferay.portal.bootstrap.jar
-	${module_framework_base_dir}/core/com.liferay.registry.impl.jar
-	${module_framework_base_dir}/core/org.eclipse.osgi.jar
-	${app_server_dir}/webapps/ROOT/WEB-INF/lib/bnd.jar
 	${app_server_dir}/webapps/ROOT/WEB-INF/lib/commons-beanutils.jar
 	${app_server_dir}/webapps/ROOT/WEB-INF/lib/commons-configuration.jar
 	${app_server_dir}/webapps/ROOT/WEB-INF/lib/commons-digester.jar
@@ -39,6 +32,13 @@ jars=(
 	${app_server_dir}/lib/ext/com.liferay.registry.api.jar
 	${app_server_dir}/lib/ext/portal-kernel.jar
 	${app_server_dir}/lib/servlet-api.jar
+	${module_framework_base_dir}/core/com.liferay.jaxws.osgi.bridge.jar
+	${module_framework_base_dir}/core/com.liferay.osgi.service.tracker.collections.jar
+	${module_framework_base_dir}/core/com.liferay.portal.app.license.api.jar
+	${module_framework_base_dir}/core/com.liferay.portal.bootstrap.jar
+	${module_framework_base_dir}/core/com.liferay.registry.impl.jar
+	${module_framework_base_dir}/core/org.eclipse.osgi.jar
+	${module_framework_base_dir}/static/com.liferay.portal.target.platform.indexer.jar
 )
 
 function classpathify { local IFS=":"; echo "$*"; }
@@ -56,7 +56,7 @@ CLASSPATH=$(classpathify "${jars[@]}")
 java \
 	-classpath "$CLASSPATH" \
 	-Dexternal-properties=${liferay_home}/portal-ext.properties \
-	com.liferay.portal.bootstrap.index.TargetPlatformIndexer
+	com.liferay.portal.target.platform.indexer.main.TargetPlatformMain
 
 #
 # Indexing LPKG files
@@ -69,7 +69,7 @@ java \
 java \
 	-classpath "$CLASSPATH" \
 	-Dexternal-properties=${liferay_home}/portal-ext.properties \
-	com.liferay.portal.bootstrap.index.LPKGIndexer \
+	com.liferay.portal.target.platform.indexer.main.LPKGIndexerMain \
 	${module_framework_base_dir}/marketplace/
 
 #
@@ -84,5 +84,5 @@ java \
 java \
 	-classpath "$CLASSPATH" \
 	-Dexternal-properties=${liferay_home}/portal-ext.properties \
-	com.liferay.portal.bootstrap.index.IndexValidator \
+	com.liferay.portal.target.platform.indexer.main.IndexValidatorMain \
 	${module_framework_base_dir}/target-platform/

@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.bootstrap.index;
+package com.liferay.portal.target.platform.indexer;
 
-import java.net.URI;
-
-import java.util.List;
+import java.io.File;
 
 /**
  * @author Raymond Augé
  */
-public interface Validator {
+public interface Indexer {
 
-	public List<String> validate(List<URI> indexes) throws Exception;
+	public static final String TARGET_PLATFORM = "target-platform";
+
+	public File index(File output) throws Exception;
 
 }

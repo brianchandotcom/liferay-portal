@@ -233,6 +233,10 @@ public class BaseLayoutDisplayContext {
 
 		_liveGroup = StagingUtil.getLiveGroup(getSelGroupId());
 
+		if (_liveGroup == null) {
+			_liveGroup = getSelGroup();
+		}
+
 		return _liveGroup;
 	}
 
@@ -253,6 +257,10 @@ public class BaseLayoutDisplayContext {
 		}
 
 		_stagingGroup = StagingUtil.getStagingGroup(getSelGroupId());
+
+		if (_stagingGroup == null) {
+			_stagingGroup = getSelGroup();
+		}
 
 		return _stagingGroup;
 	}

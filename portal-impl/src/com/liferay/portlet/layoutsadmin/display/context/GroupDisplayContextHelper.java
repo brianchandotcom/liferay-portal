@@ -43,12 +43,19 @@ public class GroupDisplayContextHelper {
 			(getSelGroup() != null)) {
 
 			_group = getSelGroup();
+
+			return _group;
 		}
-		else if (getStagingGroup() != null) {
+
+		if (getStagingGroup() != null) {
 			_group = getStagingGroup();
 		}
 		else {
 			_group = getLiveGroup();
+		}
+
+		if (_group == null) {
+			_group = getSelGroup();
 		}
 
 		return _group;
@@ -97,6 +104,10 @@ public class GroupDisplayContextHelper {
 		}
 
 		_liveGroup = StagingUtil.getLiveGroup(group.getGroupId());
+
+		if (_liveGroup == null) {
+			_liveGroup = group;
+		}
 
 		return _liveGroup;
 	}

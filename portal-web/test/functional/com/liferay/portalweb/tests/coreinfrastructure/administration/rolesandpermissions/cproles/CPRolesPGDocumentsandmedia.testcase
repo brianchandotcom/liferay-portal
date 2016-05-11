@@ -294,6 +294,12 @@
 			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
+
 		<execute macro="PermissionsInline#gotoDMFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />
 			<var name="pageName" value="Documents and Media Page" />
@@ -391,6 +397,12 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Documents and Media Page" />
+		</execute>
+
+		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
 
 		<execute macro="PermissionsInline#gotoDMFolderPG">
 			<var name="dmFolderName" value="DM Folder Name" />

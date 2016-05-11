@@ -2804,6 +2804,12 @@ this task.
 			<replacevalue></replacevalue>
 		</replace>
 
+		<replaceregexp
+			file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml"
+			match=" *&lt;handlers>\r?\n *&lt;file name=&quot;welcome-content&quot; path=&quot;\$\{jboss\.home\.dir}\/welcome-content&quot;\/>\r?\n *&lt;\/handlers>"
+			replace=""
+		/>
+
 		<echo file="${app.server.wildfly.bin.dir}/server.policy">
 			grant {
 				permission java.security.AllPermission;

@@ -19,8 +19,6 @@ import aQute.bnd.osgi.Constants;
 
 import aQute.lib.io.IO;
 
-import com.liferay.ant.bnd.jsp.JspAnalyzerPlugin;
-
 import java.io.InputStream;
 
 import java.net.URL;

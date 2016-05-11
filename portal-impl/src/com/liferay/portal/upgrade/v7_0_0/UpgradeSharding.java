@@ -206,9 +206,9 @@ public class UpgradeSharding extends UpgradeProcess {
 
 	protected List<Long> getCompanyIds(String shardName) throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			 PreparedStatement ps = connection.prepareStatement(
-				 "select classPK from Shard where name = '" + shardName + "'");
-			 ResultSet rs = ps.executeQuery()) {
+			PreparedStatement ps = connection.prepareStatement(
+				"select classPK from Shard where name = '" + shardName + "'");
+			ResultSet rs = ps.executeQuery()) {
 
 			List<Long> companyIds = new ArrayList<>();
 

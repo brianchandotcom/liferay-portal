@@ -181,7 +181,7 @@
 
 	<command name="_gotoExportSite">
 		<if>
-			<isset var="siteName" />
+			<isset var="siteScopeName" />
 			<then>
 				<execute macro="ProductMenu#gotoSite">
 					<var name="site" value="${siteScopeName}" />
@@ -469,6 +469,14 @@
 			<var name="exportPermissions" value="${exportPermissions}" />
 			<var name="larFileName" value="${larFileName}" />
 		</execute>
+	</command>
+
+	<command name="gotoExport">
+		<execute macro="LAR#_gotoExportSite">
+			<var name="siteScopeName" value="${siteScopeName}" />
+		</execute>
+
+		<execute function="Click" locator1="SitePagesExport#CUSTOM_EXPORT_BUTTON" />
 	</command>
 
 	<command name="gotoExportTemplateCP">

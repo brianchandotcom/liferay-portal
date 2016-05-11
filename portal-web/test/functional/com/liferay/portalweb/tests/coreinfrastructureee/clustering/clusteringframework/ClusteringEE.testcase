@@ -209,6 +209,8 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
+		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>

@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.search.facet.SearchFacet;
-import com.liferay.portal.search.facet.util.SearchFacetTracker;
 import com.liferay.portal.search.web.constants.SearchPortletKeys;
+import com.liferay.portal.search.web.facet.SearchFacet;
+import com.liferay.portal.search.web.facet.util.SearchFacetTracker;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.facet;
+package com.liferay.portal.search.web.internal.facet;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.facet.BaseJSPSearchFacet;
-import com.liferay.portal.search.facet.SearchFacet;
+import com.liferay.portal.search.web.facet.BaseJSPSearchFacet;
+import com.liferay.portal.search.web.facet.SearchFacet;
 
 import java.util.ArrayList;
 import java.util.List;

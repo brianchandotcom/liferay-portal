@@ -5,7 +5,7 @@
 	<compatibility>
 		<version>7.0.0+</version>
 	</compatibility>
-	<theme id="user-vertical" name="User Dashboard">
+	<theme id="user-dashboard" name="User Dashboard">
 		<template-extension>ftl</template-extension>
 		<settings>
 			<setting configurable="false" key="show-maximize-minimize-application-links" value="true" />

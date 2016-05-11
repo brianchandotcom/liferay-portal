@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sync.admin.exception.OAuthPortletUndeployedException;
-import com.liferay.sync.constants.PortletPropsKeys;
 import com.liferay.sync.service.SyncPreferencesLocalServiceUtil;
 
 import java.io.IOException;
@@ -96,31 +95,33 @@ public class AdminPortlet extends MVCPortlet {
 			actionRequest, "allowUserPersonalSites");
 
 		portletPreferences.setValue(
-			PortletPropsKeys.SYNC_ALLOW_USER_PERSONAL_SITES,
+			SyncConfigurationKeys.SYNC_ALLOW_USER_PERSONAL_SITES,
 			String.valueOf(allowUserPersonalSites));
 
 		boolean enabled = ParamUtil.getBoolean(actionRequest, "enabled");
 
 		portletPreferences.setValue(
-			PortletPropsKeys.SYNC_SERVICES_ENABLED, String.valueOf(enabled));
+			SyncConfigurationKeys.SYNC_SERVICES_ENABLED,
+			String.valueOf(enabled));
 
 		int maxConnections = ParamUtil.getInteger(
 			actionRequest, "maxConnections");
 
 		portletPreferences.setValue(
-			PortletPropsKeys.SYNC_CLIENT_MAX_CONNECTIONS,
+			SyncConfigurationKeys.SYNC_CLIENT_MAX_CONNECTIONS,
 			String.valueOf(maxConnections));
 
 		boolean oAuthEnabled = ParamUtil.getBoolean(
 			actionRequest, "oAuthEnabled");
 
 		portletPreferences.setValue(
-			PortletPropsKeys.SYNC_OAUTH_ENABLED, String.valueOf(oAuthEnabled));
+			SyncConfigurationKeys.SYNC_OAUTH_ENABLED,
+			String.valueOf(oAuthEnabled));
 
 		int pollInterval = ParamUtil.getInteger(actionRequest, "pollInterval");
 
 		portletPreferences.setValue(
-			PortletPropsKeys.SYNC_CLIENT_POLL_INTERVAL,
+			SyncConfigurationKeys.SYNC_CLIENT_POLL_INTERVAL,
 			String.valueOf(pollInterval));
 
 		portletPreferences.store();

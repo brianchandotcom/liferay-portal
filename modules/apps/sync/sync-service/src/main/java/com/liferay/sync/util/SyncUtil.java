@@ -47,6 +47,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sync.SyncSiteUnavailableException;
+import com.liferay.sync.configuration.SyncServiceConfigurationKeys;
+import com.liferay.sync.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.constants.SyncPermissionsConstants;
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.model.SyncDLObjectConstants;
@@ -196,7 +198,8 @@ public class SyncUtil {
 		throws PortalException {
 
 		if (dlFileVersion.getSize() >
-				PortletPropsValues.SYNC_FILE_CHECKSUM_THRESHOLD_SIZE) {
+				SyncServiceConfigurationValues.
+					SYNC_FILE_CHECKSUM_THRESHOLD_SIZE) {
 
 			return StringPool.BLANK;
 		}
@@ -207,7 +210,8 @@ public class SyncUtil {
 
 	public static String getChecksum(File file) throws PortalException {
 		if (file.length() >
-				PortletPropsValues.SYNC_FILE_CHECKSUM_THRESHOLD_SIZE) {
+				SyncServiceConfigurationValues.
+					SYNC_FILE_CHECKSUM_THRESHOLD_SIZE) {
 
 			return StringPool.BLANK;
 		}
@@ -340,8 +344,9 @@ public class SyncUtil {
 		if (group.isUser() &&
 			!PrefsPropsUtil.getBoolean(
 				group.getCompanyId(),
-				PortletPropsKeys.SYNC_ALLOW_USER_PERSONAL_SITES,
-				PortletPropsValues.SYNC_ALLOW_USER_PERSONAL_SITES)) {
+				SyncServiceConfigurationKeys.SYNC_ALLOW_USER_PERSONAL_SITES,
+				SyncServiceConfigurationValues.
+					SYNC_ALLOW_USER_PERSONAL_SITES)) {
 
 			return false;
 		}

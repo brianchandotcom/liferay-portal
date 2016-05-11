@@ -21,16 +21,16 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 portletPreferences = SyncPreferencesLocalServiceUtil.getPortletPreferences(themeDisplay.getCompanyId());
 
-boolean allowUserPersonalSites = PrefsPropsUtil.getBoolean(portletPreferences, themeDisplay.getCompanyId(), PortletPropsKeys.SYNC_ALLOW_USER_PERSONAL_SITES);
-boolean enabled = PrefsPropsUtil.getBoolean(portletPreferences, themeDisplay.getCompanyId(), PortletPropsKeys.SYNC_SERVICES_ENABLED);
-int maxConnections = PrefsPropsUtil.getInteger(portletPreferences, themeDisplay.getCompanyId(), PortletPropsKeys.SYNC_CLIENT_MAX_CONNECTIONS);
-boolean oAuthEnabled = PrefsPropsUtil.getBoolean(portletPreferences, themeDisplay.getCompanyId(), PortletPropsKeys.SYNC_OAUTH_ENABLED);
-int pollInterval = PrefsPropsUtil.getInteger(portletPreferences, themeDisplay.getCompanyId(), PortletPropsKeys.SYNC_CLIENT_POLL_INTERVAL);
+boolean allowUserPersonalSites = PrefsPropsUtil.getBoolean(portletPreferences, themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_ALLOW_USER_PERSONAL_SITES);
+boolean enabled = PrefsPropsUtil.getBoolean(portletPreferences, themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_SERVICES_ENABLED);
+int maxConnections = PrefsPropsUtil.getInteger(portletPreferences, themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_CONNECTIONS);
+boolean oAuthEnabled = PrefsPropsUtil.getBoolean(portletPreferences, themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_OAUTH_ENABLED);
+int pollInterval = PrefsPropsUtil.getInteger(portletPreferences, themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_CLIENT_POLL_INTERVAL);
 
 boolean oAuthApplicationAvailable = false;
 
 if (oAuthEnabled) {
-	long oAuthApplicationId = PrefsPropsUtil.getInteger(portletPreferences, themeDisplay.getCompanyId(), PortletPropsKeys.SYNC_OAUTH_APPLICATION_ID, 0);
+	long oAuthApplicationId = PrefsPropsUtil.getInteger(portletPreferences, themeDisplay.getCompanyId(), SyncConfigurationKeys.SYNC_OAUTH_APPLICATION_ID, 0);
 
 	if (SyncPreferencesLocalServiceUtil.isOAuthApplicationAvailable(oAuthApplicationId)) {
 		oAuthApplicationAvailable = true;

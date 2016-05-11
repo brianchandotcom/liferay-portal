@@ -1285,10 +1285,10 @@ this task.
 		</replace>
 
 		<replace file="${app.server.jboss.instance.dir}/configuration/standalone.xml">
-			<replacetoken><![CDATA[<subsystem default-virtual-server="default-host" native="false" xmlns="urn:jboss:domain:web:1.1">]]></replacetoken>
+			<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:web:2.2" default-virtual-server="default-host" native="false">]]></replacetoken>
 			<replacevalue>
 				<![CDATA[
-					<subsystem xmlns="urn:jboss:domain:web:1.1" default-virtual-server="default-host" native="false">
+					<subsystem xmlns="urn:jboss:domain:web:2.2" default-virtual-server="default-host" native="false">
 						<configuration>
 							<jsp-configuration development="true" />
 						</configuration>

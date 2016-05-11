@@ -33,23 +33,23 @@ import javax.servlet.http.HttpServletRequest;
  * Provides utility methods for reading request parameters.
  *
  * @author Brian Wing Shun Chan
- * @author Raymond AugÃ©
+ * @author Raymond Augé
  */
 public class ParamUtil {
 
 	/**
-	 * Returns the boolean parameter from the request. If the parameter is
+	 * Returns the request parameter value as a boolean. If the parameter is
 	 * missing, the default value is returned.
 	 *
 	 * <p>
-	 * If the value is not convertible to boolean, <code>false</code> is
+	 * If the value is not convertible to a boolean, <code>false</code> is
 	 * returned.
 	 * </p>
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the boolean parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a boolean
 	 */
 	public static boolean get(
 		HttpServletRequest request, String param, boolean defaultValue) {
@@ -58,14 +58,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the date parameter from the request. If the parameter is missing
-	 * or not convertible to Date, the default value is returned.
+	 * Returns the request parameter value as a date. If the parameter is missing
+	 * or not convertible to a Date, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
 	 * @param  dateFormat the format used to parse date
-	 * @param  defaultValue the default value
-	 * @return the date parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a date
 	 */
 	public static Date get(
 		HttpServletRequest request, String param, DateFormat dateFormat,
@@ -76,13 +76,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the double parameter from the request. If the parameter is
-	 * missing or not convertible to double, the default value is returned.
+	 * Returns the request parameter value as a double. If the parameter is
+	 * missing or not convertible to a double, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the double parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a double
 	 */
 	public static double get(
 		HttpServletRequest request, String param, double defaultValue) {
@@ -91,13 +91,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the float parameter from the request. If the parameter is missing
-	 * or not convertible to float, the default value is returned.
+	 * Returns the request parameter value as a float. If the parameter is missing
+	 * or not convertible to a float, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the float parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a float
 	 */
 	public static float get(
 		HttpServletRequest request, String param, float defaultValue) {
@@ -106,13 +106,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the int parameter from the request. If the parameter is missing
-	 * or not convertible to int, the default value is returned.
+	 * Returns the request parameter value as an integer. If the parameter is missing
+	 * or not convertible to an integer, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the int parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as an integer
 	 */
 	public static int get(
 		HttpServletRequest request, String param, int defaultValue) {
@@ -121,13 +121,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the long parameter from the request. If the parameter is missing
-	 * or not convertible to long, the default value is returned.
+	 * Returns the request parameter value as a long. If the parameter is missing
+	 * or not convertible to a long, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the long parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a long
 	 */
 	public static long get(
 		HttpServletRequest request, String param, long defaultValue) {
@@ -136,13 +136,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the number parameter from the request. If the parameter is
-	 * missing or not convertible to Number, the default value is returned.
+	 * Returns the request parameter value as a Number. If the parameter is
+	 * missing or not convertible to a Number, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the number parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a Number
 	 */
 	public static Number get(
 		HttpServletRequest request, String param, Number defaultValue) {
@@ -151,13 +151,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the short parameter from the request. If the parameter is missing
-	 * or not convertible to short, the default value is returned.
+	 * Returns the request parameter value as a short. If the parameter is missing
+	 * or not convertible to a short, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the short parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a short
 	 */
 	public static short get(
 		HttpServletRequest request, String param, short defaultValue) {
@@ -166,13 +166,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string parameter from the request. If the parameter is
-	 * missing or not convertible to String, the default value is returned.
+	 * Returns the request parameter value as a String. If the parameter is
+	 * missing or not convertible to a String, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the string parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a String
 	 */
 	public static String get(
 		HttpServletRequest request, String param, String defaultValue) {
@@ -188,19 +188,19 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the boolean parameter from the portlet request. If the parameter
+	 * Returns the portlet request parameter value as a boolean. If the parameter
 	 * is missing, the default value is returned.
 	 *
 	 * <p>
-	 * If the value is not convertible to boolean, <code>false</code> is
+	 * If the value is not convertible to a boolean, <code>false</code> is
 	 * returned.
 	 * </p>
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the boolean parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a boolean
 	 */
 	public static boolean get(
 		PortletRequest portletRequest, String param, boolean defaultValue) {
@@ -209,15 +209,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the date parameter from the portlet request. If the parameter is
-	 * missing or not convertible to Date, the default value is returned.
+	 * Returns the portlet request parameter value as a Date. If the parameter is
+	 * missing or not convertible to a Date, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
 	 * @param  dateFormat the format used to parse date
-	 * @param  defaultValue the default value
-	 * @return the date parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a Date
 	 */
 	public static Date get(
 		PortletRequest portletRequest, String param, DateFormat dateFormat,
@@ -228,14 +228,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the double parameter from the portlet request. If the parameter
-	 * is missing or not convertible to double, the default value is returned.
+	 * Returns the portlet request parameter value as a double. If the parameter
+	 * is missing or not convertible to a double, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the double parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a double
 	 */
 	public static double get(
 		PortletRequest portletRequest, String param, double defaultValue) {
@@ -244,14 +244,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the float parameter from the portlet request. If the parameter is
-	 * missing or not convertible to float, the default value is returned.
+	 * Returns the portlet request parameter value as a float. If the parameter is
+	 * missing or not convertible to a float, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the float parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a float
 	 */
 	public static float get(
 		PortletRequest portletRequest, String param, float defaultValue) {
@@ -260,14 +260,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the int parameter from the portlet request. If the parameter is
-	 * missing or not convertible to int, the default value is returned.
+	 * Returns the portlet request parameter value as an integer. If the parameter is
+	 * missing or not convertible to an integer, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the int parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as an integer
 	 */
 	public static int get(
 		PortletRequest portletRequest, String param, int defaultValue) {
@@ -276,14 +276,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the long parameter from the portlet request. If the parameter is
-	 * missing or not convertible to long, the default value is returned.
+	 * Returns the portlet request parameter value as a long. If the parameter is
+	 * missing or not convertible to a long, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the long parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a long
 	 */
 	public static long get(
 		PortletRequest portletRequest, String param, long defaultValue) {
@@ -292,14 +292,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the number parameter from the portlet request. If the parameter
-	 * is missing or not convertible to Number, the default value is returned.
+	 * Returns the portlet request parameter value as a Number. If the parameter
+	 * is missing or not convertible to a Number, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the number parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a Number
 	 */
 	public static Number get(
 		PortletRequest portletRequest, String param, Number defaultValue) {
@@ -308,14 +308,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the short parameter from the portlet request. If the parameter is
-	 * missing or not convertible to short, the default value is returned.
+	 * Returns the portlet request parameter value as a short. If the parameter is
+	 * missing or not convertible to a short, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the short parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a short
 	 */
 	public static short get(
 		PortletRequest portletRequest, String param, short defaultValue) {
@@ -324,14 +324,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string parameter from the portlet request. If the parameter
-	 * is missing or not convertible to String, the default value is returned.
+	 * Returns the portlet request parameter value as a String. If the parameter
+	 * is missing or not convertible to a String, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the string parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a String
 	 */
 	public static String get(
 		PortletRequest portletRequest, String param, String defaultValue) {
@@ -347,19 +347,19 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the boolean parameter from the service context. If the parameter
+	 * Returns the service context parameter value as a boolean. If the parameter
 	 * is missing, the default value is returned.
 	 *
 	 * <p>
-	 * If the value is not convertible to boolean, <code>false</code> is
+	 * If the value is not convertible to a boolean, <code>false</code> is
 	 * returned.
 	 * </p>
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the boolean parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a boolean
 	 */
 	public static boolean get(
 		ServiceContext serviceContext, String param, boolean defaultValue) {
@@ -368,15 +368,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the date parameter from the service context. If the parameter is
-	 * missing or not convertible to Date, the default value is returned.
+	 * Returns the service context parameter value as a Date. If the parameter is
+	 * missing or not convertible to a Date, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
 	 * @param  dateFormat the format used to parse date
-	 * @param  defaultValue the default value
-	 * @return the date parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a Date
 	 */
 	public static Date get(
 		ServiceContext serviceContext, String param, DateFormat dateFormat,
@@ -387,14 +387,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the double parameter from the service context. If the parameter
-	 * is missing or not convertible to double, the default value is returned.
+	 * Returns the service context parameter value as a double. If the parameter
+	 * is missing or not convertible to a double, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the double parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a double
 	 */
 	public static double get(
 		ServiceContext serviceContext, String param, double defaultValue) {
@@ -403,14 +403,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the float parameter from the service context. If the parameter is
-	 * missing or not convertible to float, the default value is returned.
+	 * Returns the service context parameter value as a float. If the parameter is
+	 * missing or not convertible to a float, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the float parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a float
 	 */
 	public static float get(
 		ServiceContext serviceContext, String param, float defaultValue) {
@@ -419,14 +419,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the int parameter from the service context. If the parameter is
-	 * missing or not convertible to int, the default value is returned.
+	 * Returns the service context parameter value as an integer. If the parameter is
+	 * missing or not convertible to an integer, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the int parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as an integer
 	 */
 	public static int get(
 		ServiceContext serviceContext, String param, int defaultValue) {
@@ -435,14 +435,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the long parameter from the service context. If the parameter is
-	 * missing or not convertible to long, the default value is returned.
+	 * Returns the service context parameter value as a long. If the parameter is
+	 * missing or not convertible to a long, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the long parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a long
 	 */
 	public static long get(
 		ServiceContext serviceContext, String param, long defaultValue) {
@@ -451,14 +451,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the number parameter from the service context. If the parameter
-	 * is missing or not convertible to Number, the default value is returned.
+	 * Returns the service context parameter value as a Number. If the parameter
+	 * is missing or not convertible to a Number, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the number parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a Number
 	 */
 	public static Number get(
 		ServiceContext serviceContext, String param, Number defaultValue) {
@@ -467,14 +467,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the short parameter from the service context. If the parameter is
-	 * missing or not convertible to short, the default value is returned.
+	 * Returns the service context parameter value as a short. If the parameter is
+	 * missing or not convertible to a short, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the short parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a short
 	 */
 	public static short get(
 		ServiceContext serviceContext, String param, short defaultValue) {
@@ -483,14 +483,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string parameter from the service context. If the parameter
-	 * is missing or not convertible to String, the default value is returned.
+	 * Returns the service context parameter value as a String. If the parameter
+	 * is missing or not convertible to a String, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the string parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a String
 	 */
 	public static String get(
 		ServiceContext serviceContext, String param, String defaultValue) {
@@ -506,30 +506,30 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the boolean parameter from the request. If the parameter is
-	 * missing or not convertible to boolean, <code>false</code> is returned.
+	 * Returns the request parameter value as a boolean. If the parameter is
+	 * missing or not convertible to a boolean, <code>false</code> is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @return the boolean parameter from the request
+	 * @return the request parameter value as a boolean
 	 */
 	public static boolean getBoolean(HttpServletRequest request, String param) {
 		return GetterUtil.getBoolean(request.getParameter(param));
 	}
 
 	/**
-	 * Returns the boolean parameter from the request. If the parameter is
+	 * Returns the request parameter value as a boolean. If the parameter is
 	 * missing, the default value is returned.
 	 *
 	 * <p>
-	 * If the value is not convertible to boolean, <code>false</code> is
+	 * If the value is not convertible to a boolean, <code>false</code> is
 	 * returned.
 	 * </p>
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the boolean parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a boolean
 	 */
 	public static boolean getBoolean(
 		HttpServletRequest request, String param, boolean defaultValue) {
@@ -538,13 +538,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the boolean parameter from the portlet request. If the parameter
-	 * is missing or not convertible to boolean, <code>false</code> is returned.
+	 * Returns the portlet request parameter value as a boolean. If the parameter
+	 * is missing or not convertible to a boolean, <code>false</code> is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the boolean parameter from the portlet request
+	 * @return the portlet request parameter value as a boolean
 	 */
 	public static boolean getBoolean(
 		PortletRequest portletRequest, String param) {
@@ -553,19 +553,19 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the boolean parameter from the portlet request. If the parameter
+	 * Returns the portlet request parameter value as a boolean. If the parameter
 	 * is missing, the default value is returned.
 	 *
 	 * <p>
-	 * If the value is not convertible to boolean, <code>false</code> is
+	 * If the value is not convertible to a boolean, <code>false</code> is
 	 * returned.
 	 * </p>
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the boolean parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a boolean
 	 */
 	public static boolean getBoolean(
 		PortletRequest portletRequest, String param, boolean defaultValue) {
@@ -574,13 +574,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the boolean parameter from the service context. If the parameter
-	 * is missing or not convertible to boolean, <code>false</code> is returned.
+	 * Returns the service context parameter value as a boolean. If the parameter
+	 * is missing or not convertible to a boolean, <code>false</code> is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the boolean parameter from the service context
+	 * @return the service context parameter value as a boolean
 	 */
 	public static boolean getBoolean(
 		ServiceContext serviceContext, String param) {
@@ -589,19 +589,19 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the boolean parameter from the service context. If the parameter
+	 * Returns the service context parameter value as a boolean. If the parameter
 	 * is missing, the default value is returned.
 	 *
 	 * <p>
-	 * If the value is not convertible to boolean, <code>false</code> is
+	 * If the value is not convertible to a boolean, <code>false</code> is
 	 * returned.
 	 * </p>
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the boolean parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a boolean
 	 */
 	public static boolean getBoolean(
 		ServiceContext serviceContext, String param, boolean defaultValue) {
@@ -610,13 +610,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the boolean array parameter from the request. In the returned
-	 * array, each parameter value not convertible to boolean is replaced by
+	 * Returns the request parameter value as a boolean array. In the returned
+	 * array, each parameter value not convertible to a boolean is replaced by
 	 * <code>false</code>.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @return the boolean array parameter from the request
+	 * @return the request parameter value as a boolean array
 	 */
 	public static boolean[] getBooleanValues(
 		HttpServletRequest request, String param) {
@@ -625,14 +625,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the boolean array parameter from the request. In the returned
-	 * array, each parameter value not convertible to boolean is replaced by the
+	 * Returns the request parameter value as a boolean array. In the returned
+	 * array, each parameter value not convertible to a boolean is replaced by the
 	 * default value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the boolean array parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a boolean array
 	 */
 	public static boolean[] getBooleanValues(
 		HttpServletRequest request, String param, boolean[] defaultValue) {
@@ -642,14 +642,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the boolean array parameter from the portlet request. In the
-	 * returned array, each parameter value not convertible to boolean is
+	 * Returns the portlet request parameter value as a boolean array. In the
+	 * returned array, each parameter value not convertible to a boolean is
 	 * replaced by <code>false</code>.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the boolean array parameter from the portlet request
+	 * @return the portlet request parameter value as a boolean array
 	 */
 	public static boolean[] getBooleanValues(
 		PortletRequest portletRequest, String param) {
@@ -658,15 +658,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the boolean array parameter from the portlet request. In the
-	 * returned array, each parameter value not convertible to boolean is
+	 * Returns the portlet request parameter value as a boolean array. In the
+	 * returned array, each parameter value not convertible to a boolean is
 	 * replaced by the default value.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the boolean array parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a boolean array
 	 */
 	public static boolean[] getBooleanValues(
 		PortletRequest portletRequest, String param, boolean[] defaultValue) {
@@ -676,14 +676,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the boolean array parameter from the service context. In the
-	 * returned array, each parameter value not convertible to boolean is
+	 * Returns the service context parameter value as a boolean array. In the
+	 * returned array, each parameter value not convertible to a boolean is
 	 * replaced by <code>false</code>.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the boolean array parameter from the service context
+	 * @return the service context parameter value as a boolean array
 	 */
 	public static boolean[] getBooleanValues(
 		ServiceContext serviceContext, String param) {
@@ -692,15 +692,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the boolean array parameter from the service context. In the
-	 * returned array, each parameter value not convertible to boolean is
+	 * Returns the service context parameter value as a boolean array. In the
+	 * returned array, each parameter value not convertible to a boolean is
 	 * replaced by the default value.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the boolean array parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a boolean array
 	 */
 	public static boolean[] getBooleanValues(
 		ServiceContext serviceContext, String param, boolean[] defaultValue) {
@@ -710,13 +710,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the date parameter from the request. If the parameter is missing
-	 * or not convertible to Date, the current date is returned.
+	 * Returns the request parameter value as a Date. If the parameter is missing
+	 * or not convertible to a Date, the current date is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
 	 * @param  dateFormat the format used to parse the date
-	 * @return the date parameter from the request
+	 * @return the request parameter value as a Date
 	 */
 	public static Date getDate(
 		HttpServletRequest request, String param, DateFormat dateFormat) {
@@ -725,14 +725,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the date parameter from the request. If the parameter is missing
-	 * or not convertible to Date, the default value is returned.
+	 * Returns the request parameter value as a Date. If the parameter is missing
+	 * or not convertible to a Date, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
 	 * @param  dateFormat the format used to parse the date
-	 * @param  defaultValue the default value
-	 * @return the date parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a Date
 	 */
 	public static Date getDate(
 		HttpServletRequest request, String param, DateFormat dateFormat,
@@ -742,14 +742,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the date parameter from the portlet request. If the parameter is
-	 * missing or not convertible to Date, the current date is returned.
+	 * Returns the portlet request parameter value as a Date. If the parameter is
+	 * missing or not convertible to a Date, the current date is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
 	 * @param  dateFormat the format used to parse the date
-	 * @return the date parameter from the portlet request
+	 * @return the portlet request parameter value as a Date
 	 */
 	public static Date getDate(
 		PortletRequest portletRequest, String param, DateFormat dateFormat) {
@@ -759,15 +759,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the date parameter from the portlet request. If the parameter is
-	 * missing or not convertible to Date, the default value is returned.
+	 * Returns the portlet request parameter value as a Date. If the parameter is
+	 * missing or not convertible to a Date, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
 	 * @param  dateFormat the format used to parse the date
-	 * @param  defaultValue the default value
-	 * @return the date parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a Date
 	 */
 	public static Date getDate(
 		PortletRequest portletRequest, String param, DateFormat dateFormat,
@@ -777,14 +777,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the date parameter from the service context. If the parameter is
-	 * missing or not convertible to Date, the current date is returned.
+	 * Returns the service context parameter value as a Date. If the parameter is
+	 * missing or not convertible to a Date, the current date is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
 	 * @param  dateFormat the format used to parse the date
-	 * @return the date parameter from the service context
+	 * @return the service context parameter value as a Date
 	 */
 	public static Date getDate(
 		ServiceContext serviceContext, String param, DateFormat dateFormat) {
@@ -794,15 +794,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the date parameter from the service context. If the parameter is
-	 * missing or not convertible to Date, the default value is returned.
+	 * Returns the service context parameter value as a Date. If the parameter is
+	 * missing or not convertible to a Date, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
 	 * @param  dateFormat the format used to parse the date
-	 * @param  defaultValue the default value
-	 * @return the date parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a Date
 	 */
 	public static Date getDate(
 		ServiceContext serviceContext, String param, DateFormat dateFormat,
@@ -812,14 +812,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the date array parameter from the request. In the returned array,
-	 * each parameter value not convertible to Date is replaced by the current
+	 * Returns the request parameter value as a Date array. In the returned array,
+	 * each parameter value not convertible to a Date is replaced by the current
 	 * date.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
 	 * @param  dateFormat the format used to parse the date
-	 * @return the date array parameter from the request
+	 * @return the request parameter value as a Date array
 	 */
 	public static Date[] getDateValues(
 		HttpServletRequest request, String param, DateFormat dateFormat) {
@@ -828,15 +828,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the date array parameter from the request. In the returned array,
-	 * each parameter value not convertible to Date is replaced by the default
+	 * Returns the request parameter value as a Date array. In the returned array,
+	 * each parameter value not convertible to a Date is replaced by the default
 	 * value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
 	 * @param  dateFormat the format used to parse the date
-	 * @param  defaultValue the default value
-	 * @return the date array parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a Date array
 	 */
 	public static Date[] getDateValues(
 		HttpServletRequest request, String param, DateFormat dateFormat,
@@ -847,15 +847,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the date array parameter from the portlet request. In the
-	 * returned array, each parameter value not convertible to Date is replaced
+	 * Returns the portlet request parameter value as a Date array. In the
+	 * returned array, each parameter value not convertible to a Date is replaced
 	 * by the current date.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
 	 * @param  dateFormat the format used to parse the date
-	 * @return the date array parameter from the portlet request
+	 * @return the portlet request parameter value as a Date array
 	 */
 	public static Date[] getDateValues(
 		PortletRequest portletRequest, String param, DateFormat dateFormat) {
@@ -864,16 +864,16 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the date array parameter from the portlet request. In the
-	 * returned array, each parameter value not convertible to Date is replaced
+	 * Returns the portlet request parameter value as a Date array. In the
+	 * returned array, each parameter value not convertible to a Date is replaced
 	 * by the default value.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
 	 * @param  dateFormat the format used to parse the date
-	 * @param  defaultValue the default value
-	 * @return the date array parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a Date array
 	 */
 	public static Date[] getDateValues(
 		PortletRequest portletRequest, String param, DateFormat dateFormat,
@@ -885,15 +885,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the date array parameter from the service context. In the
-	 * returned array, each parameter value not convertible to Date is replaced
+	 * Returns the service context parameter value as a Date array. In the
+	 * returned array, each parameter value not convertible to a Date is replaced
 	 * by the current date.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
 	 * @param  dateFormat the format used to parse the date
-	 * @return the date array parameter from the service context
+	 * @return the service context parameter value as a Date array
 	 */
 	public static Date[] getDateValues(
 		ServiceContext serviceContext, String param, DateFormat dateFormat) {
@@ -902,16 +902,16 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the date array parameter from the service context. In the
-	 * returned array, each parameter value not convertible to Date is replaced
+	 * Returns the service context parameter value as a Date array. In the
+	 * returned array, each parameter value not convertible to a Date is replaced
 	 * by the default value.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
 	 * @param  dateFormat the format used to parse the date
-	 * @param  defaultValue the default value
-	 * @return the date array parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a Date array
 	 */
 	public static Date[] getDateValues(
 		ServiceContext serviceContext, String param, DateFormat dateFormat,
@@ -922,25 +922,25 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the double parameter from the request. If the parameter is
-	 * missing or not convertible to double, <code>0</code> is returned.
+	 * Returns the request parameter value as a double. If the parameter is
+	 * missing or not convertible to a double, <code>0</code> is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @return the double parameter from the request
+	 * @return the request parameter value as a double
 	 */
 	public static double getDouble(HttpServletRequest request, String param) {
 		return GetterUtil.getDouble(request.getParameter(param));
 	}
 
 	/**
-	 * Returns the double parameter from the request. If the parameter is
-	 * missing or not convertible to double, the default value is returned.
+	 * Returns the request parameter value as a double. If the parameter is
+	 * missing or not convertible to a double, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the double parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a double
 	 */
 	public static double getDouble(
 		HttpServletRequest request, String param, double defaultValue) {
@@ -949,14 +949,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the double parameter from the request. If the parameter is
-	 * missing or not convertible to double, the default value is returned.
+	 * Returns the request parameter value as a double. If the parameter is
+	 * missing or not convertible to a double, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
+	 * @param  defaultValue a default value
 	 * @param  locale the locale used to parse the double value
-	 * @return the double parameter from the request
+	 * @return the request parameter value as a double
 	 */
 	public static double getDouble(
 		HttpServletRequest request, String param, double defaultValue,
@@ -967,13 +967,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the double parameter from the request. If the parameter is
-	 * missing or not convertible to double, <code>0</code> is returned.
+	 * Returns the request parameter value as a double. If the parameter is
+	 * missing or not convertible to a double, <code>0</code> is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
 	 * @param  locale the locale used to parse the double value
-	 * @return the double parameter from the request
+	 * @return the request parameter value as a double
 	 */
 	public static double getDouble(
 		HttpServletRequest request, String param, Locale locale) {
@@ -982,13 +982,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the double parameter from the portlet request. If the parameter
-	 * is missing or not convertible to double, <code>0</code> is returned.
+	 * Returns the portlet request parameter value as a double. If the parameter
+	 * is missing or not convertible to a double, <code>0</code> is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the double parameter from the portlet request
+	 * @return the portlet request parameter value as a double
 	 */
 	public static double getDouble(
 		PortletRequest portletRequest, String param) {
@@ -997,14 +997,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the double parameter from the portlet request. If the parameter
-	 * is missing or not convertible to double, the default value is returned.
+	 * Returns the portlet request parameter value as a double. If the parameter
+	 * is missing or not convertible to a double, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the double parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a double
 	 */
 	public static double getDouble(
 		PortletRequest portletRequest, String param, double defaultValue) {
@@ -1013,15 +1013,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the double parameter from the portlet request. If the parameter
-	 * is missing or not convertible to double, the default value is returned.
+	 * Returns the portlet request parameter value as a double. If the parameter
+	 * is missing or not convertible to a double, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
+	 * @param  defaultValue a default value
 	 * @param  locale the locale used to parse the double value
-	 * @return the double parameter from the portlet request
+	 * @return the portlet request parameter value as a double
 	 */
 	public static double getDouble(
 		PortletRequest portletRequest, String param, double defaultValue,
@@ -1032,14 +1032,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the double parameter from the portlet request. If the parameter
-	 * is missing or not convertible to double, <code>0</code> is returned.
+	 * Returns the portlet request parameter value as a double. If the parameter
+	 * is missing or not convertible to a double, <code>0</code> is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
 	 * @param  locale the locale used to parse the double value
-	 * @return the double parameter from the portlet request
+	 * @return the portlet request parameter value as a double
 	 */
 	public static double getDouble(
 		PortletRequest portletRequest, String param, Locale locale) {
@@ -1048,13 +1048,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the double parameter from the service context. If the parameter
-	 * is missing or not convertible to double, <code>0</code> is returned.
+	 * Returns the service context parameter value as a double. If the parameter
+	 * is missing or not convertible to a double, <code>0</code> is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the double parameter from the service context
+	 * @return the service context parameter value as a double
 	 */
 	public static double getDouble(
 		ServiceContext serviceContext, String param) {
@@ -1063,14 +1063,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the double parameter from the service context. If the parameter
-	 * is missing or not convertible to double, the default value is returned.
+	 * Returns the service context parameter value as a double. If the parameter
+	 * is missing or not convertible to a double, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the double parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a double
 	 */
 	public static double getDouble(
 		ServiceContext serviceContext, String param, double defaultValue) {
@@ -1079,13 +1079,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the double array parameter from the request. In the returned
-	 * array, each parameter value not convertible to double is replaced by
+	 * Returns the request parameter value as a double array. In the returned
+	 * array, each parameter value not convertible to a double is replaced by
 	 * <code>0</code>.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @return the double array parameter from the request
+	 * @return the request parameter value as a double array
 	 */
 	public static double[] getDoubleValues(
 		HttpServletRequest request, String param) {
@@ -1094,14 +1094,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the double array parameter from the request. In the returned
-	 * array, each parameter value not convertible to double is replaced by the
+	 * Returns the request parameter value as a double array. In the returned
+	 * array, each parameter value not convertible to a double is replaced by the
 	 * default value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the double array parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a double array
 	 */
 	public static double[] getDoubleValues(
 		HttpServletRequest request, String param, double[] defaultValue) {
@@ -1111,14 +1111,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the double array parameter from the portlet request. In the
-	 * returned array, each parameter value not convertible to double is
+	 * Returns the portlet request parameter value as a double array. In the
+	 * returned array, each parameter value not convertible to a double is
 	 * replaced by <code>0</code>.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the double array parameter from the portlet request
+	 * @return the portlet request parameter value as a double array
 	 */
 	public static double[] getDoubleValues(
 		PortletRequest portletRequest, String param) {
@@ -1127,15 +1127,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the double array parameter from the portlet request. In the
-	 * returned array, each parameter value not convertible to double is
+	 * Returns the portlet request parameter value as a double array. In the
+	 * returned array, each parameter value not convertible to a double is
 	 * replaced by the default value.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the double array parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a double array
 	 */
 	public static double[] getDoubleValues(
 		PortletRequest portletRequest, String param, double[] defaultValue) {
@@ -1145,14 +1145,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the double array parameter from the service context. In the
-	 * returned array, each parameter value not convertible to double is
+	 * Returns the service context parameter value as a double array. In the
+	 * returned array, each parameter value not convertible to a double is
 	 * replaced by <code>0</code>.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the double array parameter from the service context
+	 * @return the service context parameter value as a double array
 	 */
 	public static double[] getDoubleValues(
 		ServiceContext serviceContext, String param) {
@@ -1161,15 +1161,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the double array parameter from the service context. In the
-	 * returned array, each parameter value not convertible to double is
+	 * Returns the service context parameter value as a double array. In the
+	 * returned array, each parameter value not convertible to a double is
 	 * replaced by the default value.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the double array parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a double array
 	 */
 	public static double[] getDoubleValues(
 		ServiceContext serviceContext, String param, double[] defaultValue) {
@@ -1179,12 +1179,12 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the float parameter from the request. If the parameter is missing
-	 * or not convertible to float, <code>0</code> is returned.
+	 * Returns the request parameter value as a float. If the parameter is missing
+	 * or not convertible to a float, <code>0</code> is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @return the float parameter from the request
+	 * @return the request parameter value as a float
 	 */
 	public static float getFloat(HttpServletRequest request, String param) {
 
@@ -1192,13 +1192,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the float parameter from the request. If the parameter is missing
-	 * or not convertible to float, the default value is returned.
+	 * Returns the request parameter value as a float. If the parameter is missing
+	 * or not convertible to a float, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the float parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a float
 	 */
 	public static float getFloat(
 		HttpServletRequest request, String param, float defaultValue) {
@@ -1207,27 +1207,27 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the float parameter from the portlet request. If the parameter is
-	 * missing or not convertible to float, <code>0</code> is returned.
+	 * Returns the portlet request parameter value as a float. If the parameter is
+	 * missing or not convertible to a float, <code>0</code> is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the float parameter from the portlet request
+	 * @return the portlet request parameter value as a float
 	 */
 	public static float getFloat(PortletRequest portletRequest, String param) {
 		return GetterUtil.getFloat(portletRequest.getParameter(param));
 	}
 
 	/**
-	 * Returns the float parameter from the portlet request. If the parameter is
-	 * missing or not convertible to float, the default value is returned.
+	 * Returns the portlet request parameter value as a float. If the parameter is
+	 * missing or not convertible to a float, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the float parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a float
 	 */
 	public static float getFloat(
 		PortletRequest portletRequest, String param, float defaultValue) {
@@ -1236,27 +1236,27 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the float parameter from the service context. If the parameter is
-	 * missing or not convertible to float, <code>0</code> is returned.
+	 * Returns the service context parameter value as a float. If the parameter is
+	 * missing or not convertible to a float, <code>0</code> is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the float parameter from the service context
+	 * @return the service context parameter value as a float
 	 */
 	public static float getFloat(ServiceContext serviceContext, String param) {
 		return GetterUtil.getFloat(serviceContext.getAttribute(param));
 	}
 
 	/**
-	 * Returns the float parameter from the service context. If the parameter is
-	 * missing or not convertible to float, the default value is returned.
+	 * Returns the service context parameter value as a float. If the parameter is
+	 * missing or not convertible to a float, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the float parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a float
 	 */
 	public static float getFloat(
 		ServiceContext serviceContext, String param, float defaultValue) {
@@ -1265,13 +1265,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the float array parameter from the request. In the returned
-	 * array, each parameter value not convertible to float is replaced by
+	 * Returns the request parameter value as a float array. In the returned
+	 * array, each parameter value not convertible to a float is replaced by
 	 * <code>0</code>.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @return the float array parameter from the request
+	 * @return the request parameter value as a float array
 	 */
 	public static float[] getFloatValues(
 		HttpServletRequest request, String param) {
@@ -1280,14 +1280,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the float array parameter from the request. In the returned
-	 * array, each parameter value not convertible to float is replaced by the
+	 * Returns the request parameter value as a float array. In the returned
+	 * array, each parameter value not convertible to a float is replaced by the
 	 * default value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the float array parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a float array
 	 */
 	public static float[] getFloatValues(
 		HttpServletRequest request, String param, float[] defaultValue) {
@@ -1297,14 +1297,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the float array parameter from the portlet request. In the
-	 * returned array, each parameter value not convertible to float is replaced
+	 * Returns the portlet request parameter value as a float array. In the
+	 * returned array, each parameter value not convertible to a float is replaced
 	 * by <code>0</code>.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the float array parameter from the portlet request
+	 * @return the portlet request parameter value as a float array
 	 */
 	public static float[] getFloatValues(
 		PortletRequest portletRequest, String param) {
@@ -1313,15 +1313,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the float array parameter from the portlet request. In the
-	 * returned array, each parameter value not convertible to float is replaced
+	 * Returns the portlet request parameter value as a float array. In the
+	 * returned array, each parameter value not convertible to a float is replaced
 	 * by the default value.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the float array parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a float array
 	 */
 	public static float[] getFloatValues(
 		PortletRequest portletRequest, String param, float[] defaultValue) {
@@ -1331,14 +1331,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the float array parameter from the service context. In the
-	 * returned array, each parameter value not convertible to float is replaced
+	 * Returns the service context parameter value as a float array. In the
+	 * returned array, each parameter value not convertible to a float is replaced
 	 * by <code>0</code>.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the float array parameter from the service context
+	 * @return the service context parameter value as a float array
 	 */
 	public static float[] getFloatValues(
 		ServiceContext serviceContext, String param) {
@@ -1347,15 +1347,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the float array parameter from the service context. In the
-	 * returned array, each parameter value not convertible to float is replaced
+	 * Returns the service context parameter value as a float array. In the
+	 * returned array, each parameter value not convertible to a float is replaced
 	 * by the default value.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the float array parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a float array
 	 */
 	public static float[] getFloatValues(
 		ServiceContext serviceContext, String param, float[] defaultValue) {
@@ -1365,25 +1365,25 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the int parameter from the request. If the parameter is missing
-	 * or not convertible to int, <code>0</code> is returned.
+	 * Returns the request parameter value as an integer. If the parameter is missing
+	 * or not convertible to an integer, <code>0</code> is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @return the int parameter from the request
+	 * @return the request parameter value as an integer
 	 */
 	public static int getInteger(HttpServletRequest request, String param) {
 		return GetterUtil.getInteger(request.getParameter(param));
 	}
 
 	/**
-	 * Returns the int parameter from the request. If the parameter is missing
-	 * or not convertible to int, the default value is returned.
+	 * Returns the request parameter value as an integer. If the parameter is missing
+	 * or not convertible to an integer, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the int parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as an integer
 	 */
 	public static int getInteger(
 		HttpServletRequest request, String param, int defaultValue) {
@@ -1392,27 +1392,27 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the int parameter from the portlet request. If the parameter is
-	 * missing or not convertible to int, <code>0</code> is returned.
+	 * Returns the portlet request parameter value as an integer. If the parameter is
+	 * missing or not convertible to an integer, <code>0</code> is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the int parameter from the portlet request
+	 * @return the portlet request parameter value as an integer
 	 */
 	public static int getInteger(PortletRequest portletRequest, String param) {
 		return GetterUtil.getInteger(portletRequest.getParameter(param));
 	}
 
 	/**
-	 * Returns the int parameter from the portlet request. If the parameter is
-	 * missing or not convertible to int, the default value is returned.
+	 * Returns the portlet request parameter value as an integer. If the parameter is
+	 * missing or not convertible to an integer, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the int parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as an integer
 	 */
 	public static int getInteger(
 		PortletRequest portletRequest, String param, int defaultValue) {
@@ -1421,27 +1421,27 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the int parameter from the service context. If the parameter is
-	 * missing or not convertible to int, <code>0</code> is returned.
+	 * Returns the service context parameter value as an integer. If the parameter is
+	 * missing or not convertible to an integer, <code>0</code> is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the int parameter from the service context
+	 * @return the service context parameter value as an integer
 	 */
 	public static int getInteger(ServiceContext serviceContext, String param) {
 		return GetterUtil.getInteger(serviceContext.getAttribute(param));
 	}
 
 	/**
-	 * Returns the int parameter from the service context. If the parameter is
-	 * missing or not convertible to int, the default value is returned.
+	 * Returns the service context parameter value as an integer. If the parameter is
+	 * missing or not convertible to an integer, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the int parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as an integer
 	 */
 	public static int getInteger(
 		ServiceContext serviceContext, String param, int defaultValue) {
@@ -1450,13 +1450,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the int array parameter from the request. In the returned array,
-	 * each parameter value not convertible to int is replaced by
+	 * Returns the request parameter value as an integer array. In the returned array,
+	 * each parameter value not convertible to an integer is replaced by
 	 * <code>0</code>.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @return the int array parameter from the request
+	 * @return the request parameter value as an integer
 	 */
 	public static int[] getIntegerValues(
 		HttpServletRequest request, String param) {
@@ -1465,14 +1465,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the int array parameter from the request. In the returned array,
-	 * each parameter value not convertible to int is replaced by the default
+	 * Returns the request parameter value as an integer array. In the returned array,
+	 * each parameter value not convertible to an integer is replaced by the default
 	 * value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the int array parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as an integer
 	 */
 	public static int[] getIntegerValues(
 		HttpServletRequest request, String param, int[] defaultValue) {
@@ -1482,14 +1482,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the int array parameter from the portlet request. In the returned
-	 * array, each parameter value not convertible to int is replaced by
+	 * Returns the portlet request parameter value as an integer array. In the returned
+	 * array, each parameter value not convertible to an integer is replaced by
 	 * <code>0</code>.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the int array parameter from the portlet request
+	 * @return the portlet request parameter value as an integer
 	 */
 	public static int[] getIntegerValues(
 		PortletRequest portletRequest, String param) {
@@ -1498,15 +1498,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the int array parameter from the portlet request. In the returned
-	 * array, each parameter value not convertible to int is replaced by the
+	 * Returns the portlet request parameter value as an integer array. In the returned
+	 * array, each parameter value not convertible to an integer is replaced by the
 	 * default value.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the int array parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as an integer
 	 */
 	public static int[] getIntegerValues(
 		PortletRequest portletRequest, String param, int[] defaultValue) {
@@ -1516,14 +1516,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the int array parameter from the service context. In the returned
-	 * array, each parameter value not convertible to int is replaced by
+	 * Returns the service context parameter value as an integer array. In the returned
+	 * array, each parameter value not convertible to an integer is replaced by
 	 * <code>0</code>.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the int array parameter from the service context
+	 * @return the service context parameter value as an integer
 	 */
 	public static int[] getIntegerValues(
 		ServiceContext serviceContext, String param) {
@@ -1532,15 +1532,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the int array parameter from the service context. In the returned
-	 * array, each parameter value not convertible to int is replaced by the
+	 * Returns the service context parameter value as an integer array. In the returned
+	 * array, each parameter value not convertible to an integer is replaced by the
 	 * default value.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the int array parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as an integer
 	 */
 	public static int[] getIntegerValues(
 		ServiceContext serviceContext, String param, int[] defaultValue) {
@@ -1550,25 +1550,25 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the long parameter from the request. If the parameter is missing
-	 * or not convertible to long, <code>0</code> is returned.
+	 * Returns the request parameter value as a long. If the parameter is missing
+	 * or not convertible to a long, <code>0</code> is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @return the long parameter from the request
+	 * @return the request parameter value as a long
 	 */
 	public static long getLong(HttpServletRequest request, String param) {
 		return GetterUtil.getLong(request.getParameter(param));
 	}
 
 	/**
-	 * Returns the long parameter from the request. If the parameter is missing
-	 * or not convertible to long, the default value is returned.
+	 * Returns the request parameter value as a long. If the parameter is missing
+	 * or not convertible to a long, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the long parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a long
 	 */
 	public static long getLong(
 		HttpServletRequest request, String param, long defaultValue) {
@@ -1577,27 +1577,27 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the long parameter from the portlet request. If the parameter is
-	 * missing or not convertible to long, <code>0</code> is returned.
+	 * Returns the portlet request parameter value as a long. If the parameter is
+	 * missing or not convertible to a long, <code>0</code> is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the long parameter from the portlet request
+	 * @return the portlet request parameter value as a long
 	 */
 	public static long getLong(PortletRequest portletRequest, String param) {
 		return GetterUtil.getLong(portletRequest.getParameter(param));
 	}
 
 	/**
-	 * Returns the long parameter from the portlet request. If the parameter is
-	 * missing or not convertible to long, the default value is returned.
+	 * Returns the portlet request parameter value as a long. If the parameter is
+	 * missing or not convertible to a long, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the long parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a long
 	 */
 	public static long getLong(
 		PortletRequest portletRequest, String param, long defaultValue) {
@@ -1606,27 +1606,27 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the long parameter from the service context. If the parameter is
-	 * missing or not convertible to long, <code>0</code> is returned.
+	 * Returns the service context parameter value as a long. If the parameter is
+	 * missing or not convertible to a long, <code>0</code> is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the long parameter from the service context
+	 * @return the service context parameter value as a long
 	 */
 	public static long getLong(ServiceContext serviceContext, String param) {
 		return GetterUtil.getLong(serviceContext.getAttribute(param));
 	}
 
 	/**
-	 * Returns the long parameter from the service context. If the parameter is
-	 * missing or not convertible to long, the default value is returned.
+	 * Returns the service context parameter value as a long. If the parameter is
+	 * missing or not convertible to a long, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the long parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a long
 	 */
 	public static long getLong(
 		ServiceContext serviceContext, String param, long defaultValue) {
@@ -1635,13 +1635,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the long array parameter from the request. In the returned array,
-	 * each parameter value not convertible to long is replaced by
+	 * Returns the request parameter value as a long array. In the returned array,
+	 * each parameter value not convertible to a long is replaced by
 	 * <code>0</code>.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @return the long array parameter from the request
+	 * @return the request parameter value as a long array
 	 */
 	public static long[] getLongValues(
 		HttpServletRequest request, String param) {
@@ -1650,14 +1650,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the long array parameter from the request. In the returned array,
-	 * each parameter value not convertible to long is replaced by the default
+	 * Returns the request parameter value as a long array. In the returned array,
+	 * each parameter value not convertible to a long is replaced by the default
 	 * value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the long array parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a long array
 	 */
 	public static long[] getLongValues(
 		HttpServletRequest request, String param, long[] defaultValue) {
@@ -1667,14 +1667,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the long array parameter from the portlet request. In the
-	 * returned array, each parameter value not convertible to long is replaced
+	 * Returns the portlet request parameter value as a long array. In the
+	 * returned array, each parameter value not convertible to a long is replaced
 	 * by <code>0</code>.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the long array parameter from the portlet request
+	 * @return the portlet request parameter value as a long array
 	 */
 	public static long[] getLongValues(
 		PortletRequest portletRequest, String param) {
@@ -1683,15 +1683,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the long array parameter from the portlet request. In the
-	 * returned array, each parameter value not convertible to long is replaced
+	 * Returns the portlet request parameter value as a long array. In the
+	 * returned array, each parameter value not convertible to a long is replaced
 	 * by the default value.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the long array parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a long array
 	 */
 	public static long[] getLongValues(
 		PortletRequest portletRequest, String param, long[] defaultValue) {
@@ -1701,14 +1701,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the long array parameter from the service context. In the
-	 * returned array, each parameter value not convertible to long is replaced
+	 * Returns the service context parameter value as a long array. In the
+	 * returned array, each parameter value not convertible to a long is replaced
 	 * by <code>0</code>.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the long array parameter from the service context
+	 * @return the service context parameter value as a long array
 	 */
 	public static long[] getLongValues(
 		ServiceContext serviceContext, String param) {
@@ -1717,15 +1717,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the long array parameter from the service context. In the
-	 * returned array, each parameter value not convertible to long is replaced
+	 * Returns the service context parameter value as a long array. In the
+	 * returned array, each parameter value not convertible to a long is replaced
 	 * by the default value.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the long array parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a long array
 	 */
 	public static long[] getLongValues(
 		ServiceContext serviceContext, String param, long[] defaultValue) {
@@ -1735,25 +1735,25 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the number parameter from the request. If the parameter is
-	 * missing or not convertible to Number, <code>0</code> is returned.
+	 * Returns the request parameter value as a Number. If the parameter is
+	 * missing or not convertible to a Number, <code>0</code> is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @return the number parameter from the request
+	 * @return the request parameter value as a Number
 	 */
 	public static Number getNumber(HttpServletRequest request, String param) {
 		return GetterUtil.getNumber(request.getParameter(param));
 	}
 
 	/**
-	 * Returns the number parameter from the request. If the parameter is
-	 * missing or not convertible to Number, the default value is returned.
+	 * Returns the request parameter value as a Number. If the parameter is
+	 * missing or not convertible to a Number, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the number parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a Number
 	 */
 	public static Number getNumber(
 		HttpServletRequest request, String param, Number defaultValue) {
@@ -1762,13 +1762,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the number parameter from the portlet request. If the parameter
-	 * is missing or not convertible to Number, <code>0</code> is returned.
+	 * Returns the portlet request parameter value as a Number. If the parameter
+	 * is missing or not convertible to a Number, <code>0</code> is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the number parameter from the portlet request
+	 * @return the portlet request parameter value as a Number
 	 */
 	public static Number getNumber(
 		PortletRequest portletRequest, String param) {
@@ -1777,14 +1777,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the number parameter from the portlet request. If the parameter
-	 * is missing or not convertible to Number, the default value is returned.
+	 * Returns the portlet request parameter value as a Number. If the parameter
+	 * is missing or not convertible to a Number, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the number parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a Number
 	 */
 	public static Number getNumber(
 		PortletRequest portletRequest, String param, Number defaultValue) {
@@ -1793,13 +1793,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the number parameter from the service context. If the parameter
-	 * is missing or not convertible to Number, <code>0</code> is returned.
+	 * Returns the service context parameter value as a Number. If the parameter
+	 * is missing or not convertible to a Number, <code>0</code> is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the number parameter from the service context
+	 * @return the service context parameter value as a Number
 	 */
 	public static Number getNumber(
 		ServiceContext serviceContext, String param) {
@@ -1808,14 +1808,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the number parameter from the service context. If the parameter
-	 * is missing or not convertible to Number, the default value is returned.
+	 * Returns the service context parameter value as a Number. If the parameter
+	 * is missing or not convertible to a Number, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the number parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a Number
 	 */
 	public static Number getNumber(
 		ServiceContext serviceContext, String param, Number defaultValue) {
@@ -1824,13 +1824,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the number array parameter from the request. In the returned
-	 * array, each parameter value not convertible to Number is replaced by
+	 * Returns the request parameter value as a Number array. In the returned
+	 * array, each parameter value not convertible to a Number is replaced by
 	 * <code>0</code>.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @return the number array parameter from the request
+	 * @return the request parameter value as a Number array
 	 */
 	public static Number[] getNumberValues(
 		HttpServletRequest request, String param) {
@@ -1839,14 +1839,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the number array parameter from the request. In the returned
-	 * array, each parameter value not convertible to Number is replaced by the
+	 * Returns the request parameter value as a Number array. In the returned
+	 * array, each parameter value not convertible to a Number is replaced by the
 	 * default value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the number array parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a Number array
 	 */
 	public static Number[] getNumberValues(
 		HttpServletRequest request, String param, Number[] defaultValue) {
@@ -1856,14 +1856,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the number array parameter from the portlet request. In the
-	 * returned array, each parameter value not convertible to Number is
+	 * Returns the portlet request parameter value as a Number array. In the
+	 * returned array, each parameter value not convertible to a Number is
 	 * replaced by <code>0</code>.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the number array parameter from the portlet request
+	 * @return the portlet request parameter value as a Number array
 	 */
 	public static Number[] getNumberValues(
 		PortletRequest portletRequest, String param) {
@@ -1872,15 +1872,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the number array parameter from the portlet request. In the
-	 * returned array, each parameter value not convertible to Number is
+	 * Returns the portlet request parameter value as a Number array. In the
+	 * returned array, each parameter value not convertible to a Number is
 	 * replaced by the default value.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the number array parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a Number array
 	 */
 	public static Number[] getNumberValues(
 		PortletRequest portletRequest, String param, Number[] defaultValue) {
@@ -1890,14 +1890,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the number array parameter from the service context. In the
-	 * returned array, each parameter value not convertible to Number is
+	 * Returns the service context parameter value as a Number array. In the
+	 * returned array, each parameter value not convertible to a Number is
 	 * replaced by <code>0</code>.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the number array parameter from the service context
+	 * @return the service request parameter value as a Number array
 	 */
 	public static Number[] getNumberValues(
 		ServiceContext serviceContext, String param) {
@@ -1906,15 +1906,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the number array parameter from the service context. In the
-	 * returned array, each parameter value not convertible to Number is
+	 * Returns the service context parameter value as a Number array. In the
+	 * returned array, each parameter value not convertible to a Number is
 	 * replaced by the default value.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the number array parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service request parameter value as a Number array
 	 */
 	public static Number[] getNumberValues(
 		ServiceContext serviceContext, String param, Number[] defaultValue) {
@@ -1924,13 +1924,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string array parameter from the request. In the returned
-	 * array, each parameter value not convertible to String is replaced by a
+	 * Returns the request parameter value as a String array. In the returned
+	 * array, each parameter value not convertible to a String is replaced by a
 	 * blank string.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @return the string array parameter from the request
+	 * @return the request parameter value as a String array
 	 */
 	public static String[] getParameterValues(
 		HttpServletRequest request, String param) {
@@ -1939,14 +1939,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string array parameter from the request. In the returned
-	 * array, each parameter value not convertible to String is replaced by the
+	 * Returns the request parameter value as a String array. In the returned
+	 * array, each parameter value not convertible to a String is replaced by the
 	 * default value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the string array parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a String array
 	 */
 	public static String[] getParameterValues(
 		HttpServletRequest request, String param, String[] defaultValue) {
@@ -1955,16 +1955,16 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string array parameter from the request. In the returned
-	 * array, each parameter value not convertible to String is replaced by the
+	 * Returns the request parameter value as a String array. In the returned
+	 * array, each parameter value not convertible to a String is replaced by the
 	 * default value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
+	 * @param  defaultValue a default value
 	 * @param  split whether to split the single parameter value using comma
 	 *         separators to get multiple values
-	 * @return the string array parameter from the request
+	 * @return the request parameter value as a String array
 	 */
 	public static String[] getParameterValues(
 		HttpServletRequest request, String param, String[] defaultValue,
@@ -1984,14 +1984,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string array parameter from the portlet request. In the
-	 * returned array, each parameter value not convertible to String is
+	 * Returns the portlet request parameter value as a String array. In the
+	 * returned array, each parameter value not convertible to a String is
 	 * replaced by a blank string.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the string array parameter from the portlet request
+	 * @return the portlet request parameter value as a String array
 	 */
 	public static String[] getParameterValues(
 		PortletRequest portletRequest, String param) {
@@ -2000,15 +2000,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string array parameter from the portlet request. In the
-	 * returned array, each parameter value not convertible to String is
+	 * Returns the portlet request parameter value as a String array. In the
+	 * returned array, each parameter value not convertible to a String is
 	 * replaced by the default value.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the string array parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a String array
 	 */
 	public static String[] getParameterValues(
 		PortletRequest portletRequest, String param, String[] defaultValue) {
@@ -2017,17 +2017,17 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string array parameter from the portlet request. In the
-	 * returned array, each parameter value not convertible to String is
+	 * Returns the portlet request parameter value as a String array. In the
+	 * returned array, each parameter value not convertible to a String is
 	 * replaced by the default value.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
+	 * @param  defaultValue a default value
 	 * @param  split whether to split the single parameter value using comma
 	 *         separators to get multiple values
-	 * @return the string array parameter from the portlet request
+	 * @return the portlet request parameter value as a String array
 	 */
 	public static String[] getParameterValues(
 		PortletRequest portletRequest, String param, String[] defaultValue,
@@ -2040,25 +2040,25 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the short parameter from the request. If the parameter is missing
-	 * or not convertible to short, <code>0</code> is returned.
+	 * Returns the request parameter value as a short. If the parameter is missing
+	 * or not convertible to a short, <code>0</code> is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @return the short parameter from the request
+	 * @return the request parameter value as a short
 	 */
 	public static short getShort(HttpServletRequest request, String param) {
 		return GetterUtil.getShort(request.getParameter(param));
 	}
 
 	/**
-	 * Returns the short parameter from the request. If the parameter is missing
-	 * or not convertible to short, the default value is returned.
+	 * Returns the request parameter value as a short. If the parameter is missing
+	 * or not convertible to a short, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the short parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a short
 	 */
 	public static short getShort(
 		HttpServletRequest request, String param, short defaultValue) {
@@ -2067,27 +2067,27 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the short parameter from the portlet request. If the parameter is
-	 * missing or not convertible to short, <code>0</code> is returned.
+	 * Returns the portlet request parameter value as a short. If the parameter is
+	 * missing or not convertible to a short, <code>0</code> is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the short parameter from the portlet request
+	 * @return the portlet request parameter value as a short
 	 */
 	public static short getShort(PortletRequest portletRequest, String param) {
 		return GetterUtil.getShort(portletRequest.getParameter(param));
 	}
 
 	/**
-	 * Returns the short parameter from the portlet request. If the parameter is
-	 * missing or not convertible to short, the default value is returned.
+	 * Returns the portlet request parameter value as a short. If the parameter is
+	 * missing or not convertible to a short, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the short parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a short
 	 */
 	public static short getShort(
 		PortletRequest portletRequest, String param, short defaultValue) {
@@ -2096,27 +2096,27 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the short parameter from the service context. If the parameter is
-	 * missing or not convertible to short, <code>0</code> is returned.
+	 * Returns the service context parameter value as a short. If the parameter is
+	 * missing or not convertible to a short, <code>0</code> is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the short parameter from the service context
+	 * @return the service context parameter value as a short
 	 */
 	public static short getShort(ServiceContext serviceContext, String param) {
 		return GetterUtil.getShort(serviceContext.getAttribute(param));
 	}
 
 	/**
-	 * Returns the short parameter from the service context. If the parameter is
-	 * missing or not convertible to short, the default value is returned.
+	 * Returns the service context parameter value as a short. If the parameter is
+	 * missing or not convertible to a short, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the short parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a short
 	 */
 	public static short getShort(
 		ServiceContext serviceContext, String param, short defaultValue) {
@@ -2125,13 +2125,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the short array parameter from the request. In the returned
-	 * array, each parameter value not convertible to short is replaced by
+	 * Returns the request parameter value as a short array. In the returned
+	 * array, each parameter value not convertible to a short is replaced by
 	 * <code>0</code>.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @return the short array parameter from the request
+	 * @return the request parameter value as a short array
 	 */
 	public static short[] getShortValues(
 		HttpServletRequest request, String param) {
@@ -2140,14 +2140,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the short array parameter from the request. In the returned
-	 * array, each parameter value not convertible to short is replaced by the
+	 * Returns the request parameter value as a short array. In the returned
+	 * array, each parameter value not convertible to a short is replaced by the
 	 * default value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the short array parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a short array
 	 */
 	public static short[] getShortValues(
 		HttpServletRequest request, String param, short[] defaultValue) {
@@ -2157,14 +2157,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the short array parameter from the portlet request. In the
-	 * returned array, each parameter value not convertible to short is replaced
+	 * Returns the portlet request parameter value as a short array. In the
+	 * returned array, each parameter value not convertible to a short is replaced
 	 * by <code>0</code>.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the short array parameter from the portlet request
+	 * @return the portlet request parameter value as a short array
 	 */
 	public static short[] getShortValues(
 		PortletRequest portletRequest, String param) {
@@ -2173,15 +2173,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the short array parameter from the portlet request. In the
-	 * returned array, each parameter value not convertible to short is replaced
+	 * Returns the portlet request parameter value as a short array. In the
+	 * returned array, each parameter value not convertible to a short is replaced
 	 * by the default value.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the short array parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a short array
 	 */
 	public static short[] getShortValues(
 		PortletRequest portletRequest, String param, short[] defaultValue) {
@@ -2191,14 +2191,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the short array parameter from the service context. In the
-	 * returned array, each parameter value not convertible to short is replaced
+	 * Returns the service context parameter value as a short array. In the
+	 * returned array, each parameter value not convertible to a short is replaced
 	 * by <code>0</code>.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the short array parameter from the service context
+	 * @return the service context parameter value as a short array
 	 */
 	public static short[] getShortValues(
 		ServiceContext serviceContext, String param) {
@@ -2207,15 +2207,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the short array parameter from the service context. In the
-	 * returned array, each parameter value not convertible to short is replaced
+	 * Returns the service context parameter value as a short array. In the
+	 * returned array, each parameter value not convertible to a short is replaced
 	 * by the default value.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the short array parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a short array
 	 */
 	public static short[] getShortValues(
 		ServiceContext serviceContext, String param, short[] defaultValue) {
@@ -2225,12 +2225,12 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string parameter from the request. If the parameter is
-	 * missing or not convertible to String, a blank string is returned.
+	 * Returns the request parameter value as a String. If the parameter is
+	 * missing or not convertible to a String, a blank string is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @return the string parameter from the request
+	 * @return the request parameter value as a String
 	 */
 	public static String getString(HttpServletRequest request, String param) {
 
@@ -2238,13 +2238,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string parameter from the request. If the parameter is
-	 * missing or not convertible to String, the default value is returned.
+	 * Returns the request parameter value as a String. If the parameter is
+	 * missing or not convertible to a String, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the string parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a String
 	 */
 	public static String getString(
 		HttpServletRequest request, String param, String defaultValue) {
@@ -2253,13 +2253,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string parameter from the portlet request. If the parameter
-	 * is missing or not convertible to String, a blank string is returned.
+	 * Returns the portlet request parameter value as a String. If the parameter
+	 * is missing or not convertible to a String, a blank string is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the string parameter from the portlet request
+	 * @return the portlet request parameter value as a String
 	 */
 	public static String getString(
 		PortletRequest portletRequest, String param) {
@@ -2268,14 +2268,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string parameter from the portlet request. If the parameter
-	 * is missing or not convertible to String, the default value is returned.
+	 * Returns the portlet request parameter value as a String. If the parameter
+	 * is missing or not convertible to a String, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the string parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a String
 	 */
 	public static String getString(
 		PortletRequest portletRequest, String param, String defaultValue) {
@@ -2284,13 +2284,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string parameter from the service context. If the parameter
-	 * is missing or not convertible to String, a blank string is returned.
+	 * Returns the service context parameter value as a String. If the parameter
+	 * is missing or not convertible to a String, a blank string is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the string parameter from the service context
+	 * @return the service context parameter value as a String
 	 */
 	public static String getString(
 		ServiceContext serviceContext, String param) {
@@ -2299,14 +2299,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string parameter from the service context. If the parameter
-	 * is missing or not convertible to String, the default value is returned.
+	 * Returns the service context parameter value as a String. If the parameter
+	 * is missing or not convertible to a String, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the string parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a String
 	 */
 	public static String getString(
 		ServiceContext serviceContext, String param, String defaultValue) {
@@ -2315,13 +2315,13 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string array parameter from the request. In the returned
-	 * array, each parameter value not convertible to String is replaced by a
+	 * Returns the request parameter value as a String array. In the returned
+	 * array, each parameter value not convertible to a String is replaced by a
 	 * blank string.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @return the string array parameter from the request
+	 * @return the request parameter value as a String array
 	 */
 	public static String[] getStringValues(
 		HttpServletRequest request, String param) {
@@ -2330,14 +2330,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string array parameter from the request. In the returned
-	 * array, each parameter value not convertible to String is replaced by the
+	 * Returns the request parameter value as a String array. In the returned
+	 * array, each parameter value not convertible to a String is replaced by the
 	 * default value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the string array parameter from the request
+	 * @param  defaultValue a default value
+	 * @return the request parameter value as a String array
 	 */
 	public static String[] getStringValues(
 		HttpServletRequest request, String param, String[] defaultValue) {
@@ -2347,14 +2347,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string array parameter from the portlet request. In the
-	 * returned array, each parameter value not convertible to String is
+	 * Returns the portlet request parameter value as a String array. In the
+	 * returned array, each parameter value not convertible to a String is
 	 * replaced by a blank string.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the string array parameter from the portlet request
+	 * @return the portlet request parameter value as a String array
 	 */
 	public static String[] getStringValues(
 		PortletRequest portletRequest, String param) {
@@ -2363,15 +2363,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string array parameter from the portlet request. In the
-	 * returned array, each parameter value not convertible to String is
+	 * Returns the portlet request parameter value as a String array. In the
+	 * returned array, each parameter value not convertible to a String is
 	 * replaced by the default value.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the string array parameter from the portlet request
+	 * @param  defaultValue a default value
+	 * @return the portlet request parameter value as a String array
 	 */
 	public static String[] getStringValues(
 		PortletRequest portletRequest, String param, String[] defaultValue) {
@@ -2381,14 +2381,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string array parameter from the service context. In the
-	 * returned array, each parameter value not convertible to String is
+	 * Returns the service context parameter value as a String array. In the
+	 * returned array, each parameter value not convertible to a String is
 	 * replaced by a blank string.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @return the string array parameter from the service context
+	 * @return the service context parameter value as a String array
 	 */
 	public static String[] getStringValues(
 		ServiceContext serviceContext, String param) {
@@ -2397,15 +2397,15 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the string array parameter from the service context. In the
-	 * returned array, each parameter value not convertible to String is
+	 * Returns the service context parameter value as a String array. In the
+	 * returned array, each parameter value not convertible to a String is
 	 * replaced by the default value.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
 	 * @param  param the name of the parameter to return
-	 * @param  defaultValue the default value
-	 * @return the string array parameter from the service context
+	 * @param  defaultValue a default value
+	 * @return the service context parameter value as a String array
 	 */
 	public static String[] getStringValues(
 		ServiceContext serviceContext, String param, String[] defaultValue) {
@@ -2415,7 +2415,7 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Prints all request parameters as standard output.
+	 * Prints all the request parameters as standard output.
 	 *
 	 * @param request the servlet request from which to read the parameters
 	 */
@@ -2433,7 +2433,7 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Prints all portlet request parameters as standard output.
+	 * Prints all the portlet request parameters as standard output.
 	 *
 	 * @param portletRequest the portlet request from which to read the
 	 *        parameters
@@ -2453,7 +2453,7 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Prints all service context parameters as standard output.
+	 * Prints all the service context parameters as standard output.
 	 *
 	 * @param serviceContext the service context from which to read the
 	 *        parameters

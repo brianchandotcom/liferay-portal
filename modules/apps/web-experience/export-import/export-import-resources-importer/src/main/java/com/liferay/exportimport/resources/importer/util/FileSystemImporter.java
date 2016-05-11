@@ -65,10 +65,10 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -86,6 +86,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Attribute;
@@ -137,6 +138,7 @@ public class FileSystemImporter extends BaseImporter {
 		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService,
 		MimeTypes mimeTypes, Portal portal,
 		PortletPreferencesFactory portletPreferencesFactory,
+		PortletPreferencesLocalService portletPreferencesLocalService,
 		Map<String, PortletPreferencesTranslator> portletPreferencesTranslators,
 		RepositoryLocalService repositoryLocalService, SAXReader saxReader,
 		ThemeLocalService themeLocalService) {
@@ -160,6 +162,7 @@ public class FileSystemImporter extends BaseImporter {
 		this.mimeTypes = mimeTypes;
 		this.portal = portal;
 		this.portletPreferencesFactory = portletPreferencesFactory;
+		this.portletPreferencesLocalService = portletPreferencesLocalService;
 		this.portletPreferencesTranslators = portletPreferencesTranslators;
 		this.repositoryLocalService = repositoryLocalService;
 		this.saxReader = saxReader;
@@ -1074,7 +1077,7 @@ public class FileSystemImporter extends BaseImporter {
 					friendlyURLMap, serviceContext);
 			}
 			else {
-				resetTypeSettings(layout);
+				resetLayoutColumns(layout);
 
 				layout = layoutLocalService.updateLayout(
 					groupId, privateLayout, layout.getLayoutId(),
@@ -1707,8 +1710,40 @@ public class FileSystemImporter extends BaseImporter {
 		return content;
 	}
 
-	protected void resetTypeSettings(Layout layout) {
-		layout.setTypeSettings(StringPool.BLANK);
+	protected void resetLayoutColumns(Layout layout) {
+		UnicodeProperties typeSettings = layout.getTypeSettingsProperties();
+
+		int counter = 1;
+
+		do {
+			String portletIds = typeSettings.remove("column-" + counter++);
+
+			if (Validator.isNull(portletIds)) {
+				break;
+			}
+
+			String[] portletIdsArray = StringUtil.split(portletIds);
+
+			for (String portletId : portletIdsArray) {
+				try {
+					portletPreferencesLocalService.deletePortletPreferences(
+						PortletKeys.PREFS_OWNER_ID_DEFAULT,
+						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+						portletId);
+				}
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Could not delete preferences for: " + portletId,
+							pe);
+					}
+				}
+			}
+		}
+		while (true);
+
+		layout.setTypeSettingsProperties(typeSettings);
+
 		layoutLocalService.updateLayout(layout);
 	}
 
@@ -1906,6 +1941,8 @@ public class FileSystemImporter extends BaseImporter {
 	protected final MimeTypes mimeTypes;
 	protected final Portal portal;
 	protected final PortletPreferencesFactory portletPreferencesFactory;
+	protected final PortletPreferencesLocalService
+		portletPreferencesLocalService;
 	protected final Map<String, PortletPreferencesTranslator>
 		portletPreferencesTranslators;
 	protected final RepositoryLocalService repositoryLocalService;

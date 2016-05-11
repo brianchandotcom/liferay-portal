@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.upgrade.v7_0_0.util.ClassNameTable;
 import com.liferay.portal.upgrade.v7_0_0.util.ClusterGroupTable;
 import com.liferay.portal.upgrade.v7_0_0.util.CompanyTable;
@@ -52,6 +53,25 @@ import javax.sql.DataSource;
  * @author Manuel de la Peña
  */
 public class UpgradeSharding extends UpgradeProcess {
+
+	protected void copyCompanyTable(
+			Connection sourceConnection, Connection targetConnection,
+			String shardName)
+		throws Exception {
+
+		copyControlTable(
+			sourceConnection, targetConnection, CompanyTable.TABLE_NAME,
+			CompanyTable.TABLE_COLUMNS, CompanyTable.TABLE_SQL_CREATE);
+
+		List<Long> companyIdsList = getCompanyIds(shardName);
+
+		String companyIds = ListUtil.toString(
+			companyIdsList, StringPool.NULL, StringPool.COMMA);
+
+		runSQL(
+			targetConnection,
+			"delete from Company where companyId not in (" + companyIds + ")");
+	}
 
 	protected void copyControlTable(
 			Connection sourceConnection, Connection targetConnection,
@@ -126,9 +146,9 @@ public class UpgradeSharding extends UpgradeProcess {
 				connection, targetConnection, ClusterGroupTable.TABLE_NAME,
 				ClusterGroupTable.TABLE_COLUMNS,
 				ClusterGroupTable.TABLE_SQL_CREATE);
-			copyControlTable(
-				connection, targetConnection, CompanyTable.TABLE_NAME,
-				CompanyTable.TABLE_COLUMNS, CompanyTable.TABLE_SQL_CREATE);
+
+			copyCompanyTable(connection, targetConnection, shardName);
+
 			copyControlTable(
 				connection, targetConnection, CounterTable.TABLE_NAME,
 				CounterTable.TABLE_COLUMNS, CounterTable.TABLE_SQL_CREATE);
@@ -181,6 +201,22 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Deleted table " + tableName);
+		}
+	}
+
+	protected List<Long> getCompanyIds(String shardName) throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			 PreparedStatement ps = connection.prepareStatement(
+				 "select classPK from Shard where name = '" + shardName + "'");
+			 ResultSet rs = ps.executeQuery()) {
+
+			List<Long> companyIds = new ArrayList<>();
+
+			while (rs.next()) {
+				companyIds.add(rs.getLong("classPK"));
+			}
+
+			return companyIds;
 		}
 	}
 

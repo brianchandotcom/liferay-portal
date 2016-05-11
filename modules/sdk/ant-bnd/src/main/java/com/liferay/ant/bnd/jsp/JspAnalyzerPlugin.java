@@ -29,6 +29,7 @@ import aQute.bnd.osgi.Jar;
 import aQute.bnd.osgi.Packages;
 import aQute.bnd.osgi.Resource;
 import aQute.bnd.service.AnalyzerPlugin;
+import aQute.lib.env.Header;
 
 import aQute.lib.io.IO;
 import aQute.lib.strings.Strings;
@@ -316,7 +317,9 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 			Parameters parameters = OSGiHeader.parseHeader(value);
 
 			for (Entry<String, Attrs> entry : parameters.entrySet()) {
-				StringBuilder sb = new StringBuilder(entry.getKey());
+				String key = Header.removeDuplicateMarker(entry.getKey());
+
+				StringBuilder sb = new StringBuilder(key);
 
 				Attrs attrs = entry.getValue();
 

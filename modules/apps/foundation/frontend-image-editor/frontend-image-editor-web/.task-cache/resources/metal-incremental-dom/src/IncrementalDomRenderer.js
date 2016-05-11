@@ -187,14 +187,29 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 				if (_metal.core.isFunction(value)) {
 					_dom2.default.on(element, eventName, value);
 				}
-			} else if (name === 'checked') {
+			}
+
+			if (name === 'checked') {
 				// This is a temporary fix to account for incremental dom setting
 				// "checked" as an attribute only, which can cause bugs since that won't
 				// necessarily check/uncheck the element it's set on. See
 				// https://github.com/google/incremental-dom/issues/198 for more details.
-				element.checked = _metal.core.isDefAndNotNull(value) && value !== false;
+				value = _metal.core.isDefAndNotNull(value) && value !== false;
 			}
-			originalFn(element, name, value);
+
+			if (_metal.core.isBoolean(value)) {
+				// Incremental dom sets boolean values as string data attributes, which
+				// is counter intuitive. This changes the behavior to use the actual
+				// boolean value.
+				element[name] = value;
+				if (value) {
+					element.setAttribute(name, '');
+				} else {
+					element.removeAttribute(name);
+				}
+			} else {
+				originalFn(element, name, value);
+			}
 		};
 
 		IncrementalDomRenderer.prototype.handleInterceptedChildrenCloseCall_ = function handleInterceptedChildrenCloseCall_(originalFn, callTag) {
@@ -207,9 +222,7 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 				config.children = this.buildChildrenFn_(calls);
 				this.componentToRender_ = null;
 				_IncrementalDomAop2.default.stopInterception();
-				var comp = this.renderSubComponent_(tag, config);
-				this.updateElementIfNotReached_(comp);
-				return comp.element;
+				return this.renderFromTag_(tag, config);
 			}
 			this.componentToRender_.calls.push({
 				name: 'elementClose',
@@ -307,6 +320,16 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 
 		IncrementalDomRenderer.prototype.render = function render() {
 			this.patch();
+		};
+
+		IncrementalDomRenderer.prototype.renderFromTag_ = function renderFromTag_(tag, config) {
+			if (_metal.core.isString(tag) || tag.prototype.getRenderer) {
+				var comp = this.renderSubComponent_(tag, config);
+				this.updateElementIfNotReached_(comp);
+				return comp.element;
+			} else {
+				return tag(config);
+			}
 		};
 
 		IncrementalDomRenderer.prototype.renderIncDom = function renderIncDom() {

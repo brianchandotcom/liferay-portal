@@ -161,7 +161,21 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 			var _this3 = this;
 
 			return new _Promise.CancellablePromise(function (resolve, reject) {
-				_this3.getImageEditorCanvas().toBlob(resolve);
+				var canvas = _this3.getImageEditorCanvas();
+
+				if (canvas.toBlob) {
+					canvas.toBlob(resolve);
+				} else {
+					var data = atob(canvas.toDataURL().split(',')[1]);
+					var length = data.length;
+					var bytes = new Uint8Array(length);
+
+					for (var i = 0; i < length; i++) {
+						bytes[i] = data.charCodeAt(i);
+					}
+
+					resolve(new Blob([bytes], { type: 'image/png' }));
+				}
 			});
 		};
 
@@ -178,6 +192,8 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 				});
 
 				Liferay.Util.getWindow().hide();
+			} else if (result.error) {
+				this.showError_(result.error.message);
 			}
 		};
 
@@ -233,12 +249,33 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 					return _this6.submitBlob_(imageBlob);
 				}).then(function (result) {
 					return _this6.notifySaveResult_(result);
+				}).catch(function (error) {
+					return _this6.showError_(error);
 				});
 			}
 		};
 
-		ImageEditor.prototype.submitBlob_ = function submitBlob_(imageBlob) {
+		ImageEditor.prototype.showError_ = function showError_(message) {
 			var _this7 = this;
+
+			this.components.loading.show = false;
+
+			AUI().use('liferay-alert', function () {
+				new Liferay.Alert({
+					delay: {
+						hide: 2000,
+						show: 0
+					},
+					duration: 3000,
+					icon: 'exclamation-circle',
+					message: message,
+					type: 'danger'
+				}).render(_this7.element);
+			});
+		};
+
+		ImageEditor.prototype.submitBlob_ = function submitBlob_(imageBlob) {
+			var _this8 = this;
 
 			var saveFileName = this.saveFileName;
 			var saveParamName = this.saveParamName;
@@ -248,18 +285,16 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 
 				formData.append(saveParamName, imageBlob, saveFileName);
 
-				$.ajax({
+				var requestConfig = {
 					contentType: false,
 					data: formData,
-					error: function error(_error) {
-						return reject(_error);
-					},
 					processData: false,
-					success: function success(result) {
-						return resolve(result);
-					},
 					type: 'POST',
-					url: _this7.saveURL
+					url: _this8.saveURL
+				};
+
+				$.ajax(requestConfig).done(resolve).fail(function (jqXHR, status, error) {
+					return reject(error);
 				});
 			});
 
@@ -269,16 +304,16 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 		};
 
 		ImageEditor.prototype.syncHistory_ = function syncHistory_() {
-			var _this8 = this;
+			var _this9 = this;
 
 			return new _Promise.CancellablePromise(function (resolve, reject) {
-				_this8.history_[_this8.historyIndex_].getImageData().then(function (imageData) {
-					_this8.syncImageData_(imageData);
+				_this9.history_[_this9.historyIndex_].getImageData().then(function (imageData) {
+					_this9.syncImageData_(imageData);
 
-					_this8.history = {
-						canRedo: _this8.historyIndex_ < _this8.history_.length - 1,
-						canReset: _this8.history_.length > 1,
-						canUndo: _this8.historyIndex_ > 0
+					_this9.history = {
+						canRedo: _this9.historyIndex_ < _this9.history_.length - 1,
+						canReset: _this9.history_.length > 1,
+						canUndo: _this9.historyIndex_ > 0
 					};
 
 					resolve();

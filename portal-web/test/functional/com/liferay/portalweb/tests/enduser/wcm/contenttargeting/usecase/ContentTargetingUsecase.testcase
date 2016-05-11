@@ -1603,60 +1603,6 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportUncheckAppCTRefAllAndContentAT" priority="4">
-		<execute macro="LAR#setupContentTargeting" />
-
-		<execute macro="LAR#_gotoExportSite">
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
-		<execute macro="LAR#configureExportSiteOptions">
-			<var name="mainApplication" value="User Segment Content Display" />
-			<var name="uncheckSubApplicationList" value="Referenced User Segments,Referenced Content" />
-		</execute>
-
-		<execute macro="LAR#configureExportSiteOptions">
-			<var name="mainApplication" value="Campaign Content Display" />
-			<var name="uncheckSubApplicationList" value="Referenced Campaigns,Referenced Content" />
-		</execute>
-
-		<execute macro="LAR#configureExportSiteOptions">
-			<var name="uncheckContentNameList" value="Audience Targeting" />
-		</execute>
-
-		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
-
-		<var name="key_larFileName" value="${larFileName}" />
-
-		<execute function="AssertTextEquals" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-
-		<var method="selenium#getText('//tr/td[7]//span/a')" name="valueName" />
-
-		<echo message="value name ${valueName}" />
-
-		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9KB)]*" />
-
-		<echo message="lar file name ${larFileName}" />
-
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute function="DownloadTempFile" />
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Import Site" />
-		</execute>
-
-		<execute macro="LAR#importSiteCP">
-			<var name="importFail" value="true" />
-			<var name="larFileName" value="${larFileName}" />
-			<var name="siteName" value="Import Site" />
-		</execute>
-	</command>
-
 	<command name="ExportImportUncheckAppCTRefAllAndContentWC" priority="4">
 		<execute macro="LAR#setupContentTargeting" />
 

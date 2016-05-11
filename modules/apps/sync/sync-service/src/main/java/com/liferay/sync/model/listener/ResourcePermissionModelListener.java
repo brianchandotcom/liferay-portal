@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.hook.listeners;
+package com.liferay.sync.model.listener;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;

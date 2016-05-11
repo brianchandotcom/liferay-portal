@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.admin.portlet;
+package com.liferay.sync.web.portlet;
 
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.model.Group;

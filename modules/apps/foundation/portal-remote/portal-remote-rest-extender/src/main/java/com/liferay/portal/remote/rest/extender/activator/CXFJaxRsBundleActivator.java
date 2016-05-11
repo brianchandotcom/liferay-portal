@@ -12,19 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.remote.cxf.jaxrs.common.activator;
-
-import java.util.Collection;
+package com.liferay.portal.remote.rest.extender.activator;
 
 import javax.ws.rs.ext.RuntimeDelegate;
 
-import org.apache.cxf.Bus;
-
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-import org.osgi.framework.wiring.BundleWiring;
 
 /**
  * @author Carlos Sierra Andrés
@@ -37,13 +30,9 @@ public class CXFJaxRsBundleActivator implements BundleActivator {
 
 		ClassLoader contextClassLoader = thread.getContextClassLoader();
 
-		Bundle bundle = bundleContext.getBundle();
+		ClassLoader classLoader = RuntimeDelegate.class.getClassLoader();
 
-		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-		ClassLoader bundleClassLoader = bundleWiring.getClassLoader();
-
-		thread.setContextClassLoader(bundleClassLoader);
+		thread.setContextClassLoader(classLoader);
 
 		try {
 
@@ -59,16 +48,5 @@ public class CXFJaxRsBundleActivator implements BundleActivator {
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
 
-		// Clean up the cached instance so a new bundle can its place
-
-		Collection<ServiceReference<Bus>> serviceReferences =
-			bundleContext.getServiceReferences(Bus.class, null);
-
-		for (ServiceReference<Bus> serviceReference : serviceReferences) {
-			Bus bus = bundleContext.getService(serviceReference);
-
-			bus.setProperty("jaxrs.shared.server.factory", null);
-		}
 	}
-
 }

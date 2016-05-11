@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.calendar.upgrade.v1_0_3;
-
-import com.liferay.portal.kernel.upgrade.BaseUpgradeCompanyId;
+package com.liferay.calendar.upgrade.v1_0_5;
 
 /**
  * @author Inácio Nery
  */
-public class UpgradeCompanyId extends BaseUpgradeCompanyId {
+public class UpgradeCompanyId
+	extends com.liferay.portal.upgrade.util.UpgradeCompanyId {
 
 	@Override
 	protected TableUpdater[] getTableUpdaters() {

@@ -17,6 +17,7 @@ package com.liferay.portal.scripting;
 import com.liferay.portal.kernel.scripting.ScriptingContainer;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.FileUtil;
 
 import java.io.File;
@@ -86,7 +87,13 @@ public abstract class BaseScriptingExecutor implements ScriptingExecutor {
 	protected ClassLoader getClassLoader() {
 		Class<?> clazz = getClass();
 
-		return clazz.getClassLoader();
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		ClassLoader contextClassLoader =
+			Thread.currentThread().getContextClassLoader();
+
+		return AggregateClassLoader.getAggregateClassLoader(
+			classLoader, contextClassLoader);
 	}
 
 }

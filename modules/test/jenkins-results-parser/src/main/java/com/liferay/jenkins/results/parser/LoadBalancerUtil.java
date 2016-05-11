@@ -61,10 +61,6 @@ public class LoadBalancerUtil {
 
 		long start = System.currentTimeMillis();
 
-		System.out.println("Get most available master URL for properties:");
-
-		properties.list(System.out);
-
 		boolean readOnly = false;
 		int retryCount = 0;
 

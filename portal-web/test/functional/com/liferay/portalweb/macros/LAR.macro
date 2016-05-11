@@ -553,10 +553,6 @@
 	</command>
 
 	<command name="setupContentTargeting" >
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
 		<if>
 			<equals arg1="${stagingSetup}" arg2="true" />
 			<then>

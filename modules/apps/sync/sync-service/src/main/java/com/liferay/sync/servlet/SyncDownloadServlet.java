@@ -69,16 +69,28 @@ import java.io.InputStream;
 
 import java.util.List;
 
+import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Dennis Ju
  */
-public class DownloadServlet extends HttpServlet {
+@Component(
+	immediate = true,
+	property = {
+		"osgi.http.whiteboard.context.path=/sync",
+		"osgi.http.whiteboard.servlet.name=com.liferay.sync.servlet.SyncDownloadServlet",
+		"osgi.http.whiteboard.servlet.pattern=/sync/download/*"
+	},
+	service = Servlet.class
+)
+public class SyncDownloadServlet extends HttpServlet {
 
 	@Override
 	public void service(

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.upgrade.v7_0_0.util.ClassNameTable;
 import com.liferay.portal.upgrade.v7_0_0.util.ClusterGroupTable;
+import com.liferay.portal.upgrade.v7_0_0.util.CompanyTable;
 import com.liferay.portal.upgrade.v7_0_0.util.CounterTable;
 import com.liferay.portal.upgrade.v7_0_0.util.CountryTable;
 import com.liferay.portal.upgrade.v7_0_0.util.PortalPreferencesTable;
@@ -125,6 +126,9 @@ public class UpgradeSharding extends UpgradeProcess {
 				connection, targetConnection, ClusterGroupTable.TABLE_NAME,
 				ClusterGroupTable.TABLE_COLUMNS,
 				ClusterGroupTable.TABLE_SQL_CREATE);
+			copyControlTable(
+				connection, targetConnection, CompanyTable.TABLE_NAME,
+				CompanyTable.TABLE_COLUMNS, CompanyTable.TABLE_SQL_CREATE);
 			copyControlTable(
 				connection, targetConnection, CounterTable.TABLE_NAME,
 				CounterTable.TABLE_COLUMNS, CounterTable.TABLE_SQL_CREATE);

@@ -79,7 +79,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		throws Exception {
 
 		try {
-			if (!hasRows(targetConnection, tableName)) {
+			if (hasRows(targetConnection, tableName)) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Control table " + tableName + " should not contain " +

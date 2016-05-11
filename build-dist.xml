@@ -2753,11 +2753,6 @@ this task.
 		</replace>
 
 		<replace file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml">
-			<replacetoken><![CDATA[<location handler="welcome-content" name="/"/>]]></replacetoken>
-			<replacevalue></replacevalue>
-		</replace>
-
-		<replace file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml">
 			<replacetoken><![CDATA[<extension module="org.jboss.as.weld"/>]]></replacetoken>
 			<replacevalue></replacevalue>
 		</replace>
@@ -2802,6 +2797,11 @@ this task.
 						</security-domain>
 				]]>
 			</replacevalue>
+		</replace>
+
+		<replace file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml">
+			<replacetoken><![CDATA[<location name="/" handler="welcome-content"/>]]></replacetoken>
+			<replacevalue></replacevalue>
 		</replace>
 
 		<echo file="${app.server.wildfly.bin.dir}/server.policy">

@@ -1246,11 +1246,6 @@ this task.
 			};
 		</echo>
 
-		<replace file="${app.server.jboss.bin.dir}/standalone.conf">
-			<replacetoken><![CDATA[JAVA_OPTS="-Xms64m -Xmx512m -XX:MaxPermSize=256m ]]></replacetoken>
-			<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
-		</replace>
-
 		<if>
 			<equals arg1="${java.security.manager.option}" arg2="" />
 			<then>

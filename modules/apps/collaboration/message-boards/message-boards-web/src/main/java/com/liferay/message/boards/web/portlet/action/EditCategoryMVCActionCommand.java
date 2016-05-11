@@ -26,7 +26,6 @@ import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.service.MBCategoryService;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
-import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.model.TrashedModel;
@@ -142,9 +141,8 @@ public class EditCategoryMVCActionCommand extends BaseMVCActionCommand {
 			actionResponse.setRenderParameter(
 				"mvcPath", "/message_boards/error.jsp");
 		}
-		catch (CaptchaConfigurationException | CaptchaMaxChallengesException |
-			   CaptchaTextException | CategoryNameException |
-			   MailingListEmailAddressException |
+		catch (CaptchaConfigurationException | CaptchaTextException |
+			   CategoryNameException | MailingListEmailAddressException |
 			   MailingListInServerNameException |
 			   MailingListInUserNameException |
 			   MailingListOutEmailAddressException |

@@ -18,20 +18,6 @@
 
 <%
 String url = (String)request.getAttribute("liferay-ui:captcha:url");
-
-boolean captchaEnabled = false;
-
-try {
-	if (portletRequest != null) {
-		captchaEnabled = CaptchaUtil.isEnabled(portletRequest);
-	}
-	else {
-		captchaEnabled = CaptchaUtil.isEnabled(request);
-	}
-}
-catch (CaptchaMaxChallengesException cmce) {
-	captchaEnabled = true;
-}
 %>
 
 <c:if test="<%= captchaEnabled %>">

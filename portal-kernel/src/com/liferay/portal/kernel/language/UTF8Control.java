@@ -57,30 +57,57 @@ public class UTF8Control extends Control {
 			return null;
 		}
 
-		if (!reload) {
-			ResourceBundle resourceBundle = _resourceBundles.get(url);
-
-			if (resourceBundle != null) {
-				return resourceBundle;
-			}
-		}
-
 		URLConnection urlConnection = url.openConnection();
 
 		urlConnection.setUseCaches(!reload);
+
+		if (!reload) {
+			CacheContent cacheContent = _resourceBundles.get(url);
+
+			if (cacheContent != null) {
+				if (urlConnection.getLastModified() <=
+						cacheContent.getLastModified()) {
+
+					return cacheContent.getResourceBundle();
+				}
+			}
+		}
 
 		try (InputStream inputStream = urlConnection.getInputStream()) {
 			ResourceBundle resourceBundle = new PropertyResourceBundle(
 				new InputStreamReader(inputStream, StringPool.UTF8));
 
-			_resourceBundles.put(url, resourceBundle);
+			CacheContent cacheContent = new CacheContent(
+				urlConnection.getLastModified(), resourceBundle);
+
+			_resourceBundles.put(url, cacheContent);
 
 			return resourceBundle;
 		}
 	}
 
-	private static final Map<URL, ResourceBundle> _resourceBundles =
+	private static final Map<URL, CacheContent> _resourceBundles =
 		new ConcurrentReferenceValueHashMap<>(
 			FinalizeManager.SOFT_REFERENCE_FACTORY);
+
+	private static final class CacheContent {
+
+		public CacheContent(long lastModified, ResourceBundle resourceBundle) {
+			_lastModified = lastModified;
+			_resourceBundle = resourceBundle;
+		}
+
+		public long getLastModified() {
+			return _lastModified;
+		}
+
+		public ResourceBundle getResourceBundle() {
+			return _resourceBundle;
+		}
+
+		private final long _lastModified;
+		private final ResourceBundle _resourceBundle;
+
+	}
 
 }

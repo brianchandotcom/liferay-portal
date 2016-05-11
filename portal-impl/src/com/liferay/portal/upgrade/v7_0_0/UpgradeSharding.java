@@ -236,29 +236,6 @@ public class UpgradeSharding extends UpgradeProcess {
 		}
 	}
 
-	/**
-	 * @see com.liferay.portal.kernel.dao.db.BaseDBProcess#hasRows(String)
-	 */
-	protected boolean hasRows(Connection connection, String tableName) {
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select count(*) from " + tableName);
-			ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				int count = rs.getInt(1);
-
-				if (count > 0) {
-					return true;
-				}
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return false;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradeSharding.class);
 

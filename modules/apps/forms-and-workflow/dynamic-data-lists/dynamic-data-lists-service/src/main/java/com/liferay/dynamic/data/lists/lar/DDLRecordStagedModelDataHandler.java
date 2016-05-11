@@ -14,9 +14,9 @@
 
 package com.liferay.dynamic.data.lists.lar;
 
+import com.liferay.dynamic.data.lists.exportimport.staged.model.repository.DDLRecordStagedModelRepository;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.exportimport.content.processor.DDMFormValuesExportImportContentProcessor;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
@@ -29,17 +29,13 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,40 +49,6 @@ public class DDLRecordStagedModelDataHandler
 	extends BaseStagedModelDataHandler<DDLRecord> {
 
 	public static final String[] CLASS_NAMES = {DDLRecord.class.getName()};
-
-	@Override
-	public void deleteStagedModel(DDLRecord record) throws PortalException {
-		_ddlRecordLocalService.deleteRecord(record);
-	}
-
-	@Override
-	public void deleteStagedModel(
-			String uuid, long groupId, String className, String extraData)
-		throws PortalException {
-
-		DDLRecord record = fetchStagedModelByUuidAndGroupId(uuid, groupId);
-
-		if (record != null) {
-			deleteStagedModel(record);
-		}
-	}
-
-	@Override
-	public DDLRecord fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return _ddlRecordLocalService.fetchDDLRecordByUuidAndGroupId(
-			uuid, groupId);
-	}
-
-	@Override
-	public List<DDLRecord> fetchStagedModelsByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		return _ddlRecordLocalService.getDDLRecordsByUuidAndCompanyId(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new StagedModelModifiedDateComparator<DDLRecord>());
-	}
 
 	@Override
 	public String[] getClassNames() {
@@ -120,8 +82,6 @@ public class DDLRecordStagedModelDataHandler
 			PortletDataContext portletDataContext, DDLRecord record)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(record.getUserUuid());
-
 		Map<Long, Long> recordSetIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				DDLRecordSet.class);
@@ -134,32 +94,26 @@ public class DDLRecordStagedModelDataHandler
 		DDMFormValues ddmFormValues = getImportDDMFormValues(
 			portletDataContext, recordElement, recordSetId);
 
-		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			record);
+		DDLRecord importedRecord = (DDLRecord)record.clone();
 
-		DDLRecord importedRecord = null;
+		importedRecord.setGroupId(portletDataContext.getScopeGroupId());
+		importedRecord.setRecordSetId(recordSetId);
 
-		if (portletDataContext.isDataStrategyMirror()) {
-			DDLRecord existingRecord = fetchStagedModelByUuidAndGroupId(
+		DDLRecord existingRecord =
+			_ddlRecordStagedModelRepository.fetchStagedModelByUuidAndGroupId(
 				record.getUuid(), portletDataContext.getScopeGroupId());
 
-			if (existingRecord == null) {
-				serviceContext.setUuid(record.getUuid());
+		if (!portletDataContext.isDataStrategyMirror() ||
+			(existingRecord == null)) {
 
-				importedRecord = _ddlRecordLocalService.addRecord(
-					userId, portletDataContext.getScopeGroupId(), recordSetId,
-					record.getDisplayIndex(), ddmFormValues, serviceContext);
-			}
-			else {
-				importedRecord = _ddlRecordLocalService.updateRecord(
-					userId, existingRecord.getRecordId(), false,
-					record.getDisplayIndex(), ddmFormValues, serviceContext);
-			}
+			importedRecord = _ddlRecordStagedModelRepository.addStagedModel(
+				portletDataContext, importedRecord, ddmFormValues);
 		}
 		else {
-			importedRecord = _ddlRecordLocalService.addRecord(
-				userId, portletDataContext.getScopeGroupId(), recordSetId,
-				record.getDisplayIndex(), ddmFormValues, serviceContext);
+			importedRecord.setRecordId(existingRecord.getRecordId());
+
+			importedRecord = _ddlRecordStagedModelRepository.updateStagedModel(
+				portletDataContext, importedRecord, ddmFormValues);
 		}
 
 		portletDataContext.importClassedModel(record, importedRecord);
@@ -213,11 +167,9 @@ public class DDLRecordStagedModelDataHandler
 				portletDataContext, ddmStructure, ddmFormValues);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDLRecordLocalService(
-		DDLRecordLocalService ddlRecordLocalService) {
-
-		_ddlRecordLocalService = ddlRecordLocalService;
+	@Override
+	protected StagedModelRepository<DDLRecord> getStagedModelRepository() {
+		return _ddlRecordStagedModelRepository;
 	}
 
 	@Reference(unbind = "-")
@@ -248,6 +200,17 @@ public class DDLRecordStagedModelDataHandler
 		DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer) {
 
 		_ddmFormValuesJSONSerializer = ddmFormValuesJSONSerializer;
+	}
+
+	@Reference(
+		target =
+			"(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord)",
+		unbind = "-"
+	)
+	protected void setStagedModelRepository(
+		DDLRecordStagedModelRepository ddlRecordStagedModelRepository) {
+
+		_ddlRecordStagedModelRepository = ddlRecordStagedModelRepository;
 	}
 
 	@Reference(unbind = "-")
@@ -281,8 +244,8 @@ public class DDLRecordStagedModelDataHandler
 		}
 	}
 
-	private DDLRecordLocalService _ddlRecordLocalService;
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private DDLRecordStagedModelRepository _ddlRecordStagedModelRepository;
 	private DDMFormValuesExportImportContentProcessor
 		_ddmFormValuesExportImportContentProcessor;
 	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;

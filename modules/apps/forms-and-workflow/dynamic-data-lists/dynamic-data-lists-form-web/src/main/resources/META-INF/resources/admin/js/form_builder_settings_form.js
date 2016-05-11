@@ -5,7 +5,7 @@ AUI.add(
 
 		var CSS_FIELD_SETTINGS_SAVE = A.getClassName('lfr', 'ddl', 'field', 'settings', 'save');
 
-		var TPL_MODE_TOGGLER = '<a class="settings-toggler" href="javascript:;"></a>';
+		var TPL_SETTINGS_TOGGLER = '<button class="btn settings-toggler" type="button"><span class="settings-toggle-label"></span><span class="settings-toggle-icon"></span></button>';
 
 		var TPL_OPTION = '<option {status} value="{value}">{label}</option>';
 
@@ -190,13 +190,13 @@ AUI.add(
 
 						var advancedSettingsNode = instance.getPageNode(2);
 
-						var modeToggler = A.Node.create(TPL_MODE_TOGGLER);
+						var settingsTogglerNode = A.Node.create(TPL_SETTINGS_TOGGLER);
 
-						advancedSettingsNode.placeBefore(modeToggler);
+						advancedSettingsNode.placeBefore(settingsTogglerNode);
 
-						modeToggler.on('click', A.bind('_onClickModeToggler', instance));
+						settingsTogglerNode.on('click', A.bind('_onClickModeToggler', instance));
 
-						instance.modeToggler = modeToggler;
+						instance.settingsTogglerNode = settingsTogglerNode;
 					},
 
 					_generateFieldName: function(key) {
@@ -318,16 +318,23 @@ AUI.add(
 
 						var advancedSettingsNode = instance.getPageNode(2);
 
-						var modeToggler = instance.modeToggler;
+						var settingsTogglerNode = instance.settingsTogglerNode;
 
-						if (advancedSettingsNode.hasClass('active')) {
-							modeToggler.addClass('active');
-							modeToggler.html(Liferay.Language.get('hide-options'));
+						var settingsTogglerIconNode = settingsTogglerNode.one('.settings-toggle-icon');
+						var settingsTogglerLabelNode = settingsTogglerNode.one('.settings-toggle-label');
+
+						var active = advancedSettingsNode.hasClass('active');
+
+						if (active) {
+							settingsTogglerIconNode.html(Liferay.Util.getLexiconIconTpl('angle-up'));
+							settingsTogglerLabelNode.html(Liferay.Language.get('hide-options'));
 						}
 						else {
-							modeToggler.removeClass('active');
-							modeToggler.html(Liferay.Language.get('show-more-options'));
+							settingsTogglerIconNode.html(Liferay.Util.getLexiconIconTpl('angle-down'));
+							settingsTogglerLabelNode.html(Liferay.Language.get('show-more-options'));
 						}
+
+						settingsTogglerNode.toggleClass('active', active);
 					},
 
 					_valueContainer: function() {

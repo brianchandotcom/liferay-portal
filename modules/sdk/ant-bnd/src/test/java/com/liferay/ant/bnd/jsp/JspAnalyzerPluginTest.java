@@ -14,8 +14,6 @@
 
 package com.liferay.ant.bnd.jsp;
 
-import static org.junit.Assert.assertEquals;
-
 import aQute.bnd.osgi.Builder;
 import aQute.bnd.osgi.Constants;
 
@@ -99,7 +97,7 @@ public class JspAnalyzerPluginTest {
 		String requireCapabilityAfter = b.getProperty(
 			Constants.REQUIRE_CAPABILITY);
 
-		assertEquals(requireCapabilityBefore, requireCapabilityAfter);
+		Assert.assertEquals(requireCapabilityBefore, requireCapabilityAfter);
 	}
 
 	protected URL getResource(String path) {

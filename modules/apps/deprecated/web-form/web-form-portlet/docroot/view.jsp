@@ -39,7 +39,6 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 
 		<liferay-ui:success key="success" message="the-form-information-was-sent-successfully" />
 
-		<liferay-ui:error exception="<%= CaptchaMaxChallengesException.class %>" message="maximum-number-of-captcha-attempts-exceeded" />
 		<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 		<liferay-ui:error key="error" message="an-error-occurred-while-sending-the-form-information" />
 

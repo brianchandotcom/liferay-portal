@@ -63,18 +63,14 @@ public class CaptchaImpl implements Captcha {
 	}
 
 	@Override
-	public boolean isEnabled(HttpServletRequest request)
-		throws CaptchaException {
-
+	public boolean isEnabled(HttpServletRequest request) {
 		_initialize();
 
 		return _captcha.isEnabled(request);
 	}
 
 	@Override
-	public boolean isEnabled(PortletRequest portletRequest)
-		throws CaptchaException {
-
+	public boolean isEnabled(PortletRequest portletRequest) {
 		_initialize();
 
 		return _captcha.isEnabled(portletRequest);

@@ -17,3 +17,14 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.captcha.CaptchaUtil" %>
+
+<%
+boolean captchaEnabled = false;
+
+if (portletRequest != null) {
+	captchaEnabled = CaptchaUtil.isEnabled(portletRequest);
+}
+else {
+	captchaEnabled = CaptchaUtil.isEnabled(request);
+}
+%>

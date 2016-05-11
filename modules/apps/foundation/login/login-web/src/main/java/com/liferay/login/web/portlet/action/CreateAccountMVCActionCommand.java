@@ -17,7 +17,6 @@ package com.liferay.login.web.portlet.action;
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.login.web.portlet.util.LoginUtil;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
-import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.exception.AddressCityException;
@@ -259,7 +258,6 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 					 e instanceof AddressStreetException ||
 					 e instanceof AddressZipException ||
 					 e instanceof CaptchaConfigurationException ||
-					 e instanceof CaptchaMaxChallengesException ||
 					 e instanceof CaptchaTextException ||
 					 e instanceof CompanyMaxUsersException ||
 					 e instanceof ContactBirthdayException ||

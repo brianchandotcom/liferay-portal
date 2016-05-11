@@ -52,15 +52,11 @@ public class CaptchaUtil {
 		return getCaptcha().getTaglibPath();
 	}
 
-	public static boolean isEnabled(HttpServletRequest request)
-		throws CaptchaException {
-
+	public static boolean isEnabled(HttpServletRequest request) {
 		return getCaptcha().isEnabled(request);
 	}
 
-	public static boolean isEnabled(PortletRequest portletRequest)
-		throws CaptchaException {
-
+	public static boolean isEnabled(PortletRequest portletRequest) {
 		return getCaptcha().isEnabled(portletRequest);
 	}
 

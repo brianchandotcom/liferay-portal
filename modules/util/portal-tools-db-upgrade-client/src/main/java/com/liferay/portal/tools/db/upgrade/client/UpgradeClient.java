@@ -70,8 +70,8 @@ public class UpgradeClient {
 
 			String jvmOpts = null;
 
-			if (commandLine.hasOption("jvmOpts")) {
-				jvmOpts = commandLine.getOptionValue("jvmOpts");
+			if (commandLine.hasOption("jvm-opts")) {
+				jvmOpts = commandLine.getOptionValue("jvm-opts");
 			}
 			else {
 				jvmOpts =
@@ -81,8 +81,8 @@ public class UpgradeClient {
 
 			File logFile = null;
 
-			if (commandLine.hasOption("logFile")) {
-				logFile = new File(commandLine.getOptionValue("logFile"));
+			if (commandLine.hasOption("log-file")) {
+				logFile = new File(commandLine.getOptionValue("log-file"));
 			}
 			else {
 				logFile = new File("upgrade.log");
@@ -251,10 +251,10 @@ public class UpgradeClient {
 			new Option("h", "help", false, "Print this message."));
 		options.addOption(
 			new Option(
-				"j", "jvmOpts", true,
+				"j", "jvm-opts", true,
 				"Set the JVM_OPTS used for the upgrade."));
 		options.addOption(
-			new Option("l", "logFile", true, "Set the name of log file."));
+			new Option("l", "log-file", true, "Set the name of log file."));
 		options.addOption(
 			new Option(
 				"s", "shell", false, "Automatically connect to GoGo shell."));
@@ -343,19 +343,19 @@ public class UpgradeClient {
 	private boolean _isFinished(GogoTelnetClient gogoTelnetClient)
 		throws IOException {
 
-		System.out.print(
-			"Checking to see if all upgrades steps have completed...");
+		System.out.print("Checking to see if all upgrades have completed...");
 
-		String unfinishedUpgrades = gogoTelnetClient.send("upgrade:dryRun");
+		String upgradeCheck = gogoTelnetClient.send("upgrade:check");
 
 		String upgradeSteps = gogoTelnetClient.send(
 			"upgrade:list | grep Registered | grep step");
 
-		if (!unfinishedUpgrades.equals("upgrade:dryRun") ||
+		if (!upgradeCheck.equals("upgrade:check") ||
 			upgradeSteps.contains("true")) {
 
 			System.out.println(
-				" one of your upgrades is still running or failed.");
+				" one or more of your upgrades failed, has not been started, " +
+					"or is still running.");
 
 			return false;
 		}
@@ -369,7 +369,9 @@ public class UpgradeClient {
 	private void _printHelp() {
 		System.out.println("\nUpgrade commands:");
 		System.out.println("exit or quit - Exit Gogo Shell");
-		System.out.println("upgrade:dryRun - List unfinished upgrades");
+		System.out.println(
+			"upgrade:check - List upgrades that failed or has not been " +
+				"started");
 		System.out.println(
 			"upgrade:execute {module_name} - Execute upgrade for specified " +
 				"module");

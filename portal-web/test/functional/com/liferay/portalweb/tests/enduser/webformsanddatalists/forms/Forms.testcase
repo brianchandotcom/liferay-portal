@@ -32,6 +32,7 @@
 
 	<command name="ConfigureDataProviderWithSelectField" priority="5">
 		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="Forms#ConfigureDataProviderWithSelectField" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 

@@ -1358,9 +1358,12 @@
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
-		<execute macro="SitePageNavigator#gotoPages">
-			<var name="site" value="Community Site Name" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Home" />
+			<var name="siteName" value="Community Site Name" />
 		</execute>
+
+		<execute macro="Navigator#gotoStagedView" />
 
 		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="Home" />
@@ -1635,14 +1638,16 @@
 			<var name="sitePagesVariationName" value="Empty Variation" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Home" />
+			<var name="siteName" value="Community Site Name" />
 		</execute>
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Empty Page Name" />
 			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Community Site Name" />
+			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="Staging#viewSitePagesVariationPG">
@@ -4399,6 +4404,7 @@
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Page Name" />
 			<var name="pageStaging" value="true" />
+			<var name="siteScopeSelected" value="true" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">

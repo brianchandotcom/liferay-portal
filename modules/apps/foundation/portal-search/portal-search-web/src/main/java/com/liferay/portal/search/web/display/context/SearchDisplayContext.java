@@ -70,7 +70,9 @@ public class SearchDisplayContext {
 		_renderResponse = renderResponse;
 		_portletPreferences = portletPreferences;
 
-		if ((getKeywords() == null) || (getKeywords().length() == 0)) {
+		String keywords = getKeywords();
+
+		if ((keywords == null) || (keywords.length() == 0)) {
 			_hits = null;
 			_searchContext = null;
 			_searchContainer = null;
@@ -86,7 +88,7 @@ public class SearchDisplayContext {
 
 		String emptyResultMessage = LanguageUtil.format(
 			request, "no-results-were-found-that-matched-the-keywords-x",
-			"<strong>" + HtmlUtil.escape(getKeywords()) + "</strong>", false);
+			"<strong>" + HtmlUtil.escape(keywords) + "</strong>", false);
 
 		SearchContainer<Document> searchContainer = new SearchContainer<>(
 			_renderRequest, getPortletURL(), null, emptyResultMessage);

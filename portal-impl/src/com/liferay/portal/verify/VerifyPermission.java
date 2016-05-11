@@ -14,9 +14,11 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -41,6 +43,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -51,7 +54,10 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.impl.ResourcePermissionLocalServiceImpl;
 import com.liferay.portal.util.PortalInstances;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +90,64 @@ public class VerifyPermission extends VerifyProcess {
 
 				ResourceActionLocalServiceUtil.checkResourceActions(
 					portletName, actionIds, true);
+			}
+		}
+	}
+
+	protected void deleteConflictingUserDefaultRolePermissions(
+			long companyId, long powerUserRoleId, long userRoleId,
+			long userClassNameId, long userGroupClassNameId)
+		throws Exception {
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(14);
+
+			sb.append("select rp1.resourcePermissionId from ");
+			sb.append("ResourcePermission rp1 inner join ");
+			sb.append("ResourcePermission rp2 on ");
+			sb.append("rp1.companyId = rp2.companyId and ");
+			sb.append("rp1.name = rp2.name and ");
+			sb.append("rp1.scope = rp2.scope and rp1.primKey = rp2.primKey ");
+			sb.append("inner join Layout on ");
+			sb.append("rp1.companyId = Layout.companyId and ");
+			sb.append("rp1.primKey like replace('[$PLID$]_LAYOUT_%', ");
+			sb.append("'[$PLID$]', cast_text(Layout.plid)) and ");
+			sb.append("Layout.type_ = '");
+			sb.append(LayoutConstants.TYPE_PORTLET);
+			sb.append(CharPool.APOSTROPHE);
+			sb.append(" inner join Group_ on Layout.groupId = Group_.groupId ");
+			sb.append("where rp1.companyId = ");
+			sb.append(companyId);
+			sb.append(" and rp1.roleId = ");
+			sb.append(powerUserRoleId);
+			sb.append(" and rp2.roleId = ");
+			sb.append(userRoleId);
+			sb.append(" and rp1.scope = ");
+			sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
+			sb.append(" and (Group_.classNameId = ");
+			sb.append(userClassNameId);
+			sb.append(" or Group_.classNameId = ");
+			sb.append(userGroupClassNameId);
+			sb.append(")");
+
+			try (Statement ps1 = connection.createStatement();
+				PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"delete from ResourcePermission where " +
+							"resourcePermissionId = ?")) {
+
+				String sql = SQLTransformer.transform(sb.toString());
+
+				try (ResultSet rs = ps1.executeQuery(sql)) {
+					while (rs.next()) {
+						ps2.setLong(1, rs.getLong(1));
+
+						ps2.addBatch();
+					}
+				}
+
+				ps2.executeBatch();
 			}
 		}
 	}
@@ -238,6 +302,10 @@ public class VerifyPermission extends VerifyProcess {
 				Role userRole = RoleLocalServiceUtil.getRole(
 					companyId, RoleConstants.USER);
 
+				deleteConflictingUserDefaultRolePermissions(
+					companyId, powerUserRole.getRoleId(), userRole.getRoleId(),
+					userClassNameId, userGroupClassNameId);
+
 				StringBundler sb = new StringBundler(20);
 
 				sb.append("update ResourcePermission set roleId = ");
@@ -279,6 +347,10 @@ public class VerifyPermission extends VerifyProcess {
 				companyId, RoleConstants.POWER_USER);
 			Role userRole = RoleLocalServiceUtil.getRole(
 				companyId, RoleConstants.USER);
+
+			deleteConflictingUserDefaultRolePermissions(
+				companyId, powerUserRole.getRoleId(), userRole.getRoleId(),
+				userClassNameId, userGroupClassNameId);
 
 			StringBundler sb = new StringBundler(19);
 
@@ -335,6 +407,10 @@ public class VerifyPermission extends VerifyProcess {
 				companyId, RoleConstants.POWER_USER);
 			Role userRole = RoleLocalServiceUtil.getRole(
 				companyId, RoleConstants.USER);
+
+			deleteConflictingUserDefaultRolePermissions(
+				companyId, powerUserRole.getRoleId(), userRole.getRoleId(),
+				userClassNameId, userGroupClassNameId);
 
 			sb = new StringBundler(20);
 

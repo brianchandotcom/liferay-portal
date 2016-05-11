@@ -43,7 +43,9 @@ public class UpgradeNamespace extends UpgradeProcess {
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(newTableName)) {
-			if (hasTable(newTableName) && hasRows(newTableName)) {
+			boolean hasNewTable = hasTable(newTableName);
+
+			if (hasNewTable && hasRows(newTableName)) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Not renaming " + oldTableName + " to " + newTableName +
@@ -53,7 +55,9 @@ public class UpgradeNamespace extends UpgradeProcess {
 				return;
 			}
 
-			if (!hasRows(oldTableName)) {
+			boolean hasOldTable = hasTable(oldTableName);
+
+			if (hasOldTable && !hasRows(oldTableName)) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Not renaming " + oldTableName + " to " + newTableName +
@@ -63,7 +67,15 @@ public class UpgradeNamespace extends UpgradeProcess {
 				return;
 			}
 
-			runSQL(tableSqlDrop);
+			if (!hasOldTable && !hasNewTable) {
+				runSQL(tableSqlCreate);
+
+				return;
+			}
+
+			if (hasNewTable) {
+				runSQL(tableSqlDrop);
+			}
 
 			UpgradeTable upgradeTable = UpgradeTableFactoryUtil.getUpgradeTable(
 				oldTableName, tableColumns);

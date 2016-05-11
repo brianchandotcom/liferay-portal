@@ -23,6 +23,10 @@ gradle.beforeProject {
 				task buildService(dependsOn: "build-service")
 				task buildWSDD(dependsOn: "build-wsdd")
 			}
+
+			deploy {
+				dependsOn ":apps:foundation:frontend-css:frontend-css-common:buildCssCommon"
+			}
 		}
 
 		pluginManager.withPlugin("com.liferay.osgi.plugin") {

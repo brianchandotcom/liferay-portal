@@ -305,6 +305,10 @@ public class ToolsUtil {
 			String importPackageAndClassName = line.substring(
 				x + 7, line.lastIndexOf(StringPool.SEMICOLON));
 
+			if (importPackageAndClassName.contains(StringPool.STAR)) {
+				continue;
+			}
+
 			Pattern pattern3 = Pattern.compile(
 				"\n(.*)(" +
 					StringUtil.replace(importPackageAndClassName, ".", "\\.") +

@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
-import com.liferay.calendar.upgrade.v1_0_1.UpgradeCalendar;
+import com.liferay.calendar.upgrade.v1_0_2.UpgradeCalendar;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Group;

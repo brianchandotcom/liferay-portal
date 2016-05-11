@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManag
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -240,8 +239,6 @@ public class LoginUtil {
 		UserLocalServiceUtil.sendPassword(
 			company.getCompanyId(), toAddress, fromName, fromAddress, subject,
 			body, serviceContext);
-
-		SessionMessages.add(actionRequest, "requestProcessed", toAddress);
 	}
 
 	/**

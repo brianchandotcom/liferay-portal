@@ -1268,8 +1268,8 @@ this task.
 		</echo>
 
 		<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat">
-			<replacetoken><![CDATA[set "JAVA_OPTS=-Xms64M ]]></replacetoken>
-			<replacevalue><![CDATA[rem set "JAVA_OPTS=-Xms64M ]]></replacevalue>
+			<replacetoken><![CDATA[set "JAVA_OPTS=-Xms1G -Xmx1G -XX:MaxPermSize=256M"]]></replacetoken>
+			<replacevalue></replacevalue>
 		</replace>
 
 		<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat">

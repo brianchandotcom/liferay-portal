@@ -33,56 +33,86 @@ public class DLRequestHelper extends BaseRequestHelper {
 	}
 
 	public DLGroupServiceSettings getDLGroupServiceSettings() {
-		try {
-			if (_dlGroupServiceSettings == null) {
-				String portletResource = getPortletResource();
-
-				if (Validator.isNotNull(portletResource)) {
-					HttpServletRequest request = getRequest();
-
-					_dlGroupServiceSettings =
-						DLGroupServiceSettings.getInstance(
-							getScopeGroupId(), request.getParameterMap());
-				}
-				else {
-					_dlGroupServiceSettings =
-						DLGroupServiceSettings.getInstance(getScopeGroupId());
-				}
-			}
-
+		if (_dlGroupServiceSettings != null) {
 			return _dlGroupServiceSettings;
+		}
+
+		HttpServletRequest request = getRequest();
+
+		_dlGroupServiceSettings = (DLGroupServiceSettings)request.getAttribute(
+			_DL_GROUP_SERVICE_SETTINGS_KEY);
+
+		if (_dlGroupServiceSettings != null) {
+			return _dlGroupServiceSettings;
+		}
+
+		String portletResource = getPortletResource();
+
+		try {
+			if (Validator.isNotNull(portletResource)) {
+				_dlGroupServiceSettings = DLGroupServiceSettings.getInstance(
+					getScopeGroupId(), request.getParameterMap());
+			}
+			else {
+				_dlGroupServiceSettings = DLGroupServiceSettings.getInstance(
+					getScopeGroupId());
+			}
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);
 		}
+
+		request.setAttribute(
+			_DL_GROUP_SERVICE_SETTINGS_KEY, _dlGroupServiceSettings);
+
+		return _dlGroupServiceSettings;
 	}
 
 	public DLPortletInstanceSettings getDLPortletInstanceSettings() {
-		try {
-			if (_dlPortletInstanceSettings == null) {
-				String portletResource = getPortletResource();
-
-				if (Validator.isNotNull(portletResource)) {
-					HttpServletRequest request = getRequest();
-
-					_dlPortletInstanceSettings =
-						DLPortletInstanceSettings.getInstance(
-							getLayout(), getResourcePortletId(),
-							request.getParameterMap());
-				}
-				else {
-					_dlPortletInstanceSettings =
-						DLPortletInstanceSettings.getInstance(
-							getLayout(), getPortletId());
-				}
-			}
-
+		if (_dlGroupServiceSettings != null) {
 			return _dlPortletInstanceSettings;
+		}
+
+		HttpServletRequest request = getRequest();
+
+		_dlPortletInstanceSettings =
+			(DLPortletInstanceSettings)request.getAttribute(
+				_DL_PORTLET_INSTANCE_SETTINGS_KEY);
+
+		if (_dlPortletInstanceSettings != null) {
+			return _dlPortletInstanceSettings;
+		}
+
+		String portletResource = getPortletResource();
+
+		try {
+			if (Validator.isNotNull(portletResource)) {
+				_dlPortletInstanceSettings =
+					DLPortletInstanceSettings.getInstance(
+						getLayout(), getResourcePortletId(),
+						request.getParameterMap());
+			}
+			else {
+				_dlPortletInstanceSettings =
+					DLPortletInstanceSettings.getInstance(
+						getLayout(), getPortletId());
+			}
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);
 		}
+
+		request.setAttribute(
+			_DL_PORTLET_INSTANCE_SETTINGS_KEY, _dlPortletInstanceSettings);
+
+		return _dlPortletInstanceSettings;
 	}
+
+	private static final String _DL_GROUP_SERVICE_SETTINGS_KEY =
+		"DL_GROUP_SERVICE_SETTINGS";
+
+	private static final String _DL_PORTLET_INSTANCE_SETTINGS_KEY =
+		"DL_PORTLET_INSTANCE_SETTINGS";
 
 	private DLGroupServiceSettings _dlGroupServiceSettings;
 	private DLPortletInstanceSettings _dlPortletInstanceSettings;

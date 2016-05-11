@@ -58,14 +58,14 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as a date. If the parameter is
+	 * Returns the request parameter value as a Date. If the parameter is
 	 * missing or not convertible to a Date, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
 	 * @param  dateFormat the format used to parse date
 	 * @param  defaultValue a default value
-	 * @return the request parameter value as a date
+	 * @return the request parameter value as a Date
 	 */
 	public static Date get(
 		HttpServletRequest request, String param, DateFormat dateFormat,

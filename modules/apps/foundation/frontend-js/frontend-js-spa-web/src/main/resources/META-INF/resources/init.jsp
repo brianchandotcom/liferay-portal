@@ -27,15 +27,19 @@ SPAUtil spaUtil = (SPAUtil)request.getAttribute(SPAWebKeys.SPA_UTIL);
 %>
 
 <aui:script require="frontend-js-spa-web/liferay/init.es">
-	Liferay.on(
-		'SPAReady',
-		function() {
-			var app = Liferay.SPA.app;
+	var setSPAProperties = function() {
+		var app = Liferay.SPA.app;
 
-			app.setPortletsBlacklist(<%= spaUtil.getPortletsBlacklist(themeDisplay) %>);
-			app.setValidStatusCodes(<%= spaUtil.getValidStatusCodes() %>);
-		}
-	);
+		app.setPortletsBlacklist(<%= spaUtil.getPortletsBlacklist(themeDisplay) %>);
+		app.setValidStatusCodes(<%= spaUtil.getValidStatusCodes() %>);
+	};
+
+	if (Liferay.SPA.app == null) {
+		Liferay.on('SPAReady', setSPAProperties);
+	}
+	else {
+		setSPAProperties();
+	}
 </aui:script>
 
 <aui:script>

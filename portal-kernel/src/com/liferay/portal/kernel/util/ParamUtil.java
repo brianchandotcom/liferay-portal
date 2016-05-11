@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
  * Provides utility methods for reading request parameters.
  *
  * @author Brian Wing Shun Chan
- * @author Raymond Augé
+ * @author Raymond AugÃ©
  */
 public class ParamUtil {
 
@@ -58,8 +58,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as a date. If the parameter is missing
-	 * or not convertible to a Date, the default value is returned.
+	 * Returns the request parameter value as a date. If the parameter is
+	 * missing or not convertible to a Date, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -91,8 +91,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as a float. If the parameter is missing
-	 * or not convertible to a float, the default value is returned.
+	 * Returns the request parameter value as a float. If the parameter is
+	 * missing or not convertible to a float, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -106,8 +106,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as an integer. If the parameter is missing
-	 * or not convertible to an integer, the default value is returned.
+	 * Returns the request parameter value as an integer. If the parameter is
+	 * missing or not convertible to an integer, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -121,8 +121,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as a long. If the parameter is missing
-	 * or not convertible to a long, the default value is returned.
+	 * Returns the request parameter value as a long. If the parameter is
+	 * missing or not convertible to a long, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -151,8 +151,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as a short. If the parameter is missing
-	 * or not convertible to a short, the default value is returned.
+	 * Returns the request parameter value as a short. If the parameter is
+	 * missing or not convertible to a short, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -188,8 +188,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as a boolean. If the parameter
-	 * is missing, the default value is returned.
+	 * Returns the portlet request parameter value as a boolean. If the
+	 * parameter is missing, the default value is returned.
 	 *
 	 * <p>
 	 * If the value is not convertible to a boolean, <code>false</code> is
@@ -209,8 +209,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as a Date. If the parameter is
-	 * missing or not convertible to a Date, the default value is returned.
+	 * Returns the portlet request parameter value as a Date. If the parameter
+	 * is missing or not convertible to a Date, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -244,8 +244,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as a float. If the parameter is
-	 * missing or not convertible to a float, the default value is returned.
+	 * Returns the portlet request parameter value as a float. If the parameter
+	 * is missing or not convertible to a float, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -260,8 +260,9 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as an integer. If the parameter is
-	 * missing or not convertible to an integer, the default value is returned.
+	 * Returns the portlet request parameter value as an integer. If the
+	 * parameter is missing or not convertible to an integer, the default value
+	 * is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -276,8 +277,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as a long. If the parameter is
-	 * missing or not convertible to a long, the default value is returned.
+	 * Returns the portlet request parameter value as a long. If the parameter
+	 * is missing or not convertible to a long, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -308,8 +309,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as a short. If the parameter is
-	 * missing or not convertible to a short, the default value is returned.
+	 * Returns the portlet request parameter value as a short. If the parameter
+	 * is missing or not convertible to a short, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -347,8 +348,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as a boolean. If the parameter
-	 * is missing, the default value is returned.
+	 * Returns the service context parameter value as a boolean. If the
+	 * parameter is missing, the default value is returned.
 	 *
 	 * <p>
 	 * If the value is not convertible to a boolean, <code>false</code> is
@@ -368,8 +369,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as a Date. If the parameter is
-	 * missing or not convertible to a Date, the default value is returned.
+	 * Returns the service context parameter value as a Date. If the parameter
+	 * is missing or not convertible to a Date, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -403,8 +404,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as a float. If the parameter is
-	 * missing or not convertible to a float, the default value is returned.
+	 * Returns the service context parameter value as a float. If the parameter
+	 * is missing or not convertible to a float, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -419,8 +420,9 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as an integer. If the parameter is
-	 * missing or not convertible to an integer, the default value is returned.
+	 * Returns the service context parameter value as an integer. If the
+	 * parameter is missing or not convertible to an integer, the default value
+	 * is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -435,8 +437,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as a long. If the parameter is
-	 * missing or not convertible to a long, the default value is returned.
+	 * Returns the service context parameter value as a long. If the parameter
+	 * is missing or not convertible to a long, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -467,8 +469,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as a short. If the parameter is
-	 * missing or not convertible to a short, the default value is returned.
+	 * Returns the service context parameter value as a short. If the parameter
+	 * is missing or not convertible to a short, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -538,8 +540,9 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as a boolean. If the parameter
-	 * is missing or not convertible to a boolean, <code>false</code> is returned.
+	 * Returns the portlet request parameter value as a boolean. If the
+	 * parameter is missing or not convertible to a boolean, <code>false</code>
+	 * is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -553,8 +556,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as a boolean. If the parameter
-	 * is missing, the default value is returned.
+	 * Returns the portlet request parameter value as a boolean. If the
+	 * parameter is missing, the default value is returned.
 	 *
 	 * <p>
 	 * If the value is not convertible to a boolean, <code>false</code> is
@@ -574,8 +577,9 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as a boolean. If the parameter
-	 * is missing or not convertible to a boolean, <code>false</code> is returned.
+	 * Returns the service context parameter value as a boolean. If the
+	 * parameter is missing or not convertible to a boolean, <code>false</code>
+	 * is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -589,8 +593,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as a boolean. If the parameter
-	 * is missing, the default value is returned.
+	 * Returns the service context parameter value as a boolean. If the
+	 * parameter is missing, the default value is returned.
 	 *
 	 * <p>
 	 * If the value is not convertible to a boolean, <code>false</code> is
@@ -626,8 +630,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the request parameter value as a boolean array. In the returned
-	 * array, each parameter value not convertible to a boolean is replaced by the
-	 * default value.
+	 * array, each parameter value not convertible to a boolean is replaced by
+	 * the default value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -710,8 +714,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as a Date. If the parameter is missing
-	 * or not convertible to a Date, the current date is returned.
+	 * Returns the request parameter value as a Date. If the parameter is
+	 * missing or not convertible to a Date, the current date is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -725,8 +729,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as a Date. If the parameter is missing
-	 * or not convertible to a Date, the default value is returned.
+	 * Returns the request parameter value as a Date. If the parameter is
+	 * missing or not convertible to a Date, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -742,8 +746,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as a Date. If the parameter is
-	 * missing or not convertible to a Date, the current date is returned.
+	 * Returns the portlet request parameter value as a Date. If the parameter
+	 * is missing or not convertible to a Date, the current date is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -759,8 +763,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as a Date. If the parameter is
-	 * missing or not convertible to a Date, the default value is returned.
+	 * Returns the portlet request parameter value as a Date. If the parameter
+	 * is missing or not convertible to a Date, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -777,8 +781,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as a Date. If the parameter is
-	 * missing or not convertible to a Date, the current date is returned.
+	 * Returns the service context parameter value as a Date. If the parameter
+	 * is missing or not convertible to a Date, the current date is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -794,8 +798,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as a Date. If the parameter is
-	 * missing or not convertible to a Date, the default value is returned.
+	 * Returns the service context parameter value as a Date. If the parameter
+	 * is missing or not convertible to a Date, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -812,9 +816,9 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as a Date array. In the returned array,
-	 * each parameter value not convertible to a Date is replaced by the current
-	 * date.
+	 * Returns the request parameter value as a Date array. In the returned
+	 * array, each parameter value not convertible to a Date is replaced by the
+	 * current date.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -828,9 +832,9 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as a Date array. In the returned array,
-	 * each parameter value not convertible to a Date is replaced by the default
-	 * value.
+	 * Returns the request parameter value as a Date array. In the returned
+	 * array, each parameter value not convertible to a Date is replaced by the
+	 * default value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -848,8 +852,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the portlet request parameter value as a Date array. In the
-	 * returned array, each parameter value not convertible to a Date is replaced
-	 * by the current date.
+	 * returned array, each parameter value not convertible to a Date is
+	 * replaced by the current date.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -865,8 +869,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the portlet request parameter value as a Date array. In the
-	 * returned array, each parameter value not convertible to a Date is replaced
-	 * by the default value.
+	 * returned array, each parameter value not convertible to a Date is
+	 * replaced by the default value.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -886,8 +890,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the service context parameter value as a Date array. In the
-	 * returned array, each parameter value not convertible to a Date is replaced
-	 * by the current date.
+	 * returned array, each parameter value not convertible to a Date is
+	 * replaced by the current date.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -903,8 +907,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the service context parameter value as a Date array. In the
-	 * returned array, each parameter value not convertible to a Date is replaced
-	 * by the default value.
+	 * returned array, each parameter value not convertible to a Date is
+	 * replaced by the default value.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -1095,8 +1099,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the request parameter value as a double array. In the returned
-	 * array, each parameter value not convertible to a double is replaced by the
-	 * default value.
+	 * array, each parameter value not convertible to a double is replaced by
+	 * the default value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -1179,8 +1183,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as a float. If the parameter is missing
-	 * or not convertible to a float, <code>0</code> is returned.
+	 * Returns the request parameter value as a float. If the parameter is
+	 * missing or not convertible to a float, <code>0</code> is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -1192,8 +1196,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as a float. If the parameter is missing
-	 * or not convertible to a float, the default value is returned.
+	 * Returns the request parameter value as a float. If the parameter is
+	 * missing or not convertible to a float, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -1207,8 +1211,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as a float. If the parameter is
-	 * missing or not convertible to a float, <code>0</code> is returned.
+	 * Returns the portlet request parameter value as a float. If the parameter
+	 * is missing or not convertible to a float, <code>0</code> is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -1220,8 +1224,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as a float. If the parameter is
-	 * missing or not convertible to a float, the default value is returned.
+	 * Returns the portlet request parameter value as a float. If the parameter
+	 * is missing or not convertible to a float, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -1236,8 +1240,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as a float. If the parameter is
-	 * missing or not convertible to a float, <code>0</code> is returned.
+	 * Returns the service context parameter value as a float. If the parameter
+	 * is missing or not convertible to a float, <code>0</code> is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -1249,8 +1253,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as a float. If the parameter is
-	 * missing or not convertible to a float, the default value is returned.
+	 * Returns the service context parameter value as a float. If the parameter
+	 * is missing or not convertible to a float, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -1298,8 +1302,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the portlet request parameter value as a float array. In the
-	 * returned array, each parameter value not convertible to a float is replaced
-	 * by <code>0</code>.
+	 * returned array, each parameter value not convertible to a float is
+	 * replaced by <code>0</code>.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -1314,8 +1318,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the portlet request parameter value as a float array. In the
-	 * returned array, each parameter value not convertible to a float is replaced
-	 * by the default value.
+	 * returned array, each parameter value not convertible to a float is
+	 * replaced by the default value.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -1332,8 +1336,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the service context parameter value as a float array. In the
-	 * returned array, each parameter value not convertible to a float is replaced
-	 * by <code>0</code>.
+	 * returned array, each parameter value not convertible to a float is
+	 * replaced by <code>0</code>.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -1348,8 +1352,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the service context parameter value as a float array. In the
-	 * returned array, each parameter value not convertible to a float is replaced
-	 * by the default value.
+	 * returned array, each parameter value not convertible to a float is
+	 * replaced by the default value.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -1365,8 +1369,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as an integer. If the parameter is missing
-	 * or not convertible to an integer, <code>0</code> is returned.
+	 * Returns the request parameter value as an integer. If the parameter is
+	 * missing or not convertible to an integer, <code>0</code> is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -1377,8 +1381,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as an integer. If the parameter is missing
-	 * or not convertible to an integer, the default value is returned.
+	 * Returns the request parameter value as an integer. If the parameter is
+	 * missing or not convertible to an integer, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -1392,8 +1396,9 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as an integer. If the parameter is
-	 * missing or not convertible to an integer, <code>0</code> is returned.
+	 * Returns the portlet request parameter value as an integer. If the
+	 * parameter is missing or not convertible to an integer, <code>0</code> is
+	 * returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -1405,8 +1410,9 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as an integer. If the parameter is
-	 * missing or not convertible to an integer, the default value is returned.
+	 * Returns the portlet request parameter value as an integer. If the
+	 * parameter is missing or not convertible to an integer, the default value
+	 * is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -1421,8 +1427,9 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as an integer. If the parameter is
-	 * missing or not convertible to an integer, <code>0</code> is returned.
+	 * Returns the service context parameter value as an integer. If the
+	 * parameter is missing or not convertible to an integer, <code>0</code> is
+	 * returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -1434,8 +1441,9 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as an integer. If the parameter is
-	 * missing or not convertible to an integer, the default value is returned.
+	 * Returns the service context parameter value as an integer. If the
+	 * parameter is missing or not convertible to an integer, the default value
+	 * is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -1450,8 +1458,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as an integer array. In the returned array,
-	 * each parameter value not convertible to an integer is replaced by
+	 * Returns the request parameter value as an integer array. In the returned
+	 * array, each parameter value not convertible to an integer is replaced by
 	 * <code>0</code>.
 	 *
 	 * @param  request the servlet request from which to read the parameter
@@ -1465,9 +1473,9 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as an integer array. In the returned array,
-	 * each parameter value not convertible to an integer is replaced by the default
-	 * value.
+	 * Returns the request parameter value as an integer array. In the returned
+	 * array, each parameter value not convertible to an integer is replaced by
+	 * the default value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -1482,9 +1490,9 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as an integer array. In the returned
-	 * array, each parameter value not convertible to an integer is replaced by
-	 * <code>0</code>.
+	 * Returns the portlet request parameter value as an integer array. In the
+	 * returned array, each parameter value not convertible to an integer is
+	 * replaced by <code>0</code>.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -1498,9 +1506,9 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as an integer array. In the returned
-	 * array, each parameter value not convertible to an integer is replaced by the
-	 * default value.
+	 * Returns the portlet request parameter value as an integer array. In the
+	 * returned array, each parameter value not convertible to an integer is
+	 * replaced by the default value.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -1516,9 +1524,9 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as an integer array. In the returned
-	 * array, each parameter value not convertible to an integer is replaced by
-	 * <code>0</code>.
+	 * Returns the service context parameter value as an integer array. In the
+	 * returned array, each parameter value not convertible to an integer is
+	 * replaced by <code>0</code>.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -1532,9 +1540,9 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as an integer array. In the returned
-	 * array, each parameter value not convertible to an integer is replaced by the
-	 * default value.
+	 * Returns the service context parameter value as an integer array. In the
+	 * returned array, each parameter value not convertible to an integer is
+	 * replaced by the default value.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -1550,8 +1558,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as a long. If the parameter is missing
-	 * or not convertible to a long, <code>0</code> is returned.
+	 * Returns the request parameter value as a long. If the parameter is
+	 * missing or not convertible to a long, <code>0</code> is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -1562,8 +1570,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as a long. If the parameter is missing
-	 * or not convertible to a long, the default value is returned.
+	 * Returns the request parameter value as a long. If the parameter is
+	 * missing or not convertible to a long, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -1577,8 +1585,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as a long. If the parameter is
-	 * missing or not convertible to a long, <code>0</code> is returned.
+	 * Returns the portlet request parameter value as a long. If the parameter
+	 * is missing or not convertible to a long, <code>0</code> is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -1590,8 +1598,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as a long. If the parameter is
-	 * missing or not convertible to a long, the default value is returned.
+	 * Returns the portlet request parameter value as a long. If the parameter
+	 * is missing or not convertible to a long, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -1606,8 +1614,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as a long. If the parameter is
-	 * missing or not convertible to a long, <code>0</code> is returned.
+	 * Returns the service context parameter value as a long. If the parameter
+	 * is missing or not convertible to a long, <code>0</code> is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -1619,8 +1627,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as a long. If the parameter is
-	 * missing or not convertible to a long, the default value is returned.
+	 * Returns the service context parameter value as a long. If the parameter
+	 * is missing or not convertible to a long, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -1635,8 +1643,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as a long array. In the returned array,
-	 * each parameter value not convertible to a long is replaced by
+	 * Returns the request parameter value as a long array. In the returned
+	 * array, each parameter value not convertible to a long is replaced by
 	 * <code>0</code>.
 	 *
 	 * @param  request the servlet request from which to read the parameter
@@ -1650,9 +1658,9 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as a long array. In the returned array,
-	 * each parameter value not convertible to a long is replaced by the default
-	 * value.
+	 * Returns the request parameter value as a long array. In the returned
+	 * array, each parameter value not convertible to a long is replaced by the
+	 * default value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -1668,8 +1676,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the portlet request parameter value as a long array. In the
-	 * returned array, each parameter value not convertible to a long is replaced
-	 * by <code>0</code>.
+	 * returned array, each parameter value not convertible to a long is
+	 * replaced by <code>0</code>.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -1684,8 +1692,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the portlet request parameter value as a long array. In the
-	 * returned array, each parameter value not convertible to a long is replaced
-	 * by the default value.
+	 * returned array, each parameter value not convertible to a long is
+	 * replaced by the default value.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -1702,8 +1710,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the service context parameter value as a long array. In the
-	 * returned array, each parameter value not convertible to a long is replaced
-	 * by <code>0</code>.
+	 * returned array, each parameter value not convertible to a long is
+	 * replaced by <code>0</code>.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -1718,8 +1726,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the service context parameter value as a long array. In the
-	 * returned array, each parameter value not convertible to a long is replaced
-	 * by the default value.
+	 * returned array, each parameter value not convertible to a long is
+	 * replaced by the default value.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -1840,8 +1848,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the request parameter value as a Number array. In the returned
-	 * array, each parameter value not convertible to a Number is replaced by the
-	 * default value.
+	 * array, each parameter value not convertible to a Number is replaced by
+	 * the default value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -1940,8 +1948,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the request parameter value as a String array. In the returned
-	 * array, each parameter value not convertible to a String is replaced by the
-	 * default value.
+	 * array, each parameter value not convertible to a String is replaced by
+	 * the default value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -1956,8 +1964,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the request parameter value as a String array. In the returned
-	 * array, each parameter value not convertible to a String is replaced by the
-	 * default value.
+	 * array, each parameter value not convertible to a String is replaced by
+	 * the default value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -2040,8 +2048,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as a short. If the parameter is missing
-	 * or not convertible to a short, <code>0</code> is returned.
+	 * Returns the request parameter value as a short. If the parameter is
+	 * missing or not convertible to a short, <code>0</code> is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -2052,8 +2060,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the request parameter value as a short. If the parameter is missing
-	 * or not convertible to a short, the default value is returned.
+	 * Returns the request parameter value as a short. If the parameter is
+	 * missing or not convertible to a short, the default value is returned.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return
@@ -2067,8 +2075,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as a short. If the parameter is
-	 * missing or not convertible to a short, <code>0</code> is returned.
+	 * Returns the portlet request parameter value as a short. If the parameter
+	 * is missing or not convertible to a short, <code>0</code> is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -2080,8 +2088,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the portlet request parameter value as a short. If the parameter is
-	 * missing or not convertible to a short, the default value is returned.
+	 * Returns the portlet request parameter value as a short. If the parameter
+	 * is missing or not convertible to a short, the default value is returned.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -2096,8 +2104,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as a short. If the parameter is
-	 * missing or not convertible to a short, <code>0</code> is returned.
+	 * Returns the service context parameter value as a short. If the parameter
+	 * is missing or not convertible to a short, <code>0</code> is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -2109,8 +2117,8 @@ public class ParamUtil {
 	}
 
 	/**
-	 * Returns the service context parameter value as a short. If the parameter is
-	 * missing or not convertible to a short, the default value is returned.
+	 * Returns the service context parameter value as a short. If the parameter
+	 * is missing or not convertible to a short, the default value is returned.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -2158,8 +2166,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the portlet request parameter value as a short array. In the
-	 * returned array, each parameter value not convertible to a short is replaced
-	 * by <code>0</code>.
+	 * returned array, each parameter value not convertible to a short is
+	 * replaced by <code>0</code>.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -2174,8 +2182,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the portlet request parameter value as a short array. In the
-	 * returned array, each parameter value not convertible to a short is replaced
-	 * by the default value.
+	 * returned array, each parameter value not convertible to a short is
+	 * replaced by the default value.
 	 *
 	 * @param  portletRequest the portlet request from which to read the
 	 *         parameter
@@ -2192,8 +2200,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the service context parameter value as a short array. In the
-	 * returned array, each parameter value not convertible to a short is replaced
-	 * by <code>0</code>.
+	 * returned array, each parameter value not convertible to a short is
+	 * replaced by <code>0</code>.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -2208,8 +2216,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the service context parameter value as a short array. In the
-	 * returned array, each parameter value not convertible to a short is replaced
-	 * by the default value.
+	 * returned array, each parameter value not convertible to a short is
+	 * replaced by the default value.
 	 *
 	 * @param  serviceContext the service context from which to read the
 	 *         parameter
@@ -2331,8 +2339,8 @@ public class ParamUtil {
 
 	/**
 	 * Returns the request parameter value as a String array. In the returned
-	 * array, each parameter value not convertible to a String is replaced by the
-	 * default value.
+	 * array, each parameter value not convertible to a String is replaced by
+	 * the default value.
 	 *
 	 * @param  request the servlet request from which to read the parameter
 	 * @param  param the name of the parameter to return

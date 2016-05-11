@@ -2608,50 +2608,6 @@
 		<execute macro="UserSegmentContentListPortlet#viewContentNotPresent" />
 	</command>
 
-	<command name="StagingUncheckAppCTRefAllAndContentAT" priority="4">
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSitesPublishing">
-			<var name="portlet" value="Staging" />
-		</execute>
-
-		<execute macro="Staging#activateStagingCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="LAR#setupContentTargeting">
-			<var name="stagingSetup" value="true" />
-		</execute>
-
-		<execute macro="Navigator#gotoStagedSitePage">
-			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="Staging#gotoPublishToLive" />
-
-		<execute macro="Staging#configurePublishToLive">
-			<var name="mainApplication" value="Campaign Content Display" />
-			<var name="uncheckSubApplicationList" value="Referenced Campaigns,Referenced Content" />
-		</execute>
-
-		<execute macro="Staging#configurePublishToLive">
-			<var name="mainApplication" value="User Segment Content Display" />
-			<var name="uncheckSubApplicationList" value="Referenced User Segments,Referenced Content" />
-		</execute>
-
-		<execute macro="Staging#configurePublishToLive">
-			<var name="contentDateRange" value="All" />
-			<var name="uncheckContentNameList" value="Audience Targeting" />
-		</execute>
-
-		<execute macro="Staging#publishToLive">
-			<var name="publishValidation" value="true" />
-		</execute>
-	</command>
-
 	<command name="StagingUncheckAppCTRefAllAndContentWC" priority="4">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />

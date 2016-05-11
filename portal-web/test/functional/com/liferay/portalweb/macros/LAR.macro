@@ -344,8 +344,12 @@
 		<execute function="AssertClick" locator1="SitePagesImport#SELECT_FILE_BUTTON" value1="Select File" />
 
 		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
-		<execute function="SikuliUploadTempFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${larFileName}" />
+
 		<execute function="Pause" locator1="5000" />
+
+		<execute function="SikuliUploadTempFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${larFileName}" />
+
+		<execute function="Pause" locator1="60000" />
 
 		<if>
 			<isset var="importValidationMissingItem" />

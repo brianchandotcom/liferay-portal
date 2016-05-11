@@ -142,7 +142,7 @@
 </tr>
 <tr>
 	<td>ICON_FOLDER_CHECKBOX</td>
-	<td>//li[contains(@data-title,'${key_dmFolderName}')]//input</td>
+	<td>//li[contains(@data-title,'${key_dmFolderName}')]//label/input</td>
 	<td></td>
 </tr>
 <tr>

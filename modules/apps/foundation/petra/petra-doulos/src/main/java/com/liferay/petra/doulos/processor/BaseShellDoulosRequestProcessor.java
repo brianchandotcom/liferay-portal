@@ -92,7 +92,7 @@ public abstract class BaseShellDoulosRequestProcessor
 			JSONObject payloadJSONObject, JSONObject responseJSONObject)
 		throws Exception {
 
-		if (isValid(payloadJSONObject)) {
+		if (!isValid(payloadJSONObject)) {
 			if (_log.isInfoEnabled()) {
 				_log.info("Skip invalid payload");
 			}

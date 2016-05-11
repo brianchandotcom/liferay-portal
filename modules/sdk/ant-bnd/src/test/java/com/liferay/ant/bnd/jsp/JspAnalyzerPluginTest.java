@@ -14,7 +14,14 @@
 
 package com.liferay.ant.bnd.jsp;
 
+import static org.junit.Assert.assertEquals;
+
+import aQute.bnd.osgi.Builder;
+import aQute.bnd.osgi.Constants;
+
 import aQute.lib.io.IO;
+
+import com.liferay.ant.bnd.jsp.JspAnalyzerPlugin;
 
 import java.io.InputStream;
 
@@ -31,7 +38,7 @@ import org.junit.Test;
 public class JspAnalyzerPluginTest {
 
 	@Test
-	public void tesGetTaglibURIsWithComments() throws Exception {
+	public void testGetTaglibURIsWithComments() throws Exception {
 		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
 
 		URL url = getResource("dependencies/imports_with_comments.jsp");
@@ -50,7 +57,7 @@ public class JspAnalyzerPluginTest {
 	}
 
 	@Test
-	public void tesGetTaglibURIsWithoutComments() throws Exception {
+	public void testGetTaglibURIsWithoutComments() throws Exception {
 		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
 
 		URL url = getResource("dependencies/imports_without_comments.jsp");
@@ -66,6 +73,33 @@ public class JspAnalyzerPluginTest {
 		int size = taglibURIs.size();
 
 		Assert.assertEquals(8, size);
+	}
+
+	@Test
+	public void testRemoveDuplicateTaglibRequirements() throws Exception {
+		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
+
+		URL url = getResource("dependencies/imports_without_comments.jsp");
+
+		InputStream inputStream = url.openStream();
+
+		String content = IO.collect(inputStream);
+
+		Builder b = new Builder();
+
+		b.build();
+
+		jspAnalyzerPlugin.addTaglibRequirements(b, content);
+
+		String requireCapabilityBefore = b.getProperty(
+			Constants.REQUIRE_CAPABILITY);
+
+		jspAnalyzerPlugin.addTaglibRequirements(b, content);
+
+		String requireCapabilityAfter = b.getProperty(
+			Constants.REQUIRE_CAPABILITY);
+
+		assertEquals(requireCapabilityBefore, requireCapabilityAfter);
 	}
 
 	protected URL getResource(String path) {

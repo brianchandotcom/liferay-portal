@@ -318,6 +318,7 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 
 			for (Entry<String, Attrs> entry : parameters.entrySet()) {
 				String key = Header.removeDuplicateMarker(entry.getKey());
+
 				StringBuilder sb = new StringBuilder(key);
 
 				Attrs attrs = entry.getValue();

@@ -83,18 +83,18 @@ public class JspAnalyzerPluginTest {
 
 		String content = IO.collect(inputStream);
 
-		Builder b = new Builder();
+		Builder builder = new Builder();
 
-		b.build();
+		builder.build();
 
-		jspAnalyzerPlugin.addTaglibRequirements(b, content);
+		jspAnalyzerPlugin.addTaglibRequirements(builder, content);
 
-		String requireCapabilityBefore = b.getProperty(
+		String requireCapabilityBefore = builder.getProperty(
 			Constants.REQUIRE_CAPABILITY);
 
-		jspAnalyzerPlugin.addTaglibRequirements(b, content);
+		jspAnalyzerPlugin.addTaglibRequirements(builder, content);
 
-		String requireCapabilityAfter = b.getProperty(
+		String requireCapabilityAfter = builder.getProperty(
 			Constants.REQUIRE_CAPABILITY);
 
 		Assert.assertEquals(requireCapabilityBefore, requireCapabilityAfter);

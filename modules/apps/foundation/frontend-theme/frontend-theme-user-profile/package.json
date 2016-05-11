@@ -1,0 +1,17 @@
+{
+	"dependencies": {
+		"gulp": "^3.8.10",
+		"liferay-theme-deps-7.0": "*",
+		"liferay-theme-tasks": "*"
+	},
+	"keywords": [
+		"liferay-theme"
+	],
+	"liferayTheme": {
+		"baseTheme": "styled",
+		"rubySass": false,
+		"version": "7.0"
+	},
+	"name": "user-profile-theme",
+	"version": "1.0.0"
+}

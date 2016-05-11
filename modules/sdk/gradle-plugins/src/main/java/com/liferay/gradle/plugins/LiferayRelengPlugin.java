@@ -458,7 +458,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 					if (GradleUtil.hasStartParameterTask(
 							project, task.getName()) ||
-						GradleUtil.isSnapshot(project)) {
+						!GradleUtil.isSnapshot(project)) {
 
 						return true;
 					}

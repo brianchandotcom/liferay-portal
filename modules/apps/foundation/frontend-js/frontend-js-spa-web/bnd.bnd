@@ -10,4 +10,3 @@ Liferay-Export-JS-Submodules:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend SPA Infrastructure
 Provide-Capability: osgi.extender;osgi.extender="liferay.spa";version:Version="${plugin.full.version}"
--includeresource: package.json

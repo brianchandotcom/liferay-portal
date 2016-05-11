@@ -146,7 +146,22 @@ class ImageEditor extends Component {
 	 */
 	getImageEditorImageBlob() {
 		return new CancellablePromise((resolve, reject) => {
-			this.getImageEditorCanvas().toBlob(resolve);
+			let canvas = this.getImageEditorCanvas();
+
+			if (canvas.toBlob) {
+				canvas.toBlob(resolve);
+			}
+			else {
+				let data = atob(canvas.toDataURL().split(',')[1]);
+				let length = data.length;
+				let bytes = new Uint8Array(length);
+
+				for (let i = 0; i < length; i++) {
+					bytes[i] = data.charCodeAt(i);
+				}
+
+				resolve(new Blob([bytes], {type: 'image/png'}));
+			}
 		});
 	}
 
@@ -177,6 +192,9 @@ class ImageEditor extends Component {
 			);
 
 			Liferay.Util.getWindow().hide();
+		}
+		else if (result.error) {
+			this.showError_(result.error.message);
 		}
 	}
 
@@ -243,9 +261,35 @@ class ImageEditor extends Component {
 	save_(event) {
 		if (!event.delegateTarget.disabled) {
 			this.getImageEditorImageBlob()
-				.then(imageBlob => this.submitBlob_(imageBlob))
-				.then(result => this.notifySaveResult_(result));
+				.then((imageBlob) => this.submitBlob_(imageBlob))
+				.then((result) => this.notifySaveResult_(result))
+				.catch((error) => this.showError_(error));
 		}
+	}
+
+	/**
+	 * Shows an error message in the editor
+	 *
+	 * @param  {String} message The error message to show
+	 * @protected
+	 */
+	showError_(message) {
+		this.components.loading.show = false;
+
+		AUI().use('liferay-alert', () => {
+			new Liferay.Alert(
+				{
+					delay: {
+						hide: 2000,
+						show: 0
+					},
+					duration: 3000,
+					icon: 'exclamation-circle',
+					message: message,
+					type: 'danger'
+				}
+			).render(this.element);
+		});
 	}
 
 	/**
@@ -265,17 +309,17 @@ class ImageEditor extends Component {
 
 			formData.append(saveParamName, imageBlob, saveFileName);
 
-			$.ajax(
-				{
-					contentType: false,
-					data: formData,
-					error: (error) => reject(error),
-					processData: false,
-					success: (result) => resolve(result),
-					type: 'POST',
-					url: this.saveURL
-				}
-			);
+			let requestConfig = {
+				contentType: false,
+				data: formData,
+				processData: false,
+				type: 'POST',
+				url: this.saveURL
+			};
+
+			$.ajax(requestConfig)
+				.done(resolve)
+				.fail((jqXHR, status, error) => reject(error));
 		});
 
 		this.components.loading.show = true;
@@ -303,7 +347,7 @@ class ImageEditor extends Component {
 
 					resolve();
 				});
-			});
+		});
 	}
 
 	/**

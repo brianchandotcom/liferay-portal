@@ -3095,6 +3095,21 @@ plugins.includes=</echo>
 				</if>
 
 				<if>
+					<available file="${zip.executable.dir}/../tools" />
+					<then>
+						<zip
+							destfile="dist/${zip.executable.file}-${lp.version}.zip"
+							update="true"
+						>
+							<zipfileset
+								dir="${zip.executable.dir}/../tools"
+								prefix="liferay-portal-${lp.version}/tools"
+							/>
+						</zip>
+					</then>
+				</if>
+
+				<if>
 					<available file="${zip.executable.dir}/../work" />
 					<then>
 						<zip

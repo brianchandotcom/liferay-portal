@@ -14,6 +14,7 @@
 
 package com.liferay.sync.service.persistence.impl;
 
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.model.impl.SyncDLObjectImpl;
 import com.liferay.sync.service.persistence.SyncDLObjectFinder;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -61,7 +61,7 @@ public class SyncDLObjectFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_TYPE_PKS);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_TYPE_PKS);
 
 			sql = StringUtil.replace(
 				sql, new String[] {"[$TYPE_PKS$]", "[$ROLE_IDS_OR_OWNER_ID$]"},
@@ -98,7 +98,7 @@ public class SyncDLObjectFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_MODIFIED_TIME);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_MODIFIED_TIME);
 
 			if (modifiedTime <= 0) {
 				sql = StringUtil.replace(

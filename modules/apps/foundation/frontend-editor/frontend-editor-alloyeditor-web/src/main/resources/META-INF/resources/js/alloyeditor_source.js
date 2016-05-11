@@ -197,18 +197,23 @@ AUI.add(
 								function(dialog) {
 									fullScreenDialog = dialog;
 
-									fullScreenEditor = new A.LiferayFullScreenSourceEditor(
-										{
-											boundingBox: dialog.getStdModNode(A.WidgetStdMod.BODY).appendChild('<div></div>'),
-											dataProcessor: host.getNativeEditor().dataProcessor,
-											previewCssClass: 'alloy-editor alloy-editor-placeholder',
-											value: host.getHTML()
+									Liferay.Util.getTop().AUI().use(
+										'liferay-fullscreen-source-editor',
+										function(A) {
+											fullScreenEditor = new A.LiferayFullScreenSourceEditor(
+												{
+													boundingBox: dialog.getStdModNode(A.WidgetStdMod.BODY).appendChild('<div></div>'),
+													dataProcessor: host.getNativeEditor().dataProcessor,
+													previewCssClass: 'alloy-editor alloy-editor-placeholder',
+													value: host.getHTML()
+												}
+											).render();
+
+											instance._fullScreenDialog = fullScreenDialog;
+
+											instance._fullScreenEditor = fullScreenEditor;
 										}
-									).render();
-
-									instance._fullScreenDialog = fullScreenDialog;
-
-									instance._fullScreenEditor = fullScreenEditor;
+									);
 								}
 							);
 						}

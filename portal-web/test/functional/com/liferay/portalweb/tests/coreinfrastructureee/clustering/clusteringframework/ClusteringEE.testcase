@@ -221,7 +221,6 @@
 		</execute>
 
 		<execute macro="DMDocument#viewAllPG">
-			<var name="dmDocumentFile" value="Document_1.doc" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
@@ -246,7 +245,6 @@
 		</execute>
 
 		<execute macro="DMDocument#viewAllPG">
-			<var name="dmDocumentFile" value="Document_1.doc" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 

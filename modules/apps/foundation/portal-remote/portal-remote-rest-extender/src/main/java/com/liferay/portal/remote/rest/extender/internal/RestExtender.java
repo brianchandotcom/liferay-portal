@@ -104,15 +104,15 @@ public class RestExtender {
 			restExtenderConfiguration.jaxRsApplicationFilterStrings();
 
 		if (jaxRsApplicationFilterStrings == null) {
+			addTCCLServiceDependency(
+				false, Application.class, null, "addApplication",
+				"removeApplication");
+
 			return;
 		}
 
 		for (String jaxRsApplicationFilterString :
 				jaxRsApplicationFilterStrings) {
-
-			if (Validator.isNull(jaxRsApplicationFilterString)) {
-				continue;
-			}
 
 			addTCCLServiceDependency(
 				false, Application.class, jaxRsApplicationFilterString,
@@ -178,7 +178,12 @@ public class RestExtender {
 			serviceDependency.setService(filter);
 		}
 		else {
-			serviceDependency.setService(clazz, filter);
+			if (filter == null) {
+				serviceDependency.setService(clazz);
+			}
+			else {
+				serviceDependency.setService(clazz, filter);
+			}
 		}
 
 		_component.add(serviceDependency);

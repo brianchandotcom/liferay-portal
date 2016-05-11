@@ -608,10 +608,6 @@ public class UpgradeClient {
 				dataSource.setDatabaseName(response);
 			}
 
-			System.out.println("Please enter your database password: ");
-
-			String password = _consoleReader.readLine();
-
 			System.out.println(
 				"Please enter your database port (" + port + "): ");
 
@@ -629,6 +625,10 @@ public class UpgradeClient {
 			System.out.println("Please enter your database username: ");
 
 			String username = _consoleReader.readLine();
+
+			System.out.println("Please enter your database password: ");
+
+			String password = _consoleReader.readLine();
 
 			_portalUpgradeDatabaseProperties.setProperty(
 				"jdbc.default.driverClassName", dataSource.getClassName());

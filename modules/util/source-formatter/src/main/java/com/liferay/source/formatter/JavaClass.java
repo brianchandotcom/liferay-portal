@@ -125,6 +125,12 @@ public class JavaClass {
 				checkVariableNames(javaTerm);
 			}
 
+			// LPS-65690
+
+			if (_fileName.endsWith("Comparator.java") && javaTerm.isMethod()) {
+				checkLocalSensitiveComparison(javaTerm);
+			}
+
 			if (_fileName.endsWith("LocalServiceImpl.java") &&
 				javaTerm.hasAnnotation("Indexable") &&
 				!javaTerm.hasReturnType()) {
@@ -567,6 +573,26 @@ public class JavaClass {
 				_fileName,
 				"Create a new var for " + StringUtil.trim(matcher.group(1)) +
 					" for better readability: " + _fileName + " " + lineCount);
+		}
+	}
+
+	protected void checkLocalSensitiveComparison(JavaTerm javaTerm) {
+		String javaTermName = javaTerm.getName();
+
+		if (!javaTermName.equals("compare")) {
+			return;
+		}
+
+		String javaTermContent = javaTerm.getContent();
+
+		if (javaTermContent.contains("_locale") &&
+			javaTermContent.contains(".compareTo") &&
+			!javaTermContent.contains("Collator")) {
+
+			_javaSourceProcessor.processErrorMessage(
+				_fileName,
+				"LPS-65690 Use Collator for locale-sensitive String " +
+					"comparison: " + _fileName);
 		}
 	}
 

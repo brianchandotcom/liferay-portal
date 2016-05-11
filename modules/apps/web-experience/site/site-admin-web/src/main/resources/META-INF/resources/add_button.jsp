@@ -40,16 +40,9 @@
 				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addSiteURL.toString() %>" />
 			</c:when>
 			<c:otherwise>
-
-				<%
-				addSiteURL.setParameter("showPrototypes", "0");
-				%>
-
 				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "blank-site") %>' url="<%= addSiteURL.toString() %>" />
 
 				<%
-				addSiteURL.setParameter("showPrototypes", "1");
-
 				for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
 					addSiteURL.setParameter("layoutSetPrototypeId", String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()));
 				%>

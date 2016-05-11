@@ -20,7 +20,12 @@
 Group group = (Group)request.getAttribute("site.group");
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)request.getAttribute("site.layoutSetPrototype");
-boolean showPrototypes = GetterUtil.getBoolean(request.getAttribute("site.showPrototypes"));
+
+boolean showPrototypes = true;
+
+if ((layoutSetPrototype == null) && (group == null)) {
+	showPrototypes = false;
+}
 
 List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
 

@@ -28,10 +28,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sync.SyncClientMinBuildException;
 import com.liferay.sync.SyncDeviceHeaderException;
 import com.liferay.sync.SyncServicesUnavailableException;
+import com.liferay.sync.configuration.SyncServiceConfigurationKeys;
+import com.liferay.sync.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.model.SyncDevice;
 import com.liferay.sync.service.SyncDeviceLocalServiceUtil;
-import com.liferay.sync.util.PortletPropsKeys;
-import com.liferay.sync.util.PortletPropsValues;
 import com.liferay.sync.util.SyncDeviceThreadLocal;
 import com.liferay.sync.util.SyncUtil;
 
@@ -126,8 +126,8 @@ public class SyncJSONFilter implements Filter {
 
 		if (PrefsPropsUtil.getBoolean(
 				PortalUtil.getCompanyId(httpServletRequest),
-				PortletPropsKeys.SYNC_SERVICES_ENABLED,
-				PortletPropsValues.SYNC_SERVICES_ENABLED)) {
+				SyncServiceConfigurationKeys.SYNC_SERVICES_ENABLED,
+				SyncServiceConfigurationValues.SYNC_SERVICES_ENABLED)) {
 
 			int absoluteSyncClientMinBuild = 0;
 			int syncClientMinBuild = 0;
@@ -143,8 +143,9 @@ public class SyncJSONFilter implements Filter {
 
 				syncClientMinBuild = PrefsPropsUtil.getInteger(
 					PortalUtil.getCompanyId(httpServletRequest),
-					PortletPropsKeys.SYNC_CLIENT_MIN_BUILD_DESKTOP,
-					PortletPropsValues.SYNC_CLIENT_MIN_BUILD_DESKTOP);
+					SyncServiceConfigurationKeys.SYNC_CLIENT_MIN_BUILD_DESKTOP,
+					SyncServiceConfigurationValues.
+						SYNC_CLIENT_MIN_BUILD_DESKTOP);
 			}
 			else if (syncDevice.equals("mobile-android")) {
 				absoluteSyncClientMinBuild =
@@ -152,8 +153,9 @@ public class SyncJSONFilter implements Filter {
 
 				syncClientMinBuild = PrefsPropsUtil.getInteger(
 					PortalUtil.getCompanyId(httpServletRequest),
-					PortletPropsKeys.SYNC_CLIENT_MIN_BUILD_ANDROID,
-					PortletPropsValues.SYNC_CLIENT_MIN_BUILD_ANDROID);
+					SyncServiceConfigurationKeys.SYNC_CLIENT_MIN_BUILD_ANDROID,
+					SyncServiceConfigurationValues.
+						SYNC_CLIENT_MIN_BUILD_ANDROID);
 			}
 			else if (syncDevice.equals("mobile-ios")) {
 				absoluteSyncClientMinBuild =
@@ -161,8 +163,8 @@ public class SyncJSONFilter implements Filter {
 
 				syncClientMinBuild = PrefsPropsUtil.getInteger(
 					PortalUtil.getCompanyId(httpServletRequest),
-					PortletPropsKeys.SYNC_CLIENT_MIN_BUILD_IOS,
-					PortletPropsValues.SYNC_CLIENT_MIN_BUILD_IOS);
+					SyncServiceConfigurationKeys.SYNC_CLIENT_MIN_BUILD_IOS,
+					SyncServiceConfigurationValues.SYNC_CLIENT_MIN_BUILD_IOS);
 			}
 			else {
 				throwable = new SyncDeviceHeaderException();

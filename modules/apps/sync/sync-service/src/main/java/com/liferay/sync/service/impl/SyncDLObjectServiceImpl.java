@@ -65,14 +65,14 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.sync.configuration.SyncServiceConfigurationKeys;
+import com.liferay.sync.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.constants.SyncDeviceConstants;
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.model.SyncDLObjectConstants;
 import com.liferay.sync.model.SyncDevice;
 import com.liferay.sync.service.base.SyncDLObjectServiceBaseImpl;
 import com.liferay.sync.util.JSONWebServiceActionParametersMap;
-import com.liferay.sync.util.PortletPropsKeys;
-import com.liferay.sync.util.PortletPropsValues;
 import com.liferay.sync.util.SyncContext;
 import com.liferay.sync.util.SyncDLObjectUpdate;
 import com.liferay.sync.util.SyncDeviceThreadLocal;
@@ -512,19 +512,20 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 			syncContext.setAuthType(authType);
 
 			boolean oAuthEnabled = PrefsPropsUtil.getBoolean(
-				user.getCompanyId(), PortletPropsKeys.SYNC_OAUTH_ENABLED,
-				PortletPropsValues.SYNC_OAUTH_ENABLED);
+				user.getCompanyId(),
+				SyncServiceConfigurationKeys.SYNC_OAUTH_ENABLED,
+				SyncServiceConfigurationValues.SYNC_OAUTH_ENABLED);
 
 			if (oAuthEnabled) {
 				String oAuthConsumerKey = PrefsPropsUtil.getString(
 					user.getCompanyId(),
-					PortletPropsKeys.SYNC_OAUTH_CONSUMER_KEY);
+					SyncServiceConfigurationKeys.SYNC_OAUTH_CONSUMER_KEY);
 
 				syncContext.setOAuthConsumerKey(oAuthConsumerKey);
 
 				String oAuthConsumerSecret = PrefsPropsUtil.getString(
 					user.getCompanyId(),
-					PortletPropsKeys.SYNC_OAUTH_CONSUMER_SECRET);
+					SyncServiceConfigurationKeys.SYNC_OAUTH_CONSUMER_SECRET);
 
 				syncContext.setOAuthConsumerSecret(oAuthConsumerSecret);
 			}
@@ -615,7 +616,7 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 				end = QueryUtil.ALL_POS;
 			}
 			else if (max == 0) {
-				end = PortletPropsValues.SYNC_PAGINATION_DELTA;
+				end = SyncServiceConfigurationValues.SYNC_PAGINATION_DELTA;
 			}
 			else {
 				end = max;
@@ -735,8 +736,9 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 			if (PrefsPropsUtil.getBoolean(
 					user.getCompanyId(),
-					PortletPropsKeys.SYNC_ALLOW_USER_PERSONAL_SITES,
-					PortletPropsValues.SYNC_ALLOW_USER_PERSONAL_SITES)) {
+					SyncServiceConfigurationKeys.SYNC_ALLOW_USER_PERSONAL_SITES,
+					SyncServiceConfigurationValues.
+						SYNC_ALLOW_USER_PERSONAL_SITES)) {
 
 				Group userGroup = user.getGroup();
 
@@ -881,7 +883,7 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 				fileEntryId, sourceFileName, mimeType, title, description,
 				changeLog, majorVersion, patchedFile, checksum, serviceContext);
 
-			if (PortletPropsValues.SYNC_FILE_DIFF_CACHE_ENABLED &&
+			if (SyncServiceConfigurationValues.SYNC_FILE_DIFF_CACHE_ENABLED &&
 				(sourceVersionId != syncDLObject.getVersionId())) {
 
 				DLFileVersion targetDLFileVersion =
@@ -1240,33 +1242,37 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 		User user = getUser();
 
 		portletPreferencesMap.put(
-			PortletPropsKeys.SYNC_CLIENT_AUTHENTICATION_RETRY_INTERVAL,
+			SyncServiceConfigurationKeys.
+				SYNC_CLIENT_AUTHENTICATION_RETRY_INTERVAL,
 			String.valueOf(
-				PortletPropsValues.SYNC_CLIENT_AUTHENTICATION_RETRY_INTERVAL));
+				SyncServiceConfigurationValues.
+					SYNC_CLIENT_AUTHENTICATION_RETRY_INTERVAL));
 
 		int batchFileMaxSize = PrefsPropsUtil.getInteger(
 			user.getCompanyId(),
-			PortletPropsKeys.SYNC_CLIENT_BATCH_FILE_MAX_SIZE,
-			PortletPropsValues.SYNC_CLIENT_BATCH_FILE_MAX_SIZE);
+			SyncServiceConfigurationKeys.SYNC_CLIENT_BATCH_FILE_MAX_SIZE,
+			SyncServiceConfigurationValues.SYNC_CLIENT_BATCH_FILE_MAX_SIZE);
 
 		portletPreferencesMap.put(
-			PortletPropsKeys.SYNC_CLIENT_BATCH_FILE_MAX_SIZE,
+			SyncServiceConfigurationKeys.SYNC_CLIENT_BATCH_FILE_MAX_SIZE,
 			String.valueOf(batchFileMaxSize));
 
 		int maxConnections = PrefsPropsUtil.getInteger(
-			user.getCompanyId(), PortletPropsKeys.SYNC_CLIENT_MAX_CONNECTIONS,
-			PortletPropsValues.SYNC_CLIENT_MAX_CONNECTIONS);
+			user.getCompanyId(),
+			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_CONNECTIONS,
+			SyncServiceConfigurationValues.SYNC_CLIENT_MAX_CONNECTIONS);
 
 		portletPreferencesMap.put(
-			PortletPropsKeys.SYNC_CLIENT_MAX_CONNECTIONS,
+			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_CONNECTIONS,
 			String.valueOf(maxConnections));
 
 		int pollInterval = PrefsPropsUtil.getInteger(
-			user.getCompanyId(), PortletPropsKeys.SYNC_CLIENT_POLL_INTERVAL,
-			PortletPropsValues.SYNC_CLIENT_POLL_INTERVAL);
+			user.getCompanyId(),
+			SyncServiceConfigurationKeys.SYNC_CLIENT_POLL_INTERVAL,
+			SyncServiceConfigurationValues.SYNC_CLIENT_POLL_INTERVAL);
 
 		portletPreferencesMap.put(
-			PortletPropsKeys.SYNC_CLIENT_POLL_INTERVAL,
+			SyncServiceConfigurationKeys.SYNC_CLIENT_POLL_INTERVAL,
 			String.valueOf(pollInterval));
 
 		return portletPreferencesMap;

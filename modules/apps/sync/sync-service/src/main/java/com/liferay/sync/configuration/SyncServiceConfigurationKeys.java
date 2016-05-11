@@ -12,19 +12,36 @@
  * details.
  */
 
-package com.liferay.sync.util;
+package com.liferay.sync.configuration;
 
 /**
  * @author Dennis Ju
  */
-public class PortletPropsKeys
-	extends com.liferay.sync.constants.PortletPropsKeys {
+public class SyncServiceConfigurationKeys {
+
+	public static final String SYNC_ALLOW_USER_PERSONAL_SITES =
+		"sync.allow.user.personal.sites";
 
 	public static final String SYNC_CLIENT_AUTHENTICATION_RETRY_INTERVAL =
 		"sync.client.authentication.retry.interval";
 
 	public static final String SYNC_CLIENT_BATCH_FILE_MAX_SIZE =
 		"sync.client.batch.file.max.size";
+
+	public static final String SYNC_CLIENT_MAX_CONNECTIONS =
+		"sync.client.max.connections";
+
+	public static final String SYNC_CLIENT_MIN_BUILD_ANDROID =
+		"sync.client.min.build.android";
+
+	public static final String SYNC_CLIENT_MIN_BUILD_DESKTOP =
+		"sync.client.min.build.desktop";
+
+	public static final String SYNC_CLIENT_MIN_BUILD_IOS =
+		"sync.client.min.build.ios";
+
+	public static final String SYNC_CLIENT_POLL_INTERVAL =
+		"sync.client.poll.interval";
 
 	public static final String SYNC_FILE_CHECKSUM_THRESHOLD_SIZE =
 		"sync.file.checksum.threshold.size";
@@ -43,5 +60,22 @@ public class PortletPropsKeys
 
 	public static final String SYNC_MAC_PACKAGE_METADATA_FILE_NAMES =
 		"sync.mac.package.metadata.file.names";
+
+	public static final String SYNC_OAUTH_APPLICATION_ID =
+		"sync.oauth.application.id";
+
+	public static final String SYNC_OAUTH_CONSUMER_KEY =
+		"sync.oauth.consumer.key";
+
+	public static final String SYNC_OAUTH_CONSUMER_SECRET =
+		"sync.oauth.consumer.secret";
+
+	public static final String SYNC_OAUTH_ENABLED = "sync.oauth.enabled";
+
+	public static final String SYNC_PAGINATION_DELTA = "sync.pagination.delta";
+
+	public static final String SYNC_SERVICES_ENABLED = "sync.services.enabled";
+
+	public static final String SYNC_VERIFY = "sync.verify";
 
 }

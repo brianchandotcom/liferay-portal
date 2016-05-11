@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.sync.constants.PortletPropsKeys;
+import com.liferay.sync.configuration.SyncServiceConfigurationKeys;
 import com.liferay.sync.service.base.SyncPreferencesLocalServiceBaseImpl;
-import com.liferay.util.portlet.PortletProps;
 
 import java.io.InputStream;
 
@@ -46,7 +46,8 @@ public class SyncPreferencesLocalServiceImpl
 		throws PortalException {
 
 		long oAuthApplicationId = PrefsPropsUtil.getLong(
-			companyId, PortletPropsKeys.SYNC_OAUTH_APPLICATION_ID, 0);
+			companyId, SyncServiceConfigurationKeys.SYNC_OAUTH_APPLICATION_ID,
+			0);
 
 		OAuthApplication oAuthApplication =
 			OAuthApplicationLocalServiceUtil.fetchOAuthApplication(
@@ -74,13 +75,13 @@ public class SyncPreferencesLocalServiceImpl
 
 		try {
 			portletPreferences.setValue(
-				PortletPropsKeys.SYNC_OAUTH_APPLICATION_ID,
+				SyncServiceConfigurationKeys.SYNC_OAUTH_APPLICATION_ID,
 				String.valueOf(oAuthApplication.getOAuthApplicationId()));
 			portletPreferences.setValue(
-				PortletPropsKeys.SYNC_OAUTH_CONSUMER_KEY,
+				SyncServiceConfigurationKeys.SYNC_OAUTH_CONSUMER_KEY,
 				oAuthApplication.getConsumerKey());
 			portletPreferences.setValue(
-				PortletPropsKeys.SYNC_OAUTH_CONSUMER_SECRET,
+				SyncServiceConfigurationKeys.SYNC_OAUTH_CONSUMER_SECRET,
 				oAuthApplication.getConsumerSecret());
 
 			portletPreferences.store();
@@ -97,7 +98,7 @@ public class SyncPreferencesLocalServiceImpl
 		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
 			companyId);
 
-		Properties properties = PortletProps.getProperties();
+		Properties properties = PropsUtil.getProperties();
 
 		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 			String key = String.valueOf(entry.getKey());

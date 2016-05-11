@@ -20,11 +20,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.sync.SyncClientMinBuildException;
 import com.liferay.sync.SyncServicesUnavailableException;
+import com.liferay.sync.configuration.SyncServiceConfigurationKeys;
+import com.liferay.sync.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.constants.SyncDeviceConstants;
 import com.liferay.sync.exception.SyncDeviceActiveException;
 import com.liferay.sync.exception.SyncDeviceWipeException;
-import com.liferay.sync.util.PortletPropsKeys;
-import com.liferay.sync.util.PortletPropsValues;
 
 /**
  * @author Shinn Lok
@@ -42,8 +42,9 @@ public class SyncDeviceImpl extends SyncDeviceBaseImpl {
 		}
 
 		if (!PrefsPropsUtil.getBoolean(
-				getCompanyId(), PortletPropsKeys.SYNC_SERVICES_ENABLED,
-				PortletPropsValues.SYNC_SERVICES_ENABLED)) {
+				getCompanyId(),
+				SyncServiceConfigurationKeys.SYNC_SERVICES_ENABLED,
+				SyncServiceConfigurationValues.SYNC_SERVICES_ENABLED)) {
 
 			throw new SyncServicesUnavailableException();
 		}
@@ -66,18 +67,21 @@ public class SyncDeviceImpl extends SyncDeviceBaseImpl {
 
 		if (type.startsWith("desktop")) {
 			minBuildNumber = PrefsPropsUtil.getInteger(
-				getCompanyId(), PortletPropsKeys.SYNC_CLIENT_MIN_BUILD_DESKTOP,
-				PortletPropsValues.SYNC_CLIENT_MIN_BUILD_DESKTOP);
+				getCompanyId(),
+				SyncServiceConfigurationKeys.SYNC_CLIENT_MIN_BUILD_DESKTOP,
+				SyncServiceConfigurationValues.SYNC_CLIENT_MIN_BUILD_DESKTOP);
 		}
 		else if (type.equals("mobile-android")) {
 			minBuildNumber = PrefsPropsUtil.getInteger(
-				getCompanyId(), PortletPropsKeys.SYNC_CLIENT_MIN_BUILD_ANDROID,
-				PortletPropsValues.SYNC_CLIENT_MIN_BUILD_ANDROID);
+				getCompanyId(),
+				SyncServiceConfigurationKeys.SYNC_CLIENT_MIN_BUILD_ANDROID,
+				SyncServiceConfigurationValues.SYNC_CLIENT_MIN_BUILD_ANDROID);
 		}
 		else if (type.equals("mobile-ios")) {
 			minBuildNumber = PrefsPropsUtil.getInteger(
-				getCompanyId(), PortletPropsKeys.SYNC_CLIENT_MIN_BUILD_IOS,
-				PortletPropsValues.SYNC_CLIENT_MIN_BUILD_IOS);
+				getCompanyId(),
+				SyncServiceConfigurationKeys.SYNC_CLIENT_MIN_BUILD_IOS,
+				SyncServiceConfigurationValues.SYNC_CLIENT_MIN_BUILD_IOS);
 		}
 
 		if (getBuildNumber() >= minBuildNumber) {

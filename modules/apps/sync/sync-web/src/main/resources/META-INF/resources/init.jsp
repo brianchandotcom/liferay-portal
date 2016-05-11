@@ -46,7 +46,7 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.sync.admin.exception.OAuthPortletUndeployedException" %><%@
-page import="com.liferay.sync.constants.PortletPropsKeys" %><%@
+page import="com.liferay.sync.configuration.SyncServiceConfigurationKeys" %><%@
 page import="com.liferay.sync.constants.SyncPermissionsConstants" %><%@
 page import="com.liferay.sync.service.SyncPreferencesLocalServiceUtil" %>
 

@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.sync.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.model.SyncDLFileVersionDiff;
 import com.liferay.sync.service.base.SyncDLFileVersionDiffLocalServiceBaseImpl;
-import com.liferay.sync.util.PortletPropsValues;
 
 import java.io.File;
 
@@ -79,8 +79,8 @@ public class SyncDLFileVersionDiffLocalServiceImpl
 
 		expirationDate.setTime(
 			expirationDate.getTime() +
-				PortletPropsValues.SYNC_FILE_DIFF_CACHE_EXPIRATION_TIME *
-					3600000);
+				SyncServiceConfigurationValues.
+					SYNC_FILE_DIFF_CACHE_EXPIRATION_TIME * 3600000);
 
 		syncDLFileVersionDiff.setExpirationDate(expirationDate);
 
@@ -155,8 +155,8 @@ public class SyncDLFileVersionDiffLocalServiceImpl
 
 		expirationDate.setTime(
 			expirationDate.getTime() +
-				PortletPropsValues.SYNC_FILE_DIFF_CACHE_EXPIRATION_TIME *
-					3600000);
+				SyncServiceConfigurationValues.
+					SYNC_FILE_DIFF_CACHE_EXPIRATION_TIME * 3600000);
 
 		syncDLFileVersionDiff.setExpirationDate(expirationDate);
 

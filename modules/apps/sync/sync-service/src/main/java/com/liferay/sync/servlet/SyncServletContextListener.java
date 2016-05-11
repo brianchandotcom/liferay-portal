@@ -34,12 +34,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.sync.configuration.SyncServiceConfigurationKeys;
+import com.liferay.sync.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.messaging.DLSyncEventMessageListener;
 import com.liferay.sync.messaging.SyncDLFileVersionDiffMessageListener;
 import com.liferay.sync.service.SyncDLObjectLocalServiceUtil;
 import com.liferay.sync.service.SyncPreferencesLocalServiceUtil;
-import com.liferay.sync.util.PortletPropsKeys;
-import com.liferay.sync.util.PortletPropsValues;
 import com.liferay.sync.util.VerifyUtil;
 
 import java.util.HashMap;
@@ -111,7 +111,7 @@ public class SyncServletContextListener
 			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR,
 			_dlSyncEventMessageListener);
 
-		if (PortletPropsValues.SYNC_FILE_DIFF_CACHE_ENABLED) {
+		if (SyncServiceConfigurationValues.SYNC_FILE_DIFF_CACHE_ENABLED) {
 			MessageBusUtil.unregisterMessageListener(
 				SyncDLFileVersionDiffMessageListener.DESTINATION_NAME,
 				_syncDLFileVersionDiffMessageListener);
@@ -125,7 +125,7 @@ public class SyncServletContextListener
 	@Override
 	protected void doPortalInit() {
 		try {
-			if (PortletPropsValues.SYNC_VERIFY) {
+			if (SyncServiceConfigurationValues.SYNC_VERIFY) {
 				VerifyUtil.verify();
 			}
 
@@ -133,8 +133,9 @@ public class SyncServletContextListener
 
 			for (Company company : companies) {
 				boolean oAuthEnabled = PrefsPropsUtil.getBoolean(
-					company.getCompanyId(), PortletPropsKeys.SYNC_OAUTH_ENABLED,
-					PortletPropsValues.SYNC_OAUTH_ENABLED);
+					company.getCompanyId(),
+					SyncServiceConfigurationKeys.SYNC_OAUTH_ENABLED,
+					SyncServiceConfigurationValues.SYNC_OAUTH_ENABLED);
 
 				if (!oAuthEnabled) {
 					continue;
@@ -161,7 +162,7 @@ public class SyncServletContextListener
 			_dlSyncEventMessageListener,
 			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
 
-		if (PortletPropsValues.SYNC_FILE_DIFF_CACHE_ENABLED) {
+		if (SyncServiceConfigurationValues.SYNC_FILE_DIFF_CACHE_ENABLED) {
 			_syncDLFileVersionDiffMessageListener =
 				new SyncDLFileVersionDiffMessageListener();
 
@@ -198,7 +199,8 @@ public class SyncServletContextListener
 			SchedulerEngineHelperUtil.schedule(
 				TriggerFactoryUtil.createTrigger(
 					eventListenerClassName, eventListenerClassName,
-					PortletPropsValues.SYNC_FILE_DIFF_CACHE_DELETE_INTERVAL,
+					SyncServiceConfigurationValues.
+						SYNC_FILE_DIFF_CACHE_DELETE_INTERVAL,
 					TimeUnit.HOUR),
 				StorageType.MEMORY_CLUSTERED, null,
 				SyncDLFileVersionDiffMessageListener.DESTINATION_NAME, null, 0);

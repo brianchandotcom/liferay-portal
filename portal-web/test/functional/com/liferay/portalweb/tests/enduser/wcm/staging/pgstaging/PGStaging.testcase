@@ -153,6 +153,8 @@
 
 		<execute macro="Navigator#gotoStagedView" />
 
+		<execute function="Pause" locator1="30000" />
+
 		<execute macro="ProductMenu#gotoSitesPublishing">
 			<var name="portlet" value="Staging" />
 		</execute>
@@ -1023,6 +1025,8 @@
 
 		<execute macro="Navigator#gotoStagedView" />
 
+		<execute function="Pause" locator1="30000" />
+
 		<execute macro="ProductMenu#gotoSitesPublishing">
 			<var name="portlet" value="Staging" />
 		</execute>
@@ -1171,6 +1175,8 @@
 		</execute>
 
 		<execute macro="Navigator#gotoStagedView" />
+
+		<execute function="Pause" locator1="3000" />
 
 		<execute macro="ProductMenu#gotoSitesPublishing">
 			<var name="portlet" value="Staging" />

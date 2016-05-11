@@ -1,27 +1,34 @@
 <html>
 	<style type="text/css">
 		h1 {
-			color: red;
+			color: #124680;
 		}
+
 		h2 {
-			color: blue;
+			color: #1B75BB;
 		}
+
 		h3 {
-			color: darkgreen;
+			color: #1B75BB;
 		}
+
 		#toc {
-			border: 1px dotted #555;
+			border: 1px solid #555;
 			color: #555;
+			padding: 20px;
 			width: 700px;
 		}
+
 		#toc li {
 			font-size: 14px;
 		}
+
 		.defaults {
-			background-color: #EFE;
+			background-color: #8BB8E8;
 		}
+
 		.examples {
-			background-color: #EEE;
+			background-color: #E3E4E5;
 		}
 	</style>
 	<head>

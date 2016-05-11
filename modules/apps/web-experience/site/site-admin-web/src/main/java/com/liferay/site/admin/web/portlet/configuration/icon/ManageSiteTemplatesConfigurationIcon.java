@@ -65,6 +65,10 @@ public class ManageSiteTemplatesConfigurationIcon
 					portletRequest, LayoutSetPrototype.class.getName(),
 					PortletProvider.Action.VIEW);
 
+			if (manageSiteTemplateURL == null) {
+				return StringPool.BLANK;
+			}
+
 			manageSiteTemplateURL.setParameter(
 				"redirect", themeDisplay.getURLCurrent());
 			manageSiteTemplateURL.setParameter(

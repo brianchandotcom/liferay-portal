@@ -32,10 +32,10 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.sync.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.model.SyncDLObjectConstants;
 import com.liferay.sync.service.base.SyncDLObjectLocalServiceBaseImpl;
-import com.liferay.sync.util.PortletPropsValues;
 
 import java.util.Date;
 import java.util.List;
@@ -143,7 +143,8 @@ public class SyncDLObjectLocalServiceImpl
 
 		if (type.equals(SyncDLObjectConstants.TYPE_FILE) &&
 			ArrayUtil.contains(
-				PortletPropsValues.SYNC_MAC_PACKAGE_METADATA_FILE_NAMES,
+				SyncServiceConfigurationValues.
+					SYNC_MAC_PACKAGE_METADATA_FILE_NAMES,
 				syncDLObject.getName())) {
 
 			SyncDLObject parentFolderSyncDLObject =
@@ -155,7 +156,8 @@ public class SyncDLObjectLocalServiceImpl
 				parentFolderSyncDLObject.getName());
 
 			if (ArrayUtil.contains(
-					PortletPropsValues.SYNC_MAC_PACKAGE_FOLDER_EXTENSIONS,
+					SyncServiceConfigurationValues.
+						SYNC_MAC_PACKAGE_FOLDER_EXTENSIONS,
 					parentFolderExtension)) {
 
 				JSONObject extraSettingsJSONObject =

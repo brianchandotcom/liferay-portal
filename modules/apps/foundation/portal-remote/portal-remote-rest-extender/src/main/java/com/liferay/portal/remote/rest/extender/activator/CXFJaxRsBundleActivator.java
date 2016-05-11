@@ -47,6 +47,6 @@ public class CXFJaxRsBundleActivator implements BundleActivator {
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-
 	}
+
 }

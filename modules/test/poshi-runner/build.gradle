@@ -32,5 +32,5 @@ deploy {
 }
 
 liferay {
-	deployDir = "../../../tools/sdk/tmp/portal-tools/poshi-runner"
+	deployDir = "../../../tools/sdk/dependencies/com.liferay.poshi.runner/lib"
 }

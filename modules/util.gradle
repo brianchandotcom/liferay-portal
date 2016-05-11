@@ -3,81 +3,29 @@ import com.liferay.gradle.util.StringUtil
 import com.liferay.gradle.util.copy.RenameDependencyClosure
 
 buildscript {
-	apply from: rootProject.file("build-buildscript.gradle"), to: buildscript
+	apply from: file("build-buildscript.gradle"), to: buildscript
 }
 
 task cleanReleng
-task printLeafProjects
 task setUpPortalTools
 task wrapper(type: Wrapper)
 
-File portalToolsDir = rootProject.file("../tools/sdk/tmp/portal-tools")
-Properties portalToolVersions = _getPortalToolVersions()
-
 cleanReleng << {
-	File relengRootDir = rootProject.file(".releng")
+	File relengRootDir = file(".releng")
 
-	FileTree relengFileTree = rootProject.fileTree(dir: relengRootDir, include: "**/artifact.properties")
+	FileTree relengFileTree = fileTree(dir: relengRootDir, include: "**/artifact.properties")
 
 	relengFileTree.each {
 		File relengFile ->
 
 		File relengDir = relengFile.parentFile
 
-		File moduleDir = rootProject.file(FileUtil.relativize(relengDir, relengRootDir))
+		File moduleDir = file(FileUtil.relativize(relengDir, relengRootDir))
 
 		if (!moduleDir.exists()) {
 			delete relengDir
 
-			println "Removed " + rootProject.relativePath(relengDir)
-		}
-	}
-}
-
-configurations {
-	all {
-		resolutionStrategy {
-			eachDependency {
-				DependencyResolveDetails dependencyResolveDetails ->
-
-				if (dependencyResolveDetails.requested.version == "default") {
-					dependencyResolveDetails.useVersion portalToolVersions[dependencyResolveDetails.requested.name]
-				}
-			}
-		}
-	}
-
-	portalToolsCssBuilder
-	portalToolsJavadocFormatter
-	portalToolsLangBuilder
-	portalToolsPortalToolsServiceBuilder
-	portalToolsPortalToolsUpgradeTableBuilder
-	portalToolsPortalToolsWsddBuilder
-	portalToolsSonar
-	portalToolsSourceFormatter
-	portalToolsTldFormatter
-	portalToolsWhip
-}
-
-dependencies {
-	portalToolsCssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "default"
-	portalToolsJavadocFormatter group: "com.liferay", name: "com.liferay.javadoc.formatter", version: "default"
-	portalToolsLangBuilder group: "com.liferay", name: "com.liferay.lang.builder", version: "default"
-	portalToolsPortalToolsServiceBuilder group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "default"
-	portalToolsPortalToolsUpgradeTableBuilder group: "com.liferay", name: "com.liferay.portal.tools.upgrade.table.builder", version: "default"
-	portalToolsPortalToolsWsddBuilder group: "com.liferay", name: "com.liferay.portal.tools.wsdd.builder", version: "default"
-	portalToolsSonar group: "org.codehaus.sonar-plugins", name: "sonar-ant-task", version: "2.1"
-	portalToolsSourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "default"
-	portalToolsTldFormatter group: "com.liferay", name: "com.liferay.tld.formatter", version: "default"
-	portalToolsWhip group: "com.liferay", name: "com.liferay.whip", version: "default"
-}
-
-printLeafProjects << {
-	FileTree buildGradleFileTree = fileTree(dir: rootDir, include: "*/**/build.gradle")
-
-	buildGradleFileTree.each {
-		if (!it.text.contains("provided project(")) {
-			println it.parentFile
+			println "Removed " + relativePath(relengDir)
 		}
 	}
 }
@@ -91,7 +39,7 @@ repositories {
 }
 
 wrapper {
-	File wrapperDir = rootDir.parentFile
+	File wrapperDir = projectDir.parentFile
 
 	distributionUrl = "../../tools/gradle-${gradle.gradleVersion}.LIFERAY-PATCHED-3-bin.zip"
 
@@ -117,30 +65,70 @@ set DEFAULT_JVM_OPTS=%DEFAULT_JVM_OPTS% -Dgradle.user.home=%APP_HOME%\\.gradle''
 	scriptFile = new File(wrapperDir, "gradlew")
 }
 
-Collection<Configuration> portalToolsConfigurations = configurations.matching {
-	it.name.startsWith "portalTools"
+_createSetUpTasks()
+
+private void _createSetUpTasks() {
+	FileTree ivyXmlFileTree = fileTree(dir: "../tools/sdk", includes: ["ivy.xml", "dependencies/*/ivy.xml"])
+
+	Properties portalToolVersions = _getPortalToolVersions()
+
+	XmlSlurper xmlSlurper = new XmlSlurper()
+
+	ivyXmlFileTree.each {
+		File ivyXmlFile ->
+
+		File portalToolDir = ivyXmlFile.parentFile
+
+		String portalToolName = portalToolDir.name
+
+		String portalToolSuffix = _getPortalToolSuffix(portalToolName)
+		String portalToolVersion = portalToolVersions[portalToolName]
+
+		Configuration portalToolConfiguration = configurations.create("portalTools" + portalToolSuffix)
+
+		portalToolConfiguration.exclude group: "com.liferay.portal"
+
+		if (portalToolVersion) {
+			dependencies.add portalToolConfiguration.name, "com.liferay:${portalToolName}:${portalToolVersion}"
+		}
+		else {
+			def ivyModuleNode = xmlSlurper.parse(ivyXmlFile)
+
+			def dependencyNodes = ivyModuleNode.dependencies.children()
+
+			dependencyNodes.each {
+				String conf = it.@conf
+
+				if (conf) {
+					return
+				}
+
+				dependencies.add portalToolConfiguration.name, "${it.@org}:${it.@name}:${it.@rev}"
+			}
+		}
+
+		Task portalToolTask = tasks.create(name: "setUp" + portalToolSuffix, type: Copy) {
+			doLast {
+				ant.checksum file: ivyXmlFile
+			}
+
+			from portalToolConfiguration
+			into new File(portalToolDir, "lib")
+			rename new RenameDependencyClosure(project, portalToolConfiguration.name)
+		}
+
+		setUpPortalTools.dependsOn portalToolTask
+	}
 }
 
-portalToolsConfigurations.each {
-	Configuration configuration ->
+private String _getPortalToolSuffix(String name) {
+	String suffix = name.replaceAll(/\.(\w)/) {
+		String s = it[1]
 
-	String dirName = configuration.name.substring(11)
-
-	dirName = dirName.replaceAll(/[A-Z]/) {
-		"-" + it.toLowerCase()
+		s.toUpperCase()
 	}
 
-	dirName = dirName.substring(1)
-
-	String taskName = "setUp" + StringUtil.capitalize(configuration.name)
-
-	Task configurationTask = tasks.create(name: taskName, type: Copy) {
-		from configuration
-		into new File(portalToolsDir, dirName)
-		rename new RenameDependencyClosure(project, configuration.name)
-	}
-
-	setUpPortalTools.dependsOn configurationTask
+	return StringUtil.capitalize(suffix)
 }
 
 private Properties _getPortalToolVersions() {

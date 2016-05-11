@@ -8,7 +8,7 @@ dependencies {
 }
 
 liferay {
-	deployDir = "../../../tools/sdk/tmp/portal-tools/jasper-jspc"
+	deployDir = "../../../tools/sdk/dependencies/com.liferay.jasper.jspc/lib"
 }
 
 updateFileVersions {

@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ADVANCED_FIELD_SETTINGS_TOGGLE</td>
-	<td>//a[@class='settings-toggler']</td>
+	<td>//button[contains(@class,'settings-toggler')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -31,7 +31,7 @@ formatSource {
 }
 
 liferay {
-	deployDir = "../../../tools/sdk/tmp/portal-tools/source-formatter"
+	deployDir = "../../../tools/sdk/dependencies/com.liferay.source.formatter/lib"
 }
 
 updateFileVersions {

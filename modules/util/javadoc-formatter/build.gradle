@@ -29,7 +29,7 @@ formatSource {
 }
 
 liferay {
-	deployDir = "../../../tools/sdk/tmp/portal-tools/javadoc-formatter"
+	deployDir = "../../../tools/sdk/dependencies/com.liferay.javadoc.formatter/lib"
 }
 
 updateFileVersions {

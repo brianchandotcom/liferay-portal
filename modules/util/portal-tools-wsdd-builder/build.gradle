@@ -37,7 +37,7 @@ formatSource {
 }
 
 liferay {
-	deployDir = "../../../tools/sdk/tmp/portal-tools/portal-tools-wsdd-builder"
+	deployDir = "../../../tools/sdk/dependencies/com.liferay.portal.tools.wsdd.builder/lib"
 }
 
 updateFileVersions {

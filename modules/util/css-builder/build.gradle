@@ -28,7 +28,7 @@ formatSource {
 }
 
 liferay {
-	deployDir = "../../../tools/sdk/tmp/portal-tools/css-builder"
+	deployDir = "../../../tools/sdk/dependencies/com.liferay.css.builder/lib"
 }
 
 test {

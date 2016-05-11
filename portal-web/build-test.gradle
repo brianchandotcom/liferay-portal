@@ -57,7 +57,7 @@ updateGradleCache << {
 }
 
 if (GradleUtil.getProperty(project, "local", false)) {
-	File localPoshiDir = file("../tools/sdk/tmp/portal-tools/poshi-runner")
+	File localPoshiDir = file("../tools/sdk/dependencies/com.liferay.poshi.runner/lib")
 
 	dependencies {
 		poshiRunner fileTree(dir: localPoshiDir, include: "*.jar")

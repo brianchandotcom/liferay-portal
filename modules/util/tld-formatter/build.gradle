@@ -28,7 +28,7 @@ formatSource {
 }
 
 liferay {
-	deployDir = "../../../tools/sdk/tmp/portal-tools/tld-formatter"
+	deployDir = "../../../tools/sdk/dependencies/com.liferay.tld.formatter/lib"
 }
 
 updateFileVersions {

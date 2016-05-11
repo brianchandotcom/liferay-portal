@@ -266,8 +266,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					configureLocalPortalTool(
 						project, portalRootDir,
 						ServiceBuilderPlugin.CONFIGURATION_NAME,
-						ServiceBuilderDefaultsPlugin.PORTAL_TOOL_NAME,
-						"portal-tools-service-builder");
+						ServiceBuilderDefaultsPlugin.PORTAL_TOOL_NAME);
 				}
 
 			});
@@ -1352,7 +1351,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	protected void configureLocalPortalTool(
 		Project project, File portalRootDir, String configurationName,
-		String portalToolName, String portalToolDirName) {
+		String portalToolName) {
 
 		if (portalRootDir == null) {
 			return;
@@ -1369,7 +1368,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		configuration.exclude(args);
 
 		File dir = new File(
-			portalRootDir, "tools/sdk/tmp/portal-tools/" + portalToolDirName);
+			portalRootDir, "tools/sdk/dependencies/" + portalToolName + "/lib");
 
 		FileTree fileTree = FileUtil.getJarsFileTree(project, dir);
 

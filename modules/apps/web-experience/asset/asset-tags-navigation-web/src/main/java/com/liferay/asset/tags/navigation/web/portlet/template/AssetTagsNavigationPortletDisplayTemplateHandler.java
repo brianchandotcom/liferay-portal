@@ -17,7 +17,6 @@ package com.liferay.asset.tags.navigation.web.portlet.template;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
-import com.liferay.asset.kernel.service.AssetTagStatsLocalService;
 import com.liferay.asset.tags.navigation.web.configuration.AssetTagsNavigationWebConfigurationValues;
 import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -97,8 +96,7 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 		assetServicesTemplateVariableGroup.setAutocompleteEnabled(false);
 
 		assetServicesTemplateVariableGroup.addServiceLocatorVariables(
-			AssetTagLocalService.class, AssetTagService.class,
-			AssetTagStatsLocalService.class);
+			AssetTagLocalService.class, AssetTagService.class);
 
 		templateVariableGroups.put(
 			assetServicesTemplateVariableGroup.getLabel(),

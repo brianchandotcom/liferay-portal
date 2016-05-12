@@ -157,7 +157,7 @@ public abstract class BaseDBProcess implements DBProcess {
 		return false;
 	}
 
-	protected boolean hasRows(Connection connection, String tableName) {
+	protected boolean hasRows(String tableName) throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
 				"select count(*) from " + tableName);
 			ResultSet rs = ps.executeQuery()) {
@@ -175,10 +175,6 @@ public abstract class BaseDBProcess implements DBProcess {
 		}
 
 		return false;
-	}
-
-	protected boolean hasRows(String tableName) throws Exception {
-		return hasRows(connection, tableName);
 	}
 
 	protected boolean hasTable(String tableName) throws Exception {

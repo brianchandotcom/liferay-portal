@@ -23,7 +23,7 @@
 	%>
 
 	<div class="closed lfr-admin-panel lfr-product-menu-panel lfr-simulation-panel sidenav-fixed sidenav-menu-slider sidenav-right" id="<%= portletNamespace %>simulationPanelId">
-		<div class="product-menu sidebar sidebar-inverse">
+		<div class="product-menu sidebar sidebar-inverse sidenav-menu">
 			<h4 class="sidebar-header">
 				<span><liferay-ui:message key="simulation" /></span>
 

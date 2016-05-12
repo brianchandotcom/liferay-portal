@@ -471,23 +471,9 @@ AUI.add(
 
 						var host = instance._host;
 
-						var sessionLength = host.get('sessionLength');
-						var timestamp = host.get('timestamp');
 						var warningLength = host.get('warningLength');
 
-						var value = parseInt(timestamp, 10);
-
-						var elapsed = sessionLength;
-
-						if (!isNaN(value)) {
-							elapsed = Math.floor((Date.now() - timestamp) / 1000) * 1000;
-						}
-
-						var remainingTime = sessionLength - elapsed;
-
-						if (remainingTime > warningLength) {
-							remainingTime = warningLength;
-						}
+						var remainingTime = warningLength;
 
 						var banner = instance._getBanner();
 

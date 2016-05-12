@@ -84,7 +84,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 									showIcon="<%= false %>"
 									showLabel="<%= false %>"
 									status="<%= assetRenderer.getStatus() %>"
-									statusMessage='<%= assetRenderer.getStatus() == 0 ? "not-visible" : WorkflowConstants.getStatusLabel(assetRenderer.getStatus()) %>'
+									statusMessage='<%= (assetRenderer.getStatus() == 0) ? "not-visible" : WorkflowConstants.getStatusLabel(assetRenderer.getStatus()) %>'
 								/>)
 							</c:if>
 						</liferay-ui:search-container-column-text>

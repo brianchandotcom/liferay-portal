@@ -80,6 +80,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 
 							<c:if test="<%= !assetEntry.isVisible() %>">
 								(<aui:workflow-status
+									markupView="lexicon"
 									showIcon="<%= false %>"
 									showLabel="<%= false %>"
 									status="<%= assetRenderer.getStatus() %>"

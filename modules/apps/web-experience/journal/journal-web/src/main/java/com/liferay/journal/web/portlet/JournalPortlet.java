@@ -1236,9 +1236,7 @@ public class JournalPortlet extends MVCPortlet {
 			}
 		}
 
-		if (Validator.isNotNull(redirect)) {
-			actionResponse.sendRedirect(redirect);
-		}
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	protected void sendEditEntryRedirect(

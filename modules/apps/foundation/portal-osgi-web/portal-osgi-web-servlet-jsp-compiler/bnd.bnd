@@ -64,9 +64,7 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: OSGI JSP support
-Provide-Capability:\
-	liferay.extender;\
-	liferay.extender="jsp.extender";version:Version="${Bundle-Version}"
+Provide-Capability: liferay.extender;liferay.extender="jsp.extender";version:Version="${Bundle-Version}"
 -liferay-includeresource:\
 	@javax.servlet.jsp-*.jar,\
 	@javax.servlet.jsp.jstl-*.jar!/META-INF/*.tld,\

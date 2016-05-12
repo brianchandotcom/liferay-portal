@@ -107,9 +107,9 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 
 		db.runSQL(
 			"delete from Image where imageId IN (SELECT articleImageId FROM " +
-				"JournalArticleImage where tempImage = TRUE)");
+				"JournalArticleImage where tempImage = [$TRUE$])");
 
-		db.runSQL("delete from JournalArticleImage where tempImage = TRUE");
+		db.runSQL("delete from JournalArticleImage where tempImage = [$TRUE$]");
 	}
 
 	@Reference(unbind = "-")

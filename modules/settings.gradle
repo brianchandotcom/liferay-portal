@@ -6,6 +6,7 @@ if (Boolean.getBoolean("portal.build")) {
 else {
 	modulesFileTree = fileTree(rootDir) {
 		exclude "**/bin/"
+		exclude "**/tmp/"
 		exclude "sdk/*/samples/"
 		exclude "sdk/gradle-templates/classes/"
 		exclude "sdk/gradle-templates/src/"

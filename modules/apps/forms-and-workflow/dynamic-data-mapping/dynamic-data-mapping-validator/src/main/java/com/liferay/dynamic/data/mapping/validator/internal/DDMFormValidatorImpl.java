@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.Mus
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetDefaultLocale;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetDefaultLocaleAsAvailableLocale;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetFieldType;
+import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetFieldsForForm;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetOptionsForField;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidAvailableLocalesForProperty;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException.MustSetValidCharactersForFieldName;
@@ -185,6 +186,10 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			List<DDMFormField> ddmFormFields, Set<String> ddmFormFieldNames,
 			Set<Locale> ddmFormAvailableLocales, Locale ddmFormDefaultLocale)
 		throws DDMFormValidationException {
+
+		if (ddmFormFields.isEmpty()) {
+			throw new MustSetFieldsForForm();
+		}
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			validateDDMFormFieldName(ddmFormField, ddmFormFieldNames);

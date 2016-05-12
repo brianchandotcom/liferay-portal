@@ -322,7 +322,9 @@ AUI.add(
 
 								var elapsed = sessionLength;
 
-								if (Lang.toInt(timestamp)) {
+								var value = Lang.toInt(timestamp);
+
+								if (!value) {
 									timeOffset = Math.floor((Date.now() - timestamp) / 1000) * 1000;
 
 									elapsed = timeOffset;
@@ -473,9 +475,11 @@ AUI.add(
 						var timestamp = host.get('timestamp');
 						var warningLength = host.get('warningLength');
 
+						var value = Lang.toInt(timestamp);
+
 						var elapsed = sessionLength;
 
-						if (Lang.toInt(timestamp)) {
+						if (!value) {
 							elapsed = Math.floor((Date.now() - timestamp) / 1000) * 1000;
 						}
 

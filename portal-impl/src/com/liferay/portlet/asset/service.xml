@@ -350,7 +350,7 @@
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetTagStats" package-path="com.liferay.portlet.asset" />
 	</entity>
-	<entity local-service="true" name="AssetTagStats" remote-service="false">
+	<entity deprecated="true" local-service="true" name="AssetTagStats" remote-service="false">
 
 		<!-- PK fields -->
 

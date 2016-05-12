@@ -16,6 +16,8 @@ package com.liferay.portlet.asset.model.impl;
 
 /**
  * @author Jorge Ferrer
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class AssetTagStatsImpl extends AssetTagStatsBaseImpl {
 }

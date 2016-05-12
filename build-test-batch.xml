@@ -512,6 +512,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<attribute default="${app.server.@{app.server.type}.version}" name="app.server.version" />
 		<attribute name="database.type" />
 		<attribute default="${database.@{database.type}.version}" name="database.version" />
+		<attribute default="" name="portal.version" />
 		<attribute default="" name="test.build.fix.pack.zip.url" />
 		<attribute default="" name="test.fix.pack.base.url" />
 		<attribute default="" name="test.legacy.database.dump" />
@@ -683,7 +684,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 	<macrodef name="run-legacy-database-dump">
 		<attribute name="database.type" />
-		<attribute name="database.version" />
+		<attribute default="" name="database.version" />
 		<attribute name="portal.version" />
 
 		<sequential>
@@ -693,6 +694,7 @@ app.server.type=@{app.server.type}]]></echo>
 				app.server.type="tomcat"
 				database.type="@{database.type}"
 				database.version="@{database.version}"
+				portal.version="@{portal.version}"
 				test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 				test.fix.pack.base.url="${test.fix.pack.base.url}"
 				test.legacy.database.dump="true"
@@ -942,23 +944,23 @@ app.server.type=@{app.server.type}]]></echo>
 	</target>
 
 	<target name="legacy-functional-bundle-tomcat-db2105-jdk7">
-		<run-legacy-database-dump database.type="db2" />
+		<run-legacy-database-dump database.type="db2" portal.version="${test.portal.version}" />
 	</target>
 
 	<target name="legacy-functional-bundle-tomcat-mysql55-jdk7">
-		<run-legacy-database-dump database.type="mysql" database.version="5.5" />
+		<run-legacy-database-dump database.type="mysql" database.version="5.5" portal.version="${test.portal.version}" />
 	</target>
 
 	<target name="legacy-functional-bundle-tomcat-oracle12-jdk7">
-		<run-legacy-database-dump database.type="oracle" />
+		<run-legacy-database-dump database.type="oracle" portal.version="${test.portal.version}" />
 	</target>
 
 	<target name="legacy-functional-bundle-tomcat-postgresql94-jdk7">
-		<run-legacy-database-dump database.type="postgresql" />
+		<run-legacy-database-dump database.type="postgresql" portal.version="${test.portal.version}" />
 	</target>
 
 	<target name="legacy-functional-bundle-tomcat-sybase16-jdk7">
-		<run-legacy-database-dump database.type="sybase" />
+		<run-legacy-database-dump database.type="sybase" portal.version="${test.portal.version}" />
 	</target>
 
 	<target name="lpkg-startup-jdk7">

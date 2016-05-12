@@ -66,62 +66,6 @@ public class SyncServletContextListener
 		registerPortalLifecycle();
 	}
 
-	protected void consumeDLSyncEvents() {
-		try {
-			long latestModifiedTime =
-				SyncDLObjectLocalServiceUtil.getLatestModifiedTime();
-
-			List<DLSyncEvent> dlSyncEvents = null;
-
-			if (latestModifiedTime == 0) {
-				dlSyncEvents =
-					DLSyncEventLocalServiceUtil.getLatestDLSyncEvents();
-			}
-			else {
-				dlSyncEvents = DLSyncEventLocalServiceUtil.getDLSyncEvents(
-					latestModifiedTime);
-			}
-
-			for (DLSyncEvent dlSyncEvent : dlSyncEvents) {
-				Message message = new Message();
-
-				Map<String, Object> values = new HashMap<>(4);
-
-				values.put("event", dlSyncEvent.getEvent());
-				values.put("modifiedTime", dlSyncEvent.getModifiedTime());
-				values.put("syncEventId", dlSyncEvent.getSyncEventId());
-				values.put("type", dlSyncEvent.getType());
-				values.put("typePK", dlSyncEvent.getTypePK());
-
-				message.setValues(values);
-
-				MessageBusUtil.sendMessage(
-					DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR,
-					message);
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-	}
-
-	@Override
-	protected void doPortalDestroy() throws Exception {
-		MessageBusUtil.unregisterMessageListener(
-			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR,
-			_dlSyncEventMessageListener);
-
-		if (SyncServiceConfigurationValues.SYNC_FILE_DIFF_CACHE_ENABLED) {
-			MessageBusUtil.unregisterMessageListener(
-				SyncDLFileVersionDiffMessageListener.DESTINATION_NAME,
-				_syncDLFileVersionDiffMessageListener);
-
-			SchedulerEngineHelperUtil.unschedule(
-				SyncDLFileVersionDiffMessageListener.class.getName(),
-				StorageType.MEMORY_CLUSTERED);
-		}
-	}
-
 	@Override
 	protected void doPortalInit() {
 		try {
@@ -155,65 +99,10 @@ public class SyncServletContextListener
 		catch (Exception e) {
 			_log.error(e, e);
 		}
-
-		_dlSyncEventMessageListener = new DLSyncEventMessageListener();
-
-		registerMessageListener(
-			_dlSyncEventMessageListener,
-			DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR);
-
-		if (SyncServiceConfigurationValues.SYNC_FILE_DIFF_CACHE_ENABLED) {
-			_syncDLFileVersionDiffMessageListener =
-				new SyncDLFileVersionDiffMessageListener();
-
-			registerMessageListener(
-				_syncDLFileVersionDiffMessageListener,
-				SyncDLFileVersionDiffMessageListener.DESTINATION_NAME);
-
-			scheduleDLFileVersionDiffMessageListener();
-		}
-
-		consumeDLSyncEvents();
 	}
 
-	protected void registerMessageListener(
-		MessageListener messageListener, String destinationName) {
-
-		SerialDestination serialDestination = new SerialDestination();
-
-		serialDestination.setName(destinationName);
-
-		serialDestination.afterPropertiesSet();
-
-		MessageBusUtil.addDestination(serialDestination);
-
-		MessageBusUtil.registerMessageListener(
-			destinationName, messageListener);
-	}
-
-	protected void scheduleDLFileVersionDiffMessageListener() {
-		try {
-			String eventListenerClassName =
-				SyncDLFileVersionDiffMessageListener.class.getName();
-
-			SchedulerEngineHelperUtil.schedule(
-				TriggerFactoryUtil.createTrigger(
-					eventListenerClassName, eventListenerClassName,
-					SyncServiceConfigurationValues.
-						SYNC_FILE_DIFF_CACHE_DELETE_INTERVAL,
-					TimeUnit.HOUR),
-				StorageType.MEMORY_CLUSTERED, null,
-				SyncDLFileVersionDiffMessageListener.DESTINATION_NAME, null, 0);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SyncServletContextListener.class);
-
-	private MessageListener _dlSyncEventMessageListener;
-	private MessageListener _syncDLFileVersionDiffMessageListener;
 
 }

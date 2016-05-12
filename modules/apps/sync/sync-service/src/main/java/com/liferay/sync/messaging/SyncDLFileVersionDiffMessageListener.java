@@ -14,22 +14,82 @@
 
 package com.liferay.sync.messaging;
 
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.sync.service.SyncDLFileVersionDiffLocalServiceUtil;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
+import com.liferay.sync.configuration.SyncServiceConfigurationValues;
+import com.liferay.sync.service.SyncDLFileVersionDiffLocalService;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Dennis Ju
  */
-public class SyncDLFileVersionDiffMessageListener extends BaseMessageListener {
+@Component(
+	immediate = true, service = SyncDLFileVersionDiffMessageListener.class
+)
+public class SyncDLFileVersionDiffMessageListener
+	extends BaseSchedulerEntryMessageListener {
 
 	public static final String DESTINATION_NAME =
 		"liferay/sync_dl_file_version_diff_processor";
 
+	@Activate
+	protected void activate() {
+		schedulerEntryImpl.setTrigger(
+			TriggerFactoryUtil.createTrigger(
+				getEventListenerClass(), getEventListenerClass(),
+				SyncServiceConfigurationValues.
+					SYNC_FILE_DIFF_CACHE_DELETE_INTERVAL,
+				TimeUnit.HOUR));
+
+		_schedulerEngineHelper.register(
+			this, schedulerEntryImpl, DESTINATION_NAME);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_schedulerEngineHelper.unregister(this);
+	}
+
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		SyncDLFileVersionDiffLocalServiceUtil.
+		_syncDLFileVersionDiffLocalService.
 			deleteExpiredSyncDLFileVersionDiffs();
 	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setSchedulerEngineHelper(
+		SchedulerEngineHelper schedulerEngineHelper) {
+
+		_schedulerEngineHelper = schedulerEngineHelper;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSyncDLFileVersionDiffLocalService(
+		SyncDLFileVersionDiffLocalService syncDLFileVersionDiffLocalService) {
+
+		_syncDLFileVersionDiffLocalService = syncDLFileVersionDiffLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTriggerFactory(TriggerFactory triggerFactory) {
+	}
+
+	private SchedulerEngineHelper _schedulerEngineHelper;
+	private SyncDLFileVersionDiffLocalService
+		_syncDLFileVersionDiffLocalService;
 
 }

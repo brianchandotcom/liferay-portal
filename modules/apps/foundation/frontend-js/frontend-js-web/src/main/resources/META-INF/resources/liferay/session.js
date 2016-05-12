@@ -475,7 +475,7 @@ AUI.add(
 						var timestamp = host.get('timestamp');
 						var warningLength = host.get('warningLength');
 
-						var value = Lang.toInt(timestamp);
+						var value = parseInt(timestamp, 10);
 
 						var elapsed = sessionLength;
 

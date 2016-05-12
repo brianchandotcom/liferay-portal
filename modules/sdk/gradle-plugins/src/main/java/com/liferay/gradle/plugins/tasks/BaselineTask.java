@@ -70,6 +70,7 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 
 		};
 
+		baseline.setBndFile(getBndFile());
 		baseline.setForcePackageInfo(true);
 		baseline.setLogFile(getLogFile());
 		baseline.setNewJarFile(getNewJarFile());
@@ -92,6 +93,12 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 				throw new GradleException(message);
 			}
 		}
+	}
+
+	@Input
+	@Optional
+	public File getBndFile() {
+		return GradleUtil.toFile(getProject(), _bndFile);
 	}
 
 	@Override
@@ -138,6 +145,10 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 		return _reportOnlyDirtyPackages;
 	}
 
+	public void setBndFile(Object bndFile) {
+		_bndFile = bndFile;
+	}
+
 	@Override
 	public void setIgnoreFailures(boolean ignoreFailures) {
 		_ignoreFailures = ignoreFailures;
@@ -169,6 +180,7 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 
 	private static final Logger _logger = Logging.getLogger(BaselineTask.class);
 
+	private Object _bndFile;
 	private boolean _ignoreFailures;
 	private String _logFileName;
 	private Object _newJarFile;

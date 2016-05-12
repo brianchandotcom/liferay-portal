@@ -79,10 +79,9 @@ public class BaselineJarTask extends BaseBndTask {
 
 		_reportLevelIsDiff = _reportLevel.equals("diff");
 		_reportLevelIsOff = _reportLevel.equals("off");
+		_reportLevelIsPersist = _reportLevel.equals("persist");
 
-		boolean reportLevelIsPersist = _reportLevel.equals("persist");
-
-		if (reportLevelIsPersist) {
+		if (_reportLevelIsPersist) {
 			_reportLevelIsDiff = true;
 
 			File baselineReportsDir = new File(
@@ -123,6 +122,10 @@ public class BaselineJarTask extends BaseBndTask {
 			}
 
 		};
+
+		if (_reportLevelIsPersist) {
+			baseline.setBndFile(_bndFile);
+		}
 
 		Properties properties = baseline.getProperties();
 
@@ -174,6 +177,7 @@ public class BaselineJarTask extends BaseBndTask {
 	private String _reportLevel;
 	private boolean _reportLevelIsDiff;
 	private boolean _reportLevelIsOff = true;
+	private boolean _reportLevelIsPersist;
 	private boolean _reportOnlyDirtyPackages;
 	private File _sourceDir;
 

@@ -17,10 +17,13 @@ package com.liferay.ant.bnd;
 import aQute.bnd.differ.Baseline.BundleInfo;
 import aQute.bnd.differ.Baseline.Info;
 import aQute.bnd.differ.DiffPluginImpl;
+import aQute.bnd.osgi.Constants;
 import aQute.bnd.osgi.Jar;
 import aQute.bnd.service.diff.Delta;
 import aQute.bnd.service.diff.Diff;
 import aQute.bnd.version.Version;
+
+import aQute.lib.io.IO;
 
 import aQute.service.reporter.Reporter;
 
@@ -97,6 +100,9 @@ public abstract class Baseline {
 
 			if (bundleInfo.mismatch) {
 				match = false;
+
+				updateBundleVersion(
+					bundleInfo.newerVersion, bundleInfo.suggestedVersion);
 			}
 
 			Info[] infosArray = infos.toArray(new Info[infos.size()]);
@@ -195,6 +201,10 @@ public abstract class Baseline {
 
 	public Properties getProperties() {
 		return _properties;
+	}
+
+	public void setBndFile(File bndFile) {
+		_bndFile = bndFile;
 	}
 
 	public void setForcePackageInfo(boolean forcePackageInfo) {
@@ -415,6 +425,23 @@ public abstract class Baseline {
 		persistLog(output);
 	}
 
+	protected void updateBundleVersion(Version oldVersion, Version newVersion)
+		throws IOException {
+
+		if (_bndFile == null) {
+			return;
+		}
+
+		String content = IO.collect(_bndFile);
+
+		content = content.replace(
+			Constants.BUNDLE_VERSION + ": " + oldVersion,
+			Constants.BUNDLE_VERSION + ": " + newVersion);
+
+		IO.store(content, _bndFile);
+	}
+
+	private File _bndFile;
 	private boolean _forcePackageInfo;
 	private boolean _headerPrinted;
 	private File _logFile;

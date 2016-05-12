@@ -1510,12 +1510,19 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	protected void configureTaskBaseline(BaselineTask baselineTask) {
 		Project project = baselineTask.getProject();
 
-		boolean reportDiff = false;
-
 		String reportLevel = GradleUtil.getProperty(
 			project, "baseline.jar.report.level", "standard");
 
-		if (reportLevel.equals("diff") || reportLevel.equals("persist")) {
+		boolean reportLevelIsDiff = reportLevel.equals("diff");
+		boolean reportLevelIsPersist = reportLevel.equals("persist");
+
+		if (reportLevelIsPersist && FileUtil.exists(project, "bnd.bnd")) {
+			baselineTask.setBndFile("bnd.bnd");
+		}
+
+		boolean reportDiff = false;
+
+		if (reportLevelIsDiff || reportLevelIsPersist) {
 			reportDiff = true;
 		}
 

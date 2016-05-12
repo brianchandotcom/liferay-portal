@@ -479,7 +479,7 @@ AUI.add(
 
 						var elapsed = sessionLength;
 
-						if (!value) {
+						if (!isNaN(value)) {
 							elapsed = Math.floor((Date.now() - timestamp) / 1000) * 1000;
 						}
 

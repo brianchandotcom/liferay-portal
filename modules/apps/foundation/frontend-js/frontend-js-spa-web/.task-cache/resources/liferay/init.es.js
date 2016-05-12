@@ -25,7 +25,7 @@ define("frontend-js-spa-web@1.0.6/liferay/init.es", ['exports', './screen/Action
 		};
 	}
 
-	var initSPA = function initSPA() {
+	var initSPA = function initSPA(callback) {
 		var app = new _App2.default();
 
 		app.addRoutes([{
@@ -86,16 +86,22 @@ define("frontend-js-spa-web@1.0.6/liferay/init.es", ['exports', './screen/Action
 		Liferay.SPA.app = app;
 
 		Liferay.fire('SPAReady');
+
+		return app;
 	};
 
-	if (_globals2.default.document.readyState == 'loading') {
-		_globals2.default.document.addEventListener('DOMContentLoaded', initSPA);
-	} else {
-		initSPA();
-	}
+	exports.default = {
+		init: function init(callback) {
+			var _this = this;
 
-	Liferay.SPA = Liferay.SPA || {};
-
-	exports.default = Liferay.SPA;
+			if (_globals2.default.document.readyState == 'loading') {
+				_globals2.default.document.addEventListener('DOMContentLoaded', function () {
+					callback.call(_this, initSPA());
+				});
+			} else {
+				callback.call(this, initSPA());
+			}
+		}
+	};
 });
 //# sourceMappingURL=init.es.js.map

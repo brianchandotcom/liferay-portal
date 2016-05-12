@@ -105,6 +105,11 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 							cssClass="entry-action-column"
 							path="/asset_selection_action.jsp"
 						/>
+
+						<liferay-ui:search-container-column-jsp
+							cssClass="entry-action-column"
+							path="/asset_selection_order_action.jsp"
+						/>
 					</liferay-ui:search-container-row>
 
 					<liferay-ui:search-iterator markupView="lexicon" paginate="<%= total > SearchContainer.DEFAULT_DELTA %>" />

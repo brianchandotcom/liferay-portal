@@ -61,10 +61,6 @@ public class LoadBalancerUtil {
 
 		long start = System.currentTimeMillis();
 
-		System.out.println("Get most available master URL for properties:");
-
-		properties.list(System.out);
-
 		boolean readOnly = false;
 		int retryCount = 0;
 
@@ -554,12 +550,12 @@ public class LoadBalancerUtil {
 			try {
 				computerJSONObject = JenkinsResultsParserUtil.toJSONObject(
 					JenkinsResultsParserUtil.getLocalURL(
-						url + "/computer/api/json?pretty&tree=computer" +
-							"[displayName,idle,offline]"),
+						url + "/computer/api/json?tree=computer[displayName," +
+							"idle,offline]"),
 					false, 5000);
 				queueJSONObject = JenkinsResultsParserUtil.toJSONObject(
 					JenkinsResultsParserUtil.getLocalURL(
-						url + "/queue/api/json"),
+						url + "/queue/api/json?tree=items[task[name],why]"),
 					false, 5000);
 			}
 			catch (Exception e) {

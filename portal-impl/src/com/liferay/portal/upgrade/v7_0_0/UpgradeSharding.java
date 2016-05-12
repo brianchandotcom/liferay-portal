@@ -139,6 +139,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		DataSource dataSource = dataSourceFactoryBean.createInstance();
 
 		try (Connection targetConnection = dataSource.getConnection()) {
+			copyCompanyTable(connection, targetConnection, shardName);
 			copyControlTable(
 				connection, targetConnection, ClassNameTable.TABLE_NAME,
 				ClassNameTable.TABLE_COLUMNS, ClassNameTable.TABLE_SQL_CREATE);
@@ -146,9 +147,6 @@ public class UpgradeSharding extends UpgradeProcess {
 				connection, targetConnection, ClusterGroupTable.TABLE_NAME,
 				ClusterGroupTable.TABLE_COLUMNS,
 				ClusterGroupTable.TABLE_SQL_CREATE);
-
-			copyCompanyTable(connection, targetConnection, shardName);
-
 			copyControlTable(
 				connection, targetConnection, CounterTable.TABLE_NAME,
 				CounterTable.TABLE_COLUMNS, CounterTable.TABLE_SQL_CREATE);

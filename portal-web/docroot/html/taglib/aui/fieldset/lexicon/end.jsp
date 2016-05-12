@@ -18,7 +18,7 @@
 
 		</div>
 	</div>
-</div>
+</fieldset>
 
 <c:if test="<%= collapsible %>">
 	<aui:script sandbox="<%= true %>" use="aui-base,liferay-store">

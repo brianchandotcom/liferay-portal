@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRendererConstants;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
@@ -351,10 +350,6 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 		DDMFormFieldValueRequestParameterRetriever
 			ddmFormFieldValueRequestParameterRetriever =
 				getDDMFormFieldValueRequestParameterRetriever(fieldType);
-
-		if (fieldType.equals(DDMFormFieldType.CHECKBOX)) {
-			defaultDDMFormFieldParameterValue = "false";
-		}
 
 		return ddmFormFieldValueRequestParameterRetriever.get(
 			httpServletRequest, sb.toString(),

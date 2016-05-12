@@ -322,7 +322,7 @@ AUI.add(
 
 								var elapsed = sessionLength;
 
-								var value = Lang.toInt(timestamp);
+								var value = parseInt(timestamp, 10);
 
 								if (!value) {
 									timeOffset = Math.floor((Date.now() - timestamp) / 1000) * 1000;

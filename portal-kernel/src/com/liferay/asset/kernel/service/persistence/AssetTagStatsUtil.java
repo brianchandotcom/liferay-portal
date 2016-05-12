@@ -36,8 +36,10 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @see AssetTagStatsPersistence
  * @see com.liferay.portlet.asset.service.persistence.impl.AssetTagStatsPersistenceImpl
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public class AssetTagStatsUtil {
 	/*

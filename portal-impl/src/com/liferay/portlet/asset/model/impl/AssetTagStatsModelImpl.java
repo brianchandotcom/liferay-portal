@@ -51,8 +51,10 @@ import java.util.Map;
  * @see AssetTagStatsImpl
  * @see AssetTagStats
  * @see AssetTagStatsModel
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	implements AssetTagStatsModel {

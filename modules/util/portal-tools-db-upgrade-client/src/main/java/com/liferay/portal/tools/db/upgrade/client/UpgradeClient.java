@@ -310,6 +310,7 @@ public class UpgradeClient {
 		File portalClassesDir = _appServer.getPortalClassesDir();
 
 		sb.append(portalClassesDir.getCanonicalPath());
+
 		sb.append(File.pathSeparator);
 
 		_appendClassPath(sb, _appServer.getPortalLibDir());

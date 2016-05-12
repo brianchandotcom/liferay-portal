@@ -15,46 +15,26 @@
 package com.liferay.dynamic.data.lists.form.web.portlet;
 
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
-import com.liferay.dynamic.data.lists.form.web.constants.DDLFormWebKeys;
 import com.liferay.dynamic.data.lists.form.web.display.context.DDLFormDisplayContext;
-import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
-import com.liferay.dynamic.data.mapping.constants.DDMWebKeys;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
-import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
-
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -62,7 +42,6 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.ResourceURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -166,131 +145,6 @@ public class DDLFormPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	protected String createCaptchaResourceURL(RenderResponse renderResponse) {
-		ResourceURL resourceURL = renderResponse.createResourceURL();
-
-		resourceURL.setResourceID("captcha");
-
-		return resourceURL.toString();
-	}
-
-	protected DDMFormRenderingContext createDDMFormRenderingContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		DDMForm ddmForm) {
-
-		String languageId = ParamUtil.getString(renderRequest, "languageId");
-
-		DDMFormRenderingContext ddmFormRenderingContext =
-			new DDMFormRenderingContext();
-
-		ddmFormRenderingContext.setDDMFormValues(
-			_ddmFormValuesFactory.create(renderRequest, ddmForm));
-		ddmFormRenderingContext.setHttpServletRequest(
-			PortalUtil.getHttpServletRequest(renderRequest));
-		ddmFormRenderingContext.setHttpServletResponse(
-			PortalUtil.getHttpServletResponse(renderResponse));
-		ddmFormRenderingContext.setLocale(
-			LocaleUtil.fromLanguageId(languageId));
-		ddmFormRenderingContext.setPortletNamespace(
-			renderResponse.getNamespace());
-
-		return ddmFormRenderingContext;
-	}
-
-	protected DDMFormLayoutRow createFullColumnDDMFormLayoutRow(
-		String ddmFormFieldName) {
-
-		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
-
-		DDMFormLayoutColumn ddmFormLayoutColumn = new DDMFormLayoutColumn(
-			DDMFormLayoutColumn.FULL, ddmFormFieldName);
-
-		ddmFormLayoutRow.addDDMFormLayoutColumn(ddmFormLayoutColumn);
-
-		return ddmFormLayoutRow;
-	}
-
-	protected DDMForm getDDMForm(
-		RenderResponse renderResponse, DDMStructure ddmStructure,
-		boolean requireCaptcha) {
-
-		DDMForm ddmForm = ddmStructure.getDDMForm();
-
-		if (requireCaptcha) {
-			DDMFormField captchaDDMFormField = new DDMFormField(
-				_DDM_FORM_FIELD_NAME_CAPTCHA, "captcha");
-
-			captchaDDMFormField.setDataType("string");
-			captchaDDMFormField.setProperty(
-				"url", createCaptchaResourceURL(renderResponse));
-
-			ddmForm.addDDMFormField(captchaDDMFormField);
-		}
-
-		return ddmForm;
-	}
-
-	protected String getDDMFormHTML(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			DDLRecordSet recordSet)
-		throws PortalException {
-
-		DDMStructure ddmStructure = recordSet.getDDMStructure();
-		boolean requireCaptcha = isCaptchaRequired(recordSet);
-
-		DDMForm ddmForm = getDDMForm(
-			renderResponse, ddmStructure, requireCaptcha);
-
-		DDMFormLayout ddmFormLayout = getDDMFormLayout(
-			ddmStructure, requireCaptcha);
-
-		DDMFormRenderingContext ddmFormRenderingContext =
-			createDDMFormRenderingContext(
-				renderRequest, renderResponse, ddmForm);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		boolean showSubmitButton = isShowSubmitButton(renderRequest);
-
-		ddmFormRenderingContext.setShowSubmitButton(showSubmitButton);
-
-		String submitLabel = getSubmitLabel(recordSet, themeDisplay);
-
-		ddmFormRenderingContext.setSubmitLabel(submitLabel);
-
-		return _ddmFormRenderer.render(
-			ddmForm, ddmFormLayout, ddmFormRenderingContext);
-	}
-
-	protected DDMFormLayout getDDMFormLayout(
-			DDMStructure ddmStructure, boolean requireCaptcha)
-		throws PortalException {
-
-		DDMFormLayout ddmFormLayout = ddmStructure.getDDMFormLayout();
-
-		if (requireCaptcha) {
-			DDMFormLayoutPage lastDDMFormLayoutPage = getLastDDMFormLayoutPage(
-				ddmFormLayout);
-
-			DDMFormLayoutRow ddmFormLayoutRow =
-				createFullColumnDDMFormLayoutRow(_DDM_FORM_FIELD_NAME_CAPTCHA);
-
-			lastDDMFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow);
-		}
-
-		return ddmFormLayout;
-	}
-
-	protected DDMFormLayoutPage getLastDDMFormLayoutPage(
-		DDMFormLayout ddmFormLayout) {
-
-		List<DDMFormLayoutPage> ddmFormLayoutPages =
-			ddmFormLayout.getDDMFormLayoutPages();
-
-		return ddmFormLayoutPages.get(ddmFormLayoutPages.size() - 1);
-	}
-
 	protected String getPublishedFormURL(ActionRequest actionRequest) {
 		String recordSetId = ParamUtil.getString(actionRequest, "recordSetId");
 
@@ -317,36 +171,6 @@ public class DDLFormPortlet extends MVCPortlet {
 		return throwable;
 	}
 
-	protected String getSubmitLabel(
-		DDLRecordSet recordSet, ThemeDisplay themeDisplay) {
-
-		boolean workflowEnabled = hasWorkflowEnabled(recordSet, themeDisplay);
-
-		if (workflowEnabled) {
-			return LanguageUtil.get(
-				themeDisplay.getRequest(), "submit-for-publication");
-		}
-		else {
-			return LanguageUtil.get(themeDisplay.getRequest(), "submit");
-		}
-	}
-
-	protected boolean hasWorkflowEnabled(
-		DDLRecordSet recordSet, ThemeDisplay themeDisplay) {
-
-		return _workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
-			themeDisplay.getCompanyId(), recordSet.getGroupId(),
-			DDLRecordSet.class.getName(), recordSet.getRecordSetId());
-	}
-
-	protected boolean isCaptchaRequired(DDLRecordSet recordSet)
-		throws PortalException {
-
-		DDLRecordSetSettings recordSetSettings = recordSet.getSettingsModel();
-
-		return recordSetSettings.requireCaptcha();
-	}
-
 	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
 		return false;
@@ -363,88 +187,31 @@ public class DDLFormPortlet extends MVCPortlet {
 		return type.equals(LayoutConstants.TYPE_SHARED_PORTLET);
 	}
 
-	protected boolean isShowSubmitButton(RenderRequest renderRequest) {
-		boolean preview = ParamUtil.getBoolean(renderRequest, "preview");
-
-		if (preview) {
-			return false;
-		}
-
-		return true;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDLRecordSetLocalService(
-		DDLRecordSetLocalService ddlRecordSetLocalService) {
-
-		_ddlRecordSetLocalService = ddlRecordSetLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDLRecordSetService(
-		DDLRecordSetService ddlRecordSetService) {
-
-		_ddlRecordSetService = ddlRecordSetService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormRenderer(DDMFormRenderer ddmFormRenderer) {
-		_ddmFormRenderer = ddmFormRenderer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormValuesFactory(
-		DDMFormValuesFactory ddmFormValuesFactory) {
-
-		_ddmFormValuesFactory = ddmFormValuesFactory;
-	}
-
 	protected void setRenderRequestAttributes(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
 		DDLFormDisplayContext ddlFormDisplayContext = new DDLFormDisplayContext(
-			renderRequest, _ddlRecordSetLocalService);
+			renderRequest, renderResponse, _ddlRecordSetService,
+			_ddmFormRenderer, _ddmFormValuesFactory,
+			_workflowDefinitionLinkLocalService);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, ddlFormDisplayContext);
-
-		long recordSetId = PrefsParamUtil.getLong(
-			PortletPreferencesFactoryUtil.getPortletSetup(renderRequest),
-			renderRequest, "recordSetId");
-
-		if (recordSetId == 0) {
-			return;
-		}
-
-		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
-
-		renderRequest.setAttribute(
-			DDLFormWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
-
-		String ddmFormHTML = getDDMFormHTML(
-			renderRequest, renderResponse, recordSet);
-
-		renderRequest.setAttribute(
-			DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML, ddmFormHTML);
 	}
-
-	@Reference(unbind = "-")
-	protected void setWorkflowDefinitionLinkLocalService(
-		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
-
-		_workflowDefinitionLinkLocalService =
-			workflowDefinitionLinkLocalService;
-	}
-
-	private static final String _DDM_FORM_FIELD_NAME_CAPTCHA = "_CAPTCHA_";
 
 	private static final Log _log = LogFactoryUtil.getLog(DDLFormPortlet.class);
 
-	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+	@Reference
 	private DDLRecordSetService _ddlRecordSetService;
+
+	@Reference
 	private DDMFormRenderer _ddmFormRenderer;
+
+	@Reference
 	private DDMFormValuesFactory _ddmFormValuesFactory;
+
+	@Reference
 	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
 

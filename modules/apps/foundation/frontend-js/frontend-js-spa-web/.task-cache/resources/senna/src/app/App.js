@@ -1,4 +1,4 @@
-define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-promise/src/promise/Promise', 'metal-events/src/events', '../utils/utils', '../globals/globals', '../route/Route', '../screen/Screen', '../surface/Surface', 'metal-uri/src/Uri'], function (exports, _metal, _dom, _Promise, _events, _utils, _globals, _Route, _Screen, _Surface, _Uri) {
+define("frontend-js-spa-web@1.0.6/senna/src/app/App", ['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-promise/src/promise/Promise', 'metal-events/src/events', '../utils/utils', '../globals/globals', '../route/Route', '../screen/Screen', '../surface/Surface', 'metal-uri/src/Uri'], function (exports, _metal, _dom, _Promise, _events, _utils, _globals, _Route, _Screen, _Surface, _Uri) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

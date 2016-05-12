@@ -1,4 +1,4 @@
-define(['exports'], function (exports) {
+define("frontend-js-spa-web@1.0.6/senna/src/app/dataAttributes", ['exports'], function (exports) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

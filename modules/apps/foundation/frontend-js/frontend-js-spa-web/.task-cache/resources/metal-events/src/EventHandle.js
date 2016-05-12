@@ -1,4 +1,4 @@
-define(['exports', 'metal/src/metal'], function (exports, _metal) {
+define("frontend-js-spa-web@1.0.6/metal-events/src/EventHandle", ['exports', 'metal/src/metal'], function (exports, _metal) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

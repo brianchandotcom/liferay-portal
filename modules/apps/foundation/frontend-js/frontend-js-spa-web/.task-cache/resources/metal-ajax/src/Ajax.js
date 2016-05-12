@@ -1,4 +1,4 @@
-define(['exports', 'metal/src/metal', 'metal-uri/src/Uri', 'metal-promise/src/promise/Promise'], function (exports, _metal, _Uri, _Promise) {
+define("frontend-js-spa-web@1.0.6/metal-ajax/src/Ajax", ['exports', 'metal/src/metal', 'metal-uri/src/Uri', 'metal-promise/src/promise/Promise'], function (exports, _metal, _Uri, _Promise) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

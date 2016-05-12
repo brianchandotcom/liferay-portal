@@ -1,4 +1,4 @@
-define(['exports', 'metal/src/metal', './dataAttributes', '../globals/globals', './App', '../screen/HtmlScreen', '../route/Route'], function (exports, _metal, _dataAttributes, _globals, _App, _HtmlScreen, _Route) {
+define("frontend-js-spa-web@1.0.6/senna/src/app/AppDataAttributeHandler", ['exports', 'metal/src/metal', './dataAttributes', '../globals/globals', './App', '../screen/HtmlScreen', '../route/Route'], function (exports, _metal, _dataAttributes, _globals, _App, _HtmlScreen, _Route) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

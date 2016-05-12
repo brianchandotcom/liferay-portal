@@ -1,4 +1,4 @@
-define(['exports', 'senna/src/screen/HtmlScreen', 'metal-promise/src/promise/Promise', '../util/Utils.es'], function (exports, _HtmlScreen2, _Promise, _Utils) {
+define("frontend-js-spa-web@1.0.6/liferay/screen/EventScreen.es", ['exports', 'senna/src/screen/HtmlScreen', 'metal-promise/src/promise/Promise', '../util/Utils.es'], function (exports, _HtmlScreen2, _Promise, _Utils) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

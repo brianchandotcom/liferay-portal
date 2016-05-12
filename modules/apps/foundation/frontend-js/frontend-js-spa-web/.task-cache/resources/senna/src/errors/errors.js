@@ -1,4 +1,4 @@
-define(['exports'], function (exports) {
+define("frontend-js-spa-web@1.0.6/senna/src/errors/errors", ['exports'], function (exports) {
   'use strict';
 
   /**

@@ -1,4 +1,4 @@
-define(['exports', '../dom', '../DomEventEmitterProxy', '../DomEventHandle', '../features', '../globalEval', '../globalEvalStyles', '../events'], function (exports, _dom, _DomEventEmitterProxy, _DomEventHandle, _features, _globalEval, _globalEvalStyles) {
+define("frontend-js-spa-web@1.0.6/metal-dom/src/all/dom", ['exports', '../dom', '../DomEventEmitterProxy', '../DomEventHandle', '../features', '../globalEval', '../globalEvalStyles', '../events'], function (exports, _dom, _DomEventEmitterProxy, _DomEventHandle, _features, _globalEval, _globalEvalStyles) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

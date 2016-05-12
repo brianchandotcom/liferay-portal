@@ -86,7 +86,7 @@ public interface LDAPServerConfiguration {
 	public String[] userIgnoreAttributes();
 
 	@Meta.AD(
-		deflt = "birthday=|facebookSn=|jabberSn=|jobTitle=|skypeSn=|smsSn=|twitterSn=",
+		deflt = "birthday=|facebookSn=|jabberSn=|skypeSn=|smsSn=|twitterSn=",
 		description = "contact-mappings-help", required = false
 	)
 	public String[] contactMappings();

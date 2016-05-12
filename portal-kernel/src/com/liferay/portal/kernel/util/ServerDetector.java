@@ -126,8 +126,14 @@ public class ServerDetector {
 		return _SUPPORTS_COMET;
 	}
 
+	/**
+	 * @return     true since this is always possible with OSGi
+	 *
+	 * @deprecated As of 7.3.0, with no direct replacement
+	 */
+	@Deprecated
 	public static boolean isSupportsHotDeploy() {
-		return getInstance()._supportsHotDeploy;
+		return true;
 	}
 
 	public static boolean isTomcat() {
@@ -146,17 +152,11 @@ public class ServerDetector {
 		return getInstance()._wildfly;
 	}
 
+	/**
+	 * @deprecated As of 7.3.0, with no direct replacement
+	 */
+	@Deprecated
 	public static void setSupportsHotDeploy(boolean supportsHotDeploy) {
-		getInstance()._supportsHotDeploy = supportsHotDeploy;
-
-		if (_log.isInfoEnabled()) {
-			if (supportsHotDeploy) {
-				_log.info("Server supports hot deploy");
-			}
-			else {
-				_log.info("Server does not support hot deploy");
-			}
-		}
 	}
 
 	private boolean _detect(String className) {
@@ -304,7 +304,6 @@ public class ServerDetector {
 	private boolean _oc4j;
 	private boolean _resin;
 	private String _serverId;
-	private boolean _supportsHotDeploy;
 	private boolean _tomcat;
 	private boolean _webLogic;
 	private boolean _webSphere;

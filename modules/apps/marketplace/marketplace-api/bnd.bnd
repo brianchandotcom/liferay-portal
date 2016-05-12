@@ -1,6 +1,10 @@
 Bundle-Name: Liferay Marketplace API
 Bundle-SymbolicName: com.liferay.marketplace.api
 Bundle-Version: 4.0.0
-Export-Package: com.liferay.marketplace.*
+Export-Package:\
+	com.liferay.marketplace.exception,\
+	com.liferay.marketplace.model,\
+	com.liferay.marketplace.service,\
+	com.liferay.marketplace.service.persistence
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

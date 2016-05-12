@@ -173,7 +173,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 											cssClass="asset-selector"
 											data="<%= data %>"
 											id="<%= groupId + FriendlyURLNormalizerUtil.normalize(type) %>"
-											message="<%= type %>"
+											message="<%= HtmlUtil.escape(type) %>"
 											url="javascript:;"
 										/>
 
@@ -202,7 +202,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 												cssClass="asset-selector"
 												data="<%= data %>"
 												id="<%= groupId + FriendlyURLNormalizerUtil.normalize(type) %>"
-												message="<%= type %>"
+												message="<%= HtmlUtil.escape(type) %>"
 												url="javascript:;"
 											/>
 

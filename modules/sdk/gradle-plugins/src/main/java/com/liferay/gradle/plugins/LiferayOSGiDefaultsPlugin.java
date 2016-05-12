@@ -156,7 +156,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	public static final String COPY_LIBS_TASK_NAME = "copyLibs";
 
 	public static final String DEFAULT_REPOSITORY_URL =
-		"http://cdn.repository.liferay.com/nexus/content/groups/public";
+		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/" +
+			"public";
 
 	public static final String INSTALL_CACHE_TASK_NAME = "installCache";
 

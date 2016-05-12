@@ -445,6 +445,17 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			path = fileName.substring(0, pos + 1);
 		}
 
+		boolean hasPrivateAppsDir = false;
+
+		if (portalSource) {
+			File privateAppsDir = getFile(
+				"modules/private/apps", PORTAL_MAX_DIR_LEVEL);
+
+			if (privateAppsDir != null) {
+				hasPrivateAppsDir = true;
+			}
+		}
+
 		Properties properties = new Properties();
 
 		InputStream inputStream = new FileInputStream(fileName);
@@ -481,6 +492,12 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 				if (pos != -1) {
 					propertyFileName = propertyFileName.substring(0, pos);
+				}
+
+				if (portalSource && !hasPrivateAppsDir &&
+					propertyFileName.contains("/private/apps/")) {
+
+					continue;
 				}
 
 				File file = new File(path + propertyFileName);

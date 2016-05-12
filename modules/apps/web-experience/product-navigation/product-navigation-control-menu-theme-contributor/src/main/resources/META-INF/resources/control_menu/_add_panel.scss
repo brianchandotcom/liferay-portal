@@ -21,19 +21,17 @@ body.open-admin-panel, body.sidenav-transition {
 	}
 }
 
-.lfr-admin-panel.sidenav-menu-slider {
-	z-index: 501;
-
-	&, .product-menu {
-		width: $admin-panel-width;
-	}
+.lfr-add-panel.open-admin-panel {
+	visibility: visible;
+	width: $admin-panel-width;
 }
 
 .lfr-admin-panel {
-	.product-menu {
-		@include sm() {
-			position: absolute;
-			right: 0;
+	&.sidenav-menu-slider {
+		z-index: 501;
+
+		.product-menu {
+			width: $admin-panel-width;
 		}
 	}
 

@@ -1,5 +1,8 @@
 .lfr-simulation-panel {
-	width: 320px;
+	&.open-admin-panel {
+		visibility: visible;
+		width: 320px;
+	}
 
 	.custom-devices {
 		background-color: #3A4D5A;

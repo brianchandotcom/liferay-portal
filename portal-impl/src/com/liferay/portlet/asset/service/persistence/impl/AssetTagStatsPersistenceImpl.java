@@ -63,8 +63,10 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @see AssetTagStatsPersistence
  * @see com.liferay.asset.kernel.service.persistence.AssetTagStatsUtil
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagStats>
 	implements AssetTagStatsPersistence {

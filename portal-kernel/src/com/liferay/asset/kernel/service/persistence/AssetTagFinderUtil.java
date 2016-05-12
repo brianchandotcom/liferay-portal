@@ -34,6 +34,12 @@ public class AssetTagFinderUtil {
 		return getFinder().countByG_C_N(groupId, classNameId, name);
 	}
 
+	public static java.util.List<com.liferay.asset.kernel.model.AssetTag> findByC_N(
+		long classNameId, java.lang.String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.asset.kernel.model.AssetTag> obc) {
+		return getFinder().findByC_N(classNameId, name, start, end, obc);
+	}
+
 	public static java.util.List<com.liferay.asset.kernel.model.AssetTag> findByG_C_N(
 		long groupId, long classNameId, java.lang.String name, int start,
 		int end,

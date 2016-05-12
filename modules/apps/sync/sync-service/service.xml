@@ -170,7 +170,6 @@
 
 		<tx-required>getFileDeltaAsStream</tx-required>
 	</entity>
-	<entity local-service="true" name="SyncPreferences" remote-service="false" tx-manager="false" />
 	<exceptions>
 		<exception>SyncDeviceActive</exception>
 		<exception>SyncDeviceWipe</exception>

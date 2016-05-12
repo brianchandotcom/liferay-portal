@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.upgrade.v7_0_0.util.ClassNameTable;
 import com.liferay.portal.upgrade.v7_0_0.util.ClusterGroupTable;
+import com.liferay.portal.upgrade.v7_0_0.util.CompanyTable;
 import com.liferay.portal.upgrade.v7_0_0.util.CounterTable;
 import com.liferay.portal.upgrade.v7_0_0.util.CountryTable;
 import com.liferay.portal.upgrade.v7_0_0.util.PortalPreferencesTable;
@@ -52,13 +54,32 @@ import javax.sql.DataSource;
  */
 public class UpgradeSharding extends UpgradeProcess {
 
+	protected void copyCompanyTable(
+			Connection sourceConnection, Connection targetConnection,
+			String shardName)
+		throws Exception {
+
+		copyControlTable(
+			sourceConnection, targetConnection, CompanyTable.TABLE_NAME,
+			CompanyTable.TABLE_COLUMNS, CompanyTable.TABLE_SQL_CREATE);
+
+		List<Long> companyIdsList = getCompanyIds(shardName);
+
+		String companyIds = ListUtil.toString(
+			companyIdsList, StringPool.NULL, StringPool.COMMA);
+
+		runSQL(
+			targetConnection,
+			"delete from Company where companyId not in (" + companyIds + ")");
+	}
+
 	protected void copyControlTable(
 			Connection sourceConnection, Connection targetConnection,
 			String tableName, Object[][] columns, String createSQL)
 		throws Exception {
 
 		try {
-			if (!hasRows(targetConnection, tableName)) {
+			if (hasRows(targetConnection, tableName)) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Control table " + tableName + " should not contain " +
@@ -118,6 +139,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		DataSource dataSource = dataSourceFactoryBean.createInstance();
 
 		try (Connection targetConnection = dataSource.getConnection()) {
+			copyCompanyTable(connection, targetConnection, shardName);
 			copyControlTable(
 				connection, targetConnection, ClassNameTable.TABLE_NAME,
 				ClassNameTable.TABLE_COLUMNS, ClassNameTable.TABLE_SQL_CREATE);
@@ -177,6 +199,25 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Deleted table " + tableName);
+		}
+	}
+
+	protected List<Long> getCompanyIds(String shardName) throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
+				"select classPK from Shard where name = ?")) {
+
+			ps.setString(1, shardName);
+
+			List<Long> companyIds = new ArrayList<>();
+
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					companyIds.add(rs.getLong("classPK"));
+				}
+			}
+
+			return companyIds;
 		}
 	}
 

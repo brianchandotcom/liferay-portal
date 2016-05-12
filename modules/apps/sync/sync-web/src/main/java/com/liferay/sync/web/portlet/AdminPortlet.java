@@ -14,12 +14,10 @@
 
 package com.liferay.sync.web.portlet;
 
-import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -27,8 +25,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.sync.admin.exception.OAuthPortletUndeployedException;
-import com.liferay.sync.service.SyncPreferencesLocalServiceUtil;
+import com.liferay.sync.configuration.SyncServiceConfigurationKeys;
+import com.liferay.sync.exception.OAuthPortletUndeployedException;
+import com.liferay.sync.util.SyncOAuthUtil;
 
 import java.io.IOException;
 
@@ -37,10 +36,14 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Shinn Lok
  * @author Jonathan McCann
  */
+@Component(immediate = true)
 public class AdminPortlet extends MVCPortlet {
 
 	public void updatePreferences(
@@ -64,7 +67,7 @@ public class AdminPortlet extends MVCPortlet {
 		long[] groupIds = ParamUtil.getLongValues(actionRequest, "groupIds");
 
 		for (long groupId : groupIds) {
-			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+			Group group = _groupLocalService.fetchGroup(groupId);
 
 			UnicodeProperties typeSettingsProperties =
 				group.getTypeSettingsProperties();
@@ -80,7 +83,7 @@ public class AdminPortlet extends MVCPortlet {
 
 			group.setTypeSettingsProperties(typeSettingsProperties);
 
-			GroupLocalServiceUtil.updateGroup(group);
+			_groupLocalService.updateGroup(group);
 		}
 	}
 
@@ -95,42 +98,39 @@ public class AdminPortlet extends MVCPortlet {
 			actionRequest, "allowUserPersonalSites");
 
 		portletPreferences.setValue(
-			SyncConfigurationKeys.SYNC_ALLOW_USER_PERSONAL_SITES,
+			SyncServiceConfigurationKeys.SYNC_ALLOW_USER_PERSONAL_SITES,
 			String.valueOf(allowUserPersonalSites));
 
 		boolean enabled = ParamUtil.getBoolean(actionRequest, "enabled");
 
 		portletPreferences.setValue(
-			SyncConfigurationKeys.SYNC_SERVICES_ENABLED,
+			SyncServiceConfigurationKeys.SYNC_SERVICES_ENABLED,
 			String.valueOf(enabled));
 
 		int maxConnections = ParamUtil.getInteger(
 			actionRequest, "maxConnections");
 
 		portletPreferences.setValue(
-			SyncConfigurationKeys.SYNC_CLIENT_MAX_CONNECTIONS,
+			SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_CONNECTIONS,
 			String.valueOf(maxConnections));
 
 		boolean oAuthEnabled = ParamUtil.getBoolean(
 			actionRequest, "oAuthEnabled");
 
 		portletPreferences.setValue(
-			SyncConfigurationKeys.SYNC_OAUTH_ENABLED,
+			SyncServiceConfigurationKeys.SYNC_OAUTH_ENABLED,
 			String.valueOf(oAuthEnabled));
 
 		int pollInterval = ParamUtil.getInteger(actionRequest, "pollInterval");
 
 		portletPreferences.setValue(
-			SyncConfigurationKeys.SYNC_CLIENT_POLL_INTERVAL,
+			SyncServiceConfigurationKeys.SYNC_CLIENT_POLL_INTERVAL,
 			String.valueOf(pollInterval));
 
 		portletPreferences.store();
 
 		if (oAuthEnabled) {
-			PluginPackage oAuthPortletPluginPackage =
-				DeployManagerUtil.getInstalledPluginPackage("oauth-portlet");
-
-			if (oAuthPortletPluginPackage == null) {
+			if (!SyncOAuthUtil.isDeployed()) {
 				SessionErrors.add(
 					actionRequest, OAuthPortletUndeployedException.class);
 
@@ -140,9 +140,16 @@ public class AdminPortlet extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
 
-			SyncPreferencesLocalServiceUtil.enableOAuth(
+			SyncOAuthUtil.enableOAuth(
 				CompanyThreadLocal.getCompanyId(), serviceContext);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	private GroupLocalService _groupLocalService;
 
 }

@@ -503,11 +503,7 @@ AUI.add(
 									instance._uiSetActivated();
 								}
 								else if (!hasExpired) {
-									if (hasWarned) {
-										elapsed = Math.floor((Date.now() - timestamp) / 1000) * 1000;
-
-										remainingTime = sessionLength - elapsed;
-
+									if (warningMoment) {
 										if (remainingTime <= 0) {
 											remainingTime = warningLength;
 										}

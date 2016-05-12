@@ -54,6 +54,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -79,14 +83,43 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	public final void format() throws Exception {
 		preFormat();
 
-		for (String fileName : getFileNames()) {
-			try {
-				format(fileName);
-			}
-			catch (Exception e) {
-				throw new RuntimeException("Unable to format " + fileName, e);
-			}
+		List<String> fileNames = getFileNames();
+
+		int processorThreadCount = GetterUtil.getInteger(
+			System.getProperty("source.formatter.processor.thread.count"), 5);
+
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			processorThreadCount);
+
+		List<Future<Void>> futures = new ArrayList<>(fileNames.size());
+
+		for (final String fileName : fileNames) {
+			Future<Void> future = executorService.submit(
+				new Callable<Void>() {
+
+					@Override
+					public Void call() throws Exception {
+						try {
+							format(fileName);
+
+							return null;
+						}
+						catch (Exception e) {
+							throw new RuntimeException(
+								"Unable to format " + fileName, e);
+						}
+					}
+
+				});
+
+			futures.add(future);
 		}
+
+		for (Future<Void> future : futures) {
+			future.get();
+		}
+
+		executorService.shutdown();
 
 		postFormat();
 
@@ -378,7 +411,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		if (_portalLanguageProperties == null) {
-			_portalLanguageProperties = new Properties();
+			Properties portalLanguageProperties = new Properties();
 
 			File portalLanguagePropertiesFile = new File(
 				getFile("portal-impl", PORTAL_MAX_DIR_LEVEL),
@@ -387,7 +420,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			InputStream inputStream = new FileInputStream(
 				portalLanguagePropertiesFile);
 
-			_portalLanguageProperties.load(inputStream);
+			portalLanguageProperties.load(inputStream);
+
+			_portalLanguageProperties = portalLanguageProperties;
 		}
 
 		Matcher matcher = pattern.matcher(content);
@@ -2125,7 +2160,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return _pluginsInsideModulesDirectoryNames;
 		}
 
-		_pluginsInsideModulesDirectoryNames = new ArrayList<>();
+		List<String> pluginsInsideModulesDirectoryNames = new ArrayList<>();
 
 		List<String> pluginBuildFileNames = getFileNames(
 			new String[0],
@@ -2150,9 +2185,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			int y = absolutePath.lastIndexOf(StringPool.SLASH);
 
-			_pluginsInsideModulesDirectoryNames.add(
+			pluginsInsideModulesDirectoryNames.add(
 				absolutePath.substring(x, y + 1));
 		}
+
+		_pluginsInsideModulesDirectoryNames =
+			pluginsInsideModulesDirectoryNames;
 
 		return _pluginsInsideModulesDirectoryNames;
 	}

@@ -41,6 +41,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -3862,7 +3863,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		classContent = FileUtil.read(file);
 
-		_moduleFileContentsMap.put(fullClassName, classContent);
+		if (classContent != null) {
+			_moduleFileContentsMap.put(fullClassName, classContent);
+		}
 
 		return classContent;
 	}
@@ -3872,7 +3875,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return _moduleFileNamesMap;
 		}
 
-		_moduleFileNamesMap = new HashMap<>();
+		Map<String, String> moduleFileNamesMap = new HashMap<>();
 
 		List<String> fileNames = new ArrayList<>();
 
@@ -3905,8 +3908,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			className = className.substring(pos + 1, fileName.length() - 5);
 
-			_moduleFileNamesMap.put(className, fileName);
+			moduleFileNamesMap.put(className, fileName);
 		}
+
+		_moduleFileNamesMap = moduleFileNamesMap;
 
 		return _moduleFileNamesMap;
 	}
@@ -4443,7 +4448,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _assertEqualsPattern = Pattern.compile(
 		"Assert\\.assertEquals\\((.*?)\\);\n", Pattern.DOTALL);
 	private final Map<String, Tuple> _bndInheritRequiredTupleMap =
-		new HashMap<>();
+		new ConcurrentHashMap<>();
 	private final Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExcludes;
@@ -4508,7 +4513,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"(\t| = |return )new .*\\(.*\\) \\{\n\t+[^{\t]");
 	private final Pattern _missingEmptyLinePattern2 = Pattern.compile(
 		"(\n\t*)(public|private|protected) [^;]+? \\{");
-	private final Map<String, String> _moduleFileContentsMap = new HashMap<>();
+	private final Map<String, String> _moduleFileContentsMap =
+		new ConcurrentHashMap<>();
 	private Map<String, String> _moduleFileNamesMap;
 	private final Pattern _processCallablePattern = Pattern.compile(
 		"implements ProcessCallable\\b");

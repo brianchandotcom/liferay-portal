@@ -106,7 +106,7 @@ public class DDMFormValidationException extends PortalException {
 		extends DDMFormValidationException {
 
 		public MustSetFieldsForForm() {
-			super(String.format("At least one field must be set"));
+			super("At least one field must be set");
 		}
 
 	}

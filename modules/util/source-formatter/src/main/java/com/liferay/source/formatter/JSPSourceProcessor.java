@@ -1236,8 +1236,22 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		for (String dataType : getPrimitiveTagAttributeDataTypes()) {
 			Type javaType = new Type(dataType);
 
-			JavaMethod setAttributeMethod = tagJavaClass.getMethodBySignature(
-				setAttributeMethodName, new Type[] {javaType}, true);
+			JavaMethod setAttributeMethod = null;
+
+			while (true) {
+
+				// com.thoughtworks.qdox.model.JavaClass is not thread-safe and
+				// can throw NPE as a result of a race condition
+
+				try {
+					setAttributeMethod = tagJavaClass.getMethodBySignature(
+						setAttributeMethodName, new Type[] {javaType}, true);
+
+					break;
+				}
+				catch (Exception e) {
+				}
+			}
 
 			if (setAttributeMethod != null) {
 				String value = attributeAndValue.substring(

@@ -82,6 +82,32 @@ public class JniSassCompilerTest {
 	}
 
 	@Test
+	public void testCompileFileSassVariableWithUnicode() throws Exception {
+		SassCompiler sassCompiler = new JniSassCompiler();
+
+		Class<?> clazz = getClass();
+
+		URL url = clazz.getResource("dependencies");
+
+		File inputDir = new File(url.toURI());
+
+		File inputFile = new File(inputDir, "/unicode/input.scss");
+
+		String actualOutput = sassCompiler.compileFile(
+			inputFile.getCanonicalPath(), "");
+
+		Assert.assertNotNull(actualOutput);
+
+		File expectedOutputFile = new File(
+			inputDir, "/unicode/expected_output.css");
+
+		String expectedOutput = read(expectedOutputFile.toPath());
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
+	}
+
+	@Test
 	public void testCompileFileWithSourceMap() throws Exception {
 		SassCompiler sassCompiler = new JniSassCompiler();
 
@@ -123,6 +149,33 @@ public class JniSassCompilerTest {
 		String expectedOutput = "foo { margin: 42px; }";
 		String actualOutput = sassCompiler.compileString(
 			"foo { margin: 21px * 2; }", "");
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
+	}
+
+	@Test
+	public void testCompileStringSassVariableWithUnicode() throws Exception {
+		SassCompiler sassCompiler = new JniSassCompiler();
+
+		Class<?> clazz = getClass();
+
+		URL url = clazz.getResource("dependencies");
+
+		File inputDir = new File(url.toURI());
+
+		File inputFile = new File(inputDir, "/unicode/input.scss");
+
+		String input = read(inputFile.toPath());
+
+		String actualOutput = sassCompiler.compileString(input, "");
+
+		Assert.assertNotNull(actualOutput);
+
+		File expectedOutputFile = new File(
+			inputDir, "/unicode/expected_output.css");
+
+		String expectedOutput = read(expectedOutputFile.toPath());
 
 		Assert.assertEquals(
 			stripNewLines(expectedOutput), stripNewLines(actualOutput));
@@ -180,19 +233,6 @@ public class JniSassCompilerTest {
 		expectedOutput = ".foo { line-height: 1.429; }";
 		actualOutput = sassCompiler.compileString(
 			"$val: 1.428571429;.foo { line-height: $val; }", "");
-
-		Assert.assertEquals(
-			stripNewLines(expectedOutput), stripNewLines(actualOutput));
-	}
-
-	@Test
-	public void testSassVariableWithUnicode() throws Exception {
-		SassCompiler sassCompiler = new JniSassCompiler();
-
-		String expectedOutput =
-			"@charset \"UTF-8\";.foo { content: '\\f105'; }";
-		String actualOutput = sassCompiler.compileString(
-			".foo { $icon-var: '\\f105'; content: '#{$icon-var}'; }", "");
 
 		Assert.assertEquals(
 			stripNewLines(expectedOutput), stripNewLines(actualOutput));

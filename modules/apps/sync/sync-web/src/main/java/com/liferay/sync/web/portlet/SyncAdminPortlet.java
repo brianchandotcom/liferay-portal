@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sync.configuration.SyncServiceConfigurationKeys;
+import com.liferay.sync.constants.SyncAdminPortletKeys;
 import com.liferay.sync.exception.OAuthPortletUndeployedException;
 import com.liferay.sync.util.SyncOAuthUtil;
 
@@ -33,6 +34,7 @@ import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 
@@ -43,8 +45,29 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shinn Lok
  * @author Jonathan McCann
  */
-@Component(immediate = true)
-public class AdminPortlet extends MVCPortlet {
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.css-class-wrapper=portlet-sync-admin",
+		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.preferences-owned-by-group=true",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=Sync Connector Admin",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + SyncAdminPortletKeys.SYNC_ADMIN_PORTLET,
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
+public class SyncAdminPortlet extends MVCPortlet {
 
 	public void updatePreferences(
 			ActionRequest actionRequest, ActionResponse actionResponse)

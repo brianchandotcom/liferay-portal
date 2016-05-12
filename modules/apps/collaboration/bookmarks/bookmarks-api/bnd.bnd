@@ -2,8 +2,13 @@ Bundle-Name: Liferay Bookmarks API
 Bundle-SymbolicName: com.liferay.bookmarks.api
 Bundle-Version: 2.0.1
 Export-Package:\
-	!com.liferay.bookmarks.configuration.dependencies,\
-	\
-	com.liferay.bookmarks.*
+	com.liferay.bookmarks.configuration,\
+	com.liferay.bookmarks.configuration.definition,\
+	com.liferay.bookmarks.constants,\
+	com.liferay.bookmarks.exception,\
+	com.liferay.bookmarks.model,\
+	com.liferay.bookmarks.service,\
+	com.liferay.bookmarks.service.persistence,\
+	com.liferay.bookmarks.util.comparator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Bookmarks

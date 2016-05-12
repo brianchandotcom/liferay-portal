@@ -136,6 +136,14 @@ public class AssetTagFinderImpl
 	}
 
 	@Override
+	public List<AssetTag> findByC_N(
+		long classNameId, String name, int start, int end,
+		OrderByComparator<AssetTag> obc) {
+
+		return findByG_C_N(0, classNameId, name, start, end, obc);
+	}
+
+	@Override
 	public List<AssetTag> findByG_C_N(
 		long groupId, long classNameId, String name, int start, int end,
 		OrderByComparator<AssetTag> obc) {
@@ -146,6 +154,11 @@ public class AssetTagFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(FIND_BY_G_C_N);
+
+			if (groupId <= 0) {
+				sql = StringUtil.removeSubstring(
+					sql, "(AssetEntry.groupId = ?) AND");
+			}
 
 			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
 

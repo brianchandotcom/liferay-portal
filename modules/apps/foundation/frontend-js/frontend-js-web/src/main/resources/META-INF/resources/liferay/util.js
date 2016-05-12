@@ -311,22 +311,22 @@
 			);
 
 			if (!interacting && Util.inBrowserView(el)) {
-				if (!el.is(':disabled,:hidden')) {
+				var form = el.closest('form');
+
+				var focusable = !(el.is(':disabled') || el.is(':hidden'));
+
+				if (!form.length || focusable) {
 					el.focus();
 				}
 				else {
-					var form = el.closest('form');
+					var portletName = form[0].getAttribute('data-fm-namespace');
 
-					if (form.length) {
-						var portletName = form[0].getAttribute('data-fm-namespace');
-
-						Liferay.once(
-							portletName + 'formReady',
-							function() {
-								el.focus();
-							}
-						);
-					}
+					Liferay.once(
+						portletName + 'formReady',
+						function() {
+							el.focus();
+						}
+					);
 				}
 			}
 		},

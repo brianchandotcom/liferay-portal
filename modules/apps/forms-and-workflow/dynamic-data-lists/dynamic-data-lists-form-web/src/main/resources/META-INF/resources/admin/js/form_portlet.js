@@ -148,7 +148,7 @@ AUI.add(
 
 						var descriptionEditor = CKEDITOR.instances[instance.ns('descriptionEditor')];
 
-						descriptionEditor.element.$.contentEditable = false;
+						descriptionEditor.setReadOnly(true);
 					},
 
 					disableNameEditor: function() {
@@ -156,7 +156,7 @@ AUI.add(
 
 						var nameEditor = CKEDITOR.instances[instance.ns('nameEditor')];
 
-						nameEditor.element.$.contentEditable = false;
+						nameEditor.setReadOnly(true);
 					},
 
 					enableDescriptionEditor: function() {
@@ -164,7 +164,7 @@ AUI.add(
 
 						var descriptionEditor = CKEDITOR.instances[instance.ns('descriptionEditor')];
 
-						descriptionEditor.element.$.contentEditable = true;
+						descriptionEditor.setReadOnly(false);
 					},
 
 					enableNameEditor: function() {
@@ -172,7 +172,7 @@ AUI.add(
 
 						var nameEditor = CKEDITOR.instances[instance.ns('nameEditor')];
 
-						nameEditor.element.$.contentEditable = true;
+						nameEditor.setReadOnly(false);
 					},
 
 					getState: function() {

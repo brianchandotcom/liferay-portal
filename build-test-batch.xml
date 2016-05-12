@@ -507,6 +507,54 @@ app.server.type=@{app.server.type}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="run-legacy-database-dump">
+		<attribute name="database.type" />
+		<attribute name="database.version" />
+		<attribute name="portal.version" />
+
+		<sequential>
+			<if>
+				<matches pattern="[A-z]+" string="${axis.variable}" />
+				<then>
+					<property name="test.class" value="${axis.variable}" />
+				</then>
+				<else>
+					<property name="test.class" value="${run.test.case.method.group}_${axis.variable}" />
+				</else>
+			</if>
+
+			<run-batch-test tomcat.gc.log="@{tomcat.gc.log}" tsant.gc.log="@{tsant.gc.log}">
+				<test-action>
+					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}">
+						<test-action>
+							<ant dir="${portal.legacy.dir}/@{portal.version}" target="populate-data-archive">
+								<property name="database.type" value="@{database.type}" />
+								<property name="test.class" value="${axis.variable}" />
+							</ant>
+						</test-action>
+					</database-test-run-test>
+				</test-action>
+
+				<test-set-up>
+					<antcall target="record-test-generated-properties" />
+
+					<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
+				</test-set-up>
+
+				<test-tear-down>
+					<if>
+						<available file=".testable.portal.started" />
+						<then>
+							<antcall target="stop-app-server" />
+
+							<delete failonerror="false" file=".testable.portal.started" />
+						</then>
+					</if>
+				</test-tear-down>
+			</run-batch-test>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="run-functional-test">
 		<attribute name="app.server.type" />
 		<attribute default="${app.server.@{app.server.type}.version}" name="app.server.version" />
@@ -906,6 +954,26 @@ app.server.type=@{app.server.type}]]></echo>
 
 	<target name="integration-sybase160-jdk7">
 		<run-integration-test database.type="sybase" />
+	</target>
+
+	<target name="legacy-functional-bundle-tomcat-db2105-jdk7">
+		<run-legacy-database-dump database.type="db2" />
+	</target>
+
+	<target name="legacy-functional-bundle-tomcat-mysql55-jdk7">
+		<run-legacy-database-dump database.type="mysql" database.version="5.5" />
+	</target>
+
+	<target name="legacy-functional-bundle-tomcat-oracle12-jdk7">
+		<run-legacy-database-dump database.type="oracle" />
+	</target>
+
+	<target name="legacy-functional-bundle-tomcat-postgresql94-jdk7">
+		<run-legacy-database-dump database.type="postgresql" />
+	</target>
+
+	<target name="legacy-functional-bundle-tomcat-sybase16-jdk7">
+		<run-legacy-database-dump database.type="sybase" />
 	</target>
 
 	<target name="lpkg-startup-jdk7">

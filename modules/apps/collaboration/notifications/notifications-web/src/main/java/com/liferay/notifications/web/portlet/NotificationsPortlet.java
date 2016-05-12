@@ -15,16 +15,21 @@
 package com.liferay.notifications.web.portlet;
 
 import com.liferay.notifications.web.constants.NotificationsPortletKeys;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -169,6 +174,9 @@ public class NotificationsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long[] userNotificationDeliveryIds = ParamUtil.getLongValues(
 			actionRequest, "userNotificationDeliveryIds");
 
@@ -180,6 +188,15 @@ public class NotificationsPortlet extends MVCPortlet {
 				updateUserNotificationDelivery(
 					userNotificationDeliveryId, deliver);
 		}
+
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				LanguageUtil.getLanguageId(themeDisplay.getLocale()));
+
+		SessionMessages.add(
+			actionRequest, "requestProcessed",
+			LanguageUtil.get(
+				resourceBundle, "your-configuration-was-saved-sucessfully"));
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -234,6 +251,12 @@ public class NotificationsPortlet extends MVCPortlet {
 		_userNotificationEventLocalService.updateUserNotificationEvent(
 			userNotificationEvent);
 	}
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.notifications.web)",
+		unbind = "-"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
 
 	private SubscriptionLocalService _subscriptionLocalService;
 	private UserNotificationDeliveryLocalService

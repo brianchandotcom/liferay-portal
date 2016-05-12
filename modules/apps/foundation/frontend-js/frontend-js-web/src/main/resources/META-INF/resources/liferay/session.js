@@ -324,7 +324,7 @@ AUI.add(
 
 								var value = parseInt(timestamp, 10);
 
-								if (!value) {
+								if (!isNaN(value)) {
 									timeOffset = Math.floor((Date.now() - timestamp) / 1000) * 1000;
 
 									elapsed = timeOffset;

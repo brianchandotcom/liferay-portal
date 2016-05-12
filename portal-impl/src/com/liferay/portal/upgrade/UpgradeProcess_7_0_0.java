@@ -97,10 +97,11 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeRepository.class);
 		upgrade(UpgradeRepositoryEntry.class);
 		upgrade(UpgradeResourcePermission.class);
-		upgrade(UpgradeSharding.class);
 		upgrade(UpgradeSocial.class);
 		upgrade(UpgradeSubscription.class);
 		upgrade(UpgradeWebsite.class);
+
+		upgrade(UpgradeSharding.class);
 
 		clearIndexesCache();
 	}

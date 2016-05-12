@@ -8,7 +8,7 @@ import RenderURLScreen from './screen/RenderURLScreen.es';
 import Uri from 'metal-uri/src/Uri';
 import utils from 'senna/src/utils/utils';
 
-var initSPA = function() {
+var initSPA = function(callback) {
 	let app = new App();
 
 	app.addRoutes(
@@ -75,15 +75,22 @@ var initSPA = function() {
 	Liferay.SPA.app = app;
 
 	Liferay.fire('SPAReady');
+
+	return app;
 };
 
-if (globals.document.readyState == 'loading') {
-	globals.document.addEventListener('DOMContentLoaded', initSPA);
-}
-else {
-	initSPA();
-}
-
-Liferay.SPA = Liferay.SPA || {};
-
-export default Liferay.SPA;
+export default {
+	init: function(callback) {
+		if (globals.document.readyState == 'loading') {
+			globals.document.addEventListener(
+				'DOMContentLoaded',
+				() => {
+					callback.call(this, initSPA());
+				}
+			);
+		}
+		else {
+			callback.call(this, initSPA());
+		}
+	}
+};

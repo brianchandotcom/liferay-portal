@@ -27,26 +27,17 @@ SPAUtil spaUtil = (SPAUtil)request.getAttribute(SPAWebKeys.SPA_UTIL);
 %>
 
 <aui:script require="frontend-js-spa-web/liferay/init.es">
-	var setSPAProperties = function() {
-		var app = Liferay.SPA.app;
-
-		app.setPortletsBlacklist(<%= spaUtil.getPortletsBlacklist(themeDisplay) %>);
-		app.setValidStatusCodes(<%= spaUtil.getValidStatusCodes() %>);
-	};
-
-	if (Liferay.SPA.app == null) {
-		Liferay.on('SPAReady', setSPAProperties);
-	}
-	else {
-		setSPAProperties();
-	}
-</aui:script>
-
-<aui:script>
 	Liferay.SPA = Liferay.SPA || {};
 
 	Liferay.SPA.cacheExpirationTime = <%= spaUtil.getCacheExpirationTime(themeDisplay.getCompanyId()) %>;
 	Liferay.SPA.clearScreensCache = <%= spaUtil.isClearScreensCache(request, session) %>;
 	Liferay.SPA.excludedPaths = <%= spaUtil.getExcludedPaths() %>;
 	Liferay.SPA.loginRedirect = '<%= spaUtil.getLoginRedirect(request) %>';
+
+	frontendJsSpaWebLiferayInitEs.default.init(
+		function(app) {
+			app.setPortletsBlacklist(<%= spaUtil.getPortletsBlacklist(themeDisplay) %>);
+			app.setValidStatusCodes(<%= spaUtil.getValidStatusCodes() %>);
+		}
+	);
 </aui:script>

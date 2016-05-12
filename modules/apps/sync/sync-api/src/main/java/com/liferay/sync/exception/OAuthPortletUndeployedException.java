@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.web.exception;
+package com.liferay.sync.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 

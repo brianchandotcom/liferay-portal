@@ -19,35 +19,36 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-portletPreferences = SyncPreferencesLocalServiceUtil.getPortletPreferences(themeDisplay.getCompanyId());
-
-boolean allowUserPersonalSites = PrefsPropsUtil.getBoolean(portletPreferences, themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_ALLOW_USER_PERSONAL_SITES);
-boolean enabled = PrefsPropsUtil.getBoolean(portletPreferences, themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_SERVICES_ENABLED);
-int maxConnections = PrefsPropsUtil.getInteger(portletPreferences, themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_CONNECTIONS);
-boolean oAuthEnabled = PrefsPropsUtil.getBoolean(portletPreferences, themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_OAUTH_ENABLED);
-int pollInterval = PrefsPropsUtil.getInteger(portletPreferences, themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_CLIENT_POLL_INTERVAL);
+boolean allowUserPersonalSites = PrefsPropsUtil.getBoolean(themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_ALLOW_USER_PERSONAL_SITES, SyncServiceConfigurationValues.SYNC_ALLOW_USER_PERSONAL_SITES);
+boolean enabled = PrefsPropsUtil.getBoolean(themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_SERVICES_ENABLED, SyncServiceConfigurationValues.SYNC_SERVICES_ENABLED);
+int maxConnections = PrefsPropsUtil.getInteger(themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_CONNECTIONS, SyncServiceConfigurationValues.SYNC_CLIENT_MAX_CONNECTIONS);
+boolean oAuthEnabled = PrefsPropsUtil.getBoolean(themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_OAUTH_ENABLED, SyncServiceConfigurationValues.SYNC_OAUTH_ENABLED);
+int pollInterval = PrefsPropsUtil.getInteger(themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_CLIENT_POLL_INTERVAL, SyncServiceConfigurationValues.SYNC_CLIENT_POLL_INTERVAL);
 
 boolean oAuthApplicationAvailable = false;
 
 if (oAuthEnabled) {
-	long oAuthApplicationId = PrefsPropsUtil.getInteger(portletPreferences, themeDisplay.getCompanyId(), SyncConfigurationKeys.SYNC_OAUTH_APPLICATION_ID, 0);
+	long oAuthApplicationId = PrefsPropsUtil.getInteger(themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_OAUTH_APPLICATION_ID, 0);
 
-	if (SyncPreferencesLocalServiceUtil.isOAuthApplicationAvailable(oAuthApplicationId)) {
+	if (SyncOAuthUtil.isOAuthApplicationAvailable(oAuthApplicationId)) {
 		oAuthApplicationAvailable = true;
 	}
 }
 %>
 
-<c:if test='<%= oAuthEnabled && !DeployManagerUtil.isDeployed("oauth-portlet") %>'>
-	<div class="alert alert-warning">
-		<liferay-ui:message key="oauth-publisher-is-not-deployed" />
-	</div>
-</c:if>
-
-<c:if test="<%= oAuthEnabled && !oAuthApplicationAvailable %>">
-	<div class="alert alert-warning">
-		<liferay-ui:message key="the-oauth-application-for-liferay-sync-is-missing" />
-	</div>
+<c:if test="<%= oAuthEnabled %>">
+	<c:choose>
+		<c:when test="<%= !SyncOAuthUtil.isDeployed() %>">
+			<div class="alert alert-warning">
+				<liferay-ui:message key="oauth-publisher-is-not-deployed" />
+			</div>
+		</c:when>
+		<c:when test="<%= !oAuthApplicationAvailable %>">
+			<div class="alert alert-warning">
+				<liferay-ui:message key="the-oauth-application-for-liferay-sync-is-missing" />
+			</div>
+		</c:when>
+	</c:choose>
 </c:if>
 
 <liferay-portlet:actionURL var="configurationActionURL" />
@@ -66,7 +67,7 @@ if (oAuthEnabled) {
 
 	<h4><liferay-ui:message key="advanced" /></h4>
 
-	<c:if test='<%= DeployManagerUtil.isDeployed("oauth-portlet") %>'>
+	<c:if test="<%= SyncOAuthUtil.isDeployed() %>">
 		<aui:fieldset>
 			<aui:input helpMessage="oauth-enabled-help" label="oauth-enabled" name="oAuthEnabled" type="checkbox" value="<%= oAuthEnabled %>" />
 		</aui:fieldset>

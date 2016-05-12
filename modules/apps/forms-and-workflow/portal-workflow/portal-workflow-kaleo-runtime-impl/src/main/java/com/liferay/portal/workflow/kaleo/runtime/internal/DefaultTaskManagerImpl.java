@@ -189,9 +189,15 @@ public class DefaultTaskManagerImpl
 			KaleoNode.class.getName(), kaleoTask.getKaleoNodeId(),
 			ExecutionType.ON_ASSIGNMENT, executionContext);
 
-		if (!assigneeClassName.equals(User.class.getName()) ||
-			(serviceContext.getUserId() != assigneeClassPK)) {
+		boolean selfAssignment = false;
 
+		if (assigneeClassName.equals(User.class.getName()) &&
+			(assigneeClassPK == serviceContext.getUserId())) {
+
+			selfAssignment = true;
+		}
+
+		if (!selfAssignment) {
 			_notificationHelper.sendKaleoNotifications(
 				KaleoNode.class.getName(), kaleoTask.getKaleoNodeId(),
 				ExecutionType.ON_ASSIGNMENT, executionContext);

@@ -16,13 +16,13 @@
 {template .checkbox autoescape="deprecated-contextual"}
 	<div class="form-group form-inline liferay-ddm-form-field-checkbox" data-fieldname="{$name}">
 		{if $showAsSwitcher}
-			<label for="{$name}" role="checkbox" aria-checked="{($status) ? true : false}">
+			<label aria-checked="{($status) ? true : false}" for="{$name}" role="checkbox">
 				<input class="toggle-switch" {if $readOnly}disabled{/if} id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />
 
 				<span aria-hidden="true" class="toggle-switch-bar">
 					<span class="toggle-switch-handle"></span>
 				</span>
-				
+
 				<span class="toggle-switch-text toggle-switch-text-right">
 					{$label}
 

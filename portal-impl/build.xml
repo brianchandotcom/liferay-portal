@@ -752,6 +752,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<jvmarg value="-Dsource.formatter.check.unprocessed.exceptions=${source.formatter.check.unprocessed.exceptions}" />
 			<jvmarg value="-Dsource.formatter.excludes=${source.formatter.excludes}" />
 			<jvmarg value="-Dsource.formatter.max.line.length=${source.formatter.max.line.length}" />
+			<jvmarg value="-Dsource.formatter.processor.thread.count=${source.formatter.processor.thread.count}" />
 			<arg value="format.current.branch=${format.current.branch}" />
 			<arg value="format.latest.author=${format.latest.author}" />
 			<arg value="format.local.changes=${format.local.changes}" />

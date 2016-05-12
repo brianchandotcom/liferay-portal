@@ -85,7 +85,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		List<String> fileNames = getFileNames();
 
-		ExecutorService executorService = Executors.newFixedThreadPool(5);
+		int processorThreadCount = GetterUtil.getInteger(
+			System.getProperty("source.formatter.processor.thread.count"), 5);
+
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			processorThreadCount);
 
 		List<Future<Void>> futures = new ArrayList<>(fileNames.size());
 

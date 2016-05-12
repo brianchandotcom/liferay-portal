@@ -4,3 +4,4 @@ Bundle-Version: 1.0.0
 DynamicImport-Package: *
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Kaleo Workflow Engine
+-dsannotations-options: inherit

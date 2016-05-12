@@ -1,6 +1,11 @@
 Bundle-Name: Liferay Microblogs API
 Bundle-SymbolicName: com.liferay.microblogs.api
 Bundle-Version: 2.0.1
-Export-Package: com.liferay.microblogs.*
+Export-Package:\
+	com.liferay.microblogs.constants,\
+	com.liferay.microblogs.exception,\
+	com.liferay.microblogs.model,\
+	com.liferay.microblogs.service,\
+	com.liferay.microblogs.service.persistence
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Microblogs

@@ -31,13 +31,13 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1182,8 +1182,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		if (portalSource && !isModulesFile(absolutePath)) {
 			if (_tablesContent == null) {
-				_tablesContent = getContent(
+				String tablesContent = getContent(
 					"sql/portal-tables.sql", PORTAL_MAX_DIR_LEVEL);
+
+				_tablesContent = tablesContent;
 			}
 
 			return _tablesContent;
@@ -1216,7 +1218,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				new File(moduleOrPluginFolder + "/sql/tables.sql"));
 		}
 
-		_tablesContentMap.put(fileName, tablesContent);
+		if (tablesContent != null) {
+			_tablesContentMap.put(fileName, tablesContent);
+		}
 
 		return tablesContent;
 	}
@@ -1515,7 +1519,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		"/(\\w*-(ext|hooks|layouttpl|portlet|theme|web))/build\\.xml$");
 	private String _solrElementsContent;
 	private String _tablesContent;
-	private final Map<String, String> _tablesContentMap = new HashMap<>();
+	private final Map<String, String> _tablesContentMap =
+		new ConcurrentHashMap<>();
 	private final Pattern _whereNotInSQLPattern = Pattern.compile(
 		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
 	private List<String> _xmlExcludes;

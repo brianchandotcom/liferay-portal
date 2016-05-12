@@ -1476,8 +1476,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			return _primitiveTagAttributeDataTypes;
 		}
 
-		_primitiveTagAttributeDataTypes = SetUtil.fromArray(
+		Set<String> primitiveTagAttributeDataTypes = SetUtil.fromArray(
 			new String[] {"boolean", "double", "int", "long"});
+
+		_primitiveTagAttributeDataTypes = primitiveTagAttributeDataTypes;
 
 		return _primitiveTagAttributeDataTypes;
 	}
@@ -1489,17 +1491,21 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		File utilTaglibDir = getFile("util-taglib/src", PORTAL_MAX_DIR_LEVEL);
 
+		String utilTaglibSrcDirName = null;
+
 		if (utilTaglibDir != null) {
-			_utilTaglibSrcDirName = utilTaglibDir.getAbsolutePath();
+			utilTaglibSrcDirName = utilTaglibDir.getAbsolutePath();
 
-			_utilTaglibSrcDirName = StringUtil.replace(
-				_utilTaglibSrcDirName, StringPool.BACK_SLASH, StringPool.SLASH);
+			utilTaglibSrcDirName = StringUtil.replace(
+				utilTaglibSrcDirName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-			_utilTaglibSrcDirName += StringPool.SLASH;
+			utilTaglibSrcDirName += StringPool.SLASH;
 		}
 		else {
-			_utilTaglibSrcDirName = StringPool.BLANK;
+			utilTaglibSrcDirName = StringPool.BLANK;
 		}
+
+		_utilTaglibSrcDirName = utilTaglibSrcDirName;
 
 		return _utilTaglibSrcDirName;
 	}

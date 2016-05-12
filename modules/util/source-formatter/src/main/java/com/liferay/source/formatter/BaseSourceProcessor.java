@@ -378,7 +378,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		if (_portalLanguageProperties == null) {
-			_portalLanguageProperties = new Properties();
+			Properties portalLanguageProperties = new Properties();
 
 			File portalLanguagePropertiesFile = new File(
 				getFile("portal-impl", PORTAL_MAX_DIR_LEVEL),
@@ -387,7 +387,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			InputStream inputStream = new FileInputStream(
 				portalLanguagePropertiesFile);
 
-			_portalLanguageProperties.load(inputStream);
+			portalLanguageProperties.load(inputStream);
+
+			_portalLanguageProperties = portalLanguageProperties;
 		}
 
 		Matcher matcher = pattern.matcher(content);
@@ -2125,7 +2127,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return _pluginsInsideModulesDirectoryNames;
 		}
 
-		_pluginsInsideModulesDirectoryNames = new ArrayList<>();
+		List<String> pluginsInsideModulesDirectoryNames = new ArrayList<>();
 
 		List<String> pluginBuildFileNames = getFileNames(
 			new String[0],
@@ -2150,9 +2152,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			int y = absolutePath.lastIndexOf(StringPool.SLASH);
 
-			_pluginsInsideModulesDirectoryNames.add(
+			pluginsInsideModulesDirectoryNames.add(
 				absolutePath.substring(x, y + 1));
 		}
+
+		_pluginsInsideModulesDirectoryNames =
+			pluginsInsideModulesDirectoryNames;
 
 		return _pluginsInsideModulesDirectoryNames;
 	}

@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -526,11 +527,15 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			return _portalPortalPropertiesContent;
 		}
 
+		String portalPortalPropertiesContent = null;
+
 		if (portalSource) {
 			File file = getFile(
 				"portal-impl/src/portal.properties", PORTAL_MAX_DIR_LEVEL);
 
-			_portalPortalPropertiesContent = FileUtil.read(file);
+			portalPortalPropertiesContent = FileUtil.read(file);
+
+			_portalPortalPropertiesContent = portalPortalPropertiesContent;
 
 			return _portalPortalPropertiesContent;
 		}
@@ -541,11 +546,13 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		URL url = classLoader.getResource("portal.properties");
 
 		if (url != null) {
-			_portalPortalPropertiesContent = IOUtils.toString(url);
+			portalPortalPropertiesContent = IOUtils.toString(url);
 		}
 		else {
-			_portalPortalPropertiesContent = StringPool.BLANK;
+			portalPortalPropertiesContent = StringPool.BLANK;
 		}
+
+		_portalPortalPropertiesContent = portalPortalPropertiesContent;
 
 		return _portalPortalPropertiesContent;
 	}
@@ -612,7 +619,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private final Map<String, Set<String>> _duplicateLanguageKeyLinesMap =
-		new HashMap<>();
+		new ConcurrentHashMap<>();
 	private Map<String, Properties> _languagePropertiesMap;
 	private final Pattern _licensesPattern = Pattern.compile(
 		"\nlicenses=(\\w+)\n");

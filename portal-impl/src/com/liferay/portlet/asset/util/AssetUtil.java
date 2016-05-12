@@ -137,19 +137,22 @@ public class AssetUtil {
 
 		Collections.reverse(ancestorCategories);
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		for (AssetCategory ancestorCategory : ancestorCategories) {
 			portletURL.setParameter(
 				"categoryId", String.valueOf(ancestorCategory.getCategoryId()));
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				request, ancestorCategory.getTitleCurrentValue(),
+				request, ancestorCategory.getTitle(themeDisplay.getLocale()),
 				portletURL.toString());
 		}
 
 		portletURL.setParameter("categoryId", String.valueOf(assetCategoryId));
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, assetCategory.getTitleCurrentValue(),
+			request, assetCategory.getTitle(themeDisplay.getLocale()),
 			portletURL.toString());
 	}
 

@@ -14,7 +14,6 @@ dependencies {
 	provided group: "org.apache.cxf", name: "cxf-tools-common", version: "3.0.3"
 	provided group: "org.apache.cxf", name: "cxf-tools-validator", version: "3.0.3"
 	provided group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "3.2.0"
-	provided group: "org.apache.felix", name: "org.apache.felix.dependencymanager.shell", version: "3.2.0"
 	provided group: "org.apache.ws.xmlschema", name: "xmlschema-core", version: "2.1.0"
 	provided group: "org.codehaus.woodstox", name: "stax2-api", version: "3.1.4"
 	provided group: "org.codehaus.woodstox", name: "woodstox-core-asl", version: "4.4.1"
@@ -36,8 +35,6 @@ deployDependencies {
 
 	from configurations.provided
 
-	include "org.apache.felix.dependencymanager-*.jar"
-	include "org.apache.felix.dependencymanager.shell-*.jar"
 	include "stax2-api-*.jar"
 	include "woodstox-core-asl-*.jar"
 
@@ -45,8 +42,6 @@ deployDependencies {
 		liferay.deployDir
 	}
 
-	rename(/org\.apache\.felix\.dependencymanager-.+\.jar/, "org.apache.felix.dependencymanager.jar")
-	rename(/org\.apache\.felix\.dependencymanager\.shell-.+\.jar/, "org.apache.felix.dependencymanager.shell.jar")
 	rename(/stax2-api-.+\.jar/, "org.codehaus.stax2.jar")
 	rename(/woodstox-core-asl-.+\.jar/, "com.ctc.wstx.jar")
 }

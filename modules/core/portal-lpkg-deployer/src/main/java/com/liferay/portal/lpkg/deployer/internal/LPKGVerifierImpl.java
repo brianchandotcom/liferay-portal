@@ -17,6 +17,8 @@ package com.liferay.portal.lpkg.deployer.internal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.LPKGVerifier;
 import com.liferay.portal.lpkg.deployer.LPKGVerifyException;
+import com.liferay.portal.target.platform.indexer.IndexerFactory;
+import com.liferay.portal.target.platform.indexer.ValidatorFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +34,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.Version;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
@@ -119,5 +122,11 @@ public class LPKGVerifierImpl implements LPKGVerifier {
 	}
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private IndexerFactory _indexerFactory;
+
+	@Reference
+	private ValidatorFactory _validatorFactory;
 
 }

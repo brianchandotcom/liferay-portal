@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Portal Target Platform Indexer
+Bundle-SymbolicName: com.liferay.portal.target.platform.indexer
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.target.platform.indexer
+Import-Package:\
+	!com.liferay.portal.bootstrap,\
+	\
+	!org.apache.tools.ant.*,\
+	*
+-liferay-includeresource: @biz.aQute.bnd-*.jar

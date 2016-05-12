@@ -295,17 +295,11 @@
 		focusFormField: function(el) {
 			var doc = $(document);
 
-			var focusable = false;
-
 			var interacting = false;
-
-			var portletName;
 
 			el = Util.getDOM(el);
 
 			el = $(el);
-
-			focusable = !el.is(':disabled') && !el.is(':hidden');
 
 			doc.on(
 				'click.focusFormField',
@@ -316,21 +310,23 @@
 				}
 			);
 
-			if (focusable && !interacting && Util.inBrowserView(el)) {
-				el.focus();
-			}
-			else {
-				var form = el.parents('form');
+			if (!interacting && Util.inBrowserView(el)) {
+				if (!el.is(':disabled,:hidden')) {
+					el.focus();
+				}
+				else {
+					var form = el.closest('form');
 
-				if (form.length) {
-					portletName = form[0].getAttribute('data-fm-namespace');
+					if (form.length) {
+						var portletName = form[0].getAttribute('data-fm-namespace');
 
-					Liferay.once(
-						portletName + 'formReady',
-						function() {
-							el.focus();
-						}
-					);
+						Liferay.once(
+							portletName + 'formReady',
+							function() {
+								el.focus();
+							}
+						);
+					}
 				}
 			}
 		},
@@ -943,7 +939,7 @@
 		showCapsLock: function(event, span) {
 			var keyCode = event.keyCode ? event.keyCode : event.which;
 
-			var shiftKeyCode = keyCode == 16 ? true : false;
+			var shiftKeyCode = keyCode === 16;
 
 			var shiftKey = event.shiftKey ? event.shiftKey : shiftKeyCode;
 

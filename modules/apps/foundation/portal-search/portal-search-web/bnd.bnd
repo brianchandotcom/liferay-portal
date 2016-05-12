@@ -1,7 +1,11 @@
 Bundle-Name: Liferay Portal Search Web
 Bundle-SymbolicName: com.liferay.portal.search.web
-Bundle-Version: 1.0.5
-Export-Package: com.liferay.portal.search.web.constants
+Bundle-Version: 1.1.0
+Export-Package:\
+	com.liferay.portal.search.web.constants,\
+	com.liferay.portal.search.web.facet,\
+	com.liferay.portal.search.web.facet.util,\
+	com.liferay.portal.search.web.facet.util.comparator
 Import-Package:\
 	!com.liferay.util.xml,\
 	*

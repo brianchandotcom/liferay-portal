@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Journal Content Search Web
 Bundle-SymbolicName: com.liferay.journal.content.search.web
 Bundle-Version: 1.0.2
-
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Web Content
 Web-ContextPath: /journal-content-search-web

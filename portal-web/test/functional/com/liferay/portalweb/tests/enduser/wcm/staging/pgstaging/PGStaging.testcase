@@ -1334,10 +1334,6 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Portlet#viewPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="image" value="true" />
 			<var name="webContentContent" value="Web Content Content" />

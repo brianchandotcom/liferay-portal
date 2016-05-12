@@ -3724,7 +3724,7 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<execute function="Pause" locator1="3000" />
+		<execute function="Pause" locator1="5000" />
 
 		<var name="key_webContentTitle" value="Web Content Title" />
 

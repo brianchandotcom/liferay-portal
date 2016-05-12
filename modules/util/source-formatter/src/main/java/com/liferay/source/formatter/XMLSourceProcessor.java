@@ -1300,7 +1300,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 						trimmedLine.endsWith(StringPool.GREATER_THAN) &&
 						!trimmedLine.startsWith("<?") &&
 						!trimmedLine.startsWith("<%") &&
-						!trimmedLine.startsWith("<!")) {
+						!trimmedLine.startsWith("<!") &&
+						!(line.contains("<![CDATA[") && line.contains("]]>"))) {
 
 						line = formatAttributes(
 							fileName, line, trimmedLine, lineCount, true);

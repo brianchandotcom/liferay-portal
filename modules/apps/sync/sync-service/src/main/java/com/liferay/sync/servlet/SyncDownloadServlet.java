@@ -18,9 +18,9 @@ import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.model.DLFileVersion;
-import com.liferay.document.library.kernel.service.DLAppServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFileVersionLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -35,9 +35,9 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.ImageServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ImageService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -77,6 +77,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Dennis Ju
@@ -166,7 +167,7 @@ public class SyncDownloadServlet extends HttpServlet {
 				long groupId = GetterUtil.getLong(pathArray[0]);
 				String fileUuid = pathArray[1];
 
-				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+				Group group = _groupLocalService.fetchGroup(groupId);
 
 				if ((group == null) || !SyncUtil.isSyncEnabled(group)) {
 					response.setHeader(
@@ -203,19 +204,48 @@ public class SyncDownloadServlet extends HttpServlet {
 		}
 	}
 
+	@Reference(unbind = "-")
+	public void setDlFileEntryLocalService(
+		DLFileEntryLocalService dlFileEntryLocalService) {
+
+		_dlFileEntryLocalService = dlFileEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setDlFileVersionLocalService(
+		DLFileVersionLocalService dlFileVersionLocalService) {
+
+		_dlFileVersionLocalService = dlFileVersionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setImageService(ImageService imageService) {
+		_imageService = imageService;
+	}
+
+	@Reference(unbind = "-")
+	public void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	protected void addZipFolderEntry(
 			long userId, long repositoryId, long folderId, String folderPath,
 			ZipWriter zipWriter)
 		throws Exception {
 
-		List<FileEntry> fileEntries = DLAppServiceUtil.getFileEntries(
+		List<FileEntry> fileEntries = _dlAppService.getFileEntries(
 			repositoryId, folderId);
 
 		for (FileEntry fileEntry : fileEntries) {
 			InputStream inputStream = null;
 
 			try {
-				inputStream = DLFileEntryLocalServiceUtil.getFileAsStream(
+				inputStream = _dlFileEntryLocalService.getFileAsStream(
 					userId, fileEntry.getFileEntryId(), fileEntry.getVersion(),
 					false);
 
@@ -228,7 +258,7 @@ public class SyncDownloadServlet extends HttpServlet {
 			}
 		}
 
-		List<Folder> childFolders = DLAppServiceUtil.getFolders(
+		List<Folder> childFolders = _dlAppService.getFolders(
 			repositoryId, folderId);
 
 		for (Folder childFolder : childFolders) {
@@ -247,15 +277,15 @@ public class SyncDownloadServlet extends HttpServlet {
 		throws Exception {
 
 		DLFileVersion sourceDLFileVersion =
-			DLFileVersionLocalServiceUtil.getDLFileVersion(sourceVersionId);
+			_dlFileVersionLocalService.getDLFileVersion(sourceVersionId);
 
-		File sourceFile = DLFileEntryLocalServiceUtil.getFile(
+		File sourceFile = _dlFileEntryLocalService.getFile(
 			userId, fileEntryId, sourceDLFileVersion.getVersion(), false);
 
 		DLFileVersion targetDLFileVersion =
-			DLFileVersionLocalServiceUtil.getDLFileVersion(targetVersionId);
+			_dlFileVersionLocalService.getDLFileVersion(targetVersionId);
 
-		File targetFile = DLFileEntryLocalServiceUtil.getFile(
+		File targetFile = _dlFileEntryLocalService.getFile(
 			userId, fileEntryId, targetDLFileVersion.getVersion(), false);
 
 		return SyncUtil.getFileDelta(sourceFile, targetFile);
@@ -266,7 +296,7 @@ public class SyncDownloadServlet extends HttpServlet {
 			long versionId)
 		throws Exception {
 
-		FileEntry fileEntry = DLAppServiceUtil.getFileEntryByUuidAndGroupId(
+		FileEntry fileEntry = _dlAppService.getFileEntryByUuidAndGroupId(
 			uuid, groupId);
 
 		if (fileEntry.isInTrash()) {
@@ -274,10 +304,9 @@ public class SyncDownloadServlet extends HttpServlet {
 		}
 
 		if (Validator.isNull(version)) {
-			InputStream inputStream =
-				DLFileEntryLocalServiceUtil.getFileAsStream(
-					userId, fileEntry.getFileEntryId(), fileEntry.getVersion(),
-					false);
+			InputStream inputStream = _dlFileEntryLocalService.getFileAsStream(
+				userId, fileEntry.getFileEntryId(), fileEntry.getVersion(),
+				false);
 
 			return new DownloadServletInputStream(
 				inputStream, fileEntry.getFileName(), fileEntry.getMimeType(),
@@ -286,7 +315,7 @@ public class SyncDownloadServlet extends HttpServlet {
 		else {
 			if (versionId > 0) {
 				DLFileVersion dlFileVersion =
-					DLFileVersionLocalServiceUtil.fetchDLFileVersion(versionId);
+					_dlFileVersionLocalService.fetchDLFileVersion(versionId);
 
 				return new DownloadServletInputStream(
 					dlFileVersion.getContentStream(false),
@@ -309,7 +338,7 @@ public class SyncDownloadServlet extends HttpServlet {
 			long targetVersionId)
 		throws Exception {
 
-		FileEntry fileEntry = DLAppServiceUtil.getFileEntryByUuidAndGroupId(
+		FileEntry fileEntry = _dlAppService.getFileEntryByUuidAndGroupId(
 			uuid, groupId);
 
 		if (fileEntry.isInTrash()) {
@@ -412,13 +441,13 @@ public class SyncDownloadServlet extends HttpServlet {
 	protected void sendImage(HttpServletResponse response, long imageId)
 		throws Exception {
 
-		User user = UserLocalServiceUtil.fetchUser(imageId);
+		User user = _userLocalService.fetchUser(imageId);
 
 		if (user != null) {
 			imageId = user.getPortraitId();
 		}
 
-		Image image = ImageServiceUtil.getImage(imageId);
+		Image image = _imageService.getImage(imageId);
 
 		String type = image.getType();
 
@@ -464,7 +493,7 @@ public class SyncDownloadServlet extends HttpServlet {
 			long groupId = zipObjectJSONObject.getLong("groupId");
 			String zipFileId = zipObjectJSONObject.getString("zipFileId");
 
-			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+			Group group = _groupLocalService.fetchGroup(groupId);
 
 			if ((group == null) || !SyncUtil.isSyncEnabled(group)) {
 				processException(
@@ -534,6 +563,18 @@ public class SyncDownloadServlet extends HttpServlet {
 			response, new FileInputStream(file), file.length());
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLAppService(DLAppService dlAppService) {
+		_dlAppService = dlAppService;
+	}
+
 	private static final String _ERROR_HEADER = "Sync-Error";
+
+	private DLAppService _dlAppService;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+	private DLFileVersionLocalService _dlFileVersionLocalService;
+	private GroupLocalService _groupLocalService;
+	private ImageService _imageService;
+	private UserLocalService _userLocalService;
 
 }

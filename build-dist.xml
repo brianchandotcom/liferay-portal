@@ -1246,11 +1246,6 @@ this task.
 			};
 		</echo>
 
-		<replace file="${app.server.jboss.bin.dir}/standalone.conf">
-			<replacetoken><![CDATA[JAVA_OPTS="-Xms64m -Xmx512m -XX:MaxPermSize=256m ]]></replacetoken>
-			<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
-		</replace>
-
 		<if>
 			<equals arg1="${java.security.manager.option}" arg2="" />
 			<then>
@@ -1268,13 +1263,13 @@ this task.
 
 		<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">
 			<![CDATA[
-				JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m"
+				JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Duser.timezone=GMT -Xmx1024m -XX:MaxMetaspaceSize=384m"
 			]]>
 		</echo>
 
 		<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat">
-			<replacetoken><![CDATA[set "JAVA_OPTS=-Xms64M ]]></replacetoken>
-			<replacevalue><![CDATA[rem set "JAVA_OPTS=-Xms64M ]]></replacevalue>
+			<replacetoken><![CDATA[set "JAVA_OPTS=-Xms1G -Xmx1G -XX:MaxPermSize=256M"]]></replacetoken>
+			<replacevalue></replacevalue>
 		</replace>
 
 		<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat">
@@ -1282,7 +1277,7 @@ this task.
 			<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
 			<replacevalue>
 				<![CDATA[
-					set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true @java.security.config@ -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m"
+					set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true @java.security.config@ -Duser.timezone=GMT -Xmx1024m -XX:MaxMetaspaceSize=384m"
 
 					:JAVA_OPTS_SET
 				]]>
@@ -1290,10 +1285,10 @@ this task.
 		</replace>
 
 		<replace file="${app.server.jboss.instance.dir}/configuration/standalone.xml">
-			<replacetoken><![CDATA[<subsystem default-virtual-server="default-host" native="false" xmlns="urn:jboss:domain:web:1.1">]]></replacetoken>
+			<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:web:2.2" default-virtual-server="default-host" native="false">]]></replacetoken>
 			<replacevalue>
 				<![CDATA[
-					<subsystem xmlns="urn:jboss:domain:web:1.1" default-virtual-server="default-host" native="false">
+					<subsystem xmlns="urn:jboss:domain:web:2.2" default-virtual-server="default-host" native="false">
 						<configuration>
 							<jsp-configuration development="true" />
 						</configuration>

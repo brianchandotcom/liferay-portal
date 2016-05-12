@@ -5,11 +5,11 @@ AUI.add(
 
 		var CSS_FIELD_SETTINGS_SAVE = A.getClassName('lfr', 'ddl', 'field', 'settings', 'save');
 
-		var TPL_SETTINGS_TOGGLER = '<button class="btn settings-toggler" type="button"><span class="settings-toggle-label"></span><span class="settings-toggle-icon"></span></button>';
-
 		var TPL_OPTION = '<option {status} value="{value}">{label}</option>';
 
 		var TPL_SETTINGS_FORM = '<form action="javascript:;"></form>';
+
+		var TPL_SETTINGS_TOGGLER = '<button class="btn settings-toggler" type="button"><span class="settings-toggle-label"></span><span class="settings-toggle-icon"></span></button>';
 
 		var TPL_SUBMIT_BUTTON = '<button class="hide" type="submit" />';
 

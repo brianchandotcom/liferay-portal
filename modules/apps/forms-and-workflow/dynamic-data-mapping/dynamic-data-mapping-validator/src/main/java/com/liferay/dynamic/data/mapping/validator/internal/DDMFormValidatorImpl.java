@@ -65,15 +65,9 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 	public void validate(DDMForm ddmForm) throws DDMFormValidationException {
 		validateDDMFormLocales(ddmForm);
 
-		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
-
-		if (ddmFormFields.isEmpty()) {
-			throw new MustSetFieldsForForm();
-		}
-
 		validateDDMFormFields(
-			ddmFormFields, new HashSet<String>(), ddmForm.getAvailableLocales(),
-			ddmForm.getDefaultLocale());
+			ddmForm.getDDMFormFields(), new HashSet<String>(),
+			ddmForm.getAvailableLocales(), ddmForm.getDefaultLocale());
 	}
 
 	@Reference(unbind = "-")
@@ -192,6 +186,10 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			List<DDMFormField> ddmFormFields, Set<String> ddmFormFieldNames,
 			Set<Locale> ddmFormAvailableLocales, Locale ddmFormDefaultLocale)
 		throws DDMFormValidationException {
+
+		if (ddmFormFields.isEmpty()) {
+			throw new MustSetFieldsForForm();
+		}
 
 		for (DDMFormField ddmFormField : ddmFormFields) {
 			validateDDMFormFieldName(ddmFormField, ddmFormFieldNames);

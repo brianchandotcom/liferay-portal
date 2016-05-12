@@ -72,6 +72,11 @@ public class UpgradeSharding extends UpgradeProcess {
 			targetConnection,
 			"delete from Company where companyId not in (" + companyIdsString +
 				")");
+
+		runSQL(
+			sourceConnection,
+			"delete from Company where companyId in (" + companyIdsString +
+				")");
 	}
 
 	protected void copyControlTable(

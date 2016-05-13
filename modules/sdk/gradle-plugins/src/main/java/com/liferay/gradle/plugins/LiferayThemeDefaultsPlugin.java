@@ -86,10 +86,10 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		configureDeployDir(project);
 		configureProject(project);
 
-		Project frontendThemeStyledProject = GradleUtil.getProject(
-			project.getRootProject(), "frontend-theme-styled");
-		Project frontendThemeUnstyledProject = GradleUtil.getProject(
-			project.getRootProject(), "frontend-theme-unstyled");
+		Project frontendThemeStyledProject = getThemeProject(
+			project, "frontend-theme-styled");
+		Project frontendThemeUnstyledProject = getThemeProject(
+			project, "frontend-theme-unstyled");
 
 		configureTasksExecuteGulp(
 			project, expandFrontendCSSCommonTask, frontendThemeStyledProject,
@@ -351,6 +351,19 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
 
 		uploadArchivesTask.finalizedBy(updateThemeVersionTask);
+	}
+
+	protected Project getThemeProject(Project project, String name) {
+		Project parentProject = project.getParent();
+
+		Project themeProject = parentProject.findProject(name);
+
+		if (themeProject == null) {
+			themeProject = GradleUtil.getProject(
+				project.getRootProject(), name);
+		}
+
+		return themeProject;
 	}
 
 	private static final String _GROUP = "com.liferay.plugins";

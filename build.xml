@@ -120,6 +120,7 @@
 				/>
 			</delete>
 
+			<delete dir="${liferay.home}/deploy" failonerror="false" />
 			<delete dir="${liferay.home}/osgi" failonerror="false" />
 			<delete dir="${liferay.home}/work" failonerror="false" />
 

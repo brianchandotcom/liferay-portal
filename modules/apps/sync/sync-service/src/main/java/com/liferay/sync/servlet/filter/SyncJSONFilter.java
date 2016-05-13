@@ -52,9 +52,19 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Shinn Lok
  */
+@Component(
+	immediate = true,
+	property = {
+		"after-filter=Upload Servlet Request Filter", "servlet-context-name=",
+		"servlet-filter-name=Sync JSON Filter", "url-pattern=/api/jsonws/*"
+	},
+	service = Filter.class
+)
 public class SyncJSONFilter implements Filter {
 
 	@Override
@@ -110,7 +120,7 @@ public class SyncJSONFilter implements Filter {
 				return;
 			}
 		}
-		else if (!uri.startsWith("/api/jsonws/sync-web.")) {
+		else if (!uri.startsWith("/api/jsonws/sync")) {
 			filterChain.doFilter(servletRequest, servletResponse);
 
 			return;
@@ -243,7 +253,8 @@ public class SyncJSONFilter implements Filter {
 				String key = iterator.next();
 
 				if (key.startsWith("/sync-web.") ||
-					key.startsWith("/sync-web/")) {
+					key.startsWith("/sync-web/") ||
+					key.startsWith("/sync.") || key.startsWith("/sync/")) {
 
 					return true;
 				}

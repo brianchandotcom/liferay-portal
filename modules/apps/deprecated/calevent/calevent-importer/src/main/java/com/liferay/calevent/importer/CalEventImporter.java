@@ -122,7 +122,7 @@ public class CalEventImporter {
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
 			connection = con;
 
-			importCalEvent();
+			importCalEvents();
 		}
 		finally {
 			connection = null;
@@ -865,12 +865,6 @@ public class CalEventImporter {
 		}
 	}
 
-	protected void importCalEvent() throws Exception {
-		if (hasTable("CalEvent")) {
-			importCalEvents();
-		}
-	}
-
 	protected CalendarBooking importCalEvent(long calEventId) throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			StringBundler sb = new StringBundler(5);
@@ -994,6 +988,10 @@ public class CalEventImporter {
 	}
 
 	protected void importCalEvents() throws Exception {
+		if (!hasTable("CalEvent")) {
+			return;
+		}
+
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			StringBundler sb = new StringBundler(5);
 

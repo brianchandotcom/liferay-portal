@@ -278,6 +278,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 	<liferay-ui:success key="layoutAdded" message='<%= LanguageUtil.get(resourceBundle, "the-page-has-been-created-succesfully") %>' targetNode="<%= targetNode %>" />
 	<liferay-ui:success key="layoutDeleted" message='<%= LanguageUtil.get(resourceBundle, "the-page-has-been-deleted-succesfully") %>' targetNode="<%= targetNode %>" />
+	<liferay-ui:success key="layoutUpdated" message='<%= LanguageUtil.get(resourceBundle, "the-page-has-been-updated-succesfully") %>' targetNode="<%= targetNode %>" />
 
 	<%@ include file="/layout_exception.jspf" %>
 

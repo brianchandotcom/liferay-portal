@@ -178,7 +178,7 @@ public class LiferayThemePlugin implements Plugin<Project> {
 					ConfigurablePublishArtifact configurablePublishArtifact) {
 
 					Task gulpBuildTask = GradleUtil.getTask(
-						project, _GULP_BUILD_TASK_NAME);
+						project, GULP_BUILD_TASK_NAME);
 
 					configurablePublishArtifact.builtBy(gulpBuildTask);
 				}
@@ -256,6 +256,6 @@ public class LiferayThemePlugin implements Plugin<Project> {
 			"dist/" + GradleUtil.getArchivesBaseName(project) + ".war");
 	}
 
-	private static final String _GULP_BUILD_TASK_NAME = "gulpBuild";
+	protected static final String GULP_BUILD_TASK_NAME = "gulpBuild";
 
 }

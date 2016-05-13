@@ -219,7 +219,7 @@ public class ModulesStructureTest {
 							pluginNames, "com.liferay.gradle.plugins.",
 							buildGradlePath, "com.liferay.",
 							new String[] {
-								"cache", "lang.merger", "maven.plugin.builder"
+								"lang.merger", "maven.plugin.builder"
 							});
 
 						return FileVisitResult.SKIP_SUBTREE;

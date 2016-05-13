@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins;
 import aQute.bnd.header.Parameters;
 import aQute.bnd.osgi.Constants;
 
+import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
@@ -701,7 +702,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						continue;
 					}
 
-					if (GradleUtil.hasPlugin(project, "com.liferay.cache") &&
+					if (GradleUtil.hasPlugin(project, CachePlugin.class) &&
 						taskName.startsWith("save") &&
 						taskName.endsWith("Cache")) {
 

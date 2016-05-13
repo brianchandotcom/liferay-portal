@@ -14,10 +14,16 @@
 
 package com.liferay.gradle.plugins;
 
+import com.liferay.gradle.plugins.cache.CacheExtension;
+import com.liferay.gradle.plugins.cache.CachePlugin;
+import com.liferay.gradle.plugins.cache.task.TaskCache;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.util.IncrementVersionClosure;
+
+import groovy.lang.Closure;
 
 import java.io.File;
 
@@ -53,6 +59,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		final ReplaceRegexTask updateVersionTask = addTaskUpdateVersion(
 			project);
 
+		configureCache(project);
 		configureDeployDir(project);
 		configureProject(project);
 
@@ -112,7 +119,29 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 	}
 
 	protected void applyPlugins(Project project) {
+		GradleUtil.applyPlugin(project, CachePlugin.class);
 		GradleUtil.applyPlugin(project, MavenPlugin.class);
+	}
+
+	protected void configureCache(Project project) {
+		CacheExtension cacheExtension = GradleUtil.getExtension(
+			project, CacheExtension.class);
+
+		cacheExtension.task(
+			LiferayThemePlugin.GULP_BUILD_TASK_NAME,
+			new Closure<Void>(null) {
+
+				@SuppressWarnings("unused")
+				public void doCall(TaskCache taskCache) {
+					taskCache.setBaseDir("dist");
+					taskCache.setCacheDir(".task-cache");
+					taskCache.skipTaskDependency(
+						NodePlugin.DOWNLOAD_NODE_TASK_NAME,
+						NodePlugin.NPM_INSTALL_TASK_NAME);
+					taskCache.testFile("gulpfile.js", "package.json", "src");
+				}
+
+			});
 	}
 
 	protected void configureDeployDir(Project project) {

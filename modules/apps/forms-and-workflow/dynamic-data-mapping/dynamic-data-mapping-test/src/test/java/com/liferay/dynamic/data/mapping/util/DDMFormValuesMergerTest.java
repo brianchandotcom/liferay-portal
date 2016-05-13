@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -154,6 +155,52 @@ public class DDMFormValuesMergerTest {
 			enStringValue, mergedValue.getString(LocaleUtil.US));
 		Assert.assertEquals(
 			ptStringValue, mergedValue.getString(LocaleUtil.BRAZIL));
+	}
+
+	@Test
+	public void testMergeWithTransientDDMFormField() {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField paragraph1 = DDMFormTestUtil.createDDMFormField(
+			"text1", "text1", "paragraph", null, false, false, false);
+
+		paragraph1.setProperty("text", "paragraph 1");
+
+		DDMFormField paragraph2 = DDMFormTestUtil.createDDMFormField(
+			"text2", "text2", "paragraph", null, false, false, false);
+
+		paragraph2.setProperty("text", "paragraph 2");
+
+		ddmForm.addDDMFormField(paragraph1);
+		ddmForm.addDDMFormField(paragraph2);
+
+		DDMFormFieldValue text1DDMFormFieldValue =
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"text1", null);
+
+		DDMFormValues existingDDMFormValues = createDDMFormValues(
+			ddmForm, text1DDMFormFieldValue);
+
+		DDMFormFieldValue text2DDMFormFieldValue =
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"text2", null);
+
+		DDMFormValues newDDMFormValues = createDDMFormValues(
+			ddmForm, text2DDMFormFieldValue);
+
+		DDMFormValues mergedDDMFormValues = _ddmFormValuesMerger.merge(
+			newDDMFormValues, existingDDMFormValues);
+
+		List<DDMFormFieldValue> mergedDDMFormFieldValues =
+			mergedDDMFormValues.getDDMFormFieldValues();
+
+		Assert.assertEquals(1, mergedDDMFormFieldValues.size());
+
+		Assert.assertTrue(
+			mergedDDMFormFieldValues.contains(text1DDMFormFieldValue));
+
+		Assert.assertTrue(
+			!mergedDDMFormFieldValues.contains(text2DDMFormFieldValue));
 	}
 
 	@Test

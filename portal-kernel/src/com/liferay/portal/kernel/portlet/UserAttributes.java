@@ -434,7 +434,11 @@ public class UserAttributes {
 			return null;
 		}
 		else if (name.equals(USER_GENDER)) {
-			return _user.isMale() ? "male" : "female";
+			if (_user.isMale()) {
+				return "male";
+			}
+
+			return "female";
 		}
 		else if (name.equals(USER_EMPLOYER)) {
 			return StringPool.BLANK;

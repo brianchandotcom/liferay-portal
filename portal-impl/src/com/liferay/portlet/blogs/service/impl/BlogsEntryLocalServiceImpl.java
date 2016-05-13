@@ -24,6 +24,7 @@ import com.liferay.blogs.kernel.exception.EntrySmallImageScaleException;
 import com.liferay.blogs.kernel.exception.EntryTitleException;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.kernel.util.comparator.EntryDisplayDateComparator;
+import com.liferay.blogs.kernel.util.comparator.EntryIdComparator;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -681,10 +682,16 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
-		return blogsEntryPersistence.findByG_S_PrevAndNext(
-			entry.getEntryId(), entry.getGroupId(),
-			WorkflowConstants.STATUS_APPROVED,
-			new EntryDisplayDateComparator(true));
+		long groupId = entry.getGroupId();
+
+		Date displayDate = entry.getDisplayDate();
+
+		BlogsEntry[] blogsEntries =
+			blogsEntryPersistence.findByG_S_D_PrevAndNext(
+				entryId, groupId, WorkflowConstants.STATUS_APPROVED,
+				displayDate, new EntryIdComparator(true));
+
+		return blogsEntries;
 	}
 
 	@Override

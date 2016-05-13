@@ -217,6 +217,12 @@ public class TaskCacheApplicator {
 				continue;
 			}
 
+			String testFilePath = FileUtil.getAbsolutePath(testFile);
+
+			if (testFilePath.contains("/.DS_Store/")) {
+				continue;
+			}
+
 			sb.append(FileUtil.getDigest(testFile));
 			sb.append(_DIGEST_SEPARATOR);
 		}

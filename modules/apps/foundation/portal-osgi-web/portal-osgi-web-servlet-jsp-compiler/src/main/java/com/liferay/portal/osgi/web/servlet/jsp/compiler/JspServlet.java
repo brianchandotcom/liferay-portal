@@ -34,6 +34,7 @@ import java.lang.reflect.Proxy;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -520,7 +521,9 @@ public class JspServlet extends HttpServlet {
 	}
 
 	private void _deleteOutDatedJspFiles(String dir, List<Path> paths) {
-		Path dirPath = FileSystems.getDefault().getPath(dir);
+		FileSystem fileSystem = FileSystems.getDefault();
+
+		Path dirPath = fileSystem.getPath(dir);
 
 		if (Files.exists(dirPath) && (paths.size() > 0)) {
 			try {
@@ -605,7 +608,9 @@ public class JspServlet extends HttpServlet {
 				return null;
 			}
 
-			fragmentHost = fragmentHost.split(";")[0];
+			String[] fragmentHostParts = fragmentHost.split(";");
+
+			fragmentHost = fragmentHostParts[0];
 
 			String symbolicName = _bundle.getSymbolicName();
 
@@ -617,25 +622,29 @@ public class JspServlet extends HttpServlet {
 				_RESOURCES_DIR, "*.jsp", true);
 
 			if (jsps != null) {
-				String scratchdir = _jspServlet.getInitParameter(
-					_SCRATCH_DIR);
+				String scratchdir = _jspServlet.getInitParameter(_SCRATCH_DIR);
 
 				while (jsps.hasMoreElements()) {
 					URL url = jsps.nextElement();
 
 					String urlPath = url.getPath();
 
-					String jspPath = urlPath.split(_RESOURCES_DIR)[1];
+					String[] urlPathParts = urlPath.split(_RESOURCES_DIR);
+
+					String jspPath = urlPathParts[1];
 
 					StringBuilder sb = new StringBuilder(4);
 
 					sb.append(scratchdir);
 					sb.append("/org/apache/jsp");
-					sb.append(jspPath.replace(".", "_"));
+					sb.append(
+						jspPath.replace(
+							StringPool.PERIOD, StringPool.UNDERLINE));
 					sb.append(".class");
 
-					paths.add(
-						FileSystems.getDefault().getPath(sb.toString()));
+					FileSystem fileSystem = FileSystems.getDefault();
+
+					paths.add(fileSystem.getPath(sb.toString()));
 				}
 
 				_deleteOutDatedJspFiles(scratchdir, paths);

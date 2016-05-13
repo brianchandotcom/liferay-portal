@@ -354,6 +354,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRIES_PERMISSIONS</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem']//span[.='Entries Permissions']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPIRE</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Expire')]</td>
 	<td></td>

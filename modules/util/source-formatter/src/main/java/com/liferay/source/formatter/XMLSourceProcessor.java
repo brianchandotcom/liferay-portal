@@ -952,19 +952,18 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		List<Element> entityElements = rootElement.elements("entity");
 
-		ServiceFinderElementComparator serviceFinderElementComparator =
-			new ServiceFinderElementComparator();
 		ServiceReferenceElementComparator serviceReferenceElementComparator =
 			new ServiceReferenceElementComparator("entity");
 
 		for (Element entityElement : entityElements) {
 			String entityName = entityElement.attributeValue("name");
 
-			_columnNames = getColumnNames(fileName, absolutePath, entityName);
+			List<String> columnNames = getColumnNames(
+				fileName, absolutePath, entityName);
 
 			checkOrder(
 				fileName, entityElement, "finder", entityName,
-				serviceFinderElementComparator);
+				new ServiceFinderElementComparator(columnNames));
 			checkOrder(
 				fileName, entityElement, "reference", entityName,
 				serviceReferenceElementComparator);
@@ -1476,7 +1475,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private static final Pattern _commentPattern2 = Pattern.compile(
 		"[\t ]-->\n[\t<]");
 
-	private List<String> _columnNames;
 	private final Pattern _importFilePattern = Pattern.compile(
 		"<import file=\"(.*)\"");
 	private final Pattern _incorrectDefaultPreferencesFileName =
@@ -1609,6 +1607,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	private class ServiceFinderElementComparator extends ElementComparator {
 
+		public ServiceFinderElementComparator(List<String> columnNames) {
+			_columnNames = columnNames;
+		}
+
 		@Override
 		public int compare(Element finderElement1, Element finderElement2) {
 			List<Element> finderColumnElements1 = finderElement1.elements(
@@ -1670,6 +1672,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			return 0;
 		}
+
+		private List<String> _columnNames;
 
 	}
 

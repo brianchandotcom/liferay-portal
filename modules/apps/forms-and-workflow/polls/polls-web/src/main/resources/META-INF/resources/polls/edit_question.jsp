@@ -170,8 +170,12 @@ portletDisplay.setURLBack(redirect);
 	function <portlet:namespace />deletePollChoice(choiceName) {
 		document.<portlet:namespace />fm.<portlet:namespace />choicesCount.value = '<%= choicesCount - 1 %>';
 		document.<portlet:namespace />fm.<portlet:namespace />choiceName.value = '<%= choiceName %>';
+		<liferay-portlet:renderURL allowEmptyParam="<%= true %>" var="deletePollChoiceURL">
+			<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
+			<liferay-portlet:param name="mvcRenderCommandName" value="/polls/edit_question" />
+		</liferay-portlet:renderURL>
 
-		submitForm(document.<portlet:namespace />fm);
+		submitForm(document.<portlet:namespace />fm, '<%= deletePollChoiceURL %>');
 	}
 
 	function <portlet:namespace />saveQuestion() {

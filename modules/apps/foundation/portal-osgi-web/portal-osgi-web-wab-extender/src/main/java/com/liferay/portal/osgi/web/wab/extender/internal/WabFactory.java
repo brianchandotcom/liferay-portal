@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperFactory;
 import com.liferay.portal.osgi.web.wab.extender.internal.configuration.WabExtenderConfiguration;
 import com.liferay.portal.osgi.web.wab.extender.internal.event.EventUtil;
+import com.liferay.portal.profile.gatekeeper.Profile;
 
 import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
@@ -30,6 +31,7 @@ import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -147,13 +149,17 @@ public class WabFactory extends AbstractExtender {
 					ie);
 			}
 
+			if (_serviceRegistration != null) {
+				_serviceRegistration.unregister();
+			}
+
 			_webBundleDeployer.doStop(_bundle);
 		}
 
 		@Override
 		public void start() throws Exception {
 			try {
-				_webBundleDeployer.doStart(_bundle);
+				_serviceRegistration = _webBundleDeployer.doStart(_bundle);
 			}
 			finally {
 				_started.countDown();
@@ -161,6 +167,7 @@ public class WabFactory extends AbstractExtender {
 		}
 
 		private final Bundle _bundle;
+		private ServiceRegistration<Profile> _serviceRegistration;
 		private final CountDownLatch _started = new CountDownLatch(1);
 
 	}

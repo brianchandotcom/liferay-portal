@@ -14,9 +14,20 @@
 
 package com.liferay.portal.osgi.web.wab.extender.internal;
 
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.osgi.web.wab.extender.internal.event.EventUtil;
+import com.liferay.portal.profile.gatekeeper.Profile;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.net.URL;
 
 import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -24,6 +35,7 @@ import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleRevision;
 
 /**
@@ -49,13 +61,13 @@ public class WebBundleDeployer {
 		}
 	}
 
-	public void doStart(Bundle bundle) {
+	public ServiceRegistration<Profile> doStart(Bundle bundle) {
 		_eventUtil.sendEvent(bundle, EventUtil.DEPLOYING, null, false);
 
 		String contextPath = WabUtil.getWebContextPath(bundle);
 
 		if (contextPath == null) {
-			return;
+			return null;
 		}
 
 		BundleContext bundleContext = bundle.getBundleContext();
@@ -63,27 +75,44 @@ public class WebBundleDeployer {
 		if (bundleContext == null) {
 			_eventUtil.sendEvent(bundle, EventUtil.FAILED, null, false);
 
-			return;
+			return null;
 		}
 
-		try {
-			WabBundleProcessor newWabBundleProcessor = new WabBundleProcessor(
-				bundle, _logger);
+		Enumeration<URL> enumeration = bundle.findEntries(
+			"/WEB-INF", "liferay-plugin-package.properties", false);
 
-			WabBundleProcessor oldWabBundleProcessor =
-				_wabBundleProcessors.putIfAbsent(bundle, newWabBundleProcessor);
+		if ((enumeration == null) || !enumeration.hasMoreElements()) {
+			_initWabBundle(bundle);
 
-			if (oldWabBundleProcessor != null) {
-				_eventUtil.sendEvent(bundle, EventUtil.FAILED, null, false);
-
-				return;
-			}
-
-			newWabBundleProcessor.init(_properties);
+			return null;
 		}
-		catch (Exception e) {
-			_eventUtil.sendEvent(bundle, EventUtil.FAILED, e, false);
+
+		URL url = enumeration.nextElement();
+
+		Properties properties = new Properties();
+
+		try (InputStream inputStream = url.openStream()) {
+			properties.load(inputStream);
 		}
+		catch (IOException ioe) {
+			_eventUtil.sendEvent(bundle, EventUtil.FAILED, ioe, false);
+		}
+
+		Set<String> supportedPortalProfiles = SetUtil.fromArray(
+			StringUtil.split(
+				properties.getProperty(Profile.PORTAL_PROFILE_NAMES)));
+
+		if (supportedPortalProfiles.isEmpty()) {
+			_initWabBundle(bundle);
+
+			return null;
+		}
+
+		supportedPortalProfiles.add(bundle.getSymbolicName());
+
+		return _bundleContext.registerService(
+			Profile.class,
+			new WarModuleProfile(bundle, supportedPortalProfiles), null);
 	}
 
 	public void doStop(Bundle bundle) {
@@ -140,11 +169,56 @@ public class WebBundleDeployer {
 		}
 	}
 
+	private void _initWabBundle(Bundle bundle) {
+		try {
+			WabBundleProcessor newWabBundleProcessor = new WabBundleProcessor(
+				bundle, _logger);
+
+			WabBundleProcessor oldWabBundleProcessor =
+				_wabBundleProcessors.putIfAbsent(bundle, newWabBundleProcessor);
+
+			if (oldWabBundleProcessor != null) {
+				_eventUtil.sendEvent(bundle, EventUtil.FAILED, null, false);
+
+				return;
+			}
+
+			newWabBundleProcessor.init(_properties);
+		}
+		catch (Exception e) {
+			_eventUtil.sendEvent(bundle, EventUtil.FAILED, e, false);
+		}
+	}
+
 	private final BundleContext _bundleContext;
 	private final EventUtil _eventUtil;
 	private final Logger _logger;
 	private final Dictionary<String, Object> _properties;
 	private final ConcurrentMap<Bundle, WabBundleProcessor>
 		_wabBundleProcessors = new ConcurrentHashMap<>();
+
+	private class WarModuleProfile implements Profile {
+
+		@Override
+		public void activate() {
+			_initWabBundle(_wabBundle);
+		}
+
+		@Override
+		public Set<String> getSupportedPortalProfileNames() {
+			return _supportedPortalProfiles;
+		}
+
+		private WarModuleProfile(
+			Bundle wabBundle, Set<String> supportedPortalProfiles) {
+
+			_wabBundle = wabBundle;
+			_supportedPortalProfiles = supportedPortalProfiles;
+		}
+
+		private final Set<String> _supportedPortalProfiles;
+		private final Bundle _wabBundle;
+
+	}
 
 }

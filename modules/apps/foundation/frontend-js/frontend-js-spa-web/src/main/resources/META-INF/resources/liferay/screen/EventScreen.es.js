@@ -42,6 +42,14 @@ class EventScreen extends HtmlScreen {
 		this.cacheLastModified = (new Date()).getTime();
 	}
 
+	checkRedirectPath(redirectPath) {
+		var app = Liferay.SPA.app;
+
+		if (!globals.capturedFormElement && !app.findRoute(redirectPath)) {
+			window.location.href = redirectPath;
+		}
+	}
+
 	deactivate() {
 		super.deactivate();
 
@@ -107,6 +115,10 @@ class EventScreen extends HtmlScreen {
 		return super.load(path)
 			.then(
 				(content) => {
+					var redirectPath = this.beforeUpdateHistoryPath(path);
+
+					this.checkRedirectPath(redirectPath);
+
 					Liferay.fire(
 						'screenLoad',
 						{

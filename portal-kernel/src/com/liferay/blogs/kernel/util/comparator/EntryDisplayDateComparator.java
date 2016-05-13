@@ -26,8 +26,7 @@ public class EntryDisplayDateComparator extends OrderByComparator<BlogsEntry> {
 	public static final String ORDER_BY_ASC =
 		"BlogsEntry.displayDate ASC, BlogsEntry.entryId ASC";
 
-	public static final String[] ORDER_BY_CONDITION_FIELDS =
-		{"displayDate", "entryId"};
+	public static final String[] ORDER_BY_CONDITION_FIELDS = {"displayDate"};
 
 	public static final String ORDER_BY_DESC =
 		"BlogsEntry.displayDate DESC, BlogsEntry.entryId DESC";

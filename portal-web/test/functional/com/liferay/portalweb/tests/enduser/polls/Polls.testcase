@@ -128,6 +128,18 @@
 			<var name="pollsQuestionTitle" value="Polls Name" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Polls Page" />
+		</execute>
+
+		<execute macro="Polls#selectPollPG">
+			<var name="pollsQuestionTitle" value="Polls Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Polls Page" />
+		</execute>
+
 		<execute macro="Polls#viewPollPG">
 			<var name="pollsQuestion" value="Test Poll Display" />
 			<var name="pollsQuestionChoiceList" value="Yes,No" />

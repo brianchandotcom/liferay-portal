@@ -10,7 +10,7 @@
 		<if>
 			<isset var="pollsQuestionChoiceC" />
 			<then>
-				<execute function="AssertClick" locator1="CPPollsAddquestion#ADD_CHOICE_BUTTON" value1="Add Choice" />
+				<execute function="AssertClick" locator1="Polls#ADD_CHOICE_BUTTON" value1="Add Choice" />
 				<execute function="Type" locator1="CPPollsAddquestion#CHOICE_C_FIELD" value1="${pollsQuestionChoiceC}" />
 			</then>
 		</if>
@@ -18,7 +18,7 @@
 		<if>
 			<isset var="pollsQuestionChoiceD" />
 			<then>
-				<execute function="AssertClick" locator1="CPPollsAddquestion#ADD_CHOICE_BUTTON" value1="Add Choice" />
+				<execute function="AssertClick" locator1="Polls#ADD_CHOICE_BUTTON" value1="Add Choice" />
 				<execute function="Type" locator1="CPPollsAddquestion#CHOICE_D_FIELD" value1="${pollsQuestionChoiceD}" />
 			</then>
 		</if>
@@ -26,7 +26,7 @@
 		<if>
 			<isset var="pollsQuestionChoiceE" />
 			<then>
-				<execute function="AssertClick" locator1="CPPollsAddquestion#ADD_CHOICE_BUTTON" value1="Add Choice" />
+				<execute function="AssertClick" locator1="Polls#ADD_CHOICE_BUTTON" value1="Add Choice" />
 				<execute function="Type" locator1="CPPollsAddquestion#CHOICE_E_FIELD" value1="${pollsQuestionChoiceE}" />
 			</then>
 		</if>
@@ -48,12 +48,14 @@
 	</command>
 
 	<command name="addPollPG">
-		<execute function="Click" locator1="Polls#ADD_QUESTION" value1="Add Question" />
+		<execute function="AssertClick" locator1="Polls#ADD_NEW_POLL" value1="Add" />
 
 		<execute function="SelectFrame" locator1="BasePortlet#IFRAME" />
 
+		<execute function="Click" locator1="Button#PLUS" />
+
 		<execute function="Type" locator1="TextInput#TITLE" value1="${pollsQuestionTitle}" />
-		<execute function="Type" locator1="TextArea#POLLS_QUESTION" value1="${pollsQuestion}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${pollsQuestion}" />
 		<execute function="Type" locator1="TextInput#POLL_CHOICE_A" value1="${pollsQuestionChoiceA}" />
 		<execute function="Type" locator1="TextInput#POLL_CHOICE_B" value1="${pollsQuestionChoiceB}" />
 		<execute macro="Button#clickSave" />
@@ -136,7 +138,7 @@
 	<command name="votePollPG">
 		<var name="key_pollsQuestionChoice" value="${pollsQuestionChoice}" />
 
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="Polls#POLL_QUESTION_CHOICE" value1="${pollsQuestionChoice}" />
+		<execute function="Click" locator1="Polls#POLL_QUESTION_CHOICE" />
 		<execute function="AssertClick" locator1="Button#VOTE" value1="Vote" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGPollsdisplayVotes#SUCCESS_MESSAGE" value1="Thank you for your vote." />

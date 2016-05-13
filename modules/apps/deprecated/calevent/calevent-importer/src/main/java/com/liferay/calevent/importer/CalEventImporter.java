@@ -113,6 +113,12 @@ public class CalEventImporter {
 
 	@Activate
 	protected void activate() throws Exception {
+		long start = System.currentTimeMillis();
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Importing CalEvent records");
+		}
+
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
 			connection = con;
 
@@ -120,6 +126,12 @@ public class CalEventImporter {
 		}
 		finally {
 			connection = null;
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Completed CalEvent import process in " +
+						(System.currentTimeMillis() - start) + "ms");
+			}
 		}
 	}
 

@@ -15,12 +15,20 @@
 package com.liferay.portal.service;
 
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalServiceUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ContactLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -86,6 +94,27 @@ public class UserLocalServiceTest {
 		List<User> users = UserLocalServiceUtil.getNoGroups();
 
 		Assert.assertTrue(users.contains(user));
+	}
+
+	@Test
+	public void testViewUserPermission() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		RoleTestUtil.addResourcePermission(
+			role, User.class.getName(), ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(user.getCompanyId()), ActionKeys.VIEW);
+
+		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		Assert.assertTrue(
+			UserPermissionUtil.contains(
+				permissionChecker, ResourceConstants.PRIMKEY_DNE,
+				ActionKeys.VIEW));
 	}
 
 	@DeleteAfterTestRun

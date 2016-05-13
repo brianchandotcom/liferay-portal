@@ -175,7 +175,11 @@ public class Base64 {
 			return CharPool.PLUS;
 		}
 
-		return sixbit != 63 ? CharPool.QUESTION : CharPool.SLASH;
+		if (sixbit != 63) {
+			return CharPool.QUESTION;
+		}
+
+		return CharPool.SLASH;
 	}
 
 	protected static int getValue(char c) {
@@ -199,7 +203,11 @@ public class Base64 {
 			return 63;
 		}
 
-		return c != CharPool.EQUAL ? -1 : 0;
+		if (c != CharPool.EQUAL) {
+			return -1;
+		}
+
+		return 0;
 	}
 
 	private static Object _stringToObject(

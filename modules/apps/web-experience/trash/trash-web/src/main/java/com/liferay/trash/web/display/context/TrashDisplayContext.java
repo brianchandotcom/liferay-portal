@@ -211,7 +211,11 @@ public class TrashDisplayContext {
 	public long getTrashEntryId() {
 		TrashEntry trashEntry = getTrashEntry();
 
-		return (trashEntry != null) ? trashEntry.getEntryId() : 0;
+		if (trashEntry != null) {
+			return trashEntry.getEntryId();
+		}
+
+		return 0;
 	}
 
 	public TrashHandler getTrashHandler() {

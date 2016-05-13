@@ -1,25 +1,24 @@
 {
+	"author": "Nathan Cavanaugh <nathan.cavanaugh@liferay.com> (https://github.com/natecavanaugh)",
+	"bugs": {
+		"url": "https://issues.liferay.com/"
+	},
 	"dependencies": {
 		"gulp": "^3.8.10",
 		"liferay-theme-deps-7.0": "*",
 		"liferay-theme-tasks": "*"
 	},
-	"devDependencies": {
-		"node-bourbon": "^4.2.3"
-	},
 	"keywords": [
 		"liferay-theme"
 	],
+	"license": "LGPL",
 	"liferayTheme": {
 		"baseTheme": "styled",
 		"rubySass": false,
-		"screenshot": "",
-		"templateLanguage": "ftl",
 		"version": "7.0"
 	},
+	"main": "package.json",
 	"name": "product-app-theme",
-	"publishConfig": {
-		"tag": "7_0_x"
-	},
+	"repository": "liferay/liferay-portal",
 	"version": "1.0.0"
 }

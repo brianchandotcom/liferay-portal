@@ -313,13 +313,13 @@
 			if (!interacting && Util.inBrowserView(el)) {
 				var form = el.closest('form');
 
-				var focusable = !(el.is(':disabled') || el.is(':hidden'));
+				var focusable = !el.is(':disabled') && !el.is(':hidden');
 
 				if (!form.length || focusable) {
 					el.focus();
 				}
 				else {
-					var portletName = form[0].getAttribute('data-fm-namespace');
+					var portletName = form.data('fm-namespace');
 
 					Liferay.once(
 						portletName + 'formReady',

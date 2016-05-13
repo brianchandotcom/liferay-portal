@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_CATEGORY</td>
+	<td>//ul[contains(@class,'navbar')]//a[contains(@title,'Add Category')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>APPLICATION_SEARCH_FIELD</td>
 	<td>//input[contains(@id,'searchApplication')]</td>
 	<td>Application Search Field</td>
@@ -106,6 +111,11 @@
 <tr>
 	<td>RECENT</td>
 	<td>//*[@data-qa-id='navigation']//a[contains(.,'Recent')] | //div[contains(@class,'navbar-default')]//a/span[contains(.,'Recent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOG_LEVELS</td>
+	<td>//ul[contains(@class,'navbar')]//a[contains(@title,'Log Levels')]/span</td>
 	<td></td>
 </tr>
 <tr>

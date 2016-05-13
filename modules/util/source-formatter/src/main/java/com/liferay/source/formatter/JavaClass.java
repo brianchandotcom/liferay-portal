@@ -1550,25 +1550,32 @@ public class JavaClass {
 	}
 
 	private void _formatReturnStatement(
-		String javaTermContent, Matcher matcher) {
+		String javaTermContent, String returnStatement, String tabs,
+		String ifCondition, String trueValue, String falseValue) {
 
-		String tabs = matcher.group(1);
+		StringBundler sb = new StringBundler(15);
 
-		StringBundler sb = new StringBundler(11);
-
-		sb.append(javaTermContent.substring(0, matcher.end(1)));
+		sb.append("\n");
+		sb.append(tabs);
 		sb.append("if (");
-		sb.append(matcher.group(2));
+		sb.append(ifCondition);
 		sb.append(") {\n\n");
 		sb.append(tabs);
-		sb.append("\treturn true;\n");
+		sb.append("\treturn ");
+		sb.append(trueValue);
+		sb.append(";\n");
 		sb.append(tabs);
 		sb.append("}\n\n");
 		sb.append(tabs);
-		sb.append("return false;\n");
-		sb.append(javaTermContent.substring(matcher.end()));
+		sb.append("return ");
+		sb.append(falseValue);
+		sb.append(";\n");
 
-		_classContent = _classContent.replace(javaTermContent, sb.toString());
+		String newJavaTermContent = StringUtil.replace(
+			javaTermContent, returnStatement, sb.toString());
+
+		_classContent = StringUtil.replace(
+			_classContent, javaTermContent, newJavaTermContent);
 	}
 
 	private void _formatReturnStatements(JavaTerm javaTerm) {
@@ -1594,7 +1601,9 @@ public class JavaClass {
 			if (returnStatement.contains("|\n") ||
 				returnStatement.contains("&\n")) {
 
-				_formatReturnStatement(javaTermContent, matcher1);
+				_formatReturnStatement(
+					javaTermContent, returnStatement, matcher1.group(1),
+					matcher1.group(2), "true", "false");
 
 				return;
 			}
@@ -1604,7 +1613,9 @@ public class JavaClass {
 			if (matcher2.find() &&
 				!ToolsUtil.isInsideQuotes(returnStatement, matcher2.start(1))) {
 
-				_formatReturnStatement(javaTermContent, matcher1);
+				_formatReturnStatement(
+					javaTermContent, returnStatement, matcher1.group(1),
+					matcher1.group(2), "true", "false");
 
 				return;
 			}

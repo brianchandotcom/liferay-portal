@@ -1527,7 +1527,7 @@ public class FileSystemImporter extends BaseImporter {
 	}
 
 	protected String getKey(String name) {
-		name = StringUtil.replace(name, StringPool.SPACE, StringPool.DASH);
+		name = StringUtil.replace(name, CharPool.SPACE, CharPool.DASH);
 
 		name = StringUtil.toUpperCase(name);
 

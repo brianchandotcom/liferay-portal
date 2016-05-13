@@ -1579,16 +1579,12 @@ public class JavaClass {
 	}
 
 	private void _formatReturnStatements(JavaTerm javaTerm) {
-		String returnType = javaTerm.getReturnType();
-
-		if (!returnType.equals("boolean")) {
-			return;
-		}
-
 		String javaTermContent = javaTerm.getContent();
+		String returnType = javaTerm.getReturnType();
 
 		Matcher matcher1 = _returnPattern1.matcher(javaTermContent);
 
+		outerLoop:
 		while (matcher1.find()) {
 			String returnStatement = matcher1.group();
 
@@ -1598,26 +1594,75 @@ public class JavaClass {
 				continue;
 			}
 
-			if (returnStatement.contains("|\n") ||
-				returnStatement.contains("&\n")) {
+			if (returnType.equals("boolean")) {
+				if (returnStatement.contains("|\n") ||
+					returnStatement.contains("&\n")) {
 
-				_formatReturnStatement(
-					javaTermContent, returnStatement, matcher1.group(1),
-					matcher1.group(2), "true", "false");
+					_formatReturnStatement(
+						javaTermContent, returnStatement, matcher1.group(1),
+						matcher1.group(2), "true", "false");
 
-				return;
+					return;
+				}
+
+				Matcher matcher2 = _returnPattern2.matcher(returnStatement);
+
+				if (matcher2.find() &&
+					!ToolsUtil.isInsideQuotes(
+						returnStatement, matcher2.start(1))) {
+
+					_formatReturnStatement(
+						javaTermContent, returnStatement, matcher1.group(1),
+						matcher1.group(2), "true", "false");
+
+					return;
+				}
 			}
 
-			Matcher matcher2 = _returnPattern2.matcher(returnStatement);
+			String match = matcher1.group(2);
 
-			if (matcher2.find() &&
-				!ToolsUtil.isInsideQuotes(returnStatement, matcher2.start(1))) {
+			int x = -1;
+
+			while (true) {
+				x = match.indexOf(StringPool.QUESTION, x + 1);
+
+				if (x == -1) {
+					continue outerLoop;
+				}
+
+				if (!ToolsUtil.isInsideQuotes(match, x) &&
+					_javaSourceProcessor.getLevel(
+						match.substring(0, x), "<", ">") == 0) {
+
+					break;
+				}
+			}
+
+			int y = x;
+
+			while (true) {
+				y = match.indexOf(StringPool.COLON, y + 1);
+
+				if (y == -1) {
+					continue outerLoop;
+				}
+
+				if (!ToolsUtil.isInsideQuotes(match, y)) {
+					break;
+				}
+			}
+
+			String falseValue = StringUtil.trim(match.substring(y + 1));
+			String ifCondition = StringUtil.trim(match.substring(0, x));
+			String trueValue = StringUtil.trim(match.substring(x + 1, y));
+
+			if ((_javaSourceProcessor.getLevel(falseValue) == 0) &&
+				(_javaSourceProcessor.getLevel(ifCondition) == 0) &&
+				(_javaSourceProcessor.getLevel(trueValue) == 0)) {
 
 				_formatReturnStatement(
 					javaTermContent, returnStatement, matcher1.group(1),
-					matcher1.group(2), "true", "false");
-
-				return;
+					ifCondition, trueValue, falseValue);
 			}
 		}
 	}

@@ -282,7 +282,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 										<aui:fieldset label="border-style">
 											<aui:input checked="checked" cssClass="lfr-use-for-all use-for-all-column" label="same-for-all" name="lfr-use-for-all-style" type="toggle-switch" />
 
-											<aui:select label="top" name="lfr-border-style-top" showEmptyOption="<%= true %>">
+											<aui:select label="top" name="lfr-border-style-top" showEmptyOption="<%= true %>" wrapperCssClass="field-row">
 												<aui:option label="dashed" />
 												<aui:option label="double" />
 												<aui:option label="dotted" />
@@ -294,7 +294,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 												<aui:option label="solid" />
 											</aui:select>
 
-											<aui:select label="right" name="lfr-border-style-right" showEmptyOption="<%= true %>">
+											<aui:select label="right" name="lfr-border-style-right" showEmptyOption="<%= true %>" wrapperCssClass="field-row">
 												<aui:option label="dashed" />
 												<aui:option label="double" />
 												<aui:option label="dotted" />
@@ -306,7 +306,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 												<aui:option label="solid" />
 											</aui:select>
 
-											<aui:select label="bottom" name="lfr-border-style-bottom" showEmptyOption="<%= true %>">
+											<aui:select label="bottom" name="lfr-border-style-bottom" showEmptyOption="<%= true %>" wrapperCssClass="field-row">
 												<aui:option label="dashed" />
 												<aui:option label="double" />
 												<aui:option label="dotted" />
@@ -318,7 +318,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 												<aui:option label="solid" />
 											</aui:select>
 
-											<aui:select label="left" name="lfr-border-style-left" showEmptyOption="<%= true %>">
+											<aui:select label="left" name="lfr-border-style-left" showEmptyOption="<%= true %>" wrapperCssClass="field-row">
 												<aui:option label="dashed" />
 												<aui:option label="double" />
 												<aui:option label="dotted" />
@@ -336,13 +336,13 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 										<aui:fieldset label="border-color">
 											<aui:input checked="checked" cssClass="lfr-use-for-all use-for-all-column" label="same-for-all" name="lfr-use-for-all-color" type="toggle-switch" />
 
-											<aui:input label="top" name="lfr-border-color-top" />
+											<aui:input label="top" name="lfr-border-color-top" wrapperCssClass="field-row" />
 
-											<aui:input label="right" name="lfr-border-color-right" />
+											<aui:input label="right" name="lfr-border-color-right" wrapperCssClass="field-row" />
 
-											<aui:input label="bottom" name="lfr-border-color-bottom" />
+											<aui:input label="bottom" name="lfr-border-color-bottom" wrapperCssClass="field-row" />
 
-											<aui:input label="left" name="lfr-border-color-left" />
+											<aui:input label="left" name="lfr-border-color-left" wrapperCssClass="field-row" />
 										</aui:fieldset>
 									</aui:col>
 								</aui:row>

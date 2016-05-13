@@ -512,12 +512,12 @@ app.server.type=@{app.server.type}]]></echo>
 		<attribute default="${app.server.@{app.server.type}.version}" name="app.server.version" />
 		<attribute name="database.type" />
 		<attribute default="${database.@{database.type}.version}" name="database.version" />
-		<attribute default="" name="portal.version" />
 		<attribute default="" name="test.build.fix.pack.zip.url" />
 		<attribute default="" name="test.fix.pack.base.url" />
 		<attribute default="" name="test.legacy.database.dump" />
 		<attribute default="" name="test.license.xml.url" />
 		<attribute default="" name="test.plugin.zip.url" />
+		<attribute default="" name="test.portal.bundle.version" />
 		<attribute default="" name="test.portal.bundle.zip.url" />
 		<attribute default="" name="test.sql.zip.url" />
 		<attribute default="false" name="tomcat.gc.log" />
@@ -543,7 +543,7 @@ app.server.type=@{app.server.type}]]></echo>
 						<test-action>
 							<ant antfile="build-test-${app.server.type}.xml" inheritAll="false" target="run-selenium-${app.server.type}">
 								<property name="database.type" value="@{database.type}" />
-								<property name="liferay.portal.bundle" value="${test.portal.bundle.version}" />
+								<property name="liferay.portal.bundle" value="@{test.portal.bundle.version}" />
 								<property name="print.java.process.on.fail" value="Bootstrap" />
 								<property name="test.class" value="${test.class}" />
 							</ant>
@@ -551,7 +551,7 @@ app.server.type=@{app.server.type}]]></echo>
 							<if>
 								<equals arg1="@{test.legacy.database.dump}" arg2="true" />
 								<then>
-									<ant dir="${portal.legacy.dir}/@{portal.version}" target="export-database">
+									<ant dir="${portal.legacy.dir}/@{test.portal.bundle.version}" target="export-database">
 										<property name="database.type" value="@{database.type}" />
 									</ant>
 								</then>
@@ -685,7 +685,6 @@ app.server.type=@{app.server.type}]]></echo>
 	<macrodef name="run-legacy-database-dump">
 		<attribute name="database.type" />
 		<attribute default="" name="database.version" />
-		<attribute name="portal.version" />
 
 		<sequential>
 			<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
@@ -694,12 +693,12 @@ app.server.type=@{app.server.type}]]></echo>
 				app.server.type="tomcat"
 				database.type="@{database.type}"
 				database.version="@{database.version}"
-				portal.version="@{portal.version}"
 				test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 				test.fix.pack.base.url="${test.fix.pack.base.url}"
 				test.legacy.database.dump="true"
 				test.license.xml.url="${test.license.xml.url}"
 				test.plugin.zip.url="${test.plugin.zip.url}"
+				test.portal.bundle.version="${test.portal.bundle.version}"
 				test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
 				test.sql.zip.url="${test.sql.zip.url}"
 			/>
@@ -862,6 +861,7 @@ app.server.type=@{app.server.type}]]></echo>
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>
@@ -944,23 +944,23 @@ app.server.type=@{app.server.type}]]></echo>
 	</target>
 
 	<target name="legacy-functional-bundle-tomcat-db2105-jdk7">
-		<run-legacy-database-dump database.type="db2" portal.version="${test.portal.version}" />
+		<run-legacy-database-dump database.type="db2" />
 	</target>
 
 	<target name="legacy-functional-bundle-tomcat-mysql55-jdk7">
-		<run-legacy-database-dump database.type="mysql" database.version="5.5" portal.version="${test.portal.version}" />
+		<run-legacy-database-dump database.type="mysql" database.version="5.5" />
 	</target>
 
 	<target name="legacy-functional-bundle-tomcat-oracle12-jdk7">
-		<run-legacy-database-dump database.type="oracle" portal.version="${test.portal.version}" />
+		<run-legacy-database-dump database.type="oracle" />
 	</target>
 
 	<target name="legacy-functional-bundle-tomcat-postgresql94-jdk7">
-		<run-legacy-database-dump database.type="postgresql" portal.version="${test.portal.version}" />
+		<run-legacy-database-dump database.type="postgresql" />
 	</target>
 
 	<target name="legacy-functional-bundle-tomcat-sybase16-jdk7">
-		<run-legacy-database-dump database.type="sybase" portal.version="${test.portal.version}" />
+		<run-legacy-database-dump database.type="sybase" />
 	</target>
 
 	<target name="lpkg-startup-jdk7">
@@ -1104,6 +1104,7 @@ ${output.content}</echo>
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>

@@ -1,6 +1,5 @@
 <definition component-name="portal-business-productivity-ee">
 	<property name="portal.release" value="true" />
-	<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet" />
 	<property name="testray.main.component.name" value="Kaleo Forms Admin" />
 
 	<var name="workflowAssetType" value="Kaleo Forms Process" />
@@ -2389,8 +2388,6 @@
 	</command>
 
 	<command name="CompleteProcessAndViewNotifications" priority="5">
-		<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet,notifications-portlet" />
-
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Text" />
@@ -7013,8 +7010,6 @@
 	</command>
 
 	<command name="RejectAndResubmitProcessAndViewNotifications" priority="4">
-		<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet,notifications-portlet" />
-
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Text" />
@@ -7343,8 +7338,6 @@
 	</command>
 
 	<command name="ViewApprovedProcessNotificationWithComments" priority="3">
-		<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet,notifications-portlet" />
-
 		<var name="comment" value="Process is approved" />
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
@@ -8300,8 +8293,6 @@
 
 	<command name="ViewKaleoProcessNameOpenedViaNotifications" priority="3">
 		<description message="This is a use case for LPS-51098." />
-
-		<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet,notifications-portlet" />
 
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />

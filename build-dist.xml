@@ -1223,7 +1223,7 @@ this task.
 
 		<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
 			<replacetoken><![CDATA[<deployment-scanner ]]></replacetoken>
-			<replacevalue><![CDATA[<deployment-scanner deployment-timeout="120" ]]></replacevalue>
+			<replacevalue><![CDATA[<deployment-scanner deployment-timeout="360" ]]></replacevalue>
 		</replace>
 
 		<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">

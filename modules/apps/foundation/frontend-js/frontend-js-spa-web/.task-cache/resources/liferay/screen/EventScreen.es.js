@@ -1,4 +1,4 @@
-define("frontend-js-spa-web@1.0.6/liferay/screen/EventScreen.es", ['exports', 'senna/src/screen/HtmlScreen', 'metal-promise/src/promise/Promise', '../util/Utils.es'], function (exports, _HtmlScreen2, _Promise, _Utils) {
+define("frontend-js-spa-web@1.0.6/liferay/screen/EventScreen.es", ['exports', 'senna/src/screen/HtmlScreen', 'senna/src/globals/globals', 'metal-promise/src/promise/Promise', '../util/Utils.es'], function (exports, _HtmlScreen2, _globals, _Promise, _Utils) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -6,6 +6,8 @@ define("frontend-js-spa-web@1.0.6/liferay/screen/EventScreen.es", ['exports', 's
 	});
 
 	var _HtmlScreen3 = _interopRequireDefault(_HtmlScreen2);
+
+	var _globals2 = _interopRequireDefault(_globals);
 
 	var _Utils2 = _interopRequireDefault(_Utils);
 
@@ -82,6 +84,14 @@ define("frontend-js-spa-web@1.0.6/liferay/screen/EventScreen.es", ['exports', 's
 			this.cacheLastModified = new Date().getTime();
 		};
 
+		EventScreen.prototype.checkRedirectPath = function checkRedirectPath(redirectPath) {
+			var app = Liferay.SPA.app;
+
+			if (!_globals2.default.capturedFormElement && !app.findRoute(redirectPath)) {
+				window.location.href = redirectPath;
+			}
+		};
+
 		EventScreen.prototype.deactivate = function deactivate() {
 			_HtmlScreen.prototype.deactivate.call(this);
 
@@ -98,12 +108,21 @@ define("frontend-js-spa-web@1.0.6/liferay/screen/EventScreen.es", ['exports', 's
 			});
 		};
 
+		EventScreen.prototype.copyBodyAttributes = function copyBodyAttributes() {
+			var virtualBody = this.virtualDocument.querySelector('body');
+
+			document.body.className = virtualBody.className;
+			document.body.onload = virtualBody.onload;
+		};
+
 		EventScreen.prototype.flip = function flip(surfaces) {
 			var _this2 = this;
 
-			document.body.className = this.virtualDocument.querySelector('body').className;
+			this.copyBodyAttributes();
 
 			return _Promise.CancellablePromise.resolve(_Utils2.default.resetAllPortlets()).then(_Promise.CancellablePromise.resolve(this.beforeScreenFlip())).then(_HtmlScreen.prototype.flip.call(this, surfaces)).then(function () {
+				_this2.runBodyOnLoad();
+
 				Liferay.fire('screenFlip', {
 					app: Liferay.SPA.app,
 					screen: _this2
@@ -135,6 +154,10 @@ define("frontend-js-spa-web@1.0.6/liferay/screen/EventScreen.es", ['exports', 's
 			var _this3 = this;
 
 			return _HtmlScreen.prototype.load.call(this, path).then(function (content) {
+				var redirectPath = _this3.beforeUpdateHistoryPath(path);
+
+				_this3.checkRedirectPath(redirectPath);
+
 				Liferay.fire('screenLoad', {
 					app: Liferay.SPA.app,
 					content: content,
@@ -143,6 +166,14 @@ define("frontend-js-spa-web@1.0.6/liferay/screen/EventScreen.es", ['exports', 's
 
 				return content;
 			});
+		};
+
+		EventScreen.prototype.runBodyOnLoad = function runBodyOnLoad() {
+			var onLoad = document.body.onload;
+
+			if (onLoad) {
+				onLoad();
+			}
 		};
 
 		return EventScreen;

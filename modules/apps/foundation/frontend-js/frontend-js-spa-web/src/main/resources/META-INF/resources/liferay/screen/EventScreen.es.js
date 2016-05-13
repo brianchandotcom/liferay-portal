@@ -1,6 +1,7 @@
 'use strict';
 
 import HtmlScreen from 'senna/src/screen/HtmlScreen';
+import globals from 'senna/src/globals/globals';
 import {CancellablePromise} from 'metal-promise/src/promise/Promise';
 import Utils from '../util/Utils.es';
 

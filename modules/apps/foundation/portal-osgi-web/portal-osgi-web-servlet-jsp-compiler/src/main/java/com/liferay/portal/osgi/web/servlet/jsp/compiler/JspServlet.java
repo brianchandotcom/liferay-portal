@@ -14,8 +14,6 @@
 
 package com.liferay.portal.osgi.web.servlet.jsp.compiler;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -76,6 +74,7 @@ import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionListener;
 import javax.servlet.jsp.JspFactory;
 
+import org.apache.felix.utils.log.Logger;
 import org.apache.jasper.runtime.JspFactoryImpl;
 import org.apache.jasper.runtime.TagHandlerPool;
 import org.apache.jasper.xmlparser.ParserUtils;
@@ -258,6 +257,8 @@ public class JspServlet extends HttpServlet {
 		bundles.add(_bundle);
 
 		bundles.add(_jspBundle);
+
+		_logger = new Logger(_bundle.getBundleContext());
 
 		collectTaglibProviderBundles(bundles);
 
@@ -526,9 +527,8 @@ public class JspServlet extends HttpServlet {
 				Files.walkFileTree(dirPath, new DeleteFileVisitor(paths));
 			}
 			catch (IOException ioe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Can't delete outdated files " + paths, ioe);
-				}
+				_logger.log(
+					Logger.LOG_WARNING, "Can't delete outdated files " + paths);
 			}
 		}
 	}
@@ -549,8 +549,6 @@ public class JspServlet extends HttpServlet {
 		PropsUtil.get(PropsKeys.LIFERAY_HOME) + File.separator + "work" +
 			File.separator;
 
-	private static final Log _log = LogFactoryUtil.getLog(JspServlet.class);
-
 	private static final Map<Method, Method> _contextAdapterMethods;
 	private static final Bundle _jspBundle = FrameworkUtil.getBundle(
 		JspServlet.class);
@@ -567,6 +565,7 @@ public class JspServlet extends HttpServlet {
 	private JspBundleClassloader _jspBundleClassloader;
 	private final HttpServlet _jspServlet =
 		new org.apache.jasper.servlet.JspServlet();
+	private Logger _logger;
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new CopyOnWriteArrayList<>();
 

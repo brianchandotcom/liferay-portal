@@ -193,6 +193,14 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<execute macro="Polls#selectPollPG">
+			<var name="pollsQuestionTitle" value="Election Poll" />
+		</execute>
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="Polls#viewPollPG">
 			<var name="pollsQuestion" value="What is the most important issue for this election?" />
 			<var name="pollsQuestionChoiceList" value="The Economy,The National Debt" />

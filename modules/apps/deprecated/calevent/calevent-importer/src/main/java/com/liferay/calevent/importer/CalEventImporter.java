@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.verify;
+package com.liferay.calevent.importer;
 
 import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
 import com.liferay.asset.kernel.model.AssetCategory;
@@ -45,10 +45,13 @@ import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.portal.kernel.cal.DayAndPosition;
 import com.liferay.portal.kernel.cal.TZSRecurrence;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -72,11 +75,11 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.model.RatingsStats;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
@@ -84,6 +87,8 @@ import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.service.SocialActivityLocalService;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -96,18 +101,27 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
  */
-@Component(
-	immediate = true,
-	property = {"verify.process.name=com.liferay.calendar.service"},
-	service = VerifyProcess.class
-)
-public class CalendarVerifyProcess extends VerifyProcess {
+@Component(immediate = true)
+public class CalEventImporter {
+
+	@Activate
+	protected void activate() throws Exception {
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
+			connection = con;
+
+			importCalEvent();
+		}
+		finally {
+			connection = null;
+		}
+	}
 
 	protected void addAssetEntry(
 		long entryId, long groupId, long companyId, long userId,
@@ -478,9 +492,24 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		return RecurrenceSerializer.serialize(recurrence);
 	}
 
-	@Override
-	protected void doVerify() throws Exception {
-		verifyCalEvent();
+	protected boolean doHasTable(String tableName) throws Exception {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			DatabaseMetaData metadata = connection.getMetaData();
+
+			rs = metadata.getTables(null, null, tableName, null);
+
+			while (rs.next()) {
+				return true;
+			}
+		}
+		finally {
+			DataAccess.cleanUp(ps, rs);
+		}
+
+		return false;
 	}
 
 	protected long getActionId(
@@ -658,6 +687,17 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		}
 	}
 
+	protected boolean hasTable(String tableName) throws Exception {
+		if (doHasTable(StringUtil.toLowerCase(tableName)) ||
+			doHasTable(StringUtil.toUpperCase(tableName)) ||
+			doHasTable(tableName)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected void importAssetLink(
 			AssetLink assetLink, long oldEntryId, long newEntryId)
 		throws Exception {
@@ -810,6 +850,12 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			importCalendarBookingResourcePermission(
 				resourcePermission, calendarBookingId);
+		}
+	}
+
+	protected void importCalEvent() throws Exception {
+		if (hasTable("CalEvent")) {
+			importCalEvents();
 		}
 	}
 
@@ -968,8 +1014,6 @@ public class CalendarVerifyProcess extends VerifyProcess {
 					int durationMinute = rs.getInt("durationMinute");
 					boolean allDay = rs.getBoolean("allDay");
 					String type = rs.getString("type_");
-
-					// boolean repeatiing = rs.getBoolean("repeating");
 
 					String recurrence = rs.getString("recurrence");
 					int firstReminder = rs.getInt("firstReminder");
@@ -1365,16 +1409,15 @@ public class CalendarVerifyProcess extends VerifyProcess {
 		_mbThreadLocalService.updateMBThread(mbThread);
 	}
 
-	protected void verifyCalEvent() throws Exception {
-		if (hasTable("CalEvent")) {
-			importCalEvents();
-		}
-	}
+	protected Connection connection;
 
 	private static final String _ASSET_VOCABULARY_NAME = "Calendar Event Types";
 
 	private static final String _CAL_EVENT_CLASS_NAME =
 		"com.liferay.portlet.calendar.model.CalEvent";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CalEventImporter.class);
 
 	private static final Map<Integer, Frequency> _frequencyMap =
 		new HashMap<>();

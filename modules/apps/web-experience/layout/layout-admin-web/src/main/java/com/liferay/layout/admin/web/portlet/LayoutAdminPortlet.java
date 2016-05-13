@@ -526,6 +526,12 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
 			stagingGroupId, privateLayout, layout.getLayoutId(),
 			layout.getTypeSettingsProperties());
+
+		String redirect = PortalUtil.getLayoutFullURL(layout, themeDisplay);
+
+		MultiSessionMessages.add(actionRequest, "layoutUpdated", layout);
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	public void editLayoutSet(

@@ -124,6 +124,8 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 			<liferay-ui:message arguments="<%= mndfn.getFieldName() %>" key="the-definition-field-name-x-was-defined-more-than-once" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
+		<liferay-ui:error exception="<%= DDMFormValidationException.MustSetFieldsForForm.class %>" message="please-add-at-least-one-field" />
+
 		<liferay-ui:error exception="<%= DDMFormValidationException.MustSetOptionsForField.class %>">
 
 			<%

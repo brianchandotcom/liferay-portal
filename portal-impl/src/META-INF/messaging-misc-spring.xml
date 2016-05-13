@@ -31,7 +31,7 @@
 		</property>
 	</bean>
 	<bean class="com.liferay.portal.subscription.CleanUpSubscriptionMessageListener" id="messageListener.subscription_clean_up" />
-	<bean class="com.liferay.portal.messaging.SubscriptionSenderMessageListener" id="messageListener.subscription_sender" />
+	<bean class="com.liferay.portal.messaging.subscription.SubscriptionSenderMessageListener" id="messageListener.subscription_sender" />
 
 	<!-- Configurator -->
 

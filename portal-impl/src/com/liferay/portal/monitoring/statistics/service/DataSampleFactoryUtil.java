@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.monitoring.statistics;
+package com.liferay.portal.monitoring.statistics.service;
 
 import aQute.bnd.annotation.ProviderType;
 

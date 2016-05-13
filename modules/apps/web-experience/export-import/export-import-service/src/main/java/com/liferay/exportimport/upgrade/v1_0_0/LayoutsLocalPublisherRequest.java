@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.messaging;
+package com.liferay.exportimport.upgrade.v1_0_0;
 
 import java.io.Serializable;
 
@@ -21,9 +21,7 @@ import java.util.Map;
 
 /**
  * @author     Bruno Farache
- * @deprecated As of 7.0.0, with no direct replacement
  */
-@Deprecated
 public class LayoutsLocalPublisherRequest implements Serializable {
 
 	public static final String COMMAND_ALL_PAGES = "ALL_PAGES";

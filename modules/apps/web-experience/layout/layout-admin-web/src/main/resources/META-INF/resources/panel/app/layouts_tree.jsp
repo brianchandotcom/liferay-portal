@@ -106,7 +106,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 									%>
 
 									<li>
-										<a data-qa-id="editPublicPages" href="<%= editLayoutURL.toString() %>"><liferay-ui:message key="configuration" /></a>
+										<a data-qa-id="editPublicPages" href="<%= editLayoutURL.toString() %>"><liferay-ui:message key="configure" /></a>
 									</li>
 								</c:if>
 
@@ -178,7 +178,7 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 									%>
 
 									<li>
-										<a data-qa-id="editPrivatePages" href="<%= editLayoutURL.toString() %>"><liferay-ui:message key="configuration" /></a>
+										<a data-qa-id="editPrivatePages" href="<%= editLayoutURL.toString() %>"><liferay-ui:message key="configure" /></a>
 									</li>
 								</c:if>
 
@@ -255,8 +255,8 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 
 				<li>
 					<a class="layout-tree-edit" data-plid="{plid}" data-qa-id="editPage" data-updateable="{updateable}" data-url="{url}" data-uuid="{uuid}" href="{editLayoutURL}" id="{id}Edit">
-						<span aria-hidden="true"><liferay-ui:message key="edit" /></span>
-						<span class="sr-only"><liferay-ui:message arguments="{label}" key="edit-x" /></span>
+						<span aria-hidden="true"><liferay-ui:message key="configure-page" /></span>
+						<span class="sr-only"><liferay-ui:message arguments="{label}" key="configure-x" /></span>
 					</a>
 				</li>
 

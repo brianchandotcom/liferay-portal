@@ -361,6 +361,53 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
 	}
 
+	@Test(expected = MustSetValidValue.class)
+	public void testValidationWithNonRequiredSelectAndInvalidLocalizedValue()
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = new DDMFormField("option", "select");
+
+		ddmFormField.setDataType("string");
+		ddmFormField.setRequired(false);
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		ddmFormFieldOptions.addOptionLabel("A", LocaleUtil.US, "Option A");
+		ddmFormFieldOptions.addOptionLabel("B", LocaleUtil.US, "Option B");
+
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+		ddmFormField.setLocalizable(true);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addAvailableLocale(LocaleUtil.BRAZIL);
+
+		String instanceId = StringUtil.randomString();
+
+		LocalizedValue localizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"[\"\"]", "[\"C\"]", LocaleUtil.US);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				instanceId, "option", localizedValue));
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			createDDMFormFieldEvaluationResult("option", instanceId, false);
+
+		DDMFormEvaluator ddmFormEvaluator = mockDDMFormEvaluatorWithResult(
+			createDDMFormEvaluationResult(ddmFormFieldEvaluationResult));
+
+		setDDMFormValuesValidatorEvaluator(ddmFormEvaluator);
+
+		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+	}
+
 	@Test(expected = NullPointerException.class)
 	public void testValidationWithoutDDMFormReference() throws Exception {
 		DDMFormValues ddmFormValues = new DDMFormValues(null);
@@ -559,7 +606,6 @@ public class DDMFormValuesValidatorTest {
 		ddmFormFieldOptions.addOptionLabel("B", LocaleUtil.US, "Option B");
 
 		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
-
 		ddmFormField.setLocalizable(false);
 
 		ddmForm.addDDMFormField(ddmFormField);

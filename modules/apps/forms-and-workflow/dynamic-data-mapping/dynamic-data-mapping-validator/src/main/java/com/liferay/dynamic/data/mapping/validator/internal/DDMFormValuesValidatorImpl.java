@@ -237,7 +237,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 				if (Validator.isNull(jsonArray.getString(i)) &&
 					!ddmFormField.isRequired()) {
 
-					return;
+					continue;
 				}
 
 				if (!optionValues.contains(jsonArray.getString(i))) {

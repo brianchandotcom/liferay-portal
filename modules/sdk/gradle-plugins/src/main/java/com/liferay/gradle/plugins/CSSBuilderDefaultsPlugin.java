@@ -39,7 +39,7 @@ public class CSSBuilderDefaultsPlugin
 
 		addPortalToolDependencies(
 			project, CSSBuilderPlugin.PORTAL_COMMON_CSS_CONFIGURATION_NAME,
-			_FRONTEND_COMMON_CSS_NAME);
+			FRONTEND_COMMON_CSS_NAME);
 
 		configureTasksBuildCSS(project);
 	}
@@ -104,7 +104,7 @@ public class CSSBuilderDefaultsPlugin
 		return _PORTAL_TOOL_NAME;
 	}
 
-	private static final String _FRONTEND_COMMON_CSS_NAME =
+	protected static final String FRONTEND_COMMON_CSS_NAME =
 		"com.liferay.frontend.css.common";
 
 	private static final String _PORTAL_TOOL_NAME = "com.liferay.css.builder";

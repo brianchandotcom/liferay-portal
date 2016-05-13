@@ -18,10 +18,13 @@ import com.liferay.gradle.plugins.cache.CacheExtension;
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.cache.task.TaskCache;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.gulp.ExecuteGulpTask;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.tasks.ReplaceRegexTask;
+import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.util.GradleUtil;
 import com.liferay.gradle.plugins.util.IncrementVersionClosure;
+import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
 import groovy.lang.Closure;
 
@@ -35,14 +38,27 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.file.FileTree;
+import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.BasePlugin;
+import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.MavenPlugin;
+import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.Upload;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
+
+	public static final String EXPAND_FRONTEND_CSS_COMMON_TASK_NAME =
+		"expandFrontendCSSCommon";
+
+	public static final String FRONTEND_CSS_COMMON_CONFIGURATION_NAME =
+		"frontendCSSCommon";
 
 	@Override
 	public void apply(Project project) {
@@ -56,12 +72,28 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 		applyConfigScripts(project);
 
+		LiferayOSGiDefaultsPlugin.configureRepositories(project);
+
+		Configuration frontendCSSCommonConfiguration =
+			addConfigurationFrontendCSSCommon(project);
+
+		Copy expandFrontendCSSCommonTask = addTaskExpandFrontendCSSCommon(
+			project, frontendCSSCommonConfiguration);
 		final ReplaceRegexTask updateVersionTask = addTaskUpdateVersion(
 			project);
 
 		configureCache(project);
 		configureDeployDir(project);
 		configureProject(project);
+
+		Project frontendThemeStyledProject = GradleUtil.getProject(
+			project.getRootProject(), "frontend-theme-styled");
+		Project frontendThemeUnstyledProject = GradleUtil.getProject(
+			project.getRootProject(), "frontend-theme-unstyled");
+
+		configureTasksExecuteGulp(
+			project, expandFrontendCSSCommonTask, frontendThemeStyledProject,
+			frontendThemeUnstyledProject);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -78,6 +110,82 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	protected Configuration addConfigurationFrontendCSSCommon(
+		final Project project) {
+
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, FRONTEND_CSS_COMMON_CONFIGURATION_NAME);
+
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
+
+				@Override
+				public void execute(DependencySet dependencySet) {
+					addDependenciesFrontendCSSCommon(project);
+				}
+
+			});
+
+		configuration.setDescription(
+			"Configures com.liferay.frontend.css.common for compiling the " +
+				"theme.");
+		configuration.setTransitive(false);
+		configuration.setVisible(false);
+
+		return configuration;
+	}
+
+	protected void addDependenciesFrontendCSSCommon(Project project) {
+		String version = GradleUtil.getPortalToolVersion(
+			project, CSSBuilderDefaultsPlugin.FRONTEND_COMMON_CSS_NAME);
+
+		GradleUtil.addDependency(
+			project, FRONTEND_CSS_COMMON_CONFIGURATION_NAME, "com.liferay",
+			CSSBuilderDefaultsPlugin.FRONTEND_COMMON_CSS_NAME, version, false);
+	}
+
+	protected Copy addTaskExpandFrontendCSSCommon(
+		final Project project,
+		final Configuration frontendCSSCommonConfguration) {
+
+		Copy copy = GradleUtil.addTask(
+			project, EXPAND_FRONTEND_CSS_COMMON_TASK_NAME, Copy.class);
+
+		copy.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Copy copy = (Copy)task;
+
+					project.delete(copy.getDestinationDir());
+				}
+
+			});
+
+		copy.eachFile(new StripPathSegmentsAction(2));
+
+		copy.from(
+			new Closure<Void>(null) {
+
+				@SuppressWarnings("unused")
+				public FileTree doCall() {
+					return project.zipTree(
+						frontendCSSCommonConfguration.getSingleFile());
+				}
+
+			});
+
+		copy.include("META-INF/resources/");
+		copy.into(new File(project.getBuildDir(), "frontend-css-common"));
+		copy.setDescription(
+			"Expands com.liferay.frontend.css.common to a temporary " +
+				"directory.");
+		copy.setIncludeEmptyDirs(false);
+
+		return copy;
 	}
 
 	protected Upload addTaskInstall(Project project) {
@@ -164,6 +272,74 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		project.setGroup(_GROUP);
 	}
 
+	protected void configureTaskExecuteGulp(
+		ExecuteGulpTask executeGulpTask, final Copy expandFrontendCSSCommonTask,
+		Project frontendThemeStyledProject,
+		Project frontendThemeUnstyledProject) {
+
+		executeGulpTask.args(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					File dir = expandFrontendCSSCommonTask.getDestinationDir();
+
+					return "--css-common-path=" + FileUtil.getAbsolutePath(dir);
+				}
+
+			});
+
+		executeGulpTask.dependsOn(expandFrontendCSSCommonTask);
+
+		configureTaskExecuteGulpParentTheme(
+			executeGulpTask, frontendThemeStyledProject, "styled");
+		configureTaskExecuteGulpParentTheme(
+			executeGulpTask, frontendThemeUnstyledProject, "unstyled");
+	}
+
+	protected void configureTaskExecuteGulpParentTheme(
+		ExecuteGulpTask executeGulpTask, Project themeProject, String name) {
+
+		if (themeProject == null) {
+			if (_logger.isWarnEnabled()) {
+				_logger.warn("Unable to configure " + name + " parent theme");
+			}
+
+			return;
+		}
+
+		File dir = themeProject.file(
+			"src/main/resources/META-INF/resources/_" + name);
+
+		executeGulpTask.args(
+			"--" + name + "-path=" + FileUtil.getAbsolutePath(dir));
+
+		executeGulpTask.dependsOn(
+			themeProject.getPath() + ":" + JavaPlugin.CLASSES_TASK_NAME);
+	}
+
+	protected void configureTasksExecuteGulp(
+		Project project, final Copy expandFrontendCSSCommonTask,
+		final Project frontendThemeStyledProject,
+		final Project frontendThemeUnstyledProject) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			ExecuteGulpTask.class,
+			new Action<ExecuteGulpTask>() {
+
+				@Override
+				public void execute(ExecuteGulpTask executeGulpTask) {
+					configureTaskExecuteGulp(
+						executeGulpTask, expandFrontendCSSCommonTask,
+						frontendThemeStyledProject,
+						frontendThemeUnstyledProject);
+				}
+
+			});
+	}
+
 	protected void configureTaskUploadArchives(
 		Project project, Task updateThemeVersionTask) {
 
@@ -178,5 +354,8 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private static final String _GROUP = "com.liferay.plugins";
+
+	private static final Logger _logger = Logging.getLogger(
+		LiferayThemeDefaultsPlugin.class);
 
 }

@@ -132,7 +132,7 @@
         "dependencies": ["exports", "./EventScreen.es", "metal-uri/src/Uri", "senna/src/utils/utils"]
     },
     "frontend-js-spa-web@1.0.6/liferay/screen/EventScreen.es": {
-        "dependencies": ["exports", "metal-dom/src/dom", "senna/src/screen/HtmlScreen", "metal-dom/src/globalEval", "metal-promise/src/promise/Promise", "../util/Utils.es"]
+        "dependencies": ["exports", "senna/src/screen/HtmlScreen", "metal-promise/src/promise/Promise", "../util/Utils.es"]
     },
     "frontend-js-spa-web@1.0.6/liferay/screen/RenderURLScreen.es": {
         "dependencies": ["exports", "./EventScreen.es"]

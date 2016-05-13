@@ -1,8 +1,6 @@
 'use strict';
 
-import dom from 'metal-dom/src/dom';
 import HtmlScreen from 'senna/src/screen/HtmlScreen';
-import globalEval from 'metal-dom/src/globalEval';
 import { CancellablePromise } from 'metal-promise/src/promise/Promise';
 import Utils from '../util/Utils.es';
 
@@ -81,6 +79,16 @@ class EventScreen extends HtmlScreen {
 					}
 				);
 			});
+	}
+
+	getCache() {
+		var app = Liferay.SPA.app;
+
+		if (app.isCacheEnabled() && !app.isScreenCacheExpired(this)) {
+			return super.getCache();
+		}
+
+		return null;
 	}
 
 	getCacheLastModified() {

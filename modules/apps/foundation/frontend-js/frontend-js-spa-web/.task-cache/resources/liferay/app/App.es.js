@@ -86,16 +86,6 @@ define("frontend-js-spa-web@1.0.6/liferay/app/App.es", ['exports', 'senna/src/ap
 			return _this;
 		}
 
-		LiferayApp.prototype.createScreenInstance = function createScreenInstance(path, route) {
-			var screen = _App.prototype.createScreenInstance.call(this, path, route);
-
-			if (this.isCacheEnabled() && this.isScreenCacheExpired(screen)) {
-				screen.clearCache();
-			}
-
-			return screen;
-		};
-
 		LiferayApp.prototype.getCacheExpirationTime = function getCacheExpirationTime() {
 			return Liferay.SPA.cacheExpirationTime;
 		};

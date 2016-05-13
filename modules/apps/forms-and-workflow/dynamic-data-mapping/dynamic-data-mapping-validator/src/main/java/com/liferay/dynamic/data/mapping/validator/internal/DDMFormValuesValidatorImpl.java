@@ -234,6 +234,12 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 				ddmFormField.getName(), selectedValue);
 
 			for (int i = 0; i < jsonArray.length(); i++) {
+				if (Validator.isNull(jsonArray.getString(i)) &&
+					!ddmFormField.isRequired()) {
+
+					continue;
+				}
+
 				if (!optionValues.contains(jsonArray.getString(i))) {
 					throw new MustSetValidValue(ddmFormField.getName());
 				}

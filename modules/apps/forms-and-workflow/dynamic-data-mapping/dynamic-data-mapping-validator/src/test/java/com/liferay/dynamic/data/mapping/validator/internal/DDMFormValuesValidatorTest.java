@@ -279,6 +279,135 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
 	}
 
+	@Test
+	public void testValidationWithNonRequiredSelect() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = new DDMFormField("option", "select");
+
+		ddmFormField.setDataType("string");
+		ddmFormField.setRequired(false);
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		ddmFormFieldOptions.addOptionLabel("A", LocaleUtil.US, "Option A");
+		ddmFormFieldOptions.addOptionLabel("B", LocaleUtil.US, "Option B");
+
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+
+		ddmFormField.setLocalizable(false);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		String instanceId = StringUtil.randomString();
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				instanceId, "option", new UnlocalizedValue("[\"A\"]")));
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			createDDMFormFieldEvaluationResult("option", instanceId, false);
+
+		DDMFormEvaluator ddmFormEvaluator = mockDDMFormEvaluatorWithResult(
+			createDDMFormEvaluationResult(ddmFormFieldEvaluationResult));
+
+		setDDMFormValuesValidatorEvaluator(ddmFormEvaluator);
+
+		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+	}
+
+	@Test
+	public void testValidationWithNonRequiredSelectAndEmptyDefaultLocaleValue()
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = new DDMFormField("option", "select");
+
+		ddmFormField.setDataType("string");
+		ddmFormField.setRequired(false);
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		ddmFormFieldOptions.addOptionLabel("A", LocaleUtil.US, "Option A");
+		ddmFormFieldOptions.addOptionLabel("B", LocaleUtil.US, "Option B");
+
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+
+		ddmFormField.setLocalizable(false);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		String instanceId = StringUtil.randomString();
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				instanceId, "option", new UnlocalizedValue("[\"\"]")));
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			createDDMFormFieldEvaluationResult("option", instanceId, false);
+
+		DDMFormEvaluator ddmFormEvaluator = mockDDMFormEvaluatorWithResult(
+			createDDMFormEvaluationResult(ddmFormFieldEvaluationResult));
+
+		setDDMFormValuesValidatorEvaluator(ddmFormEvaluator);
+
+		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+	}
+
+	@Test(expected = MustSetValidValue.class)
+	public void testValidationWithNonRequiredSelectAndInvalidLocalizedValue()
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = new DDMFormField("option", "select");
+
+		ddmFormField.setDataType("string");
+		ddmFormField.setRequired(false);
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		ddmFormFieldOptions.addOptionLabel("A", LocaleUtil.US, "Option A");
+		ddmFormFieldOptions.addOptionLabel("B", LocaleUtil.US, "Option B");
+
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+		ddmFormField.setLocalizable(true);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addAvailableLocale(LocaleUtil.BRAZIL);
+
+		String instanceId = StringUtil.randomString();
+
+		LocalizedValue localizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"[\"\"]", "[\"C\"]", LocaleUtil.US);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				instanceId, "option", localizedValue));
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			createDDMFormFieldEvaluationResult("option", instanceId, false);
+
+		DDMFormEvaluator ddmFormEvaluator = mockDDMFormEvaluatorWithResult(
+			createDDMFormEvaluationResult(ddmFormFieldEvaluationResult));
+
+		setDDMFormValuesValidatorEvaluator(ddmFormEvaluator);
+
+		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+	}
+
 	@Test(expected = NullPointerException.class)
 	public void testValidationWithoutDDMFormReference() throws Exception {
 		DDMFormValues ddmFormValues = new DDMFormValues(null);
@@ -462,6 +591,87 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
 	}
 
+	@Test
+	public void testValidationWithRequiredSelect() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = new DDMFormField("option", "select");
+
+		ddmFormField.setDataType("string");
+		ddmFormField.setRequired(true);
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		ddmFormFieldOptions.addOptionLabel("A", LocaleUtil.US, "Option A");
+		ddmFormFieldOptions.addOptionLabel("B", LocaleUtil.US, "Option B");
+
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+		ddmFormField.setLocalizable(false);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		String instanceId = StringUtil.randomString();
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				instanceId, "option", new UnlocalizedValue("[\"A\"]")));
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			createDDMFormFieldEvaluationResult("option", instanceId, false);
+
+		DDMFormEvaluator ddmFormEvaluator = mockDDMFormEvaluatorWithResult(
+			createDDMFormEvaluationResult(ddmFormFieldEvaluationResult));
+
+		setDDMFormValuesValidatorEvaluator(ddmFormEvaluator);
+
+		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+	}
+
+	@Test(expected = MustSetValidValue.class)
+	public void testValidationWithRequiredSelectAndEmptyDefaultLocaleValue()
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = new DDMFormField("option", "select");
+
+		ddmFormField.setDataType("string");
+		ddmFormField.setRequired(true);
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		ddmFormFieldOptions.addOptionLabel("A", LocaleUtil.US, "Option A");
+		ddmFormFieldOptions.addOptionLabel("B", LocaleUtil.US, "Option B");
+
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+
+		ddmFormField.setLocalizable(false);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		String instanceId = StringUtil.randomString();
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				instanceId, "option", new UnlocalizedValue("[\"\"]")));
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			createDDMFormFieldEvaluationResult("option", instanceId, false);
+
+		DDMFormEvaluator ddmFormEvaluator = mockDDMFormEvaluatorWithResult(
+			createDDMFormEvaluationResult(ddmFormFieldEvaluationResult));
+
+		setDDMFormValuesValidatorEvaluator(ddmFormEvaluator);
+
+		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+	}
+
 	@Test(expected = MustNotSetValue.class)
 	public void testValidationWithSeparatorField() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
@@ -602,9 +812,19 @@ public class DDMFormValuesValidatorTest {
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
 
+		String instanceId = StringUtil.randomString();
+
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"option", new UnlocalizedValue("[\"Invalid\"]")));
+				instanceId, "option", new UnlocalizedValue("[\"Invalid\"]")));
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			createDDMFormFieldEvaluationResult("option", instanceId, false);
+
+		DDMFormEvaluator ddmFormEvaluator = mockDDMFormEvaluatorWithResult(
+			createDDMFormEvaluationResult(ddmFormFieldEvaluationResult));
+
+		setDDMFormValuesValidatorEvaluator(ddmFormEvaluator);
 
 		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
 	}

@@ -28,7 +28,7 @@ buildCKEditor {
 
 	from(zipTree(ckEditorZipFile)) {
 		eachFile new StripPathSegmentsAction(1)
-		exclude "ckeditor/**/samples/"
+		exclude "ckeditor/samples/"
 		include "ckeditor/"
 	}
 

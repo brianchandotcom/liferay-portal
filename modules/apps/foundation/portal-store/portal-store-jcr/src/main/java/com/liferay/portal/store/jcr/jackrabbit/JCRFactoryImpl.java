@@ -112,8 +112,6 @@ public class JCRFactoryImpl implements JCRFactory {
 				session.logout();
 			}
 		}
-
-		_initialized = true;
 	}
 
 	@Override
@@ -173,16 +171,11 @@ public class JCRFactoryImpl implements JCRFactory {
 
 	@Override
 	public void shutdown() {
-		if (_initialized) {
-			_transientRepository.shutdown();
-		}
-
-		_initialized = false;
+		_transientRepository.shutdown();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JCRFactoryImpl.class);
 
-	private boolean _initialized;
 	private final JCRStoreConfiguration _jcrStoreConfiguration;
 	private final TransientRepository _transientRepository;
 

@@ -2175,6 +2175,8 @@ closeTemplate()
 
 							export USER_MEM_ARGS="-Xmx1024m -XX:MetaspaceSize=512m"
 
+							export DERBY_FLAG="false"
+
 							export MW_HOME="${app.server.weblogic.dir}"
 
 							export JAVA_OPTIONS="${JAVA_OPTIONS} @java.security.manager.option@ -da:org.apache.lucene... -da:org.aspectj..."

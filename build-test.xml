@@ -6416,6 +6416,20 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		<antcall if:set="env.JENKINS_HOME" target="clean-up-java-processes" inheritAll="false" />
 	</target>
 
+	<target name="prepare-test-build-custom">
+		<app-server-properties-update>
+			app.server.type=${app.server.type}
+		</app-server-properties-update>
+
+		<antcall inheritAll="false" target="update-sdk-properties" />
+
+		<antcall target="unzip-${app.server.type}-custom" />
+
+		<ant inheritAll="false" target="deploy" />
+
+		<app-server-properties-reset />
+	</target>
+
 	<target name="prepare-test-build-tomcat-dependents">
 		<if>
 			<equals arg1="${test.build.bundle.tcat}" arg2="true" />

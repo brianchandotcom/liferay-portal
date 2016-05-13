@@ -2,9 +2,18 @@ Bundle-Name: Liferay Wiki API
 Bundle-SymbolicName: com.liferay.wiki.api
 Bundle-Version: 2.0.2
 Export-Package:\
-	!com.liferay.wiki.configuration.dependencies,\
-	!com.liferay.wiki.item.selector.handler,\
-	\
-	com.liferay.wiki.*
+	com.liferay.wiki.configuration,\
+	com.liferay.wiki.configuration.definition,\
+	com.liferay.wiki.constants,\
+	com.liferay.wiki.display.context,\
+	com.liferay.wiki.engine,\
+	com.liferay.wiki.escape,\
+	com.liferay.wiki.exception,\
+	com.liferay.wiki.importer,\
+	com.liferay.wiki.item.selector.criterion,\
+	com.liferay.wiki.model,\
+	com.liferay.wiki.service,\
+	com.liferay.wiki.service.persistence,\
+	com.liferay.wiki.validator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki

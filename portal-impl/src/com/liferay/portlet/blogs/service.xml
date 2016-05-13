@@ -72,6 +72,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="G_S_D" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="status" />
+			<finder-column name="displayDate" />
+		</finder>
 		<finder name="G_NotS" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column comparator="!=" name="status" />
@@ -114,6 +119,11 @@
 		<finder name="G_LtD_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_GtD_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column comparator="&gt;" name="displayDate" />
 			<finder-column name="status" />
 		</finder>
 		<finder name="G_LtD_NotS" return-type="Collection">

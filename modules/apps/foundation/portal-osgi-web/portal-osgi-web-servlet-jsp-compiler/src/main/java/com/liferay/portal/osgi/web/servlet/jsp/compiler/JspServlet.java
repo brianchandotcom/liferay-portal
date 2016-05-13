@@ -607,34 +607,38 @@ public class JspServlet extends HttpServlet {
 
 			fragmentHost = fragmentHost.split(";")[0];
 
-			if (_bundle.getSymbolicName().equals(fragmentHost)) {
-				Enumeration<URL> jsps = bundle.findEntries(
-					_RESOURCES_DIR, "*.jsp", true);
+			String symbolicName = _bundle.getSymbolicName();
 
-				if (jsps != null) {
-					String scratchdir = _jspServlet.getInitParameter(
-						_SCRATCH_DIR);
+			if (!symbolicName.equals(fragmentHost)) {
+				return null;
+			}
 
-					while (jsps.hasMoreElements()) {
-						URL url = jsps.nextElement();
+			Enumeration<URL> jsps = bundle.findEntries(
+				_RESOURCES_DIR, "*.jsp", true);
 
-						String urlPath = url.getPath();
+			if (jsps != null) {
+				String scratchdir = _jspServlet.getInitParameter(
+					_SCRATCH_DIR);
 
-						String jspPath = urlPath.split(_RESOURCES_DIR)[1];
+				while (jsps.hasMoreElements()) {
+					URL url = jsps.nextElement();
 
-						StringBuilder sb = new StringBuilder(4);
+					String urlPath = url.getPath();
 
-						sb.append(scratchdir);
-						sb.append("/org/apache/jsp");
-						sb.append(jspPath.replace(".", "_"));
-						sb.append(".class");
+					String jspPath = urlPath.split(_RESOURCES_DIR)[1];
 
-						paths.add(
-							FileSystems.getDefault().getPath(sb.toString()));
-					}
+					StringBuilder sb = new StringBuilder(4);
 
-					_deleteOutDatedJspFiles(scratchdir, paths);
+					sb.append(scratchdir);
+					sb.append("/org/apache/jsp");
+					sb.append(jspPath.replace(".", "_"));
+					sb.append(".class");
+
+					paths.add(
+						FileSystems.getDefault().getPath(sb.toString()));
 				}
+
+				_deleteOutDatedJspFiles(scratchdir, paths);
 			}
 
 			return paths;

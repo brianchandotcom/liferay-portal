@@ -105,7 +105,7 @@
 
 	<target depends="taglibdoc" name="jar-tlddoc">
 		<zip destfile="util-taglib-tlddoc.jar">
-			<zipfileset dir="${doc.dir}/taglibs" />
+			<zipfileset dir="${doc.dir}/taglibs/util-taglib" />
 		</zip>
 	</target>
 
@@ -126,7 +126,7 @@
 	</target>
 
 	<target depends="validate-tld" name="taglibdoc">
-		<property name="doc.taglibs.dir" value="${doc.dir}/taglibs" />
+		<property name="doc.taglibs.dir" value="${doc.dir}/taglibs/util-taglib" />
 
 		<mkdir dir="${doc.taglibs.dir}" />
 

@@ -188,19 +188,19 @@ public class MonitoringFilter
 				portalRequestDataSample.setStatusCode(response.getStatus());
 			}
 		}
-		catch (Exception e) {
+		catch (Throwable t) {
 			if (portalRequestDataSample != null) {
 				portalRequestDataSample.capture(RequestStatus.ERROR);
 			}
 
-			if (e instanceof IOException) {
-				throw (IOException)e;
+			if (t instanceof IOException) {
+				throw (IOException)t;
 			}
-			else if (e instanceof ServletException) {
-				throw (ServletException)e;
+			else if (t instanceof ServletException) {
+				throw (ServletException)t;
 			}
 			else {
-				throw new ServletException("Unable to execute request", e);
+				throw new ServletException("Unable to execute request", t);
 			}
 		}
 		finally {
@@ -264,7 +264,7 @@ public class MonitoringFilter
 
 	private DataSampleFactory _dataSampleFactory;
 	private LayoutLocalService _layoutLocalService;
-	private boolean _monitorPortalRequest;
+	private volatile boolean _monitorPortalRequest;
 	private PortletMonitoringControl _portletMonitoringControl;
 	private ServiceMonitoringControl _serviceMonitoringControl;
 

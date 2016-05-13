@@ -17,7 +17,6 @@ package com.liferay.portal.monitoring.internal.statistics.portal;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.monitoring.DataSampleProcessor;
-import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.monitoring.internal.statistics.RequestStatistics;
 
@@ -87,19 +86,7 @@ public class CompanyStatistics
 			return;
 		}
 
-		RequestStatus requestStatus =
-			portalRequestDataSample.getRequestStatus();
-
-		if (requestStatus.equals(RequestStatus.ERROR)) {
-			_requestStatistics.incrementError();
-		}
-		else if (requestStatus.equals(RequestStatus.SUCCESS)) {
-			_requestStatistics.incrementSuccessDuration(
-				portalRequestDataSample.getDuration());
-		}
-		else if (requestStatus.equals(RequestStatus.TIMEOUT)) {
-			_requestStatistics.incrementTimeout();
-		}
+		_requestStatistics.processDataSample(portalRequestDataSample);
 
 		long duration = portalRequestDataSample.getDuration();
 

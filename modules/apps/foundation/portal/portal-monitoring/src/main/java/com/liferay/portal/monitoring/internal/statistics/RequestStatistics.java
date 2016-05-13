@@ -14,6 +14,10 @@
 
 package com.liferay.portal.monitoring.internal.statistics;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.monitoring.DataSample;
+import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.monitoring.statistics.Statistics;
 
 /**
@@ -79,6 +83,29 @@ public class RequestStatistics implements Statistics {
 		_timeoutStatistics.incrementCount();
 	}
 
+	public void processDataSample(DataSample dataSample) {
+		RequestStatus requestStatus = dataSample.getRequestStatus();
+
+		if (requestStatus == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Invalid data sample, no request status: " + dataSample);
+			}
+
+			return;
+		}
+
+		if (requestStatus.equals(RequestStatus.ERROR)) {
+			incrementError();
+		}
+		else if (requestStatus.equals(RequestStatus.SUCCESS)) {
+			incrementSuccessDuration(dataSample.getDuration());
+		}
+		else if (requestStatus.equals(RequestStatus.TIMEOUT)) {
+			incrementTimeout();
+		}
+	}
+
 	@Override
 	public void reset() {
 		_errorStatistics.reset();
@@ -90,6 +117,9 @@ public class RequestStatistics implements Statistics {
 	public void setDescription(String description) {
 		_description = description;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RequestStatistics.class);
 
 	private String _description;
 	private final CountStatistics _errorStatistics;

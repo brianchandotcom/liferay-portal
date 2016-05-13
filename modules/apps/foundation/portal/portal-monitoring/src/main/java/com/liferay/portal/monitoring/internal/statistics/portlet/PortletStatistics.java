@@ -17,7 +17,6 @@ package com.liferay.portal.monitoring.internal.statistics.portlet;
 import com.liferay.portal.kernel.monitoring.DataSampleProcessor;
 import com.liferay.portal.kernel.monitoring.MonitoringException;
 import com.liferay.portal.kernel.monitoring.PortletRequestType;
-import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.monitoring.internal.statistics.RequestStatistics;
 
 import java.util.HashMap;
@@ -100,19 +99,7 @@ public class PortletStatistics
 				"No statistics found for " + portletRequestDataSample);
 		}
 
-		RequestStatus requestStatus =
-			portletRequestDataSample.getRequestStatus();
-
-		if (requestStatus.equals(RequestStatus.ERROR)) {
-			requestStatistics.incrementError();
-		}
-		else if (requestStatus.equals(RequestStatus.SUCCESS)) {
-			requestStatistics.incrementSuccessDuration(
-				portletRequestDataSample.getDuration());
-		}
-		else if (requestStatus.equals(RequestStatus.TIMEOUT)) {
-			requestStatistics.incrementTimeout();
-		}
+		requestStatistics.processDataSample(portletRequestDataSample);
 	}
 
 	public void reset() {

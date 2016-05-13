@@ -74,9 +74,9 @@ public class DefaultPortletMonitoringControl
 		_monitorPortletResourceRequest = monitorPortletResourceRequest;
 	}
 
-	private boolean _monitorPortletActionRequest;
-	private boolean _monitorPortletEventRequest;
-	private boolean _monitorPortletRenderRequest;
-	private boolean _monitorPortletResourceRequest;
+	private volatile boolean _monitorPortletActionRequest;
+	private volatile boolean _monitorPortletEventRequest;
+	private volatile boolean _monitorPortletRenderRequest;
+	private volatile boolean _monitorPortletResourceRequest;
 
 }

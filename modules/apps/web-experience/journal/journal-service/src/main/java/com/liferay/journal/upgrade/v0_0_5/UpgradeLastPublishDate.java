@@ -12,28 +12,23 @@
  * details.
  */
 
-package com.liferay.journal.upgrade.v1_0_0;
+package com.liferay.journal.upgrade.v0_0_5;
 
-import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.util.PortletKeys;
 
 /**
- * @author Juergen Kappler
+ * @author Mate Thurzo
  */
-public class UpgradePortletSettings
-	extends com.liferay.portal.upgrade.v7_0_0.UpgradePortletSettings {
-
-	public UpgradePortletSettings(SettingsFactory settingsFactory) {
-		super(settingsFactory);
-	}
+public class UpgradeLastPublishDate
+	extends com.liferay.portal.upgrade.v7_0_0.UpgradeLastPublishDate {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeDisplayPortlet(
-			JournalPortletKeys.JOURNAL, JournalConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
+		updateLastPublishDates(JournalPortletKeys.JOURNAL, "JournalArticle");
+
+		updateLastPublishDates(JournalPortletKeys.JOURNAL, "JournalFeed");
+
+		updateLastPublishDates(JournalPortletKeys.JOURNAL, "JournalFolder");
 	}
 
 }

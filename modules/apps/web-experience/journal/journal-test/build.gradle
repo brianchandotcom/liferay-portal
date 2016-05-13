@@ -16,10 +16,10 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.io", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.service", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.journal.api", version: "2.0.0"
-	testIntegrationCompile project(":apps:web-experience:journal:journal-service")
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.journal.web", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testIntegrationCompile project(":apps:web-experience:journal:journal-service")
 }

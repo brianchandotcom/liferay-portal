@@ -17,14 +17,21 @@ package com.liferay.sync.messaging;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLSyncEvent;
-import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
-import com.liferay.document.library.kernel.service.DLSyncEventLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.document.library.kernel.service.DLSyncEventLocalService;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.StringPool;
@@ -33,31 +40,93 @@ import com.liferay.sync.model.SyncDLObjectConstants;
 import com.liferay.sync.model.impl.SyncDLObjectImpl;
 import com.liferay.sync.util.SyncUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Dennis Ju
  */
+@Component(
+	immediate = true,
+	property = {"destination.name=" + DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR},
+	service = MessageListener.class
+)
 public class DLSyncEventMessageListener extends BaseMessageListener {
+
+	@Activate
+	protected void activate() {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_dlSyncEventLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<DLSyncEvent>() {
+
+				@Override
+				public void performAction(DLSyncEvent dlSyncEvent)
+					throws PortalException {
+
+					try {
+						Message message = new Message();
+
+						Map<String, Object> values = new HashMap<>(5);
+
+						values.put("event", dlSyncEvent.getEvent());
+						values.put(
+							"modifiedTime", dlSyncEvent.getModifiedTime());
+						values.put("syncEventId", dlSyncEvent.getSyncEventId());
+						values.put("type", dlSyncEvent.getType());
+						values.put("typePK", dlSyncEvent.getTypePK());
+
+						message.setValues(values);
+
+						processDLSyncEvent(
+							dlSyncEvent.getModifiedTime(),
+							dlSyncEvent.getEvent(), dlSyncEvent.getType(),
+							dlSyncEvent.getTypePK());
+
+						deleteDLSyncEvent(
+							dlSyncEvent.getModifiedTime(),
+							dlSyncEvent.getSyncEventId(),
+							dlSyncEvent.getTypePK());
+					}
+					catch (Exception e) {
+						_log.error(e, e);
+					}
+				}
+
+			});
+
+		try {
+			actionableDynamicQuery.performActions();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+	}
 
 	protected void deleteDLSyncEvent(
 			long modifiedTime, long syncEventId, long typePK)
 		throws Exception {
 
 		if (syncEventId != 0) {
-			DLSyncEventLocalServiceUtil.deleteDLSyncEvent(syncEventId);
+			_dlSyncEventLocalService.deleteDLSyncEvent(syncEventId);
 
 			return;
 		}
 
-		DynamicQuery dynamicQuery = DLSyncEventLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _dlSyncEventLocalService.dynamicQuery();
 
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq("modifiedTime", modifiedTime));
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("typePK", typePK));
 
-		List<DLSyncEvent> dlSyncEvents =
-			DLSyncEventLocalServiceUtil.dynamicQuery(dynamicQuery);
+		List<DLSyncEvent> dlSyncEvents = _dlSyncEventLocalService.dynamicQuery(
+			dynamicQuery);
 
 		if (dlSyncEvents.isEmpty()) {
 			return;
@@ -65,7 +134,7 @@ public class DLSyncEventMessageListener extends BaseMessageListener {
 
 		DLSyncEvent dlSyncEvent = dlSyncEvents.get(0);
 
-		DLSyncEventLocalServiceUtil.deleteDLSyncEvent(dlSyncEvent);
+		_dlSyncEventLocalService.deleteDLSyncEvent(dlSyncEvent);
 	}
 
 	@Override
@@ -110,8 +179,8 @@ public class DLSyncEventMessageListener extends BaseMessageListener {
 			syncDLObject.setTypePK(typePK);
 		}
 		else if (type.equals(SyncDLObjectConstants.TYPE_FILE)) {
-			DLFileEntry dlFileEntry =
-				DLFileEntryLocalServiceUtil.fetchDLFileEntry(typePK);
+			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+				typePK);
 
 			if (dlFileEntry == null) {
 				return;
@@ -121,7 +190,7 @@ public class DLSyncEventMessageListener extends BaseMessageListener {
 				dlFileEntry, event, !dlFileEntry.isInTrash());
 		}
 		else {
-			DLFolder dlFolder = DLFolderLocalServiceUtil.fetchDLFolder(typePK);
+			DLFolder dlFolder = _dlFolderLocalService.fetchDLFolder(typePK);
 
 			if ((dlFolder == null) || !SyncUtil.isSupportedFolder(dlFolder)) {
 				return;
@@ -134,5 +203,38 @@ public class DLSyncEventMessageListener extends BaseMessageListener {
 
 		SyncUtil.addSyncDLObject(syncDLObject);
 	}
+
+	@Reference(unbind = "-")
+	protected void setDLFileEntryLocalService(
+		DLFileEntryLocalService dlFileEntryLocalService) {
+
+		_dlFileEntryLocalService = dlFileEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFolderLocalService(
+		DLFolderLocalService dlFolderLocalService) {
+
+		_dlFolderLocalService = dlFolderLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLSyncEventLocalService(
+		DLSyncEventLocalService dlSyncEventLocalService) {
+
+		_dlSyncEventLocalService = dlSyncEventLocalService;
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLSyncEventMessageListener.class);
+
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+	private DLFolderLocalService _dlFolderLocalService;
+	private DLSyncEventLocalService _dlSyncEventLocalService;
 
 }

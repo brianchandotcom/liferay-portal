@@ -601,9 +601,11 @@ public class JspServlet extends HttpServlet {
 
 			String fragmentHost = headers.get("Fragment-Host");
 
-			if (fragmentHost != null) {
-				fragmentHost = fragmentHost.split(";")[0];
+			if (fragmentHost == null) {
+				return null;
 			}
+
+			fragmentHost = fragmentHost.split(";")[0];
 
 			if (_bundle.getSymbolicName().equals(fragmentHost)) {
 				Enumeration<URL> jsps = bundle.findEntries(

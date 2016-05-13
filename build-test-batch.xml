@@ -947,6 +947,10 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-legacy-database-dump database.type="db2" />
 	</target>
 
+	<target name="legacy-functional-bundle-tomcat-mariadb100-jdk7">
+		<run-legacy-database-dump database.type="mariadb" />
+	</target>
+
 	<target name="legacy-functional-bundle-tomcat-mysql55-jdk7">
 		<run-legacy-database-dump database.type="mysql" database.version="5.5" />
 	</target>

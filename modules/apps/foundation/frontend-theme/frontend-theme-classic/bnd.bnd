@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Frontend Theme Classic
+Bundle-SymbolicName: com.liferay.frontend.theme.classic
+Bundle-Version: 2.0.3
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Themes
+Web-ContextPath: /frontend-theme-classic
+-donotcopy: (.*_diffs.*|\.npmignore|npm-debug\.log|package\.json)

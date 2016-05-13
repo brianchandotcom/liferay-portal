@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Frontend Theme Admin
+Bundle-SymbolicName: com.liferay.frontend.theme.admin
+Bundle-Version: 1.0.4
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Themes
+Web-ContextPath: /frontend-theme-admin
+-donotcopy: (.*_diffs.*)

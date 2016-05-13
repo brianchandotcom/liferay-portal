@@ -1382,32 +1382,59 @@
 		</execute>
 
 		<execute macro="Page#viewPageLayoutColumn">
-			<var name="pageColumnLayout" value="PAGE_COLUMN_1" />
+			<var name="columnName" value="1 Column" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Home" />
+			<var name="siteName" value="Community Site Name" />
 		</execute>
 
 		<execute macro="Staging#undoStagingPageVersioningPG" />
 
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Home" />
+		</execute>
+
 		<execute macro="Page#viewPageLayoutColumn">
-			<var name="pageColumnLayout" value="PAGE_COLUMN_2" />
+			<var name="columnName" value="2 Columns" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Home" />
+			<var name="siteName" value="Community Site Name" />
 		</execute>
 
 		<execute macro="Staging#redoStagingPageVersioningPG" />
 
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Home" />
+		</execute>
+
 		<execute macro="Page#viewPageLayoutColumn">
-			<var name="pageColumnLayout" value="PAGE_COLUMN_1" />
+			<var name="columnName" value="1 Column" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Home" />
+			<var name="siteName" value="Community Site Name" />
 		</execute>
 
 		<execute macro="Staging#gotoPublishToLive" />
 
 		<execute macro="Staging#publishToLive" />
 
-		<execute macro="Navigator#gotoSitePage">
+		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="Home" />
+		</execute>
+
 		<execute macro="Page#viewPageLayoutColumn">
-			<var name="pageColumnLayout" value="PAGE_COLUMN_1" />
+			<var name="columnName" value="1 Column" />
 		</execute>
 	</command>
 

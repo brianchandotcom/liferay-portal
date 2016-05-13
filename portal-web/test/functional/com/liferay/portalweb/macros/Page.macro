@@ -727,7 +727,9 @@
 	</command>
 
 	<command name="viewPageLayoutColumn">
-		<execute function="AssertElementPresent" locator1="Home#${pageColumnLayout}" />
+		<var name="key_columnName" value="${columnName}" />
+
+		<execute function="AssertElementPresent" locator1="SitePagesEditPage#LAYOUT_CARD" />
 	</command>
 
 	<command name="viewPageLocalization">

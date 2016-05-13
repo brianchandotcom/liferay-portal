@@ -14,9 +14,9 @@
 
 package com.liferay.frontend.image.editor.integration.document.library.display.context;
 
-import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplayContext;
-import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.frontend.image.editor.integration.document.library.display.context.logic.ImageEditorDLDisplayContextHelper;
+import com.liferay.image.gallery.display.kernel.display.context.BaseIGViewFileVersionDisplayContext;
+import com.liferay.image.gallery.display.kernel.display.context.IGViewFileVersionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
-import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -39,15 +38,15 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Ambrin Chaudhary
  */
-public class ImageEditorDLViewFileVersionDisplayContext
-	extends BaseDLViewFileVersionDisplayContext {
+public class ImageEditorIGViewFileVersionDisplayContext
+	extends BaseIGViewFileVersionDisplayContext {
 
-	public ImageEditorDLViewFileVersionDisplayContext(
-		DLViewFileVersionDisplayContext parentDLDisplayContext,
+	public ImageEditorIGViewFileVersionDisplayContext(
+		IGViewFileVersionDisplayContext parentIGDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
 		FileVersion fileVersion, ResourceBundleLoader resourceBundleLoader) {
 
-		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
+		super(_UUID, parentIGDisplayContext, request, response, fileVersion);
 
 		_resourceBundleLoader = resourceBundleLoader;
 
@@ -68,7 +67,7 @@ public class ImageEditorDLViewFileVersionDisplayContext
 		}
 		catch (PortalException pe) {
 			throw new SystemException(
-				"Unable to create image editor document library view file " +
+				"Unable to create image editor image gallery view file " +
 					"version display context for file version " + fileVersion,
 				pe);
 		}
@@ -78,11 +77,11 @@ public class ImageEditorDLViewFileVersionDisplayContext
 	public Menu getMenu() throws PortalException {
 		Menu menu = super.getMenu();
 
-		List<MenuItem> menuItems = menu.getMenuItems();
-
 		if (!_imageEditorDLDisplayContextHelper.isShowImageEditorAction()) {
 			return menu;
 		}
+
+		List<MenuItem> menuItems = menu.getMenuItems();
 
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(
@@ -98,30 +97,8 @@ public class ImageEditorDLViewFileVersionDisplayContext
 		return menu;
 	}
 
-	@Override
-	public List<ToolbarItem> getToolbarItems() throws PortalException {
-		List<ToolbarItem> toolbarItems = super.getToolbarItems();
-
-		if (!_imageEditorDLDisplayContextHelper.isShowImageEditorAction()) {
-			return toolbarItems;
-		}
-
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(
-				LanguageUtil.getLanguageId(_themeDisplay.getLocale()));
-
-		ImageEditorDLDisplayContextHelper imageEditorDLDisplayContextHelper =
-			new ImageEditorDLDisplayContextHelper(fileVersion, request);
-
-		toolbarItems.add(
-			imageEditorDLDisplayContextHelper.
-				getJavacriptEditWithImageEditorToolbarItem(resourceBundle));
-
-		return toolbarItems;
-	}
-
 	private static final UUID _UUID = UUID.fromString(
-		"ec0c6ec4-8671-4c9e-94a3-8c6bcca0437c");
+		"1cc61284-8baf-4904-8a65-b7b3845e64d7");
 
 	private final FileEntry _fileEntry;
 	private final ImageEditorDLDisplayContextHelper

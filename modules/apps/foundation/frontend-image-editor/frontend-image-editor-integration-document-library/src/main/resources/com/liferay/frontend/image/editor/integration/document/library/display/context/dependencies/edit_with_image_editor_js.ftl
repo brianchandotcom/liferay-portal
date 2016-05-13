@@ -9,9 +9,9 @@ function ${namespace}editWithImageEditor(
 			},
 			id: 'dlImageEditor',
 			stack: false,
-			title: 'Edit ' + fileEntryFilename,
+			title: '${editLanguageKey} ' + fileEntryFilename,
 			uri: editItemURL,
-			URLParams: {
+			urlParams: {
 				entityURL: fileEntrySrc,
 				saveParamName: 'imageEditorFileName',
 				saveURL: uploadItemURL

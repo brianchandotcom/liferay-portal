@@ -23,12 +23,10 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfig
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -109,12 +107,7 @@ public class EditWithImageEditorPortletConfigurationIcon
 				imageEditorDLDisplayContextHelper =
 					new ImageEditorDLDisplayContextHelper(fileVersion, request);
 
-			if (imageEditorDLDisplayContextHelper.
-					isEditWithImageEditorActionAvailable() &&
-				ArrayUtil.contains(
-					PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
-					fileVersion.getMimeType())) {
-
+			if (imageEditorDLDisplayContextHelper.isShowImageEditorAction()) {
 				return true;
 			}
 

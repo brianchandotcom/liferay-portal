@@ -522,19 +522,21 @@ AUI.add(
 
 						var labelNode = instance.getLabelNode();
 
-						var tipNode = labelNode.one('.taglib-icon-help');
+						if (labelNode) {
+							var tipNode = labelNode.one('.taglib-icon-help');
 
-						if (Lang.isValue(label) && Lang.isNode(labelNode)) {
-							labelNode.html(A.Escape.html(label));
+							if (Lang.isValue(label) && Lang.isNode(labelNode)) {
+								labelNode.html(A.Escape.html(label));
+							}
+
+							var fieldDefinition = instance.getFieldDefinition();
+
+							if (fieldDefinition.required) {
+								labelNode.append(TPL_REQUIRED_MARK);
+							}
+
+							instance._addTip(labelNode, tipNode);
 						}
-
-						var fieldDefinition = instance.getFieldDefinition();
-
-						if (fieldDefinition.required) {
-							labelNode.append(TPL_REQUIRED_MARK);
-						}
-
-						instance._addTip(labelNode, tipNode);
 					},
 
 					setValue: function(value) {

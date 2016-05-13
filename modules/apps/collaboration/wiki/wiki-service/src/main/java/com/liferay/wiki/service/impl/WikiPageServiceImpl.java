@@ -424,7 +424,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		throws PortalException {
 
 		WikiPagePermissionChecker.check(
-			getPermissionChecker(), nodeId, title, ActionKeys.VIEW);
+			getPermissionChecker(), nodeId, title, version, ActionKeys.VIEW);
 
 		return wikiPageLocalService.getPage(nodeId, title, version);
 	}

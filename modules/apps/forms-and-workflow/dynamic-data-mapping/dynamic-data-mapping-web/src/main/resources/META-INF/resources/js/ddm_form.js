@@ -333,12 +333,6 @@ AUI.add(
 						);
 					},
 
-					destructor: function() {
-						var instance = this;
-
-						instance.get('container').remove();
-					},
-
 					renderUI: function() {
 						var instance = this;
 
@@ -358,6 +352,12 @@ AUI.add(
 								field: instance
 							}
 						);
+					},
+
+					destructor: function() {
+						var instance = this;
+
+						instance.get('container').remove();
 					},
 
 					createField: function(fieldTemplate) {
@@ -2144,14 +2144,14 @@ AUI.add(
 
 						instance.eventHandlers = null;
 
-						 A.each(
-						 	instance.repeatableInstances,
-						 	function(item) {
-						 		item.destroy();
-						 	}
-						 );
+						A.each(
+							instance.repeatableInstances,
+							function(item) {
+								item.destroy();
+							}
+						);
 
-						 instance.repeatableInstances = null;
+						instance.repeatableInstances = null;
 					},
 
 					moveField: function(parentField, oldIndex, newIndex) {

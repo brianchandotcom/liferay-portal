@@ -34,14 +34,14 @@ repositories {
 	mavenLocal()
 
 	maven {
-		url System.properties["repository.url"] ?: "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		url System.properties["repository.url"] ?: "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
 	}
 }
 
 wrapper {
 	File wrapperDir = projectDir.parentFile
 
-	distributionUrl = "../../tools/gradle-${gradle.gradleVersion}.LIFERAY-PATCHED-3-bin.zip"
+	distributionUrl = "../../tools/gradle-${gradle.gradleVersion}.LIFERAY-PATCHED-4-bin.zip"
 
 	doLast {
 		ant.replace(file: new File(wrapperDir, "gradlew")) {

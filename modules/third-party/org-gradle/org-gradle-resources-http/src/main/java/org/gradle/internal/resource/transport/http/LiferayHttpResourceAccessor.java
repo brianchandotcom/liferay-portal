@@ -370,7 +370,9 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 
 	private static final String[] _REPOSITORY_URLS = {
 		"http://cdn.repository.liferay.com/nexus/content/groups/public/",
-		"http://repository.liferay.com/nexus/content/groups/public/"
+		"http://repository.liferay.com/nexus/content/groups/public/",
+		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/" +
+			"public/"
 	};
 
 	private static final Logger _logger = LoggerFactory.getLogger(

@@ -10,7 +10,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.service", version: "2.0.0"
 	compile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.web", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.journal.api", version: "2.0.0"
-	compile group: "com.liferay", name: "com.liferay.journal.service", version: "2.0.0"
+	compile project(":apps:web-experience:journal:journal-service")
 	compile group: "com.liferay", name: "com.liferay.login.web", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.message.boards.api", version: "3.0.0"
 	compile group: "com.liferay", name: "com.liferay.message.boards.web", version: "1.0.0"

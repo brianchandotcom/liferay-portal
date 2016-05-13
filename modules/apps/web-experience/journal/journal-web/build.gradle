@@ -10,7 +10,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.item.selector.criteria.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.journal.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.journal.lang", version: "2.0.0"
-	provided group: "com.liferay", name: "com.liferay.journal.service", version: "2.0.0"
+	provided project(":apps:web-experience:journal:journal-service")
 	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"

@@ -59,7 +59,6 @@ public class LayoutsPrototypeTreeDisplayContext
 		editLayoutURL.setParameter("privateLayout", Boolean.TRUE.toString());
 		editLayoutURL.setParameter(
 			"backURL", PortalUtil.getCurrentURL(liferayPortletRequest));
-		editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 
 		return editLayoutURL.toString();
 	}

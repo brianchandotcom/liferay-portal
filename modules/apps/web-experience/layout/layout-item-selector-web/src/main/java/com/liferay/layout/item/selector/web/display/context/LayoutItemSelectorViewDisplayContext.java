@@ -67,7 +67,6 @@ public class LayoutItemSelectorViewDisplayContext {
 		editLayoutURL.setParameter("redirect", themeDisplay.getURLCurrent());
 		editLayoutURL.setParameter(
 			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-		editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 
 		return editLayoutURL;
 	}

@@ -18,7 +18,7 @@ AUI.add(
 					},
 
 					width: {
-						value: '900px'
+						validator: Lang.isString
 					}
 				},
 

@@ -34,9 +34,18 @@ import java.lang.reflect.Proxy;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -66,12 +75,14 @@ import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionListener;
 import javax.servlet.jsp.JspFactory;
 
+import org.apache.felix.utils.log.Logger;
 import org.apache.jasper.runtime.JspFactoryImpl;
 import org.apache.jasper.runtime.TagHandlerPool;
 import org.apache.jasper.xmlparser.ParserUtils;
 import org.apache.jasper.xmlparser.TreeNode;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleReference;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
@@ -79,6 +90,8 @@ import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
+import org.osgi.util.tracker.BundleTracker;
+import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Raymond Augé
@@ -160,6 +173,8 @@ public class JspServlet extends HttpServlet {
 		}
 
 		_serviceRegistrations.clear();
+
+		_bundleTracker.close();
 	}
 
 	@Override
@@ -244,6 +259,8 @@ public class JspServlet extends HttpServlet {
 
 		bundles.add(_jspBundle);
 
+		_logger = new Logger(_bundle.getBundleContext());
+
 		collectTaglibProviderBundles(bundles);
 
 		_allParticipatingBundles = bundles.toArray(new Bundle[bundles.size()]);
@@ -272,7 +289,7 @@ public class JspServlet extends HttpServlet {
 		sb.append(StringPool.DASH);
 		sb.append(_bundle.getVersion());
 
-		defaults.put("scratchdir", sb.toString());
+		defaults.put(_SCRATCH_DIR, sb.toString());
 
 		defaults.put(
 			TagHandlerPool.OPTION_TAGPOOL, JspTagHandlerPool.class.getName());
@@ -321,6 +338,12 @@ public class JspServlet extends HttpServlet {
 							servletContext, _bundle));
 
 			});
+
+		_bundleTracker = new BundleTracker<>(
+			_bundle.getBundleContext(), Bundle.RESOLVED,
+			new JSPFragmentTrackerCustomizer());
+
+		_bundleTracker.open();
 	}
 
 	@Override
@@ -497,12 +520,33 @@ public class JspServlet extends HttpServlet {
 		return Collections.unmodifiableMap(methods);
 	}
 
+	private void _deleteOutDatedJspFiles(String dir, List<Path> paths) {
+		FileSystem fileSystem = FileSystems.getDefault();
+
+		Path dirPath = fileSystem.getPath(dir);
+
+		if (Files.exists(dirPath) && (paths.size() > 0)) {
+			try {
+				Files.walkFileTree(dirPath, new DeleteFileVisitor(paths));
+			}
+			catch (IOException ioe) {
+				_logger.log(
+					Logger.LOG_WARNING, "Can't delete outdated files " + paths);
+			}
+		}
+	}
+
 	private static final String _ANALYZED_TLDS =
 		JspServlet.class.getName().concat("#ANALYZED_TLDS");
 
 	private static final Class<?>[] _INTERFACES = {
 		JspServletContext.class, ServletContext.class
 	};
+
+	private static final String _RESOURCES_DIR =
+		File.separator + "META-INF" + File.separator + "resources";
+
+	private static final String _SCRATCH_DIR = "scratchdir";
 
 	private static final String _WORK_DIR =
 		PropsUtil.get(PropsKeys.LIFERAY_HOME) + File.separator + "work" +
@@ -520,11 +564,110 @@ public class JspServlet extends HttpServlet {
 
 	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;
+	private BundleTracker<List<Path>> _bundleTracker;
 	private JspBundleClassloader _jspBundleClassloader;
 	private final HttpServlet _jspServlet =
 		new org.apache.jasper.servlet.JspServlet();
+	private Logger _logger;
 	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new CopyOnWriteArrayList<>();
+
+	private class DeleteFileVisitor extends SimpleFileVisitor<Path> {
+
+		public DeleteFileVisitor(List<Path> paths) {
+			_paths = paths;
+		}
+
+		@Override
+		public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+			throws IOException {
+
+			if (_paths.contains(file.toAbsolutePath())) {
+				Files.delete(file);
+			}
+
+			return FileVisitResult.CONTINUE;
+		}
+
+		private final List<Path> _paths;
+
+	}
+
+	private class JSPFragmentTrackerCustomizer
+		implements BundleTrackerCustomizer<List<Path>> {
+
+		@Override
+		public List<Path> addingBundle(Bundle bundle, BundleEvent bundleEvent) {
+			List<Path> paths = new ArrayList<>();
+
+			Dictionary<String, String> headers = bundle.getHeaders();
+
+			String fragmentHost = headers.get("Fragment-Host");
+
+			if (fragmentHost == null) {
+				return null;
+			}
+
+			String[] fragmentHostParts = fragmentHost.split(";");
+
+			fragmentHost = fragmentHostParts[0];
+
+			String symbolicName = _bundle.getSymbolicName();
+
+			if (!symbolicName.equals(fragmentHost)) {
+				return null;
+			}
+
+			Enumeration<URL> jsps = bundle.findEntries(
+				_RESOURCES_DIR, "*.jsp", true);
+
+			if (jsps != null) {
+				String scratchdir = _jspServlet.getInitParameter(_SCRATCH_DIR);
+
+				while (jsps.hasMoreElements()) {
+					URL url = jsps.nextElement();
+
+					String urlPath = url.getPath();
+
+					String[] urlPathParts = urlPath.split(_RESOURCES_DIR);
+
+					String jspPath = urlPathParts[1];
+
+					StringBuilder sb = new StringBuilder(4);
+
+					sb.append(scratchdir);
+					sb.append("/org/apache/jsp");
+					sb.append(
+						jspPath.replace(
+							StringPool.PERIOD, StringPool.UNDERLINE));
+					sb.append(".class");
+
+					FileSystem fileSystem = FileSystems.getDefault();
+
+					paths.add(fileSystem.getPath(sb.toString()));
+				}
+
+				_deleteOutDatedJspFiles(scratchdir, paths);
+			}
+
+			return paths;
+		}
+
+		@Override
+		public void modifiedBundle(
+			Bundle bundle, BundleEvent bundleEvent, List<Path> paths) {
+		}
+
+		@Override
+		public void removedBundle(
+			Bundle bundle, BundleEvent bundleEvent, final List<Path> paths) {
+
+			String scratchdir = _jspServlet.getInitParameter(_SCRATCH_DIR);
+
+			_deleteOutDatedJspFiles(scratchdir, paths);
+		}
+
+	}
 
 	private class JspServletContextInvocationHandler
 		implements InvocationHandler, JspServletContext {
@@ -595,11 +738,11 @@ public class JspServlet extends HttpServlet {
 			if (matcher.matches()) {
 				path = matcher.group("file") + matcher.group("extension");
 
-				return _bundle.getEntry("META-INF/resources" + path);
+				return _bundle.getEntry(_RESOURCES_DIR + path);
 			}
 
 			Enumeration<URL> enumeration = _bundle.findEntries(
-				"META-INF/resources", path.substring(1), false);
+				_RESOURCES_DIR, path.substring(1), false);
 
 			if (enumeration == null) {
 				return null;
@@ -640,7 +783,7 @@ public class JspServlet extends HttpServlet {
 
 				if (!path.startsWith("/META-INF/")) {
 					url = _servletContext.getResource(
-						"/META-INF/resources".concat(path));
+						_RESOURCES_DIR.concat(path));
 				}
 
 				if (url != null) {

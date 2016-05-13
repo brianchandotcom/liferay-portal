@@ -16,26 +16,25 @@
 {template .checkbox autoescape="deprecated-contextual"}
 	<div class="form-group form-inline liferay-ddm-form-field-checkbox" data-fieldname="{$name}">
 		{if $showAsSwitcher}
-			<div class="checkbox">
-				<label class="control-label" for="{$name}">
-					<input class="hide toggle-switch" {if $readOnly}disabled{/if} id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />
+			<label aria-checked="{($status) ? true : false}" for="{$name}" role="checkbox">
+				<input class="toggle-switch" {if $readOnly}disabled{/if} id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />
 
-					<span aria-hidden="true" class="toggle-switch-bar">
-						<span class="toggle-switch-handle"></span>
-					</span>
-					<span class="toggle-switch-text toggle-switch-text-right">
-						{$label}
+				<span aria-hidden="true" class="toggle-switch-bar">
+					<span class="toggle-switch-handle"></span>
+				</span>
 
-						{if $required}
-							<span class="icon-asterisk text-warning"></span>
-						{/if}
-					</span>
-				</label>
+				<span class="toggle-switch-text toggle-switch-text-right">
+					{$label}
 
-				{if $tip}
-					<p class="liferay-ddm-form-field-tip">{$tip}</p>
-				{/if}
-			</div>
+					{if $required}
+						<span class="icon-asterisk text-warning"></span>
+					{/if}
+				</span>
+			</label>
+
+			{if $tip}
+				<p class="liferay-ddm-form-field-tip">{$tip}</p>
+			{/if}
 		{else}
 			<div class="checkbox checkbox-default">
 				{if $showLabel}

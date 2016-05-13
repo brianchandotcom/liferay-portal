@@ -1007,6 +1007,14 @@ $horizontal-spacing: 35px;
 		font-size: 11px;
 	}
 
+	input.toggle-switch {
+		display: none;
+
+		&:disabled ~ .toggle-switch-bar {
+			opacity: 1;
+		}
+	}
+
 	.layout-builder-remove-row-button {
 		background: #FFF;
 		border: 1px solid #65B6F0;
@@ -1063,10 +1071,6 @@ $horizontal-spacing: 35px;
 
 	.liferay-ddm-form-renderer-wizard-navigation-allowed > li {
 		cursor: pointer;
-	}
-
-	.toggle-switch {
-		display: none;
 	}
 }
 

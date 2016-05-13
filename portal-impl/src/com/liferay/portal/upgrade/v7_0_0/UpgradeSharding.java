@@ -63,15 +63,15 @@ public class UpgradeSharding extends UpgradeProcess {
 			sourceConnection, targetConnection, CompanyTable.TABLE_NAME,
 			CompanyTable.TABLE_COLUMNS, CompanyTable.TABLE_SQL_CREATE);
 
-		runSQL(
-			sourceConnection,
-			"delete from Company where companyId in (" + companyIdsString +
-				")");
-
 		List<Long> companyIds = getCompanyIds(shardName);
 
 		String companyIdsString = ListUtil.toString(
 			companyIds, StringPool.NULL, StringPool.COMMA);
+
+		runSQL(
+			sourceConnection,
+			"delete from Company where companyId in (" + companyIdsString +
+				")");
 
 		runSQL(
 			targetConnection,

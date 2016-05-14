@@ -49,6 +49,7 @@ import org.osgi.service.component.annotations.Modified;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Application Display Templates",
 		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.always-send-redirect=true",
 		"javax.portlet.init-param.refererWebDAVToken=application_display_template",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view_template.jsp",

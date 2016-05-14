@@ -67,7 +67,7 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	@Override
 	public ColorScheme getColorScheme() {
 		return ThemeLocalServiceUtil.getColorScheme(
-			getCompanyId(), getTheme().getThemeId(), getColorSchemeId());
+			getCompanyId(), getThemeId(), getColorSchemeId());
 	}
 
 	@Override

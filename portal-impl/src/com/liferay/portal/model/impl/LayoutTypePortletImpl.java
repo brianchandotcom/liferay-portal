@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.ResourcePermission;
-import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -1619,25 +1618,18 @@ public class LayoutTypePortletImpl
 	}
 
 	protected String getThemeId() {
-		String themeId = null;
-
 		try {
 			Layout layout = getLayout();
 
-			Theme theme = layout.getTheme();
+			LayoutSet layoutSet = layout.getLayoutSet();
 
-			if (theme != null) {
-				themeId = theme.getThemeId();
-			}
-			else {
-				themeId = layout.getThemeId();
-			}
+			return layoutSet.getThemeId();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
 
-		return themeId;
+		return null;
 	}
 
 	protected String getUserPreference(String key) {

@@ -30,12 +30,6 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 .image-editor {
 	background-color: $imageeditor-bg;
 
-	.image-editor-ready {
-		.image-preview, .lfr-image-editor-tools-container, .lfr-image-editor-history-container {
-			opacity: 1;
-		}
-	}
-
 	ul, ol {
 		margin: 0;
 	}

@@ -55,6 +55,7 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -2845,7 +2846,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		new HashMap<>();
 	private Map<String, String> _compatClassNamesMap;
 	private String _copyright;
-	private Map<String, List<String>> _errorMessagesMap = new HashMap<>();
+	private Map<String, List<String>> _errorMessagesMap =
+		new ConcurrentHashMap<>();
 	private String[] _excludes;
 	private SourceMismatchException _firstSourceMismatchException;
 	private Set<String> _immutableFieldTypes;

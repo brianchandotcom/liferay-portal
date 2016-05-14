@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.kaleo.runtime.util;
 
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.workflow.kaleo.runtime.messaging.DestinationNames;
+import com.liferay.portal.workflow.kaleo.runtime.constants.KaleoRuntimeDestinationNames;
 
 /**
  * @author Michael C. Han
@@ -23,7 +23,7 @@ import com.liferay.portal.workflow.kaleo.runtime.messaging.DestinationNames;
 public class SchedulerUtil {
 
 	public static final String getGroupName(long kaleoTimerInstanceTokenId) {
-		String groupName = DestinationNames.WORKFLOW_TIMER.concat(
+		String groupName = KaleoRuntimeDestinationNames.WORKFLOW_TIMER.concat(
 			StringPool.SLASH).concat(String.valueOf(kaleoTimerInstanceTokenId));
 
 		return groupName;

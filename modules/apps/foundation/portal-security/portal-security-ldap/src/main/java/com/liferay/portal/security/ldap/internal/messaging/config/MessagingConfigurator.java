@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.security.ldap.internal.messaging.DestinationNames;
+import com.liferay.portal.security.ldap.internal.constants.LDAPDestinationNames;
 
 import java.util.Dictionary;
 
@@ -42,7 +42,7 @@ public class MessagingConfigurator {
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-				DestinationNames.SCHEDULED_USER_LDAP_IMPORT);
+				LDAPDestinationNames.SCHEDULED_USER_LDAP_IMPORT);
 
 		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);

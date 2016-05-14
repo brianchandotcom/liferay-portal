@@ -4,7 +4,6 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.push.notifications.constants,\
 	com.liferay.push.notifications.exception,\
-	com.liferay.push.notifications.messaging,\
 	com.liferay.push.notifications.model,\
 	com.liferay.push.notifications.sender,\
 	com.liferay.push.notifications.service,\

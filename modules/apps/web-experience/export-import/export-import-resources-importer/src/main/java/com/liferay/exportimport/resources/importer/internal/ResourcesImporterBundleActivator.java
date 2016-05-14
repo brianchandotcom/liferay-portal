@@ -14,7 +14,7 @@
 
 package com.liferay.exportimport.resources.importer.internal;
 
-import com.liferay.exportimport.resources.importer.messaging.DestinationNames;
+import com.liferay.exportimport.resources.importer.constants.ResourcesImporterDestinationNames;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
@@ -44,7 +44,7 @@ public class ResourcesImporterBundleActivator implements BundleActivator {
 			DestinationConfiguration destinationConfiguration =
 				new DestinationConfiguration(
 					DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-					DestinationNames.RESOURCES_IMPORTER);
+					ResourcesImporterDestinationNames.RESOURCES_IMPORTER);
 
 			Destination destination = destinationFactory.createDestination(
 				destinationConfiguration);

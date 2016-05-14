@@ -12,17 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.reports.engine.messaging;
+package com.liferay.portal.configuration.cluster.constants;
 
 /**
  * @author Michael C. Han
  */
-public class DestinationNames {
+public class ConfigurationClusterDestinationNames {
 
-	public static final String REPORT_COMPILER = "liferay/report_compiler";
-
-	public static final String REPORT_REQUEST = "liferay/report_request";
-
-	public static final String REPORT_RESULT = "liferay/report_result";
+	public static final String CONFIGURATION = "liferay/configuration";
 
 }

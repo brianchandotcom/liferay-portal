@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
+import com.liferay.portal.workflow.kaleo.runtime.constants.KaleoRuntimeDestinationNames;
 import com.liferay.portal.workflow.kaleo.runtime.graph.GraphWalker;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
-import com.liferay.portal.workflow.kaleo.runtime.messaging.DestinationNames;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"destination.name=" + DestinationNames.KALEO_GRAPH_WALKER},
+	property = {"destination.name=" + KaleoRuntimeDestinationNames.KALEO_GRAPH_WALKER},
 	service = MessageListener.class
 )
 public class PathElementMessageListener extends BaseMessageListener {
@@ -45,7 +45,7 @@ public class PathElementMessageListener extends BaseMessageListener {
 		_singleDestinationMessageSender =
 			_singleDestinationMessageSenderFactory.
 				createSingleDestinationMessageSender(
-					DestinationNames.KALEO_GRAPH_WALKER);
+					KaleoRuntimeDestinationNames.KALEO_GRAPH_WALKER);
 	}
 
 	@Override

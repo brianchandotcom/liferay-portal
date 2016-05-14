@@ -34,8 +34,8 @@ import com.liferay.portal.kernel.workflow.WorkflowLogManager;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.kernel.workflow.messaging.DefaultWorkflowDestinationEventListener;
+import com.liferay.portal.workflow.kaleo.runtime.constants.KaleoRuntimeDestinationNames;
 import com.liferay.portal.workflow.kaleo.runtime.internal.timer.messaging.TimerMessageListener;
-import com.liferay.portal.workflow.kaleo.runtime.messaging.DestinationNames;
 
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -103,7 +103,7 @@ public class KaleoWorkflowMessagingConfigurator {
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
-				DestinationNames.KALEO_GRAPH_WALKER);
+				KaleoRuntimeDestinationNames.KALEO_GRAPH_WALKER);
 
 		destinationConfiguration.setMaximumQueueSize(_MAXIMUM_QUEUE_SIZE);
 
@@ -158,7 +158,8 @@ public class KaleoWorkflowMessagingConfigurator {
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put("destination.name", DestinationNames.WORKFLOW_TIMER);
+		properties.put(
+			"destination.name", KaleoRuntimeDestinationNames.WORKFLOW_TIMER);
 
 		_schedulerEventMessageListenerServiceRegistration =
 			_bundleContext.registerService(
@@ -170,7 +171,7 @@ public class KaleoWorkflowMessagingConfigurator {
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
-				DestinationNames.WORKFLOW_DEFINITION_LINK);
+				KaleoRuntimeDestinationNames.WORKFLOW_DEFINITION_LINK);
 
 		registerDestination(destinationConfiguration);
 	}
@@ -248,7 +249,7 @@ public class KaleoWorkflowMessagingConfigurator {
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
-				DestinationNames.WORKFLOW_TIMER);
+				KaleoRuntimeDestinationNames.WORKFLOW_TIMER);
 
 		destinationConfiguration.setMaximumQueueSize(_MAXIMUM_QUEUE_SIZE);
 

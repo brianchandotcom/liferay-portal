@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.push.notifications.constants.PushNotificationsDestinationNames;
 import com.liferay.push.notifications.service.PushNotificationsDeviceLocalService;
 
 import java.util.Dictionary;
@@ -49,7 +50,7 @@ public class PushNotificationMessagingConfigurator {
 		DestinationConfiguration pushNotificationDestinationConfiguration =
 			new DestinationConfiguration(
 				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-				DestinationNames.PUSH_NOTIFICATION);
+				PushNotificationsDestinationNames.PUSH_NOTIFICATION);
 
 		Destination pushNotificationDestination = registerDestination(
 			pushNotificationDestinationConfiguration);
@@ -64,7 +65,8 @@ public class PushNotificationMessagingConfigurator {
 			pushNotificationResponseDestinationConfiguration =
 				new DestinationConfiguration(
 					DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-					DestinationNames.PUSH_NOTIFICATION_RESPONSE);
+					PushNotificationsDestinationNames.
+						PUSH_NOTIFICATION_RESPONSE);
 
 		Destination pushNotificationResponseDestination = registerDestination(
 			pushNotificationResponseDestinationConfiguration);

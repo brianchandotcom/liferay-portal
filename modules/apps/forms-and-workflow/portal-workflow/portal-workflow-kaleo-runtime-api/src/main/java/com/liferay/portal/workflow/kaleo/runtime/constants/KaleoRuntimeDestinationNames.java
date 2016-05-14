@@ -12,16 +12,19 @@
  * details.
  */
 
-package com.liferay.push.notifications.messaging;
+package com.liferay.portal.workflow.kaleo.runtime.constants;
 
 /**
- * @author Bruno Farache
+ * @author Michael C. Han
  */
-public class DestinationNames {
+public class KaleoRuntimeDestinationNames {
 
-	public static final String PUSH_NOTIFICATION = "liferay/push_notification";
+	public static final String KALEO_GRAPH_WALKER =
+		"liferay/kaleo_graph_walker";
 
-	public static final String PUSH_NOTIFICATION_RESPONSE =
-		"liferay/push_notification_response";
+	public static final String WORKFLOW_DEFINITION_LINK =
+		"destination.workflow_definition_link";
+
+	public static final String WORKFLOW_TIMER = "destination.workflow_timer";
 
 }

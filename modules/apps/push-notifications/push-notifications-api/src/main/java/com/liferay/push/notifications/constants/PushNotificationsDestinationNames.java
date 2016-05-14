@@ -12,14 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.security.ldap.internal.messaging;
+package com.liferay.push.notifications.constants;
 
 /**
- * @author Michael C. Han
+ * @author Bruno Farache
  */
-public class DestinationNames {
+public class PushNotificationsDestinationNames {
 
-	public static final String SCHEDULED_USER_LDAP_IMPORT =
-		"liferay/scheduled_user_ldap_import";
+	public static final String PUSH_NOTIFICATION = "liferay/push_notification";
+
+	public static final String PUSH_NOTIFICATION_RESPONSE =
+		"liferay/push_notification_response";
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.configuration.cluster.internal;
 
-import com.liferay.portal.configuration.cluster.messaging.DestinationNames;
+import com.liferay.portal.configuration.cluster.constants.ConfigurationClusterDestinationNames;
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.Priority;
 import com.liferay.portal.kernel.messaging.Destination;
@@ -42,7 +42,8 @@ public class ConfigurationSynchronousConfigurationListener
 
 		Message message = new Message();
 
-		message.setDestinationName(DestinationNames.CONFIGURATION);
+		message.setDestinationName(
+			ConfigurationClusterDestinationNames.CONFIGURATION);
 
 		String factoryPid = configurationEvent.getFactoryPid();
 
@@ -64,7 +65,7 @@ public class ConfigurationSynchronousConfigurationListener
 	}
 
 	@Reference(
-		target = "(destination.name=" + DestinationNames.CONFIGURATION + ")",
+		target = "(destination.name=" + ConfigurationClusterDestinationNames.CONFIGURATION + ")",
 		unbind = "-"
 	)
 	protected void setDestination(Destination destination) {

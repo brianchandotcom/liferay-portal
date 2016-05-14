@@ -15,7 +15,7 @@
 package com.liferay.push.notifications.sender.apple.internal;
 
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.push.notifications.messaging.DestinationNames;
+import com.liferay.push.notifications.constants.PushNotificationsDestinationNames;
 
 import com.notnoop.apns.ApnsDelegate;
 import com.notnoop.apns.ApnsNotification;
@@ -53,7 +53,8 @@ public class AppleDelegate implements ApnsDelegate {
 
 	protected void sendResponse(AppleResponse appleResponse) {
 		MessageBusUtil.sendMessage(
-			DestinationNames.PUSH_NOTIFICATION_RESPONSE, appleResponse);
+			PushNotificationsDestinationNames.PUSH_NOTIFICATION_RESPONSE,
+			appleResponse);
 	}
 
 }

@@ -17,8 +17,8 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.manager.messaging;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.workflow.kaleo.runtime.constants.KaleoRuntimeDestinationNames;
 import com.liferay.portal.workflow.kaleo.runtime.manager.PortalKaleoManager;
-import com.liferay.portal.workflow.kaleo.runtime.messaging.DestinationNames;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"destination.name=" + DestinationNames.WORKFLOW_DEFINITION_LINK},
+	property = {"destination.name=" + KaleoRuntimeDestinationNames.WORKFLOW_DEFINITION_LINK},
 	service = MessageListener.class
 )
 public class KaleoAssetDeploymentMessageListener extends BaseMessageListener {

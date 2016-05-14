@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.push.notifications.constants.PushNotificationsConstants;
+import com.liferay.push.notifications.constants.PushNotificationsDestinationNames;
 import com.liferay.push.notifications.exception.PushNotificationsException;
-import com.liferay.push.notifications.messaging.DestinationNames;
 import com.liferay.push.notifications.sender.PushNotificationsSender;
 import com.liferay.push.notifications.sender.Response;
 import com.liferay.push.notifications.sender.sms.internal.configuration.SMSPushNotificationsSenderConfiguration;
@@ -91,7 +91,8 @@ public class SMSPushNotificationsSender implements PushNotificationsSender {
 				smsFactory.create(params), payloadJSONObject);
 
 			MessageBusUtil.sendMessage(
-				DestinationNames.PUSH_NOTIFICATION_RESPONSE, response);
+				PushNotificationsDestinationNames.PUSH_NOTIFICATION_RESPONSE,
+				response);
 		}
 	}
 

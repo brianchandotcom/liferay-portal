@@ -1,8 +1,9 @@
 Bundle-Name: Liferay Portal Reports Engine API
 Bundle-SymbolicName: com.liferay.portal.reports.engine.api
-Bundle-Version: 2.1.0
+Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.portal.reports.engine,\
+	com.liferay.portal.reports.engine.constants,\
 	com.liferay.portal.reports.engine.messaging,\
 	com.liferay.portal.reports.engine.servlet
 Liferay-Releng-Module-Group-Description:

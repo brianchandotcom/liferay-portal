@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.push.notifications.messaging.DestinationNames;
+import com.liferay.push.notifications.constants.PushNotificationsDestinationNames;
 import com.liferay.push.notifications.model.PushNotificationsDevice;
 import com.liferay.push.notifications.sender.BaseResponse;
 import com.liferay.push.notifications.sender.PushNotificationsSender;
@@ -160,7 +160,8 @@ public class PushNotificationsDeviceLocalServiceImpl
 		finally {
 			if (exception != null) {
 				MessageBusUtil.sendMessage(
-					DestinationNames.PUSH_NOTIFICATION_RESPONSE,
+					PushNotificationsDestinationNames.
+						PUSH_NOTIFICATION_RESPONSE,
 					new BaseResponse(platform, exception));
 			}
 		}

@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.exportimport.resources.importer.messaging;
+package com.liferay.portal.security.ldap.internal.constants;
 
 /**
- * @author Daniel Kocsis
+ * @author Michael C. Han
  */
-public interface DestinationNames {
+public class LDAPDestinationNames {
 
-	public static final String RESOURCES_IMPORTER =
-		"liferay/resources_importer";
+	public static final String SCHEDULED_USER_LDAP_IMPORT =
+		"liferay/scheduled_user_ldap_import";
 
 }

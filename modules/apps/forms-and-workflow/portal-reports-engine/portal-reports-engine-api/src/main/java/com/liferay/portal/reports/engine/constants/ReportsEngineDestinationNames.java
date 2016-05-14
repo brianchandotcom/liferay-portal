@@ -12,19 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.messaging;
+package com.liferay.portal.reports.engine.constants;
 
 /**
  * @author Michael C. Han
  */
-public class DestinationNames {
+public class ReportsEngineDestinationNames {
 
-	public static final String KALEO_GRAPH_WALKER =
-		"liferay/kaleo_graph_walker";
+	public static final String REPORT_COMPILER = "liferay/report_compiler";
 
-	public static final String WORKFLOW_DEFINITION_LINK =
-		"destination.workflow_definition_link";
+	public static final String REPORT_REQUEST = "liferay/report_request";
 
-	public static final String WORKFLOW_TIMER = "destination.workflow_timer";
+	public static final String REPORT_RESULT = "liferay/report_result";
 
 }

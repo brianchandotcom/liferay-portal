@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.security.ldap.exportimport.LDAPUserImporter;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
+import com.liferay.portal.security.ldap.internal.constants.LDAPDestinationNames;
 
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class UserImportMessageListener
 
 		_schedulerEngineHelper.register(
 			this, schedulerEntryImpl,
-			DestinationNames.SCHEDULED_USER_LDAP_IMPORT);
+			LDAPDestinationNames.SCHEDULED_USER_LDAP_IMPORT);
 	}
 
 	@Deactivate
@@ -94,7 +95,7 @@ public class UserImportMessageListener
 	}
 
 	@Reference(
-		target = "(destination.name=" + DestinationNames.SCHEDULED_USER_LDAP_IMPORT + ")",
+		target = "(destination.name=" + LDAPDestinationNames.SCHEDULED_USER_LDAP_IMPORT + ")",
 		unbind = "-"
 	)
 	protected void setDestination(Destination destination) {

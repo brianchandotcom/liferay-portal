@@ -583,14 +583,13 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
+		<execute macro="Navigator#gotoSpecificURLPage">
+			<var name="pageName" value="Site Page" />
+			<var name="url" value="http://localhost:8080/group/site-name/site-page" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Private Page" />
-			<var name="siteName" value="Site Name" />
-			<var name="sitePagePrivacy" value="Private" />
+		<execute macro="Page#view">
+			<var name="pageName" value="Site Page" />
 		</execute>
 	</command>
 

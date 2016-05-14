@@ -90,17 +90,17 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.soy", ['exports', 'metal-com
      * @suppress {checkTypes}
      */
     function $render(opt_data, opt_ignored, opt_ijData) {
-      ie_open('div', null, null, 'class', opt_data.imageEditorReady ? 'image-editor-ready' : '', 'id', opt_data.id);
+      ie_open('div', null, null, 'id', opt_data.id);
       ie_open('div', null, null, 'class', 'lfr-image-editor-image-container', 'id', opt_data.id + 'ImageContainer');
       ie_open('img', null, null, 'class', 'hide img-responsive', 'src', opt_data.image);
       ie_close('img');
-      ie_void('canvas', null, null, 'class', 'fade image-preview');
+      ie_void('canvas', null, null, 'class', 'fade ' + (opt_data.imageEditorReady ? 'in' : '') + ' image-preview');
       $templateAlias1(soy.$$augmentMap(opt_data, { key: 'loading' }), null, opt_ijData);
       ie_close('div');
-      ie_open('div', null, null, 'class', 'fade lfr-image-editor-tools-container');
+      ie_open('div', null, null, 'class', 'fade ' + (opt_data.imageEditorReady ? 'in' : '') + ' lfr-image-editor-tools-container');
       $tools(opt_data, null, opt_ijData);
       ie_close('div');
-      ie_open('div', null, null, 'class', 'fade lfr-image-editor-history-container');
+      ie_open('div', null, null, 'class', 'fade ' + (opt_data.imageEditorReady && !opt_data.selectedTool ? 'in' : '') + ' lfr-image-editor-history-container');
       ie_open('div', null, null, 'class', 'btn-group', 'role', 'group');
       ie_open('a', null, null, 'class', 'btn btn-link ' + (opt_data.history && opt_data.history.canUndo ? '' : 'disabled') + ' icon-monospaced', 'data-onclick', 'undo', 'href', 'javascript:;');
       ie_open('svg', null, null, 'class', 'lexicon-icon');
@@ -120,16 +120,16 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.soy", ['exports', 'metal-com
       ie_close('div');
       ie_close('div');
       ie_open('div', null, null, 'class', 'button-holder dialog-footer');
-      var hasChanges__soy33 = opt_data.history && opt_data.history.canUndo;
-      var saveButtonAttributes__soy34 = function saveButtonAttributes__soy34() {
-        iattr('class', 'btn btn-default btn-lg btn-primary ' + (hasChanges__soy33 ? '' : 'disabled'));
+      var hasChanges__soy37 = opt_data.history && opt_data.history.canUndo;
+      var saveButtonAttributes__soy38 = function saveButtonAttributes__soy38() {
+        iattr('class', 'btn btn-default btn-lg btn-primary ' + (hasChanges__soy37 ? '' : 'disabled'));
         iattr('data-onclick', 'save_');
-        if (!hasChanges__soy33) {
+        if (!hasChanges__soy37) {
           iattr('disabled', 'disabled');
         }
       };
       ie_open_start('button');
-      saveButtonAttributes__soy34();
+      saveButtonAttributes__soy38();
       ie_open_end();
       ie_open('span', null, null, 'class', 'lfr-btn-label');
       itext((goog.asserts.assert(opt_data.strings['save'] != null), opt_data.strings['save']));
@@ -158,12 +158,12 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.soy", ['exports', 'metal-com
     function $tools(opt_data, opt_ignored, opt_ijData) {
       ie_open('div', null, null, 'class', 'controls text-center');
       ie_open('ul', null, null, 'class', 'list-inline');
-      var toolList57 = opt_data.imageEditorCapabilities.tools;
-      var toolListLen57 = toolList57.length;
-      for (var toolIndex57 = 0; toolIndex57 < toolListLen57; toolIndex57++) {
-        var toolData57 = toolList57[toolIndex57];
-        ie_open('li', null, null, 'class', opt_data.selectedTool == 'tool-' + toolIndex57 ? 'open' : '');
-        $tool(soy.$$augmentMap(opt_data, { tool: toolData57, toolIndex: toolIndex57 }), null, opt_ijData);
+      var toolList61 = opt_data.imageEditorCapabilities.tools;
+      var toolListLen61 = toolList61.length;
+      for (var toolIndex61 = 0; toolIndex61 < toolListLen61; toolIndex61++) {
+        var toolData61 = toolList61[toolIndex61];
+        ie_open('li', null, null, 'class', opt_data.selectedTool == 'tool-' + toolIndex61 ? 'open' : '');
+        $tool(soy.$$augmentMap(opt_data, { tool: toolData61, toolIndex: toolIndex61 }), null, opt_ijData);
         ie_close('li');
       }
       ie_close('ul');
@@ -185,13 +185,13 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.soy", ['exports', 'metal-com
       if (opt_data.tool.controls.length > 1) {
         $tool_dropdown(opt_data, null, opt_ijData);
       } else {
-        var control__soy66 = opt_data.tool.controls[0];
-        ie_open('a', null, null, 'class', 'btn', 'data-control', control__soy66.variant, 'data-onclick', 'requestImageEditorEdit', 'data-tool', 'tool-' + opt_data.toolIndex, 'href', 'javascript:;');
+        var control__soy70 = opt_data.tool.controls[0];
+        ie_open('a', null, null, 'class', 'btn', 'data-control', control__soy70.variant, 'data-onclick', 'requestImageEditorEdit', 'data-tool', 'tool-' + opt_data.toolIndex, 'href', 'javascript:;');
         ie_open('svg', null, null, 'class', 'icon-monospaced lexicon-icon');
         ie_void('use', null, null, 'xlink:href', opt_data.pathThemeImages + '/lexicon/icons.svg#' + opt_data.tool.icon);
         ie_close('svg');
         ie_close('a');
-        $tool_control(soy.$$augmentMap(opt_data, { control: control__soy66 }), null, opt_ijData);
+        $tool_control(soy.$$augmentMap(opt_data, { control: control__soy70 }), null, opt_ijData);
       }
     }
     exports.tool = $tool;
@@ -207,31 +207,31 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.soy", ['exports', 'metal-com
      * @suppress {checkTypes}
      */
     function $tool_dropdown(opt_data, opt_ignored, opt_ijData) {
-      var param79 = function param79() {
+      var param83 = function param83() {
         ie_open('a', null, null, 'class', 'btn', 'data-onclick', 'toggle', 'href', 'javascript:;');
         ie_open('svg', null, null, 'class', 'icon-monospaced lexicon-icon', 'data-icon', opt_data.tool.icon);
         ie_void('use', null, null, 'xlink:href', opt_data.pathThemeImages + '/lexicon/icons.svg#' + opt_data.tool.icon);
         ie_close('svg');
         ie_close('a');
       };
-      var param87 = function param87() {
-        var controlList97 = opt_data.tool.controls;
-        var controlListLen97 = controlList97.length;
-        for (var controlIndex97 = 0; controlIndex97 < controlListLen97; controlIndex97++) {
-          var controlData97 = controlList97[controlIndex97];
+      var param91 = function param91() {
+        var controlList101 = opt_data.tool.controls;
+        var controlListLen101 = controlList101.length;
+        for (var controlIndex101 = 0; controlIndex101 < controlListLen101; controlIndex101++) {
+          var controlData101 = controlList101[controlIndex101];
           ie_open('li', null, null, 'data-onclick', 'toggle');
-          ie_open('a', null, null, 'data-control', controlData97.variant, 'data-onclick', opt_data.requestImageEditorEdit, 'data-tool', 'tool-' + opt_data.toolIndex);
-          itext((goog.asserts.assert(controlData97.label != null), controlData97.label));
+          ie_open('a', null, null, 'data-control', controlData101.variant, 'data-onclick', opt_data.requestImageEditorEdit, 'data-tool', 'tool-' + opt_data.toolIndex);
+          itext((goog.asserts.assert(controlData101.label != null), controlData101.label));
           ie_close('a');
           ie_close('li');
         }
       };
-      $templateAlias2({ header: param79, body: param87, elementClasses: 'dropup', position: 0, positionClassOnMenu: true }, null, opt_ijData);
-      var controlList105 = opt_data.tool.controls;
-      var controlListLen105 = controlList105.length;
-      for (var controlIndex105 = 0; controlIndex105 < controlListLen105; controlIndex105++) {
-        var controlData105 = controlList105[controlIndex105];
-        $tool_control(soy.$$augmentMap(opt_data, { control: controlData105 }), null, opt_ijData);
+      $templateAlias2({ header: param83, body: param91, elementClasses: 'dropup', position: 0, positionClassOnMenu: true }, null, opt_ijData);
+      var controlList109 = opt_data.tool.controls;
+      var controlListLen109 = controlList109.length;
+      for (var controlIndex109 = 0; controlIndex109 < controlListLen109; controlIndex109++) {
+        var controlData109 = controlList109[controlIndex109];
+        $tool_control(soy.$$augmentMap(opt_data, { control: controlData109 }), null, opt_ijData);
       }
     }
     exports.tool_dropdown = $tool_dropdown;
@@ -292,12 +292,12 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.soy", ['exports', 'metal-com
      * @return {void}
      * @suppress {checkTypes}
      */
-    function __deltemplate_s124_266044fb(opt_data, opt_ignored, opt_ijData) {}
-    exports.__deltemplate_s124_266044fb = __deltemplate_s124_266044fb;
+    function __deltemplate_s128_266044fb(opt_data, opt_ignored, opt_ijData) {}
+    exports.__deltemplate_s128_266044fb = __deltemplate_s128_266044fb;
     if (goog.DEBUG) {
-      __deltemplate_s124_266044fb.soyTemplateName = 'ImageEditor.__deltemplate_s124_266044fb';
+      __deltemplate_s128_266044fb.soyTemplateName = 'ImageEditor.__deltemplate_s128_266044fb';
     }
-    soy.$$registerDelegateFn(soy.$$getDelTemplateId('ImageEditor.Controls.idom'), '', 0, __deltemplate_s124_266044fb);
+    soy.$$registerDelegateFn(soy.$$getDelTemplateId('ImageEditor.Controls.idom'), '', 0, __deltemplate_s128_266044fb);
 
     exports.render.params = ["history", "id", "image", "imageEditorCapabilities", "imageEditorReady", "selectedControl", "selectedTool", "pathThemeImages", "strings", "getImageEditorCanvas", "getImageEditorImageData", "requestImageEditorEdit", "requestImageEditorPreview"];
     exports.render.types = { "history": "any", "id": "any", "image": "any", "imageEditorCapabilities": "any", "imageEditorReady": "any", "selectedControl": "any", "selectedTool": "any", "pathThemeImages": "any", "strings": "any", "getImageEditorCanvas": "any", "getImageEditorImageData": "any", "requestImageEditorEdit": "any", "requestImageEditorPreview": "any" };

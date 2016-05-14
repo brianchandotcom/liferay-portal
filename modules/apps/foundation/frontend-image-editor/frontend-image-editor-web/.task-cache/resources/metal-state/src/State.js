@@ -313,11 +313,14 @@ define(['exports', 'metal/src/metal', 'metal-events/src/events'], function (expo
 			}
 		};
 
-		State.prototype.setState = function setState(values) {
+		State.prototype.setState = function setState(values, opt_callback) {
 			this.updateConfig_(values);
 			var names = Object.keys(values);
 			for (var i = 0; i < names.length; i++) {
 				this[names[i]] = values[names[i]];
+			}
+			if (opt_callback && this.scheduledBatchData_) {
+				this.once('stateChanged', opt_callback);
 			}
 		};
 

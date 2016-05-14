@@ -55,6 +55,7 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -2849,7 +2850,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private SourceMismatchException _firstSourceMismatchException;
 	private Set<String> _immutableFieldTypes;
 	private String _mainReleaseVersion;
-	private final List<String> _modifiedFileNames = new ArrayList<>();
+	private final List<String> _modifiedFileNames =
+		new CopyOnWriteArrayList<>();
 	private final Map<String, Properties> _moduleLangLanguageProperties =
 		new HashMap<>();
 	private final Map<String, Properties> _moduleLanguageProperties =

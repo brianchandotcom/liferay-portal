@@ -26,7 +26,6 @@ import com.liferay.document.library.kernel.model.DLSyncEvent;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -95,6 +93,9 @@ import java.util.Set;
 import jodd.bean.BeanUtil;
 
 import jodd.util.NameValue;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Michael Young
@@ -532,27 +533,14 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 			syncContext.setOAuthEnabled(oAuthEnabled);
 
-			PluginPackage syncWebPluginPackage =
-				DeployManagerUtil.getInstalledPluginPackage("sync-web");
+			syncContext.setPortletPreferencesMap(getPortletPreferencesMap());
 
-			syncContext.setPluginVersion(syncWebPluginPackage.getVersion());
+			Bundle bundle = FrameworkUtil.getBundle(this.getClass());
+
+			syncContext.setPluginVersion(String.valueOf(bundle.getVersion()));
 
 			if (!user.isDefaultUser()) {
 				syncContext.setPortalBuildNumber(ReleaseInfo.getBuildNumber());
-
-				PluginPackage soPortletPluginPackage =
-					DeployManagerUtil.getInstalledPluginPackage("so-portlet");
-
-				syncContext.setPortletPreferencesMap(
-					getPortletPreferencesMap());
-
-				if (soPortletPluginPackage != null) {
-					syncContext.setSocialOfficeInstalled(true);
-				}
-				else {
-					syncContext.setSocialOfficeInstalled(false);
-				}
-
 				syncContext.setUser(user);
 
 				if (!syncDeviceSupports(SyncDeviceConstants.FEATURE_SET_1)) {

@@ -7,7 +7,7 @@
 
 				<execute function="Click#makeVisibleClickAt" locator1="BasePortlet#SPECIFIC_PORTLET_BORDERLESS_BAR" />
 
-				<execute function="Click" locator1="UserSegmentContentDisplay#PREVIEW_BUTTON" />
+				<execute function="Click" locator1="ContentTargeting#PREVIEW_BUTTON" />
 
 				<execute function="AssertElementPresent" locator1="ContentTargeting#PREVIEW_BUTTON_EXPANDED" />
 			</then>

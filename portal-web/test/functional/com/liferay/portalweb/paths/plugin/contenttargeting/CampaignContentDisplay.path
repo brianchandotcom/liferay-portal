@@ -39,17 +39,6 @@
 	<td>xpath=(//button[contains(@class,'delete-row')])[${key_rowNumber}]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--PREVIEW-->
-<tr>
-	<td>PREVIEW_BUTTON</td>
-	<td>//div[contains(@class,'portlet-content') and contains(.,'Campaign Content Display')]//div[contains(@class,'preview-button')]/button</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

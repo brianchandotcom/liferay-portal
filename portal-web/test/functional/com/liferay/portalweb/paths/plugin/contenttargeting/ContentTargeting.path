@@ -103,6 +103,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PREVIEW_BUTTON</td>
+	<td>//div[contains(@class,'portlet-content') and contains(.,'${key_portletName}')]//div[contains(@class,'preview-button')]/button</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PREVIEW_BUTTON_EXPANDED</td>
 	<td>//div[contains(@class,'preview-button')]/button[@aria-expanded='true']</td>
 	<td></td>
@@ -120,7 +125,7 @@
 <!--REPORT_TABLE-->
 <tr>
 	<td>REPORT_TABLE_CONTENT</td>
-		<td>//*[@data-qa-id='row'][contains(.,'${key_reportTitle}')]/td[normalize-space(.//text())='${key_contentReports}']</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_reportTitle}')]/td[normalize-space(.//text())='${key_contentReports}']</td>
 	<td></td>
 </tr>
 <tr>

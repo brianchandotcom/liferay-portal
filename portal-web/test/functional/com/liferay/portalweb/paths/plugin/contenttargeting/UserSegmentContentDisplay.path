@@ -25,11 +25,6 @@
 </tr>
 <!--PREVIEW-->
 <tr>
-	<td>PREVIEW_BUTTON</td>
-	<td>//div[contains(@class,'portlet-content') and contains(.,'User Segment Content Display')]//div[contains(@class,'preview-button')]/button</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PREVIEW_DOCUMENT_1_PNG</td>
 	<td>portal/portlets/user_segment_content_display_document.png</td>
 	<td></td>

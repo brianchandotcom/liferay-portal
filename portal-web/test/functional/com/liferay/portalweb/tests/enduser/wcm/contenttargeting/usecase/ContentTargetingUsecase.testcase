@@ -2913,7 +2913,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<for list="Admin,Page Visited,Male,Female" param="ruleName">
+		<for list="Admin,Page Visited,Male,Woman" param="ruleName">
 			<execute macro="ProductMenu#gotoSite">
 				<var name="site" value="Site Name" />
 			</execute>
@@ -2983,10 +2983,10 @@
 		</execute>
 
 		<execute macro="User#addMultipleCP">
-			<var name="usersEmailsList" value="male@liferay.com,female@liferay.com,wcmuser@liferay.com" />
+			<var name="usersEmailsList" value="male@liferay.com,woman@liferay.com,wcmuser@liferay.com" />
 		</execute>
 
-		<for list="male,female,wcmuser" param="userScreenName">
+		<for list="male,woman,wcmuser" param="userScreenName">
 			<execute macro="ProductMenu#gotoControlPanelUsers">
 				<var name="portlet" value="Users and Organizations" />
 			</execute>
@@ -3016,7 +3016,7 @@
 		</execute>
 
 		<execute macro="User#editUserGenderCP">
-			<var name="userFirstName" value="female" />
+			<var name="userFirstName" value="woman" />
 			<var name="userGender" value="Female" />
 		</execute>
 
@@ -3060,7 +3060,7 @@
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#configureOtherwiseContenDisplayRule">
-			<var name="otherwiseContentTitle" value="WC Title Female" />
+			<var name="otherwiseContentTitle" value="WC Title Woman" />
 			<var name="otherwiseContentType" value="Web Content Article" />
 		</execute>
 
@@ -3099,8 +3099,8 @@
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="female@liferay.com" />
-			<var name="userLoginFullName" value="female" />
+			<var name="userLoginEmailAddress" value="woman@liferay.com" />
+			<var name="userLoginFullName" value="woman" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -3109,7 +3109,7 @@
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
-			<var name="entryContentText" value="WC Content Female" />
+			<var name="entryContentText" value="WC Content Woman" />
 		</execute>
 	</command>
 

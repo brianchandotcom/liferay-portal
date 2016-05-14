@@ -293,9 +293,13 @@
 		},
 
 		focusFormField: function(el) {
+			var doc = $(document);
+
 			var interacting = false;
 
-			var doc = $(document);
+			el = Util.getDOM(el);
+
+			el = $(el);
 
 			doc.on(
 				'click.focusFormField',
@@ -306,12 +310,24 @@
 				}
 			);
 
-			el = Util.getDOM(el);
-
-			el = $(el);
-
 			if (!interacting && Util.inBrowserView(el)) {
-				el.focus();
+				var form = el.closest('form');
+
+				var focusable = !el.is(':disabled') && !el.is(':hidden');
+
+				if (!form.length || focusable) {
+					el.focus();
+				}
+				else {
+					var portletName = form.data('fm-namespace');
+
+					Liferay.once(
+						portletName + 'formReady',
+						function() {
+							el.focus();
+						}
+					);
+				}
 			}
 		},
 
@@ -923,7 +939,7 @@
 		showCapsLock: function(event, span) {
 			var keyCode = event.keyCode ? event.keyCode : event.which;
 
-			var shiftKeyCode = keyCode == 16 ? true : false;
+			var shiftKeyCode = keyCode === 16;
 
 			var shiftKey = event.shiftKey ? event.shiftKey : shiftKeyCode;
 

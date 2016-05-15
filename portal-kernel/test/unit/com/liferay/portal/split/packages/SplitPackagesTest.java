@@ -24,6 +24,7 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -44,6 +45,11 @@ public class SplitPackagesTest {
 
 		final Path portalPath = Paths.get(System.getProperty("user.dir"));
 
+		final Set<Path> ignorePaths = new HashSet<>(
+			Arrays.asList(
+				portalPath.resolve("portal-test"),
+				portalPath.resolve("portal-test-integration")));
+
 		Files.walkFileTree(
 			portalPath,
 			new SimpleFileVisitor<Path>() {
@@ -53,13 +59,7 @@ public class SplitPackagesTest {
 						Path path, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					Path pathFileName = path.getFileName();
-
-					String pathFileNameString = pathFileName.toString();
-
-					if (pathFileNameString.equals("portal-test") ||
-						pathFileNameString.equals("portal-test-integration")) {
-
+					if (ignorePaths.contains(path)) {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 

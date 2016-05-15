@@ -67,35 +67,31 @@ public class SplitPackagesTest {
 						Path sourcePath = path.resolve("src");
 
 						if (Files.exists(sourcePath)) {
-							Set<String> packages = _getPackageNames(sourcePath);
-
 							_checkPackageSet(
-								path, portalPath, moduleMap, packages);
+								path, portalPath, moduleMap, sourcePath);
 
 							return FileVisitResult.SKIP_SUBTREE;
 						}
 					}
 
 					if (Files.exists(path.resolve("portal.build"))) {
-						Set<String> packages = new HashSet<>();
-
 						if (Files.exists(path.resolve("docroot"))) {
 							Path sourcePath = path.resolve(
 								"docroot/WEB-INF/src/main/java");
 
 							if (Files.exists(sourcePath)) {
-								packages = _getPackageNames(sourcePath);
+								_checkPackageSet(
+									path, portalPath, moduleMap, sourcePath);
 							}
 						}
 						else {
 							Path sourcePath = path.resolve("src/main/java");
 
 							if (Files.exists(sourcePath)) {
-								packages = _getPackageNames(sourcePath);
+								_checkPackageSet(
+									path, portalPath, moduleMap, sourcePath);
 							}
 						}
-
-						_checkPackageSet(path, portalPath, moduleMap, packages);
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}
@@ -108,8 +104,10 @@ public class SplitPackagesTest {
 
 	private void _checkPackageSet(
 			Path path, Path portalPath, Map<Path, Set<String>> moduleMap,
-			Set<String> packages)
+			Path sourcePath)
 		throws IOException {
+
+		Set<String> packages = _getPackageNames(sourcePath);
 
 		boolean addedToImpl = false;
 

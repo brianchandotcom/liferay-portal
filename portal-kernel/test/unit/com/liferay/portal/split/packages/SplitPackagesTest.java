@@ -63,15 +63,17 @@ public class SplitPackagesTest {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					if (portalPath.equals(path.getParent()) &&
-						Files.exists(path.resolve("src"))) {
+					if (portalPath.equals(path.getParent())) {
+						Path sourcePath = path.resolve("src");
 
-						Set<String> packages = _getPackageNames(
-							path.resolve("src"));
+						if (Files.exists(sourcePath)) {
+							Set<String> packages = _getPackageNames(sourcePath);
 
-						_checkPackageSet(path, portalPath, moduleMap, packages);
+							_checkPackageSet(
+								path, portalPath, moduleMap, packages);
 
-						return FileVisitResult.SKIP_SUBTREE;
+							return FileVisitResult.SKIP_SUBTREE;
+						}
 					}
 
 					if (Files.exists(path.resolve("portal.build"))) {

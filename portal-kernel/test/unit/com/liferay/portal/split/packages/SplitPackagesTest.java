@@ -56,35 +56,35 @@ public class SplitPackagesTest {
 
 				@Override
 				public FileVisitResult preVisitDirectory(
-						Path path, BasicFileAttributes basicFileAttributes)
+						Path dirPath, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					if (ignorePaths.contains(path)) {
+					if (ignorePaths.contains(dirPath)) {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					if (portalPath.equals(path.getParent())) {
-						Path sourcePath = path.resolve("src");
+					if (portalPath.equals(dirPath.getParent())) {
+						Path sourcePath = dirPath.resolve("src");
 
 						if (Files.exists(sourcePath)) {
 							_checkPackageSet(
-								path, portalPath, moduleMap, sourcePath);
+								dirPath, portalPath, moduleMap, sourcePath);
 
 							return FileVisitResult.SKIP_SUBTREE;
 						}
 					}
 
-					if (Files.exists(path.resolve("portal.build"))) {
-						Path sourcePath = path.resolve("src/main/java");
+					if (Files.exists(dirPath.resolve("portal.build"))) {
+						Path sourcePath = dirPath.resolve("src/main/java");
 
-						if (Files.exists(path.resolve("docroot"))) {
-							sourcePath = path.resolve(
+						if (Files.exists(dirPath.resolve("docroot"))) {
+							sourcePath = dirPath.resolve(
 								"docroot/WEB-INF/src/main/java");
 						}
 
 						if (Files.exists(sourcePath)) {
 							_checkPackageSet(
-								path, portalPath, moduleMap, sourcePath);
+								dirPath, portalPath, moduleMap, sourcePath);
 						}
 
 						return FileVisitResult.SKIP_SUBTREE;
@@ -97,7 +97,7 @@ public class SplitPackagesTest {
 	}
 
 	private void _checkPackageSet(
-			Path path, Path portalPath, Map<Path, Set<String>> moduleMap,
+			Path dirPath, Path portalPath, Map<Path, Set<String>> moduleMap,
 			Path sourcePath)
 		throws IOException {
 
@@ -115,7 +115,7 @@ public class SplitPackagesTest {
 			if (!currentPackages.isEmpty()) {
 				if (mapKeyPath.equals(Paths.get("portal-impl"))) {
 					String text = new String(
-						Files.readAllBytes(path.resolve("build.gradle")));
+						Files.readAllBytes(dirPath.resolve("build.gradle")));
 
 					if (text.contains(
 							"deployDir = new File(appServerPortalDir, " +
@@ -133,13 +133,13 @@ public class SplitPackagesTest {
 			}
 
 			Assert.assertTrue(
-				"Detected split packages in " + portalPath.relativize(path) +
+				"Detected split packages in " + portalPath.relativize(dirPath) +
 					" and " + mapKeyPath + ": " + currentPackages,
 				currentPackages.isEmpty());
 		}
 
 		if (!addedToImpl) {
-			moduleMap.put(portalPath.relativize(path), packages);
+			moduleMap.put(portalPath.relativize(dirPath), packages);
 		}
 	}
 

@@ -55,8 +55,6 @@ public class SplitPackagesTest {
 
 					Path pathFileName = path.getFileName();
 
-					Path parentPath = path.getParent();
-
 					String pathFileNameString = pathFileName.toString();
 
 					if (pathFileNameString.equals("portal-test") ||
@@ -64,8 +62,11 @@ public class SplitPackagesTest {
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}
-					else if (parentPath.equals(portalPath) &&
-							 Files.exists(path.resolve("src"))) {
+
+					Path parentPath = path.getParent();
+
+					if (parentPath.equals(portalPath) &&
+						Files.exists(path.resolve("src"))) {
 
 						Set<String> packages = _getPackageNames(
 							path.resolve("src"));
@@ -74,7 +75,8 @@ public class SplitPackagesTest {
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}
-					else if (Files.exists(path.resolve("portal.build"))) {
+
+					if (Files.exists(path.resolve("portal.build"))) {
 						Set<String> packages = new HashSet<>();
 
 						if (Files.exists(path.resolve("docroot"))) {

@@ -63,9 +63,7 @@ public class SplitPackagesTest {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					Path parentPath = path.getParent();
-
-					if (parentPath.equals(portalPath) &&
+					if (portalPath.equals(path.getParent()) &&
 						Files.exists(path.resolve("src"))) {
 
 						Set<String> packages = _getPackageNames(

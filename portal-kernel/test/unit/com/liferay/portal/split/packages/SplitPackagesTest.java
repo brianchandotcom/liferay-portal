@@ -80,14 +80,15 @@ public class SplitPackagesTest {
 						Set<String> packages = new HashSet<>();
 
 						if (Files.exists(path.resolve("docroot"))) {
-							Path sourcePath = path.resolve(_DOCROOTPATH);
+							Path sourcePath = path.resolve(
+								"docroot/WEB-INF/src/main/java");
 
 							if (Files.exists(sourcePath)) {
 								packages = _getPackageNames(sourcePath);
 							}
 						}
 						else {
-							Path sourcePath = path.resolve(_MAINJAVAPATH);
+							Path sourcePath = path.resolve("src/main/java");
 
 							if (Files.exists(sourcePath)) {
 								packages = _getPackageNames(sourcePath);
@@ -184,10 +185,5 @@ public class SplitPackagesTest {
 
 		return packageNames;
 	}
-
-	private static final Path _DOCROOTPATH = Paths.get(
-		"docroot", "WEB-INF", "src", "main", "java");
-
-	private static final Path _MAINJAVAPATH = Paths.get("src", "main", "java");
 
 }

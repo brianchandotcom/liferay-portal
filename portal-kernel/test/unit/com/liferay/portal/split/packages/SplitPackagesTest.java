@@ -75,22 +75,16 @@ public class SplitPackagesTest {
 					}
 
 					if (Files.exists(path.resolve("portal.build"))) {
+						Path sourcePath = path.resolve("src/main/java");
+
 						if (Files.exists(path.resolve("docroot"))) {
-							Path sourcePath = path.resolve(
+							sourcePath = path.resolve(
 								"docroot/WEB-INF/src/main/java");
-
-							if (Files.exists(sourcePath)) {
-								_checkPackageSet(
-									path, portalPath, moduleMap, sourcePath);
-							}
 						}
-						else {
-							Path sourcePath = path.resolve("src/main/java");
 
-							if (Files.exists(sourcePath)) {
-								_checkPackageSet(
-									path, portalPath, moduleMap, sourcePath);
-							}
+						if (Files.exists(sourcePath)) {
+							_checkPackageSet(
+								path, portalPath, moduleMap, sourcePath);
 						}
 
 						return FileVisitResult.SKIP_SUBTREE;

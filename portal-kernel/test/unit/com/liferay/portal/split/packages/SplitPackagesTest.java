@@ -67,7 +67,7 @@ public class SplitPackagesTest {
 						Path sourcePath = dirPath.resolve("src");
 
 						if (Files.exists(sourcePath)) {
-							_checkPackageSet(
+							_checkSplitPackages(
 								dirPath, portalPath, moduleMap, sourcePath);
 
 							return FileVisitResult.SKIP_SUBTREE;
@@ -83,7 +83,7 @@ public class SplitPackagesTest {
 						}
 
 						if (Files.exists(sourcePath)) {
-							_checkPackageSet(
+							_checkSplitPackages(
 								dirPath, portalPath, moduleMap, sourcePath);
 						}
 
@@ -96,7 +96,7 @@ public class SplitPackagesTest {
 			});
 	}
 
-	private void _checkPackageSet(
+	private void _checkSplitPackages(
 			Path dirPath, Path portalPath, Map<Path, Set<String>> moduleMap,
 			Path sourcePath)
 		throws IOException {
@@ -105,37 +105,37 @@ public class SplitPackagesTest {
 
 		boolean addedToImpl = false;
 
-		for (Path mapKeyPath : moduleMap.keySet()) {
-			Set<String> mapPackages = moduleMap.get(mapKeyPath);
+		for (Map.Entry<Path, Set<String>> entry : moduleMap.entrySet()) {
+			Set<String> modulePackages = new HashSet<>(entry.getValue());
 
-			Set<String> currentPackages = new HashSet<>(packages);
+			modulePackages.retainAll(packages);
 
-			currentPackages.retainAll(mapPackages);
+			Path modulePath = entry.getKey();
 
-			if (!currentPackages.isEmpty()) {
-				if (mapKeyPath.equals(Paths.get("portal-impl"))) {
-					String text = new String(
-						Files.readAllBytes(dirPath.resolve("build.gradle")));
+			if (!modulePackages.isEmpty() &&
+				modulePath.equals(Paths.get("portal-impl"))) {
 
-					if (text.contains(
-							"deployDir = new File(appServerPortalDir, " +
-								"\"WEB-INF/lib\")")) {
+				String buildGradleContent = new String(
+					Files.readAllBytes(dirPath.resolve("build.gradle")));
 
-						mapPackages.addAll(currentPackages);
+				if (buildGradleContent.contains(
+						"deployDir = new File(appServerPortalDir, " +
+							"\"WEB-INF/lib\")")) {
 
-						moduleMap.put(mapKeyPath, mapPackages);
+					Set<String> portalImplPackages = entry.getValue();
 
-						addedToImpl = true;
+					portalImplPackages.addAll(packages);
 
-						currentPackages.clear();
-					}
+					addedToImpl = true;
+
+					modulePackages.clear();
 				}
 			}
 
 			Assert.assertTrue(
 				"Detected split packages in " + portalPath.relativize(dirPath) +
-					" and " + mapKeyPath + ": " + currentPackages,
-				currentPackages.isEmpty());
+					" and " + modulePath + ": " + modulePackages,
+				modulePackages.isEmpty());
 		}
 
 		if (!addedToImpl) {

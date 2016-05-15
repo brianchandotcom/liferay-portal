@@ -15,6 +15,7 @@
 package com.liferay.portal.split.packages;
 
 import java.io.IOException;
+
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -22,6 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -57,15 +59,13 @@ public class SplitPackagesTest {
 
 					String pathFileNameString = pathFileName.toString();
 
-					if (
-						pathFileNameString.equals("portal-test") ||
+					if (pathFileNameString.equals("portal-test") ||
 						pathFileNameString.equals("portal-test-integration")) {
 
 						return FileVisitResult.SKIP_SUBTREE;
 					}
-					else if (
-						parentPath.equals(portalPath) &&
-						Files.exists(path.resolve("src"))) {
+					else if (parentPath.equals(portalPath) &&
+							 Files.exists(path.resolve("src"))) {
 
 						Set<String> packages = _getPackageNames(
 							path.resolve("src"));
@@ -83,7 +83,6 @@ public class SplitPackagesTest {
 							if (Files.exists(sourcePath)) {
 								packages = _getPackageNames(sourcePath);
 							}
-
 						}
 						else {
 							Path sourcePath = path.resolve(_MAINJAVAPATH);
@@ -102,7 +101,6 @@ public class SplitPackagesTest {
 				}
 
 			});
-
 	}
 
 	private void _checkPackageSet(
@@ -124,10 +122,9 @@ public class SplitPackagesTest {
 					String text = new String(
 						Files.readAllBytes(path.resolve("build.gradle")));
 
-					if (
-						text.contains(
-							"deployDir = new File(appServerPortalDir, \"WEB-INF"
-								+ "/lib\")")) {
+					if (text.contains(
+							"deployDir = new File(appServerPortalDir, " +
+								"\"WEB-INF/lib\")")) {
 
 						mapPackages.addAll(currentPackages);
 
@@ -139,6 +136,7 @@ public class SplitPackagesTest {
 					}
 				}
 			}
+
 			Assert.assertTrue(
 				"Detected split packages in " + portalPath.relativize(path) +
 					" and " + mapKeyPath + ": " + currentPackages,
@@ -187,6 +185,7 @@ public class SplitPackagesTest {
 
 	private static final Path _DOCROOTPATH = Paths.get(
 		"docroot", "WEB-INF", "src", "main", "java");
+
 	private static final Path _MAINJAVAPATH = Paths.get("src", "main", "java");
 
 }

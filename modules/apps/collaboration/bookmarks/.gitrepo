@@ -3,7 +3,6 @@
 ; https://github.com/git-commands/git-subrepo#readme for more information.
 ;
 [subrepo]
-	branch = 7.0.x
 	cmdver = liferay
 	commit = 7d50fbbd58fe1c45d5f8eb6c772be4a6df78270e
 	mode = push

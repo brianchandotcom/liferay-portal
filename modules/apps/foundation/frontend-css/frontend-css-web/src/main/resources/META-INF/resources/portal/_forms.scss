@@ -115,6 +115,10 @@
 	.field-wrapper {
 		position: relative;
 
+		&.form-builder-field label {
+			float: none;
+		}
+
 		.aui-field-wrapper {
 			margin-left: 20px;
 		}

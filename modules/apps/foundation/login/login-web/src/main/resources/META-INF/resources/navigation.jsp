@@ -51,9 +51,9 @@ navigation = navigation.trim();
 </c:if>
 
 <aui:script>
-	var navigation = $('#<portlet:namespace />navigation');
+	var navigation = AUI.$('#<portlet:namespace />navigation');
 
-	if (navigation && navigation.children().length <= 1) {
+	if (navigation.children().length <= 1) {
 		navigation.remove();
 	}
 </aui:script>

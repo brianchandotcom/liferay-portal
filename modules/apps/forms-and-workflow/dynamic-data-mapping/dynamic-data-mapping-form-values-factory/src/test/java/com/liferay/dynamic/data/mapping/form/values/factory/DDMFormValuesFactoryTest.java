@@ -690,6 +690,36 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 	}
 
 	@Test
+	public void testCreateWithTransientField() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"Paragraph", "Paragraph", "paragraph", StringPool.BLANK, false,
+				false, false));
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.addParameter(
+			"availableLanguageIds", LocaleUtil.toLanguageId(LocaleUtil.US));
+		mockHttpServletRequest.addParameter(
+			"defaultLanguageId", LocaleUtil.toLanguageId(LocaleUtil.US));
+
+		DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
+			mockHttpServletRequest, ddmForm);
+
+		List<DDMFormFieldValue> ddmFormFieldValues =
+			ddmFormValues.getDDMFormFieldValues();
+
+		Assert.assertEquals(1, ddmFormFieldValues.size());
+
+		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
+
+		Assert.assertEquals("Paragraph", ddmFormFieldValue.getName());
+	}
+
+	@Test
 	public void testCreateWithUncheckedCheckboxAndTextFieldWithSimilarNames()
 		throws Exception {
 

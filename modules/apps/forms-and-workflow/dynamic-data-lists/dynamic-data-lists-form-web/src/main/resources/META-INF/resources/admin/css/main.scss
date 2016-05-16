@@ -513,9 +513,6 @@ $horizontal-spacing: 35px;
 		width: 32px;
 	}
 
-	.record-set-id, .record-set-modified-date {
-		margin-right: 20px;
-
 	.checkbox,
 	.radio {
 		margin-bottom: 0;
@@ -609,6 +606,10 @@ $horizontal-spacing: 35px;
 		border-bottom: 1px solid #DEE4E9;
 		padding: 20px 34px 11px 34px;
 		position: relative;
+	}
+
+	.record-set-id, .record-set-modified-date {
+		margin-right: 20px;
 	}
 }
 

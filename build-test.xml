@@ -6858,10 +6858,11 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 			<equals arg1="${database.type}" arg2="mysql" />
 			<then>
 				<get-database-property property.name="database.password" />
+				<get-database-property property.name="database.schema" />
 				<get-database-property property.name="database.username" />
 
 				<exec executable="${mysql.executable}" input="${liferay.home}/${database.type}.sql">
-					<arg value="--database=lportal" />
+					<arg value="--database=${database.schema}" />
 					<arg value="--password=${database.password}" />
 					<arg value="--user=${database.username}" />
 				</exec>

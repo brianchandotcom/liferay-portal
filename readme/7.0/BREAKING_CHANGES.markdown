@@ -4131,30 +4131,32 @@ different parts of the portal.
 
 ---------------------------------------
 
-### Removed the swfupload and video_player misc utilities
+### Removed the swfupload and video_player Utilities
 - **Date:** 2016-May-13
 - **JIRA Ticket:** LPS-54111
 
 #### What changed?
 
-The misc utilities swfupload and video_player have been removed.
+The utilities `swfupload` and `video_player` have been removed.
 
 #### Who is affected?
 
-This affects anyone who is using the `swfupload` AlloyUI module or any of the associated
-`swfupload_f*.swf` and `mpw_player.swf` flash movies.
+This affects anyone who is using the `swfupload` AlloyUI module or any of the
+associated `swfupload_f*.swf` and `mpw_player.swf` flash movies.
 
 #### How should I update my code?
 
-There are better, more standard ways to achieve upload these days. For instance you can use
-[A.Uploader](http://alloyui.com/api/classes/Uploader.html) to manage your uploads consistently
-across browsers.
+There are better, more standard ways to achieve upload currently. For instance,
+you can use [A.Uploader](http://alloyui.com/api/classes/Uploader.html) to manage
+your uploads consistently across browsers.
 
-For audio/video reproduction, you should update your code to use [A.Audio](http://alloyui.com/api/classes/A.Audio.html) and [A.Video](http://alloyui.com/api/classes/A.Video.html).
+For audio/video reproduction, you should update your code to use
+[A.Audio](http://alloyui.com/api/classes/A.Audio.html) and
+[A.Video](http://alloyui.com/api/classes/A.Video.html).
 
 #### Why was this change made?
 
-This change removes outdated code no longer being used in the platform. In addition, this
-change avoids future security issues from outdated flash movies.
+This change removes outdated code no longer being used in the platform. In
+addition, this change avoids future security issues from outdated flash movies.
 
 ---------------------------------------

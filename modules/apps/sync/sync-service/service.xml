@@ -123,13 +123,13 @@
 			<finder-column name="repositoryId" />
 			<finder-column name="parentFolderId" />
 		</finder>
-		<finder name="R_T" return-type="Collection">
-			<finder-column name="repositoryId" />
-			<finder-column name="type" />
-		</finder>
 		<finder name="R_NotE" return-type="Collection">
 			<finder-column name="repositoryId" />
 			<finder-column comparator="!=" name="event" />
+		</finder>
+		<finder name="R_T" return-type="Collection">
+			<finder-column name="repositoryId" />
+			<finder-column name="type" />
 		</finder>
 		<finder name="T_NotE" return-type="Collection">
 			<finder-column comparator="LIKE" name="treePath" />

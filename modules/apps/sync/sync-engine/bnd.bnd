@@ -1,4 +1,30 @@
 Bundle-Name: Liferay Sync Engine
 Bundle-SymbolicName: com.liferay.sync.engine
 Bundle-Version: 3.1.2
-Export-Package: com.liferay.sync.engine.*
+-liferay-includeresource:\
+	@ch.securityvision.xattrj-*.jar,\
+	@com.barbarysoftware.watchservice-*.jar,\
+	@com.btr.proxy.vole-*.jar,\
+	@com.liferay.petra.io.delta-*.jar,\
+	@commons-codec-*.jar,\
+	@commons-configuration-*.jar,\
+	@commons-io-*.jar,\
+	@commons-lang-*.jar,\
+	@h2-*.jar,\
+	@httpclient-*.jar,\
+	@httpcore-*.jar,\
+	@httpmime-*.jar,\
+	@jackson-annotations-*.jar,\
+	@jackson-core-*.jar,\
+	@jackson-databind-*.jar,\
+	@jna-*.jar,\
+	@logback-classic-*.jar,\
+	@logback-core-*.jar,\
+	@net.sf.jpathwatch--*.jar,\
+	@ormlite-core-*.jar,\
+	@ormlite-jdbc-*.jar,\
+	@poi-*.jar,\
+	@poi-ooxml-*.jar,\
+	@signpost-commonshttp4-*.jar,\
+	@signpost-core-*.jar,\
+	@slf4j-api-*.jar

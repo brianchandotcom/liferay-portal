@@ -27,9 +27,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.sync.configuration.SyncServiceConfigurationKeys;
-import com.liferay.sync.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.exception.OAuthPortletUndeployedException;
+import com.liferay.sync.service.configuration.SyncServiceConfigurationKeys;
+import com.liferay.sync.service.configuration.SyncServiceConfigurationValues;
 
 import java.io.InputStream;
 

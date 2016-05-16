@@ -35,14 +35,12 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.sync.constants.SyncDLObjectConstants;
 import com.liferay.sync.model.SyncDLObject;
-import com.liferay.sync.model.SyncDLObjectConstants;
 import com.liferay.sync.model.impl.SyncDLObjectImpl;
 import com.liferay.sync.util.SyncUtil;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -71,19 +69,6 @@ public class DLSyncEventMessageListener extends BaseMessageListener {
 					throws PortalException {
 
 					try {
-						Message message = new Message();
-
-						Map<String, Object> values = new HashMap<>(5);
-
-						values.put("event", dlSyncEvent.getEvent());
-						values.put(
-							"modifiedTime", dlSyncEvent.getModifiedTime());
-						values.put("syncEventId", dlSyncEvent.getSyncEventId());
-						values.put("type", dlSyncEvent.getType());
-						values.put("typePK", dlSyncEvent.getTypePK());
-
-						message.setValues(values);
-
 						processDLSyncEvent(
 							dlSyncEvent.getModifiedTime(),
 							dlSyncEvent.getEvent(), dlSyncEvent.getType(),

@@ -25,9 +25,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.sync.configuration.SyncServiceConfigurationKeys;
 import com.liferay.sync.constants.SyncAdminPortletKeys;
 import com.liferay.sync.exception.OAuthPortletUndeployedException;
+import com.liferay.sync.service.configuration.SyncServiceConfigurationKeys;
 import com.liferay.sync.util.SyncOAuthUtil;
 
 import java.io.IOException;

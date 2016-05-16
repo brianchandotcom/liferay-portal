@@ -34,7 +34,7 @@ public class BNDImportsFormatter extends BaseImportsFormatter {
 		Matcher matcher = pattern.matcher(content);
 
 		if (matcher.find()) {
-			return matcher.group(1);
+			return matcher.group(2);
 		}
 
 		return null;

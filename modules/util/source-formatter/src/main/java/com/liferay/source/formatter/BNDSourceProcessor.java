@@ -103,6 +103,27 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkWildcardImports(
+		String fileName, String content, Pattern pattern) {
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
+			return;
+		}
+
+		String imports = matcher.group(2);
+
+		matcher = _wilcardImportPattern.matcher(imports);
+
+		while (matcher.find()) {
+			processErrorMessage(
+				fileName,
+				"Don't use wildcard in Export-Package '" + matcher.group(1) +
+					"': " + fileName);
+		}
+	}
+
 	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
@@ -140,6 +161,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			content = StringUtil.replaceFirst(
 				content, matcher.group(1), StringPool.SPACE, matcher.start());
 		}
+
+		checkWildcardImports(fileName, content, _exportsPattern);
 
 		ImportsFormatter importsFormatter = new BNDImportsFormatter();
 
@@ -316,10 +339,10 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _bundleSymbolicNamePattern = Pattern.compile(
 		"^Bundle-SymbolicName: (.*)\n", Pattern.MULTILINE);
 	private final Pattern _exportsPattern = Pattern.compile(
-		"\nExport-Package:\\\\\n(.*?\n)[^\t]",
+		"\nExport-Package:(\\\\\n| )(.*?\n|\\Z)[^\t]",
 		Pattern.DOTALL | Pattern.MULTILINE);
 	private final Pattern _importsPattern = Pattern.compile(
-		"\nImport-Package:\\\\\n(.*?\n)[^\t]",
+		"\nImport-Package:(\\\\\n| )(.*?\n|\\Z)[^\t]",
 		Pattern.DOTALL | Pattern.MULTILINE);
 	private final Pattern _includeResourcePattern = Pattern.compile(
 		"^((-liferay)?-includeresource|Include-Resource):[\\s\\S]*?([^\\\\]" +
@@ -329,6 +352,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		"\n[^\t].*:\\\\\n(\t{2,})[^\t]");
 	private final Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
 		"\n.*:(\\\\\n\t).*(\n[^\t]|\\Z)");
+	private final Pattern _wilcardImportPattern = Pattern.compile(
+		"\\s(\\S+\\*)(,\\\\\n|\n|\\Z)");
 
 	private static class DefinitionComparator implements Comparator<String> {
 

@@ -204,35 +204,6 @@ public class SyncDownloadServlet extends HttpServlet {
 		}
 	}
 
-	@Reference(unbind = "-")
-	public void setDlFileEntryLocalService(
-		DLFileEntryLocalService dlFileEntryLocalService) {
-
-		_dlFileEntryLocalService = dlFileEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setDlFileVersionLocalService(
-		DLFileVersionLocalService dlFileVersionLocalService) {
-
-		_dlFileVersionLocalService = dlFileVersionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setImageService(ImageService imageService) {
-		_imageService = imageService;
-	}
-
-	@Reference(unbind = "-")
-	public void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	protected void addZipFolderEntry(
 			long userId, long repositoryId, long folderId, String folderPath,
 			ZipWriter zipWriter)
@@ -566,6 +537,35 @@ public class SyncDownloadServlet extends HttpServlet {
 	@Reference(unbind = "-")
 	protected void setDLAppService(DLAppService dlAppService) {
 		_dlAppService = dlAppService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDlFileEntryLocalService(
+		DLFileEntryLocalService dlFileEntryLocalService) {
+
+		_dlFileEntryLocalService = dlFileEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDlFileVersionLocalService(
+		DLFileVersionLocalService dlFileVersionLocalService) {
+
+		_dlFileVersionLocalService = dlFileVersionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setImageService(ImageService imageService) {
+		_imageService = imageService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
 	}
 
 	private static final String _ERROR_HEADER = "Sync-Error";

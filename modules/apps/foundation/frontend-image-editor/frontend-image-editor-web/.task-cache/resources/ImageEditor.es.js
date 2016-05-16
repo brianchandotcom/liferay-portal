@@ -288,6 +288,7 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 				var requestConfig = {
 					contentType: false,
 					data: formData,
+					dataType: "json",
 					processData: false,
 					type: 'POST',
 					url: _this8.saveURL

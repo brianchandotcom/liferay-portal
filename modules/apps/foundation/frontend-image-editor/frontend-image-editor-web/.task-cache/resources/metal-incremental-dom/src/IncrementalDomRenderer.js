@@ -266,19 +266,6 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 				args[1] = currComp.config.key;
 			}
 
-			// Don't allow using statics for now. This is because incremental dom
-			// won't update reused elements with new statics, but the compiler we're
-			// using for jsx is setting statics even when no key is set, which is not
-			// advisable (see http://google.github.io/incremental-dom/#rendering-dom/statics-array).
-			// Once that's fixed in the compiler we'll be able to remove this. Until
-			// then we'll go without this statics optimization.
-			if (statics) {
-				args[2] = null;
-				for (var i = 0; i < statics.length; i++) {
-					args.push(statics[i]);
-				}
-			}
-
 			var node = originalFn.apply(null, args);
 			this.updateElementIfNotReached_(node, args);
 			return node;
@@ -332,7 +319,7 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 		};
 
 		IncrementalDomRenderer.prototype.isListenerAttr_ = function isListenerAttr_(attr) {
-			return attr.startsWith('data-on');
+			return attr.substr(0, 7) === 'data-on';
 		};
 
 		IncrementalDomRenderer.prototype.render = function render() {

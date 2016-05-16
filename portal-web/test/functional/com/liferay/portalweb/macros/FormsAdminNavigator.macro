@@ -17,6 +17,16 @@
 		<execute function="AssertClick" locator1="MenuItem#DATA_PROVIDERS" value1="Data Providers" />
 	</command>
 
+	<command name="gotoDeleteField">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="MouseOver" locator1="Form#FIELD" />
+
+		<execute function="Click" locator1="Form#FIELD_ELLIPSIS" />
+
+		<execute function="Click" locator1="Form#FIELD_DELETE_BUTTON" />
+	</command>
+
 	<command name="gotoEdit">
 		<var name="key_rowEntry" value="${formName}" />
 

@@ -144,8 +144,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_DELETE_BUTTON</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//div[contains(@class,'toolbar')]//button[contains(@class,'item')][3]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_EDIT_BUTTON</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//div[contains(@class,'toolbar')]//button[contains(@class,'item')]</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//div[contains(@class,'toolbar')]//button[contains(@class,'item')][1]</td>
 	<td></td>
 </tr>
 </tbody>

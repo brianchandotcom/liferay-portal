@@ -680,6 +680,8 @@
 	</command>
 
 	<command name="SubmitFormWithAllFieldTypesAfterEditingFields" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1049,6 +1051,7 @@
 
 	<command name="SubmitFormWithAllFieldTypesAndTwoPages" priority="5">
 		<description message="This is a use case for LPS-64798." />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Navigator#openURL" />
 

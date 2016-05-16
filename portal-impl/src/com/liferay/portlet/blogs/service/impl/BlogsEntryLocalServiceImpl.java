@@ -691,6 +691,18 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				entryId, groupId, WorkflowConstants.STATUS_APPROVED,
 				displayDate, new EntryIdComparator(true));
 
+		if (blogsEntries[0] == null) {
+			blogsEntries[0] = blogsEntryPersistence.fetchByG_LtD_S_Last(
+				groupId, displayDate, WorkflowConstants.STATUS_APPROVED,
+				new EntryDisplayDateComparator(true));
+		}
+
+		if (blogsEntries[2] == null) {
+			blogsEntries[2] = blogsEntryPersistence.fetchByG_GtD_S_First(
+				groupId, displayDate, WorkflowConstants.STATUS_APPROVED,
+				new EntryDisplayDateComparator(true));
+		}
+
 		return blogsEntries;
 	}
 

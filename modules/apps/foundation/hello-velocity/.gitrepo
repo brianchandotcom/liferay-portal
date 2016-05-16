@@ -3,9 +3,8 @@
 ; https://github.com/git-commands/git-subrepo#readme for more information.
 ;
 [subrepo]
-	branch = 7.0.x
 	cmdver = liferay
-	commit = b71193b1283cf8c3a958dc3a4416111bbe71a03f
+	commit = a27ed25392672fcb45f4ddff6f6d4ddfb8a648cb
 	mode = push
-	parent = 83de4002e6418cd95e00b3ebbe3a6b86a01bf1af
+	parent = 6e39e7f50af7916607926452dd91797962a53cef
 	remote = git@github.com:liferay-continuous-integration/com-liferay-hello-velocity.git

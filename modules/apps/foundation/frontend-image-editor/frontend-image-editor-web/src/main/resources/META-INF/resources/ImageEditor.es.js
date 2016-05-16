@@ -312,6 +312,7 @@ class ImageEditor extends Component {
 			let requestConfig = {
 				contentType: false,
 				data: formData,
+				dataType: "json",
 				processData: false,
 				type: 'POST',
 				url: this.saveURL

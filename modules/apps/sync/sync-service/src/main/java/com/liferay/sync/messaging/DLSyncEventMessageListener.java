@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.sync.constants.SyncDLObjectConstants;
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.model.impl.SyncDLObjectImpl;
+import com.liferay.sync.service.SyncDLObjectLocalService;
 import com.liferay.sync.util.SyncUtil;
 
 import java.util.List;
@@ -80,7 +81,9 @@ public class DLSyncEventMessageListener extends BaseMessageListener {
 							dlSyncEvent.getTypePK());
 					}
 					catch (Exception e) {
-						_log.error(e, e);
+						if (_log.isDebugEnabled()) {
+							_log.debug(e, e);
+						}
 					}
 				}
 
@@ -130,9 +133,16 @@ public class DLSyncEventMessageListener extends BaseMessageListener {
 		String type = message.getString("type");
 		long typePK = message.getLong("typePK");
 
-		processDLSyncEvent(modifiedTime, event, type, typePK);
+		try {
+			processDLSyncEvent(modifiedTime, event, type, typePK);
 
-		deleteDLSyncEvent(modifiedTime, syncEventId, typePK);
+			deleteDLSyncEvent(modifiedTime, syncEventId, typePK);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
 	}
 
 	protected void processDLSyncEvent(
@@ -213,6 +223,11 @@ public class DLSyncEventMessageListener extends BaseMessageListener {
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
+	@Reference(unbind = "-")
+	protected void setSyncDLObjectLocalService(
+		SyncDLObjectLocalService syncDLObjectLocalService) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -1,0 +1,67 @@
+{namespace ddm}
+
+/**
+ * Prints the DDM form multi checkbox field.
+ *
+ * @param? childElementsHTML
+ * @param label
+ * @param name
+ * @param required
+ * @param showLabel
+ * @param tip
+ * @param readOnly
+ * @param showAsSwitcher
+ * @param options
+ * @param inline
+ * @param dir
+ */
+{template .multi_checkbox autoescape="deprecated-contextual"}
+	<div class="form-group liferay-ddm-form-field-multi-checkbox" data-fieldname="{$name}">
+        {if $showLabel and length($options) > 1}
+			<label class="control-label" for="{$name}">
+				{$label}
+
+				{if $required}
+					<span class="icon-asterisk text-warning"></span>
+				{/if}
+			</label>
+
+			{if $tip}
+				<p class="liferay-ddm-form-field-tip">{$tip}</p>
+			{/if}
+		{/if}
+
+        <div class="clearfix multi-checkbox-options">
+            {foreach $option in $options}
+                {if not $inline}
+                    <div class="checkbox">
+                {/if}
+
+                {if $showAsSwitcher}
+                    <label class="checkbox-default{$inline ? ' checkbox-inline' : ''} checkbox-option-{$option.value}" for="{$name}_{$option.value}">
+                        <input class="hide toggle-switch " {if $readOnly}disabled{/if} id="{$name}_{$option.value}" name="{$name}" {$option.status} type="checkbox" value="{$option.value}" />
+
+                        <span aria-hidden="true" class="toggle-switch-bar">
+                            <span class="toggle-switch-handle"></span>
+                        </span>
+                        <span class="toggle-switch-text toggle-switch-text-right">
+                            {$option.label}
+                        </span>
+                    </label>
+                {else}
+                    <label class="checkbox-default{$inline ? ' checkbox-inline' : ''} checkbox-option-{$option.value}" for="{$name}_{$option.value}">
+                        <input class="field" dir="{$dir}" {if $readOnly}disabled{/if} id="{$name}_{$option.value}" name="{$name}" {$option.status} type="checkbox" value="{$option.value}" /> {$option.label}
+                    </label>
+                {/if}
+
+                {if not $inline}
+                    </div>
+                {/if}
+            {/foreach}
+        </div>
+
+        {if $childElementsHTML}
+            {$childElementsHTML|noAutoescape}
+        {/if}
+	</div>
+{/template}

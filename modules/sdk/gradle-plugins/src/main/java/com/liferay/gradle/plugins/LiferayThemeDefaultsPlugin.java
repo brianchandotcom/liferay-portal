@@ -66,6 +66,9 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 		applyPlugins(project);
 
+		CacheExtension cacheExtension = GradleUtil.getExtension(
+			project, CacheExtension.class);
+
 		// GRADLE-2427
 
 		addTaskInstall(project);
@@ -82,7 +85,9 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		final ReplaceRegexTask updateVersionTask = addTaskUpdateVersion(
 			project);
 
-		configureCache(project);
+		TaskCache gulpBuildTaskCache = configureCacheGulpBuild(
+			project, cacheExtension);
+
 		configureDeployDir(project);
 		configureProject(project);
 
@@ -93,7 +98,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 		configureTasksExecuteGulp(
 			project, expandFrontendCSSCommonTask, frontendThemeStyledProject,
-			frontendThemeUnstyledProject);
+			frontendThemeUnstyledProject, gulpBuildTaskCache);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -203,6 +208,14 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		return upload;
 	}
 
+	protected void addTaskSkippedDependency(
+		Task task, TaskCache taskCache, Object taskDependency) {
+
+		task.dependsOn(taskDependency);
+
+		taskCache.skipTaskDependency(taskDependency);
+	}
+
 	protected ReplaceRegexTask addTaskUpdateVersion(final Project project) {
 		ReplaceRegexTask replaceRegexTask = GradleUtil.addTask(
 			project, LiferayRelengPlugin.UPDATE_VERSION_TASK_NAME,
@@ -231,11 +244,10 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, MavenPlugin.class);
 	}
 
-	protected void configureCache(Project project) {
-		CacheExtension cacheExtension = GradleUtil.getExtension(
-			project, CacheExtension.class);
+	protected TaskCache configureCacheGulpBuild(
+		Project project, CacheExtension cacheExtension) {
 
-		cacheExtension.task(
+		return cacheExtension.task(
 			LiferayThemePlugin.GULP_BUILD_TASK_NAME,
 			new Closure<Void>(null) {
 
@@ -275,7 +287,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 	protected void configureTaskExecuteGulp(
 		ExecuteGulpTask executeGulpTask, final Copy expandFrontendCSSCommonTask,
 		Project frontendThemeStyledProject,
-		Project frontendThemeUnstyledProject) {
+		Project frontendThemeUnstyledProject, TaskCache taskCache) {
 
 		executeGulpTask.args(
 			new Callable<String>() {
@@ -289,16 +301,19 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 			});
 
-		executeGulpTask.dependsOn(expandFrontendCSSCommonTask);
+		addTaskSkippedDependency(
+			executeGulpTask, taskCache, expandFrontendCSSCommonTask);
 
 		configureTaskExecuteGulpParentTheme(
-			executeGulpTask, frontendThemeStyledProject, "styled");
+			executeGulpTask, frontendThemeStyledProject, "styled", taskCache);
 		configureTaskExecuteGulpParentTheme(
-			executeGulpTask, frontendThemeUnstyledProject, "unstyled");
+			executeGulpTask, frontendThemeUnstyledProject, "unstyled",
+			taskCache);
 	}
 
 	protected void configureTaskExecuteGulpParentTheme(
-		ExecuteGulpTask executeGulpTask, Project themeProject, String name) {
+		ExecuteGulpTask executeGulpTask, Project themeProject, String name,
+		TaskCache taskCache) {
 
 		if (themeProject == null) {
 			if (_logger.isWarnEnabled()) {
@@ -314,14 +329,15 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		executeGulpTask.args(
 			"--" + name + "-path=" + FileUtil.getAbsolutePath(dir));
 
-		executeGulpTask.dependsOn(
+		addTaskSkippedDependency(
+			executeGulpTask, taskCache,
 			themeProject.getPath() + ":" + JavaPlugin.CLASSES_TASK_NAME);
 	}
 
 	protected void configureTasksExecuteGulp(
 		Project project, final Copy expandFrontendCSSCommonTask,
 		final Project frontendThemeStyledProject,
-		final Project frontendThemeUnstyledProject) {
+		final Project frontendThemeUnstyledProject, final TaskCache taskCache) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -334,7 +350,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 					configureTaskExecuteGulp(
 						executeGulpTask, expandFrontendCSSCommonTask,
 						frontendThemeStyledProject,
-						frontendThemeUnstyledProject);
+						frontendThemeUnstyledProject, taskCache);
 				}
 
 			});

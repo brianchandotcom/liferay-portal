@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
-import com.liferay.sync.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.service.SyncDLFileVersionDiffLocalService;
+import com.liferay.sync.service.configuration.SyncServiceConfigurationValues;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;

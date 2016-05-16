@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.configuration;
+package com.liferay.sync.service.configuration;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 

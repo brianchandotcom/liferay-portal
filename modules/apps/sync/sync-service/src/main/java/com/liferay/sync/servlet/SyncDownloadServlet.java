@@ -55,11 +55,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.sync.SyncSiteUnavailableException;
-import com.liferay.sync.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.model.SyncDLFileVersionDiff;
 import com.liferay.sync.model.SyncDevice;
 import com.liferay.sync.service.SyncDLFileVersionDiffLocalServiceUtil;
 import com.liferay.sync.service.SyncDeviceLocalServiceUtil;
+import com.liferay.sync.service.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.util.SyncUtil;
 
 import java.io.File;

@@ -47,14 +47,14 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sync.SyncSiteUnavailableException;
-import com.liferay.sync.configuration.SyncServiceConfigurationKeys;
-import com.liferay.sync.configuration.SyncServiceConfigurationValues;
+import com.liferay.sync.constants.SyncDLObjectConstants;
 import com.liferay.sync.constants.SyncPermissionsConstants;
 import com.liferay.sync.model.SyncDLObject;
-import com.liferay.sync.model.SyncDLObjectConstants;
 import com.liferay.sync.model.SyncDevice;
 import com.liferay.sync.model.impl.SyncDLObjectImpl;
 import com.liferay.sync.service.SyncDLObjectLocalServiceUtil;
+import com.liferay.sync.service.configuration.SyncServiceConfigurationKeys;
+import com.liferay.sync.service.configuration.SyncServiceConfigurationValues;
 
 import java.io.File;
 import java.io.FileInputStream;

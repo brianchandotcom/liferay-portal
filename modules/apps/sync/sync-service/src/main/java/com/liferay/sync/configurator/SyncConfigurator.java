@@ -23,14 +23,15 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.sync.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.messaging.SyncDLFileVersionDiffMessageListener;
+import com.liferay.sync.service.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.util.VerifyUtil;
 
 import java.util.Dictionary;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
@@ -41,6 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = SyncConfigurator.class)
 public class SyncConfigurator {
 
+	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 

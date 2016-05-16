@@ -876,16 +876,20 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkPoshiCharactersAfterDefinition(fileName, content);
 		checkPoshiCharactersBeforeDefinition(fileName, content);
 
-		Document document = readXML(content);
+		try {
+			Document document = readXML(content);
 
-		Element rootElement = document.getRootElement();
+			Element rootElement = document.getRootElement();
 
-		List<Element> commandElements = rootElement.elements("command");
+			List<Element> commandElements = rootElement.elements("command");
 
-		for (Element commandElement : commandElements) {
-			checkOrder(
-				fileName, commandElement, "property", null,
-				new ElementComparator());
+			for (Element commandElement : commandElements) {
+				checkOrder(
+					fileName, commandElement, "property", null,
+					new ElementComparator());
+			}
+		}
+		catch (Exception e) {
 		}
 
 		content = sortPoshiCommands(content);

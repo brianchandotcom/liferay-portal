@@ -6423,7 +6423,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 		<antcall inheritAll="false" target="update-sdk-properties" />
 
-		<antcall target="unzip-${app.server.type}-custom" />
+		<ant antfile="build-dist.xml" inheritAll="false" target="unzip-${app.server.type}-custom" />
 
 		<ant inheritAll="false" target="deploy" />
 

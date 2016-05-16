@@ -16,6 +16,14 @@
 		<available file="bnd.bnd" />
 	</condition>
 
+	<condition property="artifact.json">
+		<available file="package.json" />
+	</condition>
+
+	<condition property="artifact.legacy">
+		<available file="build.xml" />
+	</condition>
+
 	<target depends="download-artifact,record-artifact-change-log" name="dist-module-artifact" />
 
 	<target depends="move-artifact" name="dist-module-artifact-lpkg" />
@@ -107,7 +115,19 @@
 		</condition>
 	</target>
 
-	<target depends="get-artifact-properties-bnd,get-artifact-properties-json" name="get-artifact-properties" />
+	<target depends="get-artifact-properties-bnd,get-artifact-properties-json,get-artifact-properties-legacy" name="get-artifact-properties" />
+
+	<target if="artifact.legacy" name="get-artifact-properties-legacy">
+		<basename file="${basedir}" property="artifact.name" />
+
+		<property file="${ant.file}/../../release.properties" />
+
+		<property file="docroot/WEB-INF/liferay-plugin-package.properties" />
+
+		<property name="artifact.location.dest" value="${osgi.dir}/marketplace/${artifact.name}-${lp.version}.${module-incremental-version}.war" />
+
+		<property name="artifact.location.src" value="${osgi.dir}/../deploy/${artifact.name}-${lp.version}.${module-incremental-version}.war" />
+	</target>
 
 	<target if="artifact.bnd" name="get-artifact-properties-bnd">
 		<property file="bnd.bnd" />
@@ -127,7 +147,7 @@
 		</condition>
 	</target>
 
-	<target name="get-artifact-properties-json" unless="artifact.bnd">
+	<target if="artifact.json" name="get-artifact-properties-json">
 		<basename file="${basedir}" property="app.dir.name" />
 
 		<loadfile property="artifact.name" srcfile="package.json">

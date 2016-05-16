@@ -90,11 +90,11 @@ define("frontend-js-metal-web@1.0.6/metal-soy/src/Soy", ['exports', 'metal/src/m
 			}
 		};
 
-		Soy.prototype.buildTemplateData_ = function buildTemplateData_(data, params) {
+		Soy.prototype.buildTemplateData_ = function buildTemplateData_(params) {
 			var _this2 = this;
 
 			var component = this.component_;
-			data = _metal.object.mixin({}, data);
+			var data = _metal.object.mixin({}, component.config);
 			component.getStateKeys().forEach(function (key) {
 				// Get all state values except "element", since it helps performance
 				// and the element shouldn't be referenced inside a soy template anyway.
@@ -103,7 +103,7 @@ define("frontend-js-metal-web@1.0.6/metal-soy/src/Soy", ['exports', 'metal/src/m
 				}
 
 				var value = component[key];
-				if (component.getStateKeyConfig(key).isHtml || _this2.soyParamTypes_[key] === 'html') {
+				if (_this2.isHtmlParam_(key)) {
 					value = Soy.toIncDom(value);
 				}
 				data[key] = value;
@@ -125,10 +125,22 @@ define("frontend-js-metal-web@1.0.6/metal-soy/src/Soy", ['exports', 'metal/src/m
 			};
 		};
 
-		Soy.handleInterceptedCall_ = function handleInterceptedCall_(originalFn, opt_data) {
-			var ctor = originalFn.componentCtor;
-			var data = opt_data;
-			IncrementalDOM.elementVoid('Component', null, [], 'ctor', ctor, 'data', data);
+		Soy.handleInterceptedCall_ = function handleInterceptedCall_(originalFn) {
+			var opt_data = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+			var args = [originalFn.componentCtor, null, []];
+			for (var key in opt_data) {
+				args.push(key, opt_data[key]);
+			}
+			IncrementalDOM.elementVoid.apply(null, args);
+		};
+
+		Soy.prototype.isHtmlParam_ = function isHtmlParam_(name) {
+			if (this.component_.getStateKeyConfig(name).isHtml) {
+				return true;
+			}
+			var type = this.soyParamTypes_[name] || '';
+			return type.split('|').indexOf('html') !== -1;
 		};
 
 		Soy.register = function register(componentCtor, templates) {
@@ -141,12 +153,12 @@ define("frontend-js-metal-web@1.0.6/metal-soy/src/Soy", ['exports', 'metal/src/m
 			_component.ComponentRegistry.register(componentCtor);
 		};
 
-		Soy.prototype.renderIncDom = function renderIncDom(data) {
+		Soy.prototype.renderIncDom = function renderIncDom() {
 			var elementTemplate = this.component_.constructor.TEMPLATE;
-			if (_metal.core.isFunction(elementTemplate)) {
+			if (_metal.core.isFunction(elementTemplate) && !this.component_.render) {
 				elementTemplate = _SoyAop2.default.getOriginalFn(elementTemplate);
 				_SoyAop2.default.startInterception(Soy.handleInterceptedCall_);
-				elementTemplate(this.buildTemplateData_(data, elementTemplate.params || []), null, ijData);
+				elementTemplate(this.buildTemplateData_(elementTemplate.params || []), null, ijData);
 				_SoyAop2.default.stopInterception();
 			} else {
 				_IncrementalDomRender.prototype.renderIncDom.call(this);
@@ -158,6 +170,11 @@ define("frontend-js-metal-web@1.0.6/metal-soy/src/Soy", ['exports', 'metal/src/m
 		};
 
 		Soy.prototype.shouldUpdate = function shouldUpdate(changes) {
+			var should = _IncrementalDomRender.prototype.shouldUpdate.call(this, changes);
+			if (!should || this.component_.shouldUpdate) {
+				return should;
+			}
+
 			var fn = this.component_.constructor.TEMPLATE;
 			var params = fn ? _SoyAop2.default.getOriginalFn(fn).params : [];
 			for (var i = 0; i < params.length; i++) {

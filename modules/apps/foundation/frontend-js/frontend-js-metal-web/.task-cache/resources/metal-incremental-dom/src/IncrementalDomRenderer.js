@@ -57,10 +57,22 @@ define("frontend-js-metal-web@1.0.6/metal-incremental-dom/src/IncrementalDomRend
 
 			var _this = _possibleConstructorReturn(this, _ComponentRenderer.call(this, comp));
 
+			comp.context = {};
 			_this.changes_ = {};
 			_this.eventsCollector_ = new _component.EventsCollector(comp);
+			_this.lastElementCreationCall_ = [];
 			comp.on('stateKeyChanged', _this.handleStateKeyChanged_.bind(_this));
+			comp.on('attached', _this.handleAttached_.bind(_this));
 			comp.on('detached', _this.handleDetached_.bind(_this));
+
+			// Binds functions that will be used many times, to avoid creating new
+			// functions each time.
+			_this.handleInterceptedAttributesCall_ = _this.handleInterceptedAttributesCall_.bind(_this);
+			_this.handleInterceptedOpenCall_ = _this.handleInterceptedOpenCall_.bind(_this);
+			_this.handleInterceptedChildrenCloseCall_ = _this.handleInterceptedChildrenCloseCall_.bind(_this);
+			_this.handleInterceptedChildrenOpenCall_ = _this.handleInterceptedChildrenOpenCall_.bind(_this);
+			_this.handleInterceptedChildrenTextCall_ = _this.handleInterceptedChildrenTextCall_.bind(_this);
+			_this.renderInsidePatchDontSkip_ = _this.renderInsidePatchDontSkip_.bind(_this);
 			return _this;
 		}
 
@@ -75,7 +87,7 @@ define("frontend-js-metal-web@1.0.6/metal-incremental-dom/src/IncrementalDomRend
 			for (var i = 0; i < listeners.length; i += 2) {
 				var name = listeners[i];
 				var fn = listeners[i + 1];
-				if (name.startsWith('data-on') && _metal.core.isString(fn)) {
+				if (this.isListenerAttr_(name) && _metal.core.isString(fn)) {
 					this.listenersToAttach_.push({
 						eventName: name.substr(7),
 						fn: fn
@@ -92,6 +104,34 @@ define("frontend-js-metal-web@1.0.6/metal-incremental-dom/src/IncrementalDomRend
 			}
 		};
 
+		IncrementalDomRenderer.prototype.buildChildrenFn_ = function buildChildrenFn_(calls) {
+			var _this2 = this;
+
+			if (calls.length === 0) {
+				return emptyChildrenFn_;
+			}
+			var prefix = this.buildKey_();
+			var fn = function fn() {
+				var prevPrefix = _this2.currentPrefix_;
+				_this2.generatedKeyCount_[prefix] = 0;
+				_this2.currentPrefix_ = prefix;
+				_this2.intercept_();
+				for (var i = 0; i < calls.length; i++) {
+					IncrementalDOM[calls[i].name].apply(null, _metal.array.slice(calls[i].args, 1));
+				}
+				_IncrementalDomAop2.default.stopInterception();
+				_this2.currentPrefix_ = prevPrefix;
+			};
+			fn.iDomCalls = calls;
+			return fn;
+		};
+
+		IncrementalDomRenderer.prototype.buildKey_ = function buildKey_() {
+			var count = this.generatedKeyCount_[this.currentPrefix_] || 0;
+			this.generatedKeyCount_[this.currentPrefix_] = count + 1;
+			return this.currentPrefix_ + 'sub' + count;
+		};
+
 		IncrementalDomRenderer.prototype.disposeUnusedSubComponents_ = function disposeUnusedSubComponents_() {
 			var keys = Object.keys(this.component_.components);
 			var unused = [];
@@ -103,11 +143,8 @@ define("frontend-js-metal-web@1.0.6/metal-incremental-dom/src/IncrementalDomRend
 			this.component_.disposeSubComponents(unused);
 		};
 
-		IncrementalDomRenderer.prototype.getRenderingData = function getRenderingData() {
-			if (!this.renderingData_) {
-				this.renderingData_ = _metal.object.mixin({}, this.component_.getInitialConfig());
-			}
-			return this.renderingData_;
+		IncrementalDomRenderer.getComponentBeingRendered = function getComponentBeingRendered() {
+			return renderingComponents_[renderingComponents_.length - 1];
 		};
 
 		IncrementalDomRenderer.prototype.getSubComponent_ = function getSubComponent_(key, tagOrCtor, config) {
@@ -115,7 +152,6 @@ define("frontend-js-metal-web@1.0.6/metal-incremental-dom/src/IncrementalDomRend
 			if (comp.wasRendered) {
 				comp.setState(config);
 			}
-			comp.componentIncrementalDomKey_ = key;
 			return comp;
 		};
 
@@ -130,12 +166,20 @@ define("frontend-js-metal-web@1.0.6/metal-incremental-dom/src/IncrementalDomRend
 			}
 		};
 
+		IncrementalDomRenderer.finishedRenderingComponent = function finishedRenderingComponent() {
+			renderingComponents_.pop();
+		};
+
+		IncrementalDomRenderer.prototype.handleAttached_ = function handleAttached_(data) {
+			this.attachData_ = data;
+		};
+
 		IncrementalDomRenderer.prototype.handleDetached_ = function handleDetached_() {
 			this.eventsCollector_.detachAllListeners();
 		};
 
 		IncrementalDomRenderer.prototype.handleInterceptedAttributesCall_ = function handleInterceptedAttributesCall_(originalFn, element, name, value) {
-			if (name.startsWith('data-on')) {
+			if (this.isListenerAttr_(name)) {
 				var eventName = name.substr(7);
 				if (_metal.core.isFunction(element[name])) {
 					element.removeEventListener(eventName, element[name]);
@@ -143,128 +187,211 @@ define("frontend-js-metal-web@1.0.6/metal-incremental-dom/src/IncrementalDomRend
 				if (_metal.core.isFunction(value)) {
 					_dom2.default.on(element, eventName, value);
 				}
-			} else if (name === 'checked') {
+			}
+
+			if (name === 'checked') {
 				// This is a temporary fix to account for incremental dom setting
 				// "checked" as an attribute only, which can cause bugs since that won't
 				// necessarily check/uncheck the element it's set on. See
 				// https://github.com/google/incremental-dom/issues/198 for more details.
-				element.checked = _metal.core.isDefAndNotNull(value) && value !== false;
+				value = _metal.core.isDefAndNotNull(value) && value !== false;
 			}
-			originalFn(element, name, value);
+
+			if (_metal.core.isBoolean(value)) {
+				// Incremental dom sets boolean values as string data attributes, which
+				// is counter intuitive. This changes the behavior to use the actual
+				// boolean value.
+				element[name] = value;
+				if (value) {
+					element.setAttribute(name, '');
+				} else {
+					element.removeAttribute(name);
+				}
+			} else {
+				originalFn(element, name, value);
+			}
 		};
 
-		IncrementalDomRenderer.prototype.handleInterceptedCloseCall_ = function handleInterceptedCloseCall_(originalFn, tag) {
-			if (!this.isComponentTag_(tag)) {
-				originalFn(tag);
+		IncrementalDomRenderer.prototype.handleInterceptedChildrenCloseCall_ = function handleInterceptedChildrenCloseCall_(originalFn, callTag) {
+			if (this.isCurrentComponentTag_(callTag) && --this.componentToRender_.tagsCount === 0) {
+				var _componentToRender_ = this.componentToRender_;
+				var calls = _componentToRender_.calls;
+				var config = _componentToRender_.config;
+				var tag = _componentToRender_.tag;
+
+				config.children = this.buildChildrenFn_(calls);
+				this.componentToRender_ = null;
+				_IncrementalDomAop2.default.stopInterception();
+				return this.renderFromTag_(tag, config);
 			}
+			this.componentToRender_.calls.push({
+				name: 'elementClose',
+				args: arguments
+			});
+		};
+
+		IncrementalDomRenderer.prototype.handleInterceptedChildrenOpenCall_ = function handleInterceptedChildrenOpenCall_(originalFn, tag) {
+			if (this.isCurrentComponentTag_(tag)) {
+				this.componentToRender_.tagsCount++;
+			}
+			this.componentToRender_.calls.push({
+				name: 'elementOpen',
+				args: arguments
+			});
+		};
+
+		IncrementalDomRenderer.prototype.handleInterceptedChildrenTextCall_ = function handleInterceptedChildrenTextCall_() {
+			this.componentToRender_.calls.push({
+				name: 'text',
+				args: arguments
+			});
 		};
 
 		IncrementalDomRenderer.prototype.handleInterceptedOpenCall_ = function handleInterceptedOpenCall_(originalFn, tag) {
-			var node;
 			if (this.isComponentTag_(tag)) {
-				node = this.handleSubComponentCall_.apply(this, arguments);
+				return this.handleSubComponentCall_.apply(this, arguments);
 			} else {
-				node = this.handleRegularCall_.apply(this, arguments);
+				return this.handleRegularCall_.apply(this, arguments);
 			}
-			return node;
 		};
 
 		IncrementalDomRenderer.prototype.handleRegularCall_ = function handleRegularCall_(originalFn, tag, key, statics) {
 			var attrsArr = _metal.array.slice(arguments, 4);
 			this.addInlineListeners_((statics || []).concat(attrsArr));
 			var args = _metal.array.slice(arguments, 1);
-			if (!this.rootElementReached_ && this.component_.componentIncrementalDomKey_) {
-				args[1] = this.component_.componentIncrementalDomKey_;
+
+			var currComp = IncrementalDomRenderer.getComponentBeingRendered();
+			var currRenderer = currComp.getRenderer();
+			if (!currRenderer.rootElementReached_ && currComp.config.key) {
+				args[1] = currComp.config.key;
 			}
-			var node = originalFn.apply(null, args);
-			if (!this.rootElementReached_) {
-				this.rootElementReached_ = true;
-				if (this.component_.element !== node) {
-					this.component_.element = node;
+
+			// Don't allow using statics for now. This is because incremental dom
+			// won't update reused elements with new statics, but the compiler we're
+			// using for jsx is setting statics even when no key is set, which is not
+			// advisable (see http://google.github.io/incremental-dom/#rendering-dom/statics-array).
+			// Once that's fixed in the compiler we'll be able to remove this. Until
+			// then we'll go without this statics optimization.
+			if (statics) {
+				args[2] = null;
+				for (var i = 0; i < statics.length; i++) {
+					args.push(statics[i]);
 				}
 			}
+
+			var node = originalFn.apply(null, args);
+			this.updateElementIfNotReached_(node, args);
 			return node;
 		};
 
 		IncrementalDomRenderer.prototype.handleStateKeyChanged_ = function handleStateKeyChanged_(data) {
-			if (data.key !== 'element') {
-				this.changes_[data.key] = data;
-			}
+			this.changes_[data.key] = data;
 		};
 
 		IncrementalDomRenderer.prototype.handleSubComponentCall_ = function handleSubComponentCall_(originalFn, tag, key, statics) {
-			var config = {};
+			var config = { key: key };
 			var attrsArr = (statics || []).concat(_metal.array.slice(arguments, 4));
 			for (var i = 0; i < attrsArr.length; i += 2) {
 				config[attrsArr[i]] = attrsArr[i + 1];
 			}
 
-			var tagOrCtor = tag;
-			if (tag === 'Component' && config.ctor) {
-				tagOrCtor = config.ctor;
-				config = config.data || {};
+			this.componentToRender_ = {
+				calls: [],
+				config: config,
+				tag: tag,
+				tagsCount: 1
+			};
+			_IncrementalDomAop2.default.startInterception({
+				elementClose: this.handleInterceptedChildrenCloseCall_,
+				elementOpen: this.handleInterceptedChildrenOpenCall_,
+				text: this.handleInterceptedChildrenTextCall_
+			});
+		};
+
+		IncrementalDomRenderer.prototype.hasChangedBesidesElement_ = function hasChangedBesidesElement_() {
+			var count = Object.keys(this.changes_).length;
+			if (this.changes_.hasOwnProperty('element')) {
+				count--;
 			}
-			var comp = this.renderSubComponent_(tagOrCtor, config);
-			return comp.element;
+			return count > 0;
+		};
+
+		IncrementalDomRenderer.prototype.intercept_ = function intercept_() {
+			_IncrementalDomAop2.default.startInterception({
+				attributes: this.handleInterceptedAttributesCall_,
+				elementOpen: this.handleInterceptedOpenCall_
+			});
 		};
 
 		IncrementalDomRenderer.prototype.isComponentTag_ = function isComponentTag_(tag) {
-			return tag[0] === tag[0].toUpperCase();
+			return !_metal.core.isString(tag) || tag[0] === tag[0].toUpperCase();
+		};
+
+		IncrementalDomRenderer.prototype.isCurrentComponentTag_ = function isCurrentComponentTag_(tag) {
+			return this.isComponentTag_(tag) && this.componentToRender_.tag === tag;
+		};
+
+		IncrementalDomRenderer.prototype.isListenerAttr_ = function isListenerAttr_(attr) {
+			return attr.substr(0, 7) === 'data-on';
 		};
 
 		IncrementalDomRenderer.prototype.render = function render() {
 			this.patch();
 		};
 
-		IncrementalDomRenderer.prototype.renderIncDom = function renderIncDom() {
-			IncrementalDOM.elementVoid('div');
+		IncrementalDomRenderer.prototype.renderFromTag_ = function renderFromTag_(tag, config) {
+			if (_metal.core.isString(tag) || tag.prototype.getRenderer) {
+				var comp = this.renderSubComponent_(tag, config);
+				this.updateElementIfNotReached_(comp);
+				return comp.element;
+			} else {
+				return tag(config);
+			}
 		};
 
-		IncrementalDomRenderer.prototype.renderWithoutPatch = function renderWithoutPatch(opt_data) {
-			// Mark that there shouldn't be an update for state changes so far, since
-			// render has already been called.
-			this.changes_ = {};
+		IncrementalDomRenderer.prototype.renderIncDom = function renderIncDom() {
+			if (this.component_.render) {
+				this.component_.render();
+			} else {
+				IncrementalDOM.elementVoid('div');
+			}
+		};
 
+		IncrementalDomRenderer.prototype.renderInsidePatch = function renderInsidePatch() {
+			if (this.component_.wasRendered && !this.shouldUpdate(this.changes_)) {
+				this.skipRerender_();
+				return;
+			}
+			this.renderInsidePatchDontSkip_();
+		};
+
+		IncrementalDomRenderer.prototype.renderInsidePatchDontSkip_ = function renderInsidePatchDontSkip_() {
+			IncrementalDomRenderer.startedRenderingComponent(this.component_);
+			this.changes_ = {};
 			this.rootElementReached_ = false;
 			this.subComponentsFound_ = {};
-			this.generatedKeyCount_ = 0;
+			this.generatedKeyCount_ = {};
 			this.listenersToAttach_ = [];
-			_IncrementalDomAop2.default.startInterception(this.handleInterceptedOpenCall_.bind(this), this.handleInterceptedCloseCall_.bind(this), this.handleInterceptedAttributesCall_.bind(this));
-			_metal.object.mixin(this.getRenderingData(), opt_data);
-			this.renderIncDom(this.getRenderingData());
+			this.currentPrefix_ = '';
+			this.intercept_();
+			this.renderIncDom();
 			_IncrementalDomAop2.default.stopInterception();
 			this.attachInlineListeners_();
-		};
-
-		IncrementalDomRenderer.prototype.shouldUpdate = function shouldUpdate() {
-			return true;
-		};
-
-		IncrementalDomRenderer.prototype.patch = function patch() {
-			var tempParent = this.guaranteeParent_();
-			if (tempParent) {
-				IncrementalDOM.patch(tempParent, this.renderWithoutPatch.bind(this));
-				_dom2.default.exitDocument(this.component_.element);
-			} else {
-				IncrementalDOM.patchOuter(this.component_.element, this.renderWithoutPatch.bind(this));
+			IncrementalDomRenderer.finishedRenderingComponent();
+			if (!this.rootElementReached_) {
+				this.component_.element = null;
 			}
-		};
-
-		IncrementalDomRenderer.prototype.update = function update() {
-			var changedKeys = Object.keys(this.changes_);
-			if (changedKeys.length > 0 && this.shouldUpdate(this.changes_)) {
-				this.patch();
-				this.eventsCollector_.detachUnusedListeners();
-				this.disposeUnusedSubComponents_();
-			}
+			this.emit('rendered', !this.component_.wasRendered);
 		};
 
 		IncrementalDomRenderer.prototype.renderSubComponent_ = function renderSubComponent_(tagOrCtor, config) {
-			var key = config.key || 'sub' + this.generatedKeyCount_++;
+			var key = config.key || this.buildKey_();
 			var comp = this.getSubComponent_(key, tagOrCtor, config);
+			this.updateContext_(comp);
 			var renderer = comp.getRenderer();
 			if (renderer instanceof IncrementalDomRenderer) {
-				renderer.renderWithoutPatch(config);
+				renderer.lastParentComponent_ = IncrementalDomRenderer.getComponentBeingRendered();
+				renderer.renderInsidePatch();
 			} else {
 				console.warn('IncrementalDomRenderer doesn\'t support rendering sub components ' + 'that don\'t use IncrementalDomRenderer as well, like:', comp);
 			}
@@ -275,8 +402,94 @@ define("frontend-js-metal-web@1.0.6/metal-incremental-dom/src/IncrementalDomRend
 			return comp;
 		};
 
+		IncrementalDomRenderer.prototype.shouldUpdate = function shouldUpdate(changes) {
+			if (this.component_.shouldUpdate) {
+				return this.component_.shouldUpdate(changes);
+			}
+			return true;
+		};
+
+		IncrementalDomRenderer.prototype.skipRerender_ = function skipRerender_() {
+			if (this.lastElementCreationCall_.length > 0) {
+				IncrementalDOM.elementOpen.apply(null, this.lastElementCreationCall_);
+				IncrementalDOM.skip();
+				IncrementalDOM.elementClose(this.lastElementCreationCall_[0]);
+			}
+		};
+
+		IncrementalDomRenderer.startedRenderingComponent = function startedRenderingComponent(comp) {
+			renderingComponents_.push(comp);
+		};
+
+		IncrementalDomRenderer.prototype.patch = function patch() {
+			if (!this.component_.element && this.lastParentComponent_) {
+				// If the component has no content but was rendered from another component,
+				// we'll need to patch this parent to make sure that any new content will
+				// be added in the right place.
+				this.lastParentComponent_.getRenderer().patch();
+				return;
+			}
+
+			var tempParent = this.guaranteeParent_();
+			if (tempParent) {
+				IncrementalDOM.patch(tempParent, this.renderInsidePatchDontSkip_);
+				_dom2.default.exitDocument(this.component_.element);
+				if (this.component_.element && this.component_.inDocument) {
+					this.component_.renderElement_(this.attachData_.parent, this.attachData_.sibling);
+				}
+			} else {
+				var element = this.component_.element;
+				IncrementalDOM.patchOuter(element, this.renderInsidePatchDontSkip_);
+				if (!this.component_.element) {
+					_dom2.default.exitDocument(element);
+				}
+			}
+		};
+
+		IncrementalDomRenderer.prototype.update = function update() {
+			if (this.hasChangedBesidesElement_() && this.shouldUpdate(this.changes_)) {
+				this.patch();
+				this.eventsCollector_.detachUnusedListeners();
+				this.disposeUnusedSubComponents_();
+			}
+		};
+
+		IncrementalDomRenderer.prototype.updateElementIfNotReached_ = function updateElementIfNotReached_(nodeOrComponent, opt_args) {
+			var currComp = IncrementalDomRenderer.getComponentBeingRendered();
+			var currRenderer = currComp.getRenderer();
+			if (!currRenderer.rootElementReached_) {
+				currRenderer.rootElementReached_ = true;
+
+				var node = nodeOrComponent;
+				var args = opt_args;
+
+				if (nodeOrComponent instanceof _component.Component) {
+					var renderer = nodeOrComponent.getRenderer();
+					args = renderer instanceof IncrementalDomRenderer ? renderer.lastElementCreationCall_ : [];
+					node = nodeOrComponent.element;
+				}
+
+				if (currComp.element !== node) {
+					currComp.element = node;
+				}
+				currRenderer.lastElementCreationCall_ = args;
+			}
+		};
+
+		IncrementalDomRenderer.prototype.updateContext_ = function updateContext_(comp) {
+			var context = comp.context;
+			var parent = IncrementalDomRenderer.getComponentBeingRendered();
+			var childContext = parent.getChildContext ? parent.getChildContext() : {};
+			_metal.object.mixin(context, parent.context, childContext);
+			comp.context = context;
+		};
+
 		return IncrementalDomRenderer;
 	}(_component.ComponentRenderer);
+
+	var renderingComponents_ = [];
+	function emptyChildrenFn_() {}
+	emptyChildrenFn_.calls = [];
 
 	exports.default = IncrementalDomRenderer;
 });

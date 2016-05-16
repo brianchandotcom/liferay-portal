@@ -91,7 +91,9 @@ define("frontend-js-metal-web@1.0.6/metal-popover/src/Popover", ['exports', 'met
    */
 		content: {
 			isHtml: true,
-			validator: _metal2.default.isString
+			validator: function validator(val) {
+				return _metal2.default.isString(val) || _metal2.default.isFunction(val);
+			}
 		},
 
 		/**
@@ -102,6 +104,15 @@ define("frontend-js-metal-web@1.0.6/metal-popover/src/Popover", ['exports', 'met
 		triggerEvents: {
 			validator: Array.isArray,
 			value: ['click', 'click']
+		},
+
+		/**
+   * Flag indicating if an arrow should be rendered for the popover.
+   * @type {boolean}
+   * @default true
+   */
+		withArrow: {
+			value: true
 		}
 	};
 

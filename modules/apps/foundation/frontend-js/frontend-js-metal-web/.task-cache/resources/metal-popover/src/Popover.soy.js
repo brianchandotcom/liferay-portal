@@ -83,6 +83,7 @@ define("frontend-js-metal-web@1.0.6/metal-popover/src/Popover.soy", ['exports', 
      *    alignedPosition: (?),
      *    elementClasses: (?),
      *    position: (?),
+     *    withArrow: (?),
      *    content: (?soydata.SanitizedHtml|string|undefined),
      *    title: (?soydata.SanitizedHtml|string|undefined)
      * }} opt_data
@@ -101,7 +102,9 @@ define("frontend-js-metal-web@1.0.6/metal-popover/src/Popover.soy", ['exports', 
       var currentPosition__soy4 = opt_data.alignedPosition != null ? opt_data.alignedPosition : opt_data.position;
       var positionClass__soy5 = currentPosition__soy4 != null ? positionClasses__soy3[currentPosition__soy4] : 'bottom';
       ie_open('div', null, null, 'class', 'popover ' + positionClass__soy5 + (opt_data.elementClasses ? ' ' + opt_data.elementClasses : ''), 'role', 'tooltip');
-      ie_void('div', null, null, 'class', 'arrow');
+      if (opt_data.withArrow || !(opt_data.withArrow != null)) {
+        ie_void('div', null, null, 'class', 'arrow');
+      }
       ie_open('h3', null, null, 'class', 'popover-title' + (title ? '' : ' hidden'));
       if (title) {
         title();
@@ -121,7 +124,8 @@ define("frontend-js-metal-web@1.0.6/metal-popover/src/Popover.soy", ['exports', 
       $render.soyTemplateName = 'Popover.render';
     }
 
-    exports.render.params = ["content", "title", "alignedPosition", "elementClasses", "position"];
+    exports.render.params = ["content", "title", "alignedPosition", "elementClasses", "position", "withArrow"];
+    exports.render.types = { "content": "html", "title": "html", "alignedPosition": "any", "elementClasses": "any", "position": "any", "withArrow": "any" };
     exports.templates = templates = exports;
     return exports;
   });
@@ -139,8 +143,8 @@ define("frontend-js-metal-web@1.0.6/metal-popover/src/Popover.soy", ['exports', 
   }(_Component3.default);
 
   _Soy2.default.register(Popover, templates);
-  exports.default = templates;
   exports.Popover = Popover;
   exports.templates = templates;
+  exports.default = templates;
 });
 //# sourceMappingURL=Popover.soy.js.map

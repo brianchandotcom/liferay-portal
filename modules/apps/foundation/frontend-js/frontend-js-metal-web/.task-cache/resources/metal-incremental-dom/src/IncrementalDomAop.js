@@ -20,24 +20,17 @@ define("frontend-js-metal-web@1.0.6/metal-incremental-dom/src/IncrementalDomAop"
 			return fnStack[0];
 		};
 
-		IncrementalDomAop.startInterception = function startInterception(openFn, closeFn, attributesFn) {
-			openFn = openFn.bind(null, fnStack[0].elementOpen);
-			closeFn = closeFn.bind(null, fnStack[0].elementClose);
-			fnStack.push({
-				attr: fnAttr,
-				attributes: attributesFn.bind(null, fnStack[0].attributes),
-				elementClose: closeFn,
-				elementOpen: openFn,
-				elementOpenEnd: function elementOpenEnd() {
-					return openFn.apply(null, collectedArgs);
-				},
-				elementOpenStart: fnOpenStart,
-				elementVoid: function elementVoid(tag) {
-					var node = openFn.apply(null, arguments);
-					closeFn(tag);
-					return node;
-				}
+		IncrementalDomAop.startInterception = function startInterception(fns) {
+			var originals = IncrementalDomAop.getOriginalFns();
+			fns = _metal.object.map(fns, function (name, value) {
+				return value.bind(null, originals[name]);
 			});
+			fnStack.push(_metal.object.mixin({}, originals, fns, {
+				attr: fnAttr,
+				elementOpenEnd: fnOpenEnd,
+				elementOpenStart: fnOpenStart,
+				elementVoid: fnVoid
+			}));
 		};
 
 		IncrementalDomAop.stopInterception = function stopInterception() {
@@ -56,7 +49,8 @@ define("frontend-js-metal-web@1.0.6/metal-incremental-dom/src/IncrementalDomAop"
 		elementOpen: IncrementalDOM.elementOpen,
 		elementOpenEnd: IncrementalDOM.elementOpenEnd,
 		elementOpenStart: IncrementalDOM.elementOpenStart,
-		elementVoid: IncrementalDOM.elementVoid
+		elementVoid: IncrementalDOM.elementVoid,
+		text: IncrementalDOM.text
 	}];
 
 	var collectedArgs = [];
@@ -69,9 +63,21 @@ define("frontend-js-metal-web@1.0.6/metal-incremental-dom/src/IncrementalDomAop"
 		collectedArgs = [tag, key, statics];
 	}
 
+	function fnOpenEnd() {
+		return getFn('elementOpen').apply(null, collectedArgs);
+	}
+
+	function fnVoid(tag) {
+		getFn('elementOpen').apply(null, arguments);
+		return getFn('elementClose')(tag);
+	}
+
+	function getFn(name) {
+		return fnStack[fnStack.length - 1][name];
+	}
+
 	function handleCall(name) {
-		var fn = fnStack[fnStack.length - 1][name];
-		fn.apply(null, _metal.array.slice(arguments, 1));
+		return getFn(name).apply(null, _metal.array.slice(arguments, 1));
 	}
 
 	IncrementalDOM.attr = handleCall.bind(null, 'attr');
@@ -80,6 +86,7 @@ define("frontend-js-metal-web@1.0.6/metal-incremental-dom/src/IncrementalDomAop"
 	IncrementalDOM.elementOpenEnd = handleCall.bind(null, 'elementOpenEnd');
 	IncrementalDOM.elementOpenStart = handleCall.bind(null, 'elementOpenStart');
 	IncrementalDOM.elementVoid = handleCall.bind(null, 'elementVoid');
+	IncrementalDOM.text = handleCall.bind(null, 'text');
 
 	IncrementalDOM.attributes[IncrementalDOM.symbols.default] = handleCall.bind(null, 'attributes');
 

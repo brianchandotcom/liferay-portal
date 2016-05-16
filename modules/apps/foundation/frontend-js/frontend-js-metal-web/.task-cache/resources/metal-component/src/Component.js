@@ -123,9 +123,9 @@ define("frontend-js-metal-web@1.0.6/metal-component/src/Component", ['exports', 
 			_this.DEFAULT_ELEMENT_PARENT = document.body;
 
 			_metal.core.mergeSuperClassesProperty(_this.constructor, 'ELEMENT_CLASSES', _this.mergeElementClasses_);
-			_metal.core.mergeSuperClassesProperty(_this.constructor, 'RENDERER', _metal.array.firstDefinedValue);
 
-			_this.renderer_ = new _this.constructor.RENDERER_MERGED(_this);
+			_this.renderer_ = _this.createRenderer();
+			_this.renderer_.on('rendered', _this.rendered.bind(_this));
 
 			_this.on('stateChanged', _this.handleStateChanged_);
 			_this.newListenerHandle_ = _this.on('newListener', _this.handleNewListener_);
@@ -171,13 +171,13 @@ define("frontend-js-metal-web@1.0.6/metal-component/src/Component", ['exports', 
 		};
 
 		Component.prototype.attach = function attach(opt_parentElement, opt_siblingElement) {
-			if (!this.element) {
-				throw new Error(Component.Error.ELEMENT_NOT_CREATED);
-			}
 			if (!this.inDocument) {
 				this.renderElement_(opt_parentElement, opt_siblingElement);
 				this.inDocument = true;
-				this.emit('attached');
+				this.emit('attached', {
+					parent: opt_parentElement,
+					sibling: opt_siblingElement
+				});
 				this.attached();
 			}
 			return this;
@@ -186,11 +186,18 @@ define("frontend-js-metal-web@1.0.6/metal-component/src/Component", ['exports', 
 		Component.prototype.attached = function attached() {};
 
 		Component.prototype.addSubComponent = function addSubComponent(key, componentNameOrCtor, opt_data) {
-			if (!this.components[key]) {
-				var ConstructorFn = componentNameOrCtor;
-				if (_metal.core.isString(ConstructorFn)) {
-					ConstructorFn = _ComponentRegistry2.default.getConstructor(componentNameOrCtor);
-				}
+			var ConstructorFn = componentNameOrCtor;
+			if (_metal.core.isString(ConstructorFn)) {
+				ConstructorFn = _ComponentRegistry2.default.getConstructor(componentNameOrCtor);
+			}
+
+			var component = this.components[key];
+			if (component && component.constructor !== ConstructorFn) {
+				component.dispose();
+				component = null;
+			}
+
+			if (!component) {
 				this.components[key] = new ConstructorFn(opt_data, false);
 			}
 			return this.components[key];
@@ -198,13 +205,18 @@ define("frontend-js-metal-web@1.0.6/metal-component/src/Component", ['exports', 
 
 		Component.prototype.created = function created() {};
 
+		Component.prototype.createRenderer = function createRenderer() {
+			_metal.core.mergeSuperClassesProperty(this.constructor, 'RENDERER', _metal.array.firstDefinedValue);
+			return new this.constructor.RENDERER_MERGED(this);
+		};
+
 		Component.prototype.delegate = function delegate(eventName, selector, callback) {
 			return this.on('delegate:' + eventName + ':' + selector, callback);
 		};
 
 		Component.prototype.detach = function detach() {
 			if (this.inDocument) {
-				if (this.element.parentNode) {
+				if (this.element && this.element.parentNode) {
 					this.element.parentNode.removeChild(this.element);
 				}
 				this.inDocument = false;
@@ -216,7 +228,11 @@ define("frontend-js-metal-web@1.0.6/metal-component/src/Component", ['exports', 
 
 		Component.prototype.detached = function detached() {};
 
+		Component.prototype.disposed = function disposed() {};
+
 		Component.prototype.disposeInternal = function disposeInternal() {
+			this.disposed();
+
 			this.detach();
 
 			if (this.elementEventProxy_) {
@@ -342,14 +358,18 @@ define("frontend-js-metal-web@1.0.6/metal-component/src/Component", ['exports', 
 
 		Component.prototype.renderElement_ = function renderElement_(opt_parentElement, opt_siblingElement) {
 			var element = this.element;
-			if (opt_siblingElement || !element.parentNode) {
+			if (element && (opt_siblingElement || !element.parentNode)) {
 				var parent = _dom.dom.toElement(opt_parentElement) || this.DEFAULT_ELEMENT_PARENT;
 				parent.insertBefore(element, _dom.dom.toElement(opt_siblingElement));
 			}
 		};
 
 		Component.prototype.setterElementFn_ = function setterElementFn_(newVal, currentVal) {
-			return _dom.dom.toElement(newVal) || currentVal;
+			var element = newVal;
+			if (element) {
+				element = _dom.dom.toElement(newVal) || currentVal;
+			}
+			return element;
 		};
 
 		Component.prototype.setUpProxy_ = function setUpProxy_() {
@@ -393,12 +413,14 @@ define("frontend-js-metal-web@1.0.6/metal-component/src/Component", ['exports', 
 			}
 		};
 
+		Component.prototype.rendered = function rendered() {};
+
 		Component.prototype.validatorElementClassesFn_ = function validatorElementClassesFn_(val) {
 			return _metal.core.isString(val);
 		};
 
 		Component.prototype.validatorElementFn_ = function validatorElementFn_(val) {
-			return _metal.core.isElement(val) || _metal.core.isString(val);
+			return _metal.core.isElement(val) || _metal.core.isString(val) || !_metal.core.isDefAndNotNull(val);
 		};
 
 		Component.prototype.validatorEventsFn_ = function validatorEventsFn_(val) {
@@ -471,21 +493,10 @@ define("frontend-js-metal-web@1.0.6/metal-component/src/Component", ['exports', 
 	Component.RENDERER = _ComponentRenderer2.default;
 
 	/**
-  * Errors thrown by the component.
-  * @enum {string}
-  */
-	Component.Error = {
-		/**
-   * Error when the component is attached but its element hasn't been created yet.
-   */
-		ELEMENT_NOT_CREATED: 'Can\'t attach component element. It hasn\'t been created yet.'
-	};
-
-	/**
   * A list with state key names that will automatically be rejected as invalid.
   * @type {!Array<string>}
   */
-	Component.INVALID_KEYS = ['components'];
+	Component.INVALID_KEYS = ['components', 'wasRendered'];
 
 	exports.default = Component;
 });

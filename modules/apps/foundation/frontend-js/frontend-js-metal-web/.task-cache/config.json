@@ -167,6 +167,18 @@
     "frontend-js-metal-web@1.0.6/metal-popover/src/Popover.soy": {
         "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]
     },
+    "frontend-js-metal-web@1.0.6/metal-pagination/src/Pagination-min": {
+        "dependencies": ["exports", "metal/src/metal", "./Pagination.soy", "metal-component/src/all/component", "metal-soy/src/Soy", "metal-jquery-adapter/src/JQueryAdapter"]
+    },
+    "frontend-js-metal-web@1.0.6/metal-pagination/src/Pagination": {
+        "dependencies": ["exports", "metal/src/metal", "./Pagination.soy", "metal-component/src/all/component", "metal-soy/src/Soy", "metal-jquery-adapter/src/JQueryAdapter"]
+    },
+    "frontend-js-metal-web@1.0.6/metal-pagination/src/Pagination.soy-min": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]
+    },
+    "frontend-js-metal-web@1.0.6/metal-pagination/src/Pagination.soy": {
+        "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]
+    },
     "frontend-js-metal-web@1.0.6/metal-modal/src/Modal-min": {
         "dependencies": ["exports", "metal/src/metal", "metal-dom/src/all/dom", "metal-events/src/events", "./Modal.soy", "metal-component/src/all/component", "metal-soy/src/Soy", "metal-jquery-adapter/src/JQueryAdapter"]
     },
@@ -209,12 +221,6 @@
     "frontend-js-metal-web@1.0.6/metal-jquery-adapter/src/JQueryAdapter": {
         "dependencies": ["exports"]
     },
-    "frontend-js-metal-web@1.0.6/metal-incremental-dom/src/incremental-dom-min": {
-        "dependencies": []
-    },
-    "frontend-js-metal-web@1.0.6/metal-incremental-dom/src/incremental-dom": {
-        "dependencies": []
-    },
     "frontend-js-metal-web@1.0.6/metal-incremental-dom/src/IncrementalDomAop-min": {
         "dependencies": ["exports", "metal/src/metal", "./incremental-dom"]
     },
@@ -226,6 +232,12 @@
     },
     "frontend-js-metal-web@1.0.6/metal-incremental-dom/src/IncrementalDomRenderer": {
         "dependencies": ["exports", "metal/src/metal", "metal-dom/src/all/dom", "metal-component/src/all/component", "./IncrementalDomAop", "./incremental-dom"]
+    },
+    "frontend-js-metal-web@1.0.6/metal-incremental-dom/src/incremental-dom-min": {
+        "dependencies": []
+    },
+    "frontend-js-metal-web@1.0.6/metal-incremental-dom/src/incremental-dom": {
+        "dependencies": []
     },
     "frontend-js-metal-web@1.0.6/metal-events/src/EventEmitter-min": {
         "dependencies": ["exports", "metal/src/metal", "./EventHandle"]
@@ -305,12 +317,6 @@
     "frontend-js-metal-web@1.0.6/metal-drag-drop/src/all/drag": {
         "dependencies": ["exports", "../Drag", "../DragDrop"]
     },
-    "frontend-js-metal-web@1.0.6/metal-dom/src/dom-min": {
-        "dependencies": ["exports", "metal/src/metal", "./DomEventHandle"]
-    },
-    "frontend-js-metal-web@1.0.6/metal-dom/src/dom": {
-        "dependencies": ["exports", "metal/src/metal", "./DomEventHandle"]
-    },
     "frontend-js-metal-web@1.0.6/metal-dom/src/DomEventEmitterProxy-min": {
         "dependencies": ["exports", "./dom", "metal-events/src/events"]
     },
@@ -322,6 +328,12 @@
     },
     "frontend-js-metal-web@1.0.6/metal-dom/src/DomEventHandle": {
         "dependencies": ["exports", "metal-events/src/events"]
+    },
+    "frontend-js-metal-web@1.0.6/metal-dom/src/dom-min": {
+        "dependencies": ["exports", "metal/src/metal", "./DomEventHandle"]
+    },
+    "frontend-js-metal-web@1.0.6/metal-dom/src/dom": {
+        "dependencies": ["exports", "metal/src/metal", "./DomEventHandle"]
     },
     "frontend-js-metal-web@1.0.6/metal-dom/src/events-min": {
         "dependencies": ["./dom", "./features"]

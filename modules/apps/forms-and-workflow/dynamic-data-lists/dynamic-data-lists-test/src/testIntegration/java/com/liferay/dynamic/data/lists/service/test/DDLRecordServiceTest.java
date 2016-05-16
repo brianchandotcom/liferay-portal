@@ -110,8 +110,7 @@ public class DDLRecordServiceTest {
 
 	@Test(expected = StorageException.class)
 	public void testAddRecordWithFailStorage() throws Exception {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			_availableLocales, _defaultLocale);
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("Field");
 
 		DDLRecordSet ddlRecordSet = addRecordSet(
 			ddmForm, FailStorageAdapter.STORAGE_TYPE);

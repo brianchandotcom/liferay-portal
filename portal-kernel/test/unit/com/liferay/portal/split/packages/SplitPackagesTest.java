@@ -24,8 +24,11 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
@@ -38,18 +41,106 @@ public class SplitPackagesTest {
 
 	@Test
 	public void testSplitPackage() throws IOException {
-		Set<String> portalImplPackageNames = _getPackageNames(
-			Paths.get("portal-impl/src"));
+		final Map<Path, Set<String>> moduleMap = new HashMap<>();
 
-		Set<String> portalKernelPackageNames = _getPackageNames(
-			Paths.get("portal-kernel/src"));
+		final Path portalPath = Paths.get(System.getProperty("user.dir"));
 
-		portalImplPackageNames.retainAll(portalKernelPackageNames);
+		final Set<Path> ignorePaths = new HashSet<>(
+			Arrays.asList(
+				portalPath.resolve("portal-test"),
+				portalPath.resolve("portal-test-integration")));
 
-		Assert.assertTrue(
-			"Detected split packages in portal-impl and portal-kernel: " +
-				portalImplPackageNames,
-			portalImplPackageNames.isEmpty());
+		Files.walkFileTree(
+			portalPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					if (ignorePaths.contains(dirPath)) {
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					if (portalPath.equals(dirPath.getParent())) {
+						Path sourcePath = dirPath.resolve("src");
+
+						if (Files.exists(sourcePath)) {
+							_checkSplitPackages(
+								dirPath, portalPath, moduleMap, sourcePath);
+
+							return FileVisitResult.SKIP_SUBTREE;
+						}
+					}
+
+					if (Files.exists(dirPath.resolve("portal.build"))) {
+						Path sourcePath = dirPath.resolve("src/main/java");
+
+						if (Files.exists(dirPath.resolve("docroot"))) {
+							sourcePath = dirPath.resolve(
+								"docroot/WEB-INF/src/main/java");
+						}
+
+						if (Files.exists(sourcePath)) {
+							_checkSplitPackages(
+								dirPath, portalPath, moduleMap, sourcePath);
+						}
+
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
+	private void _checkSplitPackages(
+			Path dirPath, Path portalPath, Map<Path, Set<String>> moduleMap,
+			Path sourcePath)
+		throws IOException {
+
+		Set<String> packages = _getPackageNames(sourcePath);
+
+		boolean addedToImpl = false;
+
+		for (Map.Entry<Path, Set<String>> entry : moduleMap.entrySet()) {
+			Set<String> modulePackages = new HashSet<>(entry.getValue());
+
+			modulePackages.retainAll(packages);
+
+			Path modulePath = entry.getKey();
+
+			if (!modulePackages.isEmpty() &&
+				modulePath.equals(Paths.get("portal-impl"))) {
+
+				String buildGradleContent = new String(
+					Files.readAllBytes(dirPath.resolve("build.gradle")));
+
+				if (buildGradleContent.contains(
+						"deployDir = new File(appServerPortalDir, " +
+							"\"WEB-INF/lib\")")) {
+
+					Set<String> portalImplPackages = entry.getValue();
+
+					portalImplPackages.addAll(packages);
+
+					addedToImpl = true;
+
+					modulePackages.clear();
+				}
+			}
+
+			Assert.assertTrue(
+				"Detected split packages in " + portalPath.relativize(dirPath) +
+					" and " + modulePath + ": " + modulePackages,
+				modulePackages.isEmpty());
+		}
+
+		if (!addedToImpl) {
+			moduleMap.put(portalPath.relativize(dirPath), packages);
+		}
 	}
 
 	private Set<String> _getPackageNames(final Path path) throws IOException {

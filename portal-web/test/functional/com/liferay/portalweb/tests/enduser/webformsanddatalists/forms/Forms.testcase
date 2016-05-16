@@ -1988,9 +1988,8 @@
 	</command>
 
 	<command name="SubmitFormWithRequiredRepeatingTextField" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<description message="This is a use case for LPS-59335." />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Navigator#openURL" />
 

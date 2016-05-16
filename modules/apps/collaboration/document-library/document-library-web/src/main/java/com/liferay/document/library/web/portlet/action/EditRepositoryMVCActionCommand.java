@@ -22,6 +22,8 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.exception.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -88,6 +90,10 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 					 e instanceof InvalidRepositoryException ||
 					 e instanceof RepositoryNameException) {
 
+				if (e instanceof InvalidRepositoryException) {
+					_log.error(e);
+				}
+
 				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
@@ -150,6 +156,9 @@ public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 				repositoryId, name, description);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditRepositoryMVCActionCommand.class);
 
 	private RepositoryService _repositoryService;
 

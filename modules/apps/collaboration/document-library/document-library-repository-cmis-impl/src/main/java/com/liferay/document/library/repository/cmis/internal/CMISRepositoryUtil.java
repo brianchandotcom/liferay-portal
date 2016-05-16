@@ -50,7 +50,7 @@ public class CMISRepositoryUtil {
 
 		if (!typeSettingsProperties.containsKey(typeSettingsKey)) {
 			org.apache.chemistry.opencmis.client.api.Repository cmisRepository =
-				_sessionFactory.getRepositories(parameters).get(0);
+				getCMISRepository(parameters);
 
 			typeSettingsProperties.setProperty(
 				typeSettingsKey, cmisRepository.getId());
@@ -73,7 +73,9 @@ public class CMISRepositoryUtil {
 			createSession(Map<String, String> parameters)
 		throws PrincipalException, RepositoryException {
 
-		try {
+		try (ClassLoaderSetter classLoaderSetter = new ClassLoaderSetter(
+				CMISRepositoryUtil.class.getClassLoader())) {
+
 			Session session = _sessionFactory.createSession(parameters);
 
 			session.setDefaultContext(_operationContext);
@@ -105,6 +107,16 @@ public class CMISRepositoryUtil {
 		}
 
 		return value;
+	}
+
+	protected static org.apache.chemistry.opencmis.client.api.Repository
+		getCMISRepository(Map<String, String> parameters) {
+
+		try (ClassLoaderSetter classLoaderSetter = new ClassLoaderSetter(
+				CMISRepositoryUtil.class.getClassLoader())) {
+
+			return _sessionFactory.getRepositories(parameters).get(0);
+		}
 	}
 
 	private static final OperationContext _operationContext;

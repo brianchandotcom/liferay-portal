@@ -339,9 +339,15 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			"antcall", rootElement, null);
 
 		for (Element antCallElement : antCallElements) {
-			checkTargetName(
-				antCallElement.attributeValue("target"), absolutePath,
-				fileName);
+			String targetName = antCallElement.attributeValue("target");
+
+			if ((targetName == null) ||
+				targetName.contains(StringPool.OPEN_CURLY_BRACE)) {
+
+				continue;
+			}
+
+			checkTargetName(targetName, absolutePath, fileName);
 		}
 
 		String fileDirName = fileName.substring(

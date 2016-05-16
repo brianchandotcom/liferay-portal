@@ -679,7 +679,7 @@
 		</for>
 	</command>
 
-	<command name="SubmitFormWithAllFieldTypesAfterEditingFields" priority="4">
+	<command name="SubmitFormWithAllFieldTypesAfterEditingFields" priority="5">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1047,7 +1047,7 @@
 		</execute>
 	</command>
 
-	<command name="SubmitFormWithAllFieldTypesAndTwoPages" priority="4">
+	<command name="SubmitFormWithAllFieldTypesAndTwoPages" priority="5">
 		<description message="This is a use case for LPS-64798." />
 
 		<execute macro="Navigator#openURL" />

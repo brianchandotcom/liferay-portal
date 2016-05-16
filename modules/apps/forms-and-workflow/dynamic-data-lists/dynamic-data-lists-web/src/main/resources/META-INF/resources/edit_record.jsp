@@ -101,11 +101,13 @@ else {
 	<portlet:param name="mvcPath" value="/edit_record.jsp" />
 </portlet:actionURL>
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button />
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
+<c:if test="<%= record != null %>">
+	<liferay-frontend:management-bar>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-sidenav-toggler-button />
+		</liferay-frontend:management-bar-buttons>
+	</liferay-frontend:management-bar>
+</c:if>
 
 <div class="container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<c:if test="<%= recordVersion != null %>">

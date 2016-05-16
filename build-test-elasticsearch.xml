@@ -5,50 +5,62 @@
 
 	<macrodef name="prepare-elasticsearch">
 		<sequential>
+			<copy todir="${elasticsearch.dir}">
+				<fileset
+					dir="modules/apps/foundation/portal-search/portal-search-elasticsearch/src/main/resources/plugins/"
+					includes="analysis*${elasticsearch.version}.zip"
+				/>
+			</copy>
+
+			<chmod file="${elasticsearch.dir}/bin/**" perm="a+x" />
+
 			<if>
-				<os family="windows" />
+				<os family="unix" />
 				<then>
-					<exec dir="${elasticsearch.dir}/bin" executable="cmd">
-						<arg value="/c" />
-						<arg line="plugin install analysis-icu" />
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./plugin install file:///${elasticsearch.dir}/analysis-icu-${elasticsearch.version}.zip" />
 					</exec>
 
-					<exec dir="${elasticsearch.dir}/bin" executable="cmd">
-						<arg value="/c" />
-						<arg line="plugin install analysis-kuromoji" />
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./plugin install file:///${elasticsearch.dir}/analysis-kuromoji-${elasticsearch.version}.zip" />
 					</exec>
 
-					<exec dir="${elasticsearch.dir}/bin" executable="cmd">
-						<arg value="/c" />
-						<arg line="plugin install analysis-smartcn" />
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./plugin install file:///${elasticsearch.dir}/analysis-smartcn-${elasticsearch.version}.zip" />
 					</exec>
 
-					<exec dir="${elasticsearch.dir}/bin" executable="cmd">
-						<arg value="/c" />
-						<arg line="plugin install analysis-stempel" />
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./plugin install file:///${elasticsearch.dir}/analysis-stempel-${elasticsearch.version}.zip" />
 					</exec>
 				</then>
-				<else>
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="plugin install analysis-icu" />
-					</exec>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
+							<arg value="/c" />
+							<arg line="plugin install file:///${elasticsearch.dir}/analysis-icu-${elasticsearch.version}.zip" />
+						</exec>
 
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="plugin install analysis-kuromoji" />
-					</exec>
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
+							<arg value="/c" />
+							<arg line="plugin install file:///${elasticsearch.dir}/analysis-kuromoji-${elasticsearch.version}.zip" />
+						</exec>
 
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="plugin install analysis-smartcn" />
-					</exec>
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
+							<arg value="/c" />
+							<arg line="plugin install file:///${elasticsearch.dir}/analysis-smartcn-${elasticsearch.version}.zip" />
+						</exec>
 
-					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-						<arg value="-c" />
-						<arg value="plugin install analysis-stempel" />
-					</exec>
-				</else>
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
+							<arg value="/c" />
+							<arg line="plugin install file:///${elasticsearch.dir}/analysis-stempel-${elasticsearch.version}.zip" />
+						</exec>
+					</then>
+				</elseif>
 			</if>
 		</sequential>
 	</macrodef>
@@ -62,7 +74,7 @@
 					<available file="${app.server.parent.dir}/${elasticsearch.zip.name}" />
 				</not>
 				<then>
-					<get
+					<mirrors-get
 						dest="${app.server.parent.dir}/${elasticsearch.zip.name}"
 						src="${elasticsearch.zip.url}"
 						verbose="true"
@@ -99,8 +111,6 @@ logExceptionsOnly=false</echo>
 		<if>
 			<os family="unix" />
 			<then>
-				<chmod file="${elasticsearch.dir}/bin" perm="a+x" />
-
 				<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
 					<arg value="-c" />
 					<arg value="./elasticsearch -d -p pid" />
@@ -134,9 +144,17 @@ logExceptionsOnly=false</echo>
 		<if>
 			<os family="unix" />
 			<then>
+				<loadfile property="pid" srcFile="${elasticsearch.dir}/bin/pid">
+					<filterchain>
+						<linecontainsregexp>
+							<regexp pattern="[0-9]*" />
+						</linecontainsregexp>
+					</filterchain>
+				</loadfile>
+
 				<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
 					<arg value="-c" />
-					<arg value="kill $(<pid)" />
+					<arg value="kill ${pid}" />
 				</exec>
 			</then>
 			<elseif>

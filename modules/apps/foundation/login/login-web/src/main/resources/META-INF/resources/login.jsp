@@ -207,41 +207,48 @@
 			</c:if>
 		</aui:form>
 
-		<aui:script sandbox="<%= true %>">
-			window.<portlet:namespace />showPopup = function(event) {
-				event.preventDefault();
+		<aui:script>
+			Liferay.provide(
+				window,
+				'<portlet:namespace />showPopup',
+				function(event) {
+					event.preventDefault();
 
-				Liferay.Util.openWindow(
-					{
-						dialog: {
-							centered: true,
-							destroyOnHide: true,
-							on: {
-								closeWindow: function(event) {
+					Liferay.Util.openWindow(
+						{
+							dialog: {
+								centered: true,
+								destroyOnHide: true,
+								on: {
+									closeWindow: function(event) {
 
-									var alert = $(document).find('.lfr-alert-container');
+										var alert = $(document).find('.lfr-alert-container');
 
-									alert.replaceWith(event.alert);
+										alert.replaceWith(event.alert);
 
-									alert.find('.lfr-alert-wrapper').css('height', '58px');
+										alert.find('.lfr-alert-wrapper').css('height', '58px');
 
-									Liferay.fire(
-										'closeWindow',
-										{
-											id: '<portlet:namespace />popup'
-										}
-									);
-								}
+										Liferay.fire(
+											'closeWindow',
+											{
+												id: '<portlet:namespace />popup'
+											}
+										);
+									}
+								},
+								visible: false
 							},
-							visible: false
-						},
-						id: '<portlet:namespace />popup',
-						title: event.target.text.trim(),
-						uri: event.target.href
-					}
-				);
-			};
+							id: '<portlet:namespace />popup',
+							title: event.target.text.trim(),
+							uri: event.target.href
+						}
+					);
+				},
+				['liferay-util-window']
+			);
+		</aui:script>
 
+		<aui:script sandbox="<%= true %>">
 			var form = AUI.$(document.<portlet:namespace /><%= formName %>);
 
 			form.on(

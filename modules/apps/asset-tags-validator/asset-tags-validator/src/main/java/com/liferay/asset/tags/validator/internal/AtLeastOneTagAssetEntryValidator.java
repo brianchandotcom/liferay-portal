@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.tags.validator;
+package com.liferay.asset.tags.validator.internal;
 
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.validator.AssetEntryValidator;

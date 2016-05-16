@@ -14,9 +14,9 @@
 
 package com.liferay.sync.engine.util;
 
-import com.liferay.io.delta.ByteChannelReader;
-import com.liferay.io.delta.ByteChannelWriter;
-import com.liferay.io.delta.DeltaUtil;
+import com.liferay.petra.io.delta.ByteChannelReader;
+import com.liferay.petra.io.delta.ByteChannelWriter;
+import com.liferay.petra.io.delta.DeltaUtil;
 import com.liferay.sync.engine.model.SyncFile;
 
 import java.io.FileInputStream;

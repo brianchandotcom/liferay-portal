@@ -6871,9 +6871,12 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 			<elseif>
 				<equals arg1="${database.type}" arg2="postgresql" />
 				<then>
+					<get-database-property property.name="database.schema" />
 					<get-database-property property.name="database.username" />
 
 					<exec executable="${postgresql.executable}" failonerror="true">
+						<arg value="-d" />
+						<arg value="${database.schema}" />
 						<arg value="-f" />
 						<arg value="${liferay.home}/${database.type}.sql" />
 						<arg value="-U" />

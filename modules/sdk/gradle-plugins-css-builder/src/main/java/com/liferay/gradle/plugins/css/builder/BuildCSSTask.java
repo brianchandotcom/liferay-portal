@@ -21,6 +21,8 @@ import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
+import java.nio.charset.StandardCharsets;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -49,6 +51,7 @@ import org.gradle.util.GUtil;
 public class BuildCSSTask extends JavaExec {
 
 	public BuildCSSTask() {
+		setDefaultCharacterEncoding(StandardCharsets.UTF_8.toString());
 		setDirNames("/");
 		setMain("com.liferay.css.builder.CSSBuilder");
 	}

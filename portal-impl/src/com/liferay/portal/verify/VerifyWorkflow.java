@@ -15,6 +15,7 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -27,36 +28,43 @@ public class VerifyWorkflow extends VerifyProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			for (String[] orphanedAttachedModel : getOrphanedAttachedModels()) {
 				String tableName = orphanedAttachedModel[0];
+				String columnName = orphanedAttachedModel[1];
+				String columnValue = orphanedAttachedModel[2];
 
-				if (!hasTable(tableName) ||
-					!hasColumn(tableName, "classNameId")) {
-
+				if (!hasTable(tableName) || !hasColumn(tableName, columnName)) {
 					continue;
 				}
 
-				String orphanedTableName = orphanedAttachedModel[2];
-				String orphanedColumnName = orphanedAttachedModel[3];
+				String orphanedTableName = orphanedAttachedModel[3];
+				String orphanedColumnName = orphanedAttachedModel[4];
 
-				if (!hasTable(orphanedTableName)) {
+				if (!hasTable(orphanedTableName) ||
+					!hasColumn(orphanedTableName, orphanedColumnName)) {
+
 					continue;
 				}
 
 				deleteOrphaned(
-					tableName, orphanedTableName, orphanedColumnName);
+					tableName, columnName, columnValue, orphanedTableName,
+					orphanedColumnName);
 			}
 		}
 	}
 
 	protected void deleteOrphaned(
-			String tableName, String orphanedTableName,
-			String orphanedColumnName)
+			String tableName, String columnName, String columnValue,
+			String orphanedTableName, String orphanedColumnName)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("delete from ");
 		sb.append(tableName);
-		sb.append(" where classPK not in (select ");
+		sb.append(" where ");
+		sb.append(columnName);
+		sb.append(" = ");
+		sb.append(columnValue);
+		sb.append(" and classPK not in (select ");
 		sb.append(orphanedColumnName);
 		sb.append(" from ");
 		sb.append(orphanedTableName);
@@ -76,23 +84,25 @@ public class VerifyWorkflow extends VerifyProcess {
 
 	private static final String[][] _ORPHANED_ATTACHED_MODELS = new String[][] {
 		new String[] {
-			"KaleoInstance",
-			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
+			"KaleoInstance", "className",
+			"'com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess'",
 			"DDLRecord", "recordId"
 		},
 		new String[] {
-			"KaleoInstanceToken",
-			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
+			"KaleoInstanceToken", "className",
+			"'com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess'",
 			"DDLRecord", "recordId"
 		},
 		new String[] {
-			"WorkflowDefinitionLink",
-			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
+			"WorkflowDefinitionLink", "classNameId",
+			String.valueOf(PortalUtil.getClassNameId(
+				"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess")),
 			"DDLRecord", "recordId"
 		},
 		new String[] {
-			"WorkflowDefinitionLink",
-			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess",
+			"WorkflowDefinitionLink", "classNameId",
+			String.valueOf(PortalUtil.getClassNameId(
+				"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess")),
 			"KaleoProcess", "kaleoProcessId"
 		}
 	};

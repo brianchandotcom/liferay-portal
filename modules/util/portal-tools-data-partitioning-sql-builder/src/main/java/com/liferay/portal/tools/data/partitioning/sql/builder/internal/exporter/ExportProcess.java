@@ -43,9 +43,55 @@ public class ExportProcess {
 		List<Long> companyIds = exportContext.getCompanyIds();
 
 		for (Long companyId : companyIds) {
+			_deleteCompanyData(companyId, partitionedTableNames, exportContext);
 			_exportCompany(
 				companyId, partitionedTableNames, exportContext, true);
 			_exportCompany(companyId, controlTableNames, exportContext, false);
+		}
+	}
+
+	private void _deleteCompanyData(
+			long companyId, List<String> tableNames,
+			ExportContext exportContext)
+		throws IOException {
+
+		String outputFileName =
+			exportContext.getSchemaName() + "-" + companyId + "-delete.sql";
+
+		File outputFile = new File(
+			exportContext.getOutputDirName(), outputFileName);
+
+		OutputStream outputStream = null;
+
+		if (!exportContext.isWriteFile()) {
+			outputStream = new BufferedOutputStream(
+				new FileOutputStream(outputFile));
+		}
+
+		for (String tableName : tableNames) {
+			if (exportContext.isWriteFile()) {
+				outputFileName =
+					exportContext.getSchemaName() + "-" + companyId +
+						"-table-" + tableName + "-delete.sql";
+
+				outputFile = new File(
+					exportContext.getOutputDirName(), outputFileName);
+
+				outputStream = new BufferedOutputStream(
+					new FileOutputStream(outputFile));
+			}
+
+			_dbExporter.writeDelete(companyId, tableName, outputStream);
+
+			outputStream.flush();
+
+			if (exportContext.isWriteFile()) {
+				outputStream.close();
+			}
+		}
+
+		if (!exportContext.isWriteFile()) {
+			outputStream.close();
 		}
 	}
 

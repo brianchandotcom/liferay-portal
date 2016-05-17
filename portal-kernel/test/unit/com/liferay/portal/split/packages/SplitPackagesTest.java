@@ -45,8 +45,15 @@ public class SplitPackagesTest {
 
 		final Path portalPath = Paths.get(System.getProperty("user.dir"));
 
+		Path portalImplPath = portalPath.resolve("portal-impl");
+
+		_checkSplitPackages(
+			portalImplPath, portalPath, moduleMap,
+			portalImplPath.resolve("src"));
+
 		final Set<Path> ignorePaths = new HashSet<>(
 			Arrays.asList(
+				portalPath.resolve("portal-impl"),
 				portalPath.resolve("portal-test"),
 				portalPath.resolve("portal-test-integration")));
 

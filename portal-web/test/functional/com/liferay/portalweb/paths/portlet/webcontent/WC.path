@@ -143,6 +143,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_DESCRIPTIVE_TITLE_ON_LIVE</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[@class=' list-group-item-content']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_DESCRIPTIVE_VERSION</td>
 	<td>//li[contains(@data-title,'${key_webContentTitle}')]//h6[contains(.,'Version')]</td>
 	<td></td>

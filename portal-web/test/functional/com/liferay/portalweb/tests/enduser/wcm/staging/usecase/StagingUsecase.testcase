@@ -3749,7 +3749,7 @@
 
 		<var name="key_webContentTitle" value="Web Content Title" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="Web Content Title" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE_ON_LIVE" value1="Web Content Title" />
 
 		<execute macro="WebContentNavigator#gotoManageStructures" />
 

@@ -39,7 +39,7 @@ else if (translateMessage) {
 }
 %>
 
-<c:if test="<%= MultiSessionMessages.contains(portletRequest, key) %>">
+<c:if test="<%= ((portletRequest != null) && MultiSessionMessages.contains(portletRequest, key)) || SessionMessages.contains(request, key) %>">
 	<liferay-ui:alert
 		icon="check"
 		message="<%= message %>"

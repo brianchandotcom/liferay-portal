@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -36,7 +37,12 @@ public class SuccessTag extends IncludeTag implements BodyTag {
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 
-		if (!MultiSessionMessages.contains(portletRequest, _key)) {
+		if (portletRequest != null) {
+			if (!MultiSessionMessages.contains(portletRequest, _key)) {
+				return SKIP_BODY;
+			}
+		}
+		else if (!SessionMessages.contains(request, _key)) {
 			return SKIP_BODY;
 		}
 

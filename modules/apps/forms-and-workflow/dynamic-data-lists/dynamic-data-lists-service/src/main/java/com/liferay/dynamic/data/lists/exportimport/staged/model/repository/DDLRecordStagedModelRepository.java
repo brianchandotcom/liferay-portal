@@ -153,7 +153,7 @@ public class DDLRecordStagedModelRepository
 						"recordId");
 
 					DynamicQuery recordVersionDynamicQuery =
-						createRecordVersionDynamicQuery();
+						getRecordVersionDynamicQuery();
 
 					dynamicQuery.add(
 						recordIdProperty.in(recordVersionDynamicQuery));
@@ -162,7 +162,7 @@ public class DDLRecordStagedModelRepository
 						"recordSetId");
 
 					DynamicQuery recordSetDynamicQuery =
-						createRecordSetDynamicQuery(scope);
+						getRecordSetDynamicQuery(scope);
 
 					dynamicQuery.add(
 						recordSetIdProperty.in(recordSetDynamicQuery));
@@ -203,7 +203,7 @@ public class DDLRecordStagedModelRepository
 			ddmFormValues, serviceContext);
 	}
 
-	protected DynamicQuery createRecordSetDynamicQuery(int scope) {
+	protected DynamicQuery getRecordSetDynamicQuery(int scope) {
 		StagedModelDataHandler<?> stagedModelDataHandler =
 			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 				DDLRecord.class.getName());
@@ -227,7 +227,7 @@ public class DDLRecordStagedModelRepository
 		return recordSetDynamicQuery;
 	}
 
-	protected DynamicQuery createRecordVersionDynamicQuery() {
+	protected DynamicQuery getRecordVersionDynamicQuery() {
 		StagedModelDataHandler<?> stagedModelDataHandler =
 			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 				DDLRecord.class.getName());

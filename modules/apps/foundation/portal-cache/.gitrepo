@@ -7,4 +7,4 @@
 	commit = 26c0b64bb0ca6a1ccb61bd4d56e01935c85ff304
 	mode = push
 	parent = a35d2fed0974f95ce8356e94861a951f8869f514
-	remote = git@github.com:liferay-continuous-integration/com-liferay-portal-cache.git
+	remote = git@github.com:liferay/com-liferay-portal-cache.git

@@ -7,4 +7,4 @@
 	commit = 3b79fbf7eeac485d52b2531548359768630a7307
 	mode = push
 	parent = 610499ad72a70efc3eaf3b0528af849781ac6ef2
-	remote = git@github.com:liferay-continuous-integration/com-liferay-social.git
+	remote = git@github.com:liferay/com-liferay-social.git

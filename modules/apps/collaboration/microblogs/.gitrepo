@@ -7,4 +7,4 @@
 	commit = 1f031323955a9c3c8660b9da74128cae8c275730
 	mode = push
 	parent = 336decfbf6569434a5fef3f0c253d6a265ddd4fa
-	remote = git@github.com:liferay-continuous-integration/com-liferay-microblogs.git
+	remote = git@github.com:liferay/com-liferay-microblogs.git

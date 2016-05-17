@@ -7,4 +7,4 @@
 	commit = 2536b4c7f80e8b386cf391ca6b04f08ecf438493
 	mode = push
 	parent = 79f08d3e977f012e8878ddba19977571eca0d34b
-	remote = git@github.com:liferay-continuous-integration/com-liferay-item-selector.git
+	remote = git@github.com:liferay/com-liferay-item-selector.git

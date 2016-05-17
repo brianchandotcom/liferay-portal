@@ -7,4 +7,4 @@
 	commit = 5225e61db9f23e51ec5f526d3018982d6383c712
 	mode = push
 	parent = 6656be62eb13b6ba099720ce2740a06650a6e6ea
-	remote = git@github.com:liferay-continuous-integration/com-liferay-portal-workflow.git
+	remote = git@github.com:liferay/com-liferay-portal-workflow.git

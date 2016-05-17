@@ -7,4 +7,4 @@
 	commit = 6550b1d47c9e8bd6149105abe44870fb7fda39c3
 	mode = push
 	parent = a3f0209913bf7675245142b956f9866d20abaf14
-	remote = git@github.com:liferay-continuous-integration/com-liferay-map.git
+	remote = git@github.com:liferay/com-liferay-map.git

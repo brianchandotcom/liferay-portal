@@ -7,4 +7,4 @@
 	commit = 5cc5c52f64bcf58908addeb7cec48cae12f08359
 	mode = push
 	parent = 1bd76c039e1106e8a8a4438036c7503d916213d8
-	remote = git@github.com:liferay-continuous-integration/com-liferay-frontend-taglib.git
+	remote = git@github.com:liferay/com-liferay-frontend-taglib.git

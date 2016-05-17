@@ -7,4 +7,4 @@
 	commit = 3b2eabe765c08849e301677763433107a66d6ff3
 	mode = push
 	parent = 88d6aaf651188e3d433ce06d6a72ac74dd13a84c
-	remote = git@github.com:liferay-continuous-integration/com-liferay-dynamic-data-lists.git
+	remote = git@github.com:liferay/com-liferay-dynamic-data-lists.git

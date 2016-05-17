@@ -7,4 +7,4 @@
 	commit = c397da77849ed6c68ed3b29acdc7630952b0911a
 	mode = push
 	parent = aaf537ff01c8d1ba286eb61a7d99e1e92ee59f70
-	remote = git@github.com:liferay-continuous-integration/com-liferay-export-import.git
+	remote = git@github.com:liferay/com-liferay-export-import.git

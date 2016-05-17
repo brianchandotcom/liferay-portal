@@ -7,4 +7,4 @@
 	commit = c4d445ffad7055fef77e4753c1bf5c3fcb138dbd
 	mode = push
 	parent = 3a940cb0f6d3ec8b82587e0d310219a3d9cd61a1
-	remote = git@github.com:liferay-continuous-integration/com-liferay-portal-background-task.git
+	remote = git@github.com:liferay/com-liferay-portal-background-task.git

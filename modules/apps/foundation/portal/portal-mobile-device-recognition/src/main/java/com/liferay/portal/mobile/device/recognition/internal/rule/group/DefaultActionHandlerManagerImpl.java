@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.internal.rule.group;
+package com.liferay.portal.mobile.device.recognition.internal.rule.group;
 
 import com.liferay.mobile.device.rules.action.ActionHandler;
 import com.liferay.mobile.device.rules.action.ActionHandlerManager;

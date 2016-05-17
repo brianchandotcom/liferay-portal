@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.mobile.device.internal;
+package com.liferay.portal.mobile.device.recognition.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

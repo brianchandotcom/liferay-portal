@@ -873,11 +873,9 @@ public class MainServlet extends ActionServlet {
 		// See LEP-2885. Don't flush hot deploy events until after the portal
 		// has initialized.
 
-		if (!PropsValues.SETUP_WIZARD_ENABLED) {
-			HotDeployUtil.setCapturePrematureEvents(false);
+		HotDeployUtil.setCapturePrematureEvents(false);
 
-			PortalLifecycleUtil.flushInits();
-		}
+		PortalLifecycleUtil.flushInits();
 	}
 
 	protected void initPortletApp(

@@ -16,6 +16,8 @@ package com.liferay.source.formatter.dependencies;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.provider.AddPortletProvider;
 import com.liferay.portal.kernel.provider.ViewPortletProvider;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -197,6 +199,15 @@ public class CombineLines
 		String s =
 			"Hello World " +
 				"Hello World Hello" + "Hello World Hello World Hello";
+	}
+
+	public void method9(String s) {
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(
+					new UnsyncStringReader(s))) {
+
+			return;
+		}
 	}
 
 	protected final List<String>

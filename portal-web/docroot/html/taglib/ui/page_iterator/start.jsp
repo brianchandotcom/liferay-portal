@@ -76,6 +76,17 @@ else {
 String deltaURL = HttpUtil.removeParameter(url, namespace + deltaParam);
 
 NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
+
+if (forcePost && (portletURL != null)) {
+	url = url.split(namespace)[0];
+%>
+
+<form action="<%= url %>" id="<%= namespace %>pageIteratorFm" method="post" name="<%= namespace %>pageIteratorFm">
+	<liferay-portlet:renderURLParams portletURL="<%= portletURL %>" />
+</form>
+
+<%
+}
 %>
 
 <c:if test='<%= type.equals("approximate") || type.equals("more") || type.equals("regular") || (type.equals("article") && (total > resultRowsSize)) %>'>
@@ -110,7 +121,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 			content = StringPool.BLANK;
 		}
 		else {
-			StringBundler sb = new StringBundler((pagesIteratorEnd - pagesIteratorBegin + 1) * 6);
+			StringBundler sb = new StringBundler((pagesIteratorEnd - pagesIteratorBegin + 1) * 14);
 
 			for (int i = pagesIteratorBegin; i <= pagesIteratorEnd; i++) {
 				if (i == cur) {
@@ -121,6 +132,16 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 				else {
 					sb.append("<a class='journal-article-page-number' href='");
 					sb.append(_getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor));
+					if (forcePost) {
+						sb.append("' onclick='event.preventDefault(); ");
+						sb.append(namespace);
+						sb.append("submitForm(");
+						sb.append(namespace);
+						sb.append(curParam);
+						sb.append(",");
+						sb.append(i);
+						sb.append(");");
+					}
 					sb.append("'>");
 					sb.append(i);
 					sb.append("</a>");
@@ -190,6 +211,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 										<liferay-ui:icon
 											message="<%= String.valueOf(i) %>"
+											onClick='<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm(\'" + namespace + curParam + "\'," + i + ");" : "" %>'
 											url='<%= url + namespace + curParam + "=" + i + urlAnchor %>'
 										/>
 
@@ -225,6 +247,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 										<liferay-ui:icon
 											message="<%= String.valueOf(curDelta) %>"
+											onClick='<%= forcePost ? "event.preventDefault(); " + namespace + "submitForm(\'" + namespace + deltaParam + "\'," + curDelta + ");" : "" %>'
 											url='<%= deltaURL + "&" + namespace + deltaParam + "=" + curDelta + urlAnchor %>'
 										/>
 
@@ -247,20 +270,20 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 		<ul class="lfr-pagination-buttons pager">
 			<c:if test='<%= type.equals("approximate") || type.equals("more") || type.equals("regular") %>'>
 				<li class="<%= (cur != 1) ? "" : "disabled" %> first">
-					<a href="<%= (cur != 1) ? _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) : "javascript:;" %>" tabIndex="<%= (cur != 1) ? "0" : "-1" %>" target="<%= target %>">
+					<a href="<%= (cur != 1) ? _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) : "javascript:;" %>" onclick="<%= (cur != 1 && forcePost) ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + 1 + ");" : "" %>" tabIndex="<%= (cur != 1) ? "0" : "-1" %>" target="<%= target %>">
 						<%= PortalUtil.isRightToLeft(request) ? "&rarr;" : "&larr;" %> <liferay-ui:message key="first" />
 					</a>
 				</li>
 			</c:if>
 
 			<li class="<%= (cur != 1) ? "" : "disabled" %>">
-				<a href="<%= (cur != 1) ? _getHREF(formName, namespace + curParam, cur - 1, jsCall, url, urlAnchor) : "javascript:;" %>" tabIndex="<%= (cur != 1) ? "0" : "-1" %>" target="<%= target %>">
+				<a href="<%= (cur != 1) ? _getHREF(formName, namespace + curParam, cur - 1, jsCall, url, urlAnchor) : "javascript:;" %>" onclick="<%= (cur != 1 && forcePost) ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + (cur - 1) + ");" : "" %>" tabIndex="<%= (cur != 1) ? "0" : "-1" %>" target="<%= target %>">
 					<liferay-ui:message key="previous" />
 				</a>
 			</li>
 
 			<li class="<%= (cur != pages) ? "" : "disabled" %>">
-				<a href="<%= (cur != pages) ? _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) : "javascript:;" %>" tabIndex="<%= (cur != pages) ? "0" : "-1" %>" target="<%= target %>">
+				<a href="<%= (cur != pages) ? _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) : "javascript:;" %>" onclick="<%= (cur != pages && forcePost) ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + (cur + 1) + ");" : "" %>" tabIndex="<%= (cur != pages) ? "0" : "-1" %>" target="<%= target %>">
 					<c:choose>
 						<c:when test='<%= type.equals("approximate") || type.equals("more") %>'>
 							<liferay-ui:message key="more" />
@@ -274,7 +297,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 			<c:if test='<%= type.equals("regular") %>'>
 				<li class="<%= (cur != pages) ? "" : "disabled" %> last">
-					<a href="<%= (cur != pages) ? _getHREF(formName, namespace + curParam, pages, jsCall, url, urlAnchor) : "javascript:;" %>" tabIndex="<%= (cur != pages) ? "0" : "-1" %>" target="<%= target %>">
+					<a href="<%= (cur != pages) ? _getHREF(formName, namespace + curParam, pages, jsCall, url, urlAnchor) : "javascript:;" %>" onclick="<%= (cur != pages && forcePost) ? "event.preventDefault(); " + namespace + "submitForm('" + namespace + curParam + "'," + pages + ");" : "" %>" tabIndex="<%= (cur != pages) ? "0" : "-1" %>" target="<%= target %>">
 						<liferay-ui:message key="last" /> <%= PortalUtil.isRightToLeft(request) ? "&larr;" : "&rarr;" %>
 					</a>
 				</li>
@@ -286,6 +309,16 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 <c:if test='<%= type.equals("approximate") || type.equals("more") || type.equals("regular") || (type.equals("article") && (total > resultRowsSize)) %>'>
 	</div>
 </c:if>
+
+<aui:script>
+	function <portlet:namespace />submitForm(curParam, cur) {
+		var form = AUI.$(document.<portlet:namespace />pageIteratorFm);
+
+		form.fm(curParam).val(cur);
+
+		submitForm(form);
+	}
+</aui:script>
 
 <%!
 private String _getHREF(String formName, String curParam, int cur, String jsCall, String url, String urlAnchor) throws Exception {

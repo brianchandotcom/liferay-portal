@@ -81,27 +81,27 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 		TABLE_COLUMNS_MAP.put("flag", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Chat_Entry (entryId LONG not null primary key,createDate LONG,fromUserId LONG,toUserId LONG,content VARCHAR(1000) null,flag INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table Chat_Entry (entryId LONG not null primary key,createDate LONG,fromUserId LONG,toUserId LONG,content VARCHAR(75) null,flag INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table Chat_Entry";
 	public static final String ORDER_BY_JPQL = " ORDER BY entry.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY Chat_Entry.createDate DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.chat.service.util.ServiceProps.get(
 				"value.object.entity.cache.enabled.com.liferay.chat.model.Entry"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.chat.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.chat.model.Entry"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.chat.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.chat.model.Entry"),
 			true);
 	public static final long CONTENT_COLUMN_BITMASK = 1L;
 	public static final long CREATEDATE_COLUMN_BITMASK = 2L;
 	public static final long FROMUSERID_COLUMN_BITMASK = 4L;
 	public static final long TOUSERID_COLUMN_BITMASK = 8L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.chat.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.chat.model.Entry"));
 
 	public EntryModelImpl() {

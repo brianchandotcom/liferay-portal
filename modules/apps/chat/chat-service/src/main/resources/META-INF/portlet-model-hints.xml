@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.chat.model.Entry">
+		<field name="entryId" type="long" />
+		<field name="createDate" type="long" />
+		<field name="fromUserId" type="long" />
+		<field name="toUserId" type="long" />
+		<field name="content" type="String" />
+		<field name="flag" type="int" />
+	</model>
+	<model name="com.liferay.chat.model.Status">
+		<field name="statusId" type="long" />
+		<field name="userId" type="long" />
+		<field name="modifiedDate" type="long" />
+		<field name="online" type="boolean" />
+		<field name="awake" type="boolean" />
+		<field name="activePanelIds" type="String" />
+		<field name="message" type="String" />
+		<field name="playSound" type="boolean" />
+	</model>
+</model-hints>

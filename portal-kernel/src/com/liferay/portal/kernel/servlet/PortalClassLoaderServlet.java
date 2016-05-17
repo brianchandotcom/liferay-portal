@@ -129,7 +129,7 @@ public class PortalClassLoaderServlet
 		PortalClassLoaderServlet.class);
 
 	private boolean _calledPortalDestroy;
-	private HttpServlet _servlet;
+	private volatile HttpServlet _servlet;
 	private ServletConfig _servletConfig;
 
 }

@@ -14,14 +14,9 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 /**
  * @author Shinn Lok
@@ -39,40 +34,15 @@ public class VerifyWorkflow extends VerifyProcess {
 					continue;
 				}
 
-				try (PreparedStatement ps = connection.prepareStatement(
-						"select distinct classNameId from " + tableName);
-					ResultSet rs = ps.executeQuery()) {
+				String orphanedTableName = orphanedAttachedModel[2];
+				String orphanedColumnName = orphanedAttachedModel[3];
 
-					while (rs.next()) {
-						long classNameId = rs.getLong("classNameId");
-
-						ClassName className =
-							ClassNameLocalServiceUtil.fetchClassName(
-								classNameId);
-
-						if (className == null) {
-							continue;
-						}
-
-						String classNameValue = className.getValue();
-
-						String orphanedClassName = orphanedAttachedModel[1];
-
-						if (!classNameValue.equals(orphanedClassName)) {
-							continue;
-						}
-
-						String orphanedTableName = orphanedAttachedModel[2];
-						String orphanedColumnName = orphanedAttachedModel[3];
-
-						if (!hasTable(orphanedTableName)) {
-							continue;
-						}
-
-						deleteOrphaned(
-							tableName, orphanedTableName, orphanedColumnName);
-					}
+				if (!hasTable(orphanedTableName)) {
+					continue;
 				}
+
+				deleteOrphaned(
+					tableName, orphanedTableName, orphanedColumnName);
 			}
 		}
 	}

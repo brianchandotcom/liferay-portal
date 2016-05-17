@@ -12,8 +12,7 @@
 	</tear-down>
 
 	<command name="ViewTestMiscPortlet" priority="5">
-		<property name="portal.acceptance" value="false" />
-		<property name="portal.acceptance.quarantine" value="true" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Misc Localized Title Page" />

@@ -16,8 +16,7 @@
 	</tear-down>
 
 	<command description="This is a test case for LPS-56769." name="Smoke" priority="5">
-		<property name="portal.acceptance" value="false" />
-		<property name="portal.acceptance.quarantine" value="true" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Runtime Page" />

@@ -15,6 +15,7 @@
 package com.liferay.portal.template.freemarker;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.JSPSupportServlet;
@@ -249,7 +250,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 
 			TemplateCache templateCache = new LiferayTemplateCache(
 				_configuration, _freemarkerEngineConfiguration,
-				templateResourceLoader);
+				templateResourceLoader, _singleVMPool);
 
 			field.set(_configuration, templateCache);
 		}
@@ -377,6 +378,11 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		return false;
 	}
 
+	@Reference(unbind = "-")
+	protected void setSingleVMPool(SingleVMPool singleVMPool) {
+		_singleVMPool = singleVMPool;
+	}
+
 	private static final Class<?>[] _INTERFACES = {ServletContext.class};
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -388,6 +394,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 	private volatile FreeMarkerBundleClassloader _freeMarkerBundleClassloader;
 	private volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
+	private SingleVMPool _singleVMPool;
 	private final Map<String, String> _taglibMappings =
 		new ConcurrentHashMap<>();
 	private TemplateClassResolver _templateClassResolver;

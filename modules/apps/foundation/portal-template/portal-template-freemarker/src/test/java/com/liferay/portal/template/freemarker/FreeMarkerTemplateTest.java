@@ -82,7 +82,8 @@ public class FreeMarkerTemplateTest {
 
 		TemplateCache templateCache = new LiferayTemplateCache(
 			_configuration, _freemarkerEngineConfiguration,
-			freeMarkerTemplateResourceLoader);
+			freeMarkerTemplateResourceLoader,
+			registry.getService(SingleVMPool.class));
 
 		ReflectionTestUtil.setFieldValue(
 			_configuration, "cache", templateCache);

@@ -48,7 +48,3 @@ deployDependencies {
 		liferay.deployDir
 	}
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/static")
-}

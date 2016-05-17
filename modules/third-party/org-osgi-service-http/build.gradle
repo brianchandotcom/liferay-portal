@@ -4,7 +4,3 @@ dependencies {
 	provided group: "org.osgi", name: "org.osgi.service.http", version: "1.2.1"
 	provided group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.0.0"
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/static")
-}

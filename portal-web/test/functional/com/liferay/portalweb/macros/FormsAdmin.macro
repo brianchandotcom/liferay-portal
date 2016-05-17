@@ -139,6 +139,13 @@
 		<execute function="AssertTextEquals" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" value1="${fieldValue}" />
 	</command>
 
+	<command name="viewFormTableEntryNotPresent">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldValue" value="${fieldValue}" />
+
+		<execute function="AssertElementNotPresent" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" />
+	</command>
+
 	<command name="viewMultilineTextEntry">
 		<execute macro="FormsAdmin#viewCannotEditFormEntries" />
 

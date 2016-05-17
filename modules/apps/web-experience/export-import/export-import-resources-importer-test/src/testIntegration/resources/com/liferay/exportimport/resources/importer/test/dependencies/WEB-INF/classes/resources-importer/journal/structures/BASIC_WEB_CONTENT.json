@@ -1,0 +1,21 @@
+{
+	"defaultLanguageId":"en_US",
+	"availableLanguageIds":["en_US"],
+	"fields":[
+		{
+			"validation":{},
+			"localizable":true,
+			"label":{"en_US":"Content"},
+			"type":"ddm-text-html",
+			"fieldNamespace":"ddm",
+			"indexType":"keyword",
+			"dataType":"html",
+			"readOnly":false,
+			"visibilityExpression":"",
+			"showLabel":true,
+			"name":"content",
+			"repeatable":false,
+			"required":false
+		}
+	]
+}

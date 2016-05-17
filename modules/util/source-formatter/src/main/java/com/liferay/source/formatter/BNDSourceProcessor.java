@@ -212,7 +212,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			return StringUtil.replace(content, includeResources, replacement);
 		}
 
-		return sortIncludeResources(
+		return sortDefinitionProperties(
 			content, includeResources, new IncludeResourceComparator());
 	}
 
@@ -255,44 +255,39 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String sortIncludeResources(
-		String content, String includeResources,
-		Comparator<String> comparator) {
+	protected String sortDefinitionProperties(
+		String content, String properties, Comparator<String> comparator) {
 
-		String[] lines = StringUtil.splitLines(includeResources);
+		String[] lines = StringUtil.splitLines(properties);
 
 		if (lines.length == 1) {
 			return content;
 		}
 
-		String previousIncludeResource = null;
+		String previousProperty = null;
 
 		for (int i = 1; i < lines.length; i++) {
-			String includeResource = StringUtil.trim(lines[i]);
+			String property = StringUtil.trim(lines[i]);
 
-			if (includeResource.endsWith(",\\")) {
-				includeResource = includeResource.substring(
-					0, includeResource.length() - 2);
+			if (property.endsWith(",\\")) {
+				property = property.substring(0, property.length() - 2);
 			}
 
-			if (previousIncludeResource != null) {
-				int value = comparator.compare(
-					previousIncludeResource, includeResource);
+			if (previousProperty != null) {
+				int value = comparator.compare(previousProperty, property);
 
 				if (value > 0) {
 					String replacement = StringUtil.replaceFirst(
-						includeResources, previousIncludeResource,
-						includeResource);
+						properties, previousProperty, property);
 
 					replacement = StringUtil.replaceLast(
-						replacement, includeResource, previousIncludeResource);
+						replacement, property, previousProperty);
 
-					return StringUtil.replace(
-						content, includeResources, replacement);
+					return StringUtil.replace(content, properties, replacement);
 				}
 			}
 
-			previousIncludeResource = includeResource;
+			previousProperty = property;
 		}
 
 		return content;

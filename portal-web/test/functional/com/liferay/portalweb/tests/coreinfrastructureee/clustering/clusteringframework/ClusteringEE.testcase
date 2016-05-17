@@ -281,7 +281,7 @@
 			<var name="siteName" value="Liferay" />
 		</execute>
 
-		<execute macro="Navigator#openStagingURL" />
+		<execute macro="Navigator#openURL" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="New Page Name" />
@@ -327,11 +327,11 @@
 		<execute function="AssertTextEquals" locator1="Home#PAGE_2_GUEST_VIEW" value1="New Page Name" />
 
 		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://localhost:9080" />
+			<var name="url" value="http://localhost:9080/web/guest-staging" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesConfiguration">
-			<var name="portlet" value="Site Settings" />
+		<execute macro="ProductMenu#gotoSitesPublishing">
+			<var name="portlet" value="Staging" />
 		</execute>
 
 		<execute macro="Staging#deactivateStagingCP">

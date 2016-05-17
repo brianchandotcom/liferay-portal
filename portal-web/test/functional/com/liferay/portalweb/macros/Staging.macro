@@ -642,6 +642,8 @@
 
 		<execute function="AssertTextEquals" locator1="Staging#PROCESS_SUCCESSFUL" value1="Successful" />
 
+		<execute function="SelectFrame" value1="relative=top" />
+
 		<if>
 			<condition function="IsElementPresent" locator1="Icon#CLOSE" />
 			<then>

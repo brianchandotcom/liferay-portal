@@ -7,4 +7,4 @@
 	commit = bb71503d70da62c0be87de5e22f11482045b130b
 	mode = push
 	parent = c4be23d450b7c78201819bbc2098a59d4aa7a8f9
-	remote = git@github.com:liferay-continuous-integration/com-liferay-trash.git
+	remote = git@github.com:liferay/com-liferay-trash.git

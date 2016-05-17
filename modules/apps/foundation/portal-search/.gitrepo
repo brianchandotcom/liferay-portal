@@ -7,4 +7,4 @@
 	commit = d7e8a6ed4a991b37f6f02b489714d45a8b5d8ec4
 	mode = push
 	parent = 1b97393128baf269c865df475b034b0475807090
-	remote = git@github.com:liferay-continuous-integration/com-liferay-portal-search.git
+	remote = git@github.com:liferay/com-liferay-portal-search.git

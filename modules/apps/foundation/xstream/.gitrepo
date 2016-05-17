@@ -7,4 +7,4 @@
 	commit = 6ccdc8a3b61ccf0e3f9cdcdbdbf66b5d6e0cdb62
 	mode = push
 	parent = 66ccc13b748ca3af331e6b2b487e4753d5fcbfaa
-	remote = git@github.com:liferay-continuous-integration/com-liferay-xstream.git
+	remote = git@github.com:liferay/com-liferay-xstream.git

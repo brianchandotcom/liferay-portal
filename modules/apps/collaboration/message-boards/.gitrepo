@@ -7,4 +7,4 @@
 	commit = e570132f90d9efb3f7683ad9fc55fdb419da1bc1
 	mode = push
 	parent = 0be8454ebbedc337e7cbd784162949da9dfcf02f
-	remote = git@github.com:liferay-continuous-integration/com-liferay-message-boards.git
+	remote = git@github.com:liferay/com-liferay-message-boards.git

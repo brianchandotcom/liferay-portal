@@ -7,4 +7,4 @@
 	commit = cb0c7913a29480b3ebca6047d36e037cc8b2d640
 	mode = push
 	parent = 0adace9e5652d93eb50debd3a1136eaa7efa046b
-	remote = git@github.com:liferay-continuous-integration/com-liferay-portlet-display-template.git
+	remote = git@github.com:liferay/com-liferay-portlet-display-template.git

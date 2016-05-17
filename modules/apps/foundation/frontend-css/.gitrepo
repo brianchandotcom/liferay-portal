@@ -7,4 +7,4 @@
 	commit = 38fac80ac395b8257be52f39b072e4097f2d206b
 	mode = push
 	parent = d66b2f396e163dd0c3208d96cecc09a805c6b0d3
-	remote = git@github.com:liferay-continuous-integration/com-liferay-frontend-css.git
+	remote = git@github.com:liferay/com-liferay-frontend-css.git

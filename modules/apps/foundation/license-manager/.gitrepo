@@ -7,4 +7,4 @@
 	commit = 386d0cf75bd915bcb653c817372786bcb5746aef
 	mode = push
 	parent = 9fd8e07343e06fe8feaa90ee2ef4f01beca168fd
-	remote = git@github.com:liferay-continuous-integration/com-liferay-license-manager.git
+	remote = git@github.com:liferay/com-liferay-license-manager.git

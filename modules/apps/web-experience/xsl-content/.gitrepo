@@ -7,4 +7,4 @@
 	commit = 2ea69a4851c54e517cfc676d106a3d426cc14f0a
 	mode = push
 	parent = 51be32ac8d281d9d821fb77bfc3cd69a79f241a6
-	remote = git@github.com:liferay-continuous-integration/com-liferay-xsl-content.git
+	remote = git@github.com:liferay/com-liferay-xsl-content.git

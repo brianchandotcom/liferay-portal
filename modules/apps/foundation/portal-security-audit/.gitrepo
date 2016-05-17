@@ -7,4 +7,4 @@
 	commit = 1a605dfac7266dffdbce75fde9956bae55f61ee2
 	mode = push
 	parent = 9088986b4100c81ecd07c2de626df7e6bd259665
-	remote = git@github.com:liferay-continuous-integration/com-liferay-portal-security-audit.git
+	remote = git@github.com:liferay/com-liferay-portal-security-audit.git

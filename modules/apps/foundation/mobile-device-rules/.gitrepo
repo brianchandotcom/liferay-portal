@@ -7,4 +7,4 @@
 	commit = 214edc1f8531130b25bf36443e13ac53714987cd
 	mode = push
 	parent = 9375ea705c1d48593f00ee4af95990d4a5966c67
-	remote = git@github.com:liferay-continuous-integration/com-liferay-mobile-device-rules.git
+	remote = git@github.com:liferay/com-liferay-mobile-device-rules.git

@@ -7,4 +7,4 @@
 	commit = 2612643b666c22d81b9a7b6d2dc12eb45733d9f8
 	mode = push
 	parent = 59b167b1bb2c21bb6a09f63dbd2c433d038c9ca6
-	remote = git@github.com:liferay-continuous-integration/com-liferay-announcements.git
+	remote = git@github.com:liferay/com-liferay-announcements.git

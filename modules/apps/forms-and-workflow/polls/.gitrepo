@@ -7,4 +7,4 @@
 	commit = f73786e20102921f571de952081511278f0f964a
 	mode = push
 	parent = 79c7b1f91988def0a9b94bd3f625e5376f1f5cf8
-	remote = git@github.com:liferay-continuous-integration/com-liferay-polls.git
+	remote = git@github.com:liferay/com-liferay-polls.git

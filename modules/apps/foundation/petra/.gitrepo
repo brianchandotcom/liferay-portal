@@ -7,4 +7,4 @@
 	commit = f42f2e49326374e048c88a5c29f046f615e78f92
 	mode = push
 	parent = bdc83008b95b221a5a5f59ddbe4a0ddb5f3eb142
-	remote = git@github.com:liferay-continuous-integration/com-liferay-petra.git
+	remote = git@github.com:liferay/com-liferay-petra.git

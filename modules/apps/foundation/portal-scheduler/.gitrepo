@@ -7,4 +7,4 @@
 	commit = 349f6613f1b5b6eaa20f212ece29e32bca87b53f
 	mode = push
 	parent = 86b0561f3844fb0ddce1ca3f6bb499b70a74c74b
-	remote = git@github.com:liferay-continuous-integration/com-liferay-portal-scheduler.git
+	remote = git@github.com:liferay/com-liferay-portal-scheduler.git

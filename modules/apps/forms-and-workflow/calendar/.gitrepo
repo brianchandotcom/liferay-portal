@@ -7,4 +7,4 @@
 	commit = dcb153a18fbe113134d5b86b8db11049fc08d2cf
 	mode = push
 	parent = 5ec13bae8f625c88f982ec8440d49cd58e929b56
-	remote = git@github.com:liferay-continuous-integration/com-liferay-calendar.git
+	remote = git@github.com:liferay/com-liferay-calendar.git

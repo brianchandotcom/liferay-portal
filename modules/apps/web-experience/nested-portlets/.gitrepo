@@ -7,4 +7,4 @@
 	commit = a278a1c9787f9dd22d170487c5be9232c45979fb
 	mode = push
 	parent = 179b1e1a613a0dfd358102523f6e0b1d48416544
-	remote = git@github.com:liferay-continuous-integration/com-liferay-nested-portlets.git
+	remote = git@github.com:liferay/com-liferay-nested-portlets.git

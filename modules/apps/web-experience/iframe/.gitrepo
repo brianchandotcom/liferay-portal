@@ -7,4 +7,4 @@
 	commit = a1baa0baf041fbba5f3ab01ebbce657fd1ff9792
 	mode = push
 	parent = 51f5dfde4bc8d8dc37f7552b88ed9fb7b3c542a2
-	remote = git@github.com:liferay-continuous-integration/com-liferay-iframe.git
+	remote = git@github.com:liferay/com-liferay-iframe.git

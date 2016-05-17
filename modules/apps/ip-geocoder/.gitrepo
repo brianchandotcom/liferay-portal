@@ -7,4 +7,4 @@
 	commit = 648c6614c49e32acd9f09351df07a5a3ee7c64d3
 	mode = push
 	parent = b43c343d56748d7c7505551a2d51b7105079a700
-	remote = git@github.com:liferay-continuous-integration/com-liferay-ip-geocoder.git
+	remote = git@github.com:liferay/com-liferay-ip-geocoder.git

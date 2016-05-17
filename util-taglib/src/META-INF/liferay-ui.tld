@@ -3329,6 +3329,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>forcePost</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description>A name for the form.</description>
 			<name>formName</name>
 			<required>false</required>
@@ -3359,6 +3365,12 @@
 			<type>int</type>
 		</attribute>
 		<attribute>
+			<description>A base URL for the iterator. Parameters are added to and removed from this URL as the user navigates through pages.</description>
+			<name>portletURL</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>A target for the <![CDATA[<code>first</code>]]>, <![CDATA[<code>previous</code>]]>, <![CDATA[<code>next</code>]]>, and <![CDATA[<code>last</code>]]> link buttons.</description>
 			<name>target</name>
 			<required>false</required>
@@ -3378,7 +3390,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A base URL for the iterator. Parameters are added to and removed from this URL as the user navigates through pages.</description>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>portletURL</code>]]>.</description>
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

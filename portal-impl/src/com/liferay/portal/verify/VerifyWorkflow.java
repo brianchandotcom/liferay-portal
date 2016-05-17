@@ -82,6 +82,10 @@ public class VerifyWorkflow extends VerifyProcess {
 		return _ORPHANED_ATTACHED_MODELS;
 	}
 
+	private static final String _KALEO_PROCESS_CLASS_NAME_ID = String.valueOf(
+		PortalUtil.getClassNameId(
+			"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess"));
+
 	private static final String[][] _ORPHANED_ATTACHED_MODELS = new String[][] {
 		new String[] {
 			"KaleoInstance", "className",
@@ -95,14 +99,10 @@ public class VerifyWorkflow extends VerifyProcess {
 		},
 		new String[] {
 			"WorkflowDefinitionLink", "classNameId",
-			String.valueOf(PortalUtil.getClassNameId(
-				"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess")),
-			"KaleoProcess", "kaleoProcessId"
+			_KALEO_PROCESS_CLASS_NAME_ID, "KaleoProcess", "kaleoProcessId"
 		},
 		new String[] {
-			"WorkflowInstanceLink", "classNameId",
-			String.valueOf(PortalUtil.getClassNameId(
-				"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess")),
+			"WorkflowInstanceLink", "classNameId", _KALEO_PROCESS_CLASS_NAME_ID,
 			"DDLRecord", "recordId"
 		}
 	};

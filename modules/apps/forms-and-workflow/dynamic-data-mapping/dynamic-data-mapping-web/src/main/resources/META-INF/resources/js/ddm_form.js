@@ -367,6 +367,8 @@ AUI.add(
 
 						instance.get('container').placeAfter(fieldNode);
 
+						instance.parseContent(fieldTemplate);
+
 						var parent = instance.get('parent');
 
 						var siblings = instance.getSiblings();
@@ -474,6 +476,18 @@ AUI.add(
 						return Lang.String.unescapeHTML(inputNode.val());
 					},
 
+					parseContent: function(content) {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						container.plug(A.Plugin.ParseContent);
+
+						var parser = container.ParseContent;
+
+						parser.parseContent(content);
+					},
+
 					remove: function() {
 						var instance = this;
 
@@ -499,8 +513,6 @@ AUI.add(
 						container.append(TPL_REPEATABLE_DELETE);
 
 						container.delegate('click', instance._handleToolbarClick, SELECTOR_REPEAT_BUTTONS, instance);
-
-						container.plug(A.Plugin.ParseContent);
 					},
 
 					repeat: function() {

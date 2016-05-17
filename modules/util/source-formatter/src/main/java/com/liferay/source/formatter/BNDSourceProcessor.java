@@ -15,6 +15,7 @@
 package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -148,6 +149,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 		checkDirectoryAndBundleName(fileName, absolutePath, content);
 
+		content = formatBundleClassPath(content);
+
 		if (portalSource && isModulesFile(absolutePath) &&
 			!fileName.endsWith("test-bnd.bnd")) {
 
@@ -160,6 +163,17 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
 		return getFileNames(new String[0], getIncludes());
+	}
+
+	protected String formatBundleClassPath(String content) {
+		Matcher matcher = _bundleClassPathPattern.matcher(content);
+
+		if (matcher.find()) {
+			return sortDefinitionProperties(
+				content, matcher.group(), new NaturalOrderStringComparator());
+		}
+
+		return content;
 	}
 
 	protected String formatIncludeResource(String content) {
@@ -305,6 +319,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 	private final Pattern _bndDefinitionPattern = Pattern.compile(
 		"^[A-Za-z-][\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
+	private final Pattern _bundleClassPathPattern = Pattern.compile(
+		"^Bundle-ClassPath:[\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
 	private final Pattern _bundleNamePattern = Pattern.compile(
 		"^Bundle-Name: (.*)\n", Pattern.MULTILINE);
 	private final Pattern _bundleSymbolicNamePattern = Pattern.compile(

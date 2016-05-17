@@ -6905,6 +6905,40 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 				<exec executable="mysql_upgrade" />
 			</then>
 			<elseif>
+				<equals arg1="${database.type}" arg2="oracle" />
+				<then>
+					<sql classpath="${app.server.lib.global.dir}/${jdbc.oracle.driver}" driver="oracle.jdbc.OracleDriver" onerror="continue" output="datapumpdir" password="${oracle.admin.password}" print="true" url="${database.oracle.url}" userid="${oracle.admin.user}">
+						<![CDATA[
+							drop user lportal cascade;
+							select directory_name, directory_path from dba_directories where directory_name='DATA_PUMP_DIR';
+						]]>
+					</sql>
+
+					<loadfile property="data.pump.dir" srcFile="datapumpdir" />
+
+					<propertyregex
+						input="${data.pump.dir}"
+						override="true"
+						property="data.pump.dir"
+						regexp="[\s\S]+DATA_PUMP_DIR,(.*)[\s\S]+"
+						replace="\1"
+					/>
+
+					<move file="${liferay.home}/${database.type}.dmp" todir="${data.pump.dir}" />
+
+					<chown file="${data.pump.dir}/${database.type}.dmp" owner="oracle" />
+					<chgrp file="${data.pump.dir}/${database.type}.dmp" group="oracle" />
+
+					<exec executable="impdp">
+						<arg value="${oracle.admin.user}/${oracle.admin.password}" />
+						<arg value="dumpfile=${database.type}.dmp" />
+						<arg value="table_exists_action=replace" />
+					</exec>
+
+					<delete file="${data.pump.dir}/${database.type}.dmp" />
+				</then>
+			</elseif>
+			<elseif>
 				<equals arg1="${database.type}" arg2="postgresql" />
 				<then>
 					<get-database-property property.name="database.schema" />

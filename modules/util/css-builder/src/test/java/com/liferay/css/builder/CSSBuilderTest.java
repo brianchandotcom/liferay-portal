@@ -119,8 +119,7 @@ public class CSSBuilderTest {
 		String actualTestPartialContent = _read(
 			_docrootDirName + "/css/.sass-cache/test_partial.css");
 
-		Assert.assertEquals(
-			expectedTestContent, actualTestPartialContent);
+		Assert.assertEquals(expectedTestContent, actualTestPartialContent);
 
 		File partialCssFile = new File(
 			Paths.get("/css/.sass-cache/_partial.css").toString());
@@ -133,8 +132,7 @@ public class CSSBuilderTest {
 		String actualTestRtlContent = _read(
 			_docrootDirName + "/css/.sass-cache/test_rtl.css");
 
-		Assert.assertEquals(
-			expectedTestRtlContent, actualTestRtlContent);
+		Assert.assertEquals(expectedTestRtlContent, actualTestRtlContent);
 
 		String actualTestPartialRtlContent = _read(
 			_docrootDirName + "/css/.sass-cache/test_partial_rtl.css");
@@ -148,8 +146,7 @@ public class CSSBuilderTest {
 		String actualTestUnicodeContent = _read(
 			_docrootDirName + "/css/.sass-cache/test_unicode.css");
 
-		Assert.assertEquals(
-			expectedUnicodeContent, actualTestUnicodeContent);
+		Assert.assertEquals(expectedUnicodeContent, actualTestUnicodeContent);
 	}
 
 	private static String _docrootDirName;

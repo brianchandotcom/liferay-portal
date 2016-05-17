@@ -23,15 +23,31 @@ String curParam = (String)request.getAttribute("liferay-ui:page-iterator:curPara
 int delta = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:page-iterator:delta"));
 boolean deltaConfigurable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:page-iterator:deltaConfigurable"));
 String deltaParam = (String)request.getAttribute("liferay-ui:page-iterator:deltaParam");
+boolean forcePost = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:page-iterator:forcePost"));
 String id = (String)request.getAttribute("liferay-ui:page-iterator:id");
 String jsCall = GetterUtil.getString((String)request.getAttribute("liferay-ui:page-iterator:jsCall"));
 int maxPages = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:page-iterator:maxPages"));
+PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:page-iterator:portletURL");
 String target = (String)request.getAttribute("liferay-ui:page-iterator:target");
 int total = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:page-iterator:total"));
 String type = (String)request.getAttribute("liferay-ui:page-iterator:type");
 String url = (String)request.getAttribute("liferay-ui:page-iterator:url");
 String urlAnchor = (String)request.getAttribute("liferay-ui:page-iterator:urlAnchor");
 int pages = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:page-iterator:pages"));
+
+if ((portletURL != null) && Validator.isNull(url) && Validator.isNull(urlAnchor)) {
+	String[] urlArray = PortalUtil.stripURLAnchor(portletURL.toString(), StringPool.POUND);
+
+	url = urlArray[0];
+	urlAnchor = urlArray[1];
+
+	if (url.indexOf(CharPool.QUESTION) == -1) {
+		url += "?";
+	}
+	else if (!url.endsWith("&")) {
+		url += "&";
+	}
+}
 
 if (Validator.isNull(id)) {
 	id = PortalUtil.generateRandomKey(request, "taglib-page-iterator");

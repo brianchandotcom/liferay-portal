@@ -14,14 +14,14 @@
 
 package com.liferay.portal.tools.data.partitioning.sql.builder.internal.exporter;
 
+import com.liferay.portal.tools.data.partitioning.sql.builder.command.ExportProcessCommand;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.DBExporter;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
+import com.liferay.portal.tools.data.partitioning.sql.builder.internal.command.DeleteExportProcessCommand;
+import com.liferay.portal.tools.data.partitioning.sql.builder.internal.command.InsertControlExportProcessCommand;
+import com.liferay.portal.tools.data.partitioning.sql.builder.internal.command.InsertPartitionedExportProcessCommand;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 import java.util.List;
 
@@ -43,114 +43,25 @@ public class ExportProcess {
 		List<Long> companyIds = exportContext.getCompanyIds();
 
 		for (Long companyId : companyIds) {
-			_deleteCompanyData(companyId, partitionedTableNames, exportContext);
-			_exportCompany(
-				companyId, partitionedTableNames, exportContext, true);
-			_exportCompany(companyId, controlTableNames, exportContext, false);
-		}
-	}
+			ExportProcessCommand deleteExportProcessCommand =
+				new DeleteExportProcessCommand(
+					companyId, _dbExporter, partitionedTableNames,
+					exportContext);
 
-	private void _deleteCompanyData(
-			long companyId, List<String> tableNames,
-			ExportContext exportContext)
-		throws IOException {
+			deleteExportProcessCommand.execute();
 
-		String outputFileName =
-			exportContext.getSchemaName() + "-" + companyId + "-delete.sql";
+			ExportProcessCommand insertPartitionedExportProcessCommand =
+				new InsertPartitionedExportProcessCommand(
+					companyId, _dbExporter, partitionedTableNames,
+					exportContext);
 
-		File outputFile = new File(
-			exportContext.getOutputDirName(), outputFileName);
+			insertPartitionedExportProcessCommand.execute();
 
-		OutputStream outputStream = null;
+			ExportProcessCommand insertControlExportProcessCommand =
+				new InsertControlExportProcessCommand(
+					companyId, _dbExporter, controlTableNames, exportContext);
 
-		if (!exportContext.isWriteFile()) {
-			outputStream = new BufferedOutputStream(
-				new FileOutputStream(outputFile));
-		}
-
-		for (String tableName : tableNames) {
-			if (exportContext.isWriteFile()) {
-				outputFileName =
-					exportContext.getSchemaName() + "-" + companyId +
-						"-table-" + tableName + "-delete.sql";
-
-				outputFile = new File(
-					exportContext.getOutputDirName(), outputFileName);
-
-				outputStream = new BufferedOutputStream(
-					new FileOutputStream(outputFile));
-			}
-
-			_dbExporter.writeDelete(companyId, tableName, outputStream);
-
-			outputStream.flush();
-
-			if (exportContext.isWriteFile()) {
-				outputStream.close();
-			}
-		}
-
-		if (!exportContext.isWriteFile()) {
-			outputStream.close();
-		}
-	}
-
-	private void _exportCompany(
-			long companyId, List<String> tableNames,
-			ExportContext exportContext, boolean filterByCompanyId)
-		throws IOException {
-
-		String outputFileName =
-			exportContext.getSchemaName() + "-" + companyId + "-";
-
-		if (filterByCompanyId) {
-			outputFileName += "partitioned";
-		}
-		else {
-			outputFileName += "control";
-		}
-
-		outputFileName += ".sql";
-
-		File outputFile = new File(
-			exportContext.getOutputDirName(), outputFileName);
-
-		OutputStream outputStream = null;
-
-		if (!exportContext.isWriteFile()) {
-			outputStream = new BufferedOutputStream(
-				new FileOutputStream(outputFile));
-		}
-
-		for (String tableName : tableNames) {
-			if (exportContext.isWriteFile()) {
-				outputFileName =
-					exportContext.getSchemaName() + "-" + companyId +
-						"-table-" + tableName + ".sql";
-
-				outputFile = new File(
-					exportContext.getOutputDirName(), outputFileName);
-
-				outputStream = new BufferedOutputStream(
-					new FileOutputStream(outputFile));
-			}
-
-			if (filterByCompanyId) {
-				_dbExporter.write(companyId, tableName, outputStream);
-			}
-			else {
-				_dbExporter.write(tableName, outputStream);
-			}
-
-			outputStream.flush();
-
-			if (exportContext.isWriteFile()) {
-				outputStream.close();
-			}
-		}
-
-		if (!exportContext.isWriteFile()) {
-			outputStream.close();
+			insertControlExportProcessCommand.execute();
 		}
 	}
 

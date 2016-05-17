@@ -216,6 +216,44 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			content, includeResources, new IncludeResourceComparator());
 	}
 
+	protected String sortDefinitionProperties(
+		String content, String properties, Comparator<String> comparator) {
+
+		String[] lines = StringUtil.splitLines(properties);
+
+		if (lines.length == 1) {
+			return content;
+		}
+
+		String previousProperty = null;
+
+		for (int i = 1; i < lines.length; i++) {
+			String property = StringUtil.trim(lines[i]);
+
+			if (property.endsWith(",\\")) {
+				property = property.substring(0, property.length() - 2);
+			}
+
+			if (previousProperty != null) {
+				int value = comparator.compare(previousProperty, property);
+
+				if (value > 0) {
+					String replacement = StringUtil.replaceFirst(
+						properties, previousProperty, property);
+
+					replacement = StringUtil.replaceLast(
+						replacement, property, previousProperty);
+
+					return StringUtil.replace(content, properties, replacement);
+				}
+			}
+
+			previousProperty = property;
+		}
+
+		return content;
+	}
+
 	protected String sortDefinitions(String content) {
 		String previousDefinition = null;
 
@@ -250,44 +288,6 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			}
 
 			previousDefinition = definition;
-		}
-
-		return content;
-	}
-
-	protected String sortDefinitionProperties(
-		String content, String properties, Comparator<String> comparator) {
-
-		String[] lines = StringUtil.splitLines(properties);
-
-		if (lines.length == 1) {
-			return content;
-		}
-
-		String previousProperty = null;
-
-		for (int i = 1; i < lines.length; i++) {
-			String property = StringUtil.trim(lines[i]);
-
-			if (property.endsWith(",\\")) {
-				property = property.substring(0, property.length() - 2);
-			}
-
-			if (previousProperty != null) {
-				int value = comparator.compare(previousProperty, property);
-
-				if (value > 0) {
-					String replacement = StringUtil.replaceFirst(
-						properties, previousProperty, property);
-
-					replacement = StringUtil.replaceLast(
-						replacement, property, previousProperty);
-
-					return StringUtil.replace(content, properties, replacement);
-				}
-			}
-
-			previousProperty = property;
 		}
 
 		return content;

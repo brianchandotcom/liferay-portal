@@ -3636,6 +3636,118 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 		throws NoSuchArticleException;
 
 	/**
+	* Returns all the journal articles that the user has permission to view where groupId = &#63; and layoutUuid &ne; all &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutUuids the layout uuids
+	* @return the matching journal articles that the user has permission to view
+	*/
+	public java.util.List<JournalArticle> filterFindByG_NotL(long groupId,
+		java.lang.String[] layoutUuids);
+
+	/**
+	* Returns a range of all the journal articles that the user has permission to view where groupId = &#63; and layoutUuid &ne; all &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param layoutUuids the layout uuids
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @return the range of matching journal articles that the user has permission to view
+	*/
+	public java.util.List<JournalArticle> filterFindByG_NotL(long groupId,
+		java.lang.String[] layoutUuids, int start, int end);
+
+	/**
+	* Returns an ordered range of all the journal articles that the user has permission to view where groupId = &#63; and layoutUuid &ne; all &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param layoutUuids the layout uuids
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching journal articles that the user has permission to view
+	*/
+	public java.util.List<JournalArticle> filterFindByG_NotL(long groupId,
+		java.lang.String[] layoutUuids, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle> orderByComparator);
+
+	/**
+	* Returns all the journal articles where groupId = &#63; and layoutUuid &ne; all &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param layoutUuids the layout uuids
+	* @return the matching journal articles
+	*/
+	public java.util.List<JournalArticle> findByG_NotL(long groupId,
+		java.lang.String[] layoutUuids);
+
+	/**
+	* Returns a range of all the journal articles where groupId = &#63; and layoutUuid &ne; all &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param layoutUuids the layout uuids
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @return the range of matching journal articles
+	*/
+	public java.util.List<JournalArticle> findByG_NotL(long groupId,
+		java.lang.String[] layoutUuids, int start, int end);
+
+	/**
+	* Returns an ordered range of all the journal articles where groupId = &#63; and layoutUuid &ne; all &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param layoutUuids the layout uuids
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching journal articles
+	*/
+	public java.util.List<JournalArticle> findByG_NotL(long groupId,
+		java.lang.String[] layoutUuids, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the journal articles where groupId = &#63; and layoutUuid &ne; &#63;, optionally using the finder cache.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link JournalArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param layoutUuid the layout uuid
+	* @param start the lower bound of the range of journal articles
+	* @param end the upper bound of the range of journal articles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching journal articles
+	*/
+	public java.util.List<JournalArticle> findByG_NotL(long groupId,
+		java.lang.String[] layoutUuids, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
 	* Removes all the journal articles where groupId = &#63; and layoutUuid &ne; &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -3653,6 +3765,15 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	public int countByG_NotL(long groupId, java.lang.String layoutUuid);
 
 	/**
+	* Returns the number of journal articles where groupId = &#63; and layoutUuid &ne; all &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutUuids the layout uuids
+	* @return the number of matching journal articles
+	*/
+	public int countByG_NotL(long groupId, java.lang.String[] layoutUuids);
+
+	/**
 	* Returns the number of journal articles that the user has permission to view where groupId = &#63; and layoutUuid &ne; &#63;.
 	*
 	* @param groupId the group ID
@@ -3660,6 +3781,15 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @return the number of matching journal articles that the user has permission to view
 	*/
 	public int filterCountByG_NotL(long groupId, java.lang.String layoutUuid);
+
+	/**
+	* Returns the number of journal articles that the user has permission to view where groupId = &#63; and layoutUuid &ne; all &#63;.
+	*
+	* @param groupId the group ID
+	* @param layoutUuids the layout uuids
+	* @return the number of matching journal articles that the user has permission to view
+	*/
+	public int filterCountByG_NotL(long groupId, java.lang.String[] layoutUuids);
 
 	/**
 	* Returns all the journal articles where groupId = &#63; and status = &#63;.

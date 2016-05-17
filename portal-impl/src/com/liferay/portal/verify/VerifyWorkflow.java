@@ -97,13 +97,13 @@ public class VerifyWorkflow extends VerifyProcess {
 			"WorkflowDefinitionLink", "classNameId",
 			String.valueOf(PortalUtil.getClassNameId(
 				"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess")),
-			"DDLRecord", "recordId"
+			"KaleoProcess", "kaleoProcessId"
 		},
 		new String[] {
-			"WorkflowDefinitionLink", "classNameId",
+			"WorkflowInstanceLink", "classNameId",
 			String.valueOf(PortalUtil.getClassNameId(
 				"com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess")),
-			"KaleoProcess", "kaleoProcessId"
+			"DDLRecord", "recordId"
 		}
 	};
 

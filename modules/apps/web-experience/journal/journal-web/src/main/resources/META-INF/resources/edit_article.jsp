@@ -270,7 +270,7 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 
 		String saveButtonLabel = "save";
 
-		if ((article == null) || article.isApproved() || article.isDraft() || article.isExpired()) {
+		if ((article == null) || article.isApproved() || article.isDraft() || article.isExpired() || article.isScheduled()) {
 			saveButtonLabel = "save-as-draft";
 		}
 

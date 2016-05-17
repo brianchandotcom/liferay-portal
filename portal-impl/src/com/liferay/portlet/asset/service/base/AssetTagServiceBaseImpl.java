@@ -455,6 +455,7 @@ public abstract class AssetTagServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the asset tag stats local service
 	 */
+	@SuppressWarnings("deprecation")
 	public com.liferay.asset.kernel.service.AssetTagStatsLocalService getAssetTagStatsLocalService() {
 		return assetTagStatsLocalService;
 	}
@@ -464,6 +465,7 @@ public abstract class AssetTagServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param assetTagStatsLocalService the asset tag stats local service
 	 */
+	@SuppressWarnings("deprecation")
 	public void setAssetTagStatsLocalService(
 		com.liferay.asset.kernel.service.AssetTagStatsLocalService assetTagStatsLocalService) {
 		this.assetTagStatsLocalService = assetTagStatsLocalService;
@@ -579,6 +581,7 @@ public abstract class AssetTagServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = AssetEntryFinder.class)
 	protected AssetEntryFinder assetEntryFinder;
 	@BeanReference(type = com.liferay.asset.kernel.service.AssetTagStatsLocalService.class)
+	@SuppressWarnings("deprecation")
 	protected com.liferay.asset.kernel.service.AssetTagStatsLocalService assetTagStatsLocalService;
 	@BeanReference(type = AssetTagStatsPersistence.class)
 	protected AssetTagStatsPersistence assetTagStatsPersistence;

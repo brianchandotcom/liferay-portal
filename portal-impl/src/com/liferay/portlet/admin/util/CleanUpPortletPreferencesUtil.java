@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.portlet.admin.util;
 
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
+import com.liferay.portal.kernel.model.LayoutStagingHandler;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
@@ -33,16 +34,20 @@ import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.util.List;
 
 /**
  * @author Andrew Betts
  */
-public class VerifyPortletPreferences extends VerifyProcess {
+public class CleanUpPortletPreferencesUtil {
 
 	public static void cleanUpLayoutRevisionPortletPreferences()
 		throws Exception {
+
+		CacheRegistryUtil.setActive(true);
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			ActionableDynamicQuery actionableDynamicQuery =
@@ -52,6 +57,21 @@ public class VerifyPortletPreferences extends VerifyProcess {
 
 			actionableDynamicQuery.performActions();
 		}
+		finally {
+			CacheRegistryUtil.setActive(false);
+		}
+	}
+
+	protected static boolean containsPortlet(Layout layout, String portletId) {
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		List<Portlet> portlets = layoutTypePortlet.getAllPortlets();
+
+		List<String> portletIds = ListUtil.toList(
+			portlets, Portlet.PORTLET_ID_ACCESSOR);
+
+		return portletIds.contains(portletId);
 	}
 
 	protected static ActionableDynamicQuery
@@ -99,16 +119,23 @@ public class VerifyPortletPreferences extends VerifyProcess {
 						return;
 					}
 
-					LayoutTypePortlet layoutTypePortlet =
-						(LayoutTypePortlet)layout.getLayoutType();
+					if (containsPortlet(
+							layout, portletPreferences.getPortletId())) {
 
-					List<Portlet> portlets = layoutTypePortlet.getAllPortlets();
+						return;
+					}
 
-					List<String> portletIds = ListUtil.toList(
-						portlets, Portlet.PORTLET_ID_ACCESSOR);
+					LayoutStagingHandler layoutStagingHandler =
+						new LayoutStagingHandler(layout);
 
-					if (portletIds.contains(
-							portletPreferences.getPortletId())) {
+					layoutStagingHandler.setLayoutRevision(layoutRevision);
+
+					Layout proxiedLayout = (Layout)ProxyUtil.newProxyInstance(
+						PortalClassLoaderUtil.getClassLoader(),
+						new Class[] {Layout.class}, layoutStagingHandler);
+
+					if (containsPortlet(
+							proxiedLayout, portletPreferences.getPortletId())) {
 
 						return;
 					}
@@ -128,19 +155,7 @@ public class VerifyPortletPreferences extends VerifyProcess {
 		return portletPreferencesActionableDynamicQuery;
 	}
 
-	@Override
-	protected void doVerify() throws Exception {
-		CacheRegistryUtil.setActive(true);
-
-		try {
-			cleanUpLayoutRevisionPortletPreferences();
-		}
-		finally {
-			CacheRegistryUtil.setActive(false);
-		}
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
-		VerifyPortletPreferences.class);
+		CleanUpPortletPreferencesUtil.class);
 
 }

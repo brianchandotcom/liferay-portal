@@ -91,6 +91,7 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.admin.util.CleanUpPermissionsUtil;
+import com.liferay.portlet.admin.util.CleanUpPortletPreferencesUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -176,6 +177,10 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else if (cmd.startsWith("convertProcess.")) {
 			redirect = convertProcess(actionRequest, actionResponse, cmd);
+		}
+		else if (cmd.equals("cleanUpPortletPreferences")) {
+			CleanUpPortletPreferencesUtil.
+				cleanUpLayoutRevisionPortletPreferences();
 		}
 		else if (cmd.equals("dlPreviews")) {
 			DLPreviewableProcessor.deleteFiles();

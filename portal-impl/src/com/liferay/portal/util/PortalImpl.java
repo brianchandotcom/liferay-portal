@@ -664,11 +664,26 @@ public class PortalImpl implements Portal {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
+		boolean isPortletBreadcrumbEntry = Validator.isNotNull(
+			portletDisplay.getId()) && !portletDisplay.isFocused();
+
+		addPortletBreadcrumbEntry(
+			request, title, url, null, isPortletBreadcrumbEntry);
+	}
+
+	@Override
+	public void addPortletBreadcrumbEntry(
+		HttpServletRequest request, String title, String url,
+		Map<String, Object> data, boolean isPortletBreadcrumbEntry) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		String name = WebKeys.PORTLET_BREADCRUMBS;
 
-		if (Validator.isNotNull(portletDisplay.getId()) &&
-			!portletDisplay.isFocused()) {
-
+		if (isPortletBreadcrumbEntry) {
 			name += StringPool.UNDERLINE + portletDisplay.getId();
 		}
 
@@ -8152,7 +8167,6 @@ public class PortalImpl implements Portal {
 	private static final String _LOCALHOST = "localhost";
 
 	private static final Locale _NULL_LOCALE;
-
 	private static final MethodHandler _resetCDNHostsMethodHandler =
 		new MethodHandler(new MethodKey(PortalUtil.class, "resetCDNHosts"));
 

@@ -188,6 +188,24 @@ public class PortalUtil {
 	}
 
 	/**
+	 * Adds an entry to the portlet breadcrumbs for the page in the request.
+	 *
+	 * @param request the servlet request for the page
+	 * @param title the title of the new breadcrumb entry
+	 * @param url the URL of the new breadcrumb entry
+	 * @param data the HTML5 data parameters of the new breadcrumb entry
+	 * @param isPortletBreadcrumbEntry specifies if the the entry is a portlet
+	 *        breadcrumb entry
+	 */
+	public static void addPortletBreadcrumbEntry(
+		HttpServletRequest request, String title, String url,
+		Map<String, Object> data, boolean isPortletBreadcrumbEntry) {
+
+		getPortal().addPortletBreadcrumbEntry(
+			request, title, url, data, isPortletBreadcrumbEntry);
+	}
+
+	/**
 	 * Adds the default resource permissions for the portlet to the page in the
 	 * request.
 	 *

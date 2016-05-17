@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1463166584165
+Bnd-LastModified: 1463480923120
 Bundle-ManifestVersion: 2
 Bundle-Name: portal-bootstrap
 Bundle-SymbolicName: portal-bootstrap
 Bundle-Vendor: Liferay, Inc.
 Bundle-Version: 1.0.0
-Created-By: 1.7.0_71 (Oracle Corporation)
+Created-By: 1.8.0_60 (Oracle Corporation)
 Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  u.impl;version="4.0.1";uses:="com.liferay.ibm.icu.math,com.liferay.ib
  m.icu.text,com.liferay.ibm.icu.util",com.liferay.ibm.icu.impl.coll;ve
@@ -3624,7 +3624,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  asset.kernel.model,com.liferay.portal.kernel.bean,com.liferay.portal.
  kernel.model,com.liferay.portal.kernel.social,com.liferay.portal.kern
  el.spring.osgi,com.liferay.social.kernel.service";version="1.0.0",com
- .liferay.portlet.asset.util;version="1.0.2";uses:="com.liferay.asset.
+ .liferay.portlet.asset.util;version="1.1.0";uses:="com.liferay.asset.
  kernel.model,com.liferay.asset.kernel.service.persistence,com.liferay
  .portal.kernel.exception,com.liferay.portal.kernel.model,com.liferay.
  portal.kernel.portlet,com.liferay.portal.kernel.search,com.liferay.po
@@ -4265,43 +4265,43 @@ Private-Package: aQute.bnd.osgi.eclipse;version="1.0.0",aQute.bnd.osgi
  eray.osgi.service.tracker.collections.internal.list,com.liferay.osgi.
  service.tracker.collections.internal.map,com.liferay.portal.asm,com.l
  iferay.portal.aspectj,com.liferay.portal.dependencies,com.liferay.por
- tal.deploy.dependencies,com.liferay.portal.deploy.dependencies.images
- .liferay-ui,com.liferay.portal.events.dependencies,com.liferay.portal
- .fabric,com.liferay.portal.freemarker;version="1.0.2",com.liferay.por
- tal.javadoc,com.liferay.portal.jericho,com.liferay.portal.license,com
- .liferay.portal.license.util,com.liferay.portal.microsofttranslator,c
- om.liferay.portal.minifier,com.liferay.portal.nio.intraband.proxy,com
- .liferay.portal.search.dependencies.spellchecker,com.liferay.portal.s
- ecurity.jaas.ext,com.liferay.portal.security.jaas.ext.jboss,com.lifer
- ay.portal.security.jaas.ext.jetty,com.liferay.portal.security.jaas.ex
- t.jonas,com.liferay.portal.security.jaas.ext.resin,com.liferay.portal
- .security.jaas.ext.tomcat,com.liferay.portal.security.jaas.ext.weblog
- ic,com.liferay.portal.servlet.filters.dynamiccss.dependencies,com.lif
- eray.portal.sharepoint,com.liferay.portal.sharepoint.dws,com.liferay.
- portal.sharepoint.methods,com.liferay.portal.tools.comparator,com.lif
- eray.portal.tools.dependencies,com.liferay.portal.tools.jspc.common,c
- om.liferay.portal.tools.jspc.resin,com.liferay.portal.tools.propertie
- sdoc,com.liferay.portal.tools.propertiesdoc.dependencies,com.liferay.
- portal.tools.sql,com.liferay.portal.tools.sql.dependencies,com.lifera
- y.portal.upgrade.v6_1_0.dependencies,com.liferay.portal.util.dependen
- cies,com.liferay.portal.velocity,com.liferay.portal.webserver.depende
- ncies,com.liferay.portal.words.dependencies,com.liferay.portal.xuggle
- r,com.liferay.portlet.admin.dependencies,com.liferay.portlet.announce
- ments.dependencies,com.liferay.portlet.blogs.dependencies,com.liferay
- .portlet.documentlibrary.dependencies,com.liferay.portlet.documentlib
- rary.sharepoint,com.liferay.portlet.messageboards.dependencies,com.li
- feray.portlet.portletdisplaytemplate.dependencies,com.liferay.portlet
- .sites.dependencies,com.liferay.registry.collections.internal,com.sun
- .mail.handlers,com.sun.mail.iap,com.sun.mail.imap,com.sun.mail.imap.p
- rotocol,com.sun.mail.pop3,com.sun.mail.smtp,com.sun.mail.util,content
- ,custom-sql,images,license,org.apache.html.dom,org.apache.log4j.lf5,o
- rg.apache.log4j.lf5.config,org.apache.log4j.lf5.util,org.apache.log4j
- .lf5.viewer,org.apache.log4j.lf5.viewer.categoryexplorer,org.apache.l
- og4j.lf5.viewer.configure,org.apache.log4j.lf5.viewer.images,org.apac
- he.wml,org.apache.wml.dom,org.aspectj.internal.lang.annotation,org.as
- pectj.internal.lang.reflect,org.aspectj.lang.internal.lang,org.aspect
- j.runtime.internal,org.aspectj.runtime.internal.cflowstack,org.jcp.xm
- l.dsig.internal,org.jcp.xml.dsig.internal.dom,resource-actions,trax
+ tal.deploy.dependencies,com.liferay.portal.events.dependencies,com.li
+ feray.portal.fabric,com.liferay.portal.freemarker;version="1.0.2",com
+ .liferay.portal.javadoc,com.liferay.portal.jericho,com.liferay.portal
+ .license,com.liferay.portal.license.util,com.liferay.portal.microsoft
+ translator,com.liferay.portal.minifier,com.liferay.portal.nio.intraba
+ nd.proxy,com.liferay.portal.search.dependencies.spellchecker,com.life
+ ray.portal.security.jaas.ext,com.liferay.portal.security.jaas.ext.jbo
+ ss,com.liferay.portal.security.jaas.ext.jetty,com.liferay.portal.secu
+ rity.jaas.ext.jonas,com.liferay.portal.security.jaas.ext.resin,com.li
+ feray.portal.security.jaas.ext.tomcat,com.liferay.portal.security.jaa
+ s.ext.weblogic,com.liferay.portal.servlet.filters.dynamiccss.dependen
+ cies,com.liferay.portal.sharepoint,com.liferay.portal.sharepoint.dws,
+ com.liferay.portal.sharepoint.methods,com.liferay.portal.tools.compar
+ ator,com.liferay.portal.tools.dependencies,com.liferay.portal.tools.j
+ spc.common,com.liferay.portal.tools.jspc.resin,com.liferay.portal.too
+ ls.propertiesdoc,com.liferay.portal.tools.propertiesdoc.dependencies,
+ com.liferay.portal.tools.sql,com.liferay.portal.tools.sql.dependencie
+ s,com.liferay.portal.upgrade.v6_1_0.dependencies,com.liferay.portal.u
+ til.dependencies,com.liferay.portal.velocity,com.liferay.portal.webse
+ rver.dependencies,com.liferay.portal.words.dependencies,com.liferay.p
+ ortal.xuggler,com.liferay.portlet.admin.dependencies,com.liferay.port
+ let.announcements.dependencies,com.liferay.portlet.blogs.dependencies
+ ,com.liferay.portlet.documentlibrary.dependencies,com.liferay.portlet
+ .documentlibrary.sharepoint,com.liferay.portlet.messageboards.depende
+ ncies,com.liferay.portlet.portletdisplaytemplate.dependencies,com.lif
+ eray.portlet.sites.dependencies,com.liferay.registry.collections.inte
+ rnal,com.sun.mail.handlers,com.sun.mail.iap,com.sun.mail.imap,com.sun
+ .mail.imap.protocol,com.sun.mail.pop3,com.sun.mail.smtp,com.sun.mail.
+ util,content,custom-sql,images,license,org.apache.html.dom,org.apache
+ .log4j.lf5,org.apache.log4j.lf5.config,org.apache.log4j.lf5.util,org.
+ apache.log4j.lf5.viewer,org.apache.log4j.lf5.viewer.categoryexplorer,
+ org.apache.log4j.lf5.viewer.configure,org.apache.log4j.lf5.viewer.ima
+ ges,org.apache.wml,org.apache.wml.dom,org.aspectj.internal.lang.annot
+ ation,org.aspectj.internal.lang.reflect,org.aspectj.lang.internal.lan
+ g,org.aspectj.runtime.internal,org.aspectj.runtime.internal.cflowstac
+ k,org.jcp.xml.dsig.internal,org.jcp.xml.dsig.internal.dom,resource-ac
+ tions,trax
 Provide-Capability: liferay.resource.bundle;bundle.symbolic.name=porta
  l-bootstrap;resource.bundle.base.name="content.Language"
 Require-Capability: osgi.extender;filter:="(&(osgi.extender=jsp.taglib

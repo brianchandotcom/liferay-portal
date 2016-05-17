@@ -53,7 +53,7 @@ else {
 }
 
 if (Validator.isNotNull(tag)) {
-	PortalUtil.addPortletBreadcrumbEntry(request, tag, currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, tag, currentURL, null, false);
 }
 %>
 

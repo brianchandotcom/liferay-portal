@@ -1584,7 +1584,6 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Page Name" />
-			<var name="pageStaging" value="true" />
 		</execute>
 
 		<execute macro="Staging#changeSitePageVariationPG">
@@ -1668,7 +1667,6 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Empty Page Name" />
-			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Community Site Name" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>

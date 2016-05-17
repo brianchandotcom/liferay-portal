@@ -360,10 +360,12 @@ AUI.add(
 									}
 
 									if (updateSessionState) {
-										if (expirationMoment) {
+										var sessionState = instance.get('sessionState');
+
+										if (hasExpired && sessionState != "expired") {
 											instance.expire();
 										}
-										else if (warningMoment) {
+										else if (hasWarned && !hasExpired && sessionState != "warned") {
 											instance.warn();
 										}
 										else if (extend) {

@@ -207,7 +207,7 @@ public class DDLRecordStagedModelDataHandler
 			"(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord)",
 		unbind = "-"
 	)
-	protected void setStagedModelRepository(
+	protected void setDDLRecordStagedModelRepository(
 		DDLRecordStagedModelRepository ddlRecordStagedModelRepository) {
 
 		_ddlRecordStagedModelRepository = ddlRecordStagedModelRepository;

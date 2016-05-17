@@ -117,10 +117,14 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		matcher = _wilcardImportPattern.matcher(imports);
 
 		while (matcher.find()) {
-			processErrorMessage(
-				fileName,
-				"Don't use wildcard in Export-Package '" + matcher.group(1) +
-					"': " + fileName);
+			String wildcardImport = matcher.group(1);
+
+			if (wildcardImport.matches("^!?com\\.liferay\\..+")) {
+				processErrorMessage(
+					fileName,
+					"Don't use wildcard in Export-Package '" + wildcardImport +
+						"': " + fileName);
+			}
 		}
 	}
 

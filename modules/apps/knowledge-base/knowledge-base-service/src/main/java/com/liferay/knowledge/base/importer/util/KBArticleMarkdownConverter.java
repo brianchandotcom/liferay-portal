@@ -22,6 +22,7 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -263,8 +264,21 @@ public class KBArticleMarkdownConverter {
 			urlTitle = StringUtil.toLowerCase(urlTitle);
 		}
 
+		if (urlTitle == null) {
+			return null;
+		}
+
 		if (!urlTitle.startsWith(StringPool.SLASH)) {
 			urlTitle = StringPool.SLASH + urlTitle;
+		}
+
+		int urlTitleMaxSize = ModelHintsUtil.getMaxLength(
+			KBArticle.class.getName(), "urlTitle");
+
+		if (urlTitle.length() > urlTitleMaxSize) {
+			int pos = urlTitle.lastIndexOf(StringPool.DASH);
+
+			urlTitle = urlTitle.substring(0, pos);
 		}
 
 		return urlTitle;

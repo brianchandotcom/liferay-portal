@@ -212,7 +212,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			return StringUtil.replace(content, includeResources, replacement);
 		}
 
-		return sortIncludeResources(content, includeResources);
+		return sortIncludeResources(
+			content, includeResources, new IncludeResourceComparator());
 	}
 
 	protected String sortDefinitions(String content) {
@@ -255,7 +256,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String sortIncludeResources(
-		String content, String includeResources) {
+		String content, String includeResources,
+		Comparator<String> comparator) {
 
 		String[] lines = StringUtil.splitLines(includeResources);
 
@@ -264,9 +266,6 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		}
 
 		String previousIncludeResource = null;
-
-		IncludeResourceComparator includeResourceComparator =
-			new IncludeResourceComparator();
 
 		for (int i = 1; i < lines.length; i++) {
 			String includeResource = StringUtil.trim(lines[i]);
@@ -277,7 +276,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			}
 
 			if (previousIncludeResource != null) {
-				int value = includeResourceComparator.compare(
+				int value = comparator.compare(
 					previousIncludeResource, includeResource);
 
 				if (value > 0) {

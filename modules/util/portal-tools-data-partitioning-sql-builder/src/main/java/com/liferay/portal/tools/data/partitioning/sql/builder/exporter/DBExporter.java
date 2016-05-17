@@ -32,4 +32,7 @@ public interface DBExporter {
 
 	public void write(String tableName, OutputStream outputStream);
 
+	public void writeDelete(
+		long companyId, String tableName, OutputStream outputStream);
+
 }

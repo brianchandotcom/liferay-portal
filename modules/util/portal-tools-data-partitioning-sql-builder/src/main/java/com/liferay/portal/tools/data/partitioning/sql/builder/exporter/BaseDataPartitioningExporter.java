@@ -162,6 +162,32 @@ public abstract class BaseDataPartitioningExporter
 		write(0, tableName, outputStream);
 	}
 
+	@Override
+	public void writeDelete(
+		long companyId, String tableName, OutputStream outputStream) {
+
+		DataSource dataSource = getDataSource();
+
+		String sql = "select * from " + tableName +" where companyId = ?";
+
+		try (Connection connection = dataSource.getConnection();
+			PreparedStatement preparedStatement = buildPreparedStatement(
+				connection, sql, companyId);
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				String deleteSql =
+					"delete from " + tableName + " where companyId = " +
+						companyId + ";\n";
+
+				outputStream.write(deleteSql.getBytes());
+			}
+		}
+		catch (IOException | SQLException e) {
+			_logger.error("Unable to export " + tableName, e);
+		}
+	}
+
 	protected PreparedStatement buildPreparedStatement(
 			Connection connection, String sql, long companyId)
 		throws SQLException {

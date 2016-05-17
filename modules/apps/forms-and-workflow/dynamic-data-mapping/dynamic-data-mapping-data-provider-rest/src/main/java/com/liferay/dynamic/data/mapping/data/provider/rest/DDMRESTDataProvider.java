@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.data.provider.rest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -124,9 +124,15 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		_jsonFactory = jsonFactory;
 	}
 
+	@Reference(unbind = "-")
+	protected void setMultiVMPool(MultiVMPool multiVMPool) {
+		_portalCache =
+			(PortalCache<String, DDMRESTDataProviderResult>)
+				multiVMPool.getPortalCache(DDMRESTDataProvider.class.getName());
+	}
+
 	private JSONFactory _jsonFactory;
-	private final PortalCache<String, DDMRESTDataProviderResult> _portalCache =
-		MultiVMPoolUtil.getPortalCache(DDMRESTDataProvider.class.getName());
+	private PortalCache<String, DDMRESTDataProviderResult> _portalCache;
 
 	private static class DDMRESTDataProviderResult implements Serializable {
 

@@ -78,7 +78,10 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 	searchContainerId="wikiNodes"
 >
 	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button />
+		<liferay-frontend:management-bar-sidenav-toggler-button
+			icon="info-circle"
+			label="info"
+		/>
 
 		<liferay-frontend:management-bar-display-buttons
 			displayViews='<%= new String[] {"descriptive", "list"} %>'
@@ -92,7 +95,10 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button />
+		<liferay-frontend:management-bar-sidenav-toggler-button
+			icon="info-circle"
+			label="info"
+		/>
 
 		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteNodes();" %>' icon='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
 	</liferay-frontend:management-bar-action-buttons>

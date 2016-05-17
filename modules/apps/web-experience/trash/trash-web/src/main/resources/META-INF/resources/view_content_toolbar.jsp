@@ -18,7 +18,10 @@
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button />
+		<liferay-frontend:management-bar-sidenav-toggler-button
+			icon="info-circle"
+			label="info"
+		/>
 
 		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />

@@ -36,14 +36,6 @@ if (Validator.isNull(href)) {
 	href = "#" + sidenavId;
 }
 
-if (Validator.isNull(icon)) {
-	icon = "info-circle";
-}
-
-if (Validator.isNull(label)) {
-	label = "info";
-}
-
 if (Validator.isNull(position)) {
 	position = "right";
 }

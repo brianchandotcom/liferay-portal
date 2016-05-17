@@ -30,7 +30,10 @@ PortletURL portletURL = siteAdminDisplayContext.getPortletURL();
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button />
+		<liferay-frontend:management-bar-sidenav-toggler-button
+			icon="info-circle"
+			label="info"
+		/>
 
 		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -58,7 +61,10 @@ PortletURL portletURL = siteAdminDisplayContext.getPortletURL();
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button />
+		<liferay-frontend:management-bar-sidenav-toggler-button
+			icon="info-circle"
+			label="info"
+		/>
 
 		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSites" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>

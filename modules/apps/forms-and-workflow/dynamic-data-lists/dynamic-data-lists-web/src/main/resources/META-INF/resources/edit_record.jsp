@@ -104,7 +104,10 @@ else {
 <c:if test="<%= record != null %>">
 	<liferay-frontend:management-bar>
 		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-sidenav-toggler-button />
+			<liferay-frontend:management-bar-sidenav-toggler-button
+				icon="info-circle"
+				label="info"
+			/>
 		</liferay-frontend:management-bar-buttons>
 	</liferay-frontend:management-bar>
 </c:if>

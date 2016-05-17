@@ -37,7 +37,10 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 	searchContainerId="<%= searchContainerId %>"
 >
 	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button />
+		<liferay-frontend:management-bar-sidenav-toggler-button
+			icon="info-circle"
+			label="info"
+		/>
 
 		<c:if test="<%= !search %>">
 			<liferay-util:include page="/document_library/display_style_buttons.jsp" servletContext="<%= application %>" />
@@ -98,7 +101,10 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-sidenav-toggler-button />
+		<liferay-frontend:management-bar-sidenav-toggler-button
+			icon="info-circle"
+			label="info"
+		/>
 
 		<%
 		Group scopeGroup = themeDisplay.getScopeGroup();

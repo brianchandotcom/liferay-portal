@@ -353,19 +353,19 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 
 				var unselectedTargets = unselectedTargetsNode.val().split(',');
 
-				var form = AUI.$(document.<portlet:namespace />fm);
+				var form = A.one(document.<portlet:namespace />fm);
 
-				form.find('input[type=checkbox]').each(
-					function(index, item) {
+				form.all('input[type=checkbox]').each(
+					function(item, index) {
 						var checkbox = A.one(item);
 
 						var value = checkbox.val();
 
 						if (checkbox.get('checked')) {
-							var index = unselectedTargets.indexOf(value);
+							var unselectedTargetIndex = unselectedTargets.indexOf(value);
 
-							if (index != -1) {
-								unselectedTargets.splice(index, 1);
+							if (unselectedTargetIndex != -1) {
+								unselectedTargets.splice(unselectedTargetIndex, 1);
 							}
 						}
 						else if (originalSelectedValues.indexOf(value) != -1) {

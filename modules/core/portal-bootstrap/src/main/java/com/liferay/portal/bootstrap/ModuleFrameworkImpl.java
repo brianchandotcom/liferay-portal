@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -90,6 +91,7 @@ import org.osgi.framework.launch.FrameworkFactory;
 import org.osgi.framework.startlevel.BundleStartLevel;
 import org.osgi.framework.startlevel.FrameworkStartLevel;
 import org.osgi.framework.wiring.BundleRevision;
+import org.osgi.framework.wiring.FrameworkWiring;
 import org.osgi.util.tracker.BundleTracker;
 
 import org.springframework.beans.factory.BeanIsAbstractException;
@@ -642,9 +644,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		// Framework
 
 		properties.put(
-			Constants.FRAMEWORK_BEGINNING_STARTLEVEL,
-			String.valueOf(PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL));
-		properties.put(
 			Constants.FRAMEWORK_BUNDLE_PARENT,
 			Constants.FRAMEWORK_BUNDLE_PARENT_APP);
 		properties.put(
@@ -826,7 +825,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
-	private void _installInitialBundle(String location) {
+	private Bundle _installInitialBundle(String location) {
 		boolean start = false;
 		int startLevel = PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL;
 
@@ -882,7 +881,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					_log.warn(ioe.getMessage());
 				}
 
-				return;
+				return null;
 			}
 
 			if (_log.isDebugEnabled()) {
@@ -898,45 +897,13 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 
 			if ((bundle == null) || _isFragmentBundle(bundle)) {
-				return;
+				return bundle;
 			}
 
 			if (!start && _hasLazyActivationPolicy(bundle)) {
 				bundle.start(Bundle.START_ACTIVATION_POLICY);
 
-				return;
-			}
-
-			if (start) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Starting initial bundle " + bundle);
-				}
-
-				bundle.start();
-
-				final CountDownLatch countDownLatch = new CountDownLatch(1);
-
-				BundleTracker<Void> bundleTracker = new BundleTracker<Void>(
-					_framework.getBundleContext(), Bundle.ACTIVE, null) {
-
-					@Override
-					public Void addingBundle(
-						Bundle trackedBundle, BundleEvent bundleEvent) {
-
-						if (trackedBundle == bundle) {
-							countDownLatch.countDown();
-
-							close();
-						}
-
-						return null;
-					}
-
-				};
-
-				bundleTracker.open();
-
-				countDownLatch.await();
+				return bundle;
 			}
 
 			if (((bundle.getState() & Bundle.UNINSTALLED) == 0) &&
@@ -954,12 +921,24 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				bundleStartLevel.setStartLevel(startLevel);
 			}
 
+			if (start) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Starting initial bundle " + bundle);
+				}
+
+				bundle.start();
+			}
+
 			if (_log.isDebugEnabled()) {
 				_log.debug("Started bundle " + bundle);
 			}
+
+			return bundle;
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+
+			return null;
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
@@ -1085,15 +1064,103 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_log.debug("Starting initial bundles");
 		}
 
+		List<Bundle> bundles = new ArrayList<>();
+
 		for (String initialBundle :
 				PropsValues.MODULE_FRAMEWORK_INITIAL_BUNDLES) {
 
-			_installInitialBundle(initialBundle);
+			Bundle bundle = _installInitialBundle(initialBundle);
+
+			if (bundle != null) {
+				bundles.add(bundle);
+			}
+		}
+
+		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
+			FrameworkStartLevel.class);
+
+		frameworkStartLevel.setStartLevel(
+			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL);
+
+		for (final Bundle bundle : bundles) {
+			if (_isFragmentBundle(bundle)) {
+				continue;
+			}
+
+			final CountDownLatch countDownLatch = new CountDownLatch(1);
+
+			BundleTracker<Void> bundleTracker = new BundleTracker<Void>(
+				_framework.getBundleContext(), Bundle.ACTIVE, null) {
+
+				@Override
+				public Void addingBundle(
+					Bundle trackedBundle, BundleEvent bundleEvent) {
+
+					if (trackedBundle == bundle) {
+						countDownLatch.countDown();
+
+						close();
+					}
+
+					return null;
+				}
+
+			};
+
+			bundleTracker.open();
+
+			countDownLatch.await();
 		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Started initial bundles");
 		}
+
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		Bundle[] installedBundles = bundleContext.getBundles();
+
+		List<String> hostBundleSymbolicNames = new ArrayList<>();
+
+		for (Bundle bundle : installedBundles) {
+			BundleStartLevel bundleStartLevel = bundle.adapt(
+				BundleStartLevel.class);
+
+			if (bundleStartLevel.getStartLevel() !=
+					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL) {
+
+				continue;
+			}
+
+			Dictionary<String, String> headers = bundle.getHeaders();
+
+			String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
+
+			if (fragmentHost == null) {
+				continue;
+			}
+
+			int index = fragmentHost.indexOf(CharPool.SEMICOLON);
+
+			if (index != -1) {
+				fragmentHost = fragmentHost.substring(0, index);
+			}
+
+			hostBundleSymbolicNames.add(fragmentHost);
+		}
+
+		List<Bundle> hostBundles = new ArrayList<>();
+
+		for (Bundle bundle : installedBundles) {
+			if (hostBundleSymbolicNames.contains(bundle.getSymbolicName())) {
+				hostBundles.add(bundle);
+			}
+		}
+
+		FrameworkWiring frameworkWiring = _framework.adapt(
+			FrameworkWiring.class);
+
+		frameworkWiring.refreshBundles(hostBundles);
 	}
 
 	private void _setUpPrerequisiteFrameworkServices(

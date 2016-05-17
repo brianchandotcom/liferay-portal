@@ -27,11 +27,34 @@ public interface DBExporter {
 
 	public List<String> getPartitionedTableNames(String schemaName);
 
+	/**
+	 * Writes the SQL sentences that insert all rows related to the company
+	 * identified by "companyId", on the table identified by "tableName".
+	 *
+	 * @param companyId the primary key to be used to filter the table
+	 * @param tableName the name of the table
+	 * @param outputStream the output stream where the strings will be written
+	 */
 	public void write(
 		long companyId, String tableName, OutputStream outputStream);
 
+	/**
+	 * Writes the SQL sentences that insert all rows on the table identified by
+	 * "tableName".
+	 *
+	 * @param tableName the name of the table
+	 * @param outputStream the output stream where the strings will be written
+	 */
 	public void write(String tableName, OutputStream outputStream);
 
+	/**
+	 * Writes the SQL sentences that delete all rows related to the company
+	 * identified by "companyId", on the table identified by "tableName".
+	 *
+	 * @param companyId the primary key to be used to filter the table
+	 * @param tableName the name of the table
+	 * @param outputStream the output stream where the strings will be written
+	 */
 	public void writeDelete(
 		long companyId, String tableName, OutputStream outputStream);
 

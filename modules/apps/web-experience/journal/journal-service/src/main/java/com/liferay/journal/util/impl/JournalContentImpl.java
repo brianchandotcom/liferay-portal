@@ -19,7 +19,7 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.journal.util.JournalContent;
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.index.IndexEncoder;
 import com.liferay.portal.kernel.cache.index.PortalCacheIndexer;
@@ -62,7 +62,7 @@ public class JournalContentImpl implements JournalContent {
 			return;
 		}
 
-		_getPortalCache().removeAll();
+		_portalCache.removeAll();
 	}
 
 	@Override
@@ -171,7 +171,7 @@ public class JournalContentImpl implements JournalContent {
 			groupId, articleId, version, ddmTemplateKey, layoutSetId, viewMode,
 			languageId, page, secure);
 
-		JournalArticleDisplay articleDisplay = _getPortalCache().get(
+		JournalArticleDisplay articleDisplay = _portalCache.get(
 			journalContentKey);
 
 		boolean lifecycleRender = false;
@@ -189,7 +189,7 @@ public class JournalContentImpl implements JournalContent {
 			if ((articleDisplay != null) && articleDisplay.isCacheable() &&
 				lifecycleRender) {
 
-				_getPortalCache().put(journalContentKey, articleDisplay);
+				_portalCache.put(journalContentKey, articleDisplay);
 			}
 		}
 
@@ -297,24 +297,21 @@ public class JournalContentImpl implements JournalContent {
 		_journalArticleLocalService = journalArticleLocalService;
 	}
 
-	protected static final String CACHE_NAME = JournalContent.class.getName();
-
-	private PortalCache<JournalContentKey, JournalArticleDisplay>
-		_getPortalCache() {
-
-		if (_portalCache == null) {
-			_portalCache = MultiVMPoolUtil.getPortalCache(CACHE_NAME);
-		}
-
-		return _portalCache;
+	@Reference(unbind = "-")
+	protected void setMultiVMPool(MultiVMPool multiVMPool) {
+		_portalCache =
+			(PortalCache<JournalContentKey, JournalArticleDisplay>)
+				multiVMPool.getPortalCache(CACHE_NAME);
 	}
+
+	protected static final String CACHE_NAME = JournalContent.class.getName();
 
 	private PortalCacheIndexer<String, JournalContentKey, JournalArticleDisplay>
 		_getPortalCacheIndexer() {
 
 		if (_portalCacheIndexer == null) {
 			_portalCacheIndexer = new PortalCacheIndexer<>(
-				new JournalContentKeyIndexEncoder(), _getPortalCache());
+				new JournalContentKeyIndexEncoder(), _portalCache);
 		}
 
 		return _portalCacheIndexer;

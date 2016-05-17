@@ -398,8 +398,6 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute function="AssertElementNotPresent" locator1="ControlMenu#ADMIN" />
-
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Access in Site Administration" />
@@ -431,10 +429,6 @@
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute function="AssertElementNotPresent" locator1="ControlMenu#ADMIN" />
 	</command>
 
 	<command name="ViewWebContentPortletSiteRole" priority="4">
@@ -457,8 +451,6 @@
 			<var name="pageName" value="Web Content Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="ControlMenu#ADMIN" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
@@ -496,12 +488,5 @@
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Web Content Page" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute function="AssertElementNotPresent" locator1="ControlMenu#ADMIN" />
 	</command>
 </definition>

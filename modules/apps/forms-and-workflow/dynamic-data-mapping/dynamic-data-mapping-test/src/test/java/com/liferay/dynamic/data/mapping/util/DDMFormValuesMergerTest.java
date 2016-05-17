@@ -194,13 +194,13 @@ public class DDMFormValuesMergerTest {
 		List<DDMFormFieldValue> mergedDDMFormFieldValues =
 			mergedDDMFormValues.getDDMFormFieldValues();
 
-		Assert.assertEquals(1, mergedDDMFormFieldValues.size());
+		Assert.assertEquals(2, mergedDDMFormFieldValues.size());
 
 		Assert.assertTrue(
 			mergedDDMFormFieldValues.contains(text1DDMFormFieldValue));
 
 		Assert.assertTrue(
-			!mergedDDMFormFieldValues.contains(text2DDMFormFieldValue));
+			mergedDDMFormFieldValues.contains(text2DDMFormFieldValue));
 	}
 
 	@Test

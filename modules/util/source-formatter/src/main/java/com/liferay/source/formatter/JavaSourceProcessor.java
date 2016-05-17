@@ -3557,12 +3557,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return null;
 		}
 
-		if (line.endsWith(StringPool.COMMA)) {
-			if (getLevel(trimmedLine) < 0) {
-				return getCombinedLinesContent(
-					content, fileName, line, trimmedLine, lineLength, lineCount,
-					previousLine, null, false, false, 0);
-			}
+		if ((getLevel(trimmedLine) < 0) &&
+			(line.endsWith(StringPool.COMMA) ||
+			 (trimmedPreviousLine.startsWith("new ") &&
+			  line.endsWith(") {")))) {
+
+			return getCombinedLinesContent(
+				content, fileName, line, trimmedLine, lineLength, lineCount,
+				previousLine, null, false, false, 0);
 		}
 
 		if (((line.endsWith(StringPool.OPEN_CURLY_BRACE) &&

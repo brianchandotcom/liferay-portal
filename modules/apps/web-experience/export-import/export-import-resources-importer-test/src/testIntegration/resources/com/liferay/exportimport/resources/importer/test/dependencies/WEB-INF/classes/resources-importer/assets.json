@@ -1,0 +1,19 @@
+{
+	"assets": [
+		{
+			"name": "company_logo.png",
+			"tags": [
+				"logo",
+				"company"
+			]
+		},
+		{
+			"abstractSummary": "This is an abstract summary.",
+			"name": "Basic Article.xml",
+			"smallImage": "company_logo.png",
+			"tags": [
+				"web content"
+			]
+		}
+	]
+}

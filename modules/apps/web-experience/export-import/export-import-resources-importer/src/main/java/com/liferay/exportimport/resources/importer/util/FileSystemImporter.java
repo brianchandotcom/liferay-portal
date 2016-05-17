@@ -1177,16 +1177,6 @@ public class FileSystemImporter extends BaseImporter {
 		PortletPreferencesTranslator portletPreferencesTranslator =
 			portletPreferencesTranslators.get(rootPortletId);
 
-		if (portletPreferencesTranslator == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"No PortletPreferenceRetriever configured for : " +
-						rootPortletId);
-			}
-
-			return;
-		}
-
 		String portletId = layoutTypePortlet.addPortletId(
 			userId, rootPortletId, columnId, -1, false);
 
@@ -1203,19 +1193,22 @@ public class FileSystemImporter extends BaseImporter {
 			return;
 		}
 
-		PortletPreferences portletSetup =
-			portletPreferencesFactory.getLayoutPortletSetup(layout, portletId);
+		if (portletPreferencesTranslator != null) {
+			PortletPreferences portletSetup =
+				portletPreferencesFactory.getLayoutPortletSetup(
+					layout, portletId);
 
-		Iterator<String> iterator = portletPreferencesJSONObject.keys();
+			Iterator<String> iterator = portletPreferencesJSONObject.keys();
 
-		while (iterator.hasNext()) {
-			String key = iterator.next();
+			while (iterator.hasNext()) {
+				String key = iterator.next();
 
-			portletPreferencesTranslator.translate(
-				portletPreferencesJSONObject, key, portletSetup);
+				portletPreferencesTranslator.translate(
+					portletPreferencesJSONObject, key, portletSetup);
+			}
+
+			portletSetup.store();
 		}
-
-		portletSetup.store();
 
 		if (rootPortletId.equals(PortletKeys.NESTED_PORTLETS)) {
 			JSONArray columnsJSONArray =

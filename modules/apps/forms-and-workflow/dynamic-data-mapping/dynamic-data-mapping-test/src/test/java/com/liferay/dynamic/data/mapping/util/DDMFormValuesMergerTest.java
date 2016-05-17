@@ -198,7 +198,6 @@ public class DDMFormValuesMergerTest {
 
 		Assert.assertTrue(
 			mergedDDMFormFieldValues.contains(text1DDMFormFieldValue));
-
 		Assert.assertTrue(
 			mergedDDMFormFieldValues.contains(text2DDMFormFieldValue));
 	}

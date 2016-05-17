@@ -86,27 +86,27 @@ public class StatusModelImpl extends BaseModelImpl<Status>
 		TABLE_COLUMNS_MAP.put("playSound", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Chat_Status (statusId LONG not null primary key,userId LONG,modifiedDate LONG,online_ BOOLEAN,awake BOOLEAN,activePanelIds STRING null,message STRING null,playSound BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table Chat_Status (statusId LONG not null primary key,userId LONG,modifiedDate LONG,online_ BOOLEAN,awake BOOLEAN,activePanelIds VARCHAR(75) null,message VARCHAR(75) null,playSound BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table Chat_Status";
 	public static final String ORDER_BY_JPQL = " ORDER BY status.statusId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Chat_Status.statusId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.chat.service.util.ServiceProps.get(
 				"value.object.entity.cache.enabled.com.liferay.chat.model.Status"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.chat.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.chat.model.Status"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.chat.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.chat.model.Status"),
 			true);
 	public static final long MODIFIEDDATE_COLUMN_BITMASK = 1L;
 	public static final long ONLINE_COLUMN_BITMASK = 2L;
 	public static final long USERID_COLUMN_BITMASK = 4L;
 	public static final long STATUSID_COLUMN_BITMASK = 8L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.chat.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.chat.model.Status"));
 
 	public StatusModelImpl() {

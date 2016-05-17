@@ -14,30 +14,19 @@
 
 package com.liferay.layout.admin.web.control.menu;
 
-import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -51,52 +40,12 @@ import org.osgi.service.component.annotations.Component;
 	service = ProductNavigationControlMenuEntry.class
 )
 public class ManageLayoutProductNavigationControlMenuEntry
-	extends BaseProductNavigationControlMenuEntry
+	extends BaseJSPProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 
 	@Override
-	public Map<String, Object> getData(HttpServletRequest request) {
-		return _data;
-	}
-
-	@Override
-	public String getIcon(HttpServletRequest request) {
-		return "cog";
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return LanguageUtil.get(resourceBundle, "configure-page");
-	}
-
-	@Override
-	public String getURL(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Group group = themeDisplay.getScopeGroup();
-
-		String portletId = LayoutAdminPortletKeys.GROUP_PAGES;
-
-		if (group.isLayoutPrototype()) {
-			portletId = LayoutAdminPortletKeys.LAYOUT_PROTOTYPE_PAGE;
-		}
-
-		PortletURL editPageURL = PortalUtil.getControlPanelPortletURL(
-			request, portletId, PortletRequest.RENDER_PHASE);
-
-		Layout layout = themeDisplay.getLayout();
-
-		editPageURL.setParameter(
-			"groupId", String.valueOf(layout.getGroupId()));
-		editPageURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
-		editPageURL.setParameter(
-			"privateLayout", String.valueOf(layout.isPrivateLayout()));
-
-		return editPageURL.toString();
+	public String getIconJspPath() {
+		return "/control/menu/edit_layout_control_menu_entry_icon.jsp";
 	}
 
 	@Override
@@ -119,7 +68,13 @@ public class ManageLayoutProductNavigationControlMenuEntry
 		return super.isShow(request);
 	}
 
-	private static final Map<String, Object> _data =
-		Collections.<String, Object>singletonMap("qa-id", "editPage");
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
 
 }

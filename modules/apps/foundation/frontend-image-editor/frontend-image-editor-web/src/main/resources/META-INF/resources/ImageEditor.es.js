@@ -149,10 +149,10 @@ class ImageEditor extends Component {
 			let canvas = this.getImageEditorCanvas();
 
 			if (canvas.toBlob) {
-				canvas.toBlob(resolve);
+				canvas.toBlob(resolve, this.saveMimeType);
 			}
 			else {
-				let data = atob(canvas.toDataURL().split(',')[1]);
+				let data = atob(canvas.toDataURL(this.saveMimeType).split(',')[1]);
 				let length = data.length;
 				let bytes = new Uint8Array(length);
 
@@ -160,7 +160,7 @@ class ImageEditor extends Component {
 					bytes[i] = data.charCodeAt(i);
 				}
 
-				resolve(new Blob([bytes], {type: 'image/png'}));
+				resolve(new Blob([bytes], {type: this.saveMimeType}));
 			}
 		});
 	}
@@ -172,6 +172,19 @@ class ImageEditor extends Component {
 	 */
 	getImageEditorImageData() {
 		return this.history_[this.historyIndex_].getImageData();
+	}
+
+	/**
+	 * Normalizes different mime types to the most similar mime type
+	 * available to canvas implementations.
+	 *
+	 * @see http://kangax.github.io/jstests/toDataUrl_mime_type_test/
+	 *
+	 * @param  {String} mimeType Original mime type
+	 * @return {String} The normalized mime type
+	 */
+	normalizeCanvasMimeType_(mimeType) {
+		return mimeType.replace('jpg', 'jpeg');
 	}
 
 	/**
@@ -265,6 +278,24 @@ class ImageEditor extends Component {
 				.then((result) => this.notifySaveResult_(result))
 				.catch((error) => this.showError_(error));
 		}
+	}
+
+	/**
+	 * Setter function for the `saveMimeType` state key
+	 *
+	 * @param  {!String} saveMimeType The optional passed value for the attribute
+	 * @return {String} The computed value for the attribute
+	 * @protected
+	 */
+	setterSaveMimeTypeFn_(saveMimeType) {
+		if (!saveMimeType) {
+			let imageExtensionRegex = /(?:.*:\/\/)?(?:[^\/])*[^.]*.([^?\/$]*)/;
+			let imageExtension = this.image.match(imageExtensionRegex)[1];
+
+			saveMimeType = this.normalizeCanvasMimeType_('image/' + imageExtension);
+		}
+
+		return saveMimeType;
 	}
 
 	/**
@@ -436,6 +467,16 @@ ImageEditor.STATE = {
 	 * @type {String}
 	 */
 	saveFileName: {
+		validator: core.isString
+	},
+
+	/**
+	 * Mime type of the saved image. If not explicitly set,
+	 * the image mime type will be infered from the image url.
+	 * @type {String}
+	 */
+	saveMimeType: {
+		setter: 'setterSaveMimeTypeFn_',
 		validator: core.isString
 	},
 

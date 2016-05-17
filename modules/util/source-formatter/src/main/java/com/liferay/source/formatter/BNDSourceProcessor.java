@@ -104,7 +104,13 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void checkWildcardImports(
-		String fileName, String content, Pattern pattern) {
+		String fileName, String absolutePath, String content, Pattern pattern) {
+
+		if (absolutePath.contains("/portal-kernel/") ||
+			absolutePath.contains("/util-taglib/")) {
+
+			return;
+		}
 
 		Matcher matcher = pattern.matcher(content);
 
@@ -166,7 +172,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 				content, matcher.group(1), StringPool.SPACE, matcher.start());
 		}
 
-		checkWildcardImports(fileName, content, _exportsPattern);
+		checkWildcardImports(fileName, absolutePath, content, _exportsPattern);
 
 		ImportsFormatter importsFormatter = new BNDImportsFormatter();
 

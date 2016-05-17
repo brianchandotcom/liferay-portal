@@ -164,9 +164,9 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 				var canvas = _this3.getImageEditorCanvas();
 
 				if (canvas.toBlob) {
-					canvas.toBlob(resolve);
+					canvas.toBlob(resolve, _this3.saveMimeType);
 				} else {
-					var data = atob(canvas.toDataURL().split(',')[1]);
+					var data = atob(canvas.toDataURL(_this3.saveMimeType).split(',')[1]);
 					var length = data.length;
 					var bytes = new Uint8Array(length);
 
@@ -174,13 +174,17 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 						bytes[i] = data.charCodeAt(i);
 					}
 
-					resolve(new Blob([bytes], { type: 'image/png' }));
+					resolve(new Blob([bytes], { type: _this3.saveMimeType }));
 				}
 			});
 		};
 
 		ImageEditor.prototype.getImageEditorImageData = function getImageEditorImageData() {
 			return this.history_[this.historyIndex_].getImageData();
+		};
+
+		ImageEditor.prototype.normalizeCanvasMimeType_ = function normalizeCanvasMimeType_(mimeType) {
+			return mimeType.replace('jpg', 'jpeg');
 		};
 
 		ImageEditor.prototype.notifySaveResult_ = function notifySaveResult_(result) {
@@ -253,6 +257,17 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 					return _this6.showError_(error);
 				});
 			}
+		};
+
+		ImageEditor.prototype.setterSaveMimeTypeFn_ = function setterSaveMimeTypeFn_(saveMimeType) {
+			if (!saveMimeType) {
+				var imageExtensionRegex = /(?:.*:\/\/)?(?:[^\/])*[^.]*.([^?\/$]*)/;
+				var imageExtension = this.image.match(imageExtensionRegex)[1];
+
+				saveMimeType = this.normalizeCanvasMimeType_('image/' + imageExtension);
+			}
+
+			return saveMimeType;
 		};
 
 		ImageEditor.prototype.showError_ = function showError_(message) {
@@ -398,6 +413,16 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
    * @type {String}
    */
 		saveFileName: {
+			validator: _core2.default.isString
+		},
+
+		/**
+   * Mime type of the saved image. If not explicitly set,
+   * the image mime type will be infered from the image url.
+   * @type {String}
+   */
+		saveMimeType: {
+			setter: 'setterSaveMimeTypeFn_',
 			validator: _core2.default.isString
 		},
 

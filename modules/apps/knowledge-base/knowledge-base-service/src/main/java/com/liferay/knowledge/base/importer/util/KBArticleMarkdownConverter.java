@@ -70,6 +70,11 @@ public class KBArticleMarkdownConverter {
 
 		_urlTitle = getUrlTitle(heading);
 
+		if (Validator.isNull(_urlTitle)) {
+			throw new KBArticleImportException(
+				"Missing title heading ID in file: " + fileEntryName);
+		}
+
 		_title = HtmlUtil.unescape(stripIds(heading));
 
 		html = stripIds(html);
@@ -242,6 +247,10 @@ public class KBArticleMarkdownConverter {
 
 		int x = heading.indexOf("[](id=");
 		int y = heading.indexOf(StringPool.CLOSE_PARENTHESIS, x);
+
+		if (x == -1) {
+			return null;
+		}
 
 		if (y > (x + 1)) {
 			int equalsSign = heading.indexOf(StringPool.EQUAL, x);

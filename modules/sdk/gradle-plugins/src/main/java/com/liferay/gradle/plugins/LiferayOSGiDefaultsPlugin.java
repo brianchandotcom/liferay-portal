@@ -1310,6 +1310,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
+					if (FileUtil.exists(project, "static.build")) {
+						return new File(
+							liferayExtension.getLiferayHome(), "osgi/static");
+					}
+
 					String archivesBaseName = GradleUtil.getArchivesBaseName(
 						project);
 
@@ -1317,10 +1322,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						return new File(
 							liferayExtension.getLiferayHome(), "osgi/portal");
 					}
-					else {
-						return new File(
-							liferayExtension.getLiferayHome(), "osgi/modules");
-					}
+
+					return new File(
+						liferayExtension.getLiferayHome(), "osgi/modules");
 				}
 
 			});

@@ -1873,7 +1873,7 @@
 				<execute function="Refresh" />
 			</then>
 		</if>
-		
+
 		<if>
 			<condition function="IsElementNotPresent" locator1="Icon#INFO_ACTIVE" />
 			<then>

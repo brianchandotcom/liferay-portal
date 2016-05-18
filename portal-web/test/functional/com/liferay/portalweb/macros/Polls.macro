@@ -63,6 +63,18 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="checkPollChartArea">
+		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
+
+		<execute function="Click#makeVisibleClickAt" locator1="Polls#POLLS_TABLE_TITLE" />
+
+		<execute function="Click#makeVisibleClickAt" locator1="CPPolls#SELECT_CHART_AREA" />
+
+		<execute function="SelectWindow#selectPopUp" locator1="null" />
+		<execute function="AssertElementPresent" locator1="CPPolls#POLLS_CHART" />
+		<execute function="Close#closeWindow" locator1="null" />
+	</command>
+
 	<command name="selectPollPG">
 		<execute function="Click#makeVisibleClickAt" locator1="Polls#SELECT_QUESTION" />
 

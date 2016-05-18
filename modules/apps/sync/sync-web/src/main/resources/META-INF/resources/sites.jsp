@@ -23,10 +23,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 int delta = ParamUtil.getInteger(request, "delta", SearchContainer.DEFAULT_DELTA);
 
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("tabs1", tabs1);

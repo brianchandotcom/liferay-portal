@@ -22,10 +22,6 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 Group group = (Group)row.getObject();
 
 String groupId = String.valueOf(group.getGroupId());
-
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
 %>
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">

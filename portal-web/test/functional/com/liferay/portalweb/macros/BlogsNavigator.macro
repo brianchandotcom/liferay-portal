@@ -62,7 +62,6 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="AssertTextEquals" locator1="Blogs#ICON_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="Blogs#ICON_VIEW_ENTRY_STATUS" value1="Draft" />
 
 		<execute function="AssertClick" locator1="Blogs#ICON_VIEW_ENTRY_TITLE_LINK" value1="${entryTitle}" />
 	</command>
@@ -105,16 +104,12 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="Blogs#ICON_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
-
 		<if>
 			<isset var="entryStatus" />
 			<then>
 				<execute function="AssertTextEquals" locator1="Blogs#ICON_VIEW_ENTRY_STATUS" value1="${entryStatus}" />
 			</then>
 		</if>
-
-		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="AssertClick" locator1="Blogs#ICON_VIEW_ENTRY_TITLE_LINK" value1="${entryTitle}" />
 	</command>

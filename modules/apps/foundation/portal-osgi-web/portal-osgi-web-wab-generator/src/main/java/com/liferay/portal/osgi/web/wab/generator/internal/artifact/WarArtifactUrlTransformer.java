@@ -120,7 +120,7 @@ public class WarArtifactUrlTransformer implements ArtifactUrlTransformer {
 
 			properties.load(inputStream);
 
-			return properties.getProperty("serlvet-context-name");
+			return properties.getProperty("servlet-context-name");
 		}
 	}
 

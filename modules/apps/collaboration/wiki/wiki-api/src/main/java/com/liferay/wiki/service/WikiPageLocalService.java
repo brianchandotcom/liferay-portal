@@ -327,6 +327,12 @@ public interface WikiPageLocalService extends BaseLocalService,
 		java.lang.String attachmentURLPrefix) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiPageDisplay getPageDisplay(WikiPage page,
+		PortletURL viewPageURL, PortletURL editPageURL,
+		java.lang.String attachmentURLPrefix, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPageDisplay getPageDisplay(long nodeId, java.lang.String title,
 		PortletURL viewPageURL, PortletURL editPageURL,
 		java.lang.String attachmentURLPrefix) throws PortalException;

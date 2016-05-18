@@ -14,17 +14,31 @@
 
 package com.liferay.chat.jabber;
 
-import com.liferay.chat.util.PortletPropsValues;
+import com.liferay.chat.configuration.ChatGroupServiceConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.util.List;
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
+ * @author Peter Fellwock
  */
+@Component(
+	configurationPid = "com.liferay.chat.configuration.ChatConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = JabberUtil.class
+)
 public class JabberUtil {
 
 	public static void disconnect(long userId) {
-		if (!PortletPropsValues.JABBER_ENABLED) {
+		if (!_jabberEnabled) {
 			return;
 		}
 
@@ -42,7 +56,7 @@ public class JabberUtil {
 	public static List<Object[]> getStatuses(
 		long companyId, long userId, List<Object[]> buddies) {
 
-		if (!PortletPropsValues.JABBER_ENABLED) {
+		if (!_jabberEnabled) {
 			return buddies;
 		}
 
@@ -50,7 +64,7 @@ public class JabberUtil {
 	}
 
 	public static void login(long userId, String password) {
-		if (!PortletPropsValues.JABBER_ENABLED) {
+		if (!_jabberEnabled) {
 			return;
 		}
 
@@ -60,7 +74,7 @@ public class JabberUtil {
 	public static void sendMessage(
 		long fromUserId, long toUserId, String content) {
 
-		if (!PortletPropsValues.JABBER_ENABLED) {
+		if (!_jabberEnabled) {
 			return;
 		}
 
@@ -68,7 +82,7 @@ public class JabberUtil {
 	}
 
 	public static void updatePassword(long userId, String password) {
-		if (!PortletPropsValues.JABBER_ENABLED) {
+		if (!_jabberEnabled) {
 			return;
 		}
 
@@ -76,21 +90,33 @@ public class JabberUtil {
 	}
 
 	public static void updateStatus(long userId, int online) {
-		if (!PortletPropsValues.JABBER_ENABLED) {
+		if (!_jabberEnabled) {
 			return;
 		}
 
 		getJabber().updateStatus(userId, online);
 	}
 
-	public void setJabber(Jabber jabber) {
-		_jabber = jabber;
-	}
-
 	protected static Jabber getJabber() {
 		return _jabber;
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_chatGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
+			ChatGroupServiceConfiguration.class, properties);
+
+		_jabberEnabled = _chatGroupServiceConfiguration.jabberEnabled();
+	}
+
+	@Reference(unbind = "-")
+	protected void setJabber(Jabber jabber) {
+		_jabber = jabber;
+	}
+
+	private static ChatGroupServiceConfiguration _chatGroupServiceConfiguration;
 	private static Jabber _jabber;
+	private static boolean _jabberEnabled;
 
 }

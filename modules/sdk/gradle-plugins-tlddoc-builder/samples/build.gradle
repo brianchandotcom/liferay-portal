@@ -22,3 +22,7 @@ repositories {
 		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
 	}
 }
+
+tlddoc {
+	xsltDir = "../../../../tools/styles/taglibs"
+}

@@ -14,7 +14,17 @@
 
 package com.liferay.social.office.optional.upgrade.internal;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -35,7 +45,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class SocialOfficeUpgradeCommand {
 
-	public void executeAll() {
+	public void executeAll() throws PortalException {
 		hideTasksLayout();
 		removeTasksPortlet();
 		renameDashboardSiteTemplate();
@@ -45,8 +55,43 @@ public class SocialOfficeUpgradeCommand {
 		updateSocialSiteTheme();
 	}
 
-	public void hideTasksLayout() {
-		throw new UnsupportedOperationException();
+	public void hideTasksLayout() throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_layoutLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.eq("friendlyURL", "/so/tasks"));
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.eq("hidden", false));
+				}
+
+			});
+
+		final AtomicInteger atomicInteger = new AtomicInteger(0);
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Layout>() {
+
+				public void performAction(Layout layout)
+					throws PortalException {
+
+					layout.setHidden(true);
+
+					_layoutLocalService.updateLayout(layout);
+
+					atomicInteger.incrementAndGet();
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
+
+		System.out.printf(
+			"[so:hideTasksLayout] %d layouts updated.%n", atomicInteger.get());
 	}
 
 	public void removeTasksPortlet() {
@@ -72,5 +117,14 @@ public class SocialOfficeUpgradeCommand {
 	public void updateSocialSiteTheme() {
 		throw new UnsupportedOperationException();
 	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	private LayoutLocalService _layoutLocalService;
 
 }

@@ -104,8 +104,8 @@ if (Validator.isNotNull(keywords)) {
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="name"
-				truncate="<%= true %>"
 			>
 
 				<%
@@ -127,6 +127,7 @@ if (Validator.isNotNull(keywords)) {
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="scope"
 			>
 				<c:choose>

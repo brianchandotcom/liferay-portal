@@ -195,6 +195,17 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	@Override
+	public URL getBundleResource(long bundleId, String name) {
+		Bundle bundle = getBundle(bundleId);
+
+		if (bundle == null) {
+			return null;
+		}
+
+		return bundle.getResource(name);
+	}
+
+	@Override
 	public Framework getFramework() {
 		return _framework;
 	}

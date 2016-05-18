@@ -19,6 +19,8 @@ import com.liferay.portal.module.framework.ModuleFramework;
 
 import java.io.InputStream;
 
+import java.net.URL;
+
 /**
  * @author Raymond Augé
  * @author Miguel Pastor
@@ -33,6 +35,10 @@ public class ModuleFrameworkUtil {
 		throws PortalException {
 
 		return getModuleFramework().addBundle(location, inputStream);
+	}
+
+	public static URL getBundleResource(long bundleId, String name) {
+		return getModuleFramework().getBundleResource(bundleId, name);
 	}
 
 	public static Object getFramework() {

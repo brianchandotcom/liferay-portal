@@ -172,7 +172,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			checkLanguageProperties(fileName);
 		}
 		else if (fileName.endsWith("liferay-plugin-package.properties")) {
-			newContent = formatPluginPackageProperties(fileName, content);
+			newContent = formatPluginPackageProperties(absolutePath, content);
 		}
 		else if (fileName.endsWith("portlet.properties")) {
 			newContent = formatPortletProperties(fileName, content);
@@ -190,6 +190,36 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
 		return getFileNames(new String[0], getIncludes());
+	}
+
+	protected String fixIncorrectLicenses(String absolutePath, String content) {
+		if (!absolutePath.contains("/modules/apps/") &&
+			!absolutePath.contains("/modules/private/apps/")) {
+
+			return content;
+		}
+
+		Matcher matcher = _licensesPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String licenses = matcher.group(1);
+
+		String expectedLicenses = "LGPL";
+
+		if (absolutePath.contains("/modules/private/apps/")) {
+			expectedLicenses = "DXP";
+		}
+
+		if (licenses.equals(expectedLicenses)) {
+			return content;
+		}
+
+		return StringUtil.replace(
+			content, "licenses=" + licenses, "licenses=" + expectedLicenses,
+			matcher.start());
 	}
 
 	protected void formatDuplicateLanguageKeys() throws Exception {
@@ -259,29 +289,9 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatPluginPackageProperties(
-		String fileName, String content) {
+		String absolutePath, String content) {
 
-		Matcher matcher = _licensesPattern.matcher(content);
-
-		if (!matcher.find()) {
-			return content;
-		}
-
-		String licenses = matcher.group(1);
-
-		String expectedLicenses = "LGPL";
-
-		if (fileName.contains("modules/private/apps")) {
-			expectedLicenses = "DXP";
-		}
-
-		if (licenses.equals(expectedLicenses)) {
-			return content;
-		}
-
-		return StringUtil.replace(
-			content, "licenses=" + licenses, "licenses=" + expectedLicenses,
-			matcher.start());
+		return fixIncorrectLicenses(absolutePath, content);
 	}
 
 	protected void formatPortalProperties(String fileName, String content)

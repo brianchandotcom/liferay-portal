@@ -12,26 +12,22 @@
  * details.
  */
 
-package com.liferay.sync.hook.upgrade.v1_0_0;
+package com.liferay.sync.upgrade.v1_0_0;
 
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.sync.model.SyncDLObjectConstants;
-import com.liferay.sync.service.SyncDLObjectLocalServiceUtil;
-import com.liferay.sync.util.VerifyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
- * @author Dennis Ju
+ * @author Shinn Lok
  */
-public class UpgradeSyncDLObject extends UpgradeProcess {
+public class UpgradeIndex extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		SyncDLObjectLocalServiceUtil.deleteSyncDLObjects(
-			DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
-			SyncDLObjectConstants.TYPE_FILE);
+		String template = StringUtil.read(
+			UpgradeIndex.class.getResourceAsStream("dependencies/update.sql"));
 
-		VerifyUtil.verify();
+		runSQLTemplateString(template, false, false);
 	}
 
 }

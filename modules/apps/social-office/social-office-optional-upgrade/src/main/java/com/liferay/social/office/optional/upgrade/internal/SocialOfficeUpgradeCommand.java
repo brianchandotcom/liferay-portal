@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -94,8 +96,43 @@ public class SocialOfficeUpgradeCommand {
 			"[so:hideTasksLayout] %d layouts updated.%n", atomicInteger.get());
 	}
 
-	public void removeTasksPortlet() {
-		throw new UnsupportedOperationException();
+	public void removeTasksPortlet() throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_portletPreferencesLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.like(
+							"portletId", "%tasksportlet%"));
+				}
+
+			});
+
+		final AtomicInteger atomicInteger = new AtomicInteger(0);
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.
+				PerformActionMethod<PortletPreferences>() {
+
+				public void performAction(PortletPreferences portletPreferences)
+					throws PortalException {
+
+					_portletPreferencesLocalService.deletePersistedModel(
+						portletPreferences);
+
+					atomicInteger.incrementAndGet();
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
+
+		System.out.printf(
+			"[so:removeTasksPortlet] %d Tasks portlet preferences deleted.%n",
+			atomicInteger.get());
 	}
 
 	public void renameDashboardSiteTemplate() {
@@ -125,6 +162,14 @@ public class SocialOfficeUpgradeCommand {
 		_layoutLocalService = layoutLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setPortletPreferencesLocalService(
+		PortletPreferencesLocalService portletPreferencesLocalService) {
+
+		_portletPreferencesLocalService = portletPreferencesLocalService;
+	}
+
 	private LayoutLocalService _layoutLocalService;
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 }

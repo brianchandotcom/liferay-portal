@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.data.partitioning.sql.builder.command;
+package com.liferay.portal.tools.data.partitioning.sql.builder.internal.command;
 
 import java.io.IOException;
 

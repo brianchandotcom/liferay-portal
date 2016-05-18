@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.tools.data.partitioning.sql.builder.internal.command;
+package com.liferay.portal.tools.data.partitioning.sql.builder.internal.command.impl;
 
-import com.liferay.portal.tools.data.partitioning.sql.builder.command.BaseExportProcessCommand;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.DBExporter;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
+import com.liferay.portal.tools.data.partitioning.sql.builder.internal.command.BaseExportProcessCommand;
 
 import java.io.OutputStream;
 
@@ -25,10 +25,10 @@ import java.util.List;
 /**
  * @author Manuel de la Peña
  */
-public class InsertControlExportProcessCommand
+public class InsertPartitionedExportProcessCommand
 	extends BaseExportProcessCommand {
 
-	public InsertControlExportProcessCommand(
+	public InsertPartitionedExportProcessCommand(
 		long companyId, DBExporter dbExporter, List<String> tableNames,
 		ExportContext exportContext) {
 
@@ -36,7 +36,9 @@ public class InsertControlExportProcessCommand
 	}
 
 	protected String getOutputFileName() {
-		return exportContext.getSchemaName() + "-" + companyId + "-control.sql";
+		return
+			exportContext.getSchemaName() + "-" + companyId +
+				"-partitioned.sql";
 	}
 
 	protected String getOutputFileName(String tableName) {
@@ -46,7 +48,7 @@ public class InsertControlExportProcessCommand
 	}
 
 	protected void write(String tableName, OutputStream outputStream) {
-		dbExporter.write(tableName, outputStream);
+		dbExporter.write(companyId, tableName, outputStream);
 	}
 
 }

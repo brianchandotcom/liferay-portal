@@ -593,7 +593,36 @@
 			</else>
 		</if>
 
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#CHECKIN" value1="Checkin" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="Radio#MAJOR_VERSION" />
+			<then>
+				<if>
+					<equals arg1="${revision}" arg2="Major" />
+					<then>
+						<execute function="Click" locator1="Radio#MAJOR_VERSION" />
+					</then>
+					<elseif>
+						<equals arg1="${revision}" arg2="Minor" />
+						<then>
+							<execute function="Click" locator1="Radio#MINOR_VERSION" />
+						</then>
+					</elseif>
+				</if>
+
+				<if>
+					<isset var="changeLog" />
+					<then>
+						<execute function="Type" locator1="TextArea#CHANGE_LOG" value1="${changeLog}" />
+					</then>
+				</if>
+
+				<execute function="Click" locator1="Button#SAVE" />
+			</then>
+		</if>
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

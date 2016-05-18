@@ -190,7 +190,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			content = formatIncludeResource(content);
 		}
 
-		return sortDefinitions(content);
+		return sortDefinitions(content, new DefinitionComparator());
 	}
 
 	@Override
@@ -301,10 +301,10 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String sortDefinitions(String content) {
-		String previousDefinition = null;
+	protected String sortDefinitions(
+		String content, Comparator<String> comparator) {
 
-		DefinitionComparator definitionComparator = new DefinitionComparator();
+		String previousDefinition = null;
 
 		Matcher matcher = _bndDefinitionPattern.matcher(content);
 
@@ -316,8 +316,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 			}
 
 			if (Validator.isNotNull(previousDefinition)) {
-				int value = definitionComparator.compare(
-					previousDefinition, definition);
+				int value = comparator.compare(previousDefinition, definition);
 
 				if (value > 0) {
 					content = StringUtil.replaceFirst(

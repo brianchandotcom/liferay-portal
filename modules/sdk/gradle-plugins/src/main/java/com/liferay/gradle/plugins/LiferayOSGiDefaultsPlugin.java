@@ -253,6 +253,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		configureTaskJavadoc(project);
 		configureTaskTest(project);
 		configureTaskTestIntegration(project);
+		configureTaskTlddoc(project, portalRootDir);
 		configureTasksBaseline(project);
 		configureTasksFindBugs(project);
 		configureTasksJavaCompile(project);
@@ -1858,6 +1859,19 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		testLoggingContainer.setEvents(EnumSet.allOf(TestLogEvent.class));
 		testLoggingContainer.setExceptionFormat(TestExceptionFormat.FULL);
 		testLoggingContainer.setStackTraceFilters(Collections.emptyList());
+	}
+
+	protected void configureTaskTlddoc(Project project, File portalRootDir) {
+		if (portalRootDir == null) {
+			return;
+		}
+
+		TLDDocTask tlddocTask = (TLDDocTask)GradleUtil.getTask(
+			project, TLDDocBuilderPlugin.TLDDOC_TASK_NAME);
+
+		File xsltDir = new File(portalRootDir, "tools/styles/taglibs");
+
+		tlddocTask.setXsltDir(xsltDir);
 	}
 
 	protected void configureTaskUpdateFileVersions(

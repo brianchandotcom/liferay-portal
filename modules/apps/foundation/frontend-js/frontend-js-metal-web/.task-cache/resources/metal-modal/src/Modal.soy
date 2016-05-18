@@ -8,6 +8,7 @@
 	{@param? elementClasses: string}
 	{@param? footer: html}
 	{@param? header: html}
+	{@param? noCloseButton: bool}
 	{@param? role: string}
 	<div
 		class="modal{$elementClasses ? ' ' + $elementClasses : ''}"
@@ -16,9 +17,11 @@
 			<div class="modal-content">
 				<header class="modal-header">
 					{if $header}
-						<button type="button" class="close" data-onclick="hide" aria-label="Close">
-							<span aria-hidden="true">×</span>
-						</button>
+						{if not $noCloseButton}
+							<button type="button" class="close" data-onclick="hide" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						{/if}
 						{$header}
 					{/if}
 				</header>

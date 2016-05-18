@@ -165,7 +165,7 @@ define("frontend-js-metal-web@1.0.6/metal-state/src/State", ['exports', 'metal/s
 			var info = this.stateInfo_[name];
 			var config = info.config;
 			if (config.validator) {
-				return this.callFunction_(config.validator, [value]);
+				return this.callFunction_(config.validator, [value, name]);
 			}
 			return true;
 		};

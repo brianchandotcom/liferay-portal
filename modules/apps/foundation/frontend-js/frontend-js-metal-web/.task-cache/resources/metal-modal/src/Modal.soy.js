@@ -59,10 +59,14 @@ define("frontend-js-metal-web@1.0.6/metal-modal/src/Modal.soy", ['exports', 'met
 
     goog.module('Modal.incrementaldom');
 
+    /** @suppress {extraRequire} */
     var soy = goog.require('soy');
+    /** @suppress {extraRequire} */
     var soydata = goog.require('soydata');
     /** @suppress {extraRequire} */
     goog.require('goog.asserts');
+    /** @suppress {extraRequire} */
+    goog.require('soy.asserts');
     /** @suppress {extraRequire} */
     goog.require('goog.i18n.bidi');
     var IncrementalDom = goog.require('incrementaldom');
@@ -80,6 +84,7 @@ define("frontend-js-metal-web@1.0.6/metal-modal/src/Modal.soy", ['exports', 'met
      *    elementClasses: (null|string|undefined),
      *    footer: (?soydata.SanitizedHtml|string|undefined),
      *    header: (?soydata.SanitizedHtml|string|undefined),
+     *    noCloseButton: (boolean|null|undefined),
      *    role: (null|string|undefined)
      * }} opt_data
      * @param {(null|undefined)=} opt_ignored
@@ -97,6 +102,8 @@ define("frontend-js-metal-web@1.0.6/metal-modal/src/Modal.soy", ['exports', 'met
       var footer = /** @type {?soydata.SanitizedHtml|string|undefined} */opt_data.footer;
       soy.asserts.assertType(opt_data.header == null || opt_data.header instanceof Function || opt_data.header instanceof soydata.UnsanitizedText || goog.isString(opt_data.header), 'header', opt_data.header, '?soydata.SanitizedHtml|string|undefined');
       var header = /** @type {?soydata.SanitizedHtml|string|undefined} */opt_data.header;
+      soy.asserts.assertType(opt_data.noCloseButton == null || goog.isBoolean(opt_data.noCloseButton) || opt_data.noCloseButton === 1 || opt_data.noCloseButton === 0, 'noCloseButton', opt_data.noCloseButton, 'boolean|null|undefined');
+      var noCloseButton = /** @type {boolean|null|undefined} */opt_data.noCloseButton;
       soy.asserts.assertType(opt_data.role == null || opt_data.role instanceof goog.soy.data.SanitizedContent || goog.isString(opt_data.role), 'role', opt_data.role, 'null|string|undefined');
       var role = /** @type {null|string|undefined} */opt_data.role;
       ie_open('div', null, null, 'class', 'modal' + (elementClasses ? ' ' + elementClasses : ''), 'role', role ? role : 'dialog');
@@ -104,11 +111,13 @@ define("frontend-js-metal-web@1.0.6/metal-modal/src/Modal.soy", ['exports', 'met
       ie_open('div', null, null, 'class', 'modal-content');
       ie_open('header', null, null, 'class', 'modal-header');
       if (header) {
-        ie_open('button', null, null, 'type', 'button', 'class', 'close', 'data-onclick', 'hide', 'aria-label', 'Close');
-        ie_open('span', null, null, 'aria-hidden', 'true');
-        itext('×');
-        ie_close('span');
-        ie_close('button');
+        if (!noCloseButton) {
+          ie_open('button', null, null, 'type', 'button', 'class', 'close', 'data-onclick', 'hide', 'aria-label', 'Close');
+          ie_open('span', null, null, 'aria-hidden', 'true');
+          itext('×');
+          ie_close('span');
+          ie_close('button');
+        }
         header();
       }
       ie_close('header');
@@ -131,7 +140,8 @@ define("frontend-js-metal-web@1.0.6/metal-modal/src/Modal.soy", ['exports', 'met
       $render.soyTemplateName = 'Modal.render';
     }
 
-    exports.render.params = ["body", "elementClasses", "footer", "header", "role"];
+    exports.render.params = ["body", "elementClasses", "footer", "header", "noCloseButton", "role"];
+    exports.render.types = { "body": "html", "elementClasses": "string", "footer": "html", "header": "html", "noCloseButton": "bool", "role": "string" };
     exports.templates = templates = exports;
     return exports;
   });

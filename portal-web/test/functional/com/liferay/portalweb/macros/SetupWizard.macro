@@ -200,7 +200,17 @@
 	</command>
 
 	<command name="viewDefaultPortalNamePG">
-		<execute function="AssertTextEquals#assertValue" locator1="TextInput#PORTAL_NAME" value1="Liferay" />
+		<var method="TestPropsUtil#get('liferay.portal.branch')" name="testPortalBranch" />
+
+		<if>
+			<equals arg1="${testPortalBranch}" arg2="ee-7.0.x" />
+			<then>
+				<execute function="AssertTextEquals#assertValue" locator1="TextInput#PORTAL_NAME" value1="Liferay DXP" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals#assertValue" locator1="TextInput#PORTAL_NAME" value1="Liferay" />
+			</else>
+		</if>		
 	</command>
 
 	<command name="viewSampleDataAddedInConsole">

@@ -32,14 +32,14 @@ public interface RepositoryProvider {
 	public LocalRepository getFileShortcutLocalRepository(long fileShortcutId)
 		throws PortalException;
 
-	public Repository getFileShortcutRepository(
-		long fileShortcutId) throws PortalException;
+	public Repository getFileShortcutRepository(long fileShortcutId)
+		throws PortalException;
 
 	public LocalRepository getFileVersionLocalRepository(long fileVersionId)
 		throws PortalException;
 
-	public Repository getFileVersionRepository(
-		long fileVersionId) throws PortalException;
+	public Repository getFileVersionRepository(long fileVersionId)
+		throws PortalException;
 
 	public LocalRepository getFolderLocalRepository(long folderId)
 		throws PortalException;

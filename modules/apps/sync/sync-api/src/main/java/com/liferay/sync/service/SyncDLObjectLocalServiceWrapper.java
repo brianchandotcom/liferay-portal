@@ -183,14 +183,6 @@ public class SyncDLObjectLocalServiceWrapper implements SyncDLObjectLocalService
 		return _syncDLObjectLocalService.getSyncDLObjectsCount();
 	}
 
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _syncDLObjectLocalService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*

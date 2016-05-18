@@ -34,12 +34,13 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import com.liferay.sync.model.SyncDLFileVersionDiff;
 import com.liferay.sync.service.SyncDLFileVersionDiffLocalService;
@@ -459,25 +460,6 @@ public abstract class SyncDLFileVersionDiffLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the sync preferences local service.
-	 *
-	 * @return the sync preferences local service
-	 */
-	public com.liferay.sync.service.SyncPreferencesLocalService getSyncPreferencesLocalService() {
-		return syncPreferencesLocalService;
-	}
-
-	/**
-	 * Sets the sync preferences local service.
-	 *
-	 * @param syncPreferencesLocalService the sync preferences local service
-	 */
-	public void setSyncPreferencesLocalService(
-		com.liferay.sync.service.SyncPreferencesLocalService syncPreferencesLocalService) {
-		this.syncPreferencesLocalService = syncPreferencesLocalService;
-	}
-
-	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -647,16 +629,12 @@ public abstract class SyncDLFileVersionDiffLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		Class<?> clazz = getClass();
-
-		_classLoader = clazz.getClassLoader();
-
-		PersistedModelLocalServiceRegistryUtil.register("com.liferay.sync.model.SyncDLFileVersionDiff",
+		persistedModelLocalServiceRegistry.register("com.liferay.sync.model.SyncDLFileVersionDiff",
 			syncDLFileVersionDiffLocalService);
 	}
 
 	public void destroy() {
-		PersistedModelLocalServiceRegistryUtil.unregister(
+		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.sync.model.SyncDLFileVersionDiff");
 	}
 
@@ -668,27 +646,6 @@ public abstract class SyncDLFileVersionDiffLocalServiceBaseImpl
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return SyncDLFileVersionDiffLocalService.class.getName();
-	}
-
-	@Override
-	public Object invokeMethod(String name, String[] parameterTypes,
-		Object[] arguments) throws Throwable {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (contextClassLoader != _classLoader) {
-			currentThread.setContextClassLoader(_classLoader);
-		}
-
-		try {
-			return _clpInvoker.invokeMethod(name, parameterTypes, arguments);
-		}
-		finally {
-			if (contextClassLoader != _classLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-		}
 	}
 
 	protected Class<?> getModelClass() {
@@ -727,7 +684,7 @@ public abstract class SyncDLFileVersionDiffLocalServiceBaseImpl
 	protected com.liferay.sync.service.SyncDeviceLocalService syncDeviceLocalService;
 	@BeanReference(type = SyncDevicePersistence.class)
 	protected SyncDevicePersistence syncDevicePersistence;
-	@BeanReference(type = SyncDLFileVersionDiffLocalService.class)
+	@BeanReference(type = com.liferay.sync.service.SyncDLFileVersionDiffLocalService.class)
 	protected SyncDLFileVersionDiffLocalService syncDLFileVersionDiffLocalService;
 	@BeanReference(type = SyncDLFileVersionDiffPersistence.class)
 	protected SyncDLFileVersionDiffPersistence syncDLFileVersionDiffPersistence;
@@ -737,26 +694,24 @@ public abstract class SyncDLFileVersionDiffLocalServiceBaseImpl
 	protected SyncDLObjectPersistence syncDLObjectPersistence;
 	@BeanReference(type = SyncDLObjectFinder.class)
 	protected SyncDLObjectFinder syncDLObjectFinder;
-	@BeanReference(type = com.liferay.sync.service.SyncPreferencesLocalService.class)
-	protected com.liferay.sync.service.SyncPreferencesLocalService syncPreferencesLocalService;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
 	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = ClassNamePersistence.class)
+	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@BeanReference(type = com.liferay.portal.kernel.service.CompanyLocalService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.CompanyLocalService.class)
 	protected com.liferay.portal.kernel.service.CompanyLocalService companyLocalService;
-	@BeanReference(type = CompanyPersistence.class)
+	@ServiceReference(type = CompanyPersistence.class)
 	protected CompanyPersistence companyPersistence;
-	@BeanReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
 	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	@BeanReference(type = com.liferay.document.library.kernel.service.DLAppLocalService.class)
+	@ServiceReference(type = com.liferay.document.library.kernel.service.DLAppLocalService.class)
 	protected com.liferay.document.library.kernel.service.DLAppLocalService dlAppLocalService;
-	private ClassLoader _classLoader;
-	private SyncDLFileVersionDiffLocalServiceClpInvoker _clpInvoker = new SyncDLFileVersionDiffLocalServiceClpInvoker();
+	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

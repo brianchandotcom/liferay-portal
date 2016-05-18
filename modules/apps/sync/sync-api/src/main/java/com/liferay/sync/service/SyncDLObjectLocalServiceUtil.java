@@ -16,9 +16,9 @@ package com.liferay.sync.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.service.InvokableLocalService;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for SyncDLObject. This utility wraps
@@ -177,12 +177,6 @@ public class SyncDLObjectLocalServiceUtil {
 		return getService().getSyncDLObjectsCount();
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -314,28 +308,10 @@ public class SyncDLObjectLocalServiceUtil {
 		getService().trashSyncDLObjects(parentSyncDLObject);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static SyncDLObjectLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					SyncDLObjectLocalService.class.getName());
-
-			if (invokableLocalService instanceof SyncDLObjectLocalService) {
-				_service = (SyncDLObjectLocalService)invokableLocalService;
-			}
-			else {
-				_service = new SyncDLObjectLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(SyncDLObjectLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	private static SyncDLObjectLocalService _service;
+	private static ServiceTracker<SyncDLObjectLocalService, SyncDLObjectLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(SyncDLObjectLocalService.class);
 }

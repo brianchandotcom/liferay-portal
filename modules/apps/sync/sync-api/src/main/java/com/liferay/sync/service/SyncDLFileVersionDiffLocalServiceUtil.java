@@ -16,9 +16,9 @@ package com.liferay.sync.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.service.InvokableLocalService;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for SyncDLFileVersionDiff. This utility wraps
@@ -170,12 +170,6 @@ public class SyncDLFileVersionDiffLocalServiceUtil {
 		return getService().getSyncDLFileVersionDiffsCount();
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -290,28 +284,10 @@ public class SyncDLFileVersionDiffLocalServiceUtil {
 		getService().refreshExpirationDate(syncDLFileVersionDiffId);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static SyncDLFileVersionDiffLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					SyncDLFileVersionDiffLocalService.class.getName());
-
-			if (invokableLocalService instanceof SyncDLFileVersionDiffLocalService) {
-				_service = (SyncDLFileVersionDiffLocalService)invokableLocalService;
-			}
-			else {
-				_service = new SyncDLFileVersionDiffLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(SyncDLFileVersionDiffLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	private static SyncDLFileVersionDiffLocalService _service;
+	private static ServiceTracker<SyncDLFileVersionDiffLocalService, SyncDLFileVersionDiffLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(SyncDLFileVersionDiffLocalService.class);
 }

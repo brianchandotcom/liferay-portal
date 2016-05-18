@@ -293,6 +293,13 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		content = StringUtil.replace(content, "\n\n", "\n");
 
+		Matcher matcher = _singleValueOnMultipleLinesPattern.matcher(content);
+
+		while (matcher.find()) {
+			content = StringUtil.replaceFirst(
+				content, matcher.group(1), StringPool.BLANK, matcher.start());
+		}
+
 		return fixIncorrectLicenses(absolutePath, content);
 	}
 
@@ -652,5 +659,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		"\nlicenses=(\\w+)\n");
 	private int _maxLineLength;
 	private String _portalPortalPropertiesContent;
+	private final Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
+		"\n.*=(\\\\\n *).*(\n[^ ]|\\Z)");
 
 }

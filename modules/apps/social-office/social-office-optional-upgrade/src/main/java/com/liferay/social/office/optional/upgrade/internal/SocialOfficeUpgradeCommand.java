@@ -138,46 +138,23 @@ public class SocialOfficeUpgradeCommand {
 	}
 
 	public void renameDashboardSiteTemplate() throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_layoutSetPrototypeLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					dynamicQuery.add(
-						RestrictionsFactoryUtil.like(
-							"name", "%>Social Office User Home<%"));
-				}
-
-			});
-
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<LayoutSetPrototype>() {
-
-				public void performAction(LayoutSetPrototype layoutSetPrototype)
-					throws PortalException {
-
-					layoutSetPrototype.setName(_DASHBOARD_NAME_XML);
-					layoutSetPrototype.setDescription(
-						_DASHBOARD_DESCRIPTION_XML);
-
-					_layoutSetPrototypeLocalService.updateLayoutSetPrototype(
-						layoutSetPrototype);
-				}
-
-			});
-
-		actionableDynamicQuery.performActions();
-
-		System.out.println(
+		String successMessage =
 			"[so:renameDashboardSiteTemplate] Successfully renamed Dashboard " +
-				"site template.");
+				"site template.";
+
+		_doRenameSiteTemplate(
+			"%>Social Office User Home<%", _DASHBOARD_NAME_XML,
+			_DASHBOARD_DESCRIPTION_XML, successMessage);
 	}
 
 	public void renameProfileSiteTemplate() {
-		throw new UnsupportedOperationException();
+		String successMessage =
+			"[so:renameProfileSiteTemplate] Successfully renamed Profile " +
+				"site template.";
+
+		_doRenameSiteTemplate(
+			"%>Social Office User Profile<%", _PROFILE_NAME_XML,
+			_PROFILE_DESCRIPTION_XML, successMessage);
 	}
 
 	public void updateDashboardTheme() {
@@ -213,6 +190,45 @@ public class SocialOfficeUpgradeCommand {
 		_portletPreferencesLocalService = portletPreferencesLocalService;
 	}
 
+	private void _doRenameSiteTemplate(
+			final String filter, final String nameXml,
+			final String descriptionXml, String successMessage)
+		throws PortalException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_layoutSetPrototypeLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.like("name", filter));
+				}
+
+			});
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.
+				PerformActionMethod<LayoutSetPrototype>() {
+
+				public void performAction(LayoutSetPrototype layoutSetPrototype)
+					throws PortalException {
+
+					layoutSetPrototype.setName(nameXml);
+					layoutSetPrototype.setDescription(descriptionXml);
+
+					_layoutSetPrototypeLocalService.updateLayoutSetPrototype(
+						layoutSetPrototype);
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
+
+		System.out.println(successMessage);
+	}
+
 	private static final String _DASHBOARD_DESCRIPTION_XML =
 		"<?xml version='1.0' encoding='UTF-8'?>" +
 			"<root available-locales=\"en_US\" default-locale=\"en_US\">" +
@@ -223,6 +239,17 @@ public class SocialOfficeUpgradeCommand {
 		"<?xml version='1.0' encoding='UTF-8'?>" +
 			"<root available-locales=\"en_US\" default-locale=\"en_US\">" +
 				"<Name language-id=\"en_US\">Social Dashboard</Name></root>";
+
+	private static final String _PROFILE_DESCRIPTION_XML =
+		"<?xml version='1.0' encoding='UTF-8'?>" +
+			"<root available-locales=\"en_US\" default-locale=\"en_US\">" +
+				"<Description language-id=\"en_US\">" +
+					"Site template for the User Profile</Description></root>";
+
+	private static final String _PROFILE_NAME_XML =
+		"<?xml version='1.0' encoding='UTF-8'?>" +
+			"<root available-locales=\"en_US\" default-locale=\"en_US\">" +
+				"<Name language-id=\"en_US\">Social Profile</Name></root>";
 
 	private LayoutLocalService _layoutLocalService;
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;

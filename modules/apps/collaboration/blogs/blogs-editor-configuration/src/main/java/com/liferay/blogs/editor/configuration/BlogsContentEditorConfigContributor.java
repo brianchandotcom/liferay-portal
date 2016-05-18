@@ -65,12 +65,14 @@ public class BlogsContentEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(6);
 
-		sb.append("a[*]; b em hr h1 h2 h3 h4 h5 h6 i img[class, !src] ");
-		sb.append("{height, width}; li ol p{text-align}; pre strong ");
-		sb.append("table[border, cellpadding, cellspacing] {width}; tbody td ");
-		sb.append("th[scope]; thead tr[scope]; u ul;");
+		sb.append("a[*]; ");
+		sb.append(_getTextAllowedContent() + " ");
+		sb.append("div[*]; img[class, !src] { height, width }; ");
+		sb.append(_getListsAllowedContent() + " ");
+		sb.append("p { text-align }; ");
+		sb.append(_getTableAllowedContent());
 
 		jsonObject.put("allowedContent", sb.toString());
 
@@ -157,6 +159,19 @@ public class BlogsContentEditorConfigContributor
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
 		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
+	}
+
+	private String _getListsAllowedContent() {
+		return "li ol ul;";
+	}
+
+	private String _getTableAllowedContent() {
+		return "table[border, cellpadding, cellspacing] { width } " +
+			"thead tbody tr[scope] th[scope] td;";
+	}
+
+	private String _getTextAllowedContent() {
+		return "b code em h1 h2 h3 h4 h5 h6 hr i pre strong u;";
 	}
 
 	private ItemSelector _itemSelector;

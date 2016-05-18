@@ -132,7 +132,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent;
 import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
 import org.gradle.execution.ProjectConfigurer;
 import org.gradle.external.javadoc.CoreJavadocOptions;
-import org.gradle.external.javadoc.MinimalJavadocOptions;
+import org.gradle.external.javadoc.StandardJavadocDocletOptions;
 import org.gradle.internal.service.ServiceRegistry;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.plugins.ide.eclipse.model.EclipseClasspath;
@@ -250,7 +250,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		configureRepositories(project);
 		configureSourceSetMain(project);
 		configureTaskJar(project, testProject);
-		configureTaskJavadoc(project);
+		configureTaskJavadoc(project, portalRootDir);
 		configureTaskTest(project);
 		configureTaskTestIntegration(project);
 		configureTasksBaseline(project);
@@ -1648,12 +1648,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		compileOptions.setWarnings(false);
 	}
 
-	protected void configureTaskJavadoc(Project project) {
+	protected void configureTaskJavadoc(Project project, File portalRootDir) {
 		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
 			project, JavaPlugin.JAVADOC_TASK_NAME);
 
 		configureTaskJavadocFilter(javadoc);
-		configureTaskJavadocOptions(javadoc);
+		configureTaskJavadocOptions(javadoc, portalRootDir);
 
 		JavaVersion javaVersion = JavaVersion.current();
 
@@ -1714,9 +1714,19 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected void configureTaskJavadocOptions(Javadoc javadoc) {
-		MinimalJavadocOptions minimalJavadocOptions = javadoc.getOptions();
+	protected void configureTaskJavadocOptions(
+		Javadoc javadoc, File portalRootDir) {
+
+		StandardJavadocDocletOptions standardJavadocDocletOptions =
+			(StandardJavadocDocletOptions)javadoc.getOptions();
 		Project project = javadoc.getProject();
+
+		if (portalRootDir != null) {
+			File stylesheetFile = new File(
+				portalRootDir, "tools/styles/javadoc.css");
+
+			standardJavadocDocletOptions.setStylesheetFile(stylesheetFile);
+		}
 
 		File overviewFile = null;
 
@@ -1736,7 +1746,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 
 		if (overviewFile != null) {
-			minimalJavadocOptions.setOverview(
+			standardJavadocDocletOptions.setOverview(
 				project.relativePath(overviewFile));
 		}
 	}

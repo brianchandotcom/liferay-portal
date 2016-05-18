@@ -233,7 +233,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Matcher matcher = getterUtilGetPattern.matcher(content);
 
 		while (matcher.find()) {
-			List<String> parametersList = getParameterList(matcher);
+			List<String> parametersList = getParameterList(matcher.group());
 
 			if (parametersList.size() != 2) {
 				continue;
@@ -574,7 +574,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Matcher matcher = stringUtilReplacePattern.matcher(content);
 
 		while (matcher.find()) {
-			List<String> parametersList = getParameterList(matcher);
+			List<String> parametersList = getParameterList(matcher.group());
 
 			if (parametersList.size() != 3) {
 				return;
@@ -2123,26 +2123,26 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return null;
 	}
 
-	protected List<String> getParameterList(Matcher methodCallMatcher) {
-		String replaceCall = methodCallMatcher.group();
+	protected List<String> getParameterList(String methodCall) {
+		String parameters = null;
 
-		int x = replaceCall.length();
+		int x = -1;
 
 		while (true) {
-			x = replaceCall.lastIndexOf(
-				StringPool.CLOSE_PARENTHESIS, x - 1);
+			x = methodCall.indexOf(StringPool.CLOSE_PARENTHESIS, x + 1);
 
-			replaceCall = replaceCall.substring(0, x + 1);
+			parameters = methodCall.substring(0, x + 1);
 
-			if (getLevel(replaceCall) == 0) {
+			if ((getLevel(parameters, "(", ")") == 0) &&
+				(getLevel(parameters, "{", "}") == 0)) {
+
 				break;
 			}
 		}
 
-		x = replaceCall.indexOf(StringPool.OPEN_PARENTHESIS);
+		x = parameters.indexOf(StringPool.OPEN_PARENTHESIS);
 
-		String parameters = replaceCall.substring(
-			x + 1, replaceCall.length() - 1);
+		parameters = parameters.substring(x + 1, parameters.length() - 1);
 
 		return splitParameters(parameters);
 	}
@@ -2498,7 +2498,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			String linePart = parameters.substring(0, x);
 
-			if (getLevel(linePart) == 0) {
+			if ((getLevel(linePart, "(", ")") == 0) &&
+				(getLevel(linePart, "{", "}") == 0)) {
+
 				parametersList.add(StringUtil.trim(linePart));
 
 				parameters = parameters.substring(x + 1);

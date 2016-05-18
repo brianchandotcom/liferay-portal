@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.journal.upgrade.v1_0_0;
+package com.liferay.journal.upgrade.v0_0_4;
 
-import com.liferay.journal.upgrade.v1_0_0.util.JournalArticleTable;
-import com.liferay.journal.upgrade.v1_0_0.util.JournalFeedTable;
+import com.liferay.journal.upgrade.v0_0_4.util.JournalArticleTable;
+import com.liferay.journal.upgrade.v0_0_4.util.JournalFeedTable;
 import com.liferay.portal.kernel.upgrade.UpgradeMVCCVersion;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;

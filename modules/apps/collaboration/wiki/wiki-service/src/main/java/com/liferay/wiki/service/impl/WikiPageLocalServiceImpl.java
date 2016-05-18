@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
@@ -1256,6 +1257,31 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			page.getUserId(), page.getNodeId(), page.getTitle(),
 			page.getVersion(), page.getContent(), formattedContent,
 			page.getFormat(), page.getHead(), page.getAttachmentsFileEntries());
+	}
+
+	@Override
+	public WikiPageDisplay getPageDisplay(
+			WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
+			String attachmentURLPrefix, ServiceContext serviceContext)
+		throws PortalException {
+
+		HttpServletRequest request = serviceContext.getRequest();
+
+		boolean workflowAssetPreview = false;
+
+		if (request != null) {
+			workflowAssetPreview = (Boolean)request.getAttribute(
+				WebKeys.WORKFLOW_ASSET_PREVIEW);
+		}
+
+		if (!workflowAssetPreview && page.isApproved()) {
+			return WikiCacheUtil.getDisplay(
+				page.getNodeId(), page.getTitle(), viewPageURL, editPageURL,
+				attachmentURLPrefix);
+		}
+
+		return getPageDisplay(
+			page, viewPageURL, editPageURL, attachmentURLPrefix);
 	}
 
 	@Override

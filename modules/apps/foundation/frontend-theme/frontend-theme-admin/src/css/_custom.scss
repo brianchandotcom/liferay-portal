@@ -131,3 +131,10 @@ body {
 		width: 200px;
 	}
 }
+
+.portlet-boundary_com_liferay_portal_instances_web_portlet_PortalInstancesPortlet_ {
+	.lfr-mail-domain-column, .lfr-virtual-host-column, .lfr-web-id-column {
+		max-width: 150px;
+		min-width: 150px;
+	}
+}

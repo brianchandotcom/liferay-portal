@@ -44,24 +44,24 @@
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			href="<%= rowURL %>"
 			name="web-id"
 			property="webId"
-			truncate="<%= true %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			href="<%= rowURL %>"
 			name="virtual-host"
-			truncate="<%= true %>"
 			value="<%= curCompany.getVirtualHostname() %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			href="<%= rowURL %>"
 			name="mail-domain"
 			property="mx"
-			truncate="<%= true %>"
 		/>
 
 		<liferay-ui:search-container-column-text

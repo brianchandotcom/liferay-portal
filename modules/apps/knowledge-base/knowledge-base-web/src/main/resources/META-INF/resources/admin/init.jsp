@@ -16,45 +16,55 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
-page import="com.liferay.knowledge.base.constants.KBCommentConstants" %><%@
-page import="com.liferay.knowledge.base.service.util.AdminUtil" %><%@
-page import="com.liferay.knowledge.base.web.display.context.KBSuggestionListDisplayContext" %><%@
-page import="com.liferay.knowledge.base.web.search.KBArticleDisplayTerms" %><%@
-page import="com.liferay.knowledge.base.web.search.KBArticleSearch" %><%@
-page import="com.liferay.knowledge.base.web.search.KBArticleSearchTerms" %><%@
-page import="com.liferay.knowledge.base.web.search.KBTemplateDisplayTerms" %><%@
-page import="com.liferay.knowledge.base.web.search.KBTemplateSearch" %><%@
-page import="com.liferay.knowledge.base.web.search.KBTemplateSearchTerms" %><%@
-page import="com.liferay.knowledge.base.web.util.KBArticleAssetEntriesUtil" %><%@
-page import="com.liferay.portal.kernel.model.Portlet" %><%@
-page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.servlet.SessionMessages" %>
-
 <%
-String kbArticlesOrderByCol = portletPreferences.getValue("kbArticlesOrderByCol", StringPool.BLANK);
-String kbArticlesOrderByType = portletPreferences.getValue("kbArticlesOrderByType", StringPool.BLANK);
+long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());
 
-boolean enableKBArticleDescription = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleDescription", null));
-boolean enableKBArticleRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleRatings", null));
-String kbArticleRatingsType = GetterUtil.getString(portletPreferences.getValue("kbArticleRatingsType", null), "thumbs");
-boolean showKBArticleAssetEntries = GetterUtil.getBoolean(portletPreferences.getValue("showKBArticleAssetEntries", null));
-boolean showKBArticleAttachments = GetterUtil.getBoolean(portletPreferences.getValue("showKBArticleAttachments", null), true);
-boolean enableKBArticleAssetLinks = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleAssetLinks", null), true);
-boolean enableKBArticleViewCountIncrement = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleViewCountIncrement", null));
-boolean enableKBArticleSubscriptions = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleSubscriptions", null), true);
-boolean enableKBArticleHistory = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleHistory", null), true);
-boolean enableKBArticlePrint = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticlePrint", null), true);
-boolean enableSocialBookmarks = GetterUtil.getBoolean(portletPreferences.getValue("enableSocialBookmarks", null));
-String socialBookmarksDisplayStyle = portletPreferences.getValue("socialBookmarksDisplayStyle", PortletPropsValues.KNOWLEDGE_BASE_SOCIAL_BOOKMARKS_DISPLAY_STYLE);
-String socialBookmarksDisplayPosition = portletPreferences.getValue("socialBookmarksDisplayPosition", "bottom");
-String socialBookmarksTypes = portletPreferences.getValue("socialBookmarksTypes", PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES));
+long resourceClassNameId = kbFolderClassNameId;
 
-boolean enableKBTemplateKBComments = GetterUtil.getBoolean(portletPreferences.getValue("enableKBTemplateKBComments", null));
-boolean showKBTemplateKBComments = GetterUtil.getBoolean(portletPreferences.getValue("showKBTemplateKBComments", null));
+if (resourceClassNameId == 0) {
+	resourceClassNameId = kbFolderClassNameId;
+}
 
-boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(portletPreferences.getValue("enableRss", null), true);
-int rssDelta = GetterUtil.getInteger(portletPreferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
-String rssDisplayStyle = portletPreferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_FULL_CONTENT);
-String rssFeedType = portletPreferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
+long resourcePrimKey = 0;
+
+String kbArticlesOrderByCol = "priority";
+String kbArticlesOrderByType = "desc";
+
+boolean enableKBArticleDescription = true;
+boolean enableKBArticleRatings = true;
+String kbArticleRatingsType = "thumbs";
+boolean showKBArticleAssetEntries = true;
+boolean showKBArticleAttachments = true;
+boolean enableKBArticleAssetLinks = true;
+boolean enableKBArticleViewCountIncrement = true;
+boolean enableKBArticleSubscriptions = true;
+boolean enableKBArticleHistory = true;
+boolean enableKBArticlePrint = true;
+boolean enableSocialBookmarks = false;
+String socialBookmarksDisplayStyle = "menu";
+String socialBookmarksDisplayPosition = "bottom";
+String socialBookmarksTypes = PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES);
+
+request.setAttribute("init.jsp-enableKBArticleDescription", enableKBArticleDescription);
+request.setAttribute("init.jsp-enableKBArticleRatings", enableKBArticleRatings);
+request.setAttribute("init.jsp-kbArticleRatingsType", kbArticleRatingsType);
+request.setAttribute("init.jsp-showKBArticleAssetEntries", showKBArticleAssetEntries);
+request.setAttribute("init.jsp-showKBArticleAttachments", showKBArticleAttachments);
+request.setAttribute("init.jsp-enableKBArticleAssetLinks", enableKBArticleAssetLinks);
+request.setAttribute("init.jsp-enableKBArticleViewCountIncrement", enableKBArticleViewCountIncrement);
+request.setAttribute("init.jsp-enableKBArticleSubscriptions", enableKBArticleSubscriptions);
+request.setAttribute("init.jsp-enableKBArticleHistory", enableKBArticleHistory);
+request.setAttribute("init.jsp-enableKBArticlePrint", enableKBArticlePrint);
+request.setAttribute("init.jsp-enableSocialBookmarks", enableSocialBookmarks);
+request.setAttribute("init.jsp-socialBookmarksDisplayStyle", socialBookmarksDisplayStyle);
+request.setAttribute("init.jsp-socialBookmarksDisplayPosition", socialBookmarksDisplayPosition);
+request.setAttribute("init.jsp-socialBookmarksTypes", socialBookmarksTypes);
+
+boolean enableKBTemplateKBComments = true;
+boolean showKBTemplateKBComments = true;
+
+boolean enableRSS = kbGroupServiceConfiguration.enableRSS();
+int rssDelta = kbGroupServiceConfiguration.rssDelta();
+String rssDisplayStyle = kbGroupServiceConfiguration.rssDisplayStyle();
+String rssFeedType = kbGroupServiceConfiguration.rssFeedType();
 %>

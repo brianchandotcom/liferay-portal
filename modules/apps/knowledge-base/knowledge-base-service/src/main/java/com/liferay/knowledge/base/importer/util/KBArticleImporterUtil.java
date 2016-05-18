@@ -15,15 +15,18 @@
 package com.liferay.knowledge.base.importer.util;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
+import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
 import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.util.PortletPropsValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -45,8 +48,17 @@ public class KBArticleImporterUtil {
 			ZipReader zipReader, Map<String, FileEntry> fileEntriesMap)
 		throws PortalException {
 
+		KBGroupServiceConfiguration kbGroupServiceConfiguration =
+			ConfigurationProviderUtil.getConfiguration(
+				KBGroupServiceConfiguration.class,
+				new GroupServiceSettingsLocator(
+					kbArticle.getGroupId(), KBConstants.SERVICE_NAME));
+
 		try {
-			validateImageFileExtension(imageFileName);
+			validateImageFileExtension(
+				imageFileName,
+				kbGroupServiceConfiguration.
+					markdownImporterImageFileExtensions());
 		}
 		catch (KBArticleImportException kbaie) {
 			if (_log.isWarnEnabled()) {
@@ -60,7 +72,7 @@ public class KBArticleImporterUtil {
 			return addImageFileEntry(
 				userId, kbArticle, imageFileName,
 				zipReader.getEntryAsInputStream(
-					PortletPropsValues.MARKDOWN_IMPORTER_IMAGE_FOLDER +
+					kbGroupServiceConfiguration.markdownImporterImageFolder() +
 						imageFileName),
 				fileEntriesMap);
 		}
@@ -113,14 +125,13 @@ public class KBArticleImporterUtil {
 		return paths[paths.length - 1];
 	}
 
-	public static void validateImageFileExtension(String imageFileName)
+	public static void validateImageFileExtension(
+			String imageFileName, String[] fileExtensions)
 		throws KBArticleImportException {
 
 		boolean validImageFileExtension = false;
 
-		for (String fileExtension :
-				PortletPropsValues.MARKDOWN_IMPORTER_IMAGE_FILE_EXTENSIONS) {
-
+		for (String fileExtension : fileExtensions) {
 			if (StringPool.STAR.equals(fileExtension) ||
 				StringUtil.endsWith(imageFileName, fileExtension)) {
 

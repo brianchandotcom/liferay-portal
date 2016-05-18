@@ -14,15 +14,15 @@
  */
 --%>
 
-<%@ include file="/admin/init.jsp" %>
+<%@ include file="/admin/common/init.jsp" %>
 
 <%
 int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 
 long kbArticleClassNameId = PortalUtil.getClassNameId(KBArticleConstants.getClassName());
 
-long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
-long resourcePrimKey = ParamUtil.getLong(request, "resourcePrimKey");
+resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
+resourcePrimKey = ParamUtil.getLong(request, "resourcePrimKey");
 long parentResourceClassNameId = ParamUtil.getLong(request, "parentResourceClassNameId");
 long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey");
 
@@ -71,7 +71,7 @@ else {
 			<aui:input cssClass="input-mini" label="priority" name="currentPriority" readonly="<%= true %>" value="<%= BigDecimal.valueOf(priority).toPlainString() %>" />
 		</aui:field-wrapper>
 
-		<liferay-util:include page="/admin/new_parent.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/admin/common/new_parent.jsp" servletContext="<%= application %>" />
 
 		<aui:button-row cssClass="kb-submit-buttons">
 			<aui:button type="submit" value="move" />

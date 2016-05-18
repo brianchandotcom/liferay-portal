@@ -14,23 +14,23 @@
  */
 --%>
 
-<%@ include file="/admin/init.jsp" %>
+<%@ include file="/admin/common/init.jsp" %>
 
 <%
 KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
 KBTemplate kbTemplate = (KBTemplate)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
 
-long resourcePrimKey = BeanParamUtil.getLong(kbArticle, request, "resourcePrimKey");
+resourcePrimKey = BeanParamUtil.getLong(kbArticle, request, "resourcePrimKey");
 
-long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());
+kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());
 
 long parentResourceClassNameId = BeanParamUtil.getLong(kbArticle, request, "parentResourceClassNameId", kbFolderClassNameId);
 
 long parentResourcePrimKey = BeanParamUtil.getLong(kbArticle, request, "parentResourcePrimKey", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 String content = BeanParamUtil.getString(kbArticle, request, "content", BeanPropertiesUtil.getString(kbTemplate, "content"));
-String[] sections = AdminUtil.unescapeSections(BeanPropertiesUtil.getString(kbArticle, "sections", StringUtil.merge(PortletPropsValues.ADMIN_KB_ARTICLE_SECTIONS_DEFAULT)));
+String[] sections = AdminUtil.unescapeSections(BeanPropertiesUtil.getString(kbArticle, "sections", StringUtil.merge(kbSectionPortletInstanceConfiguration.adminKBArticleSections())));
 %>
 
 <liferay-ui:header
@@ -158,11 +158,11 @@ String[] sections = AdminUtil.unescapeSections(BeanPropertiesUtil.getString(kbAr
 			<aui:input name="description" />
 		</c:if>
 
-		<c:if test="<%= PortletPropsValues.KNOWLEDGE_BASE_SOURCE_URL_ENABLED %>">
+		<c:if test="<%= kbGroupServiceConfiguration.sourceURLEnabled() %>">
 			<aui:input label="source-url" name="sourceURL" />
 		</c:if>
 
-		<c:if test="<%= ArrayUtil.isNotEmpty(PortletPropsValues.ADMIN_KB_ARTICLE_SECTIONS) && (parentResourceClassNameId == kbFolderClassNameId) %>">
+		<c:if test="<%= ArrayUtil.isNotEmpty(kbSectionPortletInstanceConfiguration.adminKBArticleSections()) && (parentResourceClassNameId == kbFolderClassNameId) %>">
 			<aui:model-context bean="<%= null %>" model="<%= KBArticle.class %>" />
 
 			<aui:select ignoreRequestValue="<%= true %>" multiple="<%= true %>" name="sections">
@@ -170,7 +170,7 @@ String[] sections = AdminUtil.unescapeSections(BeanPropertiesUtil.getString(kbAr
 				<%
 				Map<String, String> sectionsMap = new TreeMap<String, String>();
 
-				for (String section : PortletPropsValues.ADMIN_KB_ARTICLE_SECTIONS) {
+				for (String section : kbSectionPortletInstanceConfiguration.adminKBArticleSections()) {
 					sectionsMap.put(LanguageUtil.get(request, section), section);
 				}
 
@@ -199,7 +199,7 @@ String[] sections = AdminUtil.unescapeSections(BeanPropertiesUtil.getString(kbAr
 		<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" persistState="<%= true %>" title="attachments">
 			<aui:fieldset>
 				<div id="<portlet:namespace />attachments">
-					<liferay-util:include page="/admin/attachments.jsp" servletContext="<%= application %>" />
+					<liferay-util:include page="/admin/common/attachments.jsp" servletContext="<%= application %>" />
 				</div>
 			</aui:fieldset>
 		</liferay-ui:panel>

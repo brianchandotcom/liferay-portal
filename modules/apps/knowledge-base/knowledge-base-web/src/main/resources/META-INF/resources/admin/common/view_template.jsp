@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/admin/init.jsp" %>
+<%@ include file="/admin/common/init.jsp" %>
 
 <%
 KBTemplate kbTemplate = (KBTemplate)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
@@ -26,7 +26,7 @@ KBTemplate kbTemplate = (KBTemplate)request.getAttribute(KBWebKeys.KNOWLEDGE_BAS
 	</div>
 
 	<div class="kb-tools">
-		<liferay-util:include page="/admin/template_tools.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/admin/common/template_tools.jsp" servletContext="<%= application %>" />
 	</div>
 </div>
 
@@ -36,9 +36,9 @@ KBTemplate kbTemplate = (KBTemplate)request.getAttribute(KBWebKeys.KNOWLEDGE_BAS
 	request.setAttribute("template_icons.jsp-kb_template", kbTemplate);
 	%>
 
-	<liferay-util:include page="/admin/template_icons.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/admin/common/template_icons.jsp" servletContext="<%= application %>" />
 
 	<%= kbTemplate.getContent() %>
 
-	<liferay-util:include page="/admin/template_comments.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/admin/common/template_comments.jsp" servletContext="<%= application %>" />
 </div>

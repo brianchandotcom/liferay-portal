@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/admin/init.jsp" %>
+<%@ include file="/admin/common/init.jsp" %>
 
 <%
 KBSuggestionListDisplayContext kbSuggestionListDisplayContext = (KBSuggestionListDisplayContext)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT);
@@ -65,12 +65,12 @@ String navItem = kbSuggestionListDisplayContext.getSelectedNavItem();
 
 <c:choose>
 	<c:when test='<%= navItem.equals("viewInProgressSuggestions") %>'>
-		<liferay-util:include page="/admin/view_in_progress_suggestions.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/admin/common/view_in_progress_suggestions.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:when test='<%= navItem.equals("viewNewSuggestions") %>'>
-		<liferay-util:include page="/admin/view_new_suggestions.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/admin/common/view_new_suggestions.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
-		<liferay-util:include page="/admin/view_completed_suggestions.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/admin/common/view_completed_suggestions.jsp" servletContext="<%= application %>" />
 	</c:otherwise>
 </c:choose>

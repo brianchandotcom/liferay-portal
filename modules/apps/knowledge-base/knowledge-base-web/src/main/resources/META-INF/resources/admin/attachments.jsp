@@ -19,7 +19,7 @@
 <%
 KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
-long resourcePrimKey = BeanParamUtil.getLong(kbArticle, request, "resourcePrimKey");
+resourcePrimKey = BeanParamUtil.getLong(kbArticle, request, "resourcePrimKey");
 
 List<FileEntry> attachmentsFileEntries = new ArrayList<FileEntry>();
 

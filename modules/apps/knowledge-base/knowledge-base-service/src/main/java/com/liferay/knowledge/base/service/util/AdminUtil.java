@@ -15,24 +15,19 @@
 package com.liferay.knowledge.base.service.util;
 
 import com.liferay.knowledge.base.constants.KBArticleConstants;
-import com.liferay.knowledge.base.constants.KBCommentConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
-import com.liferay.petra.content.ContentUtil;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
-
-import javax.portlet.PortletPreferences;
 
 import net.htmlparser.jericho.Attribute;
 import net.htmlparser.jericho.Attributes;
@@ -59,288 +54,6 @@ public class AdminUtil {
 		}
 
 		return sections;
-	}
-
-	public static String getEmailFromAddress(
-		PortletPreferences preferences, long companyId) {
-
-		return PortalUtil.getEmailFromAddress(
-			preferences, companyId,
-			PortletPropsValues.ADMIN_EMAIL_FROM_ADDRESS);
-	}
-
-	public static String getEmailFromName(
-		PortletPreferences preferences, long companyId) {
-
-		return PortalUtil.getEmailFromName(
-			preferences, companyId, PortletPropsValues.ADMIN_EMAIL_FROM_NAME);
-	}
-
-	public static String getEmailKBArticleAddedBody(
-		PortletPreferences preferences) {
-
-		String emailKBArticleAddedBody = preferences.getValue(
-			"emailKBArticleAddedBody", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailKBArticleAddedBody)) {
-			return emailKBArticleAddedBody;
-		}
-
-		return ContentUtil.get(
-			AdminUtil.class.getClassLoader(),
-			PortletPropsValues.ADMIN_EMAIL_KB_ARTICLE_ADDED_BODY);
-	}
-
-	public static boolean getEmailKBArticleAddedEnabled(
-		PortletPreferences preferences) {
-
-		String emailKBArticleAddedEnabled = preferences.getValue(
-			"emailKBArticleAddedEnabled", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailKBArticleAddedEnabled)) {
-			return GetterUtil.getBoolean(emailKBArticleAddedEnabled);
-		}
-
-		return PortletPropsValues.ADMIN_EMAIL_KB_ARTICLE_ADDED_ENABLED;
-	}
-
-	public static String getEmailKBArticleAddedSubject(
-		PortletPreferences preferences) {
-
-		String emailKBArticleAddedSubject = preferences.getValue(
-			"emailKBArticleAddedSubject", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailKBArticleAddedSubject)) {
-			return emailKBArticleAddedSubject;
-		}
-
-		return ContentUtil.get(
-			AdminUtil.class.getClassLoader(),
-			PortletPropsValues.ADMIN_EMAIL_KB_ARTICLE_ADDED_SUBJECT);
-	}
-
-	public static String getEmailKBArticleSuggestionInProgressBody(
-		PortletPreferences preferences) {
-
-		String emailKBArticleSuggestionInProgressBody = preferences.getValue(
-			"emailKBArticleSuggestionInProgressBody", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailKBArticleSuggestionInProgressBody)) {
-			return emailKBArticleSuggestionInProgressBody;
-		}
-
-		return ContentUtil.get(
-			AdminUtil.class.getClassLoader(),
-			PortletPropsValues.
-				ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_IN_PROGRESS_BODY);
-	}
-
-	public static boolean getEmailKBArticleSuggestionInProgressEnabled(
-		PortletPreferences preferences) {
-
-		String emailKBArticleSuggestionInProgressEnabled = preferences.getValue(
-			"emailKBArticleSuggestionInProgressEnabled", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailKBArticleSuggestionInProgressEnabled)) {
-			return GetterUtil.getBoolean(
-				emailKBArticleSuggestionInProgressEnabled);
-		}
-
-		return PortletPropsValues.
-			ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_IN_PROGRESS_ENABLED;
-	}
-
-	public static String getEmailKBArticleSuggestionInProgressSubject(
-		PortletPreferences preferences) {
-
-		String emailKBArticleSuggestionInProgressSubject = preferences.getValue(
-			"emailKBArticleSuggestionInProgressSubject", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailKBArticleSuggestionInProgressSubject)) {
-			return emailKBArticleSuggestionInProgressSubject;
-		}
-
-		return ContentUtil.get(
-			AdminUtil.class.getClassLoader(),
-			PortletPropsValues.
-				ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_IN_PROGRESS_SUBJECT);
-	}
-
-	public static String getEmailKBArticleSuggestionNotificationBody(
-		int status, PortletPreferences portletPreferences) {
-
-		if (status == KBCommentConstants.STATUS_COMPLETED) {
-			return AdminUtil.getEmailKBArticleSuggestionResolvedBody(
-				portletPreferences);
-		}
-		else if (status == KBCommentConstants.STATUS_IN_PROGRESS) {
-			return AdminUtil.getEmailKBArticleSuggestionInProgressBody(
-				portletPreferences);
-		}
-		else if (status == KBCommentConstants.STATUS_NEW) {
-			return AdminUtil.getEmailKBArticleSuggestionReceivedBody(
-				portletPreferences);
-		}
-		else {
-			throw new IllegalArgumentException(
-				String.format("Unknown suggestion status %s", status));
-		}
-	}
-
-	public static String getEmailKBArticleSuggestionNotificationSubject(
-		int status, PortletPreferences portletPreferences) {
-
-		if (status == KBCommentConstants.STATUS_COMPLETED) {
-			return AdminUtil.getEmailKBArticleSuggestionResolvedSubject(
-				portletPreferences);
-		}
-		else if (status == KBCommentConstants.STATUS_IN_PROGRESS) {
-			return AdminUtil.getEmailKBArticleSuggestionInProgressSubject(
-				portletPreferences);
-		}
-		else if (status == KBCommentConstants.STATUS_NEW) {
-			return AdminUtil.getEmailKBArticleSuggestionReceivedSubject(
-				portletPreferences);
-		}
-		else {
-			throw new IllegalArgumentException(
-				String.format("Unknown suggestion status %s", status));
-		}
-	}
-
-	public static String getEmailKBArticleSuggestionReceivedBody(
-		PortletPreferences preferences) {
-
-		String emailKBArticleSuggestionReceivedBody = preferences.getValue(
-			"emailKBArticleSuggestionReceivedBody", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailKBArticleSuggestionReceivedBody)) {
-			return emailKBArticleSuggestionReceivedBody;
-		}
-
-		return ContentUtil.get(
-			AdminUtil.class.getClassLoader(),
-			PortletPropsValues.ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RECEIVED_BODY);
-	}
-
-	public static boolean getEmailKBArticleSuggestionReceivedEnabled(
-		PortletPreferences preferences) {
-
-		String emailKBArticleSuggestionReceivedEnabled = preferences.getValue(
-			"emailKBArticleSuggestionReceivedEnabled", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailKBArticleSuggestionReceivedEnabled)) {
-			return GetterUtil.getBoolean(
-				emailKBArticleSuggestionReceivedEnabled);
-		}
-
-		return PortletPropsValues.
-			ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RECEIVED_ENABLED;
-	}
-
-	public static String getEmailKBArticleSuggestionReceivedSubject(
-		PortletPreferences preferences) {
-
-		String emailKBArticleSuggestionReceivedSubject = preferences.getValue(
-			"emailKBArticleSuggestionReceivedSubject", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailKBArticleSuggestionReceivedSubject)) {
-			return emailKBArticleSuggestionReceivedSubject;
-		}
-
-		return ContentUtil.get(
-			AdminUtil.class.getClassLoader(),
-			PortletPropsValues.
-				ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RECEIVED_SUBJECT);
-	}
-
-	public static String getEmailKBArticleSuggestionResolvedBody(
-		PortletPreferences preferences) {
-
-		String emailKBArticleSuggestionResolvedBody = preferences.getValue(
-			"emailKBArticleSuggestionResolvedBody", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailKBArticleSuggestionResolvedBody)) {
-			return emailKBArticleSuggestionResolvedBody;
-		}
-
-		return ContentUtil.get(
-			AdminUtil.class.getClassLoader(),
-			PortletPropsValues.ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RESOLVED_BODY);
-	}
-
-	public static boolean getEmailKBArticleSuggestionResolvedEnabled(
-		PortletPreferences preferences) {
-
-		String emailKBArticleSuggestionResolvedEnabled = preferences.getValue(
-			"emailKBArticleSuggestionResolvedEnabled", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailKBArticleSuggestionResolvedEnabled)) {
-			return GetterUtil.getBoolean(
-				emailKBArticleSuggestionResolvedEnabled);
-		}
-
-		return PortletPropsValues.
-			ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RESOLVED_ENABLED;
-	}
-
-	public static String getEmailKBArticleSuggestionResolvedSubject(
-		PortletPreferences preferences) {
-
-		String emailKBArticleSuggestionResolvedSubject = preferences.getValue(
-			"emailKBArticleSuggestionResolvedSubject", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailKBArticleSuggestionResolvedSubject)) {
-			return emailKBArticleSuggestionResolvedSubject;
-		}
-
-		return ContentUtil.get(
-			AdminUtil.class.getClassLoader(),
-			PortletPropsValues.
-				ADMIN_EMAIL_KB_ARTICLE_SUGGESTION_RESOLVED_SUBJECT);
-	}
-
-	public static String getEmailKBArticleUpdatedBody(
-		PortletPreferences preferences) {
-
-		String emailKBArticleUpdatedBody = preferences.getValue(
-			"emailKBArticleUpdatedBody", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailKBArticleUpdatedBody)) {
-			return emailKBArticleUpdatedBody;
-		}
-
-		return ContentUtil.get(
-			AdminUtil.class.getClassLoader(),
-			PortletPropsValues.ADMIN_EMAIL_KB_ARTICLE_UPDATED_BODY);
-	}
-
-	public static boolean getEmailKBArticleUpdatedEnabled(
-		PortletPreferences preferences) {
-
-		String emailKBArticleUpdatedEnabled = preferences.getValue(
-			"emailKBArticleUpdatedEnabled", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailKBArticleUpdatedEnabled)) {
-			return GetterUtil.getBoolean(emailKBArticleUpdatedEnabled);
-		}
-
-		return PortletPropsValues.ADMIN_EMAIL_KB_ARTICLE_UPDATED_ENABLED;
-	}
-
-	public static String getEmailKBArticleUpdatedSubject(
-		PortletPreferences preferences) {
-
-		String emailKBArticleUpdatedSubject = preferences.getValue(
-			"emailKBArticleUpdatedSubject", StringPool.BLANK);
-
-		if (Validator.isNotNull(emailKBArticleUpdatedSubject)) {
-			return emailKBArticleUpdatedSubject;
-		}
-
-		return ContentUtil.get(
-			AdminUtil.class.getClassLoader(),
-			PortletPropsValues.ADMIN_EMAIL_KB_ARTICLE_UPDATED_SUBJECT);
 	}
 
 	public static String getKBArticleDiff(
@@ -435,23 +148,6 @@ public class AdminUtil {
 		}
 
 		return outputDocument.toString();
-	}
-
-	public static boolean isSuggestionStatusChangeNotificationEnabled(
-		int status, PortletPreferences preferences) {
-
-		if (status == KBCommentConstants.STATUS_COMPLETED) {
-			return getEmailKBArticleSuggestionResolvedEnabled(preferences);
-		}
-		else if (status == KBCommentConstants.STATUS_IN_PROGRESS) {
-			return getEmailKBArticleSuggestionInProgressEnabled(preferences);
-		}
-		else if (status == KBCommentConstants.STATUS_NEW) {
-			return getEmailKBArticleSuggestionReceivedEnabled(preferences);
-		}
-		else {
-			return false;
-		}
 	}
 
 	public static String[] unescapeSections(String sections) {

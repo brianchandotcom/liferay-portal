@@ -20,10 +20,6 @@
 String tabs2 = ParamUtil.getString(request, "tabs2", "general");
 
 String tabs2Names = "general,display-settings";
-
-if (PortalUtil.isRSSFeedsEnabled()) {
-	tabs2Names += ",rss";
-}
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -82,14 +78,6 @@ if (PortalUtil.isRSSFeedsEnabled()) {
 					displayStyle="<%= socialBookmarksDisplayStyle %>"
 					enabled="<%= enableSocialBookmarks %>"
 					types="<%= socialBookmarksTypes %>"
-				/>
-			</c:when>
-			<c:when test='<%= tabs2.equals("rss") %>'>
-				<liferay-ui:rss-settings
-					delta="<%= rssDelta %>"
-					displayStyle="<%= rssDisplayStyle %>"
-					enabled="<%= enableRSS %>"
-					feedType="<%= rssFeedType %>"
 				/>
 			</c:when>
 		</c:choose>

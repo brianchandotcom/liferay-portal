@@ -14,15 +14,13 @@
  */
 --%>
 
-<%@ include file="/admin/init.jsp" %>
+<%@ include file="/admin/common/init.jsp" %>
 
 <%
 int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
 
-long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());
-
-long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
-long resourcePrimKey = ParamUtil.getLong(request, "resourcePrimKey");
+resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
+resourcePrimKey = ParamUtil.getLong(request, "resourcePrimKey");
 long parentResourceClassNameId = ParamUtil.getLong(request, "parentResourceClassNameId", kbFolderClassNameId);
 long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 long originalParentResourceClassNameId = ParamUtil.getLong(request, "originalParentResourceClassNameId");

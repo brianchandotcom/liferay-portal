@@ -14,18 +14,21 @@
 
 package com.liferay.knowledge.base.importer;
 
+import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
+import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
 import com.liferay.knowledge.base.importer.util.KBArticleMarkdownConverter;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
-import com.liferay.knowledge.base.service.util.PortletPropsValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -50,11 +53,15 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author James Hinkey
  * @author Sergio González
  * @author Jesse Rao
  */
+@Component(service = KBArticleImporter.class)
 public class KBArticleImporter {
 
 	public int processZipFile(
@@ -174,7 +181,8 @@ public class KBArticleImporter {
 	}
 
 	protected Map<String, List<String>> getFolderNameFileEntryNamesMap(
-			ZipReader zipReader)
+			ZipReader zipReader,
+			KBGroupServiceConfiguration kbGroupServiceConfiguration)
 		throws KBArticleImportException {
 
 		Map<String, List<String>> folderNameFileEntryNamesMap = new TreeMap<>();
@@ -183,7 +191,8 @@ public class KBArticleImporter {
 			String extension = FileUtil.getExtension(zipEntry);
 
 			if (!ArrayUtil.contains(
-					PortletPropsValues.MARKDOWN_IMPORTER_ARTICLE_EXTENSIONS,
+					kbGroupServiceConfiguration.
+						markdownImporterArticleExtensions(),
 					StringPool.PERIOD.concat(extension))) {
 
 				continue;
@@ -260,8 +269,15 @@ public class KBArticleImporter {
 			PrioritizationStrategy.create(
 				groupId, parentKBFolderId, prioritizeByNumericalPrefix);
 
+		KBGroupServiceConfiguration kbGroupServiceConfiguration =
+			_configurationProvider.getConfiguration(
+				KBGroupServiceConfiguration.class,
+				new GroupServiceSettingsLocator(
+					groupId, KBConstants.SERVICE_NAME));
+
 		Map<String, List<String>> folderNameFileEntryNamesMap =
-			getFolderNameFileEntryNamesMap(zipReader);
+			getFolderNameFileEntryNamesMap(
+				zipReader, kbGroupServiceConfiguration);
 
 		Set<String> folderNames = folderNameFileEntryNamesMap.keySet();
 
@@ -275,7 +291,8 @@ public class KBArticleImporter {
 
 			for (String fileEntryName : fileEntryNames) {
 				if (fileEntryName.endsWith(
-						PortletPropsValues.MARKDOWN_IMPORTER_ARTICLE_INTRO)) {
+						kbGroupServiceConfiguration.
+							markdownImporterArticleIntro())) {
 
 					sectionIntroFileEntryName = fileEntryName;
 				}
@@ -334,6 +351,13 @@ public class KBArticleImporter {
 		return importedKBArticlesCount;
 	}
 
+	@Reference(unbind = "-")
+	protected void setConfigurationProvider(
+		ConfigurationProvider configurationProvider) {
+
+		_configurationProvider = configurationProvider;
+	}
+
 	private List<String> _getEntries(ZipReader zipReader)
 		throws KBArticleImportException {
 
@@ -349,5 +373,7 @@ public class KBArticleImporter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleImporter.class);
+
+	private ConfigurationProvider _configurationProvider;
 
 }

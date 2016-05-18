@@ -45,7 +45,7 @@ long parentKBFolderId = ParamUtil.getLong(request, "parentKBFolderId");
 		<aui:field-wrapper>
 			<div class="alert alert-info">
 				<liferay-ui:message
-					arguments="<%= StringUtil.merge(PortletPropsValues.MARKDOWN_IMPORTER_ARTICLE_EXTENSIONS, StringPool.COMMA_AND_SPACE) %>"
+					arguments="<%= StringUtil.merge(kbGroupServiceConfiguration.markdownImporterArticleExtensions(), StringPool.COMMA_AND_SPACE) %>"
 					key="upload-your-zip-file-help"
 				/>
 			</div>

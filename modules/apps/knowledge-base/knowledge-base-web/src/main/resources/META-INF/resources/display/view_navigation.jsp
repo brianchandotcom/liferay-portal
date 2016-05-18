@@ -23,8 +23,6 @@ KBNavigationDisplayContext kbNavigationDisplayContext = (KBNavigationDisplayCont
 
 List<Long> ancestorResourcePrimaryKeys = kbNavigationDisplayContext.getAncestorResourcePrimaryKeys();
 
-long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());
-
 long rootResourcePrimKey = kbNavigationDisplayContext.getRootResourcePrimKey();
 
 String pageTitle = kbNavigationDisplayContext.getPageTitle();

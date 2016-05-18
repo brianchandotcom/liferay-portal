@@ -20,6 +20,7 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderServiceUtil;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
+import com.liferay.knowledge.base.web.configuration.KBDisplayPortletInstanceConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -30,7 +31,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 /**
@@ -40,11 +40,14 @@ public class KBNavigationDisplayContext {
 
 	public KBNavigationDisplayContext(
 		PortletRequest portletRequest, PortalPreferences portalPreferences,
-		PortletPreferences portletPreferences, KBArticle kbArticle) {
+		KBDisplayPortletInstanceConfiguration
+			kbDisplayPortletInstanceConfiguration,
+		KBArticle kbArticle) {
 
 		_portletRequest = portletRequest;
 		_portalPreferences = portalPreferences;
-		_portletPreferences = portletPreferences;
+		_kbDisplayPortletInstanceConfiguration =
+			kbDisplayPortletInstanceConfiguration;
 		_kbArticle = kbArticle;
 	}
 
@@ -73,7 +76,8 @@ public class KBNavigationDisplayContext {
 	public String getCurrentKBFolderURLTitle() throws PortalException {
 		String currentKBFolderURLTitle =
 			KnowledgeBaseUtil.getPreferredKBFolderURLTitle(
-				_portalPreferences, getContentRootPrefix());
+				_portalPreferences,
+				_kbDisplayPortletInstanceConfiguration.contentRootPrefix());
 
 		long rootResourcePrimKey = getRootResourcePrimKey();
 
@@ -96,7 +100,9 @@ public class KBNavigationDisplayContext {
 			KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(
 				rootResourcePrimKey);
 
-			pageTitle = getContentRootPrefix() + " " + kbFolder.getName();
+			pageTitle =
+				_kbDisplayPortletInstanceConfiguration.contentRootPrefix() +
+					" " + kbFolder.getName();
 
 			if (_kbArticle != null) {
 				pageTitle = _kbArticle.getTitle() + " - " + pageTitle;
@@ -155,16 +161,19 @@ public class KBNavigationDisplayContext {
 		return false;
 	}
 
-	protected String getContentRootPrefix() {
-		return GetterUtil.getString(
-			_portletPreferences.getValue("contentRootPrefix", null));
-	}
-
 	protected long getResourceClassNameId() {
 		if (_resourceClassNameId == null) {
-			_resourceClassNameId = GetterUtil.getLong(
-				_portletPreferences.getValue("resourceClassNameId", null),
-				PortalUtil.getClassNameId(KBFolderConstants.getClassName()));
+			if (_kbDisplayPortletInstanceConfiguration.resourceClassNameId() !=
+					0) {
+
+				_resourceClassNameId =
+					_kbDisplayPortletInstanceConfiguration.
+						resourceClassNameId();
+			}
+			else {
+				_resourceClassNameId = PortalUtil.getClassNameId(
+					KBFolderConstants.getClassName());
+			}
 		}
 
 		return _resourceClassNameId;
@@ -173,7 +182,7 @@ public class KBNavigationDisplayContext {
 	protected long getResourcePrimKey() {
 		if (_resourcePrimKey == null) {
 			_resourcePrimKey = GetterUtil.getLong(
-				_portletPreferences.getValue("resourcePrimKey", null));
+				_kbDisplayPortletInstanceConfiguration.resourcePrimKey());
 		}
 
 		return _resourcePrimKey;
@@ -245,9 +254,10 @@ public class KBNavigationDisplayContext {
 	}
 
 	private final KBArticle _kbArticle;
+	private final KBDisplayPortletInstanceConfiguration
+		_kbDisplayPortletInstanceConfiguration;
 	private Boolean _leftNavigationVisible;
 	private final PortalPreferences _portalPreferences;
-	private final PortletPreferences _portletPreferences;
 	private final PortletRequest _portletRequest;
 	private Long _resourceClassNameId;
 	private Long _resourcePrimKey;

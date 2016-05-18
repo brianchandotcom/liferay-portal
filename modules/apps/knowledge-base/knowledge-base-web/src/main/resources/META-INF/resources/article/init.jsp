@@ -17,27 +17,51 @@
 <%@ include file="/init.jsp" %>
 
 <%
+KBArticlePortletInstanceConfiguration kbArticlePortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(KBArticlePortletInstanceConfiguration.class);
+
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-long resourcePrimKey = GetterUtil.getLong(portletPreferences.getValue("resourcePrimKey", null));
+long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());
 
-boolean enableKBArticleDescription = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleDescription", null));
-boolean enableKBArticleRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleRatings", null));
-String kbArticleRatingsType = GetterUtil.getString(portletPreferences.getValue("kbArticleRatingsType", null), "thumbs");
-boolean showKBArticleAssetEntries = GetterUtil.getBoolean(portletPreferences.getValue("showKBArticleAssetEntries", null));
-boolean showKBArticleAttachments = GetterUtil.getBoolean(portletPreferences.getValue("showKBArticleAttachments", null), true);
-boolean enableKBArticleAssetLinks = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleAssetLinks", null), true);
-boolean enableKBArticleViewCountIncrement = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleViewCountIncrement", null));
-boolean enableKBArticleSubscriptions = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleSubscriptions", null), true);
-boolean enableKBArticleHistory = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticleHistory", null), true);
-boolean enableKBArticlePrint = GetterUtil.getBoolean(portletPreferences.getValue("enableKBArticlePrint", null), true);
-boolean enableSocialBookmarks = GetterUtil.getBoolean(portletPreferences.getValue("enableSocialBookmarks", null));
-String socialBookmarksDisplayStyle = portletPreferences.getValue("socialBookmarksDisplayStyle", PortletPropsValues.KNOWLEDGE_BASE_SOCIAL_BOOKMARKS_DISPLAY_STYLE);
-String socialBookmarksDisplayPosition = portletPreferences.getValue("socialBookmarksDisplayPosition", "bottom");
-String socialBookmarksTypes = portletPreferences.getValue("socialBookmarksTypes", PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES));
+long resourceClassNameId = kbArticlePortletInstanceConfiguration.resourceClassNameId();
 
-boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(portletPreferences.getValue("enableRss", null), true);
-int rssDelta = GetterUtil.getInteger(portletPreferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
-String rssDisplayStyle = portletPreferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
-String rssFeedType = portletPreferences.getValue("rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
+if (resourceClassNameId == 0) {
+	resourceClassNameId = kbFolderClassNameId;
+}
+
+request.setAttribute("init.jsp-resourceClassNameId", resourceClassNameId);
+
+long resourcePrimKey = kbArticlePortletInstanceConfiguration.resourcePrimKey();
+
+request.setAttribute("init.jsp-resourcePrimKey", resourcePrimKey);
+
+boolean enableKBArticleDescription = kbArticlePortletInstanceConfiguration.enableKBArticleDescription();
+boolean enableKBArticleRatings = kbArticlePortletInstanceConfiguration.enableKBArticleRatings();
+String kbArticleRatingsType = kbArticlePortletInstanceConfiguration.kbArticleRatingsType();
+boolean showKBArticleAssetEntries = kbArticlePortletInstanceConfiguration.showKBArticleAssetEntries();
+boolean showKBArticleAttachments = kbArticlePortletInstanceConfiguration.showKBArticleAttachments();
+boolean enableKBArticleAssetLinks = kbArticlePortletInstanceConfiguration.enableKBArticleAssetLinks();
+boolean enableKBArticleViewCountIncrement = kbArticlePortletInstanceConfiguration.enableKBArticleViewCountIncrement();
+boolean enableKBArticleSubscriptions = kbArticlePortletInstanceConfiguration.enableKBArticleSubscriptions();
+boolean enableKBArticleHistory = kbArticlePortletInstanceConfiguration.enableKBArticleHistory();
+boolean enableKBArticlePrint = kbArticlePortletInstanceConfiguration.enableKBArticlePrint();
+boolean enableSocialBookmarks = kbArticlePortletInstanceConfiguration.enableSocialBookmarks();
+String socialBookmarksDisplayStyle = kbArticlePortletInstanceConfiguration.socialBookmarksDisplayStyle();
+String socialBookmarksDisplayPosition = kbArticlePortletInstanceConfiguration.socialBookmarksDisplayPosition();
+String socialBookmarksTypes = kbArticlePortletInstanceConfiguration.socialBookmarksTypes();
+
+request.setAttribute("init.jsp-enableKBArticleDescription", enableKBArticleDescription);
+request.setAttribute("init.jsp-enableKBArticleRatings", enableKBArticleRatings);
+request.setAttribute("init.jsp-kbArticleRatingsType", kbArticleRatingsType);
+request.setAttribute("init.jsp-showKBArticleAssetEntries", showKBArticleAssetEntries);
+request.setAttribute("init.jsp-showKBArticleAttachments", showKBArticleAttachments);
+request.setAttribute("init.jsp-enableKBArticleAssetLinks", enableKBArticleAssetLinks);
+request.setAttribute("init.jsp-enableKBArticleViewCountIncrement", enableKBArticleViewCountIncrement);
+request.setAttribute("init.jsp-enableKBArticleSubscriptions", enableKBArticleSubscriptions);
+request.setAttribute("init.jsp-enableKBArticleHistory", enableKBArticleHistory);
+request.setAttribute("init.jsp-enableKBArticlePrint", enableKBArticlePrint);
+request.setAttribute("init.jsp-enableSocialBookmarks", enableSocialBookmarks);
+request.setAttribute("init.jsp-socialBookmarksDisplayStyle", socialBookmarksDisplayStyle);
+request.setAttribute("init.jsp-socialBookmarksDisplayPosition", socialBookmarksDisplayPosition);
+request.setAttribute("init.jsp-socialBookmarksTypes", socialBookmarksTypes);
 %>

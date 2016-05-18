@@ -19,8 +19,10 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
+import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
 import com.liferay.knowledge.base.constants.AdminActivityKeys;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
+import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.KBArticleContentException;
@@ -37,7 +39,6 @@ import com.liferay.knowledge.base.service.base.KBArticleLocalServiceBaseImpl;
 import com.liferay.knowledge.base.service.util.AdminSubscriptionSender;
 import com.liferay.knowledge.base.service.util.AdminUtil;
 import com.liferay.knowledge.base.service.util.KnowledgeBaseConstants;
-import com.liferay.knowledge.base.service.util.PortletPropsValues;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.knowledge.base.util.comparator.KBArticleVersionComparator;
@@ -64,12 +65,15 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -85,6 +89,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.InputStream;
 
@@ -95,8 +100,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.portlet.PortletPreferences;
 
 /**
  * @author Peter Shin
@@ -263,8 +266,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			boolean prioritizeByNumericalPrefix, InputStream inputStream,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		KBArticleImporter kbArticleImporter = new KBArticleImporter();
 
 		return kbArticleImporter.processZipFile(
 			userId, groupId, parentKbFolderId, prioritizeByNumericalPrefix,
@@ -1563,6 +1564,15 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		return emailKBArticleDiffs;
 	}
 
+	protected KBGroupServiceConfiguration getKBGroupServiceConfiguration(
+			long groupId)
+		throws ConfigurationException {
+
+		return configurationProvider.getConfiguration(
+			KBGroupServiceConfiguration.class,
+			new GroupServiceSettingsLocator(groupId, KBConstants.SERVICE_NAME));
+	}
+
 	protected KBArticle getNextAncestorKBArticle(
 			long kbArticleId, KBArticle nextKBArticle)
 		throws PortalException {
@@ -1644,8 +1654,13 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		return lastSiblingChildKBArticle;
 	}
 
-	protected double getPriority(long groupId, long parentResourcePrimKey) {
-		if (!PortletPropsValues.ADMIN_KB_ARTICLE_INCREMENT_PRIORITY_ENABLED) {
+	protected double getPriority(long groupId, long parentResourcePrimKey)
+		throws PortalException {
+
+		KBGroupServiceConfiguration kbGroupServiceConfiguration =
+			getKBGroupServiceConfiguration(groupId);
+
+		if (!kbGroupServiceConfiguration.articleIncrementPriorityEnabled()) {
 			return KBArticleConstants.DEFAULT_VERSION;
 		}
 
@@ -1779,29 +1794,23 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			return;
 		}
 
-		PortletPreferences preferences =
-			portletPreferencesLocalService.getPreferences(
-				kbArticle.getCompanyId(), kbArticle.getGroupId(),
-				KBPortletKeys.PREFS_OWNER_TYPE_GROUP,
-				KBPortletKeys.PREFS_PLID_SHARED,
-				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, null);
+		KBGroupServiceConfiguration kbGroupServiceConfiguration =
+			getKBGroupServiceConfiguration(kbArticle.getGroupId());
 
 		if (serviceContext.isCommandAdd() &&
-			!AdminUtil.getEmailKBArticleAddedEnabled(preferences)) {
+			!kbGroupServiceConfiguration.emailKBArticleAddedEnabled()) {
 
 			return;
 		}
 
 		if (serviceContext.isCommandUpdate() &&
-			!AdminUtil.getEmailKBArticleUpdatedEnabled(preferences)) {
+			!kbGroupServiceConfiguration.emailKBArticleUpdatedEnabled()) {
 
 			return;
 		}
 
-		String fromName = AdminUtil.getEmailFromName(
-			preferences, kbArticle.getCompanyId());
-		String fromAddress = AdminUtil.getEmailFromAddress(
-			preferences, kbArticle.getCompanyId());
+		String fromName = kbGroupServiceConfiguration.emailFromName();
+		String fromAddress = kbGroupServiceConfiguration.emailFromAddress();
 
 		String kbArticleContent = StringUtil.replace(
 			kbArticle.getContent(), new String[] {"href=\"/", "src=\"/"},
@@ -1827,12 +1836,13 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		String body = null;
 
 		if (serviceContext.isCommandAdd()) {
-			subject = AdminUtil.getEmailKBArticleAddedSubject(preferences);
-			body = AdminUtil.getEmailKBArticleAddedBody(preferences);
+			subject = kbGroupServiceConfiguration.emailKBArticleAddedSubject();
+			body = kbGroupServiceConfiguration.emailKBArticleAddedBody();
 		}
 		else {
-			subject = AdminUtil.getEmailKBArticleUpdatedSubject(preferences);
-			body = AdminUtil.getEmailKBArticleUpdatedBody(preferences);
+			subject =
+				kbGroupServiceConfiguration.emailKBArticleUpdatedSubject();
+			body = kbGroupServiceConfiguration.emailKBArticleUpdatedBody();
 		}
 
 		SubscriptionSender subscriptionSender = new AdminSubscriptionSender(
@@ -2014,6 +2024,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			throw new KBArticleUrlTitleException.MustNotBeDuplicate(urlTitle);
 		}
 	}
+
+	@ServiceReference(type = ConfigurationProvider.class)
+	protected ConfigurationProvider configurationProvider;
+
+	@ServiceReference(type = KBArticleImporter.class)
+	protected KBArticleImporter kbArticleImporter;
 
 	@BeanReference(type = PortletFileRepository.class)
 	protected PortletFileRepository portletFileRepository;

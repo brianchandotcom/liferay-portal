@@ -15,8 +15,8 @@
 package com.liferay.knowledge.base.web.portlet.action;
 
 import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -39,8 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_SECTION},
 	service = ConfigurationAction.class
 )
-public class SectionConfigurationAction
-	extends BaseJSPSettingsConfigurationAction {
+public class SectionConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest request) {

@@ -8096,26 +8096,26 @@ jdbc.default.password=${database.mysql.password}</echo>
 			<equals arg1="${app.server.type}" arg2="jboss" />
 			<then>
 				<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
+extra.lib.dirs=
 global.lib.dir=modules/com/liferay/portal/main
-portal.dir=standalone/deployments/ROOT.war
-extra.lib.dirs=</echo>
+portal.dir=standalone/deployments/ROOT.war</echo>
 			</then>
 			<elseif>
 				<equals arg1="${app.server.type}" arg2="tomcat" />
 				<then>
 					<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
+extra.lib.dirs=bin
 global.lib.dir=lib
-portal.dir=webapps/ROOT
-extra.lib.dirs=bin</echo>
+portal.dir=webapps/ROOT</echo>
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${app.server.type}" arg2="wildfly" />
 				<then>
 					<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
+extra.lib.dirs=modules/system/layers/base/javax/transaction,modules/system/layers/base/javax/mail,modules/system/layers/base/javax/persistence,modules/system/layers/base/javax/servlet
 global.lib.dir=modules/com/liferay/portal/main
-portal.dir=standalone/deployments/ROOT.war
-extra.lib.dirs=modules/system/layers/base/javax/transaction,modules/system/layers/base/javax/mail,modules/system/layers/base/javax/persistence,modules/system/layers/base/javax/servlet</echo>
+portal.dir=standalone/deployments/ROOT.war</echo>
 				</then>
 			</elseif>
 		</if>

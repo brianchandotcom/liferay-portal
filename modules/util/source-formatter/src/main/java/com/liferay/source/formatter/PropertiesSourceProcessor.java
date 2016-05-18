@@ -291,6 +291,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	protected String formatPluginPackageProperties(
 		String absolutePath, String content) {
 
+		content = StringUtil.replace(content, "\n\n", "\n");
+
 		return fixIncorrectLicenses(absolutePath, content);
 	}
 

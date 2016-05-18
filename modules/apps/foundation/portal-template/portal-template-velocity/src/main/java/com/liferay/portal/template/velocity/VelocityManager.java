@@ -287,13 +287,11 @@ public class VelocityManager extends BaseSingleTemplateManager {
 
 	@Reference(unbind = "-")
 	protected void setSingleVMPool(SingleVMPool singleVMPool) {
-		_singleVMPool = singleVMPool;
 	}
 
 	private static volatile VelocityEngineConfiguration
 		_velocityEngineConfiguration;
 
-	private SingleVMPool _singleVMPool;
 	private VelocityEngine _velocityEngine;
 
 }

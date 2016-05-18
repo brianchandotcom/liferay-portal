@@ -42,9 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.command.function=removeTasksPortlet",
 		"osgi.command.function=renameDashboardSiteTemplate",
 		"osgi.command.function=renameProfileSiteTemplate",
-		"osgi.command.function=updateProfileTheme",
-		"osgi.command.function=updateSocialSiteTheme",
-		"osgi.command.function=updateDashboardTheme", "osgi.command.scope=so"
+		"osgi.command.function=updateSocialSiteTheme", "osgi.command.scope=so"
 	},
 	service = Object.class
 )
@@ -55,8 +53,6 @@ public class SocialOfficeUpgradeCommand {
 		removeTasksPortlet();
 		renameDashboardSiteTemplate();
 		renameProfileSiteTemplate();
-		updateDashboardTheme();
-		updateProfileTheme();
 		updateSocialSiteTheme();
 	}
 
@@ -162,14 +158,6 @@ public class SocialOfficeUpgradeCommand {
 		_doRenameSiteTemplate(
 			"%>Social Office User Profile<%", _PROFILE_NAME_XML,
 			_PROFILE_DESCRIPTION_XML, successMessage, notFoundMessage);
-	}
-
-	public void updateDashboardTheme() {
-		throw new UnsupportedOperationException();
-	}
-
-	public void updateProfileTheme() {
-		throw new UnsupportedOperationException();
 	}
 
 	public void updateSocialSiteTheme() {

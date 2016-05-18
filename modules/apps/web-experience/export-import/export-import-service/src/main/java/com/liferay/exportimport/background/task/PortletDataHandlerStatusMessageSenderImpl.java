@@ -19,13 +19,12 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSender;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
+import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.LongWrapper;
 
 import java.util.HashMap;
@@ -65,23 +64,26 @@ public class PortletDataHandlerStatusMessageSenderImpl
 
 		message.put("portletId", portletId);
 
-		Portlet portlet = _portletLocalService.getPortletById(portletId);
+		PortletDataHandler portletDataHandler =
+			_portletDataHandlerProvider.provide(portletId);
 
-		if (portlet != null) {
-			PortletDataHandler portletDataHandler =
-				portlet.getPortletDataHandlerInstance();
+		if (portletDataHandler == null) {
+			_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
+				message);
 
-			long portletModelAdditionCountersTotal =
-				portletDataHandler.getExportModelCount(manifestSummary);
-
-			if (portletModelAdditionCountersTotal < 0) {
-				portletModelAdditionCountersTotal = 0;
-			}
-
-			message.put(
-				"portletModelAdditionCountersTotal",
-				portletModelAdditionCountersTotal);
+			return;
 		}
+
+		long portletModelAdditionCountersTotal =
+			portletDataHandler.getExportModelCount(manifestSummary);
+
+		if (portletModelAdditionCountersTotal < 0) {
+			portletModelAdditionCountersTotal = 0;
+		}
+
+		message.put(
+			"portletModelAdditionCountersTotal",
+			portletModelAdditionCountersTotal);
 
 		_backgroundTaskStatusMessageSender.sendBackgroundTaskStatusMessage(
 			message);
@@ -154,6 +156,6 @@ public class PortletDataHandlerStatusMessageSenderImpl
 		_backgroundTaskStatusMessageSender;
 
 	@Reference
-	private PortletLocalService _portletLocalService;
+	private PortletDataHandlerProvider _portletDataHandlerProvider;
 
 }

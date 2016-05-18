@@ -44,6 +44,7 @@ import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.lar.DeletionSystemEventExporter;
 import com.liferay.exportimport.lar.PermissionExporter;
+import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorRegistryUtil;
@@ -1039,15 +1040,13 @@ public class PortletExportController implements ExportController {
 			return;
 		}
 
-		Portlet portlet = _portletLocalService.getPortletById(
-			portletDataContext.getPortletId());
+		PortletDataHandler portletDataHandler =
+			_portletDataHandlerProvider.provide(
+				portletDataContext.getPortletId());
 
-		if ((portlet == null) || portlet.isUndeployedPortlet()) {
+		if (portletDataHandler == null) {
 			return;
 		}
-
-		PortletDataHandler portletDataHandler =
-			portlet.getPortletDataHandlerInstance();
 
 		String serviceName = portletDataHandler.getServiceName();
 
@@ -1301,6 +1300,10 @@ public class PortletExportController implements ExportController {
 	private LayoutLocalService _layoutLocalService;
 	private final PermissionExporter _permissionExporter =
 		PermissionExporter.getInstance();
+
+	@Reference
+	private PortletDataHandlerProvider _portletDataHandlerProvider;
+
 	private PortletItemLocalService _portletItemLocalService;
 	private PortletLocalService _portletLocalService;
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

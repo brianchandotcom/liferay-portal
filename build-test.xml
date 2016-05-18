@@ -43,7 +43,12 @@
 	<macrodef name="apply-portal-ext-properties">
 		<sequential>
 			<if>
-				<contains string="${app.server.portal.dir}" substring="liferay-portal.war" />
+				<and>
+					<contains string="${app.server.portal.dir}" substring="liferay-portal.war" />
+					<not>
+						<equals arg1="${app.server.type}" arg2="websphere" />
+					</not>
+				</and>
 				<then>
 					<property name="test.build.liferay.portal.zip.file.name" value="${app.server.portal.dir}" />
 				</then>

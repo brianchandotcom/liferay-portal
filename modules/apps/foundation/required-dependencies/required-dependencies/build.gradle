@@ -32,6 +32,10 @@ deploy {
 	}
 
 	from configurations.provided
-	into new File(liferay.liferayHome, "osgi/static")
+
+	into  {
+		liferay.deployDir
+	}
+
 	rename new RenameDependencyClosure(project, configurations.provided.name)
 }

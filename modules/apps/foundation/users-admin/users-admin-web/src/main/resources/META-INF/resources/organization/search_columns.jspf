@@ -15,24 +15,25 @@
 --%>
 
 <liferay-ui:search-container-column-text
+	cssClass="table-cell-content"
 	href="<%= rowURL %>"
 	name="name"
 	orderable="<%= true %>"
-	truncate="<%= true %>"
 >
 	<aui:a href="<%= String.valueOf(rowURL) %>"><strong><%= organization.getName() %></strong></aui:a>
 </liferay-ui:search-container-column-text>
 
 <c:if test="<%= Validator.isNotNull(keywords) %>">
 	<liferay-ui:search-container-column-text
+		cssClass="table-cell-content"
 		href="<%= rowURL %>"
 		name="parent-organization"
-		truncate="<%= true %>"
 		value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
 	/>
 </c:if>
 
 <liferay-ui:search-container-column-text
+	cssClass="table-cell-content"
 	href="<%= rowURL %>"
 	name="type"
 	orderable="<%= true %>"

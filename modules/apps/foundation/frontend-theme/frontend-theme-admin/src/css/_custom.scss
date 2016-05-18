@@ -37,3 +37,10 @@ body {
 		}
 	}
 }
+
+.portlet-boundary_com_liferay_users_admin_web_portlet_UsersAdminPortlet_ {
+	.lfr-job-title-column, .lfr-name-column, .lfr-organizations-column, .lfr-screen-name-column, .lfr-user-groups-column {
+		max-width: 150px;
+		min-width: 150px;
+	}
+}

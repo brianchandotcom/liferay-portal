@@ -72,6 +72,30 @@ public class RubySassCompilerTest {
 	}
 
 	@Test
+	public void testCompileFileSassVariableWithUnicode() throws Exception {
+		SassCompiler sassCompiler = new RubySassCompiler();
+
+		File inputDir = new File(
+			"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+				"/compiler/jni/internal/dependencies/");
+
+		File inputFile = new File(inputDir, "/unicode/input.scss");
+
+		String actualOutput = sassCompiler.compileFile(
+			inputFile.getCanonicalPath(), "");
+
+		Assert.assertNotNull(actualOutput);
+
+		File expectedOutputFile = new File(
+			inputDir, "/unicode/expected_output.css");
+
+		String expectedOutput = read(expectedOutputFile.toPath());
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
+	}
+
+	@Test
 	public void testCompileFileWithSourceMap() throws Exception {
 		SassCompiler sassCompiler = new RubySassCompiler();
 
@@ -112,6 +136,31 @@ public class RubySassCompilerTest {
 		String expectedOutput = "foo { margin: 42px; }";
 		String actualOutput = sassCompiler.compileString(
 			"foo { margin: 21px * 2; }", "");
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
+	}
+
+	@Test
+	public void testCompileStringSassVariableWithUnicode() throws Exception {
+		SassCompiler sassCompiler = new RubySassCompiler();
+
+		File inputDir = new File(
+			"../sass-compiler-jni/src/test/resources/com/liferay/sass" +
+				"/compiler/jni/internal/dependencies/");
+
+		File inputFile = new File(inputDir, "/unicode/input.scss");
+
+		String input = read(inputFile.toPath());
+
+		String actualOutput = sassCompiler.compileString(input, "");
+
+		Assert.assertNotNull(actualOutput);
+
+		File expectedOutputFile = new File(
+			inputDir, "/unicode/expected_output.css");
+
+		String expectedOutput = read(expectedOutputFile.toPath());
 
 		Assert.assertEquals(
 			stripNewLines(expectedOutput), stripNewLines(actualOutput));

@@ -108,35 +108,45 @@ public class CSSBuilderTest {
 
 		cssBuilder.execute(Arrays.asList(new String[] {"/css"}));
 
-		File cssFile = new File(_docrootDirName + "/css/.sass-cache/test.css");
-
-		Assert.assertFalse(cssFile.exists());
-
-		String expectedCacheContent = _read(
+		String expectedTestContent = _read(
 			_docrootDirName + "/expected/test.css");
 
-		String actualMainCacheContent = _read(
-			_docrootDirName + "/css/.sass-cache/main.css");
+		String actualTestContent = _read(
+			_docrootDirName + "/css/.sass-cache/test.css");
 
-		Assert.assertEquals(expectedCacheContent, actualMainCacheContent);
+		Assert.assertEquals(expectedTestContent, actualTestContent);
 
-		File file = new File(
+		String actualTestPartialContent = _read(
+			_docrootDirName + "/css/.sass-cache/test_partial.css");
+
+		Assert.assertEquals(expectedTestContent, actualTestPartialContent);
+
+		File partialCssFile = new File(
 			Paths.get("/css/.sass-cache/_partial.css").toString());
 
-		Assert.assertFalse(file.exists());
+		Assert.assertFalse(partialCssFile.exists());
 
-		File rtlCssFile = new File(
-			_docrootDirName + "/css/.sass-cache/test_rtl.css");
-
-		Assert.assertFalse(rtlCssFile.exists());
-
-		String expectedRtlCacheContent = _read(
+		String expectedTestRtlContent = _read(
 			_docrootDirName + "/expected/test_rtl.css");
 
-		String actualMainRtlCacheContent = _read(
-			_docrootDirName + "/css/.sass-cache/main_rtl.css");
+		String actualTestRtlContent = _read(
+			_docrootDirName + "/css/.sass-cache/test_rtl.css");
 
-		Assert.assertEquals(expectedRtlCacheContent, actualMainRtlCacheContent);
+		Assert.assertEquals(expectedTestRtlContent, actualTestRtlContent);
+
+		String actualTestPartialRtlContent = _read(
+			_docrootDirName + "/css/.sass-cache/test_partial_rtl.css");
+
+		Assert.assertEquals(
+			expectedTestRtlContent, actualTestPartialRtlContent);
+
+		String expectedUnicodeContent = _read(
+			_docrootDirName + "/expected/test_unicode.css");
+
+		String actualTestUnicodeContent = _read(
+			_docrootDirName + "/css/.sass-cache/test_unicode.css");
+
+		Assert.assertEquals(expectedUnicodeContent, actualTestUnicodeContent);
 	}
 
 	private static String _docrootDirName;

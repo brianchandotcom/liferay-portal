@@ -160,8 +160,43 @@ public class SocialOfficeUpgradeCommand {
 			_PROFILE_DESCRIPTION_XML, successMessage, notFoundMessage);
 	}
 
-	public void updateSocialSiteTheme() {
-		throw new UnsupportedOperationException();
+	public void updateSocialSiteTheme() throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_layoutLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.eq(
+							"themeId", "so_WAR_sotheme"));
+				}
+
+			});
+
+		final AtomicInteger atomicInteger = new AtomicInteger(0);
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Layout>() {
+
+				public void performAction(Layout layout)
+					throws PortalException {
+
+					layout.setThemeId("classic_WAR_classictheme");
+
+					_layoutLocalService.updateLayout(layout);
+
+					atomicInteger.incrementAndGet();
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
+
+		System.out.printf(
+			"[so:updateSocialSiteTheme] %d layouts updated.%n",
+			atomicInteger.get());
 	}
 
 	@Reference(unbind = "-")

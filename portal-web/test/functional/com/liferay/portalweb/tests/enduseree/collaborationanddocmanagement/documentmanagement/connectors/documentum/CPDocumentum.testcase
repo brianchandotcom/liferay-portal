@@ -260,6 +260,7 @@
 		</execute>
 
 		<execute macro="DMDocument#viewCheckedinCP" >
+			<var name="dmDocumentVersionNumber" value="1.1" />
 			<var name="dmRepositoryName" value="true" />
 		</execute>
 	</command>

@@ -61,6 +61,7 @@ List themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId());
 		%>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			name="themes"
 		>
 			<aui:a href="<%= showEditPluginHREF ? rowURL.toString() : null %>">
@@ -83,11 +84,13 @@ List themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId());
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			name="active"
 			value='<%= LanguageUtil.get(request, (pluginSetting.isActive() ? "yes" : "no")) %>'
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			name="roles"
 			value="<%= HtmlUtil.escape(StringUtil.merge(pluginSetting.getRolesArray(), StringPool.COMMA_AND_SPACE)) %>"
 		/>

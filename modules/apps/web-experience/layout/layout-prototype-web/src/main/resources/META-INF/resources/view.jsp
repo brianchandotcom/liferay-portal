@@ -168,8 +168,8 @@
 				</c:when>
 				<c:when test="<%= layoutPrototypeDisplayContext.isListView() %>">
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
 						name="name"
-						truncate="<%= true %>"
 					>
 						<aui:a href="<%= layoutPrototypeGroup.getDisplayURL(themeDisplay, true) %>" target="_blank"><%= layoutPrototype.getName(locale) %></aui:a>
 
@@ -183,8 +183,8 @@
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
 						name="description"
-						truncate="<%= true %>"
 						value="<%= layoutPrototype.getDescription(locale) %>"
 					/>
 

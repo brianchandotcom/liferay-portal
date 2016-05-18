@@ -113,3 +113,21 @@ body {
 		width: auto;
 	}
 }
+
+.portlet-boundary_com_liferay_layout_prototype_web_portlet_LayoutPrototypePortlet_,
+.portlet-boundary_com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet_ {
+	.lfr-create-date-column {
+		white-space: nowrap;
+	}
+
+	.lfr-description-column {
+		max-width: 400px;
+		min-width: 400px;
+	}
+
+	.lfr-name-column {
+		max-width: 150px;
+		min-width: 150px;
+		width: 200px;
+	}
+}

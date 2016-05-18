@@ -14,6 +14,7 @@
 
 package com.liferay.portal.osgi.web.wab.generator.internal.artifact;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.osgi.web.wab.generator.internal.util.ManifestUtil;
 
 import java.io.File;
@@ -32,6 +33,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import org.apache.felix.fileinstall.ArtifactUrlTransformer;
+
+import org.osgi.framework.Constants;
 
 /**
  * @author Miguel Pastor
@@ -52,6 +55,19 @@ public class WarArtifactUrlTransformer implements ArtifactUrlTransformer {
 
 	@Override
 	public URL transform(URL artifact) throws Exception {
+		String path = artifact.getPath();
+
+		int x = path.lastIndexOf('/');
+		int y = path.lastIndexOf(".war");
+
+		String symbolicName = path.substring(x + 1, y);
+
+		Matcher matcher = _pattern.matcher(symbolicName);
+
+		if (matcher.matches()) {
+			symbolicName = matcher.group(1);
+		}
+
 		String contextName = null;
 
 		if ("file".equals(artifact.getProtocol())) {
@@ -75,24 +91,20 @@ public class WarArtifactUrlTransformer implements ArtifactUrlTransformer {
 		}
 
 		if (contextName == null) {
-			String path = artifact.getPath();
-
-			int x = path.lastIndexOf('/');
-			int y = path.lastIndexOf(".war");
-
-			contextName = path.substring(x + 1, y);
-
-			Matcher matcher = _pattern.matcher(contextName);
-
-			if (matcher.matches()) {
-				contextName = matcher.group(1);
-			}
+			contextName = symbolicName;
 		}
 
-		String pathWithQueryString =
-			artifact.getPath() + "?Web-ContextPath=/" + contextName;
+		StringBundler sb = new StringBundler(7);
 
-		URL url = new URL("file", null, pathWithQueryString);
+		sb.append(artifact.getPath());
+		sb.append("?Web-ContextPath=/");
+		sb.append(contextName);
+		sb.append("&");
+		sb.append(Constants.BUNDLE_SYMBOLICNAME);
+		sb.append("=");
+		sb.append(symbolicName);
+
+		URL url = new URL("file", null, sb.toString());
 
 		url = new URL("webbundle", null, url.toString());
 

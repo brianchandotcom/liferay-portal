@@ -586,14 +586,14 @@
 		<if>
 			<equals arg1="${dmRepositoryName}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#CHECKOUT_SUCCESS" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
 			</then>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#CHECKOUT_SUCCESS" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="DocumentsAndMediaDocument#TOOLBAR_CHECKIN_BUTTON" value1="Checkin" />
+		<execute function="AssertClick" locator1="MenuItem#CHECKIN" value1="Checkin" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -675,7 +675,7 @@
 	<command name="checkoutCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_ACTIONS" />
+		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#CHECKOUT" value1="Checkout" />
 
@@ -684,10 +684,10 @@
 		<if>
 			<equals arg1="${dmRepositoryName}" arg2="true" />
 			<then>
-				<execute function="AssertElementNotPresent" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" />
+				<execute function="AssertElementNotPresent" locator1="Message#CHECKOUT_SUCCESS" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#CHECKOUT_SUCCESS" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 			</else>
 		</if>
 	</command>
@@ -1634,7 +1634,7 @@
 
 	<command name="viewCheckedinCP">
 		<execute function="AssertVisible" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_VERSION" />
-		<execute function="AssertElementNotPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertElementNotPresent" locator1="Message#CHECKOUT_SUCCESS" />
 
 		<if>
 			<equals arg1="${dmRepositoryName}" arg2="true" />

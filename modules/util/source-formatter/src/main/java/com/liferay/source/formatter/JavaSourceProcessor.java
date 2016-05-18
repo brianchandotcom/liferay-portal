@@ -485,6 +485,118 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkUpgradeClass(
+		String fileName, String absolutePath, String className,
+		String content) {
+
+		if (!fileName.contains("/upgrade/")) {
+			return;
+		}
+
+		// LPS-41205
+
+		int pos = content.indexOf("LocaleUtil.getDefault()");
+
+		if (pos != -1) {
+			processErrorMessage(
+				fileName,
+				"Use UpgradeProcessUtil.getDefaultLanguageId(companyId) " +
+					"instead of LocaleUtil.getDefault(): " + fileName + " " +
+						getLineCount(content, pos));
+		}
+
+		pos = content.indexOf("rs.getDate(");
+
+		if (pos != -1) {
+			processErrorMessage(
+				fileName,
+				"Use rs.getTimeStamp: " + fileName + " " +
+					getLineCount(content, pos));
+		}
+
+		// LPS-34911
+
+		if (portalSource &&
+			!isExcludedPath(_upgradeServiceUtilExcludes, absolutePath) &&
+			fileName.contains("/portal/upgrade/") &&
+			!fileName.contains("/test/") &&
+			!fileName.contains("/testIntegration/")) {
+
+			pos = content.indexOf("ServiceUtil.");
+
+			if (pos != -1) {
+				processErrorMessage(fileName, "ServiceUtil: " + fileName + " " +
+					getLineCount(content, pos));
+			}
+		}
+
+		if (!fileName.endsWith("Upgrade.java")) {
+			return;
+		}
+
+		// LPS-59828
+
+		if (content.contains("implements UpgradeStepRegistrator")) {
+			Matcher matcher = _componentAnnotationPattern.matcher(content);
+
+			if (matcher.find()) {
+				String componentAnnotation = matcher.group();
+
+				if (!componentAnnotation.contains("service =")) {
+					processErrorMessage(
+						fileName, "Missing service in @Component " + fileName);
+				}
+			}
+		}
+
+		// LPS-65685
+
+		Matcher matcher1 = _registryRegisterPattern.matcher(content);
+
+		while (matcher1.find()) {
+			List<String> parametersList = getParameterList(
+				content.substring(matcher1.start()));
+
+			if (parametersList.size() <= 4) {
+				continue;
+			}
+
+			String previousUpgradeClassName = null;
+
+			for (int i = 3; i < parametersList.size(); i++) {
+				String parameter = parametersList.get(i);
+
+				Matcher matcher2 = _upgradeClassNamePattern.matcher(parameter);
+
+				if (!matcher2.find()) {
+					break;
+				}
+
+				String upgradeClassName = matcher2.group(1);
+
+				if ((previousUpgradeClassName != null) &&
+					(previousUpgradeClassName.compareTo(
+						upgradeClassName) > 0)) {
+
+					StringBundler sb = new StringBundler(6);
+
+					sb.append("LPS-65685: Break up Upgrade classes with a ");
+					sb.append("minor version increment or order ");
+					sb.append("alphabetically: ");
+					sb.append(fileName);
+					sb.append(StringPool.SPACE);
+					sb.append(getLineCount(content, matcher1.start()));
+
+					processErrorMessage(fileName, sb.toString());
+
+					break;
+				}
+
+				previousUpgradeClassName = upgradeClassName;
+			}
+		}
+	}
+
 	protected void checkVerifyUpgradeConnection(
 		String fileName, String className, String content) {
 
@@ -679,18 +791,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processErrorMessage(fileName, "ServiceUtil: " + fileName);
 		}
 
-		// LPS-34911
-
-		if (portalSource &&
-			!isExcludedPath(_upgradeServiceUtilExcludes, absolutePath) &&
-			fileName.contains("/portal/upgrade/") &&
-			!fileName.contains("/test/") &&
-			!fileName.contains("/testIntegration/") &&
-			newContent.contains("ServiceUtil.")) {
-
-			processErrorMessage(fileName, "ServiceUtil: " + fileName);
-		}
-
 		boolean isRunOutsidePortalExclusion = isExcludedPath(
 			getRunOutsidePortalExcludes(), absolutePath);
 
@@ -799,17 +899,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		checkSystemEventAnnotations(newContent, fileName);
 
-		// LPS-41205
-
-		if (fileName.contains("/upgrade/") &&
-			newContent.contains("LocaleUtil.getDefault()")) {
-
-			processErrorMessage(
-				fileName,
-				"Use UpgradeProcessUtil.getDefaultLanguageId(companyId) " +
-					"instead of LocaleUtil.getDefault(): " + fileName);
-		}
-
 		// LPS-46017
 
 		newContent = StringUtil.replace(
@@ -890,23 +979,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = checkPrincipalException(newContent);
 
-		// LPS-59828
-
-		if (fileName.endsWith("Upgrade.java") &&
-			newContent.contains("implements UpgradeStepRegistrator")) {
-
-			matcher = _componentAnnotationPattern.matcher(newContent);
-
-			if (matcher.find()) {
-				String componentAnnotation = matcher.group();
-
-				if (!componentAnnotation.contains("service =")) {
-					processErrorMessage(
-						fileName, "Missing service in @Component " + fileName);
-				}
-			}
-		}
-
 		// LPS-60473
 
 		if (newContent.contains(".supportsBatchUpdates()") &&
@@ -959,6 +1031,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-65213
 
 		checkVerifyUpgradeConnection(fileName, className, newContent);
+
+		checkUpgradeClass(fileName, absolutePath, className, newContent);
 
 		newContent = formatAssertEquals(fileName, newContent);
 
@@ -2261,14 +2335,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						fileName,
 						"Rename mapping to ActionMapping: " + fileName + " " +
 							lineCount);
-				}
-
-				if (fileName.contains("/upgrade/") &&
-					line.contains("rs.getDate(")) {
-
-					processErrorMessage(
-						fileName,
-						"Use rs.getTimeStamp: " + fileName + " " + lineCount);
 				}
 
 				if (!trimmedLine.equals("{") && line.endsWith("{") &&
@@ -4514,6 +4580,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"\\s*([ ,<>\\w]+)\\s+\\w+\\) \\{\\s+([\\s\\S]*?)\\s*?\n\t\\}\n");
 	private final Pattern _registryImportPattern = Pattern.compile(
 		"\nimport (com\\.liferay\\.registry\\..+);");
+	private final Pattern _registryRegisterPattern = Pattern.compile(
+		"registry\\.register\\((.*?)\\);\n", Pattern.DOTALL);
 	private List<String> _secureDeserializationExcludes;
 	private List<String> _secureRandomExcludes;
 	private List<String> _secureXmlExcludes;
@@ -4527,6 +4595,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private List<String> _testAnnotationsExcludes;
 	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
+	private final Pattern _upgradeClassNamePattern = Pattern.compile(
+		"new .*?(\\w+)\\(", Pattern.DOTALL);
 	private List<String> _upgradeDataAccessConnectionExcludes;
 	private List<String> _upgradeServiceUtilExcludes;
 

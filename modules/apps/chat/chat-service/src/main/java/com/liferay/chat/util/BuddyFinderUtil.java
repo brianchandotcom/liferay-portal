@@ -16,10 +16,15 @@ package com.liferay.chat.util;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Ankit Srivastava
+ * @author Peter Fellwock
  */
+@Component(immediate = true, service = BuddyFinderUtil.class)
 public class BuddyFinderUtil {
 
 	public static List<Object[]> getBuddies(long companyId, long userId) {
@@ -30,7 +35,8 @@ public class BuddyFinderUtil {
 		return _buddyFinder;
 	}
 
-	public void setBuddyFinder(BuddyFinder buddyFinder) {
+	@Reference(unbind = "-")
+	protected void setBuddyFinder(BuddyFinder buddyFinder) {
 		_buddyFinder = buddyFinder;
 	}
 

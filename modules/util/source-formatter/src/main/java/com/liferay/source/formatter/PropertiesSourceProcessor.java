@@ -53,9 +53,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		if (portalSource) {
 			return new String[] {
 				"**/Language.properties",
-				"**/modules/apps/**/liferay-plugin-package.properties",
-				"**/modules/private/apps/**/liferay-plugin-package.properties",
-				"**/portal.properties",
+				"**/liferay-plugin-package.properties", "**/portal.properties",
 				"**/portal-ext.properties", "**/portal-legacy-*.properties",
 				"**/portlet.properties", "**/source-formatter.properties"
 			};

@@ -141,18 +141,18 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 				</portlet:renderURL>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
 					href="<%= rowURL %>"
 					name="name"
 					property="name"
-					truncate="<%= true %>"
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
 					href="<%= rowURL %>"
 					name="description"
 					orderable="<%= true %>"
 					property="description"
-					truncate="<%= true %>"
 				/>
 
 				<liferay-ui:search-container-column-jsp

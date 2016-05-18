@@ -74,3 +74,26 @@ body {
 		width: 250px;
 	}
 }
+
+.portlet-boundary_com_liferay_password_policies_admin_web_portlet_PasswordPoliciesAdminPortlet_ {
+	.lfr-description-column {
+		max-width: 300px;
+		min-width: 300px;
+	}
+
+	.lfr-name-column,
+	.lfr-parent-organization-column,
+	.lfr-screen-name-column {
+		max-width: 175px;
+		min-width: 175px;
+		width: 250px;
+	}
+
+	.lfr-city-column,
+	.lfr-region-column {
+		@include sm {
+			max-width: 100px;
+			min-width: 100px;
+		}
+	}
+}

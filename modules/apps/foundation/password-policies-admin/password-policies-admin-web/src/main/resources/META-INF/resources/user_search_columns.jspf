@@ -89,16 +89,16 @@
 		</c:when>
 		<c:otherwise>
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="name"
-				truncate="<%= true %>"
 				value="<%= name %>"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="screen-name"
 				orderable="<%= true %>"
 				property="screenName"
-				truncate="<%= true %>"
 			/>
 		</c:otherwise>
 	</c:choose>

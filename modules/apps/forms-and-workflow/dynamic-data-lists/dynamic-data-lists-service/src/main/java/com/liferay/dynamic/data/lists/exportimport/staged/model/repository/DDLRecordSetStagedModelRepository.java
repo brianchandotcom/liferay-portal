@@ -205,7 +205,7 @@ public class DDLRecordSetStagedModelRepository
 
 			});
 
-			return exportActionableDynamicQuery;
+		return exportActionableDynamicQuery;
 	}
 
 	@Override

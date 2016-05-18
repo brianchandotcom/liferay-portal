@@ -118,7 +118,7 @@ else if (group != null) {
 	}
 	%>
 
-	<aui:input disabled="<%= disabled %>" helpMessage='<%= disabled ? "this-site-cannot-inherit-the-content-from-its-parent-site-since-the-parent-site-is-already-inheriting-the-content-from-its-parent" : StringPool.BLANK %>' name="inheritContent" value="<%= false %>" />
+	<aui:input disabled="<%= disabled %>" helpMessage='<%= disabled ? "this-site-cannot-inherit-the-content-from-its-parent-site-since-the-parent-site-is-already-inheriting-the-content-from-its-parent" : StringPool.BLANK %>' name="inheritContent" type="toggle-switch" value="<%= group.isInheritContent() %>" />
 </c:if>
 
 <h4 class="text-default"><liferay-ui:message key="membership-options" /></h4>

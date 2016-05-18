@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -53,9 +54,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		if (portalSource) {
 			return new String[] {
 				"**/Language.properties",
-				"**/modules/apps/**/liferay-plugin-package.properties",
-				"**/modules/private/apps/**/liferay-plugin-package.properties",
-				"**/portal.properties",
+				"**/liferay-plugin-package.properties", "**/portal.properties",
 				"**/portal-ext.properties", "**/portal-legacy-*.properties",
 				"**/portlet.properties", "**/source-formatter.properties"
 			};
@@ -174,7 +173,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			checkLanguageProperties(fileName);
 		}
 		else if (fileName.endsWith("liferay-plugin-package.properties")) {
-			newContent = formatPluginPackageProperties(fileName, content);
+			newContent = formatPluginPackageProperties(absolutePath, content);
 		}
 		else if (fileName.endsWith("portlet.properties")) {
 			newContent = formatPortletProperties(fileName, content);
@@ -192,6 +191,36 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected List<String> doGetFileNames() throws Exception {
 		return getFileNames(new String[0], getIncludes());
+	}
+
+	protected String fixIncorrectLicenses(String absolutePath, String content) {
+		if (!absolutePath.contains("/modules/apps/") &&
+			!absolutePath.contains("/modules/private/apps/")) {
+
+			return content;
+		}
+
+		Matcher matcher = _licensesPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String licenses = matcher.group(1);
+
+		String expectedLicenses = "LGPL";
+
+		if (absolutePath.contains("/modules/private/apps/")) {
+			expectedLicenses = "DXP";
+		}
+
+		if (licenses.equals(expectedLicenses)) {
+			return content;
+		}
+
+		return StringUtil.replace(
+			content, "licenses=" + licenses, "licenses=" + expectedLicenses,
+			matcher.start());
 	}
 
 	protected void formatDuplicateLanguageKeys() throws Exception {
@@ -261,29 +290,20 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatPluginPackageProperties(
-		String fileName, String content) {
+		String absolutePath, String content) {
 
-		Matcher matcher = _licensesPattern.matcher(content);
+		content = StringUtil.replace(content, "\n\n", "\n");
 
-		if (!matcher.find()) {
-			return content;
+		Matcher matcher = _singleValueOnMultipleLinesPattern.matcher(content);
+
+		if (matcher.find()) {
+			content = StringUtil.replaceFirst(
+				content, matcher.group(1), StringPool.BLANK, matcher.start());
 		}
 
-		String licenses = matcher.group(1);
+		content = sortDefinitions(content, new NaturalOrderStringComparator());
 
-		String expectedLicenses = "LGPL";
-
-		if (fileName.contains("modules/private/apps")) {
-			expectedLicenses = "DXP";
-		}
-
-		if (licenses.equals(expectedLicenses)) {
-			return content;
-		}
-
-		return StringUtil.replace(
-			content, "licenses=" + licenses, "licenses=" + expectedLicenses,
-			matcher.start());
+		return fixIncorrectLicenses(absolutePath, content);
 	}
 
 	protected void formatPortalProperties(String fileName, String content)
@@ -642,5 +662,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		"\nlicenses=(\\w+)\n");
 	private int _maxLineLength;
 	private String _portalPortalPropertiesContent;
+	private final Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
+		"\n.*=(\\\\\n *).*(\n[^ ]|\\Z)");
 
 }

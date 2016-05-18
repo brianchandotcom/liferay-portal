@@ -47,6 +47,7 @@ import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -2472,6 +2473,44 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			});
 	}
 
+	protected String sortDefinitions(
+		String content, Comparator<String> comparator) {
+
+		String previousDefinition = null;
+
+		Matcher matcher = _definitionPattern.matcher(content);
+
+		while (matcher.find()) {
+			String definition = matcher.group();
+
+			if (Validator.isNotNull(matcher.group(1))) {
+				definition = definition.substring(0, definition.length() - 1);
+			}
+
+			if (Validator.isNotNull(previousDefinition)) {
+				int value = comparator.compare(previousDefinition, definition);
+
+				if (value > 0) {
+					content = StringUtil.replaceFirst(
+						content, previousDefinition, definition);
+					content = StringUtil.replaceLast(
+						content, definition, previousDefinition);
+
+					return content;
+				}
+
+				if (value == 0) {
+					return StringUtil.replaceFirst(
+						content, previousDefinition + "\n", StringPool.BLANK);
+				}
+			}
+
+			previousDefinition = definition;
+		}
+
+		return content;
+	}
+
 	protected String sortHTMLAttributes(
 		String line, String value, String attributeAndValue) {
 
@@ -2838,6 +2877,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		new HashMap<>();
 	private Map<String, String> _compatClassNamesMap;
 	private String _copyright;
+	private final Pattern _definitionPattern = Pattern.compile(
+		"^[A-Za-z-][\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
 	private Map<String, List<String>> _errorMessagesMap =
 		new ConcurrentHashMap<>();
 	private String[] _excludes;

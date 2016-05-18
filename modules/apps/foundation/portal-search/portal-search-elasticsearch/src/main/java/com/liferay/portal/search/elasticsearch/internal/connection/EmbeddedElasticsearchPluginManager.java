@@ -14,20 +14,17 @@
 
 package com.liferay.portal.search.elasticsearch.internal.connection;
 
-import com.liferay.portal.search.elasticsearch.internal.util.ResourceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.File;
 import java.io.IOException;
 
-import java.net.URI;
-import java.net.URL;
+import java.nio.file.Path;
 
+import org.elasticsearch.Version;
 import org.elasticsearch.common.cli.Terminal;
 import org.elasticsearch.common.cli.Terminal.Verbosity;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.unit.TimeValue;
-import org.elasticsearch.env.Environment;
-import org.elasticsearch.plugins.PluginManager;
 
 /**
  * @author Artur Aquino
@@ -35,37 +32,108 @@ import org.elasticsearch.plugins.PluginManager;
  */
 public class EmbeddedElasticsearchPluginManager {
 
-	public static void installPlugin(
-			String pluginName, String resourceName, Class<?> clazz,
-			Settings settings)
-		throws IOException {
+	public EmbeddedElasticsearchPluginManager(
+		String pluginName, String pluginsPathString,
+		PluginManagerFactory pluginManagerFactory,
+		PluginZipFactory pluginZipFactory) {
 
-		File file = new File(settings.get("path.plugins"));
+		_pluginName = pluginName;
+		_pluginsPathString = pluginsPathString;
+		_pluginManagerFactory = pluginManagerFactory;
+		_pluginZipFactory = pluginZipFactory;
+	}
+
+	public void install() throws IOException {
+		if (isAlreadyInstalled()) {
+			return;
+		}
+
+		PluginZip pluginZip = createPluginZip();
+
+		try {
+			downloadAndExtract(pluginZip);
+		}
+		finally {
+			pluginZip.delete();
+		}
+	}
+
+	protected PluginZip createPluginZip() throws IOException {
+		String versionString = Version.CURRENT.toString();
+
+		String resourceName =
+			"/plugins/" + _pluginName + "-" + versionString + ".zip";
+
+		return _pluginZipFactory.createPluginZip(resourceName);
+	}
+
+	protected void downloadAndExtract(PluginZip pluginZip) throws IOException {
+		File file = new File(_pluginsPathString);
 
 		file.mkdirs();
 
-		File tempFile = ResourceUtil.getResourceAsTempFile(clazz, resourceName);
+		PluginManager pluginManager = _pluginManagerFactory.createPluginManager(
+			pluginZip);
+
+		Terminal terminal = Terminal.DEFAULT;
+
+		terminal.verbosity(Verbosity.SILENT);
 
 		try {
-			URI uri = tempFile.toURI();
-
-			URL url = uri.toURL();
-
-			PluginManager pluginManager = new PluginManager(
-				new Environment(settings), url, PluginManager.OutputMode.SILENT,
-				TimeValue.timeValueMinutes(1));
-
-			Terminal terminal = Terminal.DEFAULT;
-
-			terminal.verbosity(Verbosity.SILENT);
-
-			pluginManager.removePlugin(pluginName, terminal);
-
-			pluginManager.downloadAndExtract(pluginName, terminal, true);
+			pluginManager.downloadAndExtract(_pluginName, terminal, true);
 		}
-		finally {
-			tempFile.delete();
+		catch (IOException ioe) {
+			if (!handle(ioe)) {
+				throw ioe;
+			}
 		}
 	}
+
+	protected boolean handle(IOException ioe) {
+		String message = ioe.getMessage();
+
+		if (message == null) {
+			return false;
+		}
+
+		if (message.contains(
+				"already exists. To update the plugin, uninstall it first")) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Plugin " + _pluginName + " already installed. Skipping...",
+					ioe);
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isAlreadyInstalled() throws IOException {
+		PluginManager pluginManager =
+			_pluginManagerFactory.createPluginManager();
+
+		Path[] paths = pluginManager.getInstalledPluginsPaths();
+
+		if (paths != null) {
+			for (Path path : paths) {
+				if (path.endsWith(_pluginName)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EmbeddedElasticsearchPluginManager.class);
+
+	private final PluginManagerFactory _pluginManagerFactory;
+	private final String _pluginName;
+	private final String _pluginsPathString;
+	private final PluginZipFactory _pluginZipFactory;
 
 }

@@ -12,34 +12,22 @@
  * details.
  */
 
-package com.liferay.sync.hook.upgrade;
+package com.liferay.sync.upgrade.v1_0_2;
 
-import com.liferay.portal.kernel.upgrade.UpgradeException;
-import com.liferay.sync.service.SyncDLObjectLocalServiceUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Shinn Lok
  */
-public abstract class UpgradeProcess
-	extends com.liferay.portal.kernel.upgrade.UpgradeProcess {
+public class UpgradeSchema extends UpgradeProcess {
 
 	@Override
-	public void upgrade() throws UpgradeException {
-		try {
+	protected void doUpgrade() throws Exception {
+		String template = StringUtil.read(
+			UpgradeSchema.class.getResourceAsStream("dependencies/update.sql"));
 
-			// SYNC-1453
-
-			int count = SyncDLObjectLocalServiceUtil.getSyncDLObjectsCount();
-
-			if (count == 0) {
-				return;
-			}
-
-			super.upgrade();
-		}
-		catch (Exception e) {
-			throw new UpgradeException(e);
-		}
+		runSQLTemplateString(template, false, false);
 	}
 
 }

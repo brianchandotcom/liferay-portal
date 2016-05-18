@@ -12,17 +12,19 @@
  * details.
  */
 
-package com.liferay.sync.hook.upgrade.v1_0_2;
+package com.liferay.sync.upgrade.v1_0_2;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.sync.constants.SyncDLObjectConstants;
 import com.liferay.sync.model.SyncDLObject;
-import com.liferay.sync.model.SyncDLObjectConstants;
+import com.liferay.sync.service.SyncDLObjectLocalService;
 import com.liferay.sync.service.SyncDLObjectLocalServiceUtil;
 
 /**
@@ -31,19 +33,27 @@ import com.liferay.sync.service.SyncDLObjectLocalServiceUtil;
  */
 public class UpgradeSyncDLObject extends UpgradeProcess {
 
+	public UpgradeSyncDLObject(
+		SyncDLObjectLocalService syncDLObjectLocalService) {
+
+		_syncDLObjectLocalService = syncDLObjectLocalService;
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateColumn(
-			"DLFileEntry", "fileEntryId",
-			new String[] {
-				SyncDLObjectConstants.TYPE_FILE,
-				SyncDLObjectConstants.TYPE_PRIVATE_WORKING_COPY
-			});
-		updateColumn(
-			"DLFolder", "folderId",
-			new String[] {SyncDLObjectConstants.TYPE_FOLDER});
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			updateColumn(
+				"DLFileEntry", "fileEntryId",
+				new String[] {
+					SyncDLObjectConstants.TYPE_FILE,
+					SyncDLObjectConstants.TYPE_PRIVATE_WORKING_COPY
+				});
+			updateColumn(
+				"DLFolder", "folderId",
+				new String[] {SyncDLObjectConstants.TYPE_FOLDER});
 
-		upgradeTrashEvents();
+			upgradeTrashEvents();
+		}
 	}
 
 	protected void updateColumn(
@@ -77,7 +87,7 @@ public class UpgradeSyncDLObject extends UpgradeProcess {
 
 	protected void upgradeTrashEvents() throws Exception {
 		ActionableDynamicQuery actionableDynamicQuery =
-			SyncDLObjectLocalServiceUtil.getActionableDynamicQuery();
+			_syncDLObjectLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
@@ -108,5 +118,7 @@ public class UpgradeSyncDLObject extends UpgradeProcess {
 
 		actionableDynamicQuery.performActions();
 	}
+
+	private final SyncDLObjectLocalService _syncDLObjectLocalService;
 
 }

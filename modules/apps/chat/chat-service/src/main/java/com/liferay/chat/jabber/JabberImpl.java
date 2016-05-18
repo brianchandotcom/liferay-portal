@@ -14,10 +14,11 @@
 
 package com.liferay.chat.jabber;
 
+import com.liferay.chat.configuration.ChatGroupServiceConfiguration;
 import com.liferay.chat.model.Status;
 import com.liferay.chat.service.StatusLocalServiceUtil;
-import com.liferay.chat.util.PortletPropsValues;
 import com.liferay.chat.util.comparator.BuddyComparator;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ContactConstants;
@@ -54,9 +55,19 @@ import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Presence;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
+
 /**
  * @author Bruno Farache
  */
+@Component(
+	configurationPid = "ccom.liferay.chat.configuration.ChatConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = Jabber.class
+)
 public class JabberImpl implements Jabber {
 
 	@Override
@@ -115,7 +126,7 @@ public class JabberImpl implements Jabber {
 
 			Collection<RosterEntry> rosterEntries = roster.getEntries();
 
-			if (PortletPropsValues.JABBER_IMPORT_USER_ENABLED) {
+			if (_chatGroupServiceConfiguration.jabberImportUserEnabled()) {
 				for (Object[] buddy : buddies) {
 					String firstName = (String)buddy[1];
 					String lastName = (String)buddy[3];
@@ -187,7 +198,7 @@ public class JabberImpl implements Jabber {
 			if (Validator.isNotNull(message1) &&
 				message1.contains("not-authorized")) {
 
-				if (!PortletPropsValues.JABBER_IMPORT_USER_ENABLED) {
+				if (!_chatGroupServiceConfiguration.jabberImportUserEnabled()) {
 					if (_log.isDebugEnabled()) {
 						_log.debug(
 							"User " + userId + " cannot connect to Jabber");
@@ -265,7 +276,8 @@ public class JabberImpl implements Jabber {
 				String resource = getResource(from);
 
 				if (StringUtil.equalsIgnoreCase(
-						resource, PortletPropsValues.JABBER_RESOURCE)) {
+						resource,
+						_chatGroupServiceConfiguration.jabberResource())) {
 
 					continue;
 				}
@@ -296,7 +308,7 @@ public class JabberImpl implements Jabber {
 
 	@Override
 	public void updatePassword(long userId, String password) {
-		if (!PortletPropsValues.JABBER_IMPORT_USER_ENABLED ||
+		if (!_chatGroupServiceConfiguration.jabberImportUserEnabled() ||
 			(password == null)) {
 
 			return;
@@ -321,6 +333,13 @@ public class JabberImpl implements Jabber {
 	@Override
 	public void updateStatus(long userId, int online) {
 		updateStatus(userId, online, null);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_chatGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
+			ChatGroupServiceConfiguration.class, properties);
 	}
 
 	protected Connection connect() throws Exception {
@@ -350,7 +369,8 @@ public class JabberImpl implements Jabber {
 		User user = UserLocalServiceUtil.getUserById(userId);
 
 		connection.login(
-			user.getScreenName(), password, PortletPropsValues.JABBER_RESOURCE);
+			user.getScreenName(), password,
+			_chatGroupServiceConfiguration.jabberResource());
 
 		Status status = StatusLocalServiceUtil.getUserStatus(userId);
 
@@ -381,7 +401,7 @@ public class JabberImpl implements Jabber {
 			return _connectionConfiguration;
 		}
 
-		String jabberHost = PortletPropsValues.JABBER_HOST;
+		String jabberHost = _chatGroupServiceConfiguration.jabberHost();
 
 		if (!Validator.isIPAddress(jabberHost)) {
 			InetAddress inetAddress = InetAddress.getByName(jabberHost);
@@ -390,15 +410,15 @@ public class JabberImpl implements Jabber {
 		}
 
 		_connectionConfiguration = new ConnectionConfiguration(
-			jabberHost, PortletPropsValues.JABBER_PORT,
-			PortletPropsValues.JABBER_SERVICE_NAME);
+			jabberHost, _chatGroupServiceConfiguration.jabberPort(),
+			_chatGroupServiceConfiguration.jabberServiceName());
 
 		_connectionConfiguration.setSendPresence(false);
 
 		SmackConfiguration.setLocalSocks5ProxyEnabled(
-			PortletPropsValues.JABBER_SOCK5_PROXY_ENABLED);
+			_chatGroupServiceConfiguration.jabberSock5ProxyEnabled());
 		SmackConfiguration.setLocalSocks5ProxyPort(
-			PortletPropsValues.JABBER_SOCK5_PROXY_PORT);
+			_chatGroupServiceConfiguration.jabberSock5ProxyPort());
 
 		return _connectionConfiguration;
 	}
@@ -407,12 +427,12 @@ public class JabberImpl implements Jabber {
 		String jabberId = getJabberId(screenName);
 
 		return jabberId.concat(StringPool.SLASH).concat(
-			PortletPropsValues.JABBER_RESOURCE);
+			_chatGroupServiceConfiguration.jabberResource());
 	}
 
 	protected String getJabberId(String screenName) {
 		return screenName.concat(StringPool.AT).concat(
-			PortletPropsValues.JABBER_SERVICE_NAME);
+			_chatGroupServiceConfiguration.jabberResource());
 	}
 
 	protected void importUser(long userId, String password) throws Exception {
@@ -478,6 +498,7 @@ public class JabberImpl implements Jabber {
 
 	private static final Log _log = LogFactoryUtil.getLog(JabberImpl.class);
 
+	private ChatGroupServiceConfiguration _chatGroupServiceConfiguration;
 	private ConnectionConfiguration _connectionConfiguration;
 	private final Map<Long, Connection> _connections = new HashMap<>();
 	private final Set<Long> _onlineUserIds = new HashSet<>();

@@ -295,7 +295,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		Matcher matcher = _singleValueOnMultipleLinesPattern.matcher(content);
 
-		while (matcher.find()) {
+		if (matcher.find()) {
 			content = StringUtil.replaceFirst(
 				content, matcher.group(1), StringPool.BLANK, matcher.start());
 		}

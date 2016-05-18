@@ -160,14 +160,14 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 		Matcher matcher = _incorrectTabPattern.matcher(content);
 
-		while (matcher.find()) {
+		if (matcher.find()) {
 			content = StringUtil.replaceFirst(
 				content, matcher.group(1), StringPool.TAB, matcher.start());
 		}
 
 		matcher = _singleValueOnMultipleLinesPattern.matcher(content);
 
-		while (matcher.find()) {
+		if (matcher.find()) {
 			content = StringUtil.replaceFirst(
 				content, matcher.group(1), StringPool.SPACE, matcher.start());
 		}

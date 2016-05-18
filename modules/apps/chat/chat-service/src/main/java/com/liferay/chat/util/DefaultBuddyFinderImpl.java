@@ -14,18 +14,32 @@
 
 package com.liferay.chat.util;
 
+import com.liferay.chat.configuration.ChatGroupServiceConfiguration;
 import com.liferay.chat.jabber.JabberUtil;
 import com.liferay.chat.service.StatusLocalServiceUtil;
 import com.liferay.chat.util.comparator.BuddyComparator;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Ankit Srivastava
  * @author Tibor Lipusz
+ * @author Peter Fellwock
  */
+@Component(
+		configurationPid = "ccom.liferay.chat.configuration.ChatConfiguration",
+		configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+		service = BuddyFinder.class
+	)
 public class DefaultBuddyFinderImpl implements BuddyFinder {
 
 	@Override
@@ -34,45 +48,49 @@ public class DefaultBuddyFinderImpl implements BuddyFinder {
 			System.currentTimeMillis() - ChatConstants.ONLINE_DELTA;
 
 		List<Object[]> buddies = null;
+		
+		String buddyListStrategy = 
+			_chatGroupServiceConfiguration.buddyListStrategy();
 
-		if (PortletPropsValues.BUDDY_LIST_STRATEGY.equals("all")) {
+		if (buddyListStrategy.equals("all")) {
 			buddies = StatusLocalServiceUtil.getAllStatuses(
 				companyId, userId, modifiedDate, 0,
-				PortletPropsValues.BUDDY_LIST_MAX_BUDDIES);
+				_chatGroupServiceConfiguration.buddyListMaxBuddies());
 		}
-		else if (PortletPropsValues.BUDDY_LIST_STRATEGY.equals("communities") ||
-				 PortletPropsValues.BUDDY_LIST_STRATEGY.equals("sites")) {
+		else if (buddyListStrategy.equals("communities") ||
+			buddyListStrategy.equals("sites")) {
 
 			buddies = StatusLocalServiceUtil.getGroupStatuses(
 				userId, modifiedDate,
-				PortletPropsValues.BUDDY_LIST_SITE_EXCLUDES, 0,
-				PortletPropsValues.BUDDY_LIST_MAX_BUDDIES);
+				_chatGroupServiceConfiguration.buddyListSiteExcludes(), 0,
+				_chatGroupServiceConfiguration.buddyListMaxBuddies());
 		}
-		else if (PortletPropsValues.BUDDY_LIST_STRATEGY.equals("friends") ||
-				 PortletPropsValues.BUDDY_LIST_STRATEGY.equals("social")) {
+		else if (buddyListStrategy.equals("friends") ||
+			buddyListStrategy.equals("social")) {
 
 			buddies = StatusLocalServiceUtil.getSocialStatuses(
 				userId,
-				PortletPropsValues.BUDDY_LIST_ALLOWED_SOCIAL_RELATION_TYPES,
-				modifiedDate, 0, PortletPropsValues.BUDDY_LIST_MAX_BUDDIES);
+				_chatGroupServiceConfiguration
+					.buddyListAllowedSocialRelationTypes(),
+				modifiedDate, 0, 
+				_chatGroupServiceConfiguration.buddyListMaxBuddies());
 		}
-		else if (PortletPropsValues.BUDDY_LIST_STRATEGY.equals(
-					"communities,friends") ||
-				 PortletPropsValues.BUDDY_LIST_STRATEGY.equals(
-					 "sites,social") ||
-				 PortletPropsValues.BUDDY_LIST_STRATEGY.equals(
-					 "friends,sites")) {
+		else if (buddyListStrategy.equals("communities,friends") ||
+			buddyListStrategy.equals("sites,social") ||
+			buddyListStrategy.equals("friends,sites")) {
 
 			List<Object[]> groupBuddies =
 				StatusLocalServiceUtil.getGroupStatuses(
 					userId, modifiedDate,
-					PortletPropsValues.BUDDY_LIST_SITE_EXCLUDES, 0,
-					PortletPropsValues.BUDDY_LIST_MAX_BUDDIES);
+					_chatGroupServiceConfiguration.buddyListSiteExcludes(), 0,
+					_chatGroupServiceConfiguration.buddyListMaxBuddies());
 			List<Object[]> socialBuddies =
 				StatusLocalServiceUtil.getSocialStatuses(
 					userId,
-					PortletPropsValues.BUDDY_LIST_ALLOWED_SOCIAL_RELATION_TYPES,
-					modifiedDate, 0, PortletPropsValues.BUDDY_LIST_MAX_BUDDIES);
+					_chatGroupServiceConfiguration
+						.buddyListAllowedSocialRelationTypes(),
+					modifiedDate, 0,
+					_chatGroupServiceConfiguration.buddyListMaxBuddies());
 
 			buddies = new ArrayList<>(
 				groupBuddies.size() + socialBuddies.size());
@@ -99,5 +117,14 @@ public class DefaultBuddyFinderImpl implements BuddyFinder {
 
 		return buddies;
 	}
+	
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_chatGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
+			ChatGroupServiceConfiguration.class, properties);
+	}
+	
+	private ChatGroupServiceConfiguration _chatGroupServiceConfiguration;
 
 }

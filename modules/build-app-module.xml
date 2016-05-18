@@ -234,6 +234,7 @@
 		<exec dir="${modules.dir}" executable="${modules.dir}/../gradlew${gradlew.suffix}">
 			<arg value="${gradle.project.path}:deployDependencies" />
 			<arg value="-Ddeploy.dependencies.keep.versions=true" />
+			<arg value="-Dforced.cache.enabled=true" />
 			<arg value="-Pforced.deploy.dir=${artifact.dependencies.tmp.dir}" />
 		</exec>
 
@@ -274,6 +275,7 @@
 	<target if="artifact.deploy.dependencies" name="reset-artifact-dependencies">
 		<exec dir="${modules.dir}" executable="${modules.dir}/../gradlew${gradlew.suffix}">
 			<arg value="${gradle.project.path}:deployDependencies" />
+			<arg value="-Dforced.cache.enabled=true" />
 		</exec>
 	</target>
 </project>

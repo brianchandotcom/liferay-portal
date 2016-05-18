@@ -243,7 +243,7 @@
 			<chainedmapper>
 				<flattenmapper />
 
-				<regexpmapper from="^(.+?)-(\d.*?)\.jar$" to="\1.jar" />
+				<regexpmapper from="^(.+?)-\d.*?\.jar$" to="\1.jar" />
 			</chainedmapper>
 		</pathconvert>
 

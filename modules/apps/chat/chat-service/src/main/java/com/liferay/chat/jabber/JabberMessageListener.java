@@ -14,10 +14,12 @@
 
 package com.liferay.chat.jabber;
 
+import com.liferay.chat.configuration.ChatGroupServiceConfiguration;
 import com.liferay.chat.service.EntryLocalServiceUtil;
-import com.liferay.chat.util.PortletPropsValues;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,12 +30,22 @@ import org.jivesoftware.smack.packet.Message;
 
 /**
  * @author Bruno Farache
+ * @author Peter Fellwock
  */
 public class JabberMessageListener implements MessageListener {
 
 	public JabberMessageListener(long companyId, long userId) {
 		_companyId = companyId;
 		_userId = userId;
+		
+		try {
+			_chatGroupServiceConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					ChatGroupServiceConfiguration.class, _companyId);
+		}
+		catch (ConfigurationException e) {
+			_log.error("Unable to load ChatGroupServiceConfiguration", e);
+		}
 	}
 
 	@Override
@@ -49,8 +61,11 @@ public class JabberMessageListener implements MessageListener {
 
 			String resource = JabberUtil.getResource(from);
 
+
+			
 			if (StringUtil.equalsIgnoreCase(
-					resource, PortletPropsValues.JABBER_RESOURCE)) {
+					resource, 
+					_chatGroupServiceConfiguration.jabberResource())) {
 
 				return;
 			}
@@ -70,5 +85,7 @@ public class JabberMessageListener implements MessageListener {
 
 	private final long _companyId;
 	private final long _userId;
+	
+	private ChatGroupServiceConfiguration _chatGroupServiceConfiguration;
 
 }

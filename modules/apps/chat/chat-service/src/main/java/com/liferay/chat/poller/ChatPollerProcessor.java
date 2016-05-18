@@ -14,14 +14,15 @@
 
 package com.liferay.chat.poller;
 
+import com.liferay.chat.configuration.ChatGroupServiceConfiguration;
 import com.liferay.chat.model.Entry;
 import com.liferay.chat.model.Status;
 import com.liferay.chat.service.EntryLocalServiceUtil;
 import com.liferay.chat.service.StatusLocalServiceUtil;
 import com.liferay.chat.util.BuddyFinderUtil;
 import com.liferay.chat.util.ChatConstants;
-import com.liferay.chat.util.PortletPropsValues;
 import com.liferay.chat.web.constants.ChatPortletKeys;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -46,15 +47,20 @@ import com.liferay.portal.kernel.util.Time;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Peter Fellwock
  */
 @Component(
-		immediate = true,
+		configurationPid = "ccom.liferay.chat.configuration.ChatConfiguration",
+		configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 		property = {"javax.portlet.name=" + ChatPortletKeys.CHAT},
 		service = PollerProcessor.class
 	)
@@ -176,7 +182,7 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 
 		List<Entry> entries = EntryLocalServiceUtil.getNewEntries(
 			pollerRequest.getUserId(), createDate, 0,
-			PortletPropsValues.BUDDY_LIST_MAX_BUDDIES);
+			_chatGroupServiceConfiguration.buddyListMaxBuddies());
 
 		entries = ListUtil.copy(entries);
 
@@ -259,5 +265,14 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 				activePanelIds, statusMessage, playSound);
 		}
 	}
+	
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_chatGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
+			ChatGroupServiceConfiguration.class, properties);
+	}
+	
+	private ChatGroupServiceConfiguration _chatGroupServiceConfiguration;
 
 }

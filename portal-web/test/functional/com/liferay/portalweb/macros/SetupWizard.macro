@@ -210,7 +210,7 @@
 			<else>
 				<execute function="AssertTextEquals#assertValue" locator1="TextInput#PORTAL_NAME" value1="Liferay" />
 			</else>
-		</if>		
+		</if>
 	</command>
 
 	<command name="viewSampleDataAddedInConsole">

@@ -68,7 +68,7 @@ List<SocialRequest> requests = (List<SocialRequest>)request.getAttribute(SocialR
 							</c:if>
 
 							<liferay-ui:icon-list>
-								<portlet:actionURL name="/update_request" var="confirmRequestURL">
+								<portlet:actionURL name="/requests/update_request" var="confirmRequestURL">
 									<portlet:param name="redirect" value="<%= currentURL %>" />
 									<portlet:param name="requestId" value="<%= String.valueOf(socialRequest.getRequestId()) %>" />
 									<portlet:param name="status" value="<%= String.valueOf(SocialRequestConstants.STATUS_CONFIRM) %>" />

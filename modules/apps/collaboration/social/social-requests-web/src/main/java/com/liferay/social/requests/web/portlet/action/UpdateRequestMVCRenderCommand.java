@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SocialRequestsPortletKeys.REQUESTS,
-		"mvc.command.name=/update_request"
+		"mvc.command.name=/requests/update_request"
 	},
 	service = MVCActionCommand.class
 )

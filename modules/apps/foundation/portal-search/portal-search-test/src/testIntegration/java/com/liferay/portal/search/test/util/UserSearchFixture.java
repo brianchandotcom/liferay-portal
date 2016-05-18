@@ -43,21 +43,23 @@ public class UserSearchFixture {
 		return group;
 	}
 
-	public void addUser(Group group, String... assetTagNames) throws Exception {
-		User user = UserTestUtil.addUser(group.getGroupId());
+	public User addUser(Group group, String... assetTagNames) throws Exception {
+		User user1 = UserTestUtil.addUser(group.getGroupId());
 
-		_users.add(user);
+		_users.add(user1);
 
 		ServiceContext serviceContext = getServiceContext(group);
 
 		serviceContext.setAssetTagNames(assetTagNames);
 
-		UserTestUtil.updateUser(user, serviceContext);
+		User user2 = UserTestUtil.updateUser(user1, serviceContext);
 
 		List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(
-			user.getModelClassName(), user.getPrimaryKey());
+			user2.getModelClassName(), user2.getPrimaryKey());
 
 		_assetTags.addAll(assetTags);
+
+		return user2;
 	}
 
 	public List<AssetTag> getAssetTags() {

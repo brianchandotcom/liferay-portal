@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.upgrade;
 
+import com.liferay.portal.kernel.dao.db.DBMetadata;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -37,7 +38,9 @@ public abstract class BaseUpgradeLastPublishDate extends UpgradeProcess {
 
 	protected void addLastPublishDateColumn(String tableName) throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
-			if (hasColumn(tableName, "lastPublishDate")) {
+			DBMetadata dbMetadata = new DBMetadata(connection);
+
+			if (dbMetadata.hasColumn(tableName, "lastPublishDate")) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Table " + tableName +

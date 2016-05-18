@@ -210,9 +210,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbTitle, currentURL);
 			%>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				href="<%= rowURL %>"
 				name="title"
-				truncate="<%= true %>"
 				value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
 			/>
 
@@ -225,9 +225,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbTitle, currentURL);
 			</c:if>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				href="<%= rowURL %>"
 				name="description"
-				truncate="<%= true %>"
 				value="<%= HtmlUtil.escape(role.getDescription(locale)) %>"
 			/>
 

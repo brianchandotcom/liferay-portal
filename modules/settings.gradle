@@ -1,7 +1,7 @@
 FileTree modulesFileTree
 
 if (Boolean.getBoolean("portal.build")) {
-	modulesFileTree = fileTree(dir: rootDir, include: "*/**/portal.build")
+	modulesFileTree = fileTree(dir: rootDir, include: "*/**/.lfrbuild-portal")
 }
 else {
 	modulesFileTree = fileTree(rootDir) {

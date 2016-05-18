@@ -223,7 +223,7 @@
 			<path>
 				<dirset dir="${basedir}" excludes="**/*-test*" includes="apps/${app.name}/**">
 					<present targetdir="${basedir}">
-						<mapper from="*" to="*/portal.build" type="glob" />
+						<mapper from="*" to="*/.lfrbuild-portal" type="glob" />
 					</present>
 				</dirset>
 			</path>

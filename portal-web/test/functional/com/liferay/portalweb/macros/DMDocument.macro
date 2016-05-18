@@ -2097,12 +2097,6 @@
 		<execute function="AssertVisible" locator1="DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED" />
 	</command>
 
-	<command name="viewIconNotLockedCP">
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
-
-		<execute function="AssertVisible" locator1="DocumentsAndMedia#ICON_DOCUMENT_ICON_NOT_LOCKED" />
-	</command>
-
 	<command name="viewMovedToFolderCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 		<var name="key_dmFolderName" value="${dmFolderName}" />

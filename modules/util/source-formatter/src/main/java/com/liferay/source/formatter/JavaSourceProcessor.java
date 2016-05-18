@@ -2491,7 +2491,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						(previousLine.endsWith(
 							StringPool.OPEN_PARENTHESIS) &&
 						 line.contains(" throws ") &&
-						 line.endsWith(StringPool.OPEN_CURLY_BRACE))) {
+						 (line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
+						  line.endsWith(StringPool.SEMICOLON)))) {
 
 						processErrorMessage(
 							fileName,

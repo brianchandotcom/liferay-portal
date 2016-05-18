@@ -115,8 +115,8 @@ public interface DDMStructureManager {
 			DDMForm ddmForm, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void updateStructureDefinition(
-		long structureId, String definition) throws PortalException;
+	public void updateStructureDefinition(long structureId, String definition)
+		throws PortalException;
 
 	public void updateStructureKey(long structureId, String structureKey)
 		throws PortalException;

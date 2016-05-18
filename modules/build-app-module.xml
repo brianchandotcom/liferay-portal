@@ -214,7 +214,7 @@
 	</target>
 
 	<target depends="get-artifact-properties" name="move-artifact" unless="osgi.static">
-		<move failonerror="false" file="${artifact.location.src}" tofile="${artifact.location.dest}" />
+		<move file="${artifact.location.src}" tofile="${artifact.location.dest}" />
 	</target>
 
 	<target

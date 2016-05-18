@@ -41,7 +41,7 @@ public abstract class BaseExportProcessCommand implements ExportProcessCommand {
 	}
 
 	@Override
-	public void execute() throws IOException {
+	public void export() throws IOException {
 		String outputFileName = getOutputFileName();
 
 		File outputFile = new File(

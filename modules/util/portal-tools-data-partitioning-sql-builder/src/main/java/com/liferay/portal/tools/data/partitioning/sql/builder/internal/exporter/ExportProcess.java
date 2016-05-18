@@ -48,20 +48,20 @@ public class ExportProcess {
 					companyId, _dbExporter, partitionedTableNames,
 					exportContext);
 
-			deleteExportProcessCommand.execute();
+			deleteExportProcessCommand.export();
 
 			ExportProcessCommand insertPartitionedExportProcessCommand =
 				new InsertPartitionedExportProcessCommand(
 					companyId, _dbExporter, partitionedTableNames,
 					exportContext);
 
-			insertPartitionedExportProcessCommand.execute();
+			insertPartitionedExportProcessCommand.export();
 
 			ExportProcessCommand insertControlExportProcessCommand =
 				new InsertControlExportProcessCommand(
 					companyId, _dbExporter, controlTableNames, exportContext);
 
-			insertControlExportProcessCommand.execute();
+			insertControlExportProcessCommand.export();
 		}
 	}
 

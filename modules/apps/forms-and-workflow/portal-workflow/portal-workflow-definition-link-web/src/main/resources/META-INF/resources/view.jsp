@@ -39,14 +39,14 @@ WorkflowDefinitionLinkSearch workflowDefinitionLinkSearchContainer = workflowDef
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="resource"
-				truncate="<%= true %>"
 				value="<%= workflowDefinitionLinkSearchEntry.getResource() %>"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="workflow"
-				truncate="<%= true %>"
 				value="<%= workflowDefinitionLinkSearchEntry.getWorkflowDefinitionLabel() %>"
 			/>
 

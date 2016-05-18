@@ -126,14 +126,14 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 			modelVar="workflowDefinition"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="name"
-				truncate="<%= true %>"
 				value="<%= workflowDefinitionDisplayContext.getName(workflowDefinition) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="title"
-				truncate="<%= true %>"
 				value="<%= workflowDefinitionDisplayContext.getTitle(workflowDefinition) %>"
 			/>
 

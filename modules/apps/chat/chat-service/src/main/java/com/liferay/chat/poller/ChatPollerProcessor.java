@@ -21,6 +21,7 @@ import com.liferay.chat.service.StatusLocalServiceUtil;
 import com.liferay.chat.util.BuddyFinderUtil;
 import com.liferay.chat.util.ChatConstants;
 import com.liferay.chat.util.PortletPropsValues;
+import com.liferay.chat.web.constants.ChatPortletKeys;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.poller.BasePollerProcessor;
+import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.poller.PollerRequest;
 import com.liferay.portal.kernel.poller.PollerResponse;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -45,9 +47,17 @@ import com.liferay.portal.kernel.util.Time;
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
+@Component(
+		immediate = true,
+		property = {"javax.portlet.name=" + ChatPortletKeys.CHAT},
+		service = PollerProcessor.class
+	)
 public class ChatPollerProcessor extends BasePollerProcessor {
 
 	protected void addEntry(PollerRequest pollerRequest) throws Exception {

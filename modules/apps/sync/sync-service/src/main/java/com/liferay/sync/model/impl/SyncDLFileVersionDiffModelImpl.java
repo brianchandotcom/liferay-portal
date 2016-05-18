@@ -88,13 +88,13 @@ public class SyncDLFileVersionDiffModelImpl extends BaseModelImpl<SyncDLFileVers
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.sync.service.util.ServiceProps.get(
 				"value.object.entity.cache.enabled.com.liferay.sync.model.SyncDLFileVersionDiff"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.sync.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.sync.model.SyncDLFileVersionDiff"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.sync.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.sync.model.SyncDLFileVersionDiff"),
 			true);
 	public static final long EXPIRATIONDATE_COLUMN_BITMASK = 1L;
@@ -102,7 +102,7 @@ public class SyncDLFileVersionDiffModelImpl extends BaseModelImpl<SyncDLFileVers
 	public static final long SOURCEFILEVERSIONID_COLUMN_BITMASK = 4L;
 	public static final long TARGETFILEVERSIONID_COLUMN_BITMASK = 8L;
 	public static final long SYNCDLFILEVERSIONDIFFID_COLUMN_BITMASK = 16L;
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.sync.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.sync.model.SyncDLFileVersionDiff"));
 
 	public SyncDLFileVersionDiffModelImpl() {

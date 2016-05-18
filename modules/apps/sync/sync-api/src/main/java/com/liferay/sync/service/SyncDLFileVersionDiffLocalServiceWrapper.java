@@ -176,14 +176,6 @@ public class SyncDLFileVersionDiffLocalServiceWrapper
 		return _syncDLFileVersionDiffLocalService.getSyncDLFileVersionDiffsCount();
 	}
 
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _syncDLFileVersionDiffLocalService.invokeMethod(name,
-			parameterTypes, arguments);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*

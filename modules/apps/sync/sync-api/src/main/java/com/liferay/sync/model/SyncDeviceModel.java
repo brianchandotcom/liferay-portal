@@ -287,19 +287,19 @@ public interface SyncDeviceModel extends BaseModel<SyncDevice>, ShardedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(SyncDevice syncDevice);
+	public int compareTo(com.liferay.sync.model.SyncDevice syncDevice);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<SyncDevice> toCacheModel();
+	public CacheModel<com.liferay.sync.model.SyncDevice> toCacheModel();
 
 	@Override
-	public SyncDevice toEscapedModel();
+	public com.liferay.sync.model.SyncDevice toEscapedModel();
 
 	@Override
-	public SyncDevice toUnescapedModel();
+	public com.liferay.sync.model.SyncDevice toUnescapedModel();
 
 	@Override
 	public String toString();

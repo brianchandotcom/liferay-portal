@@ -117,16 +117,6 @@ public class SyncDLFileVersionDiffWrapper implements SyncDLFileVersionDiff,
 	}
 
 	@Override
-	public SyncDLFileVersionDiff toEscapedModel() {
-		return new SyncDLFileVersionDiffWrapper(_syncDLFileVersionDiff.toEscapedModel());
-	}
-
-	@Override
-	public SyncDLFileVersionDiff toUnescapedModel() {
-		return new SyncDLFileVersionDiffWrapper(_syncDLFileVersionDiff.toUnescapedModel());
-	}
-
-	@Override
 	public boolean isCachedModel() {
 		return _syncDLFileVersionDiff.isCachedModel();
 	}
@@ -147,12 +137,23 @@ public class SyncDLFileVersionDiffWrapper implements SyncDLFileVersionDiff,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<SyncDLFileVersionDiff> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<com.liferay.sync.model.SyncDLFileVersionDiff> toCacheModel() {
 		return _syncDLFileVersionDiff.toCacheModel();
 	}
 
 	@Override
-	public int compareTo(SyncDLFileVersionDiff syncDLFileVersionDiff) {
+	public com.liferay.sync.model.SyncDLFileVersionDiff toEscapedModel() {
+		return new SyncDLFileVersionDiffWrapper(_syncDLFileVersionDiff.toEscapedModel());
+	}
+
+	@Override
+	public com.liferay.sync.model.SyncDLFileVersionDiff toUnescapedModel() {
+		return new SyncDLFileVersionDiffWrapper(_syncDLFileVersionDiff.toUnescapedModel());
+	}
+
+	@Override
+	public int compareTo(
+		com.liferay.sync.model.SyncDLFileVersionDiff syncDLFileVersionDiff) {
 		return _syncDLFileVersionDiff.compareTo(syncDLFileVersionDiff);
 	}
 

@@ -1,6 +1,6 @@
 import com.liferay.gradle.util.copy.RenameDependencyClosure
 
-task deploy(type: Copy, overwrite: true)
+task deployDependencies(type: Copy)
 
 dependencies {
 	provided group: "com.liferay", name: "javax.servlet.jsp.jstl", transitive: false, version: "1.2.3.LIFERAY-PATCHED-2"
@@ -27,6 +27,13 @@ dependencies {
 }
 
 deploy {
+	deleteAllActions()
+
+	dependsOn = []
+	finalizedBy deployDependencies
+}
+
+deployDependencies {
 	ext {
 		autoClean = false
 	}

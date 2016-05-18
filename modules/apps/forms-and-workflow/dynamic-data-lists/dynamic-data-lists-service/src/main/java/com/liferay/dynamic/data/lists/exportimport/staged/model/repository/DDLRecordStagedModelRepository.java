@@ -258,13 +258,7 @@ public class DDLRecordStagedModelRepository
 		return recordVersionDynamicQuery;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDLRecordLocalService(
-		DDLRecordLocalService ddlRecordLocalService) {
-
-		_ddlRecordLocalService = ddlRecordLocalService;
-	}
-
+	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;
 
 }

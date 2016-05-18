@@ -177,6 +177,17 @@ public class DDLRecordStagedModelDataHandler
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
 	}
 
+	@Reference(
+		target =
+			"(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord)",
+		unbind = "-"
+	)
+	protected void setDDLRecordStagedModelRepository(
+		DDLRecordStagedModelRepository ddlRecordStagedModelRepository) {
+
+		_ddlRecordStagedModelRepository = ddlRecordStagedModelRepository;
+	}
+
 	@Reference(unbind = "-")
 	protected void setDDMFormValuesExportImportContentProcessor(
 		DDMFormValuesExportImportContentProcessor
@@ -198,17 +209,6 @@ public class DDLRecordStagedModelDataHandler
 		DDMFormValuesJSONSerializer ddmFormValuesJSONSerializer) {
 
 		_ddmFormValuesJSONSerializer = ddmFormValuesJSONSerializer;
-	}
-
-	@Reference(
-		target =
-			"(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord)",
-		unbind = "-"
-	)
-	protected void setDDLRecordStagedModelRepository(
-		DDLRecordStagedModelRepository ddlRecordStagedModelRepository) {
-
-		_ddlRecordStagedModelRepository = ddlRecordStagedModelRepository;
 	}
 
 	@Reference(unbind = "-")

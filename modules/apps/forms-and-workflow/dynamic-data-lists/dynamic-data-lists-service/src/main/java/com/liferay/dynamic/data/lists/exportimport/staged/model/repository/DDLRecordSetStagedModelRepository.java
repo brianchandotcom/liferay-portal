@@ -237,21 +237,10 @@ public class DDLRecordSetStagedModelRepository
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDLRecordSetLocalService(
-		DDLRecordSetLocalService ddlRecordSetLocalService) {
-
-		_ddlRecordSetLocalService = ddlRecordSetLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
-
-		_ddmStructureLocalService = ddmStructureLocalService;
-	}
-
+	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+
+	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

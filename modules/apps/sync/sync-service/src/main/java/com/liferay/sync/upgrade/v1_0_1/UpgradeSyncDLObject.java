@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.sync.hook.upgrade.v1_0_1;
+package com.liferay.sync.upgrade.v1_0_1;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.sync.model.SyncDLObjectConstants;
+import com.liferay.sync.constants.SyncDLObjectConstants;
 
 /**
  * @author Shinn Lok
@@ -26,43 +27,9 @@ public class UpgradeSyncDLObject extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateColumn(
-			"DLFileEntry", "userId", "userId", null, "fileEntryId", 0,
-			new String[] {
-				SyncDLObjectConstants.TYPE_FILE,
-				SyncDLObjectConstants.TYPE_PRIVATE_WORKING_COPY
-			});
-		updateColumn(
-			"DLFolder", "userId", "userId", null, "folderId", 0,
-			new String[] {SyncDLObjectConstants.TYPE_FOLDER});
-
-		updateColumn(
-			"DLFileEntry", "userName", "userName", null, "fileEntryId", "''",
-			new String[] {
-				SyncDLObjectConstants.TYPE_FILE,
-				SyncDLObjectConstants.TYPE_PRIVATE_WORKING_COPY
-			});
-		updateColumn(
-			"DLFolder", "userName", "userName", null, "folderId", "''",
-			new String[] {SyncDLObjectConstants.TYPE_FOLDER});
-
-		updateColumn(
-			"DLFileEntry", "treePath", "treePath", null, "fileEntryId", "''",
-			new String[] {
-				SyncDLObjectConstants.TYPE_FILE,
-				SyncDLObjectConstants.TYPE_PRIVATE_WORKING_COPY
-			});
-		updateColumn(
-			"DLFolder", "treePath", "treePath", null, "folderId", "''",
-			new String[] {SyncDLObjectConstants.TYPE_FOLDER});
-
-		updateColumn(
-			"DLFileVersion", "versionId", "fileVersionId", "version",
-			"fileEntryId", 0,
-			new String[] {
-				SyncDLObjectConstants.TYPE_FILE,
-				SyncDLObjectConstants.TYPE_PRIVATE_WORKING_COPY
-			});
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			upgradeColumns();
+		}
 	}
 
 	protected void updateColumn(
@@ -115,6 +82,46 @@ public class UpgradeSyncDLObject extends UpgradeProcess {
 		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		runSQL(sb.toString());
+	}
+
+	protected void upgradeColumns() throws Exception {
+		updateColumn(
+			"DLFileEntry", "userId", "userId", null, "fileEntryId", 0,
+			new String[] {
+				SyncDLObjectConstants.TYPE_FILE,
+				SyncDLObjectConstants.TYPE_PRIVATE_WORKING_COPY
+			});
+		updateColumn(
+			"DLFolder", "userId", "userId", null, "folderId", 0,
+			new String[] {SyncDLObjectConstants.TYPE_FOLDER});
+
+		updateColumn(
+			"DLFileEntry", "userName", "userName", null, "fileEntryId", "''",
+			new String[] {
+				SyncDLObjectConstants.TYPE_FILE,
+				SyncDLObjectConstants.TYPE_PRIVATE_WORKING_COPY
+			});
+		updateColumn(
+			"DLFolder", "userName", "userName", null, "folderId", "''",
+			new String[] {SyncDLObjectConstants.TYPE_FOLDER});
+
+		updateColumn(
+			"DLFileEntry", "treePath", "treePath", null, "fileEntryId", "''",
+			new String[] {
+				SyncDLObjectConstants.TYPE_FILE,
+				SyncDLObjectConstants.TYPE_PRIVATE_WORKING_COPY
+			});
+		updateColumn(
+			"DLFolder", "treePath", "treePath", null, "folderId", "''",
+			new String[] {SyncDLObjectConstants.TYPE_FOLDER});
+
+		updateColumn(
+			"DLFileVersion", "versionId", "fileVersionId", "version",
+			"fileEntryId", 0,
+			new String[] {
+				SyncDLObjectConstants.TYPE_FILE,
+				SyncDLObjectConstants.TYPE_PRIVATE_WORKING_COPY
+			});
 	}
 
 }

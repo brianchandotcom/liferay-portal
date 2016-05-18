@@ -464,154 +464,6 @@ public interface SyncDLObjectPersistence extends BasePersistence<SyncDLObject> {
 	public int countByR_P(long repositoryId, long parentFolderId);
 
 	/**
-	* Returns all the sync d l objects where repositoryId = &#63; and type = &#63;.
-	*
-	* @param repositoryId the repository ID
-	* @param type the type
-	* @return the matching sync d l objects
-	*/
-	public java.util.List<SyncDLObject> findByR_T(long repositoryId,
-		java.lang.String type);
-
-	/**
-	* Returns a range of all the sync d l objects where repositoryId = &#63; and type = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SyncDLObjectModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param repositoryId the repository ID
-	* @param type the type
-	* @param start the lower bound of the range of sync d l objects
-	* @param end the upper bound of the range of sync d l objects (not inclusive)
-	* @return the range of matching sync d l objects
-	*/
-	public java.util.List<SyncDLObject> findByR_T(long repositoryId,
-		java.lang.String type, int start, int end);
-
-	/**
-	* Returns an ordered range of all the sync d l objects where repositoryId = &#63; and type = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SyncDLObjectModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param repositoryId the repository ID
-	* @param type the type
-	* @param start the lower bound of the range of sync d l objects
-	* @param end the upper bound of the range of sync d l objects (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching sync d l objects
-	*/
-	public java.util.List<SyncDLObject> findByR_T(long repositoryId,
-		java.lang.String type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SyncDLObject> orderByComparator);
-
-	/**
-	* Returns an ordered range of all the sync d l objects where repositoryId = &#63; and type = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SyncDLObjectModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param repositoryId the repository ID
-	* @param type the type
-	* @param start the lower bound of the range of sync d l objects
-	* @param end the upper bound of the range of sync d l objects (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching sync d l objects
-	*/
-	public java.util.List<SyncDLObject> findByR_T(long repositoryId,
-		java.lang.String type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SyncDLObject> orderByComparator,
-		boolean retrieveFromCache);
-
-	/**
-	* Returns the first sync d l object in the ordered set where repositoryId = &#63; and type = &#63;.
-	*
-	* @param repositoryId the repository ID
-	* @param type the type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching sync d l object
-	* @throws NoSuchDLObjectException if a matching sync d l object could not be found
-	*/
-	public SyncDLObject findByR_T_First(long repositoryId,
-		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator<SyncDLObject> orderByComparator)
-		throws NoSuchDLObjectException;
-
-	/**
-	* Returns the first sync d l object in the ordered set where repositoryId = &#63; and type = &#63;.
-	*
-	* @param repositoryId the repository ID
-	* @param type the type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching sync d l object, or <code>null</code> if a matching sync d l object could not be found
-	*/
-	public SyncDLObject fetchByR_T_First(long repositoryId,
-		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator<SyncDLObject> orderByComparator);
-
-	/**
-	* Returns the last sync d l object in the ordered set where repositoryId = &#63; and type = &#63;.
-	*
-	* @param repositoryId the repository ID
-	* @param type the type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching sync d l object
-	* @throws NoSuchDLObjectException if a matching sync d l object could not be found
-	*/
-	public SyncDLObject findByR_T_Last(long repositoryId,
-		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator<SyncDLObject> orderByComparator)
-		throws NoSuchDLObjectException;
-
-	/**
-	* Returns the last sync d l object in the ordered set where repositoryId = &#63; and type = &#63;.
-	*
-	* @param repositoryId the repository ID
-	* @param type the type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching sync d l object, or <code>null</code> if a matching sync d l object could not be found
-	*/
-	public SyncDLObject fetchByR_T_Last(long repositoryId,
-		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator<SyncDLObject> orderByComparator);
-
-	/**
-	* Returns the sync d l objects before and after the current sync d l object in the ordered set where repositoryId = &#63; and type = &#63;.
-	*
-	* @param syncDLObjectId the primary key of the current sync d l object
-	* @param repositoryId the repository ID
-	* @param type the type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next sync d l object
-	* @throws NoSuchDLObjectException if a sync d l object with the primary key could not be found
-	*/
-	public SyncDLObject[] findByR_T_PrevAndNext(long syncDLObjectId,
-		long repositoryId, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator<SyncDLObject> orderByComparator)
-		throws NoSuchDLObjectException;
-
-	/**
-	* Removes all the sync d l objects where repositoryId = &#63; and type = &#63; from the database.
-	*
-	* @param repositoryId the repository ID
-	* @param type the type
-	*/
-	public void removeByR_T(long repositoryId, java.lang.String type);
-
-	/**
-	* Returns the number of sync d l objects where repositoryId = &#63; and type = &#63;.
-	*
-	* @param repositoryId the repository ID
-	* @param type the type
-	* @return the number of matching sync d l objects
-	*/
-	public int countByR_T(long repositoryId, java.lang.String type);
-
-	/**
 	* Returns all the sync d l objects where repositoryId = &#63; and event &ne; &#63;.
 	*
 	* @param repositoryId the repository ID
@@ -758,6 +610,154 @@ public interface SyncDLObjectPersistence extends BasePersistence<SyncDLObject> {
 	* @return the number of matching sync d l objects
 	*/
 	public int countByR_NotE(long repositoryId, java.lang.String event);
+
+	/**
+	* Returns all the sync d l objects where repositoryId = &#63; and type = &#63;.
+	*
+	* @param repositoryId the repository ID
+	* @param type the type
+	* @return the matching sync d l objects
+	*/
+	public java.util.List<SyncDLObject> findByR_T(long repositoryId,
+		java.lang.String type);
+
+	/**
+	* Returns a range of all the sync d l objects where repositoryId = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SyncDLObjectModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param repositoryId the repository ID
+	* @param type the type
+	* @param start the lower bound of the range of sync d l objects
+	* @param end the upper bound of the range of sync d l objects (not inclusive)
+	* @return the range of matching sync d l objects
+	*/
+	public java.util.List<SyncDLObject> findByR_T(long repositoryId,
+		java.lang.String type, int start, int end);
+
+	/**
+	* Returns an ordered range of all the sync d l objects where repositoryId = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SyncDLObjectModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param repositoryId the repository ID
+	* @param type the type
+	* @param start the lower bound of the range of sync d l objects
+	* @param end the upper bound of the range of sync d l objects (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching sync d l objects
+	*/
+	public java.util.List<SyncDLObject> findByR_T(long repositoryId,
+		java.lang.String type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SyncDLObject> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the sync d l objects where repositoryId = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SyncDLObjectModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param repositoryId the repository ID
+	* @param type the type
+	* @param start the lower bound of the range of sync d l objects
+	* @param end the upper bound of the range of sync d l objects (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching sync d l objects
+	*/
+	public java.util.List<SyncDLObject> findByR_T(long repositoryId,
+		java.lang.String type, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SyncDLObject> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first sync d l object in the ordered set where repositoryId = &#63; and type = &#63;.
+	*
+	* @param repositoryId the repository ID
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching sync d l object
+	* @throws NoSuchDLObjectException if a matching sync d l object could not be found
+	*/
+	public SyncDLObject findByR_T_First(long repositoryId,
+		java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator<SyncDLObject> orderByComparator)
+		throws NoSuchDLObjectException;
+
+	/**
+	* Returns the first sync d l object in the ordered set where repositoryId = &#63; and type = &#63;.
+	*
+	* @param repositoryId the repository ID
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching sync d l object, or <code>null</code> if a matching sync d l object could not be found
+	*/
+	public SyncDLObject fetchByR_T_First(long repositoryId,
+		java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator<SyncDLObject> orderByComparator);
+
+	/**
+	* Returns the last sync d l object in the ordered set where repositoryId = &#63; and type = &#63;.
+	*
+	* @param repositoryId the repository ID
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching sync d l object
+	* @throws NoSuchDLObjectException if a matching sync d l object could not be found
+	*/
+	public SyncDLObject findByR_T_Last(long repositoryId,
+		java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator<SyncDLObject> orderByComparator)
+		throws NoSuchDLObjectException;
+
+	/**
+	* Returns the last sync d l object in the ordered set where repositoryId = &#63; and type = &#63;.
+	*
+	* @param repositoryId the repository ID
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching sync d l object, or <code>null</code> if a matching sync d l object could not be found
+	*/
+	public SyncDLObject fetchByR_T_Last(long repositoryId,
+		java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator<SyncDLObject> orderByComparator);
+
+	/**
+	* Returns the sync d l objects before and after the current sync d l object in the ordered set where repositoryId = &#63; and type = &#63;.
+	*
+	* @param syncDLObjectId the primary key of the current sync d l object
+	* @param repositoryId the repository ID
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next sync d l object
+	* @throws NoSuchDLObjectException if a sync d l object with the primary key could not be found
+	*/
+	public SyncDLObject[] findByR_T_PrevAndNext(long syncDLObjectId,
+		long repositoryId, java.lang.String type,
+		com.liferay.portal.kernel.util.OrderByComparator<SyncDLObject> orderByComparator)
+		throws NoSuchDLObjectException;
+
+	/**
+	* Removes all the sync d l objects where repositoryId = &#63; and type = &#63; from the database.
+	*
+	* @param repositoryId the repository ID
+	* @param type the type
+	*/
+	public void removeByR_T(long repositoryId, java.lang.String type);
+
+	/**
+	* Returns the number of sync d l objects where repositoryId = &#63; and type = &#63;.
+	*
+	* @param repositoryId the repository ID
+	* @param type the type
+	* @return the number of matching sync d l objects
+	*/
+	public int countByR_T(long repositoryId, java.lang.String type);
 
 	/**
 	* Returns all the sync d l objects where treePath LIKE &#63; and event &ne; &#63;.

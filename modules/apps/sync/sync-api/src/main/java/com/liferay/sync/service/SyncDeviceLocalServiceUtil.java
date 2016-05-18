@@ -16,9 +16,9 @@ package com.liferay.sync.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.service.InvokableLocalService;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for SyncDevice. This utility wraps
@@ -198,12 +198,6 @@ public class SyncDeviceLocalServiceUtil {
 		return getService().getSyncDevicesCount();
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -315,28 +309,10 @@ public class SyncDeviceLocalServiceUtil {
 		getService().updateStatus(syncDeviceId, status);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static SyncDeviceLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					SyncDeviceLocalService.class.getName());
-
-			if (invokableLocalService instanceof SyncDeviceLocalService) {
-				_service = (SyncDeviceLocalService)invokableLocalService;
-			}
-			else {
-				_service = new SyncDeviceLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(SyncDeviceLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	private static SyncDeviceLocalService _service;
+	private static ServiceTracker<SyncDeviceLocalService, SyncDeviceLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(SyncDeviceLocalService.class);
 }

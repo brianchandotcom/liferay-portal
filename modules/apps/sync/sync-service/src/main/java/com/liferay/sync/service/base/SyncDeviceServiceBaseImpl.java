@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import com.liferay.sync.model.SyncDevice;
 import com.liferay.sync.service.SyncDeviceService;
@@ -225,25 +226,6 @@ public abstract class SyncDeviceServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the sync preferences local service.
-	 *
-	 * @return the sync preferences local service
-	 */
-	public com.liferay.sync.service.SyncPreferencesLocalService getSyncPreferencesLocalService() {
-		return syncPreferencesLocalService;
-	}
-
-	/**
-	 * Sets the sync preferences local service.
-	 *
-	 * @param syncPreferencesLocalService the sync preferences local service
-	 */
-	public void setSyncPreferencesLocalService(
-		com.liferay.sync.service.SyncPreferencesLocalService syncPreferencesLocalService) {
-		this.syncPreferencesLocalService = syncPreferencesLocalService;
-	}
-
-	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -395,9 +377,6 @@ public abstract class SyncDeviceServiceBaseImpl extends BaseServiceImpl
 	}
 
 	public void afterPropertiesSet() {
-		Class<?> clazz = getClass();
-
-		_classLoader = clazz.getClassLoader();
 	}
 
 	public void destroy() {
@@ -411,27 +390,6 @@ public abstract class SyncDeviceServiceBaseImpl extends BaseServiceImpl
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return SyncDeviceService.class.getName();
-	}
-
-	@Override
-	public Object invokeMethod(String name, String[] parameterTypes,
-		Object[] arguments) throws Throwable {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (contextClassLoader != _classLoader) {
-			currentThread.setContextClassLoader(_classLoader);
-		}
-
-		try {
-			return _clpInvoker.invokeMethod(name, parameterTypes, arguments);
-		}
-		finally {
-			if (contextClassLoader != _classLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-		}
 	}
 
 	protected Class<?> getModelClass() {
@@ -468,7 +426,7 @@ public abstract class SyncDeviceServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.sync.service.SyncDeviceLocalService.class)
 	protected com.liferay.sync.service.SyncDeviceLocalService syncDeviceLocalService;
-	@BeanReference(type = SyncDeviceService.class)
+	@BeanReference(type = com.liferay.sync.service.SyncDeviceService.class)
 	protected SyncDeviceService syncDeviceService;
 	@BeanReference(type = SyncDevicePersistence.class)
 	protected SyncDevicePersistence syncDevicePersistence;
@@ -484,24 +442,20 @@ public abstract class SyncDeviceServiceBaseImpl extends BaseServiceImpl
 	protected SyncDLObjectPersistence syncDLObjectPersistence;
 	@BeanReference(type = SyncDLObjectFinder.class)
 	protected SyncDLObjectFinder syncDLObjectFinder;
-	@BeanReference(type = com.liferay.sync.service.SyncPreferencesLocalService.class)
-	protected com.liferay.sync.service.SyncPreferencesLocalService syncPreferencesLocalService;
-	@BeanReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
 	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameService.class)
 	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
-	@BeanReference(type = ClassNamePersistence.class)
+	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@BeanReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
 	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
 	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.kernel.service.UserService.class)
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserService.class)
 	protected com.liferay.portal.kernel.service.UserService userService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	private ClassLoader _classLoader;
-	private SyncDeviceServiceClpInvoker _clpInvoker = new SyncDeviceServiceClpInvoker();
 }

@@ -54,13 +54,7 @@ body {
 	.lfr-name-column {
 		max-width: 150px;
 		min-width: 150px;
-		width: 150px;
-
-		@include lg {
-			max-width: 250px;
-			min-width: 250px;
-			width: 250px;
-		}
+		width: 250px;
 	}
 
 	.lfr-users-column {

@@ -19,8 +19,10 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -135,8 +137,43 @@ public class SocialOfficeUpgradeCommand {
 			atomicInteger.get());
 	}
 
-	public void renameDashboardSiteTemplate() {
-		throw new UnsupportedOperationException();
+	public void renameDashboardSiteTemplate() throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_layoutSetPrototypeLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.like(
+							"name", "%>Social Office User Home<%"));
+				}
+
+			});
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.
+				PerformActionMethod<LayoutSetPrototype>() {
+
+				public void performAction(LayoutSetPrototype layoutSetPrototype)
+					throws PortalException {
+
+					layoutSetPrototype.setName(_DASHBOARD_NAME_XML);
+					layoutSetPrototype.setDescription(
+						_DASHBOARD_DESCRIPTION_XML);
+
+					_layoutSetPrototypeLocalService.updateLayoutSetPrototype(
+						layoutSetPrototype);
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
+
+		System.out.println(
+			"[so:renameDashboardSiteTemplate] Successfully renamed Dashboard " +
+				"site template.");
 	}
 
 	public void renameProfileSiteTemplate() {
@@ -163,13 +200,32 @@ public class SocialOfficeUpgradeCommand {
 	}
 
 	@Reference(unbind = "-")
+	protected void setLayoutSetPrototypeService(
+		LayoutSetPrototypeLocalService layoutSetPrototypeLocalService) {
+
+		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setPortletPreferencesLocalService(
 		PortletPreferencesLocalService portletPreferencesLocalService) {
 
 		_portletPreferencesLocalService = portletPreferencesLocalService;
 	}
 
+	private static final String _DASHBOARD_DESCRIPTION_XML =
+		"<?xml version='1.0' encoding='UTF-8'?>" +
+			"<root available-locales=\"en_US\" default-locale=\"en_US\">" +
+				"<Description language-id=\"en_US\">" +
+					"Site template for the User Dashboard</Description></root>";
+
+	private static final String _DASHBOARD_NAME_XML =
+		"<?xml version='1.0' encoding='UTF-8'?>" +
+			"<root available-locales=\"en_US\" default-locale=\"en_US\">" +
+				"<Name language-id=\"en_US\">Social Dashboard</Name></root>";
+
 	private LayoutLocalService _layoutLocalService;
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 }

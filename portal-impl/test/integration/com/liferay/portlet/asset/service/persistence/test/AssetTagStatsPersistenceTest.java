@@ -54,8 +54,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 public class AssetTagStatsPersistenceTest {
 	@ClassRule
 	@Rule

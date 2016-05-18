@@ -48,8 +48,10 @@ import java.util.List;
  * @see AssetTagStatsLocalServiceUtil
  * @see com.liferay.portlet.asset.service.base.AssetTagStatsLocalServiceBaseImpl
  * @see com.liferay.portlet.asset.service.impl.AssetTagStatsLocalServiceImpl
+ * @deprecated As of 7.0.0, with no direct replacement
  * @generated
  */
+@Deprecated
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})

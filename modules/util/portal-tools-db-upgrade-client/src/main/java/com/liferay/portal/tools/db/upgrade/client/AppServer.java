@@ -71,8 +71,9 @@ public class AppServer {
 
 		return new AppServer(
 			"../../wildfly-10.0.0",
-			extraLibDirPrefix + "javax/mail," + extraLibDirPrefix +
-				"javax/persistence," + extraLibDirPrefix + "javax/servlet",
+			extraLibDirPrefix + "javax/transaction," + extraLibDirPrefix +
+				"javax/mail," + extraLibDirPrefix + "javax/persistence," +
+					extraLibDirPrefix + "javax/servlet",
 			"/modules/com/liferay/portal/main",
 			"/standalone/deployments/ROOT.war");
 	}

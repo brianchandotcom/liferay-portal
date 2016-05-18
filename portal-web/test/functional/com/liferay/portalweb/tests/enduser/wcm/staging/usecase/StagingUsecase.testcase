@@ -310,10 +310,6 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Portlet#viewPG">
-			<var name="portletName" value="Web Content Display" />
-		</execute>
-
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="WC WebContent Content" />
 		</execute>
@@ -1588,7 +1584,6 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Page Name" />
-			<var name="pageStaging" value="true" />
 		</execute>
 
 		<execute macro="Staging#changeSitePageVariationPG">
@@ -1672,7 +1667,6 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Empty Page Name" />
-			<var name="pageStaging" value="true" />
 			<var name="siteName" value="Community Site Name" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
@@ -3755,7 +3749,7 @@
 
 		<var name="key_webContentTitle" value="Web Content Title" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="Web Content Title" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE_ON_LIVE" value1="Web Content Title" />
 
 		<execute macro="WebContentNavigator#gotoManageStructures" />
 

@@ -1874,11 +1874,12 @@
 			</then>
 		</if>
 
-		<execute function="Click" locator1="Button#INFO" />
-
-		<execute function="Click" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_DROPDOWN" />
-
-		<execute function="AssertClick" locator1="MenuItem#DM_DOCUMENT_TYPE" value1="Document Type" />
+		<if>
+			<condition function="IsElementNotPresent" locator1="Icon#INFO_ACTIVE" />
+			<then>
+				<execute function="Click" locator1="Button#INFO" />
+			</then>
+		</if>
 
 		<if>
 			<isset var="booleanValue" />

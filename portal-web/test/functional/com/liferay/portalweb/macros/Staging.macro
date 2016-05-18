@@ -642,6 +642,8 @@
 
 		<execute function="AssertTextEquals" locator1="Staging#PROCESS_SUCCESSFUL" value1="Successful" />
 
+		<execute function="SelectFrame" value1="relative=top" />
+
 		<if>
 			<condition function="IsElementPresent" locator1="Icon#CLOSE" />
 			<then>
@@ -938,7 +940,7 @@
 	</command>
 
 	<command name="viewStagingWorkflowStatusPG">
-		<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="${stagingWorkflowStatus}" />
+		<execute function="AssertTextEquals" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" value1="${stagingWorkflowStatus}" />
 	</command>
 
 	<command name="viewValidationError">

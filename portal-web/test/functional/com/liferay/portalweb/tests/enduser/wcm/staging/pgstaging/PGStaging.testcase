@@ -1337,7 +1337,7 @@
 		</execute>
 
 		<execute macro="WebContent#viewPGViaWCD">
-			<var name="image" value="true" />
+			<var name="imageOnLive" value="true" />
 			<var name="webContentContent" value="Web Content Content" />
 		</execute>
 	</command>

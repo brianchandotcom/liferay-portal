@@ -1629,6 +1629,12 @@
 					<execute function="AssertElementPresent" locator1="WCD#WEB_CONTENT_CONTENT_IMAGE" />
 				</then>
 			</elseif>
+			<elseif>
+				<equals arg1="${imageOnLive}" arg2="true" />
+				<then>
+					<execute function="AssertElementPresent" locator1="WCD#WEB_CONTENT_CONTENT_IMAGE_ON_LIVE" />
+				</then>
+			</elseif>
 			<else>
 				<execute function="AssertTextEquals" locator1="WCD#WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 			</else>

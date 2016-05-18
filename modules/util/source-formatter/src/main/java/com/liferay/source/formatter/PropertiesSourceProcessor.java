@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -299,6 +300,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			content = StringUtil.replaceFirst(
 				content, matcher.group(1), StringPool.BLANK, matcher.start());
 		}
+
+		content = sortDefinitions(content, new NaturalOrderStringComparator());
 
 		return fixIncorrectLicenses(absolutePath, content);
 	}

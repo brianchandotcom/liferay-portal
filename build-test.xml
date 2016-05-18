@@ -1572,6 +1572,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 	</macrodef>
 
 	<macrodef name="prepare-portal-legacy-properties">
+		<attribute default="portal-impl/src/portal-ext.properties" name="portal.ext.properties.file.path" />
 		<attribute name="portal.major.version" />
 		<sequential>
 			<var name="portal.legacy.file.content" unset="true" />
@@ -1650,7 +1651,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 				replace=""
 			/>
 
-			<echo append="true" file="portal-impl/src/portal-ext.properties">
+			<echo append="true" file="@{portal.ext.properties.file.path}">
 
 ##
 ## From portal-legacy-@{portal.major.version}.properties
@@ -8027,107 +8028,113 @@ jdbc.default.password=${database.mysql.password}</echo>
 	</target>
 
 	<target name="upgrade-legacy-database">
-		<delete file="${liferay.home}/build-db-upgrade.xml" />
-		<delete file="${liferay.home}/db_upgrade_log" />
-		<delete file="${liferay.home}/portal-ext.properties" />
 		<delete file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexStatusManagerConfiguration.cfg" />
-
-		<copy
-			file="tools/db-upgrade/build.xml"
-			overwrite="true"
-			tofile="${liferay.home}/build-db-upgrade.xml"
-		/>
-
-		<property name="db.upgrade.classpath"><![CDATA[<path id="lib.classpath">
-			<fileset dir="${app.server.dir}/bin" includes="tomcat-juli.jar" />
-			<fileset dir="${app.server.dir}/lib" includes="*.jar" />
-			<fileset dir="${app.server.dir}/lib/ext" includes="*.jar" />
-			<fileset dir="${app.server.dir}/webapps/ROOT/WEB-INF/lib" includes="*.jar" />
-		</path>]]></property>
-
-		<replaceregexp
-			file="${liferay.home}/build-db-upgrade.xml"
-			match="&lt;path id=[\S\s]*path&gt;"
-			replace="${db.upgrade.classpath}"
-		/>
-
-		<copy
-			file="portal-impl/src/portal-ext.properties"
-			overwrite="true"
-			tofile="${liferay.home}/portal-ext.properties"
-		/>
+		<delete file="${liferay.home}/tools/portal-tools-db-upgrade-client/upgrade.log" />
 
 		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexStatusManagerConfiguration.cfg">indexReadOnly=true</echo>
 
-		<record action="start" name="${liferay.home}/db_upgrade_log" />
+		<if>
+			<equals arg1="${app.server.type}" arg2="jboss" />
+			<then>
+				<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
+global.lib.dir=modules/com/liferay/portal/main
+portal.dir=standalone/deployments/ROOT.war
+extra.lib.dirs=</echo>
+			</then>
+			<elseif>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<then>
+					<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
+global.lib.dir=lib
+portal.dir=webapps/ROOT
+extra.lib.dirs=bin</echo>
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${app.server.type}" arg2="wildfly" />
+				<then>
+					<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/app-server.properties">dir=${app.server.dir}
+global.lib.dir=modules/com/liferay/portal/main
+portal.dir=standalone/deployments/ROOT.war
+extra.lib.dirs=modules/system/layers/base/javax/mail,modules/system/layers/base/javax/persistence,modules/system/layers/base/javax/servlet</echo>
+				</then>
+			</elseif>
+		</if>
 
-		<parallel>
-			<daemons>
-				<ant antfile="build-db-upgrade.xml" dir="${liferay.home}" target="upgrade" />
-			</daemons>
-			<sequential>
-				<var name="upgrade.timeout.error" unset="true" />
+		<get-database-property property.name="database.driver" />
+		<get-database-property property.name="database.password" />
+		<get-database-property property.name="database.url" />
+		<get-database-property property.name="database.username" />
 
-				<waitfor maxwait="15" maxwaitunit="minute" timeoutproperty="upgrade.timeout.error">
-					<resourcecontains
-						resource="${liferay.home}/db_upgrade_log"
-						substring="Running modules upgrades. Connect to Gogo shell to check the status."
-					/>
-				</waitfor>
+		<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-database.properties">jdbc.default.driverClassName=${database.driver}
+jdbc.default.url=${database.url}
+jdbc.default.username=${database.username}
+jdbc.default.password=${database.password}</echo>
 
-				<fail if="upgrade.timeout.error" message="Upgrade timeout error!" />
+		<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">liferay.home=${liferay.home}</echo>
 
-				<sleep seconds="60" />
+		<get-testcase-property property.name="portal.version" />
 
-				<trycatch property="telnet.error">
-					<try>
-						<telnet port="11311" server="localhost" timeout="30">
-							<read>g!</read>
-							<write>upgrade:list</write>
-							<read>g!</read>
-							<write>exit</write>
-							<write>y</write>
-						</telnet>
-					</try>
-					<catch>
-						<execute>
-							jps > jps_output
-						</execute>
+		<propertyregex
+			input="${portal.version}"
+			property="portal.major.version"
+			regexp="(\d+\.\d+)\.\d+"
+			select="\1"
+		/>
 
-						<var name="jps.output" unset="true" />
+		<if>
+			<or>
+				<equals arg1="${portal.major.version}" arg2="6.0" />
+				<equals arg1="${portal.major.version}" arg2="6.1" />
+				<equals arg1="${portal.major.version}" arg2="6.2" />
+			</or>
+			<then>
+				<prepare-portal-legacy-properties
+					portal.ext.properties.file.path="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties"
+					portal.major.version="6.2"
+				/>
+			</then>
+		</if>
 
-						<loadfile property="jps.output" srcfile="jps_output" />
+		<if>
+			<or>
+				<equals arg1="${portal.major.version}" arg2="6.0" />
+				<equals arg1="${portal.major.version}" arg2="6.1" />
+			</or>
+			<then>
+				<prepare-portal-legacy-properties
+					portal.ext.properties.file.path="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties"
+					portal.major.version="6.1"
+				/>
+			</then>
+		</if>
 
-						<if>
-							<contains string="${jps.output}" substring="DBUpgrader" />
-							<then>
-								<propertyregex
-									input="${jps.output}"
-									override="true"
-									property="dbupgrader.pid"
-									regexp="(|[\S\s]*\n)([0-9]+) DBUpgrader[\S\s]*"
-									replace="\2"
-								/>
+		<if>
+			<or>
+				<equals arg1="${portal.major.version}" arg2="6.0" />
+			</or>
+			<then>
+				<prepare-portal-legacy-properties
+					portal.ext.properties.file.path="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties"
+					portal.major.version="6.0"
+				/>
+			</then>
+		</if>
 
-								<execute>
-									jstack ${dbupgrader.pid}
-								</execute>
-							</then>
-						</if>
+		<java
+			dir="${liferay.home}/tools/portal-tools-db-upgrade-client"
+			failonerror="true"
+			fork="true"
+			jar="${liferay.home}/tools/portal-tools-db-upgrade-client/com.liferay.portal.tools.db.upgrade.client.jar"
+			timeout="900000"
+		/>
 
-						<delete file="jps_output" />
-
-						<fail message="${telnet.error}" />
-					</catch>
-				</trycatch>
-			</sequential>
-		</parallel>
-
-		<record action="stop" name="${liferay.home}/db_upgrade_log" />
-
-		<delete file="${liferay.home}/build-db-upgrade.xml" />
-		<delete file="${liferay.home}/db_upgrade_log" />
-		<delete file="${liferay.home}/portal-ext.properties" />
+		<waitfor maxwait="15" maxwaitunit="minute">
+			<resourcecontains
+				resource="${liferay.home}/tools/portal-tools-db-upgrade-client/upgrade.log"
+				substring="Checking to see if all upgrades have completed... done."
+			/>
+		</waitfor>
 
 		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexStatusManagerConfiguration.cfg">indexReadOnly=false</echo>
 	</target>

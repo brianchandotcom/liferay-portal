@@ -16,14 +16,22 @@ package com.liferay.chat.hook.events;
 
 import com.liferay.chat.jabber.JabberUtil;
 import com.liferay.portal.kernel.events.Action;
+import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Bruno Farache
+ * @author Peter Fellwock
  */
+@Component(
+		immediate = true,
+		property = {"key=logout.events.post"}, service = LifecycleAction.class
+	)
 public class LoginPostAction extends Action {
 
 	@Override

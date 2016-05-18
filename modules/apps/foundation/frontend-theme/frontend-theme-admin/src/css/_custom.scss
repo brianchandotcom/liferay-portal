@@ -97,3 +97,19 @@ body {
 		}
 	}
 }
+
+.portlet-boundary_com_liferay_site_admin_web_portlet_SiteAdminPortlet_ {
+	.lfr-name-column {
+		max-width: 200px;
+		min-width: 200px;
+	}
+
+	.lfr-child-sites-column,
+	.lfr-members-column {
+		white-space: nowrap;
+	}
+
+	.lfr-active-column, .lfr-child-sites-column, .lfr-members-column, .lfr-membership-type-column {
+		width: auto;
+	}
+}

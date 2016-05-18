@@ -15,9 +15,9 @@
 --%>
 
 <liferay-ui:search-container-column-text
+	cssClass="table-cell-content"
 	name="name"
 	orderable="<%= true %>"
-	truncate="<%= true %>"
 >
 	<aui:a href="<%= viewSiteURL %>" label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" />
 
@@ -70,7 +70,6 @@
 
 <liferay-ui:search-container-column-text
 	name="child-sites"
-	truncate="<%= true %>"
 >
 	<c:choose>
 		<c:when test="<%= hasAddChildSitePermisison && GroupPermissionUtil.contains(permissionChecker, curGroup, ActionKeys.VIEW) %>">

@@ -84,7 +84,7 @@ if (!resultRowSplitterEntries.isEmpty()) {
 										if (entry.isTruncate()) {
 											truncate = true;
 
-											cssClass += " clamp-horizontal table-cell-content";
+											cssClass += " table-cell-content";
 										}
 
 										if (!Validator.isBlank(entry.getAlign())) {
@@ -106,7 +106,7 @@ if (!resultRowSplitterEntries.isEmpty()) {
 									if (entry.isTruncate()) {
 										truncate = true;
 
-										cssClass += " clamp-horizontal table-cell-content";
+										cssClass += " table-cell-content";
 									}
 								}
 							}
@@ -132,11 +132,9 @@ if (!resultRowSplitterEntries.isEmpty()) {
 
 							<c:choose>
 								<c:when test="<%= truncate %>">
-									<div class="clamp-container">
-										<span class="truncate-text">
-											<%= headerNameValue %>
-										</span>
-									</div>
+									<span class="truncate-text">
+										<%= headerNameValue %>
+									</span>
 								</c:when>
 								<c:otherwise>
 									<%= headerNameValue %>
@@ -251,7 +249,7 @@ if (!resultRowSplitterEntries.isEmpty()) {
 							if (entry.isTruncate()) {
 								truncate = true;
 
-								columnClassName += " clamp-horizontal table-cell-content";
+								columnClassName += " table-cell-content";
 							}
 
 							String normalizedColumnName = null;
@@ -272,15 +270,13 @@ if (!resultRowSplitterEntries.isEmpty()) {
 							<td class="<%= columnClassName %>" colspan="<%= entry.getColspan() %>">
 								<c:choose>
 									<c:when test="<%= truncate %>">
-										<div class="clamp-container">
-											<span class="truncate-text">
+										<span class="truncate-text">
 
-												<%
-												entry.print(pageContext.getOut(), request, response);
-												%>
+											<%
+											entry.print(pageContext.getOut(), request, response);
+											%>
 
-											</span>
-										</div>
+										</span>
 									</c:when>
 									<c:otherwise>
 

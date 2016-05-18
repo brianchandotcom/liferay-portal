@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportPackage;
 import com.liferay.portal.tools.ImportsFormatter;
 
@@ -301,44 +300,6 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String sortDefinitions(
-		String content, Comparator<String> comparator) {
-
-		String previousDefinition = null;
-
-		Matcher matcher = _bndDefinitionPattern.matcher(content);
-
-		while (matcher.find()) {
-			String definition = matcher.group();
-
-			if (Validator.isNotNull(matcher.group(1))) {
-				definition = definition.substring(0, definition.length() - 1);
-			}
-
-			if (Validator.isNotNull(previousDefinition)) {
-				int value = comparator.compare(previousDefinition, definition);
-
-				if (value > 0) {
-					content = StringUtil.replaceFirst(
-						content, previousDefinition, definition);
-					content = StringUtil.replaceLast(
-						content, definition, previousDefinition);
-
-					return content;
-				}
-
-				if (value == 0) {
-					return StringUtil.replaceFirst(
-						content, previousDefinition + "\n", StringPool.BLANK);
-				}
-			}
-
-			previousDefinition = definition;
-		}
-
-		return content;
-	}
-
 	private static final String[] _INCLUDE_RESOURCE_DIRS_BLACKLIST =
 		new String[] {
 			"classes",
@@ -349,8 +310,6 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = new String[] {"**/*.bnd"};
 
-	private final Pattern _bndDefinitionPattern = Pattern.compile(
-		"^[A-Za-z-][\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
 	private final Pattern _bundleClassPathPattern = Pattern.compile(
 		"^Bundle-ClassPath:[\\s\\S]*?([^\\\\]\n|\\Z)", Pattern.MULTILINE);
 	private final Pattern _bundleNamePattern = Pattern.compile(

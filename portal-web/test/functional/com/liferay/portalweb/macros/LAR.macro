@@ -698,7 +698,7 @@
 		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
 			<var name="belongs" value="true" />
 			<var name="contentTitle" value="Web Content Title" />
-			<var name="contentType" value="Web Content Article" />
+			<var name="contentType" value="Basic Web Content" />
 			<var name="doesNotBelong" value="${doesNotBelong}" />
 			<var name="rowIndexNumber" value="${rowIndexNumber}" />
 			<var name="rowNumber" value="1" />
@@ -739,7 +739,7 @@
 		<execute macro="CampaignDisplayPortlet#configureCampaignRule">
 			<var name="campaignName" value="Campaign Name" />
 			<var name="contentTitle" value="Web Content Title" />
-			<var name="contentType" value="Web Content Article" />
+			<var name="contentType" value="Basic Web Content" />
 			<var name="rowNumber" value="1" />
 		</execute>
 

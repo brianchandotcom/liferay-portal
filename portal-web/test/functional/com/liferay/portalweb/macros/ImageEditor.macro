@@ -1,0 +1,106 @@
+<definition>
+	<command name="_applyChanges">
+		<execute function="AssertClick" locator1="Button#APPLY_EFFECTS" value1="Apply" />
+	</command>
+
+	<command name="_saveFile">
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+	</command>
+
+	<command name="applyChangesAndSaveFile">
+		<execute macro="ImageEditor#_applyChanges" />
+
+		<execute function="Pause" locator1="3000" />
+
+		<execute macro="ImageEditor#_saveFile" />
+	</command>
+
+	<command name="cancel Changes">
+		<execute function="AssertClick" locator1="Button#CANCEL_EFFECTS" value1="Cancel" />
+	</command>
+
+	<command name="gotoCropImage">
+		<execute function="Click" locator1="Button#TRANSFORM" />
+
+		<execute function="AssertClick" locator1="MenuItem#TRANSFORM_CROP" value1="Crop" />
+	</command>
+
+	<command name="gotoEditBrightness">
+		<execute function="Click" locator1="Button#COLOR_EFFECT" />
+
+		<execute function="AssertClick" locator1="MenuItem#COLOR_EFFECT_BRIGHTNESS" value1="Brightness" />
+	</command>
+
+	<command name="gotoEditContrast">
+		<execute function="Click" locator1="Button#COLOR_EFFECT" />
+
+		<execute function="AssertClick" locator1="MenuItem#COLOR_EFFECT_CONTRAST" value1="Contrast" />
+	</command>
+
+	<command name="gotoEditSaturation">
+		<execute function="Click" locator1="Button#COLOR_EFFECT" />
+
+		<execute function="AssertClick" locator1="MenuItem#COLOR_EFFECT_SATURATION" value1="Saturation" />
+	</command>
+
+	<command name="gotoImageEditorViaDM">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_ACTIONS" />
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT_WITH_IMAGE_EDITOR" value1="Edit With Image Editor" />
+
+		<execute function="SelectFrame" locator1="ImageEditor#IMAGE_EDITOR_IFRAME" />
+	</command>
+
+	<command name="gotoImageEditorViaItemSelector">
+		<execute macro="ItemSelector#gotoItemSelectorViaAlloyEditor" />
+
+		<execute function="SelectFrame" locator1="ItemSelector#ITEM_SELECTOR_IFRAME" />
+
+		<execute function="AssertClick" locator1="ItemSelector#NAVIGATION_DOCUMENTS_AND_MEDIA" value1="Documents and Media" />
+
+		<var method="StringUtil#replace('${imageFileName}', ' ', '+')" name="key_imageFileName" />
+
+		<execute function="Click" locator1="ItemSelector#SELECT_FILE_IMAGE_PREVIEW" />
+
+		<execute function="Click" locator1="Icon#EDIT_PENCIL" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute function="SelectFrame" locator1="ImageEditor#IMAGE_EDITOR_IFRAME" />
+	</command>
+
+	<command name="gotoResizeImage">
+		<execute function="Click" locator1="Button#TRANSFORM" />
+
+		<execute function="AssertClick" locator1="MenuItem#TRANSFORM_RESIZE" value1="Resize" />
+	</command>
+
+	<command name="gotoRotateImage">
+		<execute function="Click" locator1="Button#TRANSFORM" />
+
+		<execute function="AssertClick" locator1="MenuItem#TRANSFORM_ROTATE" value1="Rotate" />
+	</command>
+
+	<command name="rotateImage">
+		<execute macro="ImageEditor#gotoRotateImage" />
+
+		<if>
+			<equals arg1="${rotateDirection}" arg2="left" />
+			<then>
+				<execute function="Click" locator1="Button#ROTATE_LEFT" />
+			</then>
+			<elseif>
+				<equals arg1="${rotateDirection}" arg2="right" />
+				<then>
+					<execute function="Click" locator1="Button#ROTATE_RIGHT" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
+	<command name="viewImageEditorPortletHeader">
+		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#H3_MODAL_TITLE" value1="${imageFileName} (Copy)" />
+	</command>
+</definition>

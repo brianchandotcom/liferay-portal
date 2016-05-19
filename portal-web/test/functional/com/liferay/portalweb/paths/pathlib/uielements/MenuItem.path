@@ -239,6 +239,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COLOR_EFFECT_BRIGHTNESS</td>
+	<td>//div[@class='dropdown dropup open']//a[contains(.,'Brightness')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLOR_EFFECT_SATURATION</td>
+	<td>//div[@class='dropdown dropup open']//a[contains(.,'Saturation')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLOR_EFFECT_CONTRAST</td>
+	<td>//div[@class='dropdown dropup open']//a[contains(.,'Contrast')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMUNITY_SITE</td>
 	<td>//a[contains(@id,'menuItem') and contains(.,'Community Site')]</td>
 	<td></td>
@@ -351,6 +366,11 @@
 <tr>
 	<td>EDIT_DEFAULT_VALUES</td>
 	<td>//a[@role='menuitem' and contains(.,'Edit Default Values')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_WITH_IMAGE_EDITOR</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem']//span[contains(.,'Edit With Image Editor')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -846,6 +866,21 @@
 <tr>
 	<td>THREAD</td>
 	<td>//div[contains(@class,'open')]//a[contains(.,'Thread')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRANSFORM_ROTATE</td>
+	<td>//div[@class=&quot;dropdown dropup open&quot;]//a[contains(.,'Rotate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRANSFORM_CROP</td>
+	<td>//div[@class=&quot;dropdown dropup open&quot;]//a[contains(.,'Crop')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRANSFORM_RESIZE</td>
+	<td>//div[@class=&quot;dropdown dropup open&quot;]//a[contains(.,'Resize')]</td>
 	<td></td>
 </tr>
 <tr>

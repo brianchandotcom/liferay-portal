@@ -1,0 +1,105 @@
+<html>
+<head>
+<title>ImageEditor</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ImageEditor</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>IMAGE_EDITOR_IFRAME</td>
+	<td>//iframe[contains(@id,'ImageEditor_iframe')] | //iframe[contains(@class,'dialog-iframe') and contains(@src,'ImageEditor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FILTER_EFFECT-->
+<tr>
+	<td>FILTER_EFFECT_ABSINTHE</td>
+	<td>//div[contains(@id,'ImageEditorPortlet') and contains (@id,'effectsabsinthe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_EFFECT_CHROMA</td>
+	<td>//div[contains(@id,'ImageEditorPortlet') and contains (@id,'effectschroma')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_EFFECT_ATARI</td>
+	<td>//div[contains(@id,'ImageEditorPortlet') and contains (@id,'effectsatari')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_EFFECT_TRIPEL</td>
+	<td>//div[contains(@id,'ImageEditorPortlet') and contains (@id,'effectstripel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_EFFECT_AILIS</td>
+	<td>//div[contains(@id,'ImageEditorPortlet') and contains (@id,'effectsailis')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_EFFECT_FLATFOOT</td>
+	<td>//div[contains(@id,'ImageEditorPortlet') and contains (@id,'effectsflatfoot')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_EFFECT_PYREXIA</td>
+	<td>//div[contains(@id,'ImageEditorPortlet') and contains (@id,'effectspyrexia')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_EFFECT_UMBRA</td>
+	<td>//div[contains(@id,'ImageEditorPortlet') and contains (@id,'effectsumbra')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_EFFECT_ROUGE</td>
+	<td>//div[contains(@id,'ImageEditorPortlet') and contains (@id,'effectsrouge')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_EFFECT_IDYLL</td>
+	<td>//div[contains(@id,'ImageEditorPortlet') and contains (@id,'effectsidyll')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_EFFECT_GLIMMER</td>
+	<td>//div[contains(@id,'ImageEditorPortlet') and contains (@id,'effectsglimmer')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_EFFECT_ELYSIUM</td>
+	<td>//div[contains(@id,'ImageEditorPortlet') and contains (@id,'effectselysium')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_EFFECT_NUCLEUS</td>
+	<td>//div[contains(@id,'ImageEditorPortlet') and contains (@id,'effectsnucleus')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_EFFECT_AMBER</td>
+	<td>//div[contains(@id,'ImageEditorPortlet') and contains (@id,'effectsamber')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_EFFECT_PAELLA</td>
+	<td>//div[contains(@id,'ImageEditorPortlet') and contains (@id,'effectspaella')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_EFFECT_AUREUS</td>
+	<td>//div[contains(@id,'ImageEditorPortlet') and contains (@id,'effectsaureus')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

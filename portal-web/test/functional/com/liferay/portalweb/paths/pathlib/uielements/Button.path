@@ -129,6 +129,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>APPLY_EFFECTS</td>
+	<td>//div[contains(@class,'controls-container') and contains(@class,'open')]//button[contains(@class,'btn') and contains(.,'Apply')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSIGN_SITE_ROLES</td>
 	<td>//*[@data-qa-id='assign-site-rolesButton']</td>
 	<td></td>
@@ -161,6 +166,11 @@
 <tr>
 	<td>CANCEL_CHECKOUT</td>
 	<td>//a[contains(@class,'btn') and contains(.,'Cancel Checkout')] | //button[contains(.,'Cancel Checkout')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_EFFECTS</td>
+	<td>//div[contains(@class,'controls-container') and contains(@class,'open')]//button[contains(@class,'btn') and contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -236,6 +246,11 @@
 <tr>
 	<td>CLOSE_SIDE_NAVIGATION</td>
 	<td>//span[contains(@class,'sidenav-close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLOR_EFFECT</td>
+	<td>//a[@class='btn']//*[name()='svg'][@data-icon='effects']</td>
 	<td></td>
 </tr>
 <tr>
@@ -336,6 +351,11 @@
 <tr>
 	<td>FIELD_FILTER_APPLY</td>
 	<td>//tr[contains(.,'${key_fieldName}')]//button[contains(.,'Apply')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_EFFECT</td>
+	<td>//a[@class='btn' and (@data-control='effects')]//*[name()='svg'][contains(@class,'lexicon-icon')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -539,6 +559,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ROTATE_LEFT</td>
+	<td>//a[contains(@class,'btn') and (@data-onclick='rotateLeft')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROTATE_RIGHT</td>
+	<td>//a[contains(@class,'btn') and (@data-onclick='rotateRight')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_ATTACHMENT</td>
 	<td>//div[contains(@id,'selectedFileName')]//button[contains(.,'Save')]</td>
 	<td></td>
@@ -656,6 +686,11 @@
 <tr>
 	<td>SUBMIT_FOR_PUBLICATION</td>
 	<td>//button[contains(.,'Submit for Publication')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRANSFORM</td>
+	<td>//a[@class='btn']//*[name()='svg'][@data-icon='transform']</td>
 	<td></td>
 </tr>
 <tr>

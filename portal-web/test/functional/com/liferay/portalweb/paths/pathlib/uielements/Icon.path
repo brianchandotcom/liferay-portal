@@ -124,6 +124,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_PENCIL</td>
+	<td>//*[name()='svg'][contains(@class,'lexicon-icon-pencil')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPIRE</td>
 	<td>//*[@data-qa-id='expireButton'] | //a[contains(@id,'expireArticle') or contains(@href,'editEntry')]/span[contains(@class,'icon-time')]</td>
 	<td></td>

@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>H3_MODAL_TITLE</td>
+	<td>//h3[@class='modal-title']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>H3_HEADER_2</td>
 	<td>xpath=(//h3[@class='header-title']/span)[2]</td>
 	<td></td>

@@ -1739,6 +1739,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			minimalJavadocOptions.setOverview(
 				project.relativePath(overviewFile));
 		}
+
+		standardJavadocDocletOptions.tags("generated");
 	}
 
 	protected void configureTaskPublishNodeModule(

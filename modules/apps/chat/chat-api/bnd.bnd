@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Chat API
+Bundle-SymbolicName: com.liferay.chat.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.chat.exception,\
+	com.liferay.chat.model,\
+	com.liferay.chat.service,\
+	com.liferay.chat.service.messaging,\
+	com.liferay.chat.service.persistence,\
+	com.liferay.chat.util.comparator

@@ -91,6 +91,7 @@ import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.bundling.War;
 import org.gradle.api.tasks.compile.CompileOptions;
 import org.gradle.api.tasks.compile.JavaCompile;
+import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.internal.Factory;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
@@ -127,6 +128,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		configureDescription(project);
 		configureSourceSetMain(project);
 		configureTaskClean(project);
+		configureTaskJavadoc(project);
 		configureTaskTest(project);
 		configureTasksTest(project);
 
@@ -750,6 +752,24 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		CompileOptions compileOptions = javaCompile.getOptions();
 
 		compileOptions.setFork(fork);
+	}
+
+	protected void configureTaskJavadoc(Project project) {
+		String bundleName = getBundleInstruction(
+			project, Constants.BUNDLE_NAME);
+		String bundleVersion = getBundleInstruction(
+			project, Constants.BUNDLE_VERSION);
+
+		if (Validator.isNull(bundleName) || Validator.isNull(bundleVersion)) {
+			return;
+		}
+
+		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
+			project, JavaPlugin.JAVADOC_TASK_NAME);
+
+		String title = String.format("%s %s API", bundleName, bundleVersion);
+
+		javadoc.setTitle(title);
 	}
 
 	protected void configureTasksJavaCompileFork(

@@ -30,7 +30,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AddPollsQuestionWithChart" priority="4">
+	<command name="ViewChart" priority="4">
 		<var name="pollsQuestionTitle"><![CDATA["Color"]]></var>
 		<var name="pollsQuestion"><![CDATA["What is your favorite color?"]]></var>
 		<var name="pollsQuestionChoiceA"><![CDATA["Blue"]]></var>

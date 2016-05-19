@@ -246,8 +246,8 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 		if ((dlFileEntry == null) ||
 			((dlFileEntry.getFolderId() > 0) &&
-			 (_dlFolderLocalService.fetchFolder(
-				 dlFileEntry.getFolderId()) == null))) {
+			 (_dlFolderLocalService.fetchFolder(dlFileEntry.getFolderId()) ==
+				 null))) {
 
 			return false;
 		}

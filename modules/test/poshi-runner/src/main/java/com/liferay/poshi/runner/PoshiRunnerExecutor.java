@@ -174,14 +174,14 @@ public class PoshiRunnerExecutor {
 				else if (childElement.attributeValue("macro") != null) {
 					runMacroExecuteElement(childElement, "macro");
 				}
-				else if ((childElement.attributeValue(
-							"macro-desktop") != null) &&
+				else if ((childElement.attributeValue("macro-desktop") !=
+							null) &&
 						 !PropsValues.MOBILE_BROWSER) {
 
 					runMacroExecuteElement(childElement, "macro-desktop");
 				}
-				else if ((childElement.attributeValue(
-							"macro-mobile") != null) &&
+				else if ((childElement.attributeValue("macro-mobile") !=
+							null) &&
 						 PropsValues.MOBILE_BROWSER) {
 
 					runMacroExecuteElement(childElement, "macro-mobile");

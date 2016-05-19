@@ -131,8 +131,9 @@ public class JCRFactoryImpl implements JCRFactory {
 			File repositoryRoot = new File(path);
 
 			if (!repositoryRoot.isAbsolute()) {
-				path = PropsUtil.get(
-					PropsKeys.LIFERAY_HOME) + StringPool.SLASH + path;
+				path =
+					PropsUtil.get(PropsKeys.LIFERAY_HOME) + StringPool.SLASH +
+						path;
 			}
 
 			FileUtil.mkdirs(path);

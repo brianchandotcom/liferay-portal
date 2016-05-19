@@ -51,8 +51,8 @@ public class SampleAppStartupAction extends SimpleAction {
 	}
 
 	protected void doRun(long companyId) throws Exception {
-		if (UserLocalServiceUtil.fetchUserByScreenName(
-				companyId, "paul") != null) {
+		if (UserLocalServiceUtil.fetchUserByScreenName(companyId, "paul") !=
+				null) {
 
 			return;
 		}

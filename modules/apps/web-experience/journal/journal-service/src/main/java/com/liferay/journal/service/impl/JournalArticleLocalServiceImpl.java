@@ -774,8 +774,8 @@ public class JournalArticleLocalServiceImpl
 		else {
 			validate(newArticleId);
 
-			if (journalArticlePersistence.countByG_A(
-					groupId, newArticleId) > 0) {
+			if (journalArticlePersistence.countByG_A(groupId, newArticleId) >
+					0) {
 
 				StringBundler sb = new StringBundler(5);
 

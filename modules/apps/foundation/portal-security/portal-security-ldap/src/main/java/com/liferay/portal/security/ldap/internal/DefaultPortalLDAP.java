@@ -752,8 +752,8 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			String emailAddress)
 		throws Exception {
 
-		if (getUser(
-				ldapServerId, companyId, screenName, emailAddress) != null) {
+		if (getUser(ldapServerId, companyId, screenName, emailAddress) !=
+				null) {
 
 			return true;
 		}

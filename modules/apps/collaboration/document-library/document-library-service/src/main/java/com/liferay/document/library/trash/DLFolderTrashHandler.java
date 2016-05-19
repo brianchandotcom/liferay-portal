@@ -238,8 +238,8 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 		if ((dlFolder == null) ||
 			((dlFolder.getParentFolderId() > 0) &&
-			 (_dlFolderLocalService.fetchFolder(
-				 dlFolder.getParentFolderId()) == null))) {
+			 (_dlFolderLocalService.fetchFolder(dlFolder.getParentFolderId()) ==
+				 null))) {
 
 			return false;
 		}

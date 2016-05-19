@@ -211,8 +211,8 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		MBThread thread = _mbThreadLocalService.getThread(classPK);
 
 		if ((thread.getCategoryId() > 0) &&
-			(_mbCategoryLocalService.fetchMBCategory(
-				thread.getCategoryId()) == null)) {
+			(_mbCategoryLocalService.fetchMBCategory(thread.getCategoryId()) ==
+				null)) {
 
 			return false;
 		}

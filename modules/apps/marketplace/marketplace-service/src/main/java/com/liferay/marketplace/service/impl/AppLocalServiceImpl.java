@@ -39,7 +39,10 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -259,7 +262,22 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 					"Unable to open file at " + app.getFilePath());
 			}
 
-			File file = FileUtil.createTempFile(inputStream);
+
+
+			String extension = FileUtil.getExtension(app.getFileName());
+			String fileName = FileUtil.encodeSafeFileName(app.getTitle());
+			fileName = encodeSafeFileName(fileName);
+
+			StringBundler sb = new StringBundler(7);
+
+			sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
+			sb.append(StringPool.SLASH);
+			sb.append(fileName);
+			sb.append(StringPool.PERIOD);
+			sb.append(extension);
+
+			File file = new File(sb.toString());
+			FileUtil.write(file, inputStream);
 
 			List<Bundle> bundles = BundleManagerUtil.installLPKG(file);
 
@@ -405,6 +423,15 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		return app;
 	}
 
+	protected String encodeSafeFileName(String fileName) {
+		if (fileName == null) {
+			return StringPool.BLANK;
+		}
+
+		return StringUtil.replace(
+			fileName, _SAFE_FILE_NAME_1, _SAFE_FILE_NAME_2);
+	}
+
 	protected Properties getMarketplaceProperties(File liferayPackageFile) {
 		InputStream inputStream = null;
 		ZipFile zipFile = null;
@@ -473,5 +500,16 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 	private List<App> _installedApps;
 	private Map<String, String> _prepackagedApps;
+
+	private static final String[] _SAFE_FILE_NAME_1 = {
+		StringPool.SLASH, StringPool.BACK_SLASH, StringPool.PIPE,
+		StringPool.STAR, StringPool.COLON, StringPool.LESS_THAN,
+		StringPool.GREATER_THAN, StringPool.QUESTION, StringPool.QUOTE
+	};
+
+	private static final String[] _SAFE_FILE_NAME_2 = {
+		"_SL_", "_BSL_", "_PIP_", "_ST_", "_COL_", "_LT_", "_GT_", "_QUE_",
+		"_QUO_"
+	};
 
 }

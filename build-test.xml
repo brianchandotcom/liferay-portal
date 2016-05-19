@@ -3327,6 +3327,12 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 	<target name="build-sql-file">
 		<get-testcase-property property.name="portal.version" />
 
+		<condition property="portal.version" value="${liferay.portal.bundle}">
+			<not>
+				<isset property="portal.version" />
+			</not>
+		</condition>
+
 		<if>
 			<isset property="portal.version" />
 			<then>
@@ -3433,7 +3439,28 @@ create database lportal${database.index} character set utf8;</echo>
 									</then>
 								</if>
 
-								<property name="sql.dir" value="sql\create${database.create.suffix}\" />
+								<if>
+									<or>
+										<equals arg1="${portal.version}" arg2="6.0.6" />
+										<equals arg1="${portal.version}" arg2="6.1.2" />
+									</or>
+									<then>
+										<var name="database.create.suffix" value="-minimal" />
+
+										<property name="sql.dir" value="sql/legacy/${portal.version}/create${database.create.suffix}/" />
+									</then>
+									<elseif>
+										<equals arg1="${portal.version}" arg2="6.2.3" />
+										<then>
+											<var name="database.create.suffix" value="-bare" />
+
+											<property name="sql.dir" value="sql/legacy/${portal.version}/create${database.create.suffix}/" />
+										</then>
+									</elseif>
+									<else>
+										<property name="sql.dir" value="sql\create${database.create.suffix}\" />
+									</else>
+								</if>
 
 								<if>
 									<equals arg1="${database.type}" arg2="mariadb" />
@@ -3452,6 +3479,8 @@ create database lportal${database.index} character set utf8;</echo>
 								</if>
 							</then>
 						</if>
+
+						<echo>Copying '${sql.dir}${sql.file}' to 'create.sql'</echo>
 
 						<copy file="${sql.dir}${sql.file}" tofile="create.sql" />
 					</else>

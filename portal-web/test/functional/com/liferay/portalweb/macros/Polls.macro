@@ -63,7 +63,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="checkPollChartArea">
+	<command name="viewPollChartArea">
 		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
 
 		<execute function="Click#makeVisibleClickAt" locator1="Polls#POLLS_TABLE_TITLE" />

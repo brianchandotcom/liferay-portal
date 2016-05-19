@@ -95,7 +95,7 @@
 			<var name="portlet" value="Polls" />
 		</execute>
 
-		<execute macro="Polls#checkPollChartArea">
+		<execute macro="Polls#viewPollChartArea">
 			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
 		</execute>
 	</command>

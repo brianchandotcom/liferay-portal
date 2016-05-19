@@ -187,15 +187,15 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	}
 
 	@Reference(unbind = "-")
-	protected void setResourceActions(ResourceActions resourceActions) {
-		_resourceActions = resourceActions;
-	}
-
-	@Reference(unbind = "-")
 	protected void setResourceActionLocalService(
 		ResourceActionLocalService resourceActionLocalService) {
 
 		_resourceActionLocalService = resourceActionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourceActions(ResourceActions resourceActions) {
+		_resourceActions = resourceActions;
 	}
 
 	@Reference(unbind = "-")
@@ -220,8 +220,8 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;
-	private ResourceActions _resourceActions;
 	private ResourceActionLocalService _resourceActionLocalService;
+	private ResourceActions _resourceActions;
 	private SettingsFactory _settingsFactory;
 	private UserLocalService _userLocalService;
 

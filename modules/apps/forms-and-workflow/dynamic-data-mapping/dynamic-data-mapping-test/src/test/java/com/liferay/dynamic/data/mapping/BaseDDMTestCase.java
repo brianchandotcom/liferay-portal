@@ -346,6 +346,20 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		return value;
 	}
 
+	protected DDMFormField createParagraphDDMFormField(String name) {
+		DDMFormField ddmFormField = new DDMFormField(name, "paragraph");
+
+		ddmFormField.setLocalizable(false);
+		ddmFormField.setRepeatable(false);
+		ddmFormField.setRequired(false);
+
+		LocalizedValue localizedValue = ddmFormField.getLabel();
+
+		localizedValue.addString(LocaleUtil.US, name);
+
+		return ddmFormField;
+	}
+
 	protected Document createSampleDocument() {
 		Document document = createEmptyDocument();
 

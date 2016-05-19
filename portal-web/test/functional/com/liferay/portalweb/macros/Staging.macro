@@ -940,7 +940,12 @@
 	</command>
 
 	<command name="viewStagingWorkflowStatusPG">
-		<execute function="AssertTextEquals" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" value1="${stagingWorkflowStatus}" />
+		<if>
+			<equals arg1="${stagingWorkflowStatus}" arg2="Ready for Publication" />
+			<then>
+				<execute function="AssertElementPresent" locator1="Staging#STAGING_MENU_READY_FOR_PUBLICATION" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewValidationError">

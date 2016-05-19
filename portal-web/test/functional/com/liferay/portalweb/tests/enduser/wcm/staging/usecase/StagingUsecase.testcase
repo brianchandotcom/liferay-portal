@@ -1667,7 +1667,6 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Empty Page Name" />
-			<var name="siteName" value="Community Site Name" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 

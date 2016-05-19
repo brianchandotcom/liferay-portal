@@ -23,7 +23,8 @@ boolean toggleRowChecker = GetterUtil.getBoolean(request.getAttribute("liferay-u
 %>
 
 <c:if test="<%= Validator.isNotNull(src) %>">
-	<div class="user-icon user-icon-xl user-icon-square <%= toggleRowChecker ? "click-selector" : StringPool.BLANK %>">
-		<img alt="thumbnail" class="img-responsive img-rounded" src="<%= HtmlUtil.escapeAttribute(src) %>" />
+	<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover <%= toggleRowChecker ? "click-selector" : StringPool.BLANK %>"
+		style="background-image: url('<%= src %>')" >
+		<img alt="thumbnail" class="sr-only" src="<%= HtmlUtil.escapeAttribute(src) %>" />
 	</div>
 </c:if>

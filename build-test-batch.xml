@@ -749,6 +749,10 @@ app.server.type=@{app.server.type}]]></echo>
 									<gradle-execute dir="modules/core/portal-lpkg-deployer-test" task="testIntegration">
 										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
+
+									<antcall inheritall="false" target="run-selenium-test">
+										<param name="test.class" value="PortalSmoke#Smoke" />
+									</antcall>
 								</try>
 
 								<finally>

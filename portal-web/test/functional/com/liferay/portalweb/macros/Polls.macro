@@ -118,7 +118,9 @@
 		<execute function="Click" locator1="CPPolls#SELECT_CHART_AREA" />
 
 		<execute function="SelectWindow#selectPopUp" locator1="null" />
+
 		<execute function="AssertElementPresent" locator1="CPPolls#POLLS_CHART" />
+
 		<execute function="Close#closeWindow" locator1="null" />
 	</command>
 

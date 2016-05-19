@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -56,34 +57,31 @@ public class SplitPackagesTest {
 
 		Bundle[] frameworkBundles = frameworkBundleContext.getBundles();
 
-		Map<Bundle, Map<String, ExportPackage>> bundlesMap = new HashMap<>();
+		Map<Bundle, Set<ExportPackage>> bundlesMap = new HashMap<>();
 
 		Map<String, SplitPackages> allowedSplitPackagesMap =
 			_getAllowedSplitPackagesMap();
 
 		for (Bundle bundle : frameworkBundles) {
-			Map<String, ExportPackage> bundleExportPackages =
-				_getBundleExportPackages(bundle);
+			Set<ExportPackage> bundleExportPackages = _getBundleExportPackages(
+				bundle);
 
 			if (bundleExportPackages == null) {
 				continue;
 			}
 
-			for (Map.Entry<Bundle, Map<String, ExportPackage>> entry :
+			for (Map.Entry<Bundle, Set<ExportPackage>> entry :
 					bundlesMap.entrySet()) {
 
-				Map<String, ExportPackage> mapBundlePackages = new HashMap<>(
+				Set<ExportPackage> mapBundlePackages = new HashSet<>(
 					entry.getValue());
 
-				Set<String> keySet = mapBundlePackages.keySet();
-
-				keySet.retainAll(bundleExportPackages.keySet());
+				mapBundlePackages.retainAll(bundleExportPackages);
 
 				if (!mapBundlePackages.isEmpty()) {
 					_processDuplicatedPackages(
-						entry.getKey(), mapBundlePackages.values(),
-						bundleExportPackages, allowedSplitPackagesMap,
-						bundle.getSymbolicName());
+						entry.getKey(), mapBundlePackages,
+						allowedSplitPackagesMap, bundle.getSymbolicName());
 				}
 			}
 
@@ -130,7 +128,7 @@ public class SplitPackagesTest {
 		return allowedSplitPackagesMap;
 	}
 
-	private Map<String, ExportPackage> _getBundleExportPackages(Bundle bundle) {
+	private Set<ExportPackage> _getBundleExportPackages(Bundle bundle) {
 		Dictionary<String, String> headers = bundle.getHeaders();
 
 		String exportPackage = headers.get(Constants.EXPORT_PACKAGE);
@@ -144,7 +142,7 @@ public class SplitPackagesTest {
 		Map<String, ? extends Map<String, String>> exportPackages =
 			parameters.asMapMap();
 
-		Map<String, ExportPackage> bundleExportPackages = new HashMap<>();
+		Set<ExportPackage> bundleExportPackages = new HashSet<>();
 
 		for (Map.Entry<String, ? extends Map<String, String>> entry :
 				exportPackages.entrySet()) {
@@ -159,8 +157,7 @@ public class SplitPackagesTest {
 				version = "0.0";
 			}
 
-			bundleExportPackages.put(
-				packageName, new ExportPackage(packageName, version));
+			bundleExportPackages.add(new ExportPackage(packageName, version));
 		}
 
 		return bundleExportPackages;
@@ -168,34 +165,26 @@ public class SplitPackagesTest {
 
 	private void _processDuplicatedPackages(
 		Bundle mapBundle, Collection<ExportPackage> duplicatedExportPackages,
-		Map<String, ExportPackage> currentBundleExportPackages,
 		Map<String, SplitPackages> allowedSplitPackagesMap,
 		String currentSymbolicName) {
 
 		String symbolicName = mapBundle.getSymbolicName();
 
 		for (ExportPackage duplicatedExportPackage : duplicatedExportPackages) {
-			String duplicatedPackageName = duplicatedExportPackage._name;
+			String packageName = duplicatedExportPackage._name;
 
-			ExportPackage exportPackage = currentBundleExportPackages.get(
-				duplicatedPackageName);
+			Assert.assertTrue(
+				"Detected split packages in " + currentSymbolicName + " and " +
+					symbolicName + ": " + packageName,
+				allowedSplitPackagesMap.containsKey(packageName));
 
-			if (Objects.equals(
-					exportPackage._version, duplicatedExportPackage._version)) {
-
-				Assert.assertTrue(
-					"Detected split packages in " + currentSymbolicName +
-						" and " + symbolicName + ": " + duplicatedPackageName,
-					allowedSplitPackagesMap.containsKey(duplicatedPackageName));
-
-				Assert.assertTrue(
-					"Detected split packages in " + currentSymbolicName +
-						" and " + symbolicName + ": " +
-							duplicatedExportPackages,
-					_checkAllowedSplitPackages(
-						allowedSplitPackagesMap.get(duplicatedPackageName),
-						exportPackage, currentSymbolicName));
-			}
+			Assert.assertTrue(
+				"Detected split packages in " + currentSymbolicName + " and " +
+					symbolicName + ": " +
+						duplicatedExportPackages,
+				_checkAllowedSplitPackages(
+					allowedSplitPackagesMap.get(packageName),
+					duplicatedExportPackage, currentSymbolicName));
 		}
 	}
 

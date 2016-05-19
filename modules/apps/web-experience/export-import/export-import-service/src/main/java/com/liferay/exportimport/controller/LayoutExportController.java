@@ -188,6 +188,8 @@ public class LayoutExportController implements ExportController {
 			parameterMap, PortletDataHandlerKeys.LOGO);
 		boolean exportLayoutSetSettings = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS);
+		boolean exportLayoutSetPrototypeSettings = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Export permissions " + exportPermissions);
@@ -325,6 +327,23 @@ public class LayoutExportController implements ExportController {
 			}
 		}
 
+		String layoutSetPrototypeUuid = layoutSet.getLayoutSetPrototypeUuid();
+
+		if (exportLayoutSetPrototypeSettings &&
+			Validator.isNotNull(layoutSetPrototypeUuid)) {
+
+			LayoutSetPrototype layoutSetPrototype =
+				_layoutSetPrototypeLocalService.
+					getLayoutSetPrototypeByUuidAndCompanyId(
+						layoutSetPrototypeUuid, companyId);
+
+			headerElement.addAttribute(
+				"layout-set-prototype-uuid", layoutSetPrototypeUuid);
+			headerElement.addAttribute(
+				"layout-set-prototype-name",
+				layoutSetPrototype.getName(LocaleUtil.getDefault()));
+		}
+
 		Element missingReferencesElement = rootElement.addElement(
 			"missing-references");
 
@@ -439,25 +458,6 @@ public class LayoutExportController implements ExportController {
 
 		portletDataContext.addDeletionSystemEventStagedModelTypes(
 			new StagedModelType(Layout.class));
-
-		Element layoutsElement = portletDataContext.getExportDataGroupElement(
-			Layout.class);
-
-		String layoutSetPrototypeUuid = layoutSet.getLayoutSetPrototypeUuid();
-
-		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
-			LayoutSetPrototype layoutSetPrototype =
-				_layoutSetPrototypeLocalService.
-					getLayoutSetPrototypeByUuidAndCompanyId(
-						layoutSetPrototypeUuid, companyId);
-
-			layoutsElement.addAttribute(
-				"layout-set-prototype-uuid", layoutSetPrototypeUuid);
-
-			layoutsElement.addAttribute(
-				"layout-set-prototype-name",
-				layoutSetPrototype.getName(LocaleUtil.getDefault()));
-		}
 
 		for (Layout layout : layouts) {
 			exportLayout(portletDataContext, layoutIds, layout);

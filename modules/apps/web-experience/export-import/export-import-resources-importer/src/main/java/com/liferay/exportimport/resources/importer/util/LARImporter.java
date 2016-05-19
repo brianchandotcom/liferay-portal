@@ -125,6 +125,9 @@ public class LARImporter extends BaseImporter {
 			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_LINK_ENABLED,
 			new String[] {Boolean.TRUE.toString()});
 		parameters.put(
+			PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS,
+			new String[] {Boolean.TRUE.toString()});
+		parameters.put(
 			PortletDataHandlerKeys.LAYOUT_SET_SETTINGS,
 			new String[] {Boolean.TRUE.toString()});
 		parameters.put(

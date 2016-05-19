@@ -2183,7 +2183,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  liferay.exportimport.kernel.model",com.liferay.exportimport.kernel.ex
  ception;version="1.0.0";uses:="com.liferay.exportimport.kernel.lar,co
  m.liferay.portal.kernel.exception",com.liferay.exportimport.kernel.la
- r;version="1.0.0";uses:="com.liferay.asset.kernel.model,com.liferay.e
+ r;version="1.1.0";uses:="com.liferay.asset.kernel.model,com.liferay.e
  xpando.kernel.model,com.liferay.exportimport.kernel.model,com.liferay
  .message.boards.kernel.model,com.liferay.portal.kernel.dao.orm,com.li
  feray.portal.kernel.exception,com.liferay.portal.kernel.lock,com.life

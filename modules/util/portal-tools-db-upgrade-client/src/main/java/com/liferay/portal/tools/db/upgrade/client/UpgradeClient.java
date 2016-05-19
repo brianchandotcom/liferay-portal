@@ -581,7 +581,7 @@ public class UpgradeClient {
 
 			System.out.println(
 				"Please enter your database host (" + dataSource.getHost() +
-				"): ");
+					"): ");
 
 			response = _consoleReader.readLine();
 

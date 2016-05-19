@@ -21,6 +21,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 
@@ -44,57 +45,50 @@ import org.osgi.framework.Constants;
 
 /**
  * @author Tom Wang
+ * @author Shuyang Zhou
  */
 @RunWith(Arquillian.class)
 public class SplitPackagesTest {
 
 	@Test
-	public void testSplitPackage() throws IOException {
-		Bundle frameworkBundle =
-			(Bundle)ModuleFrameworkUtilAdapter.getFramework();
-
-		BundleContext frameworkBundleContext =
-			frameworkBundle.getBundleContext();
-
-		Bundle[] frameworkBundles = frameworkBundleContext.getBundles();
-
-		Map<Bundle, Set<ExportPackage>> bundlesMap = new HashMap<>();
-
+	public void testSplitPackages() throws IOException {
 		Map<ExportPackage, Set<String>> allowedSplitPackages =
 			_getAllowedSplitPackages();
 
-		for (Bundle bundle : frameworkBundles) {
-			Set<ExportPackage> bundleExportPackages = _getBundleExportPackages(
-				bundle);
+		Bundle systemBundle = (Bundle)ModuleFrameworkUtilAdapter.getFramework();
 
-			if (bundleExportPackages == null) {
+		BundleContext bundleContext = systemBundle.getBundleContext();
+
+		Map<Bundle, Set<ExportPackage>> exportPackagesMap = new HashMap<>();
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			Set<ExportPackage> exportPackages = _getExportPackages(bundle);
+
+			if (exportPackages == null) {
 				continue;
 			}
 
 			for (Map.Entry<Bundle, Set<ExportPackage>> entry :
-					bundlesMap.entrySet()) {
+					exportPackagesMap.entrySet()) {
 
-				Set<ExportPackage> mapBundlePackages = new HashSet<>(
+				Set<ExportPackage> duplicatedExportPackages = new HashSet<>(
 					entry.getValue());
 
-				mapBundlePackages.retainAll(bundleExportPackages);
+				duplicatedExportPackages.retainAll(exportPackages);
 
-				if (!mapBundlePackages.isEmpty()) {
-					_processDuplicatedPackages(
-						entry.getKey(), mapBundlePackages,
-						allowedSplitPackages, bundle);
-				}
+				_processSplitPackages(
+					bundle, entry.getKey(), duplicatedExportPackages,
+					allowedSplitPackages);
 			}
 
-			bundlesMap.put(bundle, bundleExportPackages);
+			exportPackagesMap.put(bundle, exportPackages);
 		}
 	}
 
 	private Map<ExportPackage, Set<String>> _getAllowedSplitPackages()
 		throws IOException {
 
-		Map<ExportPackage, Set<String>> allowedSplitPackages =
-			new HashMap<>();
+		Map<ExportPackage, Set<String>> allowedSplitPackages = new HashMap<>();
 
 		for (String splitPackagesLine :
 				StringUtil.splitLines(
@@ -103,20 +97,17 @@ public class SplitPackagesTest {
 							"AllowedSplitPackages.txt")))) {
 
 			String[] splitPackagesParts = StringUtil.split(
-				splitPackagesLine, ';');
-
-			ExportPackage exportPackage = new ExportPackage(
-				splitPackagesParts[0], splitPackagesParts[1]);
+				splitPackagesLine, StringPool.SEMICOLON);
 
 			allowedSplitPackages.put(
-				exportPackage,
+				new ExportPackage(splitPackagesParts[0], splitPackagesParts[1]),
 				SetUtil.fromArray(StringUtil.split(splitPackagesParts[2])));
 		}
 
 		return allowedSplitPackages;
 	}
 
-	private Set<ExportPackage> _getBundleExportPackages(Bundle bundle) {
+	private Set<ExportPackage> _getExportPackages(Bundle bundle) {
 		Dictionary<String, String> headers = bundle.getHeaders();
 
 		String exportPackage = headers.get(Constants.EXPORT_PACKAGE);
@@ -127,34 +118,29 @@ public class SplitPackagesTest {
 
 		Parameters parameters = OSGiHeader.parseHeader(exportPackage);
 
-		Map<String, ? extends Map<String, String>> exportPackages =
+		Map<String, ? extends Map<String, String>> exportPackagesMap =
 			parameters.asMapMap();
 
-		Set<ExportPackage> bundleExportPackages = new HashSet<>();
+		Set<ExportPackage> exportPackages = new HashSet<>();
 
 		for (Map.Entry<String, ? extends Map<String, String>> entry :
-				exportPackages.entrySet()) {
-
-			String packageName = entry.getKey();
+				exportPackagesMap.entrySet()) {
 
 			Map<String, String> attributes = entry.getValue();
 
-			String version = attributes.get(Constants.VERSION_ATTRIBUTE);
-
-			if (version == null) {
-				version = "0.0";
-			}
-
-			bundleExportPackages.add(new ExportPackage(packageName, version));
+			exportPackages.add(
+				new ExportPackage(
+					entry.getKey(),
+					attributes.get(Constants.VERSION_ATTRIBUTE)));
 		}
 
-		return bundleExportPackages;
+		return exportPackages;
 	}
 
-	private void _processDuplicatedPackages(
-		Bundle mapBundle, Collection<ExportPackage> duplicatedExportPackages,
-		Map<ExportPackage, Set<String>> allowedSplitPackages,
-		Bundle currentBundle) {
+	private void _processSplitPackages(
+		Bundle currentBundle, Bundle previousBundle,
+		Collection<ExportPackage> duplicatedExportPackages,
+		Map<ExportPackage, Set<String>> allowedSplitPackages) {
 
 		for (ExportPackage duplicatedExportPackage : duplicatedExportPackages) {
 			Set<String> symbolicNames = allowedSplitPackages.get(
@@ -165,7 +151,7 @@ public class SplitPackagesTest {
 
 				Assert.fail(
 					"Detected split packages " + duplicatedExportPackage +
-						" in " + mapBundle + " and " + currentBundle);
+						" in " + previousBundle + " and " + currentBundle);
 			}
 		}
 	}

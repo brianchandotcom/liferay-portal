@@ -61,10 +61,16 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	public UpgradeJournal(
 		CompanyLocalService companyLocalService,
-		DDMTemplateLinkLocalService ddmTemplateLinkLocalService) {
+		DDMTemplateLinkLocalService ddmTemplateLinkLocalService,
+		DefaultDDMStructureHelper defaultDDMStructureHelper,
+		GroupLocalService groupLocalService,
+		UserLocalService userLocalService) {
 
 		_companyLocalService = companyLocalService;
 		_ddmTemplateLinkLocalService = ddmTemplateLinkLocalService;
+		_defaultDDMStructureHelper = defaultDDMStructureHelper;
+		_groupLocalService = groupLocalService;
+		_userLocalService = userLocalService;
 	}
 
 	protected String getBasicWebContentStructureKey(long companyId)
@@ -379,7 +385,10 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	private final CompanyLocalService _companyLocalService;
 	private final DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
+	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
+	private final GroupLocalService _groupLocalService;
 	private final Pattern _nameAttributePattern = Pattern.compile(
 		"name=\"([^\"]+)\"");
+	private final UserLocalService _userLocalService;
 
 }

@@ -28,7 +28,7 @@
 			</then>
 			<else>
 				<execute function="AssertClick" locator1="KnowledgeBase#MENUBAR_ADD" value1="Add" />
-				<execute function="AssertClick" locator1="MenuItem#ADD_ARTICLE" value1="Add Article" />
+				<execute function="AssertClick" locator1="MenuItem#BASIC_ARTICLE" value1="Basic Article" />
 			</else>
 		</if>
 
@@ -153,7 +153,7 @@
 	<command name="addCPWithInvalidAttachmentSize">
 		<execute function="AssertClick" locator1="KnowledgeBase#MENUBAR_ADD" value1="Add" />
 
-		<execute function="AssertClick" locator1="MenuItem#ADD_ARTICLE" value1="Add Article" />
+		<execute function="AssertClick" locator1="MenuItem#BASIC_ARTICLE" value1="Basic Article" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${kbArticleTitle}" />
 
@@ -170,7 +170,7 @@
 
 	<command name="addCPWithInvalidTitle">
 		<execute function="AssertClick" locator1="KnowledgeBase#MENUBAR_ADD" value1="Add" />
-		<execute function="AssertClick" locator1="MenuItem#ADD_ARTICLE" value1="Add Article" />
+		<execute function="AssertClick" locator1="MenuItem#BASIC_ARTICLE" value1="Basic Article" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${kbArticleTitle}" />
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbArticleContent}" />

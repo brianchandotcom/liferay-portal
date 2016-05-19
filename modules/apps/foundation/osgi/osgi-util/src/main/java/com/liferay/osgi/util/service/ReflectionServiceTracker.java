@@ -166,8 +166,8 @@ public class ReflectionServiceTracker implements Closeable {
 						getServiceReference();
 
 					if ((currentServiceReference == null) ||
-						(serviceReference.compareTo(
-							currentServiceReference) > 0)) {
+						(serviceReference.compareTo(currentServiceReference) >
+							0)) {
 
 						try {
 							injectionPoint.inject(service);

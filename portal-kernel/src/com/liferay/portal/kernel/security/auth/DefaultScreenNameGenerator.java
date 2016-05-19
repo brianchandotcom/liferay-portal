@@ -76,8 +76,8 @@ public class DefaultScreenNameGenerator implements ScreenNameGenerator {
 			}
 		}
 
-		if (UserLocalServiceUtil.fetchUserByScreenName(
-				companyId, screenName) != null) {
+		if (UserLocalServiceUtil.fetchUserByScreenName(companyId, screenName) !=
+				null) {
 
 			return getUnusedScreenName(companyId, screenName);
 		}

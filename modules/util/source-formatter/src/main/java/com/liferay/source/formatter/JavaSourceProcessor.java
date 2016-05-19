@@ -3600,6 +3600,37 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return null;
 		}
 
+		int x = -1;
+
+		while (true) {
+			x = trimmedLine.indexOf(") ", x + 1);
+
+			if (x == -1) {
+				break;
+			}
+
+			String linePart1 = trimmedLine.substring(0, x);
+
+			if (ToolsUtil.isInsideQuotes(trimmedLine, x) ||
+				(getLevel(linePart1) != 0)) {
+
+				continue;
+			}
+
+			String linePart2 = trimmedLine.substring(x + 2);
+
+			if (linePart2.matches("[!=<>\\+\\-\\*]+ .*")) {
+				int y = trimmedLine.indexOf(StringPool.SPACE, x + 2);
+
+				if (previousLineLength + y <= _maxLineLength) {
+					return getCombinedLinesContent(
+						content, fileName, line, trimmedLine, lineLength,
+						lineCount, previousLine, trimmedLine.substring(0, y),
+						true, true, 0);
+				}
+			}
+		}
+
 		if (StringUtil.count(previousLine, CharPool.OPEN_PARENTHESIS) > 1) {
 			int pos = trimmedPreviousLine.lastIndexOf(
 				CharPool.OPEN_PARENTHESIS, trimmedPreviousLine.length() - 2);

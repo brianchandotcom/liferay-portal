@@ -218,8 +218,8 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			classPK);
 
 		if ((article.getFolderId() > 0) &&
-			(_journalFolderLocalService.fetchFolder(
-				article.getFolderId()) == null)) {
+			(_journalFolderLocalService.fetchFolder(article.getFolderId()) ==
+				null)) {
 
 			return false;
 		}

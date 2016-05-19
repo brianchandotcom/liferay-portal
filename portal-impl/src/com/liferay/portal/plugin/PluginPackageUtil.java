@@ -535,8 +535,8 @@ public class PluginPackageUtil {
 	}
 
 	private boolean _isInstallationInProcess(String context) {
-		if (_installedPluginPackages.getInstallingPluginPackage(
-				context) != null) {
+		if (_installedPluginPackages.getInstallingPluginPackage(context) !=
+				null) {
 
 			return true;
 		}

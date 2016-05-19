@@ -252,8 +252,8 @@ public class SyncWatchEventProcessor implements Runnable {
 				}
 			}
 			catch (Exception e) {
-				if (SyncFileService.fetchSyncFile(
-						targetFilePath.toString()) == null) {
+				if (SyncFileService.fetchSyncFile(targetFilePath.toString()) ==
+						null) {
 
 					_logger.error(e.getMessage(), e);
 				}

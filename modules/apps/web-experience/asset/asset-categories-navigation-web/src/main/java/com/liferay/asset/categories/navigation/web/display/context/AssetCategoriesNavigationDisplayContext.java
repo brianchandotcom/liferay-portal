@@ -144,8 +144,8 @@ public class AssetCategoriesNavigationDisplayContext {
 			getAvailableAssetVocabularyIds());
 
 		for (long assetVocabularyId : availableAssetVocabularyIdsSet) {
-			if (Arrays.binarySearch(
-					assetVocabularyIds, assetVocabularyId) < 0) {
+			if (Arrays.binarySearch(assetVocabularyIds, assetVocabularyId) <
+					0) {
 
 				AssetVocabulary assetVocabulary =
 					AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(

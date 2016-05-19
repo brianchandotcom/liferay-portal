@@ -166,7 +166,6 @@ portletDisplay.setURLBack(redirect);
 
 		<liferay-portlet:renderURL allowEmptyParam="<%= true %>" var="addPollChoiceURL">
 			<liferay-portlet:param name="mvcRenderCommandName" value="/polls/edit_question" />
-			<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
 			<liferay-portlet:param name="<%= EditQuestionMVCActionCommand.CHOICE_DESCRIPTION_PREFIX + (char)(96 + choicesCount + 1) %>" value="" />
 		</liferay-portlet:renderURL>
 
@@ -184,7 +183,6 @@ portletDisplay.setURLBack(redirect);
 
 		<liferay-portlet:renderURL allowEmptyParam="<%= true %>" var="deletePollChoiceURL">
 			<liferay-portlet:param name="mvcRenderCommandName" value="/polls/edit_question" />
-			<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
 			<liferay-portlet:param name="<%= EditQuestionMVCActionCommand.CHOICE_DESCRIPTION_PREFIX + (char)(96 + choicesCount - 1) %>" value="" />
 		</liferay-portlet:renderURL>
 

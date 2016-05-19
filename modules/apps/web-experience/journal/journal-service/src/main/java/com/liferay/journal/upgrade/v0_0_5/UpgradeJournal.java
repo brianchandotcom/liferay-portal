@@ -19,10 +19,14 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
@@ -73,8 +77,31 @@ public class UpgradeJournal extends UpgradeProcess {
 		_userLocalService = userLocalService;
 	}
 
-	protected String getBasicWebContentStructureKey(long companyId)
+	protected String addBasicWebContentStructureAndTemplate(long companyId)
 		throws Exception {
+
+		Group group = _groupLocalService.getCompanyGroup(companyId);
+
+		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
+
+		boolean addResource = PermissionThreadLocal.isAddResource();
+
+		PermissionThreadLocal.setAddResource(false);
+
+		try {
+			Class<?> clazz = getClass();
+
+			_defaultDDMStructureHelper.addDDMStructures(
+				defaultUserId, group.getGroupId(),
+				PortalUtil.getClassNameId(JournalArticle.class),
+				clazz.getClassLoader(),
+				"com/liferay/journal/upgrade/v1_0_0/dependencies" +
+					"/basic-web-content-structure.xml",
+				new ServiceContext());
+		}
+		finally {
+			PermissionThreadLocal.setAddResource(addResource);
+		}
 
 		String defaultLanguageId = UpgradeProcessUtil.getDefaultLanguageId(
 			companyId);
@@ -349,7 +376,7 @@ public class UpgradeJournal extends UpgradeProcess {
 					"JournalArticle where companyId = " + companyId);
 			ResultSet rs = ps.executeQuery()) {
 
-			String name = getBasicWebContentStructureKey(companyId);
+			String name = addBasicWebContentStructureAndTemplate(companyId);
 
 			while (rs.next()) {
 				long id = rs.getLong("id_");

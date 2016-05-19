@@ -67,7 +67,7 @@ public class BlogsContentEditorConfigContributor
 
 		StringBundler sb = new StringBundler(6);
 
-		sb.append("a[*]; ");
+		sb.append("a[*](*); ");
 		sb.append(getAllowedContentText());
 		sb.append(" div(*); img[class, !src] {height, width}; ");
 		sb.append(getAllowedContentLists());

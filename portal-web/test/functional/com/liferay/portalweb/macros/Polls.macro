@@ -113,9 +113,9 @@
 	<command name="viewPollChartArea">
 		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="Polls#POLLS_TABLE_TITLE" />
+		<execute function="Click" locator1="Polls#POLLS_TABLE_TITLE" />
 
-		<execute function="Click#makeVisibleClickAt" locator1="CPPolls#SELECT_CHART_AREA" />
+		<execute function="Click" locator1="CPPolls#SELECT_CHART_AREA" />
 
 		<execute function="SelectWindow#selectPopUp" locator1="null" />
 		<execute function="AssertElementPresent" locator1="CPPolls#POLLS_CHART" />

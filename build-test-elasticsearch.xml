@@ -1,0 +1,171 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-test-elasticsearch" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<macrodef name="prepare-elasticsearch">
+		<sequential>
+			<copy todir="${elasticsearch.dir}">
+				<fileset
+					dir="modules/apps/foundation/portal-search/portal-search-elasticsearch/src/main/resources/plugins/"
+					includes="analysis*${elasticsearch.version}.zip"
+				/>
+			</copy>
+
+			<chmod file="${elasticsearch.dir}/bin/**" perm="a+x" />
+
+			<if>
+				<os family="unix" />
+				<then>
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./plugin install file:///${elasticsearch.dir}/analysis-icu-${elasticsearch.version}.zip" />
+					</exec>
+
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./plugin install file:///${elasticsearch.dir}/analysis-kuromoji-${elasticsearch.version}.zip" />
+					</exec>
+
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./plugin install file:///${elasticsearch.dir}/analysis-smartcn-${elasticsearch.version}.zip" />
+					</exec>
+
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./plugin install file:///${elasticsearch.dir}/analysis-stempel-${elasticsearch.version}.zip" />
+					</exec>
+				</then>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
+							<arg value="/c" />
+							<arg line="plugin install file:///${elasticsearch.dir}/analysis-icu-${elasticsearch.version}.zip" />
+						</exec>
+
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
+							<arg value="/c" />
+							<arg line="plugin install file:///${elasticsearch.dir}/analysis-kuromoji-${elasticsearch.version}.zip" />
+						</exec>
+
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
+							<arg value="/c" />
+							<arg line="plugin install file:///${elasticsearch.dir}/analysis-smartcn-${elasticsearch.version}.zip" />
+						</exec>
+
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
+							<arg value="/c" />
+							<arg line="plugin install file:///${elasticsearch.dir}/analysis-stempel-${elasticsearch.version}.zip" />
+						</exec>
+					</then>
+				</elseif>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="unzip-elasticsearch">
+		<sequential>
+			<delete dir="${elasticsearch.dir}" />
+
+			<if>
+				<not>
+					<available file="${app.server.parent.dir}/${elasticsearch.zip.name}" />
+				</not>
+				<then>
+					<mirrors-get
+						dest="${app.server.parent.dir}/${elasticsearch.zip.name}"
+						src="${elasticsearch.zip.url}"
+						verbose="true"
+					/>
+				</then>
+			</if>
+
+			<unzip
+				dest="${app.server.parent.dir}"
+				src="${app.server.parent.dir}/${elasticsearch.zip.name}"
+			/>
+		</sequential>
+	</macrodef>
+
+	<target name="configure-elasticsearch-osgi-bundle-properties">
+		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.cfg">operationMode=REMOTE
+logExceptionsOnly=false</echo>
+	</target>
+
+	<target name="start-elasticsearch">
+		<unzip-elasticsearch />
+
+		<replace file="${elasticsearch.dir}/config/elasticsearch.yml">
+			<replacetoken><![CDATA[# cluster.name: my-application]]></replacetoken>
+			<replacevalue><![CDATA[cluster.name: LiferayElasticsearchCluster]]></replacevalue>
+		</replace>
+
+		<prepare-elasticsearch />
+
+		<antcall target="configure-elasticsearch-osgi-bundle-properties" />
+
+		<local name="elasticsearch.server.not.started" />
+
+		<if>
+			<os family="unix" />
+			<then>
+				<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+					<arg value="-c" />
+					<arg value="./elasticsearch -d -p pid" />
+				</exec>
+
+				<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
+					<http url="http://localhost:9200/" />
+				</waitfor>
+
+				<fail if="elasticsearch.server.not.started" message="Elasticsearch server failed to initialize." />
+			</then>
+			<elseif>
+				<os family="windows" />
+				<then>
+					<exec dir="${elasticsearch.dir}/bin" executable="cmd" spawn="true">
+						<arg value="/c" />
+						<arg value="elasticsearch -d -p pid" />
+					</exec>
+
+					<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">
+						<http url="http://localhost:9200/" />
+					</waitfor>
+
+					<fail if="elasticsearch.server.not.started" message="Elasticsearch server failed to initialize." />
+				</then>
+			</elseif>
+		</if>
+	</target>
+
+	<target name="stop-elasticsearch">
+		<if>
+			<os family="unix" />
+			<then>
+				<loadfile property="pid" srcFile="${elasticsearch.dir}/bin/pid">
+					<filterchain>
+						<linecontainsregexp>
+							<regexp pattern="[0-9]*" />
+						</linecontainsregexp>
+					</filterchain>
+				</loadfile>
+
+				<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+					<arg value="-c" />
+					<arg value="kill ${pid}" />
+				</exec>
+			</then>
+			<elseif>
+				<os family="windows" />
+				<then>
+					<exec dir="${elasticsearch.dir}/bin" executable="cmd" spawn="true">
+						<arg value="/c" />
+						<arg value="for /f %x in (pid) do taskkill /f /pid %x" />
+					</exec>
+				</then>
+			</elseif>
+		</if>
+	</target>
+</project>

@@ -18,13 +18,13 @@ import com.liferay.chat.model.Entry;
 import com.liferay.chat.model.EntryConstants;
 import com.liferay.chat.model.impl.EntryImpl;
 import com.liferay.chat.service.persistence.EntryFinder;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class EntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_EMPTY_CONTENT);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_EMPTY_CONTENT);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -82,7 +82,7 @@ public class EntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_NEW);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_NEW);
 
 			if (createDate > 0) {
 				sql = StringUtil.replace(sql, _FLAG_SQL, _CREATE_DATE_SQL);
@@ -121,7 +121,7 @@ public class EntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_OLD);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_OLD);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 

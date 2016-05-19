@@ -141,6 +141,7 @@ import org.gradle.plugins.ide.idea.IdeaPlugin;
 import org.gradle.plugins.ide.idea.model.IdeaModel;
 import org.gradle.plugins.ide.idea.model.IdeaModule;
 import org.gradle.process.ExecSpec;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -158,6 +159,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	public static final String DEFAULT_REPOSITORY_URL =
 		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/" +
 			"public";
+
+	public static final String DOCLET_CONFIGURATION_NAME = "doclet";
 
 	public static final String INSTALL_CACHE_TASK_NAME = "installCache";
 
@@ -218,6 +221,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, portalConfiguration, portalTestConfiguration);
 		}
 
+		Configuration docletConfiguration = addConfigurationDoclet(project);
+
 		Configuration baselineConfiguration = null;
 
 		if (hasBaseline(project)) {
@@ -250,7 +255,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		configureRepositories(project);
 		configureSourceSetMain(project);
 		configureTaskJar(project, testProject);
-		configureTaskJavadoc(project, portalRootDir);
+		configureTaskJavadoc(project, docletConfiguration, portalRootDir);
 		configureTaskTest(project);
 		configureTaskTestIntegration(project);
 		configureTaskTlddoc(project, portalRootDir);
@@ -382,6 +387,28 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
+	protected Configuration addConfigurationDoclet(final Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, DOCLET_CONFIGURATION_NAME);
+
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
+
+				@Override
+				public void execute(DependencySet dependencySet) {
+					addDependenciesDoclet(project);
+				}
+
+			});
+
+		configuration.setDescription(
+			"Configures the Doclet used to generate the Javadoc files for " +
+				"this project.");
+		configuration.setVisible(false);
+
+		return configuration;
+	}
+
 	protected Configuration addConfigurationPortalTest(Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, PORTAL_TEST_CONFIGURATION_NAME);
@@ -400,6 +427,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			String.valueOf(project.getGroup()),
 			GradleUtil.getArchivesBaseName(project),
 			"(," + String.valueOf(project.getVersion()) + ")", false);
+	}
+
+	protected void addDependenciesDoclet(Project project) {
+		String version = GradleUtil.getPortalToolVersion(project, _DOCLET_NAME);
+
+		GradleUtil.addDependency(
+			project, DOCLET_CONFIGURATION_NAME, GradleUtil.PORTAL_TOOL_GROUP,
+			_DOCLET_NAME, version);
 	}
 
 	protected void addDependenciesPortalTest(Project project) {
@@ -1649,12 +1684,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		compileOptions.setWarnings(false);
 	}
 
-	protected void configureTaskJavadoc(Project project, File portalRootDir) {
+	protected void configureTaskJavadoc(
+		Project project, Configuration docletConfiguration,
+		File portalRootDir) {
+
 		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
 			project, JavaPlugin.JAVADOC_TASK_NAME);
 
 		configureTaskJavadocFilter(javadoc);
-		configureTaskJavadocOptions(javadoc, portalRootDir);
+		configureTaskJavadocOptions(
+			javadoc, docletConfiguration, portalRootDir);
 
 		JavaVersion javaVersion = JavaVersion.current();
 
@@ -1716,11 +1755,35 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTaskJavadocOptions(
-		Javadoc javadoc, File portalRootDir) {
+		Javadoc javadoc, final Configuration docletConfiguration,
+		File portalRootDir) {
 
 		StandardJavadocDocletOptions standardJavadocDocletOptions =
 			(StandardJavadocDocletOptions)javadoc.getOptions();
 		Project project = javadoc.getProject();
+
+		javadoc.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Javadoc javadoc = (Javadoc)task;
+
+					StandardJavadocDocletOptions standardJavadocDocletOptions =
+						(StandardJavadocDocletOptions)javadoc.getOptions();
+
+					List<File> docletPaths =
+						standardJavadocDocletOptions.getDocletpath();
+
+					if (docletPaths.isEmpty()) {
+						GUtil.addToCollection(docletPaths, docletConfiguration);
+					}
+				}
+
+			});
+
+		standardJavadocDocletOptions.setDoclet(
+			"com.liferay.tools.doclets.standard.Standard");
 
 		if (portalRootDir != null) {
 			File stylesheetFile = new File(
@@ -2171,6 +2234,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	private static final String _APP_BND_FILE_NAME = "app.bnd";
 
 	private static final String _CACHE_COMMIT_MESSAGE = "FAKE GRADLE CACHE";
+
+	private static final String _DOCLET_NAME = "com.liferay.doclet";
 
 	private static final String _GROUP = "com.liferay";
 

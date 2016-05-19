@@ -560,7 +560,7 @@ public class UpgradeClient {
 			}
 
 			System.out.println(
-				"Please enter your database JDBC driver class name(" +
+				"Please enter your database JDBC driver class name (" +
 					dataSource.getClassName() + "): ");
 
 			response = _consoleReader.readLine();

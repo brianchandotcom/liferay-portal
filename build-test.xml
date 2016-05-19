@@ -2457,24 +2457,21 @@ module.framework.base.dir=${liferay.home}/osgi]]></echo>
 		<attribute name="liferay.portal.bundle" />
 
 		<sequential>
-			<var name="app.server.tomcat.bin.dir" unset="true" />
-			<var name="app.server.tomcat.version" unset="true" />
-
 			<if>
 				<equals arg1="@{liferay.portal.bundle}" arg2="6.0.6" />
 				<then>
-					<property name="app.server.tomcat.version" value="6.0.29" />
+					<var name="app.server.tomcat.version" value="6.0.29" />
 				</then>
 				<elseif>
 					<equals arg1="@{liferay.portal.bundle}" arg2="6.1.2" />
 					<then>
-						<property name="app.server.tomcat.version" value="7.0.40" />
+						<var name="app.server.tomcat.version" value="7.0.40" />
 					</then>
 				</elseif>
 				<elseif>
 					<equals arg1="@{liferay.portal.bundle}" arg2="6.1.20" />
 					<then>
-						<property name="app.server.tomcat.version" value="7.0.27" />
+						<var name="app.server.tomcat.version" value="7.0.27" />
 					</then>
 				</elseif>
 				<elseif>
@@ -2497,12 +2494,12 @@ module.framework.base.dir=${liferay.home}/osgi]]></echo>
 						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.13" />
 					</or>
 					<then>
-						<property name="app.server.tomcat.version" value="7.0.42" />
+						<var name="app.server.tomcat.version" value="7.0.42" />
 					</then>
 				</elseif>
 			</if>
 
-			<property name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/bin" />
+			<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/bin" />
 
 			<echo append="true" file="app.server.${user.name}.properties">
 				app.server.tomcat.bin.dir=${app.server.tomcat.bin.dir}

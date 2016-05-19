@@ -58,7 +58,7 @@ public class SyncDLObjectUpdate {
 		StringBundler sb = new StringBundler((_syncDLObjects.size() * 78) + 5);
 
 		sb.append("{\"lastAccessTime\":");
-		sb.append(_lastAccessTime);
+		append(sb, _lastAccessTime, false);
 		sb.append(",\"resultsTotal\":");
 		sb.append(_resultsTotal);
 		sb.append(",\"syncDLObjects\":[");
@@ -71,9 +71,9 @@ public class SyncDLObjectUpdate {
 			sb.append(",\"checksum\":");
 			append(sb, syncDLObject.getChecksum(), false);
 			sb.append(",\"companyId\":");
-			sb.append(syncDLObject.getCompanyId());
+			append(sb, syncDLObject.getCompanyId(), false);
 			sb.append(",\"createTime\":");
-			sb.append(syncDLObject.getCreateTime());
+			append(sb, syncDLObject.getCreateTime(), false);
 			sb.append(",\"description\":");
 			append(sb, syncDLObject.getDescription(), true);
 			sb.append(",\"event\":");
@@ -94,37 +94,37 @@ public class SyncDLObjectUpdate {
 			}
 
 			sb.append(",\"lockUserId\":");
-			sb.append(syncDLObject.getLockUserId());
+			append(sb, syncDLObject.getLockUserId(), false);
 			sb.append(",\"lockUserName\":");
 			append(sb, syncDLObject.getLockUserName(), true);
 			sb.append(",\"mimeType\":");
 			append(sb, syncDLObject.getMimeType(), true);
 			sb.append(",\"modifiedTime\":");
-			sb.append(syncDLObject.getModifiedTime());
+			append(sb, syncDLObject.getModifiedTime(), false);
 			sb.append(",\"name\":");
 			append(sb, syncDLObject.getName(), true);
 			sb.append(",\"parentFolderId\":");
-			sb.append(syncDLObject.getParentFolderId());
+			append(sb, syncDLObject.getParentFolderId(), false);
 			sb.append(",\"repositoryId\":");
-			sb.append(syncDLObject.getRepositoryId());
+			append(sb, syncDLObject.getRepositoryId(), false);
 			sb.append(",\"size\":");
-			sb.append(syncDLObject.getSize());
+			append(sb, syncDLObject.getSize(), false);
 			sb.append(",\"syncDLObjectId\":");
-			sb.append(syncDLObject.getSyncDLObjectId());
+			append(sb, syncDLObject.getSyncDLObjectId(), false);
 			sb.append(",\"type\":");
 			append(sb, syncDLObject.getType(), false);
 			sb.append(",\"typePK\":");
-			sb.append(syncDLObject.getTypePK());
+			append(sb, syncDLObject.getTypePK(), false);
 			sb.append(",\"typeUuid\":");
 			append(sb, syncDLObject.getTypeUuid(), false);
 			sb.append(",\"userId\":");
-			sb.append(syncDLObject.getUserId());
+			append(sb, syncDLObject.getUserId(), false);
 			sb.append(",\"userName\":");
 			append(sb, syncDLObject.getUserName(), true);
 			sb.append(",\"version\":");
 			append(sb, syncDLObject.getVersion(), false);
 			sb.append(",\"versionId\":");
-			sb.append(syncDLObject.getVersionId());
+			append(sb, syncDLObject.getVersionId(), false);
 			sb.append(StringPool.CLOSE_CURLY_BRACE);
 
 			if (i != (_syncDLObjects.size() - 1)) {
@@ -137,11 +137,11 @@ public class SyncDLObjectUpdate {
 		return sb.toString();
 	}
 
-	protected void append(StringBundler sb, String s, boolean escape) {
+	protected void append(StringBundler sb, Object s, boolean escape) {
 		sb.append(StringPool.QUOTE);
 
 		if (escape) {
-			s = StringEscapeUtils.escapeJava(s);
+			s = StringEscapeUtils.escapeJava(String.valueOf(s));
 		}
 
 		sb.append(s);

@@ -217,9 +217,7 @@ public class TaskCacheApplicator {
 				continue;
 			}
 
-			String testFilePath = FileUtil.getAbsolutePath(testFile);
-
-			if (testFilePath.contains("/.DS_Store/")) {
+			if (".DS_Store".equals(testFile.getName())) {
 				continue;
 			}
 

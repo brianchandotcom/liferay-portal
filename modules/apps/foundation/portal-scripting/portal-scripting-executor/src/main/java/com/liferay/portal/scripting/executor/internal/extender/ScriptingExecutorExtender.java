@@ -38,6 +38,7 @@ import java.util.Set;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -184,6 +185,13 @@ public class ScriptingExecutorExtender {
 			message.put(
 				ScriptingExecutorMessagingConstants.MESSAGE_KEY_URLS,
 				scriptURLs);
+
+			ClassLoader bundleClassLoader = bundle.adapt(
+				BundleWiring.class).getClassLoader();
+
+			message.put(
+				ScriptingExecutorMessagingConstants.BUNDLE_CLASS_LOADER,
+				bundleClassLoader);
 
 			_singleDestinationMessageSender.send(message);
 

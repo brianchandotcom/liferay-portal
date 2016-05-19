@@ -6301,6 +6301,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<or>
 				<equals arg1="${cmis.repository.type}" arg2="documentum6" />
 				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
+				<equals arg1="${cmis.repository.type}" arg2="sharepoint2013" />
 			</or>
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
@@ -7763,10 +7764,19 @@ jdbc.default.password=${database.mysql.password}</echo>
 					<equals arg1="${cmis.repository.type}" arg2="documentum6" />
 					<then>
 						<replace
-							file="${lp.plugins.dir}/hooks/documentum-hook/docroot/WEB-INF/src/dfc.properties"
+							file="${project.dir}/modules/private/apps/documentum/documentum-hook/docroot/WEB-INF/src/dfc.properties"
 							token="dfc.docbroker.host[0]=localhost"
 							value="dfc.docbroker.host[0]=${cmis.repository.vm.host.name}"
 						/>
+					</then>
+				</if>
+
+				<if>
+					<equals arg1="${cmis.repository.type}" arg2="documentum6" />
+					<then>
+						<gradle-execute dir="${project.dir}/modules/private/apps/documentum/documentum-hook" task="deploy">
+							<arg value="clean" />
+						</gradle-execute>
 					</then>
 				</if>
 			</then>
@@ -7794,7 +7804,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 		<antcall target="deploy-specified-plugins">
 			<param name="test.class" value="${test.class}" />
-		</antcall>
+		</antcall> 
 
 		<antcall target="deploy-extra-apps" />
 

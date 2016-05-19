@@ -2,7 +2,6 @@
 	<property name="portal.release" value="true" />
 	<property name="cmis.repository.type" value="documentum6" />
 	<property name="custom.properties" value="session.store.password=true${line.separator}company.security.auth.type=screenName" />
-	<property name="hook.plugins.includes" value="documentum-hook" />
 	<property name="testray.main.component.name" value="Documents Management" />
 
 	<set-up>

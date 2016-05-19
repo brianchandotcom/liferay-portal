@@ -20,7 +20,6 @@ import aQute.bnd.header.Parameters;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 
@@ -32,8 +31,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-
-import org.apache.commons.io.IOUtils;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -110,25 +107,24 @@ public class SplitPackagesTest {
 	private Map<String, SplitPackages> _getAllowedSplitPackagesMap()
 		throws IOException {
 
-		Class clazz = this.getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
 		Map<String, SplitPackages> allowedSplitPackagesMap = new HashMap<>();
 
-		for (String packages :
-				StringUtil.split(
-					IOUtils.toString(
-						classLoader.getResourceAsStream("SuitableImports"),
-						StringPool.UTF8),'\n')) {
+		for (String splitPackagesLine :
+				StringUtil.splitLines(
+					StringUtil.read(
+						SplitPackagesTest.class.getResourceAsStream(
+							"AllowedSplitPackages.txt")))) {
 
-			String[] packageSplit = StringUtil.split(packages, ';');
+			String[] splitPackagesParts = StringUtil.split(
+				splitPackagesLine, ';');
 
 			allowedSplitPackagesMap.put(
-				packageSplit[0],
+				splitPackagesParts[0],
 				new SplitPackages(
-					new ExportPackage(packageSplit[0], packageSplit[1]),
-					SetUtil.fromArray(StringUtil.split(packageSplit[2]))));
+					new ExportPackage(
+						splitPackagesParts[0], splitPackagesParts[1]),
+					SetUtil.fromArray(
+						StringUtil.split(splitPackagesParts[2]))));
 		}
 
 		return allowedSplitPackagesMap;

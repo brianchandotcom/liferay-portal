@@ -20,21 +20,56 @@
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 long classPK = ParamUtil.getLong(request, "classPK");
 String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
-%>
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
-<liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param name="mvcPath" value="/select_structure.jsp" />
-	<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-	<portlet:param name="eventName" value="<%= eventName %>" />
-</liferay-portlet:renderURL>
+PortletURL portletURL = renderResponse.createRenderURL();
 
-<%
+portletURL.setParameter("mvcPath", "/select_structure.jsp");
+portletURL.setParameter("classPK", String.valueOf(classPK));
+portletURL.setParameter("eventName", eventName);
+
 SearchContainer structureSearch = new StructureSearch(renderRequest, portletURL, WorkflowConstants.STATUS_APPROVED);
+
+String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
+
+structureSearch.setOrderByCol(orderByCol);
+
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+structureSearch.setOrderByType(orderByType);
+
+OrderByComparator<DDMStructure> orderByComparator = DDMUtil.getStructureOrderByComparator(orderByCol, orderByType);
+
+structureSearch.setOrderByComparator(orderByComparator);
 
 request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 %>
 
 <liferay-util:include page="/structure_toolbar.jsp" servletContext="<%= application %>" />
+
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= structureSearch.getOrderByCol() %>"
+			orderByType="<%= structureSearch.getOrderByType() %>"
+			orderColumns='<%= new String[] {"modified-date", "id"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= portletURL %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+</liferay-frontend:management-bar>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectStructureFm">
 	<liferay-ui:search-container
@@ -98,7 +133,7 @@ request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

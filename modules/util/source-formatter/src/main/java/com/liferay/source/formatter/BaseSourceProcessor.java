@@ -80,6 +80,8 @@ import org.dom4j.io.SAXReader;
  */
 public abstract class BaseSourceProcessor implements SourceProcessor {
 
+	public static final int PLUGINS_MAX_DIR_LEVEL = 3;
+
 	public static final int PORTAL_MAX_DIR_LEVEL = 7;
 
 	@Override
@@ -1617,7 +1619,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		List<String> fileNames = new ArrayList<>();
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < PLUGINS_MAX_DIR_LEVEL; i++) {
 			File sharedDir = new File(basedir + "shared");
 
 			if (sharedDir.exists()) {

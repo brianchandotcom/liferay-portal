@@ -220,6 +220,7 @@ AUI.add(
 							);
 						}
 
+						Liferay.Util.Window._setWindowDefaultSizeIfNeeded(instance._currentPopup);
 						instance._currentPopup.show();
 						instance._currentPopup.loadingmask.show();
 						instance._currentPopup.io.start();

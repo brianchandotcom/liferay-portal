@@ -298,6 +298,10 @@ public interface KBCommentLocalService extends BaseLocalService,
 		long classPK, int[] status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KBComment> getKBComments(long groupId, int start, int end,
+		OrderByComparator<KBComment> obc);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBComment> getKBComments(long groupId, int status, int start,
 		int end);
 

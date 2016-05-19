@@ -23,6 +23,7 @@ import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBCommentServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
+import com.liferay.knowledge.base.util.comparator.KBCommentStatusComparator;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,29 +44,29 @@ import javax.servlet.http.HttpServletRequest;
 public class KBSuggestionListDisplayContext {
 
 	public KBSuggestionListDisplayContext(
-		HttpServletRequest request, String templatePath, KBArticle kbArticle,
-		String selectedNavItem) {
+		HttpServletRequest request, String templatePath, KBArticle kbArticle) {
 
 		_request = request;
 		_templatePath = templatePath;
 		_kbArticle = kbArticle;
-		_selectedNavItem = selectedNavItem;
 
 		_groupId = kbArticle.getGroupId();
 	}
 
 	public KBSuggestionListDisplayContext(
-		HttpServletRequest request, String templatePath, long groupId,
-		String selectedNavItem) {
+		HttpServletRequest request, String templatePath, long groupId) {
 
 		_request = request;
 		_templatePath = templatePath;
 		_groupId = groupId;
-		_selectedNavItem = selectedNavItem;
 	}
 
 	public int getCompletedKBCommentsCount() throws PortalException {
 		return getKBCommentsCount(KBCommentConstants.STATUS_COMPLETED);
+	}
+
+	public long getGroupId() {
+		return _groupId;
 	}
 
 	public int getInProgressKBCommentsCount() throws PortalException {
@@ -73,19 +74,30 @@ public class KBSuggestionListDisplayContext {
 	}
 
 	public List<KBComment> getKBComments(
-			int status, SearchContainer<KBComment> searchContainer)
+			SearchContainer<KBComment> searchContainer)
 		throws PortalException {
 
 		if (_kbArticle == null) {
 			return KBCommentServiceUtil.getKBComments(
-				_groupId, status, searchContainer.getStart(),
-				searchContainer.getEnd());
+				_groupId, searchContainer.getStart(), searchContainer.getEnd(),
+				new KBCommentStatusComparator());
 		}
 		else {
 			return KBCommentServiceUtil.getKBComments(
 				_groupId, KBArticleConstants.getClassName(),
-				_kbArticle.getClassPK(), status, searchContainer.getStart(),
-				searchContainer.getEnd());
+				_kbArticle.getClassPK(), searchContainer.getStart(),
+				searchContainer.getEnd(), new KBCommentStatusComparator());
+		}
+	}
+
+	public int getKBCommentsCount() throws PortalException {
+		if (_kbArticle == null) {
+			return KBCommentServiceUtil.getKBCommentsCount(_groupId);
+		}
+		else {
+			return KBCommentServiceUtil.getKBCommentsCount(
+				_groupId, KBArticleConstants.getClassName(),
+				_kbArticle.getClassPK());
 		}
 	}
 
@@ -104,11 +116,7 @@ public class KBSuggestionListDisplayContext {
 		return getKBCommentsCount(KBCommentConstants.STATUS_NEW);
 	}
 
-	public String getSelectedNavItem() {
-		return _selectedNavItem;
-	}
-
-	public String getViewSuggestionURL(PortletURL portletURL, String navItem)
+	public String getViewSuggestionURL(PortletURL portletURL)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
@@ -118,7 +126,6 @@ public class KBSuggestionListDisplayContext {
 
 		String portletId = portletDisplay.getId();
 
-		portletURL.setParameter("navItem", navItem);
 		portletURL.setParameter("expanded", Boolean.TRUE.toString());
 
 		if (_kbArticle == null) {
@@ -156,11 +163,10 @@ public class KBSuggestionListDisplayContext {
 		return portletURL.toString() + "#kbSuggestions";
 	}
 
-	public String getViewSuggestionURL(
-			RenderResponse renderResponse, String navItem)
+	public String getViewSuggestionURL(RenderResponse renderResponse)
 		throws PortalException {
 
-		return getViewSuggestionURL(renderResponse.createRenderURL(), navItem);
+		return getViewSuggestionURL(renderResponse.createRenderURL());
 	}
 
 	public boolean isShowKBArticleTitle() {
@@ -174,7 +180,6 @@ public class KBSuggestionListDisplayContext {
 	private final long _groupId;
 	private KBArticle _kbArticle;
 	private final HttpServletRequest _request;
-	private final String _selectedNavItem;
 	private final String _templatePath;
 
 }

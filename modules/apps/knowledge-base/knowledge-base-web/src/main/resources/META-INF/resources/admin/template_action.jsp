@@ -24,7 +24,7 @@ ResultRow row = (ResultRow)request.getAttribute(KBWebKeys.SEARCH_CONTAINER_RESUL
 KBTemplate kbTemplate = (KBTemplate)row.getObject();
 %>
 
-<liferay-ui:icon-menu cssClass="kb-template-action" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= KBTemplatePermission.contains(permissionChecker, kbTemplate, KBActionKeys.VIEW) %>">
 		<liferay-portlet:renderURL var="viewURL">
 			<portlet:param name="mvcPath" value='<%= templatePath + "view_template.jsp" %>' />
@@ -32,7 +32,6 @@ KBTemplate kbTemplate = (KBTemplate)row.getObject();
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-search"
 			message="view"
 			url="<%= viewURL %>"
 		/>
@@ -41,12 +40,11 @@ KBTemplate kbTemplate = (KBTemplate)row.getObject();
 	<c:if test="<%= KBTemplatePermission.contains(permissionChecker, kbTemplate, KBActionKeys.UPDATE) %>">
 		<liferay-portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value='<%= templatePath + "edit_template.jsp" %>' />
-			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" />
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editURL %>"
 		/>
@@ -62,8 +60,8 @@ KBTemplate kbTemplate = (KBTemplate)row.getObject();
 		/>
 
 		<liferay-ui:icon
-			iconCssClass="icon-lock"
 			message="permissions"
+			method="get"
 			url="<%= permissionsURL %>"
 			useDialog="<%= true %>"
 		/>
@@ -72,7 +70,7 @@ KBTemplate kbTemplate = (KBTemplate)row.getObject();
 	<c:if test="<%= KBTemplatePermission.contains(permissionChecker, kbTemplate, KBActionKeys.DELETE) %>">
 		<liferay-portlet:actionURL name="deleteKBTemplate" var="deleteURL">
 			<portlet:param name="mvcPath" value="<%= mvcPath %>" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" />
 		</liferay-portlet:actionURL>
 

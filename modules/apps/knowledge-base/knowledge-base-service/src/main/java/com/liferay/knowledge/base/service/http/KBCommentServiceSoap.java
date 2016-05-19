@@ -125,6 +125,23 @@ public class KBCommentServiceSoap {
 	}
 
 	public static com.liferay.knowledge.base.model.KBCommentSoap[] getKBComments(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBComment> obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.knowledge.base.model.KBComment> returnValue =
+				KBCommentServiceUtil.getKBComments(groupId, start, end, obc);
+
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.knowledge.base.model.KBCommentSoap[] getKBComments(
 		long groupId, java.lang.String className, long classPK, int status,
 		int start, int end) throws RemoteException {
 		try {
@@ -141,11 +158,59 @@ public class KBCommentServiceSoap {
 		}
 	}
 
+	public static com.liferay.knowledge.base.model.KBCommentSoap[] getKBComments(
+		long groupId, java.lang.String className, long classPK, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBComment> obc)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.knowledge.base.model.KBComment> returnValue =
+				KBCommentServiceUtil.getKBComments(groupId, className, classPK,
+					start, end, obc);
+
+			return com.liferay.knowledge.base.model.KBCommentSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getKBCommentsCount(long groupId)
+		throws RemoteException {
+		try {
+			int returnValue = KBCommentServiceUtil.getKBCommentsCount(groupId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getKBCommentsCount(long groupId, int status)
 		throws RemoteException {
 		try {
 			int returnValue = KBCommentServiceUtil.getKBCommentsCount(groupId,
 					status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getKBCommentsCount(long groupId,
+		java.lang.String className, long classPK) throws RemoteException {
+		try {
+			int returnValue = KBCommentServiceUtil.getKBCommentsCount(groupId,
+					className, classPK);
 
 			return returnValue;
 		}

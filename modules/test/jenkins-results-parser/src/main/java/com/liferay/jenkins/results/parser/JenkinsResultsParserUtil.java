@@ -506,33 +506,63 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static JSONObject toJSONObject(String url) throws Exception {
-		return toJSONObject(url, true, 0);
+		return toJSONObject(
+			url, true, _DEFAULT_MAX_RETRIES, _DEFAULT_RETRY_PERIOD,
+			_DEFAULT_TIMEOUT);
 	}
 
 	public static JSONObject toJSONObject(String url, boolean checkCache)
 		throws Exception {
 
-		return createJSONObject(toString(url, checkCache, 0));
+		return createJSONObject(
+			toString(
+				url, checkCache, _DEFAULT_MAX_RETRIES, _DEFAULT_RETRY_PERIOD,
+				_DEFAULT_TIMEOUT));
 	}
 
 	public static JSONObject toJSONObject(
 			String url, boolean checkCache, int timeout)
 		throws Exception {
 
-		return createJSONObject(toString(url, checkCache, timeout));
+		return toJSONObject(
+			url, checkCache, _DEFAULT_MAX_RETRIES, _DEFAULT_RETRY_PERIOD,
+			timeout);
+	}
+
+	public static JSONObject toJSONObject(
+			String url, boolean checkCache, int maxRetries, int retryPeriod,
+			int timeout)
+		throws Exception {
+
+		return createJSONObject(
+			toString(url, checkCache, maxRetries, retryPeriod, timeout));
 	}
 
 	public static String toString(String url) throws Exception {
-		return toString(url, true, 0);
+		return toString(
+			url, true, _DEFAULT_MAX_RETRIES, _DEFAULT_RETRY_PERIOD,
+			_DEFAULT_TIMEOUT);
 	}
 
 	public static String toString(String url, boolean checkCache)
 		throws Exception {
 
-		return toString(url, checkCache, 0);
+		return toString(
+			url, checkCache, _DEFAULT_MAX_RETRIES, _DEFAULT_RETRY_PERIOD,
+			_DEFAULT_TIMEOUT);
 	}
 
 	public static String toString(String url, boolean checkCache, int timeout)
+		throws Exception {
+
+		return toString(
+			url, checkCache, _DEFAULT_MAX_RETRIES, _DEFAULT_RETRY_PERIOD,
+			timeout);
+	}
+
+	public static String toString(
+			String url, boolean checkCache, int maxRetries, int retryPeriod,
+			int timeout)
 		throws Exception {
 
 		url = fixURL(url);
@@ -594,13 +624,13 @@ public class JenkinsResultsParserUtil {
 			catch (FileNotFoundException fnfe) {
 				retryCount++;
 
-				if (retryCount > 3) {
+				if ((maxRetries >= 0) && (retryCount >= maxRetries)) {
 					throw fnfe;
 				}
 
-				System.out.println("Retry in 5 seconds");
+				System.out.println("Retry in " + retryPeriod + " seconds");
 
-				Thread.sleep(5000);
+				sleep(1000 * retryPeriod);
 			}
 		}
 	}
@@ -640,6 +670,12 @@ public class JenkinsResultsParserUtil {
 			throw new RuntimeException(murle);
 		}
 	}
+
+	private static final int _DEFAULT_MAX_RETRIES = 3;
+
+	private static final int _DEFAULT_RETRY_PERIOD = 5;
+
+	private static final int _DEFAULT_TIMEOUT = 0;
 
 	private static final Pattern _localURLPattern1 = Pattern.compile(
 		"https://test.liferay.com/([0-9]+)/");

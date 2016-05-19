@@ -157,6 +157,6 @@ public class AssetAddButtonTag extends IncludeTag {
 	private long[] _classTypeIds;
 	private long[] _groupIds;
 	private String _redirect;
-	private boolean _useDialog;
+	private boolean _useDialog = true;
 
 }

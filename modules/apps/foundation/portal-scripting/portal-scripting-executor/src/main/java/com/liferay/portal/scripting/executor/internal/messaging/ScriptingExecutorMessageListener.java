@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scripting.Scripting;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.scripting.executor.internal.ScriptingExecutorMessagingConstants;
 
@@ -46,8 +47,23 @@ public class ScriptingExecutorMessageListener extends BaseMessageListener {
 		List<URL> urls = (List<URL>)message.get(
 			ScriptingExecutorMessagingConstants.MESSAGE_KEY_URLS);
 
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
 		for (URL url : urls) {
 			try (InputStream inputStream = url.openStream()) {
+				ClassLoader bundleClassLoader = (ClassLoader)message.get(
+					ScriptingExecutorMessagingConstants.BUNDLE_CLASS_LOADER);
+
+				if (bundleClassLoader != null) {
+					ClassLoader aggregateClassLoader =
+						AggregateClassLoader.getAggregateClassLoader(
+							contextClassLoader, bundleClassLoader);
+
+					currentThread.setContextClassLoader(aggregateClassLoader);
+				}
+
 				_scripting.exec(
 					null, new HashMap<String, Object>(), scriptingLanguage,
 					StringUtil.read(inputStream));
@@ -56,6 +72,9 @@ public class ScriptingExecutorMessageListener extends BaseMessageListener {
 				if (_log.isWarnEnabled()) {
 					_log.warn("Unable to execute script " + url.getFile(), e);
 				}
+			}
+			finally {
+				currentThread.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}

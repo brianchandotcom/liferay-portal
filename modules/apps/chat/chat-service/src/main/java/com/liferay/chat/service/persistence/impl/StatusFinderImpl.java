@@ -15,6 +15,7 @@
 package com.liferay.chat.service.persistence.impl;
 
 import com.liferay.chat.service.persistence.StatusFinder;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.service.persistence.UserUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +58,7 @@ public class StatusFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_MODIFIED_DATE);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_MODIFIED_DATE);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -172,7 +172,8 @@ public class StatusFinderImpl
 	}
 
 	protected String getFindBySocialRelationTypes_SQL(int[] types) {
-		String sql = CustomSQLUtil.get(FIND_BY_SOCIAL_RELATION_TYPES);
+		String sql = CustomSQLUtil.get(
+			getClass(), FIND_BY_SOCIAL_RELATION_TYPES);
 
 		if (types.length == 0) {
 			return StringUtil.replace(
@@ -195,7 +196,7 @@ public class StatusFinderImpl
 	}
 
 	protected String getFindByUsersGroups_SQL(String[] groupNames) {
-		String sql = CustomSQLUtil.get(FIND_BY_USERS_GROUPS);
+		String sql = CustomSQLUtil.get(getClass(), FIND_BY_USERS_GROUPS);
 
 		if (groupNames.length == 0) {
 			return StringUtil.replace(

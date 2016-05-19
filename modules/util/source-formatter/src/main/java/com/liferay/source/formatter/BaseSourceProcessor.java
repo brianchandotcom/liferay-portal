@@ -1618,9 +1618,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		List<String> fileNames = new ArrayList<>();
 
 		for (int i = 0; i < 3; i++) {
-			fileNames = getFileNames(basedir, new String[0], includes);
+			File sharedDir = new File(basedir + "shared");
 
-			if (!fileNames.isEmpty()) {
+			if (sharedDir.exists()) {
+				fileNames = getFileNames(basedir, new String[0], includes);
+
 				break;
 			}
 
@@ -1628,13 +1630,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		for (String fileName : fileNames) {
-			if (!fileName.startsWith(
-					sourceFormatterArgs.getBaseDirName() + "shared")) {
-
-				break;
-			}
-
-			File file = new File(basedir + fileName);
+			File file = new File(fileName);
 
 			String content = FileUtil.read(file);
 

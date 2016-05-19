@@ -158,7 +158,6 @@
 	</command>
 
 	<command name="ViewChart" priority="4">
-		<var name="pollsQuestionTitle" value="Color" />
 		<var name="pollsQuestion" value="What is your favorite color?" />
 		<var name="pollsQuestionChoiceA" value="Blue" />
 		<var name="pollsQuestionChoiceB" value="Green" />
@@ -166,6 +165,7 @@
 		<var name="pollsQuestionChoiceD" value="Yellow" />
 		<var name="pollsQuestionChoiceE" value="Other" />
 		<var name="pollsQuestionChoiceList" value="${pollsQuestionChoiceA},${pollsQuestionChoiceB},${pollsQuestionChoiceC},${pollsQuestionChoiceD},${pollsQuestionChoiceE}" />
+		<var name="pollsQuestionTitle" value="Color" />
 
 		<execute macro="Navigator#openURL" />
 

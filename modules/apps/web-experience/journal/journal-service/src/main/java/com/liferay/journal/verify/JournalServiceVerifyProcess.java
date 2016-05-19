@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -119,6 +120,13 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		verifyUUIDModels();
 
 		verifyArticleImages();
+
+		VerifyProcess verifyProcess =
+			new JournalServiceSystemEventVerifyProcess(
+				_journalArticleLocalService,
+				_journalArticleResourceLocalService, _systemEventLocalService);
+
+		verifyProcess.verify();
 	}
 
 	@Reference(unbind = "-")
@@ -186,6 +194,13 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		ResourceLocalService resourceLocalService) {
 
 		_resourceLocalService = resourceLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSystemEventLocalService(
+		SystemEventLocalService systemEventLocalService) {
+
+		_systemEventLocalService = systemEventLocalService;
 	}
 
 	protected void updateContentSearch(long groupId, String portletId)
@@ -968,6 +983,7 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 	private JournalConverter _journalConverter;
 	private JournalFolderLocalService _journalFolderLocalService;
 	private ResourceLocalService _resourceLocalService;
+	private SystemEventLocalService _systemEventLocalService;
 	private final VerifyResourcePermissions _verifyResourcePermissions =
 		new VerifyResourcePermissions();
 

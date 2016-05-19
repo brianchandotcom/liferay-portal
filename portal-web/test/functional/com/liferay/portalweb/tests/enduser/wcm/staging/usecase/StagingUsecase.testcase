@@ -1667,7 +1667,6 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Empty Page Name" />
-			<var name="siteName" value="Community Site Name" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
@@ -3752,6 +3751,10 @@
 		<execute macro="WebContentStructures#viewCP">
 			<var name="structureDescription" value="Structure Description" />
 			<var name="structureName" value="Structure Name" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Structure Name" />
 		</execute>
 
 		<for list="Text,Text Box" param="structureFieldName">

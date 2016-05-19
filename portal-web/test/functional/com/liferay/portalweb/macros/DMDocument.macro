@@ -1731,8 +1731,6 @@
 
 		<execute macro="DMNavigator#gotoDocumentDetails" />
 
-		<execute function="AssertClick" locator1="MenuItem#DM_DOCUMENT_TYPE" value1="Document Type" />
-
 		<var name="key_marketingSelect" value="${marketingSelect}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#MARKETING_SELECT" value1="${marketingSelect}" />

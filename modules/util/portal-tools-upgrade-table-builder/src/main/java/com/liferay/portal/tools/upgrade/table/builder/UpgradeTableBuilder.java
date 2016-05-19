@@ -122,7 +122,7 @@ public class UpgradeTableBuilder {
 			_upgradeTableDirName, upgradeFileVersion, upgradeFileName);
 
 		if (Files.notExists(upgradeFilePath)) {
-			if (!upgradeFileVersion.equals(_getModuleVersion())) {
+			if (!upgradeFileVersion.equals(_getSchemaVersion())) {
 				return;
 			}
 
@@ -369,7 +369,7 @@ public class UpgradeTableBuilder {
 		return indexesFilePath;
 	}
 
-	private String _getModuleVersion() throws IOException {
+	private String _getSchemaVersion() throws IOException {
 		if (!_osgiModule) {
 			return ReleaseInfo.getVersion();
 		}
@@ -382,7 +382,7 @@ public class UpgradeTableBuilder {
 			properties.load(inputStream);
 		}
 
-		return properties.getProperty("Bundle-Version");
+		return properties.getProperty("Liferay-Require-SchemaVersion");
 	}
 
 	private String _getPackagePath(String content) {

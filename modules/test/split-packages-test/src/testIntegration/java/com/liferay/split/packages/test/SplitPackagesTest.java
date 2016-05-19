@@ -20,6 +20,7 @@ import aQute.bnd.header.Parameters;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 
@@ -59,8 +60,8 @@ public class SplitPackagesTest {
 
 		Map<Bundle, Set<ExportPackage>> bundlesMap = new HashMap<>();
 
-		Map<ExportPackage, SplitPackages> allowedSplitPackagesMap =
-			_getAllowedSplitPackagesMap();
+		Map<ExportPackage, Set<String>> allowedSplitPackages =
+			_getAllowedSplitPackages();
 
 		for (Bundle bundle : frameworkBundles) {
 			Set<ExportPackage> bundleExportPackages = _getBundleExportPackages(
@@ -81,7 +82,7 @@ public class SplitPackagesTest {
 				if (!mapBundlePackages.isEmpty()) {
 					_processDuplicatedPackages(
 						entry.getKey(), mapBundlePackages,
-						allowedSplitPackagesMap, bundle.getSymbolicName());
+						allowedSplitPackages, bundle);
 				}
 			}
 
@@ -89,23 +90,10 @@ public class SplitPackagesTest {
 		}
 	}
 
-	private boolean _checkAllowedSplitPackages(
-		SplitPackages allowedSplitPackages, ExportPackage exportPackage,
-		String currentSymbolicName) {
-
-		if (exportPackage.equals(allowedSplitPackages.getExportPackage()) &&
-			allowedSplitPackages.hasBundle(currentSymbolicName)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private Map<ExportPackage, SplitPackages> _getAllowedSplitPackagesMap()
+	private Map<ExportPackage, Set<String>> _getAllowedSplitPackages()
 		throws IOException {
 
-		Map<ExportPackage, SplitPackages> allowedSplitPackagesMap =
+		Map<ExportPackage, Set<String>> allowedSplitPackages =
 			new HashMap<>();
 
 		for (String splitPackagesLine :
@@ -120,15 +108,12 @@ public class SplitPackagesTest {
 			ExportPackage exportPackage = new ExportPackage(
 				splitPackagesParts[0], splitPackagesParts[1]);
 
-			allowedSplitPackagesMap.put(
+			allowedSplitPackages.put(
 				exportPackage,
-				new SplitPackages(
-					exportPackage,
-					SetUtil.fromArray(
-						StringUtil.split(splitPackagesParts[2]))));
+				SetUtil.fromArray(StringUtil.split(splitPackagesParts[2])));
 		}
 
-		return allowedSplitPackagesMap;
+		return allowedSplitPackages;
 	}
 
 	private Set<ExportPackage> _getBundleExportPackages(Bundle bundle) {
@@ -168,24 +153,20 @@ public class SplitPackagesTest {
 
 	private void _processDuplicatedPackages(
 		Bundle mapBundle, Collection<ExportPackage> duplicatedExportPackages,
-		Map<ExportPackage, SplitPackages> allowedSplitPackagesMap,
-		String currentSymbolicName) {
-
-		String symbolicName = mapBundle.getSymbolicName();
+		Map<ExportPackage, Set<String>> allowedSplitPackages,
+		Bundle currentBundle) {
 
 		for (ExportPackage duplicatedExportPackage : duplicatedExportPackages) {
-			Assert.assertTrue(
-				"Detected split packages in " + currentSymbolicName + " and " +
-					symbolicName + ": " + duplicatedExportPackage._name,
-				allowedSplitPackagesMap.containsKey(duplicatedExportPackage));
+			Set<String> symbolicNames = allowedSplitPackages.get(
+				duplicatedExportPackage);
 
-			Assert.assertTrue(
-				"Detected split packages in " + currentSymbolicName + " and " +
-					symbolicName + ": " +
-						duplicatedExportPackages,
-				_checkAllowedSplitPackages(
-					allowedSplitPackagesMap.get(duplicatedExportPackage),
-					duplicatedExportPackage, currentSymbolicName));
+			if ((symbolicNames == null) ||
+				!symbolicNames.contains(currentBundle.getSymbolicName())) {
+
+				Assert.fail(
+					"Detected split packages " + duplicatedExportPackage +
+						" in " + mapBundle + " and " + currentBundle);
+			}
 		}
 	}
 
@@ -211,6 +192,19 @@ public class SplitPackagesTest {
 			return HashUtil.hash(hashCode, _version);
 		}
 
+		@Override
+		public String toString() {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("{name=");
+			sb.append(_name);
+			sb.append(", version=");
+			sb.append(_version);
+			sb.append("}");
+
+			return sb.toString();
+		}
+
 		private ExportPackage(String name, String version) {
 			_name = name;
 			_version = version;
@@ -218,28 +212,6 @@ public class SplitPackagesTest {
 
 		private final String _name;
 		private final String _version;
-
-	}
-
-	private class SplitPackages {
-
-		public ExportPackage getExportPackage() {
-			return _exportPackage;
-		}
-
-		public boolean hasBundle(String symbolicName) {
-			return _symbolicNames.contains(symbolicName);
-		}
-
-		private SplitPackages(
-			ExportPackage exportPackage, Set<String> symbolicNames) {
-
-			_exportPackage = exportPackage;
-			_symbolicNames = symbolicNames;
-		}
-
-		private final ExportPackage _exportPackage;
-		private final Set<String> _symbolicNames;
 
 	}
 

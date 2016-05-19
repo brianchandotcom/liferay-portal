@@ -67,27 +67,25 @@ public class DDMFormValuesToFieldsConverterImpl
 
 		String fieldName = ddmFormFieldValue.getName();
 
-		if (!ddmStructure.hasField(fieldName)) {
-			return;
-		}
+		if (ddmStructure.hasField(fieldName)) {
+			if (!ddmStructure.isFieldTransient(fieldName)) {
+				Field ddmField = createDDMField(
+					ddmStructure, ddmFormFieldValue, defaultLocale);
 
-		if (!ddmStructure.isFieldTransient(fieldName)) {
-			Field ddmField = createDDMField(
-				ddmStructure, ddmFormFieldValue, defaultLocale);
+				Field existingDDMField = ddmFields.get(ddmField.getName());
 
-			Field existingDDMField = ddmFields.get(ddmField.getName());
-
-			if (existingDDMField == null) {
-				ddmFields.put(ddmField);
-			}
-			else {
-				addDDMFieldValues(existingDDMField, ddmField);
+				if (existingDDMField == null) {
+					ddmFields.put(ddmField);
+				}
+				else {
+					addDDMFieldValues(existingDDMField, ddmField);
+				}
 			}
 		}
 
 		addFieldDisplayValue(
-			ddmFields.get(DDMImpl.FIELDS_DISPLAY_NAME),
-			getFieldDisplayValue(ddmFormFieldValue));
+				ddmFields.get(DDMImpl.FIELDS_DISPLAY_NAME),
+				getFieldDisplayValue(ddmFormFieldValue));
 
 		for (DDMFormFieldValue nestedDDMFormFieldValue :
 				ddmFormFieldValue.getNestedDDMFormFieldValues()) {

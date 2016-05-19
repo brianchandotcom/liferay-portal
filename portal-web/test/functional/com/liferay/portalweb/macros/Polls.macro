@@ -63,18 +63,6 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="viewPollChartArea">
-		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
-
-		<execute function="Click#makeVisibleClickAt" locator1="Polls#POLLS_TABLE_TITLE" />
-
-		<execute function="Click#makeVisibleClickAt" locator1="CPPolls#SELECT_CHART_AREA" />
-
-		<execute function="SelectWindow#selectPopUp" locator1="null" />
-		<execute function="AssertElementPresent" locator1="CPPolls#POLLS_CHART" />
-		<execute function="Close#closeWindow" locator1="null" />
-	</command>
-
 	<command name="selectPollPG">
 		<execute function="Click#makeVisibleClickAt" locator1="Polls#SELECT_QUESTION" />
 
@@ -120,6 +108,18 @@
 
 		<execute function="AssertElementNotPresent" locator1="Button#VOTE" />
 		<execute function="AssertTextEquals" locator1="PGPollsdisplay#INFO_MESSAGE" value1="Please sign in to vote." />
+	</command>
+
+	<command name="viewPollChartArea">
+		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
+
+		<execute function="Click#makeVisibleClickAt" locator1="Polls#POLLS_TABLE_TITLE" />
+
+		<execute function="Click#makeVisibleClickAt" locator1="CPPolls#SELECT_CHART_AREA" />
+
+		<execute function="SelectWindow#selectPopUp" locator1="null" />
+		<execute function="AssertElementPresent" locator1="CPPolls#POLLS_CHART" />
+		<execute function="Close#closeWindow" locator1="null" />
 	</command>
 
 	<command name="viewPollPG">

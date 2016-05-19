@@ -30,76 +30,6 @@
 		</if>
 	</tear-down>
 
-	<command name="ViewChart" priority="4">
-		<var name="pollsQuestionTitle"><![CDATA["Color"]]></var>
-		<var name="pollsQuestion"><![CDATA["What is your favorite color?"]]></var>
-		<var name="pollsQuestionChoiceA"><![CDATA["Blue"]]></var>
-		<var name="pollsQuestionChoiceB"><![CDATA["Green"]]></var>
-		<var name="pollsQuestionChoiceC"><![CDATA["Red"]]></var>
-		<var name="pollsQuestionChoiceD"><![CDATA["Yellow"]]></var>
-		<var name="pollsQuestionChoiceE"><![CDATA["Other"]]></var>
-		<var name="pollsQuestionChoiceList" value="${pollsQuestionChoiceA},${pollsQuestionChoiceB},${pollsQuestionChoiceC},${pollsQuestionChoiceD},${pollsQuestionChoiceE}" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Polls" />
-		</execute>
-
-		<execute macro="Polls#addPollCP">
-			<var name="pollsQuestion" value="${pollsQuestion}" />
-			<var name="pollsQuestionChoiceA" value="${pollsQuestionChoiceA}" />
-			<var name="pollsQuestionChoiceB" value="${pollsQuestionChoiceB}" />
-			<var name="pollsQuestionChoiceC" value="${pollsQuestionChoiceC}" />
-			<var name="pollsQuestionChoiceD" value="${pollsQuestionChoiceD}" />
-			<var name="pollsQuestionChoiceE" value="${pollsQuestionChoiceE}" />
-			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
-		</execute>
-
-		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
-
-		<execute function="AssertTextEquals" locator1="Polls#POLLS_TABLE_TITLE" value1="${pollsQuestionTitle}" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="Page#add">
-			<var name="pageName" value="Polls Page" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Polls Page" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Polls Display" />
-		</execute>
-
-		<execute macro="Polls#selectPollPG">
-			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Polls Page" />
-		</execute>
-
-		<execute macro="Polls#viewPollPG">
-			<var name="pollsQuestion" value="${pollsQuestion}" />
-			<var name="pollsQuestionChoiceList" value="${pollsQuestionChoiceList}" />
-		</execute>
-
-		<execute macro="Polls#votePollPG">
-			<var name="pollsQuestionChoice" value="${pollsQuestionChoiceC}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Polls" />
-		</execute>
-
-		<execute macro="Polls#viewPollChartArea">
-			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
-		</execute>
-	</command>
-
 	<command name="AddPollsQuestionWithSpecialCharacters" priority="4">
 		<var name="pollsQuestionTitle"><![CDATA["Hair Color"]]></var>
 		<var name="pollsQuestion"><![CDATA["What is your hair color? Frank & John want to know."]]></var>
@@ -224,6 +154,76 @@
 			<var name="pollsQuestionTotalVotes" value="1" />
 			<var name="pollsQuestionVoteCount" value="1" />
 			<var name="pollsQuestionVotePercent" value="100%" />
+		</execute>
+	</command>
+
+	<command name="ViewChart" priority="4">
+		<var name="pollsQuestionTitle"><![CDATA["Color"]]></var>
+		<var name="pollsQuestion"><![CDATA["What is your favorite color?"]]></var>
+		<var name="pollsQuestionChoiceA"><![CDATA["Blue"]]></var>
+		<var name="pollsQuestionChoiceB"><![CDATA["Green"]]></var>
+		<var name="pollsQuestionChoiceC"><![CDATA["Red"]]></var>
+		<var name="pollsQuestionChoiceD"><![CDATA["Yellow"]]></var>
+		<var name="pollsQuestionChoiceE"><![CDATA["Other"]]></var>
+		<var name="pollsQuestionChoiceList" value="${pollsQuestionChoiceA},${pollsQuestionChoiceB},${pollsQuestionChoiceC},${pollsQuestionChoiceD},${pollsQuestionChoiceE}" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Polls" />
+		</execute>
+
+		<execute macro="Polls#addPollCP">
+			<var name="pollsQuestion" value="${pollsQuestion}" />
+			<var name="pollsQuestionChoiceA" value="${pollsQuestionChoiceA}" />
+			<var name="pollsQuestionChoiceB" value="${pollsQuestionChoiceB}" />
+			<var name="pollsQuestionChoiceC" value="${pollsQuestionChoiceC}" />
+			<var name="pollsQuestionChoiceD" value="${pollsQuestionChoiceD}" />
+			<var name="pollsQuestionChoiceE" value="${pollsQuestionChoiceE}" />
+			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
+		</execute>
+
+		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
+
+		<execute function="AssertTextEquals" locator1="Polls#POLLS_TABLE_TITLE" value1="${pollsQuestionTitle}" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Polls Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Polls Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Polls Display" />
+		</execute>
+
+		<execute macro="Polls#selectPollPG">
+			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Polls Page" />
+		</execute>
+
+		<execute macro="Polls#viewPollPG">
+			<var name="pollsQuestion" value="${pollsQuestion}" />
+			<var name="pollsQuestionChoiceList" value="${pollsQuestionChoiceList}" />
+		</execute>
+
+		<execute macro="Polls#votePollPG">
+			<var name="pollsQuestionChoice" value="${pollsQuestionChoiceC}" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Polls" />
+		</execute>
+
+		<execute macro="Polls#viewPollChartArea">
+			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
 		</execute>
 	</command>
 

@@ -158,13 +158,13 @@
 	</command>
 
 	<command name="ViewChart" priority="4">
-		<var name="pollsQuestionTitle"><![CDATA["Color"]]></var>
-		<var name="pollsQuestion"><![CDATA["What is your favorite color?"]]></var>
-		<var name="pollsQuestionChoiceA"><![CDATA["Blue"]]></var>
-		<var name="pollsQuestionChoiceB"><![CDATA["Green"]]></var>
-		<var name="pollsQuestionChoiceC"><![CDATA["Red"]]></var>
-		<var name="pollsQuestionChoiceD"><![CDATA["Yellow"]]></var>
-		<var name="pollsQuestionChoiceE"><![CDATA["Other"]]></var>
+		<var name="pollsQuestionTitle" value="Color" />
+		<var name="pollsQuestion" value="What is your favorite color?" />
+		<var name="pollsQuestionChoiceA" value="Blue" />
+		<var name="pollsQuestionChoiceB" value="Green" />
+		<var name="pollsQuestionChoiceC" value="Red" />
+		<var name="pollsQuestionChoiceD" value="Yellow" />
+		<var name="pollsQuestionChoiceE" value="Other" />
 		<var name="pollsQuestionChoiceList" value="${pollsQuestionChoiceA},${pollsQuestionChoiceB},${pollsQuestionChoiceC},${pollsQuestionChoiceD},${pollsQuestionChoiceE}" />
 
 		<execute macro="Navigator#openURL" />

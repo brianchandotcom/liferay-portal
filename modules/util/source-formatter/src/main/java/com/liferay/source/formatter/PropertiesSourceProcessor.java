@@ -61,8 +61,9 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return new String[] {
-			"**/portal.properties", "**/portal-ext.properties",
-			"**/portlet.properties", "**/source-formatter.properties"
+			"**/liferay-plugin-package.properties", "**/portal.properties",
+			"**/portal-ext.properties", "**/portlet.properties",
+			"**/source-formatter.properties"
 		};
 	}
 
@@ -293,6 +294,9 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		String absolutePath, String content) {
 
 		content = StringUtil.replace(content, "\n\n", "\n");
+
+		content = StringUtil.replace(
+			content, StringPool.TAB, StringPool.FOUR_SPACES);
 
 		Matcher matcher = _singleValueOnMultipleLinesPattern.matcher(content);
 

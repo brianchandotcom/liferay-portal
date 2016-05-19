@@ -192,13 +192,43 @@ public class VerifyProcessTracker {
 		WorkflowThreadLocal.setEnabled(false);
 
 		try {
+			Release release = _releaseLocalService.fetchRelease(
+				verifyProcessName);
+
+			if ((release != null) && release.isVerified()) {
+				return;
+			}
+
+			if (release == null) {
+
+				// Verification state must be persisted even though
+				// not all verifiers are associated with a database
+				// service
+
+				release = _releaseLocalService.createRelease(
+					_counterLocalService.increment());
+
+				release.setServletContextName(verifyProcessName);
+				release.setVerified(false);
+			}
+
+			VerifyException verifyException = null;
+
 			for (VerifyProcess verifyProcess : verifyProcesses) {
 				try {
 					verifyProcess.verify();
 				}
 				catch (VerifyException ve) {
 					_log.error(ve, ve);
+
+					verifyException = ve;
 				}
+			}
+
+			if (verifyException == null) {
+				release.setVerified(true);
+
+				_releaseLocalService.updateRelease(release);
 			}
 		}
 		finally {
@@ -342,29 +372,7 @@ public class VerifyProcessTracker {
 			String key, VerifyProcess serviceVerifyProcess,
 			List<VerifyProcess> contentVerifyProcesses) {
 
-			Release release = _releaseLocalService.fetchRelease(key);
-
-			if ((release != null) && release.isVerified()) {
-				return;
-			}
-
-			if (release == null) {
-
-				// Verification state must be persisted even though not all
-				// verifiers are associated with a database service
-
-				release = _releaseLocalService.createRelease(
-					_counterLocalService.increment());
-
-				release.setServletContextName(key);
-				release.setVerified(false);
-			}
-
 			execute(key);
-
-			release.setVerified(true);
-
-			_releaseLocalService.updateRelease(release);
 		}
 
 		@Override

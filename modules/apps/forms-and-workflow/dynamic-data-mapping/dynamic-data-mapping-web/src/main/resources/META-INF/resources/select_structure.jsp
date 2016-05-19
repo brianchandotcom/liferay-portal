@@ -50,26 +50,34 @@ request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 			modelVar="structure"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="content-column name-column title-column"
+				name="name"
+				truncate="<%= true %>"
+				value="<%= HtmlUtil.escape(structure.getName(locale)) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="content-column description-column"
+				name="description"
+				truncate="<%= true %>"
+				value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
+			/>
+
+			<liferay-ui:search-container-column-date
+				cssClass="modified-date-column text-column"
+				name="modified-date"
+				value="<%= structure.getModifiedDate() %>"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="id-column text-column"
 				name="id"
 				value="<%= String.valueOf(structure.getStructureId()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				name="name"
-				value="<%= HtmlUtil.escape(structure.getName(locale)) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				name="description"
-				value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
-			/>
-
-			<liferay-ui:search-container-column-date
-				name="modified-date"
-				value="<%= structure.getModifiedDate() %>"
-			/>
-
-			<liferay-ui:search-container-column-text cssClass="entry-action">
+				cssClass="entry-action-column"
+			>
 				<c:if test="<%= (structure.getStructureId() != classPK) && ((classPK == 0) || (structure.getParentStructureId() == 0) || (structure.getParentStructureId() != classPK)) %>">
 
 					<%

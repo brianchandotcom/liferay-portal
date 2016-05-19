@@ -295,6 +295,9 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		content = StringUtil.replace(content, "\n\n", "\n");
 
+		content = StringUtil.replace(
+			content, StringPool.TAB, StringPool.FOUR_SPACES);
+
 		Matcher matcher = _singleValueOnMultipleLinesPattern.matcher(content);
 
 		if (matcher.find()) {

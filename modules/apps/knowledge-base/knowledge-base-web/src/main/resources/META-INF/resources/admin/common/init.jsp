@@ -42,6 +42,9 @@ String socialBookmarksDisplayStyle = GetterUtil.getString(request.getAttribute("
 String socialBookmarksDisplayPosition = GetterUtil.getString(request.getAttribute("init.jsp-socialBookmarksDisplayPosition"));
 String socialBookmarksTypes = GetterUtil.getString(request.getAttribute("init.jsp-socialBookmarksTypes"));
 
+boolean enableKBTemplateKBComments = true;
+boolean showKBTemplateKBComments = true;
+
 boolean enableRSS = kbGroupServiceConfiguration.enableRSS();
 int rssDelta = kbGroupServiceConfiguration.rssDelta();
 String rssDisplayStyle = kbGroupServiceConfiguration.rssDisplayStyle();

@@ -33,7 +33,7 @@ if (viewResults && !PollsQuestionPermissionChecker.contains(permissionChecker, q
 	viewResults = false;
 }
 
-renderResponse.setTitle(question.getTitle(locale));
+renderResponse.setTitle(HtmlUtil.unescape(question.getTitle(locale)));
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

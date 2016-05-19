@@ -110,6 +110,20 @@
 		<execute function="AssertTextEquals" locator1="PGPollsdisplay#INFO_MESSAGE" value1="Please sign in to vote." />
 	</command>
 
+	<command name="viewPollChartArea">
+		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
+
+		<execute function="Click" locator1="Polls#POLLS_TABLE_TITLE" />
+
+		<execute function="Click" locator1="Polls#CHART_AREA" />
+
+		<execute function="SelectWindow#selectPopUp" locator1="null" />
+
+		<execute function="AssertElementPresent" locator1="Polls#CHART_IMAGE" />
+
+		<execute function="Close#closeWindow" locator1="null" />
+	</command>
+
 	<command name="viewPollPG">
 		<var name="key_pollsQuestion" value="${pollsQuestion}" />
 

@@ -90,6 +90,22 @@
 	<td>//form[contains(@id,'PollsDisplayPortlet')]//div[contains(.,'Total Votes: ${key_pollsQuestionTotalVotes}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CHART-->
+<tr>
+	<td>CHART_AREA</td>
+	<td>//a[contains(@href,'area')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHART_IMAGE</td>
+	<td>//img[1]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

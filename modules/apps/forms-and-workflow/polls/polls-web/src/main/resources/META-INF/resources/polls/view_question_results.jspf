@@ -102,7 +102,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
 
 			ResourceURL resourceURL = renderResponse.createResourceURL();
 
-			resourceURL.setParameter("mvcRenderCommandName", "/polls/view_chart");
+			resourceURL.setResourceID("/polls/view_chart");
 			resourceURL.setParameter("questionId", Long.toString(question.getQuestionId()));
 			resourceURL.setParameter("chartType", TextFormatter.format(chart, TextFormatter.N));
 

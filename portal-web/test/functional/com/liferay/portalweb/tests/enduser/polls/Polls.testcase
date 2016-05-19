@@ -30,6 +30,45 @@
 		</if>
 	</tear-down>
 
+	<command name="AddPollsQuestionWithExpirationDate" priority="4">
+		<var name="expirationDate" value="01/02/3000" />
+		<var name="pollsQuestionTitle"><![CDATA["Derivative"]]></var>
+		<var name="pollsQuestion"><![CDATA["What is the derivative of x^(2)?"]]></var>
+		<var name="pollsQuestionChoiceA"><![CDATA["x^(2)"]]></var>
+		<var name="pollsQuestionChoiceB"><![CDATA["x/2"]]></var>
+		<var name="pollsQuestionChoiceC"><![CDATA["2x"]]></var>
+		<var name="pollsQuestionChoiceD"><![CDATA["e^(2) "]]></var>
+		<var name="pollsQuestionChoiceE"><![CDATA["None of the previous"]]></var>
+		<var name="pollsQuestionChoiceList" value="${pollsQuestionChoiceA},${pollsQuestionChoiceB},${pollsQuestionChoiceC},${pollsQuestionChoiceD},${pollsQuestionChoiceE}" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Polls" />
+		</execute>
+
+		<execute macro="Polls#addPollCPWithExpirationDate">
+			<var name="expirationDate" value="${expirationDate}" />
+			<var name="pollsQuestion" value="${pollsQuestion}" />
+			<var name="pollsQuestionChoiceA" value="${pollsQuestionChoiceA}" />
+			<var name="pollsQuestionChoiceB" value="${pollsQuestionChoiceB}" />
+			<var name="pollsQuestionChoiceC" value="${pollsQuestionChoiceC}" />
+			<var name="pollsQuestionChoiceD" value="${pollsQuestionChoiceD}" />
+			<var name="pollsQuestionChoiceE" value="${pollsQuestionChoiceE}" />
+			<var name="pollsQuestionTitle" value="${pollsQuestionTitle}" />
+		</execute>
+
+		<var name="key_pollsQuestionTitle" value="${pollsQuestionTitle}" />
+
+		<execute function="Click" locator1="Polls#POLLS_TABLE_ACTION" />
+
+		<execute function="AssertClick" locator1="CPPolls#POLLS_MENULIST_EDIT" value1="Edit" />
+
+		<execute function="AssertNotChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
+
+		<execute function="AssertTextEquals" locator1="TextInput#EXPIRATION_DATE" value1="${expirationDate}" />
+	</command>
+
 	<command name="AddPollsQuestionWithSpecialCharacters" priority="4">
 		<var name="pollsQuestionTitle"><![CDATA["Hair Color"]]></var>
 		<var name="pollsQuestion"><![CDATA["What is your hair color? Frank & John want to know."]]></var>

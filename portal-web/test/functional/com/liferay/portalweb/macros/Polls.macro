@@ -7,6 +7,8 @@
 		<execute function="Type" locator1="CPPollsAddquestion#CHOICE_A_FIELD" value1="${pollsQuestionChoiceA}" />
 		<execute function="Type" locator1="CPPollsAddquestion#CHOICE_B_FIELD" value1="${pollsQuestionChoiceB}" />
 
+		<execute function="AssertChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
+
 		<if>
 			<isset var="pollsQuestionChoiceC" />
 			<then>
@@ -14,6 +16,8 @@
 				<execute function="Type" locator1="CPPollsAddquestion#CHOICE_C_FIELD" value1="${pollsQuestionChoiceC}" />
 			</then>
 		</if>
+
+		<execute function="AssertChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
 
 		<if>
 			<isset var="pollsQuestionChoiceD" />
@@ -23,6 +27,8 @@
 			</then>
 		</if>
 
+		<execute function="AssertChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
+
 		<if>
 			<isset var="pollsQuestionChoiceE" />
 			<then>
@@ -30,6 +36,69 @@
 				<execute function="Type" locator1="CPPollsAddquestion#CHOICE_E_FIELD" value1="${pollsQuestionChoiceE}" />
 			</then>
 		</if>
+
+		<execute function="AssertChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
+
+		<if>
+			<isset var="permissions" />
+			<then>
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Permissions" />
+				</execute>
+
+				<var name="key_permissionsViewRole" value="${permissionsViewRole}" />
+
+				<execute function="Select" locator1="Select#PERMISSIONS_VIEW_ROLE" value1="${permissionsViewRole}" />
+			</then>
+		</if>
+
+		<execute function="AssertClick" locator1="CPPollsAddquestion#SAVE_BUTTON" value1="Save" />
+	</command>
+
+	<command name="addPollCPWithExpirationDate">
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="Type" locator1="CPPollsAddquestion#TITLE_FIELD" value1="${pollsQuestionTitle}" />
+		<execute function="Type" locator1="CPPollsAddquestion#POLLS_QUESTION_FIELD" value1="${pollsQuestion}" />
+		<execute function="Type" locator1="CPPollsAddquestion#CHOICE_A_FIELD" value1="${pollsQuestionChoiceA}" />
+		<execute function="Type" locator1="CPPollsAddquestion#CHOICE_B_FIELD" value1="${pollsQuestionChoiceB}" />
+
+		<execute function="AssertChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
+		<execute function="Uncheck" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
+		<execute function="Type#clickAtSendKeys" locator1="TextInput#EXPIRATION_DATE" value1="${expirationDate}" />
+
+		<if>
+			<isset var="pollsQuestionChoiceC" />
+			<then>
+				<execute function="AssertClick" locator1="Polls#ADD_CHOICE_BUTTON" value1="Add Choice" />
+				<execute function="Type" locator1="CPPollsAddquestion#CHOICE_C_FIELD" value1="${pollsQuestionChoiceC}" />
+			</then>
+		</if>
+
+		<execute function="AssertNotChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
+		<execute function="AssertTextEquals" locator1="TextInput#EXPIRATION_DATE" value1="${expirationDate}" />
+
+		<if>
+			<isset var="pollsQuestionChoiceD" />
+			<then>
+				<execute function="AssertClick" locator1="Polls#ADD_CHOICE_BUTTON" value1="Add Choice" />
+				<execute function="Type" locator1="CPPollsAddquestion#CHOICE_D_FIELD" value1="${pollsQuestionChoiceD}" />
+			</then>
+		</if>
+
+		<execute function="AssertNotChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
+		<execute function="AssertTextEquals" locator1="TextInput#EXPIRATION_DATE" value1="${expirationDate}" />
+
+		<if>
+			<isset var="pollsQuestionChoiceE" />
+			<then>
+				<execute function="AssertClick" locator1="Polls#ADD_CHOICE_BUTTON" value1="Add Choice" />
+				<execute function="Type" locator1="CPPollsAddquestion#CHOICE_E_FIELD" value1="${pollsQuestionChoiceE}" />
+			</then>
+		</if>
+
+		<execute function="AssertNotChecked" locator1="Checkbox#NEVER_EXPIRE" value1="Never Expire" />
+		<execute function="AssertTextEquals" locator1="TextInput#EXPIRATION_DATE" value1="${expirationDate}" />
 
 		<if>
 			<isset var="permissions" />

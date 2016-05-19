@@ -240,12 +240,12 @@
 </tr>
 <tr>
 	<td>NEVER_EXPIRE</td>
-	<td>//input[contains(@name,'neverExpire')]</td>
+	<td>//input[contains(@name,'neverExpire') and @type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NEVER_REVIEW</td>
-	<td>//input[contains(@name,'neverReview')]</td>
+	<td>//input[contains(@name,'neverReview') and @type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

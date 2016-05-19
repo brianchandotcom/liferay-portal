@@ -12,33 +12,28 @@
  * details.
  */
 
-package com.liferay.calendar.upgrade.v1_0_1;
+package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.dao.db.DBMetadata;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.upgrade.v7_0_0.util.UserNotificationEventTable;
 
 /**
- * @author Bryan Engler
+ * @author Adolfo Pérez
  */
-public class UpgradeCalendarBooking extends UpgradeProcess {
+public class UpgradeNotifications extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateCalendarBooking();
-	}
+		DBMetadata dbMetadata = new DBMetadata(connection);
 
-	protected void updateCalendarBooking() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			DBMetadata dbMetadata = new DBMetadata(connection);
+		if (!dbMetadata.hasType(
+				UserNotificationEventTable.class, "type_",
+				"VARCHAR(200) null")) {
 
-			if (!dbMetadata.hasColumn("CalendarBooking", "vEventUid")) {
-				runSQL("alter table CalendarBooking add vEventUid STRING null");
-			}
-
-			runSQL(
-				"update CalendarBooking set vEventUid = uuid_ where " +
-					"vEventUid is null or vEventUid = ''");
+			alter(
+				UserNotificationEventTable.class,
+				new AlterColumnType("type_", "VARCHAR(200) null"));
 		}
 	}
 

@@ -1214,6 +1214,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				line, attributeAndValue, newAttributeAndValue);
 		}
 
+		if (!portalSource) {
+			return line;
+		}
+
 		if (!attributeAndValue.endsWith(StringPool.QUOTE) ||
 			attributeAndValue.contains("\"<%=")) {
 
@@ -1862,7 +1866,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			ReflectionUtil.throwException(e);
 		}
 
-		_populateTagJavaClasses();
+		if (portalSource) {
+			_populateTagJavaClasses();
+		}
 	}
 
 	@Override

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Doclet
+Bundle-SymbolicName: com.liferay.doclet
+Bundle-Version: 1.0.0
+Include-Resource: @../../../lib/development/liferay-doclet.jar

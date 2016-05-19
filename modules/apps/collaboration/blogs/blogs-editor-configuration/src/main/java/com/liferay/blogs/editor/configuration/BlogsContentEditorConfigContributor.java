@@ -97,8 +97,8 @@ public class BlogsContentEditorConfigContributor
 	}
 
 	protected String getAllowedContentTable() {
-		return "table[border, cellpadding, cellspacing] {width} thead tbody " +
-			"tr[scope] th[scope] td;";
+		return "table[border, cellpadding, cellspacing] {width}; thead tbody " +
+			"tr[scope]; th[scope]; td;";
 	}
 
 	protected String getAllowedContentText() {

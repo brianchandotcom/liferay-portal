@@ -171,6 +171,15 @@ public class ScriptingExecutorExtender {
 
 			Message message = new Message();
 
+			BundleWiring bundleWiring = bundle.adapt(
+				BundleWiring.class);
+
+			ClassLoader bundleClassLoader = bundleWiring.getClassLoader();
+
+			message.put(
+				ScriptingExecutorMessagingConstants.BUNDLE_CLASS_LOADER,
+				bundleClassLoader);
+
 			message.put(
 				ScriptingExecutorMessagingConstants.
 					MESSAGE_KEY_SCRIPTING_LANGUAGE,
@@ -185,13 +194,6 @@ public class ScriptingExecutorExtender {
 			message.put(
 				ScriptingExecutorMessagingConstants.MESSAGE_KEY_URLS,
 				scriptURLs);
-
-			ClassLoader bundleClassLoader = bundle.adapt(
-				BundleWiring.class).getClassLoader();
-
-			message.put(
-				ScriptingExecutorMessagingConstants.BUNDLE_CLASS_LOADER,
-				bundleClassLoader);
 
 			_singleDestinationMessageSender.send(message);
 

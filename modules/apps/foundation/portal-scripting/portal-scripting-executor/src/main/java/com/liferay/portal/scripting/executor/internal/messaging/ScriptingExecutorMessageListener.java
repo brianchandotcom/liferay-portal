@@ -47,21 +47,22 @@ public class ScriptingExecutorMessageListener extends BaseMessageListener {
 		List<URL> urls = (List<URL>)message.get(
 			ScriptingExecutorMessagingConstants.MESSAGE_KEY_URLS);
 
-		Thread thread = Thread.currentThread();
+		Thread currentThread = Thread.currentThread();
 
-		ClassLoader threadClassLoader =
-			Thread.currentThread().getContextClassLoader();
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		for (URL url : urls) {
 			try (InputStream inputStream = url.openStream()) {
 				ClassLoader bundleClassLoader = (ClassLoader)message.get(
 					ScriptingExecutorMessagingConstants.BUNDLE_CLASS_LOADER);
 
-				ClassLoader classLoader =
-					AggregateClassLoader.getAggregateClassLoader(
-						threadClassLoader, bundleClassLoader);
+				if (bundleClassLoader != null) {
+					ClassLoader aggregateClassLoader =
+						AggregateClassLoader.getAggregateClassLoader(
+							contextClassLoader, bundleClassLoader);
 
-				thread.setContextClassLoader(classLoader);
+					currentThread.setContextClassLoader(aggregateClassLoader);
+				}
 
 				_scripting.exec(
 					null, new HashMap<String, Object>(), scriptingLanguage,
@@ -73,7 +74,7 @@ public class ScriptingExecutorMessageListener extends BaseMessageListener {
 				}
 			}
 			finally {
-				thread.setContextClassLoader(threadClassLoader);
+				currentThread.setContextClassLoader(contextClassLoader);
 			}
 		}
 	}

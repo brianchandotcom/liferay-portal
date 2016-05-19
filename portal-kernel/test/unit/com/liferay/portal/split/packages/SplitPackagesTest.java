@@ -81,7 +81,7 @@ public class SplitPackagesTest {
 						}
 					}
 
-					if (Files.exists(dirPath.resolve("portal.build"))) {
+					if (Files.exists(dirPath.resolve(".lfrbuild-portal"))) {
 						Path sourcePath = dirPath.resolve("src/main/java");
 
 						if (Files.exists(dirPath.resolve("docroot"))) {

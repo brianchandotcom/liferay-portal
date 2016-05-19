@@ -1310,7 +1310,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					if (FileUtil.exists(project, "static.build")) {
+					if (FileUtil.exists(project, ".lfrbuild-static")) {
 						return new File(
 							liferayExtension.getLiferayHome(), "osgi/static");
 					}

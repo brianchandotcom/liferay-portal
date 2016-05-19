@@ -67,7 +67,7 @@
 						SyndEntry syndEntry = rssFeedEntry.getSyndEntry();
 					%>
 
-						<aui:fieldset collapsed="<%= (themeDisplay.isStateMaximized() || (j < rssPortletInstanceConfiguration.expandedEntriesPerFeed())) %>" collapsible="<%= true %>" cssClass="feed-entry" label="<%= HtmlUtil.escape(syndEntry.getTitle()) %>">
+						<aui:fieldset collapsed="<%= (themeDisplay.isStateMaximized() || (j < rssPortletInstanceConfiguration.expandedEntriesPerFeed())) %>" collapsible="<%= true %>" cssClass="feed-entry" id='<%= "panelId_" + j %>' label="<%= HtmlUtil.escape(syndEntry.getTitle()) %>">
 							<div class="feed-entry-content">
 								<c:if test="<%= rssPortletInstanceConfiguration.showFeedItemAuthor() && Validator.isNotNull(syndEntry.getAuthor()) %>">
 									<strong class="feed-entry-author small">

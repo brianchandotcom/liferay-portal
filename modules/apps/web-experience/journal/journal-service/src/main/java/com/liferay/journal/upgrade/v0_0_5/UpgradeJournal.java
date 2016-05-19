@@ -16,6 +16,7 @@ package com.liferay.journal.upgrade.v0_0_5;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.xml.XMLUtil;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
@@ -24,8 +25,12 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -67,28 +72,28 @@ public class UpgradeJournal extends UpgradeProcess {
 		CompanyLocalService companyLocalService,
 		DDMTemplateLinkLocalService ddmTemplateLinkLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
-		GroupLocalService groupLocalService,
+		GroupLocalService groupLocalService, ResourceActions resourceActions,
+		ResourceActionLocalService resourceActionLocalService,
 		UserLocalService userLocalService) {
 
 		_companyLocalService = companyLocalService;
 		_ddmTemplateLinkLocalService = ddmTemplateLinkLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 		_groupLocalService = groupLocalService;
+		_resourceActions = resourceActions;
+		_resourceActionLocalService = resourceActionLocalService;
 		_userLocalService = userLocalService;
 	}
 
 	protected String addBasicWebContentStructureAndTemplate(long companyId)
 		throws Exception {
 
+		initJournalDDMCompositeModelsResourceActions();
+
 		Group group = _groupLocalService.getCompanyGroup(companyId);
 
 		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
 
-		boolean addResource = PermissionThreadLocal.isAddResource();
-
-		PermissionThreadLocal.setAddResource(false);
-
-		try {
 			Class<?> clazz = getClass();
 
 			_defaultDDMStructureHelper.addDDMStructures(
@@ -98,10 +103,6 @@ public class UpgradeJournal extends UpgradeProcess {
 				"com/liferay/journal/upgrade/v1_0_0/dependencies" +
 					"/basic-web-content-structure.xml",
 				new ServiceContext());
-		}
-		finally {
-			PermissionThreadLocal.setAddResource(addResource);
-		}
 
 		String defaultLanguageId = UpgradeProcessUtil.getDefaultLanguageId(
 			companyId);
@@ -113,6 +114,27 @@ public class UpgradeJournal extends UpgradeProcess {
 		Element structureElement = structureElements.get(0);
 
 		return structureElement.elementText("name");
+	}
+
+	protected void initJournalDDMCompositeModelsResourceActions()
+		throws Exception {
+
+		_resourceActions.read(
+			null, UpgradeJournal.class.getClassLoader(),
+			"/META-INF/resource-actions/journal_ddm_composite_models.xml");
+
+		String portletId = JournalPortletKeys.JOURNAL;
+
+		List<String> modelNames =
+			_resourceActions.getPortletModelResources(portletId);
+
+		for (String modelName : modelNames) {
+			List<String> modelActions =
+				_resourceActions.getModelResourceActions(modelName);
+
+			_resourceActionLocalService.checkResourceActions(
+				modelName, modelActions);
+		}
 	}
 
 	protected void addDDMTemplateLinks() throws Exception {
@@ -416,6 +438,8 @@ public class UpgradeJournal extends UpgradeProcess {
 	private final GroupLocalService _groupLocalService;
 	private final Pattern _nameAttributePattern = Pattern.compile(
 		"name=\"([^\"]+)\"");
+	private final ResourceActions _resourceActions;
+	private final ResourceActionLocalService _resourceActionLocalService;
 	private final UserLocalService _userLocalService;
 
 }

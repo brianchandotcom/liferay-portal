@@ -35,9 +35,11 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
@@ -78,6 +80,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			new UpgradeJournal(
 				_companyLocalService, _ddmTemplateLinkLocalService,
 				_defaultDDMStructureHelper, _groupLocalService,
+				_resourceActions, _resourceActionLocalService,
 				_userLocalService),
 			new UpgradeJournalArticles(
 				_assetCategoryLocalService, _ddmStructureLocalService,
@@ -184,6 +187,18 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	}
 
 	@Reference(unbind = "-")
+	protected void setResourceActions(ResourceActions resourceActions) {
+		_resourceActions = resourceActions;
+	}
+
+	@Reference(unbind = "-")
+	protected void setResourceActionLocalService(
+		ResourceActionLocalService resourceActionLocalService) {
+
+		_resourceActionLocalService = resourceActionLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setSettingsFactory(SettingsFactory settingsFactory) {
 		_settingsFactory = settingsFactory;
 	}
@@ -205,6 +220,8 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
 	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;
+	private ResourceActions _resourceActions;
+	private ResourceActionLocalService _resourceActionLocalService;
 	private SettingsFactory _settingsFactory;
 	private UserLocalService _userLocalService;
 

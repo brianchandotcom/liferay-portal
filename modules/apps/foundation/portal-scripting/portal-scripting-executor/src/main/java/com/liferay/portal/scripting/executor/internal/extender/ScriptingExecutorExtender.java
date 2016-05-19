@@ -171,8 +171,7 @@ public class ScriptingExecutorExtender {
 
 			Message message = new Message();
 
-			BundleWiring bundleWiring = bundle.adapt(
-				BundleWiring.class);
+			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
 			ClassLoader bundleClassLoader = bundleWiring.getClassLoader();
 

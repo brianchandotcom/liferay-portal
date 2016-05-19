@@ -97,16 +97,16 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				href="<%= rowURL %>"
 				name="name"
-				truncate="<%= true %>"
 			>
 				<strong><%= sapEntry.getName() %></strong>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="description"
-				truncate="<%= true %>"
 				value="<%= sapEntry.getTitle(locale) %>"
 			/>
 

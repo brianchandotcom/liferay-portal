@@ -262,21 +262,16 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 					"Unable to open file at " + app.getFilePath());
 			}
 
-
-
-			String extension = FileUtil.getExtension(app.getFileName());
-			String fileName = FileUtil.encodeSafeFileName(app.getTitle());
-			fileName = encodeSafeFileName(fileName);
-
 			StringBundler sb = new StringBundler(7);
 
 			sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
 			sb.append(StringPool.SLASH);
-			sb.append(fileName);
+			sb.append(encodeSafeFileName(app.getTitle()));
 			sb.append(StringPool.PERIOD);
-			sb.append(extension);
+			sb.append(FileUtil.getExtension(app.getFileName()));
 
 			File file = new File(sb.toString());
+
 			FileUtil.write(file, inputStream);
 
 			List<Bundle> bundles = BundleManagerUtil.installLPKG(file);
@@ -427,6 +422,8 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		if (fileName == null) {
 			return StringPool.BLANK;
 		}
+
+		fileName = FileUtil.encodeSafeFileName(fileName);
 
 		return StringUtil.replace(
 			fileName, _SAFE_FILE_NAME_1, _SAFE_FILE_NAME_2);

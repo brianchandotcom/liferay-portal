@@ -15,6 +15,7 @@
 package com.liferay.contacts.upgrade;
 
 import com.liferay.contacts.upgrade.v2_0_0.UpgradeEntry;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,6 +31,16 @@ public class ContactsServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.contacts.service", "0.0.1", "1.0.0",
 			new UpgradeEntry());
+
+		// See LPS-65946
+
+		registry.register(
+			"com.liferay.contacts.service", "1.0.0", "2.0.1",
+			new DummyUpgradeStep());
+
+		registry.register(
+			"com.liferay.contacts.service", "2.0.0", "2.0.1",
+			new DummyUpgradeStep());
 	}
 
 }

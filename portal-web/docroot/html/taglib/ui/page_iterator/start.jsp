@@ -133,6 +133,7 @@ if (forcePost && (portletURL != null)) {
 				else {
 					sb.append("<a class='journal-article-page-number' href='");
 					sb.append(_getHREF(formName, namespace + curParam, i, jsCall, url, urlAnchor));
+
 					if (forcePost) {
 						sb.append("' onclick='event.preventDefault(); ");
 						sb.append(namespace);
@@ -143,6 +144,7 @@ if (forcePost && (portletURL != null)) {
 						sb.append(i);
 						sb.append(");");
 					}
+
 					sb.append("'>");
 					sb.append(i);
 					sb.append("</a>");

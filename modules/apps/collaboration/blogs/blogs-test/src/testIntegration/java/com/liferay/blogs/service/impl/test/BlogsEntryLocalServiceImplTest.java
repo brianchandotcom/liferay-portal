@@ -160,8 +160,6 @@ public class BlogsEntryLocalServiceImplTest {
 			(BlogsEntryLocalService) PortalBeanLocatorUtil.locate(
 				BlogsEntryLocalService.class.getName());
 
-		long day = 86400000;
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
@@ -174,7 +172,7 @@ public class BlogsEntryLocalServiceImplTest {
 
 			blogsEntries[order] = BlogsEntryLocalServiceUtil.addEntry(
 				TestPropsValues.getUserId(), StringUtil.randomString(),
-				StringUtil.randomString(), new Date(displayDate * day),
+				StringUtil.randomString(), new Date(displayDate * Time.DAY),
 				serviceContext);
 
 			_blogsEntries.add(blogsEntries[order]);

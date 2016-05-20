@@ -36,7 +36,7 @@ long recordSetId = ddlFormDisplayContext.getRecordSetId();
 				<portlet:actionURL name="addRecord" var="addRecordActionURL" />
 
 				<div class="portlet-forms">
-					<aui:form action="<%= addRecordActionURL %>" method="post" name="fm">
+					<aui:form action="<%= addRecordActionURL %>" data-DDLRecordSetId="<%= recordSetId %>" method="post" name="fm">
 
 						<%
 						String redirectURL = ddlFormDisplayContext.getRedirectURL();

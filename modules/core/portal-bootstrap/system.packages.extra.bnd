@@ -1,3 +1,4 @@
+Bundle-SymbolicName: system.packages.extra
 Export-Package:\
 	!.touch,\
 	!*.dependencies.*,\
@@ -65,8 +66,10 @@ Export-Package:\
 	!resource-actions,\
 	!trax,\
 	!unicode-license.txt,\
+	com.ibm.crypto.provider,\
 	com.liferay.ibm.icu.*;version='4.0.1',\
 	com.liferay.portal.bootstrap.index;version='1.0.0',\
+    com.sun.security.auth.module,\
 	com.sun.syndication;version='1.0',\
 	com.sun.syndication.feed;version='1.0',\
 	com.sun.syndication.feed.atom;version='1.0',\
@@ -170,6 +173,7 @@ Export-Package:\
 	org.apache.log4j.spi;version='1.2.17',\
 	org.apache.log4j.varia;version='1.2.17',\
 	org.apache.log4j.xml;version='1.2.17',\
+    org.apache.naming.java,\
 	org.apache.regexp;version='2.7.1',\
 	org.apache.struts.*;version='1.3.10',\
 	org.apache.tools.ant.*;version='1.8.2',\
@@ -203,6 +207,8 @@ Export-Package:\
 	org.springframework.*;version='4.1.9',\
 	org.w3c.dom.*;version='1.0',\
 	org.xml.sax.*;version='2.0.2',\
+	sun.misc,\
+	sun.security.provider,\
 	*
 Import-Package: !*
 -includeresource:\
@@ -270,3 +276,4 @@ Import-Package: !*
 	@lib/com.liferay.osgi.service.tracker.collections.jar,\
 	@lib/com.liferay.portal.app.license.api.jar,\
 	@lib/com.liferay.registry.api.jar
+-removeheaders: Private-Package, Service-Component

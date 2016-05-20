@@ -165,7 +165,12 @@ define(['exports', 'metal/src/metal', 'metal-events/src/events'], function (expo
 			var info = this.stateInfo_[name];
 			var config = info.config;
 			if (config.validator) {
-				return this.callFunction_(config.validator, [value, name]);
+				var validatorReturn = this.callFunction_(config.validator, [value, name, this]);
+
+				if (validatorReturn instanceof Error) {
+					console.error('Warning: ' + validatorReturn);
+				}
+				return validatorReturn;
 			}
 			return true;
 		};

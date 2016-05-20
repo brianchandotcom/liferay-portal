@@ -161,21 +161,27 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 			var _this3 = this;
 
 			return new _Promise.CancellablePromise(function (resolve, reject) {
-				var canvas = _this3.getImageEditorCanvas();
+				_this3.getImageEditorImageData().then(function (imageData) {
+					var canvas = document.createElement('canvas');
+					canvas.width = imageData.width;
+					canvas.height = imageData.height;
 
-				if (canvas.toBlob) {
-					canvas.toBlob(resolve, _this3.saveMimeType);
-				} else {
-					var data = atob(canvas.toDataURL(_this3.saveMimeType).split(',')[1]);
-					var length = data.length;
-					var bytes = new Uint8Array(length);
+					canvas.getContext('2d').putImageData(imageData, 0, 0);
 
-					for (var i = 0; i < length; i++) {
-						bytes[i] = data.charCodeAt(i);
+					if (canvas.toBlob) {
+						canvas.toBlob(resolve, _this3.saveMimeType);
+					} else {
+						var data = atob(canvas.toDataURL(_this3.saveMimeType).split(',')[1]);
+						var length = data.length;
+						var bytes = new Uint8Array(length);
+
+						for (var i = 0; i < length; i++) {
+							bytes[i] = data.charCodeAt(i);
+						}
+
+						resolve(new Blob([bytes], { type: _this3.saveMimeType }));
 					}
-
-					resolve(new Blob([bytes], { type: _this3.saveMimeType }));
-				}
+				});
 			});
 		};
 

@@ -34,44 +34,25 @@ import com.liferay.portal.verify.VerifyProcess;
 
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Daniel Kocsis
  */
-@Component(
-	immediate = true,
-	property = {"verify.process.name=com.liferay.journal.service"},
-	service = VerifyProcess.class
-)
 public class JournalServiceSystemEventVerifyProcess extends VerifyProcess {
+
+	public JournalServiceSystemEventVerifyProcess(
+		JournalArticleLocalService journalArticleLocalService,
+		JournalArticleResourceLocalService journalArticleResourceLocalService,
+		SystemEventLocalService systemEventLocalService) {
+
+		_journalArticleLocalService = journalArticleLocalService;
+		_journalArticleResourceLocalService =
+			journalArticleResourceLocalService;
+		_systemEventLocalService = systemEventLocalService;
+	}
 
 	@Override
 	protected void doVerify() throws Exception {
 		verifyJournalArticleDeleteSystemEvents();
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleLocalService(
-		JournalArticleLocalService journalArticleLocalService) {
-
-		_journalArticleLocalService = journalArticleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleResourceLocalService(
-		JournalArticleResourceLocalService journalArticleResourceLocalService) {
-
-		_journalArticleResourceLocalService =
-			journalArticleResourceLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSystemEventLocalService(
-		SystemEventLocalService systemEventLocalService) {
-
-		_systemEventLocalService = systemEventLocalService;
 	}
 
 	protected void verifyJournalArticleDeleteSystemEvents() throws Exception {
@@ -142,9 +123,9 @@ public class JournalServiceSystemEventVerifyProcess extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalServiceSystemEventVerifyProcess.class);
 
-	private JournalArticleLocalService _journalArticleLocalService;
-	private JournalArticleResourceLocalService
+	private final JournalArticleLocalService _journalArticleLocalService;
+	private final JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
-	private SystemEventLocalService _systemEventLocalService;
+	private final SystemEventLocalService _systemEventLocalService;
 
 }

@@ -18,24 +18,10 @@ import aQute.bnd.header.Attrs;
 import aQute.bnd.header.Parameters;
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.osgi.Jar;
-import aQute.bnd.osgi.Verifier;
 import aQute.bnd.osgi.resource.CapabilityBuilder;
 
-import com.liferay.portal.bootstrap.ModuleFrameworkImpl;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.target.platform.indexer.Indexer;
 import com.liferay.portal.target.platform.indexer.internal.PathUtil;
-import com.liferay.portal.util.FastDateFormatFactoryImpl;
-import com.liferay.portal.util.FileImpl;
-import com.liferay.portal.util.PropsImpl;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -54,6 +40,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
@@ -61,6 +48,7 @@ import java.util.jar.Manifest;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.launch.Framework;
+import org.osgi.framework.launch.FrameworkFactory;
 import org.osgi.framework.namespace.BundleNamespace;
 import org.osgi.framework.namespace.HostNamespace;
 import org.osgi.framework.namespace.IdentityNamespace;
@@ -78,45 +66,34 @@ import org.osgi.service.repository.ContentNamespace;
 public class TargetPlatformMain implements Indexer {
 
 	public static void main(String[] args) throws Exception {
-		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
-			new FastDateFormatFactoryUtil();
+		String moduleFrameworkBaseDir = System.getProperty(
+			"module.framework.base.dir");
 
-		fastDateFormatFactoryUtil.setFastDateFormatFactory(
-			new FastDateFormatFactoryImpl());
+		if (moduleFrameworkBaseDir == null) {
+			System.err.println(
+				"== -Dmodule.framework.base.dir must point to a valid path");
 
-		FileUtil fileUtil = new FileUtil();
+			return;
+		}
 
-		fileUtil.setFile(new FileImpl());
+		String moduleFrameworkModulesDir = System.getProperty(
+			"module.framework.modules.dir");
+
+		if (moduleFrameworkModulesDir == null) {
+			moduleFrameworkModulesDir = moduleFrameworkBaseDir + "/modules/";
+		}
+
+		String moduleFrameworkPortalDir = System.getProperty(
+			"module.framework.portal.dir");
+
+		if (moduleFrameworkPortalDir == null) {
+			moduleFrameworkPortalDir = moduleFrameworkBaseDir + "/portal/";
+		}
 
 		Path tempPath = Files.createTempDirectory(null);
 
-		File tempDir = tempPath.toFile();
-
-		com.liferay.portal.util.PropsUtil.set(
-			PropsKeys.MODULE_FRAMEWORK_STATE_DIR, tempDir.getCanonicalPath());
-
-		PropsUtil.setProps(new PropsImpl());
-
-		String[] moduleFrameworkInitialBundles = PropsUtil.getArray(
-			PropsKeys.MODULE_FRAMEWORK_INITIAL_BUNDLES);
-
-		for (int i = 0; i < moduleFrameworkInitialBundles.length; i++) {
-			String moduleFrameworkInitialBundle =
-				moduleFrameworkInitialBundles[i];
-
-			if (moduleFrameworkInitialBundle.endsWith("@start")) {
-				moduleFrameworkInitialBundles[i] =
-					moduleFrameworkInitialBundle.substring(
-						0, moduleFrameworkInitialBundle.length() - 6);
-			}
-		}
-
-		com.liferay.portal.util.PropsUtil.set(
-			PropsKeys.MODULE_FRAMEWORK_INITIAL_BUNDLES,
-			StringUtil.merge(moduleFrameworkInitialBundles));
-
 		File targetPlatformDir = new File(
-			PropsValues.MODULE_FRAMEWORK_BASE_DIR, DIR_NAME_TARGET_PLATFORM);
+			moduleFrameworkBaseDir, DIR_NAME_TARGET_PLATFORM);
 
 		if (!targetPlatformDir.exists() && !targetPlatformDir.mkdirs()) {
 			System.err.printf(
@@ -126,7 +103,8 @@ public class TargetPlatformMain implements Indexer {
 		}
 
 		TargetPlatformMain targetPlatformMain = new TargetPlatformMain(
-			"com.liferay.target.platform", ReleaseInfo.getVersion());
+			moduleFrameworkBaseDir, moduleFrameworkModulesDir,
+			moduleFrameworkPortalDir);
 
 		try {
 			File indexFile = targetPlatformMain.index(targetPlatformDir);
@@ -138,15 +116,19 @@ public class TargetPlatformMain implements Indexer {
 		}
 	}
 
-	public TargetPlatformMain(String bundleSymbolicName, String bundleVersion) {
-		_bundleSymbolicName = bundleSymbolicName;
-		_bundleVersion = bundleVersion;
+	public TargetPlatformMain(
+		String moduleFrameworkBaseDir, String moduleFrameworkModulesDir,
+		String moduleFrameworkPortalDir) {
+
+		_moduleFrameworkBaseDir = moduleFrameworkBaseDir;
+		_moduleFrameworkModulesDir = moduleFrameworkModulesDir;
+		_moduleFrameworkPortalDir = moduleFrameworkPortalDir;
 
 		_config.put("compressed", "false");
 		_config.put(
 			"license.url", "https://www.liferay.com/downloads/ce-license");
 		_config.put("pretty", "true");
-		_config.put("repository.name", ReleaseInfo.getReleaseInfo());
+		_config.put("repository.name", "Liferay Target Platform");
 		_config.put("stylesheet", "http://www.osgi.org/www/obr2html.xsl");
 	}
 
@@ -156,114 +138,21 @@ public class TargetPlatformMain implements Indexer {
 
 		File tempDir = tempPath.toFile();
 
-		_config.put("root.url", tempDir.getCanonicalPath());
+		_config.put("root.url", tempDir.getPath());
 
-		_moduleFrameworkImpl.initFramework();
+		Set<File> jarFiles = new LinkedHashSet<>();
 
-		_moduleFrameworkImpl.startFramework();
+		try {
+			_processSystemBundle(tempDir, jarFiles);
+			_processSystemPackagesExtra(tempDir, jarFiles);
 
-		Framework framework = _moduleFrameworkImpl.getFramework();
+			String[] moduleDirs = new String[] {
+				_moduleFrameworkBaseDir + "/static/",
+				_moduleFrameworkModulesDir, _moduleFrameworkPortalDir
+			};
 
-		BundleContext bundleContext = framework.getBundleContext();
-
-		processBundle(bundleContext.getBundle(0));
-
-		Manifest manifest = new Manifest();
-
-		Attributes attributes = manifest.getMainAttributes();
-
-		attributes.putValue(
-			Constants.BUNDLE_DESCRIPTION, ReleaseInfo.getReleaseInfo());
-		attributes.putValue(
-			Constants.BUNDLE_COPYRIGHT,
-			"Copyright (c) 2000-present All rights reserved.");
-		attributes.putValue(
-			Constants.BUNDLE_LICENSE,
-			"http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt");
-		attributes.putValue(Constants.BUNDLE_MANIFESTVERSION, "2");
-		attributes.putValue(Constants.BUNDLE_SYMBOLICNAME, _bundleSymbolicName);
-		attributes.putValue(Constants.BUNDLE_VENDOR, ReleaseInfo.getVendor());
-		attributes.putValue(Constants.BUNDLE_VERSION, _bundleVersion);
-
-		String exportPackage = StringUtil.replace(
-			_packagesParamters.toString(), "version:Version", "version");
-
-		attributes.putValue(Constants.EXPORT_PACKAGE, exportPackage);
-
-		StringBundler sb = new StringBundler();
-
-		for (Parameters parameter : _parametersList) {
-			sb.append(parameter.toString());
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		String capabilities = sb.toString();
-
-		attributes.putValue(Constants.PROVIDE_CAPABILITY, capabilities);
-
-		Jar jar = new Jar("distro");
-
-		jar.setManifest(manifest);
-
-		try (Verifier verifier = new Verifier(jar)) {
-			verifier.setProperty(
-				Constants.FIXUPMESSAGES,
-				"osgi.* namespace must not be specified with generic " +
-					"capabilities");
-
-			verifier.verify();
-
-			verifier.getErrors();
-
-			if (!verifier.isOk()) {
-				List<String> errors = verifier.getErrors();
-
-				sb = new StringBundler((errors.size() * 4) + 3);
-
-				sb.append(TargetPlatformMain.class.getName());
-				sb.append(" failed with {");
-
-				for (String error : verifier.getErrors()) {
-					sb.append("[");
-					sb.append(error);
-					sb.append("]");
-					sb.append(",");
-				}
-
-				sb.setIndex(sb.index() - 1);
-
-				sb.append("}");
-
-				throw new Exception(sb.toString());
-			}
-
-			File jarFile = new File(
-				tempPath.toFile(),
-				_bundleSymbolicName + "-" + _bundleVersion + ".jar");
-
-			jar.write(jarFile);
-
-			Set<File> jarFiles = new LinkedHashSet<>();
-
-			jarFiles.add(jarFile);
-
-			for (String moduleFrameworkInitialBundle :
-					PropsValues.MODULE_FRAMEWORK_INITIAL_BUNDLES) {
-
-				addBundle(
-					jarFiles, moduleFrameworkInitialBundle,
-					PropsValues.MODULE_FRAMEWORK_BASE_DIR + "/static/",
-					tempPath.toFile());
-			}
-
-			String[] autoDeployDirs = ArrayUtil.append(
-				new String[] {PropsValues.MODULE_FRAMEWORK_PORTAL_DIR},
-				PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
-
-			for (String autoDeployDir : autoDeployDirs) {
-				File dir = new File(autoDeployDir);
+			for (String moduleDir : moduleDirs) {
+				File dir = new File(moduleDir);
 
 				if (!dir.isDirectory() || !dir.canRead()) {
 					continue;
@@ -280,15 +169,13 @@ public class TargetPlatformMain implements Indexer {
 					});
 
 				for (File childFile : childFiles) {
-					addBundle(jarFiles, childFile, tempPath.toFile());
+					_addBundle(jarFiles, childFile, tempDir);
 				}
 			}
 
 			ResourceIndexer resourceIndexer = new RepoIndex();
 
-			File tempIndexFile = new File(
-				tempPath.toFile(),
-				_bundleSymbolicName + "-" + _bundleVersion + "-index.xml");
+			File tempIndexFile = new File(tempDir, "target.platform.index.xml");
 
 			try (FileOutputStream fileOutputStream =
 					new FileOutputStream(tempIndexFile)) {
@@ -307,12 +194,10 @@ public class TargetPlatformMain implements Indexer {
 		}
 		finally {
 			PathUtil.deltree(tempPath);
-
-			_moduleFrameworkImpl.stopFramework(0);
 		}
 	}
 
-	protected void addBundle(Set<File> jarFiles, File bundleFile, File tempDir)
+	private void _addBundle(Set<File> jarFiles, File bundleFile, File tempDir)
 		throws IOException {
 
 		File jarFile = new File(tempDir, bundleFile.getName());
@@ -325,44 +210,7 @@ public class TargetPlatformMain implements Indexer {
 		jarFiles.add(jarFile);
 	}
 
-	protected void addBundle(
-			Set<File> jarFiles, String bundleLocation, String baseDirName,
-			File tempDir)
-		throws IOException {
-
-		int index = bundleLocation.indexOf('@');
-
-		if (index != -1) {
-			bundleLocation = bundleLocation.substring(0, index);
-		}
-
-		if (!bundleLocation.startsWith("file:")) {
-			bundleLocation = "file:" + baseDirName + bundleLocation;
-		}
-
-		if (!bundleLocation.endsWith(".jar")) {
-			return;
-		}
-
-		URI uri = URI.create(bundleLocation);
-
-		File bundleFile = new File(uri);
-
-		if (!bundleFile.exists() || !bundleFile.canRead()) {
-			return;
-		}
-
-		File jarFile = new File(tempDir, bundleFile.getName());
-
-		Files.copy(
-			bundleFile.toPath(), jarFile.toPath(),
-			StandardCopyOption.COPY_ATTRIBUTES,
-			StandardCopyOption.REPLACE_EXISTING);
-
-		jarFiles.add(jarFile);
-	}
-
-	protected void processBundle(Bundle bundle) throws Exception {
+	private void _processBundle(Bundle bundle) throws Exception {
 		BundleRevision bundleRevision = bundle.adapt(BundleRevision.class);
 
 		for (Capability capability : bundleRevision.getCapabilities(null)) {
@@ -407,7 +255,99 @@ public class TargetPlatformMain implements Indexer {
 		}
 	}
 
+	private void _processSystemBundle(File tempDir, Set<File> jarFiles)
+		throws Exception {
+
+		Framework framework = null;
+
+		try (Jar jar = new Jar("system.bundle")) {
+			ServiceLoader<FrameworkFactory> serviceLoader = ServiceLoader.load(
+				FrameworkFactory.class);
+
+			FrameworkFactory frameworkFactory = serviceLoader.iterator().next();
+
+			Map<String, String> properties = new HashMap<>();
+
+			properties.put(
+				org.osgi.framework.Constants.FRAMEWORK_STORAGE,
+				tempDir.getAbsolutePath());
+
+			framework = frameworkFactory.newFramework(properties);
+
+			framework.init();
+
+			BundleContext bundleContext = framework.getBundleContext();
+
+			Bundle systemBundle = bundleContext.getBundle(0);
+
+			_processBundle(systemBundle);
+
+			Manifest manifest = new Manifest();
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			attributes.putValue(
+				Constants.BUNDLE_SYMBOLICNAME, systemBundle.getSymbolicName());
+			attributes.putValue(
+				Constants.BUNDLE_VERSION, systemBundle.getVersion().toString());
+
+			String exportPackage = _packagesParamters.toString().replace(
+				"version:Version", "version");
+
+			attributes.putValue(Constants.EXPORT_PACKAGE, exportPackage);
+
+			StringBuilder sb = new StringBuilder();
+
+			for (Parameters parameter : _parametersList) {
+				sb.append(parameter.toString());
+				sb.append(",");
+			}
+
+			sb.setLength(sb.length() - 1);
+
+			String capabilities = sb.toString();
+
+			attributes.putValue(Constants.PROVIDE_CAPABILITY, capabilities);
+
+			jar.setManifest(manifest);
+
+			File jarFile = new File(
+				tempDir,
+				systemBundle.getSymbolicName() + "-" +
+					systemBundle.getVersion() + ".jar");
+
+			jar.write(jarFile);
+
+			jarFiles.add(jarFile);
+		}
+		finally {
+			framework.stop();
+		}
+	}
+
+	private void _processSystemPackagesExtra(File tempDir, Set<File> jarFiles)
+		throws Exception {
+
+		try (Jar jar = new Jar("system.packages.extra")) {
+			ClassLoader classLoader = _targetPlatformMainClass.getClassLoader();
+
+			Manifest manifest = new Manifest(
+				classLoader.getResourceAsStream(
+					"META-INF/system.packages.extra.mf"));
+
+			jar.setManifest(manifest);
+
+			File jarFile = new File(tempDir, "system.packages.extra.jar");
+
+			jar.write(jarFile);
+
+			jarFiles.add(jarFile);
+		}
+	}
+
 	private static final Set<String> _ignoredNamespaces = new HashSet<>();
+	private static final Class<?> _targetPlatformMainClass =
+		TargetPlatformMain.class;
 
 	static {
 		_ignoredNamespaces.add(BundleNamespace.BUNDLE_NAMESPACE);
@@ -417,11 +357,10 @@ public class TargetPlatformMain implements Indexer {
 		_ignoredNamespaces.add(PackageNamespace.PACKAGE_NAMESPACE);
 	}
 
-	private final String _bundleSymbolicName;
-	private final String _bundleVersion;
 	private final Map<String, String> _config = new HashMap<>();
-	private final ModuleFrameworkImpl _moduleFrameworkImpl =
-		new ModuleFrameworkImpl();
+	private final String _moduleFrameworkBaseDir;
+	private final String _moduleFrameworkModulesDir;
+	private final String _moduleFrameworkPortalDir;
 	private final Parameters _packagesParamters = new Parameters();
 	private final List<Parameters> _parametersList = new ArrayList<>();
 

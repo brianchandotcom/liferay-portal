@@ -63,6 +63,11 @@ public class TaskCacheApplicator {
 
 			upToDate = true;
 		}
+		else if (taskCache.isDisabled()) {
+			if (_logger.isLifecycleEnabled()) {
+				_logger.lifecycle("Cache for " + task + " is disabled");
+			}
+		}
 		else {
 			String cachedDigest = getCachedDigest(taskCache);
 

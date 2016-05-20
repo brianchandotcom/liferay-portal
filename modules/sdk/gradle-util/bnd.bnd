@@ -1,4 +1,3 @@
 Bundle-Name: Liferay Gradle Utilities
 Bundle-SymbolicName: com.liferay.gradle.util
 Bundle-Version: 1.0.26
-Export-Package: com.liferay.gradle.util.*

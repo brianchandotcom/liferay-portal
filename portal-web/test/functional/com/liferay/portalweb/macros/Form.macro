@@ -86,7 +86,7 @@
 
 		<execute function="Click#makeVisibleClickAt" locator1="Form#ADD_ADDITIONAL_FIELD" />
 
-		<var method="StringUtil#lowerCase('${fieldType}')" name="key_fieldType" />
+		<var name="key_fieldType" value="${fieldType}"/>
 
 		<execute function="AssertClick" locator1="Form#ADD_FIELD_TYPE" value1="${fieldType}" />
 	</command>
@@ -96,7 +96,7 @@
 
 		<execute function="Click" locator1="Form#ADD_FIRST_FIELD" />
 
-		<var method="StringUtil#lowerCase('${fieldType}')" name="key_fieldType" />
+		<var name="key_fieldType" value="${fieldType}"/>
 
 		<execute function="AssertClick" locator1="Form#ADD_FIELD_TYPE" value1="${fieldType}" />
 	</command>

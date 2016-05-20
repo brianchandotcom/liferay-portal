@@ -30,14 +30,14 @@
 			{/if}
 		{/if}
 
-		<div class="clearfix radio-options">
+		<div class="clearfix radio radio-options">
 			{foreach $option in $options}
 				{if not $inline}
 					<div class="radio">
 				{/if}
 
-				<label class="radio-default{$inline ? ' radio-inline' : ''} radio-option-{$option.value}" for="{$name}_{$option.value}">
-					<input class="field" dir="{$dir}" {if $readOnly}disabled{/if} id="{$name}_{$option.value}" name="{$name}" {$option.status} type="radio" value="{$option.value}" /> {$option.label}
+				<label class="{$inline ? ' radio-inline' : ''} radio-option-{$option.value}" for="{$name}_{$option.value}">
+					<input class="field" dir="{$dir or ''}" {if $readOnly}disabled{/if} id="{$name}_{$option.value}" name="{$name}" {$option.status} type="radio" value="{$option.value}" /> {$option.label}
 				</label>
 
 				{if not $inline}

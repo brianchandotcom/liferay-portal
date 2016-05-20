@@ -399,7 +399,6 @@ $horizontal-spacing: 35px;
 .portlet-forms {
 	.form-control {
 		font-size: 14px;
-		height: 40px;
 	}
 
 	@include sm {
@@ -514,8 +513,10 @@ $horizontal-spacing: 35px;
 		width: 32px;
 	}
 
-	.record-set-id, .record-set-modified-date {
-		margin-right: 20px;
+	.checkbox,
+	.radio {
+		margin-bottom: 0;
+		margin-top: 0;
 	}
 
 	.ddl-form-basic-info {
@@ -605,6 +606,10 @@ $horizontal-spacing: 35px;
 		border-bottom: 1px solid #DEE4E9;
 		padding: 20px 34px 11px 34px;
 		position: relative;
+	}
+
+	.record-set-id, .record-set-modified-date {
+		margin-right: 20px;
 	}
 }
 

@@ -14,7 +14,7 @@
  * @param tip
  */
 {template .checkbox autoescape="deprecated-contextual"}
-	<div class="form-group form-inline liferay-ddm-form-field-checkbox" data-fieldname="{$name}">
+	<div class="form-group liferay-ddm-form-field-checkbox" data-fieldname="{$name}">
 		{if $showAsSwitcher}
 			<label aria-checked="{($status) ? true : false}" for="{$name}" role="checkbox">
 				<input class="toggle-switch" {if $readOnly}disabled{/if} id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />
@@ -36,12 +36,12 @@
 				<p class="liferay-ddm-form-field-tip">{$tip}</p>
 			{/if}
 		{else}
-			<div class="checkbox checkbox-default">
+			<div class="checkbox">
 				{if $showLabel}
-					<label class="control-label" for="{$name}">
+					<label for="{$name}">
 				{/if}
 
-				<input {if $readOnly}disabled{/if} id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />{if $showLabel} {$label}{/if}
+						<input {if $readOnly}disabled{/if} id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />{if $showLabel} {$label}{/if}
 
 				{if $showLabel}
 						{if $required}

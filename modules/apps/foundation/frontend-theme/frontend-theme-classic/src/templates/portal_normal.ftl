@@ -25,7 +25,7 @@
 		<div class="row">
 			<div class="navbar-header" id="heading">
 				<a class="${logo_css_class}" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
-					<img alt="${logo_description}" height="64" src="${site_logo}" width="64" />
+					<img alt="${logo_description}" height="64" src="${site_logo}" />
 				</a>
 
 				<#if show_site_name>

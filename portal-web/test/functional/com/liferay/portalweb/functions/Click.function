@@ -27,87 +27,6 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="clickAtAndWait">
-		<execute function="WaitForSPARefresh" />
-
-		<execute selenium="waitForVisible" />
-
-		<execute selenium="mouseOver" />
-
-		<execute selenium="clickAtAndWait" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="clickAtAndWaitCPNavigation">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="//script[contains(@src,'/liferay/message.js')]" selenium="waitForElementPresent" />
-
-		<execute function="Click#clickAtAndWait" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="clickAtClickDockbar">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<execute argument1="//div[@id='_145_dockbar']" selenium="click" />
-
-		<execute argument1="//script[contains(@src,'/liferay/node.js')]" selenium="waitForElementPresent" />
-
-		<execute function="Click#clickAt" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="clickAtNavigation">
-		<execute function="WaitForSPARefresh" />
-
-		<execute function="Click#clickAtNonLiferayNavigation" />
-
-		<execute argument1="//script[contains(@src,'/aui/aui-url/aui-url')]" selenium="waitForElementPresent" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="clickAtNonLiferayNavigation">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<if>
-			<condition argument1="//a[@id='_145_addPanel']" selenium="isElementPresent" />
-			<then>
-				<execute argument1="//nav[@id='navigation']" selenium="clickAt" />
-
-				<execute argument1="//script[contains(@src,'/aui/sortable/sortable')]" selenium="waitForElementPresent" />
-
-				<execute selenium="mouseOver" />
-
-				<execute argument1="//li[contains(@class,'lfr-nav-hover')]" selenium="waitForElementPresent" />
-			</then>
-		</if>
-
-		<execute function="Click#clickAt" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
 	<command name="clickAtSidebarClickAt">
 		<execute function="WaitForSPARefresh" />
 
@@ -250,20 +169,6 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="partialTextClickAtAndWait">
-		<execute function="WaitForSPARefresh" />
-
-		<execute function="AssertTextEquals#assertPartialText" />
-
-		<execute selenium="mouseOver" />
-
-		<execute selenium="clickAtAndWait" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
 	<command name="pauseClickAt">
 		<execute function="WaitForSPARefresh" />
 
@@ -302,18 +207,6 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="pauseTextClickAtAndWait">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<execute function="Click#textClickAtAndWait" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
 	<command name="textClick">
 		<execute function="WaitForSPARefresh" />
 
@@ -322,20 +215,6 @@
 		<execute selenium="mouseOver" />
 
 		<execute selenium="click" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="textClickAndWait">
-		<execute function="WaitForSPARefresh" />
-
-		<execute function="AssertTextEquals#assertText" />
-
-		<execute selenium="mouseOver" />
-
-		<execute selenium="clickAndWait" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

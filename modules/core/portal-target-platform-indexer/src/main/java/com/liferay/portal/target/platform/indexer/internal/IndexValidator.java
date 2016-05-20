@@ -14,6 +14,8 @@
 
 package com.liferay.portal.target.platform.indexer.internal;
 
+import aQute.bnd.build.model.EE;
+import aQute.bnd.build.model.OSGI_CORE;
 import aQute.bnd.osgi.resource.ResourceBuilder;
 
 import biz.aQute.resolve.ResolverValidator;
@@ -76,6 +78,9 @@ public class IndexValidator implements Validator {
 			List<String> messages = new ArrayList<>();
 
 			ResourceBuilder resourceBuilder = new ResourceBuilder();
+
+			resourceBuilder.addEE(EE.JavaSE_1_7);
+			resourceBuilder.addManifest(OSGI_CORE.R6_0_0.getManifest());
 
 			for (URI indexURI : indexURIs) {
 				resolverValidator.addRepository(indexURI);

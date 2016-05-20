@@ -325,7 +325,7 @@ public class LDAPAuth implements Authenticator {
 			// Get user or create from LDAP
 
 			if (!ldapAuthResult.isAuthenticated()) {
-				password = StringPool.BLANK;
+				password = null;
 			}
 
 			User user = _ldapUserImporter.importUser(

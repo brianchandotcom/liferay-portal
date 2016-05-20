@@ -235,7 +235,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 				return importUser(
 					ldapServerId, companyId, ldapContext, attributes,
-					StringPool.BLANK);
+					null);
 			}
 			else {
 				return null;
@@ -341,7 +341,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			ldapServerId, companyId, ldapContext, fullUserDN);
 
 		User user = importUser(
-			ldapServerId, companyId, ldapContext, attributes, StringPool.BLANK);
+			ldapServerId, companyId, ldapContext, attributes, null);
 
 		ldapContext.close();
 
@@ -792,8 +792,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 					User user = importUser(
 						ldapServerId, companyId, userAttributes, userMappings,
 						userExpandoMappings, contactMappings,
-						contactExpandoMappings, StringPool.BLANK,
-						ldapUserIgnoreAttributes);
+						contactExpandoMappings, null, ldapUserIgnoreAttributes);
 
 					importGroups(
 						ldapServerId, companyId, ldapContext, userAttributes,
@@ -1168,7 +1167,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				User user = importUser(
 					ldapServerId, companyId, userAttributes, userMappings,
 					userExpandoMappings, contactMappings,
-					contactExpandoMappings, StringPool.BLANK,
+					contactExpandoMappings, null,
 					ldapUserIgnoreAttributes);
 
 				if (user != null) {

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -175,6 +176,8 @@ public class BlogsEntryLocalServiceImplTest {
 				TestPropsValues.getUserId(), StringUtil.randomString(),
 				StringUtil.randomString(), new Date(displayDate * day),
 				serviceContext);
+
+			_blogsEntries.add(blogsEntries[order]);
 		}
 
 		for (int i = 0; i < blogsEntries.length; i++) {
@@ -201,8 +204,6 @@ public class BlogsEntryLocalServiceImplTest {
 				Assert.assertNull(prevAndNextValues[2]);
 			}
 		}
-
-		blogsEntryLocalService.deleteEntries(TestPropsValues.getGroupId());
 	}
 
 	@DeleteAfterTestRun

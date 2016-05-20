@@ -150,7 +150,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 					groupId: <%= themeDisplay.getScopeGroupId() %>,
 					mvcPath: '/select_structure.jsp',
 					navigationStartsOn: '<%= DDMNavigationHelper.SELECT_STRUCTURE %>',
-					refererPortletName: '<%= JournalPortletKeys.JOURNAL %>',
+					refererPortletName: '<%= JournalPortletKeys.JOURNAL + ".filterStructure" %>',
 
 					<%
 					Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());

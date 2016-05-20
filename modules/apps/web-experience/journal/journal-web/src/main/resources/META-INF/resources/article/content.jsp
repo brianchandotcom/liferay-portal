@@ -144,7 +144,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 			'ddm.classNameId': '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
 			'ddm.classPK': <%= ddmStructure.getPrimaryKey() %>,
 			'ddm.groupId': <%= groupId %>,
-			'ddm.refererPortletName': '<%= JournalPortletKeys.JOURNAL %>',
+			'ddm.refererPortletName': '<%= JournalPortletKeys.JOURNAL + ".selectStructure" %>',
 			'ddm.resourceClassNameId': '<%= ddmStructure.getClassNameId() %>',
 			'ddm.templateId': <%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : 0 %>,
 			descriptionInputLocalized: Liferay.component('<portlet:namespace />description'),

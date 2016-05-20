@@ -25,12 +25,17 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -105,11 +110,23 @@ public class DDMFormFieldTypesJSONSerializerImpl
 			MapUtil.getString(
 				ddmFormFieldTypeProperties, "ddm.form.field.type.js.module",
 				"liferay-ddm-form-renderer-field"));
+
 		jsonObject.put("name", ddmFormFieldType.getName());
 
-		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+		String labelKey = MapUtil.getString(
+			ddmFormFieldTypeProperties, "ddm.form.field.type.label");
 
-		jsonObject.put("label", ddmFormFieldType.getLabel(locale));
+		if (Validator.isNotNull(labelKey)) {
+			Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", locale, ddmFormFieldType.getClass());
+
+			String translatedLabel = LanguageUtil.get(
+				resourceBundle, labelKey, StringPool.BLANK);
+
+			jsonObject.put("label", translatedLabel);
+		}
 
 		DDMFormFieldTypeSettingsSerializerHelper
 			ddmFormFieldTypeSettingsSerializerHelper =

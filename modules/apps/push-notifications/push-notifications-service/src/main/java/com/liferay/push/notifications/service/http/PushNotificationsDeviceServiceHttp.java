@@ -154,12 +154,44 @@ public class PushNotificationsDeviceServiceHttp {
 		}
 	}
 
+	public static com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDeviceWithToken(
+		HttpPrincipal httpPrincipal, java.lang.String token)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(PushNotificationsDeviceServiceUtil.class,
+					"deletePushNotificationsDeviceWithToken",
+					_deletePushNotificationsDeviceWithTokenParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, token);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.push.notifications.model.PushNotificationsDevice)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void sendPushNotification(HttpPrincipal httpPrincipal,
 		long[] toUserIds, java.lang.String payload)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PushNotificationsDeviceServiceUtil.class,
-					"sendPushNotification", _sendPushNotificationParameterTypes3);
+					"sendPushNotification", _sendPushNotificationParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					toUserIds, payload);
@@ -188,7 +220,7 @@ public class PushNotificationsDeviceServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PushNotificationsDeviceServiceUtil.class,
-					"sendPushNotification", _sendPushNotificationParameterTypes4);
+					"sendPushNotification", _sendPushNotificationParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					platform, tokens, payload);
@@ -219,10 +251,12 @@ public class PushNotificationsDeviceServiceHttp {
 		new Class[] { long.class };
 	private static final Class<?>[] _deletePushNotificationsDeviceParameterTypes2 =
 		new Class[] { java.lang.String.class };
-	private static final Class<?>[] _sendPushNotificationParameterTypes3 = new Class[] {
+	private static final Class<?>[] _deletePushNotificationsDeviceWithTokenParameterTypes3 =
+		new Class[] { java.lang.String.class };
+	private static final Class<?>[] _sendPushNotificationParameterTypes4 = new Class[] {
 			long[].class, java.lang.String.class
 		};
-	private static final Class<?>[] _sendPushNotificationParameterTypes4 = new Class[] {
+	private static final Class<?>[] _sendPushNotificationParameterTypes5 = new Class[] {
 			java.lang.String.class, java.util.List.class, java.lang.String.class
 		};
 }

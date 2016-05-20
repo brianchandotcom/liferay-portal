@@ -82,8 +82,6 @@ public class PushNotificationsDeviceServiceImpl
 			deletePushNotificationsDevice(pushNotificationsDeviceId);
 	}
 
-	@AccessControlled(guestAccessEnabled = true)
-	@Override
 	public PushNotificationsDevice deletePushNotificationsDevice(String token)
 		throws PortalException {
 
@@ -114,6 +112,15 @@ public class PushNotificationsDeviceServiceImpl
 		}
 
 		return pushNotificationsDevice;
+	}
+
+	@AccessControlled(guestAccessEnabled = true)
+	@Override
+	public PushNotificationsDevice deletePushNotificationsDeviceWithToken(
+			String token)
+		throws PortalException {
+
+		return deletePushNotificationsDevice(token);
 	}
 
 	@Override

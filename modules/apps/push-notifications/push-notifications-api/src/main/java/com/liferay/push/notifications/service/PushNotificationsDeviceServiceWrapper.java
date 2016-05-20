@@ -56,6 +56,13 @@ public class PushNotificationsDeviceServiceWrapper
 		return _pushNotificationsDeviceService.deletePushNotificationsDevice(pushNotificationsDeviceId);
 	}
 
+	@Override
+	public com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDeviceWithToken(
+		java.lang.String token)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pushNotificationsDeviceService.deletePushNotificationsDeviceWithToken(token);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

@@ -58,12 +58,15 @@ public interface PushNotificationsDeviceService extends BaseService {
 		java.lang.String token, java.lang.String platform)
 		throws PortalException;
 
-	@AccessControlled(guestAccessEnabled = true)
 	public PushNotificationsDevice deletePushNotificationsDevice(
 		java.lang.String token) throws PortalException;
 
 	public PushNotificationsDevice deletePushNotificationsDevice(
 		long pushNotificationsDeviceId) throws PortalException;
+
+	@AccessControlled(guestAccessEnabled = true)
+	public PushNotificationsDevice deletePushNotificationsDeviceWithToken(
+		java.lang.String token) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

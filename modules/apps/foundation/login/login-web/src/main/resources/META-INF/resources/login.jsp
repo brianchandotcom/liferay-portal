@@ -32,7 +32,6 @@
 		<liferay-ui:message arguments="<%= signedInAs %>" key="you-are-signed-in-as-x" translateArguments="<%= false %>" />
 	</c:when>
 	<c:otherwise>
-
 		<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
 
 		<%
@@ -67,7 +66,6 @@
 			<div class="inline-alert-container lfr-alert-container">
 				<c:choose>
 					<c:when test='<%= SessionMessages.contains(request, "passwordSent") %>'>
-
 						<div class="alert alert-success">
 							<liferay-ui:message key="your-password-was-sent-to-the-provided-email-address" />
 						</div>

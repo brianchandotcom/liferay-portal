@@ -35,6 +35,6 @@ if (portletName.equals(PortletKeys.FAST_LOGIN)) {
 }
 %>
 
-<li class='<%= (Validator.isNull(mvcRenderCommandName) || mvcRenderCommandName.startsWith("/login/login")) ? "active" : "" %>'>
+<li class="<%= (Validator.isNull(mvcRenderCommandName) || mvcRenderCommandName.startsWith("/login/login")) ? "active" : "" %>">
 	<aui:a href="<%= signInURL %>" label="email" />
 </li>

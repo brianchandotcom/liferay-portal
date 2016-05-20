@@ -5,6 +5,7 @@
 				calendar: {
 					base: MODULE_PATH + '/js/',
 					combine: Liferay.AUI.getCombine(),
+					filter: Liferay.AUI.getFilterConfig(),
 					modules: {
 						'liferay-calendar-date-picker-util': {
 							path: 'date_picker_util.js',

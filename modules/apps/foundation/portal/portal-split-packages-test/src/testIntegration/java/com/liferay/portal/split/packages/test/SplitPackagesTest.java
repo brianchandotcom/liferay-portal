@@ -144,14 +144,19 @@ public class SplitPackagesTest {
 			Set<String> symbolicNames = allowedSplitPackageNames.get(
 				duplicateExportPackage);
 
+			boolean splitPackage = false;
+
 			if ((symbolicNames == null) ||
 				!symbolicNames.contains(currentBundle.getSymbolicName()) ||
 				!symbolicNames.contains(previousBundle.getSymbolicName())) {
 
-				Assert.fail(
-					"Detected split packages " + duplicateExportPackage +
-						" in " + previousBundle + " and " + currentBundle);
+				splitPackage = true;
 			}
+
+			Assert.assertFalse(
+				"Detected split packages " + duplicateExportPackage + " in " +
+					previousBundle + " and " + currentBundle,
+				splitPackage);
 		}
 	}
 

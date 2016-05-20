@@ -26,7 +26,7 @@
 			[
 				{
 					cssClass: 'btn-lg btn-primary',
-					label: submitButton ? submitButton.text().trim() : Liferay.Language.get('submit'),
+					label: submitButton ? submitButton.text().trim() : '<%= LanguageUtil.get(request, "submit") %>',
 					on: {
 						click: function() {
 							var form = Liferay.Form.get('<portlet:namespace />fm');
@@ -71,7 +71,7 @@
 				},
 				{
 					cssClass: 'btn-lg btn-link close-modal',
-					label: Liferay.Language.get('cancel'),
+					label: '<%= LanguageUtil.get(request, "cancel") %>',
 					on: {
 						click: function() {
 							dialog.hide();

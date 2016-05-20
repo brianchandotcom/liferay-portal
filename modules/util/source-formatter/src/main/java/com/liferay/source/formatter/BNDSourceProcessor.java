@@ -331,7 +331,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
 		"\n.*:(\\\\\n\t).*(\n[^\t]|\\Z)");
 	private final Pattern _wilcardImportPattern = Pattern.compile(
-		"\\s(\\S+\\*)(,\\\\\n|\n|\\Z)");
+		"(\\S+\\*)(,\\\\\n|\n|\\Z)");
 
 	private static class DefinitionComparator implements Comparator<String> {
 

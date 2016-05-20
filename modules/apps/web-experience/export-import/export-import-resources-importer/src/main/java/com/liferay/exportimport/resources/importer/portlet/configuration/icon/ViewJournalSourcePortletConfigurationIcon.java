@@ -78,9 +78,8 @@ public class ViewJournalSourcePortletConfigurationIcon
 			return StringPool.BLANK;
 		}
 
-		return
-			"var sourceModal = " + getWindowJS(portletRequest, article) +
-				" return false;";
+		return "var sourceModal = " + getWindowJS(portletRequest, article) +
+			" return false;";
 	}
 
 	@Override

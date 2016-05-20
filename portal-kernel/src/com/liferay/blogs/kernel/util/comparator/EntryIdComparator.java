@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 /**
  * @author Christopher Kian
  */
-public class EntryIdComparator extends OrderByComparator {
+public class EntryIdComparator extends OrderByComparator<BlogsEntry> {
 
 	public static final String ORDER_BY_ASC = "BlogsEntry.entryId ASC";
 
@@ -39,10 +39,7 @@ public class EntryIdComparator extends OrderByComparator {
 	}
 
 	@Override
-	public int compare(Object obj1, Object obj2) {
-		BlogsEntry entry1 = (BlogsEntry)obj1;
-		BlogsEntry entry2 = (BlogsEntry)obj2;
-
+	public int compare(BlogsEntry entry1, BlogsEntry entry2) {
 		int value = 0;
 
 		if (entry1.getEntryId() < entry2.getEntryId()) {

@@ -322,9 +322,7 @@ AUI.add(
 
 								var elapsed = sessionLength;
 
-								var value = parseInt(timestamp, 10);
-
-								if (!isNaN(value)) {
+								if (Lang.toInt(timestamp)) {
 									timeOffset = Math.floor((Date.now() - timestamp) / 1000) * 1000;
 
 									elapsed = timeOffset;

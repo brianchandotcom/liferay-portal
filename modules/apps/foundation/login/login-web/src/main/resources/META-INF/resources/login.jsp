@@ -221,12 +221,10 @@
 								destroyOnHide: true,
 								on: {
 									closeWindow: function(event) {
+										var form = AUI().one('#<%= renderResponse.getNamespace() + formName %>');
+										var alert = form.one('.lfr-alert-container');
 
-										var alert = $(document).find('.lfr-alert-container');
-
-										alert.replaceWith(event.alert);
-
-										alert.find('.lfr-alert-wrapper').css('height', '58px');
+										alert.replace(event.alert);
 
 										Liferay.fire(
 											'closeWindow',

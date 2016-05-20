@@ -14,41 +14,52 @@
  */
 --%>
 
-<aui:script>
-	var dialog = Liferay.Util.getWindow();
+<aui:script use="aui-base,aui-io-request">
+	var A = AUI();
+
+	var submitButton = A.one('button[type="submit"]');
+
+	var dialog = Liferay.Util.getWindow('<portlet:namespace />popup');
 
 	dialog.addToolbar(
 		[
 			{
 				cssClass: 'btn-lg btn-primary',
-				label: Liferay.Language.get('save'),
+				label: submitButton ? submitButton.text().trim() : Liferay.Language.get('submit'),
 				on: {
 					click: function() {
-						var form = AUI.$(document.<portlet:namespace />fm);
+						var form = Liferay.Form.get('<portlet:namespace />fm');
 
-						var formValidator = Liferay.Form.get('<portlet:namespace />fm').formValidator;
+						var formValidator = form.formValidator;
 
 						formValidator.validate();
 
 						if (!formValidator.hasErrors()) {
-							form.ajaxSubmit(
+							A.io.request(
+								form.formNode.attr('action'),
 								{
-									success: function(responseData) {
-										document.open();
-										document.write(responseData);
-										document.close();
+									form: {
+										id: form.formNode.attr('id')
+									},
+									on: {
+										success: function(event, id, obj) {
+											var response = A.Node.create(obj.responseText);
 
-										var alert = $(responseData).find('.lfr-alert-container');
+											var alert = response.one('.lfr-alert-container');
 
-										var alertSuccess = alert.find('.alert-success');
-
-										if (alertSuccess.length) {
-											dialog.fire(
-												'closeWindow',
-												{
-													alert: alert
-												}
-											);
+											if (alert) {
+												dialog.fire(
+													'closeWindow',
+													{
+														alert: alert
+													}
+												);
+											}
+											else {
+												document.open();
+												document.write(obj.responseText);
+												document.close();
+											}
 										}
 									}
 								}

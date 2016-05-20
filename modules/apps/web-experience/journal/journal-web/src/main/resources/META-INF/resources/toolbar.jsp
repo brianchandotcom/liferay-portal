@@ -142,7 +142,7 @@ String searchContainerId = ParamUtil.getString(request, "searchContainerId");
 			Liferay.Util.openDDMPortlet(
 				{
 					basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
-					classPK: 0,
+					classPK: <%= journalDisplayContext.getDDMStructurePrimaryKey() %>,
 					dialog: {
 						destroyOnHide: true
 					},

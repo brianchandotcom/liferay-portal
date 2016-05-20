@@ -975,7 +975,7 @@
 		<var name="kbArticleRelatedAssetTitle" value="Blogs Entry Title" />
 		<var name="key_kbArticleRelatedAssetTitle" value="${kbArticleRelatedAssetTitle}" />
 
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="AssetRelatedAssets#KB_RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
+		<execute function="AssertClick#assertTextClickAt" locator1="AssetRelatedAssets#KB_RELATED_ASSETS_LINKS" value1="${kbArticleRelatedAssetTitle}" />
 
 		<execute macro="KBArticle#viewBlogsEntryRelatedAsset" />
 	</command>

@@ -844,7 +844,7 @@
 
 		<execute function="Click" locator1="Radio#CUSTOM_ABSTRACT" />
 
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Button#PUBLISH" value1="Publish" />
+		<execute function="AssertClick#assertTextClickAt" locator1="Button#PUBLISH" value1="Publish" />
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
 

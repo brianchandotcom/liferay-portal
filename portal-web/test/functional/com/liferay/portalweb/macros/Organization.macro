@@ -615,7 +615,7 @@
 					</then>
 				</if>
 
-				<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="UsersAndOrganizationsAssignUsers#BACK" value1="Back" />
+				<execute function="AssertClick#assertPartialTextClickAt" locator1="UsersAndOrganizationsAssignUsers#BACK" value1="Back" />
 
 				<execute function="AssertClickNoError" locator1="UsersAndOrganizationsOrganization#MENU_DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />

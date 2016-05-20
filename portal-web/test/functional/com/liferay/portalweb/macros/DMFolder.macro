@@ -5,7 +5,7 @@
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
 		<execute function="Click" locator1="Button#PLUS" />
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="MenuItem#FOLDER" value1="Folder" />
+		<execute function="AssertClick#assertTextClickAt" locator1="MenuItem#FOLDER" value1="Folder" />
 
 		<execute function="Pause" locator1="1000" />
 
@@ -29,7 +29,7 @@
 	<command name="addPG">
 		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="MenuItem#FOLDER" value1="Folder" />
+		<execute function="AssertClick#assertTextClickAt" locator1="MenuItem#FOLDER" value1="Folder" />
 
 		<execute function="Pause" locator1="1000" />
 
@@ -73,7 +73,7 @@
 	<command name="addPGViaMG">
 		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="MenuItem#ADD_FOLDER" value1="Folder" />
+		<execute function="AssertClick#assertTextClickAt" locator1="MenuItem#ADD_FOLDER" value1="Folder" />
 
 		<execute function="Pause" locator1="1000" />
 
@@ -91,7 +91,7 @@
 	<command name="addSubfolderCP">
 		<execute function="Click#makeVisibleClickAt" locator1="Button#PLUS" />
 
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="MenuItem#SUBFOLDER" value1="Subfolder" />
+		<execute function="AssertClick#assertTextClickAt" locator1="MenuItem#SUBFOLDER" value1="Subfolder" />
 
 		<execute function="Pause" locator1="1000" />
 
@@ -130,7 +130,7 @@
 	<command name="addSubfolderPG">
 		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="MenuItem#SUBFOLDER" value1="Subfolder" />
+		<execute function="AssertClick#assertTextClickAt" locator1="MenuItem#SUBFOLDER" value1="Subfolder" />
 
 		<execute function="Pause" locator1="1000" />
 
@@ -169,7 +169,7 @@
 	<command name="addSubfolderPGViaMG">
 		<execute function="Click#makeVisibleClickAt" locator1="Portlet#ICON_PLUS_SIGN" />
 
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="MenuItem#ADD_SUBFOLDER" value1="Subfolder" />
+		<execute function="AssertClick#assertTextClickAt" locator1="MenuItem#ADD_SUBFOLDER" value1="Subfolder" />
 
 		<execute function="Pause" locator1="1000" />
 
@@ -325,7 +325,7 @@
 
 		<execute function="MakeVisible" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL_GENERIC" />
 
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="${dmFolderName}" />
+		<execute function="AssertClick#assertTextClickAt" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="${dmFolderName}" />
 
 		<execute function="AssertVisible" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" />
 	</command>

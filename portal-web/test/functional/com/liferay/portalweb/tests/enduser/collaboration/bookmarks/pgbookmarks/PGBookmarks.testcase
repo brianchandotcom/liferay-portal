@@ -377,7 +377,7 @@
 
 		<var name="key_assetName" value="${folderName2}" />
 
-		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName2}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName2}" />
 
 		<var name="key_assetName" value="${bookmarkName}" />
 

@@ -193,7 +193,7 @@
 	<command name="gotoPG">
 		<var name="key_assetName" value="${folderName}" />
 
-		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}" />
 
 		<var name="key_folderName" value="${folderName}" />
 
@@ -215,11 +215,11 @@
 
 		<var name="key_assetName" value="${folderName}" />
 
-		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}" />
 
 		<var name="key_assetName" value="${subfolderName}" />
 
-		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${subfolderName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${subfolderName}" />
 
 		<var name="key_folderName" value="${subfolderName}" />
 

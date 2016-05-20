@@ -1508,7 +1508,7 @@
 		<var name="key_assetContent" value="${webContentContent}" />
 		<var name="key_assetTitle" value="${webContentTitle}" />
 
-		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="AP#ASSET_ABSTRACT_VIEW" value1="${webContentTitle}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="AP#ASSET_ABSTRACT_VIEW" value1="${webContentTitle}" />
 
 		<execute function="AssertTextEquals" locator1="APAsset#ASSET_TITLE_HEADER" value1="${webContentTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="APAsset#ASSET_CONTENT" value1="${webContentContent}" />

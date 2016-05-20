@@ -56,7 +56,7 @@
 		<execute function="AssertElementNotPresent" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_VIEW_DETAILS_BUTTON" />
 		<execute function="AssertElementNotPresent" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" />
 
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" value1="Edit" />
+		<execute function="AssertClick#assertTextClickAt" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" value1="Edit" />
 
 		<execute macro="CalendarEvent#selectEventIframe" />
 	</command>

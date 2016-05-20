@@ -2277,7 +2277,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="Link#READ_MORE" />
 			<then>
-				<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="Link#READ_MORE" value1="Read More" />
+				<execute function="AssertClick#assertPartialTextClickAt" locator1="Link#READ_MORE" value1="Read More" />
 				<execute function="AssertTextEquals" locator1="APAsset#ASSET_TITLE" value1="${dmDocumentTitle}" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="APAsset#ASSET_CONTENT" value1="${dmDocumentDescription}" />
 			</then>

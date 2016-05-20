@@ -8,7 +8,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertClick#pauseAssertTextClickAtAndWait" locator1="Button#SELECT" value1="Select" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SELECT" value1="Select" />
 
 		<execute function="SelectFrameTop" />
 

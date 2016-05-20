@@ -106,7 +106,7 @@
 	</command>
 
 	<command name="saveConfiguration">
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertClick#assertTextClickAt" locator1="Button#SAVE" value1="Save" />
 		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>

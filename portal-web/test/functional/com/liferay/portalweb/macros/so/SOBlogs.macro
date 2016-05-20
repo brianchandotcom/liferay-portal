@@ -80,7 +80,7 @@
 		</if>
 
 		<execute function="AssertElementPresent" locator1="SOBlogs#RECENT_BLOGS_ENTRY_DATE" />
-		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="SOBlogs#RECENT_BLOGS_ENTRY_READ_MORE_LINK" value1="Read More" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="SOBlogs#RECENT_BLOGS_ENTRY_READ_MORE_LINK" value1="Read More" />
 
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />

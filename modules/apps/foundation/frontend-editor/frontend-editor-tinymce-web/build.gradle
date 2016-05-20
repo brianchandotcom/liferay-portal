@@ -3,7 +3,7 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 task buildTinyMCE(type: Copy)
 
-String tinyMCEVersion = "4.1.7"
+String tinyMCEVersion = "4.3.12"
 
 File editorDestinationDir = file("tmp/META-INF/resources")
 File editorSrcDir = file("src/main/resources/META-INF/resources")

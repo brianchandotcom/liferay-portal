@@ -98,7 +98,8 @@ public class LPKGVerifierImpl implements LPKGVerifier {
 			}
 
 			File targetPlatformDir = new File(
-				PropsValues.MODULE_FRAMEWORK_BASE_DIR, Indexer.TARGET_PLATFORM);
+				PropsValues.MODULE_FRAMEWORK_BASE_DIR,
+				Indexer.DIR_NAME_TARGET_PLATFORM);
 
 			File indexFile = new File(
 				targetPlatformDir, tempIndexFile.getName());

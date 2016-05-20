@@ -432,7 +432,11 @@ if (portletTitleBasedNavigation) {
 
 							<aui:input checked="<%= true %>" label="minor-version" name="majorVersion" type="radio" value="<%= false %>" />
 
-							<aui:input label="change-log" model="<%= null %>" name="changeLog" type="textarea" />
+							<aui:model-context />
+
+							<aui:input label="change-log" name="changeLog" type="textarea" />
+
+							<aui:model-context bean="<%= fileVersion %>" model="<%= DLFileVersion.class %>" />
 						</div>
 					</c:if>
 				</c:if>
@@ -513,7 +517,12 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <c:if test="<%= (fileEntry != null) && checkedOut %>">
-	<%@ include file="/document_library/version_details.jspf" %>
+
+	<%
+	request.setAttribute("version_details.jsp-checkedOut", checkedOut);
+	%>
+
+	<liferay-util:include page="/document_library/version_details.jsp" servletContext="<%= application %>" />
 </c:if>
 
 <aui:script>

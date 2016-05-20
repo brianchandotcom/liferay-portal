@@ -169,7 +169,7 @@ portletDisplay.setURLBack(redirect);
 			<liferay-portlet:param name="<%= EditQuestionMVCActionCommand.CHOICE_DESCRIPTION_PREFIX + (char)(96 + choicesCount + 1) %>" value="" />
 		</liferay-portlet:renderURL>
 
-		submitForm(document.<portlet:namespace />fm, '<%= addPollChoiceURL %>');
+		submitForm(form, '<%= addPollChoiceURL %>');
 	}
 
 	function <portlet:namespace />deletePollChoice(choiceName) {
@@ -186,7 +186,7 @@ portletDisplay.setURLBack(redirect);
 			<liferay-portlet:param name="<%= EditQuestionMVCActionCommand.CHOICE_DESCRIPTION_PREFIX + (char)(96 + choicesCount - 1) %>" value="" />
 		</liferay-portlet:renderURL>
 
-		submitForm(document.<portlet:namespace />fm, '<%= deletePollChoiceURL %>');
+		submitForm(form, '<%= deletePollChoiceURL %>');
 	}
 
 	function <portlet:namespace />saveQuestion() {
@@ -197,7 +197,7 @@ portletDisplay.setURLBack(redirect);
 		form.fm('<%= Constants.CMD %>').val('<%= (question == null) ? Constants.ADD : Constants.UPDATE %>');
 		form.fm('neverExpire').val(neverExpire);
 
-		submitForm(document.<portlet:namespace />fm);
+		submitForm(form);
 	}
 </aui:script>
 

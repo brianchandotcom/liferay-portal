@@ -63,6 +63,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 	LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
 
 	groupParams.put("active", true);
+	groupParams.put("site", true);
 
 	List<Group> groups = GroupLocalServiceUtil.search(themeDisplay.getCompanyId(), keywords, groupParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 

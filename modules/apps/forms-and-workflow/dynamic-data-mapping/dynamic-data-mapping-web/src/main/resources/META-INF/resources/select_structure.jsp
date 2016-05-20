@@ -88,8 +88,32 @@ request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 				cssClass="content-column name-column title-column"
 				name="name"
 				truncate="<%= true %>"
-				value="<%= HtmlUtil.escape(structure.getName(locale)) %>"
-			/>
+			>
+				<c:choose>
+					<c:when test="<%= (structure.getStructureId() != classPK) && ((classPK == 0) || (structure.getParentStructureId() == 0) || (structure.getParentStructureId() != classPK)) %>">
+
+						<%
+						Map<String, Object> data = new HashMap<String, Object>();
+
+						if (ddmDisplay.isShowConfirmSelectStructure()) {
+							data.put("confirm-selection", Boolean.TRUE.toString());
+							data.put("confirm-selection-message", ddmDisplay.getConfirmSelectStructureMessage(locale));
+						}
+
+						data.put("ddmstructureid", structure.getStructureId());
+						data.put("ddmstructurekey", structure.getStructureKey());
+						data.put("name", structure.getName(locale));
+						%>
+
+						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+							<%= HtmlUtil.escape(structure.getName(locale)) %>
+						</aui:a>
+					</c:when>
+					<c:otherwise>
+						<span class="text-muted"><%= HtmlUtil.escape(structure.getName(locale)) %></span>
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
 				cssClass="content-column description-column"
@@ -109,28 +133,6 @@ request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 				name="id"
 				value="<%= String.valueOf(structure.getStructureId()) %>"
 			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="entry-action-column"
-			>
-				<c:if test="<%= (structure.getStructureId() != classPK) && ((classPK == 0) || (structure.getParentStructureId() == 0) || (structure.getParentStructureId() != classPK)) %>">
-
-					<%
-					Map<String, Object> data = new HashMap<String, Object>();
-
-					if (ddmDisplay.isShowConfirmSelectStructure()) {
-						data.put("confirm-selection", Boolean.TRUE.toString());
-						data.put("confirm-selection-message", ddmDisplay.getConfirmSelectStructureMessage(locale));
-					}
-
-					data.put("ddmstructureid", structure.getStructureId());
-					data.put("ddmstructurekey", structure.getStructureKey());
-					data.put("name", structure.getName(locale));
-					%>
-
-					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
-				</c:if>
-			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />

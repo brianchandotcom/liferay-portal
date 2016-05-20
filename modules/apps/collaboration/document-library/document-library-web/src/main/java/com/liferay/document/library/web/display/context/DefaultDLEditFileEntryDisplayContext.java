@@ -100,7 +100,9 @@ public class DefaultDLEditFileEntryDisplayContext
 		DLPortletInstanceSettings dlPortletInstanceSettings =
 			_dlRequestHelper.getDLPortletInstanceSettings();
 
-		if (dlPortletInstanceSettings.isEnableFileEntryDrafts()) {
+		if (dlPortletInstanceSettings.isEnableFileEntryDrafts() ||
+			_fileEntryDisplayContextHelper.isCheckedOut()) {
+
 			return "save";
 		}
 

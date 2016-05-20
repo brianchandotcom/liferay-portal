@@ -719,7 +719,7 @@
 		</java>
 	</target>
 
-	<target name="setup-jrebel">
+	<target depends="setup-jrebel-properties" name="setup-jrebel">
 		<copy file="tools/jrebel/rebel.xml_GLOBAL" tofile="${app.server.lib.global.dir}/rebel.xml">
 			<filterchain>
 				<expandproperties />
@@ -731,29 +731,18 @@
 				<expandproperties />
 			</filterchain>
 		</copy>
+	</target>
 
-		<if>
-			<not>
-				<resourcecontains
-					resource="portal-impl/src/system-ext.properties"
-					substring="liferay.lib.portal.dir"
-				/>
-			</not>
-			<then>
-				<echo
-					append="true"
-					file="portal-impl/src/system-ext.properties"
-				>
-					liferay.lib.portal.dir=${app.server.lib.portal.dir}
-				</echo>
+	<target name="setup-jrebel-init">
+		<condition property="liferay.lib.portal.dir.isset">
+			<resourcecontains resource="portal-impl/src/system-ext.properties" substring="liferay.lib.portal.dir" />
+		</condition>
+	</target>
 
-				<copy
-					file="portal-impl/src/system-ext.properties"
-					overwrite="true"
-					tofile="portal-impl/classes/system-ext.properties"
-				/>
-			</then>
-		</if>
+	<target depends="setup-jrebel-init" name="setup-jrebel-properties" unless="liferay.lib.portal.dir.isset">
+		<echo append="true" file="portal-impl/src/system-ext.properties" message="liferay.lib.portal.dir=${app.server.lib.portal.dir}" />
+
+		<copy file="portal-impl/src/system-ext.properties" overwrite="true" tofile="portal-impl/classes/system-ext.properties" />
 	</target>
 
 	<target name="setup-sdk">

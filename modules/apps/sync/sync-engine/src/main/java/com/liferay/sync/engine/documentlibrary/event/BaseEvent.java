@@ -139,7 +139,7 @@ public abstract class BaseEvent implements Event {
 	@Override
 	public String getURLPath() {
 		if (ServerInfo.supportsModuleFramework(_syncAccountId)) {
-			String urlPath = _urlPath.replace("/sync-web/", "/o/sync-web/");
+			String urlPath = _urlPath.replace("/sync-web/", "/o/sync/");
 
 			return urlPath.replace("/sync-web.", "/sync.");
 		}

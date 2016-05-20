@@ -6,5 +6,5 @@ Export-Package:\
 	com.liferay.social.networking.friends.social,\
 	com.liferay.social.networking.members.social,\
 	com.liferay.social.networking.wall.social
-Liferay-Require-SchemaVersion: 1.0.1
+Liferay-Require-SchemaVersion: 1.0.2
 Liferay-Service: true

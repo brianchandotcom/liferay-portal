@@ -170,61 +170,12 @@ portletDisplay.setShowBackIcon(false);
 </aui:form>
 
 <aui:script>
-	var dialog = Liferay.Util.getWindow();
+	var dialog = Liferay.Util.getWindow('<portlet:namespace />popup');
 
-	dialog.addToolbar(
-		[
-			{
-				cssClass: 'btn-lg btn-primary',
-				label: Liferay.Langauge.get('send-password-reset-link'),
-				on: {
-					click: function(event) {
-						var form = AUI.$(document.<portlet:namespace />fm);
-
-						var formValidator = Liferay.Form.get('<portlet:namespace />fm').formValidator;
-
-						formValidator.validate();
-
-						if (!formValidator.hasErrors()) {
-							form.ajaxSubmit(
-								{
-									success: function(responseData) {
-										document.open();
-										document.write(responseData);
-										document.close();
-
-										var alert = $(responseData).find('.lfr-alert-container');
-
-										var alertSuccess = alert.find('.alert-success');
-
-										if (alertSuccess.length) {
-											dialog.fire(
-												'closeWindow',
-												{
-													alert: alert
-												}
-											);
-										}
-									}
-								}
-							);
-						}
-					}
-				}
-			},
-			{
-				cssClass: 'btn-lg btn-link close-modal',
-				label: Liferay.Language.get('cancel'),
-				on: {
-					click: function() {
-						dialog.hide();
-					}
-				}
-			}
-		]
-	);
-
-	dialog.set('height', 450);
-	dialog.set('width', 560);
-	dialog.show();
+	if (dialog) {
+		dialog.set('height', 450);
+		dialog.set('width', 560);
+	}
 </aui:script>
+
+<%@ include file="/add_dialog_toolbar.jspf" %>

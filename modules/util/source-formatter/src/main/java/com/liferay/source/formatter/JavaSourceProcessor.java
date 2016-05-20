@@ -3359,7 +3359,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			if (trimmedPreviousLine.equals("return") &&
-				line.endsWith(StringPool.OPEN_PARENTHESIS)) {
+				!line.endsWith(StringPool.PERIOD)) {
 
 				for (int i = 0;; i++) {
 					String nextLine = getLine(content, lineCount + i + 1);

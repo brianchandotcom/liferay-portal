@@ -517,7 +517,7 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <c:if test="<%= (fileEntry != null) && checkedOut %>">
-	<%@ include file="/document_library/version_details.jspf" %>
+	<liferay-util:include page="/document_library/version_details.jsp" servletContext="<%= application %>"/>
 </c:if>
 
 <aui:script>

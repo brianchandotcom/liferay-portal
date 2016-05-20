@@ -23,6 +23,7 @@ buildTinyMCE {
 
 	from(zipTree(tinyMCEZipFile)) {
 		eachFile new StripPathSegmentsAction(3)
+		exclude "**/moxieplayer.swf"
 		include "tinymce/js/tinymce/"
 	}
 

@@ -96,8 +96,6 @@ AUI.add(
 			createCalendarsAutoComplete: function(resourceURL, input, afterSelectFn) {
 				var instance = this;
 
-				var inputOuterWidth = input.outerWidth();
-
 				input.plug(
 					A.Plugin.AutoComplete,
 					{
@@ -136,7 +134,7 @@ AUI.add(
 					}
 				);
 
-				input.ac.get('boundingBox').setStyle('min-width', inputOuterWidth);
+				input.ac.get('boundingBox').setStyle('min-width', input.outerWidth());
 			},
 
 			createSchedulerEvent: function(calendarBooking) {

@@ -16,6 +16,8 @@
 
 <%@ include file="/display/init.jsp" %>
 
+<liferay-util:dynamic-include key="com.liferay.dynamic.data.lists.form.web#/display/view.jsp#pre" />
+
 <%
 String redirect = ParamUtil.getString(request, "redirect", currentURL);
 
@@ -141,3 +143,5 @@ long recordSetId = ddlFormDisplayContext.getRecordSetId();
 		</div>
 	</div>
 </c:if>
+
+<liferay-util:dynamic-include key="com.liferay.dynamic.data.lists.form.web#/display/view.jsp#post" />

@@ -49,8 +49,10 @@ downloadGems {
 
 			bufferedWriter.writeLine("# Ruby Gems")
 			bufferedWriter.writeLine("")
-			bufferedWriter.writeLine("The Ruby Gems module provides a set of Ruby gems that Liferay can access when")
-			bufferedWriter.writeLine("using JRuby. The gems included with this module are listed below:")
+			bufferedWriter.writeLine("The Ruby Gems module provides a set of " +
+				"Ruby gems that Liferay can access when")
+			bufferedWriter.writeLine("using JRuby. The gems included with " +
+				"this module are listed below:")
 			bufferedWriter.writeLine("")
 
 			List<String> gemNames = []

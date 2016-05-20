@@ -68,11 +68,6 @@ if (layoutRevision != null) {
 	}
 }
 
-if (Validator.isNotNull(backURL)) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(backURL);
-}
-
 renderResponse.setTitle(selLayout.getName(locale));
 %>
 
@@ -124,7 +119,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 		</portlet:actionURL>
 
 		<aui:form action='<%= HttpUtil.addParameter(editLayoutURL, "refererPlid", plid) %>' cssClass="edit-layout-form" enctype="multipart/form-data" method="post" name="editLayoutFm">
-			<aui:input name="redirect" type="hidden" value='<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", layoutsAdminDisplayContext.getSelPlid()) %>' />
+			<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 			<aui:input name="groupId" type="hidden" value="<%= layoutsAdminDisplayContext.getGroupId() %>" />
 			<aui:input name="liveGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getLiveGroupId() %>" />
 			<aui:input name="stagingGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getStagingGroupId() %>" />
@@ -177,8 +172,18 @@ renderResponse.setTitle(selLayout.getName(locale));
 				formModelBean="<%= selLayout %>"
 				id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT %>"
 				markupView="lexicon"
-				showButtons="<%= (selLayout.getGroupId() == layoutsAdminDisplayContext.getGroupId()) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>"
+				showButtons="<%= false %>"
 			/>
+
+			<c:if test="<%= (selLayout.getGroupId() == layoutsAdminDisplayContext.getGroupId()) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>">
+				<aui:button-row>
+					<aui:button cssClass="btn-lg btn-primary" type="submit" />
+
+					<c:if test="<%= Validator.isNotNull(backURL) %>">
+						<aui:button cssClass="btn-lg" href="<%= backURL %>" name="cancelButton" type="cancel" />
+					</c:if>
+				</aui:button-row>
+			</c:if>
 		</aui:form>
 	</c:otherwise>
 </c:choose>

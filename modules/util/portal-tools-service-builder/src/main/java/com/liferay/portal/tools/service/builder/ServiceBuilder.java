@@ -622,6 +622,8 @@ public class ServiceBuilder {
 				}
 			}
 
+			_databaseConverterName = _portletShortName + "DatabaseConverter";
+
 			_ejbList = new ArrayList<>();
 			_entityMappings = new HashMap<>();
 
@@ -787,6 +789,7 @@ public class ServiceBuilder {
 
 				_createHbmXml();
 				_createModelHintsXml();
+				_createDatabaseConverter();
 				_createSpringXml();
 
 				_createExceptions(exceptionList);
@@ -1886,6 +1889,26 @@ public class ServiceBuilder {
 			ToolsUtil.writeFile(
 				blobModelFile, content, _author, _modifiedFileNames);
 		}
+	}
+
+	private void _createDatabaseConverter() throws Exception {
+		Map<String, Object> context = _getContext();
+
+		context.put("entities", _ejbList);
+		context.put("databaseConverterName", _databaseConverterName);
+
+		// Content
+
+		String content = _processTemplate(_databaseConverter, context);
+
+		// Write file
+
+		File modelRegistryFile = new File(
+			_outputPath + "/service/convert/database/" +
+				_databaseConverterName + ".java");
+
+		ToolsUtil.writeFile(
+			modelRegistryFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createEJBPK(Entity entity) throws Exception {
@@ -3213,13 +3236,16 @@ public class ServiceBuilder {
 	}
 
 	private void _createSpringXml() throws Exception {
-		if (_packagePath.equals("com.liferay.counter")) {
-			return;
+		List<Entity> entities = new ArrayList<>();
+
+		if (!_packagePath.equals("com.liferay.counter")) {
+			entities = _ejbList;
 		}
 
 		Map<String, Object> context = _getContext();
 
-		context.put("entities", _ejbList);
+		context.put("entities", entities);
+		context.put("databaseConverterName", _databaseConverterName);
 
 		// Content
 
@@ -5588,6 +5614,8 @@ public class ServiceBuilder {
 	private long _buildNumber;
 	private boolean _buildNumberIncrement;
 	private String _currentTplName;
+	private String _databaseConverter = _TPL_ROOT + "database_converter.ftl";
+	private String _databaseConverterName;
 	private List<Entity> _ejbList;
 	private Map<String, EntityMapping> _entityMappings;
 	private Map<String, Entity> _entityPool = new HashMap<>();

@@ -936,12 +936,12 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					if (buildFlowTimeStamp != null && buildFlowTimeStamp.matches("\\d+-\\d+-\\d+\\[\\d+:\\d+:\\d+\\]")) {
 						SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd[HH:mm:ss]");
 
-					    Date date = simpleDateFormat.parse(buildFlowTimeStamp);
+						Date date = simpleDateFormat.parse(buildFlowTimeStamp);
 
-					    project.setProperty("build.flow.time.stamp", Long.toString(date.getTime()));
+						project.setProperty("build.flow.time.stamp", Long.toString(date.getTime()));
 					}
 					else {
-					    project.setProperty("build.flow.time.stamp", Long.toString(System.currentTimeMillis()));
+						project.setProperty("build.flow.time.stamp", Long.toString(System.currentTimeMillis()));
 					}
 
 					String jenkinsURL = project.getProperty("env.JENKINS_URL");
@@ -1218,7 +1218,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 						</copy>
 
 						<if>
-	  					 	<available file="${liferay.home}/deploy" />
+							<available file="${liferay.home}/deploy" />
 							<then>
 								<copy todir="${test.app.server.parent.dir}/deploy">
 									<fileset dir="${liferay.home}/deploy" />
@@ -1227,7 +1227,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 						</if>
 
 						<if>
-	  					 	<available file="${liferay.home}/osgi" />
+							<available file="${liferay.home}/osgi" />
 							<then>
 								<copy todir="${test.app.server.parent.dir}/osgi">
 									<fileset dir="${liferay.home}/osgi" />
@@ -2389,16 +2389,16 @@ ${tomcat-gc-log}
 			/>
 
 			<if>
-				 <equals arg1="@{app.server.bundle.index}" arg2="0" />
-				 <then>
+				<equals arg1="@{app.server.bundle.index}" arg2="0" />
+				<then>
 					<var name="test.app.server.bin.dir" value="@{app.server.bin.dir}" />
 					<var name="test.app.server.classes.portal.dir" value="${app.server.classes.portal.dir}" />
 					<var name="test.app.server.deploy.dir" value="${app.server.deploy.dir}" />
 					<var name="test.app.server.dir" value="${app.server.dir}" />
 					<var name="test.app.server.liferay.home" value="${liferay.home}" />
 					<var name="test.app.server.parent.dir" value="${app.server.parent.dir}" />
-				 </then>
-				 <else>
+				</then>
+				<else>
 					<antelope:stringutil property="test.app.server.bin.dir" string="@{app.server.bin.dir}">
 						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
 					</antelope:stringutil>
@@ -2420,7 +2420,7 @@ ${tomcat-gc-log}
 					<antelope:stringutil property="test.app.server.parent.dir" string="${app.server.parent.dir}">
 						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
 					</antelope:stringutil>
-				 </else>
+				</else>
 			</if>
 		</sequential>
 	</macrodef>

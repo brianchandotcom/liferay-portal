@@ -517,7 +517,12 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <c:if test="<%= (fileEntry != null) && checkedOut %>">
-	<liferay-util:include page="/document_library/version_details.jsp" servletContext="<%= application %>"/>
+
+	<%
+	request.setAttribute("version_details.jsp-checkedOut", checkedOut);
+	%>
+
+	<liferay-util:include page="/document_library/version_details.jsp" servletContext="<%= application %>" />
 </c:if>
 
 <aui:script>

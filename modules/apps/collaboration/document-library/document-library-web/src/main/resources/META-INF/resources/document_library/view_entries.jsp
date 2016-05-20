@@ -597,6 +597,10 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 	</liferay-ui:search-container>
 </div>
 
+<%
+request.setAttribute("version_details.jsp-checkedOut", true);
+%>
+
 <liferay-util:include page="/document_library/version_details.jsp" servletContext="<%= application %>" />
 
 <%!

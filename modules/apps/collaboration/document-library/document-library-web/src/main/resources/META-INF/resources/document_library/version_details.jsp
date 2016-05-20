@@ -16,13 +16,17 @@
 
 <%@ include file="/document_library/init.jsp" %>
 
+<%
+boolean checkedOut = GetterUtil.getBoolean(request.getAttribute("version_details.jsp-checkedOut"));
+%>
+
 <div id="<portlet:namespace />versionDetails" style="display: none">
 	<aui:fieldset>
 		<h5 class="control-label"><liferay-ui:message key="select-whether-this-is-a-major-or-minor-version" /></h5>
 
-		<aui:input label="major-version" name="versionDetailsMajorVersion" type="radio" value="<%= true %>" />
+		<aui:input checked="<%= checkedOut %>" label="major-version" name="versionDetailsMajorVersion" type="radio" value="<%= true %>" />
 
-		<aui:input checked="<%= true %>" label="minor-version" name="versionDetailsMajorVersion" type="radio" value="<%= false %>" />
+		<aui:input checked="<%= !checkedOut%>" label="minor-version" name="versionDetailsMajorVersion" type="radio" value="<%= false %>" />
 
 		<aui:input label="change-log" name="versionDetailsChangeLog" type="textarea" />
 

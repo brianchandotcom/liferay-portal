@@ -554,6 +554,11 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
+
+	<%
+	request.setAttribute("version_details.jsp-checkedOut", fileEntry.isCheckedOut());
+	%>
+
 	<liferay-util:include page="/document_library/version_details.jsp" servletContext="<%= application %>" />
 </c:if>
 

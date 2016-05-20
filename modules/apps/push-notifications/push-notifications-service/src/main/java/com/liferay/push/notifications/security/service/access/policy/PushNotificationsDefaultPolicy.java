@@ -14,7 +14,12 @@
 
 package com.liferay.push.notifications.security.service.access.policy;
 
+import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -28,7 +33,11 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -36,6 +45,13 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class PushNotificationsDefaultPolicy {
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceRegistration = bundleContext.registerService(
+			PortalInstanceLifecycleListener.class,
+			new PolicyPortalInstanceLifecycleListener(), null);
+	}
 
 	protected void create(long companyId) throws PortalException {
 		SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
@@ -66,13 +82,43 @@ public class PushNotificationsDefaultPolicy {
 			_PUSH_NOTIFICATIONS_DEFAULT, titleMap, new ServiceContext());
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
+	}
+
 	private static final String _PUSH_NOTIFICATIONS_DEFAULT =
 		"PUSH_NOTIFICATIONS_DEFAULT";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PushNotificationsDefaultPolicy.class);
 
 	@Reference(unbind = "-")
 	private SAPEntryLocalService _sapEntryLocalService;
 
+	private ServiceRegistration<PortalInstanceLifecycleListener>
+		_serviceRegistration;
+
 	@Reference(unbind = "-")
 	private UserLocalService _userLocalService;
+
+	private class PolicyPortalInstanceLifecycleListener
+		extends BasePortalInstanceLifecycleListener {
+
+		public void portalInstanceRegistered(Company company) throws Exception {
+			try {
+				create(company.getCompanyId());
+			}
+			catch (PortalException pe) {
+				_log.error(
+					"Unable to add PushNotificationsDefaultPolicy " +
+						"for company " + company.getCompanyId(),
+					pe);
+			}
+		}
+
+	}
 
 }

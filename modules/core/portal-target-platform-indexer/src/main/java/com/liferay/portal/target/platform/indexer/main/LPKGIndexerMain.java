@@ -58,8 +58,7 @@ public class LPKGIndexerMain {
 		}
 
 		if (!outputDir.exists() && !outputDir.mkdirs()) {
-			System.err.printf(
-				"== Unable to create directory %s\n", outputDir);
+			System.err.printf("== Unable to create directory %s\n", outputDir);
 
 			return;
 		}

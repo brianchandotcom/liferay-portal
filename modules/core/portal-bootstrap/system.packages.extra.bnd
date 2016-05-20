@@ -1,15 +1,24 @@
 Bundle-SymbolicName: system.packages.extra
 Export-Package:\
-	!.touch,\
 	!*.dependencies.*,\
+	\
 	!*.internal.*,\
+	\
 	!*.properties,\
+	\
+	!.touch,\
+	\
 	!FTL_liferay.ftl,\
+	\
 	!VM_global_library.vm,\
+	\
 	!VM_liferay.vm,\
+	\
 	!aQute.bnd.osgi.eclipse,\
 	!aQute.bnd.osgi.resource,\
+	\
 	!aQute.lib.filter,\
+	\
 	!com.liferay.portal.asm,\
 	!com.liferay.portal.aspectj,\
 	!com.liferay.portal.fabric,\
@@ -46,30 +55,51 @@ Export-Package:\
 	!com.liferay.portlet.documentlibrary.sharepoint,\
 	!com.liferay.portlet.layoutsadmin.lar,\
 	!com.liferay.portlet.sitesadmin.lar,\
+	\
 	!com.sun.mail.*,\
+	\
 	!content,\
+	\
 	!custom-sql,\
+	\
 	!ehcache,\
+	\
 	!images,\
+	\
 	!img,\
+	\
 	!jamwiki-configuration.xml,\
+	\
 	!license,\
+	\
 	!license.html,\
+	\
 	!org.apache.html.*,\
 	!org.apache.log4j.lf5.*,\
 	!org.apache.wml.*,\
+	\
 	!org.jcp.xml.*,\
+	\
 	!org.osgi.*,\
+	\
 	!overview.html,\
+	\
 	!portal-impl-overview.html,\
+	\
 	!portal-kernel-overview.html,\
+	\
 	!resource-actions,\
+	\
 	!trax,\
+	\
 	!unicode-license.txt,\
+	\
 	com.ibm.crypto.provider,\
+	\
 	com.liferay.ibm.icu.*;version='4.0.1',\
 	com.liferay.portal.bootstrap.index;version='1.0.0',\
-    com.sun.security.auth.module,\
+	\
+	com.sun.security.auth.module,\
 	com.sun.syndication;version='1.0',\
 	com.sun.syndication.feed;version='1.0',\
 	com.sun.syndication.feed.atom;version='1.0',\
@@ -81,13 +111,21 @@ Export-Package:\
 	com.sun.syndication.feed.synd.impl;version='1.0',\
 	com.sun.syndication.io;version='1.0',\
 	com.sun.syndication.io.impl;version='1.0',\
+	\
 	com.thoughtworks.xstream.*;version='1.4.7',\
+	\
 	java_cup.runtime.*;version='2.7.1',\
+	\
 	javax.jms.*;version='1.1',\
+	\
 	javax.mail.*;version='1.4',\
+	\
 	javax.persistence.*;version='2.0',\
+	\
 	javax.portlet.*;version='2.0',\
+	\
 	javax.servlet.*;version='3.0',\
+	\
 	javax.xml;version='1.4',\
 	javax.xml.crypto.*;version='1.4.5',\
 	javax.xml.datatype.*;version='1.4',\
@@ -99,12 +137,19 @@ Export-Package:\
 	javax.xml.transform.*;version='1.4',\
 	javax.xml.validation.*;version='1.4',\
 	javax.xml.xpath.*;version='1.4',\
+	\
 	jodd.bean.*;version='3.6.4',\
+	\
 	jodd.exception.*;version='3.6.4',\
+	\
 	jodd.http.*;version='3.6.4',\
+	\
 	jodd.io.*;version='3.6.4',\
+	\
 	jodd.util.*;version='3.6.4',\
+	\
 	org.aopalliance.*;version='1.0',\
+	\
 	org.apache.bcel.*;version='2.7.1',\
 	org.apache.commons.beanutils;version='1.8.2',\
 	org.apache.commons.beanutils.converters;version='1.8.2',\
@@ -153,8 +198,8 @@ Export-Package:\
 	org.apache.commons.logging.impl;version="1.2",\
 	org.apache.commons.validator.routines;version='1.5.0',\
 	org.apache.log4j;version='1.2.17',\
-	org.apache.log4j.config;version='1.2.17',\
 	org.apache.log4j.chainsaw;version='1.2.17',\
+	org.apache.log4j.config;version='1.2.17',\
 	org.apache.log4j.extras;version='1.1',\
 	org.apache.log4j.filter;version='1.1',\
 	org.apache.log4j.helpers;version='1.2.17',\
@@ -173,26 +218,33 @@ Export-Package:\
 	org.apache.log4j.spi;version='1.2.17',\
 	org.apache.log4j.varia;version='1.2.17',\
 	org.apache.log4j.xml;version='1.2.17',\
-    org.apache.naming.java,\
+	org.apache.naming.java,\
 	org.apache.regexp;version='2.7.1',\
 	org.apache.struts.*;version='1.3.10',\
 	org.apache.tools.ant.*;version='1.8.2',\
 	org.apache.xalan.*;version='2.7.1',\
-	org.apache.xpath.*;version='2.7.1',\
 	org.apache.xerces.*;version='2.11.0',\
-	org.apache.xmlcommons;version='1.4.01',\
 	org.apache.xml.dtm.*;version='2.7.1',\
 	org.apache.xml.res.*;version='2.7.1',\
 	org.apache.xml.security.*;version='1.4.5',\
 	org.apache.xml.serialize;version='2.11.0',\
 	org.apache.xml.serializer;version='2.7.1',\
 	org.apache.xml.utils.*;version='2.7.1',\
+	org.apache.xmlcommons;version='1.4.01',\
+	org.apache.xpath.*;version='2.7.1',\
+	\
 	org.aspectj.*,\
+	\
 	org.dom4j.*;version='1.6.1',\
-	org.jaxen.*;version='1.1.1',\
-	org.jdom.*;version='1.0',\
-	org.json.*;version='2012.6.16.c7d2d9161321e9',\
+	\
 	org.hibernate.*;version='3.6.10',\
+	\
+	org.jaxen.*;version='1.1.1',\
+	\
+	org.jdom.*;version='1.0',\
+	\
+	org.json.*;version='2012.6.16.c7d2d9161321e9',\
+	\
 	org.objectweb.asm;version='5.0.1',\
 	org.objectweb.asm.attrs;version='5.0.1',\
 	org.objectweb.asm.commons;version='5.0.1',\
@@ -201,13 +253,19 @@ Export-Package:\
 	org.objectweb.asm.tree.analysis;version='5.0.1',\
 	org.objectweb.asm.util;version='5.0.1',\
 	org.objectweb.asm.xml;version='5.0.1',\
+	\
 	org.slf4j;version='1.7.2',\
-	org.slf4j.spi;version='1.7.2',\
 	org.slf4j.helpers;version='1.7.2',\
+	org.slf4j.spi;version='1.7.2',\
+	\
 	org.springframework.*;version='4.1.9',\
+	\
 	org.w3c.dom.*;version='1.0',\
+	\
 	org.xml.sax.*;version='2.0.2',\
+	\
 	sun.misc,\
+	\
 	sun.security.provider,\
 	*
 Import-Package: !*

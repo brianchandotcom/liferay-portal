@@ -27,10 +27,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+
 import java.net.URI;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -141,8 +144,8 @@ public class TargetPlatformMain implements Indexer {
 		Set<File> jarFiles = new LinkedHashSet<>();
 
 		try {
-			processSystemBundle(tempDir, jarFiles);
-			processSystemPackagesExtra(tempDir, jarFiles);
+			_processSystemBundle(tempDir, jarFiles);
+			_processSystemPackagesExtra(tempDir, jarFiles);
 
 			String[] moduleDirs = new String[] {
 				_moduleFrameworkBaseDir + "/static/",
@@ -195,7 +198,52 @@ public class TargetPlatformMain implements Indexer {
 		}
 	}
 
-	private void processSystemBundle(File tempDir, Set<File> jarFiles)
+	private void _processBundle(Bundle bundle) throws Exception {
+		BundleRevision bundleRevision = bundle.adapt(BundleRevision.class);
+
+		for (Capability capability : bundleRevision.getCapabilities(null)) {
+			String namespace = capability.getNamespace();
+
+			CapabilityBuilder capabilityBuilder = new CapabilityBuilder(
+				namespace);
+
+			capabilityBuilder.addAttributes(capability.getAttributes());
+			capabilityBuilder.addDirectives(capability.getDirectives());
+
+			Attrs attrs = capabilityBuilder.toAttrs();
+
+			if (capabilityBuilder.isPackage()) {
+				attrs.remove(Constants.BUNDLE_SYMBOLIC_NAME_ATTRIBUTE);
+				attrs.remove(Constants.BUNDLE_VERSION_ATTRIBUTE);
+
+				String packageName = attrs.remove(
+					PackageNamespace.PACKAGE_NAMESPACE);
+
+				if (packageName != null) {
+					_packagesParamters.put(packageName, attrs);
+				}
+			}
+			else if (!_ignoredNamespaces.contains(namespace)) {
+				Parameters parameters = new Parameters();
+
+				if (namespace.equals(NativeNamespace.NATIVE_NAMESPACE)) {
+					Set<String> keys = new LinkedHashSet<>(attrs.keySet());
+
+					for (String key : keys) {
+						if (!key.startsWith(NativeNamespace.NATIVE_NAMESPACE)) {
+							attrs.remove(key);
+						}
+					}
+				}
+
+				parameters.put(namespace, attrs);
+
+				_parametersList.add(parameters);
+			}
+		}
+	}
+
+	private void _processSystemBundle(File tempDir, Set<File> jarFiles)
 		throws Exception {
 
 		Framework framework = null;
@@ -220,7 +268,7 @@ public class TargetPlatformMain implements Indexer {
 
 			Bundle systemBundle = bundleContext.getBundle(0);
 
-			processBundle(systemBundle);
+			_processBundle(systemBundle);
 
 			Manifest manifest = new Manifest();
 
@@ -265,8 +313,7 @@ public class TargetPlatformMain implements Indexer {
 		}
 	}
 
-
-	private void processSystemPackagesExtra(File tempDir, Set<File> jarFiles)
+	private void _processSystemPackagesExtra(File tempDir, Set<File> jarFiles)
 		throws Exception {
 
 		try (Jar jar = new Jar("system.packages.extra")) {
@@ -336,52 +383,9 @@ public class TargetPlatformMain implements Indexer {
 		jarFiles.add(jarFile);
 	}
 
-	private void processBundle(Bundle bundle) throws Exception {
-		BundleRevision bundleRevision = bundle.adapt(BundleRevision.class);
-
-		for (Capability capability : bundleRevision.getCapabilities(null)) {
-			String namespace = capability.getNamespace();
-
-			CapabilityBuilder capabilityBuilder = new CapabilityBuilder(
-				namespace);
-
-			capabilityBuilder.addAttributes(capability.getAttributes());
-			capabilityBuilder.addDirectives(capability.getDirectives());
-
-			Attrs attrs = capabilityBuilder.toAttrs();
-
-			if (capabilityBuilder.isPackage()) {
-				attrs.remove(Constants.BUNDLE_SYMBOLIC_NAME_ATTRIBUTE);
-				attrs.remove(Constants.BUNDLE_VERSION_ATTRIBUTE);
-
-				String packageName = attrs.remove(
-					PackageNamespace.PACKAGE_NAMESPACE);
-
-				if (packageName != null) {
-					_packagesParamters.put(packageName, attrs);
-				}
-			}
-			else if (!_ignoredNamespaces.contains(namespace)) {
-				Parameters parameters = new Parameters();
-
-				if (namespace.equals(NativeNamespace.NATIVE_NAMESPACE)) {
-					Set<String> keys = new LinkedHashSet<>(attrs.keySet());
-
-					for (String key : keys) {
-						if (!key.startsWith(NativeNamespace.NATIVE_NAMESPACE)) {
-							attrs.remove(key);
-						}
-					}
-				}
-
-				parameters.put(namespace, attrs);
-
-				_parametersList.add(parameters);
-			}
-		}
-	}
-
 	private static final Set<String> _ignoredNamespaces = new HashSet<>();
+	private static final Class<?> _targetPlatformMainClass =
+		TargetPlatformMain.class;
 
 	static {
 		_ignoredNamespaces.add(BundleNamespace.BUNDLE_NAMESPACE);
@@ -390,9 +394,6 @@ public class TargetPlatformMain implements Indexer {
 		_ignoredNamespaces.add(IdentityNamespace.IDENTITY_NAMESPACE);
 		_ignoredNamespaces.add(PackageNamespace.PACKAGE_NAMESPACE);
 	}
-
-	private static final Class<?> _targetPlatformMainClass =
-		TargetPlatformMain.class;
 
 	private final String _bundleSymbolicName;
 	private final Map<String, String> _config = new HashMap<>();

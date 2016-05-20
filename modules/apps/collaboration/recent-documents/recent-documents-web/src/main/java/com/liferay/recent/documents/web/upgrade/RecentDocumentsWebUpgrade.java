@@ -29,11 +29,17 @@ public class RecentDocumentsWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.recent.documents.web", "0.0.0", "1.0.0",
+			"com.liferay.recent.documents.web", "0.0.0", "1.0.1",
 			new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.recent.documents.web", "0.0.1", "1.0.0",
+			"com.liferay.recent.documents.web", "0.0.1", "1.0.1",
+			new UpgradePortletId());
+
+		// See LPS-65946
+
+		registry.register(
+			"com.liferay.recent.documents.web", "1.0.0", "1.0.1",
 			new UpgradePortletId());
 	}
 

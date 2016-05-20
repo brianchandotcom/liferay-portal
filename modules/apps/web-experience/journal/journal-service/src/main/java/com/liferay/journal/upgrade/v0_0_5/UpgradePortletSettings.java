@@ -31,9 +31,9 @@ public class UpgradePortletSettings
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeDisplayPortlet(
+		upgradeMainPortlet(
 			JournalPortletKeys.JOURNAL, JournalConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
+			PortletKeys.PREFS_OWNER_TYPE_GROUP, false);
 	}
 
 }

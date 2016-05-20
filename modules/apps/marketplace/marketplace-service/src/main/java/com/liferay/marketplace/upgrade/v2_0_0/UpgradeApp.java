@@ -23,7 +23,7 @@ public class UpgradeApp extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("alter table Marketplace_App add column required BOOLEAN");
+		runSQL("alter table Marketplace_App add required BOOLEAN");
 
 		runSQL("update Marketplace_App set required = FALSE");
 	}

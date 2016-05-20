@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Invitation Invite Members Service
 Bundle-SymbolicName: com.liferay.invitation.invite.members.service
-Bundle-Version: 2.0.3
+Bundle-Version: 2.0.4
 Export-Package: com.liferay.invitation.invite.members.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

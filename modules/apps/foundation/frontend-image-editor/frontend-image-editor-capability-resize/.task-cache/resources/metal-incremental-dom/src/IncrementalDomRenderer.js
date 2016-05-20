@@ -1,4 +1,4 @@
-define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/src/all/component', './IncrementalDomAop', './incremental-dom'], function (exports, _metal, _dom, _component, _IncrementalDomAop) {
+define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/src/all/component', './IncrementalDomAop', './children/IncrementalDomChildren', './incremental-dom'], function (exports, _metal, _dom, _component, _IncrementalDomAop, _IncrementalDomChildren) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -8,6 +8,8 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 	var _dom2 = _interopRequireDefault(_dom);
 
 	var _IncrementalDomAop2 = _interopRequireDefault(_IncrementalDomAop);
+
+	var _IncrementalDomChildren2 = _interopRequireDefault(_IncrementalDomChildren);
 
 	function _interopRequireDefault(obj) {
 		return obj && obj.__esModule ? obj : {
@@ -69,9 +71,8 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 			// functions each time.
 			_this.handleInterceptedAttributesCall_ = _this.handleInterceptedAttributesCall_.bind(_this);
 			_this.handleInterceptedOpenCall_ = _this.handleInterceptedOpenCall_.bind(_this);
-			_this.handleInterceptedChildrenCloseCall_ = _this.handleInterceptedChildrenCloseCall_.bind(_this);
-			_this.handleInterceptedChildrenOpenCall_ = _this.handleInterceptedChildrenOpenCall_.bind(_this);
-			_this.handleInterceptedChildrenTextCall_ = _this.handleInterceptedChildrenTextCall_.bind(_this);
+			_this.handleChildrenCaptured_ = _this.handleChildrenCaptured_.bind(_this);
+			_this.handleChildRender_ = _this.handleChildRender_.bind(_this);
 			_this.renderInsidePatchDontSkip_ = _this.renderInsidePatchDontSkip_.bind(_this);
 			return _this;
 		}
@@ -87,7 +88,7 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 			for (var i = 0; i < listeners.length; i += 2) {
 				var name = listeners[i];
 				var fn = listeners[i + 1];
-				if (name.startsWith('data-on') && _metal.core.isString(fn)) {
+				if (this.isListenerAttr_(name) && _metal.core.isString(fn)) {
 					this.listenersToAttach_.push({
 						eventName: name.substr(7),
 						fn: fn
@@ -104,10 +105,10 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 			}
 		};
 
-		IncrementalDomRenderer.prototype.buildChildrenFn_ = function buildChildrenFn_(calls) {
+		IncrementalDomRenderer.prototype.buildChildrenFn_ = function buildChildrenFn_(children) {
 			var _this2 = this;
 
-			if (calls.length === 0) {
+			if (children.length === 0) {
 				return emptyChildrenFn_;
 			}
 			var prefix = this.buildKey_();
@@ -116,14 +117,23 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 				_this2.generatedKeyCount_[prefix] = 0;
 				_this2.currentPrefix_ = prefix;
 				_this2.intercept_();
-				for (var i = 0; i < calls.length; i++) {
-					IncrementalDOM[calls[i].name].apply(null, _metal.array.slice(calls[i].args, 1));
-				}
+				_IncrementalDomChildren2.default.render(fn, _this2.handleChildRender_);
 				_IncrementalDomAop2.default.stopInterception();
 				_this2.currentPrefix_ = prevPrefix;
 			};
-			fn.iDomCalls = calls;
+			fn.children = children;
 			return fn;
+		};
+
+		IncrementalDomRenderer.prototype.buildConfigFromCall_ = function buildConfigFromCall_(args) {
+			var config = {
+				key: args[1]
+			};
+			var attrsArr = (args[2] || []).concat(args.slice(3));
+			for (var i = 0; i < attrsArr.length; i += 2) {
+				config[attrsArr[i]] = attrsArr[i + 1];
+			}
+			return config;
 		};
 
 		IncrementalDomRenderer.prototype.buildKey_ = function buildKey_() {
@@ -179,7 +189,7 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 		};
 
 		IncrementalDomRenderer.prototype.handleInterceptedAttributesCall_ = function handleInterceptedAttributesCall_(originalFn, element, name, value) {
-			if (name.startsWith('data-on')) {
+			if (this.isListenerAttr_(name)) {
 				var eventName = name.substr(7);
 				if (_metal.core.isFunction(element[name])) {
 					element.removeEventListener(eventName, element[name]);
@@ -212,39 +222,23 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 			}
 		};
 
-		IncrementalDomRenderer.prototype.handleInterceptedChildrenCloseCall_ = function handleInterceptedChildrenCloseCall_(originalFn, callTag) {
-			if (this.isCurrentComponentTag_(callTag) && --this.componentToRender_.tagsCount === 0) {
-				var _componentToRender_ = this.componentToRender_;
-				var calls = _componentToRender_.calls;
-				var config = _componentToRender_.config;
-				var tag = _componentToRender_.tag;
+		IncrementalDomRenderer.prototype.handleChildrenCaptured_ = function handleChildrenCaptured_(tree) {
+			var _componentToRender_ = this.componentToRender_;
+			var config = _componentToRender_.config;
+			var tag = _componentToRender_.tag;
 
-				config.children = this.buildChildrenFn_(calls);
-				this.componentToRender_ = null;
-				_IncrementalDomAop2.default.stopInterception();
-				return this.renderFromTag_(tag, config);
-			}
-			this.componentToRender_.calls.push({
-				name: 'elementClose',
-				args: arguments
-			});
+			config.children = this.buildChildrenFn_(tree.children);
+			this.componentToRender_ = null;
+			this.renderFromTag_(tag, config);
 		};
 
-		IncrementalDomRenderer.prototype.handleInterceptedChildrenOpenCall_ = function handleInterceptedChildrenOpenCall_(originalFn, tag) {
-			if (this.isCurrentComponentTag_(tag)) {
-				this.componentToRender_.tagsCount++;
+		IncrementalDomRenderer.prototype.handleChildRender_ = function handleChildRender_(node) {
+			if (node.args && !node.isText && this.isComponentTag_(node.args[0])) {
+				var config = this.buildConfigFromCall_(node.args);
+				config.children = this.buildChildrenFn_(node.children);
+				this.renderFromTag_(node.args[0], config);
+				return true;
 			}
-			this.componentToRender_.calls.push({
-				name: 'elementOpen',
-				args: arguments
-			});
-		};
-
-		IncrementalDomRenderer.prototype.handleInterceptedChildrenTextCall_ = function handleInterceptedChildrenTextCall_() {
-			this.componentToRender_.calls.push({
-				name: 'text',
-				args: arguments
-			});
 		};
 
 		IncrementalDomRenderer.prototype.handleInterceptedOpenCall_ = function handleInterceptedOpenCall_(originalFn, tag) {
@@ -275,24 +269,16 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 			this.changes_[data.key] = data;
 		};
 
-		IncrementalDomRenderer.prototype.handleSubComponentCall_ = function handleSubComponentCall_(originalFn, tag, key, statics) {
-			var config = { key: key };
-			var attrsArr = (statics || []).concat(_metal.array.slice(arguments, 4));
-			for (var i = 0; i < attrsArr.length; i += 2) {
-				config[attrsArr[i]] = attrsArr[i + 1];
+		IncrementalDomRenderer.prototype.handleSubComponentCall_ = function handleSubComponentCall_(originalFn) {
+			for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+				args[_key - 1] = arguments[_key];
 			}
 
 			this.componentToRender_ = {
-				calls: [],
-				config: config,
-				tag: tag,
-				tagsCount: 1
+				config: this.buildConfigFromCall_(args),
+				tag: args[0]
 			};
-			_IncrementalDomAop2.default.startInterception({
-				elementClose: this.handleInterceptedChildrenCloseCall_,
-				elementOpen: this.handleInterceptedChildrenOpenCall_,
-				text: this.handleInterceptedChildrenTextCall_
-			});
+			_IncrementalDomChildren2.default.capture(this.handleChildrenCaptured_);
 		};
 
 		IncrementalDomRenderer.prototype.hasChangedBesidesElement_ = function hasChangedBesidesElement_() {
@@ -314,8 +300,8 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', 'metal-component/
 			return !_metal.core.isString(tag) || tag[0] === tag[0].toUpperCase();
 		};
 
-		IncrementalDomRenderer.prototype.isCurrentComponentTag_ = function isCurrentComponentTag_(tag) {
-			return this.isComponentTag_(tag) && this.componentToRender_.tag === tag;
+		IncrementalDomRenderer.prototype.isListenerAttr_ = function isListenerAttr_(attr) {
+			return attr.substr(0, 7) === 'data-on';
 		};
 
 		IncrementalDomRenderer.prototype.render = function render() {

@@ -15,9 +15,9 @@
 package com.liferay.portal.kernel.servlet;
 
 /**
- * Provides constants for HTTP request methods specified in RFC 2616 Section 
- * 5.1.1.
- * 
+ * Provides constants for HTTP request methods specified in <a
+ * href="http://www.rfc-base.org/rfc-2616.html">RFC 2616 Section 5.1.1</a>.
+ *
  * @author Brian Wing Shun Chan
  */
 public interface HttpMethods {

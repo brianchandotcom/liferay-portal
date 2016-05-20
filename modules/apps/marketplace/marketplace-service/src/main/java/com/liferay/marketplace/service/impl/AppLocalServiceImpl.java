@@ -262,21 +262,16 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 					"Unable to open file at " + app.getFilePath());
 			}
 
-
-
-			String extension = FileUtil.getExtension(app.getFileName());
-			String fileName = FileUtil.encodeSafeFileName(app.getTitle());
-			fileName = encodeSafeFileName(fileName);
-
 			StringBundler sb = new StringBundler(7);
 
 			sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
 			sb.append(StringPool.SLASH);
-			sb.append(fileName);
+			sb.append(encodeSafeFileName(app.getTitle()));
 			sb.append(StringPool.PERIOD);
-			sb.append(extension);
+			sb.append(FileUtil.getExtension(app.getFileName()));
 
 			File file = new File(sb.toString());
+
 			FileUtil.write(file, inputStream);
 
 			List<Bundle> bundles = BundleManagerUtil.installLPKG(file);
@@ -428,6 +423,8 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 			return StringPool.BLANK;
 		}
 
+		fileName = FileUtil.encodeSafeFileName(fileName);
+
 		return StringUtil.replace(
 			fileName, _SAFE_FILE_NAME_1, _SAFE_FILE_NAME_2);
 	}
@@ -501,15 +498,21 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 	private List<App> _installedApps;
 	private Map<String, String> _prepackagedApps;
 
+	/**
+	 * @see com.liferay.portal.util.FileImpl#_SAFE_FILE_NAME_1
+	 */
 	private static final String[] _SAFE_FILE_NAME_1 = {
-		StringPool.SLASH, StringPool.BACK_SLASH, StringPool.PIPE,
-		StringPool.STAR, StringPool.COLON, StringPool.LESS_THAN,
-		StringPool.GREATER_THAN, StringPool.QUESTION, StringPool.QUOTE
+		StringPool.BACK_SLASH, StringPool.COLON, StringPool.GREATER_THAN,
+		StringPool.LESS_THAN, StringPool.PIPE, StringPool.QUESTION,
+		StringPool.QUOTE, StringPool.SLASH, StringPool.STAR
 	};
 
+	/**
+	 * @see com.liferay.portal.util.FileImpl#_SAFE_FILE_NAME_2
+	 */
 	private static final String[] _SAFE_FILE_NAME_2 = {
-		"_SL_", "_BSL_", "_PIP_", "_ST_", "_COL_", "_LT_", "_GT_", "_QUE_",
-		"_QUO_"
+		"_BSL_", "_COL_", "_GT_", "_LT_", "_PIP_", "_QUE_", "_QUO_", "_SL_",
+		"_ST_"
 	};
 
 }

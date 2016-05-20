@@ -12,18 +12,18 @@ dependencies {
 	provided group: "org.apache.aries.jmx", name: "org.apache.aries.jmx.api", transitive: false, version: "1.1.1"
 	provided group: "org.apache.aries.jmx", name: "org.apache.aries.jmx.core", transitive: false, version: "1.1.3"
 	provided group: "org.apache.felix", name: "org.apache.felix.bundlerepository", transitive: false, version: "2.0.2"
-	provided group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "3.2.0"
-	provided group: "org.apache.felix", name: "org.apache.felix.dependencymanager.shell", version: "3.2.0"
+	provided group: "org.apache.felix", name: "org.apache.felix.dependencymanager", transitive: false, version: "3.2.0"
+	provided group: "org.apache.felix", name: "org.apache.felix.dependencymanager.shell", transitive: false, version: "3.2.0"
 	provided group: "org.apache.felix", name: "org.apache.felix.eventadmin", transitive: false, version: "1.4.6"
 	provided group: "org.apache.felix", name: "org.apache.felix.fileinstall", transitive: false, version: "3.5.1-20150728.201454-4"
 	provided group: "org.apache.felix", name: "org.apache.felix.gogo.command", transitive: false, version: "0.12.0"
 	provided group: "org.apache.felix", name: "org.apache.felix.gogo.runtime", transitive: false, version: "0.10.0"
 	provided group: "org.apache.felix", name: "org.apache.felix.gogo.shell", transitive: false, version: "0.10.0"
 	provided group: "org.apache.felix", name: "org.apache.felix.scr", transitive: false, version: "2.0.2"
-	provided group: "org.eclipse.equinox", name: "org.eclipse.equinox.console", version: "1.1.100-20150308.220103-2"
-	provided group: "org.eclipse.equinox", name: "org.eclipse.equinox.metatype", version: "1.4.200-20150831.175616-1"
+	provided group: "org.eclipse.equinox", name: "org.eclipse.equinox.console", transitive: false, version: "1.1.100-20150308.220103-2"
+	provided group: "org.eclipse.equinox", name: "org.eclipse.equinox.metatype", transitive: false, version: "1.4.200-20150831.175616-1"
 	provided group: "org.glassfish", name: "javax.el", transitive: false, version: "3.0.1-b05"
-	provided group: "org.osgi", name: "org.osgi.service.metatype", version: "1.3.0"
+	provided group: "org.osgi", name: "org.osgi.service.metatype", transitive: false, version: "1.3.0"
 }
 
 deploy {

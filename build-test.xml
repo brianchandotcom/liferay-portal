@@ -6446,6 +6446,24 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 		<ant antfile="build-dist.xml" inheritAll="false" target="unzip-${app.server.type}-custom" />
 
+		<if>
+			<equals arg1="${app.server.type}" arg2="websphere" />
+			<then>
+				<chmod perm="a+x">
+					<fileset dir="${app.server.websphere.dir}">
+						<include name="bin/**/*.sh" />
+						<include name="java*/bin/*" />
+					</fileset>
+				</chmod>
+			</then>
+		</if>
+
+		<chmod perm="a+x">
+			<fileset dir="${app.server.bin.dir}">
+				<include name="**/*.sh" />
+			</fileset>
+		</chmod>
+
 		<ant inheritAll="false" target="deploy" />
 
 		<app-server-properties-reset />

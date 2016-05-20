@@ -19,6 +19,15 @@ AUI.add(
 
 			RECURRENCE_SUMMARIES: {},
 
+			RECURRING_EVENT_MODAL_ITEM_TEMPLATE: '<tr><td></td><td>' +
+													'<p class="action-description">{ confirmationDescription }</p>' +
+													'<p><small><em>{ confirmationDescriptionComplement }<em><small></p></td></tr>',
+
+			RECURRING_EVENT_MODAL_TEMPLATE: '<div class="calendar-change-recurring-event-modal-content">' +
+												'<p>{description}</p>' +
+												'<table></table>' +
+											'</div>',
+
 			WEEKDAY_LABELS: {},
 
 			getSummary: function(recurrence) {
@@ -87,21 +96,94 @@ AUI.add(
 			openConfirmationPanel: function(actionName, onlyThisInstanceFn, allFollowingFn, allEventsInFn, cancelFn) {
 				var instance = this;
 
-				var changeDeleteText;
-				var confirmationPanel;
+				var bodyContent;
+				var footerContent;
+				var modalDescription;
+				var buttons = instance._getConfirmationPanelButtons(onlyThisInstanceFn, allFollowingFn, allEventsInFn, cancelFn);
 				var titleText;
 
 				if (actionName === 'delete') {
 					titleText = Liferay.Language.get('delete-recurring-event');
-					changeDeleteText = Liferay.Language.get('would-you-like-to-delete-only-this-event-all-events-in-the-series-or-this-and-all-future-events-in-the-series');
+					modalDescription = Liferay.Language.get('would-you-like-to-delete-only-this-event-all-events-in-the-series-or-this-and-all-future-events-in-the-series');
 				}
 				else {
 					titleText = Liferay.Language.get('change-recurring-event');
-					changeDeleteText = Liferay.Language.get('would-you-like-to-change-only-this-event-all-events-in-the-series-or-this-and-all-future-events-in-the-series');
+					modalDescription = Liferay.Language.get('would-you-like-to-change-only-this-event-all-events-in-the-series-or-this-and-all-future-events-in-the-series');
 				}
 
-				var getButtonConfig = function(label, callback) {
+				bodyContent = instance._createConfirmationPanelContent(
+					modalDescription,
+					buttons.confirmations
+				);
+
+				footerContent = [buttons.dismiss];
+
+				instance.confirmationPanel = instance._createConfirmationPanel(titleText, bodyContent, footerContent);
+
+				return instance.confirmationPanel.render().show();
+			},
+
+			_createConfirmationPanel: function(title, bodyContent, footerContent) {
+				return Liferay.Util.Window.getWindow(
+					{
+						dialog:	{
+							bodyContent: bodyContent,
+							destroyOnHide: true,
+							height: 400,
+							hideOn: [],
+							resizable: false,
+							toolbars: {
+								footer: footerContent
+							},
+							width: 700
+						},
+						title: title
+					}
+				);
+			},
+
+			_createConfirmationPanelContent: function(description, options) {
+				var instance = this;
+
+				var contentNode = A.Node.create(
+					A.Lang.sub(
+						instance.RECURRING_EVENT_MODAL_TEMPLATE,
+						{
+							description: description
+						}
+					)
+				);
+
+				A.each(
+					options,
+					function(option) {
+						var optionRow = A.Lang.sub(
+							instance.RECURRING_EVENT_MODAL_ITEM_TEMPLATE,
+							{
+								confirmationDescription: option.confirmationDescription,
+								confirmationDescriptionComplement: option.confirmationDescriptionComplement || ''
+							}
+						);
+
+						var optionRowNode = A.Node.create(optionRow);
+
+						new A.Button(option.button).render(optionRowNode.one('td'));
+
+						optionRowNode.appendTo(contentNode.one('table'));
+					}
+				);
+
+				return contentNode;
+			},
+
+			_getConfirmationPanelButtons: function(onlyThisInstanceFn, allFollowingFn, allEventsInFn, cancelFn) {
+				var instance = this;
+
+				var buttons;
+
+				var getButtonConfig = function(label, callback, cssClass) {
 					return {
+						cssClass: cssClass,
 						label: label,
 						on: {
 							click: function() {
@@ -109,35 +191,33 @@ AUI.add(
 									callback.apply(this, arguments);
 								}
 
-								confirmationPanel.hide();
+								instance.confirmationPanel.hide();
 							}
 						}
 					};
 				};
 
-				confirmationPanel = Liferay.Util.Window.getWindow(
-					{
-						dialog:	{
-							bodyContent: changeDeleteText,
-							destroyOnHide: true,
-							height: 400,
-							hideOn: [],
-							resizable: false,
-							toolbars: {
-								footer: [
-									getButtonConfig(Liferay.Language.get('only-this-instance'), onlyThisInstanceFn),
-									getButtonConfig(Liferay.Language.get('all-following'), allFollowingFn),
-									getButtonConfig(Liferay.Language.get('all-events-in-the-series'), allEventsInFn),
-									getButtonConfig(Liferay.Language.get('cancel-this-change'), cancelFn)
-								]
-							},
-							width: 700
+				buttons = {
+					confirmations: [
+						{
+							button: getButtonConfig(Liferay.Language.get('single-event'), onlyThisInstanceFn, 'btn-sm'),
+							confirmationDescription: Liferay.Language.get('only-this-event-will-be-modified-the-rest-of-the-series-will-not-change')
 						},
-						title: titleText
-					}
-				);
+						{
+							button: getButtonConfig(Liferay.Language.get('following-events'), allFollowingFn, 'btn-sm'),
+							confirmationDescription: Liferay.Language.get('this-event-and-any-future-events-in-the-series-will-be-modified'),
+							confirmationDescriptionComplement: Liferay.Language.get('any-previous-edits-to-future-events-will-be-overwritten')
+						},
+						{
+							button: getButtonConfig(Liferay.Language.get('entire-series'), allEventsInFn, 'btn-sm'),
+							confirmationDescription: Liferay.Language.get('the-modification-will-change-the-entire-series-of-events'),
+							confirmationDescriptionComplement: Liferay.Language.get('any-events-edited-previously-will-not-be-affected-by-this-modification')
+						}
+					],
+					dismiss: getButtonConfig(Liferay.Language.get('cancel'), cancelFn, 'btn-link')
+				};
 
-				return confirmationPanel.render().show();
+				return buttons;
 			}
 		};
 	},

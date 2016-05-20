@@ -35,6 +35,7 @@ if (iteratorURL != null) {
 	iteratorURL.setParameter("resetCur", Boolean.FALSE.toString());
 
 	String curParam = null;
+
 	iteratorURL.setParameter(searchContainer.getCurParam(), curParam);
 }
 %>

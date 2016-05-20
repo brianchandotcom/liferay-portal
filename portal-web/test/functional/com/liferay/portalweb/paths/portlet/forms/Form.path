@@ -135,7 +135,7 @@
 <!--FIELD-->
 <tr>
 	<td>FIELD_LABEL</td>
-	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label[@class='control-label']</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label</td>
 	<td></td>
 </tr>
 <tr>

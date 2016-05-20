@@ -30,6 +30,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.icon=radio-button",
 		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.Radio",
 		"ddm.form.field.type.js.module=liferay-ddm-form-field-radio",
+		"ddm.form.field.type.label=radio-field-type-label",
 		"ddm.form.field.type.name=radio"
 	},
 	service = DDMFormFieldType.class

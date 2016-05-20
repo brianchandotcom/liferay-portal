@@ -112,6 +112,21 @@ public class PushNotificationsDeviceServiceSoap {
 		}
 	}
 
+	public static com.liferay.push.notifications.model.PushNotificationsDeviceSoap deletePushNotificationsDeviceWithToken(
+		java.lang.String token) throws RemoteException {
+		try {
+			com.liferay.push.notifications.model.PushNotificationsDevice returnValue =
+				PushNotificationsDeviceServiceUtil.deletePushNotificationsDeviceWithToken(token);
+
+			return com.liferay.push.notifications.model.PushNotificationsDeviceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void sendPushNotification(long[] toUserIds,
 		java.lang.String payload) throws RemoteException {
 		try {

@@ -60,6 +60,12 @@ public class PushNotificationsDeviceServiceUtil {
 				   .deletePushNotificationsDevice(pushNotificationsDeviceId);
 	}
 
+	public static com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDeviceWithToken(
+		java.lang.String token)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePushNotificationsDeviceWithToken(token);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

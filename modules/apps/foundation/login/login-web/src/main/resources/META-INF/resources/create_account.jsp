@@ -204,3 +204,32 @@ portletDisplay.setShowBackIcon(false);
 		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>
+
+<aui:script>
+	var dialog = Liferay.Util.getWindow();
+
+	dialog.addToolbar(
+		[
+			{
+				cssClass: 'btn-lg btn-primary',
+				label: Liferay.Language.get('save'),
+				on: {
+					click: function() {
+						submitForm(document.<portlet:namespace />fm);
+					}
+				}
+			},
+			{
+				cssClass: 'btn-lg btn-link close-modal',
+				label: Liferay.Language.get('cancel'),
+				on: {
+					click: function() {
+						dialog.hide();
+					}
+				}
+			}
+		]
+	);
+
+	dialog.show();
+</aui:script>

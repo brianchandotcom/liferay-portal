@@ -168,3 +168,34 @@ portletDisplay.setShowBackIcon(false);
 		</c:choose>
 	</aui:fieldset>
 </aui:form>
+
+<aui:script>
+	var dialog = Liferay.Util.getWindow();
+
+	dialog.addToolbar(
+		[
+			{
+				cssClass: 'btn-lg btn-primary',
+				label: Liferay.Langauge.get('send-password-reset-link'),
+				on: {
+					click: function() {
+						submitForm(document.<portlet:namespace />fm);
+					}
+				}
+			},
+			{
+				cssClass: 'btn-lg btn-link close-modal',
+				label: Liferay.Language.get('cancel'),
+				on: {
+					click: function() {
+						dialog.hide();
+					}
+				}
+			}
+		]
+	);
+
+	dialog.set('height', 450);
+	dialog.set('width', 560);
+	dialog.show();
+</aui:script>

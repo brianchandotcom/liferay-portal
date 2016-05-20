@@ -146,22 +146,29 @@ class ImageEditor extends Component {
 	 */
 	getImageEditorImageBlob() {
 		return new CancellablePromise((resolve, reject) => {
-			let canvas = this.getImageEditorCanvas();
+			this.getImageEditorImageData()
+				.then(imageData => {
+					let canvas = document.createElement('canvas');
+					canvas.width = imageData.width;
+					canvas.height = imageData.height;
 
-			if (canvas.toBlob) {
-				canvas.toBlob(resolve, this.saveMimeType);
-			}
-			else {
-				let data = atob(canvas.toDataURL(this.saveMimeType).split(',')[1]);
-				let length = data.length;
-				let bytes = new Uint8Array(length);
+					canvas.getContext('2d').putImageData(imageData, 0, 0);
 
-				for (let i = 0; i < length; i++) {
-					bytes[i] = data.charCodeAt(i);
-				}
+					if (canvas.toBlob) {
+						canvas.toBlob(resolve, this.saveMimeType);
+					}
+					else {
+						let data = atob(canvas.toDataURL(this.saveMimeType).split(',')[1]);
+						let length = data.length;
+						let bytes = new Uint8Array(length);
 
-				resolve(new Blob([bytes], {type: this.saveMimeType}));
-			}
+						for (let i = 0; i < length; i++) {
+							bytes[i] = data.charCodeAt(i);
+						}
+
+						resolve(new Blob([bytes], {type: this.saveMimeType}));
+					}
+				});
 		});
 	}
 

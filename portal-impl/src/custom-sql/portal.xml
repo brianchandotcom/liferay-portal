@@ -87,7 +87,7 @@
 				(Group_.type_ != 4)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.countByC_C_PG_N_D">
+	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.countByC_PG_N_D">
 		<![CDATA[
 			SELECT
 				DISTINCT Group_.groupId AS groupId
@@ -97,12 +97,25 @@
 			WHERE
 				[$WHERE$]
 				(Group_.companyId = ?) AND
-				(Group_.classNameId = ?) AND
 				(Group_.parentGroupId [$PARENT_GROUP_ID_COMPARATOR$] ?) AND
 				(Group_.liveGroupId = 0) AND
 				(Group_.groupKey != 'Control Panel') AND
 				(lower(Group_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 				(lower(Group_.description) LIKE ? [$AND_OR_NULL_CHECK$]) AND
+				(Group_.type_ != 4)
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByCompanyId">
+		<![CDATA[
+			SELECT
+				DISTINCT Group_.groupId AS groupId, Group_.name AS groupName
+			FROM
+				Group_
+			[$JOIN$]
+			WHERE
+				[$WHERE$]
+				(Group_.companyId = ?) AND
+				(Group_.liveGroupId = 0) AND
 				(Group_.type_ != 4)
 		]]>
 	</sql>
@@ -190,21 +203,6 @@
 			)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByC_C">
-		<![CDATA[
-			SELECT
-				DISTINCT Group_.groupId AS groupId, Group_.name AS groupName
-			FROM
-				Group_
-			[$JOIN$]
-			WHERE
-				[$WHERE$]
-				(Group_.companyId = ?) AND
-				(Group_.classNameId = ?) AND
-				(Group_.liveGroupId = 0) AND
-				(Group_.type_ != 4)
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByC_P">
 		<![CDATA[
 			SELECT
@@ -245,7 +243,7 @@
 				(Group_.remoteStagingGroupCount > ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByC_C_PG_N_D">
+	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.findByC_PG_N_D">
 		<![CDATA[
 			SELECT
 				DISTINCT Group_.groupId AS groupId, Group_.name AS groupName, Group_.type_ AS groupType, Group_.friendlyURL AS groupFriendlyURL
@@ -255,7 +253,6 @@
 			WHERE
 				[$WHERE$]
 				(Group_.companyId = ?) AND
-				(Group_.classNameId = ?) AND
 				(Group_.parentGroupId [$PARENT_GROUP_ID_COMPARATOR$] ?) AND
 				(Group_.liveGroupId = 0) AND
 				(Group_.groupKey != 'Control Panel') AND

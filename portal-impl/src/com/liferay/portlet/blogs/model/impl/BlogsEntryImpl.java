@@ -66,10 +66,9 @@ public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 			return getSmallImageURL();
 		}
 
-		return
-			themeDisplay.getPathImage() + "/blogs/entry?img_id=" +
-				getSmallImageId() + "&t=" +
-					WebServerServletTokenUtil.getToken(getSmallImageId());
+		return themeDisplay.getPathImage() + "/blogs/entry?img_id=" +
+			getSmallImageId() + "&t=" +
+				WebServerServletTokenUtil.getToken(getSmallImageId());
 	}
 
 	@Override

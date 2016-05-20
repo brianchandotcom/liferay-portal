@@ -132,10 +132,9 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			return getSmallImageURL();
 		}
 
-		return
-			themeDisplay.getPathImage() + "/journal/article?img_id=" +
-				getSmallImageId() + "&t=" +
-					WebServerServletTokenUtil.getToken(getSmallImageId());
+		return themeDisplay.getPathImage() + "/journal/article?img_id=" +
+			getSmallImageId() + "&t=" +
+				WebServerServletTokenUtil.getToken(getSmallImageId());
 	}
 
 	@Override

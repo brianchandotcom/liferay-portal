@@ -100,9 +100,8 @@ public class MarketplaceAppManagerSearchUtil {
 	protected static String getKeywordsRegex(String keywords) {
 		keywords = StringUtil.replace(keywords, CharPool.SPACE, CharPool.PIPE);
 
-		return
-			StringPool.OPEN_PARENTHESIS + keywords +
-				StringPool.CLOSE_PARENTHESIS;
+		return StringPool.OPEN_PARENTHESIS + keywords +
+			StringPool.CLOSE_PARENTHESIS;
 	}
 
 	protected static boolean hasAppDisplayKeywordsMatch(

@@ -36,9 +36,8 @@ public class InsertPartitionedExportProcessCommand
 	}
 
 	protected String getOutputFileName() {
-		return
-			exportContext.getSchemaName() + "-" + companyId +
-				"-partitioned.sql";
+		return exportContext.getSchemaName() + "-" + companyId +
+			"-partitioned.sql";
 	}
 
 	protected String getOutputFileName(String tableName) {

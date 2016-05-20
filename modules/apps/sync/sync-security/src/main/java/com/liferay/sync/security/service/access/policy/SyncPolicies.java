@@ -91,31 +91,13 @@ public class SyncPolicies {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSAPEntryLocalService(
-		SAPEntryLocalService sapEntryLocalService) {
-
-		_sapEntryLocalService = sapEntryLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(SyncPolicies.class);
 
-	private CompanyLocalService _companyLocalService;
+	@Reference(unbind = "-")
 	private SAPEntryLocalService _sapEntryLocalService;
 	private ServiceRegistration<PortalInstanceLifecycleListener>
 		_serviceRegistration;
+	@Reference(unbind = "-")
 	private UserLocalService _userLocalService;
 
 	private class PolicyPortalInstanceLifecycleListener

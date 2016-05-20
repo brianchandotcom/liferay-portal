@@ -112,13 +112,19 @@ else if (group != null) {
 
 	<%
 	boolean disabled = false;
+	boolean value = false;
+
+	if (group != null) {
+		value = group.isInheritContent();
+	}
 
 	if ((parentGroup != null) && parentGroup.isInheritContent()) {
 		disabled = true;
+		value = false;
 	}
 	%>
 
-	<aui:input disabled="<%= disabled %>" helpMessage='<%= disabled ? "this-site-cannot-inherit-the-content-from-its-parent-site-since-the-parent-site-is-already-inheriting-the-content-from-its-parent" : StringPool.BLANK %>' name="inheritContent" type="toggle-switch" value="<%= group.isInheritContent() %>" />
+	<aui:input disabled="<%= disabled %>" helpMessage='<%= disabled ? "this-site-cannot-inherit-the-content-from-its-parent-site-since-the-parent-site-is-already-inheriting-the-content-from-its-parent" : StringPool.BLANK %>' name="inheritContent" type="toggle-switch" value="<%= value %>" />
 </c:if>
 
 <h4 class="text-default"><liferay-ui:message key="membership-options" /></h4>

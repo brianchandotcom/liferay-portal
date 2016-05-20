@@ -80,7 +80,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 <liferay-ui:error exception="<%= StorageFieldRequiredException.class %>" message="please-fill-out-all-required-fields" />
 
 <aui:fieldset>
-	<aui:input autoFocus="<%= (((article != null) && !article.isNew()) || !journalWebConfiguration.journalArticleForceAutogenerateId()) && (windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP)) %>" ignoreRequestValue="<%= changeStructure %>" name="title" wrapperCssClass="article-content-title">
+	<aui:input autoFocus="<%= true %>" ignoreRequestValue="<%= changeStructure %>" name="title" wrapperCssClass="article-content-title">
 		<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 			<aui:validator name="required" />
 		</c:if>
@@ -93,7 +93,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 				<aui:input name="autoArticleId" type="hidden" value="<%= true %>" />
 			</c:when>
 			<c:otherwise>
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" field="articleId" fieldParam="newArticleId" label="id" name="newArticleId" value="<%= newArticleId %>" />
+				<aui:input field="articleId" fieldParam="newArticleId" label="id" name="newArticleId" value="<%= newArticleId %>" />
 
 				<aui:input label="autogenerate-id" name="autoArticleId" type="checkbox" />
 			</c:otherwise>

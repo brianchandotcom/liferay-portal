@@ -6449,6 +6449,13 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		<if>
 			<equals arg1="${app.server.type}" arg2="websphere" />
 			<then>
+				<replace
+					dir="${app.server.websphere.dir}"
+					includes="**/*.js,**/*.metadata,**/*.properties,**/*.props,**/*.sh,**/*.txt,**/*.xml"
+				>
+					<replacefilter token="/opt/dev/projects/github/liferay-portal/bundles" value="${app.server.parent.dir}" />
+				</replace>
+
 				<chmod perm="a+x">
 					<fileset dir="${app.server.websphere.dir}">
 						<include name="bin/**/*.sh" />

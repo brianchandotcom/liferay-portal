@@ -70,18 +70,20 @@ class ResizeComponent extends Component {
 	 * @param  {InputEvent} event
 	 */
 	syncDimensions(event) {
-		if (this.lockProportions) {
-			let newValue = parseInt(event.delegateTarget.value, 10);
+		let newValue = parseInt(event.delegateTarget.value, 10);
 
-			if (event.delegateTarget === this.imageWidthInput_) {
-				this.imageHeight = (newValue / this.imageRatio_).toFixed(1);
-				this.imageWidth = newValue;
+		if (event.delegateTarget === this.imageWidthInput_) {
+			this.imageWidth = newValue;
 
+			if (this.lockProportions) {
+				this.imageHeight = parseInt((newValue / this.imageRatio_), 10);
 				this.imageHeightInput_.value = this.imageHeight;
-			} else {
-				this.imageHeight = newValue;
-				this.imageWidth = (newValue * this.imageRatio_).toFixed(1);
+			}
+		} else {
+			this.imageHeight = newValue;
 
+			if (this.lockProportions) {
+				this.imageWidth = parseInt((newValue * this.imageRatio_), 10);
 				this.imageWidthInput_.value = this.imageWidth;
 			}
 		}

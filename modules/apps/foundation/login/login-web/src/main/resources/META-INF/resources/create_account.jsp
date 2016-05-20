@@ -202,7 +202,7 @@ portletDisplay.setShowBackIcon(false);
 		</aui:fieldset>
 	</aui:fieldset-group>
 
-	<aui:button-row>
+	<aui:button-row cssClass='<%= windowState.equals(LiferayWindowState.POP_UP) ? "hide" : StringPool.BLANK %>'>
 		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>

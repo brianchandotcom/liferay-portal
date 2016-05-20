@@ -104,7 +104,7 @@ portletDisplay.setShowBackIcon(false);
 					<liferay-ui:captcha url="<%= captchaURL %>" />
 				</c:if>
 
-				<aui:button-row>
+				<aui:button-row cssClass='<%= windowState.equals(LiferayWindowState.POP_UP) ? "hide" : StringPool.BLANK %>'>
 					<aui:button cssClass="btn-lg" type="submit" value='<%= PropsValues.USERS_REMINDER_QUERIES_ENABLED ? "next" : "send-new-password" %>' />
 				</aui:button-row>
 			</c:when>
@@ -154,7 +154,7 @@ portletDisplay.setShowBackIcon(false);
 							<liferay-ui:captcha url="<%= captchaURL %>" />
 						</c:if>
 
-						<aui:button-row>
+						<aui:button-row cssClass='<%= windowState.equals(LiferayWindowState.POP_UP) ? "hide" : StringPool.BLANK %>'>
 							<aui:button cssClass="btn-lg" type="submit" value='<%= company.isSendPasswordResetLink() ? "send-password-reset-link" : "send-new-password" %>' />
 						</aui:button-row>
 					</c:otherwise>

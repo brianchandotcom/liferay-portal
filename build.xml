@@ -496,7 +496,7 @@
 				</copy>
 
 				<if>
-					<equals arg1="${app.server.type}" arg2="tomcat" />
+					<equals arg1="${app.server.type}" arg2="tcserver" />
 					<then>
 						<delete>
 							<fileset

@@ -40,7 +40,7 @@
 	<command name="viewDescriptivePG">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertTextEquals" locator1="SitesDirectory#DESCRIPTIVE_SITE_ENTRY" value1="${siteName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitesDirectory#DESCRIPTIVE_SITE_ENTRY" value1="${siteName}" />
 	</command>
 
 	<command name="viewListHierarchyPG">

@@ -42,12 +42,15 @@ downloadGems {
 			}
 		}
 
-		File readmeFile = file("readme.txt")
+		File readmeFile = file("README.markdown")
 
 		readmeFile.withWriter {
 			BufferedWriter bufferedWriter ->
 
-			bufferedWriter.writeLine("Included gems:")
+			bufferedWriter.writeLine("# Ruby Gems")
+			bufferedWriter.writeLine("")
+			bufferedWriter.writeLine("The Ruby Gems module provides a set of Ruby gems that Liferay can access when")
+			bufferedWriter.writeLine("using JRuby. The gems included with this module are listed below:")
 			bufferedWriter.writeLine("")
 
 			List<String> gemNames = []
@@ -60,10 +63,10 @@ downloadGems {
 
 			gemNames.each {
 				if (it != gemNames.last()) {
-					bufferedWriter.writeLine(it)
+					bufferedWriter.writeLine("- `" + it + "`")
 				}
 				else {
-					bufferedWriter.write(it)
+					bufferedWriter.write("- `" + it + "`")
 				}
 			}
 		}

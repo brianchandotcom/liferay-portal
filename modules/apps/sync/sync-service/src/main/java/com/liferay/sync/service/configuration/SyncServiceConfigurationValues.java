@@ -94,10 +94,6 @@ public class SyncServiceConfigurationValues {
 				SyncServiceConfigurationKeys.
 					SYNC_MAC_PACKAGE_METADATA_FILE_NAMES));
 
-	public static final boolean SYNC_OAUTH_ENABLED = GetterUtil.getBoolean(
-		SyncServiceConfigurationUtil.get(
-			SyncServiceConfigurationKeys.SYNC_OAUTH_ENABLED));
-
 	public static final int SYNC_PAGINATION_DELTA = GetterUtil.getInteger(
 		SyncServiceConfigurationUtil.get(
 			SyncServiceConfigurationKeys.SYNC_PAGINATION_DELTA));

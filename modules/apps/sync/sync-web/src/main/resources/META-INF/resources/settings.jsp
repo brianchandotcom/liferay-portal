@@ -22,15 +22,16 @@ String redirect = ParamUtil.getString(request, "redirect");
 boolean allowUserPersonalSites = PrefsPropsUtil.getBoolean(themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_ALLOW_USER_PERSONAL_SITES, SyncServiceConfigurationValues.SYNC_ALLOW_USER_PERSONAL_SITES);
 boolean enabled = PrefsPropsUtil.getBoolean(themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_SERVICES_ENABLED, SyncServiceConfigurationValues.SYNC_SERVICES_ENABLED);
 int maxConnections = PrefsPropsUtil.getInteger(themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_CLIENT_MAX_CONNECTIONS, SyncServiceConfigurationValues.SYNC_CLIENT_MAX_CONNECTIONS);
-boolean oAuthEnabled = PrefsPropsUtil.getBoolean(themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_OAUTH_ENABLED, SyncServiceConfigurationValues.SYNC_OAUTH_ENABLED);
+boolean oAuthEnabled = PrefsPropsUtil.getBoolean(themeDisplay.getCompanyId(), SyncConstants.SYNC_OAUTH_ENABLED);
 int pollInterval = PrefsPropsUtil.getInteger(themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_CLIENT_POLL_INTERVAL, SyncServiceConfigurationValues.SYNC_CLIENT_POLL_INTERVAL);
 
+boolean deployed = SyncOAuthHelperUtil.isDeployed();
 boolean oAuthApplicationAvailable = false;
 
-if (oAuthEnabled) {
-	long oAuthApplicationId = PrefsPropsUtil.getInteger(themeDisplay.getCompanyId(), SyncServiceConfigurationKeys.SYNC_OAUTH_APPLICATION_ID, 0);
+if (deployed && oAuthEnabled) {
+	long oAuthApplicationId = PrefsPropsUtil.getInteger(themeDisplay.getCompanyId(), SyncConstants.SYNC_OAUTH_APPLICATION_ID, 0);
 
-	if (SyncOAuthUtil.isOAuthApplicationAvailable(oAuthApplicationId)) {
+	if (SyncOAuthHelperUtil.isOAuthApplicationAvailable(oAuthApplicationId)) {
 		oAuthApplicationAvailable = true;
 	}
 }
@@ -38,7 +39,7 @@ if (oAuthEnabled) {
 
 <c:if test="<%= oAuthEnabled %>">
 	<c:choose>
-		<c:when test="<%= !SyncOAuthUtil.isDeployed() %>">
+		<c:when test="<%= !deployed %>">
 			<div class="alert alert-warning">
 				<liferay-ui:message key="oauth-publisher-is-not-deployed" />
 			</div>
@@ -67,7 +68,7 @@ if (oAuthEnabled) {
 
 	<h4><liferay-ui:message key="advanced" /></h4>
 
-	<c:if test="<%= SyncOAuthUtil.isDeployed() %>">
+	<c:if test="<%= deployed %>">
 		<aui:fieldset>
 			<aui:input helpMessage="oauth-enabled-help" label="oauth-enabled" name="oAuthEnabled" type="checkbox" value="<%= oAuthEnabled %>" />
 		</aui:fieldset>

@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.sync.constants.SyncConstants;
 import com.liferay.sync.constants.SyncDLObjectConstants;
 import com.liferay.sync.constants.SyncDeviceConstants;
 import com.liferay.sync.model.SyncDLObject;
@@ -513,20 +514,17 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 			syncContext.setAuthType(authType);
 
 			boolean oAuthEnabled = PrefsPropsUtil.getBoolean(
-				user.getCompanyId(),
-				SyncServiceConfigurationKeys.SYNC_OAUTH_ENABLED,
-				SyncServiceConfigurationValues.SYNC_OAUTH_ENABLED);
+				user.getCompanyId(), SyncConstants.SYNC_OAUTH_ENABLED);
 
 			if (oAuthEnabled) {
 				String oAuthConsumerKey = PrefsPropsUtil.getString(
-					user.getCompanyId(),
-					SyncServiceConfigurationKeys.SYNC_OAUTH_CONSUMER_KEY);
+					user.getCompanyId(), SyncConstants.SYNC_OAUTH_CONSUMER_KEY);
 
 				syncContext.setOAuthConsumerKey(oAuthConsumerKey);
 
 				String oAuthConsumerSecret = PrefsPropsUtil.getString(
 					user.getCompanyId(),
-					SyncServiceConfigurationKeys.SYNC_OAUTH_CONSUMER_SECRET);
+					SyncConstants.SYNC_OAUTH_CONSUMER_SECRET);
 
 				syncContext.setOAuthConsumerSecret(oAuthConsumerSecret);
 			}

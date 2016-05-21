@@ -26,9 +26,10 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sync.constants.SyncAdminPortletKeys;
+import com.liferay.sync.constants.SyncConstants;
 import com.liferay.sync.exception.OAuthPortletUndeployedException;
+import com.liferay.sync.oauth.helper.SyncOAuthHelperUtil;
 import com.liferay.sync.service.configuration.SyncServiceConfigurationKeys;
-import com.liferay.sync.util.SyncOAuthUtil;
 
 import java.io.IOException;
 
@@ -141,8 +142,7 @@ public class SyncAdminPortlet extends MVCPortlet {
 			actionRequest, "oAuthEnabled");
 
 		portletPreferences.setValue(
-			SyncServiceConfigurationKeys.SYNC_OAUTH_ENABLED,
-			String.valueOf(oAuthEnabled));
+			SyncConstants.SYNC_OAUTH_ENABLED, String.valueOf(oAuthEnabled));
 
 		int pollInterval = ParamUtil.getInteger(actionRequest, "pollInterval");
 
@@ -153,7 +153,7 @@ public class SyncAdminPortlet extends MVCPortlet {
 		portletPreferences.store();
 
 		if (oAuthEnabled) {
-			if (!SyncOAuthUtil.isDeployed()) {
+			if (!_syncOAuthHelperUtil.isDeployed()) {
 				SessionErrors.add(
 					actionRequest, OAuthPortletUndeployedException.class);
 
@@ -163,7 +163,7 @@ public class SyncAdminPortlet extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				actionRequest);
 
-			SyncOAuthUtil.enableOAuth(
+			_syncOAuthHelperUtil.enableOAuth(
 				CompanyThreadLocal.getCompanyId(), serviceContext);
 		}
 	}
@@ -173,6 +173,14 @@ public class SyncAdminPortlet extends MVCPortlet {
 		_groupLocalService = groupLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setSyncOAuthHelperUtil(
+		SyncOAuthHelperUtil syncOAuthHelperUtil) {
+
+		_syncOAuthHelperUtil = syncOAuthHelperUtil;
+	}
+
 	private GroupLocalService _groupLocalService;
+	private SyncOAuthHelperUtil _syncOAuthHelperUtil;
 
 }

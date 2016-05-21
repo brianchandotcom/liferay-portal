@@ -44,11 +44,12 @@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.sync.constants.SyncConstants" %><%@
 page import="com.liferay.sync.constants.SyncPermissionsConstants" %><%@
 page import="com.liferay.sync.exception.OAuthPortletUndeployedException" %><%@
+page import="com.liferay.sync.oauth.helper.SyncOAuthHelperUtil" %><%@
 page import="com.liferay.sync.service.configuration.SyncServiceConfigurationKeys" %><%@
-page import="com.liferay.sync.service.configuration.SyncServiceConfigurationValues" %><%@
-page import="com.liferay.sync.util.SyncOAuthUtil" %>
+page import="com.liferay.sync.service.configuration.SyncServiceConfigurationValues" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.LinkedHashMap" %><%@

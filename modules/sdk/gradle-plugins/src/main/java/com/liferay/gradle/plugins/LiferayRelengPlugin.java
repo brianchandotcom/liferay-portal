@@ -465,6 +465,22 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
+					if (FileUtil.exists(
+							task.getProject(), ".lfrbuild-releng-ignore")) {
+
+						return false;
+					}
+
+					return true;
+				}
+
+			});
+
+		task.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
 					Properties artifactProperties = getArtifactProperties(
 						recordArtifactTask);
 

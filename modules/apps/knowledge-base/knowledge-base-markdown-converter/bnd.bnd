@@ -12,7 +12,7 @@ Import-Package:\
 	!org.pegdown.*,\
 	*
 Private-Package: com.liferay.knowledge.base.markdown.converter.internal.*
--liferay-includeresource:\
+-includeresource:\
 	@asm-*.jar,\
 	@asm-analysis-*.jar,\
 	@asm-tree-*.jar,\

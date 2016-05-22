@@ -34,7 +34,7 @@ Import-Package:\
 	\
 	com.liferay.portal.search.analysis,\
 	*
--liferay-includeresource:\
+-includeresource:\
 	lib/commons-io.jar=commons-io-*.jar,\
 	lib/httpclient.jar=httpclient-*.jar,\
 	lib/httpcore.jar=httpcore-*.jar,\

@@ -3,7 +3,7 @@ Bundle-SymbolicName: com.liferay.css.builder
 Bundle-Version: 1.0.18
 Export-Package: com.liferay.css.builder
 Main-Class: com.liferay.css.builder.CSSBuilder
--liferay-includeresource:\
+-includeresource:\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/util/AggregateUtil.class,\

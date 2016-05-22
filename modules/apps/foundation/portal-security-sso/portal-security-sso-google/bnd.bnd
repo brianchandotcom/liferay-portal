@@ -22,7 +22,7 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--liferay-includeresource:\
+-includeresource:\
 	lib/google-api-client.jar=google-api-client-*.jar,\
 	lib/google-api-services-oauth2.jar=google-api-services-oauth2-*.jar,\
 	lib/google-http-client-jackson2.jar=google-http-client-jackson2-*.jar,\

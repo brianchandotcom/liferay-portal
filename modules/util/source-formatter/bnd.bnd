@@ -9,7 +9,7 @@ Import-Package:\
 	!org.apache.maven.plugin,\
 	!org.apache.tools.ant.*,\
 	*
--liferay-includeresource:\
+-includeresource:\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/deploy/dependencies/web.xml,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\

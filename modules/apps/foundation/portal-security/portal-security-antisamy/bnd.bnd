@@ -10,7 +10,7 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--liferay-includeresource:\
+-includeresource:\
 	@antisamy-*.jar,\
 	@batik-css-*.jar,\
 	@batik-ext-*.jar,\

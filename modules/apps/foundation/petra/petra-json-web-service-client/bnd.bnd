@@ -2,7 +2,7 @@ Bundle-Name: Liferay Petra JSON Web Service Client
 Bundle-SymbolicName: com.liferay.petra.json.web.service.client
 Bundle-Version: 1.0.3
 Export-Package: com.liferay.petra.json.web.service.client
--liferay-includeresource:\
+-includeresource:\
 	@commons-codec-*.jar,\
 	@httpclient-*.jar,\
 	@httpcore-*.jar,\

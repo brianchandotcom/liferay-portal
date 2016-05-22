@@ -2,7 +2,7 @@ Bundle-Name: Liferay Web Proxy Web
 Bundle-SymbolicName: com.liferay.web.proxy.web
 Bundle-Version: 1.0.2
 Web-ContextPath: /web-proxy-web
--liferay-includeresource:\
+-includeresource:\
 	@concurrent-*.jar,\
 	@nekohtml-*.jar,\
 	@org.portletbridge.core-*.jar,\

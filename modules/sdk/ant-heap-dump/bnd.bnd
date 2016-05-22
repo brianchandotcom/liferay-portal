@@ -2,7 +2,7 @@ Bundle-Name: Liferay Ant Heap Dump
 Bundle-SymbolicName: com.liferay.ant.heap.dump
 Bundle-Version: 1.0.2
 Export-Package: com.liferay.ant.heap.dump
--liferay-includeresource:\
+-includeresource:\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/concurrent/*,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/*,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/*,\

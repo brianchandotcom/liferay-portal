@@ -48,7 +48,7 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Cache Engines
--liferay-includeresource:\
+-includeresource:\
 	@ehcache-*.jar!/META-INF/*,\
 	@ehcache-*.jar!/com/*,\
 	@ehcache-*.jar!/net/*,\

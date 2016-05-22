@@ -10,7 +10,7 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Stores
--liferay-includeresource:\
+-includeresource:\
 	@concurrent-*.jar,\
 	@jackrabbit-api-*.jar,\
 	@jackrabbit-core-*.jar,\

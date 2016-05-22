@@ -46,7 +46,7 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library
--liferay-includeresource:\
+-includeresource:\
 	lib/chemistry-opencmis-client-api.jar=chemistry-opencmis-client-api-*.jar,\
 	lib/chemistry-opencmis-client-bindings.jar=chemistry-opencmis-client-bindings-*.jar,\
 	lib/chemistry-opencmis-client-impl.jar=chemistry-opencmis-client-impl-*.jar,\

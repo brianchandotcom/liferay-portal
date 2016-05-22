@@ -8,6 +8,6 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Comments
--liferay-includeresource:\
+-includeresource:\
 	@guava-*.jar,\
 	@owasp-java-html-sanitizer-*.jar

@@ -18,7 +18,7 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks
--liferay-includeresource:\
+-includeresource:\
 	@guice-*.jar,\
 	@httpclient-*.jar,\
 	@httpcore-*.jar,\

@@ -3,7 +3,7 @@ Bundle-SymbolicName: com.liferay.push.notifications.sender.sms
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--liferay-includeresource:\
+-includeresource:\
 	@commons-lang3-*.jar,\
 	@httpclient-*.jar,\
 	@httpcore-*.jar,\

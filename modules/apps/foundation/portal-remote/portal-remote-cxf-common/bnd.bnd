@@ -48,7 +48,7 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
--liferay-includeresource:\
+-includeresource:\
 	lib/cxf-core.jar=cxf-core-*.jar,\
 	lib/cxf-rt-bindings-soap.jar=cxf-rt-bindings-soap-*.jar,\
 	lib/cxf-rt-databinding-jaxb.jar=cxf-rt-databinding-jaxb-*.jar,\

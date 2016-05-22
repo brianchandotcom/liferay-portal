@@ -104,7 +104,7 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Elasticsearch
--liferay-includeresource:\
+-includeresource:\
 	lib/antlr-runtime.jar=antlr-runtime-*.jar,\
 	lib/asm-commons.jar=asm-commons-*.jar,\
 	lib/asm.jar=asm-*.jar,\

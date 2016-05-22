@@ -10,7 +10,7 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Template Engines
--liferay-includeresource:\
+-includeresource:\
 	@aopalliance-*.jar,\
 	@args4j-*.jar,\
 	@asm-*.jar,\

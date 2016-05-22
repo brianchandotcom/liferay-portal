@@ -6,7 +6,7 @@ Import-Package:\
 	!org.apache.tools.ant.*,\
 	*
 Main-Class: com.liferay.lang.builder.LangBuilder
--liferay-includeresource:\
+-includeresource:\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/OutputStreamWriter.class,\

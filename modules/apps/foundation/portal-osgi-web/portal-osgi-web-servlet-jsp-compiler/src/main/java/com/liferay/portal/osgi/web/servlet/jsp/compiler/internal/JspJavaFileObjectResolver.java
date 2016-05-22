@@ -254,6 +254,16 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 			try {
 				Enumeration<URL> enumeration = classLoader.getResources(path);
 
+				if ((enumeration == null) ||
+					((enumeration != null) && !enumeration.hasMoreElements())) {
+
+					// This is just a fallback to make WebSphere happy when
+					// looking for some resources during JSP compilation process
+
+					enumeration = classLoader.getResources(
+						path + StringPool.SLASH);
+				}
+
 				if ((enumeration != null) && enumeration.hasMoreElements()) {
 					urls = Collections.list(enumeration);
 				}

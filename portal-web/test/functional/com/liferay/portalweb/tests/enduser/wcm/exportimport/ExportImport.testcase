@@ -584,7 +584,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Site Page" />
+			<var name="pageName" value="Private Page" />
 			<var name="sitePagePrivacy" value="true" />
 		</execute>
 	</command>

@@ -80,7 +80,7 @@ public class LayoutSetLocalServiceStagingAdvice
 				(String)arguments[3]);
 		}
 		else if (methodName.equals("updateLogo") && (arguments.length == 4) &&
-				(arguments[3] instanceof byte[])) {
+				 (arguments[3] instanceof byte[])) {
 
 			returnValue = updateLogo(
 				(LayoutSetLocalService)thisObject, (Long)arguments[0],

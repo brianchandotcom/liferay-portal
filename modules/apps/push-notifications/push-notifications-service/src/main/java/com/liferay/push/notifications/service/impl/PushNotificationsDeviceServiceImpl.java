@@ -44,7 +44,7 @@ public class PushNotificationsDeviceServiceImpl
 		throws PortalException {
 
 		PushNotificationsPermission.check(
-			getPermissionChecker(), PushNotificationsActionKeys.MANAGE_DEVICES);
+			getPermissionChecker(), PushNotificationsActionKeys.ADD_DEVICE);
 
 		PushNotificationsDevice pushNotificationsDevice =
 			pushNotificationsDevicePersistence.fetchByToken(token);
@@ -88,7 +88,7 @@ public class PushNotificationsDeviceServiceImpl
 		throws PortalException {
 
 		PushNotificationsPermission.check(
-			getPermissionChecker(), PushNotificationsActionKeys.MANAGE_DEVICES);
+			getPermissionChecker(), PushNotificationsActionKeys.DELETE_DEVICE);
 
 		PushNotificationsDevice pushNotificationsDevice =
 			pushNotificationsDevicePersistence.fetchByToken(token);

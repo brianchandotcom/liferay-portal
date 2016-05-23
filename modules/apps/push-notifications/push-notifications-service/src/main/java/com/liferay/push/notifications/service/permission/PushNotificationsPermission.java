@@ -17,6 +17,7 @@ package com.liferay.push.notifications.service.permission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.push.notifications.constants.PushNotificationsActionKeys;
 
 /**
  * @author Bruno Farache
@@ -30,14 +31,30 @@ public class PushNotificationsPermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), actionId);
 		}
 	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, String actionId) {
 
-		return permissionChecker.hasPermission(0, RESOURCE_NAME, 0, actionId);
+		boolean contains = permissionChecker.hasPermission(
+			0, RESOURCE_NAME, 0, actionId);
+
+		if (contains) {
+			return contains;
+		}
+
+		if (actionId.equals(PushNotificationsActionKeys.ADD_DEVICE) ||
+			actionId.equals(PushNotificationsActionKeys.DELETE_DEVICE)) {
+
+			return permissionChecker.hasPermission(
+				0, RESOURCE_NAME, 0,
+				PushNotificationsActionKeys.MANAGE_DEVICES);
+		}
+
+		return false;
 	}
 
 }

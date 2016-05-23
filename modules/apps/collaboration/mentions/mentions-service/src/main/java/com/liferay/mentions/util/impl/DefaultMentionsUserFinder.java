@@ -15,7 +15,6 @@
 package com.liferay.mentions.util.impl;
 
 import com.liferay.mentions.util.MentionsUserFinder;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -66,23 +65,21 @@ public class DefaultMentionsUserFinder implements MentionsUserFinder {
 				isSocialInteractionsSitesEnabled()) {
 
 			return _userLocalService.searchSocial(
-				user.getGroupIds(), userId, types, query, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				user.getGroupIds(), userId, types, query, 0, _MAX_USERS);
 		}
 
 		if (socialInteractionsConfiguration.
 				isSocialInteractionsSitesEnabled()) {
 
 			return _userLocalService.searchSocial(
-				companyId, user.getGroupIds(), query, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				companyId, user.getGroupIds(), query, 0, _MAX_USERS);
 		}
 
 		if (socialInteractionsConfiguration.
 				isSocialInteractionsFriendsEnabled()) {
 
 			return _userLocalService.searchSocial(
-				userId, types, query, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				userId, types, query, 0, _MAX_USERS);
 		}
 
 		return Collections.emptyList();
@@ -93,7 +90,7 @@ public class DefaultMentionsUserFinder implements MentionsUserFinder {
 		_userLocalService = userLocalService;
 	}
 
-	private static final int _MAX_USERS = 100;
+	private static final int _MAX_USERS = 20;
 
 	private UserLocalService _userLocalService;
 

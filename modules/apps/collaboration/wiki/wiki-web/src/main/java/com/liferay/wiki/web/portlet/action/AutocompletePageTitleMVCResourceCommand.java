@@ -107,6 +107,9 @@ public class AutocompletePageTitleMVCResourceCommand
 
 		searchContext.setNodeIds(new long[] {nodeId});
 
+		searchContext.setStart(0);
+		searchContext.setEnd(20);
+
 		Hits hits = _wikiPageTitleSearcher.search(searchContext);
 
 		for (Document document : hits.getDocs()) {

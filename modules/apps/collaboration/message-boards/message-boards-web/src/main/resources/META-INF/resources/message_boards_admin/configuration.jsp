@@ -17,6 +17,8 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
+String recentPostsDateOffset = mbGroupServiceSettings.getRecentPostsDateOffset();
+
 Set<Locale> locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
 mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSiteGroupId(), request.getParameterMap());

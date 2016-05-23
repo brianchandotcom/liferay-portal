@@ -107,7 +107,7 @@ AUI.add(
 				var selectDesc = options.selectDesc;
 				var selectSort = options.selectSort;
 				var selectVal = options.selectVal;
-				var selectNullable = options.selectNullable || true;
+				var selectNullable = options.selectNullable !== false;
 
 				var selectOptions = [];
 

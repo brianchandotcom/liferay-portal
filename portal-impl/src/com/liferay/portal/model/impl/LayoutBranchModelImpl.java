@@ -474,6 +474,7 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		return _master;
 	}
 
+	@JSON
 	@Override
 	public boolean isMaster() {
 		return _master;

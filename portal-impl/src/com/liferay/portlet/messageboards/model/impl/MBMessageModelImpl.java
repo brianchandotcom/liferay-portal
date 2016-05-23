@@ -835,6 +835,7 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		return _anonymous;
 	}
 
+	@JSON
 	@Override
 	public boolean isAnonymous() {
 		return _anonymous;
@@ -862,6 +863,7 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		return _allowPingbacks;
 	}
 
+	@JSON
 	@Override
 	public boolean isAllowPingbacks() {
 		return _allowPingbacks;
@@ -878,6 +880,7 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		return _answer;
 	}
 
+	@JSON
 	@Override
 	public boolean isAnswer() {
 		return _answer;

@@ -433,6 +433,7 @@ public class UserThreadModelImpl extends BaseModelImpl<UserThread>
 		return _read;
 	}
 
+	@JSON
 	@Override
 	public boolean isRead() {
 		return _read;
@@ -461,6 +462,7 @@ public class UserThreadModelImpl extends BaseModelImpl<UserThread>
 		return _deleted;
 	}
 
+	@JSON
 	@Override
 	public boolean isDeleted() {
 		return _deleted;

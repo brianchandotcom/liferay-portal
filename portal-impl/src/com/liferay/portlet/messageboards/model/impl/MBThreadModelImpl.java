@@ -746,6 +746,7 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		return _question;
 	}
 
+	@JSON
 	@Override
 	public boolean isQuestion() {
 		return _question;

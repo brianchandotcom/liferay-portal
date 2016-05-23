@@ -812,6 +812,7 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		return _defaultCalendar;
 	}
 
+	@JSON
 	@Override
 	public boolean isDefaultCalendar() {
 		return _defaultCalendar;
@@ -840,6 +841,7 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		return _enableComments;
 	}
 
+	@JSON
 	@Override
 	public boolean isEnableComments() {
 		return _enableComments;
@@ -856,6 +858,7 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		return _enableRatings;
 	}
 
+	@JSON
 	@Override
 	public boolean isEnableRatings() {
 		return _enableRatings;

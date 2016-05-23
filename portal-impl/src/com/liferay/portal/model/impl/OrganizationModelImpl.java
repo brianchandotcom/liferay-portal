@@ -635,6 +635,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		return _recursable;
 	}
 
+	@JSON
 	@Override
 	public boolean isRecursable() {
 		return _recursable;

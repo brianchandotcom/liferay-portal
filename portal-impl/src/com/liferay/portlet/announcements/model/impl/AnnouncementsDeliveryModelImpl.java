@@ -347,6 +347,7 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		return _email;
 	}
 
+	@JSON
 	@Override
 	public boolean isEmail() {
 		return _email;
@@ -363,6 +364,7 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		return _sms;
 	}
 
+	@JSON
 	@Override
 	public boolean isSms() {
 		return _sms;
@@ -379,6 +381,7 @@ public class AnnouncementsDeliveryModelImpl extends BaseModelImpl<AnnouncementsD
 		return _website;
 	}
 
+	@JSON
 	@Override
 	public boolean isWebsite() {
 		return _website;

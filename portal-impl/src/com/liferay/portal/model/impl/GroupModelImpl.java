@@ -968,6 +968,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return _manualMembership;
 	}
 
+	@JSON
 	@Override
 	public boolean isManualMembership() {
 		return _manualMembership;
@@ -1021,6 +1022,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return _site;
 	}
 
+	@JSON
 	@Override
 	public boolean isSite() {
 		return _site;
@@ -1060,6 +1062,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return _inheritContent;
 	}
 
+	@JSON
 	@Override
 	public boolean isInheritContent() {
 		return _inheritContent;
@@ -1088,6 +1091,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return _active;
 	}
 
+	@JSON
 	@Override
 	public boolean isActive() {
 		return _active;

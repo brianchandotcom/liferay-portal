@@ -860,6 +860,7 @@ public class CalendarResourceModelImpl extends BaseModelImpl<CalendarResource>
 		return _active;
 	}
 
+	@JSON
 	@Override
 	public boolean isActive() {
 		return _active;

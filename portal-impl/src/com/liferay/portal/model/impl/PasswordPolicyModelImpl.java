@@ -684,6 +684,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		return _defaultPolicy;
 	}
 
+	@JSON
 	@Override
 	public boolean isDefaultPolicy() {
 		return _defaultPolicy;
@@ -754,6 +755,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		return _changeable;
 	}
 
+	@JSON
 	@Override
 	public boolean isChangeable() {
 		return _changeable;
@@ -770,6 +772,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		return _changeRequired;
 	}
 
+	@JSON
 	@Override
 	public boolean isChangeRequired() {
 		return _changeRequired;
@@ -797,6 +800,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		return _checkSyntax;
 	}
 
+	@JSON
 	@Override
 	public boolean isCheckSyntax() {
 		return _checkSyntax;
@@ -813,6 +817,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		return _allowDictionaryWords;
 	}
 
+	@JSON
 	@Override
 	public boolean isAllowDictionaryWords() {
 		return _allowDictionaryWords;
@@ -911,6 +916,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		return _history;
 	}
 
+	@JSON
 	@Override
 	public boolean isHistory() {
 		return _history;
@@ -938,6 +944,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		return _expireable;
 	}
 
+	@JSON
 	@Override
 	public boolean isExpireable() {
 		return _expireable;
@@ -987,6 +994,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		return _lockout;
 	}
 
+	@JSON
 	@Override
 	public boolean isLockout() {
 		return _lockout;
@@ -1025,6 +1033,7 @@ public class PasswordPolicyModelImpl extends BaseModelImpl<PasswordPolicy>
 		return _requireUnlock;
 	}
 
+	@JSON
 	@Override
 	public boolean isRequireUnlock() {
 		return _requireUnlock;

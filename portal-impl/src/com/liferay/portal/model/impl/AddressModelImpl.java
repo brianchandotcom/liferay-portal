@@ -731,6 +731,7 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		return _mailing;
 	}
 
+	@JSON
 	@Override
 	public boolean isMailing() {
 		return _mailing;
@@ -759,6 +760,7 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		return _primary;
 	}
 
+	@JSON
 	@Override
 	public boolean isPrimary() {
 		return _primary;

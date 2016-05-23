@@ -899,6 +899,7 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		return _requiresShipping;
 	}
 
+	@JSON
 	@Override
 	public boolean isRequiresShipping() {
 		return _requiresShipping;
@@ -915,6 +916,7 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		return _insure;
 	}
 
+	@JSON
 	@Override
 	public boolean isInsure() {
 		return _insure;
@@ -1129,6 +1131,7 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		return _shipToBilling;
 	}
 
+	@JSON
 	@Override
 	public boolean isShipToBilling() {
 		return _shipToBilling;
@@ -1502,6 +1505,7 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		return _sendOrderEmail;
 	}
 
+	@JSON
 	@Override
 	public boolean isSendOrderEmail() {
 		return _sendOrderEmail;
@@ -1518,6 +1522,7 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		return _sendShippingEmail;
 	}
 
+	@JSON
 	@Override
 	public boolean isSendShippingEmail() {
 		return _sendShippingEmail;

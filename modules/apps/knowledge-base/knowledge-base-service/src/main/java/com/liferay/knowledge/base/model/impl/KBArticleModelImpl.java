@@ -892,6 +892,7 @@ public class KBArticleModelImpl extends BaseModelImpl<KBArticle>
 		return _latest;
 	}
 
+	@JSON
 	@Override
 	public boolean isLatest() {
 		return _latest;
@@ -920,6 +921,7 @@ public class KBArticleModelImpl extends BaseModelImpl<KBArticle>
 		return _main;
 	}
 
+	@JSON
 	@Override
 	public boolean isMain() {
 		return _main;

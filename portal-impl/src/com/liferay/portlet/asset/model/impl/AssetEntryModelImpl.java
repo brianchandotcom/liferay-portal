@@ -728,6 +728,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		return _listable;
 	}
 
+	@JSON
 	@Override
 	public boolean isListable() {
 		return _listable;
@@ -744,6 +745,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		return _visible;
 	}
 
+	@JSON
 	@Override
 	public boolean isVisible() {
 		return _visible;

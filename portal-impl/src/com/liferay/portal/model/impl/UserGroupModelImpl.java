@@ -544,6 +544,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		return _addedByLDAPImport;
 	}
 
+	@JSON
 	@Override
 	public boolean isAddedByLDAPImport() {
 		return _addedByLDAPImport;

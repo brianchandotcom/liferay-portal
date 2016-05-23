@@ -568,6 +568,7 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 		return _active;
 	}
 
+	@JSON
 	@Override
 	public boolean isActive() {
 		return _active;

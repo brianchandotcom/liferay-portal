@@ -599,6 +599,7 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 		return _primary;
 	}
 
+	@JSON
 	@Override
 	public boolean isPrimary() {
 		return _primary;

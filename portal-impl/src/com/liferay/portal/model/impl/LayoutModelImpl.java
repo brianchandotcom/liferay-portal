@@ -675,6 +675,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return _privateLayout;
 	}
 
+	@JSON
 	@Override
 	public boolean isPrivateLayout() {
 		return _privateLayout;
@@ -1292,6 +1293,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return _hidden;
 	}
 
+	@JSON
 	@Override
 	public boolean isHidden() {
 		return _hidden;
@@ -1444,6 +1446,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return _layoutPrototypeLinkEnabled;
 	}
 
+	@JSON
 	@Override
 	public boolean isLayoutPrototypeLinkEnabled() {
 		return _layoutPrototypeLinkEnabled;

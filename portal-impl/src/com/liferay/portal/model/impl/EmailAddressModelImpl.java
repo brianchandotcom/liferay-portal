@@ -574,6 +574,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		return _primary;
 	}
 
+	@JSON
 	@Override
 	public boolean isPrimary() {
 		return _primary;

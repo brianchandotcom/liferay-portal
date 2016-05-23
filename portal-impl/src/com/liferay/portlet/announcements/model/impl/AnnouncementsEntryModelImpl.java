@@ -678,6 +678,7 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		return _alert;
 	}
 
+	@JSON
 	@Override
 	public boolean isAlert() {
 		return _alert;

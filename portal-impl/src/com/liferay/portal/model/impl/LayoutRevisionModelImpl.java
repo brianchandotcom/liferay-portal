@@ -678,6 +678,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		return _head;
 	}
 
+	@JSON
 	@Override
 	public boolean isHead() {
 		return _head;
@@ -706,6 +707,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		return _major;
 	}
 
+	@JSON
 	@Override
 	public boolean isMajor() {
 		return _major;
@@ -745,6 +747,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		return _privateLayout;
 	}
 
+	@JSON
 	@Override
 	public boolean isPrivateLayout() {
 		return _privateLayout;

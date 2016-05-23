@@ -815,6 +815,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		return _defaultUser;
 	}
 
+	@JSON
 	@Override
 	public boolean isDefaultUser() {
 		return _defaultUser;
@@ -1349,6 +1350,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		return _lockout;
 	}
 
+	@JSON
 	@Override
 	public boolean isLockout() {
 		return _lockout;
@@ -1376,6 +1378,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		return _agreedToTermsOfUse;
 	}
 
+	@JSON
 	@Override
 	public boolean isAgreedToTermsOfUse() {
 		return _agreedToTermsOfUse;
@@ -1392,6 +1395,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		return _emailAddressVerified;
 	}
 
+	@JSON
 	@Override
 	public boolean isEmailAddressVerified() {
 		return _emailAddressVerified;

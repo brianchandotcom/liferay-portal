@@ -522,9 +522,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#SITE_VARIATION_IFRAME" />
 
-		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
+		<var name="key_rowEntry" value="${sitePagesVariationName}" />
 
-		<execute function="AssertClick" locator1="StagingManageVariations#SITE_PAGES_VARIATIONS_TABLE_ACTIONS" value1="Actions" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#MERGE" value1="Merge" />
 
 		<var name="key_sitePagesVariationMergeName" value="${sitePagesVariationMergeName}" />

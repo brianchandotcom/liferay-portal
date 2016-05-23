@@ -90,12 +90,12 @@
 <!--MERGE_SITE_PAGES_VARIATION_TABLE-->
 <tr>
 	<td>MERGE_SITE_PAGES_VARIATION_TABLE_BRANCH</td>
-	<td>//tbody[@class='table-data']//tr[contains(.,'${key_sitePagesVariationMergeName}')]/td</td>
+	<td>xpath=(//tbody//tr[contains(.,'${key_sitePagesVariationMergeName}')]/td)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MERGE_SITE_PAGES_VARIATION_TABLE_SELECT_LINK</td>
-	<td>//tbody[@class='table-data']//tr[contains(.,'${key_sitePagesVariationMergeName}')]/td[contains(.,'Select')]//a</td>
+	<td>//tbody//tr[contains(.,'${key_sitePagesVariationMergeName}')]/td[contains(.,'Select')]//a</td>
 	<td></td>
 </tr>
 <!--PAGE_VARIATION-->

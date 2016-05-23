@@ -20,11 +20,12 @@
 String href = (String)request.getAttribute("liferay-ui:search-container-column-icon:href");
 String src = (String)request.getAttribute("liferay-ui:search-container-column-icon:src");
 boolean toggleRowChecker = GetterUtil.getBoolean(request.getAttribute("liferay-ui:search-container-column-icon:toggleRowChecker"));
+
+src = HtmlUtil.escapeAttribute(src);
 %>
 
 <c:if test="<%= Validator.isNotNull(src) %>">
-	<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover <%= toggleRowChecker ? "click-selector" : StringPool.BLANK %>"
-		style="background-image: url('<%= src %>')" >
-		<img alt="thumbnail" class="sr-only" src="<%= HtmlUtil.escapeAttribute(src) %>" />
+	<div class="aspect-ratio aspect-ratio-bg-center aspect-ratio-bg-cover <%= toggleRowChecker ? "click-selector" : StringPool.BLANK %>" style="background-image: url('<%= src %>')">
+		<img alt="thumbnail" class="sr-only" src="<%= src %>" />
 	</div>
 </c:if>

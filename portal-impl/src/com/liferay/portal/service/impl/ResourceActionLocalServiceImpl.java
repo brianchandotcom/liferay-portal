@@ -16,6 +16,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.RoleConstants;
@@ -25,10 +26,10 @@ import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.comparator.ResourceActionBitwiseValueComparator;
 import com.liferay.portal.service.base.ResourceActionLocalServiceBaseImpl;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -86,7 +87,21 @@ public class ResourceActionLocalServiceImpl
 	public void checkResourceActions(
 		String name, List<String> actionIds, boolean addDefaultActions) {
 
-		long lastBitwiseValue = -1;
+		List<ResourceAction> resourceActions = getResourceActions(name);
+		LinkedList<Long> availableBitwiseValues = new LinkedList<>();
+
+		long bitwiseValue = 2;
+
+		for (int i = 0; i < Long.SIZE - 1; i++) {
+			availableBitwiseValues.add(bitwiseValue);
+
+			bitwiseValue = bitwiseValue << 1;
+		}
+
+		for (ResourceAction resourceAction : resourceActions) {
+			availableBitwiseValues.remove(resourceAction.getBitwiseValue());
+		}
+
 		List<ResourceAction> newResourceActions = null;
 
 		for (String actionId : actionIds) {
@@ -102,27 +117,17 @@ public class ResourceActionLocalServiceImpl
 				name, actionId);
 
 			if (resourceAction == null) {
-				long bitwiseValue = 1;
-
 				if (!actionId.equals(ActionKeys.VIEW)) {
-					if (lastBitwiseValue < 0) {
-						ResourceAction lastResourceAction =
-							resourceActionPersistence.fetchByName_First(
-								name,
-								new ResourceActionBitwiseValueComparator());
-
-						if (lastResourceAction != null) {
-							lastBitwiseValue =
-								lastResourceAction.getBitwiseValue();
-						}
-						else {
-							lastBitwiseValue = 1;
-						}
+					if (availableBitwiseValues.isEmpty()) {
+						throw new SystemException(
+							"There are more than 64 actions for resource " +
+								name);
 					}
 
-					lastBitwiseValue = lastBitwiseValue << 1;
-
-					bitwiseValue = lastBitwiseValue;
+					bitwiseValue = availableBitwiseValues.pop();
+				}
+				else {
+					bitwiseValue = 1;
 				}
 
 				try {

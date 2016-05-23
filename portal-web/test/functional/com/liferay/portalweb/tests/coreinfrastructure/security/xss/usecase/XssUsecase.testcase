@@ -249,6 +249,10 @@
 			<var name="portlet" value="Blogs" />
 		</execute>
 
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
+
 		<execute macro="BlogsEntry#moveToRecycleBinCP">
 			<var name="assetType" value="Blogs Entry" />
 			<var name="entryContent" value="Blogs Entry Content" />

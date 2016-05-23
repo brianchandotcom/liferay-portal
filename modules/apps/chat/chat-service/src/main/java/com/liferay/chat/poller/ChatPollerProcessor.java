@@ -36,8 +36,8 @@ import com.liferay.portal.kernel.poller.BasePollerProcessor;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.poller.PollerRequest;
 import com.liferay.portal.kernel.poller.PollerResponse;
-import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -53,6 +53,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -127,7 +128,7 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 			String displayURL = StringPool.BLANK;
 
 			try {
-				LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 					groupId, false);
 
 				if (layoutSet.getPageCount() > 0) {
@@ -199,7 +200,7 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 
 			if (entry.getFromUserId() != pollerRequest.getUserId()) {
 				try {
-					User fromUser = UserLocalServiceUtil.getUserById(
+					User fromUser = _userLocalService.getUserById(
 						entry.getFromUserId());
 
 					entryJSONObject.put("fromFullName", fromUser.getFullName());
@@ -274,5 +275,21 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 	}
 	
 	private ChatGroupServiceConfiguration _chatGroupServiceConfiguration;
+	
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+	
+	private UserLocalService _userLocalService;
+	
+	@Reference(unbind = "-")
+	protected void setLayoutSetLocalService(
+		LayoutSetLocalService layoutSetLocalService) {
+		
+		_layoutSetLocalService = layoutSetLocalService;
+	}
+	
+	private LayoutSetLocalService _layoutSetLocalService;
 
 }

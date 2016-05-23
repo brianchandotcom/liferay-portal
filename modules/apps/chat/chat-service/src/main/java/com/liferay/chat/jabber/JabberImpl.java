@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -59,6 +59,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -153,7 +154,7 @@ public class JabberImpl implements Jabber {
 					continue;
 				}
 
-				User user = UserLocalServiceUtil.getUserByScreenName(
+				User user = _userLocalService.getUserByScreenName(
 					companyId, getScreenName(rosterEntry.getUser()));
 
 				Object[] jabberBuddy = new Object[10];
@@ -256,7 +257,7 @@ public class JabberImpl implements Jabber {
 				return;
 			}
 
-			User toUser = UserLocalServiceUtil.getUser(toUserId);
+			User toUser = _userLocalService.getUser(toUserId);
 
 			Roster roster = connection.getRoster();
 
@@ -366,7 +367,7 @@ public class JabberImpl implements Jabber {
 			return connection;
 		}
 
-		User user = UserLocalServiceUtil.getUserById(userId);
+		User user = _userLocalService.getUserById(userId);
 
 		connection.login(
 			user.getScreenName(), password,
@@ -446,7 +447,7 @@ public class JabberImpl implements Jabber {
 			return;
 		}
 
-		User user = UserLocalServiceUtil.getUserById(userId);
+		User user = _userLocalService.getUserById(userId);
 
 		Map<String, String> attributes = new HashMap<>();
 
@@ -457,6 +458,11 @@ public class JabberImpl implements Jabber {
 
 		accountManager.createAccount(
 			user.getScreenName(), password, attributes);
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
 	}
 
 	protected void updateStatus(
@@ -502,5 +508,6 @@ public class JabberImpl implements Jabber {
 	private ConnectionConfiguration _connectionConfiguration;
 	private final Map<Long, Connection> _connections = new HashMap<>();
 	private final Set<Long> _onlineUserIds = new HashSet<>();
+	private UserLocalService _userLocalService;
 
 }

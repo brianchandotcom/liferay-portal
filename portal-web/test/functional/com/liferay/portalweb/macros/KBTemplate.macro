@@ -1,8 +1,8 @@
 <definition>
 	<command name="addCP">
-		<execute function="AssertClick" locator1="KnowledgeBase#ADMIN_TABS_TEMPLATES" value1="Templates" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="KnowledgeBaseTemplate#MENUBAR_ADD_TEMPLATE" value1="Add Template" />
+		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${kbTemplateTitle}" />
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbTemplateContent}" />
@@ -10,9 +10,9 @@
 	</command>
 
 	<command name="gotoCP">
-		<execute function="AssertClick" locator1="KnowledgeBase#ADMIN_TABS_TEMPLATES" value1="Templates" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<var name="key_kbTemplateTitle" value="${kbTemplateTitle}" />
+		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
 		<execute function="Click" locator1="KnowledgeBaseTemplate#TEMPLATE_TABLE_TEMPLATE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />

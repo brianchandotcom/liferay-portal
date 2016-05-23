@@ -203,6 +203,43 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testGetEntriesPrevAndNextByDisplayDate() throws Exception {
+		BlogsEntry firstEntry = addEntry(false, 1);
+
+		BlogsEntry thirdEntry = addEntry(false, 3);
+
+		BlogsEntry secondEntry = addEntry(false, 2);
+
+		BlogsEntry[] entries = BlogsEntryLocalServiceUtil.getEntriesPrevAndNext(
+			secondEntry.getEntryId());
+
+		Assert.assertNotNull(
+			"The previous entry relative to entry " + secondEntry.getEntryId() +
+				" should be " + firstEntry.getEntryId() + " but is null",
+			entries[0]);
+		Assert.assertNotNull(
+			"The current entry relative to entry " + secondEntry.getEntryId() +
+				" should be " + secondEntry.getEntryId() + " but is null",
+			entries[1]);
+		Assert.assertNotNull(
+			"The next entry relative to entry " + secondEntry.getEntryId() +
+				" should be " + thirdEntry.getEntryId() + " but is null",
+			entries[2]);
+		Assert.assertEquals(
+			"The previous entry relative to entry " + secondEntry.getEntryId() +
+				" should be " + firstEntry.getEntryId(),
+			entries[0].getEntryId(), firstEntry.getEntryId());
+		Assert.assertEquals(
+			"The current entry relative to entry " + secondEntry.getEntryId() +
+				" should be " + secondEntry.getEntryId(),
+			entries[1].getEntryId(), secondEntry.getEntryId());
+		Assert.assertEquals(
+			"The next entry relative to entry " + secondEntry.getEntryId() +
+				" should be " + thirdEntry.getEntryId(),
+			entries[2].getEntryId(), thirdEntry.getEntryId());
+	}
+
+	@Test
 	public void testGetEntriesPrevAndNextRelativeToCurrentEntry()
 		throws Exception {
 
@@ -514,7 +551,19 @@ public class BlogsEntryLocalServiceTest {
 		return addEntry(_user.getUserId(), statusInTrash);
 	}
 
+	protected BlogsEntry addEntry(boolean statusInTrash, int date)
+		throws Exception {
+
+		return addEntry(_user.getUserId(), statusInTrash, date);
+	}
+
 	protected BlogsEntry addEntry(long userId, boolean statusInTrash)
+		throws Exception {
+
+		return addEntry(userId, statusInTrash, 1);
+	}
+
+	protected BlogsEntry addEntry(long userId, boolean statusInTrash, int date)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -522,7 +571,7 @@ public class BlogsEntryLocalServiceTest {
 				_group.getGroupId(), userId);
 
 		Calendar displayDateCalendar = CalendarFactoryUtil.getCalendar(
-			2012, 1, 1);
+			2012, 1, date);
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
 			userId, RandomTestUtil.randomString(),

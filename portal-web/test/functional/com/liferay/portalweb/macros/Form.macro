@@ -23,6 +23,16 @@
 		<execute function="Click" locator1="Form#PUBLISH_FORM_SWITCHER" />
 	</command>
 
+	<command name="clickRequireCaptchaSwitcher">
+		<execute function="Click" locator1="Form#REQUIRE_CAPTCHA_SWITCHER" />
+	</command>
+
+	<command name="configureRequireCaptcha">
+		<execute macro="Form#clickRequireCaptchaSwitcher" />
+
+		<execute macro="Button#clickDone" />
+	</command>
+
 	<command name="configureWorkflow">
 		<execute function="Select" locator1="AssetWorkflow#ALL_STRUCTURES_WORKFLOW_SELECT" value1="${workflowDefinition}" />
 

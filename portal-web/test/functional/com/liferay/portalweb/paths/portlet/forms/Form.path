@@ -153,6 +153,12 @@
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//div[contains(@class,'toolbar')]//button[contains(@class,'item')][1]</td>
 	<td></td>
 </tr>
+<!--CAPTCHA-->
+<tr>
+	<td>REQUIRE_CAPTCHA_SWITCHER</td>
+	<td>//div[contains(@data-fieldname,'requireCaptcha')]/label/span/span[@class='toggle-switch-handle']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -24,7 +24,7 @@ task downloadBabelCore(type: DownloadNodeModuleTask)
 
 buildBabelCore {
 	dependsOn downloadBabelCore
-	from new File(node.nodeDir, "node_modules/babel-core/browser-polyfill.min.js")
+	from "node_modules/babel-core/browser-polyfill.min.js"
 	into new File(sourceSets.main.output.resourcesDir, "META-INF/resources")
 }
 

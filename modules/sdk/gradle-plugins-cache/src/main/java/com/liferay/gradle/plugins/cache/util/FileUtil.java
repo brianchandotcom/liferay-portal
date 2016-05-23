@@ -88,8 +88,8 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
 			// File is not a text file
 
-			if (_logger.isDebugEnabled()) {
-				_logger.debug(file + " is not a text file", ioe);
+			if (_logger.isInfoEnabled()) {
+				_logger.info(file + " is not a text file", ioe);
 			}
 
 			HashValue hashValue = HashUtil.sha1(file);
@@ -97,8 +97,8 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 			digest = hashValue.asHexString();
 		}
 
-		if (_logger.isDebugEnabled()) {
-			_logger.debug("Digest of " + file + " is " + digest);
+		if (_logger.isInfoEnabled()) {
+			_logger.info("Digest of " + file + " is " + digest);
 		}
 
 		return digest;

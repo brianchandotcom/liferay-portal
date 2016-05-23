@@ -39,7 +39,10 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -259,7 +262,17 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 					"Unable to open file at " + app.getFilePath());
 			}
 
-			File file = FileUtil.createTempFile(inputStream);
+			StringBundler sb = new StringBundler(7);
+
+			sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
+			sb.append(StringPool.SLASH);
+			sb.append(encodeSafeFileName(app.getTitle()));
+			sb.append(StringPool.PERIOD);
+			sb.append(FileUtil.getExtension(app.getFileName()));
+
+			File file = new File(sb.toString());
+
+			FileUtil.write(file, inputStream);
 
 			List<Bundle> bundles = BundleManagerUtil.installLPKG(file);
 
@@ -405,6 +418,17 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		return app;
 	}
 
+	protected String encodeSafeFileName(String fileName) {
+		if (fileName == null) {
+			return StringPool.BLANK;
+		}
+
+		fileName = FileUtil.encodeSafeFileName(fileName);
+
+		return StringUtil.replace(
+			fileName, _SAFE_FILE_NAME_1, _SAFE_FILE_NAME_2);
+	}
+
 	protected Properties getMarketplaceProperties(File liferayPackageFile) {
 		InputStream inputStream = null;
 		ZipFile zipFile = null;
@@ -473,5 +497,22 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 	private List<App> _installedApps;
 	private Map<String, String> _prepackagedApps;
+
+	/**
+	 * @see com.liferay.portal.util.FileImpl#_SAFE_FILE_NAME_1
+	 */
+	private static final String[] _SAFE_FILE_NAME_1 = {
+		StringPool.BACK_SLASH, StringPool.COLON, StringPool.GREATER_THAN,
+		StringPool.LESS_THAN, StringPool.PIPE, StringPool.QUESTION,
+		StringPool.QUOTE, StringPool.SLASH, StringPool.STAR
+	};
+
+	/**
+	 * @see com.liferay.portal.util.FileImpl#_SAFE_FILE_NAME_2
+	 */
+	private static final String[] _SAFE_FILE_NAME_2 = {
+		"_BSL_", "_COL_", "_GT_", "_LT_", "_PIP_", "_QUE_", "_QUO_", "_SL_",
+		"_ST_"
+	};
 
 }

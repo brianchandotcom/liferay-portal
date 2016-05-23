@@ -43,7 +43,7 @@ public class WorkflowDefinitionManagerTest {
 	@Test
 	public void testValidateCategorySpecificDefinition() throws Exception {
 		InputStream inputStream = getResource(
-			"/META-INF/definitions/category-specific-definition.xml");
+			"category-specific-definition.xml");
 
 		assertValid(inputStream);
 	}
@@ -52,8 +52,7 @@ public class WorkflowDefinitionManagerTest {
 	public void testValidateIncomingTransitionInitialStateDefinition()
 		throws Exception {
 
-		InputStream inputStream = getResource(
-			"/META-INF/definitions/incoming-initial-state.xml");
+		InputStream inputStream = getResource("incoming-initial-state.xml");
 
 		String error = assertInvalid(inputStream);
 
@@ -66,58 +65,51 @@ public class WorkflowDefinitionManagerTest {
 		throws Exception {
 
 		InputStream inputStream = getResource(
-			"/META-INF/definitions/incoming-transitions-join-1.xml");
+			"incoming-transitions-join-1.xml");
 
 		String error = assertInvalid(inputStream);
 
 		assertEquals("There are errors between fork fork and join join", error);
 
-		inputStream = getResource(
-			"/META-INF/definitions/incoming-transitions-join-2.xml");
+		inputStream = getResource("incoming-transitions-join-2.xml");
 
 		error = assertInvalid(inputStream);
 
 		assertEquals(
 			"There are errors between fork fork1 and join join1", error);
 
-		inputStream = getResource(
-			"/META-INF/definitions/incoming-transitions-join-3.xml");
+		inputStream = getResource("incoming-transitions-join-3.xml");
 
 		error = assertInvalid(inputStream);
 
 		assertEquals(
 			"There are errors between fork fork1 and join join", error);
 
-		inputStream = getResource(
-			"/META-INF/definitions/incoming-transitions-join-4.xml");
+		inputStream = getResource("incoming-transitions-join-4.xml");
 
 		error = assertInvalid(inputStream);
 
 		assertEquals("There are errors between fork fork and join join", error);
 
-		inputStream = getResource(
-			"/META-INF/definitions/incoming-transitions-join-5.xml");
+		inputStream = getResource("incoming-transitions-join-5.xml");
 
 		error = assertInvalid(inputStream);
 
 		assertEquals(
 			"There are errors between fork fork and join fork Join", error);
 
-		inputStream = getResource(
-			"/META-INF/definitions/incoming-transitions-join-6.xml");
+		inputStream = getResource("incoming-transitions-join-6.xml");
 
 		assertValid(inputStream);
 
-		inputStream = getResource(
-			"/META-INF/definitions/incoming-transitions-join-7.xml");
+		inputStream = getResource("incoming-transitions-join-7.xml");
 
 		assertValid(inputStream);
 	}
 
 	@Test
 	public void testValidateLegalMarketingDefinition() throws Exception {
-		InputStream inputStream = getResource(
-			"/META-INF/definitions/legal-marketing-definition.xml");
+		InputStream inputStream = getResource("legal-marketing-definition.xml");
 
 		assertValid(inputStream);
 	}
@@ -127,7 +119,7 @@ public class WorkflowDefinitionManagerTest {
 		throws Exception {
 
 		InputStream inputStream = getResource(
-			"/META-INF/definitions/less-than-two-outgoing-condition.xml");
+			"less-than-two-outgoing-condition.xml");
 
 		String error = assertInvalid(inputStream);
 
@@ -141,7 +133,7 @@ public class WorkflowDefinitionManagerTest {
 		throws Exception {
 
 		InputStream inputStream = getResource(
-			"/META-INF/definitions/less-than-two-outgoing-fork.xml");
+			"less-than-two-outgoing-fork.xml");
 
 		String error = assertInvalid(inputStream);
 
@@ -151,22 +143,19 @@ public class WorkflowDefinitionManagerTest {
 
 	@Test
 	public void testValidateMatchingForkAndJoins() throws Exception {
-		InputStream inputStream = getResource(
-			"/META-INF/definitions/matching-fork-and-join-1.xml");
+		InputStream inputStream = getResource("matching-fork-and-join-1.xml");
 
 		String error = assertInvalid(inputStream);
 
 		assertEquals("Fork fork2 and join join1 are not paired", error);
 
-		inputStream = getResource(
-			"/META-INF/definitions/matching-fork-and-join-2.xml");
+		inputStream = getResource("matching-fork-and-join-2.xml");
 
 		error = assertInvalid(inputStream);
 
 		assertEquals("Fork fork2 and join join1 are not paired", error);
 
-		inputStream = getResource(
-			"/META-INF/definitions/matching-fork-and-join-3.xml");
+		inputStream = getResource("matching-fork-and-join-3.xml");
 
 		error = assertInvalid(inputStream);
 
@@ -177,8 +166,7 @@ public class WorkflowDefinitionManagerTest {
 	public void testValidateMultipleInitialStatesDefinedDefinition()
 		throws Exception {
 
-		InputStream inputStream = getResource(
-			"/META-INF/definitions/multiple-initial-states.xml");
+		InputStream inputStream = getResource("multiple-initial-states.xml");
 
 		String error = assertInvalid(inputStream);
 
@@ -187,8 +175,7 @@ public class WorkflowDefinitionManagerTest {
 
 	@Test
 	public void testValidateNoAssignmentsTaskNodeDefinition() throws Exception {
-		InputStream inputStream = getResource(
-			"/META-INF/definitions/no-assignments-task.xml");
+		InputStream inputStream = getResource("no-assignments-task.xml");
 
 		String error = assertInvalid(inputStream);
 
@@ -199,8 +186,7 @@ public class WorkflowDefinitionManagerTest {
 	public void testValidateNoIncomingTransitionConditionNodeDefinition()
 		throws Exception {
 
-		InputStream inputStream = getResource(
-			"/META-INF/definitions/no-incoming-condition.xml");
+		InputStream inputStream = getResource("no-incoming-condition.xml");
 
 		String error = assertInvalid(inputStream);
 
@@ -212,8 +198,7 @@ public class WorkflowDefinitionManagerTest {
 	public void testValidateNoIncomingTransitionForkNodeDefinition()
 		throws Exception {
 
-		InputStream inputStream = getResource(
-			"/META-INF/definitions/no-incoming-fork.xml");
+		InputStream inputStream = getResource("no-incoming-fork.xml");
 
 		String error = assertInvalid(inputStream);
 
@@ -224,8 +209,7 @@ public class WorkflowDefinitionManagerTest {
 	public void testValidateNoIncomingTransitionStateNodeDefinition()
 		throws Exception {
 
-		InputStream inputStream = getResource(
-			"/META-INF/definitions/no-incoming-state.xml");
+		InputStream inputStream = getResource("no-incoming-state.xml");
 
 		String error = assertInvalid(inputStream);
 
@@ -236,8 +220,7 @@ public class WorkflowDefinitionManagerTest {
 	public void testValidateNoIncomingTransitionTaskNodeDefinition()
 		throws Exception {
 
-		InputStream inputStream = getResource(
-			"/META-INF/definitions/no-incoming-task.xml");
+		InputStream inputStream = getResource("no-incoming-task.xml");
 
 		String error = assertInvalid(inputStream);
 
@@ -246,8 +229,7 @@ public class WorkflowDefinitionManagerTest {
 
 	@Test
 	public void testValidateNoInitialStateDefinedDefinition() throws Exception {
-		InputStream inputStream = getResource(
-			"/META-INF/definitions/no-initial-state.xml");
+		InputStream inputStream = getResource("no-initial-state.xml");
 
 		String error = assertInvalid(inputStream);
 
@@ -258,8 +240,7 @@ public class WorkflowDefinitionManagerTest {
 	public void testValidateNoOutgoingTransitionInitialStateDefinition()
 		throws Exception {
 
-		InputStream inputStream = getResource(
-			"/META-INF/definitions/no-outgoing-initial-state.xml");
+		InputStream inputStream = getResource("no-outgoing-initial-state.xml");
 
 		String error = assertInvalid(inputStream);
 
@@ -271,8 +252,7 @@ public class WorkflowDefinitionManagerTest {
 	public void testValidateNoOutgoingTransitionStartNodeDefinition()
 		throws Exception {
 
-		InputStream inputStream = getResource(
-			"/META-INF/definitions/no-outgoing-start-node.xml");
+		InputStream inputStream = getResource("no-outgoing-start-node.xml");
 
 		String error = assertInvalid(inputStream);
 
@@ -284,8 +264,7 @@ public class WorkflowDefinitionManagerTest {
 	public void testValidateNoOutgoingTransitionTaskNodeDefinition()
 		throws Exception {
 
-		InputStream inputStream = getResource(
-			"/META-INF/definitions/no-outgoing-task.xml");
+		InputStream inputStream = getResource("no-outgoing-task.xml");
 
 		String error = assertInvalid(inputStream);
 
@@ -294,8 +273,7 @@ public class WorkflowDefinitionManagerTest {
 
 	@Test
 	public void testValidateNoTerminalStatesDefinition() throws Exception {
-		InputStream inputStream = getResource(
-			"/META-INF/definitions/no-terminal-states.xml");
+		InputStream inputStream = getResource("no-terminal-states.xml");
 
 		String error = assertInvalid(inputStream);
 
@@ -304,8 +282,7 @@ public class WorkflowDefinitionManagerTest {
 
 	@Test
 	public void testValidateSingleApproverDefinition() throws Exception {
-		InputStream inputStream = getResource(
-			"/META-INF/definitions/single-approver-definition.xml");
+		InputStream inputStream = getResource("single-approver-definition.xml");
 
 		assertValid(inputStream);
 	}
@@ -315,16 +292,14 @@ public class WorkflowDefinitionManagerTest {
 		throws Exception {
 
 		InputStream inputStream = getResource(
-			"/META-INF/definitions/" +
-				"single-approver-definition-scripted-assignment.xml");
+			"single-approver-definition-scripted-assignment.xml");
 
 		assertValid(inputStream);
 	}
 
 	@Test
 	public void testValidateTransitions() throws Exception {
-		InputStream inputStream = getResource(
-			"/META-INF/definitions/invalid-transition.xml");
+		InputStream inputStream = getResource("invalid-transition.xml");
 
 		String error = assertInvalid(inputStream);
 
@@ -333,8 +308,7 @@ public class WorkflowDefinitionManagerTest {
 
 	@Test
 	public void testValidateUnbalancedForkAndJoinNodes() throws Exception {
-		InputStream inputStream = getResource(
-			"/META-INF/definitions/unbalanced-fork-and-join.xml");
+		InputStream inputStream = getResource("unbalanced-fork-and-join.xml");
 
 		String error = assertInvalid(inputStream);
 
@@ -343,10 +317,13 @@ public class WorkflowDefinitionManagerTest {
 
 	@Test
 	public void testValidateValidDefinition() throws Exception {
-		InputStream inputStream = getResource(
-			"/META-INF/definitions/valid-definition.xml");
+		InputStream inputStream = getResource("valid-definition.xml");
 
 		assertValid(inputStream);
+	}
+
+	protected void assertEquals(String expectedMessage, String actualMessage) {
+		Assert.assertEquals(expectedMessage, actualMessage);
 	}
 
 	protected String assertInvalid(InputStream inputStream) throws Exception {
@@ -355,7 +332,7 @@ public class WorkflowDefinitionManagerTest {
 		try {
 			WorkflowDefinitionManagerUtil.validateWorkflowDefinition(bytes);
 
-			fail();
+			Assert.fail();
 		}
 		catch (WorkflowException we) {
 			Throwable throwable = we.getCause();
@@ -373,7 +350,7 @@ public class WorkflowDefinitionManagerTest {
 			WorkflowDefinitionManagerUtil.validateWorkflowDefinition(bytes);
 		}
 		catch (WorkflowException we) {
-			fail(we.getMessage());
+			Assert.fail(we.getMessage());
 		}
 	}
 
@@ -382,7 +359,8 @@ public class WorkflowDefinitionManagerTest {
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		return classLoader.getResourceAsStream(name);
+		return classLoader.getResourceAsStream(
+			"com/liferay/portal/workflow/kaleo/runtime/dependencies/" + name);
 	}
 
 }

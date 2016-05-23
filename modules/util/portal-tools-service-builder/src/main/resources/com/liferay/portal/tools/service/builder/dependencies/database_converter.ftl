@@ -36,7 +36,7 @@ public class ${databaseConverterName} implements DatabaseConverter {
 
 		<#list entities as entity>
 			<#if entity.hasColumns()>
-			models.add(${entity.name}Impl.class);
+				models.add(${entity.name}Impl.class);
 			</#if>
 		</#list>
 

@@ -2459,14 +2459,22 @@ sprite.root.dir=/tmp/sprite]]></echo>
 
 		<sequential>
 			<if>
-				<equals arg1="@{liferay.portal.bundle}" arg2="6.1.20" />
+				<equals arg1="@{liferay.portal.bundle}" arg2="6.0.6" />
 				<then>
-					<echo append="true" file="app.server.${user.name}.properties">
-						app.server.tomcat.version=7.0.27
-					</echo>
-
-					<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat-7.0.27/bin" />
+					<var name="app.server.tomcat.version" value="6.0.29" />
 				</then>
+				<elseif>
+					<equals arg1="@{liferay.portal.bundle}" arg2="6.1.2" />
+					<then>
+						<var name="app.server.tomcat.version" value="7.0.40" />
+					</then>
+				</elseif>
+				<elseif>
+					<equals arg1="@{liferay.portal.bundle}" arg2="6.1.20" />
+					<then>
+						<var name="app.server.tomcat.version" value="7.0.27" />
+					</then>
+				</elseif>
 				<elseif>
 					<or>
 						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.1" />
@@ -2487,14 +2495,17 @@ sprite.root.dir=/tmp/sprite]]></echo>
 						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.13" />
 					</or>
 					<then>
-						<echo append="true" file="app.server.${user.name}.properties">
-							app.server.tomcat.version=7.0.42
-						</echo>
-
-						<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat-7.0.42/bin" />
+						<var name="app.server.tomcat.version" value="7.0.42" />
 					</then>
 				</elseif>
 			</if>
+
+			<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/bin" />
+
+			<echo append="true" file="app.server.${user.name}.properties">
+				app.server.tomcat.bin.dir=${app.server.tomcat.bin.dir}
+				app.server.tomcat.version=${app.server.tomcat.version}
+			</echo>
 		</sequential>
 	</macrodef>
 

@@ -17,9 +17,12 @@ package com.liferay.dynamic.data.lists.web.lar;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
@@ -28,10 +31,13 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 
@@ -70,6 +76,29 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "records", true, false, null,
 				DDLRecord.class.getName()));
+	}
+
+	@Deprecated
+	protected DynamicQuery createRecordSetDynamicQuery() {
+		return null;
+	}
+
+	@Deprecated
+	protected DynamicQuery createRecordVersionDynamicQuery() {
+		return null;
+	}
+
+	@Deprecated
+	protected void deleteDDMStructures(Set<Long> ddmStructureIds)
+		throws PortalException {
+	}
+
+	@Deprecated
+	protected void deleteRecordSets(PortletDataContext portletDataContext)
+		throws PortalException {
+
+		_ddlRecordSetStagedModelRepository.deleteStagedModels(
+			portletDataContext);
 	}
 
 	@Override
@@ -197,6 +226,32 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 		recordActionableDynamicQuery.performCount();
 	}
 
+	@Deprecated
+	protected ActionableDynamicQuery getRecordActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+
+		return _ddlRecordStagedModelRepository.getExportActionableDynamicQuery(
+			portletDataContext);
+	}
+
+	@Deprecated
+	protected ActionableDynamicQuery getRecordSetActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+
+		return _ddlRecordSetStagedModelRepository.
+			getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Deprecated
+	protected void setDDLRecordLocalService(
+		DDLRecordLocalService ddlRecordLocalService) {
+	}
+
+	@Deprecated
+	protected void setDDLRecordSetLocalService(
+		DDLRecordSetLocalService ddlRecordSetLocalService) {
+	}
+
 	@Reference(
 		target =
 			"(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecordSet)",
@@ -217,6 +272,11 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 		StagedModelRepository<DDLRecord> ddlRecordStagedModelRepository) {
 
 		_ddlRecordStagedModelRepository = ddlRecordStagedModelRepository;
+	}
+
+	@Deprecated
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

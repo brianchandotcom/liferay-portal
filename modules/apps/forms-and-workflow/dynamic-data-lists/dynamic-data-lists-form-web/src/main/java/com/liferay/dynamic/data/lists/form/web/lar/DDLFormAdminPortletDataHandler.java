@@ -20,9 +20,12 @@ import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
@@ -31,6 +34,8 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -82,6 +87,24 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "form-entries", true, false, null,
 				DDLRecord.class.getName()));
+	}
+
+	@Deprecated
+	protected DynamicQuery createRecordSetDynamicQuery() {
+		return null;
+	}
+
+	@Deprecated
+	protected DynamicQuery createRecordVersionDynamicQuery() {
+		return null;
+	}
+
+	@Deprecated
+	protected void deleteRecordSets(PortletDataContext portletDataContext)
+		throws PortalException {
+
+		_ddlRecordSetStagedModelRepository.deleteStagedModels(
+			portletDataContext, DDLRecordSetConstants.SCOPE_FORMS);
 	}
 
 	@Override
@@ -214,6 +237,33 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 		recordActionableDynamicQuery.performCount();
 	}
 
+	@Deprecated
+	protected ActionableDynamicQuery getRecordActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+
+		return _ddlRecordStagedModelRepository.getExportActionableDynamicQuery(
+			portletDataContext, DDLRecordSetConstants.SCOPE_FORMS);
+	}
+
+	@Deprecated
+	protected ActionableDynamicQuery getRecordSetActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+
+		return _ddlRecordSetStagedModelRepository.
+			getExportActionableDynamicQuery(
+				portletDataContext, DDLRecordSetConstants.SCOPE_FORMS);
+	}
+
+	@Deprecated
+	protected void setDDLRecordLocalService(
+		DDLRecordLocalService ddlRecordLocalService) {
+	}
+
+	@Deprecated
+	protected void setDDLRecordSetLocalService(
+		DDLRecordSetLocalService ddlRecordSetLocalService) {
+	}
+
 	@Reference(
 		target =
 			"(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecordSet)",
@@ -234,6 +284,11 @@ public class DDLFormAdminPortletDataHandler extends BasePortletDataHandler {
 		DDLRecordStagedModelRepository ddlRecordStagedModelRepository) {
 
 		_ddlRecordStagedModelRepository = ddlRecordStagedModelRepository;
+	}
+
+	@Deprecated
+	protected void setDDMStructureLocalService(
+		DDMStructureLocalService ddmStructureLocalService) {
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

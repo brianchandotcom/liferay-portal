@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.lists.lar;
 import com.liferay.dynamic.data.lists.exportimport.staged.model.repository.DDLRecordStagedModelRepository;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.exportimport.content.processor.DDMFormValuesExportImportContentProcessor;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
@@ -31,11 +32,13 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -49,6 +52,39 @@ public class DDLRecordStagedModelDataHandler
 	extends BaseStagedModelDataHandler<DDLRecord> {
 
 	public static final String[] CLASS_NAMES = {DDLRecord.class.getName()};
+
+	@Deprecated
+	@Override
+	public void deleteStagedModel(DDLRecord stagedModel)
+		throws PortalException {
+
+		super.deleteStagedModel(stagedModel);
+	}
+
+	@Deprecated
+	@Override
+	public void deleteStagedModel(
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
+
+		super.deleteStagedModel(uuid, groupId, className, extraData);
+	}
+
+	@Deprecated
+	@Override
+	public DDLRecord fetchStagedModelByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return super.fetchStagedModelByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Deprecated
+	@Override
+	public List<DDLRecord> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return super.fetchStagedModelsByUuidAndCompanyId(uuid, companyId);
+	}
 
 	@Override
 	public String[] getClassNames() {
@@ -168,6 +204,11 @@ public class DDLRecordStagedModelDataHandler
 	@Override
 	protected StagedModelRepository<DDLRecord> getStagedModelRepository() {
 		return _ddlRecordStagedModelRepository;
+	}
+
+	@Deprecated
+	protected void setDDLRecordLocalService(
+		DDLRecordLocalService ddlRecordLocalService) {
 	}
 
 	@Reference(unbind = "-")

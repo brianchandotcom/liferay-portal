@@ -26,9 +26,6 @@
 	</bean>
 	<bean class="com.liferay.mail.util.DummyHook" id="com.liferay.mail.util.DummyHook" />
 	<bean class="com.liferay.portal.convert.database.DatabaseConvertProcess" />
-	<bean class="com.liferay.portal.convert.database.PortalDatabaseConverter" >
-		<property name="modelMigrator" ref="com.liferay.portal.convert.util.ModelMigrator" />
-	</bean>
 	<bean class="com.liferay.portal.convert.documentlibrary.DocumentLibraryConvertProcess" />
 	<bean class="com.liferay.portal.convert.documentlibrary.DocumentLibraryExtraSettingsConvertProcess" />
 	<bean class="com.liferay.portal.convert.util.ModelMigratorImpl" id="com.liferay.portal.convert.util.ModelMigrator" />

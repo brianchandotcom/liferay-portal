@@ -148,7 +148,9 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 		PermissionChecker permissionChecker) {
 
 		if (permissionChecker.isOmniadmin() ||
-			permissionChecker.isCompanyAdmin()) {
+			permissionChecker.isCompanyAdmin() ||
+			permissionChecker.isContentReviewer(
+				permissionChecker.getCompanyId(), groupId)) {
 
 			return true;
 		}

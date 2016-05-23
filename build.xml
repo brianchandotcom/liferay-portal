@@ -623,14 +623,10 @@
 			maxmemory="2048m"
 			noqualifier="java.*"
 			overview="${module.dir}/src/overview.html"
-			stylesheetfile="${project.dir}/tools/styles/javadoc.css"
 			useexternalfile="yes"
 			use="yes"
 			windowtitle="Liferay ${lp.version} ${module.dir} API"
 		>
-			<doclet name="com.liferay.tools.doclets.standard.Standard" path="${project.dir}/lib/development/liferay-doclet.jar">
-				<param name="-linksource" />
-			</doclet>
 
 			<group packages="com.liferay.portal.*:com.liferay.counter.*:com.liferay.mail.*" title="Portal Services" />
 			<group packages="com.liferay.portal.kernel.*" title="Portal Kernel" />

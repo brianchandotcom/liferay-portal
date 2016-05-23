@@ -8,5 +8,5 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: WAB
 -includeresource:\
-	@biz.aQute.bndlib-*.jar,\
-	@com.liferay.ant.bnd-*.jar!/com/liferay/ant/bnd/jsp/JspAnalyzerPlugin*.class
+	@biz.aQute.bndlib-[0-9]*.jar,\
+	@com.liferay.ant.bnd-[0-9]*.jar!/com/liferay/ant/bnd/jsp/JspAnalyzerPlugin*.class

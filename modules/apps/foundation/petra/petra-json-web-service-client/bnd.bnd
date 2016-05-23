@@ -3,9 +3,9 @@ Bundle-SymbolicName: com.liferay.petra.json.web.service.client
 Bundle-Version: 1.0.3
 Export-Package: com.liferay.petra.json.web.service.client
 -includeresource:\
-	@commons-codec-*.jar,\
-	@httpclient-*.jar,\
-	@httpcore-*.jar,\
-	@jackson-annotations-*.jar,\
-	@jackson-core-*.jar,\
-	@jackson-databind-*.jar
+	@commons-codec-[0-9]*.jar,\
+	@httpclient-[0-9]*.jar,\
+	@httpcore-[0-9]*.jar,\
+	@jackson-annotations-[0-9]*.jar,\
+	@jackson-core-[0-9]*.jar,\
+	@jackson-databind-[0-9]*.jar

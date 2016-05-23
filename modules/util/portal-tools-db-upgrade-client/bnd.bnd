@@ -4,5 +4,5 @@ Bundle-Version: 1.0.0
 JPM-Command: liferay-upgrade-db
 Main-Class: com.liferay.portal.tools.db.upgrade.client.UpgradeClient
 -includeresource:\
-	@commons-cli-*.jar,\
-	@jline-*.jar
+	@commons-cli-[0-9]*.jar,\
+	@jline-[0-9]*.jar

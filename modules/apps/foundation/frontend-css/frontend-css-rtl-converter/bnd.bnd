@@ -12,7 +12,7 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -includeresource:\
-	@annotations-*.jar,\
-	@ph-commons-*.jar,\
-	@ph-css-*.jar,\
-	@slf4j-api-*.jar
+	@annotations-[0-9]*.jar,\
+	@ph-commons-[0-9]*.jar,\
+	@ph-css-[0-9]*.jar,\
+	@slf4j-api-[0-9]*.jar

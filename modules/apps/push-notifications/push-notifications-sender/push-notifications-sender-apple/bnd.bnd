@@ -4,7 +4,7 @@ Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -includeresource:\
-	@apns-*.jar,\
-	@jackson-annotations-*.jar,\
-	@jackson-core-*.jar,\
-	@jackson-databind-*.jar
+	@apns-[0-9]*.jar,\
+	@jackson-annotations-[0-9]*.jar,\
+	@jackson-core-[0-9]*.jar,\
+	@jackson-databind-[0-9]*.jar

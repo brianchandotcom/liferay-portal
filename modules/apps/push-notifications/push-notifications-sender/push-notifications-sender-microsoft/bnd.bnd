@@ -4,6 +4,6 @@ Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -includeresource:\
-	@httpclient-*.jar,\
-	@httpcore-*.jar,\
-	@java-mpns-*.jar
+	@httpclient-[0-9]*.jar,\
+	@httpcore-[0-9]*.jar,\
+	@java-mpns-[0-9]*.jar

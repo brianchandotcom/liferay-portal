@@ -4,5 +4,5 @@ Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -includeresource:\
-	@gcm-server-*.jar,\
-	@json-simple-*.jar
+	@gcm-server-[0-9]*.jar,\
+	@json-simple-[0-9]*.jar

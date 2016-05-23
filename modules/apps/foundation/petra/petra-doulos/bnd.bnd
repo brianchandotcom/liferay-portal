@@ -7,5 +7,5 @@ Export-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -includeresource:\
-	@commons-lang3-*.jar,\
-	@concurrentlinkedhashmap-lru-*.jar
+	@commons-lang3-[0-9]*.jar,\
+	@concurrentlinkedhashmap-lru-[0-9]*.jar

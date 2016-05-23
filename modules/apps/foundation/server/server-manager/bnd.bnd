@@ -9,5 +9,5 @@ Export-Package: com.liferay.server.manager
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -includeresource:\
-	lib/commons-fileupload.jar=commons-fileupload-*.jar,\
-	lib/commons-io.jar=commons-io-*.jar
+	lib/commons-fileupload.jar=commons-fileupload-[0-9]*.jar,\
+	lib/commons-io.jar=commons-io-[0-9]*.jar

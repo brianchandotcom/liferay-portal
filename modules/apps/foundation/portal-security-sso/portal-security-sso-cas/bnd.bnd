@@ -12,5 +12,5 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks
 -includeresource:\
-	@cas-client-core-*.jar,\
-	@opensaml-*.jar
+	@cas-client-core-[0-9]*.jar,\
+	@opensaml-[0-9]*.jar

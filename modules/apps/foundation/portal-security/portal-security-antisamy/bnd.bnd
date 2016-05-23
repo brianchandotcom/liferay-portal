@@ -11,12 +11,12 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -includeresource:\
-	@antisamy-*.jar,\
-	@batik-css-*.jar,\
-	@batik-ext-*.jar,\
-	@batik-util-*.jar,\
-	@commons-httpclient-*.jar,\
-	@nekohtml-*.jar,\
-	@xercesImpl-*.jar,\
-	@xml-apis-*.jar,\
-	@xml-apis-ext-*.jar
+	@antisamy-[0-9]*.jar,\
+	@batik-css-[0-9]*.jar,\
+	@batik-ext-[0-9]*.jar,\
+	@batik-util-[0-9]*.jar,\
+	@commons-httpclient-[0-9]*.jar,\
+	@nekohtml-[0-9]*.jar,\
+	@xercesImpl-[0-9]*.jar,\
+	@xml-apis-[0-9]*.jar,\
+	@xml-apis-ext-[0-9]*.jar

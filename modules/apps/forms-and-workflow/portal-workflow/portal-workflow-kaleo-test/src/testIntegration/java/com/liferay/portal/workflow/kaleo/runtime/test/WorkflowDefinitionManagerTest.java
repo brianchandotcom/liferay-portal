@@ -41,14 +41,6 @@ public class WorkflowDefinitionManagerTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testValidateCategorySpecificDefinition() throws Exception {
-		InputStream inputStream = getResource(
-			"category-specific-definition.xml");
-
-		assertValid(inputStream);
-	}
-
-	@Test
 	public void testValidateIncomingTransitionInitialStateDefinition()
 		throws Exception {
 

@@ -22,5 +22,5 @@ Liferay.provide(
 			}
 		);
 	},
-	['document-library-checkin']
+	['document-library-checkin', 'liferay-portlet-url']
 );

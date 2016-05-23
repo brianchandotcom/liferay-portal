@@ -6907,17 +6907,17 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 			<elseif>
 				<equals arg1="${database.type}" arg2="oracle" />
 				<then>
-					<sql classpath="${app.server.lib.global.dir}/${jdbc.oracle.driver}" driver="oracle.jdbc.OracleDriver" onerror="continue" output="datapumpdir" password="${oracle.admin.password}" print="true" url="${database.oracle.url}" userid="${oracle.admin.user}">
+					<sql classpath="${app.server.lib.global.dir}/${jdbc.oracle.driver}" driver="oracle.jdbc.OracleDriver" onerror="continue" output="data.pump.log" password="${oracle.admin.password}" print="true" url="${database.oracle.url}" userid="${oracle.admin.user}">
 						<![CDATA[
 							drop user lportal cascade;
 							select directory_name, directory_path from dba_directories where directory_name='DATA_PUMP_DIR';
 						]]>
 					</sql>
 
-					<loadfile property="data.pump.dir" srcFile="datapumpdir" />
+					<loadfile property="data.pump.log.content" srcFile="data.pump.log" />
 
 					<propertyregex
-						input="${data.pump.dir}"
+						input="${data.pump.log.content}"
 						override="true"
 						property="data.pump.dir"
 						regexp="[\s\S]+DATA_PUMP_DIR,(.*)[\s\S]+"

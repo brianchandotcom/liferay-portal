@@ -204,6 +204,8 @@ AUI.add(
 							}
 						);
 
+						newLink.setData('metadata', JSON.stringify(instance._getUploadFileMetadata(imageData.file)));
+
 						linkContainer.placeAfter(newLinkContainer);
 
 						links.push(newLink);
@@ -335,6 +337,28 @@ AUI.add(
 						}
 
 						return instance._imageInfoNodes;
+					},
+
+					_getUploadFileMetadata: function(file) {
+						var instance = this;
+
+						return {
+							'groups': [
+								{
+									'data': [
+										{
+											'key': Liferay.Language.get('format'),
+											'value': file.type
+										},
+										{
+											'key': Liferay.Language.get('name'),
+											'value': file.title
+										}
+									],
+									'title': Liferay.Language.get('file-info')
+								}
+							]
+						};
 					},
 
 					_onClickEditIcon: function(event) {

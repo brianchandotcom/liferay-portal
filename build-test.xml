@@ -6875,12 +6875,6 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 	</target>
 
 	<target name="rebuild-legacy-database">
-		<antcall target="rebuild-database">
-			<param name="database.type" value="${database.type}" />
-			<param name="sql.dir" value="sql/create-bare/" />
-			<param name="sql.file" value="create-bare-${database.type}.sql" />
-		</antcall>
-
 		<get-testcase-property property.name="data.archive.type" />
 		<get-testcase-property property.name="portal.version" />
 
@@ -6892,6 +6886,12 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 		<if>
 			<equals arg1="${database.type}" arg2="mysql" />
 			<then>
+				<antcall target="rebuild-database">
+					<param name="database.type" value="${database.type}" />
+					<param name="sql.dir" value="sql/create-bare/" />
+					<param name="sql.file" value="create-bare-${database.type}.sql" />
+				</antcall>
+
 				<get-database-property property.name="database.password" />
 				<get-database-property property.name="database.schema" />
 				<get-database-property property.name="database.username" />
@@ -6905,8 +6905,48 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 				<exec executable="mysql_upgrade" />
 			</then>
 			<elseif>
+				<equals arg1="${database.type}" arg2="oracle" />
+				<then>
+					<sql classpath="${app.server.lib.global.dir}/${jdbc.oracle.driver}" driver="oracle.jdbc.OracleDriver" onerror="continue" output="data.pump.log" password="${oracle.admin.password}" print="true" url="${database.oracle.url}" userid="${oracle.admin.user}">
+						<![CDATA[
+							drop user lportal cascade;
+							select directory_name, directory_path from dba_directories where directory_name='DATA_PUMP_DIR';
+						]]>
+					</sql>
+
+					<loadfile property="data.pump.log.content" srcFile="data.pump.log" />
+
+					<propertyregex
+						input="${data.pump.log.content}"
+						override="true"
+						property="data.pump.dir"
+						regexp="[\s\S]+DATA_PUMP_DIR,(.*)[\s\S]+"
+						replace="\1"
+					/>
+
+					<move file="${liferay.home}/${database.type}.dmp" todir="${data.pump.dir}" />
+
+					<chown file="${data.pump.dir}/${database.type}.dmp" owner="oracle" />
+					<chgrp file="${data.pump.dir}/${database.type}.dmp" group="oracle" />
+
+					<exec executable="impdp">
+						<arg value="${oracle.admin.user}/${oracle.admin.password}" />
+						<arg value="dumpfile=${database.type}.dmp" />
+						<arg value="table_exists_action=replace" />
+					</exec>
+
+					<delete file="${data.pump.dir}/${database.type}.dmp" />
+				</then>
+			</elseif>
+			<elseif>
 				<equals arg1="${database.type}" arg2="postgresql" />
 				<then>
+					<antcall target="rebuild-database">
+						<param name="database.type" value="${database.type}" />
+						<param name="sql.dir" value="sql/create-bare/" />
+						<param name="sql.file" value="create-bare-${database.type}.sql" />
+					</antcall>
+
 					<get-database-property property.name="database.schema" />
 					<get-database-property property.name="database.username" />
 
@@ -7717,6 +7757,10 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
+		<antcall inheritAll="false" target="copy-optional-jars">
+			<param name="todir" value="${app.server.lib.global.dir}" />
+		</antcall>
+
 		<get-testcase-property property.name="portal.version" />
 
 		<if>
@@ -7730,10 +7774,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<antcall inheritAll="false" target="rebuild-database" />
 			</else>
 		</if>
-
-		<antcall inheritAll="false" target="copy-optional-jars">
-			<param name="todir" value="${app.server.lib.global.dir}" />
-		</antcall>
 
 		<get-testcase-property property.name="skip.clean-app-server-deploy-dir" />
 

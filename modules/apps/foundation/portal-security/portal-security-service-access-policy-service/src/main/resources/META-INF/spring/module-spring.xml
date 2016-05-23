@@ -4,5 +4,4 @@
 	<bean class="com.liferay.portal.security.service.access.policy.service.impl.SAPEntryLocalServiceImpl" id="com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService" />
 	<bean class="com.liferay.portal.security.service.access.policy.service.impl.SAPEntryServiceImpl" id="com.liferay.portal.security.service.access.policy.service.SAPEntryService" />
 	<bean class="com.liferay.portal.security.service.access.policy.service.persistence.impl.SAPEntryPersistenceImpl" id="com.liferay.portal.security.service.access.policy.service.persistence.SAPEntryPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portal.security.service.access.policy.service.convert.database.SAPDatabaseConverter" id="com.liferay.portal.security.service.access.policy.service.convert.database.SAPDatabaseConverter" />
 </beans>

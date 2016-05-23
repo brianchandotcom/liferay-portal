@@ -7,5 +7,4 @@
 	<bean class="com.liferay.chat.service.impl.StatusLocalServiceImpl" id="com.liferay.chat.service.StatusLocalService" />
 	<bean class="com.liferay.chat.service.persistence.impl.StatusPersistenceImpl" id="com.liferay.chat.service.persistence.StatusPersistence" parent="basePersistence" />
 	<bean class="com.liferay.chat.service.persistence.impl.StatusFinderImpl" id="com.liferay.chat.service.persistence.StatusFinder" parent="basePersistence" />
-	<bean class="com.liferay.chat.service.convert.database.ChatDatabaseConverter" id="com.liferay.chat.service.convert.database.ChatDatabaseConverter" />
 </beans>

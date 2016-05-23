@@ -11,5 +11,4 @@
 	<bean class="com.liferay.polls.service.impl.PollsVoteLocalServiceImpl" id="com.liferay.polls.service.PollsVoteLocalService" />
 	<bean class="com.liferay.polls.service.impl.PollsVoteServiceImpl" id="com.liferay.polls.service.PollsVoteService" />
 	<bean class="com.liferay.polls.service.persistence.impl.PollsVotePersistenceImpl" id="com.liferay.polls.service.persistence.PollsVotePersistence" parent="basePersistence" />
-	<bean class="com.liferay.polls.service.convert.database.PollsDatabaseConverter" id="com.liferay.polls.service.convert.database.PollsDatabaseConverter" />
 </beans>

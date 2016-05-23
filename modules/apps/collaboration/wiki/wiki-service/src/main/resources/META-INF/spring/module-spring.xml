@@ -10,5 +10,4 @@
 	<bean class="com.liferay.wiki.service.persistence.impl.WikiPageFinderImpl" id="com.liferay.wiki.service.persistence.WikiPageFinder" parent="basePersistence" />
 	<bean class="com.liferay.wiki.service.impl.WikiPageResourceLocalServiceImpl" id="com.liferay.wiki.service.WikiPageResourceLocalService" />
 	<bean class="com.liferay.wiki.service.persistence.impl.WikiPageResourcePersistenceImpl" id="com.liferay.wiki.service.persistence.WikiPageResourcePersistence" parent="basePersistence" />
-	<bean class="com.liferay.wiki.service.convert.database.WikiDatabaseConverter" id="com.liferay.wiki.service.convert.database.WikiDatabaseConverter" />
 </beans>

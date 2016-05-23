@@ -31,5 +31,4 @@
 	<bean class="com.liferay.dynamic.data.mapping.service.impl.DDMTemplateVersionLocalServiceImpl" id="com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService" />
 	<bean class="com.liferay.dynamic.data.mapping.service.impl.DDMTemplateVersionServiceImpl" id="com.liferay.dynamic.data.mapping.service.DDMTemplateVersionService" />
 	<bean class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMTemplateVersionPersistenceImpl" id="com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateVersionPersistence" parent="basePersistence" />
-	<bean class="com.liferay.dynamic.data.mapping.service.convert.database.DDMDatabaseConverter" id="com.liferay.dynamic.data.mapping.service.convert.database.DDMDatabaseConverter" />
 </beans>

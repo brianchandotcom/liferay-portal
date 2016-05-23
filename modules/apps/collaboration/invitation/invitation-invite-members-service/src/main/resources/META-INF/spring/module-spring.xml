@@ -3,5 +3,4 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<bean class="com.liferay.invitation.invite.members.service.impl.MemberRequestLocalServiceImpl" id="com.liferay.invitation.invite.members.service.MemberRequestLocalService" />
 	<bean class="com.liferay.invitation.invite.members.service.persistence.impl.MemberRequestPersistenceImpl" id="com.liferay.invitation.invite.members.service.persistence.MemberRequestPersistence" parent="basePersistence" />
-	<bean class="com.liferay.invitation.invite.members.service.convert.database.SODatabaseConverter" id="com.liferay.invitation.invite.members.service.convert.database.SODatabaseConverter" />
 </beans>

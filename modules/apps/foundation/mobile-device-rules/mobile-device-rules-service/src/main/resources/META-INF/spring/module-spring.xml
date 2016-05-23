@@ -14,5 +14,4 @@
 	<bean class="com.liferay.mobile.device.rules.service.impl.MDRRuleGroupInstanceLocalServiceImpl" id="com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService" />
 	<bean class="com.liferay.mobile.device.rules.service.impl.MDRRuleGroupInstanceServiceImpl" id="com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceService" />
 	<bean class="com.liferay.mobile.device.rules.service.persistence.impl.MDRRuleGroupInstancePersistenceImpl" id="com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupInstancePersistence" parent="basePersistence" />
-	<bean class="com.liferay.mobile.device.rules.service.convert.database.MDRDatabaseConverter" id="com.liferay.mobile.device.rules.service.convert.database.MDRDatabaseConverter" />
 </beans>

@@ -5,5 +5,4 @@
 	<bean class="com.liferay.contacts.service.impl.EntryServiceImpl" id="com.liferay.contacts.service.EntryService" />
 	<bean class="com.liferay.contacts.service.persistence.impl.EntryPersistenceImpl" id="com.liferay.contacts.service.persistence.EntryPersistence" parent="basePersistence" />
 	<bean class="com.liferay.contacts.service.persistence.impl.EntryFinderImpl" id="com.liferay.contacts.service.persistence.EntryFinder" parent="basePersistence" />
-	<bean class="com.liferay.contacts.service.convert.database.ContactsDatabaseConverter" id="com.liferay.contacts.service.convert.database.ContactsDatabaseConverter" />
 </beans>

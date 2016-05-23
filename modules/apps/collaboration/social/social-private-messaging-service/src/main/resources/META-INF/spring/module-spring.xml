@@ -4,5 +4,4 @@
 	<bean class="com.liferay.social.privatemessaging.service.impl.UserThreadLocalServiceImpl" id="com.liferay.social.privatemessaging.service.UserThreadLocalService" />
 	<bean class="com.liferay.social.privatemessaging.service.impl.UserThreadServiceImpl" id="com.liferay.social.privatemessaging.service.UserThreadService" />
 	<bean class="com.liferay.social.privatemessaging.service.persistence.impl.UserThreadPersistenceImpl" id="com.liferay.social.privatemessaging.service.persistence.UserThreadPersistence" parent="basePersistence" />
-	<bean class="com.liferay.social.privatemessaging.service.convert.database.PMDatabaseConverter" id="com.liferay.social.privatemessaging.service.convert.database.PMDatabaseConverter" />
 </beans>

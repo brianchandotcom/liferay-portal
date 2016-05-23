@@ -11,5 +11,4 @@
 	<bean class="com.liferay.sync.service.persistence.impl.SyncDLObjectPersistenceImpl" id="com.liferay.sync.service.persistence.SyncDLObjectPersistence" parent="basePersistence" />
 	<bean class="com.liferay.sync.service.persistence.impl.SyncDLObjectFinderImpl" id="com.liferay.sync.service.persistence.SyncDLObjectFinder" parent="basePersistence" />
 	<bean class="com.liferay.sync.service.impl.SyncPreferencesLocalServiceImpl" id="com.liferay.sync.service.SyncPreferencesLocalService" />
-	<bean class="com.liferay.sync.service.convert.database.SyncDatabaseConverter" id="com.liferay.sync.service.convert.database.SyncDatabaseConverter" />
 </beans>

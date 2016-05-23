@@ -14,5 +14,4 @@
 	<bean class="com.liferay.knowledge.base.service.impl.KBTemplateLocalServiceImpl" id="com.liferay.knowledge.base.service.KBTemplateLocalService" />
 	<bean class="com.liferay.knowledge.base.service.impl.KBTemplateServiceImpl" id="com.liferay.knowledge.base.service.KBTemplateService" />
 	<bean class="com.liferay.knowledge.base.service.persistence.impl.KBTemplatePersistenceImpl" id="com.liferay.knowledge.base.service.persistence.KBTemplatePersistence" parent="basePersistence" />
-	<bean class="com.liferay.knowledge.base.service.convert.database.KBDatabaseConverter" id="com.liferay.knowledge.base.service.convert.database.KBDatabaseConverter" />
 </beans>

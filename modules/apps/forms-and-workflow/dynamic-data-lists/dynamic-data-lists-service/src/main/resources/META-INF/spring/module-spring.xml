@@ -12,5 +12,4 @@
 	<bean class="com.liferay.dynamic.data.lists.service.impl.DDLRecordVersionLocalServiceImpl" id="com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService" />
 	<bean class="com.liferay.dynamic.data.lists.service.impl.DDLRecordVersionServiceImpl" id="com.liferay.dynamic.data.lists.service.DDLRecordVersionService" />
 	<bean class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordVersionPersistenceImpl" id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionPersistence" parent="basePersistence" />
-	<bean class="com.liferay.dynamic.data.lists.service.convert.database.DDLDatabaseConverter" id="com.liferay.dynamic.data.lists.service.convert.database.DDLDatabaseConverter" />
 </beans>

@@ -127,16 +127,6 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	}
 
 	@Override
-	public Attachment toEscapedModel() {
-		return new AttachmentWrapper(_attachment.toEscapedModel());
-	}
-
-	@Override
-	public Attachment toUnescapedModel() {
-		return new AttachmentWrapper(_attachment.toUnescapedModel());
-	}
-
-	@Override
 	public boolean isCachedModel() {
 		return _attachment.isCachedModel();
 	}
@@ -154,6 +144,16 @@ public class AttachmentWrapper implements Attachment, ModelWrapper<Attachment> {
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _attachment.getExpandoBridge();
+	}
+
+	@Override
+	public Attachment toEscapedModel() {
+		return new AttachmentWrapper(_attachment.toEscapedModel());
+	}
+
+	@Override
+	public Attachment toUnescapedModel() {
+		return new AttachmentWrapper(_attachment.toUnescapedModel());
 	}
 
 	@Override

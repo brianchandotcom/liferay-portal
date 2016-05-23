@@ -246,16 +246,6 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 		}
 	}
 
-	@Override
-	public Account toEscapedModel() {
-		return new AccountWrapper(_account.toEscapedModel());
-	}
-
-	@Override
-	public Account toUnescapedModel() {
-		return new AccountWrapper(_account.toUnescapedModel());
-	}
-
 	/**
 	* Returns the default sender of this account.
 	*
@@ -374,6 +364,16 @@ public class AccountWrapper implements Account, ModelWrapper<Account> {
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _account.getExpandoBridge();
+	}
+
+	@Override
+	public Account toEscapedModel() {
+		return new AccountWrapper(_account.toEscapedModel());
+	}
+
+	@Override
+	public Account toUnescapedModel() {
+		return new AccountWrapper(_account.toUnescapedModel());
 	}
 
 	@Override

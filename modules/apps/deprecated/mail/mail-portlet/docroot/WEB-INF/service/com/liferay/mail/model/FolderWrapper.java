@@ -136,16 +136,6 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	}
 
 	@Override
-	public Folder toEscapedModel() {
-		return new FolderWrapper(_folder.toEscapedModel());
-	}
-
-	@Override
-	public Folder toUnescapedModel() {
-		return new FolderWrapper(_folder.toUnescapedModel());
-	}
-
-	@Override
 	public boolean isCachedModel() {
 		return _folder.isCachedModel();
 	}
@@ -163,6 +153,16 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _folder.getExpandoBridge();
+	}
+
+	@Override
+	public Folder toEscapedModel() {
+		return new FolderWrapper(_folder.toEscapedModel());
+	}
+
+	@Override
+	public Folder toUnescapedModel() {
+		return new FolderWrapper(_folder.toUnescapedModel());
 	}
 
 	@Override

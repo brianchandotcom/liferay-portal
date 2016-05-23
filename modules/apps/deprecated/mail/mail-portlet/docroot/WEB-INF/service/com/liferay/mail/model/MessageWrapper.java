@@ -205,16 +205,6 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	}
 
 	@Override
-	public Message toEscapedModel() {
-		return new MessageWrapper(_message.toEscapedModel());
-	}
-
-	@Override
-	public Message toUnescapedModel() {
-		return new MessageWrapper(_message.toUnescapedModel());
-	}
-
-	@Override
 	public boolean hasAttachments() {
 		return _message.hasAttachments();
 	}
@@ -242,6 +232,16 @@ public class MessageWrapper implements Message, ModelWrapper<Message> {
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _message.getExpandoBridge();
+	}
+
+	@Override
+	public Message toEscapedModel() {
+		return new MessageWrapper(_message.toEscapedModel());
+	}
+
+	@Override
+	public Message toUnescapedModel() {
+		return new MessageWrapper(_message.toUnescapedModel());
 	}
 
 	@Override

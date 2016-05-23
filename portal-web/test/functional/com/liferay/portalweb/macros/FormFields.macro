@@ -21,6 +21,10 @@
 		<execute function="KeyPress" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="\RETURN" />
 	</command>
 
+	<command name="editCaptchaTextVerification">
+		<execute function="Type" locator1="FormFields#CAPTCHA_TEXT_VERIFICATION" value1="${fieldValue}" />
+	</command>
+
 	<command name="editDate">
 		<var name="key_fieldLabel" value="${fieldLabel}" />
 		<var name="key_fieldName" value="${fieldName}" />
@@ -117,6 +121,16 @@
 		<var name="key_textFieldLineOption" value="${textFieldLineOption}" />
 
 		<execute function="Click" locator1="FormFields#TEXT_FIELD_LINE_OPTION" />
+	</command>
+
+	<command name="viewCaptchaField">
+		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#CAPTCHA_FIELD" />
+
+		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#CAPTCHA_FIELD_REFRESH" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="FormFields#CAPTCHA_LABEL" value1="Text Verification" />
+
+		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#CAPTCHA_TEXT_VERIFICATION" />
 	</command>
 
 	<command name="viewCheckboxChecked">

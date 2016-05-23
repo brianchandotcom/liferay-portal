@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.web.upgrade.v1_0_0;
 
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 
 /**
@@ -24,25 +25,22 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			{
-				"1_WAR_knowledgebaseportlet",
-				"com_liferay_knowledge_base_web_portlet_AdminPortlet"
-			},
+			{"1_WAR_knowledgebaseportlet", KBPortletKeys.KNOWLEDGE_BASE_ADMIN},
 			{
 				"2_WAR_knowledgebaseportlet",
-				"com_liferay_knowledge_base_web_portlet_DisplayPortlet"
+				KBPortletKeys.KNOWLEDGE_BASE_DISPLAY
 			},
 			{
 				"3_WAR_knowledgebaseportlet",
-				"com_liferay_knowledge_base_web_portlet_ArticlePortlet"
+				KBPortletKeys.KNOWLEDGE_BASE_ARTICLE
 			},
 			{
 				"4_WAR_knowledgebaseportlet",
-				"com_liferay_knowledge_base_web_portlet_SectionPortlet"
+				KBPortletKeys.KNOWLEDGE_BASE_SECTION
 			},
 			{
 				"5_WAR_knowledgebaseportlet",
-				"com_liferay_knowledge_base_web_portlet_SearchPortlet"
+				KBPortletKeys.KNOWLEDGE_BASE_SEARCH
 			}
 		};
 	}

@@ -165,7 +165,12 @@ define(['exports', 'metal/src/metal', 'metal-events/src/events'], function (expo
 			var info = this.stateInfo_[name];
 			var config = info.config;
 			if (config.validator) {
-				return this.callFunction_(config.validator, [value]);
+				var validatorReturn = this.callFunction_(config.validator, [value, name, this]);
+
+				if (validatorReturn instanceof Error) {
+					console.error('Warning: ' + validatorReturn);
+				}
+				return validatorReturn;
 			}
 			return true;
 		};
@@ -313,11 +318,14 @@ define(['exports', 'metal/src/metal', 'metal-events/src/events'], function (expo
 			}
 		};
 
-		State.prototype.setState = function setState(values) {
+		State.prototype.setState = function setState(values, opt_callback) {
 			this.updateConfig_(values);
 			var names = Object.keys(values);
 			for (var i = 0; i < names.length; i++) {
 				this[names[i]] = values[names[i]];
+			}
+			if (opt_callback && this.scheduledBatchData_) {
+				this.once('stateChanged', opt_callback);
 			}
 		};
 

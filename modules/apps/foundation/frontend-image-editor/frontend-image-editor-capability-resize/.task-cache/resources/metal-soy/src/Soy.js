@@ -125,11 +125,12 @@ define(['exports', 'metal/src/metal', 'metal-component/src/all/component', 'html
 			};
 		};
 
-		Soy.handleInterceptedCall_ = function handleInterceptedCall_(originalFn, opt_data) {
+		Soy.handleInterceptedCall_ = function handleInterceptedCall_(originalFn) {
+			var opt_data = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
 			var args = [originalFn.componentCtor, null, []];
-			var names = Object.keys(opt_data || {});
-			for (var i = 0; i < names.length; i++) {
-				args.push(names[i], opt_data[names[i]]);
+			for (var key in opt_data) {
+				args.push(key, opt_data[key]);
 			}
 			IncrementalDOM.elementVoid.apply(null, args);
 		};

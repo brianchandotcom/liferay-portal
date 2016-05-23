@@ -6,6 +6,7 @@
 	window.__CONFIG__ = {
 		basePath: '',
 		combine: combine,
+		reportMismatchedAnonymousModules: 'warn',
 		url: combine ? LiferayAUI.getComboPath() : themeDisplay.getPortalURL()
 	};
 

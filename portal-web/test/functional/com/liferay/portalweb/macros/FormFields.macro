@@ -171,7 +171,7 @@
 		<execute function="AssertTextEquals" locator1="FormFields#DATE_FIELD" value1="${fieldValue}" />
 	</command>
 
-	<command name="viewFormName">
+	<command name="viewFieldName">
 		<execute function="AssertTextEquals" locator1="FormFields#FIELD_NAME" value1="Field Name:${fieldName}" />
 	</command>
 

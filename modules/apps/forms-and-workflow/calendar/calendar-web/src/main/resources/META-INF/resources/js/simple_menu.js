@@ -35,9 +35,9 @@ AUI.add(
 					function(item, index) {
 						if (item.id === id) {
 							found = item;
-
-							return true;
 						}
+
+						return !!found;
 					}
 				);
 

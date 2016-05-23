@@ -16,6 +16,7 @@
 
 <%@ include file="/sidebar_panel/init.jsp" %>
 
+		</div>
 	</div>
 </div>
 

@@ -687,9 +687,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		Date displayDate = entry.getDisplayDate();
 
 		BlogsEntry[] blogsEntries =
-			blogsEntryPersistence.findByG_S_D_PrevAndNext(
-				entryId, groupId, WorkflowConstants.STATUS_APPROVED,
-				displayDate, new EntryIdComparator(true));
+			blogsEntryPersistence.findByG_D_S_PrevAndNext(
+				entryId, groupId, displayDate,
+				WorkflowConstants.STATUS_APPROVED, new EntryIdComparator(true));
 
 		if (blogsEntries[0] == null) {
 			blogsEntries[0] = blogsEntryPersistence.fetchByG_LtD_S_Last(

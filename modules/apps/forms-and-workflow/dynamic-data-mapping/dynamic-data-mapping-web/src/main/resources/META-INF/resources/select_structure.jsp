@@ -85,6 +85,12 @@ request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 			modelVar="structure"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="id-column text-column"
+				name="id"
+				value="<%= String.valueOf(structure.getStructureId()) %>"
+			/>
+
+			<liferay-ui:search-container-column-text
 				cssClass="content-column name-column title-column"
 				name="name"
 				truncate="<%= true %>"
@@ -126,12 +132,6 @@ request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 				cssClass="modified-date-column text-column"
 				name="modified-date"
 				value="<%= structure.getModifiedDate() %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				cssClass="id-column text-column"
-				name="id"
-				value="<%= String.valueOf(structure.getStructureId()) %>"
 			/>
 		</liferay-ui:search-container-row>
 

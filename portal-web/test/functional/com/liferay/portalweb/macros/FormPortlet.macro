@@ -23,14 +23,22 @@
 		<execute function="Click" locator1="FormPortlet#FORM_CONTENT" />
 
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
+	</command>
+
+	<command name="submitSuccessfully">
+		<execute macro="FormPortlet#submit"/>
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
-	<command name="submitWithValidationError">
-		<execute function="Click" locator1="FormPortlet#FORM_CONTENT" />
+	<command name="submitWithError">
+		<execute macro="FormPortlet#submit"/>
 
-		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="${errorMessage}" />
+	</command>
+
+	<command name="submitWithValidationError">
+		<execute macro="FormPortlet#submit"/>
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR_FORM_FIELD_REQUIRED" value1="${validationErrorMessage}" />
 	</command>

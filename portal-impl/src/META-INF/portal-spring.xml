@@ -11,6 +11,7 @@
 	<bean class="com.liferay.portlet.announcements.service.impl.AnnouncementsFlagLocalServiceImpl" id="com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService" />
 	<bean class="com.liferay.portlet.announcements.service.impl.AnnouncementsFlagServiceImpl" id="com.liferay.announcements.kernel.service.AnnouncementsFlagService" />
 	<bean class="com.liferay.portlet.announcements.service.persistence.impl.AnnouncementsFlagPersistenceImpl" id="com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.announcements.service.convert.database.AnnouncementsDatabaseConverter" id="com.liferay.portlet.announcements.service.convert.database.AnnouncementsDatabaseConverter" />
 	<bean class="com.liferay.portlet.asset.service.impl.AssetCategoryLocalServiceImpl" id="com.liferay.asset.kernel.service.AssetCategoryLocalService" />
 	<bean class="com.liferay.portlet.asset.service.impl.AssetCategoryServiceImpl" id="com.liferay.asset.kernel.service.AssetCategoryService" />
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetCategoryPersistenceImpl" id="com.liferay.asset.kernel.service.persistence.AssetCategoryPersistence" parent="basePersistence" />
@@ -35,6 +36,7 @@
 	<bean class="com.liferay.portlet.asset.service.impl.AssetVocabularyServiceImpl" id="com.liferay.asset.kernel.service.AssetVocabularyService" />
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetVocabularyPersistenceImpl" id="com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetVocabularyFinderImpl" id="com.liferay.asset.kernel.service.persistence.AssetVocabularyFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.asset.service.convert.database.AssetDatabaseConverter" id="com.liferay.portlet.asset.service.convert.database.AssetDatabaseConverter" />
 	<bean class="com.liferay.portlet.blogs.service.impl.BlogsEntryLocalServiceImpl" id="com.liferay.blogs.kernel.service.BlogsEntryLocalService" />
 	<bean class="com.liferay.portlet.blogs.service.impl.BlogsEntryServiceImpl" id="com.liferay.blogs.kernel.service.BlogsEntryService" />
 	<bean class="com.liferay.portlet.blogs.service.persistence.impl.BlogsEntryPersistenceImpl" id="com.liferay.blogs.kernel.service.persistence.BlogsEntryPersistence" parent="basePersistence" />
@@ -42,6 +44,7 @@
 	<bean class="com.liferay.portlet.blogs.service.impl.BlogsStatsUserLocalServiceImpl" id="com.liferay.blogs.kernel.service.BlogsStatsUserLocalService" />
 	<bean class="com.liferay.portlet.blogs.service.persistence.impl.BlogsStatsUserPersistenceImpl" id="com.liferay.blogs.kernel.service.persistence.BlogsStatsUserPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.blogs.service.persistence.impl.BlogsStatsUserFinderImpl" id="com.liferay.blogs.kernel.service.persistence.BlogsStatsUserFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.blogs.service.convert.database.BlogsDatabaseConverter" id="com.liferay.portlet.blogs.service.convert.database.BlogsDatabaseConverter" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLAppLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLAppLocalService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLAppServiceImpl" id="com.liferay.document.library.kernel.service.DLAppService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLAppHelperLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLAppHelperLocalService" />
@@ -75,6 +78,7 @@
 	<bean class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLSyncEventPersistenceImpl" id="com.liferay.document.library.kernel.service.persistence.DLSyncEventPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLTrashLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLTrashLocalService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLTrashServiceImpl" id="com.liferay.document.library.kernel.service.DLTrashService" />
+	<bean class="com.liferay.portlet.documentlibrary.service.convert.database.DLDatabaseConverter" id="com.liferay.portlet.documentlibrary.service.convert.database.DLDatabaseConverter" />
 	<bean class="com.liferay.portlet.expando.service.impl.ExpandoColumnLocalServiceImpl" id="com.liferay.expando.kernel.service.ExpandoColumnLocalService" />
 	<bean class="com.liferay.portlet.expando.service.impl.ExpandoColumnServiceImpl" id="com.liferay.expando.kernel.service.ExpandoColumnService" />
 	<bean class="com.liferay.portlet.expando.service.persistence.impl.ExpandoColumnPersistenceImpl" id="com.liferay.expando.kernel.service.persistence.ExpandoColumnPersistence" parent="basePersistence" />
@@ -85,6 +89,7 @@
 	<bean class="com.liferay.portlet.expando.service.impl.ExpandoValueLocalServiceImpl" id="com.liferay.expando.kernel.service.ExpandoValueLocalService" />
 	<bean class="com.liferay.portlet.expando.service.impl.ExpandoValueServiceImpl" id="com.liferay.expando.kernel.service.ExpandoValueService" />
 	<bean class="com.liferay.portlet.expando.service.persistence.impl.ExpandoValuePersistenceImpl" id="com.liferay.expando.kernel.service.persistence.ExpandoValuePersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.expando.service.convert.database.ExpandoDatabaseConverter" id="com.liferay.portlet.expando.service.convert.database.ExpandoDatabaseConverter" />
 	<bean class="com.liferay.portlet.exportimport.service.impl.ExportImportLocalServiceImpl" id="com.liferay.exportimport.kernel.service.ExportImportLocalService" />
 	<bean class="com.liferay.portlet.exportimport.service.impl.ExportImportServiceImpl" id="com.liferay.exportimport.kernel.service.ExportImportService" />
 	<bean class="com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationLocalServiceImpl" id="com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService" />
@@ -93,6 +98,7 @@
 	<bean class="com.liferay.portlet.exportimport.service.persistence.impl.ExportImportConfigurationFinderImpl" id="com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationFinder" parent="basePersistence" />
 	<bean class="com.liferay.portlet.exportimport.service.impl.StagingLocalServiceImpl" id="com.liferay.exportimport.kernel.service.StagingLocalService" />
 	<bean class="com.liferay.portlet.exportimport.service.impl.StagingServiceImpl" id="com.liferay.exportimport.kernel.service.StagingService" />
+	<bean class="com.liferay.portlet.exportimport.service.convert.database.ExportImportDatabaseConverter" id="com.liferay.portlet.exportimport.service.convert.database.ExportImportDatabaseConverter" />
 	<bean class="com.liferay.portlet.messageboards.service.impl.MBBanLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBBanLocalService" />
 	<bean class="com.liferay.portlet.messageboards.service.impl.MBBanServiceImpl" id="com.liferay.message.boards.kernel.service.MBBanService" />
 	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBBanPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBBanPersistence" parent="basePersistence" />
@@ -116,6 +122,7 @@
 	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBThreadFinderImpl" id="com.liferay.message.boards.kernel.service.persistence.MBThreadFinder" parent="basePersistence" />
 	<bean class="com.liferay.portlet.messageboards.service.impl.MBThreadFlagLocalServiceImpl" id="com.liferay.message.boards.kernel.service.MBThreadFlagLocalService" />
 	<bean class="com.liferay.portlet.messageboards.service.persistence.impl.MBThreadFlagPersistenceImpl" id="com.liferay.message.boards.kernel.service.persistence.MBThreadFlagPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.messageboards.service.convert.database.MBDatabaseConverter" id="com.liferay.portlet.messageboards.service.convert.database.MBDatabaseConverter" />
 	<bean class="com.liferay.portal.service.impl.AccountLocalServiceImpl" id="com.liferay.portal.kernel.service.AccountLocalService" />
 	<bean class="com.liferay.portal.service.impl.AccountServiceImpl" id="com.liferay.portal.kernel.service.AccountService" />
 	<bean class="com.liferay.portal.service.persistence.impl.AccountPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.AccountPersistence" parent="basePersistence" />
@@ -301,6 +308,7 @@
 	<bean class="com.liferay.portal.service.persistence.impl.WorkflowDefinitionLinkPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.WorkflowDefinitionLinkPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portal.service.impl.WorkflowInstanceLinkLocalServiceImpl" id="com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService" />
 	<bean class="com.liferay.portal.service.persistence.impl.WorkflowInstanceLinkPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.service.convert.database.PortalDatabaseConverter" id="com.liferay.portal.service.convert.database.PortalDatabaseConverter" />
 	<bean class="com.liferay.portlet.ratings.service.impl.RatingsEntryLocalServiceImpl" id="com.liferay.ratings.kernel.service.RatingsEntryLocalService" />
 	<bean class="com.liferay.portlet.ratings.service.impl.RatingsEntryServiceImpl" id="com.liferay.ratings.kernel.service.RatingsEntryService" />
 	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsEntryPersistenceImpl" id="com.liferay.ratings.kernel.service.persistence.RatingsEntryPersistence" parent="basePersistence" />
@@ -308,6 +316,7 @@
 	<bean class="com.liferay.portlet.ratings.service.impl.RatingsStatsLocalServiceImpl" id="com.liferay.ratings.kernel.service.RatingsStatsLocalService" />
 	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsStatsPersistenceImpl" id="com.liferay.ratings.kernel.service.persistence.RatingsStatsPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.ratings.service.persistence.impl.RatingsStatsFinderImpl" id="com.liferay.ratings.kernel.service.persistence.RatingsStatsFinder" parent="basePersistence" />
+	<bean class="com.liferay.portlet.ratings.service.convert.database.RatingsDatabaseConverter" id="com.liferay.portlet.ratings.service.convert.database.RatingsDatabaseConverter" />
 	<bean class="com.liferay.portlet.social.service.impl.SocialActivityLocalServiceImpl" id="com.liferay.social.kernel.service.SocialActivityLocalService" />
 	<bean class="com.liferay.portlet.social.service.impl.SocialActivityServiceImpl" id="com.liferay.social.kernel.service.SocialActivityService" />
 	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialActivityPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialActivityPersistence" parent="basePersistence" />
@@ -332,9 +341,12 @@
 	<bean class="com.liferay.portlet.social.service.impl.SocialRequestServiceImpl" id="com.liferay.social.kernel.service.SocialRequestService" />
 	<bean class="com.liferay.portlet.social.service.persistence.impl.SocialRequestPersistenceImpl" id="com.liferay.social.kernel.service.persistence.SocialRequestPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.social.service.impl.SocialRequestInterpreterLocalServiceImpl" id="com.liferay.social.kernel.service.SocialRequestInterpreterLocalService" />
+	<bean class="com.liferay.portlet.social.service.convert.database.SocialDatabaseConverter" id="com.liferay.portlet.social.service.convert.database.SocialDatabaseConverter" />
 	<bean class="com.liferay.portlet.trash.service.impl.TrashEntryLocalServiceImpl" id="com.liferay.trash.kernel.service.TrashEntryLocalService" />
 	<bean class="com.liferay.portlet.trash.service.impl.TrashEntryServiceImpl" id="com.liferay.trash.kernel.service.TrashEntryService" />
 	<bean class="com.liferay.portlet.trash.service.persistence.impl.TrashEntryPersistenceImpl" id="com.liferay.trash.kernel.service.persistence.TrashEntryPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.trash.service.impl.TrashVersionLocalServiceImpl" id="com.liferay.trash.kernel.service.TrashVersionLocalService" />
 	<bean class="com.liferay.portlet.trash.service.persistence.impl.TrashVersionPersistenceImpl" id="com.liferay.trash.kernel.service.persistence.TrashVersionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portlet.trash.service.convert.database.TrashDatabaseConverter" id="com.liferay.portlet.trash.service.convert.database.TrashDatabaseConverter" />
+	<bean class="com.liferay.counter.service.convert.database.CounterDatabaseConverter" id="com.liferay.counter.service.convert.database.CounterDatabaseConverter" />
 </beans>

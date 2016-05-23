@@ -16,4 +16,5 @@
 	<bean class="com.liferay.calendar.service.impl.CalendarResourceServiceImpl" id="com.liferay.calendar.service.CalendarResourceService" />
 	<bean class="com.liferay.calendar.service.persistence.impl.CalendarResourcePersistenceImpl" id="com.liferay.calendar.service.persistence.CalendarResourcePersistence" parent="basePersistence" />
 	<bean class="com.liferay.calendar.service.persistence.impl.CalendarResourceFinderImpl" id="com.liferay.calendar.service.persistence.CalendarResourceFinder" parent="basePersistence" />
+	<bean class="com.liferay.calendar.service.convert.database.CalendarDatabaseConverter" id="com.liferay.calendar.service.convert.database.CalendarDatabaseConverter" />
 </beans>

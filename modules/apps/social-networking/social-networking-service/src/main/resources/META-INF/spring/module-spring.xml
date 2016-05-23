@@ -8,4 +8,5 @@
 	<bean class="com.liferay.social.networking.service.impl.WallEntryLocalServiceImpl" id="com.liferay.social.networking.service.WallEntryLocalService" />
 	<bean class="com.liferay.social.networking.service.persistence.impl.WallEntryPersistenceImpl" id="com.liferay.social.networking.service.persistence.WallEntryPersistence" parent="basePersistence" />
 	<bean class="com.liferay.social.networking.service.persistence.impl.WallEntryFinderImpl" id="com.liferay.social.networking.service.persistence.WallEntryFinder" parent="basePersistence" />
+	<bean class="com.liferay.social.networking.service.convert.database.SNDatabaseConverter" id="com.liferay.social.networking.service.convert.database.SNDatabaseConverter" />
 </beans>

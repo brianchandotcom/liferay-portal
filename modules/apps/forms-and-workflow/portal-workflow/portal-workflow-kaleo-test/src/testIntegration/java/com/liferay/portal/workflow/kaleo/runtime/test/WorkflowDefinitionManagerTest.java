@@ -17,17 +17,27 @@ package com.liferay.portal.workflow.kaleo.runtime.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.InputStream;
 
+import java.util.Collection;
+import java.util.Iterator;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Marcellus Tavares
@@ -39,6 +49,50 @@ public class WorkflowDefinitionManagerTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(
+			WorkflowDefinitionManagerTest.class);
+
+		_bundleContext = bundle.getBundleContext();
+
+		int count = 0;
+
+		do {
+			Collection<ServiceReference<WorkflowDefinitionManager>>
+				serviceReferences = _bundleContext.getServiceReferences(
+					WorkflowDefinitionManager.class, "(proxy.bean=false)");
+
+			if (serviceReferences.isEmpty()) {
+				count++;
+
+				if (count >= 5) {
+					throw new IllegalStateException(
+						"Unable to get the reference to workflow definition " +
+							"manager");
+				}
+
+				Thread.sleep(500);
+			}
+
+			Iterator<ServiceReference<WorkflowDefinitionManager>> iterator =
+				serviceReferences.iterator();
+
+			_serviceReference = iterator.next();
+		}
+		while (_serviceReference == null);
+
+		_workflowDefinitionManager = _bundleContext.getService(
+			_serviceReference);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_bundleContext.ungetService(_serviceReference);
+
+		_bundleContext = null;
+	}
 
 	@Test
 	public void testValidateIncomingTransitionInitialStateDefinition()
@@ -322,7 +376,7 @@ public class WorkflowDefinitionManagerTest {
 		byte[] bytes = FileUtil.getBytes(inputStream);
 
 		try {
-			WorkflowDefinitionManagerUtil.validateWorkflowDefinition(bytes);
+			_workflowDefinitionManager.validateWorkflowDefinition(bytes);
 
 			Assert.fail();
 		}
@@ -339,7 +393,7 @@ public class WorkflowDefinitionManagerTest {
 		byte[] bytes = FileUtil.getBytes(inputStream);
 
 		try {
-			WorkflowDefinitionManagerUtil.validateWorkflowDefinition(bytes);
+			_workflowDefinitionManager.validateWorkflowDefinition(bytes);
 		}
 		catch (WorkflowException we) {
 			Assert.fail(we.getMessage());
@@ -354,5 +408,9 @@ public class WorkflowDefinitionManagerTest {
 		return classLoader.getResourceAsStream(
 			"com/liferay/portal/workflow/kaleo/runtime/dependencies/" + name);
 	}
+
+	private BundleContext _bundleContext;
+	private ServiceReference<WorkflowDefinitionManager> _serviceReference;
+	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

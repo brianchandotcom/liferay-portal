@@ -18,15 +18,13 @@ import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.URLCodec;
+import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.util.ClasspathUtil;
 
 import java.io.File;
 import java.io.IOException;
 
-import java.net.JarURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 
 import java.nio.file.DirectoryStream;
 import java.nio.file.DirectoryStream.Filter;
@@ -42,7 +40,6 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.tools.JavaFileObject;
@@ -133,72 +130,6 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 		return classResourceName.replace(CharPool.SLASH, CharPool.PERIOD);
 	}
 
-	protected File getFile(URL url) throws IOException {
-		URLConnection urlConnection = url.openConnection();
-
-		String fileName = url.getFile();
-
-		if (urlConnection instanceof JarURLConnection) {
-			JarURLConnection jarURLConnection = (JarURLConnection)urlConnection;
-
-			URL jarFileURL = jarURLConnection.getJarFileURL();
-
-			fileName = jarFileURL.getFile();
-		}
-		else if (Objects.equals(url.getProtocol(), "vfs")) {
-
-			// JBoss uses a custom vfs protocol to represent JAR files
-
-			fileName = url.getFile();
-
-			int index = fileName.indexOf(".jar");
-
-			if (index > 0) {
-				fileName = fileName.substring(0, index + 4);
-			}
-		}
-		else if (Objects.equals(url.getProtocol(), "wsjar")) {
-
-			// WebSphere uses a custom wsjar protocol to represent JAR files
-
-			fileName = url.getFile();
-
-			String protocol = "file:";
-
-			int index = fileName.indexOf(protocol);
-
-			if (index > -1) {
-				fileName = fileName.substring(protocol.length());
-			}
-
-			index = fileName.indexOf('!');
-
-			if (index > -1) {
-				fileName = fileName.substring(0, index);
-			}
-		}
-		else if (Objects.equals(url.getProtocol(), "zip")) {
-
-			// Weblogic uses a custom zip protocol to represent JAR files
-
-			fileName = url.getFile();
-
-			int index = fileName.indexOf('!');
-
-			if (index > 0) {
-				fileName = fileName.substring(0, index);
-			}
-		}
-		else {
-
-			// Ignore files that we do not know how to handle
-
-			return null;
-		}
-
-		return new File(URLCodec.decodeURL(fileName, StringPool.UTF8));
-	}
-
 	protected JavaFileObject getJavaFileObject(
 		URL resourceURL, String resourceName) {
 
@@ -212,7 +143,8 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 		else if (protocol.equals("jar")) {
 			try {
 				return new JarJavaFileObject(
-					className, getFile(resourceURL), resourceName);
+					className, ClasspathUtil.getFile(resourceURL),
+					resourceName);
 			}
 			catch (IOException ioe) {
 				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
@@ -281,7 +213,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 
 		for (URL url : urls) {
 			try {
-				File file = getFile(url);
+				File file = ClasspathUtil.getFile(url);
 
 				if (file == null) {
 					_logger.log(

@@ -20,13 +20,11 @@ import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.util.ClasspathUtil;
 
 import java.io.File;
 import java.io.IOException;
 
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 import java.security.AccessController;
@@ -258,7 +256,14 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		URL url = codeSource.getLocation();
 
 		try {
-			File file = new File(toURI(url));
+			File file = ClasspathUtil.getFile(url);
+
+			if (file == null) {
+				_logger.log(
+					Logger.LOG_DEBUG,
+					"Ignoring url " + url + "Unknown protocol " +
+						url.getProtocol());
+			}
 
 			if (file.exists() && file.canRead()) {
 				_classPath.remove(file);
@@ -389,38 +394,6 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 		servletContext.setAttribute(
 			Constants.JSP_TLD_URI_TO_LOCATION_MAP, tldMappings);
-	}
-
-	protected URI toURI(URL url)
-		throws MalformedURLException, URISyntaxException {
-
-		String protocol = url.getProtocol();
-
-		if (protocol.equals("reference")) {
-			String file = url.getFile();
-
-			url = new URL(file);
-
-			protocol = url.getProtocol();
-		}
-
-		if (protocol.equals("file")) {
-			return url.toURI();
-		}
-		else if (protocol.equals("jar")) {
-			String file = url.getFile();
-
-			int pos = file.indexOf("!/");
-
-			if (pos != -1) {
-				file = file.substring(0, pos);
-			}
-
-			return new URI(file);
-		}
-
-		throw new URISyntaxException(
-			url.toString(), "Unknown protocol " + protocol);
 	}
 
 	private static Set<String> _collectPackageNames(BundleWiring bundleWiring) {

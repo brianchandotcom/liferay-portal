@@ -5,6 +5,7 @@ import com.liferay.portal.convert.database.ModelRegistry;
 import com.liferay.portal.convert.util.ModelMigrator;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 <#list entities as entity>
 	import ${packagePath}.model.impl.${entity.name}Impl;
@@ -43,7 +44,12 @@ public class ${databaseConverterName} implements DatabaseConverter {
 		return models;
 	}
 
-	@BeanReference(type = ModelMigrator.class)
+	<#if osgiModule>
+		@ServiceReference(type = ModelMigrator.class)
+	<#else>
+		@BeanReference(type = ModelMigrator.class)
+	</#if>
+
 	private ModelMigrator _modelMigrator;
 
 }

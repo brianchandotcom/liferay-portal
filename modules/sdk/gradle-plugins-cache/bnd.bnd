@@ -1,4 +1,3 @@
 Bundle-Name: Liferay Gradle Plugins Cache
 Bundle-SymbolicName: com.liferay.gradle.plugins.cache
 Bundle-Version: 1.0.8
-Export-Package: com.liferay.gradle.plugins.cache.*

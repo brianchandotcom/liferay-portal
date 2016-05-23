@@ -107,6 +107,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		String fileName, String absolutePath, String content, Pattern pattern) {
 
 		if (absolutePath.contains("/portal-kernel/") ||
+			absolutePath.contains("/util-bridges/") ||
+			absolutePath.contains("/util-java/") ||
 			absolutePath.contains("/util-taglib/")) {
 
 			return;
@@ -331,7 +333,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _singleValueOnMultipleLinesPattern = Pattern.compile(
 		"\n.*:(\\\\\n\t).*(\n[^\t]|\\Z)");
 	private final Pattern _wilcardImportPattern = Pattern.compile(
-		"\\s(\\S+\\*)(,\\\\\n|\n|\\Z)");
+		"(\\S+\\*)(,\\\\\n|\n|\\Z)");
 
 	private static class DefinitionComparator implements Comparator<String> {
 

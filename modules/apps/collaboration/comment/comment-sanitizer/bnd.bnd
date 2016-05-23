@@ -10,4 +10,4 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Comments
 -includeresource:\
 	@guava-[0-9]*.jar,\
-	@owasp-java-html-sanitizer-[0-9]*.jar
+	@owasp-java-html-sanitizer-r[0-9]*.jar

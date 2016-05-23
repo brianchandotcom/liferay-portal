@@ -964,7 +964,7 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						container.delegate('click', instance._handleButtonsClick, '.btn', instance);
+						container.delegate('click', instance._handleButtonsClick, '>.form-group .btn', instance);
 					},
 
 					syncUI: function() {
@@ -1146,7 +1146,7 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						container.delegate('click', instance._handleButtonsClick, '.btn', instance);
+						container.delegate('click', instance._handleButtonsClick, '>.form-group .btn', instance);
 					},
 
 					syncUI: function() {
@@ -1306,7 +1306,7 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						container.delegate('click', instance._handleControlButtonsClick, '.btn', instance);
+						container.delegate('click', instance._handleControlButtonsClick, '>.form-group .btn', instance);
 					},
 
 					getInitialLayouts: function(privateLayout, callback) {

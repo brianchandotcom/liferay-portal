@@ -54,6 +54,8 @@ import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.apache.felix.fileinstall.ArtifactInstaller;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
@@ -92,7 +94,8 @@ public class LPKGDeployerImpl implements LPKGDeployer {
 
 		_lpkgBundleTracker = new BundleTracker<>(
 			bundleContext, ~Bundle.UNINSTALLED,
-			new LPKGBundleTrackerCustomizer(bundleContext, _urls));
+			new LPKGBundleTrackerCustomizer(
+				bundleContext, _urls, _licenseArtifactInstaller));
 
 		_lpkgBundleTracker.open();
 
@@ -301,6 +304,9 @@ public class LPKGDeployerImpl implements LPKGDeployer {
 
 	@Reference
 	private LPKGWARBundleRegistry _lpkgWarBundleRegistry;
+
+	@Reference(target = "(installer.type=license)")
+	private ArtifactInstaller _licenseArtifactInstaller;
 
 	private final Map<String, URL> _urls = new ConcurrentHashMap<>();
 	private BundleTracker<Bundle> _warWrapperBundlerTracker;

@@ -62,7 +62,7 @@ public interface PushNotificationsDeviceService extends BaseService {
 	public PushNotificationsDevice deletePushNotificationsDevice(
 		java.lang.String token) throws PortalException;
 
-	public PushNotificationsDevice deletePushNotificationsDevice(
+	public PushNotificationsDevice deletePushNotificationsDeviceById(
 		long pushNotificationsDeviceId) throws PortalException;
 
 	/**

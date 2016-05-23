@@ -53,11 +53,11 @@ public class PushNotificationsDeviceServiceUtil {
 		return getService().deletePushNotificationsDevice(token);
 	}
 
-	public static com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
+	public static com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDeviceById(
 		long pushNotificationsDeviceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .deletePushNotificationsDevice(pushNotificationsDeviceId);
+				   .deletePushNotificationsDeviceById(pushNotificationsDeviceId);
 	}
 
 	/**

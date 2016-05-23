@@ -60,7 +60,7 @@
 
 		<execute function="Click" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" />
 
-		<execute function="Click" locator1="CalendarEditEvent#ONLY_THIS_INSTANCE_BUTTON" />
+		<execute function="Click" locator1="CalendarEditEvent#SINGLE_EVENT_BUTTON" />
 
 		<var name="key_eventTitle" value="${eventTitle}" />
 
@@ -90,7 +90,7 @@
 		<execute function="Type" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
 		<execute function="Click" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_SAVE_BUTTON" />
 
-		<execute function="Click" locator1="CalendarEditEvent#ONLY_THIS_INSTANCE_BUTTON" />
+		<execute function="Click" locator1="CalendarEditEvent#SINGLE_EVENT_BUTTON" />
 
 		<var name="key_eventTitle" value="${eventTitle}" />
 

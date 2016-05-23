@@ -2431,7 +2431,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#deleteRepeatingEventViaAgendaView">
-			<var name="deleteOptionSet" value="All Events in the Series" />
+			<var name="deleteOptionSet" value="Entire Series" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 		</execute>
@@ -2468,7 +2468,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#deleteRepeatingEventViaAgendaView">
-			<var name="deleteOptionSet" value="All Following" />
+			<var name="deleteOptionSet" value="Following Events" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 		</execute>
@@ -2527,7 +2527,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#deleteRepeatingEventViaAgendaView">
-			<var name="deleteOptionSet" value="Only This Instance" />
+			<var name="deleteOptionSet" value="Single Event" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 		</execute>
@@ -3202,7 +3202,7 @@
 		</execute>
 
 		<execute macro="CalendarScheduler#saveRepeatingEvent">
-			<var name="saveOption" value="All Events in the Series" />
+			<var name="saveOption" value="Entire Series" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -3260,7 +3260,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#publishRepeating">
-			<var name="saveOption" value="All Following" />
+			<var name="saveOption" value="Following Events" />
 		</execute>
 
 		<execute macro="CalendarEvent#viewTitle">

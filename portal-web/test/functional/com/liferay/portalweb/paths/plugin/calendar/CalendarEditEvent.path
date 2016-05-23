@@ -536,17 +536,17 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ONLY_THIS_INSTANCE_BUTTON</td>
+	<td>SINGLE_EVENT_BUTTON</td>
 	<td>//button[@role='button' and contains(.,'Single Event')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ALL_FOLLOWING_BUTTON</td>
+	<td>FOLLOWING_EVENTS_BUTTON</td>
 	<td>//button[@role='button' and contains(.,'Following Events')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ALL_EVENTS_IN_THE_SERIES_BUTTON</td>
+	<td>ENTIRE_SERIES_BUTTON</td>
 	<td>//button[@role='button' and contains(.,'Entire Series')]</td>
 	<td></td>
 </tr>

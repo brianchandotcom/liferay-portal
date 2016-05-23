@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -95,8 +94,10 @@ public class SyncPolicies {
 
 	@Reference(unbind = "-")
 	private SAPEntryLocalService _sapEntryLocalService;
+
 	private ServiceRegistration<PortalInstanceLifecycleListener>
 		_serviceRegistration;
+
 	@Reference(unbind = "-")
 	private UserLocalService _userLocalService;
 

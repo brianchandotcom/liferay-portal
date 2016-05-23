@@ -209,6 +209,10 @@
 			<contains>The addSearchEngineConfigurator method has thrown an exception</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-65961">
+			<contains>Unable to add taglib</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LRQA-14442, temporary workaround until Kiyoshi Lee fixes it">
 			<contains>[org_eclipse_equinox_http_servlet.*Framework Event Dispatcher: Equinox Container:</contains>
 			<matches></matches>

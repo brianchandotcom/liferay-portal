@@ -311,14 +311,6 @@ public class BlogsEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_S_D() throws Exception {
-		_persistence.countByG_S_D(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt(), RandomTestUtil.nextDate());
-
-		_persistence.countByG_S_D(0L, 0, RandomTestUtil.nextDate());
-	}
-
-	@Test
 	public void testCountByG_NotS() throws Exception {
 		_persistence.countByG_NotS(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt());
@@ -397,11 +389,11 @@ public class BlogsEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_LtD_S() throws Exception {
-		_persistence.countByG_LtD_S(RandomTestUtil.nextLong(),
+	public void testCountByG_D_S() throws Exception {
+		_persistence.countByG_D_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
 
-		_persistence.countByG_LtD_S(0L, RandomTestUtil.nextDate(), 0);
+		_persistence.countByG_D_S(0L, RandomTestUtil.nextDate(), 0);
 	}
 
 	@Test
@@ -410,6 +402,14 @@ public class BlogsEntryPersistenceTest {
 			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_GtD_S(0L, RandomTestUtil.nextDate(), 0);
+	}
+
+	@Test
+	public void testCountByG_LtD_S() throws Exception {
+		_persistence.countByG_LtD_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextDate(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_LtD_S(0L, RandomTestUtil.nextDate(), 0);
 	}
 
 	@Test

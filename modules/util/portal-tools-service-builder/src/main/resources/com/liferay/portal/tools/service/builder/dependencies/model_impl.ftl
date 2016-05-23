@@ -546,6 +546,10 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		</#if>
 
 		<#if column.type== "boolean">
+			<#if column.jsonEnabled>
+				@JSON
+			</#if>
+
 			@Override
 			public ${column.type} is${column.methodName}() {
 				return _${column.name};

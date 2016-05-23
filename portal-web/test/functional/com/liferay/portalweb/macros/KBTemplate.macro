@@ -45,7 +45,6 @@
 	<command name="viewCP">
 		<execute macro="KBTemplate#gotoCP">
 			<var name="kbTemplateTitle" value="${kbTemplateTitle}" />
-			<var name="key_kbTemplateTitle" value="${kbTemplateTitle}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseTemplate#TEMPLATE_TITLE" value1="${kbTemplateTitle}" />

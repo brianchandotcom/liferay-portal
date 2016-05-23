@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -101,6 +100,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.jabsorb.JSONSerializer;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -113,6 +114,8 @@ public class CalEventImporter {
 
 	@Activate
 	protected void activate() throws Exception {
+		initJSONSerializer();
+
 		long start = System.currentTimeMillis();
 
 		if (_log.isInfoEnabled()) {
@@ -427,13 +430,15 @@ public class CalEventImporter {
 		_subscriptionLocalService.updateSubscription(subscription);
 	}
 
-	protected String convertRecurrence(String originalRecurrence) {
+	protected String convertRecurrence(String originalRecurrence)
+		throws Exception {
+
 		if (Validator.isNull(originalRecurrence)) {
 			return null;
 		}
 
-		TZSRecurrence tzsRecurrence =
-			(TZSRecurrence)JSONFactoryUtil.deserialize(originalRecurrence);
+		TZSRecurrence tzsRecurrence = (TZSRecurrence)_jsonSerializer.fromJSON(
+			originalRecurrence);
 
 		if (tzsRecurrence == null) {
 			return null;
@@ -1235,6 +1240,12 @@ public class CalEventImporter {
 		}
 	}
 
+	protected void initJSONSerializer() throws Exception {
+		_jsonSerializer = new JSONSerializer();
+
+		_jsonSerializer.registerDefaultSerializers();
+	}
+
 	protected boolean isAssetLinkImported(
 			long entryId1, long entryId2, int type)
 		throws SQLException {
@@ -1460,6 +1471,7 @@ public class CalEventImporter {
 	private ClassNameLocalService _classNameLocalService;
 	private CounterLocalService _counterLocalService;
 	private GroupLocalService _groupLocalService;
+	private JSONSerializer _jsonSerializer;
 	private MBDiscussionLocalService _mbDiscussionLocalService;
 	private MBMessageLocalService _mbMessageLocalService;
 	private MBThreadLocalService _mbThreadLocalService;

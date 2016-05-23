@@ -4,6 +4,8 @@
 
 		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
+		<execute function="Click" locator1="Button#PLUS" />
+
 		<execute function="Type" locator1="TextInput#TITLE" value1="${kbTemplateTitle}" />
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbTemplateContent}" />
 		<execute macro="PortletEntry#publish" />

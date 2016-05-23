@@ -762,6 +762,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		return _fields;
 	}
 
+	@JSON
 	@Override
 	public boolean isFields() {
 		return _fields;
@@ -838,6 +839,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		return _taxable;
 	}
 
+	@JSON
 	@Override
 	public boolean isTaxable() {
 		return _taxable;
@@ -865,6 +867,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		return _useShippingFormula;
 	}
 
+	@JSON
 	@Override
 	public boolean isUseShippingFormula() {
 		return _useShippingFormula;
@@ -881,6 +884,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		return _requiresShipping;
 	}
 
+	@JSON
 	@Override
 	public boolean isRequiresShipping() {
 		return _requiresShipping;
@@ -908,6 +912,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		return _featured;
 	}
 
+	@JSON
 	@Override
 	public boolean isFeatured() {
 		return _featured;
@@ -924,6 +929,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		return _sale;
 	}
 
+	@JSON
 	@Override
 	public boolean isSale() {
 		return _sale;
@@ -940,6 +946,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		return _smallImage;
 	}
 
+	@JSON
 	@Override
 	public boolean isSmallImage() {
 		return _smallImage;
@@ -995,6 +1002,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		return _mediumImage;
 	}
 
+	@JSON
 	@Override
 	public boolean isMediumImage() {
 		return _mediumImage;
@@ -1050,6 +1058,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		return _largeImage;
 	}
 
+	@JSON
 	@Override
 	public boolean isLargeImage() {
 		return _largeImage;

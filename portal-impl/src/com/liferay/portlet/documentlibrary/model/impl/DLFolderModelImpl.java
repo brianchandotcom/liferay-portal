@@ -640,6 +640,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		return _mountPoint;
 	}
 
+	@JSON
 	@Override
 	public boolean isMountPoint() {
 		return _mountPoint;
@@ -781,6 +782,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		return _hidden;
 	}
 
+	@JSON
 	@Override
 	public boolean isHidden() {
 		return _hidden;

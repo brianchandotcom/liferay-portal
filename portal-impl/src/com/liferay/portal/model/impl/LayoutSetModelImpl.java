@@ -423,6 +423,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		return _privateLayout;
 	}
 
+	@JSON
 	@Override
 	public boolean isPrivateLayout() {
 		return _privateLayout;
@@ -563,6 +564,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		return _layoutSetPrototypeLinkEnabled;
 	}
 
+	@JSON
 	@Override
 	public boolean isLayoutSetPrototypeLinkEnabled() {
 		return _layoutSetPrototypeLinkEnabled;

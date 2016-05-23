@@ -1022,6 +1022,7 @@ public class CalendarBookingModelImpl extends BaseModelImpl<CalendarBooking>
 		return _allDay;
 	}
 
+	@JSON
 	@Override
 	public boolean isAllDay() {
 		return _allDay;

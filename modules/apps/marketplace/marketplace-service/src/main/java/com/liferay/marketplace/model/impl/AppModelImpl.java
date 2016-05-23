@@ -575,6 +575,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		return _required;
 	}
 
+	@JSON
 	@Override
 	public boolean isRequired() {
 		return _required;

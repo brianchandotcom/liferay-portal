@@ -1036,6 +1036,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return _manualCheckInRequired;
 	}
 
+	@JSON
 	@Override
 	public boolean isManualCheckInRequired() {
 		return _manualCheckInRequired;

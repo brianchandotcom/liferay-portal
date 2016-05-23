@@ -331,6 +331,7 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		return _active;
 	}
 
+	@JSON
 	@Override
 	public boolean isActive() {
 		return _active;

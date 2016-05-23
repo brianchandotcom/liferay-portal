@@ -488,6 +488,7 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		return _viewActionId;
 	}
 
+	@JSON
 	@Override
 	public boolean isViewActionId() {
 		return _viewActionId;

@@ -612,6 +612,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		return _active;
 	}
 
+	@JSON
 	@Override
 	public boolean isActive() {
 		return _active;

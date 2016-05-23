@@ -407,6 +407,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		return _zipRequired;
 	}
 
+	@JSON
 	@Override
 	public boolean isZipRequired() {
 		return _zipRequired;
@@ -423,6 +424,7 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		return _active;
 	}
 
+	@JSON
 	@Override
 	public boolean isActive() {
 		return _active;

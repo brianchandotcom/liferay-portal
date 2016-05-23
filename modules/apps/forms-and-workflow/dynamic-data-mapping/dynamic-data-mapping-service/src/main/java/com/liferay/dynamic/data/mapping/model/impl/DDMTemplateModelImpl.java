@@ -1077,6 +1077,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		return _cacheable;
 	}
 
+	@JSON
 	@Override
 	public boolean isCacheable() {
 		return _cacheable;
@@ -1093,6 +1094,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		return _smallImage;
 	}
 
+	@JSON
 	@Override
 	public boolean isSmallImage() {
 		return _smallImage;

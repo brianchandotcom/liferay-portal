@@ -334,6 +334,7 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		return _active;
 	}
 
+	@JSON
 	@Override
 	public boolean isActive() {
 		return _active;

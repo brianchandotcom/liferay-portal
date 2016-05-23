@@ -777,6 +777,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		return _allowPingbacks;
 	}
 
+	@JSON
 	@Override
 	public boolean isAllowPingbacks() {
 		return _allowPingbacks;
@@ -793,6 +794,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		return _allowTrackbacks;
 	}
 
+	@JSON
 	@Override
 	public boolean isAllowTrackbacks() {
 		return _allowTrackbacks;
@@ -868,6 +870,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		return _smallImage;
 	}
 
+	@JSON
 	@Override
 	public boolean isSmallImage() {
 		return _smallImage;

@@ -716,6 +716,7 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 		return _minorEdit;
 	}
 
+	@JSON
 	@Override
 	public boolean isMinorEdit() {
 		return _minorEdit;
@@ -790,6 +791,7 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 		return _head;
 	}
 
+	@JSON
 	@Override
 	public boolean isHead() {
 		return _head;

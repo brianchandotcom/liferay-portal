@@ -1274,6 +1274,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return _indexable;
 	}
 
+	@JSON
 	@Override
 	public boolean isIndexable() {
 		return _indexable;
@@ -1302,6 +1303,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return _smallImage;
 	}
 
+	@JSON
 	@Override
 	public boolean isSmallImage() {
 		return _smallImage;

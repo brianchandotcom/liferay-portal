@@ -784,6 +784,7 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		return _male;
 	}
 
+	@JSON
 	@Override
 	public boolean isMale() {
 		return _male;

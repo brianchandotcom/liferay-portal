@@ -584,6 +584,7 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		return _primary;
 	}
 
+	@JSON
 	@Override
 	public boolean isPrimary() {
 		return _primary;

@@ -436,6 +436,7 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		return _system;
 	}
 
+	@JSON
 	@Override
 	public boolean isSystem() {
 		return _system;
@@ -475,6 +476,7 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		return _active;
 	}
 
+	@JSON
 	@Override
 	public boolean isActive() {
 		return _active;

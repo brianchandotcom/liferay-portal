@@ -576,6 +576,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 		return _completed;
 	}
 
+	@JSON
 	@Override
 	public boolean isCompleted() {
 		return _completed;

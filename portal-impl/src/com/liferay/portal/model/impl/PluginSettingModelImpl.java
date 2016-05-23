@@ -368,6 +368,7 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		return _active;
 	}
 
+	@JSON
 	@Override
 	public boolean isActive() {
 		return _active;

@@ -2145,6 +2145,12 @@
 
 		<execute macro="DDLRecord#addCP" />
 
+		<execute macro="DDLRecord#populateFieldDate">
+			<var name="ddlRecordFieldData" value="04/01/2018" />
+			<var name="fieldFieldLabel" value="Date" />
+			<var name="fieldName" value="Date" />
+		</execute>
+
 		<execute macro="DDLRecord#addRepeatableField">
 			<var name="fieldName" value="Date" />
 		</execute>
@@ -2161,6 +2167,11 @@
 		<execute macro="DDLRecord#deleteRepeatableField">
 			<var name="fieldName" value="Date" />
 			<var name="fieldNumber" value="2" />
+		</execute>
+
+		<execute macro="DDLRecord#viewFieldRepeatedNotPresent">
+			<var name="ddlRecordFieldData" value="04/01/2018" />
+			<var name="fieldName" value="Date" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />

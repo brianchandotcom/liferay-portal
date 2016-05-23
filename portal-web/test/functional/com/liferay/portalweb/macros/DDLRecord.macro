@@ -609,6 +609,12 @@
 		</if>
 	</command>
 
+	<command name="viewFieldRepeatedNotPresent">
+		<execute function="AssertTextEquals" locator1="xpath=(//div[@data-fieldname='${fieldName}'][1]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" value1="${ddlRecordFieldData}" />
+		<execute function="AssertElementNotPresent" locator1="xpath=(//div[@data-fieldname='${fieldName}'][2]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" />
+		<execute function="AssertElementNotPresent" locator1="xpath=(//div[@data-fieldname='${fieldName}'][3]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)" />
+	</command>
+
 	<command name="viewFirstFieldCP">
 		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />
 

@@ -1903,12 +1903,12 @@ public class ServiceBuilder {
 
 		// Write file
 
-		File modelRegistryFile = new File(
+		File databaseConverterFile = new File(
 			_outputPath + "/service/convert/database/" +
 				_databaseConverterName + ".java");
 
 		ToolsUtil.writeFile(
-			modelRegistryFile, content, _author, _modifiedFileNames);
+			databaseConverterFile, content, _author, _modifiedFileNames);
 	}
 
 	private void _createEJBPK(Entity entity) throws Exception {
@@ -3236,15 +3236,13 @@ public class ServiceBuilder {
 	}
 
 	private void _createSpringXml() throws Exception {
-		List<Entity> entities = new ArrayList<>();
-
-		if (!_packagePath.equals("com.liferay.counter")) {
-			entities = _ejbList;
+		if (_packagePath.equals("com.liferay.counter")) {
+			return;
 		}
 
 		Map<String, Object> context = _getContext();
 
-		context.put("entities", entities);
+		context.put("entities", _ejbList);
 		context.put("databaseConverterName", _databaseConverterName);
 
 		// Content

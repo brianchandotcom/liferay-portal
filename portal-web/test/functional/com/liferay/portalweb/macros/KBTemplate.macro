@@ -16,7 +16,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
-		<execute function="Click" locator1="KnowledgeBaseTemplate#TEMPLATE_TABLE_TEMPLATE_ACTIONS" />
+		<var name="key_rowEntry" value="${kbTemplateTitle}" />
+
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
 	</command>
 

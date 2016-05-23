@@ -63,7 +63,7 @@ public class PushNotificationsPortlet extends MVCPortlet {
 		long pushNotificationsDeviceId = ParamUtil.getLong(
 			actionRequest, "pushNotificationsDeviceId");
 
-		_pushNotificationsDeviceService.deletePushNotificationsDevice(
+		_pushNotificationsDeviceService.deletePushNotificationsDeviceById(
 			pushNotificationsDeviceId);
 	}
 

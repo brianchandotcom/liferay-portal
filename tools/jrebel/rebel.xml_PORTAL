@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<application
+	xmlns="http://www.zeroturnaround.com"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zeroturnaround.com http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd"
+>
+	<classpath>
+		<dir name="${basedir}/portal-impl/classes" />
+		<dir name="${basedir}/util-java/classes" />
+		<dir name="${basedir}/util-bridges/classes" />
+		<dir name="${basedir}/util-taglib/classes" />
+		<dir name="${basedir}/util-slf4j/classes" />
+	</classpath>
+	<web>
+		<link target="/">
+			<dir name="${basedir}/portal-web/docroot/" />
+		</link>
+	</web>
+</application>

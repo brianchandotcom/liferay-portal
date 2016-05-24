@@ -372,7 +372,7 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 	}
 
 	@Test
-	public void testConversionWithTransientField() throws Exception {
+	public void testConversionWithTransientField1() throws Exception {
 		DDMForm ddmForm = createDDMForm();
 
 		addDDMFormFields(

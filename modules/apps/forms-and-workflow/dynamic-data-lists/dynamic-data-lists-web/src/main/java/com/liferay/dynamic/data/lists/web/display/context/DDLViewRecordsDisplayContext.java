@@ -89,7 +89,7 @@ public class DDLViewRecordsDisplayContext {
 			List<DDMFormField> ddmFormFields = new ArrayList<>();
 
 			for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-				loadDDMFormFieldsList(ddmFormField, ddmFormFields);
+				addDDMFormField(ddmFormFields, ddmFormField);
 			}
 
 			int totalColumns = _TOTAL_COLUMNS;
@@ -116,8 +116,8 @@ public class DDLViewRecordsDisplayContext {
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			new LinkedHashMap<>();
 
-		for (DDMFormFieldValue ddmFormFieldValue :ddmFormFieldValues) {
-			loadDDMFormFieldValuesMap(ddmFormFieldValue, ddmFormFieldValuesMap);
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			putDDMFormFieldValue(ddmFormFieldValuesMap, ddmFormFieldValue);
 		}
 
 		return ddmFormFieldValuesMap;
@@ -145,6 +145,22 @@ public class DDLViewRecordsDisplayContext {
 		return orderByType;
 	}
 
+	protected void addDDMFormField(
+		List<DDMFormField> ddmFormFields, DDMFormField ddmFormField) {
+
+		if (!isDDMFormFieldTransient(ddmFormField)) {
+			ddmFormFields.add(ddmFormField);
+
+			return;
+		}
+
+		for (DDMFormField nestedDDMFormField :
+				ddmFormField.getNestedDDMFormFields()) {
+
+			addDDMFormField(ddmFormFields, nestedDDMFormField);
+		}
+	}
+
 	protected boolean isDDMFormFieldTransient(DDMFormField ddmFormField) {
 		if (Validator.isNull(ddmFormField.getDataType())) {
 			return true;
@@ -153,24 +169,9 @@ public class DDLViewRecordsDisplayContext {
 		return false;
 	}
 
-	protected void loadDDMFormFieldsList(
-		DDMFormField ddmFormField, List<DDMFormField> ddmFormFields) {
-
-		if (isDDMFormFieldTransient(ddmFormField)) {
-			for (DDMFormField nestedDDMFormField :
-					ddmFormField.getNestedDDMFormFields()) {
-
-				loadDDMFormFieldsList(nestedDDMFormField, ddmFormFields);
-			}
-		}
-		else {
-			ddmFormFields.add(ddmFormField);
-		}
-	}
-
-	protected void loadDDMFormFieldValuesMap(
-		DDMFormFieldValue ddmFormFieldValue,
-		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap) {
+	protected void putDDMFormFieldValue(
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap,
+		DDMFormFieldValue ddmFormFieldValue) {
 
 		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
 			ddmFormFieldValue.getName());
@@ -187,8 +188,8 @@ public class DDLViewRecordsDisplayContext {
 		for (DDMFormFieldValue nestedDDMFormFieldValue :
 				ddmFormFieldValue.getNestedDDMFormFieldValues()) {
 
-			loadDDMFormFieldValuesMap(
-				nestedDDMFormFieldValue, ddmFormFieldValuesMap);
+			putDDMFormFieldValue(
+				ddmFormFieldValuesMap, nestedDDMFormFieldValue);
 		}
 	}
 

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.openid.OpenId;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -55,7 +54,6 @@ public class OpenIdNavigationPreDynamicInclude extends BaseDynamicInclude {
 			WebKeys.THEME_DISPLAY);
 
 		if (!_openId.isEnabled(themeDisplay.getCompanyId())) {
-
 			return;
 		}
 

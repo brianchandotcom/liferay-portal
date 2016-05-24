@@ -24,6 +24,6 @@ String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName
 	<portlet:param name="mvcRenderCommandName" value="/login/openid" />
 </portlet:renderURL>
 
-<li class='<%= mvcRenderCommandName.startsWith("/login/openid") ? "active" : "" %>'>
+<li class="<%= mvcRenderCommandName.startsWith("/login/openid") ? "active" : "" %>">
 	<aui:a href="<%= openIdURL %>" label="openid" />
 </li>

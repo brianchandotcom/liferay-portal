@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.security.auth;
 
+import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -52,7 +53,8 @@ public class FullNameDefinitionFactory {
 		}
 
 		String[] fieldNames = StringUtil.split(
-			LanguageUtil.get(locale, "lang.user.name.field.names"));
+			LanguageUtil.get(
+				locale, LanguageConstants.KEY_USER_NAME_FIELD_NAMES));
 
 		fieldNames = ArrayUtil.append(requiredFieldNames, fieldNames);
 
@@ -67,10 +69,20 @@ public class FullNameDefinitionFactory {
 
 			fullNameField.setName(userNameField);
 
-			String[] values = StringUtil.split(
-				LanguageUtil.get(
-					locale, "lang.user.name." + userNameField + ".values",
-					StringPool.BLANK));
+			String[] values = null;
+
+			if (userNameField.equals(LanguageConstants.VALUE_PREFIX)) {
+				values = StringUtil.split(
+					LanguageUtil.get(
+						locale, LanguageConstants.KEY_USER_NAME_PREFIX_VALUES,
+						StringPool.BLANK));
+			}
+			else if (userNameField.equals(LanguageConstants.VALUE_SUFFIX)) {
+				values = StringUtil.split(
+					LanguageUtil.get(
+						locale, LanguageConstants.KEY_USER_NAME_SUFFIX_VALUES,
+						StringPool.BLANK));
+			}
 
 			fullNameField.setValues(values);
 
@@ -87,11 +99,15 @@ public class FullNameDefinitionFactory {
 
 	private String[] _getRequiredFieldNames(Locale locale) {
 		String[] requiredFieldNames = StringUtil.split(
-			LanguageUtil.get(locale, "lang.user.name.required.field.names"));
+			LanguageUtil.get(
+				locale, LanguageConstants.KEY_USER_NAME_REQUIRED_FIELD_NAMES));
 
-		if (!ArrayUtil.contains(requiredFieldNames, "first-name")) {
+		if (!ArrayUtil.contains(
+				requiredFieldNames, LanguageConstants.VALUE_FIRST_NAME)) {
+
 			requiredFieldNames = ArrayUtil.append(
-				new String[] {"first-name"}, requiredFieldNames);
+				new String[] {LanguageConstants.VALUE_FIRST_NAME},
+				requiredFieldNames);
 		}
 
 		return requiredFieldNames;

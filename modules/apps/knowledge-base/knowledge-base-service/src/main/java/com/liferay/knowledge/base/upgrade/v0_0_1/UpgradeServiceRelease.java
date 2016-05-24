@@ -42,21 +42,24 @@ public class UpgradeServiceRelease {
 				try (LoggingTimer loggingTimer = new LoggingTimer();
 					PreparedStatement ps = connection.prepareStatement(
 						"select distinct buildNumber from Release_ " +
-							"where schemaVersion is null");
+							"where schemaVersion is null and " +
+								"servletContextName = ?")) {
 
-					ResultSet rs = ps.executeQuery()) {
+					ps.setString(1, _SERVLET_CONTEXT_NAME);
 
-					while (rs.next()) {
-						String buildNumber = rs.getString("buildNumber");
+					try (ResultSet rs = ps.executeQuery()) {
+						while (rs.next()) {
+							String buildNumber = rs.getString("buildNumber");
 
-						String schemaVersion = toSchemaVersion(buildNumber);
+							String schemaVersion = toSchemaVersion(buildNumber);
 
-						runSQL(
-							"update Release_ set schemaVersion = '" +
+							runSQL(
+								"update Release_ set schemaVersion = '" +
 								schemaVersion + "' where buildNumber = " +
 								buildNumber + " and schemaVersion is null and" +
 								" servletContextName = '" +
 								_SERVLET_CONTEXT_NAME + "'");
+						}
 					}
 				}
 			}

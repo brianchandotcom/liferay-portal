@@ -3,4 +3,4 @@ Bundle-SymbolicName: com.liferay.portal.security.pacl
 Bundle-Version: 7.0.0
 Private-Package: com.liferay.portal.security.pacl.*
 -baseline: portal-pacl;version="6.2.0"
--liferay-includeresource: @jsqlparser-*.jar
+-includeresource: @jsqlparser-[0-9]*.jar

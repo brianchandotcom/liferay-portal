@@ -10,16 +10,16 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Template Engines
--liferay-includeresource:\
-	@aopalliance-*.jar,\
-	@args4j-*.jar,\
-	@asm-*.jar,\
-	@cglib-*.jar,\
-	@guava-*.jar,\
-	@guice-*.jar,\
-	@guice-assistedinject-*.jar,\
-	@guice-multibindings-*.jar,\
-	@icu4j-*.jar,\
-	@javax.inject-*.jar,\
-	@jsr305-*.jar,\
-	@soy-*.jar
+-includeresource:\
+	@aopalliance-[0-9]*.jar,\
+	@args4j-[0-9]*.jar,\
+	@asm-[0-9]*.jar,\
+	@cglib-[0-9]*.jar,\
+	@guava-[0-9]*.jar,\
+	@guice-[0-9]*.jar,\
+	@guice-assistedinject-[0-9]*.jar,\
+	@guice-multibindings-[0-9]*.jar,\
+	@icu4j-[0-9]*.jar,\
+	@javax.inject-[0-9]*.jar,\
+	@jsr305-[0-9]*.jar,\
+	@soy-[0-9]*.jar

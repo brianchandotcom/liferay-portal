@@ -10,4 +10,4 @@ Import-Package:\
 	!org.incava.util.diff.*,\
 	*
 Web-ContextPath: /wiki-engine-mediawiki
--liferay-includeresource: @org.jamwiki-*.jar
+-includeresource: @org.jamwiki-[0-9]*.jar

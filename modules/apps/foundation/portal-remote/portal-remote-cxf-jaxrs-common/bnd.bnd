@@ -56,10 +56,10 @@ Provide-Capability:\
 		osgi.contract=JavaJSONP;\
 		uses:="javax.json,javax.json.spi,javax.json.stream";\
 		version:Version=1
--liferay-includeresource:\
-	lib/cxf-rt-frontend-jaxrs.jar=cxf-rt-frontend-jaxrs-*.jar,\
-	lib/cxf-rt-rs-extension-providers.jar=cxf-rt-rs-extension-providers-*.jar,\
-	lib/javax.annotation-api.jar=javax.annotation-api-*.jar,\
-	lib/javax.json-api.jar=javax.json-api-*.jar,\
-	lib/javax.ws.rs-api.jar=javax.ws.rs-api-*.jar,\
-	lib/jettison.jar=jettison-*.jar
+-includeresource:\
+	lib/cxf-rt-frontend-jaxrs.jar=cxf-rt-frontend-jaxrs-[0-9]*.jar,\
+	lib/cxf-rt-rs-extension-providers.jar=cxf-rt-rs-extension-providers-[0-9]*.jar,\
+	lib/javax.annotation-api.jar=javax.annotation-api-[0-9]*.jar,\
+	lib/javax.json-api.jar=javax.json-api-[0-9]*.jar,\
+	lib/javax.ws.rs-api.jar=javax.ws.rs-api-[0-9]*.jar,\
+	lib/jettison.jar=jettison-[0-9]*.jar

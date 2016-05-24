@@ -27,4 +27,4 @@ Import-Package:\
 	com.liferay.taglib.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--liferay-includeresource: @com.liferay.util.taglib-*.jar!/META-INF/*.tld
+-includeresource: @com.liferay.util.taglib-[0-9]*.jar!/META-INF/*.tld

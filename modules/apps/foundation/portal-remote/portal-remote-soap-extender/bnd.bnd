@@ -41,8 +41,8 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
--liferay-includeresource:\
-	lib/cxf-rt-bindings-xml.jar=cxf-rt-bindings-xml-*.jar,\
-	lib/cxf-rt-frontend-jaxws.jar=cxf-rt-frontend-jaxws-*.jar,\
-	lib/cxf-rt-frontend-simple.jar=cxf-rt-frontend-simple-*.jar,\
-	lib/cxf-rt-ws-policy.jar=cxf-rt-ws-policy-*.jar
+-includeresource:\
+	lib/cxf-rt-bindings-xml.jar=cxf-rt-bindings-xml-[0-9]*.jar,\
+	lib/cxf-rt-frontend-jaxws.jar=cxf-rt-frontend-jaxws-[0-9]*.jar,\
+	lib/cxf-rt-frontend-simple.jar=cxf-rt-frontend-simple-[0-9]*.jar,\
+	lib/cxf-rt-ws-policy.jar=cxf-rt-ws-policy-[0-9]*.jar

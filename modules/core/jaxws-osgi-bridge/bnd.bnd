@@ -1,4 +1,4 @@
 Bundle-Name: Liferay JAX-WS OSGi Bridge
 Bundle-SymbolicName: com.liferay.jaxws.osgi.bridge
 Bundle-Version: 1.0.0
--liferay-includeresource: @jaxws-api-*.jar
+-includeresource: @jaxws-api-[0-9]*.jar

@@ -1,10 +1,10 @@
 Bundle-Name: Liferay Sync Security
 Bundle-SymbolicName: com.liferay.sync.security
 Bundle-Version: 2.0.2
--liferay-includeresource:\
-	@commons-codec-*.jar,\
-	@google-collections-*.jar,\
-	@gson-*.jar,\
-	@httpcore-*.jar,\
-	@joda-time-*.jar,\
-	@jsontoken-*.jar
+-includeresource:\
+	@commons-codec-[0-9]*.jar,\
+	@google-collections-[0-9]*.jar,\
+	@gson-[0-9]*.jar,\
+	@httpcore-[0-9]*.jar,\
+	@joda-time-[0-9]*.jar,\
+	@jsontoken-[0-9]*.jar

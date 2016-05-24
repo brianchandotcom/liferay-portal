@@ -9,4 +9,4 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks
--liferay-includeresource: @jcifs-*.jar
+-includeresource: @jcifs-[0-9]*.jar

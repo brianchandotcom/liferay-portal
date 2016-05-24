@@ -14,11 +14,11 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Stores
--liferay-includeresource:\
-	@chemistry-opencmis-client-api-*.jar,\
-	@chemistry-opencmis-client-bindings-*.jar,\
-	@chemistry-opencmis-client-impl-*.jar,\
-	@chemistry-opencmis-commons-api-*.jar,\
-	@chemistry-opencmis-commons-impl-*.jar,\
-	@stax2-api-*.jar,\
-	@woodstox-core-asl-*.jar
+-includeresource:\
+	@chemistry-opencmis-client-api-[0-9]*.jar,\
+	@chemistry-opencmis-client-bindings-[0-9]*.jar,\
+	@chemistry-opencmis-client-impl-[0-9]*.jar,\
+	@chemistry-opencmis-commons-api-[0-9]*.jar,\
+	@chemistry-opencmis-commons-impl-[0-9]*.jar,\
+	@stax2-api-[0-9]*.jar,\
+	@woodstox-core-asl-[0-9]*.jar

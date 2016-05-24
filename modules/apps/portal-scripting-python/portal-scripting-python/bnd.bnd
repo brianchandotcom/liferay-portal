@@ -27,4 +27,4 @@ Import-Package:\
 	"The default package '.' is not permitted by the Import-Package ...";is:=ignore,\
 	"The JAR is empty: ...";is:=ignore,\
 	"While setting properties ...";is:=ignore
--liferay-includeresource: lib/jython-standalone.jar=jython-standalone-*.jar
+-includeresource: lib/jython-standalone.jar=jython-standalone-[0-9]*.jar

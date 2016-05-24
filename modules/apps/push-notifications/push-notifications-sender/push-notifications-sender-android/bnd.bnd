@@ -3,6 +3,6 @@ Bundle-SymbolicName: com.liferay.push.notifications.sender.android
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--liferay-includeresource:\
-	@gcm-server-*.jar,\
-	@json-simple-*.jar
+-includeresource:\
+	@gcm-server-[0-9]*.jar,\
+	@json-simple-[0-9]*.jar

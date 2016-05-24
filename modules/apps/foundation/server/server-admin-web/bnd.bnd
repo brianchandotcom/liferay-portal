@@ -5,6 +5,6 @@ DynamicImport-Package: *
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://struts.apache.org/tags-html";version:Version="${Bundle-Version}"
--liferay-includeresource:\
-	@jcommon-*.jar,\
-	@jfreechart-*.jar
+-includeresource:\
+	@jcommon-[0-9]*.jar,\
+	@jfreechart-[0-9]*.jar

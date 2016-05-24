@@ -7,4 +7,4 @@ Export-Package:\
 	com.liferay.portal.osgi.web.servlet.context.helper.order
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--liferay-includeresource: @org.apache.felix.utils-*.jar!/org/apache/felix/utils/log/*
+-includeresource: @org.apache.felix.utils-[0-9]*.jar!/org/apache/felix/utils/log/*

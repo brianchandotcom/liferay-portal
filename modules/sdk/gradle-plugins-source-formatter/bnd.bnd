@@ -2,4 +2,4 @@ Bundle-Name: Liferay Gradle Plugins Source Formatter
 Bundle-SymbolicName: com.liferay.gradle.plugins.source.formatter
 Bundle-Version: 1.0.11
 Export-Package: com.liferay.gradle.plugins.source.formatter
--liferay-includeresource: @com.liferay.source.formatter-*.jar!/com/liferay/source/formatter/SourceFormatterArgs.class
+-includeresource: @com.liferay.source.formatter-[0-9]*.jar!/com/liferay/source/formatter/SourceFormatterArgs.class

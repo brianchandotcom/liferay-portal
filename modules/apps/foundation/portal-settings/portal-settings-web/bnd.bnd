@@ -4,4 +4,4 @@ Bundle-Version: 1.0.4
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /portlet-settings-web
--liferay-includeresource: META-INF/resources/users_admin/css=@com.liferay.users.admin.web-*.jar!/META-INF/resources/css
+-includeresource: META-INF/resources/users_admin/css=@com.liferay.users.admin.web-[0-9]*.jar!/META-INF/resources/css

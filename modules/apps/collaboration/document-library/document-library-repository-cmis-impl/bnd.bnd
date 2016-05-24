@@ -46,20 +46,20 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library
--liferay-includeresource:\
-	lib/chemistry-opencmis-client-api.jar=chemistry-opencmis-client-api-*.jar,\
-	lib/chemistry-opencmis-client-bindings.jar=chemistry-opencmis-client-bindings-*.jar,\
-	lib/chemistry-opencmis-client-impl.jar=chemistry-opencmis-client-impl-*.jar,\
-	lib/chemistry-opencmis-commons-api.jar=chemistry-opencmis-commons-api-*.jar,\
-	lib/chemistry-opencmis-commons-impl.jar=chemistry-opencmis-commons-impl-*.jar,\
-	lib/cxf-api.jar=cxf-api-*.jar,\
-	lib/cxf-rt-bindings-soap.jar=cxf-rt-bindings-soap-*.jar,\
-	lib/cxf-rt-bindings-xml.jar=cxf-rt-bindings-xml-*.jar,\
-	lib/cxf-rt-core.jar=cxf-rt-core-*.jar,\
-	lib/cxf-rt-databinding-jaxb.jar=cxf-rt-databinding-jaxb-*.jar,\
-	lib/cxf-rt-frontend-jaxws.jar=cxf-rt-frontend-jaxws-*.jar,\
-	lib/cxf-rt-frontend-simple.jar=cxf-rt-frontend-simple-*.jar,\
-	lib/cxf-rt-transports-http.jar=cxf-rt-transports-http-*.jar,\
-	lib/cxf-rt-ws-addr.jar=cxf-rt-ws-addr-*.jar,\
-	lib/cxf-rt-ws-policy.jar=cxf-rt-ws-policy-*.jar,\
-	lib/neethi.jar=neethi-*.jar
+-includeresource:\
+	lib/chemistry-opencmis-client-api.jar=chemistry-opencmis-client-api-[0-9]*.jar,\
+	lib/chemistry-opencmis-client-bindings.jar=chemistry-opencmis-client-bindings-[0-9]*.jar,\
+	lib/chemistry-opencmis-client-impl.jar=chemistry-opencmis-client-impl-[0-9]*.jar,\
+	lib/chemistry-opencmis-commons-api.jar=chemistry-opencmis-commons-api-[0-9]*.jar,\
+	lib/chemistry-opencmis-commons-impl.jar=chemistry-opencmis-commons-impl-[0-9]*.jar,\
+	lib/cxf-api.jar=cxf-api-[0-9]*.jar,\
+	lib/cxf-rt-bindings-soap.jar=cxf-rt-bindings-soap-[0-9]*.jar,\
+	lib/cxf-rt-bindings-xml.jar=cxf-rt-bindings-xml-[0-9]*.jar,\
+	lib/cxf-rt-core.jar=cxf-rt-core-[0-9]*.jar,\
+	lib/cxf-rt-databinding-jaxb.jar=cxf-rt-databinding-jaxb-[0-9]*.jar,\
+	lib/cxf-rt-frontend-jaxws.jar=cxf-rt-frontend-jaxws-[0-9]*.jar,\
+	lib/cxf-rt-frontend-simple.jar=cxf-rt-frontend-simple-[0-9]*.jar,\
+	lib/cxf-rt-transports-http.jar=cxf-rt-transports-http-[0-9]*.jar,\
+	lib/cxf-rt-ws-addr.jar=cxf-rt-ws-addr-[0-9]*.jar,\
+	lib/cxf-rt-ws-policy.jar=cxf-rt-ws-policy-[0-9]*.jar,\
+	lib/neethi.jar=neethi-[0-9]*.jar

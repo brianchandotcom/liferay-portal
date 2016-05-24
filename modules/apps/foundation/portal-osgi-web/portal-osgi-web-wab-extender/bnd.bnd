@@ -5,6 +5,6 @@ Export-Package: org.eclipse.core.runtime;x-liferay-compatibility:=spring
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: WAB
 Private-Package: com.liferay.portal.osgi.web.wab.extender.internal.*
--liferay-includeresource:\
-	@org.apache.felix.utils-*.jar!/org/apache/felix/utils/extender/*,\
-	@org.apache.felix.utils-*.jar!/org/apache/felix/utils/log/*
+-includeresource:\
+	@org.apache.felix.utils-[0-9]*.jar!/org/apache/felix/utils/extender/*,\
+	@org.apache.felix.utils-[0-9]*.jar!/org/apache/felix/utils/log/*

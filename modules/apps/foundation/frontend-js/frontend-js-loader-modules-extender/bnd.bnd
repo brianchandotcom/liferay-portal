@@ -3,8 +3,8 @@ Bundle-SymbolicName: com.liferay.frontend.js.loader.modules.extender
 Bundle-Version: 1.0.2
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend Infrastructure
--liferay-includeresource:\
-	@biz.aQute.bndlib-*.jar!/aQute/lib/base64/*,\
-	@biz.aQute.bndlib-*.jar!/aQute/lib/converter/*,\
-	@json-*.jar,\
-	@org.apache.felix.utils-*.jar!/org/apache/felix/utils/log/*
+-includeresource:\
+	@biz.aQute.bndlib-[0-9]*.jar!/aQute/lib/base64/*,\
+	@biz.aQute.bndlib-[0-9]*.jar!/aQute/lib/converter/*,\
+	@json-[0-9]*.jar,\
+	@org.apache.felix.utils-[0-9]*.jar!/org/apache/felix/utils/log/*

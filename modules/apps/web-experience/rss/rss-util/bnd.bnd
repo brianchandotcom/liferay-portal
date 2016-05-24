@@ -4,4 +4,4 @@ Bundle-Version: 1.0.3
 Export-Package: com.liferay.rss.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--liferay-includeresource: @icu4j-*.jar
+-includeresource: @icu4j-[0-9]*.jar

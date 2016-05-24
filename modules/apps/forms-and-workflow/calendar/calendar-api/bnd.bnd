@@ -20,4 +20,4 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Calendar
--liferay-includeresource: @com.google.ical-*.jar
+-includeresource: @com.google.ical-[0-9]*.jar

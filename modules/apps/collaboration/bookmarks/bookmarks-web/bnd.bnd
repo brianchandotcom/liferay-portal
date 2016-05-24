@@ -5,4 +5,4 @@ Liferay-JS-Config: /META-INF/resources/bookmarks/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Bookmarks
 Web-ContextPath: /bookmarks-web
--liferay-includeresource: @com.liferay.util.java-*.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class
+-includeresource: @com.liferay.util.java-[0-9]*.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class

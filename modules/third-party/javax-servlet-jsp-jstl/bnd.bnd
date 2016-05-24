@@ -7,4 +7,4 @@ Import-Package:\
 	\
 	org.apache.taglibs.standard.*;version=1.2.3,\
 	*
--liferay-includeresource: javax.servlet.jsp.jstl-*.jar
+-includeresource: javax.servlet.jsp.jstl-[0-9]*.jar

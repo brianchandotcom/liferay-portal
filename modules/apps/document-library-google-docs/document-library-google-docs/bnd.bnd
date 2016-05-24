@@ -18,4 +18,4 @@ Import-Package:\
 	!org.zeroturnaround.javarebel,\
 	*
 Web-ContextPath: /document-library-google-docs
--liferay-includeresource: @org.freemarker-*.jar
+-includeresource: @org.freemarker-[0-9]*.jar

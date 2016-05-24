@@ -3,8 +3,8 @@ Bundle-SymbolicName: com.liferay.push.notifications.sender.apple
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--liferay-includeresource:\
-	@apns-*.jar,\
-	@jackson-annotations-*.jar,\
-	@jackson-core-*.jar,\
-	@jackson-databind-*.jar
+-includeresource:\
+	@apns-[0-9]*.jar,\
+	@jackson-annotations-[0-9]*.jar,\
+	@jackson-core-[0-9]*.jar,\
+	@jackson-databind-[0-9]*.jar

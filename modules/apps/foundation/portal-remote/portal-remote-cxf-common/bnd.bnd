@@ -48,13 +48,13 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
--liferay-includeresource:\
-	lib/cxf-core.jar=cxf-core-*.jar,\
-	lib/cxf-rt-bindings-soap.jar=cxf-rt-bindings-soap-*.jar,\
-	lib/cxf-rt-databinding-jaxb.jar=cxf-rt-databinding-jaxb-*.jar,\
-	lib/cxf-rt-transports-http.jar=cxf-rt-transports-http-*.jar,\
-	lib/cxf-rt-wsdl.jar=cxf-rt-wsdl-*.jar,\
-	lib/cxf-tools-common.jar=cxf-tools-common-*.jar,\
-	lib/cxf-tools-validator.jar=cxf-tools-validator-*.jar,\
-	lib/wsdl4j.jar=wsdl4j-*.jar,\
-	lib/xmlschema-core.jar=xmlschema-core-*.jar
+-includeresource:\
+	lib/cxf-core.jar=cxf-core-[0-9]*.jar,\
+	lib/cxf-rt-bindings-soap.jar=cxf-rt-bindings-soap-[0-9]*.jar,\
+	lib/cxf-rt-databinding-jaxb.jar=cxf-rt-databinding-jaxb-[0-9]*.jar,\
+	lib/cxf-rt-transports-http.jar=cxf-rt-transports-http-[0-9]*.jar,\
+	lib/cxf-rt-wsdl.jar=cxf-rt-wsdl-[0-9]*.jar,\
+	lib/cxf-tools-common.jar=cxf-tools-common-[0-9]*.jar,\
+	lib/cxf-tools-validator.jar=cxf-tools-validator-[0-9]*.jar,\
+	lib/wsdl4j.jar=wsdl4j-[0-9]*.jar,\
+	lib/xmlschema-core.jar=xmlschema-core-[0-9]*.jar

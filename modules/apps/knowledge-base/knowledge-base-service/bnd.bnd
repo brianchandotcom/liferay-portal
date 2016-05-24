@@ -10,4 +10,4 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Knowledge Base
 Liferay-Require-SchemaVersion: 2.0.0
 Liferay-Service: true
--liferay-includeresource: @jericho-html-*.jar
+-includeresource: @jericho-html-[0-9]*.jar

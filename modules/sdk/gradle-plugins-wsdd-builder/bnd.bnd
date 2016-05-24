@@ -2,4 +2,4 @@ Bundle-Name: Liferay Gradle Plugins WSDD Builder
 Bundle-SymbolicName: com.liferay.gradle.plugins.wsdd.builder
 Bundle-Version: 1.0.9
 Export-Package: com.liferay.gradle.plugins.wsdd.builder
--liferay-includeresource: @com.liferay.portal.tools.wsdd.builder-*.jar!/com/liferay/portal/tools/wsdd/builder/WSDDBuilderArgs.class
+-includeresource: @com.liferay.portal.tools.wsdd.builder-[0-9]*.jar!/com/liferay/portal/tools/wsdd/builder/WSDDBuilderArgs.class

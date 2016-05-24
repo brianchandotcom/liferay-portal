@@ -3,7 +3,7 @@ Bundle-SymbolicName: com.liferay.push.notifications.sender.microsoft
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--liferay-includeresource:\
-	@httpclient-*.jar,\
-	@httpcore-*.jar,\
-	@java-mpns-*.jar
+-includeresource:\
+	@httpclient-[0-9]*.jar,\
+	@httpcore-[0-9]*.jar,\
+	@java-mpns-[0-9]*.jar

@@ -11,9 +11,9 @@ Bundle-Version: 2.0.1
 Export-Package: com.liferay.document.library.repository.search.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Document Library
--liferay-includeresource:\
-	lib/lucene-analyzers-common.jar=lucene-analyzers-common-*.jar,\
-	lib/lucene-core.jar=lucene-core-*.jar,\
-	lib/lucene-queries.jar=lucene-queries-*.jar,\
-	lib/lucene-queryparser.jar=lucene-queryparser-*.jar,\
-	lib/lucene-sandbox.jar=lucene-sandbox-*.jar
+-includeresource:\
+	lib/lucene-analyzers-common.jar=lucene-analyzers-common-[0-9]*.jar,\
+	lib/lucene-core.jar=lucene-core-[0-9]*.jar,\
+	lib/lucene-queries.jar=lucene-queries-[0-9]*.jar,\
+	lib/lucene-queryparser.jar=lucene-queryparser-[0-9]*.jar,\
+	lib/lucene-sandbox.jar=lucene-sandbox-[0-9]*.jar

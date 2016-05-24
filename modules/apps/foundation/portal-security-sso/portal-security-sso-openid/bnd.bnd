@@ -18,12 +18,12 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks
--liferay-includeresource:\
-	@guice-*.jar,\
-	@httpclient-*.jar,\
-	@httpcore-*.jar,\
-	@nekohtml-*.jar,\
-	@openid4java-*.jar,\
-	@org.apache.xml.resolver-*.jar,\
-	@xercesImpl-*.jar,\
-	@xml-apis-*.jar
+-includeresource:\
+	@guice-[0-9]*.jar,\
+	@httpclient-[0-9]*.jar,\
+	@httpcore-[0-9]*.jar,\
+	@nekohtml-[0-9]*.jar,\
+	@openid4java-[0-9]*.jar,\
+	@org.apache.xml.resolver-[0-9]*.jar,\
+	@xercesImpl-[0-9]*.jar,\
+	@xml-apis-[0-9]*.jar

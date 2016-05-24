@@ -3,4 +3,4 @@ Bundle-SymbolicName: com.liferay.blogs.service
 Bundle-Version: 1.0.2
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Blogs
--liferay-includeresource: @jericho-html-*.jar
+-includeresource: @jericho-html-[0-9]*.jar

@@ -3,13 +3,13 @@ Bundle-SymbolicName: com.liferay.push.notifications.sender.sms
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--liferay-includeresource:\
-	@commons-lang3-*.jar,\
-	@httpclient-*.jar,\
-	@httpcore-*.jar,\
-	@jackson-core-asl-*.jar,\
-	@jackson-mapper-asl-*.jar,\
-	@joda-convert-*.jar,\
-	@joda-time-*.jar,\
-	@json-simple-*.jar,\
-	@twilio-java-sdk-*.jar
+-includeresource:\
+	@commons-lang3-[0-9]*.jar,\
+	@httpclient-[0-9]*.jar,\
+	@httpcore-[0-9]*.jar,\
+	@jackson-core-asl-[0-9]*.jar,\
+	@jackson-mapper-asl-[0-9]*.jar,\
+	@joda-convert-[0-9]*.jar,\
+	@joda-time-[0-9]*.jar,\
+	@json-simple-[0-9]*.jar,\
+	@twilio-java-sdk-[0-9]*.jar

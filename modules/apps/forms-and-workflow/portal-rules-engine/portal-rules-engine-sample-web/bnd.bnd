@@ -17,8 +17,8 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Rules Engine
 Web-ContextPath: /portal-rules-engine-sample-web
 -donotcopy: (docroot/WEB-INF/src|.*\.jar|.*\.java)
--liferay-includeresource:\
-	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
-	WEB-INF/classes/=@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class,\
+-includeresource:\
+	WEB-INF/classes/=@com.liferay.util.java-[0-9]*.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
+	WEB-INF/classes/=@com.liferay.util.java-[0-9]*.jar!/com/liferay/util/portlet/PortletProps.class,\
 	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties
 -wab: docroot

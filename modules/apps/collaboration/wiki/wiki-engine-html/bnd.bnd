@@ -4,4 +4,4 @@ Bundle-Version: 2.0.1
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Wiki
 Web-ContextPath: /wiki-engine-html
--liferay-includeresource: @jericho-html-*.jar
+-includeresource: @jericho-html-[0-9]*.jar

@@ -8,8 +8,8 @@ Import-Package:\
 	*
 JPM-Command: liferay-deployment-helper
 Main-Class: com.liferay.deployment.helper.DeploymentHelper
--liferay-includeresource:\
-	@commons-cli-*.jar,\
-	@slf4j-api-*.jar,\
-	@slf4j-simple-*.jar,\
-	@zt-zip-*.jar
+-includeresource:\
+	@commons-cli-[0-9]*.jar,\
+	@slf4j-api-[0-9]*.jar,\
+	@slf4j-simple-[0-9]*.jar,\
+	@zt-zip-[0-9]*.jar

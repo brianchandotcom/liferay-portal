@@ -13,4 +13,4 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Scripting Engines
--liferay-includeresource: @groovy-*.jar
+-includeresource: @groovy-[0-9]*.jar

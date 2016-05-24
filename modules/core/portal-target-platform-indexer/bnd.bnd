@@ -7,4 +7,4 @@ Import-Package:\
 	\
 	!org.apache.tools.ant.*,\
 	*
--liferay-includeresource: @biz.aQute.bnd-*.jar
+-includeresource: @biz.aQute.bnd-[0-9]*.jar

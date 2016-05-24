@@ -3,6 +3,6 @@ Bundle-SymbolicName: com.liferay.portal.tools.db.upgrade.client
 Bundle-Version: 1.0.0
 JPM-Command: liferay-upgrade-db
 Main-Class: com.liferay.portal.tools.db.upgrade.client.UpgradeClient
--liferay-includeresource:\
-	@commons-cli-*.jar,\
-	@jline-*.jar
+-includeresource:\
+	@commons-cli-[0-9]*.jar,\
+	@jline-[0-9]*.jar

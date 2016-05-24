@@ -6,4 +6,4 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /marketplace-store-web
 -dsannotations-options: inherit
--liferay-includeresource: @scribe-*.jar
+-includeresource: @scribe-[0-9]*.jar

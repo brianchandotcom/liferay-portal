@@ -12,11 +12,11 @@ Import-Package:\
 	!org.pegdown.*,\
 	*
 Private-Package: com.liferay.knowledge.base.markdown.converter.internal.*
--liferay-includeresource:\
-	@asm-*.jar,\
-	@asm-analysis-*.jar,\
-	@asm-tree-*.jar,\
-	@asm-util-*.jar,\
-	@parboiled-core-*.jar,\
-	@parboiled-java-*.jar,\
-	@pegdown-*.jar
+-includeresource:\
+	@asm-[0-9]*.jar,\
+	@asm-analysis-[0-9]*.jar,\
+	@asm-tree-[0-9]*.jar,\
+	@asm-util-[0-9]*.jar,\
+	@parboiled-core-[0-9]*.jar,\
+	@parboiled-java-[0-9]*.jar,\
+	@pegdown-[0-9]*.jar

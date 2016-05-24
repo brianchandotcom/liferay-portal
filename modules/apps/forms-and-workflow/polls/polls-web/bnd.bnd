@@ -5,6 +5,6 @@ Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Polls
 Web-ContextPath: /polls-web
 -dsannotations-options: inherit
--liferay-includeresource:\
-	@jcommon-*.jar,\
-	@jfreechart-*.jar
+-includeresource:\
+	@jcommon-[0-9]*.jar,\
+	@jfreechart-[0-9]*.jar

@@ -6,4 +6,4 @@ Liferay-Releng-Module-Group-Title: Kaleo Workflow Engine
 Liferay-Require-SchemaVersion: 1.3.0
 Liferay-Service: true
 -dsannotations-options: inherit
--liferay-includeresource: @jabsorb-*.jar
+-includeresource: @jabsorb-[0-9]*.jar

@@ -58,6 +58,27 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--DESCRIPTIVE_VIEW-->
+<tr>
+	<td>DESCRIPTIVE_VIEW_ENTRY_TITLE</td>
+	<td>//div[contains(@id,'blogEntriesSearchContainer')]//div[contains(@class,'list-group-item-content')]/h4/a[contains(.,'${key_entryTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTIVE_VIEW_ENTRY_OPTIONS_DROPDOWN</td>
+	<td>//div[contains(@id,'blogEntriesSearchContainer') and contains(.,'${key_entryTitle}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTIVE_VIEW_ENTRY_STATUS</td>
+	<td>//div[contains(@class,'list-group-item-content') and contains(.,'${key_entryTitle}')]//span[contains(@class,'status')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ICON_VIEW-->
 <tr>
 	<td>ICON_VIEW_ENTRY_TITLE</td>

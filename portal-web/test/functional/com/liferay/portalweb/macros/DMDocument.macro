@@ -586,14 +586,43 @@
 		<if>
 			<equals arg1="${dmRepositoryName}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#CHECKOUT_SUCCESS" value1="You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire." />
 			</then>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#CHECKOUT_SUCCESS" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="DocumentsAndMediaDocument#TOOLBAR_CHECKIN_BUTTON" value1="Checkin" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#CHECKIN" value1="Checkin" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="Radio#MAJOR_VERSION" />
+			<then>
+				<if>
+					<equals arg1="${revision}" arg2="Major" />
+					<then>
+						<execute function="Click" locator1="Radio#MAJOR_VERSION" />
+					</then>
+					<elseif>
+						<equals arg1="${revision}" arg2="Minor" />
+						<then>
+							<execute function="Click" locator1="Radio#MINOR_VERSION" />
+						</then>
+					</elseif>
+				</if>
+
+				<if>
+					<isset var="changeLog" />
+					<then>
+						<execute function="Type" locator1="TextArea#CHANGE_LOG" value1="${changeLog}" />
+					</then>
+				</if>
+
+				<execute function="Click" locator1="Button#SAVE" />
+			</then>
+		</if>
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
@@ -675,7 +704,7 @@
 	<command name="checkoutCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_ACTIONS" />
+		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#CHECKOUT" value1="Checkout" />
 
@@ -684,10 +713,10 @@
 		<if>
 			<equals arg1="${dmRepositoryName}" arg2="true" />
 			<then>
-				<execute function="AssertElementNotPresent" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" />
+				<execute function="AssertElementNotPresent" locator1="Message#CHECKOUT_SUCCESS" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaDocument#SUCCESS_MESSAGE_DOCUMENT_VIEW" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#CHECKOUT_SUCCESS" value1="You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day." />
 			</else>
 		</if>
 	</command>
@@ -1633,8 +1662,8 @@
 	</command>
 
 	<command name="viewCheckedinCP">
-		<execute function="AssertVisible" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_VERSION" />
-		<execute function="AssertElementNotPresent" locator1="Message#SUCCESS" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_VIEW_VERSION_NUMBER" value1="${dmDocumentVersionNumber}" />
+		<execute function="AssertElementNotPresent" locator1="Message#CHECKOUT_SUCCESS" />
 
 		<if>
 			<equals arg1="${dmRepositoryName}" arg2="true" />
@@ -2066,12 +2095,6 @@
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
 		<execute function="AssertVisible" locator1="DocumentsAndMedia#ICON_DOCUMENT_ICON_LOCKED" />
-	</command>
-
-	<command name="viewIconNotLockedCP">
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
-
-		<execute function="AssertVisible" locator1="DocumentsAndMedia#ICON_DOCUMENT_ICON_NOT_LOCKED" />
 	</command>
 
 	<command name="viewMovedToFolderCP">

@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DOCUMENT_VIEW_VERSION_NUMBER</td>
+	<td>//section[contains(@id,'DLAdminPortlet')]//span[@class='workflow-version']/span[contains(@class,'workflow-value')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENT_VIEW_WORKFLOW_STATUS</td>
 	<td>//section[contains(@id,'DLAdminPortlet')]//span[@class='workflow-status']/span[contains(@class,'workflow-value')]</td>
 	<td></td>

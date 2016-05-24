@@ -520,6 +520,19 @@ public class ResourcePermissionLocalServiceImpl
 	}
 
 	/**
+	 * Returns the resource permissions that apply to the resource.
+	 *
+	 * @param  name the resource's name, which can be either a class name or a
+	 *         portlet ID
+	 */
+	@Override
+	public List<ResourcePermission> getResourceResourcePermissions(
+		String name) {
+
+		return resourcePermissionPersistence.findByName(name);
+	}
+
+	/**
 	 * Returns all the resource permissions for the role.
 	 *
 	 * @param  roleId the primary key of the role

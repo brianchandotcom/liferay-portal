@@ -83,10 +83,10 @@ public class PushNotificationsDeviceServiceSoap {
 	}
 
 	public static com.liferay.push.notifications.model.PushNotificationsDeviceSoap deletePushNotificationsDevice(
-		long pushNotificationsDeviceId) throws RemoteException {
+		java.lang.String token) throws RemoteException {
 		try {
 			com.liferay.push.notifications.model.PushNotificationsDevice returnValue =
-				PushNotificationsDeviceServiceUtil.deletePushNotificationsDevice(pushNotificationsDeviceId);
+				PushNotificationsDeviceServiceUtil.deletePushNotificationsDevice(token);
 
 			return com.liferay.push.notifications.model.PushNotificationsDeviceSoap.toSoapModel(returnValue);
 		}
@@ -97,11 +97,11 @@ public class PushNotificationsDeviceServiceSoap {
 		}
 	}
 
-	public static com.liferay.push.notifications.model.PushNotificationsDeviceSoap deletePushNotificationsDevice(
-		java.lang.String token) throws RemoteException {
+	public static com.liferay.push.notifications.model.PushNotificationsDeviceSoap deletePushNotificationsDeviceById(
+		long pushNotificationsDeviceId) throws RemoteException {
 		try {
 			com.liferay.push.notifications.model.PushNotificationsDevice returnValue =
-				PushNotificationsDeviceServiceUtil.deletePushNotificationsDevice(token);
+				PushNotificationsDeviceServiceUtil.deletePushNotificationsDeviceById(pushNotificationsDeviceId);
 
 			return com.liferay.push.notifications.model.PushNotificationsDeviceSoap.toSoapModel(returnValue);
 		}

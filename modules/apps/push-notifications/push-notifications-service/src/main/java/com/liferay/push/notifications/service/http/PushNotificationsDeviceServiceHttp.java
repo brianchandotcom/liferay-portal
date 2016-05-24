@@ -90,15 +90,14 @@ public class PushNotificationsDeviceServiceHttp {
 	}
 
 	public static com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
-		HttpPrincipal httpPrincipal, long pushNotificationsDeviceId)
+		HttpPrincipal httpPrincipal, java.lang.String token)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PushNotificationsDeviceServiceUtil.class,
 					"deletePushNotificationsDevice",
 					_deletePushNotificationsDeviceParameterTypes1);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					pushNotificationsDeviceId);
+			MethodHandler methodHandler = new MethodHandler(methodKey, token);
 
 			Object returnObj = null;
 
@@ -122,15 +121,16 @@ public class PushNotificationsDeviceServiceHttp {
 		}
 	}
 
-	public static com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
-		HttpPrincipal httpPrincipal, java.lang.String token)
+	public static com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDeviceById(
+		HttpPrincipal httpPrincipal, long pushNotificationsDeviceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(PushNotificationsDeviceServiceUtil.class,
-					"deletePushNotificationsDevice",
-					_deletePushNotificationsDeviceParameterTypes2);
+					"deletePushNotificationsDeviceById",
+					_deletePushNotificationsDeviceByIdParameterTypes2);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, token);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					pushNotificationsDeviceId);
 
 			Object returnObj = null;
 
@@ -216,9 +216,9 @@ public class PushNotificationsDeviceServiceHttp {
 			java.lang.String.class, java.lang.String.class
 		};
 	private static final Class<?>[] _deletePushNotificationsDeviceParameterTypes1 =
-		new Class[] { long.class };
-	private static final Class<?>[] _deletePushNotificationsDeviceParameterTypes2 =
 		new Class[] { java.lang.String.class };
+	private static final Class<?>[] _deletePushNotificationsDeviceByIdParameterTypes2 =
+		new Class[] { long.class };
 	private static final Class<?>[] _sendPushNotificationParameterTypes3 = new Class[] {
 			long[].class, java.lang.String.class
 		};

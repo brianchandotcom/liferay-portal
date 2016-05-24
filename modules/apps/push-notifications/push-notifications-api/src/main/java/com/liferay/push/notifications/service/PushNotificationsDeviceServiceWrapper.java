@@ -50,10 +50,10 @@ public class PushNotificationsDeviceServiceWrapper
 	}
 
 	@Override
-	public com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDevice(
+	public com.liferay.push.notifications.model.PushNotificationsDevice deletePushNotificationsDeviceById(
 		long pushNotificationsDeviceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _pushNotificationsDeviceService.deletePushNotificationsDevice(pushNotificationsDeviceId);
+		return _pushNotificationsDeviceService.deletePushNotificationsDeviceById(pushNotificationsDeviceId);
 	}
 
 	/**

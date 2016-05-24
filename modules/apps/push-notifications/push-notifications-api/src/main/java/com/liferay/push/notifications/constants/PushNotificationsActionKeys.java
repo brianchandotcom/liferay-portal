@@ -19,6 +19,10 @@ package com.liferay.push.notifications.constants;
  */
 public class PushNotificationsActionKeys {
 
+	public static final String ADD_DEVICE = "ADD_DEVICE";
+
+	public static final String DELETE_DEVICE = "DELETE_DEVICE";
+
 	public static final String MANAGE_DEVICES = "MANAGE_DEVICES";
 
 	public static final String SEND_PUSH_NOTIFICATION =

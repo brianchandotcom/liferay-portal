@@ -44,7 +44,7 @@ public class PushNotificationsDeviceServiceImpl
 		throws PortalException {
 
 		PushNotificationsPermission.check(
-			getPermissionChecker(), PushNotificationsActionKeys.MANAGE_DEVICES);
+			getPermissionChecker(), PushNotificationsActionKeys.ADD_DEVICE);
 
 		PushNotificationsDevice pushNotificationsDevice =
 			pushNotificationsDevicePersistence.fetchByToken(token);
@@ -71,24 +71,13 @@ public class PushNotificationsDeviceServiceImpl
 		return pushNotificationsDevice;
 	}
 
-	public PushNotificationsDevice deletePushNotificationsDevice(
-			long pushNotificationsDeviceId)
-		throws PortalException {
-
-		PushNotificationsPermission.check(
-			getPermissionChecker(), PushNotificationsActionKeys.MANAGE_DEVICES);
-
-		return pushNotificationsDeviceLocalService.
-			deletePushNotificationsDevice(pushNotificationsDeviceId);
-	}
-
 	@AccessControlled(guestAccessEnabled = true)
 	@Override
 	public PushNotificationsDevice deletePushNotificationsDevice(String token)
 		throws PortalException {
 
 		PushNotificationsPermission.check(
-			getPermissionChecker(), PushNotificationsActionKeys.MANAGE_DEVICES);
+			getPermissionChecker(), PushNotificationsActionKeys.DELETE_DEVICE);
 
 		PushNotificationsDevice pushNotificationsDevice =
 			pushNotificationsDevicePersistence.fetchByToken(token);
@@ -114,6 +103,17 @@ public class PushNotificationsDeviceServiceImpl
 		}
 
 		return pushNotificationsDevice;
+	}
+
+	public PushNotificationsDevice deletePushNotificationsDeviceById(
+			long pushNotificationsDeviceId)
+		throws PortalException {
+
+		PushNotificationsPermission.check(
+			getPermissionChecker(), PushNotificationsActionKeys.MANAGE_DEVICES);
+
+		return pushNotificationsDeviceLocalService.
+			deletePushNotificationsDevice(pushNotificationsDeviceId);
 	}
 
 	@Override

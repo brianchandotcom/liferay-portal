@@ -201,7 +201,8 @@
 
 				<var name="key_ddlTemplateName" value="${templateName}" />
 
-				<execute function="AssertClickNoError" locator1="DDMSelectTemplate#TEMPLATE_TABLE_CHOOSE_BUTTON" value1="Choose" />
+				<execute function="AssertClickNoError" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK" value1="${templateName}" />
+
 				<execute function="Confirm#assertConfirmationNoWait" value1="Selecting a new template deletes all unsaved content. Do you want to proceed?" />
 
 				<execute function="SelectFrame" value1="relative=top" />
@@ -482,7 +483,8 @@
 
 		<var name="key_ddlDataDefinitionName" value="${structureName}" />
 
-		<execute function="AssertClickNoError" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
+		<execute function="AssertClickNoError" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${structureName}" />
+
 		<execute function="Confirm#assertConfirmationNoWait" value1="Selecting a new structure changes the available input fields and available templates. Do you want to proceed?" />
 		<execute function="SelectFrame" value1="relative=top" />
 
@@ -1220,7 +1222,9 @@
 		<var name="key_ddlTemplateName" value="${templateName}" />
 
 		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
-		<execute function="AssertClickNoError" locator1="DDMSelectTemplate#TEMPLATE_TABLE_CHOOSE_BUTTON" value1="Choose" />
+
+		<execute function="AssertClickNoError" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME_LINK" value1="${templateName}" />
+
 		<execute function="Confirm#assertConfirmationNoWait" value1="Selecting a new template deletes all unsaved content. Do you want to proceed?" />
 
 		<execute macro="IFrame#selectTopFrame" />

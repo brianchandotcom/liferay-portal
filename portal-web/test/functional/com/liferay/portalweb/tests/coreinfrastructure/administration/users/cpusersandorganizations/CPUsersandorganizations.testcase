@@ -1888,7 +1888,7 @@
 
 		<var name="key_orgName" value="Organization Name 1" />
 
-		<execute function="AssertTextEquals" locator1="SitesDirectory#SITE_ENTRY" value1="Liferay" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitesDirectory#SITE_ENTRY" value1="Liferay" />
 		<execute function="AssertTextEquals" locator1="SitesDirectory#ORG_SITE_ENTRY" value1="Organization Name 1" />
 		<execute function="AssertTextNotPresent" locator1="SitesDirectory#ORG_SITE_ENTRY" value1="Organization Name 2" />
 

@@ -89,7 +89,7 @@
 
 		<execute function="Type#typeEditor" locator1="Comments#COMMENT_FIELD" value1="${entryComment}" />
 
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Button#REPLY" value1="Reply" />
+		<execute function="AssertClick#assertTextClickAt" locator1="Button#REPLY" value1="Reply" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

@@ -27,20 +27,6 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="assertPartialTextClickAtAndWait">
-		<execute function="WaitForSPARefresh" />
-
-		<execute function="AssertTextEquals#assertPartialText" />
-
-		<execute selenium="mouseOver" />
-
-		<execute selenium="clickAtAndWait" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
 	<command name="assertPartialTextClickAtCPNavigation">
 		<execute function="WaitForSPARefresh" />
 
@@ -125,89 +111,6 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="assertTextClickAtAndWaitCKEditor">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
-
-		<execute function="AssertClick#assertTextClickAtAndWait" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="assertTextClickAtCKEditor">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<execute function="AssertClick#assertTextClickAt" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="assertTextClickAtClickDockbar">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<execute argument1="//div[@id='_145_dockbar']" selenium="waitForElementPresent" />
-
-		<execute selenium="mouseOver" />
-
-		<execute argument1="//script[contains(@src,'/liferay/node.js')]" selenium="waitForElementPresent" />
-
-		<execute function="AssertClick#assertTextClickAt" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="assertTextClickAtNavigation">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<if>
-			<condition argument1="//a[@id='_145_addPanel']" selenium="isElementPresent" />
-			<then>
-				<execute argument1="//nav[@id='navigation']" selenium="clickAt" />
-
-				<execute argument1="//script[contains(@src,'/aui/sortable/sortable')]" selenium="waitForElementPresent" />
-
-				<execute selenium="mouseOver" />
-
-				<execute argument1="//li[contains(@class,'lfr-nav-hover')]" selenium="waitForElementPresent" />
-			</then>
-		</if>
-
-		<execute function="AssertClick#assertTextClickAt" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="assertTextClickAtViewHistory">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="//div[contains(@id,'articleToolbar')]/div/a[contains(.,'View History')]" selenium="waitForVisible" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<execute function="AssertClick#assertTextClickAt" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
 	<command name="assertTextClickAtWaitForLastScript">
 		<execute function="WaitForSPARefresh" />
 
@@ -248,23 +151,6 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="assertTextClickWaitForInlineCKEditor">
-		<execute function="WaitForSPARefresh" />
-
-		<if>
-			<condition argument1="//div[contains(@class,'cke_editable_inline')]" selenium="isElementPresent" />
-			<then>
-				<execute argument1="//script[contains(@src,'http://localhost:8080/o/frontend-editors-web/ckeditor/plugins/wsc/lang/en.js')]" selenium="waitForElementPresent" />
-			</then>
-		</if>
-
-		<execute function="AssertClick#assertTextClick" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
 	<command name="assertValueClickAt">
 		<execute function="WaitForSPARefresh" />
 
@@ -293,18 +179,6 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
-	<command name="assertValueClickAtAndWaitCKEditor">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
-
-		<execute function="AssertClick#assertValueClickAtAndWait" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
 	<command name="pauseAssertPartialTextClickAt">
 		<execute function="WaitForSPARefresh" />
 
@@ -323,18 +197,6 @@
 		<execute argument1="1000" selenium="pause" />
 
 		<execute function="AssertClick#assertTextClickAt" />
-
-		<execute selenium="assertJavaScriptErrors" />
-
-		<execute selenium="assertLiferayErrors" />
-	</command>
-
-	<command name="pauseAssertTextClickAtAndWait">
-		<execute function="WaitForSPARefresh" />
-
-		<execute argument1="1000" selenium="pause" />
-
-		<execute function="AssertClick#assertTextClickAtAndWait" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

@@ -53,7 +53,7 @@
 	<command name="navigateToContent">
 		<var name="key_contentBody" value="${contentBody}" />
 
-		<execute function="Click#partialTextClickAtAndWait" locator1="Notifications#NOTIFICATIONS_CONTENT" value1="${contentBody}" />
+		<execute function="Click#partialTextClickAt" locator1="Notifications#NOTIFICATIONS_CONTENT" value1="${contentBody}" />
 	</command>
 
 	<command name="tearDownUnreadNotifications">

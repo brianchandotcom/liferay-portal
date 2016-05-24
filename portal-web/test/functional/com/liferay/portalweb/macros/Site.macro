@@ -441,21 +441,29 @@
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+
 		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Sites" />
 		</execute>
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#SITES_SELECT_LINK" value1="Select" />
+
 		<execute function="SelectFrame" locator1="CPUsersandorganizationsUser#SITES_SELECT_IFRAME" />
 
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute function="Type" locator1="CPUsersandorganizationsUser#SITES_SELECT_SEARCH_FIELD" value1="${siteName}" />
+
 		<execute function="KeyPress" locator1="CPUsersandorganizationsUser#SITES_SELECT_SEARCH_FIELD" value1="\RETURN" />
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#SITES_SELECT_TABLE_NAME" value1="${siteName}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="CPUsersandorganizationsUser#SITES_SELECT_TABLE_NAME" value1="${siteName}" />
+
 		<execute function="Click" locator1="SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK" />
+
 		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -488,7 +496,9 @@
 					<var name="currentSiteLanguage" value="${currentSiteLanguage}" />
 
 					<execute function="Select" locator1="SiteSettingsDisplaySettings#AVAILABLE_LANGUAGES_AVAILABLE_SELECT" value1="${currentSiteLanguage}" />
+
 					<execute function="Click" locator1="SiteSettingsDisplaySettings#MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
+
 					<execute function="AssertTextEquals#assertPartialText" locator1="SiteSettingsDisplaySettings#AVAILABLE_LANGUAGES_CURRENT_SELECT" value1="${currentSiteLanguage}" />
 				</for>
 			</then>

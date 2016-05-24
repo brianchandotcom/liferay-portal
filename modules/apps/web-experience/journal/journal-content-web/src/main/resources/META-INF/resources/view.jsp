@@ -35,6 +35,7 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 					<div>
 						<liferay-ui:message key="this-application-is-not-visible-to-users-yet" />
 					</div>
+
 					<div>
 						<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="select-web-content-to-make-it-visible" /></aui:a>
 					</div>
@@ -108,9 +109,9 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 								delta="<%= 1 %>"
 								id="articleDisplayPages"
 								maxPages="<%= 25 %>"
+								portletURL="<%= portletURL %>"
 								total="<%= articleDisplay.getNumberOfPages() %>"
 								type="article"
-								url="<%= portletURL.toString() %>"
 							/>
 
 							<br />

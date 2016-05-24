@@ -179,7 +179,15 @@
 	}
 
 	.image-viewer-sidenav {
-		&, .image-viewer-sidenav-menu {
+		&.open {
+			width: 300px;
+
+			@include sm {
+				width: 400px;
+			}
+		}
+
+		.image-viewer-sidenav-menu {
 			width: 300px;
 
 			@include sm {

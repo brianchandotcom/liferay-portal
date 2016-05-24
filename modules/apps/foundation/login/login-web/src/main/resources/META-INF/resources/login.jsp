@@ -245,7 +245,7 @@
 		</aui:script>
 
 		<aui:script sandbox="<%= true %>">
-			var form = AUI.$(document.<portlet:namespace /><%= formName %>);
+			var form = $(document.<portlet:namespace /><%= formName %>);
 
 			form.on(
 				'submit',

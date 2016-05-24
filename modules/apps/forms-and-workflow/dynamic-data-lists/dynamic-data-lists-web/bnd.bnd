@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.dynamic.data.lists.web
 Bundle-Version: 1.0.6
 Export-Package:\
 	com.liferay.dynamic.data.lists.web.asset,\
-	com.liferay.dynamic.data.lists.web.constants,\
 	com.liferay.dynamic.data.lists.web.lar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Lists

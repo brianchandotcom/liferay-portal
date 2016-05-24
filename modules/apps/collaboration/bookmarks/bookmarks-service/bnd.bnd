@@ -3,13 +3,8 @@ Bundle-SymbolicName: com.liferay.bookmarks.service
 Bundle-Version: 1.0.3
 Export-Package:\
 	com.liferay.bookmarks.asset,\
-	com.liferay.bookmarks.customattributes,\
 	com.liferay.bookmarks.lar,\
-	com.liferay.bookmarks.notifications,\
-	com.liferay.bookmarks.opensearch,\
-	com.liferay.bookmarks.routes,\
 	com.liferay.bookmarks.search,\
-	com.liferay.bookmarks.service.configuration.configurator,\
 	com.liferay.bookmarks.service.permission,\
 	com.liferay.bookmarks.social,\
 	com.liferay.bookmarks.trash,\

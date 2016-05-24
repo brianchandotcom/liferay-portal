@@ -2,7 +2,6 @@ Bundle-Name: Liferay Flags API
 Bundle-SymbolicName: com.liferay.flags.api
 Bundle-Version: 2.0.1
 Export-Package:\
-	com.liferay.flags,\
 	com.liferay.flags.configuration,\
 	com.liferay.flags.service
 Liferay-Releng-Module-Group-Description:

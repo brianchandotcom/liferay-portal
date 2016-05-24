@@ -9,8 +9,6 @@ Export-Package:\
 	com.liferay.portal.security.ldap.dummy,\
 	com.liferay.portal.security.ldap.exportimport,\
 	com.liferay.portal.security.ldap.exportimport.configuration,\
-	com.liferay.portal.security.ldap.exportimport.util,\
-	com.liferay.portal.security.ldap.exportimport.validator,\
 	com.liferay.portal.security.ldap.util,\
 	com.liferay.portal.security.ldap.validator
 Import-Package:\

@@ -1,8 +1,6 @@
 Bundle-Name: Liferay Screens API
 Bundle-SymbolicName: com.liferay.screens.api
 Bundle-Version: 2.0.1
-Export-Package:\
-	com.liferay.screens,\
-	com.liferay.screens.service
+Export-Package: com.liferay.screens.service
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

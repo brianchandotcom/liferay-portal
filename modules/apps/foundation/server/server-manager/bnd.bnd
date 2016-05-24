@@ -5,7 +5,6 @@ Bundle-ClassPath:\
 Bundle-Name: Liferay Server Manager
 Bundle-SymbolicName: com.liferay.server.manager
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.server.manager
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 -includeresource:\

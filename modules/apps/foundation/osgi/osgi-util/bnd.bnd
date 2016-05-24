@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.osgi.util
 Bundle-Version: 3.0.1
 Export-Package:\
 	com.liferay.osgi.util,\
-	com.liferay.osgi.util.classloader,\
 	com.liferay.osgi.util.service
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

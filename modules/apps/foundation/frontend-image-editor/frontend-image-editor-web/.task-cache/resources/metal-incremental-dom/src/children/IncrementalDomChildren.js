@@ -1,4 +1,4 @@
-define(['exports', '../IncrementalDomAop'], function (exports, _IncrementalDomAop) {
+define(['exports', '../IncrementalDomAop', '../utils/IncrementalDomUtils'], function (exports, _IncrementalDomAop, _IncrementalDomUtils) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -7,10 +7,27 @@ define(['exports', '../IncrementalDomAop'], function (exports, _IncrementalDomAo
 
 	var _IncrementalDomAop2 = _interopRequireDefault(_IncrementalDomAop);
 
+	var _IncrementalDomUtils2 = _interopRequireDefault(_IncrementalDomUtils);
+
 	function _interopRequireDefault(obj) {
 		return obj && obj.__esModule ? obj : {
 			default: obj
 		};
+	}
+
+	function _defineProperty(obj, key, value) {
+		if (key in obj) {
+			Object.defineProperty(obj, key, {
+				value: value,
+				enumerable: true,
+				configurable: true,
+				writable: true
+			});
+		} else {
+			obj[key] = value;
+		}
+
+		return obj;
 	}
 
 	function _classCallCheck(instance, Constructor) {
@@ -24,10 +41,13 @@ define(['exports', '../IncrementalDomAop'], function (exports, _IncrementalDomAo
 			_classCallCheck(this, IncrementalDomChildren);
 		}
 
-		IncrementalDomChildren.capture = function capture(callback) {
+		IncrementalDomChildren.capture = function capture(renderer, callback) {
+			renderer_ = renderer;
 			callback_ = callback;
 			tree_ = {
-				children: []
+				config: {
+					children: []
+				}
 			};
 			currentParent_ = tree_;
 			_IncrementalDomAop2.default.startInterception({
@@ -42,20 +62,19 @@ define(['exports', '../IncrementalDomAop'], function (exports, _IncrementalDomAo
 				return;
 			}
 
-			if (tree.isText) {
-				IncrementalDOM.text.apply(null, tree.args);
+			if (tree.text) {
+				var args = tree.args ? tree.args : [];
+				args[0] = tree.text;
+				IncrementalDOM.text.apply(null, args);
 			} else {
-				if (tree.args) {
-					IncrementalDOM.elementOpen.apply(null, tree.args);
-				}
-				if (tree.children) {
-					for (var i = 0; i < tree.children.length; i++) {
-						IncrementalDomChildren.render(tree.children[i], opt_skipNode);
+				var _args = _IncrementalDomUtils2.default.buildCallFromConfig(tree.tag, tree.config);
+				IncrementalDOM.elementOpen.apply(null, _args);
+				if (tree.config.children) {
+					for (var i = 0; i < tree.config.children.length; i++) {
+						IncrementalDomChildren.render(tree.config.children[i], opt_skipNode);
 					}
 				}
-				if (tree.args) {
-					IncrementalDOM.elementClose(tree.args[0]);
-				}
+				IncrementalDOM.elementClose(tree.tag);
 			}
 		};
 
@@ -64,6 +83,7 @@ define(['exports', '../IncrementalDomAop'], function (exports, _IncrementalDomAo
 
 	var callback_;
 	var currentParent_;
+	var renderer_;
 	var tree_;
 
 	/**
@@ -74,13 +94,25 @@ define(['exports', '../IncrementalDomAop'], function (exports, _IncrementalDomAo
   * @protected
   */
 	function addChildToTree_(args, opt_isText) {
-		var child = {
-			args: args,
-			children: [],
-			isText: opt_isText,
+		var child = _defineProperty({
 			parent: currentParent_
-		};
-		currentParent_.children.push(child);
+		}, IncrementalDomChildren.CHILD_OWNER, renderer_);
+
+		if (opt_isText) {
+			child.text = args[0];
+			if (args.length > 1) {
+				child.args = args;
+			}
+		} else {
+			if (_IncrementalDomUtils2.default.isComponentTag(args[0])) {
+				args[1] = args[1] || renderer_.buildKey();
+			}
+			child.tag = args[0];
+			child.config = _IncrementalDomUtils2.default.buildConfigFromCall(args);
+			child.config.children = [];
+		}
+
+		currentParent_.config.children.push(child);
 		return child;
 	}
 
@@ -127,6 +159,14 @@ define(['exports', '../IncrementalDomAop'], function (exports, _IncrementalDomAo
 
 		addChildToTree_(args, true);
 	}
+
+	/**
+  * Property identifying a specific object as a Metal.js child node, and
+  * pointing to the renderer instance that created it.
+  * @type {string}
+  * @static
+  */
+	IncrementalDomChildren.CHILD_OWNER = '__metalChildOwner';
 
 	exports.default = IncrementalDomChildren;
 });

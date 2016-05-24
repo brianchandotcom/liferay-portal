@@ -289,7 +289,7 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 					},
 					duration: 3000,
 					icon: 'exclamation-circle',
-					message: message,
+					message: message.message,
 					type: 'danger'
 				}).render(_this7.element);
 			});
@@ -315,7 +315,7 @@ define("frontend-image-editor-web@1.0.0/ImageEditor.es", ['exports', 'metal-comp
 					url: _this8.saveURL
 				};
 
-				$.ajax(requestConfig).done(resolve).fail(function (jqXHR, status, error) {
+				AUI.$.ajax(requestConfig).done(resolve).fail(function (jqXHR, status, error) {
 					return reject(error);
 				});
 			});

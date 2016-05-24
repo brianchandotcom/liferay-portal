@@ -185,7 +185,7 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './ComponentRegis
 
 		Component.prototype.attached = function attached() {};
 
-		Component.prototype.addSubComponent = function addSubComponent(key, componentNameOrCtor, opt_data) {
+		Component.prototype.addSubComponent = function addSubComponent(key, componentNameOrCtor, opt_data, opt_dontDispose) {
 			var ConstructorFn = componentNameOrCtor;
 			if (_metal.core.isString(ConstructorFn)) {
 				ConstructorFn = _ComponentRegistry2.default.getConstructor(componentNameOrCtor);
@@ -193,7 +193,9 @@ define(['exports', 'metal/src/metal', 'metal-dom/src/all/dom', './ComponentRegis
 
 			var component = this.components[key];
 			if (component && component.constructor !== ConstructorFn) {
-				component.dispose();
+				if (!opt_dontDispose) {
+					component.dispose();
+				}
 				component = null;
 			}
 

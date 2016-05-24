@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.flags.messaging;
+package com.liferay.flags.internal.messaging;
 
 import com.liferay.flags.configuration.FlagsGroupServiceConfiguration;
 import com.liferay.petra.content.ContentUtil;

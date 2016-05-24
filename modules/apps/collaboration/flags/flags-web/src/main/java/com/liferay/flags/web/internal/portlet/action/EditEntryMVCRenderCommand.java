@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.flags.web.portlet.action;
+package com.liferay.flags.web.internal.portlet.action;
 
-import com.liferay.flags.web.constants.FlagsPortletKeys;
+import com.liferay.flags.web.internal.constants.FlagsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.PortletException;

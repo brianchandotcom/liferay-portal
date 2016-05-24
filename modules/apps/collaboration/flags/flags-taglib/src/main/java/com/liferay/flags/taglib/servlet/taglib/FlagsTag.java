@@ -14,7 +14,7 @@
 
 package com.liferay.flags.taglib.servlet.taglib;
 
-import com.liferay.flags.taglib.servlet.ServletContextUtil;
+import com.liferay.flags.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;

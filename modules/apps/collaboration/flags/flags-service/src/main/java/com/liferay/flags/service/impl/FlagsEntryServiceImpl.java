@@ -14,7 +14,7 @@
 
 package com.liferay.flags.service.impl;
 
-import com.liferay.flags.messaging.FlagsRequest;
+import com.liferay.flags.internal.messaging.FlagsRequest;
 import com.liferay.flags.service.base.FlagsEntryServiceBaseImpl;
 import com.liferay.portal.kernel.exception.EmailAddressException;
 import com.liferay.portal.kernel.exception.PortalException;

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.flags.web.portlet.action;
+package com.liferay.flags.web.internal.portlet.action;
 
 import com.liferay.flags.service.FlagsEntryService;
-import com.liferay.flags.web.constants.FlagsPortletKeys;
+import com.liferay.flags.web.internal.constants.FlagsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;

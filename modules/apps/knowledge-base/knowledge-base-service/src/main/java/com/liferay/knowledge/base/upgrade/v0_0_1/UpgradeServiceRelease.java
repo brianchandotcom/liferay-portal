@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 public class UpgradeServiceRelease {
 
 	@Activate
-	protected void activate() {
+	protected void activate() throws UpgradeException {
 		UpgradeRelease upgradeRelease = new UpgradeRelease() {
 
 			@Override
@@ -63,12 +63,7 @@ public class UpgradeServiceRelease {
 
 		};
 
-		try {
-			upgradeRelease.upgrade();
-		}
-		catch (UpgradeException ue) {
-			_log.error("Module could not be upgraded", ue);
-		}
+		upgradeRelease.upgrade();
 	}
 
 	@Reference(unbind = "-")

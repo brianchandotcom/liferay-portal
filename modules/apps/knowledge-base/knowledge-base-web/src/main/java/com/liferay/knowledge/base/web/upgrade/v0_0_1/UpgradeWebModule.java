@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 public class UpgradeWebModule {
 
 	@Activate
-	protected void activate() {
+	protected void activate() throws UpgradeException {
 		UpgradeModules upgradeModules = new UpgradeModules() {
 
 			@Override
@@ -66,14 +66,7 @@ public class UpgradeWebModule {
 
 		};
 
-		try {
-			upgradeModules.upgrade();
-		}
-		catch (UpgradeException ue) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Module is already upgraded");
-			}
-		}
+		upgradeModules.upgrade();
 	}
 
 	@Reference(unbind = "-")

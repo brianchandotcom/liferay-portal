@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -89,6 +90,8 @@ public class DDLFormPortlet extends MVCPortlet {
 			super.processAction(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
+			PortalUtil.copyRequestParameters(actionRequest, actionResponse);
+
 			Throwable cause = getRootCause(e);
 
 			hideDefaultErrorMessage(actionRequest);

@@ -17,6 +17,8 @@ package com.liferay.portal.osgi.web.servlet.jsp.compiler.internal;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -52,7 +54,6 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
 
-import org.apache.felix.utils.log.Logger;
 import org.apache.jasper.Constants;
 import org.apache.jasper.JasperException;
 import org.apache.jasper.JspCompilationContext;
@@ -155,8 +156,6 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 		Bundle jspBundle = _jspBundleWiring.getBundle();
 
-		_logger = new Logger(jspBundle.getBundleContext());
-
 		ServletContext servletContext =
 			jspCompilationContext.getServletContext();
 
@@ -186,7 +185,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				_collectPackageNames(providedBundleWiring));
 		}
 
-		if (options.contains(BundleJavaFileManager.OPT_VERBOSE)) {
+		if (_log.isInfoEnabled()) {
 			StringBundler sb = new StringBundler(
 				_bundleWiringPackageNames.size() * 4 + 6);
 
@@ -209,11 +208,11 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 			sb.setIndex(sb.index() - 1);
 
-			_logger.log(Logger.LOG_INFO, sb.toString());
+			_log.info(sb.toString());
 		}
 
 		_javaFileObjectResolver = new JspJavaFileObjectResolver(
-			bundleWiring, _jspBundleWiring, _bundleWiringPackageNames, _logger,
+			bundleWiring, _jspBundleWiring, _bundleWiringPackageNames, _log,
 			_serviceTracker);
 
 		jspCompilationContext.setClassLoader(jspBundleClassloader);
@@ -236,8 +235,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 				addDependencyToClassPath(clazz);
 			}
 			catch (ClassNotFoundException cnfe) {
-				_logger.log(
-					Logger.LOG_ERROR,
+				_log.error(
 					"Unable to add depedency " + className +
 						" to the classpath");
 			}
@@ -258,9 +256,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		try {
 			File file = ClassPathUtil.getFile(url);
 
-			if (file == null) {
-				_logger.log(
-					Logger.LOG_DEBUG,
+			if ((file == null) && _log.isDebugEnabled()) {
+				_log.debug(
 					"Ignoring URL " + url + " because of unknown protocol " +
 						url.getProtocol());
 			}
@@ -272,7 +269,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			}
 		}
 		catch (Exception e) {
-			_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
+			_log.error(e.getMessage(), e);
 		}
 	}
 
@@ -327,13 +324,12 @@ public class JspCompiler extends Jsr199JavaCompiler {
 					StandardLocation.CLASS_PATH, _classPath);
 			}
 			catch (IOException ioe) {
-				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
+				_log.error(ioe.getMessage(), ioe);
 			}
 
 			javaFileManager = new BundleJavaFileManager(
 				_classLoader, _systemPackageNames, standardJavaFileManager,
-				_logger, options.contains(BundleJavaFileManager.OPT_VERBOSE),
-				_javaFileObjectResolver);
+				_log, _javaFileObjectResolver);
 		}
 
 		return super.getJavaFileManager(javaFileManager);
@@ -378,7 +374,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			}
 		}
 		catch (Exception e) {
-			_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
+			_log.error(e.getMessage(), e);
 		}
 
 		Map<String, String> map =
@@ -430,6 +426,8 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		"com.liferay.portal.util.PortalImpl", "javax.portlet.PortletException",
 		"javax.servlet.ServletException"
 	};
+
+	private static final Log _log = LogFactoryUtil.getLog(JspCompiler.class);
 
 	private static final Map<BundleWiring, Set<String>>
 		_bundleWiringPackageNamesCache = new ConcurrentReferenceKeyHashMap<>(
@@ -494,6 +492,5 @@ public class JspCompiler extends Jsr199JavaCompiler {
 	private ClassLoader _classLoader;
 	private final List<File> _classPath = new ArrayList<>();
 	private JavaFileObjectResolver _javaFileObjectResolver;
-	private Logger _logger;
 
 }

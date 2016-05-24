@@ -133,7 +133,7 @@
 
 lportal_BS
 		master tcp ether ${hostname} 5001
-		query tcp ether ${hotsname} 5001
+		query tcp ether ${hostname} 5001
 					</echo>
 				</then>
 				<else>

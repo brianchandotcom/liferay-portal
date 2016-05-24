@@ -14,6 +14,8 @@
 
 package com.liferay.sync.upgrade.v1_0_2;
 
+import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -22,12 +24,25 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class UpgradeSchema extends UpgradeProcess {
 
+	public UpgradeSchema(ReleaseLocalService releaseLocalService) {
+		_releaseLocalService = releaseLocalService;
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		String template = StringUtil.read(
 			UpgradeSchema.class.getResourceAsStream("dependencies/update.sql"));
 
 		runSQLTemplateString(template, false, false);
+
+		Release release = _releaseLocalService.fetchRelease(
+			"com.liferay.sync.service");
+
+		release.setVerified(false);
+
+		_releaseLocalService.updateRelease(release);
 	}
+
+	private final ReleaseLocalService _releaseLocalService;
 
 }

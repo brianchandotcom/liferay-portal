@@ -92,6 +92,7 @@ AUI.add(
 				instance.fire(
 					'focus',
 					{
+						domEvent: event,
 						field: instance
 					}
 				);

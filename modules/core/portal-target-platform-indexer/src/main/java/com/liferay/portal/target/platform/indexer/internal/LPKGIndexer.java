@@ -90,7 +90,9 @@ public class LPKGIndexer implements Indexer {
 
 				File file = new File(tempDir, name);
 
-				Files.copy(zipFile.getInputStream(zipEntry), file.toPath());
+				Files.copy(
+					zipFile.getInputStream(zipEntry), file.toPath(),
+					StandardCopyOption.REPLACE_EXISTING);
 
 				files.add(file);
 			}

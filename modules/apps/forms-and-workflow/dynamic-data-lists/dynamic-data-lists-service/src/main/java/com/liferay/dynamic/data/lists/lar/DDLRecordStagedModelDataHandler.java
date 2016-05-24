@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.lar;
 
+import com.liferay.dynamic.data.lists.exportimport.staged.model.repository.DDLRecordStagedModelRepository;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
@@ -29,11 +30,9 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -54,38 +53,37 @@ public class DDLRecordStagedModelDataHandler
 
 	public static final String[] CLASS_NAMES = {DDLRecord.class.getName()};
 
+	@Deprecated
 	@Override
-	public void deleteStagedModel(DDLRecord record) throws PortalException {
-		_ddlRecordLocalService.deleteRecord(record);
+	public void deleteStagedModel(DDLRecord stagedModel)
+		throws PortalException {
+
+		super.deleteStagedModel(stagedModel);
 	}
 
+	@Deprecated
 	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		DDLRecord record = fetchStagedModelByUuidAndGroupId(uuid, groupId);
-
-		if (record != null) {
-			deleteStagedModel(record);
-		}
+		super.deleteStagedModel(uuid, groupId, className, extraData);
 	}
 
+	@Deprecated
 	@Override
 	public DDLRecord fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return _ddlRecordLocalService.fetchDDLRecordByUuidAndGroupId(
-			uuid, groupId);
+		return super.fetchStagedModelByUuidAndGroupId(uuid, groupId);
 	}
 
+	@Deprecated
 	@Override
 	public List<DDLRecord> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return _ddlRecordLocalService.getDDLRecordsByUuidAndCompanyId(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new StagedModelModifiedDateComparator<DDLRecord>());
+		return super.fetchStagedModelsByUuidAndCompanyId(uuid, companyId);
 	}
 
 	@Override
@@ -120,8 +118,6 @@ public class DDLRecordStagedModelDataHandler
 			PortletDataContext portletDataContext, DDLRecord record)
 		throws Exception {
 
-		long userId = portletDataContext.getUserId(record.getUserUuid());
-
 		Map<Long, Long> recordSetIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				DDLRecordSet.class);
@@ -134,32 +130,24 @@ public class DDLRecordStagedModelDataHandler
 		DDMFormValues ddmFormValues = getImportDDMFormValues(
 			portletDataContext, recordElement, recordSetId);
 
-		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			record);
+		DDLRecord importedRecord = (DDLRecord)record.clone();
 
-		DDLRecord importedRecord = null;
+		importedRecord.setGroupId(portletDataContext.getScopeGroupId());
+		importedRecord.setRecordSetId(recordSetId);
 
-		if (portletDataContext.isDataStrategyMirror()) {
-			DDLRecord existingRecord = fetchStagedModelByUuidAndGroupId(
+		DDLRecord existingRecord =
+			_ddlRecordStagedModelRepository.fetchStagedModelByUuidAndGroupId(
 				record.getUuid(), portletDataContext.getScopeGroupId());
 
-			if (existingRecord == null) {
-				serviceContext.setUuid(record.getUuid());
-
-				importedRecord = _ddlRecordLocalService.addRecord(
-					userId, portletDataContext.getScopeGroupId(), recordSetId,
-					record.getDisplayIndex(), ddmFormValues, serviceContext);
-			}
-			else {
-				importedRecord = _ddlRecordLocalService.updateRecord(
-					userId, existingRecord.getRecordId(), false,
-					record.getDisplayIndex(), ddmFormValues, serviceContext);
-			}
+		if (existingRecord == null) {
+			importedRecord = _ddlRecordStagedModelRepository.addStagedModel(
+				portletDataContext, importedRecord, ddmFormValues);
 		}
 		else {
-			importedRecord = _ddlRecordLocalService.addRecord(
-				userId, portletDataContext.getScopeGroupId(), recordSetId,
-				record.getDisplayIndex(), ddmFormValues, serviceContext);
+			importedRecord.setRecordId(existingRecord.getRecordId());
+
+			importedRecord = _ddlRecordStagedModelRepository.updateStagedModel(
+				portletDataContext, importedRecord, ddmFormValues);
 		}
 
 		portletDataContext.importClassedModel(record, importedRecord);
@@ -213,11 +201,14 @@ public class DDLRecordStagedModelDataHandler
 				portletDataContext, ddmStructure, ddmFormValues);
 	}
 
-	@Reference(unbind = "-")
+	@Override
+	protected StagedModelRepository<DDLRecord> getStagedModelRepository() {
+		return _ddlRecordStagedModelRepository;
+	}
+
+	@Deprecated
 	protected void setDDLRecordLocalService(
 		DDLRecordLocalService ddlRecordLocalService) {
-
-		_ddlRecordLocalService = ddlRecordLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -225,6 +216,17 @@ public class DDLRecordStagedModelDataHandler
 		DDLRecordSetLocalService ddlRecordSetLocalService) {
 
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+	}
+
+	@Reference(
+		target =
+			"(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord)",
+		unbind = "-"
+	)
+	protected void setDDLRecordStagedModelRepository(
+		DDLRecordStagedModelRepository ddlRecordStagedModelRepository) {
+
+		_ddlRecordStagedModelRepository = ddlRecordStagedModelRepository;
 	}
 
 	@Reference(unbind = "-")
@@ -281,8 +283,8 @@ public class DDLRecordStagedModelDataHandler
 		}
 	}
 
-	private DDLRecordLocalService _ddlRecordLocalService;
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private DDLRecordStagedModelRepository _ddlRecordStagedModelRepository;
 	private DDMFormValuesExportImportContentProcessor
 		_ddmFormValuesExportImportContentProcessor;
 	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;

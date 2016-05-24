@@ -653,6 +653,90 @@
 		<execute macro="User#loginPG" />
 	</command>
 
+	<command name="ViewEditURLLocale" priority="4">
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Site Settings" />
+		</execute>
+
+		<execute macro="Site#configureCurrentLanguagesCP">
+			<var name="currentSiteLanguages" value="English (United States),Hungarian (Hungary)" />
+			<var name="defaultSiteLanguage" value="English (United States)" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Language Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Site Settings" />
+		</execute>
+
+		<execute macro="Site#configureCurrentLanguagesCP">
+			<var name="currentSiteLanguages" value="English (United States),Hungarian (Hungary)" />
+			<var name="defaultSiteLanguage" value="English (United States)" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:8080/fr/web/site-name/language-page" />
+		</execute>
+
+		<execute function="Pause" locator1="2000" />
+
+		<execute function="AssertLocation" value1="http://localhost:8080/en/web/site-name/language-page" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:8080/fr" />
+		</execute>
+
+		<execute function="Pause" locator1="2000" />
+
+		<execute function="AssertLocation" value1="http://localhost:8080/en/web/guest" />
+
+		<execute macro="User#loginPG">
+			<var name="specificURL" value="http://localhost:8080/fr" />
+		</execute>
+
+		<execute function="AssertLocation" value1="http://localhost:8080/web/guest" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Site Settings" />
+		</execute>
+
+		<execute macro="Site#addVirtualHostsURLCP">
+			<var name="publicPageVirtualHostURL" value="www.able.com" />
+			<var name="publicVirtualHosts" value="true" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://www.able.com:8080/fr/" />
+		</execute>
+
+		<execute macro="Site#viewVirtualHostsURLPG">
+			<var name="pageName" value="Language Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageURL" value="http://www.able.com:8080/en/" />
+		</execute>
+	</command>
+
 	<command name="ViewSiteLocalizationAfterDeletingOriginalLocale" priority="5">
 		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="SitelocalizationUsecase#ViewSiteLocalizationAfterDeletingOriginalLocale" />

@@ -331,6 +331,8 @@
 			</then>
 		</if>
 
+		<antcall target="index-modules-and-app-lpkgs" />
+
 		<print-current-time />
 	</target>
 
@@ -508,6 +510,32 @@
 		>
 			<include name="liferay-*${lp.version.dtd}.dtd" />
 		</DTDDoc>
+	</target>
+
+	<target name="index-modules-and-app-lpkgs">
+		<path id="target.platform.indexer.classpath">
+			<fileset dir="${liferay.home}/osgi/core" includes="com.liferay.portal.bootstrap.jar,org.eclipse.osgi.jar" />
+			<fileset dir="${liferay.home}/osgi/static" includes="com.liferay.portal.target.platform.indexer.jar" />
+		</path>
+
+		<java
+			classname="com.liferay.portal.target.platform.indexer.main.TargetPlatformMain"
+			classpathref="target.platform.indexer.classpath"
+			fork="true"
+			newenvironment="true"
+		>
+			<jvmarg value="-Dmodule.framework.base.dir=${liferay.home}/osgi" />
+		</java>
+
+		<java
+			classname="com.liferay.portal.target.platform.indexer.main.LPKGIndexerMain"
+			classpathref="target.platform.indexer.classpath"
+			fork="true"
+			newenvironment="true"
+		>
+			<jvmarg value="-Dmodule.framework.base.dir=${liferay.home}/osgi" />
+			<arg value="${liferay.home}/osgi/marketplace" />
+		</java>
 	</target>
 
 	<target name="install-portal-snapshots">

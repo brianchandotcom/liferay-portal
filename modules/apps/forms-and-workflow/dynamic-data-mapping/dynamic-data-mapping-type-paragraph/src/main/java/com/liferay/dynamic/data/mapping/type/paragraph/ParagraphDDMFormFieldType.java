@@ -30,6 +30,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.icon=paragraph",
 		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.Paragraph",
 		"ddm.form.field.type.js.module=liferay-ddm-form-field-paragraph",
+		"ddm.form.field.type.label=paragraph-field-type-label",
 		"ddm.form.field.type.name=paragraph"
 	},
 	service = DDMFormFieldType.class

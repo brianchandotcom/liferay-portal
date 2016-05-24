@@ -1,0 +1,69 @@
+.lfr-ddl-form-builder-field-types-modal {
+	height: 100%;
+	margin: 0;
+	outline: none;
+	width: 100%;
+
+	&.lfr-ddl-form-builder-field-types-modal-hidden {
+		display: none;
+	}
+
+	.form-builder-field-types-list {
+		margin-top: 10px;
+	}
+
+	.modal-body {
+		background-color: #FFF;
+		padding: 15px 25px 18px 25px;
+
+		.field-type {
+			border-radius: 5px;
+			padding: 20px 0;
+
+			&:hover {
+				background-color: #E8F1F7;
+			}
+
+			.field-type-icon,
+			.field-type-label {
+				color: #879CAC;
+			}
+
+			.field-type-icon {
+				font-size: 0;
+				margin: 0 0 10px;
+
+				.lexicon-icon {
+					height: 18px;
+					width: 18px;
+				}
+			}
+
+			.field-type-label {
+				font-family: inherit;
+				font-size: 12px;
+				font-weight: 500;
+				line-height: initial;
+				margin: 8px 0 0 0;
+			}
+		}
+	}
+}
+
+@include sm {
+	.lfr-ddl-form-builder-field-types-modal {
+		max-height: 550px;
+		width: 392px;
+	}
+}
+
+@include md {
+	.lfr-ddl-form-builder-field-types-modal {
+		width: 500px;
+
+		.field-type {
+			float: none;
+			width: auto;
+		}
+	}
+}

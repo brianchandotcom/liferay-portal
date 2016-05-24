@@ -30,6 +30,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.icon=text",
 		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.Text",
 		"ddm.form.field.type.js.module=liferay-ddm-form-field-text",
+		"ddm.form.field.type.label=text-field-type-label",
 		"ddm.form.field.type.name=text"
 	},
 	service = DDMFormFieldType.class

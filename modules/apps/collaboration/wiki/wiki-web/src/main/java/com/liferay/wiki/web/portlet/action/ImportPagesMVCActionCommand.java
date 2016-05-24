@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.service.WikiNodeService;
+import com.liferay.wiki.util.WikiCacheHelper;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
-import com.liferay.wiki.util.WikiCacheUtil;
 
 import java.io.InputStream;
 
@@ -120,9 +120,14 @@ public class ImportPagesMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
-		WikiCacheUtil.clearCache(nodeId);
+		_wikiCacheHelper.clearCache(nodeId);
 
 		progressTracker.finish(actionRequest);
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiCacheHelper(WikiCacheHelper wikiCacheHelper) {
+		_wikiCacheHelper = wikiCacheHelper;
 	}
 
 	@Reference(unbind = "-")
@@ -130,6 +135,7 @@ public class ImportPagesMVCActionCommand extends BaseMVCActionCommand {
 		_wikiNodeService = wikiNodeService;
 	}
 
+	private WikiCacheHelper _wikiCacheHelper;
 	private WikiNodeService _wikiNodeService;
 
 }

@@ -32,8 +32,8 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.permission.WikiResourcePermissionChecker;
+import com.liferay.wiki.util.WikiCacheHelper;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
-import com.liferay.wiki.util.WikiCacheUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -198,7 +198,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 				WikiNode.class);
 
 		for (long nodeId : nodeIds.values()) {
-			WikiCacheUtil.clearCache(nodeId);
+			_wikiCacheHelper.clearCache(nodeId);
 		}
 
 		return null;
@@ -229,6 +229,11 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Reference(unbind = "-")
+	protected void setWikiCacheHelper(WikiCacheHelper wikiCacheHelper) {
+		_wikiCacheHelper = wikiCacheHelper;
+	}
+
+	@Reference(unbind = "-")
 	protected void setWikiNodeLocalService(
 		WikiNodeLocalService wikiNodeLocalService) {
 
@@ -242,6 +247,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		_wikiPageLocalService = wikiPageLocalService;
 	}
 
+	private WikiCacheHelper _wikiCacheHelper;
 	private WikiNodeLocalService _wikiNodeLocalService;
 	private WikiPageLocalService _wikiPageLocalService;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.comment.editor.configuration;
+package com.liferay.comment.editor.configuration.internal;
 
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.comment.web.notifications;
+package com.liferay.comment.web.internal.notifications;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.comment.web.constants.CommentPortletKeys;
+import com.liferay.comment.web.internal.constants.CommentPortletKeys;
 import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.service.MBDiscussionLocalService;
 import com.liferay.portal.kernel.exception.SystemException;

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.comment.page.comments.web.portlet;
+package com.liferay.comment.page.comments.web.internal.portlet;
 
-import com.liferay.comment.page.comments.web.constants.PageCommentsPortletKeys;
+import com.liferay.comment.page.comments.web.internal.constants.PageCommentsPortletKeys;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 

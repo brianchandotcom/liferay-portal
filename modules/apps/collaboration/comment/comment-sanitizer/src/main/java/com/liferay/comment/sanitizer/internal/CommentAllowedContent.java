@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.comment.sanitizer;
+package com.liferay.comment.sanitizer.internal;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;

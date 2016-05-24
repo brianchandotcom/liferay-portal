@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.comment.ratings.definition;
+package com.liferay.comment.ratings.definition.internal;
 
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.portlet.PortletProvider;

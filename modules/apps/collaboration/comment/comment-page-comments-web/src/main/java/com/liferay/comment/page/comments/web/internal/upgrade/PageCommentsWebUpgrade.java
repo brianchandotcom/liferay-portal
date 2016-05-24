@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.comment.page.comments.web.upgrade;
+package com.liferay.comment.page.comments.web.internal.upgrade;
 
-import com.liferay.comment.page.comments.web.constants.PageCommentsPortletKeys;
+import com.liferay.comment.page.comments.web.internal.constants.PageCommentsPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;

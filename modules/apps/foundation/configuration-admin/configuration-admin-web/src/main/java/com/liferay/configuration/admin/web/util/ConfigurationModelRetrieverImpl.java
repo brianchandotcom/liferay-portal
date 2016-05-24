@@ -138,6 +138,10 @@ public class ConfigurationModelRetrieverImpl
 		Bundle[] bundles = _bundleContext.getBundles();
 
 		for (Bundle bundle : bundles) {
+			if (!(bundle.getState() == Bundle.ACTIVE)) {
+				continue;
+			}
+
 			collectConfigurationModels(
 				bundle, configurationModels, true, locale);
 			collectConfigurationModels(

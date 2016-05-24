@@ -93,6 +93,7 @@ public class UpdateLanguageAction extends Action {
 		String redirect = ParamUtil.getString(request, "redirect");
 
 		String layoutURL = StringPool.BLANK;
+		String queryString = StringPool.BLANK;
 
 		int pos = redirect.indexOf(Portal.FRIENDLY_URL_SEPARATOR);
 
@@ -102,6 +103,7 @@ public class UpdateLanguageAction extends Action {
 
 		if (pos != -1) {
 			layoutURL = redirect.substring(0, pos);
+			queryString = redirect.substring(pos);
 		}
 		else {
 			layoutURL = redirect;
@@ -132,6 +134,10 @@ public class UpdateLanguageAction extends Action {
 				redirect = PortalUtil.getLayoutFriendlyURL(
 					layout, themeDisplay, locale);
 			}
+		}
+
+		if (layout.isTypeControlPanel()) {
+			redirect = redirect + queryString;
 		}
 
 		response.sendRedirect(redirect);

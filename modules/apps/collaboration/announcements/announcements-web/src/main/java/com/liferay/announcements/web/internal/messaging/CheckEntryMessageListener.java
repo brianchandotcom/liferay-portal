@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.announcements.web.messaging;
+package com.liferay.announcements.web.internal.messaging;
 
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;

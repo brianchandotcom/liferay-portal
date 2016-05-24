@@ -12,13 +12,11 @@
  * details.
  */
 
-package com.liferay.announcements.web.portlet;
+package com.liferay.announcements.web.internal.portlet.action;
 
 import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
-import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
-import com.liferay.portal.kernel.portlet.ManagePortletProvider;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,19 +25,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.announcements.kernel.model.AnnouncementsEntry"},
-	service = {
-		EditPortletProvider.class, ManagePortletProvider.class,
-		ViewPortletProvider.class
-	}
+	property = {"javax.portlet.name=" + AnnouncementsPortletKeys.ANNOUNCEMENTS},
+	service = ConfigurationAction.class
 )
-public class AnnouncementsEditPortletProvider
-	extends BasePortletProvider
-	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
-
-	@Override
-	public String getPortletName() {
-		return AnnouncementsPortletKeys.ANNOUNCEMENTS;
-	}
-
+public class AnnouncementsConfigurationAction
+	extends DefaultConfigurationAction {
 }

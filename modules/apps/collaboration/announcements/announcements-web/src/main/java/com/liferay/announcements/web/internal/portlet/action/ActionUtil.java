@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.announcements.web.portlet.action;
+package com.liferay.announcements.web.internal.portlet.action;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryServiceUtil;

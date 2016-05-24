@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.announcements.web.display.context;
+package com.liferay.announcements.web.internal.display.context;
 
 import com.liferay.portal.kernel.display.context.DisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.announcements.web.upgrade;
+package com.liferay.announcements.web.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.BaseReplacePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;

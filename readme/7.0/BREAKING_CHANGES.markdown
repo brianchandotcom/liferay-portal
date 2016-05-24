@@ -4160,3 +4160,28 @@ This change removes outdated code no longer being used in the platform. In
 addition, this change avoids future security issues from outdated flash movies.
 
 ---------------------------------------
+
+### Changed Usage of the liferay-ui:page-iterator Tag
+- **Date:** 2016-May-24
+- **JIRA Ticket:** LPS-65608
+
+#### What changed?
+
+The attribute `url` of the `liferay-ui:page-iterator` taglib tag has been 
+replaced by `portletURL`.
+
+#### Who is affected?
+
+This affects developers using the `liferay-ui:page-iterator` tag.
+
+#### How should I update my code?
+
+In your `liferay-ui:page-iterator` tags, replace the `url` attribute of type 
+String by `portletURL` of type PortletURL.
+
+#### Why was this change made?
+
+In order to use `liferay-portlet:renderURLParams` tag in 
+`liferay-ui:page-iterator` tag to extract the parameters of the URL.
+
+---------------------------------------

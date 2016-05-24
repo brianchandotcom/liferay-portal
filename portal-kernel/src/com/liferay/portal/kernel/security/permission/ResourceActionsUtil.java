@@ -71,6 +71,10 @@ public class ResourceActionsUtil {
 		return getResourceActions().getActionsNames(request, name, actionIds);
 	}
 
+	public static String getCompositeModelName(String... classNames) {
+		return getResourceActions().getCompositeModelName(classNames);
+	}
+
 	public static String getCompositeModelNameSeparator() {
 		return getResourceActions().getCompositeModelNameSeparator();
 	}

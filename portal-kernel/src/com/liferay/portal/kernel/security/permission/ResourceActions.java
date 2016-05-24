@@ -58,6 +58,8 @@ public interface ResourceActions {
 	public List<String> getActionsNames(
 		HttpServletRequest request, String name, long actionIds);
 
+	public String getCompositeModelName(String... classNames);
+
 	public String getCompositeModelNameSeparator();
 
 	public List<String> getModelNames();

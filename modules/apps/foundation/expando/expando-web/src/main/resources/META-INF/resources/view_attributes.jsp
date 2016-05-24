@@ -126,7 +126,7 @@ List<String> attributeNames = Collections.list(expandoBridge.getAttributeNames()
 			</portlet:renderURL>
 
 			<aui:button-row cssClass="text-center">
-				<aui:button cssClass="btn-lg btn-primary" href="<%= addExpandoURL %>" value="add-custom-field" />
+				<aui:button cssClass="btn-lg" href="<%= addExpandoURL %>" primary="<%= true %>" value="add-custom-field" />
 			</aui:button-row>
 		</c:if>
 

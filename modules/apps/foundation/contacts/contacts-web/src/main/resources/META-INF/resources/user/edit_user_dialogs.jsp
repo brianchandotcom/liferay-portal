@@ -64,7 +64,7 @@ if (extension) {
 			request.setAttribute("websites.classPK", 0L);
 		}
 
-		String sectionJsp = "/html/portlet/users_admin/user/" + _getSectionJsp(curSectionId) + ".jsp";
+		String sectionJsp = "/user/" + _getSectionJsp(curSectionId) + ".jsp";
 		%>
 
 		<div class="form-section selected" id="<%= namespace + curSectionId %>">
@@ -72,13 +72,13 @@ if (extension) {
 
 			<c:choose>
 				<c:when test='<%= curSectionId.equals("categorization") %>'>
-					<liferay-util:include page='<%= "/user/" + _getSectionJsp(curSectionId) + ".jsp" %>' servletContext="<%= application %>" />
+					<liferay-util:include page="<%= sectionJsp %>" servletContext="<%= application %>" />
 				</c:when>
 				<c:when test='<%= curSectionId.equals("details") %>'>
-					<liferay-util:include page='<%= "/user/" + _getSectionJsp(curSectionId) + ".jsp" %>' servletContext="<%= application %>" />
+					<liferay-util:include page="<%= sectionJsp %>" servletContext="<%= application %>" />
 				</c:when>
 				<c:otherwise>
-					<liferay-util:include page="<%= sectionJsp %>" />
+					<liferay-util:include page="<%= sectionJsp %>" portletId="<%= PortletProviderUtil.getPortletId(User.class.getName(), PortletProvider.Action.VIEW) %>" />
 				</c:otherwise>
 			</c:choose>
 		</div>

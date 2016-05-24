@@ -3,7 +3,7 @@
 <javadocs>
 	<javadoc>
 		<name>BookmarksPanelApp</name>
-		<type>com.liferay.bookmarks.web.application.list.BookmarksPanelApp</type>
+		<type>com.liferay.bookmarks.web.internal.application.list.BookmarksPanelApp</type>
 		<author><![CDATA[Eudaldo Alonso]]></author>
 		<method>
 			<name>getParentCategoryKey</name>
@@ -28,7 +28,7 @@
 	</javadoc>
 	<javadoc>
 		<name>BookmarksEntryCustomAttributesDisplay</name>
-		<type>com.liferay.bookmarks.web.custom.attributes.BookmarksEntryCustomAttributesDisplay</type>
+		<type>com.liferay.bookmarks.web.internal.custom.attributes.BookmarksEntryCustomAttributesDisplay</type>
 		<author><![CDATA[Jorge Ferrer]]></author>
 		<method>
 			<name>getClassName</name>
@@ -50,7 +50,7 @@
 	</javadoc>
 	<javadoc>
 		<name>BookmarksFolderCustomAttributesDisplay</name>
-		<type>com.liferay.bookmarks.web.custom.attributes.BookmarksFolderCustomAttributesDisplay</type>
+		<type>com.liferay.bookmarks.web.internal.custom.attributes.BookmarksFolderCustomAttributesDisplay</type>
 		<author><![CDATA[Jorge Ferrer]]></author>
 		<method>
 			<name>getClassName</name>
@@ -72,7 +72,7 @@
 	</javadoc>
 	<javadoc>
 		<name>ActionUtil</name>
-		<type>com.liferay.bookmarks.web.portlet.action.ActionUtil</type>
+		<type>com.liferay.bookmarks.web.internal.portlet.action.ActionUtil</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>getEntry</name>
@@ -462,7 +462,7 @@
 	</javadoc>
 	<javadoc>
 		<name>FindEntryAction</name>
-		<type>com.liferay.bookmarks.web.portlet.action.FindEntryAction</type>
+		<type>com.liferay.bookmarks.web.internal.portlet.action.FindEntryAction</type>
 		<author><![CDATA[Juan Fernández]]></author>
 		<method>
 			<name>getGroupId</name>
@@ -511,7 +511,7 @@
 	</javadoc>
 	<javadoc>
 		<name>FindFolderAction</name>
-		<type>com.liferay.bookmarks.web.portlet.action.FindFolderAction</type>
+		<type>com.liferay.bookmarks.web.internal.portlet.action.FindFolderAction</type>
 		<author><![CDATA[Alexander Chow]]></author>
 		<method>
 			<name>getGroupId</name>
@@ -560,7 +560,7 @@
 	</javadoc>
 	<javadoc>
 		<name>OpenEntryAction</name>
-		<type>com.liferay.bookmarks.web.portlet.action.OpenEntryAction</type>
+		<type>com.liferay.bookmarks.web.internal.portlet.action.OpenEntryAction</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>execute</name>
@@ -627,12 +627,12 @@
 	</javadoc>
 	<javadoc>
 		<name>AuthPublicPath</name>
-		<type>com.liferay.bookmarks.web.portlet.path.AuthPublicPath</type>
+		<type>com.liferay.bookmarks.web.internal.portlet.path.AuthPublicPath</type>
 		<author><![CDATA[Sergio González]]></author>
 	</javadoc>
 	<javadoc>
 		<name>BookmarksUtil</name>
-		<type>com.liferay.bookmarks.web.portlet.util.BookmarksUtil</type>
+		<type>com.liferay.bookmarks.web.internal.portlet.util.BookmarksUtil</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
 			<name>addPortletBreadcrumbEntries</name>
@@ -757,7 +757,7 @@
 	</javadoc>
 	<javadoc>
 		<name>BookmarksWebUpgrade</name>
-		<type>com.liferay.bookmarks.web.upgrade.BookmarksWebUpgrade</type>
+		<type>com.liferay.bookmarks.web.internal.upgrade.BookmarksWebUpgrade</type>
 		<author><![CDATA[Miguel Pastor]]></author>
 		<method>
 			<name>setBookmarksServiceConfigurator</name>
@@ -789,7 +789,7 @@
 	</javadoc>
 	<javadoc>
 		<name>UpgradeAdminPortlets</name>
-		<type>com.liferay.bookmarks.web.upgrade.v1_0_0.UpgradeAdminPortlets</type>
+		<type>com.liferay.bookmarks.web.internal.upgrade.v1_0_0.UpgradeAdminPortlets</type>
 		<author><![CDATA[Miguel Pastor]]></author>
 		<method>
 			<name>doUpgrade</name>
@@ -802,7 +802,7 @@
 	</javadoc>
 	<javadoc>
 		<name>UpgradePortletPreferences</name>
-		<type>com.liferay.bookmarks.web.upgrade.v1_0_0.UpgradePortletPreferences</type>
+		<type>com.liferay.bookmarks.web.internal.upgrade.v1_0_0.UpgradePortletPreferences</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>getPortletIds</name>

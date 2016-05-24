@@ -554,8 +554,13 @@ app.server.type=@{app.server.type}]]></echo>
 							<if>
 								<equals arg1="@{test.legacy.database.dump}" arg2="true" />
 								<then>
+									<get-testcase-property property.name="data.archive.type" />
+
 									<ant dir="${portal.legacy.dir}/@{test.portal.bundle.version}" target="export-database">
+										<property name="data.archive.type" value="${data.archive.type}" />
 										<property name="database.type" value="@{database.type}" />
+										<property name="database.version" value="${database.version}" />
+										<property name="test.class" value="${test.class}" />
 									</ant>
 								</then>
 							</if>

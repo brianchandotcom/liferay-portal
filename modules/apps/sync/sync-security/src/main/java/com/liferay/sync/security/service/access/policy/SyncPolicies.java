@@ -14,9 +14,12 @@
 
 package com.liferay.sync.security.service.access.policy;
 
+import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -28,8 +31,11 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -47,62 +53,69 @@ public class SyncPolicies {
 	};
 
 	@Activate
-	public void activated() throws Exception {
-		for (Company company : _companyLocalService.getCompanies()) {
-			for (Object[] policy : POLICIES) {
-				String name = String.valueOf(policy[0]);
-				String allowedServiceSignatures = String.valueOf(policy[1]);
-				boolean defaultSAPEntry = GetterUtil.getBoolean(policy[2]);
+	protected void activate(BundleContext bundleContext) {
+		_serviceRegistration = bundleContext.registerService(
+			PortalInstanceLifecycleListener.class,
+			new PolicyPortalInstanceLifecycleListener(), null);
+	}
 
-				SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
-					company.getCompanyId(), name);
+	protected void create(long companyId) throws PortalException {
+		for (Object[] policy : POLICIES) {
+			String name = String.valueOf(policy[0]);
+			String allowedServiceSignatures = String.valueOf(policy[1]);
+			boolean defaultSAPEntry = GetterUtil.getBoolean(policy[2]);
 
-				if (sapEntry != null) {
-					continue;
-				}
+			SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
+				companyId, name);
 
-				try {
-					Map<Locale, String> map = new HashMap<>();
-
-					map.put(LocaleUtil.getDefault(), name);
-
-					_sapEntryLocalService.addSAPEntry(
-						_userLocalService.getDefaultUserId(
-							company.getCompanyId()),
-						allowedServiceSignatures, defaultSAPEntry, true, name,
-						map, new ServiceContext());
-				}
-				catch (PortalException pe) {
-					throw new Exception(
-						"Unable to add default SAP entry for company " +
-							company.getCompanyId(),
-						pe);
-				}
+			if (sapEntry != null) {
+				continue;
 			}
+
+			Map<Locale, String> map = new HashMap<>();
+
+			map.put(LocaleUtil.getDefault(), name);
+
+			_sapEntryLocalService.addSAPEntry(
+				_userLocalService.getDefaultUserId(companyId),
+				allowedServiceSignatures, defaultSAPEntry, true, name, map,
+				new ServiceContext());
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
+	@Deactivate
+	protected void deactivate() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setSAPEntryLocalService(
-		SAPEntryLocalService sapEntryLocalService) {
-
-		_sapEntryLocalService = sapEntryLocalService;
-	}
+	private static final Log _log = LogFactoryUtil.getLog(SyncPolicies.class);
 
 	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
-	private CompanyLocalService _companyLocalService;
 	private SAPEntryLocalService _sapEntryLocalService;
+
+	private ServiceRegistration<PortalInstanceLifecycleListener>
+		_serviceRegistration;
+
+	@Reference(unbind = "-")
 	private UserLocalService _userLocalService;
+
+	private class PolicyPortalInstanceLifecycleListener
+		extends BasePortalInstanceLifecycleListener {
+
+		public void portalInstanceRegistered(Company company) throws Exception {
+			try {
+				create(company.getCompanyId());
+			}
+			catch (PortalException pe) {
+				_log.error(
+					"Unable to add SAP entry for company " +
+						company.getCompanyId(),
+					pe);
+			}
+		}
+
+	}
 
 }

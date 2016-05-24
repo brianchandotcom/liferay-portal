@@ -20,6 +20,8 @@
 String href = (String)request.getAttribute("liferay-ui:search-container-column-icon:href");
 String src = HtmlUtil.escapeAttribute((String)request.getAttribute("liferay-ui:search-container-column-icon:src"));
 boolean toggleRowChecker = GetterUtil.getBoolean(request.getAttribute("liferay-ui:search-container-column-icon:toggleRowChecker"));
+
+src = HtmlUtil.escapeAttribute(src);
 %>
 
 <c:if test="<%= Validator.isNotNull(src) %>">

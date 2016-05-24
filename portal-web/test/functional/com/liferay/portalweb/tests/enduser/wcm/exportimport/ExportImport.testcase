@@ -141,17 +141,11 @@
 		<execute macro="LAR#exportExportTemplateCP">
 			<var name="exportTemplateDescription" value="Export Template Description" />
 			<var name="exportTemplateName" value="Export Template Name" />
+			<var name="larFileName" value="Export.Template.lar" />
 		</execute>
 
-		<var method="selenium#getText('//ul/li/div/h5')" name="valueName" />
-
-		<echo message="value name ${valueName}" />
-
-		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9KB)]*" />
-
-		<echo message="file name ${larFileName}" />
-
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+
 		<execute function="DownloadTempFile" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -163,7 +157,7 @@
 		</execute>
 
 		<execute macro="LAR#importSiteCP">
-			<var name="larFileName" value="${larFileName}" />
+			<var name="larFileName" value="Export.Template.lar" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 

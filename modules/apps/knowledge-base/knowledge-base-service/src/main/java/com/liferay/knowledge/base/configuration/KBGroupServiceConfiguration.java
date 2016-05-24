@@ -54,12 +54,6 @@ public interface KBGroupServiceConfiguration {
 	public String sourceURLEditMessageKey();
 
 	@Meta.AD(
-		deflt = "${server-property://com.liferay.portal/ratings.default.number.of.stars}",
-		required = false
-	)
-	public String ratingsNumberOfStars();
-
-	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/admin.email.from.name}",
 		required = false
 	)

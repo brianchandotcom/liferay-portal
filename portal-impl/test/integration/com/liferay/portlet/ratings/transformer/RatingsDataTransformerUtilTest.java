@@ -78,6 +78,8 @@ public class RatingsDataTransformerUtilTest {
 			"like");
 		oldPortletPreferences.setValue(
 			"com.liferay.wiki.model.WikiPage_RatingsType", "like");
+		oldPortletPreferences.setValue(
+			"com.liferay.knowledge.base.model.KBArticle_RatingsType", "like");
 
 		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
@@ -100,6 +102,8 @@ public class RatingsDataTransformerUtilTest {
 			"stars");
 		unicodeProperties.setProperty(
 			"com.liferay.wiki.model.WikiPage_RatingsType", "stars");
+		unicodeProperties.setProperty(
+			"com.liferay.knowledge.base.model.KBArticle_RatingsType", "stars");
 
 		RatingsDataTransformerUtil.transformCompanyRatingsData(
 			1, oldPortletPreferences, unicodeProperties);
@@ -132,6 +136,8 @@ public class RatingsDataTransformerUtilTest {
 			"like");
 		oldUnicodeProperties.setProperty(
 			"com.liferay.wiki.model.WikiPage_RatingsType", "like");
+		oldUnicodeProperties.setProperty(
+			"com.liferay.knowledge.base.model.KBArticle_RatingsType", "like");
 
 		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
@@ -154,6 +160,8 @@ public class RatingsDataTransformerUtilTest {
 			"stars");
 		unicodeProperties.setProperty(
 			"com.liferay.wiki.model.WikiPage_RatingsType", "stars");
+		unicodeProperties.setProperty(
+			"com.liferay.knowledge.base.model.KBArticle_RatingsType", "stars");
 
 		RatingsDataTransformerUtil.transformGroupRatingsData(
 			1, oldUnicodeProperties, unicodeProperties);

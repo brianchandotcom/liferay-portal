@@ -44,9 +44,6 @@ public interface KBArticlePortletInstanceConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean enableKBArticleRatings();
 
-	@Meta.AD(deflt = "thumbs", required = false)
-	public String kbArticleRatingsType();
-
 	@Meta.AD(deflt = "true", required = false)
 	public boolean showKBArticleAssetEntries();
 

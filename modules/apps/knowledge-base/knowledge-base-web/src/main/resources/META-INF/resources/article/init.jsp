@@ -37,7 +37,6 @@ request.setAttribute("init.jsp-resourcePrimKey", resourcePrimKey);
 
 boolean enableKBArticleDescription = kbArticlePortletInstanceConfiguration.enableKBArticleDescription();
 boolean enableKBArticleRatings = kbArticlePortletInstanceConfiguration.enableKBArticleRatings();
-String kbArticleRatingsType = kbArticlePortletInstanceConfiguration.kbArticleRatingsType();
 boolean showKBArticleAssetEntries = kbArticlePortletInstanceConfiguration.showKBArticleAssetEntries();
 boolean showKBArticleAttachments = kbArticlePortletInstanceConfiguration.showKBArticleAttachments();
 boolean enableKBArticleAssetLinks = kbArticlePortletInstanceConfiguration.enableKBArticleAssetLinks();
@@ -52,7 +51,6 @@ String socialBookmarksTypes = kbArticlePortletInstanceConfiguration.socialBookma
 
 request.setAttribute("init.jsp-enableKBArticleDescription", enableKBArticleDescription);
 request.setAttribute("init.jsp-enableKBArticleRatings", enableKBArticleRatings);
-request.setAttribute("init.jsp-kbArticleRatingsType", kbArticleRatingsType);
 request.setAttribute("init.jsp-showKBArticleAssetEntries", showKBArticleAssetEntries);
 request.setAttribute("init.jsp-showKBArticleAttachments", showKBArticleAttachments);
 request.setAttribute("init.jsp-enableKBArticleAssetLinks", enableKBArticleAssetLinks);

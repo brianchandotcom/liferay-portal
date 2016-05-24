@@ -54,11 +54,6 @@ String tabs2Names = "general,display-settings";
 
 				<aui:input label="enable-ratings" name="preferences--enableKBArticleRatings--" type="checkbox" value="<%= enableKBArticleRatings %>" />
 
-				<div class="kb-ratings-type" id="<portlet:namespace />ratingsType">
-					<aui:input checked='<%= kbArticleRatingsType.equals("stars") %>' label="use-star-ratings" name="preferences--kbArticleRatingsType--" type="radio" value="stars" />
-					<aui:input checked='<%= kbArticleRatingsType.equals("thumbs") %>' label="use-thumbs-up-thumbs-down" name="preferences--kbArticleRatingsType--" type="radio" value="thumbs" />
-				</div>
-
 				<aui:input label="show-asset-entries" name="preferences--showKBArticleAssetEntries--" type="checkbox" value="<%= showKBArticleAssetEntries %>" />
 
 				<aui:input label="show-attachments" name="preferences--showKBArticleAttachments--" type="checkbox" value="<%= showKBArticleAttachments %>" />
@@ -87,9 +82,3 @@ String tabs2Names = "general,display-settings";
 		</aui:button-row>
 	</aui:fieldset>
 </aui:form>
-
-<c:if test='<%= tabs2.equals("display-settings") %>'>
-	<aui:script>
-		Liferay.Util.toggleBoxes('<portlet:namespace />enableKBArticleRatingsCheckbox', '<portlet:namespace />ratingsType');
-	</aui:script>
-</c:if>

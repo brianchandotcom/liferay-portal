@@ -32,7 +32,6 @@ String kbArticlesOrderByType = "desc";
 
 boolean enableKBArticleDescription = true;
 boolean enableKBArticleRatings = true;
-String kbArticleRatingsType = "thumbs";
 boolean showKBArticleAssetEntries = true;
 boolean showKBArticleAttachments = true;
 boolean enableKBArticleAssetLinks = true;
@@ -47,7 +46,6 @@ String socialBookmarksTypes = PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES);
 
 request.setAttribute("init.jsp-enableKBArticleDescription", enableKBArticleDescription);
 request.setAttribute("init.jsp-enableKBArticleRatings", enableKBArticleRatings);
-request.setAttribute("init.jsp-kbArticleRatingsType", kbArticleRatingsType);
 request.setAttribute("init.jsp-showKBArticleAssetEntries", showKBArticleAssetEntries);
 request.setAttribute("init.jsp-showKBArticleAttachments", showKBArticleAttachments);
 request.setAttribute("init.jsp-enableKBArticleAssetLinks", enableKBArticleAssetLinks);

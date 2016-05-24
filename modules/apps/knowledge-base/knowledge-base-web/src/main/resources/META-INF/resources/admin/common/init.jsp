@@ -29,7 +29,6 @@ long resourcePrimKey = GetterUtil.getLong(request.getAttribute("init.jsp-resourc
 
 boolean enableKBArticleDescription = GetterUtil.getBoolean(request.getAttribute("init.jsp-enableKBArticleDescription"));
 boolean enableKBArticleRatings = GetterUtil.getBoolean(request.getAttribute("init.jsp-enableKBArticleRatings"));
-String kbArticleRatingsType = GetterUtil.getString(request.getAttribute("init.jsp-kbArticleRatingsType"));
 boolean showKBArticleAssetEntries = GetterUtil.getBoolean(request.getAttribute("init.jsp-showKBArticleAssetEntries"));
 boolean showKBArticleAttachments = GetterUtil.getBoolean(request.getAttribute("init.jsp-showKBArticleAttachments"));
 boolean enableKBArticleAssetLinks = GetterUtil.getBoolean(request.getAttribute("init.jsp-enableKBArticleAssetLinks"));

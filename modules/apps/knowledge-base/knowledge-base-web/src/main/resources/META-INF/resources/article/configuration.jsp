@@ -58,11 +58,6 @@ String tabs2Names = Objects.equals(portletResource, KBPortletKeys.KNOWLEDGE_BASE
 
 				<aui:input label="enable-ratings" name="preferences--enableKBArticleRatings--" type="checkbox" value="<%= enableKBArticleRatings %>" />
 
-				<div class="kb-ratings-type" id="<portlet:namespace />ratingsType">
-					<aui:input checked='<%= kbArticleRatingsType.equals("stars") %>' label="use-star-ratings" name="preferences--kbArticleRatingsType--" type="radio" value="stars" />
-					<aui:input checked='<%= kbArticleRatingsType.equals("thumbs") %>' label="use-thumbs-up-thumbs-down" name="preferences--kbArticleRatingsType--" type="radio" value="thumbs" />
-				</div>
-
 				<aui:input label="show-asset-entries" name="preferences--showKBArticleAssetEntries--" type="checkbox" value="<%= showKBArticleAssetEntries %>" />
 
 				<aui:input label="show-attachments" name="preferences--showKBArticleAttachments--" type="checkbox" value="<%= showKBArticleAttachments %>" />
@@ -92,41 +87,34 @@ String tabs2Names = Objects.equals(portletResource, KBPortletKeys.KNOWLEDGE_BASE
 	</aui:fieldset>
 </aui:form>
 
-<c:choose>
-	<c:when test='<%= tabs2.equals("general") %>'>
-		<aui:script use="aui-base">
-			<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectConfigurationKBArticleURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcPath" value="/article/select_configuration_object.jsp" />
-				<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(KBFolderConstants.getClassName())) %>" />
-				<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-			</liferay-portlet:renderURL>
+<c:if test='<%= tabs2.equals("general") %>'>
+	<aui:script use="aui-base">
+		<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectConfigurationKBArticleURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="mvcPath" value="/article/select_configuration_object.jsp" />
+			<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(KBFolderConstants.getClassName())) %>" />
+			<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+		</liferay-portlet:renderURL>
 
-			A.one('#<portlet:namespace />selectKBArticleButton').on(
-				'click',
-				function(event) {
-					Liferay.Util.selectEntity(
-						{
-							dialog: {
-								constrain: true,
-								destroyOnHide: true,
-								modal: true
-							},
-							id: '<portlet:namespace />selectConfigurationKBObject',
-							title: '<liferay-ui:message key="select-parent" />',
-							uri: '<%= selectConfigurationKBArticleURL %>'
+		A.one('#<portlet:namespace />selectKBArticleButton').on(
+			'click',
+			function(event) {
+				Liferay.Util.selectEntity(
+					{
+						dialog: {
+							constrain: true,
+							destroyOnHide: true,
+							modal: true
 						},
-						function(event) {
-							document.<portlet:namespace />fm.<portlet:namespace />resourcePrimKey.value = event.resourceprimkey;
-							document.getElementById('<portlet:namespace />configurationKBArticle').value = event.title;
-						}
-					);
-				}
-			);
-		</aui:script>
-	</c:when>
-	<c:when test='<%= tabs2.equals("display-settings") %>'>
-		<aui:script>
-			Liferay.Util.toggleBoxes('<portlet:namespace />enableKBArticleRatingsCheckbox', '<portlet:namespace />ratingsType');
-		</aui:script>
-	</c:when>
-</c:choose>
+						id: '<portlet:namespace />selectConfigurationKBObject',
+						title: '<liferay-ui:message key="select-parent" />',
+						uri: '<%= selectConfigurationKBArticleURL %>'
+					},
+					function(event) {
+						document.<portlet:namespace />fm.<portlet:namespace />resourcePrimKey.value = event.resourceprimkey;
+						document.getElementById('<portlet:namespace />configurationKBArticle').value = event.title;
+					}
+				);
+			}
+		);
+	</aui:script>
+</c:if>

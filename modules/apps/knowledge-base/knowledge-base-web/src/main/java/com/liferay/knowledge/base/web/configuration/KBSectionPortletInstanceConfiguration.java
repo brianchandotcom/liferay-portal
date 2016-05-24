@@ -65,9 +65,6 @@ public interface KBSectionPortletInstanceConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean showKBArticleAttachments();
 
-	@Meta.AD(deflt = "thumbs", required = false)
-	public String kbArticleRatingsType();
-
 	@Meta.AD(deflt = "true", required = false)
 	public boolean showKBArticleAssetEntries();
 

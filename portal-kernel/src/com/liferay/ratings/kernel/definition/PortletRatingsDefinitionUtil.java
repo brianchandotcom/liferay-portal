@@ -14,11 +14,17 @@
 
 package com.liferay.ratings.kernel.definition;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.ratings.kernel.RatingsType;
+import com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -29,6 +35,8 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.portlet.PortletPreferences;
 
 /**
  * @author Roberto Díaz
@@ -59,6 +67,34 @@ public class PortletRatingsDefinitionUtil {
 		}
 
 		return Collections.unmodifiableMap(portletRatingsDefinitionValuesMap);
+	}
+
+	public static RatingsType getRatingsType(
+			long companyId, long groupId, String className)
+		throws PortalException {
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		UnicodeProperties groupTypeSettings = group.getTypeSettingsProperties();
+
+		RatingsType defaultRatingsType = getDefaultRatingsType(className);
+
+		if (defaultRatingsType != null) {
+			String propertyKey = RatingsDataTransformerUtil.getPropertyKey(
+				className);
+
+			PortletPreferences companyPortletPreferences =
+				PrefsPropsUtil.getPreferences(companyId);
+
+			String type = companyPortletPreferences.getValue(
+				propertyKey, defaultRatingsType.getValue());
+
+			type = groupTypeSettings.getProperty(propertyKey, type);
+
+			return RatingsType.parse(type);
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

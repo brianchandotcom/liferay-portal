@@ -28,7 +28,6 @@ boolean showKBArticlesPagination = kbSectionPortletInstanceConfiguration.showKBA
 
 boolean enableKBArticleDescription = kbSectionPortletInstanceConfiguration.enableKBArticleDescription();
 boolean enableKBArticleRatings = kbSectionPortletInstanceConfiguration.enableKBArticleRatings();
-String kbArticleRatingsType = kbSectionPortletInstanceConfiguration.kbArticleRatingsType();
 boolean showKBArticleAssetEntries = kbSectionPortletInstanceConfiguration.showKBArticleAssetEntries();
 boolean showKBArticleAttachments = kbSectionPortletInstanceConfiguration.showKBArticleAttachments();
 boolean enableKBArticleAssetLinks = kbSectionPortletInstanceConfiguration.enableKBArticleAssetLinks();
@@ -43,7 +42,6 @@ String socialBookmarksTypes = kbSectionPortletInstanceConfiguration.socialBookma
 
 request.setAttribute("init.jsp-enableKBArticleDescription", enableKBArticleDescription);
 request.setAttribute("init.jsp-enableKBArticleRatings", enableKBArticleRatings);
-request.setAttribute("init.jsp-kbArticleRatingsType", kbArticleRatingsType);
 request.setAttribute("init.jsp-showKBArticleAssetEntries", showKBArticleAssetEntries);
 request.setAttribute("init.jsp-showKBArticleAttachments", showKBArticleAttachments);
 request.setAttribute("init.jsp-enableKBArticleAssetLinks", enableKBArticleAssetLinks);

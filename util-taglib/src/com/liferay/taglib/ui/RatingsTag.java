@@ -14,25 +14,21 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PrefsParamUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.ratings.kernel.RatingsType;
 import com.liferay.ratings.kernel.definition.PortletRatingsDefinitionUtil;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.model.RatingsStats;
-import com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil;
 import com.liferay.taglib.util.IncludeTag;
-
-import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -106,43 +102,28 @@ public class RatingsTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long companyId = themeDisplay.getCompanyId();
-
-		PortletPreferences companyPortletPreferences =
-			PrefsPropsUtil.getPreferences(companyId);
-
 		Group group = themeDisplay.getSiteGroup();
 
 		if (group.isStagingGroup()) {
 			group = group.getLiveGroup();
 		}
 
-		UnicodeProperties groupTypeSettings = new UnicodeProperties();
+		RatingsType ratingsType = RatingsType.STARS;
 
 		if (group != null) {
-			groupTypeSettings = group.getTypeSettingsProperties();
-		}
-
-		RatingsType defaultRatingsType =
-			PortletRatingsDefinitionUtil.getDefaultRatingsType(_className);
-
-		if (defaultRatingsType != null) {
-			String propertyKey = RatingsDataTransformerUtil.getPropertyKey(
-				_className);
-
-			String companyRatingsType = PrefsParamUtil.getString(
-				companyPortletPreferences, request, propertyKey,
-				defaultRatingsType.getValue());
-
-			String type = PropertiesParamUtil.getString(
-				groupTypeSettings, request, propertyKey, companyRatingsType);
-
-			if (Validator.isNotNull(type)) {
-				return type;
+			try {
+				ratingsType = PortletRatingsDefinitionUtil.getRatingsType(
+					themeDisplay.getCompanyId(), group.getGroupId(),
+					_className);
+			}
+			catch (PortalException pe) {
+				_log.error(
+					"Unable to obtain rating type for group " +
+						group.getGroupId());
 			}
 		}
 
-		return _DEFAULT_TYPE;
+		return ratingsType.getValue();
 	}
 
 	@Override
@@ -176,9 +157,10 @@ public class RatingsTag extends IncludeTag {
 	private static final int _DEFAULT_NUMBER_OF_STARS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.RATINGS_DEFAULT_NUMBER_OF_STARS));
 
-	private static final String _DEFAULT_TYPE = RatingsType.STARS.getValue();
-
 	private static final String _PAGE = "/html/taglib/ui/ratings/page.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RatingsTag.class);
 
 	private String _className;
 	private long _classPK;

@@ -377,6 +377,8 @@ public class LayoutImportController implements ImportController {
 			parameterMap, PortletDataHandlerKeys.LOGO);
 		boolean importLayoutSetSettings = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.LAYOUT_SET_SETTINGS);
+		boolean importLayoutSetPrototypeSettings = MapUtil.getBoolean(
+			parameterMap, PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS);
 
 		boolean layoutSetPrototypeLinkEnabled = MapUtil.getBoolean(
 			parameterMap,
@@ -447,15 +449,12 @@ public class LayoutImportController implements ImportController {
 
 		// Layout and layout set prototype
 
-		Element layoutsElement = portletDataContext.getImportDataGroupElement(
-			Layout.class);
-
-		String layoutSetPrototypeUuid = layoutsElement.attributeValue(
-			"layout-set-prototype-uuid");
-
 		Element rootElement = portletDataContext.getImportDataRootElement();
 
 		Element headerElement = rootElement.element("header");
+
+		String layoutSetPrototypeUuid = headerElement.attributeValue(
+			"layout-set-prototype-uuid");
 
 		String larType = headerElement.attributeValue("type");
 
@@ -542,11 +541,15 @@ public class LayoutImportController implements ImportController {
 			}
 		}
 		else if (larType.equals("layout-set-prototype")) {
+			importLayoutSetPrototypeSettings = true;
+
 			layoutSetPrototypeUuid = GetterUtil.getString(
 				headerElement.attributeValue("type-uuid"));
 		}
 
-		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
+		if (importLayoutSetPrototypeSettings &&
+			Validator.isNotNull(layoutSetPrototypeUuid)) {
+
 			layoutSet.setLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 			layoutSet.setLayoutSetPrototypeLinkEnabled(
 				layoutSetPrototypeLinkEnabled);
@@ -671,6 +674,9 @@ public class LayoutImportController implements ImportController {
 				}
 			}
 		}
+
+		Element layoutsElement = portletDataContext.getImportDataGroupElement(
+			Layout.class);
 
 		List<Element> layoutElements = layoutsElement.elements();
 
@@ -1402,16 +1408,16 @@ public class LayoutImportController implements ImportController {
 		Element layoutsElement = rootElement.element(
 			Layout.class.getSimpleName());
 
-		validateLayoutPrototypes(companyId, layoutsElement);
+		validateLayoutPrototypes(companyId, headerElement, layoutsElement);
 	}
 
 	protected void validateLayoutPrototypes(
-			long companyId, Element layoutsElement)
+			long companyId, Element headerElement, Element layoutsElement)
 		throws Exception {
 
 		List<Tuple> missingLayoutPrototypes = new ArrayList<>();
 
-		String layoutSetPrototypeUuid = layoutsElement.attributeValue(
+		String layoutSetPrototypeUuid = headerElement.attributeValue(
 			"layout-set-prototype-uuid");
 
 		if (Validator.isNotNull(layoutSetPrototypeUuid)) {
@@ -1421,7 +1427,7 @@ public class LayoutImportController implements ImportController {
 						layoutSetPrototypeUuid, companyId);
 			}
 			catch (NoSuchLayoutSetPrototypeException nslspe) {
-				String layoutSetPrototypeName = layoutsElement.attributeValue(
+				String layoutSetPrototypeName = headerElement.attributeValue(
 					"layout-set-prototype-name");
 
 				missingLayoutPrototypes.add(

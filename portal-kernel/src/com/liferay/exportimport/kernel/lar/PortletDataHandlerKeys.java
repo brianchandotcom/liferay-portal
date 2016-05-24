@@ -50,6 +50,9 @@ public class PortletDataHandlerKeys {
 	public static final String LAYOUT_SET_PROTOTYPE_LINK_ENABLED =
 		"LAYOUT_SET_PROTOTYPE_LINK_ENABLED";
 
+	public static final String LAYOUT_SET_PROTOTYPE_SETTINGS =
+		"LAYOUT_SET_PROTOTYPE_SETTINGS";
+
 	public static final String LAYOUT_SET_SETTINGS = "LAYOUT_SET_SETTINGS";
 
 	public static final String LAYOUTS_IMPORT_MODE = "LAYOUTS_IMPORT_MODE";

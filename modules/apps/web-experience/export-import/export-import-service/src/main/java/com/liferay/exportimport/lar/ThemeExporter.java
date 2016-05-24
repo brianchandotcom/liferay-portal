@@ -51,8 +51,18 @@ public class ThemeExporter {
 			return;
 		}
 
+		Theme theme = layoutSet.getTheme();
+
+		if (theme == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to export theme " + layoutSet.getThemeId());
+			}
+
+			return;
+		}
+
 		StagedTheme stagedTheme = ModelAdapterUtil.adapt(
-			layoutSet.getTheme(), Theme.class, StagedTheme.class);
+			theme, Theme.class, StagedTheme.class);
 
 		if (!portletDataContext.isPerformDirectBinaryImport()) {
 			Element layoutSetElement = portletDataContext.getExportDataElement(

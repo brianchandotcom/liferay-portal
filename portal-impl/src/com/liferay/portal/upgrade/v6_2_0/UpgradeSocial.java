@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v6_2_0;
 
+import com.liferay.portal.kernel.dao.db.DBMetadata;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -188,7 +189,9 @@ public class UpgradeSocial extends UpgradeProcess {
 
 	protected void updateSOSocialActivities() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (!hasTable("SO_SocialActivity")) {
+			DBMetadata dbMetadata = new DBMetadata(connection);
+
+			if (!dbMetadata.hasTable("SO_SocialActivity")) {
 				return;
 			}
 

@@ -34,6 +34,7 @@ import com.liferay.portal.upgrade.v7_0_0.UpgradeLookAndFeel;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeMembershipRequest;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeMessageBoards;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeModules;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeNotifications;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeOrgLabor;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeOrganization;
 import com.liferay.portal.upgrade.v7_0_0.UpgradePhone;
@@ -85,6 +86,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 		upgrade(UpgradeMembershipRequest.class);
 		upgrade(UpgradeMessageBoards.class);
 		upgrade(UpgradeModules.class);
+		upgrade(UpgradeNotifications.class);
 		upgrade(UpgradeOrganization.class);
 		upgrade(UpgradeOrgLabor.class);
 		upgrade(UpgradePhone.class);

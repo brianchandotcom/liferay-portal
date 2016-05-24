@@ -16,4 +16,6 @@
 		<constructor-arg ref="counterDataSource" />
 		<constructor-arg ref="counterSessionFactory" />
 	</bean>
+
+	<bean class="com.liferay.counter.service.convert.database.CounterDatabaseConverter" id="com.liferay.portal.convert.database.DatabaseConverter" />
 </beans>

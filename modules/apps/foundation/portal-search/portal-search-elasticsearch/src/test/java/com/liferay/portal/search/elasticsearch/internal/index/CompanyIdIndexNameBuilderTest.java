@@ -38,7 +38,7 @@ public class CompanyIdIndexNameBuilderTest {
 	@Before
 	public void setUp() throws Exception {
 		_elasticsearchFixture = new ElasticsearchFixture(
-			LiferayTypeMappingsTest.class.getSimpleName());
+			CompanyIdIndexNameBuilderTest.class.getSimpleName());
 
 		_elasticsearchFixture.setUp();
 	}

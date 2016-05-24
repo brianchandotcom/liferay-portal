@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.upgrade.v0_0_1;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeRelease;
 
@@ -53,12 +54,18 @@ public class UpgradeServiceRelease {
 
 							String schemaVersion = toSchemaVersion(buildNumber);
 
-							runSQL(
-								"update Release_ set schemaVersion = '" +
-								schemaVersion + "' where buildNumber = " +
-								buildNumber + " and schemaVersion is null and" +
-								" servletContextName = '" +
-								_SERVLET_CONTEXT_NAME + "'");
+							StringBuilder sb = new StringBuilder(8);
+
+							sb.append("update Release_ set schemaVersion = '");
+							sb.append(schemaVersion);
+							sb.append("' where buildNumber = ");
+							sb.append(buildNumber);
+							sb.append(" and schemaVersion is null and ");
+							sb.append("servletContextName = '");
+							sb.append(_SERVLET_CONTEXT_NAME);
+							sb.append(CharPool.APOSTROPHE);
+
+							runSQL(sb.toString());
 						}
 					}
 				}

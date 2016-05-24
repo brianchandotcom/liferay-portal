@@ -21,16 +21,21 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.lpkg.deployer.LPKGVerifier;
+import com.liferay.portal.lpkg.deployer.LPKGVerifyException;
 import com.liferay.portal.lpkg.deployer.LPKGWARBundleRegistry;
+import com.liferay.portal.target.platform.indexer.Indexer;
+import com.liferay.portal.target.platform.indexer.IndexerFactory;
+import com.liferay.portal.target.platform.indexer.ValidatorFactory;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
+import java.net.URI;
 import java.net.URL;
 
 import java.nio.file.FileVisitResult;
@@ -41,6 +46,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.List;
@@ -155,6 +161,40 @@ public class LPKGDeployerImpl implements LPKGDeployer {
 				}
 
 			});
+
+		try {
+			com.liferay.portal.target.platform.indexer.Validator validator =
+				_validatorFactory.create();
+
+			List<String> errors = validator.validate(
+				Collections.<URI>emptyList());
+
+			if (!errors.isEmpty()) {
+				StringBundler sb = new StringBundler((errors.size() * 4) + 2);
+
+				sb.append("LPKG validation failed with {");
+
+				for (String error : errors) {
+					sb.append("[");
+					sb.append(error);
+					sb.append("]");
+					sb.append(",");
+				}
+
+				sb.setIndex(sb.index() - 1);
+
+				sb.append("}");
+
+				throw new LPKGVerifyException(sb.toString());
+			}
+		}
+		catch (Exception e) {
+			if (e instanceof LPKGVerifyException) {
+				throw (LPKGVerifyException)e;
+			}
+
+			throw new LPKGVerifyException(e);
+		}
 	}
 
 	@Override
@@ -301,6 +341,9 @@ public class LPKGDeployerImpl implements LPKGDeployer {
 
 	@Reference
 	private LPKGWARBundleRegistry _lpkgWarBundleRegistry;
+
+	@Reference
+	private ValidatorFactory _validatorFactory;
 
 	private final Map<String, URL> _urls = new ConcurrentHashMap<>();
 	private BundleTracker<Bundle> _warWrapperBundlerTracker;

@@ -82,7 +82,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		validateBackupName(backupName);
 
 		ClusterAdminClient clusterAdminClient =
-			_elasticsearchConnectionManager.getClusterAdminClient();
+			elasticsearchConnectionManager.getClusterAdminClient();
 
 		CreateSnapshotRequestBuilder createSnapshotRequestBuilder =
 			clusterAdminClient.prepareCreateSnapshot(
@@ -112,10 +112,10 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		waitForYellowStatus();
 
 		try {
-			_indexFactory.createIndices(
-				_elasticsearchConnectionManager.getAdminClient(), companyId);
+			indexFactory.createIndices(
+				elasticsearchConnectionManager.getAdminClient(), companyId);
 
-			_elasticsearchConnectionManager.registerCompanyId(companyId);
+			elasticsearchConnectionManager.registerCompanyId(companyId);
 		}
 		catch (Exception e) {
 			throw new IllegalStateException(e);
@@ -129,7 +129,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		throws SearchException {
 
 		ClusterAdminClient clusterAdminClient =
-			_elasticsearchConnectionManager.getClusterAdminClient();
+			elasticsearchConnectionManager.getClusterAdminClient();
 
 		try {
 			if (!hasBackupRepository(clusterAdminClient)) {
@@ -155,10 +155,10 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		super.removeCompany(companyId);
 
 		try {
-			_indexFactory.deleteIndices(
-				_elasticsearchConnectionManager.getAdminClient(), companyId);
+			indexFactory.deleteIndices(
+				elasticsearchConnectionManager.getAdminClient(), companyId);
 
-			_elasticsearchConnectionManager.unregisterCompanyId(companyId);
+			elasticsearchConnectionManager.unregisterCompanyId(companyId);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -176,7 +176,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		validateBackupName(backupName);
 
 		AdminClient adminClient =
-			_elasticsearchConnectionManager.getAdminClient();
+			elasticsearchConnectionManager.getAdminClient();
 
 		IndicesAdminClient indicesAdminClient = adminClient.indices();
 
@@ -195,7 +195,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		}
 
 		ClusterAdminClient clusterAdminClient =
-			_elasticsearchConnectionManager.getClusterAdminClient();
+			elasticsearchConnectionManager.getClusterAdminClient();
 
 		RestoreSnapshotRequestBuilder restoreSnapshotRequestBuilder =
 			clusterAdminClient.prepareRestoreSnapshot(
@@ -231,13 +231,13 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	}
 
 	public void unsetElasticsearchConnectionManager(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
+		ElasticsearchConnectionManager elasticsearchConnectionManager2) {
 
-		_elasticsearchConnectionManager = null;
+		elasticsearchConnectionManager = null;
 	}
 
-	public void unsetIndexFactory(IndexFactory indexFactory) {
-		_indexFactory = null;
+	public void unsetIndexFactory(IndexFactory indexFactory2) {
+		indexFactory = null;
 	}
 
 	@Activate
@@ -338,7 +338,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		}
 
 		ClusterHealthResponse clusterHealthResponse =
-			_elasticsearchConnectionManager.getClusterHealthResponse(timeout);
+			elasticsearchConnectionManager.getClusterHealthResponse(timeout);
 
 		if (clusterHealthResponse.getStatus() == ClusterHealthStatus.RED) {
 			throw new IllegalStateException(
@@ -348,17 +348,17 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	}
 
 	@Reference
+	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+
+	@Reference
+	protected IndexFactory indexFactory;
+
+	@Reference
 	protected IndexNameBuilder indexNameBuilder;
 
 	private static final String _BACKUP_REPOSITORY_NAME = "liferay_backup";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchSearchEngine.class);
-
-	@Reference
-	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
-
-	@Reference
-	private IndexFactory _indexFactory;
 
 }

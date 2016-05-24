@@ -1177,7 +1177,7 @@ AUI.add(
 					},
 
 					getWebContentSelectorURL: function() {
-						var url = Liferay.PortletURL.createRenderURL();
+						var url = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
 
 						url.setParameter('eventName', 'selectContent');
 						url.setParameter('groupId', themeDisplay.getScopeGroupId());

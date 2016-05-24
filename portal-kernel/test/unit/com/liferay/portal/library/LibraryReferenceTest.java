@@ -14,6 +14,8 @@
 
 package com.liferay.portal.library;
 
+import com.liferay.portal.kernel.util.CharPool;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -165,6 +167,11 @@ public class LibraryReferenceTest {
 					String pathString = path.toString();
 
 					if (pathString.endsWith(".jar")) {
+						if (File.separatorChar != CharPool.SLASH) {
+							pathString = pathString.replace(
+								File.separatorChar, CharPool.SLASH);
+						}
+
 						_libJars.add(pathString);
 					}
 

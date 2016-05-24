@@ -397,7 +397,6 @@ app.server.type=@{app.server.type}]]></echo>
 /sql/sql.*.properties
 /test.*.properties
 /tools/cobertura-agent/classes
-/tools/liferay-doclet
 /tools/maven/*.asc
 /tools/node*
 /tools/selenium/*.exe

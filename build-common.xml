@@ -1113,6 +1113,42 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="record-artifact-version">
+		<attribute name="artifact.name" />
+		<attribute name="file" />
+
+		<sequential>
+			<local name="artifact.name" />
+			<local name="Bundle-Version" />
+			<local name="processed.artifact.name" />
+
+			<property name="artifact.name" value="@{artifact.name}" />
+
+			<loadresource property="processed.artifact.name">
+				<filterchain>
+					<prefixlines prefix="com.liferay." />
+
+					<suffixlines suffix=".version" />
+
+					<tokenfilter>
+						<replacestring from="-" to="." />
+					</tokenfilter>
+				</filterchain>
+				<propertyresource name="artifact.name" />
+			</loadresource>
+
+			<loadproperties srcFile="${basedir}/@{artifact.name}/bnd.bnd">
+				<filterchain>
+					<linecontains>
+						<contains value="Bundle-Version" />
+					</linecontains>
+				</filterchain>
+			</loadproperties>
+
+			<echo append="true" file="@{file}" message="${line.separator}${processed.artifact.name}=${Bundle-Version}" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="remake-dir">
 		<attribute name="dir" />
 
@@ -1420,122 +1456,13 @@ rerun your task.
 
 	<macrodef name="update-gradle-properties">
 		<sequential>
-			<propertyselector
-				casesensitive="false"
-				delimiter=","
-				distinct="true"
-				match="app\.(server\.(glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere|wildfly).*)\.dir"
-				override="true"
-				property="app.server.dir.property.list"
-				select="\1"
-			/>
+			<property location="${basedir}/.gradle/gradle.properties" name="gradle.properties.file" />
 
-			<sortlist
-				delimiter=","
-				override="true"
-				property="app.server.dir.property.list"
-				value="${app.server.dir.property.list}"
-			/>
+			<delete file="${gradle.properties.file}" />
 
-			<delete file="${basedir}/.gradle/gradle.properties" />
-
-			<for list="${app.server.dir.property.list}" param="app.server.dir.property">
-				<sequential>
-					<propertycopy
-						from="app.@{app.server.dir.property}.dir"
-						name="temp.app.server.dir"
-					/>
-
-					<echo
-						append="true"
-						file="${basedir}/.gradle/gradle.properties"
-					>
-						app.@{app.server.dir.property}.dir=${temp.app.server.dir}
-					</echo>
-
-					<var name="temp.app.server.dir" unset="true" />
-				</sequential>
-			</for>
-
-			<for list="portal-impl,portal-kernel,portal-test,portal-test-integration,util-bridges,util-java,util-taglib" param="artifact.name">
-				<sequential>
-					<propertyregex
-						global="true"
-						input="@{artifact.name}"
-						override="true"
-						property="processed.artifact.name"
-						regexp="-"
-						replace="."
-					/>
-
-					<loadproperties srcFile="${basedir}/@{artifact.name}/bnd.bnd">
-						<filterchain>
-							<linecontains>
-								<contains value="Bundle-Version" />
-							</linecontains>
-						</filterchain>
-					</loadproperties>
-
-					<echo
-						append="true"
-						file="${basedir}/.gradle/gradle.properties"
-					>
-						com.liferay.${processed.artifact.name}.version=${Bundle-Version}-SNAPSHOT
-					</echo>
-
-					<var name="Bundle-Version" unset="true" />
-					<var name="processed.artifact.name" unset="true" />
-				</sequential>
-			</for>
-
-			<propertyselector
-				casesensitive="false"
-				delimiter="," match="ivy.pom.(.+)"
-				property="ivy.pom.property.list"
-				select="\1"
-			/>
-
-			<sortlist
-				delimiter=","
-				override="true"
-				property="ivy.pom.property.list"
-				value="${ivy.pom.property.list}"
-			/>
-
-			<if>
-				<not>
-					<equals arg1="${ivy.pom.property.list}" arg2="$${ivy.pom.property.list}" />
-				</not>
-				<then>
-					<for list="${ivy.pom.property.list}" param="ivy.pom.property">
-						<sequential>
-							<propertycopy
-								from="ivy.pom.@{ivy.pom.property}"
-								name="temp.ivy.pom"
-							/>
-
-							<echo
-								append="true"
-								file="${basedir}/.gradle/gradle.properties"
-							>
-								pom.@{ivy.pom.property}=${temp.ivy.pom}
-							</echo>
-
-							<var name="temp.ivy.pom" unset="true" />
-						</sequential>
-					</for>
-				</then>
-			</if>
-
-			<if>
-				<equals arg1="${jsp.precompile}" arg2="on" />
-				<then>
-					<var name="jsp.precompile.enabled" value="true" />
-				</then>
-				<else>
-					<var name="jsp.precompile.enabled" value="false" />
-				</else>
-			</if>
+			<condition else="false" property="jsp.precompile.enabled">
+				<istrue value="${jsp.precompile}" />
+			</condition>
 
 			<exec executable="git" outputproperty="liferay.releng.branch">
 				<arg value="rev-parse" />
@@ -1543,90 +1470,75 @@ rerun your task.
 				<arg value="HEAD" />
 			</exec>
 
-			<if>
+			<condition property="liferay.releng.ee">
 				<or>
 					<istrue value="${ee.override}" />
 					<matches pattern="ee-.+" string="${liferay.releng.branch}" />
 				</or>
-				<then>
-					<var name="liferay.releng.app.title.prefix" value="Liferay" />
-					<var name="liferay.releng.public" value="false" />
-					<var name="liferay.releng.supported" value="true" />
-				</then>
-				<else>
-					<var name="liferay.releng.app.title.prefix" value="Liferay CE" />
-					<var name="liferay.releng.public" value="true" />
-					<var name="liferay.releng.supported" value="false" />
-				</else>
-			</if>
+			</condition>
 
-			<propertyselector
-				casesensitive="false"
-				delimiter="," match="sonatype.(.+)"
-				property="sonatype.property.list"
-				select="\1"
-			/>
+			<condition else="Liferay" property="liferay.releng.app.title.prefix" value="Liferay CE">
+				<istrue value="${liferay.releng.ee}" />
+			</condition>
 
-			<sortlist
-				delimiter=","
-				override="true"
-				property="sonatype.property.list"
-				value="${sonatype.property.list}"
-			/>
-
-			<if>
+			<condition else="false" property="liferay.releng.public">
 				<not>
-					<equals arg1="${sonatype.property.list}" arg2="$${sonatype.property.list}" />
+					<istrue value="${liferay.releng.ee}" />
 				</not>
-				<then>
-					<for list="${sonatype.property.list}" param="sonatype.property">
-						<sequential>
-							<propertycopy
-								from="sonatype.@{sonatype.property}"
-								name="temp.sonatype"
-							/>
+			</condition>
 
-							<echo
-								append="true"
-								file="${basedir}/.gradle/gradle.properties"
-							>
-								sonatype.@{sonatype.property}=${temp.sonatype}
-							</echo>
+			<condition else="false" property="liferay.releng.supported">
+				<istrue value="${liferay.releng.ee}" />
+			</condition>
 
-							<var name="temp.sonatype" unset="true" />
-						</sequential>
-					</for>
-				</then>
-			</if>
+			<echoproperties destfile="${gradle.properties.file}" >
+				<propertyset>
+					<propertyref name="app.server.type" />
+					<propertyref name="baseline.jar.report.level" />
+					<propertyref name="baseline.jar.report.only.dirty.packages" />
+					<propertyref name="jsp.precompile.enabled" />
+					<propertyref name="junit.java.integration.gc" />
+					<propertyref name="junit.java.unit.gc" />
+					<propertyref name="liferay.home" />
+					<propertyref name="liferay.releng.app.title.prefix" />
+					<propertyref name="liferay.releng.public" />
+					<propertyref name="liferay.releng.supported" />
+					<propertyref name="microsoft.translator.client.id" />
+					<propertyref name="microsoft.translator.client.secret" />
+					<propertyref name="nodejs.npm.email" />
+					<propertyref name="nodejs.npm.password" />
+					<propertyref name="nodejs.npm.user" />
+					<propertyref name="sass.compiler.class.name" />
+					<propertyref name="sass.generate.source.map" />
+					<propertyref name="sass.precision" />
+					<propertyref name="source.formatter.max.line.length" />
+					<propertyref name="source.formatter.processor.thread.count" />
+					<propertyref prefix="ivy.pom." />
+					<propertyref prefix="sonatype." />
+					<propertyref regex="^\s*app\.server\.(?:glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere|wildfly).*\.dir" />
+				</propertyset>
+			</echoproperties>
 
-			<echo
-				append="true"
-				file="${basedir}/.gradle/gradle.properties"
-			>
-				app.server.type=${app.server.type}
-				baseline.jar.report.level=${baseline.jar.report.level}
-				baseline.jar.report.only.dirty.packages=${baseline.jar.report.only.dirty.packages}
-				database.jdbc.oracle.driver=${jdbc.oracle.driver}
-				jsp.precompile.enabled=${jsp.precompile.enabled}
-				junit.java.integration.gc=${junit.java.integration.gc}
-				junit.java.unit.gc=${junit.java.unit.gc}
-				liferay.home=${liferay.home}
-				liferay.releng.app.title.prefix=${liferay.releng.app.title.prefix}
-				liferay.releng.public=${liferay.releng.public}
-				liferay.releng.supported=${liferay.releng.supported}
-				microsoft.translator.client.id=${microsoft.translator.client.id}
-				microsoft.translator.client.secret=${microsoft.translator.client.secret}
-				nodejs.npm.email=${nodejs.npm.email}
-				nodejs.npm.password=${nodejs.npm.password}
-				nodejs.npm.user=${nodejs.npm.user}
-				sass.compiler.class.name=${sass.compiler.class.name}
-				sass.generate.source.map=${sass.generate.source.map}
-				sass.precision=${sass.precision}
-				source.formatter.max.line.length=${source.formatter.max.line.length}
-				source.formatter.processor.thread.count=${source.formatter.processor.thread.count}
-				systemProp.build.performance.logger.enabled=${build.performance.logger.enabled}
-				upgrade.table.dir=${upgrade.table.dir}
-			</echo>
+			<record-artifact-version artifact.name="portal-impl" file="${gradle.properties.file}" />
+
+			<record-artifact-version artifact.name="portal-kernel" file="${gradle.properties.file}" />
+
+			<record-artifact-version artifact.name="portal-test" file="${gradle.properties.file}" />
+
+			<record-artifact-version artifact.name="portal-test-integration" file="${gradle.properties.file}" />
+
+			<record-artifact-version artifact.name="util-bridges" file="${gradle.properties.file}" />
+
+			<record-artifact-version artifact.name="util-java" file="${gradle.properties.file}" />
+
+			<record-artifact-version artifact.name="util-taglib" file="${gradle.properties.file}" />
+
+			<propertyfile file="${gradle.properties.file}">
+				<entry key="database.jdbc.oracle.driver" value="${jdbc.oracle.driver}" />
+				<entry key="systemProp.build.performance.logger.enabled" value="${build.performance.logger.enabled}" />
+			</propertyfile>
+
+			<replaceregexp file="${gradle.properties.file}" flags="g" match="\\([\:\=\!\\])" replace="\1" />
 		</sequential>
 	</macrodef>
 

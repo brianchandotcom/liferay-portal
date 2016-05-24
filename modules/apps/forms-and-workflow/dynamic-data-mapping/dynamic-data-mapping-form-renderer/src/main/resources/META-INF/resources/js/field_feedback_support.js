@@ -21,7 +21,8 @@ AUI.add(
 				var instance = this;
 
 				instance._eventHandlers.push(
-					instance.after('errorMessageChange', instance._afterErrorMessageChange),
+					instance.after('blur', instance._afterBlur),
+					instance.after('focus', instance._afterFocus),
 					instance.after(instance._renderErrorMessage, instance, 'render')
 				);
 			},
@@ -88,9 +89,21 @@ AUI.add(
 				}
 			},
 
-			_afterErrorMessageChange: function() {
+			_afterBlur: function() {
 				var instance = this;
 
+				if (instance.hasErrors()) {
+					instance._renderErrorMessage();
+				}
+
+				instance.showValidationStatus();
+			},
+
+			_afterFocus: function() {
+				var instance = this;
+
+				instance.clearValidationStatus();
+				instance.hideErrorMessage();
 				instance._renderErrorMessage();
 			},
 

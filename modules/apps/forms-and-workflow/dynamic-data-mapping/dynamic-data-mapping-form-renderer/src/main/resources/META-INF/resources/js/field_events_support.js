@@ -70,6 +70,7 @@ AUI.add(
 				var instance = this;
 
 				instance.bindInputEvent('blur', instance._onInputBlur);
+				instance.bindInputEvent('focus', instance._onInputFocus);
 				instance.bindInputEvent(['input', 'change'], instance._onValueChange);
 			},
 
@@ -80,6 +81,17 @@ AUI.add(
 					'blur',
 					{
 						domEvent: event,
+						field: instance
+					}
+				);
+			},
+
+			_onInputFocus: function(event) {
+				var instance = this;
+
+				instance.fire(
+					'focus',
+					{
 						field: instance
 					}
 				);

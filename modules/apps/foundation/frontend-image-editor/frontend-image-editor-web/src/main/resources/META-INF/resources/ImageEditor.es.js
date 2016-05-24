@@ -356,7 +356,7 @@ class ImageEditor extends Component {
 				url: this.saveURL
 			};
 
-			$.ajax(requestConfig)
+			AUI.$.ajax(requestConfig)
 				.done(resolve)
 				.fail((jqXHR, status, error) => reject(error));
 		});

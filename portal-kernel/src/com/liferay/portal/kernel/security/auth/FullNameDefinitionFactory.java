@@ -36,6 +36,35 @@ public class FullNameDefinitionFactory {
 	private FullNameDefinitionFactory() {
 	}
 
+	private FullNameField _getFullNameField(
+		Locale locale, String userNameField, boolean required) {
+
+		FullNameField fullNameField = new FullNameField();
+
+		fullNameField.setName(userNameField);
+
+		String[] values = null;
+
+		if (userNameField.equals(LanguageConstants.VALUE_PREFIX)) {
+			values = StringUtil.split(
+				LanguageUtil.get(
+					locale, LanguageConstants.KEY_USER_NAME_PREFIX_VALUES,
+					StringPool.BLANK));
+		}
+		else if (userNameField.equals(LanguageConstants.VALUE_SUFFIX)) {
+			values = StringUtil.split(
+				LanguageUtil.get(
+					locale, LanguageConstants.KEY_USER_NAME_SUFFIX_VALUES,
+					StringPool.BLANK));
+		}
+
+		fullNameField.setValues(values);
+
+		fullNameField.setRequired(required);
+
+		return fullNameField;
+	}
+
 	private FullNameDefinition _getInstance(Locale locale) {
 		FullNameDefinition fullNameDefinition = _fullNameDefinitions.get(
 			locale);
@@ -59,28 +88,8 @@ public class FullNameDefinitionFactory {
 		fieldNames = _includeRequiredFieldNames(requiredFieldNames, fieldNames);
 
 		for (String userNameField : fieldNames) {
-			FullNameField fullNameField = new FullNameField();
-
-			fullNameField.setName(userNameField);
-
-			String[] values = null;
-
-			if (userNameField.equals(LanguageConstants.VALUE_PREFIX)) {
-				values = StringUtil.split(
-					LanguageUtil.get(
-						locale, LanguageConstants.KEY_USER_NAME_PREFIX_VALUES,
-						StringPool.BLANK));
-			}
-			else if (userNameField.equals(LanguageConstants.VALUE_SUFFIX)) {
-				values = StringUtil.split(
-					LanguageUtil.get(
-						locale, LanguageConstants.KEY_USER_NAME_SUFFIX_VALUES,
-						StringPool.BLANK));
-			}
-
-			fullNameField.setValues(values);
-
-			fullNameField.setRequired(
+			FullNameField fullNameField = _getFullNameField(
+				locale, userNameField,
 				fullNameDefinition.isFieldRequired(userNameField));
 
 			fullNameDefinition.addFullNameField(fullNameField);
@@ -117,7 +126,7 @@ public class FullNameDefinitionFactory {
 		fieldNames = ArrayUtil.unique(fieldNames);
 
 		ArrayUtil.reverse(fieldNames);
-		
+
 		return fieldNames;
 	}
 

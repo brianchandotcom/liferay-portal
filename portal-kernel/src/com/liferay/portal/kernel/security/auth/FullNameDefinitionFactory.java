@@ -56,13 +56,7 @@ public class FullNameDefinitionFactory {
 			LanguageUtil.get(
 				locale, LanguageConstants.KEY_USER_NAME_FIELD_NAMES));
 
-		fieldNames = ArrayUtil.append(requiredFieldNames, fieldNames);
-
-		ArrayUtil.reverse(fieldNames);
-
-		fieldNames = ArrayUtil.unique(fieldNames);
-
-		ArrayUtil.reverse(fieldNames);
+		fieldNames = _includeRequiredFieldNames(requiredFieldNames, fieldNames);
 
 		for (String userNameField : fieldNames) {
 			FullNameField fullNameField = new FullNameField();
@@ -111,6 +105,20 @@ public class FullNameDefinitionFactory {
 		}
 
 		return requiredFieldNames;
+	}
+
+	private String[] _includeRequiredFieldNames(
+		String[] requiredFieldNames, String[] fieldNames) {
+
+		fieldNames = ArrayUtil.append(requiredFieldNames, fieldNames);
+
+		ArrayUtil.reverse(fieldNames);
+
+		fieldNames = ArrayUtil.unique(fieldNames);
+
+		ArrayUtil.reverse(fieldNames);
+		
+		return fieldNames;
 	}
 
 	private static final FullNameDefinitionFactory _instance =

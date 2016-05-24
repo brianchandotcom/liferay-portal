@@ -739,14 +739,11 @@ public class JournalArticleStagedModelDataHandler
 						article.getSmallImageURL(), smallFile, images,
 						articleURL, serviceContext);
 
-					String existingArticleVersionUuid =
-						existingArticleVersion.getUuid();
+					String articleUuid = article.getUuid();
 					String importedArticleUuid = importedArticle.getUuid();
 
-					if (!existingArticleVersionUuid.equals(
-							importedArticleUuid)) {
-
-						importedArticle.setUuid(existingArticleVersionUuid);
+					if (!articleUuid.equals(importedArticleUuid)) {
+						importedArticle.setUuid(articleUuid);
 
 						_journalArticleLocalService.updateJournalArticle(
 							importedArticle);

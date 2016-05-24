@@ -246,6 +246,19 @@ public class JournalTestUtil {
 	}
 
 	public static JournalArticle addArticle(
+			long groupId, long folderId, ServiceContext serviceContext)
+		throws Exception {
+
+		return addArticle(
+			groupId, folderId, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			StringPool.BLANK, true,
+			_getLocalizedMap(RandomTestUtil.randomString()),
+			_getLocalizedMap(RandomTestUtil.randomString()),
+			_getLocalizedMap(RandomTestUtil.randomString()), null,
+			LocaleUtil.getSiteDefault(), null, false, false, serviceContext);
+	}
+
+	public static JournalArticle addArticle(
 			long groupId, long folderId, String articleId,
 			boolean autoArticleId)
 		throws Exception {

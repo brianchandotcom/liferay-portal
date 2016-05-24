@@ -23,8 +23,7 @@ public class TestElasticsearchConnectionManager
 	extends ElasticsearchConnectionManager {
 
 	public TestElasticsearchConnectionManager(
-			ElasticsearchFixture elasticsearchFixture)
-		throws Exception {
+		ElasticsearchFixture elasticsearchFixture) {
 
 		setEmbeddedElasticsearchConnection(
 			elasticsearchFixture.getEmbeddedElasticsearchConnection());

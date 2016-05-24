@@ -169,7 +169,7 @@ portletDisplay.setShowBackIcon(false);
 	</aui:fieldset>
 </aui:form>
 
-<aui:script>
+<aui:script sandbox="<%= true %>">
 	var dialog = Liferay.Util.getWindow('<portlet:namespace />popup');
 
 	if (dialog) {

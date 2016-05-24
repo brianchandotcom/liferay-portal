@@ -50,8 +50,8 @@ navigation = navigation.trim();
 	</ul>
 </c:if>
 
-<aui:script>
-	var navigation = AUI.$('#<portlet:namespace />navigation');
+<aui:script sandbox="<%= true %>">
+	var navigation = $('#<portlet:namespace />navigation');
 
 	if (navigation.children().length <= 1) {
 		navigation.remove();

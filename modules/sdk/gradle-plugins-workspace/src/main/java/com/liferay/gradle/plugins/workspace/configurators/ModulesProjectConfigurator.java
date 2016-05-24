@@ -16,7 +16,7 @@ package com.liferay.gradle.plugins.workspace.configurators;
 
 import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.LiferayOSGiDefaultsPlugin;
-import com.liferay.gradle.plugins.LiferayPlugin;
+import com.liferay.gradle.plugins.LiferayOSGiPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerPlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
@@ -69,7 +69,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
-		GradleUtil.applyPlugin(project, LiferayPlugin.class);
+		GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
 		GradleUtil.applyPlugin(project, PoshiRunnerPlugin.class);
 
 		addRepositoryDefault(project, workspaceExtension);

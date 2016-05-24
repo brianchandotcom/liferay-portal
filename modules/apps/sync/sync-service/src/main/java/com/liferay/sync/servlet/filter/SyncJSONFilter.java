@@ -269,7 +269,7 @@ public class SyncJSONFilter implements Filter {
 
 	private static final int _ABSOLUTE_SYNC_CLIENT_MIN_BUILD_ANDROID = 26;
 
-	private static final int _ABSOLUTE_SYNC_CLIENT_MIN_BUILD_DESKTOP = 3009;
+	private static final int _ABSOLUTE_SYNC_CLIENT_MIN_BUILD_DESKTOP = 3200;
 
 	private static final int _ABSOLUTE_SYNC_CLIENT_MIN_BUILD_IOS = 7;
 

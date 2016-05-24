@@ -14,6 +14,7 @@
 
 package com.liferay.microblogs.upgrade.v1_0_0;
 
+import com.liferay.portal.kernel.dao.db.DBMetadata;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -31,8 +32,10 @@ public class UpgradeMicroblogsEntry extends UpgradeProcess {
 
 	protected void updateMicroBlogsEntry() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (hasColumn("MicroblogsEntry", "creatorClassNameId") ||
-				hasColumn("MicroblogsEntry", "creatorClassPK")) {
+			DBMetadata dbMetadata = new DBMetadata(connection);
+
+			if (dbMetadata.hasColumn("MicroblogsEntry", "creatorClassNameId") ||
+				dbMetadata.hasColumn("MicroblogsEntry", "creatorClassPK")) {
 
 				return;
 			}

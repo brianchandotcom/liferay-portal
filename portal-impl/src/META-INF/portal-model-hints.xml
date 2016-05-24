@@ -1726,7 +1726,9 @@
 		<field name="userNotificationEventId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
-		<field name="type" type="String" />
+		<field name="type" type="String">
+			<hint name="max-length">200</hint>
+		</field>
 		<field name="timestamp" type="long" />
 		<field name="deliveryType" type="int" />
 		<field name="deliverBy" type="long" />

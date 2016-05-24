@@ -98,8 +98,6 @@ AUI.add(
 						if (errorMessage) {
 							instance.set('errorMessage', errorMessage);
 						}
-
-						instance.showValidationStatus();
 					}
 				}
 			},

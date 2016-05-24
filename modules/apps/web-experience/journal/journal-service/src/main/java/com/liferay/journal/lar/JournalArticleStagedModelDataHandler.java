@@ -694,7 +694,7 @@ public class JournalArticleStagedModelDataHandler
 				if (existingArticle != null) {
 					existingArticleVersion = fetchExistingArticleVersion(
 						article.getUuid(), portletDataContext.getScopeGroupId(),
-						articleId, article.getVersion());
+						existingArticle.getArticleId(), article.getVersion());
 				}
 
 				if ((existingArticle != null) &&

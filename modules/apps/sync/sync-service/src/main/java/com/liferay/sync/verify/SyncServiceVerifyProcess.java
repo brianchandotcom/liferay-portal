@@ -12,44 +12,36 @@
  * details.
  */
 
-package com.liferay.sync.upgrade.v1_0_0;
+package com.liferay.sync.verify;
 
-import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.sync.constants.SyncDLObjectConstants;
+import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.sync.service.SyncDLObjectLocalService;
 import com.liferay.sync.util.VerifyUtil;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shinn Lok
  */
-public class UpgradeSyncDLObject extends UpgradeProcess {
-
-	public UpgradeSyncDLObject(
-		SyncDLObjectLocalService syncDLObjectLocalService) {
-
-		_syncDLObjectLocalService = syncDLObjectLocalService;
-	}
+@Component(
+	immediate = true,
+	property = {"verify.process.name=com.liferay.sync.service"},
+	service = VerifyProcess.class
+)
+public class SyncServiceVerifyProcess extends VerifyProcess {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		int syncDLObjectsCount =
-			_syncDLObjectLocalService.getSyncDLObjectsCount();
-
-		if (syncDLObjectsCount != 0) {
-			return;
-		}
-
+	protected void doVerify() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_syncDLObjectLocalService.deleteSyncDLObjects(
-				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
-				SyncDLObjectConstants.TYPE_FILE);
-
 			VerifyUtil.verify();
 		}
 	}
 
-	private final SyncDLObjectLocalService _syncDLObjectLocalService;
+	@Reference(unbind = "-")
+	protected void setSyncDLObjectLocalService(
+		SyncDLObjectLocalService syncDLObjectLocalService) {
+	}
 
 }

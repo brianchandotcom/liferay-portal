@@ -1,3 +1,0 @@
-drop index IX_69ADEDD1 on SyncDLObject;
-
-COMMIT_TRANSACTION;

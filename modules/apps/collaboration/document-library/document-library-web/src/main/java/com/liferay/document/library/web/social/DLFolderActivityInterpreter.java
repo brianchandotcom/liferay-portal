@@ -15,8 +15,8 @@
 package com.liferay.document.library.web.social;
 
 import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.document.library.web.util.DLResourceBundleLoader;
+import com.liferay.document.library.web.internal.constants.DLPortletKeys;
+import com.liferay.document.library.web.internal.util.DLResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;

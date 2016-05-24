@@ -16,7 +16,7 @@ package com.liferay.document.library.web.internal.util;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.document.library.web.settings.internal.DLPortletInstanceSettings;
+import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.FileEntry;

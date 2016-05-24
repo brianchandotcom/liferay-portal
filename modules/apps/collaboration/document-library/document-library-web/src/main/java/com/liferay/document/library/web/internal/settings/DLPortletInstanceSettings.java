@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.web.settings.internal;
+package com.liferay.document.library.web.internal.settings;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLUtil;

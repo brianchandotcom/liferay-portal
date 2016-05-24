@@ -16,7 +16,7 @@ package com.liferay.document.library.web.internal.display.context.logic;
 
 import com.liferay.document.library.web.internal.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
-import com.liferay.document.library.web.settings.internal.DLPortletInstanceSettings;
+import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;

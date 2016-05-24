@@ -15,7 +15,7 @@
 package com.liferay.document.library.web.internal.upgrade.v1_0_0;
 
 import com.liferay.document.library.web.internal.constants.DLPortletKeys;
-import com.liferay.document.library.web.settings.internal.DLPortletInstanceSettings;
+import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.DLGroupServiceSettings;

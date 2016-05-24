@@ -21,7 +21,7 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.web.internal.display.context.logic.FileEntryDisplayContextHelper;
 import com.liferay.document.library.web.internal.display.context.logic.FileVersionDisplayContextHelper;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
-import com.liferay.document.library.web.settings.internal.DLPortletInstanceSettings;
+import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;

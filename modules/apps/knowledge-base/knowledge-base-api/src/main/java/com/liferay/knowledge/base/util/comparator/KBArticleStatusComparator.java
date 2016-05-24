@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.util.comparator;
 
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Peter Shin
@@ -27,7 +28,7 @@ public class KBArticleStatusComparator extends OrderByComparator<KBArticle> {
 
 	public static final String ORDER_BY_DESC = "KBArticle.status DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"status"};
+	public static final String[] ORDER_BY_FIELDS = {"status", "title"};
 
 	public KBArticleStatusComparator() {
 		this(false);
@@ -46,6 +47,12 @@ public class KBArticleStatusComparator extends OrderByComparator<KBArticle> {
 		}
 		else if (kbArticle1.getStatus() > kbArticle2.getStatus()) {
 			value = 1;
+		}
+		else {
+			String title1 = StringUtil.toLowerCase(kbArticle1.getTitle());
+			String title2 = StringUtil.toLowerCase(kbArticle2.getTitle());
+
+			value = title1.compareTo(title2);
 		}
 
 		if (_ascending) {

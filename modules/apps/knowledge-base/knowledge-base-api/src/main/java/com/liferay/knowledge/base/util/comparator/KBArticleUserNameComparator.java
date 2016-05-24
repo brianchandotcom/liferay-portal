@@ -28,7 +28,7 @@ public class KBArticleUserNameComparator extends OrderByComparator<KBArticle> {
 
 	public static final String ORDER_BY_DESC = "KBArticle.userName DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"userName"};
+	public static final String[] ORDER_BY_FIELDS = {"userName", "title"};
 
 	public KBArticleUserNameComparator() {
 		this(false);
@@ -42,6 +42,13 @@ public class KBArticleUserNameComparator extends OrderByComparator<KBArticle> {
 	public int compare(KBArticle kbArticle1, KBArticle kbArticle2) {
 		int value = StringUtil.toLowerCase(kbArticle1.getUserName()).compareTo(
 			StringUtil.toLowerCase(kbArticle2.getUserName()));
+
+		if (value == 0) {
+			String title1 = StringUtil.toLowerCase(kbArticle1.getTitle());
+			String title2 = StringUtil.toLowerCase(kbArticle2.getTitle());
+
+			value = title1.compareTo(title2);
+		}
 
 		if (_ascending) {
 			return value;

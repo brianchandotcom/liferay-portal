@@ -29,7 +29,7 @@ public class KBTemplateUserNameComparator
 
 	public static final String ORDER_BY_DESC = "KBTemplate.userName DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"userName"};
+	public static final String[] ORDER_BY_FIELDS = {"userName", "title"};
 
 	public KBTemplateUserNameComparator() {
 		this(false);
@@ -43,6 +43,13 @@ public class KBTemplateUserNameComparator
 	public int compare(KBTemplate kbTemplate1, KBTemplate kbTemplate2) {
 		int value = StringUtil.toLowerCase(kbTemplate1.getUserName()).compareTo(
 			StringUtil.toLowerCase(kbTemplate2.getUserName()));
+
+		if (value == 0) {
+			String title1 = StringUtil.toLowerCase(kbTemplate1.getTitle());
+			String title2 = StringUtil.toLowerCase(kbTemplate1.getTitle());
+
+			value = title1.compareTo(title2);
+		}
 
 		if (_ascending) {
 			return value;

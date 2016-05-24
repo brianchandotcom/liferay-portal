@@ -2,31 +2,38 @@ AUI.add(
 	'document-library-checkin',
 	function(A) {
 		var DocumentLibraryCheckin = {
-			showDialog: function(contentId, title, onSave) {
-				var instance = this;
-
+			showDialog: function(contentId, title, saveButton, cancelLabel) {
 				var versionDetailsDialog = Liferay.Util.Window.getWindow(
 					{
 						dialog: {
 							bodyContent: A.one('#' + contentId).html(),
-							destroyOnHide: true
+							destroyOnHide: true,
+							height: 400,
+							'toolbars.footer': [
+								{
+									cssClass: 'btn-lg btn-primary btn-default',
+									label: saveButton.label,
+									on: {
+										click: saveButton.callback
+									}
+								},
+								{
+									cssClass: 'btn-lg btn-link',
+									label: cancelLabel,
+									on: {
+										click: function() {
+											Liferay.Util.getWindow(contentId + 'Dialog').destroy();
+										}
+									}
+								}
+							],
+							width: 700
 						},
+						dialogIframe: {
+							bodyCssClass: 'dialog-with-footer'
+						},
+						id: contentId + 'Dialog',
 						title: title
-					}
-				);
-
-				var versionDetailsDialogBoundingBox = versionDetailsDialog.get('boundingBox');
-
-				var saveButton = versionDetailsDialogBoundingBox.one('.btn-primary');
-
-				saveButton.on('click', onSave);
-
-				var cancelButton = versionDetailsDialogBoundingBox.one('.btn-cancel');
-
-				cancelButton.on(
-					'click',
-					function(event) {
-						versionDetailsDialog.destroy();
 					}
 				);
 

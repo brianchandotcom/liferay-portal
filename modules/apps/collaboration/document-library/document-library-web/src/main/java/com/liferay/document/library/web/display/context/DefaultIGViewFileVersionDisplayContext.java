@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,23 +40,19 @@ public class DefaultIGViewFileVersionDisplayContext
 
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileShortcut fileShortcut)
+			FileShortcut fileShortcut,
+			ResourceBundleLoader resourceBundleLoader)
 		throws PortalException {
 
-		this(request, response, fileShortcut.getFileVersion(), fileShortcut);
+		this(
+			request, response, fileShortcut.getFileVersion(), fileShortcut,
+			resourceBundleLoader);
 	}
 
 	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion)
-		throws PortalException {
-
-		this(request, response, fileVersion, null);
-	}
-
-	public DefaultIGViewFileVersionDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion, FileShortcut fileShortcut)
+			FileVersion fileVersion, FileShortcut fileShortcut,
+			ResourceBundleLoader resourceBundleLoader)
 		throws PortalException {
 
 		_igRequestHelper = new IGRequestHelper(request);
@@ -64,11 +61,21 @@ public class DefaultIGViewFileVersionDisplayContext
 			_igRequestHelper);
 
 		if (fileShortcut == null) {
-			_uiItemsBuilder = new UIItemsBuilder(request, fileVersion);
+			_uiItemsBuilder = new UIItemsBuilder(
+				request, fileVersion, resourceBundleLoader);
 		}
 		else {
-			_uiItemsBuilder = new UIItemsBuilder(request, fileShortcut);
+			_uiItemsBuilder = new UIItemsBuilder(
+				request, fileShortcut, resourceBundleLoader);
 		}
+	}
+
+	public DefaultIGViewFileVersionDisplayContext(
+			HttpServletRequest request, HttpServletResponse response,
+			FileVersion fileVersion, ResourceBundleLoader resourceBundleLoader)
+		throws PortalException {
+
+		this(request, response, fileVersion, null, resourceBundleLoader);
 	}
 
 	@Override

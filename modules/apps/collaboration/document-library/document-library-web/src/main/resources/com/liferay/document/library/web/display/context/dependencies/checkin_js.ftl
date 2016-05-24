@@ -5,21 +5,25 @@ Liferay.provide(
 		Liferay.Portlet.DocumentLibrary.Checkin.showDialog(
 			'${namespace}versionDetails',
 			'${dialogTitle}',
-			function(event) {
-				var $ = AUI.$;
+			{
+				label: '${dialogSaveButtonLabel}',
+				callback: function(event) {
+					var $ = AUI.$;
 
-				var portletURL = new Liferay.PortletURL(null, null, saveURL);
+					var portletURL = saveURL;
 
-				var majorVersionNode = $("input:radio[name='${namespace}versionDetailsMajorVersion']:checked");
+					var majorVersionNode = $("input:radio[name='${namespace}versionDetailsMajorVersion']:checked");
 
-				portletURL.setParameter('majorVersion', majorVersionNode.val());
+					portletURL += '&majorVersion=' + encodeURIComponent(majorVersionNode.val());
 
-				var changeLogNode = $('#${namespace}versionDetailsChangeLog');
+					var changeLogNode = $('#${namespace}versionDetailsChangeLog');
 
-				portletURL.setParameter('changeLog', changeLogNode.val());
+					portletURL += '&changeLog=' + encodeURIComponent(changeLogNode.val());
 
-				window.location.href = portletURL.toString();
-			}
+					window.location.href = portletURL;
+				}
+			},
+			'${dialogCancelButtonLabel}'
 		);
 	},
 	['document-library-checkin', 'liferay-portlet-url']

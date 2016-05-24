@@ -272,10 +272,12 @@ public class DefaultDLViewFileVersionDisplayContext
 				new FileVersionDisplayContextHelper(fileVersion);
 
 			if (fileShortcut == null) {
-				_uiItemsBuilder = new UIItemsBuilder(request, fileVersion);
+				_uiItemsBuilder = new UIItemsBuilder(
+					request, fileVersion, _resourceBundleLoader);
 			}
 			else {
-				_uiItemsBuilder = new UIItemsBuilder(request, fileShortcut);
+				_uiItemsBuilder = new UIItemsBuilder(
+					request, fileShortcut, _resourceBundleLoader);
 			}
 		}
 		catch (PortalException pe) {

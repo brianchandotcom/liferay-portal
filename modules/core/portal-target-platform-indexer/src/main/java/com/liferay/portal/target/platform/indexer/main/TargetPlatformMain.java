@@ -103,8 +103,8 @@ public class TargetPlatformMain implements Indexer {
 		}
 
 		TargetPlatformMain targetPlatformMain = new TargetPlatformMain(
-			"com.liferay.target.platform", moduleFrameworkBaseDir,
-			moduleFrameworkModulesDir, moduleFrameworkPortalDir);
+			moduleFrameworkBaseDir, moduleFrameworkModulesDir,
+			moduleFrameworkPortalDir);
 
 		try {
 			File indexFile = targetPlatformMain.index(targetPlatformDir);
@@ -117,10 +117,9 @@ public class TargetPlatformMain implements Indexer {
 	}
 
 	public TargetPlatformMain(
-		String bundleSymbolicName, String moduleFrameworkBaseDir,
-		String moduleFrameworkModulesDir, String moduleFrameworkPortalDir) {
+		String moduleFrameworkBaseDir, String moduleFrameworkModulesDir,
+		String moduleFrameworkPortalDir) {
 
-		_bundleSymbolicName = bundleSymbolicName;
 		_moduleFrameworkBaseDir = moduleFrameworkBaseDir;
 		_moduleFrameworkModulesDir = moduleFrameworkModulesDir;
 		_moduleFrameworkPortalDir = moduleFrameworkPortalDir;
@@ -170,7 +169,7 @@ public class TargetPlatformMain implements Indexer {
 					});
 
 				for (File childFile : childFiles) {
-					addBundle(jarFiles, childFile, tempDir);
+					_addBundle(jarFiles, childFile, tempDir);
 				}
 			}
 
@@ -196,6 +195,56 @@ public class TargetPlatformMain implements Indexer {
 		finally {
 			PathUtil.deltree(tempPath);
 		}
+	}
+
+	private void _addBundle(Set<File> jarFiles, File bundleFile, File tempDir)
+		throws IOException {
+
+		File jarFile = new File(tempDir, bundleFile.getName());
+
+		Files.copy(
+			bundleFile.toPath(), jarFile.toPath(),
+			StandardCopyOption.COPY_ATTRIBUTES,
+			StandardCopyOption.REPLACE_EXISTING);
+
+		jarFiles.add(jarFile);
+	}
+
+	private void _addBundle(
+			Set<File> jarFiles, String bundleLocation, String baseDirName,
+			File tempDir)
+		throws IOException {
+
+		int index = bundleLocation.indexOf('@');
+
+		if (index != -1) {
+			bundleLocation = bundleLocation.substring(0, index);
+		}
+
+		if (!bundleLocation.startsWith("file:")) {
+			bundleLocation = "file:" + baseDirName + bundleLocation;
+		}
+
+		if (!bundleLocation.endsWith(".jar")) {
+			return;
+		}
+
+		URI uri = URI.create(bundleLocation);
+
+		File bundleFile = new File(uri);
+
+		if (!bundleFile.exists() || !bundleFile.canRead()) {
+			return;
+		}
+
+		File jarFile = new File(tempDir, bundleFile.getName());
+
+		Files.copy(
+			bundleFile.toPath(), jarFile.toPath(),
+			StandardCopyOption.COPY_ATTRIBUTES,
+			StandardCopyOption.REPLACE_EXISTING);
+
+		jarFiles.add(jarFile);
 	}
 
 	private void _processBundle(Bundle bundle) throws Exception {
@@ -333,56 +382,6 @@ public class TargetPlatformMain implements Indexer {
 		}
 	}
 
-	private void addBundle(Set<File> jarFiles, File bundleFile, File tempDir)
-		throws IOException {
-
-		File jarFile = new File(tempDir, bundleFile.getName());
-
-		Files.copy(
-			bundleFile.toPath(), jarFile.toPath(),
-			StandardCopyOption.COPY_ATTRIBUTES,
-			StandardCopyOption.REPLACE_EXISTING);
-
-		jarFiles.add(jarFile);
-	}
-
-	private void addBundle(
-			Set<File> jarFiles, String bundleLocation, String baseDirName,
-			File tempDir)
-		throws IOException {
-
-		int index = bundleLocation.indexOf('@');
-
-		if (index != -1) {
-			bundleLocation = bundleLocation.substring(0, index);
-		}
-
-		if (!bundleLocation.startsWith("file:")) {
-			bundleLocation = "file:" + baseDirName + bundleLocation;
-		}
-
-		if (!bundleLocation.endsWith(".jar")) {
-			return;
-		}
-
-		URI uri = URI.create(bundleLocation);
-
-		File bundleFile = new File(uri);
-
-		if (!bundleFile.exists() || !bundleFile.canRead()) {
-			return;
-		}
-
-		File jarFile = new File(tempDir, bundleFile.getName());
-
-		Files.copy(
-			bundleFile.toPath(), jarFile.toPath(),
-			StandardCopyOption.COPY_ATTRIBUTES,
-			StandardCopyOption.REPLACE_EXISTING);
-
-		jarFiles.add(jarFile);
-	}
-
 	private static final Set<String> _ignoredNamespaces = new HashSet<>();
 	private static final Class<?> _targetPlatformMainClass =
 		TargetPlatformMain.class;
@@ -395,7 +394,6 @@ public class TargetPlatformMain implements Indexer {
 		_ignoredNamespaces.add(PackageNamespace.PACKAGE_NAMESPACE);
 	}
 
-	private final String _bundleSymbolicName;
 	private final Map<String, String> _config = new HashMap<>();
 	private final String _moduleFrameworkBaseDir;
 	private final String _moduleFrameworkModulesDir;

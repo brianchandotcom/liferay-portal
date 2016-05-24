@@ -109,6 +109,8 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	public void initialize(long companyId) {
 		super.initialize(companyId);
 
+		waitForYellowStatus();
+
 		try {
 			_indexFactory.createIndices(
 				_elasticsearchConnectionManager.getAdminClient(), companyId);

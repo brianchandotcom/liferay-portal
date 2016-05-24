@@ -36,7 +36,9 @@ var initSPA = function(callback) {
 						return false;
 					}
 
-					var excluded = Liferay.SPA.excludedPaths.some((excludedPath) => url.indexOf(excludedPath) === 0);
+					var excluded = Liferay.SPA.excludedPaths.some(
+						(excludedPath) => url.indexOf(excludedPath) === 0
+					);
 
 					if (excluded) {
 						return false;
@@ -58,7 +60,9 @@ var initSPA = function(callback) {
 				let formElement = form.getDOM();
 				let url = formElement.action;
 
-				if (app.canNavigate(url) && formElement.method !== 'get') {
+				if (app.canNavigate(url) && formElement.method !== 'get' &&
+					!app.isInPortletBlacklist(formElement)) {
+
 					Liferay.Util._submitLocked = false;
 
 					globals.capturedFormElement = formElement;

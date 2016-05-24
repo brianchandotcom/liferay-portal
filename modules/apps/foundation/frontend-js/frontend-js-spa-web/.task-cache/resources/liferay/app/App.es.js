@@ -98,6 +98,18 @@ define("frontend-js-spa-web@1.0.6/liferay/app/App.es", ['exports', 'senna/src/ap
 			return this.getCacheExpirationTime() > -1;
 		};
 
+		LiferayApp.prototype.isInPortletBlacklist = function isInPortletBlacklist(element) {
+			return Object.keys(this.portletsBlacklist).some(function (portletId) {
+				var boundaryId = _Utils2.default.getPortletBoundaryId(portletId);
+
+				var portlets = document.querySelectorAll('[id^="' + boundaryId + '"]');
+
+				return Array.prototype.slice.call(portlets).some(function (portlet) {
+					return _dom2.default.contains(portlet, element);
+				});
+			});
+		};
+
 		LiferayApp.prototype.isScreenCacheExpired = function isScreenCacheExpired(screen) {
 			var lastModifiedInterval = new Date().getTime() - screen.getCacheLastModified();
 
@@ -116,22 +128,19 @@ define("frontend-js-spa-web@1.0.6/liferay/app/App.es", ['exports', 'senna/src/ap
 		};
 
 		LiferayApp.prototype.onDocClickDelegate_ = function onDocClickDelegate_(event) {
-			var inPortletsBlacklist = false;
-
-			Object.keys(this.portletsBlacklist).forEach(function (portletId) {
-				var boundaryId = _Utils2.default.getPortletBoundaryId(portletId);
-				var portlets = document.querySelectorAll('[id^="' + boundaryId + '"]');
-
-				inPortletsBlacklist = Array.prototype.slice.call(portlets).some(function (portlet) {
-					return _dom2.default.contains(portlet, event.delegateTarget);
-				});
-			});
-
-			if (inPortletsBlacklist) {
+			if (this.isInPortletBlacklist(event.delegateTarget)) {
 				return;
 			}
 
 			_App.prototype.onDocClickDelegate_.call(this, event);
+		};
+
+		LiferayApp.prototype.onDocSubmitDelegate_ = function onDocSubmitDelegate_(event) {
+			if (this.isInPortletBlacklist(event.delegateTarget)) {
+				return;
+			}
+
+			_App.prototype.onDocSubmitDelegate_.call(this, event);
 		};
 
 		LiferayApp.prototype.onEndNavigate = function onEndNavigate(event) {

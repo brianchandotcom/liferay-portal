@@ -48,7 +48,7 @@ public class UpgradeServiceRelease {
 					ps.setString(1, _SERVLET_CONTEXT_NAME);
 
 					try (ResultSet rs = ps.executeQuery()) {
-						while (rs.next()) {
+						if (rs.next()) {
 							String buildNumber = rs.getString("buildNumber");
 
 							String schemaVersion = toSchemaVersion(buildNumber);

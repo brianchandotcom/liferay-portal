@@ -90,10 +90,12 @@
 		}
 
 		.image-wrapper {
-			height : 400px;
-			overflow: hidden;
-			position: relative;
+			height: 400px;
 			width: 100%;
+
+			@include respond-to(phone) {
+				height: 100px;
+			}
 		}
 	}
 
@@ -114,9 +116,7 @@
 	}
 
 	.browse-image-controls {
-		left: 0;
 		padding: 10px;
-		right: 0;
 		width: 100%;
 		z-index: 1;
 

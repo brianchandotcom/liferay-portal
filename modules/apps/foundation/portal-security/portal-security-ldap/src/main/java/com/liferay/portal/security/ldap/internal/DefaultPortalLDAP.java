@@ -16,13 +16,13 @@ package com.liferay.portal.security.ldap.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.log.LogUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.Props;
@@ -139,7 +139,14 @@ public class DefaultPortalLDAP implements PortalLDAP {
 				connectionPropertySplit[0], connectionPropertySplit[1]);
 		}
 
-		LogUtil.debug(_log, environmentProperties);
+		if (_log.isDebugEnabled()) {
+			String debugString = MapUtil.toString(
+				environmentProperties, null,
+				Context.SECURITY_PRINCIPAL + "|" +
+					Context.SECURITY_CREDENTIALS);
+
+			_log.debug(debugString);
+		}
 
 		LdapContext ldapContext = null;
 

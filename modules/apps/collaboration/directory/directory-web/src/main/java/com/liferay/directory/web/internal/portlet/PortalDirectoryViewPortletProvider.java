@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.directory.web.portlet;
+package com.liferay.directory.web.internal.portlet;
 
 import com.liferay.admin.kernel.util.PortalDirectoryApplicationType;
-import com.liferay.directory.web.constants.DirectoryPortletKeys;
+import com.liferay.directory.web.internal.constants.DirectoryPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 

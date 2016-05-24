@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.directory.web.portlet.action;
+package com.liferay.directory.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -32,17 +32,17 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + PortletKeys.FRIENDS_DIRECTORY,
 		"javax.portlet.name=" + PortletKeys.MY_SITES_DIRECTORY,
 		"javax.portlet.name=" + PortletKeys.SITE_MEMBERS_DIRECTORY,
-		"mvc.command.name=/directory/view_organization"
+		"mvc.command.name=/directory/view"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewUserDirectoryMVCRenderCommand implements MVCRenderCommand {
+public class ViewDirectoryMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/view_organization.jsp";
+		return "/view.jsp";
 	}
 
 }

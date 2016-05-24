@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.directory.web.portlet;
+package com.liferay.directory.web.internal.portlet;
 
-import com.liferay.directory.web.constants.DirectoryPortletKeys;
+import com.liferay.directory.web.internal.constants.DirectoryPortletKeys;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 

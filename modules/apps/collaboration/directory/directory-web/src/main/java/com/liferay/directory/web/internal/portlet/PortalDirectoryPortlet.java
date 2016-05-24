@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.directory.web.portlet;
+package com.liferay.directory.web.internal.portlet;
 
-import com.liferay.directory.web.constants.DirectoryPortletKeys;
+import com.liferay.directory.web.internal.constants.DirectoryPortletKeys;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
@@ -37,18 +37,18 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.use-default-template=true",
-		"javax.portlet.display-name=Site Members Directory",
+		"javax.portlet.display-name=Portal Directory",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + DirectoryPortletKeys.SITE_MEMBERS_DIRECTORY,
+		"javax.portlet.name=" + DirectoryPortletKeys.DIRECTORY,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
 )
-public class SiteMembersDirectoryPortlet extends MVCPortlet {
+public class PortalDirectoryPortlet extends MVCPortlet {
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.directory.web)(release.schema.version=1.0.1))",

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.directory.web.upgrade.v1_0_0;
+package com.liferay.directory.web.internal.upgrade.v1_0_0;
 
-import com.liferay.directory.web.constants.DirectoryPortletKeys;
+import com.liferay.directory.web.internal.constants.DirectoryPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 
 /**

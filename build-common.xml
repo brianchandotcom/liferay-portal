@@ -1632,147 +1632,43 @@ rerun your task.
 
 	<macrodef name="update-sdk-properties">
 		<sequential>
-			<propertyselector
-				casesensitive="false"
-				delimiter=","
-				distinct="true"
-				match="app\.(server\.(glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere|wildfly).*)\.dir"
-				override="true"
-				property="app.server.dir.property.list"
-				select="\1"
-			/>
+			<property location="${sdk.dir}/build.${env.COMPUTERNAME}.properties" name="sdk.properties.file" />
 
-			<sortlist
-				delimiter=","
-				override="true"
-				property="app.server.dir.property.list"
-				value="${app.server.dir.property.list}"
-			/>
+			<delete file="${sdk.properties.file}" />
 
-			<delete file="${sdk.dir}/build.${env.COMPUTERNAME}.properties" />
+			<echoproperties destfile="${sdk.properties.file}" >
+				<propertyset>
+					<propertyref name="app.server.parent.dir" />
+					<propertyref name="app.server.type" />
+					<propertyref name="junit.java.integration.gc" />
+					<propertyref name="junit.java.unit.gc" />
+					<propertyref name="junit.java.unit.gc.logging" />
+					<propertyref name="junit.test.excludes" />
+					<propertyref name="liferay.home" />
+					<propertyref name="microsoft.translator.client.id" />
+					<propertyref name="microsoft.translator.client.secret" />
+					<propertyref name="sass.compiler.class.name" />
+					<propertyref name="snapshot.check.enabled" />
+					<propertyref name="upgrade.table.dir" />
+					<propertyref name="-baselinerepo" />
+					<propertyref name="-metatype" />
+					<propertyref name="-plugin" />
+					<propertyref name="-releaserepo" />
+					<propertyref prefix="ivy.pom." />
+					<propertyref prefix="sonatype." />
+					<propertyref regex="^\s*app\.server\.(?:glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere|wildfly).*\.dir" />
+				</propertyset>
+			</echoproperties>
 
-			<for list="${app.server.dir.property.list}" param="app.server.dir.property">
-				<sequential>
-					<propertycopy
-						from="app.@{app.server.dir.property}.dir"
-						name="temp.app.server.dir"
-					/>
+			<propertyfile file="${sdk.properties.file}">
+				<entry key="lp.portal.project.dir" value="${project.dir}" />
+				<entry key="module.framework.base.dir" value="${liferay.home}/osgi" />
+			</propertyfile>
 
-					<echo
-						append="true"
-						file="${sdk.dir}/build.${env.COMPUTERNAME}.properties"
-					>
-						app.@{app.server.dir.property}.dir=${temp.app.server.dir}
-					</echo>
+			<replaceregexp file="${sdk.properties.file}" flags="g" match="\\([\:\=\!\\])" replace="\1" />
 
-					<var name="temp.app.server.dir" unset="true" />
-				</sequential>
-			</for>
-
-			<propertyselector
-				casesensitive="false"
-				delimiter="," match="ivy.pom.(.+)"
-				property="ivy.pom.property.list"
-				select="\1"
-			/>
-
-			<sortlist
-				delimiter=","
-				override="true"
-				property="ivy.pom.property.list"
-				value="${ivy.pom.property.list}"
-			/>
-
-			<if>
-				<not>
-					<equals arg1="${ivy.pom.property.list}" arg2="$${ivy.pom.property.list}" />
-				</not>
-				<then>
-					<for list="${ivy.pom.property.list}" param="ivy.pom.property">
-						<sequential>
-							<propertycopy
-								from="ivy.pom.@{ivy.pom.property}"
-								name="temp.ivy.pom"
-							/>
-
-							<echo
-								append="true"
-								file="${sdk.dir}/build.${env.COMPUTERNAME}.properties"
-							>
-								ivy.pom.@{ivy.pom.property}=${temp.ivy.pom}
-							</echo>
-
-							<var name="temp.ivy.pom" unset="true" />
-						</sequential>
-					</for>
-				</then>
-			</if>
-
-			<propertyselector
-				casesensitive="false"
-				delimiter="," match="sonatype.(.+)"
-				property="sonatype.property.list"
-				select="\1"
-			/>
-
-			<sortlist
-				delimiter=","
-				override="true"
-				property="sonatype.property.list"
-				value="${sonatype.property.list}"
-			/>
-
-			<if>
-				<not>
-					<equals arg1="${sonatype.property.list}" arg2="$${sonatype.property.list}" />
-				</not>
-				<then>
-					<for list="${sonatype.property.list}" param="sonatype.property">
-						<sequential>
-							<propertycopy
-								from="sonatype.@{sonatype.property}"
-								name="temp.sonatype"
-							/>
-
-							<echo
-								append="true"
-								file="${sdk.dir}/build.${env.COMPUTERNAME}.properties"
-							>
-								sonatype.@{sonatype.property}=${temp.sonatype}
-							</echo>
-
-							<var name="temp.sonatype" unset="true" />
-						</sequential>
-					</for>
-				</then>
-			</if>
-
-			<echo
-				append="true"
-				file="${sdk.dir}/build.${env.COMPUTERNAME}.properties"
-			>
-				app.server.parent.dir=${app.server.parent.dir}
-				app.server.type=${app.server.type}
-				junit.java.integration.gc=${junit.java.integration.gc}
-				junit.java.unit.gc=${junit.java.unit.gc}
-				junit.java.unit.gc.logging=${junit.java.unit.gc.logging}
-				junit.test.excludes=${junit.test.excludes}
-				liferay.home=${liferay.home}
-				lp.portal.project.dir=${project.dir}
-				microsoft.translator.client.id=${microsoft.translator.client.id}
-				microsoft.translator.client.secret=${microsoft.translator.client.secret}
-				module.framework.base.dir=${liferay.home}/osgi
-				sass.compiler.class.name=${sass.compiler.class.name}
-				snapshot.check.enabled=${snapshot.check.enabled}
-				upgrade.table.dir=${upgrade.table.dir}
-				-baselinerepo=${-baselinerepo}
-				-metatype=${-metatype}
-				-plugin=${-plugin}
-				-releaserepo=${-releaserepo}
-			</echo>
-
-			<copy file="${sdk.dir}/build.${env.COMPUTERNAME}.properties" tofile="${sdk.dir}/build.${env.HOST}.properties" />
-			<copy file="${sdk.dir}/build.${env.COMPUTERNAME}.properties" tofile="${sdk.dir}/build.${env.HOSTNAME}.properties" />
+			<copy file="${sdk.properties.file}" tofile="${sdk.dir}/build.${env.HOST}.properties" />
+			<copy file="${sdk.properties.file}" tofile="${sdk.dir}/build.${env.HOSTNAME}.properties" />
 		</sequential>
 	</macrodef>
 

@@ -45,10 +45,10 @@ public class KBTemplateUserNameComparator
 			StringUtil.toLowerCase(kbTemplate2.getUserName()));
 
 		if (value == 0) {
-			String title1 = StringUtil.toLowerCase(kbTemplate1.getTitle());
-			String title2 = StringUtil.toLowerCase(kbTemplate1.getTitle());
+			String title1 = kbTemplate1.getTitle();
+			String title2 = kbTemplate1.getTitle();
 
-			value = title1.compareTo(title2);
+			value = title1.compareToIgnoreCase(title2);
 		}
 
 		if (_ascending) {

@@ -49,10 +49,10 @@ public class KBArticleVersionComparator extends OrderByComparator<KBArticle> {
 			value = 1;
 		}
 		else {
-			String title1 = StringUtil.toLowerCase(kbArticle1.getTitle());
-			String title2 = StringUtil.toLowerCase(kbArticle2.getTitle());
+			String title1 = kbArticle1.getTitle();
+			String title2 = kbArticle2.getTitle();
 
-			value = title1.compareTo(title2);
+			value = title1.compareToIgnoreCase(title2);
 		}
 
 		if (_ascending) {

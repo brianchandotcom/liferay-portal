@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -32,6 +33,10 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -46,15 +51,13 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 	protected String getNewTypeSettings(
 		String typeSettings, String oldRootPortletId, String newRootPortletId,
-		boolean exactMatch) {
+		List<String> columns, boolean exactMatch) {
 
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
 
 		typeSettingsProperties.fastLoad(typeSettings);
 
-		for (int i = 1; i <= 10; i++) {
-			String column = LayoutTypePortletConstants.COLUMN_PREFIX + i;
-
+		for (String column : columns) {
 			if (!typeSettingsProperties.containsKey(column)) {
 				continue;
 			}
@@ -247,9 +250,13 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				long layoutRevisionId = rs.getLong("layoutRevisionId");
 				String typeSettings = rs.getString("typeSettings");
 
+				List<String> layoutColumns = _getLayoutColumns();
+
+				layoutColumns.addAll(_getNestedPortletColumns(typeSettings));
+
 				String newTypeSettings = getNewTypeSettings(
 					typeSettings, oldRootPortletId, newRootPortletId,
-					exactMatch);
+					layoutColumns, exactMatch);
 
 				updateLayoutRevision(layoutRevisionId, newTypeSettings);
 			}
@@ -272,9 +279,13 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				long plid = rs.getLong("plid");
 				String typeSettings = rs.getString("typeSettings");
 
+				List<String> layoutColumns = _getLayoutColumns();
+
+				layoutColumns.addAll(_getNestedPortletColumns(typeSettings));
+
 				String newTypeSettings = getNewTypeSettings(
 					typeSettings, oldRootPortletId, newRootPortletId,
-					exactMatch);
+					layoutColumns, exactMatch);
 
 				updateLayout(plid, newTypeSettings);
 			}
@@ -468,6 +479,31 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				updateLayouts(portletId, newPortletInstanceKey, true);
 			}
 		}
+	}
+
+	private List<String> _getLayoutColumns() {
+		List<String> columns = new ArrayList<>();
+
+		for (int i = 1; i <= 10; i++) {
+			columns.add(LayoutTypePortletConstants.COLUMN_PREFIX + i);
+		}
+
+		return columns;
+	}
+
+	private List<String> _getNestedPortletColumns(String typeSettings) {
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+
+		typeSettingsProperties.fastLoad(typeSettings);
+
+		if (!typeSettingsProperties.containsKey("nested-column-ids")) {
+			return Collections.emptyList();
+		}
+
+		String[] nestedPortletColumns = StringUtil.split(
+			typeSettingsProperties.getProperty("nested-column-ids"));
+
+		return ListUtil.fromArray(nestedPortletColumns);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -3752,31 +3752,6 @@
 			<var name="structureDescription" value="Structure Description" />
 			<var name="structureName" value="Structure Name" />
 		</execute>
-
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="Structure Name" />
-		</execute>
-
-		<for list="Text,Text Box" param="structureFieldName">
-			<execute macro="DynamicDataMapping#viewField">
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace('${structureFieldName}', ' ', '')" name="fieldName" />
-			</execute>
-		</for>
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Remote Site" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Web Content" />
-		</execute>
-
-		<execute macro="WebContentTemplates#viewCP">
-			<var name="templateDescription" value="Template Description" />
-			<var name="templateLanguage" value="ftl" />
-			<var name="templateName" value="Template Name" />
-		</execute>
 	</command>
 
 	<command name="StagingSiteVariationIncompletePage" priority="4">

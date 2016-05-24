@@ -18,6 +18,7 @@
 				<bean class="com.liferay.dynamic.data.mapping.render.impl.DocumentLibraryDDMFormFieldValueRenderer" />
 				<bean class="com.liferay.dynamic.data.mapping.render.impl.GeolocationDDMFormFieldValueRenderer" />
 				<bean class="com.liferay.dynamic.data.mapping.render.impl.IntegerDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.render.impl.JournalArticleDDMFormFieldValueRenderer" />
 				<bean class="com.liferay.dynamic.data.mapping.render.impl.LinkToPageDDMFormFieldValueRenderer" />
 				<bean class="com.liferay.dynamic.data.mapping.render.impl.NumberDDMFormFieldValueRenderer" />
 				<bean class="com.liferay.dynamic.data.mapping.render.impl.RadioDDMFormFieldValueRenderer" />

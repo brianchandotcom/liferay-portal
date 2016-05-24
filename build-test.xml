@@ -3235,6 +3235,13 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<attribute default="0" name="app.server.bundle.index" />
 
 		<sequential>
+			<if>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<then>
+					<wait-for-app-server-startup-message />
+				</then>
+			</if>
+
 			<local name="app.server.waiting.url" />
 
 			<if>
@@ -3308,6 +3315,68 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			</if>
 
 			<echo>${app.server.waiting.url} has loaded</echo>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="wait-for-app-server-startup-message">
+		<sequential>
+			<local name="app.server.log.file.path" value="${project.dir}/app-server-log" />
+
+			<delete file="${app.server.log.file.path}" />
+
+			<record action="start" name="${app.server.log.file.path}" />
+
+			<local name="app.server.timeout" />
+
+			<beanshell>
+				<![CDATA[
+					import org.apache.commons.io.FileUtils;
+
+					System.out.println("Waiting for server startup message");
+
+					String logFilePath = project.getProperty("app.server.log.file.path");
+
+					logFilePath = logFilePath.replaceAll("\\\\", "/");
+
+					int second = 0;
+
+					while (true) {
+						try {
+							File file = new File(logFilePath);
+
+							String content = FileUtils.readFileToString(file);
+
+							if (content.contains("Server startup in")) {
+								break;
+							}
+						}
+						catch (Exception e) {
+							e.printStackTrace();
+						}
+
+						if (second >= 300) {
+							project.setProperty("app.server.timeout", "Failed to find startup message after 5 minutes");
+
+							break;
+						}
+
+						second++;
+
+						Thread.sleep(1000);
+					}
+				]]>
+			</beanshell>
+
+			<record action="stop" name="${app.server.log.file.path}" />
+
+			<delete file="${app.server.log.file.path}" />
+
+			<if>
+				<isset property="app.server.timeout" />
+				<then>
+					<fail message="${app.server.timeout}" />
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 

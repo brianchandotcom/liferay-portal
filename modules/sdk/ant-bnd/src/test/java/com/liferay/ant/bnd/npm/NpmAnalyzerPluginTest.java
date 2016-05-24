@@ -370,7 +370,8 @@ public class NpmAnalyzerPluginTest {
 	}
 
 	protected void assertVersionFilter(
-		String version, String expectedFilterString) {
+			String version, String expectedFilterString)
+		throws Exception {
 
 		NpmAnalyzerPlugin npmAnalyzerPlugin = new NpmAnalyzerPlugin();
 

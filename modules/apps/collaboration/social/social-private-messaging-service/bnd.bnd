@@ -6,7 +6,7 @@ Export-Package:\
 	com.liferay.social.privatemessaging.service.base,\
 	com.liferay.social.privatemessaging.service.http,\
 	com.liferay.social.privatemessaging.service.impl,\
-	com.liferay.social.privatemessaging.service.persistance.impl,\
+	com.liferay.social.privatemessaging.service.persistence.impl,\
 	com.liferay.social.privatemessaging.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Social Private Messaging

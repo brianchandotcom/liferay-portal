@@ -119,20 +119,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 			throw new IllegalStateException(e);
 		}
 
-		long timeout = 30 * Time.SECOND;
-
-		if (PortalRunMode.isTestMode()) {
-			timeout = Time.HOUR;
-		}
-
-		ClusterHealthResponse clusterHealthResponse =
-			_elasticsearchConnectionManager.getClusterHealthResponse(timeout);
-
-		if (clusterHealthResponse.getStatus() == ClusterHealthStatus.RED) {
-			throw new IllegalStateException(
-				"Unable to initialize Elasticsearch cluster: " +
-					clusterHealthResponse);
-		}
+		waitForYellowStatus();
 	}
 
 	@Override
@@ -226,20 +213,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 			throw new SearchException(e);
 		}
 
-		long timeout = 30 * Time.SECOND;
-
-		if (PortalRunMode.isTestMode()) {
-			timeout = Time.HOUR;
-		}
-
-		ClusterHealthResponse clusterHealthResponse =
-			_elasticsearchConnectionManager.getClusterHealthResponse(timeout);
-
-		if (clusterHealthResponse.getStatus() == ClusterHealthStatus.RED) {
-			throw new IllegalStateException(
-				"Unable to initialize Elasticsearch cluster: " +
-					clusterHealthResponse);
-		}
+		waitForYellowStatus();
 	}
 
 	@Override
@@ -351,6 +325,23 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 					"Backup name must not contain invalid file name " +
 						"characters");
 			}
+		}
+	}
+
+	protected void waitForYellowStatus() {
+		long timeout = 30 * Time.SECOND;
+
+		if (PortalRunMode.isTestMode()) {
+			timeout = Time.HOUR;
+		}
+
+		ClusterHealthResponse clusterHealthResponse =
+			_elasticsearchConnectionManager.getClusterHealthResponse(timeout);
+
+		if (clusterHealthResponse.getStatus() == ClusterHealthStatus.RED) {
+			throw new IllegalStateException(
+				"Unable to initialize Elasticsearch cluster: " +
+					clusterHealthResponse);
 		}
 	}
 

@@ -3,4 +3,6 @@
 
 <project basedir="." default="deploy" name="mail-portlet">
 	<import file="../../../../tools/sdk/portlets/build-common-portlet.xml" />
+
+	<property name="plugins.war.excludes" value="WEB-INF/lib/com.liferay.portal.*.jar" />
 </project>

@@ -2492,8 +2492,8 @@
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
@@ -2511,8 +2511,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
@@ -7111,8 +7111,8 @@
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
@@ -7130,8 +7130,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
@@ -7145,8 +7145,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
@@ -7172,8 +7172,8 @@
 
 		<execute macro="KaleoFormsPortlet#resubmitPendingProcessViaMyPendingRequests" />
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
@@ -7470,6 +7470,10 @@
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
@@ -8385,8 +8389,8 @@
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
 		</execute>
 
 		<execute macro="Notifications#viewNotification">
@@ -8413,8 +8417,8 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Notifications" />
 		</execute>
 
 		<execute macro="Notifications#viewNotification">

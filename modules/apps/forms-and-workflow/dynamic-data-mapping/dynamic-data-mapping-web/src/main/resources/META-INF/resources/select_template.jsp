@@ -101,46 +101,56 @@ templateSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 				modelVar="template"
 			>
 				<liferay-ui:search-container-column-text
+					cssClass="id-column text-column"
 					name="id"
 					value="<%= String.valueOf(template.getTemplateId()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
+					cssClass="content-column name-column title-column"
 					name="name"
-					value="<%= HtmlUtil.escape(template.getName(locale)) %>"
-				/>
+					truncate="<%= true %>"
+				>
+					<c:choose>
+						<c:when test="<%= template.getTemplateId() != templateId %>">
+
+							<%
+							Map<String, Object> data = new HashMap<String, Object>();
+
+							if (ddmDisplay.isShowConfirmSelectTemplate()) {
+								data.put("confirm-selection", Boolean.TRUE.toString());
+								data.put("confirm-selection-message", ddmDisplay.getConfirmSelectTemplateMessage(locale));
+							}
+
+							data.put("ddmtemplateid", template.getTemplateId());
+							data.put("ddmtemplatekey", template.getTemplateKey());
+							data.put("description", template.getDescription(locale));
+							data.put("imageurl", template.getTemplateImageURL(themeDisplay));
+							data.put("name", template.getName(locale));
+							%>
+
+							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+								<%= HtmlUtil.escape(template.getName(locale)) %>
+							</aui:a>
+						</c:when>
+						<c:otherwise>
+							<span class="text-muted"><%= HtmlUtil.escape(template.getName(locale)) %></span>
+						</c:otherwise>
+					</c:choose>
+				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-jsp
+					cssClass="content-column description-column"
 					name="description"
 					path="/template_description.jsp"
+					truncate="<%= true %>"
 				/>
 
 				<liferay-ui:search-container-column-date
+					cssClass="modified-date-column text-column"
 					name="modified-date"
 					value="<%= template.getModifiedDate() %>"
 				/>
-
-				<liferay-ui:search-container-column-text>
-					<c:if test="<%= template.getTemplateId() != templateId %>">
-
-						<%
-						Map<String, Object> data = new HashMap<String, Object>();
-
-						if (ddmDisplay.isShowConfirmSelectTemplate()) {
-							data.put("confirm-selection", Boolean.TRUE.toString());
-							data.put("confirm-selection-message", ddmDisplay.getConfirmSelectTemplateMessage(locale));
-						}
-
-						data.put("ddmtemplateid", template.getTemplateId());
-						data.put("ddmtemplatekey", template.getTemplateKey());
-						data.put("description", template.getDescription(locale));
-						data.put("imageurl", template.getTemplateImageURL(themeDisplay));
-						data.put("name", template.getName(locale));
-						%>
-
-						<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
-					</c:if>
-				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator markupView="lexicon" />

@@ -118,11 +118,9 @@
 
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
-		<var name="key_ddlDatadefinitionName" value="${structureName}" />
+		<var name="key_ddlDataDefinitionName" value="${structureName}" />
 
-		<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_1" value1="${structureName}" />
-
-		<execute function="AssertClickNoError" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_CHOOSE_BUTTON_1" value1="Choose" />
+		<execute function="AssertClickNoError" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${structureName}" />
 
 		<execute function="Confirm" value1="Selecting a new structure changes the available input fields and available templates. Do you want to proceed?" />
 

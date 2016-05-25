@@ -237,6 +237,28 @@ public class JournalDisplayContext {
 		return _ddmStructureName;
 	}
 
+	public long getDDMStructurePrimaryKey() throws PortalException {
+		String ddmStructureKey = getDDMStructureKey();
+
+		if (Validator.isNull(ddmStructureKey)) {
+			return 0;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
+			themeDisplay.getSiteGroupId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			getDDMStructureKey(), true);
+
+		if (ddmStructure == null) {
+			return 0;
+		}
+
+		return ddmStructure.getPrimaryKey();
+	}
+
 	public String getDDMTemplateKey() {
 		if (_ddmTemplateKey != null) {
 			return _ddmTemplateKey;

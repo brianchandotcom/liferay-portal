@@ -20,58 +20,83 @@
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 long classPK = ParamUtil.getLong(request, "classPK");
 String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
-%>
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
-<liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param name="mvcPath" value="/select_structure.jsp" />
-	<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-	<portlet:param name="eventName" value="<%= eventName %>" />
-</liferay-portlet:renderURL>
+PortletURL portletURL = renderResponse.createRenderURL();
 
-<%
+portletURL.setParameter("mvcPath", "/select_structure.jsp");
+portletURL.setParameter("classPK", String.valueOf(classPK));
+portletURL.setParameter("eventName", eventName);
+
 SearchContainer structureSearch = new StructureSearch(renderRequest, portletURL, WorkflowConstants.STATUS_APPROVED);
+
+String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
+
+structureSearch.setOrderByCol(orderByCol);
+
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+structureSearch.setOrderByType(orderByType);
+
+OrderByComparator<DDMStructure> orderByComparator = DDMUtil.getStructureOrderByComparator(orderByCol, orderByType);
+
+structureSearch.setOrderByComparator(orderByComparator);
 
 request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 %>
 
 <liferay-util:include page="/structure_toolbar.jsp" servletContext="<%= application %>" />
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="selectStructureFm">
-	<div class="container-fluid-1280">
-		<liferay-ui:search-container
-			searchContainer="<%= structureSearch %>"
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation
+			navigationKeys='<%= new String[] {"all"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= structureSearch.getOrderByCol() %>"
+			orderByType="<%= structureSearch.getOrderByType() %>"
+			orderColumns='<%= new String[] {"modified-date", "id"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews='<%= new String[] {"list"} %>'
+			portletURL="<%= portletURL %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+</liferay-frontend:management-bar>
+
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="selectStructureFm">
+	<liferay-ui:search-container
+		searchContainer="<%= structureSearch %>"
+	>
+		<liferay-ui:search-container-results>
+			<%@ include file="/structure_search_results.jspf" %>
+		</liferay-ui:search-container-results>
+
+		<liferay-ui:search-container-row
+			className="com.liferay.dynamic.data.mapping.model.DDMStructure"
+			keyProperty="structureId"
+			modelVar="structure"
 		>
-			<liferay-ui:search-container-results>
-				<%@ include file="/structure_search_results.jspf" %>
-			</liferay-ui:search-container-results>
+			<liferay-ui:search-container-column-text
+				cssClass="id-column text-column"
+				name="id"
+				value="<%= String.valueOf(structure.getStructureId()) %>"
+			/>
 
-			<liferay-ui:search-container-row
-				className="com.liferay.dynamic.data.mapping.model.DDMStructure"
-				keyProperty="structureId"
-				modelVar="structure"
+			<liferay-ui:search-container-column-text
+				cssClass="content-column name-column title-column"
+				name="name"
+				truncate="<%= true %>"
 			>
-				<liferay-ui:search-container-column-text
-					name="id"
-					value="<%= String.valueOf(structure.getStructureId()) %>"
-				/>
-
-				<liferay-ui:search-container-column-text
-					name="name"
-					value="<%= HtmlUtil.escape(structure.getName(locale)) %>"
-				/>
-
-				<liferay-ui:search-container-column-text
-					name="description"
-					value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
-				/>
-
-				<liferay-ui:search-container-column-date
-					name="modified-date"
-					value="<%= structure.getModifiedDate() %>"
-				/>
-
-				<liferay-ui:search-container-column-text cssClass="entry-action">
-					<c:if test="<%= (structure.getStructureId() != classPK) && ((classPK == 0) || (structure.getParentStructureId() == 0) || (structure.getParentStructureId() != classPK)) %>">
+				<c:choose>
+					<c:when test="<%= (structure.getStructureId() != classPK) && ((classPK == 0) || (structure.getParentStructureId() == 0) || (structure.getParentStructureId() != classPK)) %>">
 
 						<%
 						Map<String, Object> data = new HashMap<String, Object>();
@@ -86,38 +111,54 @@ request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 						data.put("name", structure.getName(locale));
 						%>
 
-						<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
-					</c:if>
-				</liferay-ui:search-container-column-text>
-			</liferay-ui:search-container-row>
+						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+							<%= HtmlUtil.escape(structure.getName(locale)) %>
+						</aui:a>
+					</c:when>
+					<c:otherwise>
+						<span class="text-muted"><%= HtmlUtil.escape(structure.getName(locale)) %></span>
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-iterator markupView="lexicon" />
-		</liferay-ui:search-container>
-	</div>
+			<liferay-ui:search-container-column-text
+				cssClass="content-column description-column"
+				name="description"
+				truncate="<%= true %>"
+				value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
+			/>
 
-	<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) %>">
-		<portlet:renderURL var="viewStructureURL">
-			<portlet:param name="mvcPath" value="/select_structure.jsp" />
-			<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-			<portlet:param name="eventName" value="<%= eventName %>" />
-		</portlet:renderURL>
+			<liferay-ui:search-container-column-date
+				cssClass="modified-date-column text-column"
+				name="modified-date"
+				value="<%= structure.getModifiedDate() %>"
+			/>
+		</liferay-ui:search-container-row>
 
-		<portlet:renderURL var="addStructureURL">
-			<portlet:param name="mvcPath" value="/edit_structure.jsp" />
-			<portlet:param name="redirect" value="<%= viewStructureURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-		</portlet:renderURL>
-
-		<liferay-frontend:add-menu>
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addStructureURL %>" />
-		</liferay-frontend:add-menu>
-	</c:if>
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+	</liferay-ui:search-container>
 </aui:form>
+
+<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) %>">
+	<portlet:renderURL var="viewStructureURL">
+		<portlet:param name="mvcPath" value="/select_structure.jsp" />
+		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+		<portlet:param name="eventName" value="<%= eventName %>" />
+	</portlet:renderURL>
+
+	<portlet:renderURL var="addStructureURL">
+		<portlet:param name="mvcPath" value="/edit_structure.jsp" />
+		<portlet:param name="redirect" value="<%= viewStructureURL %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addStructureURL %>" />
+	</liferay-frontend:add-menu>
+</c:if>
 
 <aui:script>
 	Liferay.Util.focusFormField(document.<portlet:namespace />searchForm.<portlet:namespace />keywords);
-</aui:script>
 
-<aui:script>
 	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectStructureFm', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

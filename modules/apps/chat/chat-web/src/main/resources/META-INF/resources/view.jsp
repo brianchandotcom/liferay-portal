@@ -129,7 +129,7 @@
 
 								<div class="chat-panel-title"><liferay-ui:message key="settings" /></div>
 
-								<ul class="lfr-component settings clearfix">
+								<ul class="clearfix lfr-component settings">
 									<li>
 										<label for="statusMessage"><%= LanguageUtil.format(request, "x-is", HtmlUtil.escape(user.getFullName()), false) %></label>
 

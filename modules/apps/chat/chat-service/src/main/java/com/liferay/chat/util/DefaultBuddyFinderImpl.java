@@ -36,10 +36,10 @@ import org.osgi.service.component.annotations.Modified;
  * @author Peter Fellwock
  */
 @Component(
-		configurationPid = "ccom.liferay.chat.configuration.ChatConfiguration",
-		configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-		service = BuddyFinder.class
-	)
+	configurationPid = "com.liferay.chat.configuration.ChatConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = BuddyFinder.class
+)
 public class DefaultBuddyFinderImpl implements BuddyFinder {
 
 	@Override
@@ -48,8 +48,8 @@ public class DefaultBuddyFinderImpl implements BuddyFinder {
 			System.currentTimeMillis() - ChatConstants.ONLINE_DELTA;
 
 		List<Object[]> buddies = null;
-		
-		String buddyListStrategy = 
+
+		String buddyListStrategy =
 			_chatGroupServiceConfiguration.buddyListStrategy();
 
 		if (buddyListStrategy.equals("all")) {
@@ -58,7 +58,7 @@ public class DefaultBuddyFinderImpl implements BuddyFinder {
 				_chatGroupServiceConfiguration.buddyListMaxBuddies());
 		}
 		else if (buddyListStrategy.equals("communities") ||
-			buddyListStrategy.equals("sites")) {
+				 buddyListStrategy.equals("sites")) {
 
 			buddies = StatusLocalServiceUtil.getGroupStatuses(
 				userId, modifiedDate,
@@ -66,18 +66,18 @@ public class DefaultBuddyFinderImpl implements BuddyFinder {
 				_chatGroupServiceConfiguration.buddyListMaxBuddies());
 		}
 		else if (buddyListStrategy.equals("friends") ||
-			buddyListStrategy.equals("social")) {
+				 buddyListStrategy.equals("social")) {
 
 			buddies = StatusLocalServiceUtil.getSocialStatuses(
 				userId,
-				_chatGroupServiceConfiguration
-					.buddyListAllowedSocialRelationTypes(),
-				modifiedDate, 0, 
+				_chatGroupServiceConfiguration.
+					buddyListAllowedSocialRelationTypes(),
+				modifiedDate, 0,
 				_chatGroupServiceConfiguration.buddyListMaxBuddies());
 		}
 		else if (buddyListStrategy.equals("communities,friends") ||
-			buddyListStrategy.equals("sites,social") ||
-			buddyListStrategy.equals("friends,sites")) {
+				 buddyListStrategy.equals("sites,social") ||
+				 buddyListStrategy.equals("friends,sites")) {
 
 			List<Object[]> groupBuddies =
 				StatusLocalServiceUtil.getGroupStatuses(
@@ -87,8 +87,8 @@ public class DefaultBuddyFinderImpl implements BuddyFinder {
 			List<Object[]> socialBuddies =
 				StatusLocalServiceUtil.getSocialStatuses(
 					userId,
-					_chatGroupServiceConfiguration
-						.buddyListAllowedSocialRelationTypes(),
+					_chatGroupServiceConfiguration.
+						buddyListAllowedSocialRelationTypes(),
 					modifiedDate, 0,
 					_chatGroupServiceConfiguration.buddyListMaxBuddies());
 
@@ -117,14 +117,14 @@ public class DefaultBuddyFinderImpl implements BuddyFinder {
 
 		return buddies;
 	}
-	
+
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_chatGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
 			ChatGroupServiceConfiguration.class, properties);
 	}
-	
+
 	private ChatGroupServiceConfiguration _chatGroupServiceConfiguration;
 
 }

@@ -38,6 +38,7 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
+import com.liferay.exportimport.resources.importer.constants.ResourcesImporterConstants;
 import com.liferay.exportimport.resources.importer.portlet.preferences.PortletPreferencesTranslator;
 import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.model.JournalArticle;
@@ -115,6 +116,8 @@ import java.util.regex.Pattern;
 
 import javax.portlet.PortletPreferences;
 
+import org.apache.commons.collections.map.DefaultedMap;
+
 /**
  * @author Ryan Park
  * @author Raymond Augé
@@ -163,7 +166,13 @@ public class FileSystemImporter extends BaseImporter {
 		this.portal = portal;
 		this.portletPreferencesFactory = portletPreferencesFactory;
 		this.portletPreferencesLocalService = portletPreferencesLocalService;
-		this.portletPreferencesTranslators = portletPreferencesTranslators;
+
+		PortletPreferencesTranslator defaultPortletPreferencesTranslator =
+			portletPreferencesTranslators.get(
+				ResourcesImporterConstants.DEFAULT);
+		this.portletPreferencesTranslators = DefaultedMap.decorate(
+			portletPreferencesTranslators, defaultPortletPreferencesTranslator);
+
 		this.repositoryLocalService = repositoryLocalService;
 		this.saxReader = saxReader;
 		this.themeLocalService = themeLocalService;

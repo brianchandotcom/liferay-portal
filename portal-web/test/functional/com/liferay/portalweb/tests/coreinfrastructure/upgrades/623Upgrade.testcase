@@ -11,5 +11,7 @@
 		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#viewUpgrade" />
+
+		<execute macro="Upgrade#searchForAssetsAfterUpgrade" />
 	</command>
 </definition>

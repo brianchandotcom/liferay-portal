@@ -303,7 +303,7 @@
 						instance._onInputKey(event);
 					}
 				}
-				else if (acVisible && event.keyCode === KeyMap.ESC) {
+				else if (event.keyCode === KeyMap.ESC) {
 					instance.hide();
 				}
 				else {

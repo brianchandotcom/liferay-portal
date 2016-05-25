@@ -3,6 +3,70 @@
 <project basedir="." default="test" name="portal-test-plugins" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<macrodef name="get-plugin-path">
+		<attribute name="plugin" />
+		<attribute name="plugin.types" />
+
+		<sequential>
+			<var name="plugin.path" unset="true" />
+			<var name="plugin.war" unset="true" />
+
+			<if>
+				<matches pattern="http" string="${test.build.plugins.war.zip.url}" />
+				<then>
+					<pathconvert pathsep="," property="plugin.war" setonempty="false">
+						<path>
+							<fileset dir="plugins" includes="@{plugin}*.war" />
+						</path>
+					</pathconvert>
+
+					<if>
+						<isset property="plugin.war" />
+						<then>
+							<tstamp>
+								<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
+							</tstamp>
+
+							<mkdir dir="${tstamp.value}" />
+
+							<unzip
+								dest="${tstamp.value}"
+								src="${plugin.war}"
+							/>
+
+							<property name="plugin.path" value="${tstamp.value}" />
+						</then>
+					</if>
+				</then>
+			</if>
+
+			<if>
+				<available file="${lp.plugins.dir}/@{plugin.types}/@{plugin}" />
+				<then>
+					<property name="plugin.path" value="${lp.plugins.dir}/@{plugin.types}/@{plugin}" />
+				</then>
+				<else>
+					<pathconvert pathsep="," property="plugin.build.path" setonempty="false">
+						<path>
+							<fileset dir="${project.dir}/modules" includes="**/@{plugin}/build.xml" />
+						</path>
+					</pathconvert>
+
+					<dirname file="${plugin.build.path}" property="plugin.path" />
+				</else>
+			</if>
+
+			<if>
+				<not>
+					<isset property="plugin.path" />
+				</not>
+				<then>
+					<fail message="Unable to locate plugin @{plugin}" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<target name="deploy-extra-apps">
 		<for list="${plugins.includes}" param="plugin">
 			<sequential>

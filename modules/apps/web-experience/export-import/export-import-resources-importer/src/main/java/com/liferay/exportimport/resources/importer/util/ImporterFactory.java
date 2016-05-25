@@ -199,8 +199,8 @@ public class ImporterFactory {
 		return new FileSystemImporter(
 			_assetTagLocalService, _ddmFormJSONDeserializer,
 			_ddmFormXSDDeserializer, _ddmStructureLocalService,
-			_ddmTemplateLocalService, _ddmxml,
-			_dlAppLocalService, _dlFileEntryLocalService, _dlFolderLocalService,
+			_ddmTemplateLocalService, _ddmxml, _dlAppLocalService,
+			_dlFileEntryLocalService, _dlFolderLocalService,
 			_indexStatusManager, _indexerRegistry, _journalArticleLocalService,
 			_layoutLocalService, _layoutPrototypeLocalService,
 			_layoutSetLocalService, _layoutSetPrototypeLocalService, _mimeTypes,

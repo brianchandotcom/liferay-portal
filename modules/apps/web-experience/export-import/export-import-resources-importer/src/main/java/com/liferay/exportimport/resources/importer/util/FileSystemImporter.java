@@ -2032,10 +2032,10 @@ public class FileSystemImporter extends BaseImporter {
 			return getOrDefault(key, _defaultPortletPreferencesTranslator);
 		}
 
-		private final Map<String, PortletPreferencesTranslator> _delegate;
-
 		private final PortletPreferencesTranslator
 			_defaultPortletPreferencesTranslator;
+		private final Map<String, PortletPreferencesTranslator> _delegate;
+
 	}
 
 }

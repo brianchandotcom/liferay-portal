@@ -276,7 +276,7 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setDDLFormWebConfigurationActivator(
 		DDLFormWebConfigurationActivator ddlFormWebConfigurationActivator) {
@@ -467,6 +467,12 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 		WorkflowEngineManager workflowEngineManager) {
 
 		_workflowEngineManager = workflowEngineManager;
+	}
+
+	protected void unsetDDLFormWebConfigurationActivator(
+		DDLFormWebConfigurationActivator ddlFormWebConfigurationActivator) {
+
+		_ddlFormWebConfigurationActivator = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

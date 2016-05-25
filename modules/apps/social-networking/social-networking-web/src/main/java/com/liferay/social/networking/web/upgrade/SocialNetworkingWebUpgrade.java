@@ -16,6 +16,7 @@ package com.liferay.social.networking.web.upgrade;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

@@ -17,6 +17,7 @@ package com.liferay.invitation.invite.members.upgrade;
 import com.liferay.invitation.invite.members.upgrade.v1_0_0.UpgradeNamespace;
 import com.liferay.invitation.invite.members.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

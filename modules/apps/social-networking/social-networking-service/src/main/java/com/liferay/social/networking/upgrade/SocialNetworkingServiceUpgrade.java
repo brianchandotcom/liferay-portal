@@ -17,6 +17,7 @@ package com.liferay.social.networking.upgrade;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.social.networking.upgrade.v1_0_0.UpgradeNamespace;
 import com.liferay.social.networking.upgrade.v1_0_1.UpgradePortletId;
+
 import org.osgi.service.component.annotations.Component;
 
 /**

@@ -16,6 +16,7 @@ package com.liferay.portal.osgi.web.servlet.jsp.compiler.internal;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
 import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
@@ -57,14 +58,13 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 
 	public JspJavaFileObjectResolver(
 		BundleWiring bundleWiring, BundleWiring jspBundleWiring,
-		Map<BundleWiring, Set<String>> bundleWiringPackageNames, Log log,
+		Map<BundleWiring, Set<String>> bundleWiringPackageNames,
 		ServiceTracker<Map<String, List<URL>>, Map<String, List<URL>>>
 			serviceTracker) {
 
 		_bundleWiring = bundleWiring;
 		_jspBundleWiring = jspBundleWiring;
 		_bundleWiringPackageNames = bundleWiringPackageNames;
-		_log = log;
 		_serviceTracker = serviceTracker;
 	}
 
@@ -316,13 +316,15 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 		return javaFileObjects;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		JspJavaFileObjectResolver.class);
+
 	private final BundleWiring _bundleWiring;
 	private final Map<BundleWiring, Set<String>> _bundleWiringPackageNames;
 	private final Map<String, Collection<JavaFileObject>> _javaFileObjects =
 		new ConcurrentReferenceValueHashMap<>(
 			FinalizeManager.SOFT_REFERENCE_FACTORY);
 	private final BundleWiring _jspBundleWiring;
-	private final Log _log;
 	private final ServiceTracker<Map<String, List<URL>>, Map<String, List<URL>>>
 		_serviceTracker;
 

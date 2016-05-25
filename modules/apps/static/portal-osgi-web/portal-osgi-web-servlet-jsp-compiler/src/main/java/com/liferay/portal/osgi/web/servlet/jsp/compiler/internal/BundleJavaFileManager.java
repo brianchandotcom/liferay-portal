@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.servlet.jsp.compiler.internal;
 
 import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaDetector;
@@ -50,14 +51,13 @@ public class BundleJavaFileManager
 
 	public BundleJavaFileManager(
 		ClassLoader classLoader, Set<String> systemPackageNames,
-		JavaFileManager javaFileManager, Log log,
+		JavaFileManager javaFileManager,
 		JavaFileObjectResolver javaFileObjectResolver) {
 
 		super(javaFileManager);
 
 		_classLoader = classLoader;
 		_systemPackageNames = systemPackageNames;
-		_log = log;
 		_javaFileObjectResolver = javaFileObjectResolver;
 	}
 
@@ -194,6 +194,9 @@ public class BundleJavaFileManager
 		return nameField;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		BundleJavaFileManager.class);
+
 	private static final Set<Kind> _kinds = EnumSet.of(Kind.CLASS);
 	private static SoftReference<Field> _nameFieldReference;
 
@@ -207,7 +210,6 @@ public class BundleJavaFileManager
 
 	private final ClassLoader _classLoader;
 	private final JavaFileObjectResolver _javaFileObjectResolver;
-	private final Log _log;
 	private final Set<String> _systemPackageNames;
 
 }

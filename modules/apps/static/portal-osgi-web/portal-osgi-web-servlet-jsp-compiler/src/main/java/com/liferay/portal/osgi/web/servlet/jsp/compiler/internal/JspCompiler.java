@@ -212,7 +212,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 		}
 
 		_javaFileObjectResolver = new JspJavaFileObjectResolver(
-			bundleWiring, _jspBundleWiring, _bundleWiringPackageNames, _log,
+			bundleWiring, _jspBundleWiring, _bundleWiringPackageNames,
 			_serviceTracker);
 
 		jspCompilationContext.setClassLoader(jspBundleClassloader);
@@ -329,7 +329,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 
 			javaFileManager = new BundleJavaFileManager(
 				_classLoader, _systemPackageNames, standardJavaFileManager,
-				_log, _javaFileObjectResolver);
+				_javaFileObjectResolver);
 		}
 
 		return super.getJavaFileManager(javaFileManager);

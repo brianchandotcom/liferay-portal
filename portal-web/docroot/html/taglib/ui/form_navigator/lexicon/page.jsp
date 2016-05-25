@@ -74,6 +74,8 @@ for (String categoryKey : categoryKeys) {
 
 <c:if test="<%= showButtons %>">
 	<aui:button-row>
-		<aui:button cssClass="btn-lg btn-primary" type="submit" />
+		<aui:button cssClass="btn-lg" primary="<%= true %>" type="submit" />
+
+		<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
 	</aui:button-row>
 </c:if>

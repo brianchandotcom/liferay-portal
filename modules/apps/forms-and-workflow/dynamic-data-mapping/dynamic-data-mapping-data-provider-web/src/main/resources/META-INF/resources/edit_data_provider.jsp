@@ -76,7 +76,7 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 	<c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">
 		<div class="container-fluid-1280">
 			<aui:button-row>
-				<aui:button cssClass="btn-lg" id="submit" label="save" primary="<%= true %>" type="submit" />
+				<aui:button cssClass="btn-lg" id="submit" label="save" type="submit" />
 
 				<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
 			</aui:button-row>

@@ -106,7 +106,7 @@ to = sb.toString() + to;
 		<aui:input label="" name="msgFile3" type="file" />
 
 		<aui:button-row>
-			<aui:button primary="<%= true %>" type="submit" value="send" />
+			<aui:button type="submit" value="send" />
 		</aui:button-row>
 	</aui:form>
 </div>
@@ -117,65 +117,64 @@ to = sb.toString() + to;
 	form.on(
 		'submit',
 		function(event) {
-			var recipients = A.one('#<portlet:namespace />to').val();
+			var fields = A.allNS('<portlet:namespace />', '#body, #subject, #to');
 
-			if (recipients == '') {
-				A.one('#<portlet:namespace />to').focus();
+			var missingRequiredValue = fields.some(
+				function(item, index) {
+					var missingValue = !item.val();
 
-				return false;
-			}
+					if (missingValue) {
+						item.focus();
+					}
 
-			if (A.one('#<portlet:namespace />subject').val() == '') {
-				A.one('#<portlet:namespace />subject').focus();
-
-				return false;
-			}
-
-			if (A.one('#<portlet:namespace />body').val() == '') {
-				A.one('#<portlet:namespace />body').focus();
-
-				return false;
-			}
-
-			var loadingMask = new A.LoadingMask(
-				{
-					'strings.loading': '<%= UnicodeLanguageUtil.get(request, "sending-message") %>',
-					target: A.one('.private-messaging-portlet .message-body-container')
+					return missingValue;
 				}
 			);
 
-			loadingMask.show();
+			if (missingRequiredValue) {
+				event.preventDefault();
+			}
+			else {
+				var loadingMask = new A.LoadingMask(
+					{
+						'strings.loading': '<%= UnicodeLanguageUtil.get(request, "sending-message") %>',
+						target: A.one('.private-messaging-portlet .message-body-container')
+					}
+				);
 
-			A.io.request(
-				'<liferay-portlet:actionURL name="sendMessage"></liferay-portlet:actionURL>',
-				{
-					dataType: 'JSON',
-					form: {
-						id: form,
-						upload: true
-					},
-					on: {
-						complete: function(event, id, obj) {
-							var responseText = obj.responseText;
+				loadingMask.show();
 
-							var responseData = JSON.parse(responseText);
+				A.io.request(
+					'<liferay-portlet:actionURL name="sendMessage"></liferay-portlet:actionURL>',
+					{
+						dataType: 'JSON',
+						form: {
+							id: form,
+							upload: true
+						},
+						on: {
+							complete: function(event, id, obj) {
+								var responseText = obj.responseText;
 
-							if (responseData.success) {
-								Liferay.Util.getWindow('<portlet:namespace />Dialog').hide();
-							}
-							else {
-								var messageContainer = A.one('#<portlet:namespace />messageContainer');
+								var responseData = JSON.parse(responseText);
 
-								if (messageContainer) {
-									messageContainer.html('<span class="portlet-msg-error">' + responseData.message + '</span>');
+								if (responseData.success) {
+									Liferay.Util.getWindow('<portlet:namespace />Dialog').hide();
 								}
+								else {
+									var messageContainer = A.one('#<portlet:namespace />messageContainer');
 
-								loadingMask.hide();
+									if (messageContainer) {
+										messageContainer.html('<span class="portlet-msg-error">' + responseData.message + '</span>');
+									}
+
+									loadingMask.hide();
+								}
 							}
 						}
 					}
-				}
-			);
+				);
+			}
 		}
 	);
 

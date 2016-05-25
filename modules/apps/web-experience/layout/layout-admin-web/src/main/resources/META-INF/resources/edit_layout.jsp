@@ -177,7 +177,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 
 			<c:if test="<%= (selLayout.getGroupId() == layoutsAdminDisplayContext.getGroupId()) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>">
 				<aui:button-row>
-					<aui:button cssClass="btn-lg btn-primary" type="submit" />
+					<aui:button cssClass="btn-lg" type="submit" />
 
 					<c:if test="<%= Validator.isNotNull(backURL) %>">
 						<aui:button cssClass="btn-lg" href="<%= backURL %>" name="cancelButton" type="cancel" />

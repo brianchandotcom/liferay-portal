@@ -85,7 +85,7 @@ refererURL.setParameter("updateLayout", "true");
 			%>
 
 			<div class="button-holder">
-				<aui:button cssClass="btn-primary" href="<%= marketplaceURL.toString() %>" value="install-more-applications" />
+				<aui:button href="<%= marketplaceURL.toString() %>" primary="<%= true %>" value="install-more-applications" />
 			</div>
 		</c:if>
 	</div>

@@ -336,7 +336,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 					</aui:script>
 
 					<aui:button-row>
-						<aui:button cssClass="btn-lg btn-primary" type="submit" />
+						<aui:button cssClass="btn-lg" type="submit" />
 					</aui:button-row>
 				</c:if>
 			</aui:form>
@@ -407,12 +407,13 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 
 <aui:script sandbox="<%= true %>">
 	var stagingConfigurationControls = $('#stagingConfigurationControls');
+
 	var allCheckboxes = stagingConfigurationControls.find('input[type=checkbox]');
 
 	$('#<portlet:namespace />selectAllCheckbox').on(
 		'change',
 		function() {
-			allCheckboxes.prop("checked", this.checked);
+			allCheckboxes.prop('checked', this.checked);
 		}
 	);
 </aui:script>

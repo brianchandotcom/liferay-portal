@@ -95,7 +95,7 @@ if (fileEntryId != 0) {
 
 		<p class="progress-data size"></p>
 
-		<aui:button cssClass="btn-primary" id='<%= randomNamespace + "cancelUpload" %>' useNamespace="<%= false %>" value="cancel" />
+		<aui:button id='<%= randomNamespace + "cancelUpload" %>' primary="<%= true %>" useNamespace="<%= false %>" value="cancel" />
 	</div>
 
 	<div class="change-image-controls <%= (fileEntryId != 0) ? StringPool.BLANK : "hide" %>">

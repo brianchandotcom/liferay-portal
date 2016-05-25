@@ -26,7 +26,9 @@
 			</liferay-ui:panel-container>
 
 			<aui:button-row>
-				<aui:button cssClass="btn-primary" type="submit" />
+				<aui:button primary="<%= true %>" type="submit" />
+
+				<aui:button href="<%= backURL %>" type="cancel" />
 			</aui:button-row>
 		</c:when>
 		<c:otherwise>

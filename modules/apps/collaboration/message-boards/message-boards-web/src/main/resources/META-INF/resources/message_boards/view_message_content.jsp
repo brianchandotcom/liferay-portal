@@ -344,7 +344,7 @@ if (portletTitleBasedNavigation) {
 				'<portlet:namespace />',
 				{
 					index: form.fm('index').val(),
-					rootIndexPage: form.fm('rootIndexPage').val(),
+					rootIndexPage: form.fm('rootIndexPage').val()
 				}
 			);
 

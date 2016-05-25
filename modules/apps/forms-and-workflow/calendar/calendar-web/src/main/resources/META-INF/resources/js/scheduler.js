@@ -516,6 +516,21 @@ AUI.add(
 		var Scheduler = A.Component.create(
 			{
 				ATTRS: {
+					currentTimeFn: {
+			            valueFn: function() {
+			                return function(callback) {
+			                	CalendarUtil.getCurrentTime(function(date) {
+			                		var year = parseInt(date.year);
+			                		var month = parseInt(date.month);
+			                		var day = parseInt(date.day);
+			                		var hour = parseInt(date.hour);
+			                		var minute = parseInt(date.minute);
+									callback(new Date(year,month,day,hour,minute));
+								});
+			                };
+			            }
+			        },
+
 					filterCalendarBookings: {
 						validator: isFunction
 					},

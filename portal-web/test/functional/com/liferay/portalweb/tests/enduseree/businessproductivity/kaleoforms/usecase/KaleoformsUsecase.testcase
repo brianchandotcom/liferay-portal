@@ -1909,8 +1909,6 @@
 		<execute function="AssertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][1]/label" value1="Text" />
 		<execute function="AssertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][2]/label" value1="Text Box" />
 		<execute function="AssertTextEquals" locator1="//div[contains(@class,'field-wrapper-content')][3]/label" value1="Select" />
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="CompleteProcessAndViewEmailNotifications" priority="4">
@@ -2554,8 +2552,6 @@
 			<var name="fieldLabel" value="${fieldName}" />
 			<var name="fieldValue" value="${kfProcessFieldData}" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="CompleteProcessLargeFieldSet" priority="2">
@@ -2990,8 +2986,6 @@
 			<var name="fieldLabel" value="3_Number" />
 			<var name="fieldValue" value="8932839301" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="CompleteProcessPredefinedContacts" priority="3">
@@ -3184,8 +3178,6 @@
 			<var name="fieldLabel" value="Phone (Office)" />
 			<var name="fieldValue" value="555-555-5555" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="CompleteProcessPredefinedEvents" priority="3">
@@ -3359,8 +3351,6 @@
 			<var name="fieldLabel" value="Location" />
 			<var name="fieldValue" value="Diamond Bar, CA" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />s
 	</command>
 
 	<command name="CompleteProcessPredefinedInventory" priority="3">
@@ -3523,8 +3513,6 @@
 			<var name="fieldLabel" value="Quantity" />
 			<var name="fieldValue" value="4.0" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="CompleteProcessPredefinedIssuesTracking" priority="3">
@@ -3718,8 +3706,6 @@
 			<var name="fieldLabel" value="Title" />
 			<var name="fieldValue" value="Test" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="CompleteProcessPredefinedMeetingMinutes" priority="3">
@@ -3893,8 +3879,6 @@
 			<var name="fieldLabel" value="Title" />
 			<var name="fieldValue" value="Test" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="CompleteProcessPredefinedToDo" priority="3">
@@ -4098,8 +4082,6 @@
 			<var name="fieldLabel" value="Title" />
 			<var name="fieldValue" value="Test" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="CompleteProcessSubmittedViaCP" priority="4">
@@ -4380,8 +4362,6 @@
 			<var name="fieldLabel" value="Text" />
 			<var name="fieldValue" value="Test" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="CompleteProcessWithUploadedDefinition" priority="5">
@@ -4599,8 +4579,6 @@
 			<var name="fieldLabel" value="Title" />
 			<var name="fieldValue" value="Test" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="EditProcessCreateFormAfterFormSubmission" priority="4">
@@ -5374,8 +5352,6 @@
 			<var name="fieldLabel" value="Quantity" />
 			<var name="fieldValue" value="4.0" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="EditProcessNewDetailsAfterFormApproved" priority="3">
@@ -6371,8 +6347,6 @@
 			<var name="fieldLabel" value="Quantity" />
 			<var name="fieldValue" value="4.0" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="ProcessUsesCreateFormWhenEditFormIsMissing" priority="3">
@@ -6640,8 +6614,6 @@
 			<var name="fieldLabel" value="Quantity" />
 			<var name="fieldValue" value="4.0" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="ProcessUsesCreateFormWhenNoEditFormIsDefined" priority="3">
@@ -7008,8 +6980,6 @@
 			<var name="fieldName" value="quantity" />
 			<var name="kfProcessFieldData" value="4.0" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="RejectAndResubmitProcess" priority="3">
@@ -8609,8 +8579,6 @@
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
-
-		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
 	<command name="ViewMultipleProcessRecords" priority="3">

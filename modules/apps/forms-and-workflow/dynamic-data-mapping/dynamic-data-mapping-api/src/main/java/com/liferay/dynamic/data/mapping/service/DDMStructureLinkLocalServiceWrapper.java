@@ -188,6 +188,12 @@ public class DDMStructureLinkLocalServiceWrapper
 		return _ddmStructureLinkLocalService.getDDMStructureLinksCount();
 	}
 
+	@Override
+	public int getStructureLinksCount(long classNameId, long classPK) {
+		return _ddmStructureLinkLocalService.getStructureLinksCount(classNameId,
+			classPK);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -284,10 +290,25 @@ public class DDMStructureLinkLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getStructureLinkStructures(
+		long classNameId, long classPK, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureLinkLocalService.getStructureLinkStructures(classNameId,
+			classPK, start, end);
+	}
+
+	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureLink> getStructureLinks(
 		long classNameId, long classPK) {
 		return _ddmStructureLinkLocalService.getStructureLinks(classNameId,
 			classPK);
+	}
+
+	@Override
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureLink> getStructureLinks(
+		long classNameId, long classPK, int start, int end) {
+		return _ddmStructureLinkLocalService.getStructureLinks(classNameId,
+			classPK, start, end);
 	}
 
 	@Override

@@ -24,7 +24,7 @@ Group group = (Group)row.getObject();
 String groupId = String.valueOf(group.getGroupId());
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:choose>
 		<c:when test='<%= GetterUtil.getBoolean(group.getTypeSettingsProperty("syncEnabled"), !group.isCompany()) %>'>
 
@@ -33,7 +33,6 @@ String groupId = String.valueOf(group.getGroupId());
 			%>
 
 			<liferay-ui:icon
-				iconCssClass="icon-lock"
 				label="<%= true %>"
 				message="default-file-permissions"
 				url="<%= editDefaultFilePermissionsDialogURL %>"
@@ -60,7 +59,6 @@ String groupId = String.valueOf(group.getGroupId());
 			</portlet:actionURL>
 
 			<liferay-ui:icon
-				iconCssClass="icon-ok-sign"
 				label="<%= true %>"
 				message="enable-sync-site"
 				url="<%= enableSiteURL %>"

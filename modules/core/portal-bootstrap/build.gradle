@@ -24,6 +24,7 @@ buildSystemPackagesExtraManifest {
 		properties["-include"] = relativePath(systemPackagesExtraBndFile)
 
 		jarBuilder.withClasspath new File[0]
+		jarBuilder.withFailOnError true
 		jarBuilder.withName "system.packages.extra"
 		jarBuilder.withProperties properties
 		jarBuilder.withResources new File[0]

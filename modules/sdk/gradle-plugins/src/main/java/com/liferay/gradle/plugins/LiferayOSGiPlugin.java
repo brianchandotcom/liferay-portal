@@ -415,6 +415,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					jarBuilder.withBase(BundleUtils.getBase(project));
 					jarBuilder.withClasspath(_getClasspath(project));
+					jarBuilder.withFailOnError(true);
 					jarBuilder.withName(
 						properties.get(Constants.BUNDLE_SYMBOLICNAME));
 					jarBuilder.withProperties(properties);
@@ -588,7 +589,13 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	protected void configureBundleExtension(Project project) {
 		replaceJarBuilderFactory(project);
 
-		Map<String, String> bundleInstructions = getBundleInstructions(project);
+		BundleExtension bundleExtension = GradleUtil.getExtension(
+			project, BundleExtension.class);
+
+		bundleExtension.setFailOnError(true);
+
+		Map<String, String> bundleInstructions = getBundleInstructions(
+			bundleExtension);
 
 		Properties bundleProperties = null;
 

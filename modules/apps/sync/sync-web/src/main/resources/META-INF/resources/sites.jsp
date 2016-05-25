@@ -30,7 +30,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 %>
 
 <aui:nav-bar>
-	<aui:nav cssClass="hide navbar-nav" id="toolbarContainer">
+	<aui:nav cssClass="collapse-basic-search hide navbar-nav" id="toolbarContainer" markupView="lexicon">
 		<aui:nav-item href='<%= "javascript:" + renderResponse.getNamespace() + "enableSites();" %>' iconCssClass="icon-ok" label="enable-sync-sites" />
 
 		<aui:nav-item href='<%= "javascript:" + renderResponse.getNamespace() + "disableSites();" %>' iconCssClass="icon-remove" label="disable-sync-sites" />
@@ -48,7 +48,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 
 	<aui:nav-bar-search cssClass="pull-right">
 		<aui:form action="<%= portletURL %>" cssClass="form-search" method="post" name="fm1">
-			<liferay-ui:input-search placeholder='<%= LanguageUtil.get(request, "keywords") %>' title='<%= LanguageUtil.get(request, "keywords") %>' />
+			<liferay-ui:input-search markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "keywords") %>' title='<%= LanguageUtil.get(request, "keywords") %>' />
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>
@@ -109,6 +109,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 			modelVar="group"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="content-column name-column title-column"
 				name="name"
 				property="descriptiveName"
 			/>
@@ -157,12 +158,12 @@ portletURL.setParameter("delta", String.valueOf(delta));
 
 			<liferay-ui:search-container-column-jsp
 				align="right"
-				cssClass="entry-action"
+				cssClass="entry-action-column"
 				path="/sites_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

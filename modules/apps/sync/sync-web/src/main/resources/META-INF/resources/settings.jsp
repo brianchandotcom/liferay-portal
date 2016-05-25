@@ -54,7 +54,7 @@ if (deployed && oAuthEnabled) {
 
 <liferay-portlet:actionURL var="configurationActionURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updatePreferences();" %>'>
+<aui:form action="<%= configurationActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updatePreferences();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<liferay-ui:error exception="<%= OAuthPortletUndeployedException.class %>" message="oauth-publisher-is-not-deployed" />
@@ -62,15 +62,15 @@ if (deployed && oAuthEnabled) {
 	<h4><liferay-ui:message key="general" /></h4>
 
 	<aui:fieldset>
-		<aui:input label="allow-the-use-of-sync" name="enabled" type="checkbox" value="<%= enabled %>" />
-		<aui:input label="allow-users-to-sync-their-personal-sites" name="allowUserPersonalSites" type="checkbox" value="<%= allowUserPersonalSites %>" />
+		<aui:input label="allow-the-use-of-sync" name="enabled" type="toggle-switch" value="<%= enabled %>" />
+		<aui:input label="allow-users-to-sync-their-personal-sites" name="allowUserPersonalSites" type="toggle-switch" value="<%= allowUserPersonalSites %>" />
 	</aui:fieldset>
 
 	<h4><liferay-ui:message key="advanced" /></h4>
 
 	<c:if test="<%= deployed %>">
 		<aui:fieldset>
-			<aui:input helpMessage="oauth-enabled-help" label="oauth-enabled" name="oAuthEnabled" type="checkbox" value="<%= oAuthEnabled %>" />
+			<aui:input helpMessage="oauth-enabled-help" label="oauth-enabled" name="oAuthEnabled" type="toggle-switch" value="<%= oAuthEnabled %>" />
 		</aui:fieldset>
 	</c:if>
 

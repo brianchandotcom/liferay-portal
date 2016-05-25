@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mentions.service;
+package com.liferay.mentions.internal.service;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.kernel.service.BlogsEntryLocalService;

@@ -12,14 +12,29 @@
  * details.
  */
 
-package com.liferay.mentions.web.constants;
+package com.liferay.mentions.web.internal.servlet.taglib.ui;
+
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+
+import java.util.Locale;
 
 /**
  * @author Sergio González
  */
-public class MentionsPortletKeys {
+public abstract class BaseMentionsFormNavigatorEntry
+	extends BaseJSPFormNavigatorEntry<Object>
+	implements FormNavigatorEntry<Object> {
 
-	public static final String MENTIONS =
-		"com_liferay_mentions_web_portlet_MentionsPortlet";
+	@Override
+	public String getKey() {
+		return "mentions";
+	}
+
+	@Override
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "mentions");
+	}
 
 }

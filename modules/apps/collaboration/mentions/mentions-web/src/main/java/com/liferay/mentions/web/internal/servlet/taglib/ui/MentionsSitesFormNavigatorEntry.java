@@ -12,15 +12,20 @@
  * details.
  */
 
-package com.liferay.mentions.web.servlet.taglib.ui;
+package com.liferay.mentions.web.internal.servlet.taglib.ui;
 
 import com.liferay.mentions.constants.MentionsWebKeys;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.IOException;
 
@@ -40,17 +45,17 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = {"form.navigator.entry.order:Integer=90"},
 	service = FormNavigatorEntry.class
 )
-public class MentionsCompanySettingsFormNavigatorEntry
+public class MentionsSitesFormNavigatorEntry
 	extends BaseMentionsFormNavigatorEntry {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_SOCIAL;
+		return FormNavigatorConstants.CATEGORY_KEY_SITES_SOCIAL;
 	}
 
 	@Override
 	public String getFormNavigatorId() {
-		return FormNavigatorConstants.FORM_NAVIGATOR_ID_COMPANY_SETTINGS;
+		return FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES;
 	}
 
 	@Override
@@ -58,19 +63,40 @@ public class MentionsCompanySettingsFormNavigatorEntry
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		Group liveGroup = (Group)request.getAttribute("site.liveGroup");
+
+		UnicodeProperties typeSettingsProperties = null;
+
+		if (liveGroup != null) {
+			typeSettingsProperties = liveGroup.getTypeSettingsProperties();
+		}
+		else {
+			typeSettingsProperties = new UnicodeProperties();
+		}
+
+		boolean groupMentionsEnabled = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("mentionsEnabled"), true);
+
+		request.setAttribute(
+			MentionsWebKeys.GROUP_MENTIONS_ENABLED, groupMentionsEnabled);
+
+		super.include(request, response);
+	}
+
+	@Override
+	public boolean isVisible(User user, Object formModelBean) {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		HttpServletRequest request = themeDisplay.getRequest();
 
 		PortletPreferences companyPortletPreferences =
 			PrefsPropsUtil.getPreferences(themeDisplay.getCompanyId(), true);
 
-		boolean companyMentionsEnabled = PrefsParamUtil.getBoolean(
+		return PrefsParamUtil.getBoolean(
 			companyPortletPreferences, request, "mentionsEnabled", true);
-
-		request.setAttribute(
-			MentionsWebKeys.COMPANY_MENTIONS_ENABLED, companyMentionsEnabled);
-
-		super.include(request, response);
 	}
 
 	@Override
@@ -84,7 +110,7 @@ public class MentionsCompanySettingsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/portal_settings/mentions.jsp";
+		return "/sites_admin/mentions.jsp";
 	}
 
 }

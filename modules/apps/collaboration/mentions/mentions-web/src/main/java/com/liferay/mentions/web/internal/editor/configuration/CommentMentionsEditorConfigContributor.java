@@ -12,29 +12,22 @@
  * details.
  */
 
-package com.liferay.mentions.web.servlet.taglib.ui;
+package com.liferay.mentions.web.internal.editor.configuration;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 
-import java.util.Locale;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
  */
-public abstract class BaseMentionsFormNavigatorEntry
-	extends BaseJSPFormNavigatorEntry<Object>
-	implements FormNavigatorEntry<Object> {
-
-	@Override
-	public String getKey() {
-		return "mentions";
-	}
-
-	@Override
-	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "mentions");
-	}
-
+@Component(
+	property = {
+		"editor.config.key=commentEditor", "editor.name=alloyeditor",
+		"editor.name=ckeditor", "service.ranking:Integer=10"
+	},
+	service = EditorConfigContributor.class
+)
+public class CommentMentionsEditorConfigContributor
+	extends BaseMentionsEditorConfigContributor {
 }

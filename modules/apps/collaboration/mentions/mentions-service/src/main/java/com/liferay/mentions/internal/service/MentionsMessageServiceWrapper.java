@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mentions.service;
+package com.liferay.mentions.internal.service;
 
 import com.liferay.mentions.configuration.MentionsGroupServiceConfiguration;
 import com.liferay.mentions.util.MentionsNotifier;

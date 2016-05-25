@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mentions.web.servlet.taglib;
+package com.liferay.mentions.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;

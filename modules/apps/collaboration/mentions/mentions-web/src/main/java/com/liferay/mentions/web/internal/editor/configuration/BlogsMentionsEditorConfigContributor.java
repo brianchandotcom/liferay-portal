@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.mentions.web.editor.configuration;
+package com.liferay.mentions.web.internal.editor.configuration;
 
-import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 
 import org.osgi.service.component.annotations.Component;
@@ -24,14 +24,13 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"editor.config.key=editor", "editor.name=alloyeditor",
-		"editor.name=ckeditor", "editor.name=ckeditor_bbcode",
-		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
-		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS_ADMIN,
+		"editor.config.key=contentEditor", "editor.name=alloyeditor",
+		"editor.name=ckeditor", "javax.portlet.name=" + BlogsPortletKeys.BLOGS,
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN,
 		"service.ranking:Integer=10"
 	},
 	service = EditorConfigContributor.class
 )
-public class MBMentionsEditorConfigContributor
+public class BlogsMentionsEditorConfigContributor
 	extends BaseMentionsEditorConfigContributor {
 }

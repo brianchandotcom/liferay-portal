@@ -12,22 +12,14 @@
  * details.
  */
 
-package com.liferay.mentions.web.editor.configuration;
-
-import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.mentions.web.internal.constants;
 
 /**
  * @author Sergio González
  */
-@Component(
-	property = {
-		"editor.config.key=commentEditor", "editor.name=alloyeditor",
-		"editor.name=ckeditor", "service.ranking:Integer=10"
-	},
-	service = EditorConfigContributor.class
-)
-public class CommentMentionsEditorConfigContributor
-	extends BaseMentionsEditorConfigContributor {
+public class MentionsPortletKeys {
+
+	public static final String MENTIONS =
+		"com_liferay_mentions_web_portlet_MentionsPortlet";
+
 }

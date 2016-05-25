@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mentions.util.impl;
+package com.liferay.mentions.internal.util.impl;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

@@ -3335,9 +3335,9 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 			<property name="app.server.log.file.path" value="${project.dir}/app-server-log" />
 
-			<delete file="${app.server.log.file.path}" />
+			<echo file="${app.server.log.file.path}" />
 
-			<record action="start" name="${app.server.log.file.path}" />
+			<record action="start" append="true" name="${app.server.log.file.path}" />
 
 			<local name="wait.for.app.server.log.timed.out.message" />
 

@@ -336,7 +336,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 					</aui:script>
 
 					<aui:button-row>
-						<aui:button cssClass="btn-lg" primary="<%= true %>" type="submit" />
+						<aui:button cssClass="btn-lg" type="submit" />
 					</aui:button-row>
 				</c:if>
 			</aui:form>

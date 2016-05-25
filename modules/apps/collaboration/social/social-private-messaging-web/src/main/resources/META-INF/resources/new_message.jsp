@@ -106,7 +106,7 @@ to = sb.toString() + to;
 		<aui:input label="" name="msgFile3" type="file" />
 
 		<aui:button-row>
-			<aui:button primary="<%= true %>" type="submit" value="send" />
+			<aui:button type="submit" value="send" />
 		</aui:button-row>
 	</aui:form>
 </div>

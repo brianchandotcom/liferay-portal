@@ -30,11 +30,6 @@
 
 	<c:if test="<%= ddlDisplayContext.isShowIconsActions() %>">
 		<div class="lfr-icon-actions">
-			<liferay-portlet:renderURL varImpl="redirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcPath" value="/update_redirect.jsp" />
-				<portlet:param name="referringPortletResource" value="<%= portletDisplay.getId() %>" />
-			</liferay-portlet:renderURL>
-
 			<c:if test="<%= ddlDisplayContext.isShowAddDDMFormTemplateIcon() %>">
 				<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.EDIT) %>" var="addFormTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 					<portlet:param name="mvcPath" value="/edit_template.jsp" />

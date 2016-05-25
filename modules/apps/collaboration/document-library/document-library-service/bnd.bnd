@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.document.library.service
 Bundle-Version: 1.1.0
 Export-Package:\
 	com.liferay.document.library.ddm,\
-	com.liferay.document.library.events,\
 	com.liferay.document.library.lar.xstream,\
 	com.liferay.document.library.verify
 Liferay-Releng-Module-Group-Description:

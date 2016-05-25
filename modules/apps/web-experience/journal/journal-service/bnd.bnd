@@ -8,7 +8,6 @@ Export-Package:\
 	com.liferay.journal.model.impl,\
 	com.liferay.journal.model.listener,\
 	com.liferay.journal.search,\
-	com.liferay.journal.service.configuration.configurator,\
 	com.liferay.journal.service.impl,\
 	com.liferay.journal.service.permission,\
 	com.liferay.journal.service.util,\

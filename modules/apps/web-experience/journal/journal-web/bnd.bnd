@@ -3,7 +3,6 @@ Bundle-SymbolicName: com.liferay.journal.web
 Bundle-Version: 1.1.2
 Export-Package:\
 	com.liferay.journal.web.asset,\
-	com.liferay.journal.web.constants,\
 	com.liferay.journal.web.dynamic.data.mapping.util,\
 	com.liferay.journal.web.social,\
 	com.liferay.journal.web.util

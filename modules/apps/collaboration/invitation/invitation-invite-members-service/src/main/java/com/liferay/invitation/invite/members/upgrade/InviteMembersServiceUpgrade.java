@@ -29,7 +29,13 @@ public class InviteMembersServiceUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.invitation.invite.members.service", "0.0.1", "1.0.0",
+			"com.liferay.invitation.invite.members.service", "0.0.1", "1.0.1",
+			new UpgradeNamespace(), new UpgradePortletId());
+
+		// See LPS-65946
+
+		registry.register(
+			"com.liferay.invitation.invite.members.service", "1.0.0", "1.0.1",
 			new UpgradeNamespace(), new UpgradePortletId());
 	}
 

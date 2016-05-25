@@ -15,8 +15,8 @@
 package com.liferay.social.networking.web.friends.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.social.networking.model.MeetupsRegistration;
 import com.liferay.social.networking.service.MeetupsEntryLocalService;
+import com.liferay.social.networking.service.MeetupsRegistrationLocalService;
 import com.liferay.social.networking.service.WallEntryLocalService;
 
 import javax.portlet.Portlet;
@@ -54,7 +54,7 @@ public class FriendsPortlet extends MVCPortlet {
 
 	@Reference(unbind = "-")
 	protected void setMeetupsRegistrationLocalService(
-		MeetupsRegistration meetupsRegistrationLocalService) {
+		MeetupsRegistrationLocalService meetupsRegistrationLocalService) {
 	}
 
 	@Reference(unbind = "-")

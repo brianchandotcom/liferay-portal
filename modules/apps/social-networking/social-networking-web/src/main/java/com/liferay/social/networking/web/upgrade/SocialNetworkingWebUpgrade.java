@@ -12,34 +12,23 @@
  * details.
  */
 
-package com.liferay.contacts.upgrade;
+package com.liferay.social.networking.web.upgrade;
 
-import com.liferay.contacts.upgrade.v2_0_0.UpgradeEntry;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Jonathan Lee
+ * @author Adolfo Pérez
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class ContactsServiceUpgrade implements UpgradeStepRegistrator {
+public class SocialNetworkingWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.contacts.service", "0.0.1", "1.0.0",
-			new UpgradeEntry());
-
-		// See LPS-65946
-
-		registry.register(
-			"com.liferay.contacts.service", "1.0.0", "2.0.1",
-			new DummyUpgradeStep());
-
-		registry.register(
-			"com.liferay.contacts.service", "2.0.0", "2.0.1",
+			"com.liferay.social.networking.web", "0.0.1", "1.0.4",
 			new DummyUpgradeStep());
 	}
 

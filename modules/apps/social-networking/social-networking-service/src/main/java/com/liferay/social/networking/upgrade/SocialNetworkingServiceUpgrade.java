@@ -33,8 +33,14 @@ public class SocialNetworkingServiceUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.social.networking.service", "0.0.1", "1.0.0",
 			new UpgradeNamespace());
 
+		// See LPS-65946
+
 		registry.register(
-			"com.liferay.social.networking.service", "1.0.0", "1.0.1",
+			"com.liferay.social.networking.service", "1.0.0", "1.0.2",
+			new UpgradePortletId());
+
+		registry.register(
+			"com.liferay.social.networking.service", "1.0.1", "1.0.2",
 			new UpgradePortletId());
 	}
 

@@ -1,4 +1,3 @@
-Bundle-Activator: com.liferay.exportimport.resources.importer.internal.ResourcesImporterBundleActivator
 Bundle-Name: Liferay Export Import Resources Importer
 Bundle-SymbolicName: com.liferay.exportimport.resources.importer
 Bundle-Version: 1.0.5

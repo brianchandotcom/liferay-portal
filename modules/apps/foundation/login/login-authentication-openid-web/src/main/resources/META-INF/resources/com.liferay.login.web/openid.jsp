@@ -18,7 +18,11 @@
 
 <%
 String openId = ParamUtil.getString(request, "openId");
+
+portletDisplay.setShowBackIcon(false);
 %>
+
+<liferay-util:include page='<%= "/navigation.jsp" %>' portletId="<%= portletDisplay.getRootPortletId() %>" />
 
 <portlet:actionURL var="openIdURL">
 	<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="/login/openid" />

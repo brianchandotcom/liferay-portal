@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.openid.OpenId;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -51,15 +50,10 @@ public class OpenIdNavigationPreDynamicInclude extends BaseDynamicInclude {
 			String key)
 		throws IOException {
 
-		String mvcRenderCommandName = ParamUtil.getString(
-			request, "mvcRenderCommandName");
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (mvcRenderCommandName.equals("/login/openid") ||
-			!_openId.isEnabled(themeDisplay.getCompanyId())) {
-
+		if (!_openId.isEnabled(themeDisplay.getCompanyId())) {
 			return;
 		}
 

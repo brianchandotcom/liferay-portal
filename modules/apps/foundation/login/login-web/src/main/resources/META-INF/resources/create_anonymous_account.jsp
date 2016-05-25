@@ -85,5 +85,3 @@
 		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>
-
-<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />

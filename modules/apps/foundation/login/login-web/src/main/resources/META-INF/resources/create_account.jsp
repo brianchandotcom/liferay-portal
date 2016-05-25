@@ -27,13 +27,15 @@ Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar();
 birthdayCalendar.set(Calendar.MONTH, Calendar.JANUARY);
 birthdayCalendar.set(Calendar.DATE, 1);
 birthdayCalendar.set(Calendar.YEAR, 1970);
+
+portletDisplay.setShowBackIcon(false);
 %>
 
 <portlet:actionURL name="/login/create_account" secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="createAccountURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">
 	<portlet:param name="mvcRenderCommandName" value="/login/create_account" />
 </portlet:actionURL>
 
-<aui:form action="<%= createAccountURL %>" method="post" name="fm">
+<aui:form action="<%= createAccountURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -130,77 +132,79 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 
 	<aui:model-context model="<%= Contact.class %>" />
 
-	<aui:fieldset column="<%= true %>">
-		<aui:col width="<%= 50 %>">
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset column="<%= true %>">
+			<aui:col width="<%= 50 %>">
 
-			<%
-			Boolean autoGenerateScreenName = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE);
-			%>
+				<%
+				Boolean autoGenerateScreenName = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE);
+				%>
 
-			<c:if test="<%= !autoGenerateScreenName %>">
-				<aui:input autoFocus="<%= true %>" model="<%= User.class %>" name="screenName">
+				<c:if test="<%= !autoGenerateScreenName %>">
+					<aui:input autoFocus="<%= true %>" model="<%= User.class %>" name="screenName">
 
-					<%
-					ScreenNameValidator screenNameValidator = ScreenNameValidatorFactory.getInstance();
-					%>
+						<%
+						ScreenNameValidator screenNameValidator = ScreenNameValidatorFactory.getInstance();
+						%>
 
-					<c:if test="<%= Validator.isNotNull(screenNameValidator.getAUIValidatorJS()) %>">
-						<aui:validator errorMessage="<%= screenNameValidator.getDescription(locale) %>" name="custom">
-							<%= screenNameValidator.getAUIValidatorJS() %>
-						</aui:validator>
+						<c:if test="<%= Validator.isNotNull(screenNameValidator.getAUIValidatorJS()) %>">
+							<aui:validator errorMessage="<%= screenNameValidator.getDescription(locale) %>" name="custom">
+								<%= screenNameValidator.getAUIValidatorJS() %>
+							</aui:validator>
+						</c:if>
+					</aui:input>
+				</c:if>
+
+				<aui:input autoFocus="<%= autoGenerateScreenName %>" model="<%= User.class %>" name="emailAddress">
+					<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED) %>">
+						<aui:validator name="required" />
 					</c:if>
 				</aui:input>
-			</c:if>
 
-			<aui:input autoFocus="<%= autoGenerateScreenName %>" model="<%= User.class %>" name="emailAddress">
-				<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED) %>">
-					<aui:validator name="required" />
+				<liferay-ui:user-name-fields />
+			</aui:col>
+
+			<aui:col width="<%= 50 %>">
+				<c:if test="<%= PropsValues.LOGIN_CREATE_ACCOUNT_ALLOW_CUSTOM_PASSWORD %>">
+					<aui:input label="password" name="password1" size="30" type="password" value="" />
+
+					<aui:input label="enter-again" name="password2" size="30" type="password" value="">
+						<aui:validator name="equalTo">
+							'#<portlet:namespace />password1'
+						</aui:validator>
+					</aui:input>
 				</c:if>
-			</aui:input>
 
-			<liferay-ui:user-name-fields />
-		</aui:col>
+				<c:choose>
+					<c:when test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_BIRTHDAY) %>">
+						<aui:input name="birthday" value="<%= birthdayCalendar %>" />
+					</c:when>
+					<c:otherwise>
+						<aui:input name="birthdayMonth" type="hidden" value="<%= Calendar.JANUARY %>" />
+						<aui:input name="birthdayDay" type="hidden" value="1" />
+						<aui:input name="birthdayYear" type="hidden" value="1970" />
+					</c:otherwise>
+				</c:choose>
 
-		<aui:col width="<%= 50 %>">
-			<c:if test="<%= PropsValues.LOGIN_CREATE_ACCOUNT_ALLOW_CUSTOM_PASSWORD %>">
-				<aui:input label="password" name="password1" size="30" type="password" value="" />
+				<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_MALE) %>">
+					<aui:select label="gender" name="male">
+						<aui:option label="male" value="1" />
+						<aui:option label="female" selected="<%= !male %>" value="0" />
+					</aui:select>
+				</c:if>
 
-				<aui:input label="enter-again" name="password2" size="30" type="password" value="">
-					<aui:validator name="equalTo">
-						'#<portlet:namespace />password1'
-					</aui:validator>
-				</aui:input>
-			</c:if>
+				<c:if test="<%= PropsValues.CAPTCHA_CHECK_PORTAL_CREATE_ACCOUNT %>">
+					<portlet:resourceURL id="/login/captcha" var="captchaURL" />
 
-			<c:choose>
-				<c:when test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_BIRTHDAY) %>">
-					<aui:input name="birthday" value="<%= birthdayCalendar %>" />
-				</c:when>
-				<c:otherwise>
-					<aui:input name="birthdayMonth" type="hidden" value="<%= Calendar.JANUARY %>" />
-					<aui:input name="birthdayDay" type="hidden" value="1" />
-					<aui:input name="birthdayYear" type="hidden" value="1970" />
-				</c:otherwise>
-			</c:choose>
+					<liferay-ui:captcha url="<%= captchaURL %>" />
+				</c:if>
+			</aui:col>
+		</aui:fieldset>
+	</aui:fieldset-group>
 
-			<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_MALE) %>">
-				<aui:select label="gender" name="male">
-					<aui:option label="male" value="1" />
-					<aui:option label="female" selected="<%= !male %>" value="0" />
-				</aui:select>
-			</c:if>
-
-			<c:if test="<%= PropsValues.CAPTCHA_CHECK_PORTAL_CREATE_ACCOUNT %>">
-				<portlet:resourceURL id="/login/captcha" var="captchaURL" />
-
-				<liferay-ui:captcha url="<%= captchaURL %>" />
-			</c:if>
-		</aui:col>
-	</aui:fieldset>
-
-	<aui:button-row>
+	<aui:button-row cssClass='<%= windowState.equals(LiferayWindowState.POP_UP) ? "hide" : StringPool.BLANK %>'>
 		<aui:button cssClass="btn-lg" type="submit" />
 	</aui:button-row>
 </aui:form>
 
-<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
+<%@ include file="/add_dialog_toolbar.jspf" %>

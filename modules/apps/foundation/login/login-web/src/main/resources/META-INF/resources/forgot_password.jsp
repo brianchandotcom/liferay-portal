@@ -28,13 +28,15 @@ Integer reminderAttempts = (Integer)portletSession.getAttribute(WebKeys.FORGOT_P
 if (reminderAttempts == null) {
 	reminderAttempts = 0;
 }
+
+portletDisplay.setShowBackIcon(false);
 %>
 
 <portlet:actionURL name="/login/forgot_password" var="forgotPasswordURL">
 	<portlet:param name="mvcRenderCommandName" value="/login/forgot_password" />
 </portlet:actionURL>
 
-<aui:form action="<%= forgotPasswordURL %>" method="post" name="fm">
+<aui:form action="<%= forgotPasswordURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
 
 	<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
@@ -102,7 +104,7 @@ if (reminderAttempts == null) {
 					<liferay-ui:captcha url="<%= captchaURL %>" />
 				</c:if>
 
-				<aui:button-row>
+				<aui:button-row cssClass='<%= windowState.equals(LiferayWindowState.POP_UP) ? "hide" : StringPool.BLANK %>'>
 					<aui:button cssClass="btn-lg" type="submit" value='<%= PropsValues.USERS_REMINDER_QUERIES_ENABLED ? "next" : "send-new-password" %>' />
 				</aui:button-row>
 			</c:when>
@@ -152,7 +154,7 @@ if (reminderAttempts == null) {
 							<liferay-ui:captcha url="<%= captchaURL %>" />
 						</c:if>
 
-						<aui:button-row>
+						<aui:button-row cssClass='<%= windowState.equals(LiferayWindowState.POP_UP) ? "hide" : StringPool.BLANK %>'>
 							<aui:button cssClass="btn-lg" type="submit" value='<%= company.isSendPasswordResetLink() ? "send-password-reset-link" : "send-new-password" %>' />
 						</aui:button-row>
 					</c:otherwise>
@@ -167,4 +169,13 @@ if (reminderAttempts == null) {
 	</aui:fieldset>
 </aui:form>
 
-<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
+<aui:script sandbox="<%= true %>">
+	var dialog = Liferay.Util.getWindow('<portlet:namespace />popup');
+
+	if (dialog) {
+		dialog.set('height', 450);
+		dialog.set('width', 560);
+	}
+</aui:script>
+
+<%@ include file="/add_dialog_toolbar.jspf" %>

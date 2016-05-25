@@ -34,8 +34,6 @@ facebookAuthURL = HttpUtil.addParameter(facebookAuthURL, "scope", "email");
 String taglibOpenFacebookConnectLoginWindow = "javascript:var facebookConnectLoginWindow = window.open('" + HttpUtil.encodeURL(facebookAuthURL) + "', 'facebook', 'align=center,directories=no,height=560,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=1000'); void(''); facebookConnectLoginWindow.focus();";
 %>
 
-<liferay-ui:icon
-	iconCssClass="icon-facebook"
-	message="facebook"
-	url="<%= taglibOpenFacebookConnectLoginWindow %>"
-/>
+<li>
+	<aui:a href="<%= taglibOpenFacebookConnectLoginWindow %>" label="facebook" />
+</li>

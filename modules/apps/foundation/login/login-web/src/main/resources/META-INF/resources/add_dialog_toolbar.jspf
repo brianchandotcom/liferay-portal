@@ -1,0 +1,84 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<aui:script use="aui-base,aui-io-request">
+	var dialog = Liferay.Util.getWindow('<portlet:namespace />popup');
+
+	if (dialog) {
+		var submitButton = A.one('button[type="submit"]');
+
+		dialog.addToolbar(
+			[
+				{
+					cssClass: 'btn-lg btn-primary',
+					label: submitButton ? submitButton.text().trim() : '<%= LanguageUtil.get(request, "submit") %>',
+					on: {
+						click: function() {
+							var form = Liferay.Form.get('<portlet:namespace />fm');
+
+							var formValidator = form.formValidator;
+
+							formValidator.validate();
+
+							if (!formValidator.hasErrors()) {
+								A.io.request(
+									form.formNode.attr('action'),
+									{
+										form: {
+											id: form.formNode.attr('id')
+										},
+										on: {
+											success: function(event, id, obj) {
+												var response = A.Node.create(obj.responseText);
+
+												var alert = response.one('.lfr-alert-container');
+
+												if (alert) {
+													dialog.fire(
+														'closeWindow',
+														{
+															alert: alert
+														}
+													);
+												}
+												else {
+													document.open();
+													document.write(obj.responseText);
+													document.close();
+												}
+											}
+										}
+									}
+								);
+							}
+						}
+					}
+				},
+				{
+					cssClass: 'btn-lg btn-link close-modal',
+					label: '<%= LanguageUtil.get(request, "cancel") %>',
+					on: {
+						click: function() {
+							dialog.hide();
+						}
+					}
+				}
+			]
+		);
+
+		dialog.show();
+	}
+</aui:script>

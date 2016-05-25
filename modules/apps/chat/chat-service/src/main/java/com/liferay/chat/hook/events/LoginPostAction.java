@@ -29,9 +29,9 @@ import org.osgi.service.component.annotations.Component;
  * @author Peter Fellwock
  */
 @Component(
-		immediate = true,
-		property = {"key=logout.events.post"}, service = LifecycleAction.class
-	)
+	immediate = true, property = {"key=logout.events.post"},
+	service = LifecycleAction.class
+)
 public class LoginPostAction extends Action {
 
 	@Override

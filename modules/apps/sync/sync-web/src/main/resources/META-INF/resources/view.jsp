@@ -24,11 +24,38 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("tabs1", tabs1);
 %>
 
-<liferay-ui:tabs
-	names="settings,sites"
-	param="tabs1"
-	url="<%= portletURL.toString() %>"
-/>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+
+		<%
+		PortletURL settingsURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+		settingsURL.setParameter("tabs1", "settings");
+		%>
+
+		<aui:nav-item href="<%= settingsURL.toString() %>" label="settings" selected='<%= tabs1.equals("settings") %>' />
+
+		<%
+		PortletURL sitesURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+		sitesURL.setParameter("tabs1", "sites");
+		%>
+
+		<aui:nav-item href="<%= sitesURL.toString() %>" label="sites" selected='<%= tabs1.equals("sites") %>' />
+	</aui:nav>
+
+	<c:choose>
+		<c:when test='<%= tabs1.equals("sites") %>'>
+			<aui:nav-bar-search>
+				<aui:form action="<%= portletURL.toString() %>" method="get" name="searchFm">
+					<liferay-portlet:renderURLParams varImpl="portletURL" />
+
+					<liferay-ui:input-search markupView="lexicon" />
+				</aui:form>
+			</aui:nav-bar-search>
+		</c:when>
+	</c:choose>
+</aui:nav-bar>
 
 <c:choose>
 	<c:when test='<%= tabs1.equals("settings") %>'>

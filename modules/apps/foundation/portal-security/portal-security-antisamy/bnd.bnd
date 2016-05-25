@@ -7,6 +7,8 @@ Import-Package:\
 	!org.apache.xml.resolver.*,\
 	\
 	!sun.io,\
+	\
+	org.w3c.dom,\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
@@ -17,6 +19,4 @@ Liferay-Releng-Module-Group-Title:
 	@batik-util-[0-9]*.jar,\
 	@commons-httpclient-[0-9]*.jar,\
 	@nekohtml-[0-9]*.jar,\
-	@xercesImpl-[0-9]*.jar,\
-	@xml-apis-[0-9]*.jar,\
 	@xml-apis-ext-[0-9]*.jar

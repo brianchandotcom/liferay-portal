@@ -16,10 +16,20 @@ package com.liferay.chat.web.portlet;
 
 import com.liferay.chat.web.constants.ChatPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.util.PropsValues;
+
+import java.util.Map;
 
 import javax.portlet.Portlet;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Peter Fellwock
@@ -29,6 +39,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-chat",
+		"com.liferay.portlet.icon=/icons/chat.png",
 		"com.liferay.portlet.system=true",
 		"com.liferay.portlet.use-default-template=false",
 		"javax.portlet.display-name=Chat", "javax.portlet.expiration-cache=0",
@@ -45,4 +56,55 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class ChatPortlet extends MVCPortlet {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		if (!hasPortletId()) {
+			addPortletIdLayoutStaticPortletsAll();
+		}
+	}
+
+	protected void addPortletIdLayoutStaticPortletsAll() {
+		String[] layoutStaticPortletsAll =
+			PropsValues.LAYOUT_STATIC_PORTLETS_ALL;
+
+		layoutStaticPortletsAll = ArrayUtil.append(
+			layoutStaticPortletsAll, ChatPortletKeys.CHAT);
+
+		PropsUtil.set(
+			PropsKeys.LAYOUT_STATIC_PORTLETS_ALL,
+			StringUtil.merge(layoutStaticPortletsAll));
+
+		PropsValues.LAYOUT_STATIC_PORTLETS_ALL = layoutStaticPortletsAll;
+	}
+
+	@Deactivate
+	@Modified
+	protected void deactivate(Map<String, Object> properties) {
+		if (hasPortletId()) {
+			removePortletIdLayoutStaticPortletsAll();
+		}
+	}
+
+	protected boolean hasPortletId() {
+		return ArrayUtil.contains(
+			PropsValues.LAYOUT_STATIC_PORTLETS_ALL, ChatPortletKeys.CHAT,
+			false);
+	}
+
+	protected void removePortletIdLayoutStaticPortletsAll() {
+		String[] layoutStaticPortletsAll =
+			PropsValues.LAYOUT_STATIC_PORTLETS_ALL;
+
+		layoutStaticPortletsAll = ArrayUtil.remove(
+			layoutStaticPortletsAll, ChatPortletKeys.CHAT);
+
+		PropsUtil.set(
+			PropsKeys.LAYOUT_STATIC_PORTLETS_ALL,
+			StringUtil.merge(layoutStaticPortletsAll));
+
+		PropsValues.LAYOUT_STATIC_PORTLETS_ALL = layoutStaticPortletsAll;
+	}
+
 }

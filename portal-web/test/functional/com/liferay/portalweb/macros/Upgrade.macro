@@ -6,9 +6,21 @@
 			<var name="portlet" value="Server Administration" />
 		</execute>
 
-		<execute macro="ServerAdministration#executeServerResourcesActions">
-			<var name="actionsDescription" value="Reindex all search indexes." />
+		<execute function="AssertClick" locator1="NavBar#RESOURCES" value1="Resources" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Clean Up Actions" />
 		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="ServerAdministrationResources#ACTIONS_TABLE_DESCRIPTION" value1="Reindex all search indexes.">
+			<var name="key_actionsDescription" value="Reindex all search indexes." />
+		</execute>
+
+		<execute function="AssertClick" locator1="ServerAdministrationResources#ACTIONS_TABLE_EXECUTE" value1="Execute">
+			<var name="key_actionsDescription" value="Reindex all search indexes." />
+		</execute>
+
+		<execute function="Pause" locator1="10000" />
 
 		<execute macro="Navigator#openURL" />
 

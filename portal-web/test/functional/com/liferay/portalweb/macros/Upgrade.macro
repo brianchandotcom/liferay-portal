@@ -1,4 +1,67 @@
 <definition>
+	<command name="searchForAssetsAfterUpgrade">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#executeServerResourcesActions">
+			<var name="actionsDescription" value="Reindex all search indexes." />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Web Content" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Web Content Content" />
+			<var name="searchAssetTitle" value="Web Content Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Document1" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetTitle" value="Document1" />
+			<var name="searchAssetType" value="Document" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Message Boards" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Message Boards Body" />
+			<var name="searchAssetTitle" value="Message Boards Subject" />
+			<var name="searchAssetType" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Wiki" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Wiki Front Page Content" />
+			<var name="searchAssetTitle" value="FrontPage" />
+			<var name="searchAssetType" value="Wiki Page" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Blogs" />
+		</execute>
+
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetSummary" value="Blogs Entry Content" />
+			<var name="searchAssetTitle" value="Blogs Entry Title" />
+			<var name="searchAssetType" value="Blogs Entry" />
+		</execute>
+	</command>
+
 	<command name="viewUpgrade">
 		<execute macro="SignIn#signIn" />
 
@@ -88,5 +151,9 @@
 			<var name="userFirstName" value="Userfn" />
 			<var name="userLastName" value="Userln" />
 		</execute>
+
+		<execute macro="SignOut#signOut" />
+
+		<execute macro="SignIn#signIn" />
 	</command>
 </definition>

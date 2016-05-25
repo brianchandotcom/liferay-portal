@@ -325,8 +325,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		"\nImport-Package:(\\\\\n| )(.*?\n|\\Z)[^\t]",
 		Pattern.DOTALL | Pattern.MULTILINE);
 	private final Pattern _includeResourcePattern = Pattern.compile(
-		"^((-liferay)?-includeresource|Include-Resource):[\\s\\S]*?([^\\\\]" +
-			"\n|\\Z)",
+		"^(-includeresource|Include-Resource):[\\s\\S]*?([^\\\\]\n|\\Z)",
 		Pattern.MULTILINE);
 	private final Pattern _incorrectTabPattern = Pattern.compile(
 		"\n[^\t].*:\\\\\n(\t{2,})[^\t]");

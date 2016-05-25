@@ -1,4 +1,4 @@
 Bundle-Name: Liferay CalEvent Importer
 Bundle-SymbolicName: com.liferay.calevent.importer
 Bundle-Version: 1.0.0
--liferay-includeresource: @jabsorb-*.jar
+-includeresource: @jabsorb-[0-9]*.jar

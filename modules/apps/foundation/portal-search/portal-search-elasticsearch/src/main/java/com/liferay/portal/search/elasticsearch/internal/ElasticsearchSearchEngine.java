@@ -231,13 +231,13 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	}
 
 	public void unsetElasticsearchConnectionManager(
-		ElasticsearchConnectionManager elasticsearchConnectionManager2) {
+		ElasticsearchConnectionManager elasticsearchConnectionManager) {
 
-		elasticsearchConnectionManager = null;
+		this.elasticsearchConnectionManager = null;
 	}
 
-	public void unsetIndexFactory(IndexFactory indexFactory2) {
-		indexFactory = null;
+	public void unsetIndexFactory(IndexFactory indexFactory) {
+		this.indexFactory = null;
 	}
 
 	@Activate

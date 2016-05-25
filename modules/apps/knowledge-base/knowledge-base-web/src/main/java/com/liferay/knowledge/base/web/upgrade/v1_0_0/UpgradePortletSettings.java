@@ -14,35 +14,25 @@
 
 package com.liferay.knowledge.base.web.upgrade.v1_0_0;
 
+import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.util.PortletKeys;
 
 /**
- * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
-public class UpgradePortletId extends BaseUpgradePortletId {
+public class UpgradePortletSettings
+	extends com.liferay.portal.upgrade.v7_0_0.UpgradePortletSettings {
 
-	@Override
-	protected String[][] getRenamePortletIdsArray() {
-		return new String[][] {
-			{"1_WAR_knowledgebaseportlet", KBPortletKeys.KNOWLEDGE_BASE_ADMIN},
-			{
-				"2_WAR_knowledgebaseportlet",
-				KBPortletKeys.KNOWLEDGE_BASE_DISPLAY
-			},
-			{
-				"3_WAR_knowledgebaseportlet",
-				KBPortletKeys.KNOWLEDGE_BASE_ARTICLE
-			},
-			{
-				"4_WAR_knowledgebaseportlet",
-				KBPortletKeys.KNOWLEDGE_BASE_SECTION
-			},
-			{
-				"5_WAR_knowledgebaseportlet",
-				KBPortletKeys.KNOWLEDGE_BASE_SEARCH
-			}
-		};
+	public UpgradePortletSettings(SettingsFactory settingsFactory) {
+		super(settingsFactory);
+	}
+
+	protected void doUpgrade() throws Exception {
+		upgradeMainPortlet(
+			KBPortletKeys.KNOWLEDGE_BASE_ADMIN, KBConstants.SERVICE_NAME,
+			PortletKeys.PREFS_OWNER_TYPE_GROUP, false);
 	}
 
 }

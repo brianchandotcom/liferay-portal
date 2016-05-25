@@ -517,19 +517,8 @@ AUI.add(
 			{
 				ATTRS: {
 					currentTimeFn: {
-			            valueFn: function() {
-			                return function(callback) {
-			                	CalendarUtil.getCurrentTime(function(date) {
-			                		var year = parseInt(date.year);
-			                		var month = parseInt(date.month);
-			                		var day = parseInt(date.day);
-			                		var hour = parseInt(date.hour);
-			                		var minute = parseInt(date.minute);
-									callback(new Date(year,month,day,hour,minute));
-								});
-			                };
-			            }
-			        },
+						value: A.bind(CalendarUtil.getCurrentTime, CalendarUtil)
+					},
 
 					filterCalendarBookings: {
 						validator: isFunction

@@ -14,7 +14,7 @@
 
 package com.liferay.item.selector.taglib.servlet.taglib;
 
-import com.liferay.item.selector.taglib.servlet.ServletContextUtil;
+import com.liferay.item.selector.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;

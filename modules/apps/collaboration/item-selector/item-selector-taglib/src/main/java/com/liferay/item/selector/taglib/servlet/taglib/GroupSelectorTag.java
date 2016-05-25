@@ -14,8 +14,8 @@
 
 package com.liferay.item.selector.taglib.servlet.taglib;
 
-import com.liferay.item.selector.taglib.servlet.ServletContextUtil;
-import com.liferay.item.selector.taglib.servlet.item.selector.ItemSelectorUtil;
+import com.liferay.item.selector.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.item.selector.taglib.internal.servlet.item.selector.ItemSelectorUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;

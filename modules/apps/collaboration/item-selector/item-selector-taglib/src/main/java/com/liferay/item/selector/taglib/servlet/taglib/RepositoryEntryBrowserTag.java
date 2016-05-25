@@ -17,7 +17,7 @@ package com.liferay.item.selector.taglib.servlet.taglib;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.constants.ItemSelectorPortletKeys;
 import com.liferay.item.selector.taglib.ItemSelectorRepositoryEntryBrowserReturnTypeUtil;
-import com.liferay.item.selector.taglib.servlet.ServletContextUtil;
+import com.liferay.item.selector.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;

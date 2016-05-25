@@ -116,6 +116,10 @@ public class JspCompiler extends Jsr199JavaCompiler {
 						className.substring(className.lastIndexOf('.') + 1),
 						charArrayWriter.toString())));
 
+			if (_log.isDebugEnabled()) {
+				_log.debug("Compiling JSP: ".concat(className));
+			}
+
 			if (compilationTask.call()) {
 				for (BytecodeFile bytecodeFile : classFiles) {
 					rtctxt.setBytecode(

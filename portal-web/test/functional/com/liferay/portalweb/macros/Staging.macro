@@ -189,6 +189,18 @@
 		<execute function="AssertClick" locator1="Staging#PAGE_VARIATION_MENULIST_NAME" value1="${pageVariationNameMenulistName}" />
 	</command>
 
+	<command name="changePageVariationInHistory">
+		<execute function="Click" locator1="Icon#STAGING_BAR_VERTICAL_ELLIPSIS" />
+
+		<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<var name="key_pageVariationName" value="${pageVariationNameMenulistName}" />
+
+		<execute function="Select" locator1="Staging#VARIATIONS_SELECTOR" value1="${pageVariationNameMenulistName}" />
+	</command>
+
 	<command name="changeSitePageVariationPG">
 		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
 
@@ -838,19 +850,30 @@
 	</command>
 
 	<command name="viewHistoryVersionPG">
-		<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
-
-		<execute function="SelectFrame" locator1="IFrame#METADATA_SETS_IFRAME" />
+		<if>
+			<condition function="IsElementPresent#isVisible" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
+			<then>
+				<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
+	
+				<execute function="Click" locator1="Staging#HISTORY_BUTTON" />
+	
+				<execute function="SelectFrame" locator1="IFrame#METADATA_SETS_IFRAME" />
+			</then>
+		</if>
 
 		<if>
 			<equals arg1="${modifiedVersion}" arg2="true" />
 			<then>
 				<execute function="AssertTextNotEquals" locator1="Staging#HISTORY_VERSION" value1="${historyVersion}" />
 			</then>
+			<elseif>
+					<condition function="IsElementPresent#isVisible" locator1="Staging#HISTORY_VERSION" />
+					<then>
+						<execute function="AssertTextEquals#assertPartialText" locator1="Staging#HISTORY_VERSION" value1="${historyVersion}" />
+					</then>
+			</elseif>
 			<else>
-				<execute function="AssertTextEquals#assertPartialText" locator1="Staging#HISTORY_VERSION" value1="${historyVersion}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Staging#HISTORY_VERSION_ANCHOR" value1="${historyVersion}" />
 			</else>
 		</if>
 

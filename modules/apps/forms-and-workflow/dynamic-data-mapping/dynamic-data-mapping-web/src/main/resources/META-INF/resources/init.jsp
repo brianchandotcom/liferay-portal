@@ -53,6 +53,7 @@ page import="com.liferay.dynamic.data.mapping.search.TemplateDisplayTerms" %><%@
 page import="com.liferay.dynamic.data.mapping.search.TemplateSearch" %><%@
 page import="com.liferay.dynamic.data.mapping.search.TemplateSearchTerms" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalServiceUtil" %><%@
+page import="com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMStructureVersionServiceUtil" %><%@

@@ -28,6 +28,8 @@ portletURL.setParameter("mvcPath", "/select_structure.jsp");
 portletURL.setParameter("classPK", String.valueOf(classPK));
 portletURL.setParameter("eventName", eventName);
 
+boolean searchRestriction = ParamUtil.getBoolean(request, "searchRestriction");
+
 SearchContainer structureSearch = new StructureSearch(renderRequest, portletURL, WorkflowConstants.STATUS_APPROVED);
 
 String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
@@ -135,7 +137,7 @@ request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 	</liferay-ui:search-container>
 </aui:form>
 
-<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) %>">
+<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) && !searchRestriction %>">
 	<portlet:renderURL var="viewStructureURL">
 		<portlet:param name="mvcPath" value="/select_structure.jsp" />
 		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />

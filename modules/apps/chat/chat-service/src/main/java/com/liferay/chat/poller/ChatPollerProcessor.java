@@ -60,12 +60,19 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-		configurationPid = "ccom.liferay.chat.configuration.ChatConfiguration",
-		configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-		property = {"javax.portlet.name=" + ChatPortletKeys.CHAT},
-		service = PollerProcessor.class
-	)
+	configurationPid = "ccom.liferay.chat.configuration.ChatConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	property = {"javax.portlet.name=" + ChatPortletKeys.CHAT},
+	service = PollerProcessor.class
+)
 public class ChatPollerProcessor extends BasePollerProcessor {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_chatGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
+			ChatGroupServiceConfiguration.class, properties);
+	}
 
 	protected void addEntry(PollerRequest pollerRequest) throws Exception {
 		long toUserId = getLong(pollerRequest, "toUserId");
@@ -250,6 +257,18 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setLayoutSetLocalService(
+		LayoutSetLocalService layoutSetLocalService) {
+
+		_layoutSetLocalService = layoutSetLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	protected void updateStatus(PollerRequest pollerRequest) throws Exception {
 		long timestamp = -1;
 		int online = getInteger(pollerRequest, "online");
@@ -266,30 +285,9 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 				activePanelIds, statusMessage, playSound);
 		}
 	}
-	
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_chatGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
-			ChatGroupServiceConfiguration.class, properties);
-	}
-	
+
 	private ChatGroupServiceConfiguration _chatGroupServiceConfiguration;
-	
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-	
-	private UserLocalService _userLocalService;
-	
-	@Reference(unbind = "-")
-	protected void setLayoutSetLocalService(
-		LayoutSetLocalService layoutSetLocalService) {
-		
-		_layoutSetLocalService = layoutSetLocalService;
-	}
-	
 	private LayoutSetLocalService _layoutSetLocalService;
+	private UserLocalService _userLocalService;
 
 }

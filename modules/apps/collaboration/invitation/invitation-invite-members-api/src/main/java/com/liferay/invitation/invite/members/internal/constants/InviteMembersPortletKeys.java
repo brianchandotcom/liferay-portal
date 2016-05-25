@@ -12,21 +12,15 @@
  * details.
  */
 
-package com.liferay.invitation.invite.members.upgrade.v1_0_0;
-
-import com.liferay.invitation.invite.members.constants.InviteMembersPortletKeys;
-import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+package com.liferay.invitation.invite.members.internal.constants;
 
 /**
  * @author Adolfo Pérez
  */
-public class UpgradePortletId extends BaseUpgradePortletId {
+public class InviteMembersPortletKeys {
 
-	@Override
-	protected String[][] getRenamePortletIdsArray() {
-		return new String[][] {
-			{"2_WAR_soportlet", InviteMembersPortletKeys.INVITE_MEMBERS}
-		};
-	}
+	public static final String INVITE_MEMBERS =
+		"com_liferay_invitation_invite_members_web_portlet_" +
+			"InviteMembersPortlet";
 
 }

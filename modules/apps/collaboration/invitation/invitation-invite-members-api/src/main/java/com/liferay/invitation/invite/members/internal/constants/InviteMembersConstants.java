@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.invitation.invite.members.constants;
+package com.liferay.invitation.invite.members.internal.constants;
 
 /**
- * @author Adolfo Pérez
+ * @author Ryan Park
  */
-public class InviteMembersPortletKeys {
+public class InviteMembersConstants {
 
-	public static final String INVITE_MEMBERS =
-		"com_liferay_invitation_invite_members_web_portlet_" +
-			"InviteMembersPortlet";
+	public static final int STATUS_ACCEPTED = 1;
+
+	public static final int STATUS_DECLINED = 2;
+
+	public static final int STATUS_PENDING = 0;
 
 }

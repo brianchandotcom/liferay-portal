@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.invitation.invite.members.web.portlet;
+package com.liferay.invitation.invite.members.web.internal.portlet;
 
 import com.liferay.invitation.invite.members.constants.InviteMembersPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.invitation.invite.members.upgrade.v1_0_0;
+package com.liferay.invitation.invite.members.internal.upgrade.v1_0_0;
 
-import com.liferay.invitation.invite.members.upgrade.v1_0_0.util.MemberRequestTable;
+import com.liferay.invitation.invite.members.internal.upgrade.v1_0_0.util.MemberRequestTable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;

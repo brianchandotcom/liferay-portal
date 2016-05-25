@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.invitation.invite.members.upgrade.v1_0_0.util;
+package com.liferay.invitation.invite.members.internal.upgrade.v1_0_0.util;
 
 import java.sql.Types;
 

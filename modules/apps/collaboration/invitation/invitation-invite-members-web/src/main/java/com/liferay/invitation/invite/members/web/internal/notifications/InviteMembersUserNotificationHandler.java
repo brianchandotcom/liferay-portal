@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.invitation.invite.members.web.notifications;
+package com.liferay.invitation.invite.members.web.internal.notifications;
 
 import com.liferay.invitation.invite.members.constants.InviteMembersPortletKeys;
 import com.liferay.invitation.invite.members.model.MemberRequest;

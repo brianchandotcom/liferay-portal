@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.invitation.invite.members.events;
+package com.liferay.invitation.invite.members.internal.events;
 
 import com.liferay.invitation.invite.members.service.MemberRequestLocalService;
 import com.liferay.portal.kernel.events.ActionException;

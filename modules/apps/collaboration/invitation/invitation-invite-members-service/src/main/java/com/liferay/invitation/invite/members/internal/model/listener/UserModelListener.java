@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.invitation.invite.members.model.listener;
+package com.liferay.invitation.invite.members.internal.model.listener;
 
 import com.liferay.invitation.invite.members.service.MemberRequestLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;

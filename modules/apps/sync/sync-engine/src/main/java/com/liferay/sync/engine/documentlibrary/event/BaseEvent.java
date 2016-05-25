@@ -19,12 +19,12 @@ import com.liferay.sync.engine.documentlibrary.handler.Handler;
 import com.liferay.sync.engine.documentlibrary.util.BatchEvent;
 import com.liferay.sync.engine.documentlibrary.util.BatchEventManager;
 import com.liferay.sync.engine.documentlibrary.util.FileEventManager;
+import com.liferay.sync.engine.documentlibrary.util.ServerUtil;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.session.Session;
 import com.liferay.sync.engine.session.SessionManager;
-import com.liferay.sync.engine.util.ServerInfo;
 
 import java.util.Map;
 
@@ -138,13 +138,7 @@ public abstract class BaseEvent implements Event {
 
 	@Override
 	public String getURLPath() {
-		if (ServerInfo.supportsModuleFramework(_syncAccountId)) {
-			String urlPath = _urlPath.replace("/sync-web/", "/o/sync/");
-
-			return urlPath.replace("/sync-web.", "/sync.");
-		}
-
-		return _urlPath;
+		return ServerUtil.getURLPath(_syncAccountId, _urlPath);
 	}
 
 	@Override

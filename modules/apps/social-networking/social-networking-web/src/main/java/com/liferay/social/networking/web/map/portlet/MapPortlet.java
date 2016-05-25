@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.social.networking.model.MeetupsRegistration;
 import com.liferay.social.networking.service.MeetupsEntryLocalService;
+import com.liferay.social.networking.service.MeetupsRegistrationLocalService;
 import com.liferay.social.networking.service.WallEntryLocalService;
 import com.liferay.social.networking.web.constants.SocialNetworkingWebKeys;
 
@@ -78,7 +79,7 @@ public class MapPortlet extends MVCPortlet {
 
 	@Reference(unbind = "-")
 	protected void setMeetupsRegistrationLocalService(
-		MeetupsRegistration meetupsRegistrationLocalService) {
+		MeetupsRegistrationLocalService meetupsRegistrationLocalService) {
 	}
 
 	@Reference(unbind = "-")

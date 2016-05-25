@@ -32,6 +32,16 @@ DDMTemplate ddmTemplate = (DDMTemplate)request.getAttribute("edit_article.jsp-te
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
 
 boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_article.jsp-changeStructure"));
+
+long folderId = journalDisplayContext.getFolderId();
+
+boolean searchRestriction = journalDisplayContext.getRestrictionType() == JournalFolderConstants.RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW;
+
+if (!searchRestriction) {
+	folderId = JournalFolderLocalServiceUtil.getOverridedDDMStructuresFolderId(folderId);
+
+	searchRestriction = folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+}
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="content" />
@@ -151,6 +161,9 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 			'ddm.refererPortletName': '<%= JournalPortletKeys.JOURNAL + ".selectStructure" %>',
 			'ddm.resourceClassNameId': '<%= ddmStructure.getClassNameId() %>',
 			'ddm.templateId': <%= (ddmTemplate != null) ? ddmTemplate.getTemplateId() : 0 %>,
+			'ddm.searchRestriction': <%= searchRestriction %>,
+			'ddm.searchRestrictionClassNameId': <%= ClassNameLocalServiceUtil.getClassNameId(JournalFolder.class) %>,
+			'ddm.searchRestrictionClassPK': <%= folderId %>,
 			descriptionInputLocalized: Liferay.component('<portlet:namespace />description'),
 			editStructure: '#<portlet:namespace />editDDMStructure',
 			editTemplate: '#<portlet:namespace />editDDMTemplate',

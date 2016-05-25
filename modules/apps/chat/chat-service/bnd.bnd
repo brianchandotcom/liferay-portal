@@ -1,0 +1,15 @@
+Bundle-Name: Liferay Chat Service
+Bundle-SymbolicName: com.liferay.chat.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.chat.configuration,\
+	com.liferay.chat.hook.events,\
+	com.liferay.chat.jabber,\
+	com.liferay.chat.poller,\
+	com.liferay.chat.service.permission,\
+	com.liferay.chat.util
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true
+-includeresource:\
+	@smack-3.2.1.jar,\
+	@smackx-3.2.1.jar

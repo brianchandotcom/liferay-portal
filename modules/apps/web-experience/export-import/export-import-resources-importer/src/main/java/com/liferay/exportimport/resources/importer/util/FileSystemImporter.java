@@ -2019,10 +2019,11 @@ public class FileSystemImporter extends BaseImporter {
 		extends HashMap<String, PortletPreferencesTranslator> {
 
 		public DefaultedPortletPreferencesTranslatorMap(
-			Map<String, PortletPreferencesTranslator> delegate,
+			Map<String, PortletPreferencesTranslator>
+				portletPreferencesTranslators,
 			PortletPreferencesTranslator defaultPortletPreferencesTranslator) {
 
-			_delegate = delegate;
+			super(portletPreferencesTranslators);
 			_defaultPortletPreferencesTranslator =
 				defaultPortletPreferencesTranslator;
 		}
@@ -2034,7 +2035,6 @@ public class FileSystemImporter extends BaseImporter {
 
 		private final PortletPreferencesTranslator
 			_defaultPortletPreferencesTranslator;
-		private final Map<String, PortletPreferencesTranslator> _delegate;
 
 	}
 

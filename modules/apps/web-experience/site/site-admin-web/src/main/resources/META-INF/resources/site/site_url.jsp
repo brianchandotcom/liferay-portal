@@ -67,7 +67,7 @@ String privateVirtualHost = ParamUtil.getString(request, "privateVirtualHost", B
 		}
 		%>
 
-		<liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getModelResource(locale, duplicateClassName), name} %>" key="please-enter-a-unique-friendly-url" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getModelResource(locale, duplicateClassName), name} %>" key="please-enter-a-unique-friendly-url-x-x-has-the-same-friendly-url" translateArguments="<%= false %>" />
 	</c:if>
 
 	<c:if test="<%= gfurle.getType() == GroupFriendlyURLException.ENDS_WITH_SLASH %>">

@@ -1,4 +1,7 @@
 {
+    "frontend-js-spa-web@1.0.6/senna/src/senna": {
+        "dependencies": ["exports", "./app/App", "./screen/HtmlScreen", "./screen/RequestScreen", "./route/Route", "./screen/Screen"]
+    },
     "frontend-js-spa-web@1.0.6/senna/src/utils/utils": {
         "dependencies": ["exports", "../globals/globals", "metal-uri/src/Uri"]
     },
@@ -6,7 +9,7 @@
         "dependencies": ["exports", "../globals/globals", "metal/src/metal", "metal-dom/src/all/dom", "metal-promise/src/promise/Promise"]
     },
     "frontend-js-spa-web@1.0.6/senna/src/screen/HtmlScreen": {
-        "dependencies": ["exports", "metal/src/metal", "metal-dom/src/all/dom", "metal-promise/src/promise/Promise", "../globals/globals", "./RequestScreen", "../surface/Surface", "metal-useragent/src/UA", "metal-uri/src/Uri"]
+        "dependencies": ["exports", "metal/src/metal", "metal-dom/src/all/dom", "metal-promise/src/promise/Promise", "../globals/globals", "./RequestScreen", "../surface/Surface", "metal-useragent/src/UA", "metal-uri/src/Uri", "../utils/utils"]
     },
     "frontend-js-spa-web@1.0.6/senna/src/screen/RequestScreen": {
         "dependencies": ["exports", "metal/src/metal", "metal-ajax/src/Ajax", "metal-multimap/src/MultiMap", "metal-promise/src/promise/Promise", "../errors/errors", "../utils/utils", "../globals/globals", "./Screen", "metal-uri/src/Uri", "metal-useragent/src/UA"]

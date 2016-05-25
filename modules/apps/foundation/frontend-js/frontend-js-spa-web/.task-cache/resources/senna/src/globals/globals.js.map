@@ -1,1 +1,1 @@
-{"version":3,"sources":["/source/globals.js"],"names":[],"mappings":";;;;;;AAAA,KAAI,UAAU;AACb,YAAU,QAAV;AACA,UAAQ,MAAR;EAFG;;mBAKW","sourcesContent":["var globals = {\n\tdocument: document,\n\twindow: window\n};\n\nexport default globals;"]}
+{"version":3,"sources":["/source/globals.js"],"names":[],"mappings":";;;;;;AAAA,KAAI,UAAU;AACb,YAAU,QADG;AAEb,UAAQ;AAFK,EAAd;;mBAKe,O","sourcesContent":["var globals = {\n\tdocument: document,\n\twindow: window\n};\n\nexport default globals;"]}

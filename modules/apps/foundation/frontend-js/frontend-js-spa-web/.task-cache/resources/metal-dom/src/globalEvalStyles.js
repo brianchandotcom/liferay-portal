@@ -55,8 +55,8 @@ define("frontend-js-spa-web@1.0.6/metal-dom/src/globalEvalStyles", ['exports', '
 			if (style.tagName === 'STYLE') {
 				_metal.async.nextTick(callback);
 			} else {
-				_dom2.default.on(style, 'load', callback);
-				_dom2.default.on(style, 'error', callback);
+				_dom2.default.once(style, 'load', callback);
+				_dom2.default.once(style, 'error', callback);
 			}
 
 			if (opt_appendFn) {

@@ -537,7 +537,7 @@ if (portletTitleBasedNavigation) {
 
 			</c:if>
 
-			<c:if test="<%= PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED && showComments %>">
+			<c:if test="<%= showComments && fileEntry.isRepositoryCapabilityProvided(CommentCapability.class) %>">
 				<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-document-library-comments" extended="<%= true %>" markupView="lexicon" persistState="<%= true %>" title="<%= dlViewFileVersionDisplayContext.getDiscussionLabel(locale) %>">
 					<liferay-ui:discussion
 						className="<%= dlViewFileVersionDisplayContext.getDiscussionClassName() %>"

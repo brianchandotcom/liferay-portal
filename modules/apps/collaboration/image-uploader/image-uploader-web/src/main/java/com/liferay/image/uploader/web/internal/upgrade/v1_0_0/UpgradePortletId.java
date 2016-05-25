@@ -12,14 +12,21 @@
  * details.
  */
 
-package com.liferay.image.uploader.web.constants;
+package com.liferay.image.uploader.web.internal.upgrade.v1_0_0;
+
+import com.liferay.image.uploader.web.internal.constants.ImageUploaderPortletKeys;
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 
 /**
  * @author Peter Fellwock
  */
-public class ImageUploaderPortletKeys {
+public class UpgradePortletId extends BaseUpgradePortletId {
 
-	public static final String IMAGE_UPLOADER =
-		"com_liferay_image_uploader_web_portlet_ImageUploaderPortlet";
+	@Override
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {"195", ImageUploaderPortletKeys.IMAGE_UPLOADER}
+		};
+	}
 
 }

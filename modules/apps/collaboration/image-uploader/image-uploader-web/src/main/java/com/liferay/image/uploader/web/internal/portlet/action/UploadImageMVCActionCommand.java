@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.image.uploader.web.portlet.action;
+package com.liferay.image.uploader.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
-import com.liferay.image.uploader.web.constants.ImageUploaderPortletKeys;
-import com.liferay.image.uploader.web.util.UploadImageUtil;
+import com.liferay.image.uploader.web.internal.constants.ImageUploaderPortletKeys;
+import com.liferay.image.uploader.web.internal.util.UploadImageUtil;
 import com.liferay.portal.kernel.exception.ImageTypeException;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;

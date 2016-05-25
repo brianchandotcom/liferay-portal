@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.image.uploader.web.util;
+package com.liferay.image.uploader.web.internal.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;

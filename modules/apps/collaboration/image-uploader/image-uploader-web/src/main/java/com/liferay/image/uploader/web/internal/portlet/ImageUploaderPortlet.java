@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.image.uploader.web.portlet;
+package com.liferay.image.uploader.web.internal.portlet;
 
-import com.liferay.image.uploader.web.constants.ImageUploaderPortletKeys;
+import com.liferay.image.uploader.web.internal.constants.ImageUploaderPortletKeys;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 

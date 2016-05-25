@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.image.uploader.web.upgrade;
+package com.liferay.image.uploader.web.internal.upgrade;
 
-import com.liferay.image.uploader.web.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.image.uploader.web.internal.upgrade.v1_0_0.UpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 

@@ -2501,9 +2501,11 @@ sprite.root.dir=/tmp/sprite]]></echo>
 			</if>
 
 			<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/bin" />
+			<var name="app.server.tomcat.lib.global.dir" value="${app.server.parent.dir}/tomcat-${app.server.tomcat.version}/lib/ext" />
 
 			<echo append="true" file="app.server.${user.name}.properties">
 				app.server.tomcat.bin.dir=${app.server.tomcat.bin.dir}
+				app.server.tomcat.lib.global.dir=${app.server.tomcat.lib.global.dir}
 				app.server.tomcat.version=${app.server.tomcat.version}
 			</echo>
 		</sequential>

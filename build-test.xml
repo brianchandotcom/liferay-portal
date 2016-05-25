@@ -3367,8 +3367,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							e.printStackTrace();
 						}
 
-						if (second >= 900) {
-							project.setProperty("wait.for.app.server.log.timed.out.message", "Unable to find startup message after 15 minutes.");
+						if (second >= 7200) {
+							project.setProperty("wait.for.app.server.log.timed.out.message", "Unable to find startup message after 2 hours.");
 
 							break;
 						}

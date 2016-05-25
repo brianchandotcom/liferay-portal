@@ -17,8 +17,9 @@ package com.liferay.portal.lpkg.deployer.internal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.LPKGVerifier;
 import com.liferay.portal.lpkg.deployer.LPKGVerifyException;
+import com.liferay.portal.target.platform.indexer.Indexer;
 import com.liferay.portal.target.platform.indexer.IndexerFactory;
-import com.liferay.portal.target.platform.indexer.ValidatorFactory;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,6 +50,23 @@ public class LPKGVerifierImpl implements LPKGVerifier {
 
 	@Override
 	public List<Bundle> verify(File lpkgFile) {
+		try {
+			File targetPlatformDir = new File(
+				PropsValues.MODULE_FRAMEWORK_BASE_DIR,
+				Indexer.DIR_NAME_TARGET_PLATFORM);
+
+			Indexer indexer = _indexerFactory.create(lpkgFile);
+
+			indexer.index(targetPlatformDir);
+		}
+		catch (Exception e) {
+			if (e instanceof LPKGVerifyException) {
+				throw (LPKGVerifyException)e;
+			}
+
+			throw new LPKGVerifyException(e);
+		}
+
 		try (ZipFile zipFile = new ZipFile(lpkgFile)) {
 			ZipEntry zipEntry = zipFile.getEntry(
 				"liferay-marketplace.properties");
@@ -125,8 +143,5 @@ public class LPKGVerifierImpl implements LPKGVerifier {
 
 	@Reference
 	private IndexerFactory _indexerFactory;
-
-	@Reference
-	private ValidatorFactory _validatorFactory;
 
 }

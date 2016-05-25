@@ -14,15 +14,8 @@
 
 package com.liferay.portal.target.platform.indexer.main;
 
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.target.platform.indexer.Indexer;
 import com.liferay.portal.target.platform.indexer.internal.LPKGIndexer;
-import com.liferay.portal.util.FastDateFormatFactoryImpl;
-import com.liferay.portal.util.FileImpl;
-import com.liferay.portal.util.PropsImpl;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -45,25 +38,27 @@ public class LPKGIndexerMain {
 			return;
 		}
 
-		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
-			new FastDateFormatFactoryUtil();
+		String moduleFrameworkBaseDir = System.getProperty(
+			"module.framework.base.dir");
 
-		fastDateFormatFactoryUtil.setFastDateFormatFactory(
-			new FastDateFormatFactoryImpl());
+		if (moduleFrameworkBaseDir == null) {
+			System.err.println(
+				"== -Dmodule.framework.base.dir= must point to a valid path");
 
-		FileUtil fileUtil = new FileUtil();
+			return;
+		}
 
-		fileUtil.setFile(new FileImpl());
+		File outputDir = new File(
+			moduleFrameworkBaseDir, Indexer.DIR_NAME_TARGET_PLATFORM);
 
-		PropsUtil.setProps(new PropsImpl());
+		String outputDirProperty = System.getProperty("output.dir");
 
-		File targetPlatformDir = new File(
-			PropsValues.MODULE_FRAMEWORK_BASE_DIR,
-			Indexer.DIR_NAME_TARGET_PLATFORM);
+		if (outputDirProperty != null) {
+			outputDir = new File(outputDirProperty);
+		}
 
-		if (!targetPlatformDir.exists() && !targetPlatformDir.mkdirs()) {
-			System.err.printf(
-				"== Unable to create directory %s\n", targetPlatformDir);
+		if (!outputDir.exists() && !outputDir.mkdirs()) {
+			System.err.printf("== Unable to create directory %s\n", outputDir);
 
 			return;
 		}
@@ -114,7 +109,7 @@ public class LPKGIndexerMain {
 		for (File lpkgFile : lpkgFiles) {
 			LPKGIndexer lpkgIndexer = new LPKGIndexer(lpkgFile);
 
-			File indexFile = lpkgIndexer.index(targetPlatformDir);
+			File indexFile = lpkgIndexer.index(outputDir);
 
 			System.out.println("== Wrote index file " + indexFile);
 		}

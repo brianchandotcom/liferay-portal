@@ -257,8 +257,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Override
 	@Skip
 	public void deployPortlet(Portlet portlet) throws Exception {
-		_portletsMap.put(portlet.getRootPortletId(), portlet);
-
 		PortletApp portletApp = portlet.getPortletApp();
 
 		if (portletApp != null) {
@@ -278,6 +276,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		portletBagFactory.setWARFile(true);
 
 		portletBagFactory.create(portlet, true);
+
+		_portletsMap.put(portlet.getRootPortletId(), portlet);
 	}
 
 	@Override
@@ -855,9 +855,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 				portlet = entry.getValue();
 
-				_portletsMap.put(entry.getKey(), portlet);
-
 				portletBagFactory.create(portlet, true);
+
+				_portletsMap.put(entry.getKey(), portlet);
 			}
 
 			// Sprite images

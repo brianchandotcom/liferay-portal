@@ -27,14 +27,13 @@ import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.lpkg.deployer.LPKGVerifier;
 import com.liferay.portal.lpkg.deployer.LPKGVerifyException;
 import com.liferay.portal.lpkg.deployer.LPKGWARBundleRegistry;
-import com.liferay.portal.target.platform.indexer.Indexer;
-import com.liferay.portal.target.platform.indexer.IndexerFactory;
 import com.liferay.portal.target.platform.indexer.ValidatorFactory;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.net.URI;
 import java.net.URL;
 
@@ -342,10 +341,11 @@ public class LPKGDeployerImpl implements LPKGDeployer {
 	@Reference
 	private LPKGWARBundleRegistry _lpkgWarBundleRegistry;
 
+	private final Map<String, URL> _urls = new ConcurrentHashMap<>();
+
 	@Reference
 	private ValidatorFactory _validatorFactory;
 
-	private final Map<String, URL> _urls = new ConcurrentHashMap<>();
 	private BundleTracker<Bundle> _warWrapperBundlerTracker;
 
 }

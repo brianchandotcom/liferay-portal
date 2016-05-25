@@ -4219,7 +4219,7 @@ go]]></replacevalue>
 
 	<target name="deploy-lcs-environment-token">
 		<copy todir="${liferay.home}/data">
-			<fileset dir="${selenium.output.dir}" includes="lcs-cluster-entry-token-*.txt" />
+			<fileset dir="${selenium.output.dir.name}" includes="lcs-cluster-entry-token-*.txt" />
 		</copy>
 	</target>
 
@@ -5426,7 +5426,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<echo append="true" file="${test.ext.properties.file}">
 			component.names=${component.names}
 			ignore.errors.file.name=${project.dir.unix}/portal-web/test-ignorable-error-lines.xml
-			output.dir.name=${liferay.home}/poshi
+			output.dir.name=${selenium.output.dir.name}
 			product.names=${product.names}
 			project.dir=${project.dir.unix}
 			test.case.available.property.names=${test.case.available.property.names}
@@ -5621,15 +5621,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					osb.lcs.portlet.host.name=${osb.lcs.portlet.host.name}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="selenium.output.dir" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					output.dir=${selenium.output.dir}
 				</echo>
 			</then>
 		</if>
@@ -8051,7 +8042,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
-		<remake-dir dir="${selenium.output.dir}" />
+		<remake-dir dir="${selenium.output.dir.name}" />
 
 		<start-app-server />
 

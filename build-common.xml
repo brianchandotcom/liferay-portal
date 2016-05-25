@@ -1145,7 +1145,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				</filterchain>
 			</loadproperties>
 
-			<echo append="true" file="@{file}" message="${line.separator}${processed.artifact.name}=${Bundle-Version}" />
+			<echo append="true" file="@{file}" message="${line.separator}${processed.artifact.name}=${Bundle-Version}-SNAPSHOT" />
 		</sequential>
 	</macrodef>
 

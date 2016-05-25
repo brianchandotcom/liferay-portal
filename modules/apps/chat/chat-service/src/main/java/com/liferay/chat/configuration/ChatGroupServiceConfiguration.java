@@ -40,7 +40,7 @@ public interface ChatGroupServiceConfiguration {
 	 * "TYPE_BI_ROMANTIC_PARTNER", and 4 for "TYPE_BI_SIBLING" from
 	 * com.liferay.social.kernel.model.SocialRelationConstants
 	 */
-	@Meta.AD(deflt = "2|12", required = false)
+	@Meta.AD(deflt = "2,12", required = false)
 	public int[] buddyListAllowedSocialRelationTypes();
 
 	@Meta.AD(deflt = "500", required = false)

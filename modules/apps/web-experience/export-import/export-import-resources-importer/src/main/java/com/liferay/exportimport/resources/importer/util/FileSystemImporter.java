@@ -38,7 +38,6 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
-import com.liferay.exportimport.resources.importer.constants.ResourcesImporterConstants;
 import com.liferay.exportimport.resources.importer.portlet.preferences.PortletPreferencesTranslator;
 import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.model.JournalArticle;
@@ -116,8 +115,6 @@ import java.util.regex.Pattern;
 
 import javax.portlet.PortletPreferences;
 
-import org.apache.commons.collections.map.DefaultedMap;
-
 /**
  * @author Ryan Park
  * @author Raymond Augé
@@ -142,6 +139,7 @@ public class FileSystemImporter extends BaseImporter {
 		MimeTypes mimeTypes, Portal portal,
 		PortletPreferencesFactory portletPreferencesFactory,
 		PortletPreferencesLocalService portletPreferencesLocalService,
+		PortletPreferencesTranslator defaultPortletPreferencesTranslator,
 		Map<String, PortletPreferencesTranslator> portletPreferencesTranslators,
 		RepositoryLocalService repositoryLocalService, SAXReader saxReader,
 		ThemeLocalService themeLocalService) {
@@ -167,11 +165,10 @@ public class FileSystemImporter extends BaseImporter {
 		this.portletPreferencesFactory = portletPreferencesFactory;
 		this.portletPreferencesLocalService = portletPreferencesLocalService;
 
-		PortletPreferencesTranslator defaultPortletPreferencesTranslator =
-			portletPreferencesTranslators.get(
-				ResourcesImporterConstants.DEFAULT);
-		this.portletPreferencesTranslators = DefaultedMap.decorate(
-			portletPreferencesTranslators, defaultPortletPreferencesTranslator);
+		this.portletPreferencesTranslators =
+			new DefaultedPortletPreferencesTranslatorMap(
+				portletPreferencesTranslators,
+				defaultPortletPreferencesTranslator);
 
 		this.repositoryLocalService = repositoryLocalService;
 		this.saxReader = saxReader;
@@ -2017,5 +2014,28 @@ public class FileSystemImporter extends BaseImporter {
 		"\\[\\$FILE=([^\\$]+)\\$\\]");
 	private final Map<String, Set<Long>> _primaryKeys = new HashMap<>();
 	private File _resourcesDir;
+
+	private class DefaultedPortletPreferencesTranslatorMap
+		extends HashMap<String, PortletPreferencesTranslator> {
+
+		public DefaultedPortletPreferencesTranslatorMap(
+			Map<String, PortletPreferencesTranslator> delegate,
+			PortletPreferencesTranslator defaultPortletPreferencesTranslator) {
+
+			_delegate = delegate;
+			_defaultPortletPreferencesTranslator =
+				defaultPortletPreferencesTranslator;
+		}
+
+		@Override
+		public PortletPreferencesTranslator get(Object key) {
+			return getOrDefault(key, _defaultPortletPreferencesTranslator);
+		}
+
+		private final Map<String, PortletPreferencesTranslator> _delegate;
+
+		private final PortletPreferencesTranslator
+			_defaultPortletPreferencesTranslator;
+	}
 
 }

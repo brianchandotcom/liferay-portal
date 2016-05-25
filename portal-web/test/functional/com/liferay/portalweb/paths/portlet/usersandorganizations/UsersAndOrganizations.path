@@ -97,11 +97,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>USER_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'usersn')]/td[7]//div/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_TABLE_IMPERSONATE</td>
 	<td>//tr[contains(.,'${key_userScreenName}')]/td[7]//span/a[contains(.,'Impersonate User')]</td>
 	<td></td>

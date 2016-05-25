@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.microblogs.internal.microblogs.social;
+package com.liferay.microblogs.internal.social;
 
 /**
  * @author Jonathan Lee

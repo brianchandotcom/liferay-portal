@@ -239,7 +239,7 @@
 			</path>
 		</pathconvert>
 
-		<pathconvert pathsep="${line.separator}" property="app.module.dirs">
+		<pathconvert pathsep="," property="app.module.dirs">
 			<globmapper from="${modules.dir}${file.separator}*" to="*" />
 			<path>
 				<dirset dir="${basedir}" excludes="**/*-test*,${app.module.dirs.ce.excludes}" includes="apps/${app.name}/**">

@@ -7079,6 +7079,47 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 					</exec>
 				</then>
 			</elseif>
+			<elseif>
+				<equals arg1="${database.type}" arg2="sybase" />
+				<then>
+					<echo file="import-sybase.sql">load database lportal from "${liferay.home}/${database.type}.dmp"
+go
+online database lportal
+go</echo>
+
+					<exec executable="${env.SYBASE}/${env.SYBASE_ASE}/bin/backupserver" spawn="true">
+						<arg value="-Slportal_BS" />
+					</exec>
+
+					<waitfor maxwait="60" maxwaitunit="second">
+						<socket port="5001" server="localhost" />
+					</waitfor>
+
+					<print-file file.name="import-sybase.sql" />
+
+					<print-file file.name="lportal__srv.log" />
+
+					<local name="output.content" />
+
+					<exec executable="${sybase.executable}" logError="true" outputproperty="output.content">
+						<arg value="-i" />
+						<arg value="import-sybase.sql" />
+						<arg value="-P" />
+						<arg value="${database.sybase.password}" />
+						<arg value="--retserverror" />
+						<arg value="-S" />
+						<arg value="${database.sybase.schema}" />
+						<arg value="-U" />
+						<arg value="${database.sybase.username}" />
+					</exec>
+
+					<echo>${output.content}</echo>
+
+					<delete file="import-sybase.sql" />
+					<delete file="lportal__srv.log" />
+
+				</then>
+			</elseif>
 		</if>
 	</target>
 

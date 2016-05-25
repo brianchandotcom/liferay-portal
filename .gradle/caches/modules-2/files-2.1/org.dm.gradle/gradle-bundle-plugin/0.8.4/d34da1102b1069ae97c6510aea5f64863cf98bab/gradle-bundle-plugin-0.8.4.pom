@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.dm.gradle</groupId>
   <artifactId>gradle-bundle-plugin</artifactId>
-  <version>0.8.3</version>
+  <version>0.8.4</version>
   <dependencies>
     <dependency>
       <groupId>biz.aQute.bnd</groupId>

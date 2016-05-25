@@ -534,8 +534,14 @@ public class JenkinsResultsParserUtil {
 			int timeout)
 		throws Exception {
 
-		return createJSONObject(
-			toString(url, checkCache, maxRetries, retryPeriod, timeout));
+		String response = toString(
+			url, checkCache, maxRetries, retryPeriod, timeout);
+
+		if (response.endsWith("response has been truncated due to its size.")) {
+			return null;
+		}
+
+		return createJSONObject(response);
 	}
 
 	public static String toString(String url) throws Exception {

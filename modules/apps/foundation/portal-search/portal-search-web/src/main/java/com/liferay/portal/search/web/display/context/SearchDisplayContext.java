@@ -72,7 +72,7 @@ public class SearchDisplayContext {
 
 		String keywords = getKeywords();
 
-		if ((keywords == null) || (keywords.length() == 0)) {
+		if (keywords == null) {
 			_hits = null;
 			_searchContext = null;
 			_searchContainer = null;
@@ -186,7 +186,7 @@ public class SearchDisplayContext {
 
 	public String getKeywords() {
 		return ParamUtil.getString(
-			_renderRequest, SearchPortletParameterNames.KEYWORDS);
+			_renderRequest, SearchPortletParameterNames.KEYWORDS, null);
 	}
 
 	public PortletURL getPortletURL() throws PortletException {

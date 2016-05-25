@@ -388,10 +388,22 @@ AUI.add(
 
 				instance.invokeResourceURL(
 					{
-						callback: callback,
+						callback: function(dateObj) {
+							callback(instance.getDateFromObject(dateObj));
+						},
 						resourceId: 'currentTime'
 					}
 				);
+			},
+
+			getDateFromObject: function(object) {
+				var day = parseInt(object.day);
+				var hour = parseInt(object.hour);
+				var minute = parseInt(object.minute);
+				var month = parseInt(object.month);
+				var year = parseInt(object.year);
+
+				return new Date(year, month, day, hour, minute);
 			},
 
 			getDatesList: function(startDate, total) {

@@ -205,7 +205,7 @@ public class EditExportConfigurationMVCActionCommand
 			backgroundTask.getTaskContextMap();
 
 		ExportImportConfiguration exportImportConfiguration =
-			_exportImportConfigurationLocalService.getExportImportConfiguration(
+			exportImportConfigurationLocalService.getExportImportConfiguration(
 				MapUtil.getLong(taskContextMap, "exportImportConfigurationId"));
 
 		exportImportConfiguration =
@@ -232,7 +232,7 @@ public class EditExportConfigurationMVCActionCommand
 		ExportImportConfigurationLocalService
 			exportImportConfigurationLocalService) {
 
-		_exportImportConfigurationLocalService =
+		this.exportImportConfigurationLocalService =
 			exportImportConfigurationLocalService;
 	}
 
@@ -292,11 +292,12 @@ public class EditExportConfigurationMVCActionCommand
 		}
 	}
 
+	protected ExportImportConfigurationLocalService
+		exportImportConfigurationLocalService;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditExportConfigurationMVCActionCommand.class);
 
-	private ExportImportConfigurationLocalService
-		_exportImportConfigurationLocalService;
 	private ExportImportConfigurationService _exportImportConfigurationService;
 	private ExportImportService _exportImportService;
 	private TrashEntryService _trashEntryService;

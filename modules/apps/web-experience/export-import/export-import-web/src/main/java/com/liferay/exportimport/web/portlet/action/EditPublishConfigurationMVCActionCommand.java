@@ -19,7 +19,6 @@ import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationCo
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationHelper;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
-import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
@@ -49,7 +48,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -180,7 +178,7 @@ public class EditPublishConfigurationMVCActionCommand
 			backgroundTask.getTaskContextMap();
 
 		ExportImportConfiguration exportImportConfiguration =
-			_exportImportConfigurationLocalService.getExportImportConfiguration(
+			exportImportConfigurationLocalService.getExportImportConfiguration(
 				MapUtil.getLong(taskContextMap, "exportImportConfigurationId"));
 
 		if (exportImportConfiguration.getType() ==
@@ -207,7 +205,7 @@ public class EditPublishConfigurationMVCActionCommand
 		}
 
 		ExportImportConfiguration exportImportConfiguration =
-			_exportImportConfigurationLocalService.getExportImportConfiguration(
+			exportImportConfigurationLocalService.getExportImportConfiguration(
 				exportImportConfigurationId);
 
 		Map<String, Serializable> settingsMap =
@@ -222,17 +220,8 @@ public class EditPublishConfigurationMVCActionCommand
 
 		exportImportConfiguration.setSettings(settings);
 
-		_exportImportConfigurationLocalService.updateExportImportConfiguration(
+		exportImportConfigurationLocalService.updateExportImportConfiguration(
 			exportImportConfiguration);
-	}
-
-	@Reference(unbind = "-")
-	protected void setExportImportConfigurationLocalService(
-		ExportImportConfigurationLocalService
-			exportImportConfigurationLocalService) {
-
-		_exportImportConfigurationLocalService =
-			exportImportConfigurationLocalService;
 	}
 
 	protected void setRedirect(
@@ -289,8 +278,5 @@ public class EditPublishConfigurationMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditPublishConfigurationMVCActionCommand.class);
-
-	private ExportImportConfigurationLocalService
-		_exportImportConfigurationLocalService;
 
 }

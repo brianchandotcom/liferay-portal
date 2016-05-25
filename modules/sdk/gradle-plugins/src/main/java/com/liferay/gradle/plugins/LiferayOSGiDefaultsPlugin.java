@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins;
 
-import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Constants;
 import aQute.bnd.version.Version;
 
@@ -1089,8 +1088,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		Map<String, Object> bundleDefaultInstructions = new HashMap<>();
 
+		bundleDefaultInstructions.put("-check", "all");
 		bundleDefaultInstructions.put(Constants.BUNDLE_VENDOR, "Liferay, Inc.");
-		bundleDefaultInstructions.put(Constants.CHECK, Analyzer.Check.ALL);
 		bundleDefaultInstructions.put(
 			Constants.DONOTCOPY,
 			"(" + LiferayOSGiExtension.DONOTCOPY_DEFAULT + "|.touch" + ")");

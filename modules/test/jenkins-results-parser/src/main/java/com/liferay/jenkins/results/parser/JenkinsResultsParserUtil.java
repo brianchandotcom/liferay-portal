@@ -600,9 +600,21 @@ public class JenkinsResultsParserUtil {
 				BufferedReader bufferedReader = new BufferedReader(
 					inputStreamReader);
 
+				int bytesRead = 0;
 				String line = null;
 
 				while ((line = bufferedReader.readLine()) != null) {
+					byte[] bytes = line.getBytes();
+					bytesRead += bytes.length;
+
+					if (bytesRead > (30 * 1024 * 1024)) {
+						sb.append("URL: ");
+						sb.append(url);
+						sb.append(" response has been truncated due to its ");
+						sb.append("size.");
+						break;
+					}
+
 					sb.append(line);
 					sb.append("\n");
 				}
@@ -611,10 +623,8 @@ public class JenkinsResultsParserUtil {
 
 				String string = sb.toString();
 
-				byte[] bytes = string.getBytes();
-
 				if (!url.startsWith("file:") &&
-					(bytes.length < (3 * 1024 * 1024))) {
+					(bytesRead < (3 * 1024 * 1024))) {
 
 					_toStringCache.put(key, string);
 				}
@@ -641,7 +651,7 @@ public class JenkinsResultsParserUtil {
 
 		File parentDir = file.getParentFile();
 
-		if (!parentDir.exists()) {
+		if ((parentDir != null) && !parentDir.exists()) {
 			System.out.println("Make parent directories for " + file);
 
 			parentDir.mkdirs();

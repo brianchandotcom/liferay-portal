@@ -111,7 +111,15 @@ kbSuggestionListDisplayContext.getViewSuggestionURL(currentURLObj);
 				</h5>
 
 				<h4>
-					<%= StringUtil.shorten(HtmlUtil.replaceNewLine(HtmlUtil.escape(kbComment.getContent())), 100) %>
+					<liferay-portlet:renderURL varImpl="rowURL">
+						<portlet:param name="mvcPath" value="/admin/common/view_suggestion.jsp" />
+						<portlet:param name="kbCommentId" value="<%= String.valueOf(kbComment.getKbCommentId()) %>" />
+						<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
+					</liferay-portlet:renderURL>
+
+					<aui:a href="<%= rowURL.toString() %>">
+						<%= StringUtil.shorten(HtmlUtil.replaceNewLine(HtmlUtil.escape(kbComment.getContent())), 50) %>
+					</aui:a>
 				</h4>
 
 				<h5 class="text-default">

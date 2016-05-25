@@ -64,6 +64,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -790,8 +791,23 @@ public class ResourceActionsImpl implements ResourceActions {
 	protected String getCompositeModelName(Element compositeModelNameElement) {
 		StringBundler sb = new StringBundler();
 
-		Iterator<Element> itr = compositeModelNameElement.elementIterator(
-			"model-name");
+		List<Element> elements = new ArrayList<>(
+			compositeModelNameElement.elements("model-name"));
+
+		Collections.sort(
+			elements,
+			new Comparator<Element>() {
+
+				public int compare(Element element1, Element element2) {
+					String textTrim = GetterUtil.getString(
+						element1.getTextTrim());
+
+					return textTrim.compareTo(element2.getTextTrim());
+				}
+
+			});
+
+		Iterator<Element> itr = elements.iterator();
 
 		while (itr.hasNext()) {
 			Element modelNameElement = itr.next();

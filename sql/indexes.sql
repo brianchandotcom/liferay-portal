@@ -503,14 +503,14 @@ create unique index IX_D1C44A6E on UserIdMapper (userId, type_[$COLUMN_LENGTH:75
 
 create unique index IX_8B6E3ACE on UserNotificationDelivery (userId, portletId[$COLUMN_LENGTH:200$], classNameId, notificationType, deliveryType);
 
-create index IX_BF29100B on UserNotificationEvent (type_[$COLUMN_LENGTH:75$]);
+create index IX_BF29100B on UserNotificationEvent (type_[$COLUMN_LENGTH:200$]);
 create index IX_5CE95F03 on UserNotificationEvent (userId, actionRequired, archived);
 create index IX_3DBB361A on UserNotificationEvent (userId, archived);
 create index IX_E32CC19 on UserNotificationEvent (userId, delivered, actionRequired);
 create index IX_C4EFBD45 on UserNotificationEvent (userId, deliveryType, actionRequired, archived);
 create index IX_A87A585C on UserNotificationEvent (userId, deliveryType, archived);
 create index IX_A6F83617 on UserNotificationEvent (userId, deliveryType, delivered, actionRequired);
-create index IX_8FB65EC1 on UserNotificationEvent (userId, type_[$COLUMN_LENGTH:75$], deliveryType, delivered);
+create index IX_8FB65EC1 on UserNotificationEvent (userId, type_[$COLUMN_LENGTH:200$], deliveryType, delivered);
 create index IX_A6BAFDFE on UserNotificationEvent (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_29BA1CF5 on UserTracker (companyId);

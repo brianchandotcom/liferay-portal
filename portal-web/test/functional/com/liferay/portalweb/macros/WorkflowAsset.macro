@@ -18,6 +18,13 @@
 		<execute function="AssertClick" locator1="Notifications#NOTIFICATIONS_WORKFLOW_TITLE" value1="${user} sent you a ${assetType} for review in the workflow." />
 	</command>
 
+	<command name="previewViewContent">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldValue" value="${fieldValue}" />
+
+		<execute function="AssertTextEquals" locator1="AssetWorkflow#CONTENT_PREVIEW_VIEW" value1="${fieldLabel} ${fieldValue}" />
+	</command>
+
 	<command name="viewDetails">
 		<execute function="AssertTextEquals" locator1="NavBar#DETAILS" value1="Details" />
 		<execute function="AssertTextEquals" locator1="AssetWorkflow#DETAILS_WORKFLOW_STATUS" value1="${workflowStatus}" />

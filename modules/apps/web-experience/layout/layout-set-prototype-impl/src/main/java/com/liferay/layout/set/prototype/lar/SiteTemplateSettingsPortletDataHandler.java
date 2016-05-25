@@ -16,11 +16,9 @@ package com.liferay.layout.set.prototype.lar;
 
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniela Zapata Riesco
@@ -39,12 +37,6 @@ public class SiteTemplateSettingsPortletDataHandler
 	@Override
 	protected void activate() {
 		super.activate();
-	}
-
-	@Override
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

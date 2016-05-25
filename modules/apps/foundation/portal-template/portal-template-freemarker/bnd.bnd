@@ -8,7 +8,6 @@ Export-Package:\
 	\
 	freemarker.core,\
 	\
-	freemarker.ext,\
 	freemarker.ext.beans,\
 	freemarker.ext.jsp,\
 	freemarker.ext.servlet,\

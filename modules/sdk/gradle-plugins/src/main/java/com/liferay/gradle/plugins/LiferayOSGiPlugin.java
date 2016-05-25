@@ -852,11 +852,17 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		return bundleInstructions.get(key);
 	}
 
+	protected Map<String, String> getBundleInstructions(
+		BundleExtension bundleExtension) {
+
+		return (Map<String, String>)bundleExtension.getInstructions();
+	}
+
 	protected Map<String, String> getBundleInstructions(Project project) {
 		BundleExtension bundleExtension = GradleUtil.getExtension(
 			project, BundleExtension.class);
 
-		return (Map<String, String>)bundleExtension.getInstructions();
+		return getBundleInstructions(bundleExtension);
 	}
 
 	protected String getDeployedFileName(

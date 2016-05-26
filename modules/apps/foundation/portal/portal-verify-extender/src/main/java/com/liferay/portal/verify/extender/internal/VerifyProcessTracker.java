@@ -176,9 +176,6 @@ public class VerifyProcessTracker {
 
 		PrintWriter printWriter = new PrintWriter(outputStream, true);
 
-		printWriter.println(
-			"Executing verifiers registered for " + verifyProcessName);
-
 		List<VerifyProcess> verifyProcesses = getVerifyProcesses(
 			verifyProcessName);
 
@@ -210,6 +207,9 @@ public class VerifyProcessTracker {
 				release.setServletContextName(verifyProcessName);
 				release.setVerified(false);
 			}
+
+			printWriter.println(
+				"Executing verifiers registered for " + verifyProcessName);
 
 			VerifyException verifyException = null;
 

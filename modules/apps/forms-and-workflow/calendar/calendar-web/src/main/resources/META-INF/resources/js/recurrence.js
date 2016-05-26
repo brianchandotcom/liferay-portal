@@ -544,8 +544,10 @@ AUI.add(
 
 						var limitDateDatePicker = instance.get('limitDateDatePicker');
 
-						limitDateDatePicker.clearSelection('date');
-						limitDateDatePicker.selectDates([value]);
+						if (limitDateDatePicker.get('activeInput')) {
+							limitDateDatePicker.clearSelection('date');
+							limitDateDatePicker.selectDates([value]);
+						}
 
 						return value;
 					},

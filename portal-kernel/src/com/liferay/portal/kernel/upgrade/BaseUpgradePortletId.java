@@ -499,12 +499,12 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 		typeSettingsProperties.fastLoad(typeSettings);
 
-		if (!typeSettingsProperties.containsKey("nested-columnId-ids")) {
+		if (!typeSettingsProperties.containsKey("nested-column-ids")) {
 			return Collections.emptyList();
 		}
 
 		String[] nestedPortletColumnIds = StringUtil.split(
-			typeSettingsProperties.getProperty("nested-columnId-ids"));
+			typeSettingsProperties.getProperty("nested-column-ids"));
 
 		return ListUtil.fromArray(nestedPortletColumnIds);
 	}

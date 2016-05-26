@@ -15,11 +15,11 @@
 package com.liferay.portal.lpkg.deployer.internal;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static java.util.concurrent.TimeUnit.MINUTES;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.LPKGVerifier;
 import com.liferay.portal.lpkg.deployer.LPKGVerifyException;
@@ -110,9 +110,7 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 						String.format(
 							"LPKG validation time %02d:%02ds",
 							MILLISECONDS.toMinutes(duration),
-							MILLISECONDS.toSeconds(duration) -
-								MINUTES.toSeconds(
-									MILLISECONDS.toMinutes(duration))));
+							MILLISECONDS.toSeconds(duration % Time.MINUTE)));
 				}
 			}
 		}

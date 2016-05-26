@@ -2886,6 +2886,10 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						</then>
 					</if>
 
+					<delete failonerror="false" includeemptydirs="true">
+						<fileset dir="${test.app.server.dir}/logs" excludes="catalina.*.log" />
+					</delete>
+
 					<if>
 						<equals arg1="${test.ant.launched.by.selenium}" arg2="true" />
 						<then>
@@ -3246,12 +3250,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<attribute default="0" name="app.server.bundle.index" />
 
 		<sequential>
-			<if>
-				<equals arg1="${app.server.type}" arg2="tomcat" />
-				<then>
-					<wait-for-app-server-log />
-				</then>
-			</if>
+			<wait-for-app-server-log />
 
 			<local name="app.server.waiting.url" />
 
@@ -3331,63 +3330,91 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="wait-for-app-server-log">
 		<sequential>
-			<local name="app.server.log.file.path" />
-
-			<property name="app.server.log.file.path" value="${project.dir}/app-server-log" />
-
-			<echo file="${app.server.log.file.path}" />
-
-			<record action="start" append="true" name="${app.server.log.file.path}" />
-
-			<local name="wait.for.app.server.log.timed.out.message" />
-
-			<beanshell>
-				<![CDATA[
-					import org.apache.commons.io.FileUtils;
-
-					System.out.println("Waiting for server startup message");
-
-					String logFilePath = project.getProperty("app.server.log.file.path");
-
-					logFilePath = logFilePath.replaceAll("\\\\", "/");
-
-					int second = 0;
-
-					while (true) {
-						try {
-							File file = new File(logFilePath);
-
-							String content = FileUtils.readFileToString(file);
-
-							if (content.contains("Server startup in")) {
-								break;
-							}
-						}
-						catch (Exception e) {
-							e.printStackTrace();
-						}
-
-						if (second >= 900) {
-							project.setProperty("wait.for.app.server.log.timed.out.message", "Unable to find startup message after 15 minutes.");
-
-							break;
-						}
-
-						second++;
-
-						Thread.sleep(1000);
-					}
-				]]>
-			</beanshell>
-
-			<record action="stop" name="${app.server.log.file.path}" />
-
-			<delete file="${app.server.log.file.path}" />
-
 			<if>
-				<isset property="wait.for.app.server.log.timed.out.message" />
+				<and>
+					<equals arg1="${app.server.type}" arg2="tomcat" />
+					<isset property="test.app.server.dir" />
+				</and>
 				<then>
-					<fail message="${wait.for.app.server.log.timed.out.message}" />
+					<local name="wait.for.app.server.log.timed.out.message" />
+
+					<beanshell>
+						<![CDATA[
+							import org.apache.commons.io.FileUtils;
+
+							import org.apache.tools.ant.DirectoryScanner;
+
+							public String getCatalinaLogFilesContent() {
+								Map catalinaLogFiles = new TreeMap();
+
+								DirectoryScanner directoryScanner = new DirectoryScanner();
+
+								directoryScanner.setIncludes(new String[] {project.getProperty("test.app.server.dir") + "/catalina.*.log"});
+
+								directoryScanner.scan();
+
+								for (String filePath : directoryScanner.getIncludedFiles()) {
+									String osName = project.getProperty("os.name");
+
+									osName = osName.toLowerCase();
+
+									if (osName.contains("win")) {
+										filePath = filePath.replace("/", "\\");
+									}
+
+									File file = new File(filePath);
+
+									catalinaLogFiles.put(Long.toString(file.lastModified()), file);
+								}
+
+								StringBuilder sb = new StringBuilder();
+
+								SortedSet keys = new TreeSet(catalinaLogFiles.keySet());
+
+								for (String key : keys) {
+									File file = catalinaLogFiles.get(key);
+
+									sb.append(FileUtils.readFileToString(file));
+								}
+
+								return sb.toString();
+							}
+
+							System.out.println("Waiting for server startup message");
+
+							int second = 0;
+
+							while (true) {
+								try {
+									String content = getCatalinaLogFilesContent();
+
+									if (content.contains("Server startup in")) {
+										break;
+									}
+								}
+								catch (Exception e) {
+									e.printStackTrace();
+								}
+
+								if (second >= 900) {
+									project.setProperty("wait.for.app.server.log.timed.out.message", "Unable to find startup message after 15 minutes.");
+
+									break;
+								}
+
+								second++;
+
+								Thread.sleep(1000);
+							}
+						]]>
+					</beanshell>
+
+					<if>
+						<isset property="wait.for.app.server.log.timed.out.message" />
+						<then>
+							<fail message="${wait.for.app.server.log.timed.out.message}" />
+						</then>
+					</if>
 				</then>
 			</if>
 		</sequential>

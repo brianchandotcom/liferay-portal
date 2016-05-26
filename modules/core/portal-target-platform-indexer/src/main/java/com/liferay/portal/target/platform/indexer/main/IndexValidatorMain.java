@@ -14,8 +14,8 @@
 
 package com.liferay.portal.target.platform.indexer.main;
 
+import com.liferay.portal.kernel.util.Time;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static java.util.concurrent.TimeUnit.MINUTES;
 
 import com.liferay.portal.target.platform.indexer.internal.DefaultIndexValidator;
 
@@ -134,8 +134,7 @@ public class IndexValidatorMain {
 
 			System.out.printf(
 				"== Time %02d:%02ds\n", MILLISECONDS.toMinutes(duration),
-				MILLISECONDS.toSeconds(duration) -
-					MINUTES.toSeconds(MILLISECONDS.toMinutes(duration)));
+				MILLISECONDS.toSeconds(duration % Time.MINUTE));
 		}
 	}
 

@@ -15,11 +15,11 @@
 package com.liferay.portal.lpkg.deployer.internal;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static java.util.concurrent.TimeUnit.MINUTES;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.LPKGVerifier;
 import com.liferay.portal.lpkg.deployer.LPKGVerifyException;
@@ -31,6 +31,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,13 +61,12 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 	@Override
 	public List<Bundle> verify(File lpkgFile) {
 		try {
-			File targetPlatformDir = new File(
-				PropsValues.MODULE_FRAMEWORK_BASE_DIR,
-				Indexer.DIR_NAME_TARGET_PLATFORM);
-
 			Indexer indexer = _indexerFactory.create(lpkgFile);
 
-			File indexFile = indexer.index(targetPlatformDir);
+			File indexFile = indexer.index(
+				new File(
+					PropsValues.MODULE_FRAMEWORK_BASE_DIR,
+					Indexer.DIR_NAME_TARGET_PLATFORM));
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Wrote index " + indexFile.getPath());
@@ -84,20 +84,19 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 					indexFile.delete();
 
 					StringBundler sb = new StringBundler(
-						(messages.size() * 4) + 2);
+						(messages.size() * 3) + 1);
 
 					sb.append("LPKG validation failed with {");
 
 					for (String message : messages) {
 						sb.append("[");
 						sb.append(message);
-						sb.append("]");
-						sb.append(", ");
+						sb.append("],");
 					}
 
-					sb.setIndex(sb.index() - 2);
+					sb.setIndex(sb.index() - 1);
 
-					sb.append("}");
+					sb.append("]}");
 
 					throw new LPKGVerifyException(sb.toString());
 				}
@@ -110,17 +109,14 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 						String.format(
 							"LPKG validation time %02d:%02ds",
 							MILLISECONDS.toMinutes(duration),
-							MILLISECONDS.toSeconds(duration) -
-								MINUTES.toSeconds(
-									MILLISECONDS.toMinutes(duration))));
+							MILLISECONDS.toSeconds(duration % Time.MINUTE)));
 				}
 			}
 		}
+		catch (LPKGVerifyException lpkgve) {
+			throw lpkgve;
+		}
 		catch (Exception e) {
-			if (e instanceof LPKGVerifyException) {
-				throw (LPKGVerifyException)e;
-			}
-
 			throw new LPKGVerifyException(e);
 		}
 
@@ -135,7 +131,9 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 
 			Properties properties = new Properties();
 
-			properties.load(zipFile.getInputStream(zipEntry));
+			try (InputStream inputStream = zipFile.getInputStream(zipEntry)) {
+				properties.load(inputStream);
+			}
 
 			String symbolicName = properties.getProperty("title");
 

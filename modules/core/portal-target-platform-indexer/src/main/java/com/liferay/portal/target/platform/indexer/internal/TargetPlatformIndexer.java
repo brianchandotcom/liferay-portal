@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -123,10 +124,10 @@ public class TargetPlatformIndexer implements Indexer {
 
 			File tempIndexFile = new File(tempDir, "target.platform.index.xml");
 
-			try (FileOutputStream fileOutputStream =
-					new FileOutputStream(tempIndexFile)) {
+			try (OutputStream outputStream = new FileOutputStream(
+					tempIndexFile)) {
 
-				resourceIndexer.index(jarFiles, fileOutputStream, _config);
+				resourceIndexer.index(jarFiles, outputStream, _config);
 			}
 
 			File indexFile = new File(outputFile, tempIndexFile.getName());

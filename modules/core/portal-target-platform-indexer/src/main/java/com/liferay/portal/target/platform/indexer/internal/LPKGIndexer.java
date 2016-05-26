@@ -18,6 +18,7 @@ import com.liferay.portal.target.platform.indexer.Indexer;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -101,10 +102,8 @@ public class LPKGIndexer implements Indexer {
 				tempDir,
 				bundleSymbolicName + "-" + bundleVersion + "-index.xml");
 
-			try (FileOutputStream fileOutputStream =
-					new FileOutputStream(indexFile)) {
-
-				resourceIndexer.index(files, fileOutputStream, _config);
+			try (OutputStream outputStream = new FileOutputStream(indexFile)) {
+				resourceIndexer.index(files, outputStream, _config);
 			}
 
 			if (outputFile.isDirectory()) {

@@ -105,7 +105,8 @@ public class EditSessionMVCActionCommand extends BaseMVCActionCommand {
 						ClusterExecutorUtil.execute(clusterRequest);
 
 					if (futureClusterResponses != null) {
-						futureClusterResponses.get(20, TimeUnit.SECONDS);
+						futureClusterResponses.get(
+							20000, TimeUnit.MILLISECONDS);
 					}
 				}
 			}

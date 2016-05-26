@@ -3,6 +3,7 @@ Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} MediaWiki
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:
+Liferay-Releng-Deprecated: false
 Liferay-Releng-Labs: true
 Liferay-Releng-Marketplace: true
 Liferay-Releng-Public: ${liferay.releng.public}

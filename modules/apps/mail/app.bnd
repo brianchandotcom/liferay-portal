@@ -1,0 +1,12 @@
+Liferay-Releng-App-Description: This app enables your users to interact with their email using an easy to use, ubiquitous web interface. If your mail system supports the IMAP protocol, you can use this app to integrate your users' mail with the rest of your web site. You can also connect this app to a mail account provided by Google. The Mail app is a great way to integrate a familiar service with other the collaboration features that Liferay provides.<br /><br />This app will appear in your Application menu and Control Panel once installed.
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Mail
+Liferay-Releng-Bundle: false
+Liferay-Releng-Category: Productivity
+Liferay-Releng-Demo-Url:
+Liferay-Releng-Deprecated: true
+Liferay-Releng-Labs: true
+Liferay-Releng-Marketplace: false
+Liferay-Releng-Public: ${liferay.releng.public}
+Liferay-Releng-Restart-Required: true
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: ${liferay.releng.supported}

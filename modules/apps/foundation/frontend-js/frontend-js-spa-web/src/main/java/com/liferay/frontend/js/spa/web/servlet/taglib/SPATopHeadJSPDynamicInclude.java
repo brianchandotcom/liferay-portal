@@ -87,10 +87,14 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setSPAUtil(SPAUtil spaUtil) {
 		_spaUtil = spaUtil;
+	}
+
+	protected void unsetSPAUtil(SPAUtil spaUtil) {
+		_spaUtil = null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

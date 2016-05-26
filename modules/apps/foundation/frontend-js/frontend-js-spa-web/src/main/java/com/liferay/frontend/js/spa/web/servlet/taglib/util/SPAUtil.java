@@ -159,12 +159,18 @@ public class SPAUtil {
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, unbind = "-"
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setSPAConfigurationActivator(
 		SPAConfigurationActivator spaConfigurationActivator) {
 
 		_spaConfigurationActivator = spaConfigurationActivator;
+	}
+
+	protected void unsetSPAConfigurationActivator(
+		SPAConfigurationActivator spaConfigurationActivator) {
+
+		_spaConfigurationActivator = null;
 	}
 
 	private PortletLocalService _portletLocalService;

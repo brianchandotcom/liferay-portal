@@ -66,7 +66,6 @@ Export-Package:\
 	!trax,\
 	!unicode-license.txt,\
 	com.liferay.ibm.icu.*;version='4.0.1',\
-	com.liferay.portal.bootstrap.index;version='1.0.0',\
 	com.sun.syndication;version='1.0',\
 	com.sun.syndication.feed;version='1.0',\
 	com.sun.syndication.feed.atom;version='1.0',\

@@ -1748,6 +1748,7 @@ tell application "Safari" to quit
 				<matches pattern="http" string="${test.build.bundle.glassfish.zip.url}" />
 				<then>
 					<antcall inheritAll="false" target="prepare-test-bundle">
+						<param name="app.server.name" value="glassfish" />
 						<param name="app.server.type" value="glassfish" />
 						<param name="test.app.server.bin.dir" value="${app.server.glassfish.bin.dir}" />
 						<param name="test.build.bundle.zip.url" value="${test.build.bundle.glassfish.zip.url}" />
@@ -1815,6 +1816,7 @@ tell application "Safari" to quit
 				<matches pattern="http" string="${test.build.bundle.jetty.zip.url}" />
 				<then>
 					<antcall inheritAll="false" target="prepare-test-bundle">
+						<param name="app.server.name" value="jetty" />
 						<param name="app.server.type" value="jetty" />
 						<param name="test.app.server.bin.dir" value="${app.server.jetty.bin.dir}" />
 						<param name="test.build.bundle.zip.url" value="${test.build.bundle.jetty.zip.url}" />
@@ -1832,6 +1834,7 @@ tell application "Safari" to quit
 				<matches pattern="http" string="${test.build.bundle.jonas.zip.url}" />
 				<then>
 					<antcall inheritAll="false" target="prepare-test-bundle">
+						<param name="app.server.name" value="jonas" />
 						<param name="app.server.type" value="jonas" />
 						<param name="test.app.server.bin.dir" value="${app.server.jonas.bin.dir}" />
 						<param name="test.build.bundle.zip.url" value="${test.build.bundle.jonas.zip.url}" />
@@ -1849,6 +1852,7 @@ tell application "Safari" to quit
 				<matches pattern="http" string="${test.build.bundle.resin.zip.url}" />
 				<then>
 					<antcall inheritAll="false" target="prepare-test-bundle">
+						<param name="app.server.name" value="resin" />
 						<param name="app.server.type" value="resin" />
 						<param name="test.app.server.bin.dir" value="${app.server.resin.bin.dir}" />
 						<param name="test.build.bundle.zip.url" value="${test.build.bundle.resin.zip.url}" />
@@ -1888,6 +1892,7 @@ tell application "Safari" to quit
 					<set-tomcat-version-number liferay.portal.bundle="${liferay.portal.bundle}" />
 
 					<antcall inheritAll="false" target="prepare-test-bundle">
+						<param name="app.server.name" value="tomcat" />
 						<param name="app.server.type" value="tomcat" />
 						<param name="test.app.server.bin.dir" value="${app.server.tomcat.bin.dir}" />
 						<param name="test.build.bundle.zip.url" value="${test.build.bundle.tomcat.zip.url}" />
@@ -1976,6 +1981,7 @@ tell application "Safari" to quit
 				<matches pattern="http" string="${test.build.bundle.wildfly.zip.url}" />
 				<then>
 					<antcall inheritAll="false" target="prepare-test-bundle">
+						<param name="app.server.name" value="wildfly" />
 						<param name="app.server.type" value="wildfly" />
 						<param name="test.app.server.bin.dir" value="${app.server.wildfly.bin.dir}" />
 						<param name="test.build.bundle.zip.url" value="${test.build.bundle.wildfly.zip.url}" />
@@ -6647,7 +6653,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="${tstamp.value}.zip"
 				>
 					<patternset
-						includes="liferay-*/${app.server.type}-*/**"
+						includes="liferay-*/${app.server.name}-*/**"
 					/>
 					<mapper
 						from="[^/]+/(.*)"

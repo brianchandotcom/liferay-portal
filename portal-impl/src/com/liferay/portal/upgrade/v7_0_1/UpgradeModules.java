@@ -59,7 +59,6 @@ public class UpgradeModules
 			"com.liferay.social.privatemessaging.web",
 			"com.liferay.social.privatemessaging.web", "PM"
 		},
-		{"knowledge-base-portlet", "com.liferay.knowledge.base.service", "KB"},
 		{
 			"notifications-portlet", "com.liferay.notifications.web",
 			"Notification"

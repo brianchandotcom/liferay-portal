@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.upgrade;
 
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,6 +48,34 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		upgradeInstanceablePortletIds();
 		upgradeUninstanceablePortletIds();
+	}
+
+	protected String getNewTypeSettings(
+		String typeSettings, String oldRootPortletId, String newRootPortletId) {
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+
+		typeSettingsProperties.fastLoad(typeSettings);
+
+		String oldStagingPortletId = StagingUtil.getStagedPortletId(
+			oldRootPortletId);
+
+		if (!typeSettingsProperties.containsKey(oldStagingPortletId)) {
+			return typeSettings;
+		}
+
+		String stagingPortletSetting = typeSettingsProperties.getProperty(
+			oldStagingPortletId);
+
+		String newStagingPortletId = StagingUtil.getStagedPortletId(
+			newRootPortletId);
+
+		typeSettingsProperties.setProperty(
+			newStagingPortletId, stagingPortletSetting);
+
+		typeSettingsProperties.remove(oldStagingPortletId);
+
+		return typeSettingsProperties.toString();
 	}
 
 	protected String getNewTypeSettings(
@@ -103,7 +132,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 	}
 
 	protected String getTypeSettingsCriteria(String portletId) {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("typeSettings like '%=");
 		sb.append(portletId);
@@ -125,13 +154,55 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 		sb.append(portletId);
 		sb.append("_USER_%' OR typeSettings like '%,");
 		sb.append(portletId);
-		sb.append("_USER_%'");
+		sb.append("_USER_%' OR typeSettings like '%");
+		sb.append(StagingUtil.getStagedPortletId(portletId));
+		sb.append("=%'");
 
 		return sb.toString();
 	}
 
 	protected String[] getUninstanceablePortletIds() {
 		return new String[0];
+	}
+
+	protected void updateGroup(long groupId, String typeSettings)
+		throws Exception {
+
+		String sql =
+			"update Group_ set typeSettings = ? where groupId = " + groupId;
+
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setString(1, typeSettings);
+
+			ps.executeUpdate();
+		}
+		catch (SQLException sqle) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(sqle, sqle);
+			}
+		}
+	}
+
+	protected void updateGroup(String oldRootPortletId, String newRootPortletId)
+		throws Exception {
+
+		String sql =
+			"select groupId, typeSettings from Group_ where " +
+				getTypeSettingsCriteria(oldRootPortletId);
+
+		try (PreparedStatement ps = connection.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				long groupId = rs.getLong("groupId");
+				String typeSettings = rs.getString("typeSettings");
+
+				String newTypeSettings = getNewTypeSettings(
+					typeSettings, oldRootPortletId, newRootPortletId);
+
+				updateGroup(groupId, newTypeSettings);
+			}
+		}
 	}
 
 	protected void updateInstanceablePortletPreferences(
@@ -439,6 +510,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				String oldRootPortletId = renamePortletIds[0];
 				String newRootPortletId = renamePortletIds[1];
 
+				updateGroup(oldRootPortletId, newRootPortletId);
 				updatePortlet(oldRootPortletId, newRootPortletId);
 				updateLayoutRevisions(
 					oldRootPortletId, newRootPortletId, false);
@@ -474,6 +546,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 				String newPortletInstanceKey =
 					newPortletInstance.getPortletInstanceKey();
 
+				updateGroup(portletId, newPortletInstanceKey);
 				updateInstanceablePortletPreferences(
 					portletId, newPortletInstanceKey);
 				updateResourcePermission(

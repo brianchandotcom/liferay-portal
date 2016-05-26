@@ -1706,31 +1706,33 @@ public class FileSystemImporter extends BaseImporter {
 	protected void resetLayoutColumns(Layout layout) {
 		UnicodeProperties typeSettings = layout.getTypeSettingsProperties();
 
-		Set<String> typeSettingsKeys = typeSettings.keySet();
 		Set<String> columnsToRemove = new HashSet<>();
+		Set<String> typeSettingsKeys = typeSettings.keySet();
 
 		for (String key : typeSettingsKeys) {
-			if (key.startsWith("column-")) {
-				String portletIds = typeSettings.get(key);
+			if (!key.startsWith("column-")) {
+				continue;
+			}
 
-				columnsToRemove.add(key);
+			String portletIds = typeSettings.get(key);
 
-				String[] portletIdsArray = StringUtil.split(portletIds);
+			columnsToRemove.add(key);
 
-				for (String portletId : portletIdsArray) {
-					try {
-						portletPreferencesLocalService.deletePortletPreferences(
-							PortletKeys.PREFS_OWNER_ID_DEFAULT,
-							PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-							layout.getPlid(), portletId);
-					}
-					catch (PortalException pe) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to delete portlet preferences for " +
-									"portlet " + portletId,
-								pe);
-						}
+			String[] portletIdsArray = StringUtil.split(portletIds);
+
+			for (String portletId : portletIdsArray) {
+				try {
+					portletPreferencesLocalService.deletePortletPreferences(
+						PortletKeys.PREFS_OWNER_ID_DEFAULT,
+						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+						layout.getPlid(), portletId);
+				}
+				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to delete portlet preferences for " +
+								"portlet " + portletId,
+							pe);
 					}
 				}
 			}

@@ -7856,6 +7856,15 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 	<target name="run-simple-server">
 		<if>
+			<not>
+				<available file="tools/sdk" />
+			</not>
+			<then>
+				<antcall inheritAll="false" target="setup-sdk" />
+			</then>
+		</if>
+
+		<if>
 			<matches pattern="[0-9]+_[0-9]+" string="${test.class}" />
 			<then>
 				<get-test-class />

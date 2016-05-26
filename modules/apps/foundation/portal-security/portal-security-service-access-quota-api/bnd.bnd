@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Portal Security Service Access Quota API
+Bundle-SymbolicName: com.liferay.portal.security.service.access.quota.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.security.service.access.quota.configuration,\
+	com.liferay.portal.security.service.access.quota.metric,\
+	com.liferay.portal.security.service.access.quota.persistence
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

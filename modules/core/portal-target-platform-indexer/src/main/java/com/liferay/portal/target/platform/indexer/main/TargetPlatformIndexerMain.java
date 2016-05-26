@@ -14,13 +14,9 @@
 
 package com.liferay.portal.target.platform.indexer.main;
 
-import com.liferay.portal.target.platform.indexer.internal.PathUtil;
 import com.liferay.portal.target.platform.indexer.internal.TargetPlatformIndexer;
 
 import java.io.File;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 /**
  * @author Raymond Augé
@@ -55,8 +51,6 @@ public class TargetPlatformIndexerMain {
 				moduleFrameworkBaseDirName + "/portal/";
 		}
 
-		Path tempPath = Files.createTempDirectory(null);
-
 		File targetPlatformDir = new File(
 			moduleFrameworkBaseDirName,
 			TargetPlatformIndexer.DIR_NAME_TARGET_PLATFORM);
@@ -72,14 +66,9 @@ public class TargetPlatformIndexerMain {
 			moduleFrameworkBaseDirName, moduleFrameworkModulesDirName,
 			moduleFrameworkPortalDirName);
 
-		try {
-			File indexFile = targetPlatformIndexer.index(targetPlatformDir);
+		File indexFile = targetPlatformIndexer.index(targetPlatformDir);
 
-			System.out.println("== Wrote index file " + indexFile);
-		}
-		finally {
-			PathUtil.deltree(tempPath);
-		}
+		System.out.println("== Wrote index file " + indexFile);
 	}
 
 }

@@ -1709,14 +1709,17 @@ public class FileSystemImporter extends BaseImporter {
 	protected void resetLayoutColumns(Layout layout) {
 		UnicodeProperties typeSettings = layout.getTypeSettingsProperties();
 
-		int count = 1;
+		Set<String> columnsToRemove = new HashSet<>();
+		Set<String> typeSettingsKeys = typeSettings.keySet();
 
-		do {
-			String portletIds = typeSettings.remove("column-" + count++);
-
-			if (Validator.isNull(portletIds)) {
-				break;
+		for (String key : typeSettingsKeys) {
+			if (!key.startsWith("column-")) {
+				continue;
 			}
+
+			String portletIds = typeSettings.get(key);
+
+			columnsToRemove.add(key);
 
 			String[] portletIdsArray = StringUtil.split(portletIds);
 
@@ -1724,8 +1727,8 @@ public class FileSystemImporter extends BaseImporter {
 				try {
 					portletPreferencesLocalService.deletePortletPreferences(
 						PortletKeys.PREFS_OWNER_ID_DEFAULT,
-						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
-						portletId);
+						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+						layout.getPlid(), portletId);
 				}
 				catch (PortalException pe) {
 					if (_log.isWarnEnabled()) {
@@ -1737,7 +1740,8 @@ public class FileSystemImporter extends BaseImporter {
 				}
 			}
 		}
-		while (true);
+
+		typeSettingsKeys.removeAll(columnsToRemove);
 
 		layout.setTypeSettingsProperties(typeSettings);
 

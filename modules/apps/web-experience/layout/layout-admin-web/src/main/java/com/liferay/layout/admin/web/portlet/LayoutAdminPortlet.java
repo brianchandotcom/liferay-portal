@@ -17,6 +17,7 @@ package com.liferay.layout.admin.web.portlet;
 import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.ThemeSetting;
@@ -61,6 +63,7 @@ import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
+import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetService;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -112,6 +115,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
@@ -696,6 +700,32 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			PortalUtil.getPortletId(actionRequest) + "requestProcessed");
 	}
 
+	public void selectLayoutSetBranch(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			actionRequest);
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		long layoutSetBranchId = ParamUtil.getLong(
+			actionRequest, "layoutSetBranchId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			actionRequest, "privateLayout");
+
+		LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(
+			groupId, privateLayout);
+
+		LayoutSetBranch layoutSetBranch =
+			layoutSetBranchLocalService.getLayoutSetBranch(layoutSetBranchId);
+
+		StagingUtil.setRecentLayoutSetBranchId(
+			request, layoutSet.getLayoutSetId(),
+			layoutSetBranch.getLayoutSetBranchId());
+
+		hideDefaultSuccessMessage(actionRequest);
+	}
+
 	public void toggleCustomizedView(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -944,6 +974,13 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	@Reference(unbind = "-")
 	protected void setLayoutService(LayoutService layoutService) {
 		this.layoutService = layoutService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutSetBranchLocalService(
+		LayoutSetBranchLocalService layoutSetBranchLocalService) {
+
+		this.layoutSetBranchLocalService = layoutSetBranchLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -1254,6 +1291,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	protected LayoutPrototypeService layoutPrototypeService;
 	protected LayoutRevisionLocalService layoutRevisionLocalService;
 	protected LayoutService layoutService;
+	protected LayoutSetBranchLocalService layoutSetBranchLocalService;
 	protected LayoutSetLocalService layoutSetLocalService;
 	protected LayoutSetService layoutSetService;
 	protected MDRActionLocalService mdrActionLocalService;

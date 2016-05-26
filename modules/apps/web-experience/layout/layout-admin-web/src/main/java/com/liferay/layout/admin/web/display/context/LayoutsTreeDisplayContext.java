@@ -174,9 +174,12 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 
 		PortletURL layoutSetBranchURL = PortalUtil.getControlPanelPortletURL(
 			liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-			PortletRequest.RENDER_PHASE);
+			PortletRequest.ACTION_PHASE);
 
-		layoutSetBranchURL.setParameter("mvcPath", "/view.jsp");
+		layoutSetBranchURL.setParameter(
+			ActionRequest.ACTION_NAME, "selectLayoutSetBranch");
+		layoutSetBranchURL.setParameter(
+			"redirect", themeDisplay.getURLCurrent());
 		layoutSetBranchURL.setParameter(
 			"groupId", String.valueOf(layoutSetBranch.getGroupId()));
 		layoutSetBranchURL.setParameter(

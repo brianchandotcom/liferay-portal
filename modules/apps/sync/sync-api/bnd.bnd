@@ -6,7 +6,8 @@ Export-Package:\
 	com.liferay.sync.constants,\
 	com.liferay.sync.exception,\
 	com.liferay.sync.model,\
-	com.liferay.sync.oauth,\
-	com.liferay.sync.service
+	com.liferay.sync.oauth.helper,\
+	com.liferay.sync.service,\
+	com.liferay.sync.service.persistence
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Sync Connector

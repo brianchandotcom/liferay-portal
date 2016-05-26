@@ -14,11 +14,21 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * @author Preston Crary
@@ -43,7 +53,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			upgradeTable(
 				"ResourcePermission", "name", getClassNames(),
 				WildcardMode.SURROUND);
-			upgradeTable(
+			upgradeLongTextTable(
 				"UserNotificationEvent", "payload", getClassNames(),
 				WildcardMode.SURROUND);
 
@@ -58,7 +68,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			upgradeTable(
 				"ResourcePermission", "name", getResourceNames(),
 				WildcardMode.LEADING);
-			upgradeTable(
+			upgradeLongTextTable(
 				"UserNotificationEvent", "payload", getResourceNames(),
 				WildcardMode.LEADING);
 		}
@@ -73,6 +83,95 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 
 	protected String[][] getResourceNames() {
 		return _RESOURCE_NAMES;
+	}
+
+	protected void upgradeLongTextTable(
+			String columnName, String selectSQL, String updateSQL,
+			String[] name)
+		throws SQLException {
+
+		try (PreparedStatement ps1 = connection.prepareStatement(selectSQL);
+			ResultSet rs = ps1.executeQuery();
+			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(updateSQL))) {
+
+			while (rs.next()) {
+				String oldValue = rs.getString(columnName);
+
+				String newValue = StringUtil.replace(
+					oldValue, name[0], name[1]);
+
+				ps2.setString(1, newValue);
+				ps2.setString(2, oldValue);
+
+				ps2.addBatch();
+			}
+
+			ps2.executeBatch();
+		}
+	}
+
+	protected void upgradeLongTextTable(
+			String tableName, String columnName, String[][] names,
+			WildcardMode wildcardMode)
+		throws Exception {
+
+		DB db = DBManagerUtil.getDB();
+
+		if (db.getDBType() != DBType.SYBASE) {
+			upgradeTable(tableName, columnName, names, wildcardMode);
+
+			return;
+		}
+
+		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
+			StringBundler updateSB = new StringBundler(7);
+
+			updateSB.append("update ");
+			updateSB.append(tableName);
+			updateSB.append(" set ");
+			updateSB.append(columnName);
+			updateSB.append(" = ? where ");
+			updateSB.append(columnName);
+			updateSB.append(" = ?");
+
+			String updateSQL = updateSB.toString();
+
+			StringBundler selectPrefixSB = new StringBundler(7);
+
+			selectPrefixSB.append("select");
+			selectPrefixSB.append(columnName);
+			selectPrefixSB.append(" from ");
+			selectPrefixSB.append(tableName);
+			selectPrefixSB.append(" where ");
+			selectPrefixSB.append(columnName);
+
+			if (wildcardMode.equals(WildcardMode.LEADING) ||
+				wildcardMode.equals(WildcardMode.SURROUND)) {
+
+				selectPrefixSB.append(" like '%");
+			}
+			else {
+				selectPrefixSB.append(" like '");
+			}
+
+			String selectPrefix = selectPrefixSB.toString();
+
+			String selectPostfix = StringPool.APOSTROPHE;
+
+			if (wildcardMode.equals(WildcardMode.SURROUND) ||
+				wildcardMode.equals(WildcardMode.TRAILING)) {
+
+				selectPostfix = "%'";
+			}
+
+			for (String[] name : names) {
+				String selectSQL = selectPrefix.concat(name[0]).concat(
+					selectPostfix);
+
+				upgradeLongTextTable(columnName, selectSQL, updateSQL, name);
+			}
+		}
 	}
 
 	protected void upgradeTable(

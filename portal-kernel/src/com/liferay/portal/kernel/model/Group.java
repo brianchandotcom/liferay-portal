@@ -81,6 +81,7 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public java.util.List<Group> getDescendants(boolean site);
 
+	@com.liferay.portal.kernel.json.JSON()
 	public java.lang.String getDescriptiveName()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

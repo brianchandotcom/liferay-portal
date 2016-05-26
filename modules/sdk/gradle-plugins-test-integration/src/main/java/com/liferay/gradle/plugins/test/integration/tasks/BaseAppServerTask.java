@@ -141,7 +141,6 @@ public abstract class BaseAppServerTask extends DefaultTask {
 
 		Slf4jStream slf4jStream = Slf4jStream.ofCaller();
 
-		processExecutor.redirectError(slf4jStream.asWarn());
 		processExecutor.redirectOutput(slf4jStream.asWarn());
 
 		return processExecutor;

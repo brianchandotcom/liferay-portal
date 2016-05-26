@@ -16,6 +16,9 @@ package com.liferay.gradle.plugins.test.integration.tasks;
 
 import com.liferay.gradle.plugins.test.integration.util.GradleUtil;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+
 import java.util.concurrent.Callable;
 
 import org.gradle.api.GradleException;
@@ -23,6 +26,7 @@ import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.TaskAction;
 
 import org.zeroturnaround.exec.ProcessExecutor;
+import org.zeroturnaround.exec.StartedProcess;
 
 /**
  * @author Andrea Di Giorgi
@@ -53,27 +57,30 @@ public class StartAppServerTask extends BaseAppServerTask {
 			return;
 		}
 
+		OutputStream outputStream = new ByteArrayOutputStream();
+
 		ProcessExecutor processExecutor = getProcessExecutor();
 
-		processExecutor.start();
+		processExecutor.redirectOutputAlsoTo(outputStream);
 
-		waitForAppServer();
+		StartedProcess startedProcess = processExecutor.start();
+
+		waitForStarted(startedProcess, outputStream);
 	}
 
-	public void waitForAppServer() {
-		Callable<Boolean> callable = new Callable<Boolean>() {
+	public void waitForReachable() {
+		waitFor(
+			new Callable<Boolean>() {
 
-			@Override
-			public Boolean call() throws Exception {
-				if (isReachable()) {
-					return true;
+				@Override
+				public Boolean call() throws Exception {
+					return isReachable();
 				}
 
-				return false;
-			}
+			});
+	}
 
-		};
-
+	protected void waitFor(Callable<Boolean> callable) {
 		boolean success = false;
 
 		try {
@@ -87,8 +94,14 @@ public class StartAppServerTask extends BaseAppServerTask {
 
 		if (!success) {
 			throw new GradleException(
-				"Timeout while starting the application server");
+				"Timeout while waiting for the application server");
 		}
+	}
+
+	protected void waitForStarted(
+		StartedProcess startedProcess, OutputStream outputStream) {
+
+		waitForReachable();
 	}
 
 	private long _checkInterval = 500;

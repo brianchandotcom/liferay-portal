@@ -3349,7 +3349,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 								DirectoryScanner directoryScanner = new DirectoryScanner();
 
-								directoryScanner.setIncludes(new String[] {project.getProperty("test.app.server.dir") + "/catalina.*.log"});
+								directoryScanner.setIncludes(new String[] {project.getProperty("test.app.server.dir") + "/logs/catalina.*.log"});
 
 								directoryScanner.scan();
 

@@ -85,20 +85,19 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 					indexFile.delete();
 
 					StringBundler sb = new StringBundler(
-						(messages.size() * 4) + 2);
+						(messages.size() * 3) + 1);
 
 					sb.append("LPKG validation failed with {");
 
 					for (String message : messages) {
 						sb.append("[");
 						sb.append(message);
-						sb.append("]");
-						sb.append(", ");
+						sb.append("],");
 					}
 
-					sb.setIndex(sb.index() - 2);
+					sb.setIndex(sb.index() - 1);
 
-					sb.append("}");
+					sb.append("]}");
 
 					throw new LPKGVerifyException(sb.toString());
 				}

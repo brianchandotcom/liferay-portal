@@ -7,7 +7,7 @@
 
 	<command name="View606DataArchive" priority="5">
 		<property name="portal.acceptance" value="false" />
-		<property name="portal.upgrades" value="true" />
+		<property name="portal.upgrades" value="false" />
 		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Upgrade#viewUpgrade" />

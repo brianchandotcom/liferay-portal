@@ -267,7 +267,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 									" to be reachable");
 						}
 
-						startTestableTomcatTask.waitForAppServer();
+						startTestableTomcatTask.waitForReachable();
 					}
 
 					throw new StopExecutionException();

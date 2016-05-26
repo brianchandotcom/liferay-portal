@@ -57,10 +57,10 @@ public class StartAppServerTask extends BaseAppServerTask {
 
 		processExecutor.start();
 
-		waitForAppServer();
+		waitForReachable();
 	}
 
-	public void waitForAppServer() {
+	public void waitForReachable() {
 		Callable<Boolean> callable = new Callable<Boolean>() {
 
 			@Override

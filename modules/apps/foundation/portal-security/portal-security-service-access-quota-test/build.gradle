@@ -1,0 +1,6 @@
+dependencies {
+	testCompile group: "com.liferay", name: "com.liferay.portal.security.service.access.quota.api", version: "1.0.0"
+	testCompile group: "com.liferay", name: "com.liferay.portal.security.service.access.quota.service", version: "1.0.0"
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	testCompile group: "org.glassfish", name: "javax.servlet", version: "3.2-b06"
+}

@@ -892,6 +892,22 @@ app.server.type=@{app.server.type}]]></echo>
 		/>
 	</target>
 
+	<target name="functional-bundle-tomcat-mysql56-jdk8">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-functional-test
+			app.server.type="tomcat"
+			database.type="mysql"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
 	<target name="functional-jboss64-mysql56-jdk8">
 		<run-functional-test app.server.type="jboss" database.type="mysql" />
 	</target>
@@ -1207,12 +1223,12 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
-	<target name="release-functional-bundle-tomcat-mysql56-jdk7">
-		<antcall target="functional-bundle-tomcat-mysql56-jdk7" />
+	<target name="release-functional-bundle-tomcat-mysql56-jdk8">
+		<antcall target="functional-bundle-tomcat-mysql56-jdk8" />
 	</target>
 
-	<target name="release-functional-smoke-bundle-tomcat-mysql56-jdk7">
-		<antcall target="functional-bundle-tomcat-mysql56-jdk7" />
+	<target name="release-functional-smoke-bundle-tomcat-mysql56-jdk8">
+		<antcall target="functional-bundle-tomcat-mysql56-jdk8" />
 	</target>
 
 	<target name="ruby-sass-compiler-jdk7">

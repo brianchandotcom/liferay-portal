@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.googlemaps.action;
+package com.liferay.google.maps.web.portlet.action;
 
+import com.liferay.google.maps.web.constants.GoogleMapsPortletKeys;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -23,10 +25,18 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletSession;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mark Wong
+ * @author Peter Fellwock
  */
-public class ConfigurationActionImpl extends DefaultConfigurationAction {
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + GoogleMapsPortletKeys.GOOGLE_MAPS},
+	service = ConfigurationAction.class
+)
+public class GoogleMapsConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
 	public void processAction(

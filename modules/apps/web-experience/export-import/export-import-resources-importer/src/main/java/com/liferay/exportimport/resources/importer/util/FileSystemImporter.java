@@ -139,6 +139,7 @@ public class FileSystemImporter extends BaseImporter {
 		MimeTypes mimeTypes, Portal portal,
 		PortletPreferencesFactory portletPreferencesFactory,
 		PortletPreferencesLocalService portletPreferencesLocalService,
+		PortletPreferencesTranslator defaultPortletPreferencesTranslator,
 		Map<String, PortletPreferencesTranslator> portletPreferencesTranslators,
 		RepositoryLocalService repositoryLocalService, SAXReader saxReader,
 		ThemeLocalService themeLocalService) {
@@ -163,7 +164,12 @@ public class FileSystemImporter extends BaseImporter {
 		this.portal = portal;
 		this.portletPreferencesFactory = portletPreferencesFactory;
 		this.portletPreferencesLocalService = portletPreferencesLocalService;
-		this.portletPreferencesTranslators = portletPreferencesTranslators;
+
+		this.portletPreferencesTranslators =
+			new DefaultedPortletPreferencesTranslatorMap(
+				portletPreferencesTranslators,
+				defaultPortletPreferencesTranslator);
+
 		this.repositoryLocalService = repositoryLocalService;
 		this.saxReader = saxReader;
 		this.themeLocalService = themeLocalService;
@@ -2008,5 +2014,34 @@ public class FileSystemImporter extends BaseImporter {
 		"\\[\\$FILE=([^\\$]+)\\$\\]");
 	private final Map<String, Set<Long>> _primaryKeys = new HashMap<>();
 	private File _resourcesDir;
+
+	private class DefaultedPortletPreferencesTranslatorMap
+		extends HashMap<String, PortletPreferencesTranslator> {
+
+		public DefaultedPortletPreferencesTranslatorMap(
+			Map<String, PortletPreferencesTranslator>
+				portletPreferencesTranslators,
+			PortletPreferencesTranslator defaultPortletPreferencesTranslator) {
+
+			super(portletPreferencesTranslators);
+			_defaultPortletPreferencesTranslator =
+				defaultPortletPreferencesTranslator;
+		}
+
+		@Override
+		public PortletPreferencesTranslator get(Object key) {
+			PortletPreferencesTranslator value = super.get(key);
+
+			if (value == null) {
+				value = _defaultPortletPreferencesTranslator;
+			}
+
+			return value;
+		}
+
+		private final PortletPreferencesTranslator
+			_defaultPortletPreferencesTranslator;
+
+	}
 
 }

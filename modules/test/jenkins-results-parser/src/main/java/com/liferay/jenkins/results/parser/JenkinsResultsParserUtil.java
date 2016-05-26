@@ -594,42 +594,38 @@ public class JenkinsResultsParserUtil {
 					urlConnection.setReadTimeout(timeout);
 				}
 
-				InputStreamReader inputStreamReader = new InputStreamReader(
-					urlConnection.getInputStream());
-
-				BufferedReader bufferedReader = new BufferedReader(
-					inputStreamReader);
-
 				int bytesRead = 0;
 				String line = null;
 
-				while ((line = bufferedReader.readLine()) != null) {
-					byte[] bytes = line.getBytes();
-					bytesRead += bytes.length;
+				try (BufferedReader bufferedReader = new BufferedReader(
+						new InputStreamReader(
+							urlConnection.getInputStream()))) {
 
-					if (bytesRead > (30 * 1024 * 1024)) {
-						sb.append("URL: ");
-						sb.append(url);
-						sb.append(" response has been truncated due to its ");
-						sb.append("size.");
-						break;
+					while ((line = bufferedReader.readLine()) != null) {
+						byte[] bytes = line.getBytes();
+
+						bytesRead += bytes.length;
+
+						if (bytesRead > (30 * 1024 * 1024)) {
+							sb.append("URL: ");
+							sb.append(url);
+							sb.append(" response has been truncated due to ");
+							sb.append("its size.");
+							break;
+						}
+
+						sb.append(line);
+						sb.append("\n");
 					}
-
-					sb.append(line);
-					sb.append("\n");
 				}
-
-				bufferedReader.close();
-
-				String string = sb.toString();
 
 				if (!url.startsWith("file:") &&
 					(bytesRead < (3 * 1024 * 1024))) {
 
-					_toStringCache.put(key, string);
+					_toStringCache.put(key, sb.toString());
 				}
 
-				return string;
+				return sb.toString();
 			}
 			catch (FileNotFoundException fnfe) {
 				retryCount++;

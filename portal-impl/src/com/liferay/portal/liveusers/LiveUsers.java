@@ -38,8 +38,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.servlet.http.HttpSession;
-
 /**
  * @author Charles May
  * @author Brian Wing Shun Chan

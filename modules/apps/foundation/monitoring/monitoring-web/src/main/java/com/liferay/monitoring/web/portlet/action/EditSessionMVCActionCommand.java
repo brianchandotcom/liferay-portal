@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.notifications.ChannelException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -34,14 +33,12 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import javax.servlet.http.HttpSession;
-
 import org.osgi.service.component.annotations.Component;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Brian Wing Shun Chan
@@ -88,9 +85,7 @@ public class EditSessionMVCActionCommand extends BaseMVCActionCommand {
 		String sessionId = ParamUtil.getString(actionRequest, "sessionId");
 
 		try {
-			if (!actionRequest.getPortletSession().getId().equals(
-				sessionId)) {
-
+			if (!actionRequest.getPortletSession().getId().equals(sessionId)) {
 				PortalSessionContext.invalidateSession(sessionId);
 
 				if (ClusterInvokeThreadLocal.isEnabled()) {
@@ -119,8 +114,7 @@ public class EditSessionMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditSessionMVCActionCommand.class);
 
-	private static final MethodKey _invalidateSessionMethodKey =
-		new MethodKey(
-			PortalSessionContext.class, "invalidateSession", String.class);
+	private static final MethodKey _invalidateSessionMethodKey = new MethodKey(
+		PortalSessionContext.class, "invalidateSession", String.class);
 
 }

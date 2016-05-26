@@ -338,6 +338,8 @@
 
 		<execute function="AssertClick" locator1="SitePagesImport#SELECT_FILE_BUTTON" value1="Select File" />
 
+		<execute function="Pause" locator1="5000" />
+
 		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
 
 		<execute function="Pause" locator1="5000" />

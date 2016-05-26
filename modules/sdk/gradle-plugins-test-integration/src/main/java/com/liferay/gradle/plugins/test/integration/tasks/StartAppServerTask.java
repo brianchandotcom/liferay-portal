@@ -61,24 +61,19 @@ public class StartAppServerTask extends BaseAppServerTask {
 	}
 
 	public void waitForReachable() {
-		Callable<Boolean> callable = new Callable<Boolean>() {
-
-			@Override
-			public Boolean call() throws Exception {
-				if (isReachable()) {
-					return true;
-				}
-
-				return false;
-			}
-
-		};
-
 		boolean success = false;
 
 		try {
 			success = GradleUtil.waitFor(
-				callable, getCheckInterval(), getCheckTimeout());
+				new Callable<Boolean>() {
+
+					@Override
+					public Boolean call() throws Exception {
+						return isReachable();
+					}
+
+				},
+				getCheckInterval(), getCheckTimeout());
 		}
 		catch (Exception e) {
 			throw new GradleException(

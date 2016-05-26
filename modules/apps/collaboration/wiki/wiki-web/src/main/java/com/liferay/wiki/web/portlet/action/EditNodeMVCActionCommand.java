@@ -42,8 +42,8 @@ import com.liferay.wiki.exception.RequiredNodeException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiNodeService;
+import com.liferay.wiki.util.WikiCacheHelper;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
-import com.liferay.wiki.util.WikiCacheUtil;
 import com.liferay.wiki.web.configuration.WikiPortletInstanceOverriddenConfiguration;
 
 import java.util.ArrayList;
@@ -121,7 +121,7 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 				_wikiNodeService.deleteNode(deleteNodeId);
 			}
 
-			WikiCacheUtil.clearCache(deleteNodeId);
+			_wikiCacheHelper.clearCache(deleteNodeId);
 
 			updateSettings(
 				wikiPortletInstanceOverriddenConfiguration, oldName,
@@ -220,6 +220,11 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference(unbind = "-")
+	protected void setWikiCacheHelper(WikiCacheHelper wikiCacheHelper) {
+		_wikiCacheHelper = wikiCacheHelper;
+	}
+
+	@Reference(unbind = "-")
 	protected void setWikiNodeLocalService(
 		WikiNodeLocalService wikiNodeLocalService) {
 
@@ -306,6 +311,7 @@ public class EditNodeMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private TrashEntryService _trashEntryService;
+	private WikiCacheHelper _wikiCacheHelper;
 	private WikiNodeLocalService _wikiNodeLocalService;
 	private WikiNodeService _wikiNodeService;
 

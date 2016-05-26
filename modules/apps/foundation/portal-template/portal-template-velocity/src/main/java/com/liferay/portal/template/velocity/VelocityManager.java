@@ -15,6 +15,7 @@
 package com.liferay.portal.template.velocity;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -282,6 +283,10 @@ public class VelocityManager extends BaseSingleTemplateManager {
 		}
 
 		return template;
+	}
+
+	@Reference(unbind = "-")
+	protected void setSingleVMPool(SingleVMPool singleVMPool) {
 	}
 
 	private static volatile VelocityEngineConfiguration

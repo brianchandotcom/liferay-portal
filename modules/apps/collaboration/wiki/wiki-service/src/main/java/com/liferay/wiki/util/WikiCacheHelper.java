@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.util;
 
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,22 +37,26 @@ import javax.portlet.PortletURL;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Jorge Ferrer
- * @deprecated As of 7.0.0, replaced by {@link WikiCacheHelper}
  */
-@Deprecated
-public class WikiCacheUtil {
+@Component(immediate = true, service = WikiCacheHelper.class)
+public class WikiCacheHelper {
 
-	public static void clearCache(long nodeId) {
+	public void clearCache(long nodeId) {
 		_portalCache.removeAll();
 	}
 
-	public static void clearCache(long nodeId, String title) {
+	public void clearCache(long nodeId, String title) {
 		clearCache(nodeId);
 	}
 
-	public static WikiPageDisplay getDisplay(
+	public WikiPageDisplay getDisplay(
 		long nodeId, String title, PortletURL viewPageURL,
 		PortletURL editPageURL, String attachmentURLPrefix) {
 
@@ -83,7 +87,7 @@ public class WikiCacheUtil {
 		return pageDisplay;
 	}
 
-	public static Map<String, Boolean> getOutgoingLinks(
+	public Map<String, Boolean> getOutgoingLinks(
 			WikiPage page, WikiEngineRenderer wikiEngineRenderer)
 		throws PageContentException {
 
@@ -110,9 +114,28 @@ public class WikiCacheUtil {
 		return links;
 	}
 
-	private static String _encodeKey(
-		long nodeId, String title, String postfix) {
+	@Activate
+	protected void activate() {
+		_portalCache =
+			(PortalCache<String, Serializable>)_multiVMPool.getPortalCache(
+				_CACHE_NAME);
 
+		_portalCache.removeAll();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_portalCache.removeAll();
+
+		_multiVMPool.removePortalCache(_CACHE_NAME);
+	}
+
+	@Reference(unbind = "-")
+	protected void setMultiVMPool(MultiVMPool multiVMPool) {
+		_multiVMPool = multiVMPool;
+	}
+
+	private String _encodeKey(long nodeId, String title, String postfix) {
 		StringBundler sb = new StringBundler(6);
 
 		sb.append(_CACHE_NAME);
@@ -128,7 +151,7 @@ public class WikiCacheUtil {
 		return sb.toString();
 	}
 
-	private static WikiPageDisplay _getPageDisplay(
+	private WikiPageDisplay _getPageDisplay(
 		long nodeId, String title, PortletURL viewPageURL,
 		PortletURL editPageURL, String attachmentURLPrefix) {
 
@@ -153,17 +176,14 @@ public class WikiCacheUtil {
 		}
 	}
 
-	private static final String _CACHE_NAME = WikiCacheUtil.class.getName();
+	private static final String _CACHE_NAME = WikiCacheHelper.class.getName();
 
 	private static final String _OUTGOING_LINKS = "OUTGOING_LINKS";
 
-	private static final Log _log = LogFactoryUtil.getLog(WikiCacheUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		WikiCacheHelper.class);
 
-	private static final PortalCache<String, Serializable> _portalCache =
-		MultiVMPoolUtil.getPortalCache(_CACHE_NAME);
-
-	static {
-		_portalCache.removeAll();
-	}
+	private MultiVMPool _multiVMPool;
+	private PortalCache<String, Serializable> _portalCache;
 
 }

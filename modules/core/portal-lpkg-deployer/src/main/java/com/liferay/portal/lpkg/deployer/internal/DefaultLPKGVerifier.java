@@ -31,6 +31,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -133,7 +134,9 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 
 			Properties properties = new Properties();
 
-			properties.load(zipFile.getInputStream(zipEntry));
+			try (InputStream inputStream = zipFile.getInputStream(zipEntry)) {
+				properties.load(inputStream);
+			}
 
 			String symbolicName = properties.getProperty("title");
 

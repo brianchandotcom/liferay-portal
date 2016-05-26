@@ -64,6 +64,10 @@ public class UpgradeModules
 			"notifications-portlet", "com.liferay.notifications.web",
 			"Notification"
 		},
+		{
+			"push-notifications-portlet",
+			"com.liferay.push.notifications.service", "PushNotifications"
+		},
 		{"sync-web", "com.liferay.sync.service", "Sync"}
 	};
 

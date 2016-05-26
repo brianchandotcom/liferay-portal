@@ -303,7 +303,9 @@ AUI.add(
 					else if (node.layoutBranchName) {
 						node.layoutBranchName = LString.escapeHTML(node.layoutBranchName);
 
-						name += Lang.sub(' <span class="layout-branch-name" title="' + Liferay.Language.get('this-is-the-page-variation-that-is-marked-as-ready-for-publication') + '">[{layoutBranchName}]</span>', node);
+						name += Lang.sub(' [{layoutBranchName}]', node);
+
+						title = Liferay.Language.get('this-is-the-page-variation-that-is-marked-as-ready-for-publication');
 					}
 
 					if (node.incomplete) {

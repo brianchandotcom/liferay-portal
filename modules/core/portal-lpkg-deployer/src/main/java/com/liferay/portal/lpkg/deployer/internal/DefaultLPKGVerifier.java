@@ -61,13 +61,12 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 	@Override
 	public List<Bundle> verify(File lpkgFile) {
 		try {
-			File targetPlatformDir = new File(
-				PropsValues.MODULE_FRAMEWORK_BASE_DIR,
-				Indexer.DIR_NAME_TARGET_PLATFORM);
-
 			Indexer indexer = _indexerFactory.create(lpkgFile);
 
-			File indexFile = indexer.index(targetPlatformDir);
+			File indexFile = indexer.index(
+				new File(
+					PropsValues.MODULE_FRAMEWORK_BASE_DIR,
+					Indexer.DIR_NAME_TARGET_PLATFORM));
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Wrote index " + indexFile.getPath());
@@ -114,11 +113,10 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 				}
 			}
 		}
+		catch (LPKGVerifyException lpkgve) {
+			throw lpkgve;
+		}
 		catch (Exception e) {
-			if (e instanceof LPKGVerifyException) {
-				throw (LPKGVerifyException)e;
-			}
-
 			throw new LPKGVerifyException(e);
 		}
 

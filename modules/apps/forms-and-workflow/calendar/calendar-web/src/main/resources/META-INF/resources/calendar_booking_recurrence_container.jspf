@@ -272,7 +272,7 @@ if (recurrence != null) {
 	window.<portlet:namespace />openRecurrenceDialog = function(visible) {
 		recurrenceContainerNode.toggle(visible);
 
-		var actualRecurrency = recurrenceDialogController.get('recurrence');
+		var currentRecurrence = recurrenceDialogController.get('recurrence');
 
 		window.<portlet:namespace />recurrenceDialog = Liferay.Util.Window.getWindow(
 			{
@@ -305,7 +305,7 @@ if (recurrence != null) {
 								label: '<liferay-ui:message key="cancel" />',
 								on: {
 									click: function() {
-										recurrenceDialogController.set('recurrence', actualRecurrency);
+										recurrenceDialogController.set('recurrence', currentRecurrence);
 										window.<portlet:namespace />recurrenceDialog.hide();
 									}
 								}

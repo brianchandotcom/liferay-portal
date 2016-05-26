@@ -139,7 +139,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 
 			StringBundler selectPrefixSB = new StringBundler(7);
 
-			selectPrefixSB.append("select");
+			selectPrefixSB.append("select ");
 			selectPrefixSB.append(columnName);
 			selectPrefixSB.append(" from ");
 			selectPrefixSB.append(tableName);

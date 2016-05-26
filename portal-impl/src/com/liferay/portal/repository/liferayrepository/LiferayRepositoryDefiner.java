@@ -123,7 +123,7 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 				DLFileVersionServiceAdapter.create(documentRepository)));
 
 		if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
-			capabilityRegistry.addSupportedCapability(
+			capabilityRegistry.addExportedCapability(
 				CommentCapability.class, _commentCapability);
 		}
 

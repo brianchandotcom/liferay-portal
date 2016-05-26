@@ -1318,7 +1318,7 @@
 		</execute>
 
 		<execute macro="Notifications#viewBadgeCount">
-			<var name="notificationCount" value="1" />
+			<var name="notificationCount" value="0" />
 		</execute>
 
 		<execute macro="WorkflowAsset#gotoViaNotification">

@@ -18,6 +18,7 @@ import com.liferay.portal.target.platform.indexer.Indexer;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.nio.file.Files;
@@ -33,6 +34,7 @@ import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.osgi.framework.Version;
 import org.osgi.service.indexer.ResourceIndexer;
 import org.osgi.service.indexer.impl.RepoIndex;
 
@@ -60,10 +62,43 @@ public class LPKGIndexer implements Indexer {
 
 		_config.put("root.url", tempDir.getPath());
 
-		String bundleSymbolicName = _lpkgFile.getName();
-		String bundleVersion = "1.0.0";
-
 		try (ZipFile zipFile = new ZipFile(_lpkgFile)) {
+			ZipEntry zipEntry = zipFile.getEntry(
+				"liferay-marketplace.properties");
+
+			if (zipEntry == null) {
+				throw new Exception(
+					_lpkgFile +
+						" does not have liferay-marketplace.properties");
+			}
+
+			Properties properties = new Properties();
+
+			try (InputStream inputStream = zipFile.getInputStream(zipEntry)) {
+				properties.load(inputStream);
+			}
+
+			String symbolicName = properties.getProperty("title");
+
+			if ((symbolicName == null) || symbolicName.isEmpty()) {
+				throw new Exception(
+					_lpkgFile + " does not have a valid symbolic name");
+			}
+
+			Version version = null;
+
+			String versionString = properties.getProperty("version");
+
+			try {
+				new Version(versionString);
+			}
+			catch (IllegalArgumentException iae) {
+				throw new Exception(
+					_lpkgFile + " does not have a valid version: " +
+						versionString,
+					iae);
+			}
+
 			ResourceIndexer resourceIndexer = new RepoIndex();
 
 			Set<File> files = new LinkedHashSet<>();
@@ -71,21 +106,11 @@ public class LPKGIndexer implements Indexer {
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
 			while (enumeration.hasMoreElements()) {
-				ZipEntry zipEntry = enumeration.nextElement();
+				zipEntry = enumeration.nextElement();
 
 				String name = zipEntry.getName();
 
-				if (name.endsWith("liferay-marketplace.properties")) {
-					Properties properties = new Properties();
-
-					properties.load(zipFile.getInputStream(zipEntry));
-
-					bundleSymbolicName = properties.getProperty("title");
-					bundleVersion = properties.getProperty("version");
-
-					continue;
-				}
-				else if (!name.endsWith(".jar")) {
+				if (!name.endsWith(".jar")) {
 					continue;
 				}
 
@@ -99,8 +124,7 @@ public class LPKGIndexer implements Indexer {
 			}
 
 			File indexFile = new File(
-				tempDir,
-				bundleSymbolicName + "-" + bundleVersion + "-index.xml");
+				tempDir, symbolicName + "-" + version + "-index.xml");
 
 			try (OutputStream outputStream = new FileOutputStream(indexFile)) {
 				resourceIndexer.index(files, outputStream, _config);

@@ -348,10 +348,36 @@ echo "Sent notification."]]>
 
 	<macrodef name="prepare-test-build">
 		<sequential>
-			<antcall target="prepare-test-build">
-				<param name="test.class.groups.size" value="${test.batch.size}" />
-				<param name="test.plugin.groups.size" value="${test.batch.size}" />
-			</antcall>
+			<trycatch property="exception.message">
+				<try>
+					<antcall target="prepare-test-build">
+						<param name="test.class.groups.size" value="${test.batch.size}" />
+						<param name="test.plugin.groups.size" value="${test.batch.size}" />
+					</antcall>
+				</try>
+				<catch>
+					<echo message="${exception.message}" />
+
+					<fail message="Unable to prepare test build" />
+				</catch>
+			</trycatch>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-test-build-custom">
+		<sequential>
+			<trycatch property="exception.message">
+				<try>
+					<antcall target="prepare-test-build-custom">
+						<param name="app.server.type" value="${app.server.type}" />
+					</antcall>
+				</try>
+				<catch>
+					<echo message="${exception.message}" />
+
+					<fail message="Unable to prepare test build" />
+				</catch>
+			</trycatch>
 		</sequential>
 	</macrodef>
 
@@ -433,9 +459,18 @@ app.server.type=@{app.server.type}]]></echo>
 
 	<macrodef name="prepare-test-build-unit">
 		<sequential>
-			<antcall target="prepare-test-build-unit">
-				<param name="test.class.groups.size" value="${test.batch.size}" />
-			</antcall>
+			<trycatch property="exception.message">
+				<try>
+					<antcall target="prepare-test-build-unit">
+						<param name="test.class.groups.size" value="${test.batch.size}" />
+					</antcall>
+				</try>
+				<catch>
+					<echo message="${exception.message}" />
+
+					<fail message="Unable to prepare test build" />
+				</catch>
+			</trycatch>
 		</sequential>
 	</macrodef>
 
@@ -613,9 +648,7 @@ app.server.type=@{app.server.type}]]></echo>
 											<equals arg1="${app.server.type}" arg2="websphere" />
 										</or>
 										<then>
-											<antcall target="prepare-test-build-custom">
-												<param name="app.server.type" value="${app.server.type}" />
-											</antcall>
+											<prepare-test-build-custom />
 										</then>
 										<else>
 											<ant antfile="build-dist.xml" target="build-dist-${app.server.type}" />

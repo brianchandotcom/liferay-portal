@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Security Service Access Quota Memory Impl
+Bundle-SymbolicName: com.liferay.portal.security.service.access.quota.memory.impl
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

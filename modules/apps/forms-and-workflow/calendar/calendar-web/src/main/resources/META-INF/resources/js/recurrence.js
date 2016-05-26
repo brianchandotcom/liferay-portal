@@ -32,7 +32,8 @@ AUI.add(
 					},
 
 					daysOfWeek: {
-						getter: '_getDaysOfWeek'
+						getter: '_getDaysOfWeek',
+						setter: '_setDaysOfWeek'
 					},
 
 					daysOfWeekCheckboxes: {
@@ -40,7 +41,8 @@ AUI.add(
 					},
 
 					frequency: {
-						getter: '_getFrequency'
+						getter: '_getFrequency',
+						setter: '_setFrequency'
 					},
 
 					frequencySelect: {
@@ -49,7 +51,8 @@ AUI.add(
 					},
 
 					interval: {
-						getter: '_getInterval'
+						getter: '_getInterval',
+						setter: '_setInterval'
 					},
 
 					intervalSelect: {
@@ -63,7 +66,8 @@ AUI.add(
 					},
 
 					limitCount: {
-						getter: '_getLimitCount'
+						getter: '_getLimitCount',
+						setter: '_setLimitCount'
 					},
 
 					limitCountInput: {
@@ -77,7 +81,8 @@ AUI.add(
 					},
 
 					limitDate: {
-						getter: '_getLimitDate'
+						getter: '_getLimitDate',
+						setter: '_setLimitDate'
 					},
 
 					limitDateDatePicker: {
@@ -95,7 +100,8 @@ AUI.add(
 					},
 
 					limitType: {
-						getter: '_getLimitType'
+						getter: '_getLimitType',
+						setter: '_setLimitType'
 					},
 
 					monthlyRecurrenceOptions: {
@@ -113,7 +119,8 @@ AUI.add(
 					},
 
 					positionalDayOfWeek: {
-						getter: '_getPositionalDayOfWeek'
+						getter: '_getPositionalDayOfWeek',
+						setter: '_setPositionalDayOfWeek'
 					},
 
 					positionalDayOfWeekOptions: {
@@ -132,7 +139,8 @@ AUI.add(
 					},
 
 					recurrence: {
-						getter: '_getRecurrence'
+						getter: '_getRecurrence',
+						setter: '_setRecurrence'
 					},
 
 					repeatCheckbox: {
@@ -483,6 +491,111 @@ AUI.add(
 						datePicker.get('popover').zIndex = 30000;
 
 						return datePicker;
+					},
+
+					_setDaysOfWeek: function(value) {
+						var instance = this;
+
+						var dayOfWeekNodes = instance.get('daysOfWeekCheckboxes').filter(':not([disabled])');
+
+						dayOfWeekNodes.each(
+							function(node, index) {
+								var check = value.indexOf(node.get('value')) > -1;
+
+								node.set('checked', check);
+							}
+						);
+
+						return value;
+					},
+
+					_setFrequency: function(value) {
+						var instance = this;
+
+						var frequencySelect = instance.get('frequencySelect');
+
+						frequencySelect.set('value', value);
+						frequencySelect.simulate('change');
+
+						return value;
+					},
+
+					_setInterval: function(value) {
+						var instance = this;
+
+						var intervalSelect = instance.get('intervalSelect');
+
+						intervalSelect.set('value', value);
+						intervalSelect.simulate('change');
+
+						return value;
+					},
+
+					_setLimitCount: function(value) {
+						var instance = this;
+
+						instance.get('limitCountInput').set('value', value || '');
+
+						return value;
+					},
+
+					_setLimitDate: function(value) {
+						var instance = this;
+
+						var limitDateDatePicker = instance.get('limitDateDatePicker');
+
+						limitDateDatePicker.clearSelection('date');
+						limitDateDatePicker.selectDates([value]);
+
+						return value;
+					},
+
+					_setLimitType: function(value) {
+						var instance = this;
+
+						A.each(
+							instance.get('limitRadioButtons'),
+							function(node, index) {
+								if (node.get('value') === value) {
+									node.set('checked', true);
+									node.simulate('change');
+								}
+							}
+						);
+
+						return value;
+					},
+
+					_setPositionalDayOfWeek: function(value) {
+						var instance = this;
+
+						var lastPositionCheckbox = instance.get('lastPositionCheckbox');
+						var repeatOnDayOfMonthRadioButton = instance.get('repeatOnDayOfMonthRadioButton');
+						var repeatOnDayOfWeekRadioButton = instance.get('repeatOnDayOfWeekRadioButton');
+
+						lastPositionCheckbox.set('checked', (value && value.position === '-1'));
+						repeatOnDayOfMonthRadioButton.set('checked', !value);
+						repeatOnDayOfWeekRadioButton.set('checked', !!value);
+
+						lastPositionCheckbox.simulate('change');
+						repeatOnDayOfMonthRadioButton.simulate('change');
+						repeatOnDayOfWeekRadioButton.simulate('change');
+
+						return value;
+					},
+
+					_setRecurrence: function(data) {
+						var instance = this;
+
+						if (data) {
+							instance.set('daysOfWeek', data.weekdays);
+							instance.set('frequency', data.frequency);
+							instance.set('interval', data.interval);
+							instance.set('limitCount', data.count);
+							instance.set('limitDate', data.untilDate);
+							instance.set('limitType', data.endValue);
+							instance.set('positionalDayOfWeek', data.positionalWeekday);
+						}
 					},
 
 					_toggleView: function(viewName, show) {

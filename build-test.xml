@@ -40,6 +40,11 @@
 	<property location="${project.dir}/tools/putty/plink.exe" name="plink.executable" />
 	<property location="${project.dir}/tools/putty/pscp.exe" name="pscp.executable" />
 
+	<propertyfile file="${project.dir}/.gradle/gradle.properties">
+		<entry key="database.jdbc.drivers.url" value="${test.jdbc.drivers.url}" />
+		<entry key="database.oracle.version" value="${database.oracle.version}" />
+	</propertyfile>
+
 	<macrodef name="apply-portal-ext-properties">
 		<sequential>
 			<if>
@@ -8332,13 +8337,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<ant dir="portal-impl" inheritAll="false" target="test-unit" />
 
 		<ant dir="util-java" inheritAll="false" target="test-unit" />
-	</target>
-
-	<target name="update-test-gradle-properties">
-		<propertyfile file="${project.dir}/.gradle/gradle.properties">
-			<entry key="database.jdbc.drivers.url" value="${test.jdbc.drivers.url}" />
-			<entry key="database.oracle.version" value="${database.oracle.version}" />
-		</propertyfile>
 	</target>
 
 	<target name="upgrade-legacy-database">

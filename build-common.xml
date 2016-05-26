@@ -1257,8 +1257,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 			<update-gradle-properties />
 
-			<ant antfile="build-test.xml" inheritAll="false" target="update-test-gradle-properties" />
-
 			<gradle-execute task="setupPortalTools">
 				<arg value="--build-file=${project.dir}/modules/util.gradle" />
 			</gradle-execute>

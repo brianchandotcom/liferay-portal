@@ -174,8 +174,10 @@ AUI.add(
 
 						var selectAllCheckBox = instance._getSelectAllCheckBox();
 
-						selectAllCheckBox.attr(ATTR_CHECKED, checked);
-						selectAllCheckBox.attr('indeterminate', partial && checked);
+						if (selectAllCheckBox) {
+							selectAllCheckBox.attr(ATTR_CHECKED, checked);
+							selectAllCheckBox.attr('indeterminate', partial && checked);
+						}
 					},
 
 					_updateItemsCount: function(itemsCount) {

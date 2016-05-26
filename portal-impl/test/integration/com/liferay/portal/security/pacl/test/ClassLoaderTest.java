@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.test.rule.PACLTestRule;
 
 import java.net.URL;
@@ -196,7 +197,7 @@ public class ClassLoaderTest {
 	@Test
 	public void testGet15() throws Exception {
 		try {
-			PortletClassLoaderUtil.getClassLoader("1_WAR_chatportlet");
+			PortletClassLoaderUtil.getClassLoader(PortletKeys.CHAT);
 
 			Assert.fail();
 		}
@@ -212,7 +213,7 @@ public class ClassLoaderTest {
 	@Test
 	public void testGet17() throws Exception {
 		try {
-			PortletClassLoaderUtil.getClassLoader("chat-portlet");
+			PortletClassLoaderUtil.getClassLoader(PortletKeys.CHAT);
 
 			Assert.fail();
 		}

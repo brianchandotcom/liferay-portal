@@ -1724,8 +1724,8 @@ public class FileSystemImporter extends BaseImporter {
 				try {
 					portletPreferencesLocalService.deletePortletPreferences(
 						PortletKeys.PREFS_OWNER_ID_DEFAULT,
-						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-						layout.getPlid(), portletId);
+						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+						portletId);
 				}
 				catch (PortalException pe) {
 					if (_log.isWarnEnabled()) {

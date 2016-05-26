@@ -46,13 +46,11 @@ portletURL.setParameter("tabs1", tabs1);
 
 	<c:choose>
 		<c:when test='<%= tabs1.equals("sites") %>'>
-			<aui:nav-bar-search>
-				<aui:form action="<%= portletURL.toString() %>" method="get" name="searchFm">
-					<liferay-portlet:renderURLParams varImpl="portletURL" />
-
+			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+				<aui:nav-bar-search>
 					<liferay-ui:input-search markupView="lexicon" />
-				</aui:form>
-			</aui:nav-bar-search>
+				</aui:nav-bar-search>
+			</aui:form>
 		</c:when>
 	</c:choose>
 </aui:nav-bar>

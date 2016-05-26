@@ -17,16 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long groupId = ParamUtil.getLong(request, "groupId");
+long[] groupIds = ParamUtil.getLongValues(request, "groupIds");
 
-Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+Group group = null;
+int currentPermissions = 0;
 
-int currentPermissions = GetterUtil.getInteger(group.getTypeSettingsProperty("syncSiteMemberFilePermissions"));
+if (groupIds.length == 1) {
+	group = GroupLocalServiceUtil.fetchGroup(groupIds[0]);
+
+	currentPermissions = GetterUtil.getInteger(group.getTypeSettingsProperty("syncSiteMemberFilePermissions"));
+}
 %>
 
 <liferay-ui:header
 	localizeTitle="<%= false %>"
-	title="<%= group.getDescriptiveName() %>"
+	title="<%= (group == null) ? StringPool.BLANK : group.getDescriptiveName() %>"
 />
 
 <table class="table table-bordered table-hover table-striped">
@@ -42,7 +47,7 @@ int currentPermissions = GetterUtil.getInteger(group.getTypeSettingsProperty("sy
 	<tbody>
 
 		<%
-		List<Integer> permissionsOptions = new ArrayList<Integer>(3);
+		List<Integer> permissionsOptions = new ArrayList<Integer>(4);
 
 		permissionsOptions.add(SyncPermissionsConstants.PERMISSIONS_VIEW_ONLY);
 		permissionsOptions.add(SyncPermissionsConstants.PERMISSIONS_VIEW_AND_ADD_DISCUSSION);
@@ -104,7 +109,7 @@ int currentPermissions = GetterUtil.getInteger(group.getTypeSettingsProperty("sy
 				</td>
 				<td>
 					<portlet:actionURL name="updateSites" var="setPermissionsURL">
-						<portlet:param name="groupIds" value="<%= String.valueOf(groupId) %>" />
+						<portlet:param name="groupIds" value="<%= StringUtil.merge(groupIds) %>" />
 						<portlet:param name="permissions" value="<%= String.valueOf(permissions) %>" />
 					</portlet:actionURL>
 

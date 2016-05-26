@@ -276,14 +276,6 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 					</c:if>
 
 					<%
-					String entriesEmptyResultsMessage = "you-do-not-have-any-posts";
-
-					if (mbListDisplayContext.isShowRecentPosts()) {
-						entriesEmptyResultsMessage = "there-are-no-recent-posts";
-					}
-
-					entriesSearchContainer.setEmptyResultsMessage(entriesEmptyResultsMessage);
-
 					request.setAttribute("view.jsp-displayStyle", "descriptive");
 					request.setAttribute("view.jsp-entriesSearchContainer", entriesSearchContainer);
 					%>

@@ -186,9 +186,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<var name="key_pageVariationName" value="${pageVariationNameMenulistName}" />
-
-		<execute function="Select" locator1="Staging#VARIATIONS_SELECTOR" value1="${pageVariationNameMenulistName}" />
+		<execute function="Select" locator1="Staging#VARIATIONS_SELECTOR" value1="${pageVariationNameMenulistName}">
+			<var name="key_pageVariationName" value="${pageVariationNameMenulistName}" />
+		</execute>
 	</command>
 
 	<command name="changePageVariationPG">

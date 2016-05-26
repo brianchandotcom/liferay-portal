@@ -378,34 +378,7 @@ public class NpmAnalyzerPlugin implements AnalyzerPlugin {
 			analyzer.setBundleVersion(version.toString());
 		}
 
-		Parameters parameters = new Parameters() {
-
-			@Override
-			public void mergeWith(Parameters parameters, boolean override) {
-				for (Map.Entry<String, Attrs> entry : parameters.entrySet()) {
-					Attrs existingAttrs = get(entry.getKey());
-
-					if (existingAttrs == null) {
-
-						// This is a workaround for a bug in Bnd
-
-						Attrs tempAttrs = new Attrs();
-
-						tempAttrs.put("____ignore____:Version", "0.0.0");
-
-						tempAttrs.remove("____ignore____");
-
-						tempAttrs.putAll(entry.getValue());
-
-						put(entry.getKey(), tempAttrs);
-					}
-					else {
-						existingAttrs.mergeWith(entry.getValue(), override);
-					}
-				}
-			}
-
-		};
+		Parameters parameters = new Parameters();
 
 		Attrs attrs = new Attrs();
 

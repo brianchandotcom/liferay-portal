@@ -72,9 +72,10 @@ public class UpgradeAsset extends UpgradeProcess {
 			long classNameId = PortalUtil.getClassNameId(
 				"com.liferay.journal.model.JournalArticle");
 
-			StringBundler sb = new StringBundler(9);
+			StringBundler sb = new StringBundler(10);
 
-			sb.append("select JournalArticle.resourcePrimKey from (select ");
+			sb.append("select JournalArticle.resourcePrimKey as ");
+			sb.append("resourcePrimKey from (select ");
 			sb.append("JournalArticle.resourcePrimkey as primKey, ");
 			sb.append("max(JournalArticle.version) as maxVersion from ");
 			sb.append("JournalArticle group by ");

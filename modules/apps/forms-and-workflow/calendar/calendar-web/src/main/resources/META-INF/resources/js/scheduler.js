@@ -820,39 +820,37 @@ AUI.add(
 					_onClickAddEvent: function(event) {
 						var instance = this;
 
-						if (Liferay.Session.get('sessionState') !== 'expired') {
-							var recorder = instance.get('eventRecorder');
+						var recorder = instance.get('eventRecorder');
 
-							var activeViewName = instance.get('activeView').get('name');
+						var activeViewName = instance.get('activeView').get('name');
 
-							var defaultUserCalendar = CalendarUtil.getDefaultUserCalendar();
+						var defaultUserCalendar = CalendarUtil.getDefaultUserCalendar();
 
-							var calendarId = defaultUserCalendar.get('calendarId');
+						var calendarId = defaultUserCalendar.get('calendarId');
 
-							var editCalendarBookingURL = decodeURIComponent(recorder.get('editCalendarBookingURL'));
+						var editCalendarBookingURL = decodeURIComponent(recorder.get('editCalendarBookingURL'));
 
-							var data = {
-								activeView: activeViewName,
-								calendarId: calendarId,
-								titleCurrentValue: ''
-							};
+						var data = {
+							activeView: activeViewName,
+							calendarId: calendarId,
+							titleCurrentValue: ''
+						};
 
-							Liferay.Util.openWindow(
-								{
-									dialog: {
-										after: {
-											destroy: function(event) {
-												instance.load();
-											}
-										},
-										destroyOnHide: true,
-										modal: true
+						Liferay.Util.openWindow(
+							{
+								dialog: {
+									after: {
+										destroy: function(event) {
+											instance.load();
+										}
 									},
-									title: Liferay.Language.get('new-calendar-booking'),
-									uri: Lang.sub(editCalendarBookingURL, data)
-								}
-							);
-						}
+									destroyOnHide: false,
+									modal: true
+								},
+								title: Liferay.Language.get('new-calendar-booking'),
+								uri: Lang.sub(editCalendarBookingURL, data)
+							}
+						);
 					},
 
 					_onDeleteEvent: function(event) {

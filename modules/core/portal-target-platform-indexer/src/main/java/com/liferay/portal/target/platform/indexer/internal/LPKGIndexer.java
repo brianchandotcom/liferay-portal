@@ -110,9 +110,8 @@ public class LPKGIndexer implements Indexer {
 				outputFile = new File(outputFile, indexFile.getName());
 			}
 
-			Files.copy(
+			Files.move(
 				indexFile.toPath(), outputFile.toPath(),
-				StandardCopyOption.COPY_ATTRIBUTES,
 				StandardCopyOption.REPLACE_EXISTING);
 
 			return outputFile;

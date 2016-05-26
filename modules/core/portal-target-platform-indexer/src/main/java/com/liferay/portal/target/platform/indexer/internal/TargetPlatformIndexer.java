@@ -132,9 +132,8 @@ public class TargetPlatformIndexer implements Indexer {
 
 			File indexFile = new File(outputFile, tempIndexFile.getName());
 
-			Files.copy(
+			Files.move(
 				tempIndexFile.toPath(), indexFile.toPath(),
-				StandardCopyOption.COPY_ATTRIBUTES,
 				StandardCopyOption.REPLACE_EXISTING);
 
 			return indexFile;

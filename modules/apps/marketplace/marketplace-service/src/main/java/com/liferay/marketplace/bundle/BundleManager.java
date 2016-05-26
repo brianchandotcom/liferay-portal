@@ -14,16 +14,19 @@
 
 package com.liferay.marketplace.bundle;
 
-import com.liferay.portal.kernel.deploy.DeployManagerUtil;
-import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
+import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.lpkg.deployer.LPKGVerifier;
+import com.liferay.portal.util.ShutdownUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -123,27 +126,31 @@ public class BundleManager {
 	public List<Bundle> installLPKG(File file) throws Exception {
 		_lpkgVerifier.verify(file);
 
-		if (isRestartRequired(file)) {
-			AutoDeploymentContext autoDeploymentContext =
-				new AutoDeploymentContext();
+		File installFile = new File(getInstallDirName(), file.getName());
 
-			autoDeploymentContext.setFile(file);
+		boolean moved = FileUtil.move(file, installFile);
 
-			DeployManagerUtil.deploy(autoDeploymentContext);
+		if (!moved) {
+			throw new AutoDeployException(
+				"Unable to move LPKG to install directory");
+		}
+
+		if (isRestartRequired(installFile)) {
+			ShutdownUtil.shutdown(0);
 
 			return Collections.emptyList();
 		}
-		else {
-			List<Bundle> bundles = _lpkgDeployer.deploy(_bundleContext, file);
 
-			for (int i = 1; i < bundles.size(); i++) {
-				Bundle bundle = bundles.get(i);
+		List<Bundle> bundles = _lpkgDeployer.deploy(
+			_bundleContext, installFile);
 
-				bundle.start();
-			}
+		for (int i = 1; i < bundles.size(); i++) {
+			Bundle bundle = bundles.get(i);
 
-			return bundles;
+			bundle.start();
 		}
+
+		return bundles;
 	}
 
 	public boolean isInstalled(Bundle bundle) {
@@ -187,6 +194,30 @@ public class BundleManager {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+	}
+
+	protected String getInstallDirName() throws Exception {
+		String[] autoDeployDirNames = PropsUtil.getArray(
+			PropsKeys.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
+
+		if (ArrayUtil.isEmpty(autoDeployDirNames)) {
+			throw new AutoDeployException(
+				"The portal property \"" +
+					PropsKeys.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS +
+						"\" is not set");
+		}
+
+		String autoDeployDirName = autoDeployDirNames[0];
+
+		for (String curDirName : autoDeployDirNames) {
+			if (curDirName.endsWith("/marketplace")) {
+				autoDeployDirName = curDirName;
+
+				break;
+			}
+		}
+
+		return autoDeployDirName;
 	}
 
 	protected boolean isRestartRequired(File file) {

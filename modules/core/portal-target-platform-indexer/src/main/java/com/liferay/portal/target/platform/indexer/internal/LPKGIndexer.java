@@ -14,7 +14,6 @@
 
 package com.liferay.portal.target.platform.indexer.internal;
 
-import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.target.platform.indexer.Indexer;
 
 import java.io.File;
@@ -48,7 +47,7 @@ public class LPKGIndexer implements Indexer {
 		_config.put(
 			"license.url", "https://www.liferay.com/downloads/ce-license");
 		_config.put("pretty", "true");
-		_config.put("repository.name", ReleaseInfo.getReleaseInfo());
+		_config.put("repository.name", _getFileNameWithoutExtension(lpkgFile));
 		_config.put("stylesheet", "http://www.osgi.org/www/obr2html.xsl");
 	}
 
@@ -58,7 +57,7 @@ public class LPKGIndexer implements Indexer {
 
 		File tempDir = tempPath.toFile();
 
-		_config.put("root.url", tempDir.getCanonicalPath());
+		_config.put("root.url", tempDir.getPath());
 
 		String bundleSymbolicName = _lpkgFile.getName();
 		String bundleVersion = "1.0.0";
@@ -91,7 +90,9 @@ public class LPKGIndexer implements Indexer {
 
 				File file = new File(tempDir, name);
 
-				Files.copy(zipFile.getInputStream(zipEntry), file.toPath());
+				Files.copy(
+					zipFile.getInputStream(zipEntry), file.toPath(),
+					StandardCopyOption.REPLACE_EXISTING);
 
 				files.add(file);
 			}
@@ -120,6 +121,18 @@ public class LPKGIndexer implements Indexer {
 		finally {
 			PathUtil.deltree(tempPath);
 		}
+	}
+
+	private String _getFileNameWithoutExtension(File lpkgFile) {
+		String name = lpkgFile.getName();
+
+		int index = name.lastIndexOf('.');
+
+		if (index > 0) {
+			name = name.substring(0, index);
+		}
+
+		return name;
 	}
 
 	private final Map<String, String> _config = new HashMap<>();

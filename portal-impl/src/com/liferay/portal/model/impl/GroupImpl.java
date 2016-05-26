@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.staging.StagingConstants;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -102,6 +103,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  */
+@JSON(strict = true)
 public class GroupImpl extends GroupBaseImpl {
 
 	@Override
@@ -186,6 +188,7 @@ public class GroupImpl extends GroupBaseImpl {
 		return new ArrayList<>(descendants);
 	}
 
+	@JSON
 	@Override
 	public String getDescriptiveName() throws PortalException {
 		return getDescriptiveName(LocaleUtil.getMostRelevantLocale());

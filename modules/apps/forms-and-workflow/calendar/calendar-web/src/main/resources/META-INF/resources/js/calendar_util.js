@@ -397,11 +397,11 @@ AUI.add(
 			},
 
 			getDateFromObject: function(object) {
-				var day = parseInt(object.day);
-				var hour = parseInt(object.hour);
-				var minute = parseInt(object.minute);
-				var month = parseInt(object.month);
-				var year = parseInt(object.year);
+				var day = toInt(object.day);
+				var hour = toInt(object.hour);
+				var minute = toInt(object.minute);
+				var month = toInt(object.month);
+				var year = toInt(object.year);
 
 				return new Date(year, month, day, hour, minute);
 			},

@@ -88,7 +88,7 @@ String groupId = String.valueOf(group.getGroupId());
 					title: '<%= UnicodeLanguageUtil.get(request, "default-file-permissions") %>',
 
 					<portlet:renderURL var="editDefaultFilePermissionsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="groupId" value="{groupId}" />
+						<portlet:param name="groupIds" value="{groupId}" />
 						<portlet:param name="mvcPath" value="/edit_default_file_permissions.jsp" />
 					</portlet:renderURL>
 

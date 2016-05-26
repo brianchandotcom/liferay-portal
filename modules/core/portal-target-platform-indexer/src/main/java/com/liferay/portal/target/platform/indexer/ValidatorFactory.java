@@ -15,6 +15,7 @@
 package com.liferay.portal.target.platform.indexer;
 
 import com.liferay.portal.target.platform.indexer.internal.IndexValidator;
+import com.liferay.portal.util.PropsValues;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,6 +29,8 @@ public class ValidatorFactory {
 		IndexValidator indexValidator = new IndexValidator();
 
 		indexValidator.setIncludeTargetPlatform(true);
+		indexValidator.setModuleFrameworkBaseDir(
+			PropsValues.MODULE_FRAMEWORK_BASE_DIR);
 
 		return indexValidator;
 	}

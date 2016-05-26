@@ -14,6 +14,9 @@
 
 package com.liferay.portal.target.platform.indexer.main;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.MINUTES;
+
 import com.liferay.portal.target.platform.indexer.internal.IndexValidator;
 
 import java.io.File;
@@ -35,6 +38,20 @@ public class IndexValidatorMain {
 			System.err.println(
 				"== Usage: <cmd> <list of index files or directories " +
 					"containing index files>");
+
+			return;
+		}
+
+		Boolean includeTargetPlatform = Boolean.getBoolean(
+			"include.target.platform");
+
+		String moduleFrameworkBaseDir = System.getProperty(
+			"module.framework.base.dir");
+
+		if (includeTargetPlatform && (moduleFrameworkBaseDir == null)) {
+			System.err.println(
+				"== -Dmodule.framework.base.dir must be set when " +
+					"-Dinclude.target.platform is set.");
 
 			return;
 		}
@@ -88,17 +105,35 @@ public class IndexValidatorMain {
 
 		IndexValidator indexValidator = new IndexValidator();
 
-		List<String> messages = indexValidator.validate(indexURIs);
+		indexValidator.setIncludeTargetPlatform(includeTargetPlatform);
 
-		if (!messages.isEmpty()) {
-			System.out.println("== Validation errors");
+		if (includeTargetPlatform) {
+			indexValidator.setModuleFrameworkBaseDir(moduleFrameworkBaseDir);
+		}
 
-			for (String message : messages) {
-				System.out.println("== " + message);
+		long start = System.currentTimeMillis();
+
+		try {
+			List<String> messages = indexValidator.validate(indexURIs);
+
+			if (!messages.isEmpty()) {
+				System.out.println("== Validation errors");
+
+				for (String message : messages) {
+					System.out.println("== " + message);
+				}
+			}
+			else {
+				System.out.println("== Successfully validated");
 			}
 		}
-		else {
-			System.out.println("== Successfully validated");
+		finally {
+			long duration = System.currentTimeMillis() - start;
+
+			System.out.printf(
+				"== Time %02d:%02ds\n", MILLISECONDS.toMinutes(duration),
+				MILLISECONDS.toSeconds(duration) -
+					MINUTES.toSeconds(MILLISECONDS.toMinutes(duration)));
 		}
 	}
 

@@ -55,7 +55,8 @@ java -classpath "$CLASSPATH" ${JAVA_OPTS} \
 # can be used to change the output directory.
 #
 
-java -classpath "$CLASSPATH" ${JAVA_OPTS} \
+java -classpath ${module_framework_base_dir}/static/com.liferay.portal.target.platform.indexer.jar \
+	${JAVA_OPTS} \
 	com.liferay.portal.target.platform.indexer.main.LPKGIndexerMain \
 	${module_framework_base_dir}/marketplace/
 
@@ -69,6 +70,9 @@ java -classpath "$CLASSPATH" ${JAVA_OPTS} \
 # per line.
 #
 
-java -classpath "$CLASSPATH" ${JAVA_OPTS} \
+JAVA_OPTS="${JAVA_OPTS} -Dinclude.target.platform=true"
+
+java -classpath ${module_framework_base_dir}/static/com.liferay.portal.target.platform.indexer.jar \
+	${JAVA_OPTS} \
 	com.liferay.portal.target.platform.indexer.main.IndexValidatorMain \
 	${module_framework_base_dir}/target-platform/

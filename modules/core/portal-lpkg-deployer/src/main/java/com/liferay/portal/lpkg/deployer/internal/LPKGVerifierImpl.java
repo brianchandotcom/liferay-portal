@@ -14,17 +14,25 @@
 
 package com.liferay.portal.lpkg.deployer.internal;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static java.util.concurrent.TimeUnit.MINUTES;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.LPKGVerifier;
 import com.liferay.portal.lpkg.deployer.LPKGVerifyException;
 import com.liferay.portal.target.platform.indexer.Indexer;
 import com.liferay.portal.target.platform.indexer.IndexerFactory;
+import com.liferay.portal.target.platform.indexer.ValidatorFactory;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
@@ -57,7 +65,56 @@ public class LPKGVerifierImpl implements LPKGVerifier {
 
 			Indexer indexer = _indexerFactory.create(lpkgFile);
 
-			indexer.index(targetPlatformDir);
+			File indexFile = indexer.index(targetPlatformDir);
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Wrote index " + indexFile.getPath());
+			}
+
+			com.liferay.portal.target.platform.indexer.Validator validator =
+				_validatorFactory.create();
+
+			long start = System.currentTimeMillis();
+
+			try {
+				List<String> errors = validator.validate(
+					Collections.singletonList(indexFile.toURI()));
+
+				if (!errors.isEmpty()) {
+					indexFile.delete();
+
+					StringBundler sb = new StringBundler(
+						(errors.size() * 4) + 2);
+
+					sb.append("LPKG validation failed with {");
+
+					for (String error : errors) {
+						sb.append("[");
+						sb.append(error);
+						sb.append("]");
+						sb.append(",");
+					}
+
+					sb.setIndex(sb.index() - 1);
+
+					sb.append("}");
+
+					throw new LPKGVerifyException(sb.toString());
+				}
+			}
+			finally {
+				if (_log.isInfoEnabled()) {
+					long duration = System.currentTimeMillis() - start;
+
+					_log.info(
+						String.format(
+							"LPKG validation time %02d:%02ds",
+							MILLISECONDS.toMinutes(duration),
+							MILLISECONDS.toSeconds(duration) -
+								MINUTES.toSeconds(
+									MILLISECONDS.toMinutes(duration))));
+				}
+			}
 		}
 		catch (Exception e) {
 			if (e instanceof LPKGVerifyException) {
@@ -139,9 +196,15 @@ public class LPKGVerifierImpl implements LPKGVerifier {
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		LPKGVerifierImpl.class);
+
 	private BundleContext _bundleContext;
 
 	@Reference
 	private IndexerFactory _indexerFactory;
+
+	@Reference
+	private ValidatorFactory _validatorFactory;
 
 }

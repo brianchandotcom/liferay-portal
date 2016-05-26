@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Chat Web
+Bundle-SymbolicName: com.liferay.chat.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /chat-web

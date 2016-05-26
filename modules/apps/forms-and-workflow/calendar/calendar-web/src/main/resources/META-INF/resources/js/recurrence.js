@@ -81,6 +81,7 @@ AUI.add(
 					},
 
 					limitDateDatePicker: {
+						setter: '_setDatePicker',
 						value: null
 					},
 
@@ -476,6 +477,12 @@ AUI.add(
 						if (repeatCheckbox.get('checked')) {
 							instance.fire('recurrenceChange');
 						}
+					},
+
+					_setDatePicker: function(datePicker) {
+						datePicker.get('popover').zIndex = 30000;
+
+						return datePicker;
 					},
 
 					_toggleView: function(viewName, show) {

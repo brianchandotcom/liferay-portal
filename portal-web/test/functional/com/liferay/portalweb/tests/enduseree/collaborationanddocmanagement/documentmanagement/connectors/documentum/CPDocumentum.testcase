@@ -72,6 +72,8 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
+		<execute macro="ProductMenuHelper#closeProductMenu" />
+
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
@@ -85,6 +87,8 @@
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
+
+		<execute macro="ProductMenuHelper#closeProductMenu" />
 	</set-up>
 
 	<tear-down>

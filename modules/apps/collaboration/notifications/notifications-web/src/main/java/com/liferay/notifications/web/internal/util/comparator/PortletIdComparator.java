@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.notifications.web.util.comparator;
+package com.liferay.notifications.web.internal.util.comparator;
 
 import com.liferay.portal.kernel.util.PortalUtil;
 

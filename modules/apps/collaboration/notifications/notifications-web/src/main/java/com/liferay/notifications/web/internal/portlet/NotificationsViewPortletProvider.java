@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.notifications.web.portlet;
+package com.liferay.notifications.web.internal.portlet;
 
 import com.liferay.application.list.PanelApp;
-import com.liferay.notifications.web.constants.NotificationsPortletKeys;
+import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.notifications.web.portlet.configuration.icon;
+package com.liferay.notifications.web.internal.portlet.configuration.icon;
 
-import com.liferay.notifications.web.constants.NotificationsPortletKeys;
+import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;

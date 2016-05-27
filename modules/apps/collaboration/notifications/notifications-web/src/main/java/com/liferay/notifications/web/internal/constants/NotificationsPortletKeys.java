@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.notifications.web.constants;
+package com.liferay.notifications.web.internal.constants;
 
 /**
  * @author Sergio González

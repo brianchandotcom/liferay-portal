@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.notifications.web.poller;
+package com.liferay.notifications.web.internal.poller;
 
-import com.liferay.notifications.web.constants.NotificationsPortletKeys;
+import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.poller.BasePollerProcessor;
 import com.liferay.portal.kernel.poller.PollerProcessor;

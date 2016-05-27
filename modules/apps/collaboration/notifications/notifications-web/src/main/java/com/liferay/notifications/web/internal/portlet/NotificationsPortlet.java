@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.notifications.web.portlet;
+package com.liferay.notifications.web.internal.portlet;
 
-import com.liferay.notifications.web.constants.NotificationsPortletKeys;
+import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.UserNotificationEvent;

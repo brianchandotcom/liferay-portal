@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.notifications.web.upgrade;
+package com.liferay.notifications.web.internal.upgrade;
 
-import com.liferay.notifications.web.constants.NotificationsPortletKeys;
+import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.upgrade.BaseReplacePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -39,7 +39,7 @@ public class NotificationsWebUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.notifications.web", "0.0.1", "1.0.0",
-			new com.liferay.notifications.web.upgrade.v1_0_0.
+			new com.liferay.notifications.web.internal.upgrade.v1_0_0.
 				UpgradeUserNotificationEvent(
 					_userNotificationEventLocalService));
 
@@ -57,7 +57,7 @@ public class NotificationsWebUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.notifications.web", "1.3.0", "2.0.0",
-			new com.liferay.notifications.web.upgrade.v2_0_0.
+			new com.liferay.notifications.web.internal.upgrade.v2_0_0.
 				UpgradeUserNotificationEvent(
 					_userNotificationEventLocalService));
 
@@ -81,7 +81,7 @@ public class NotificationsWebUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.notifications.web", "2.0.0", "2.1.0",
-			new com.liferay.notifications.web.upgrade.v2_1_0.
+			new com.liferay.notifications.web.internal.upgrade.v2_1_0.
 				UpgradeUserNotificationEvent(
 					_userNotificationEventLocalService),
 			upgradePortletId);

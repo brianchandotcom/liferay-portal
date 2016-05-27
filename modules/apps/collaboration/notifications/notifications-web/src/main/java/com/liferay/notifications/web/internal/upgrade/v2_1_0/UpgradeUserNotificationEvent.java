@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.notifications.web.upgrade.v2_1_0;
+package com.liferay.notifications.web.internal.upgrade.v2_1_0;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

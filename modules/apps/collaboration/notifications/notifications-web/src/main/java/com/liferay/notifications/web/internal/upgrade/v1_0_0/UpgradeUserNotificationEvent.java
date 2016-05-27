@@ -12,22 +12,20 @@
  * details.
  */
 
-package com.liferay.notifications.web.upgrade.v2_0_0;
+package com.liferay.notifications.web.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.Validator;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.util.List;
 
 /**
  * @author Sergio González
- * @author Roberto Díaz
  */
 public class UpgradeUserNotificationEvent extends UpgradeProcess {
 
@@ -39,43 +37,59 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasTable("Notifications_UserNotificationEvent")) {
-			return;
-		}
-
 		updateUserNotificationEvents();
 	}
 
 	protected void updateUserNotificationEvents() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps = connection.prepareStatement(
-				"select userNotificationEventId from " +
-					"Notifications_UserNotificationEvent");
-			ResultSet rs = ps.executeQuery()) {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			List<UserNotificationEvent> userNotificationEvents =
+				_userNotificationEventLocalService.getTypeNotificationEvents(
+					"6_WAR_soportlet");
 
-			while (rs.next()) {
-				long userNotificationEventId = rs.getLong(
-					"userNotificationEventId");
+			for (UserNotificationEvent userNotificationEvent :
+					userNotificationEvents) {
 
-				UserNotificationEvent userNotificationEvent =
-					_userNotificationEventLocalService.getUserNotificationEvent(
-						userNotificationEventId);
-
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				JSONObject payloadJSONObject = JSONFactoryUtil.createJSONObject(
 					userNotificationEvent.getPayload());
 
-				userNotificationEvent.setDeliveryType(
-					UserNotificationDeliveryConstants.TYPE_WEBSITE);
-				userNotificationEvent.setDelivered(true);
+				String type = payloadJSONObject.getString("portletId");
 
-				boolean actionRequired = jsonObject.getBoolean(
-					"actionRequired");
+				if (Validator.isNull(type)) {
+					return;
+				}
 
-				jsonObject.remove("actionRequired");
+				payloadJSONObject.remove("portletId");
 
-				userNotificationEvent.setPayload(jsonObject.toString());
+				long entryId = payloadJSONObject.getLong("entryId");
 
-				userNotificationEvent.setActionRequired(actionRequired);
+				if (entryId > 0) {
+					payloadJSONObject.put("classPK", entryId);
+
+					payloadJSONObject.remove("entryId");
+				}
+				else if (type.equals("1_WAR_contactsportlet")) {
+					long socialRequestId = payloadJSONObject.getLong(
+						"requestId");
+
+					if (socialRequestId > 0) {
+						payloadJSONObject.put("classPK", socialRequestId);
+
+						payloadJSONObject.remove("socialRequestId");
+					}
+				}
+				else if (type.equals("2_WAR_soportlet")) {
+					long memberRequestId = payloadJSONObject.getLong(
+						"memberRequestId");
+
+					if (memberRequestId > 0) {
+						payloadJSONObject.put("classPK", memberRequestId);
+
+						payloadJSONObject.remove("memberRequestId");
+					}
+				}
+
+				userNotificationEvent.setType(type);
+				userNotificationEvent.setPayload(payloadJSONObject.toString());
 
 				_userNotificationEventLocalService.updateUserNotificationEvent(
 					userNotificationEvent);

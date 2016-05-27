@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.recent.documents.web.portlet.action;
+package com.liferay.recent.documents.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.recent.documents.web.constants.RecentDocumentsPortletKeys;
+import com.liferay.recent.documents.web.internal.constants.RecentDocumentsPortletKeys;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.recent.documents.web.messaging;
+package com.liferay.recent.documents.web.internal.messaging;
 
 import com.liferay.document.library.kernel.service.DLFileRankLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;

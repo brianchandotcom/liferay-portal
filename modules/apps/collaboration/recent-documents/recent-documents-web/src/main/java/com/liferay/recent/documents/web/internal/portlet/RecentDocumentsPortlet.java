@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.recent.documents.web.portlet;
+package com.liferay.recent.documents.web.internal.portlet;
 
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.recent.documents.web.constants.RecentDocumentsPortletKeys;
+import com.liferay.recent.documents.web.internal.constants.RecentDocumentsPortletKeys;
 
 import javax.portlet.Portlet;
 

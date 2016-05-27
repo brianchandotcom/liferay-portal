@@ -12,14 +12,21 @@
  * details.
  */
 
-package com.liferay.recent.documents.web.constants;
+package com.liferay.recent.documents.web.internal.upgrade.v1_0_0;
+
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+import com.liferay.recent.documents.web.internal.constants.RecentDocumentsPortletKeys;
 
 /**
  * @author Peter Fellwock
  */
-public class RecentDocumentsPortletKeys {
+public class UpgradePortletId extends BaseUpgradePortletId {
 
-	public static final String RECENT_DOCUMENTS =
-		"com_liferay_recent_documents_web_portlet_RecentDocumentsPortlet";
+	@Override
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {"64", RecentDocumentsPortletKeys.RECENT_DOCUMENTS}
+		};
+	}
 
 }

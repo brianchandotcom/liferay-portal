@@ -17,7 +17,7 @@ package com.liferay.wiki.internal.translator;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.wiki.internal.importer.impl.mediawiki.MediaWikiImporter;
+import com.liferay.wiki.importer.impl.mediawiki.MediaWikiImporter;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

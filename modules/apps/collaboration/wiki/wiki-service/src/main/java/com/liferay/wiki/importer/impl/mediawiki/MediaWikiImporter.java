@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.internal.importer.impl.mediawiki;
+package com.liferay.wiki.importer.impl.mediawiki;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;

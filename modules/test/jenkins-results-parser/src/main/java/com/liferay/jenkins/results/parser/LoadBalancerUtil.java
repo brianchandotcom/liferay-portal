@@ -304,30 +304,35 @@ public class LoadBalancerUtil {
 		return start + (int)Math.round(size * randomDouble);
 	}
 
-	protected static int getTotalRecentBatchSize(String hostName)
+	protected static int getRecentBatchSizesTotal(String hostName)
 		throws Exception {
 
-		Map<Long, Integer> hostRecentBatchSizesMap = _recentBatchSizesMap.get(hostName);
+		Map<Long, Integer> hostRecentBatchSizesMap = _recentBatchSizesMap.get(
+			hostName);
 
-		if ((hostRecentBatchSizesMap == null) || hostRecentBatchSizesMap.isEmpty()) {
+		if ((hostRecentBatchSizesMap == null) ||
+			hostRecentBatchSizesMap.isEmpty()) {
+
 			return 0;
 		}
 
-		int totalBatchSize = 0;
+		int batchSizeTotal = 0;
 
 		Set<Map.Entry<Long, Integer>> hostRecentBatchSizesEntrySet =
 			hostRecentBatchSizesMap.entrySet();
 		List<Map.Entry<Long, Integer>> hostRecentBatchSizeEntriesToBeRemoved =
 			new ArrayList<>(hostRecentBatchSizesMap.size());
 
-		for (Map.Entry<Long, Integer> recentBatchSize : hostRecentBatchSizesEntrySet) {
+		for (Map.Entry<Long, Integer> recentBatchSize :
+				hostRecentBatchSizesEntrySet) {
+
 			int batchSize = recentBatchSize.getValue();
 			long timestamp = recentBatchSize.getKey();
 
 			if ((timestamp + recentBatchPeriod) >
 					System.currentTimeMillis()) {
 
-				totalBatchSize += batchSize;
+				batchSizeTotal += batchSize;
 			}
 			else {
 				hostRecentBatchSizeEntriesToBeRemoved.add(recentBatchSize);
@@ -337,7 +342,7 @@ public class LoadBalancerUtil {
 		hostRecentBatchSizesEntrySet.removeAll(
 			hostRecentBatchSizeEntriesToBeRemoved);
 
-		return totalBatchSize;
+		return batchSizeTotal;
 	}
 
 	protected static void startParallelTasks(
@@ -351,7 +356,7 @@ public class LoadBalancerUtil {
 		for (String targetHostName : hostNames) {
 			FutureTask<Integer> futureTask = new FutureTask<>(
 				new AvailableSlaveCallable(
-					getTotalRecentBatchSize(targetHostName),
+					getRecentBatchSizesTotal(targetHostName),
 					properties.getProperty(
 						"jenkins.local.url[" + targetHostName + "]")));
 
@@ -494,8 +499,8 @@ public class LoadBalancerUtil {
 
 			int availableSlaveCount = idleCount - queueCount;
 
-			if (totalRecentBatchSize != null) {
-				availableSlaveCount -= totalRecentBatchSize;
+			if (recentBatchSizesTotal != null) {
+				availableSlaveCount -= recentBatchSizesTotal;
 			}
 
 			StringBuilder sb = new StringBuilder();
@@ -508,8 +513,8 @@ public class LoadBalancerUtil {
 			sb.append(idleCount);
 			sb.append(", queue=");
 			sb.append(queueCount);
-			sb.append(", totalRecentBatchSize=");
-			sb.append(totalRecentBatchSize);
+			sb.append(", recentBatchSizesTotal=");
+			sb.append(recentBatchSizesTotal);
 			sb.append(", url=");
 			sb.append(url);
 			sb.append("}");
@@ -520,14 +525,14 @@ public class LoadBalancerUtil {
 		}
 
 		protected AvailableSlaveCallable(
-			Integer totalRecentBatchSize, String url) {
+			Integer recentBatchSizesTotal, String url) {
 
-			this.totalRecentBatchSize = totalRecentBatchSize;
+			this.recentBatchSizesTotal = recentBatchSizesTotal;
 
 			this.url = url;
 		}
 
-		protected Integer totalRecentBatchSize;
+		protected Integer recentBatchSizesTotal;
 		protected String url;
 
 	}

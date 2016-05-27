@@ -91,9 +91,7 @@ AUI.add(
 						if (!selectAllCheckBox) {
 							selectAllCheckBox = instance.get('secondaryBar').one(instance.get(STR_SELECT_ALL_CHECKBOXES_SELECTOR));
 
-							if (selectAllCheckBox) {
-								instance._selectAllCheckBox = selectAllCheckBox;
-							}
+							instance._selectAllCheckBox = selectAllCheckBox;
 						}
 
 						return selectAllCheckBox;

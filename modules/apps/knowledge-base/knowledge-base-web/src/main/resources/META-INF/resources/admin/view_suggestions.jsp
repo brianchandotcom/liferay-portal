@@ -25,6 +25,11 @@
 	/>
 
 	<liferay-ui:success
+		key="suggestionsDeleted"
+		message="suggestions-deleted-successfully"
+	/>
+
+	<liferay-ui:success
 		key="suggestionStatusUpdated"
 		message="suggestion-status-updated-successfully"
 	/>

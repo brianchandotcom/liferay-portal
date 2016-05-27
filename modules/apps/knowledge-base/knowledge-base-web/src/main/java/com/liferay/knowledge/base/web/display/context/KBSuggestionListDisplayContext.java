@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -77,27 +78,54 @@ public class KBSuggestionListDisplayContext {
 			SearchContainer<KBComment> searchContainer)
 		throws PortalException {
 
+		int status = _getStatus();
+
 		if (_kbArticle == null) {
+			if (status == KBCommentConstants.STATUS_ANY) {
+				return KBCommentServiceUtil.getKBComments(
+					_groupId, searchContainer.getStart(),
+					searchContainer.getEnd(), new KBCommentStatusComparator());
+			}
+
 			return KBCommentServiceUtil.getKBComments(
-				_groupId, searchContainer.getStart(), searchContainer.getEnd(),
-				new KBCommentStatusComparator());
+				_groupId, status, searchContainer.getStart(),
+				searchContainer.getEnd());
 		}
 		else {
+			if (status == KBCommentConstants.STATUS_ANY) {
+				return KBCommentServiceUtil.getKBComments(
+					_groupId, KBArticleConstants.getClassName(),
+					_kbArticle.getClassPK(), searchContainer.getStart(),
+					searchContainer.getEnd(), new KBCommentStatusComparator());
+			}
+
 			return KBCommentServiceUtil.getKBComments(
 				_groupId, KBArticleConstants.getClassName(),
-				_kbArticle.getClassPK(), searchContainer.getStart(),
-				searchContainer.getEnd(), new KBCommentStatusComparator());
+				_kbArticle.getClassPK(), status, searchContainer.getStart(),
+				searchContainer.getEnd());
 		}
 	}
 
 	public int getKBCommentsCount() throws PortalException {
+		int status = _getStatus();
+
 		if (_kbArticle == null) {
-			return KBCommentServiceUtil.getKBCommentsCount(_groupId);
+			if (status == KBCommentConstants.STATUS_ANY) {
+				return KBCommentServiceUtil.getKBCommentsCount(_groupId);
+			}
+
+			return KBCommentServiceUtil.getKBCommentsCount(_groupId, status);
 		}
 		else {
+			if (status == KBCommentConstants.STATUS_ANY) {
+				return KBCommentServiceUtil.getKBCommentsCount(
+					_groupId, KBArticleConstants.getClassName(),
+					_kbArticle.getClassPK());
+			}
+
 			return KBCommentServiceUtil.getKBCommentsCount(
 				_groupId, KBArticleConstants.getClassName(),
-				_kbArticle.getClassPK());
+				_kbArticle.getClassPK(), status);
 		}
 	}
 
@@ -175,6 +203,22 @@ public class KBSuggestionListDisplayContext {
 		}
 
 		return false;
+	}
+
+	private int _getStatus() {
+		String navigation = ParamUtil.getString(_request, "navigation");
+
+		if (navigation.equals("new")) {
+			return KBCommentConstants.STATUS_NEW;
+		}
+		else if (navigation.equals("in-progress")) {
+			return KBCommentConstants.STATUS_IN_PROGRESS;
+		}
+		else if (navigation.equals("resolved")) {
+			return KBCommentConstants.STATUS_COMPLETED;
+		}
+
+		return KBCommentConstants.STATUS_ANY;
 	}
 
 	private final long _groupId;

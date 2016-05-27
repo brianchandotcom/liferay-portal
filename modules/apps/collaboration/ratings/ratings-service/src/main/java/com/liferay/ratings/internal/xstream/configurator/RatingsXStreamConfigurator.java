@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.ratings.xstream.configurator;
+package com.liferay.ratings.internal.xstream.configurator;
 
 import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;

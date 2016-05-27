@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.ratings.page.ratings.web.upgrade;
+package com.liferay.ratings.page.ratings.web.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;

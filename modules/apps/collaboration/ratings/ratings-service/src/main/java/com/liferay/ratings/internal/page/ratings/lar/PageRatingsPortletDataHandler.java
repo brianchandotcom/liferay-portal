@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.ratings.page.ratings.lar;
+package com.liferay.ratings.internal.page.ratings.lar;
 
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil;

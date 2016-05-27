@@ -144,6 +144,16 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	}
 
 	@Override
+	public SyncDevice toEscapedModel() {
+		return new SyncDeviceWrapper(_syncDevice.toEscapedModel());
+	}
+
+	@Override
+	public SyncDevice toUnescapedModel() {
+		return new SyncDeviceWrapper(_syncDevice.toUnescapedModel());
+	}
+
+	@Override
 	public boolean hasSetModifiedDate() {
 		return _syncDevice.hasSetModifiedDate();
 	}
@@ -179,22 +189,12 @@ public class SyncDeviceWrapper implements SyncDevice, ModelWrapper<SyncDevice> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.sync.model.SyncDevice> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<SyncDevice> toCacheModel() {
 		return _syncDevice.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.sync.model.SyncDevice toEscapedModel() {
-		return new SyncDeviceWrapper(_syncDevice.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.sync.model.SyncDevice toUnescapedModel() {
-		return new SyncDeviceWrapper(_syncDevice.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(com.liferay.sync.model.SyncDevice syncDevice) {
+	public int compareTo(SyncDevice syncDevice) {
 		return _syncDevice.compareTo(syncDevice);
 	}
 

@@ -684,7 +684,7 @@ public abstract class SyncDLFileVersionDiffLocalServiceBaseImpl
 	protected com.liferay.sync.service.SyncDeviceLocalService syncDeviceLocalService;
 	@BeanReference(type = SyncDevicePersistence.class)
 	protected SyncDevicePersistence syncDevicePersistence;
-	@BeanReference(type = com.liferay.sync.service.SyncDLFileVersionDiffLocalService.class)
+	@BeanReference(type = SyncDLFileVersionDiffLocalService.class)
 	protected SyncDLFileVersionDiffLocalService syncDLFileVersionDiffLocalService;
 	@BeanReference(type = SyncDLFileVersionDiffPersistence.class)
 	protected SyncDLFileVersionDiffPersistence syncDLFileVersionDiffPersistence;

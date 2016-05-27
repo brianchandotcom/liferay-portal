@@ -24,6 +24,9 @@ String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
+
+PortletURL redirectURL = renderResponse.createRenderURL();
+redirectURL.setParameter("mvcPath", "/view.jsp");
 %>
 
 <liferay-ui:icon-menu cssClass="lfr-asset-actions" direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showExpanded="<%= (row == null) %>">
@@ -38,7 +41,7 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 
 			<liferay-portlet:actionURL name="completeWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="editURL">
 				<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 				<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
 				<portlet:param name="workflowTaskId" value="<%= StringUtil.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 				<portlet:param name="assigneeUserId" value="<%= StringUtil.valueOf(workflowTask.getAssigneeUserId()) %>" />

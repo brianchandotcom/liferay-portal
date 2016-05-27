@@ -118,7 +118,7 @@ kbSuggestionListDisplayContext.getViewSuggestionURL(currentURLObj);
 					</liferay-portlet:renderURL>
 
 					<aui:a href="<%= rowURL.toString() %>">
-						<%= StringUtil.shorten(HtmlUtil.replaceNewLine(HtmlUtil.escape(kbComment.getContent())), 50) %>
+						<%= StringUtil.shorten(HtmlUtil.escape(kbComment.getContent()), 100) %>
 					</aui:a>
 				</h4>
 

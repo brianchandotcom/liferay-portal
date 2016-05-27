@@ -19,7 +19,7 @@
 <%
 KBComment kbComment = KBCommentServiceUtil.getKBComment(ParamUtil.getLong(request, "kbCommentId"));
 
-String kbCommentTitle = StringUtil.shorten(HtmlUtil.escape(kbComment.getContent()), 50);
+String kbCommentTitle = StringUtil.shorten(HtmlUtil.escape(kbComment.getContent()), 100);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -72,7 +72,7 @@ renderResponse.setTitle(kbCommentTitle);
 		</div>
 
 		<div class="panel-body text-default">
-			<%= kbComment.getContent() %>
+			<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(kbComment.getContent())) %>
 		</div>
 	</div>
 

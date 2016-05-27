@@ -17,7 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.BufferedReader;
 import java.io.CharArrayWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -631,11 +630,11 @@ public class JenkinsResultsParserUtil {
 
 				return sb.toString();
 			}
-			catch (FileNotFoundException fnfe) {
+			catch (IOException ioe) {
 				retryCount++;
 
 				if ((maxRetries >= 0) && (retryCount >= maxRetries)) {
-					throw fnfe;
+					throw ioe;
 				}
 
 				System.out.println("Retry in " + retryPeriod + " seconds");

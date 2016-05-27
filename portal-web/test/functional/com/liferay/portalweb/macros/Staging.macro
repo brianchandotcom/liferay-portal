@@ -396,6 +396,16 @@
 		</if>
 	</command>
 
+	<command name="customPublication">
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClickNoError" locator1="Button#PUBLISH_TO_LIVE" value1="Publish to Live" />
+
+		<execute function="Pause" locator1="30000" />
+
+		<execute function="AssertTextEquals" locator1="Staging#INITIAL_PROCESS_SUCCESSFUL" value1="Successful" />
+	</command>
+
 	<command name="deactivateStagingCP">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
@@ -559,30 +569,6 @@
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 		<execute function="Click" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" />
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-	</command>
-
-	<command name="publishGlobalToLiveCP">
-		<var name="key_siteName" value="Global" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Sites#SITE_TABLE_ACTIONS" />
-
-		<if>
-			<equals arg1="${remoteStaging}" arg2="true" />
-			<then>
-				<execute function="AssertClick" locator1="MenuItem#PUBLISH_TO_REMOTE_LIVE" value1="Publish to Remote Live" />
-			</then>
-			<else>
-				<execute function="AssertClick" locator1="MenuItem#PUBLISH_TO_LIVE" value1="Publish to Live" />
-			</else>
-		</if>
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-		<execute function="AssertClickNoError" locator1="Button#SUBMIT" value1="Publish" />
-		<execute function="Confirm" value1="Are you sure you want to publish these pages?" />
-		<execute function="AssertTextEquals" locator1="StagingPublishToLive#CURRENT_AND_PREVIOUS_TABLE_STATUS" value1="Successful" />
-		<execute function="SelectFrameTop" value1="relative=top" />
-
-		<execute function="Pause" locator1="5000" />
 	</command>
 
 	<command name="publishToLive">

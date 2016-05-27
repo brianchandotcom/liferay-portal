@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -1075,6 +1076,17 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_log.debug("Starting initial bundles");
 		}
 
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		ThrowableCollector throwableCollector = new ThrowableCollector();
+
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		dictionary.put("throwable.collector", "initial.bundles");
+
+		bundleContext.registerService(
+			ThrowableCollector.class, throwableCollector, dictionary);
+
 		List<Bundle> bundles = new ArrayList<>();
 
 		for (String initialBundle :
@@ -1123,11 +1135,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			countDownLatch.await();
 		}
 
+		throwableCollector.rethrow();
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Started initial bundles");
 		}
-
-		BundleContext bundleContext = _framework.getBundleContext();
 
 		Bundle[] installedBundles = bundleContext.getBundles();
 

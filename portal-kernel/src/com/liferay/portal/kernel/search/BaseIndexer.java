@@ -1010,22 +1010,26 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			int indexType = GetterUtil.getInteger(
 				properties.getProperty(ExpandoColumnConstants.INDEX_TYPE));
 
-			if (indexType != ExpandoColumnConstants.INDEX_TYPE_NONE) {
+			if ((indexType != ExpandoColumnConstants.INDEX_TYPE_NONE) &&
+				Validator.isNotNull(keywords)) {
+
 				String fieldName = getExpandoFieldName(
 					searchContext, expandoBridge, attributeName);
 
-				if (Validator.isNotNull(keywords)) {
-					if (searchContext.isAndSearch()) {
-						Query query = searchQuery.addRequiredTerm(
-							fieldName, keywords);
+				boolean like =
+					indexType == ExpandoColumnConstants.INDEX_TYPE_TEXT;
 
-						expandoQueries.put(attributeName, query);
-					}
-					else {
-						Query query = searchQuery.addTerm(fieldName, keywords);
+				if (searchContext.isAndSearch()) {
+					Query query = searchQuery.addRequiredTerm(
+						fieldName, keywords, like);
 
-						expandoQueries.put(attributeName, query);
-					}
+					expandoQueries.put(attributeName, query);
+				}
+				else {
+					Query query = searchQuery.addTerm(
+						fieldName, keywords, like);
+
+					expandoQueries.put(attributeName, query);
 				}
 			}
 		}

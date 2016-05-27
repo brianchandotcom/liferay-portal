@@ -14,9 +14,9 @@
 
 package com.liferay.portal.target.platform.indexer.main;
 
-import com.liferay.portal.kernel.util.Time;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.target.platform.indexer.internal.DefaultIndexValidator;
 
 import java.io.File;

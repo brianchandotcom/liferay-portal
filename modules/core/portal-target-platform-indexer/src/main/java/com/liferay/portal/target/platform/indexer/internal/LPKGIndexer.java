@@ -90,7 +90,7 @@ public class LPKGIndexer implements Indexer {
 			String versionString = properties.getProperty("version");
 
 			try {
-				new Version(versionString);
+				version = new Version(versionString);
 			}
 			catch (IllegalArgumentException iae) {
 				throw new Exception(

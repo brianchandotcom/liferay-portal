@@ -924,6 +924,10 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="tomcat" database.type="hypersonic" />
 	</target>
 
+	<target name="functional-tomcat8-mariadb100-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="mariadb" />
+	</target>
+
 	<target name="functional-tomcat8-mysql55-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.5" />
 	</target>

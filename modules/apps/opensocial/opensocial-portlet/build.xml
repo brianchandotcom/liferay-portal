@@ -5,7 +5,7 @@
 	<property name="compile.jsp.docroot.dir" value="tmp" />
 	<property name="original.war.file" value="shindig-server-2.0.2.war" />
 
-	<import file="../../../../../tools/sdk/portlets/build-common-portlet.xml" />
+	<import file="../../../../tools/sdk/portlets/build-common-portlet.xml" />
 
 	<target name="merge">
 

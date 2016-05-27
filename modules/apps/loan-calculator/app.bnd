@@ -1,8 +1,9 @@
 Liferay-Releng-App-Description:
-Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Deprecated Apps
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Loan Calculator
 Liferay-Releng-Bundle: false
-Liferay-Releng-Category: Utility
+Liferay-Releng-Category:
 Liferay-Releng-Demo-Url:
+Liferay-Releng-Deprecated: true
 Liferay-Releng-Labs: true
 Liferay-Releng-Marketplace: false
 Liferay-Releng-Public: ${liferay.releng.public}

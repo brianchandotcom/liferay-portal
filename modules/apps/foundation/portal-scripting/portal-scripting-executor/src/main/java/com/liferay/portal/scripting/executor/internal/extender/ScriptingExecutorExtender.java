@@ -58,7 +58,7 @@ public class ScriptingExecutorExtender {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleTracker = new BundleTracker<>(
-			bundleContext, Bundle.RESOLVED,
+			bundleContext, Bundle.ACTIVE,
 			new ScriptingExecutorBundleTrackerCustomizer());
 
 		_bundleTracker.open();

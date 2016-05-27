@@ -65,7 +65,7 @@ renderResponse.setTitle(kbCommentTitle);
 						PortletURL viewKBArticleURL = kbArticleURLHelper.createViewWithRedirectURL(kbArticle, currentURL);
 						%>
 
-						<a href="<%= viewKBArticleURL.toString() %>"><%= HtmlUtil.escape(kbArticle.getTitle()) %></a>
+						<a class="kb-article-link" href="<%= viewKBArticleURL.toString() %>"><%= HtmlUtil.escape(kbArticle.getTitle()) %></a>
 					</h5>
 				</div>
 			</div>

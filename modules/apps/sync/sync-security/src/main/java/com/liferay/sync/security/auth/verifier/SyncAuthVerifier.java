@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"auth.verifier.SyncAuthVerifier.urls.includes=/api/jsonws/sync-web.syncdevice/*,/api/jsonws/sync-web.syncdlobject/*"
+		"auth.verifier.SyncAuthVerifier.urls.includes=/api/jsonws/sync.syncdevice/*,/api/jsonws/sync.syncdlobject/*"
 	}
 )
 public class SyncAuthVerifier implements AuthVerifier {
@@ -121,7 +121,7 @@ public class SyncAuthVerifier implements AuthVerifier {
 		if (uri.startsWith("/download/")) {
 			String contextPath = request.getContextPath();
 
-			if (!contextPath.equals("/o/sync-web")) {
+			if (!contextPath.equals("/o/sync")) {
 				return authVerifierResult;
 			}
 		}

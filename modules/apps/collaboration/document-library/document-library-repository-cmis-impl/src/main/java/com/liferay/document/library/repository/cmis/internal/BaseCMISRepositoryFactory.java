@@ -79,7 +79,7 @@ public abstract class BaseCMISRepositoryFactory<T extends CMISRepositoryHandler>
 
 		CMISRepository cmisRepository = new CMISRepository(
 			_cmisRepositoryConfiguration, baseRepository,
-			_cmisSearchQueryBuilder, _lockManager);
+			_cmisSearchQueryBuilder, _cmisSessionCache, _lockManager);
 
 		baseRepository.setCmisRepository(cmisRepository);
 
@@ -103,6 +103,10 @@ public abstract class BaseCMISRepositoryFactory<T extends CMISRepositoryHandler>
 		CMISRepositoryConfiguration cmisRepositoryConfiguration) {
 
 		_cmisRepositoryConfiguration = cmisRepositoryConfiguration;
+	}
+
+	protected void setCMISSessionCache(CMISSessionCache cmisSessionCache) {
+		_cmisSessionCache = cmisSessionCache;
 	}
 
 	protected void setCompanyLocalService(
@@ -166,6 +170,7 @@ public abstract class BaseCMISRepositoryFactory<T extends CMISRepositoryHandler>
 	private CMISRepositoryConfiguration _cmisRepositoryConfiguration;
 	private final CMISSearchQueryBuilder _cmisSearchQueryBuilder =
 		new BaseCmisSearchQueryBuilder();
+	private CMISSessionCache _cmisSessionCache;
 	private CompanyLocalService _companyLocalService;
 	private DLAppHelperLocalService _dlAppHelperLocalService;
 	private DLFolderLocalService _dlFolderLocalService;

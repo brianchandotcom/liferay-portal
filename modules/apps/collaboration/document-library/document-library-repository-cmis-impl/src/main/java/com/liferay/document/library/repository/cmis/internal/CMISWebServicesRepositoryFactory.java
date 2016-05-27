@@ -70,6 +70,12 @@ public class CMISWebServicesRepositoryFactory
 
 	@Override
 	@Reference(unbind = "-")
+	protected void setCMISSessionCache(CMISSessionCache cmisSessionCache) {
+		super.setCMISSessionCache(cmisSessionCache);
+	}
+
+	@Override
+	@Reference(unbind = "-")
 	protected void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
 

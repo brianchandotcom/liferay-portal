@@ -1532,8 +1532,8 @@ rerun your task.
 			<record-artifact-version artifact.name="util-taglib" file="${gradle.properties.file}" />
 
 			<propertyfile file="${gradle.properties.file}">
-				<entry key="database.jdbc.oracle.driver" value="${jdbc.oracle.driver}" />
 				<entry key="database.jdbc.drivers.url" value="${test.jdbc.drivers.url}" />
+				<entry key="database.jdbc.oracle.driver" value="${jdbc.oracle.driver}" />
 				<entry key="database.oracle.version" value="${database.oracle.version}" />
 				<entry key="systemProp.build.performance.logger.enabled" value="${build.performance.logger.enabled}" />
 			</propertyfile>

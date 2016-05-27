@@ -398,8 +398,8 @@ create table DLFileEntryType (
 	createDate DATE null,
 	modifiedDate DATE null,
 	fileEntryTypeKey VARCHAR(75) null,
-	name STRING null,
-	description STRING null,
+	name TEXT null,
+	description TEXT null,
 	lastPublishDate DATE null
 );
 

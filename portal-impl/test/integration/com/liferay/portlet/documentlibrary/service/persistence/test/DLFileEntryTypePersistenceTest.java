@@ -254,8 +254,8 @@ public class DLFileEntryTypePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("DLFileEntryType", "uuid",
 			true, "fileEntryTypeId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "fileEntryTypeKey", true, "name", true,
-			"description", true, "lastPublishDate", true);
+			"modifiedDate", true, "fileEntryTypeKey", true, "lastPublishDate",
+			true);
 	}
 
 	@Test

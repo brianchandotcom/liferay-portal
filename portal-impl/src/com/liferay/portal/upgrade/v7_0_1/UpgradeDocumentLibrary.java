@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.util.RawMetadataProcessor;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.upgrade.v7_0_0.util.DLFileEntryTypeTable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,6 +55,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		updateFileEntryTypeNameAndDescriptionType();
+
 		updateTikaRawMetadataDDMStructure();
 
 		updateTikaRawMetadataFileEntryMetadata();
@@ -77,6 +80,28 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			}
 
 			return 0;
+		}
+	}
+
+	protected void updateFileEntryTypeNameAndDescriptionType()
+		throws Exception {
+
+		if (!hasColumnType(
+				DLFileEntryTypeTable.class, "description",
+				"TEXT null")) {
+
+			alter(
+				DLFileEntryTypeTable.class,
+				new AlterColumnType("description", "TEXT null"));
+		}
+
+		if (!hasColumnType(
+				DLFileEntryTypeTable.class, "description",
+				"TEXT null")) {
+
+			alter(
+				DLFileEntryTypeTable.class,
+				new AlterColumnType("description", "TEXT null"));
 		}
 	}
 

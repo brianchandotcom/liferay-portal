@@ -135,7 +135,7 @@ kbSuggestionListDisplayContext.getViewSuggestionURL(currentURLObj);
 					%>
 
 					<c:if test="<%= kbSuggestionListDisplayContext.isShowKBArticleTitle() %>">
-						<a href="<%= viewKBArticleURL.toString() %>"><%= HtmlUtil.escape(kbArticle.getTitle()) %></a>
+						<a class="kb-article-link" href="<%= viewKBArticleURL.toString() %>"><%= HtmlUtil.escape(kbArticle.getTitle()) %></a>
 					</c:if>
 				</h5>
 			</liferay-ui:search-container-column-text>

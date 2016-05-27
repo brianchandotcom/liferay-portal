@@ -24,6 +24,8 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.codec.binary.Base64;
 
+import org.json.JSONObject;
+
 /**
  * @author Kevin Yen
  */
@@ -103,22 +105,28 @@ public class JenkinsStopBuildUtil {
 			String buildURL, String username, String password)
 		throws Exception {
 
-		URL urlObject = new URL(
-			JenkinsResultsParserUtil.fixURL(
-				JenkinsResultsParserUtil.getLocalURL(buildURL + "/stop")));
+		String normalizedBuildURL = JenkinsResultsParserUtil.fixURL(
+			JenkinsResultsParserUtil.getLocalURL(buildURL));
 
-		HttpURLConnection httpConnection =
-			(HttpURLConnection)urlObject.openConnection();
+		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+			normalizedBuildURL + "/api/json?tree=result", false);
 
-		httpConnection.setRequestMethod("POST");
-		httpConnection.setRequestProperty(
-			"Authorization",
-			"Basic " + encodeAuthorizationFields(username, password));
+		if (jsonObject.has("result") && jsonObject.isNull("result")) {
+			URL urlObject = new URL(normalizedBuildURL + "/stop");
 
-		System.out.println(
-			"Response from " + buildURL + "/stop: " +
-				httpConnection.getResponseCode() + " " +
-					httpConnection.getResponseMessage());
+			HttpURLConnection httpConnection =
+				(HttpURLConnection)urlObject.openConnection();
+
+			httpConnection.setRequestMethod("POST");
+			httpConnection.setRequestProperty(
+				"Authorization",
+				"Basic " + encodeAuthorizationFields(username, password));
+
+			System.out.println(
+				"Response from " + urlObject.toString() + ": " +
+					httpConnection.getResponseCode() + " " +
+						httpConnection.getResponseMessage());
+		}
 	}
 
 	private static void _stopDownstreamBuilds(

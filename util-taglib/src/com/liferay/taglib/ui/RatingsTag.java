@@ -108,7 +108,7 @@ public class RatingsTag extends IncludeTag {
 			group = group.getLiveGroup();
 		}
 
-		RatingsType ratingsType = RatingsType.STARS;
+		RatingsType ratingsType = null;
 
 		if (group != null) {
 			try {
@@ -121,6 +121,10 @@ public class RatingsTag extends IncludeTag {
 					"Unable to get ratings type for group " +
 						group.getGroupId());
 			}
+		}
+
+		if (ratingsType == null) {
+			ratingsType = RatingsType.STARS;
 		}
 
 		return ratingsType.getValue();

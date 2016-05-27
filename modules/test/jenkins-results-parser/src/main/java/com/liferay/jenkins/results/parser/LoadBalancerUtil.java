@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -157,19 +158,13 @@ public class LoadBalancerUtil {
 			}
 			finally {
 				if (recentBuildsPeriod > 0) {
-					StringBuilder sb = new StringBuilder();
+					Map<Long, Integer> hostRecentBuildsMap =
+						_recentBuildsMap.get(hostNames.get(x));
 
-					String recentBuilds = _recentBuildsMap.get(
-						hostNames.get(x));
-
-					if (recentBuilds == null) {
-						recentBuilds = "";
-					}
-
-					sb.append(recentBuilds);
-
-					if (sb.length() > 0) {
-						sb.append("|");
+					if (hostRecentBuildsMap == null) {
+						hostRecentBuildsMap = new HashMap<>();
+						_recentBuildsMap.put(
+							hostNames.get(x), hostRecentBuildsMap);
 					}
 
 					int invokedBuildBatchSize = 0;
@@ -183,12 +178,8 @@ public class LoadBalancerUtil {
 					}
 
 					if (invokedBuildBatchSize != 0) {
-						sb.append(invokedBuildBatchSize);
-						sb.append("-");
-						sb.append(System.currentTimeMillis());
-
-						System.out.println(sb);
-						_recentBuildsMap.put(hostNames.get(x), sb.toString());
+						hostRecentBuildsMap.put(
+							System.currentTimeMillis(), invokedBuildBatchSize);
 					}
 				}
 
@@ -316,35 +307,34 @@ public class LoadBalancerUtil {
 	protected static int getRecentBuildsCount(String hostName)
 		throws Exception {
 
-		String recentBuilds = _recentBuildsMap.get(hostName);
+		Map<Long, Integer> hostRecentBuildsMap = _recentBuildsMap.get(hostName);
 
-		if ((recentBuilds == null) || (recentBuilds.length() == 0)) {
+		if ((hostRecentBuildsMap == null) || hostRecentBuildsMap.isEmpty()) {
 			return 0;
 		}
 
-		StringBuilder sb = new StringBuilder();
 		int totalBuildCount = 0;
 
-		for (String buildCountData : recentBuilds.split("\\|")) {
-			int x = buildCountData.indexOf("-");
+		Set<Map.Entry<Long, Integer>> recentBuildsMapEntrySet =
+			hostRecentBuildsMap.entrySet();
+		List<Map.Entry<Long, Integer>> recentBuildsEntriesToBeDeleted =
+			new ArrayList<>(hostRecentBuildsMap.size());
 
-			int buildCount = Integer.parseInt(buildCountData.substring(0, x));
-			long timestamp = Long.parseLong(buildCountData.substring(x + 1));
+		for (Map.Entry<Long, Integer> recentBuild : recentBuildsMapEntrySet) {
+			int buildCount = recentBuild.getValue();
+			long timestamp = recentBuild.getKey();
 
 			if ((timestamp + recentBuildsPeriod) >
 					System.currentTimeMillis()) {
 
-				if (sb.length() > 0) {
-					sb.append("|");
-				}
-
-				sb.append(buildCountData);
-
 				totalBuildCount += buildCount;
+			}
+			else {
+				recentBuildsEntriesToBeDeleted.add(recentBuild);
 			}
 		}
 
-		_recentBuildsMap.put(hostName, sb.toString());
+		recentBuildsMapEntrySet.removeAll(recentBuildsEntriesToBeDeleted);
 
 		return totalBuildCount;
 	}
@@ -417,7 +407,8 @@ public class LoadBalancerUtil {
 
 	private static final Pattern _hostnamePattern =
 		Pattern.compile(".*/(?<hostname>[^/]+)/?");
-	private static final Map<String, String> _recentBuildsMap = new HashMap<>();
+	private static final Map<String, Map<Long, Integer>> _recentBuildsMap =
+		new HashMap<>();
 	private static final Pattern _urlPattern = Pattern.compile(
 		"http://(?<hostNamePrefix>.+-\\d?).liferay.com");
 

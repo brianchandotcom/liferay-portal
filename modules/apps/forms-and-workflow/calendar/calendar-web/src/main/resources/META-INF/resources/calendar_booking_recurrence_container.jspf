@@ -286,8 +286,6 @@ if (recurrence != null) {
 
 							recurrenceContainerNode.toggle(event.newVal);
 
-							window.<portlet:namespace />updateSummaries();
-
 							instance.fillHeight(instance.bodyNode);
 						}
 					},

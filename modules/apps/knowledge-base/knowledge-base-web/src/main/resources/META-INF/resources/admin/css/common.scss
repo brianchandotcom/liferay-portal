@@ -369,24 +369,24 @@
 	.kb-select-article-breadcrumbs {
 		margin: 0 0 5px;
 	}
-}
 
-.knowledge-base-portlet-admin {
-	.panel-heading {
-		padding: 0;
+	.kb-suggestion {
+		.panel-heading {
+			padding: 0;
 
-		.card-row  {
-			padding-left: 30px;
+			.card-row  {
+				padding-left: 30px;
 
-			.card-col-content {
-				padding: 0 25px;
+				.card-col-content {
+					padding: 0 25px;
+				}
 			}
 		}
-	}
 
-	.panel-body {
-		padding: 30px;
-		padding-bottom: 60px;
+		.panel-body {
+			padding: 30px;
+			padding-bottom: 60px;
+		}
 	}
 }
 

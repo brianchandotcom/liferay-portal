@@ -2,5 +2,5 @@
 <!DOCTYPE project>
 
 <project basedir="." default="deploy" name="web-form-portlet">
-	<import file="../../../../../tools/sdk/portlets/build-common-portlet.xml" />
+	<import file="../../../../tools/sdk/portlets/build-common-portlet.xml" />
 </project>

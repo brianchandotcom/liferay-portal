@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.lpkg.deployer.LPKGVerifier;
+import com.liferay.portal.lpkg.deployer.LPKGVerifyException;
 import com.liferay.portal.lpkg.deployer.LPKGWARBundleRegistry;
 import com.liferay.portal.util.PropsValues;
 
@@ -100,12 +101,12 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 			bundleContext.getProperty("lpkg.deployer.dir"),
 			PropsValues.MODULE_FRAMEWORK_BASE_DIR + "/marketplace");
 
-		Path deploymentDirPath = Paths.get(deploymentDir);
+		_deploymentDirPath = Paths.get(deploymentDir);
 
-		Files.createDirectories(deploymentDirPath);
+		Files.createDirectories(_deploymentDirPath);
 
 		Files.walkFileTree(
-			deploymentDirPath,
+			_deploymentDirPath,
 			new SimpleFileVisitor<Path>() {
 
 				@Override
@@ -160,6 +161,14 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 	@Override
 	public List<Bundle> deploy(BundleContext bundleContext, File lpkgFile)
 		throws IOException {
+
+		Path lpkgFilePath = lpkgFile.toPath();
+
+		if (!lpkgFilePath.startsWith(_deploymentDirPath)) {
+			throw new LPKGVerifyException(
+				"Unable to deploy " + lpkgFile +
+					" from outside deployment dir " + _deploymentDirPath);
+		}
 
 		for (Bundle bundle : _lpkgVerifier.verify(lpkgFile)) {
 			try {
@@ -294,6 +303,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultLPKGDeployer.class);
 
+	private Path _deploymentDirPath;
 	private BundleTracker<List<Bundle>> _lpkgBundleTracker;
 
 	@Reference

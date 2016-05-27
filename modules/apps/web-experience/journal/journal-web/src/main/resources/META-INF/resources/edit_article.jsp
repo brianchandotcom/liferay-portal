@@ -196,6 +196,7 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 	<aui:input name="changeStructure" type="hidden" />
 	<aui:input name="ddmStructureId" type="hidden" />
 	<aui:input name="ddmTemplateId" type="hidden" />
+	<aui:input name="hideDefaultSuccessMessage" type="hidden" value="<%= classNameId == PortalUtil.getClassNameId(DDMStructure.class) %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<%

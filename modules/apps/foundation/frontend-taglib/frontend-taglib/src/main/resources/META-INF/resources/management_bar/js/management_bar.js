@@ -174,8 +174,10 @@ AUI.add(
 
 						var selectAllCheckBox = instance._getSelectAllCheckBox();
 
-						selectAllCheckBox.attr(ATTR_CHECKED, checked);
-						selectAllCheckBox.attr('indeterminate', partial && checked);
+						if (selectAllCheckBox) {
+							selectAllCheckBox.attr(ATTR_CHECKED, checked);
+							selectAllCheckBox.attr('indeterminate', partial && checked);
+						}
 					},
 
 					_updateItemsCount: function(itemsCount) {
@@ -190,44 +192,58 @@ AUI.add(
 
 					node = A.one(node);
 
-					var itemsCountContainer = node.all('.' + params.itemsCountContainerSelector);
+					if (node) {
+						var itemsCountContainer = node.all('.' + params.itemsCountContainerSelector);
 
-					itemsCountContainer.html(totalSelectedItems);
+						itemsCountContainer.html(totalSelectedItems);
 
-					var secondaryBar = node.one(STR_HASH + params.secondaryBarId);
+						var secondaryBar = node.one(STR_HASH + params.secondaryBarId);
 
-					if (secondaryBar && totalSelectedItems > 0) {
-						secondaryBar.addClass(STR_ON);
-					}
-
-					var searchContainerNode = node.one(STR_HASH + params.searchContainerNodeId);
-
-					var selectedElements = A.Array.partition(
-						state.data.elements,
-						function(item) {
-							var valueSelector = '[value="' + item.value + '"]';
-
-							return searchContainerNode.one(params.checkBoxesSelector + valueSelector);
+						if (secondaryBar && totalSelectedItems > 0) {
+							secondaryBar.addClass(STR_ON);
 						}
-					);
 
-					var onscreenSelectedItems = selectedElements.matches.length;
+						var searchContainerNode = node.one(STR_HASH + params.searchContainerNodeId);
 
-					var checkBoxes = searchContainerNode.all(params.checkBoxesSelector);
+						if (searchContainerNode) {
+							var selectedElements = A.Array.partition(
+								state.data.elements,
+								function(item) {
+									var valueSelector = '[value="' + item.value + '"]';
 
-					if (secondaryBar) {
-						var selectAllCheckBoxesCheckBox = secondaryBar.one(params.selectAllCheckBoxesSelector);
+									return searchContainerNode.one(params.checkBoxesSelector + valueSelector);
+								}
+							);
 
-						selectAllCheckBoxesCheckBox.attr(ATTR_CHECKED, onscreenSelectedItems);
+							var onscreenSelectedItems = selectedElements.matches.length;
 
-						if (onscreenSelectedItems !== checkBoxes.size()) {
-							selectAllCheckBoxesCheckBox.attr('indeterminate', true);
+							var checkBoxes = searchContainerNode.all(params.checkBoxesSelector);
+
+							if (secondaryBar) {
+								var selectAllCheckBoxesCheckBox = secondaryBar.one(params.selectAllCheckBoxesSelector);
+
+								if (selectAllCheckBoxesCheckBox) {
+									selectAllCheckBoxesCheckBox.attr(ATTR_CHECKED, onscreenSelectedItems);
+
+									if (onscreenSelectedItems !== checkBoxes.size()) {
+										selectAllCheckBoxesCheckBox.attr('indeterminate', true);
+									}
+								}
+							}
 						}
 					}
 				},
 
 				testRestoreTask: function(state, params, node) {
-					return A.one(node).one(STR_HASH + params.searchContainerNodeId);
+					var returnNode;
+
+					var currentNode = A.one(node);
+
+					if (currentNode) {
+						returnNode = currentNode.one(STR_HASH + params.searchContainerNodeId);
+					}
+
+					return returnNode;
 				}
 			}
 		);

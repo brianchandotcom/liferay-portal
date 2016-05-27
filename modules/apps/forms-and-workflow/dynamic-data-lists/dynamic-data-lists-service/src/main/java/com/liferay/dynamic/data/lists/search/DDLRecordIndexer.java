@@ -120,6 +120,12 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 			contextBooleanFilter.addRequiredTerm("recordSetId", recordSetId);
 		}
 
+		long recordSetScope = GetterUtil.getLong(
+			searchContext.getAttribute("recordSetScope"),
+			DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS);
+
+		contextBooleanFilter.addRequiredTerm("recordSetScope", recordSetScope);
+
 		addSearchClassTypeIds(contextBooleanFilter, searchContext);
 
 		String ddmStructureFieldName = (String)searchContext.getAttribute(
@@ -175,7 +181,8 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 		document.addText(
 			"ddmContent",
 			extractDDMContent(recordVersion, LocaleUtil.getSiteDefault()));
-		document.addKeyword("recordSetId", recordVersion.getRecordSetId());
+		document.addKeyword("recordSetId", recordSet.getRecordSetId());
+		document.addKeyword("recordSetScope", recordSet.getScope());
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 

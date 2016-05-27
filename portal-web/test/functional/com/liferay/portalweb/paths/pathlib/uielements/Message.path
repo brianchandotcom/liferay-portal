@@ -130,7 +130,7 @@
 </tr>
 <tr>
 	<td>INFO_NO_RESULTS_FOUND</td>
-	<td>//div[contains(@id,'EmptyResultsMessage')]//p</td>
+	<td>//div[contains(@class,'empty-result-message')]//div[contains(@class,'text-center')]</td>
 	<td></td>
 </tr>
 <tr>

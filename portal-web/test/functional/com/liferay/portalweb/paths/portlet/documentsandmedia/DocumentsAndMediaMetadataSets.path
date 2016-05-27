@@ -35,6 +35,11 @@
 </tr>
 <!--METADATA_SETS_TABLE-->
 <tr>
+	<td>METADATA_SETS_NAME</td>
+	<td>//a[contains(.,'${key_metadataSetName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METADATA_SETS_TABLE_CHECKBOX</td>
 	<td>//tr[contains(.,'${key_metadataSetName}')]/td[1]//input</td>
 	<td></td>

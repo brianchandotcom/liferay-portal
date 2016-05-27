@@ -159,9 +159,9 @@
 
 		<execute macro="DMMetadataSet#selectMetadataSetsFrame" />
 
-		<var name="key_metadataSetName" value="${metadataSetName}" />
-
-		<execute function="AssertClick" locator1="DocumentsAndMediaMetadataSets#METADATA_SETS_TABLE_CHOOSE" value1="Choose" />
+		<execute function="Click" locator1="DocumentsAndMediaMetadataSets#METADATA_SETS_NAME">
+			<var name="key_metadataSetName" value="${metadataSetName}" />
+		</execute>
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>

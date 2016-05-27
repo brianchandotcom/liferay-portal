@@ -132,6 +132,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VARIATIONS_SELECTOR</td>
+	<td>//select[contains(@id,'variationsSelector')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -162,6 +167,11 @@
 <tr>
 	<td>HISTORY_VERSION</td>
 	<td>//span[contains(@class,'layout-revision')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HISTORY_VERSION_ANCHOR</td>
+	<td>//a[contains(@class,'layout-revision')]</td>
 	<td></td>
 </tr>
 <tr>

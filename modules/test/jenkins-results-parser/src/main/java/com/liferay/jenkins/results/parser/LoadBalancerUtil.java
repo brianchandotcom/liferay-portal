@@ -157,29 +157,29 @@ public class LoadBalancerUtil {
 				return "http://" + hostNames.get(x);
 			}
 			finally {
-				if (recentBuildsPeriod > 0) {
-					Map<Long, Integer> hostRecentBuildsMap =
-						_recentBuildsMap.get(hostNames.get(x));
+				if (recentBatchPeriod > 0) {
+					Map<Long, Integer> hostRecentBatchSizesMap =
+						_recentBatchSizesMap.get(hostNames.get(x));
 
-					if (hostRecentBuildsMap == null) {
-						hostRecentBuildsMap = new HashMap<>();
-						_recentBuildsMap.put(
-							hostNames.get(x), hostRecentBuildsMap);
+					if (hostRecentBatchSizesMap == null) {
+						hostRecentBatchSizesMap = new HashMap<>();
+						_recentBatchSizesMap.put(
+							hostNames.get(x), hostRecentBatchSizesMap);
 					}
 
-					int invokedBuildBatchSize = 0;
+					int invokedBatchSize = 0;
 
 					try {
-						invokedBuildBatchSize = Integer.parseInt(
+						invokedBatchSize = Integer.parseInt(
 							properties.getProperty("invoked.job.batch.size"));
 					}
 					catch (Exception e) {
-						invokedBuildBatchSize = 1;
+						invokedBatchSize = 1;
 					}
 
-					if (invokedBuildBatchSize != 0) {
-						hostRecentBuildsMap.put(
-							System.currentTimeMillis(), invokedBuildBatchSize);
+					if (invokedBatchSize != 0) {
+						hostRecentBatchSizesMap.put(
+							System.currentTimeMillis(), invokedBatchSize);
 					}
 				}
 
@@ -304,39 +304,40 @@ public class LoadBalancerUtil {
 		return start + (int)Math.round(size * randomDouble);
 	}
 
-	protected static int getRecentBuildsCount(String hostName)
+	protected static int getTotalRecentBatchSize(String hostName)
 		throws Exception {
 
-		Map<Long, Integer> hostRecentBuildsMap = _recentBuildsMap.get(hostName);
+		Map<Long, Integer> hostRecentBatchSizesMap = _recentBatchSizesMap.get(hostName);
 
-		if ((hostRecentBuildsMap == null) || hostRecentBuildsMap.isEmpty()) {
+		if ((hostRecentBatchSizesMap == null) || hostRecentBatchSizesMap.isEmpty()) {
 			return 0;
 		}
 
-		int totalBuildCount = 0;
+		int totalBatchSize = 0;
 
-		Set<Map.Entry<Long, Integer>> recentBuildsMapEntrySet =
-			hostRecentBuildsMap.entrySet();
-		List<Map.Entry<Long, Integer>> recentBuildsEntriesToBeDeleted =
-			new ArrayList<>(hostRecentBuildsMap.size());
+		Set<Map.Entry<Long, Integer>> hostRecentBatchSizesEntrySet =
+			hostRecentBatchSizesMap.entrySet();
+		List<Map.Entry<Long, Integer>> hostRecentBatchSizeEntriesToBeRemoved =
+			new ArrayList<>(hostRecentBatchSizesMap.size());
 
-		for (Map.Entry<Long, Integer> recentBuild : recentBuildsMapEntrySet) {
-			int buildCount = recentBuild.getValue();
-			long timestamp = recentBuild.getKey();
+		for (Map.Entry<Long, Integer> recentBatchSize : hostRecentBatchSizesEntrySet) {
+			int batchSize = recentBatchSize.getValue();
+			long timestamp = recentBatchSize.getKey();
 
-			if ((timestamp + recentBuildsPeriod) >
+			if ((timestamp + recentBatchPeriod) >
 					System.currentTimeMillis()) {
 
-				totalBuildCount += buildCount;
+				totalBatchSize += batchSize;
 			}
 			else {
-				recentBuildsEntriesToBeDeleted.add(recentBuild);
+				hostRecentBatchSizeEntriesToBeRemoved.add(recentBatchSize);
 			}
 		}
 
-		recentBuildsMapEntrySet.removeAll(recentBuildsEntriesToBeDeleted);
+		hostRecentBatchSizesEntrySet.removeAll(
+			hostRecentBatchSizeEntriesToBeRemoved);
 
-		return totalBuildCount;
+		return totalBatchSize;
 	}
 
 	protected static void startParallelTasks(
@@ -350,7 +351,7 @@ public class LoadBalancerUtil {
 		for (String targetHostName : hostNames) {
 			FutureTask<Integer> futureTask = new FutureTask<>(
 				new AvailableSlaveCallable(
-					getRecentBuildsCount(targetHostName),
+					getTotalRecentBatchSize(targetHostName),
 					properties.getProperty(
 						"jenkins.local.url[" + targetHostName + "]")));
 
@@ -401,13 +402,13 @@ public class LoadBalancerUtil {
 		}
 	}
 
-	protected static long recentBuildsPeriod = 120 * 1000;
+	protected static long recentBatchPeriod = 120 * 1000;
 
 	private static final long _MAX_AGE = 30 * 1000;
 
 	private static final Pattern _hostnamePattern =
 		Pattern.compile(".*/(?<hostname>[^/]+)/?");
-	private static final Map<String, Map<Long, Integer>> _recentBuildsMap =
+	private static final Map<String, Map<Long, Integer>> _recentBatchSizesMap =
 		new HashMap<>();
 	private static final Pattern _urlPattern = Pattern.compile(
 		"http://(?<hostNamePrefix>.+-\\d?).liferay.com");
@@ -493,8 +494,8 @@ public class LoadBalancerUtil {
 
 			int availableSlaveCount = idleCount - queueCount;
 
-			if (recentBuildsCount != null) {
-				availableSlaveCount -= recentBuildsCount;
+			if (totalRecentBatchSize != null) {
+				availableSlaveCount -= totalRecentBatchSize;
 			}
 
 			StringBuilder sb = new StringBuilder();
@@ -507,8 +508,8 @@ public class LoadBalancerUtil {
 			sb.append(idleCount);
 			sb.append(", queue=");
 			sb.append(queueCount);
-			sb.append(", recentBuilds=");
-			sb.append(recentBuildsCount);
+			sb.append(", totalRecentBatchSize=");
+			sb.append(totalRecentBatchSize);
 			sb.append(", url=");
 			sb.append(url);
 			sb.append("}");
@@ -519,14 +520,14 @@ public class LoadBalancerUtil {
 		}
 
 		protected AvailableSlaveCallable(
-			Integer recentBuildsCount, String url) {
+			Integer totalRecentBatchSize, String url) {
 
-			this.recentBuildsCount = recentBuildsCount;
+			this.totalRecentBatchSize = totalRecentBatchSize;
 
 			this.url = url;
 		}
 
-		protected Integer recentBuildsCount;
+		protected Integer totalRecentBatchSize;
 		protected String url;
 
 	}

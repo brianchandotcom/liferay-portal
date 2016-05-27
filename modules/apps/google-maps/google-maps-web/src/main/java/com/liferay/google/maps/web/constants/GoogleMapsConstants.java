@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.googlemaps.portlet;
+package com.liferay.google.maps.web.constants;
 
 /**
  * @author Manuel de la Peña

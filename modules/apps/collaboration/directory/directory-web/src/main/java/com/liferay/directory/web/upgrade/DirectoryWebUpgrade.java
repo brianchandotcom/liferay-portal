@@ -29,7 +29,7 @@ public class DirectoryWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.directory.web", "0.0.0", "1.0.1",
+			"com.liferay.directory.web", "0.0.0", "1.0.0",
 			new DummyUpgradeStep());
 
 		registry.register(

@@ -30,7 +30,7 @@ public class MicroblogsWebUpgrade implements UpgradeStepRegistrator {
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.microblogs.web", "0.0.0", "1.0.1",
+			"com.liferay.microblogs.web", "0.0.0", "1.0.0",
 			new DummyUpgradeStep());
 
 		registry.register(

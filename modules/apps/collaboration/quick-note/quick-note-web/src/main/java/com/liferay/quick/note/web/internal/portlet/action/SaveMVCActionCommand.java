@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.quick.note.web.portlet.action;
+package com.liferay.quick.note.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortletPreferencesException;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.StrictPortletPreferencesImpl;
-import com.liferay.quick.note.web.constants.QuickNotePortletKeys;
+import com.liferay.quick.note.web.internal.constants.QuickNotePortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

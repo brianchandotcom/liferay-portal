@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.quick.note.web.constants;
+package com.liferay.quick.note.web.internal.constants;
 
 /**
  * @author Eudaldo Alonso

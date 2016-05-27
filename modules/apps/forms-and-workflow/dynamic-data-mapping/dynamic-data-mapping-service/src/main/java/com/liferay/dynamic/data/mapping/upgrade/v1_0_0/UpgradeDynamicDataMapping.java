@@ -448,7 +448,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 		if (classPK == 0) {
 			return PortalUtil.getClassNameId(
-				"com.liferay.journal.model.JournalArticle");
+				"com.liferay.portlet.journal.model.JournalArticle");
 		}
 
 		return _structureClassNameIds.get(classPK);

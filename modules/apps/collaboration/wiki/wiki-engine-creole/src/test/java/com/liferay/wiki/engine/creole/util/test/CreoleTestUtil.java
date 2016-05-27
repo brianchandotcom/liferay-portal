@@ -15,10 +15,10 @@
 package com.liferay.wiki.engine.creole.util.test;
 
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
-import com.liferay.wiki.engine.creole.parser.ast.WikiPageNode;
-import com.liferay.wiki.engine.creole.parser.parser.Creole10Lexer;
-import com.liferay.wiki.engine.creole.parser.parser.Creole10Parser;
-import com.liferay.wiki.engine.creole.util.WikiEngineCreoleComponentProvider;
+import com.liferay.wiki.engine.creole.internal.parser.ast.WikiPageNode;
+import com.liferay.wiki.engine.creole.internal.parser.parser.Creole10Lexer;
+import com.liferay.wiki.engine.creole.internal.parser.parser.Creole10Parser;
+import com.liferay.wiki.engine.creole.internal.util.WikiEngineCreoleComponentProvider;
 
 import java.io.IOException;
 import java.io.InputStream;

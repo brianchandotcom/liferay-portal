@@ -22,14 +22,14 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.VerifyResourcePermissions;
 import com.liferay.portal.verify.VerifyUUID;
+import com.liferay.wiki.internal.verify.model.WikiNodeVerifiableModel;
+import com.liferay.wiki.internal.verify.model.WikiPageResourceVerifiableModel;
+import com.liferay.wiki.internal.verify.model.WikiPageVerifiableModel;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.WikiPageResourceLocalService;
 import com.liferay.wiki.util.comparator.PageVersionComparator;
-import com.liferay.wiki.verify.model.WikiNodeVerifiableModel;
-import com.liferay.wiki.verify.model.WikiPageResourceVerifiableModel;
-import com.liferay.wiki.verify.model.WikiPageVerifiableModel;
 
 import java.util.Date;
 import java.util.List;

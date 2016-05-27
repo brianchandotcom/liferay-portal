@@ -15,7 +15,7 @@
 package com.liferay.wiki.web.util;
 
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
-import com.liferay.wiki.web.display.context.WikiDisplayContextProvider;
+import com.liferay.wiki.web.internal.display.context.WikiDisplayContextProvider;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;

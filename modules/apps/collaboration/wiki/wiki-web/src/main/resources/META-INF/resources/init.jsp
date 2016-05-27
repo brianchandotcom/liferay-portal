@@ -100,8 +100,8 @@ page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.trash.kernel.model.TrashEntry" %><%@
 page import="com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil" %><%@
 page import="com.liferay.trash.kernel.util.TrashUtil" %><%@
-page import="com.liferay.wiki.web.search.NodesChecker" %><%@
-page import="com.liferay.wiki.web.search.PagesChecker" %><%@
+page import="com.liferay.wiki.web.internal.search.NodesChecker" %><%@
+page import="com.liferay.wiki.web.internal.search.PagesChecker" %><%@
 page import="com.liferay.wiki.web.util.WikiPortletUtil" %>
 
 <%@ page import="java.text.DecimalFormatSymbols" %><%@

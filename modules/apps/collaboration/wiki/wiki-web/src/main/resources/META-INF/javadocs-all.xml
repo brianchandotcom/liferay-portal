@@ -45,7 +45,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiPanelApp</name>
-		<type>com.liferay.wiki.web.application.list.WikiPanelApp</type>
+		<type>com.liferay.wiki.web.internal.application.list.WikiPanelApp</type>
 		<author><![CDATA[Eudaldo Alonso]]></author>
 		<method>
 			<name>getParentCategoryKey</name>
@@ -127,7 +127,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiPageCustomAttributesDisplay</name>
-		<type>com.liferay.wiki.web.custom.attributes.WikiPageCustomAttributesDisplay</type>
+		<type>com.liferay.wiki.web.internal.custom.attributes.WikiPageCustomAttributesDisplay</type>
 		<author><![CDATA[Jorge Ferrer]]></author>
 		<method>
 			<name>getClassName</name>
@@ -149,7 +149,7 @@
 	</javadoc>
 	<javadoc>
 		<name>DefaultWikiEditPageDisplayContext</name>
-		<type>com.liferay.wiki.web.display.context.DefaultWikiEditPageDisplayContext</type>
+		<type>com.liferay.wiki.web.internal.display.context.DefaultWikiEditPageDisplayContext</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>DefaultWikiEditPageDisplayContext</name>
@@ -181,7 +181,7 @@
 	</javadoc>
 	<javadoc>
 		<name>DefaultWikiListPagesDisplayContext</name>
-		<type>com.liferay.wiki.web.display.context.DefaultWikiListPagesDisplayContext</type>
+		<type>com.liferay.wiki.web.internal.display.context.DefaultWikiListPagesDisplayContext</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>DefaultWikiListPagesDisplayContext</name>
@@ -361,7 +361,7 @@
 	</javadoc>
 	<javadoc>
 		<name>DefaultWikiViewPageDisplayContext</name>
-		<type>com.liferay.wiki.web.display.context.DefaultWikiViewPageDisplayContext</type>
+		<type>com.liferay.wiki.web.internal.display.context.DefaultWikiViewPageDisplayContext</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>DefaultWikiViewPageDisplayContext</name>
@@ -393,7 +393,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiDisplayContextProvider</name>
-		<type>com.liferay.wiki.web.display.context.WikiDisplayContextProvider</type>
+		<type>com.liferay.wiki.web.internal.display.context.WikiDisplayContextProvider</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>getWikiEditPageDisplayContext</name>
@@ -491,13 +491,13 @@
 	</javadoc>
 	<javadoc>
 		<name>MailTemplatesHelper</name>
-		<type>com.liferay.wiki.web.display.context.logic.MailTemplatesHelper</type>
+		<type>com.liferay.wiki.web.internal.display.context.logic.MailTemplatesHelper</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>MailTemplatesHelper</name>
 			<param>
 				<name>wikiRequestHelper</name>
-				<type>com.liferay.wiki.web.display.context.util.WikiRequestHelper</type>
+				<type>com.liferay.wiki.web.internal.display.context.util.WikiRequestHelper</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
@@ -522,13 +522,13 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiPortletInstanceSettingsHelper</name>
-		<type>com.liferay.wiki.web.display.context.logic.WikiPortletInstanceSettingsHelper</type>
+		<type>com.liferay.wiki.web.internal.display.context.logic.WikiPortletInstanceSettingsHelper</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>WikiPortletInstanceSettingsHelper</name>
 			<param>
 				<name>wikiRequestHelper</name>
-				<type>com.liferay.wiki.web.display.context.util.WikiRequestHelper</type>
+				<type>com.liferay.wiki.web.internal.display.context.util.WikiRequestHelper</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
@@ -668,13 +668,13 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiVisualizationHelper</name>
-		<type>com.liferay.wiki.web.display.context.logic.WikiVisualizationHelper</type>
+		<type>com.liferay.wiki.web.internal.display.context.logic.WikiVisualizationHelper</type>
 		<author><![CDATA[Adolfo Pérez]]></author>
 		<method>
 			<name>WikiVisualizationHelper</name>
 			<param>
 				<name>wikiRequestHelper</name>
-				<type>com.liferay.wiki.web.display.context.util.WikiRequestHelper</type>
+				<type>com.liferay.wiki.web.internal.display.context.util.WikiRequestHelper</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -773,7 +773,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiRequestHelper</name>
-		<type>com.liferay.wiki.web.display.context.util.WikiRequestHelper</type>
+		<type>com.liferay.wiki.web.internal.display.context.util.WikiRequestHelper</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>WikiRequestHelper</name>
@@ -822,7 +822,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiURLHelper</name>
-		<type>com.liferay.wiki.web.display.context.util.WikiURLHelper</type>
+		<type>com.liferay.wiki.web.internal.display.context.util.WikiURLHelper</type>
 		<author><![CDATA[Adolfo Pérez]]></author>
 		<method>
 			<name>WikiURLHelper</name>
@@ -1025,7 +1025,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiAttachmentItemSelectorView</name>
-		<type>com.liferay.wiki.web.item.selector.view.WikiAttachmentItemSelectorView</type>
+		<type>com.liferay.wiki.web.internal.item.selector.view.WikiAttachmentItemSelectorView</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>getItemSelectorCriterionClass</name>
@@ -1114,7 +1114,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiAttachmentItemSelectorViewDisplayContext</name>
-		<type>com.liferay.wiki.web.item.selector.view.display.context.WikiAttachmentItemSelectorViewDisplayContext</type>
+		<type>com.liferay.wiki.web.internal.item.selector.view.display.context.WikiAttachmentItemSelectorViewDisplayContext</type>
 		<author><![CDATA[Roberto Díaz]]></author>
 		<method>
 			<name>WikiAttachmentItemSelectorViewDisplayContext</name>
@@ -1125,7 +1125,7 @@
 			</param>
 			<param>
 				<name>wikiAttachmentItemSelectorView</name>
-				<type>com.liferay.wiki.web.item.selector.view.WikiAttachmentItemSelectorView</type>
+				<type>com.liferay.wiki.web.internal.item.selector.view.WikiAttachmentItemSelectorView</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -1243,7 +1243,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiPermissionPropagatorImpl</name>
-		<type>com.liferay.wiki.web.security.permission.WikiPermissionPropagatorImpl</type>
+		<type>com.liferay.wiki.web.internal.security.permission.WikiPermissionPropagatorImpl</type>
 		<author><![CDATA[Hugo Huijser]]></author>
 		<author><![CDATA[Angelo Jefferson]]></author>
 		<method>
@@ -1423,7 +1423,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiWebUpgrade</name>
-		<type>com.liferay.wiki.web.upgrade.WikiWebUpgrade</type>
+		<type>com.liferay.wiki.web.internal.upgrade.WikiWebUpgrade</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>setReleaseLocalService</name>
@@ -1466,7 +1466,7 @@
 	</javadoc>
 	<javadoc>
 		<name>UpgradePortletSettings</name>
-		<type>com.liferay.wiki.web.upgrade.v1_0_0.UpgradePortletSettings</type>
+		<type>com.liferay.wiki.web.internal.upgrade.v1_0_0.UpgradePortletSettings</type>
 		<author><![CDATA[Iván Zaera]]></author>
 		<method>
 			<name>UpgradePortletSettings</name>
@@ -1511,7 +1511,7 @@
 			<name>setWikiDisplayContextProvider</name>
 			<param>
 				<name>wikiDisplayContextProvider</name>
-				<type>com.liferay.wiki.web.display.context.WikiDisplayContextProvider</type>
+				<type>com.liferay.wiki.web.internal.display.context.WikiDisplayContextProvider</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
@@ -3406,7 +3406,7 @@
 	</javadoc>
 	<javadoc>
 		<name>WikiPageWorkflowHandler</name>
-		<type>com.liferay.wiki.web.workflow.WikiPageWorkflowHandler</type>
+		<type>com.liferay.wiki.web.internal.workflow.WikiPageWorkflowHandler</type>
 		<author><![CDATA[Jorge Ferrer]]></author>
 		<author><![CDATA[Julio Camarero]]></author>
 		<method>

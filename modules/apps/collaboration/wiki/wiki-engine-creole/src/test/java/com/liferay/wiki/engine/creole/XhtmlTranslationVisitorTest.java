@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.HtmlImpl;
-import com.liferay.wiki.engine.creole.parser.visitor.impl.XhtmlTranslationVisitor;
-import com.liferay.wiki.engine.creole.util.WikiEngineCreoleComponentProvider;
+import com.liferay.wiki.engine.creole.internal.parser.visitor.impl.XhtmlTranslationVisitor;
+import com.liferay.wiki.engine.creole.internal.util.WikiEngineCreoleComponentProvider;
 import com.liferay.wiki.engine.creole.util.test.CreoleTestUtil;
 
 import org.junit.After;

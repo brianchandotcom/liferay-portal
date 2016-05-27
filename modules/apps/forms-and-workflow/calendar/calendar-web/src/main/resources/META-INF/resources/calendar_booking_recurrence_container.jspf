@@ -312,7 +312,14 @@ if (recurrence != null) {
 								label: '<liferay-ui:message key="cancel" />',
 								on: {
 									click: function() {
-										recurrenceDialogController.set('recurrence', currentRecurrence);
+										if (currentRecurrence !== null) {
+											recurrenceDialogController.set('recurrence', currentRecurrence);
+										}
+										else {
+											repeatCheckboxNode.set('checked', false);
+											summaryNode.empty();
+										}
+
 										window.<portlet:namespace />recurrenceDialog.hide();
 									}
 								}

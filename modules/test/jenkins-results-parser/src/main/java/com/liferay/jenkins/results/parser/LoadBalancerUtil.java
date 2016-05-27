@@ -17,9 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.StringReader;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -35,8 +32,6 @@ import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.tools.ant.Project;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -45,23 +40,11 @@ import org.json.JSONObject;
  */
 public class LoadBalancerUtil {
 
-	public static String getMostAvailableMasterURL(Project project)
-		throws Exception {
-
-		return getMostAvailableMasterURL(
-			"base.invocation.url", project.getProperty("base.invocation.url"),
-			"invoked.job.batch.size",
-			project.getProperty("invoked.job.batch.size"),
-			"top.level.shared.dir",
-			project.getProperty("top.level.shared.dir"));
-	}
-
 	public static String getMostAvailableMasterURL(Properties properties)
 		throws Exception {
 
 		long start = System.currentTimeMillis();
 
-		boolean readOnly = false;
 		int retryCount = 0;
 
 		while (true) {
@@ -80,34 +63,6 @@ public class LoadBalancerUtil {
 				return "http://" + hostNamePrefix + "-1";
 			}
 
-			File sharedDir = new File(
-				properties.getProperty("jenkins.shared.dir", "NULL"));
-
-			if (!sharedDir.exists() || !sharedDir.isDirectory()) {
-				readOnly = true;
-
-				System.out.println(
-					"Load balancer will run in read only mode because of " +
-						"missing shared directory " + sharedDir.getPath() +
-							".");
-			}
-
-			Map<String, Integer> recentJobMap = new HashMap<>();
-
-			if (!readOnly) {
-				File baseDir = new File(sharedDir, hostNamePrefix);
-
-				File semaphoreFile = new File(
-					baseDir, hostNamePrefix + ".semaphore");
-
-				waitForTurn(semaphoreFile, hostNames.size());
-
-				JenkinsResultsParserUtil.write(semaphoreFile, _MY_HOST_NAME);
-
-				recentJobMap = getRecentJobCountMap(
-					new File(baseDir, "recentJob"));
-			}
-
 			int maxAvailableSlaveCount = Integer.MIN_VALUE;
 			int x = -1;
 
@@ -116,8 +71,7 @@ public class LoadBalancerUtil {
 					hostNames.size());
 
 				startParallelTasks(
-					recentJobMap, hostNames, hostNamePrefix, properties,
-					futureTasks);
+					hostNames, hostNamePrefix, properties, futureTasks);
 
 				List<Integer> badIndices = new ArrayList<>(futureTasks.size());
 				List<Integer> maxIndices = new ArrayList<>(futureTasks.size());
@@ -202,63 +156,38 @@ public class LoadBalancerUtil {
 				return "http://" + hostNames.get(x);
 			}
 			finally {
-				if (!readOnly) {
-					File baseDir = new File(sharedDir, hostNamePrefix);
+				if (recentJobPeriod > 0) {
+					StringBuilder sb = new StringBuilder();
 
-					File semaphoreFile = new File(
-						baseDir, hostNamePrefix + ".semaphore");
+					String recentJobs = _recentJobsMap.get(hostNames.get(x));
 
-					long age =
-						System.currentTimeMillis() -
-							semaphoreFile.lastModified();
-
-					System.out.println(
-						"Semaphore " + semaphoreFile + " was last modified " +
-							(age / 1000F) + " seconds ago.");
-
-					String content = JenkinsResultsParserUtil.read(
-						semaphoreFile);
-
-					if (content.equals(_MY_HOST_NAME)) {
-						if (recentJobPeriod > 0) {
-							StringBuilder sb = new StringBuilder();
-
-							File recentJobFile = new File(
-								baseDir, "recentJob/" + hostNames.get(x));
-
-							if (recentJobFile.exists()) {
-								sb.append(
-									JenkinsResultsParserUtil.read(
-										recentJobFile));
-
-								if (sb.length() > 0) {
-									sb.append("|");
-								}
-							}
-
-							String invokedJobBatchSize = properties.getProperty(
-								"invoked.job.batch.size");
-
-							if ((invokedJobBatchSize == null) ||
-								(invokedJobBatchSize.length() == 0)) {
-
-								invokedJobBatchSize = "1";
-							}
-
-							sb.append(invokedJobBatchSize);
-							sb.append("-");
-							sb.append(System.currentTimeMillis());
-
-							JenkinsResultsParserUtil.write(
-								recentJobFile, sb.toString());
-						}
-
-						JenkinsResultsParserUtil.write(semaphoreFile, "");
+					if (recentJobs == null) {
+						recentJobs = "";
 					}
-					else {
-						System.out.println(
-							"Sempahore " + semaphoreFile +
-								" was overwritten with: " + content);
+
+					sb.append(recentJobs);
+
+					if (sb.length() > 0) {
+						sb.append("|");
+					}
+
+					int invokedJobBatchSize = 0;
+
+					try {
+						invokedJobBatchSize = Integer.parseInt(
+							properties.getProperty("invoked.job.batch.size"));
+					}
+					catch (Exception e) {
+						invokedJobBatchSize = 1;
+					}
+
+					if (invokedJobBatchSize != 0) {
+						sb.append(invokedJobBatchSize);
+						sb.append("-");
+						sb.append(System.currentTimeMillis());
+
+						System.out.println(sb);
+						_recentJobsMap.put(hostNames.get(x), sb.toString());
 					}
 				}
 
@@ -383,76 +312,43 @@ public class LoadBalancerUtil {
 		return start + (int)Math.round(size * randomDouble);
 	}
 
-	protected static Map<String, Integer> getRecentJobCountMap(File dir)
-		throws Exception {
+	protected static int getRecentJobCount(String hostName) throws Exception {
+		String recentJobs = _recentJobsMap.get(hostName);
 
-		Map<String, Integer> jobCountMap = new HashMap<>();
-
-		if (!dir.exists()) {
-			return jobCountMap;
+		if ((recentJobs == null) || (recentJobs.length() == 0)) {
+			return 0;
 		}
 
-		for (File file : dir.listFiles()) {
-			if ((System.currentTimeMillis() - file.lastModified()) >
-					recentJobPeriod) {
+		StringBuilder sb = new StringBuilder();
+		int totalJobCount = 0;
 
-				file.delete();
+		for (String jobCountData : recentJobs.split("\\|")) {
+			int x = jobCountData.indexOf("-");
 
-				continue;
-			}
+			int jobCount = Integer.parseInt(jobCountData.substring(0, x));
+			long timestamp = Long.parseLong(jobCountData.substring(x + 1));
 
-			try {
-				String content = JenkinsResultsParserUtil.read(file);
-
-				if (content.length() == 0) {
-					continue;
-				}
-
-				StringBuilder sb = new StringBuilder();
-				int totalJobCount = 0;
-
-				for (String jobCountData : content.split("\\|")) {
-					int x = jobCountData.indexOf("-");
-
-					int jobCount = Integer.parseInt(
-						jobCountData.substring(0, x));
-					long timestamp = Long.parseLong(
-						jobCountData.substring(x + 1));
-
-					if ((timestamp + recentJobPeriod) >
-							System.currentTimeMillis()) {
-
-						if (sb.length() > 0) {
-							sb.append("|");
-						}
-
-						sb.append(jobCountData);
-
-						totalJobCount += jobCount;
-					}
-				}
-
-				jobCountMap.put(file.getName(), totalJobCount);
+			if ((timestamp + recentJobPeriod) >
+					System.currentTimeMillis()) {
 
 				if (sb.length() > 0) {
-					JenkinsResultsParserUtil.write(file, sb.toString());
+					sb.append("|");
 				}
-				else {
-					file.delete();
-				}
-			}
-			catch (Exception e) {
-				file.delete();
+
+				sb.append(jobCountData);
+
+				totalJobCount += jobCount;
 			}
 		}
 
-		return jobCountMap;
+		_recentJobsMap.put(hostName, sb.toString());
+
+		return totalJobCount;
 	}
 
 	protected static void startParallelTasks(
-			Map<String, Integer> recentJobMap, List<String> hostNames,
-			String hostNamePrefix, Properties properties,
-			List<FutureTask<Integer>> futureTasks)
+			List<String> hostNames, String hostNamePrefix,
+			Properties properties, List<FutureTask<Integer>> futureTasks)
 		throws Exception {
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
@@ -461,7 +357,7 @@ public class LoadBalancerUtil {
 		for (String targetHostName : hostNames) {
 			FutureTask<Integer> futureTask = new FutureTask<>(
 				new AvailableSlaveCallable(
-					recentJobMap.get(targetHostName),
+					getRecentJobCount(targetHostName),
 					properties.getProperty(
 						"jenkins.local.url[" + targetHostName + "]")));
 
@@ -516,27 +412,11 @@ public class LoadBalancerUtil {
 
 	private static final long _MAX_AGE = 30 * 1000;
 
-	private static final String _MY_HOST_NAME;
-
 	private static final Pattern _hostnamePattern =
 		Pattern.compile(".*/(?<hostname>[^/]+)/?");
+	private static final Map<String, String> _recentJobsMap = new HashMap<>();
 	private static final Pattern _urlPattern = Pattern.compile(
 		"http://(?<hostNamePrefix>.+-\\d?).liferay.com");
-
-	static {
-		String inetHostName = null;
-
-		try {
-			InetAddress inetAddress = InetAddress.getLocalHost();
-
-			inetHostName = inetAddress.getHostName();
-		}
-		catch (UnknownHostException uhe) {
-			inetHostName = "UNKNOWN";
-		}
-
-		_MY_HOST_NAME = inetHostName;
-	}
 
 	private static class AvailableSlaveCallable implements Callable<Integer> {
 

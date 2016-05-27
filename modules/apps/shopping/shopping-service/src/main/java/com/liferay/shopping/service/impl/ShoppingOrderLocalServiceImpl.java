@@ -139,14 +139,6 @@ public class ShoppingOrderLocalServiceImpl
 
 		shoppingOrderPersistence.update(order);
 
-		// Comment
-
-		if (PropsValues.SHOPPING_ORDER_COMMENTS_ENABLED) {
-			CommentManagerUtil.addDiscussion(
-				userId, groupId, ShoppingOrder.class.getName(), orderId,
-				order.getUserName());
-		}
-
 		// Resources
 
 		resourceLocalService.addResources(

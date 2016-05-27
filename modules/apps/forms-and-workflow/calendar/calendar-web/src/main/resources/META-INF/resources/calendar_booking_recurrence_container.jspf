@@ -279,9 +279,13 @@ if (recurrence != null) {
 				dialog: {
 					after: {
 						visibleChange: function(event) {
+							var instance = this;
+
 							recurrenceContainerNode.toggle(event.newVal);
 
 							window.<portlet:namespace />updateSummaries();
+
+							instance.fillHeight(instance.bodyNode);
 						}
 					},
 					bodyContent: recurrenceContainerNode,
@@ -378,8 +382,6 @@ if (recurrence != null) {
 
 		if (window.<portlet:namespace />recurrenceDialog) {
 			window.<portlet:namespace />recurrenceDialog.titleNode.html(getRecurrenceDialogTitle());
-
-			window.<portlet:namespace />recurrenceDialog.fillHeight(window.<portlet:namespace />recurrenceDialog.bodyNode);
 		}
 	};
 

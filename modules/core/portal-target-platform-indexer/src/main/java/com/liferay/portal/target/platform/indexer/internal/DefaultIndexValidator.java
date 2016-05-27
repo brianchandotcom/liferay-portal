@@ -30,9 +30,9 @@ import java.io.FilenameFilter;
 import java.io.InputStream;
 
 import java.net.URI;
+import java.net.URL;
 
 import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -66,10 +66,14 @@ public class DefaultIndexValidator implements IndexValidator {
 		Set<String> identities = new HashSet<>();
 
 		for (URI uri : indexURIs) {
-			String identity = _getRepositoryIdentity(
-				uri.getPath(), Files.newInputStream(Paths.get(uri)));
+			URL url = uri.toURL();
 
-			identities.add(identity);
+			try (InputStream inputStream = url.openStream()) {
+				String identity = _getRepositoryIdentity(
+					uri.getPath(), inputStream);
+
+				identities.add(identity);
+			}
 		}
 
 		try (ResolverValidator resolverValidator = new ResolverValidator()) {

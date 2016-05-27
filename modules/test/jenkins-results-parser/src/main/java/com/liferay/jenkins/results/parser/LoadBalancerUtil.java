@@ -156,38 +156,39 @@ public class LoadBalancerUtil {
 				return "http://" + hostNames.get(x);
 			}
 			finally {
-				if (recentJobPeriod > 0) {
+				if (recentBuildsPeriod > 0) {
 					StringBuilder sb = new StringBuilder();
 
-					String recentJobs = _recentJobsMap.get(hostNames.get(x));
+					String recentBuilds = _recentBuildsMap.get(
+						hostNames.get(x));
 
-					if (recentJobs == null) {
-						recentJobs = "";
+					if (recentBuilds == null) {
+						recentBuilds = "";
 					}
 
-					sb.append(recentJobs);
+					sb.append(recentBuilds);
 
 					if (sb.length() > 0) {
 						sb.append("|");
 					}
 
-					int invokedJobBatchSize = 0;
+					int invokedBuildBatchSize = 0;
 
 					try {
-						invokedJobBatchSize = Integer.parseInt(
+						invokedBuildBatchSize = Integer.parseInt(
 							properties.getProperty("invoked.job.batch.size"));
 					}
 					catch (Exception e) {
-						invokedJobBatchSize = 1;
+						invokedBuildBatchSize = 1;
 					}
 
-					if (invokedJobBatchSize != 0) {
-						sb.append(invokedJobBatchSize);
+					if (invokedBuildBatchSize != 0) {
+						sb.append(invokedBuildBatchSize);
 						sb.append("-");
 						sb.append(System.currentTimeMillis());
 
 						System.out.println(sb);
-						_recentJobsMap.put(hostNames.get(x), sb.toString());
+						_recentBuildsMap.put(hostNames.get(x), sb.toString());
 					}
 				}
 
@@ -312,38 +313,40 @@ public class LoadBalancerUtil {
 		return start + (int)Math.round(size * randomDouble);
 	}
 
-	protected static int getRecentJobCount(String hostName) throws Exception {
-		String recentJobs = _recentJobsMap.get(hostName);
+	protected static int getRecentBuildsCount(String hostName)
+		throws Exception {
 
-		if ((recentJobs == null) || (recentJobs.length() == 0)) {
+		String recentBuilds = _recentBuildsMap.get(hostName);
+
+		if ((recentBuilds == null) || (recentBuilds.length() == 0)) {
 			return 0;
 		}
 
 		StringBuilder sb = new StringBuilder();
-		int totalJobCount = 0;
+		int totalBuildCount = 0;
 
-		for (String jobCountData : recentJobs.split("\\|")) {
-			int x = jobCountData.indexOf("-");
+		for (String buildCountData : recentBuilds.split("\\|")) {
+			int x = buildCountData.indexOf("-");
 
-			int jobCount = Integer.parseInt(jobCountData.substring(0, x));
-			long timestamp = Long.parseLong(jobCountData.substring(x + 1));
+			int buildCount = Integer.parseInt(buildCountData.substring(0, x));
+			long timestamp = Long.parseLong(buildCountData.substring(x + 1));
 
-			if ((timestamp + recentJobPeriod) >
+			if ((timestamp + recentBuildsPeriod) >
 					System.currentTimeMillis()) {
 
 				if (sb.length() > 0) {
 					sb.append("|");
 				}
 
-				sb.append(jobCountData);
+				sb.append(buildCountData);
 
-				totalJobCount += jobCount;
+				totalBuildCount += buildCount;
 			}
 		}
 
-		_recentJobsMap.put(hostName, sb.toString());
+		_recentBuildsMap.put(hostName, sb.toString());
 
-		return totalJobCount;
+		return totalBuildCount;
 	}
 
 	protected static void startParallelTasks(
@@ -357,7 +360,7 @@ public class LoadBalancerUtil {
 		for (String targetHostName : hostNames) {
 			FutureTask<Integer> futureTask = new FutureTask<>(
 				new AvailableSlaveCallable(
-					getRecentJobCount(targetHostName),
+					getRecentBuildsCount(targetHostName),
 					properties.getProperty(
 						"jenkins.local.url[" + targetHostName + "]")));
 
@@ -408,13 +411,13 @@ public class LoadBalancerUtil {
 		}
 	}
 
-	protected static long recentJobPeriod = 120 * 1000;
+	protected static long recentBuildsPeriod = 120 * 1000;
 
 	private static final long _MAX_AGE = 30 * 1000;
 
 	private static final Pattern _hostnamePattern =
 		Pattern.compile(".*/(?<hostname>[^/]+)/?");
-	private static final Map<String, String> _recentJobsMap = new HashMap<>();
+	private static final Map<String, String> _recentBuildsMap = new HashMap<>();
 	private static final Pattern _urlPattern = Pattern.compile(
 		"http://(?<hostNamePrefix>.+-\\d?).liferay.com");
 
@@ -499,8 +502,8 @@ public class LoadBalancerUtil {
 
 			int availableSlaveCount = idleCount - queueCount;
 
-			if (recentJobCount != null) {
-				availableSlaveCount -= recentJobCount;
+			if (recentBuildsCount != null) {
+				availableSlaveCount -= recentBuildsCount;
 			}
 
 			StringBuilder sb = new StringBuilder();
@@ -513,8 +516,8 @@ public class LoadBalancerUtil {
 			sb.append(idleCount);
 			sb.append(", queue=");
 			sb.append(queueCount);
-			sb.append(", recentJobs=");
-			sb.append(recentJobCount);
+			sb.append(", recentBuilds=");
+			sb.append(recentBuildsCount);
 			sb.append(", url=");
 			sb.append(url);
 			sb.append("}");
@@ -524,13 +527,15 @@ public class LoadBalancerUtil {
 			return availableSlaveCount;
 		}
 
-		protected AvailableSlaveCallable(Integer recentJobCount, String url) {
-			this.recentJobCount = recentJobCount;
+		protected AvailableSlaveCallable(
+			Integer recentBuildsCount, String url) {
+
+			this.recentBuildsCount = recentBuildsCount;
 
 			this.url = url;
 		}
 
-		protected Integer recentJobCount;
+		protected Integer recentBuildsCount;
 		protected String url;
 
 	}

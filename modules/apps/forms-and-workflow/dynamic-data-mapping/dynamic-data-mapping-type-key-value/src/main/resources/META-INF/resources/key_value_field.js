@@ -10,6 +10,10 @@ AUI.add(
 						value: false
 					},
 
+					generationLocked: {
+						valueFn: '_valueGenerationLocked'
+					},
+
 					key: {
 						valueFn: '_valueKey'
 					},
@@ -82,9 +86,13 @@ AUI.add(
 					render: function() {
 						var instance = this;
 
-						KeyValueField.superclass.render.apply(instance, arguments);
+						var key = instance.get('key');
 
-						instance._uiSetKey(instance.get('key'));
+						if (!key) {
+							instance.set('key', instance._valueKey());
+						}
+
+						KeyValueField.superclass.render.apply(instance, arguments);
 
 						return instance;
 					},
@@ -131,6 +139,8 @@ AUI.add(
 
 					_afterKeyChange: function(event) {
 						var instance = this;
+
+						instance.set('generationLocked', event.newVal !== instance.normalizeKey(instance.getValue()));
 
 						instance._uiSetKey(event.newVal);
 					},
@@ -193,7 +203,7 @@ AUI.add(
 					_onValueChangeInput: function(event) {
 						var instance = this;
 
-						if (instance.normalizeKey(event.prevVal) === instance.get('key')) {
+						if (!instance.get('generationLocked')) {
 							var value = instance.getValue();
 
 							instance.set('key', instance.normalizeKey(value));
@@ -242,12 +252,16 @@ AUI.add(
 						container.one('.key-value-output').html(key);
 					},
 
+					_valueGenerationLocked: function() {
+						var instance = this;
+
+						return instance.get('key') !== instance.normalizeKey(instance.getContextValue());
+					},
+
 					_valueKey: function() {
 						var instance = this;
 
-						var value = instance.getLocalizedValue(instance.get('value'));
-
-						return instance.normalizeKey(value);
+						return instance.normalizeKey(instance.getContextValue());
 					}
 				}
 			}

@@ -34,13 +34,15 @@ AUI.add(
 						instance._initDataProvider();
 
 						var labelField = instance.getField('label');
+						var nameField = instance.getField('name');
 
 						instance._eventHandlers.push(
 							instance.after('render', instance._afterSettingsFormRender),
-							labelField.on('keyChange', A.bind('_onLabelFieldKeyChange', instance)),
-							labelField.on(A.bind('_onLabelFieldNormalizeKey', instance), labelField, 'normalizeKey'),
 							instance.on('*:addField', instance.alignModal),
-							instance.on('*:removeField', instance.alignModal)
+							instance.on('*:removeField', instance.alignModal),
+							labelField.after(A.bind('_afterLabelFieldNormalizeKey', instance), labelField, 'normalizeKey'),
+							labelField.on('keyChange', instance._onLabelFieldKeyChange, instance),
+							nameField.on('valueChange', instance._onNameChange, instance)
 						);
 					},
 
@@ -157,6 +159,12 @@ AUI.add(
 						optionsField.set('visible', manualDataSourceType);
 					},
 
+					_afterLabelFieldNormalizeKey: function(key) {
+						var instance = this;
+
+						return new A.Do.AlterReturn(null, instance._generateFieldName(A.Do.originalRetVal));
+					},
+
 					_afterSettingsFormRender: function() {
 						var instance = this;
 
@@ -178,11 +186,6 @@ AUI.add(
 								id: formName
 							}
 						);
-
-						var labelField = instance.getField('label');
-						var nameField = instance.getField('name');
-
-						labelField.set('key', nameField.getValue());
 					},
 
 					_createModeToggler: function() {
@@ -210,20 +213,15 @@ AUI.add(
 
 						var existingField;
 
-						var keyValue = key.replace(/[^a-z0-9]/gi,'');
-
-						var name;
-
-						if (keyValue) {
-							name = keyValue;
+						if (!key) {
+							key = field.get('type');
 						}
-						else {
-							name = 'label';
-						}
+
+						var name = key;
 
 						do {
 							if (counter > 0) {
-								name = name + counter;
+								name = key + counter;
 							}
 
 							existingField = builder.getField(name);
@@ -308,10 +306,12 @@ AUI.add(
 						nameField.setValue(event.newVal);
 					},
 
-					_onLabelFieldNormalizeKey: function(key) {
+					_onNameChange: function(event) {
 						var instance = this;
 
-						return new A.Do.AlterArgs(null, [instance._generateFieldName(key)]);
+						var labelField = instance.getField('label');
+
+						labelField.set('key', event.newVal);
 					},
 
 					_onSubmitForm: function(event) {

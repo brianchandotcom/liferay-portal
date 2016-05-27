@@ -171,7 +171,7 @@
 			<var name="contentMetricName" value="Content Metric Name" />
 			<var name="contentTitle" value="DM Document Title" />
 			<var name="contentTrackingActionSelect" value="View" />
-			<var name="menulistContent" value="Document" />
+			<var name="menulistContent" value="Basic Document" />
 		</execute>
 
 		<execute macro="PortletEntry#save" />
@@ -443,7 +443,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCampaignYoutubeCP" priority="5">
+	<command name="AddCampaignYouTubeCP" priority="5">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -498,9 +498,9 @@
 		</execute>
 
 		<execute macro="ContentTargetingCampaign#addTrackingActionYoutubevideosCP">
-			<var name="youtubeAlias" value="Youtube Alias" />
+			<var name="youtubeAlias" value="YouTube Alias" />
 			<var name="youtubeTrackingActionSelect" value="Playing" />
-			<var name="youtubeVideoId" value="Youtube id" />
+			<var name="youtubeVideoId" value="YouTube id" />
 		</execute>
 
 		<execute macro="PortletEntry#save" />
@@ -520,10 +520,10 @@
 
 		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
 			<var name="campaignName" value="Campaign Name" />
-			<var name="viewTrackingActionsList" value="Youtube" />
-			<var name="youtubeAlias" value="Youtube Alias" />
+			<var name="viewTrackingActionsList" value="YouTube" />
+			<var name="youtubeAlias" value="YouTube Alias" />
 			<var name="youtubeTrackingActionSelect" value="Playing" />
-			<var name="youtubeVideoId" value="Youtube id" />
+			<var name="youtubeVideoId" value="YouTube id" />
 		</execute>
 	</command>
 

@@ -1394,13 +1394,13 @@
 	</command>
 
 	<command name="editUserGenderCP">
-		<var name="key_rowEntry" value="${userFirstName}" />
+		<var name="key_rowEntry" value="${userName}" />
 
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userFirstName}" />
+		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userName}" />
 
-		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userFirstName}" />
+		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userName}" />
 
 		<execute function="Select" locator1="UsersAndOrganizationsEditUser#DETAILS_GENDER_SELECT" value1="${userGender}" />
 

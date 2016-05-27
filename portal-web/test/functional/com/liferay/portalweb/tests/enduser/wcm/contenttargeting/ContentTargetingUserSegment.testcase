@@ -1327,7 +1327,7 @@
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#viewReportContentViews">
-			<var name="reportsContentTableList" value="WC Male View Title,Basic Web Content,View,6" />
+			<var name="reportsContentTableList" value="WC Male View Title,Web Content Article,View,6" />
 			<var name="reportTitle" value="WC Male View Title" />
 		</execute>
 	</command>
@@ -1446,10 +1446,10 @@
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewConfiguredDisplayContent">
 			<var name="contentTitle" value="Targeted Web Content Title" />
-			<var name="contentType" value="Basic Web Content" />
+			<var name="contentType" value="Web Content Article" />
 			<var name="doesNotBelong" value="true" />
 			<var name="otherwiseContentTitle" value="Targeted Web Content Title 2" />
-			<var name="otherwiseContentType" value="Basic Web Content" />
+			<var name="otherwiseContentType" value="Web Content Article" />
 			<var name="rowNumber" value="1" />
 			<var name="toAny" value="true" />
 			<var name="userSegmentName" value="Female Users" />

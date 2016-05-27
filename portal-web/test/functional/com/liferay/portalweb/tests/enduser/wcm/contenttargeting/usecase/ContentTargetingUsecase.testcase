@@ -524,7 +524,7 @@
 			<var name="contentMetricName" value="Content Metric Name" />
 			<var name="contentTitle" value="DM Document Title" />
 			<var name="linkId" value="Content id" />
-			<var name="menulistContent" value="Document" />
+			<var name="menulistContent" value="Basic Document" />
 		</execute>
 
 		<execute macro="PortletEntry#save" />
@@ -582,7 +582,7 @@
 		<execute macro="CampaignDisplayPortlet#configureCampaignRule">
 			<var name="campaignName" value="Campaign Name" />
 			<var name="contentTitle" value="DM Document Title" />
-			<var name="contentType" value="Document" />
+			<var name="contentType" value="Basic Document" />
 			<var name="rowNumber" value="1" />
 		</execute>
 
@@ -1172,7 +1172,7 @@
 			<var name="contentMetricName" value="Content Metric Name" />
 			<var name="contentTitle" value="DM Document Title" />
 			<var name="linkId" value="Content id" />
-			<var name="menulistContent" value="Document" />
+			<var name="menulistContent" value="Basic Document" />
 		</execute>
 
 		<execute macro="PortletEntry#save" />
@@ -1228,7 +1228,7 @@
 		<execute macro="CampaignDisplayPortlet#configureCampaignRule">
 			<var name="campaignName" value="Campaign Name" />
 			<var name="contentTitle" value="DM Document Title" />
-			<var name="contentType" value="Document" />
+			<var name="contentType" value="Basic Document" />
 			<var name="rowNumber" value="1" />
 		</execute>
 
@@ -3039,8 +3039,8 @@
 		</execute>
 
 		<execute macro="User#editUserGenderCP">
-			<var name="userFirstName" value="woman" />
 			<var name="userGender" value="Female" />
+			<var name="userName" value="woman woman" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">
@@ -3501,7 +3501,7 @@
 
 		<execute macro="UserSegmentContentDisplayPortlet#configureOtherwiseContentDisplayRule">
 			<var name="otherwiseContentTitle" value="DM Document Title 2" />
-			<var name="otherwiseContentType" value="Document" />
+			<var name="otherwiseContentType" value="Basic Document" />
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#savePG" />

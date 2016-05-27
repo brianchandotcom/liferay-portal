@@ -40,11 +40,6 @@
 	<property location="${project.dir}/tools/putty/plink.exe" name="plink.executable" />
 	<property location="${project.dir}/tools/putty/pscp.exe" name="pscp.executable" />
 
-	<propertyfile file="${project.dir}/.gradle/gradle.properties">
-		<entry key="database.jdbc.drivers.url" value="${test.jdbc.drivers.url}" />
-		<entry key="database.oracle.version" value="${database.oracle.version}" />
-	</propertyfile>
-
 	<macrodef name="apply-portal-ext-properties">
 		<sequential>
 			<if>

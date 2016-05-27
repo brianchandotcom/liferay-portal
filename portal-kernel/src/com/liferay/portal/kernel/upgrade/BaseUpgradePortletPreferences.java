@@ -133,7 +133,45 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 			DataAccess.cleanUp(ps, rs);
 		}
 
+		if (layout == null) {
+			layout = getLayoutRevision(plid);
+		}
+
 		return layout;
+	}
+
+	protected Object[] getLayoutRevision(long layoutRevisionId)
+		throws Exception {
+
+		Object[] layoutRevision = null;
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			ps = connection.prepareStatement(
+				"select groupId, companyId, privateLayout, layoutRevisionId " +
+					"from LayoutRevision where layoutRevisionId = ?");
+
+			ps.setLong(1, layoutRevisionId);
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long groupId = rs.getLong("groupId");
+				long companyId = rs.getLong("companyId");
+				boolean privateLayout = rs.getBoolean("privateLayout");
+				long layoutId = rs.getLong("layoutRevisionId");
+
+				layoutRevision =
+					new Object[] {groupId, companyId, privateLayout, layoutId};
+			}
+		}
+		finally {
+			DataAccess.cleanUp(ps, rs);
+		}
+
+		return layoutRevision;
 	}
 
 	protected String getLayoutUuid(long plid, long layoutId) throws Exception {

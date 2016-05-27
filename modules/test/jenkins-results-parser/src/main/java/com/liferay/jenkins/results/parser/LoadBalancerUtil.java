@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -158,13 +157,13 @@ public class LoadBalancerUtil {
 			}
 			finally {
 				if (recentBatchPeriod > 0) {
-					Map<Long, Integer> hostRecentBatchSizesMap =
+					List<BatchSizeRecord> hostRecentBatchSizes =
 						_recentBatchSizesMap.get(hostNames.get(x));
 
-					if (hostRecentBatchSizesMap == null) {
-						hostRecentBatchSizesMap = new HashMap<>();
+					if (hostRecentBatchSizes == null) {
+						hostRecentBatchSizes = new ArrayList<>();
 						_recentBatchSizesMap.put(
-							hostNames.get(x), hostRecentBatchSizesMap);
+							hostNames.get(x), hostRecentBatchSizes);
 					}
 
 					int invokedBatchSize = 0;
@@ -178,8 +177,9 @@ public class LoadBalancerUtil {
 					}
 
 					if (invokedBatchSize != 0) {
-						hostRecentBatchSizesMap.put(
-							System.currentTimeMillis(), invokedBatchSize);
+						hostRecentBatchSizes.add(
+							new BatchSizeRecord(
+								invokedBatchSize, System.currentTimeMillis()));
 					}
 				}
 
@@ -307,40 +307,31 @@ public class LoadBalancerUtil {
 	protected static int getRecentBatchSizesTotal(String hostName)
 		throws Exception {
 
-		Map<Long, Integer> hostRecentBatchSizesMap = _recentBatchSizesMap.get(
+		List<BatchSizeRecord> hostRecentBatchSizes = _recentBatchSizesMap.get(
 			hostName);
 
-		if ((hostRecentBatchSizesMap == null) ||
-			hostRecentBatchSizesMap.isEmpty()) {
-
+		if ((hostRecentBatchSizes == null) || hostRecentBatchSizes.isEmpty()) {
 			return 0;
 		}
 
 		int batchSizeTotal = 0;
 
-		Set<Map.Entry<Long, Integer>> hostRecentBatchSizesEntrySet =
-			hostRecentBatchSizesMap.entrySet();
-		List<Map.Entry<Long, Integer>> hostRecentBatchSizeEntriesToBeRemoved =
-			new ArrayList<>(hostRecentBatchSizesMap.size());
+		List<BatchSizeRecord> hostRecentBatchSizeEntriesToBeRemoved =
+			new ArrayList<>(hostRecentBatchSizes.size());
 
-		for (Map.Entry<Long, Integer> recentBatchSize :
-				hostRecentBatchSizesEntrySet) {
-
-			int batchSize = recentBatchSize.getValue();
-			long timestamp = recentBatchSize.getKey();
-
-			if ((timestamp + recentBatchPeriod) >
+		for (BatchSizeRecord recentBatchSizeRecord : hostRecentBatchSizes) {
+			if ((recentBatchSizeRecord.timestamp + recentBatchPeriod) >
 					System.currentTimeMillis()) {
 
-				batchSizeTotal += batchSize;
+				batchSizeTotal += recentBatchSizeRecord.size;
 			}
 			else {
-				hostRecentBatchSizeEntriesToBeRemoved.add(recentBatchSize);
+				hostRecentBatchSizeEntriesToBeRemoved.add(
+					recentBatchSizeRecord);
 			}
 		}
 
-		hostRecentBatchSizesEntrySet.removeAll(
-			hostRecentBatchSizeEntriesToBeRemoved);
+		hostRecentBatchSizes.removeAll(hostRecentBatchSizeEntriesToBeRemoved);
 
 		return batchSizeTotal;
 	}
@@ -413,8 +404,8 @@ public class LoadBalancerUtil {
 
 	private static final Pattern _hostnamePattern =
 		Pattern.compile(".*/(?<hostname>[^/]+)/?");
-	private static final Map<String, Map<Long, Integer>> _recentBatchSizesMap =
-		new HashMap<>();
+	private static final Map<String, List<BatchSizeRecord>>
+		_recentBatchSizesMap = new HashMap<>();
 	private static final Pattern _urlPattern = Pattern.compile(
 		"http://(?<hostNamePrefix>.+-\\d?).liferay.com");
 
@@ -534,6 +525,18 @@ public class LoadBalancerUtil {
 
 		protected Integer recentBatchSizesTotal;
 		protected String url;
+
+	}
+
+	private static class BatchSizeRecord {
+
+		public int size;
+		public long timestamp;
+
+		private BatchSizeRecord(int size, long timestamp) {
+			this.size = size;
+			this.timestamp = timestamp;
+		}
 
 	}
 

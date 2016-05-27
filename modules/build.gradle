@@ -32,6 +32,10 @@ gradle.beforeProject {
 		pluginManager.withPlugin("com.liferay.osgi.plugin") {
 			apply plugin: "pmd"
 
+			afterEvaluate {
+				bundle.jarBuilderFactory.contextClassLoader = buildscript.classLoader
+			}
+
 			configurations {
 				xmltask
 			}

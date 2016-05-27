@@ -426,7 +426,7 @@ public abstract class SyncDeviceServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.sync.service.SyncDeviceLocalService.class)
 	protected com.liferay.sync.service.SyncDeviceLocalService syncDeviceLocalService;
-	@BeanReference(type = com.liferay.sync.service.SyncDeviceService.class)
+	@BeanReference(type = SyncDeviceService.class)
 	protected SyncDeviceService syncDeviceService;
 	@BeanReference(type = SyncDevicePersistence.class)
 	protected SyncDevicePersistence syncDevicePersistence;

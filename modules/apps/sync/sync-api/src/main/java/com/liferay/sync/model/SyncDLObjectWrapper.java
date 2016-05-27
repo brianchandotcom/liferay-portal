@@ -256,6 +256,16 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	}
 
 	@Override
+	public SyncDLObject toEscapedModel() {
+		return new SyncDLObjectWrapper(_syncDLObject.toEscapedModel());
+	}
+
+	@Override
+	public SyncDLObject toUnescapedModel() {
+		return new SyncDLObjectWrapper(_syncDLObject.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _syncDLObject.isCachedModel();
 	}
@@ -276,22 +286,12 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.sync.model.SyncDLObject> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<SyncDLObject> toCacheModel() {
 		return _syncDLObject.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.sync.model.SyncDLObject toEscapedModel() {
-		return new SyncDLObjectWrapper(_syncDLObject.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.sync.model.SyncDLObject toUnescapedModel() {
-		return new SyncDLObjectWrapper(_syncDLObject.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(com.liferay.sync.model.SyncDLObject syncDLObject) {
+	public int compareTo(SyncDLObject syncDLObject) {
 		return _syncDLObject.compareTo(syncDLObject);
 	}
 

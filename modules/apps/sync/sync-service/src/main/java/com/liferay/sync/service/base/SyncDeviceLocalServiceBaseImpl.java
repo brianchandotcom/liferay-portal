@@ -699,7 +699,7 @@ public abstract class SyncDeviceLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.sync.service.SyncDeviceLocalService.class)
+	@BeanReference(type = SyncDeviceLocalService.class)
 	protected SyncDeviceLocalService syncDeviceLocalService;
 	@BeanReference(type = SyncDevicePersistence.class)
 	protected SyncDevicePersistence syncDevicePersistence;

@@ -343,6 +343,9 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 
 	public void checkEntries() throws PortalException;
 
+	public void deleteEntries(long classNameId, long classPK)
+		throws PortalException;
+
 	public void deleteEntry(AnnouncementsEntry entry) throws PortalException;
 
 	public void deleteEntry(long entryId) throws PortalException;

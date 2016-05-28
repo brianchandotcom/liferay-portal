@@ -351,6 +351,11 @@
 			<var name="portlet" value="Audience Targeting" />
 		</execute>
 
+		<execute macro="ContentTargetingCampaign#gotoEditReport">
+			<var name="campaignName" value="Campaign Name" />
+			<var name="reportName" value="Content Report Name" />
+		</execute>
+
 		<execute macro="ContentTargetingCampaign#viewTrackingActionsCP">
 			<var name="campaignName" value="Campaign Name" />
 			<var name="linkAlias" value="Link Alias" />

@@ -46,10 +46,6 @@
 			<var name="campaignTrackingAction" value="Content" />
 		</execute>
 
-		<execute function="Type" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_NAME_FIELD" value1="${contentMetricName}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_TRACKING_ACTION" value1="View" />
-
 		<execute function="AssertElementPresent" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_BUTTON" />
 
 		<execute function="Click" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_SELECT_CONTENT_BUTTON" />
@@ -63,6 +59,10 @@
 
 		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" />
 		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="Type" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_NAME_FIELD" value1="${contentMetricName}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CONTENT_TRACKING_ACTION" value1="View" />
 	</command>
 
 	<command name="addTrackingActionFormCP">
@@ -251,6 +251,8 @@
 									<var name="contentTrackingActionSelect" value="${contentTrackingActionSelect}" />
 									<var name="linkId" value="${linkId}" />
 									<var name="menulistContent" value="${menulistContent}" />
+									<var name="reportDescription" value="${reportDescription}" />
+									<var name="reportName" value="${reportName}" />
 								</execute>
 							</then>
 						</elseif>

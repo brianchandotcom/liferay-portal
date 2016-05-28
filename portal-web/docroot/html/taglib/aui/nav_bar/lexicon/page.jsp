@@ -21,7 +21,7 @@
 		<div class="container-fluid-1280">
 			<c:if test="<%= Validator.isNotNull(dataTarget) %>">
 				<div class="navbar-header visible-xs">
-					<button class="<%= (navItemCount.getValue() > 1) ? "collapsed" : StringPool.BLANK %> navbar-toggle navbar-toggle-left navbar-toggle-page-name" data-target="<%= (navItemCount.getValue() > 1) ? "#" + namespace + "navTagNavbarCollapse" : StringPool.BLANK %>" data-toggle="<%= (navItemCount.getValue() > 1) ? "collapse" : StringPool.BLANK %>" id="<%= namespace %>navTagNavbarBtn" type="button">
+					<button class="<%= (navItemCount.getValue() > 1) ? "collapsed" : StringPool.BLANK %> navbar-toggle navbar-toggle-left navbar-toggle-page-name" data-target="<%= (navItemCount.getValue() > 1) ? "#" +  dataTarget + "NavbarCollapse" : StringPool.BLANK %>" data-toggle="<%= (navItemCount.getValue() > 1) ? "collapse" : StringPool.BLANK %>" id="<%= dataTarget %>NavbarBtn" type="button">
 						<span class="sr-only"><liferay-ui:message key="toggle-navigation" /></span>
 
 						<span class="page-name"><%= LanguageUtil.get(resourceBundle, selectedItemName) %></span>

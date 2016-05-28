@@ -34,6 +34,7 @@ else {
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 	searchContext.setAttribute("recordSetId", recordSet.getRecordSetId());
+	searchContext.setAttribute("recordSetScope", recordSet.getScope());
 	searchContext.setAttribute(Field.STATUS, status);
 	searchContext.setEnd(searchContainer.getEnd());
 	searchContext.setKeywords(displayTerms.getKeywords());

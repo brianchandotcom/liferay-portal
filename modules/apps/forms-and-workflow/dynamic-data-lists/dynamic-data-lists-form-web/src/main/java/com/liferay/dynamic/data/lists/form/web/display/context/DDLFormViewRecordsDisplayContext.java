@@ -269,6 +269,8 @@ public class DDLFormViewRecordsDisplayContext {
 
 			searchContext.setAttribute(
 				"recordSetId", _ddlRecordSet.getRecordSetId());
+			searchContext.setAttribute(
+				"recordSetScope", _ddlRecordSet.getScope());
 			searchContext.setAttribute(Field.STATUS, status);
 			searchContext.setEnd(_recordSearchContainer.getEnd());
 			searchContext.setKeywords(displayTerms.getKeywords());

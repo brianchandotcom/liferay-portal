@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -102,7 +103,8 @@ public abstract class BaseDDMFormFieldRenderer implements DDMFormFieldRenderer {
 			template.put("childElementsHTML", childElementsHTML);
 		}
 
-		template.put("dir", LanguageUtil.get(locale, "lang.dir"));
+		template.put(
+			"dir", LanguageUtil.get(locale, LanguageConstants.KEY_DIR));
 		template.put("label", ddmFormFieldRenderingContext.getLabel());
 		template.put("name", ddmFormFieldRenderingContext.getName());
 		template.put(

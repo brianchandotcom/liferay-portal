@@ -15,7 +15,7 @@ Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 	com/liferay/dynamic/data/mapping/service.xml=../../../modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-service/service.xml,\
 	com/liferay/journal/service.xml=../../../modules/apps/web-experience/journal/journal-service/service.xml,\
 	com/liferay/mobile/device/rules/service.xml=../../../modules/apps/foundation/mobile-device-rules/mobile-device-rules-service/service.xml,\
-	com/liferay/shopping/service.xml=../../../modules/apps/deprecated/shopping/shopping-service/service.xml,\
+	com/liferay/shopping/service.xml=../../../modules/apps/shopping/shopping-service/service.xml,\
 	@com.liferay.portal.impl-[0-9]*.jar!/META-INF/portal-model-hints.xml,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/counter/service.xml,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/mail/service.xml,\

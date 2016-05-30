@@ -198,7 +198,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 	}
 
 	private void _doActivate(final BundleContext bundleContext)
-		throws IOException {
+		throws Exception {
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
@@ -229,6 +229,8 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 		Files.createDirectories(_deploymentDirPath);
 
+		final List<File> lpkgFiles = new ArrayList<>();
+
 		Files.walkFileTree(
 			_deploymentDirPath,
 			new SimpleFileVisitor<Path>() {
@@ -246,40 +248,56 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 						return FileVisitResult.CONTINUE;
 					}
 
-					try {
-						List<Bundle> bundles = deploy(
-							bundleContext, filePath.toFile());
-
-						for (Bundle bundle : bundles) {
-							Dictionary<String, String> headers =
-								bundle.getHeaders();
-
-							String fragmentHost = headers.get(
-								Constants.FRAGMENT_HOST);
-
-							if (fragmentHost != null) {
-								continue;
-							}
-
-							try {
-								bundle.start();
-							}
-							catch (BundleException be) {
-								_log.error(
-									"Unable to start " + bundle + " for " +
-										filePath,
-									be);
-							}
-						}
-					}
-					catch (Exception e) {
-						_log.error("Unable to deploy LPKG file " + filePath, e);
-					}
+					lpkgFiles.add(filePath.toFile());
 
 					return FileVisitResult.CONTINUE;
 				}
 
 			});
+
+		_lpkgIndexValidator.setLpkgDeployer(this);
+
+		_lpkgIndexValidator.validate(lpkgFiles);
+
+		boolean enabled = LPKGValidationThreadLocal.isEnabled();
+
+		LPKGValidationThreadLocal.setEnabled(false);
+
+		try {
+			for (File lpkgFile : lpkgFiles) {
+				try {
+					List<Bundle> bundles = deploy(bundleContext, lpkgFile);
+
+					for (Bundle bundle : bundles) {
+						Dictionary<String, String> headers =
+							bundle.getHeaders();
+
+						String fragmentHost = headers.get(
+							Constants.FRAGMENT_HOST);
+
+						if (fragmentHost != null) {
+							continue;
+						}
+
+						try {
+							bundle.start();
+						}
+						catch (BundleException be) {
+							_log.error(
+								"Unable to start " + bundle + " for " +
+									lpkgFile,
+								be);
+						}
+					}
+				}
+				catch (Exception e) {
+					_log.error("Unable to deploy LPKG file " + lpkgFile, e);
+				}
+			}
+		}
+		finally {
+			LPKGValidationThreadLocal.setEnabled(enabled);
+		}
 	}
 
 	private void _writeManifest(
@@ -318,6 +336,9 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 	private Path _deploymentDirPath;
 	private BundleTracker<List<Bundle>> _lpkgBundleTracker;
+
+	@Reference
+	private LPKGIndexValidator _lpkgIndexValidator;
 
 	@Reference
 	private LPKGVerifier _lpkgVerifier;

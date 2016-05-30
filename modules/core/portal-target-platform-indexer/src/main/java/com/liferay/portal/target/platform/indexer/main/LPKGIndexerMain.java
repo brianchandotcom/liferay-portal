@@ -17,12 +17,23 @@ package com.liferay.portal.target.platform.indexer.main;
 import com.liferay.portal.target.platform.indexer.Indexer;
 import com.liferay.portal.target.platform.indexer.internal.LPKGIndexer;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.InputStream;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+
+import org.osgi.framework.Version;
 
 /**
  * @author Raymond Augé
@@ -49,20 +60,16 @@ public class LPKGIndexerMain {
 			return;
 		}
 
-		File outputDir = new File(
+		Path outputDirPath = Paths.get(
 			moduleFrameworkBaseDirName, Indexer.DIR_NAME_TARGET_PLATFORM);
 
 		String outputDirName = System.getProperty("output.dir");
 
 		if (outputDirName != null) {
-			outputDir = new File(outputDirName);
+			outputDirPath = Paths.get(outputDirName);
 		}
 
-		if (!outputDir.exists() && !outputDir.mkdirs()) {
-			System.err.printf("== Unable to create directory %s\n", outputDir);
-
-			return;
-		}
+		Files.createDirectories(outputDirPath);
 
 		List<File> lpkgFiles = new ArrayList<>();
 
@@ -110,9 +117,60 @@ public class LPKGIndexerMain {
 		for (File lpkgFile : lpkgFiles) {
 			LPKGIndexer lpkgIndexer = new LPKGIndexer(lpkgFile);
 
-			File indexFile = lpkgIndexer.index(outputDir);
+			ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
 
-			System.out.println("== Wrote index file " + indexFile);
+			lpkgIndexer.index(byteArrayOutputStream);
+
+			Path indexFilePath = _getIndexFilePath(outputDirPath, lpkgFile);
+
+			Files.write(indexFilePath, byteArrayOutputStream.toByteArray());
+
+			System.out.println("== Wrote index file " + indexFilePath);
+		}
+	}
+
+	private static Path _getIndexFilePath(Path outputDirPath, File lpkgFile)
+		throws Exception {
+
+		try (ZipFile zipFile = new ZipFile(lpkgFile)) {
+			ZipEntry zipEntry = zipFile.getEntry(
+				"liferay-marketplace.properties");
+
+			if (zipEntry == null) {
+				throw new Exception(
+					lpkgFile + " does not have liferay-marketplace.properties");
+			}
+
+			Properties properties = new Properties();
+
+			try (InputStream inputStream = zipFile.getInputStream(zipEntry)) {
+				properties.load(inputStream);
+			}
+
+			String symbolicName = properties.getProperty("title");
+
+			if ((symbolicName == null) || symbolicName.isEmpty()) {
+				throw new Exception(
+					lpkgFile + " does not have a valid symbolic name");
+			}
+
+			Version version = null;
+
+			String versionString = properties.getProperty("version");
+
+			try {
+				version = new Version(versionString);
+			}
+			catch (IllegalArgumentException iae) {
+				throw new Exception(
+					lpkgFile + " does not have a valid version: " +
+						versionString,
+					iae);
+			}
+
+			return outputDirPath.resolve(
+				symbolicName + "-" + version + "-index.xml");
 		}
 	}
 

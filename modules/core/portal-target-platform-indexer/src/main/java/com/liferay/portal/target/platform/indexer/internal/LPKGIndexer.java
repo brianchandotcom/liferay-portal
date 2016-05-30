@@ -17,8 +17,6 @@ package com.liferay.portal.target.platform.indexer.internal;
 import com.liferay.portal.target.platform.indexer.Indexer;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.nio.file.Files;
@@ -29,12 +27,10 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import org.osgi.framework.Version;
 import org.osgi.service.indexer.ResourceIndexer;
 import org.osgi.service.indexer.impl.RepoIndex;
 
@@ -55,7 +51,7 @@ public class LPKGIndexer implements Indexer {
 	}
 
 	@Override
-	public File index(File outputFile) throws Exception {
+	public void index(OutputStream outputStream) throws Exception {
 		Path tempPath = Files.createTempDirectory(null);
 
 		File tempDir = tempPath.toFile();
@@ -63,50 +59,12 @@ public class LPKGIndexer implements Indexer {
 		_config.put("root.url", tempDir.getPath());
 
 		try (ZipFile zipFile = new ZipFile(_lpkgFile)) {
-			ZipEntry zipEntry = zipFile.getEntry(
-				"liferay-marketplace.properties");
-
-			if (zipEntry == null) {
-				throw new Exception(
-					_lpkgFile +
-						" does not have liferay-marketplace.properties");
-			}
-
-			Properties properties = new Properties();
-
-			try (InputStream inputStream = zipFile.getInputStream(zipEntry)) {
-				properties.load(inputStream);
-			}
-
-			String symbolicName = properties.getProperty("title");
-
-			if ((symbolicName == null) || symbolicName.isEmpty()) {
-				throw new Exception(
-					_lpkgFile + " does not have a valid symbolic name");
-			}
-
-			Version version = null;
-
-			String versionString = properties.getProperty("version");
-
-			try {
-				version = new Version(versionString);
-			}
-			catch (IllegalArgumentException iae) {
-				throw new Exception(
-					_lpkgFile + " does not have a valid version: " +
-						versionString,
-					iae);
-			}
-
-			ResourceIndexer resourceIndexer = new RepoIndex();
-
 			Set<File> files = new LinkedHashSet<>();
 
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
 			while (enumeration.hasMoreElements()) {
-				zipEntry = enumeration.nextElement();
+				ZipEntry zipEntry = enumeration.nextElement();
 
 				String name = zipEntry.getName();
 
@@ -123,22 +81,9 @@ public class LPKGIndexer implements Indexer {
 				files.add(file);
 			}
 
-			File indexFile = new File(
-				tempDir, symbolicName + "-" + version + "-index.xml");
+			ResourceIndexer resourceIndexer = new RepoIndex();
 
-			try (OutputStream outputStream = new FileOutputStream(indexFile)) {
-				resourceIndexer.index(files, outputStream, _config);
-			}
-
-			if (outputFile.isDirectory()) {
-				outputFile = new File(outputFile, indexFile.getName());
-			}
-
-			Files.move(
-				indexFile.toPath(), outputFile.toPath(),
-				StandardCopyOption.REPLACE_EXISTING);
-
-			return outputFile;
+			resourceIndexer.index(files, outputStream, _config);
 		}
 		finally {
 			PathUtil.deltree(tempPath);

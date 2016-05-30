@@ -14,35 +14,17 @@
 
 package com.liferay.portal.lpkg.deployer.internal;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.lpkg.deployer.LPKGVerifier;
 import com.liferay.portal.lpkg.deployer.LPKGVerifyException;
-import com.liferay.portal.target.platform.indexer.IndexValidator;
-import com.liferay.portal.target.platform.indexer.IndexValidatorFactory;
-import com.liferay.portal.target.platform.indexer.Indexer;
-import com.liferay.portal.target.platform.indexer.IndexerFactory;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-
-import java.net.URI;
-
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
@@ -68,67 +50,6 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 
 	@Override
 	public List<Bundle> verify(File lpkgFile) {
-		try {
-			Indexer indexer = _indexerFactory.createLPKGIndexer(lpkgFile);
-
-			File indexFile = indexer.index(
-				new File(
-					PropsValues.MODULE_FRAMEWORK_BASE_DIR,
-					Indexer.DIR_NAME_TARGET_PLATFORM));
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Wrote index " + indexFile.getPath());
-			}
-
-			IndexValidator indexValidator = _indexValidatorFactory.create(
-				_getTargetPlatformIndexURIs());
-
-			long start = System.currentTimeMillis();
-
-			try {
-				List<String> messages = indexValidator.validate(
-					Collections.singletonList(indexFile.toURI()));
-
-				if (!messages.isEmpty()) {
-					indexFile.delete();
-
-					StringBundler sb = new StringBundler(
-						(messages.size() * 3) + 1);
-
-					sb.append("LPKG validation failed with {");
-
-					for (String message : messages) {
-						sb.append("[");
-						sb.append(message);
-						sb.append("], ");
-					}
-
-					sb.setIndex(sb.index() - 1);
-
-					sb.append("]}");
-
-					throw new LPKGVerifyException(sb.toString());
-				}
-			}
-			finally {
-				if (_log.isInfoEnabled()) {
-					long duration = System.currentTimeMillis() - start;
-
-					_log.info(
-						String.format(
-							"LPKG validation time %02d:%02ds",
-							MILLISECONDS.toMinutes(duration),
-							MILLISECONDS.toSeconds(duration % Time.MINUTE)));
-				}
-			}
-		}
-		catch (LPKGVerifyException lpkgve) {
-			throw lpkgve;
-		}
-		catch (Exception e) {
-			throw new LPKGVerifyException(e);
-		}
-
 		try (ZipFile zipFile = new ZipFile(lpkgFile)) {
 			ZipEntry zipEntry = zipFile.getEntry(
 				"liferay-marketplace.properties");
@@ -165,6 +86,11 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 					iae);
 			}
 
+			if (LPKGValidationThreadLocal.isEnabled()) {
+				_lpkgIndexValidator.validate(
+					Collections.singletonList(lpkgFile));
+			}
+
 			List<Bundle> oldBundles = new ArrayList<>();
 
 			for (Bundle bundle : _bundleContext.getBundles()) {
@@ -198,30 +124,9 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 
 			return oldBundles;
 		}
-		catch (IOException ioe) {
-			throw new LPKGVerifyException(ioe);
+		catch (Exception e) {
+			throw new LPKGVerifyException(e);
 		}
-	}
-
-	private List<URI> _getTargetPlatformIndexURIs() throws IOException {
-		List<URI> uris = new ArrayList<>();
-
-		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				Paths.get(
-					PropsValues.MODULE_FRAMEWORK_BASE_DIR,
-					Indexer.DIR_NAME_TARGET_PLATFORM),
-				"*.xml")) {
-
-			Iterator<Path> iterator = directoryStream.iterator();
-
-			while (iterator.hasNext()) {
-				Path path = iterator.next();
-
-				uris.add(path.toUri());
-			}
-		}
-
-		return uris;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -230,9 +135,6 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 	private BundleContext _bundleContext;
 
 	@Reference
-	private IndexerFactory _indexerFactory;
-
-	@Reference
-	private IndexValidatorFactory _indexValidatorFactory;
+	private LPKGIndexValidator _lpkgIndexValidator;
 
 }

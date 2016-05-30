@@ -23,30 +23,30 @@ import aQute.bnd.osgi.resource.CapabilityBuilder;
 import com.liferay.portal.target.platform.indexer.Indexer;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
+import java.net.URL;
+
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.launch.Framework;
-import org.osgi.framework.launch.FrameworkFactory;
 import org.osgi.framework.namespace.BundleNamespace;
 import org.osgi.framework.namespace.HostNamespace;
 import org.osgi.framework.namespace.IdentityNamespace;
@@ -63,13 +63,9 @@ import org.osgi.service.repository.ContentNamespace;
  */
 public class TargetPlatformIndexer implements Indexer {
 
-	public TargetPlatformIndexer(
-		String moduleFrameworkBaseDirName, String moduleFrameworkModulesDirName,
-		String moduleFrameworkPortalDirName) {
-
-		_moduleFrameworkBaseDirName = moduleFrameworkBaseDirName;
-		_moduleFrameworkModulesDirName = moduleFrameworkModulesDirName;
-		_moduleFrameworkPortalDirName = moduleFrameworkPortalDirName;
+	public TargetPlatformIndexer(Bundle systemBundle, String... dirNames) {
+		_systemBundle = systemBundle;
+		_dirNames = dirNames;
 
 		_config.put("compressed", "false");
 		_config.put(
@@ -80,7 +76,7 @@ public class TargetPlatformIndexer implements Indexer {
 	}
 
 	@Override
-	public File index(File outputFile) throws Exception {
+	public void index(OutputStream outputStream) throws Exception {
 		Path tempPath = Files.createTempDirectory(null);
 
 		File tempDir = tempPath.toFile();
@@ -93,67 +89,37 @@ public class TargetPlatformIndexer implements Indexer {
 			_processSystemBundle(tempDir, jarFiles);
 			_processSystemPackagesExtra(tempDir, jarFiles);
 
-			String[] moduleDirNames = new String[] {
-				_moduleFrameworkBaseDirName + "/static/",
-				_moduleFrameworkModulesDirName, _moduleFrameworkPortalDirName
-			};
+			for (String dirName : _dirNames) {
+				try (DirectoryStream<Path> directoryStream =
+						Files.newDirectoryStream(Paths.get(dirName))) {
 
-			for (String moduleDirName : moduleDirNames) {
-				File dir = new File(moduleDirName);
+					Iterator<Path> iterator = directoryStream.iterator();
 
-				if (!dir.isDirectory() || !dir.canRead()) {
-					continue;
-				}
-
-				File[] childFiles = dir.listFiles(
-					new FilenameFilter() {
-
-						@Override
-						public boolean accept(File dir, String name) {
-							return name.endsWith(".jar");
-						}
-
-					});
-
-				for (File childFile : childFiles) {
-					_addBundle(jarFiles, childFile, tempDir);
+					while (iterator.hasNext()) {
+						_addBundle(tempPath, iterator.next(), jarFiles);
+					}
 				}
 			}
 
 			ResourceIndexer resourceIndexer = new RepoIndex();
 
-			File tempIndexFile = new File(tempDir, "target.platform.index.xml");
-
-			try (OutputStream outputStream = new FileOutputStream(
-					tempIndexFile)) {
-
-				resourceIndexer.index(jarFiles, outputStream, _config);
-			}
-
-			File indexFile = new File(outputFile, tempIndexFile.getName());
-
-			Files.move(
-				tempIndexFile.toPath(), indexFile.toPath(),
-				StandardCopyOption.REPLACE_EXISTING);
-
-			return indexFile;
+			resourceIndexer.index(jarFiles, outputStream, _config);
 		}
 		finally {
 			PathUtil.deltree(tempPath);
 		}
 	}
 
-	private void _addBundle(Set<File> jarFiles, File bundleFile, File tempDir)
+	private void _addBundle(Path tempPath, Path jarPath, Set<File> jarFiles)
 		throws IOException {
 
-		File jarFile = new File(tempDir, bundleFile.getName());
+		Path tempJarPath = tempPath.resolve(jarPath.getFileName());
 
 		Files.copy(
-			bundleFile.toPath(), jarFile.toPath(),
-			StandardCopyOption.COPY_ATTRIBUTES,
+			jarPath, tempJarPath, StandardCopyOption.COPY_ATTRIBUTES,
 			StandardCopyOption.REPLACE_EXISTING);
 
-		jarFiles.add(jarFile);
+		jarFiles.add(tempJarPath.toFile());
 	}
 
 	private void _processBundle(Bundle bundle) throws Exception {
@@ -204,38 +170,18 @@ public class TargetPlatformIndexer implements Indexer {
 	private void _processSystemBundle(File tempDir, Set<File> jarFiles)
 		throws Exception {
 
-		Framework framework = null;
-
 		try (Jar jar = new Jar("system.bundle")) {
-			ServiceLoader<FrameworkFactory> serviceLoader = ServiceLoader.load(
-				FrameworkFactory.class);
-
-			FrameworkFactory frameworkFactory = serviceLoader.iterator().next();
-
-			Map<String, String> properties = new HashMap<>();
-
-			properties.put(
-				org.osgi.framework.Constants.FRAMEWORK_STORAGE,
-				tempDir.getAbsolutePath());
-
-			framework = frameworkFactory.newFramework(properties);
-
-			framework.init();
-
-			BundleContext bundleContext = framework.getBundleContext();
-
-			Bundle systemBundle = bundleContext.getBundle(0);
-
-			_processBundle(systemBundle);
+			_processBundle(_systemBundle);
 
 			Manifest manifest = new Manifest();
 
 			Attributes attributes = manifest.getMainAttributes();
 
 			attributes.putValue(
-				Constants.BUNDLE_SYMBOLICNAME, systemBundle.getSymbolicName());
+				Constants.BUNDLE_SYMBOLICNAME, _systemBundle.getSymbolicName());
 			attributes.putValue(
-				Constants.BUNDLE_VERSION, systemBundle.getVersion().toString());
+				Constants.BUNDLE_VERSION,
+				_systemBundle.getVersion().toString());
 
 			String exportPackage = _packagesParamters.toString();
 
@@ -260,27 +206,25 @@ public class TargetPlatformIndexer implements Indexer {
 
 			File jarFile = new File(
 				tempDir,
-				systemBundle.getSymbolicName() + "-" +
-					systemBundle.getVersion() + ".jar");
+				_systemBundle.getSymbolicName() + "-" +
+					_systemBundle.getVersion() + ".jar");
 
 			jar.write(jarFile);
 
 			jarFiles.add(jarFile);
-		}
-		finally {
-			framework.stop();
 		}
 	}
 
 	private void _processSystemPackagesExtra(File tempDir, Set<File> jarFiles)
 		throws Exception {
 
-		try (Jar jar = new Jar("system.packages.extra")) {
-			ClassLoader classLoader = _targetPlatformMainClass.getClassLoader();
+		URL url = _systemBundle.getResource(
+			"META-INF/system.packages.extra.mf");
 
-			Manifest manifest = new Manifest(
-				classLoader.getResourceAsStream(
-					"META-INF/system.packages.extra.mf"));
+		try (Jar jar = new Jar("system.packages.extra");
+			InputStream inputStream = url.openStream()) {
+
+			Manifest manifest = new Manifest(inputStream);
 
 			jar.setManifest(manifest);
 
@@ -305,10 +249,9 @@ public class TargetPlatformIndexer implements Indexer {
 	}
 
 	private final Map<String, String> _config = new HashMap<>();
-	private final String _moduleFrameworkBaseDirName;
-	private final String _moduleFrameworkModulesDirName;
-	private final String _moduleFrameworkPortalDirName;
+	private final String[] _dirNames;
 	private final Parameters _packagesParamters = new Parameters();
 	private final List<Parameters> _parametersList = new ArrayList<>();
+	private final Bundle _systemBundle;
 
 }

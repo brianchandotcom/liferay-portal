@@ -2554,8 +2554,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 
 					if (line.endsWith(" throws") ||
-						(previousLine.endsWith(
-							StringPool.OPEN_PARENTHESIS) &&
+						((previousLine.endsWith(StringPool.COMMA) ||
+						  previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) &&
 						 line.contains(" throws ") &&
 						 (line.endsWith(StringPool.OPEN_CURLY_BRACE) ||
 						  line.endsWith(StringPool.SEMICOLON)))) {

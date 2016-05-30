@@ -17,53 +17,32 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
+kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceConfiguration.class, kbGroupServiceConfiguration, request.getParameterMap(), "preferences--", "--");
+
 String tabs2 = ParamUtil.getString(request, "tabs2", "email-from");
-
-String emailFromName = kbGroupServiceConfiguration.emailFromName();
-String emailFromAddress = kbGroupServiceConfiguration.emailFromAddress();
-
-boolean emailKBArticleAddedEnabled = kbGroupServiceConfiguration.emailKBArticleAddedEnabled();
-String emailKBArticleAddedSubject = kbGroupServiceConfiguration.emailKBArticleAddedSubject();
-String emailKBArticleAddedBody = kbGroupServiceConfiguration.emailKBArticleAddedBody();
-
-boolean emailKBArticleSuggestionInProgressEnabled = kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressEnabled();
-String emailKBArticleSuggestionInProgressSubject = kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressSubject();
-String emailKBArticleSuggestionInProgressBody = kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressBody();
-
-boolean emailKBArticleSuggestionReceivedEnabled = kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedEnabled();
-String emailKBArticleSuggestionReceivedSubject = kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedSubject();
-String emailKBArticleSuggestionReceivedBody = kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedBody();
-
-boolean emailKBArticleSuggestionResolvedEnabled = kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedEnabled();
-String emailKBArticleSuggestionResolvedSubject = kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedSubject();
-String emailKBArticleSuggestionResolvedBody = kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedBody();
-
-boolean emailKBArticleUpdatedEnabled = kbGroupServiceConfiguration.emailKBArticleUpdatedEnabled();
-String emailKBArticleUpdatedSubject = kbGroupServiceConfiguration.emailKBArticleUpdatedSubject();
-String emailKBArticleUpdatedBody = kbGroupServiceConfiguration.emailKBArticleUpdatedBody();
 
 String editorParam = StringPool.BLANK;
 String editorBody = StringPool.BLANK;
 
 if (tabs2.equals("article-added-email")) {
 	editorParam = "emailKBArticleAddedBody";
-	editorBody = emailKBArticleAddedBody;
+	editorBody = kbGroupServiceConfiguration.emailKBArticleAddedBody();
 }
 else if (tabs2.equals("article-updated-email")) {
 	editorParam = "emailKBArticleUpdatedBody";
-	editorBody = emailKBArticleUpdatedBody;
+	editorBody = kbGroupServiceConfiguration.emailKBArticleUpdatedBody();
 }
 else if (tabs2.equals("suggestion-in-progress-email")) {
 	editorParam = "emailKBArticleSuggestionInProgressBody";
-	editorBody = emailKBArticleSuggestionInProgressBody;
+	editorBody = kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressBody();
 }
 else if (tabs2.equals("suggestion-received-email")) {
 	editorParam = "emailKBArticleSuggestionReceivedBody";
-	editorBody = emailKBArticleSuggestionReceivedBody;
+	editorBody = kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedBody();
 }
 else if (tabs2.equals("suggestion-resolved-email")) {
 	editorParam = "emailKBArticleSuggestionResolvedBody";
-	editorBody = emailKBArticleSuggestionResolvedBody;
+	editorBody = kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedBody();
 }
 %>
 
@@ -104,9 +83,9 @@ if (PortalUtil.isRSSFeedsEnabled()) {
 	<aui:fieldset>
 		<c:choose>
 			<c:when test='<%= tabs2.equals("email-from") %>'>
-				<aui:input label="name" name="preferences--emailFromName--" value="<%= emailFromName %>" wrapperCssClass="lfr-input-text-container" />
+				<aui:input label="name" name="preferences--emailFromName--" value="<%= kbGroupServiceConfiguration.emailFromName() %>" wrapperCssClass="lfr-input-text-container" />
 
-				<aui:input label="address" name="preferences--emailFromAddress--" value="<%= emailFromAddress %>" wrapperCssClass="lfr-input-text-container" />
+				<aui:input label="address" name="preferences--emailFromAddress--" value="<%= kbGroupServiceConfiguration.emailFromAddress() %>" wrapperCssClass="lfr-input-text-container" />
 
 				<div class="definition-of-terms">
 					<h4><liferay-ui:message key="definition-of-terms" /></h4>
@@ -160,19 +139,19 @@ if (PortalUtil.isRSSFeedsEnabled()) {
 			<c:when test='<%= tabs2.startsWith("article-") %>'>
 				<c:choose>
 					<c:when test='<%= tabs2.equals("article-added-email") %>'>
-						<aui:input label="enabled" name="preferences--emailKBArticleAddedEnabled--" type="checkbox" value="<%= emailKBArticleAddedEnabled %>" />
+						<aui:input label="enabled" name="preferences--emailKBArticleAddedEnabled--" type="checkbox" value="<%= kbGroupServiceConfiguration.emailKBArticleAddedEnabled() %>" />
 					</c:when>
 					<c:when test='<%= tabs2.equals("article-updated-email") %>'>
-						<aui:input label="enabled" name="preferences--emailKBArticleUpdatedEnabled--" type="checkbox" value="<%= emailKBArticleUpdatedEnabled %>" />
+						<aui:input label="enabled" name="preferences--emailKBArticleUpdatedEnabled--" type="checkbox" value="<%= kbGroupServiceConfiguration.emailKBArticleUpdatedEnabled() %>" />
 					</c:when>
 				</c:choose>
 
 				<c:choose>
 					<c:when test='<%= tabs2.equals("article-added-email") %>'>
-						<aui:input label="subject" name="preferences--emailKBArticleAddedSubject--" value="<%= emailKBArticleAddedSubject %>" wrapperCssClass="lfr-input-text-container" />
+						<aui:input label="subject" name="preferences--emailKBArticleAddedSubject--" value="<%= kbGroupServiceConfiguration.emailKBArticleAddedSubject() %>" wrapperCssClass="lfr-input-text-container" />
 					</c:when>
 					<c:when test='<%= tabs2.equals("article-updated-email") %>'>
-						<aui:input label="subject" name="preferences--emailKBArticleUpdatedSubject--" value="<%= emailKBArticleUpdatedSubject %>" wrapperCssClass="lfr-input-text-container" />
+						<aui:input label="subject" name="preferences--emailKBArticleUpdatedSubject--" value="<%= kbGroupServiceConfiguration.emailKBArticleUpdatedSubject() %>" wrapperCssClass="lfr-input-text-container" />
 					</c:when>
 				</c:choose>
 
@@ -264,13 +243,13 @@ if (PortalUtil.isRSSFeedsEnabled()) {
 							[$FROM_ADDRESS$]
 						</dt>
 						<dd>
-							<%= HtmlUtil.escape(emailFromAddress) %>
+							<%= HtmlUtil.escape(kbGroupServiceConfiguration.emailFromAddress()) %>
 						</dd>
 						<dt>
 							[$FROM_NAME$]
 						</dt>
 						<dd>
-							<%= HtmlUtil.escape(emailFromName) %>
+							<%= HtmlUtil.escape(kbGroupServiceConfiguration.emailFromName()) %>
 						</dd>
 						<dt>
 							[$PORTAL_URL$]
@@ -302,25 +281,25 @@ if (PortalUtil.isRSSFeedsEnabled()) {
 			<c:when test='<%= tabs2.startsWith("suggestion-") %>'>
 				<c:choose>
 					<c:when test='<%= tabs2.equals("suggestion-in-progress-email") %>'>
-						<aui:input label="enabled" name="preferences--emailKBArticleSuggestionInProgressEnabled--" type="checkbox" value="<%= emailKBArticleSuggestionInProgressEnabled %>" />
+						<aui:input label="enabled" name="preferences--emailKBArticleSuggestionInProgressEnabled--" type="checkbox" value="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressEnabled() %>" />
 					</c:when>
 					<c:when test='<%= tabs2.equals("suggestion-received-email") %>'>
-						<aui:input label="enabled" name="preferences--emailKBArticleSuggestionReceivedEnabled--" type="checkbox" value="<%= emailKBArticleSuggestionReceivedEnabled %>" />
+						<aui:input label="enabled" name="preferences--emailKBArticleSuggestionReceivedEnabled--" type="checkbox" value="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedEnabled() %>" />
 					</c:when>
 					<c:when test='<%= tabs2.equals("suggestion-resolved-email") %>'>
-						<aui:input label="enabled" name="preferences--emailKBArticleSuggestionResolvedEnabled--" type="checkbox" value="<%= emailKBArticleSuggestionResolvedEnabled %>" />
+						<aui:input label="enabled" name="preferences--emailKBArticleSuggestionResolvedEnabled--" type="checkbox" value="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedEnabled() %>" />
 					</c:when>
 				</c:choose>
 
 				<c:choose>
 					<c:when test='<%= tabs2.equals("suggestion-in-progress-email") %>'>
-						<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailKBArticleSuggestionInProgressSubject--" value="<%= emailKBArticleSuggestionInProgressSubject %>" />
+						<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailKBArticleSuggestionInProgressSubject--" value="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionInProgressSubject() %>" />
 					</c:when>
 					<c:when test='<%= tabs2.equals("suggestion-received-email") %>'>
-						<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailKBArticleSuggestionReceivedSubject--" value="<%= emailKBArticleSuggestionReceivedSubject %>" />
+						<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailKBArticleSuggestionReceivedSubject--" value="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionReceivedSubject() %>" />
 					</c:when>
 					<c:when test='<%= tabs2.equals("suggestion-resolved-email") %>'>
-						<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailKBArticleSuggestionResolvedSubject--" value="<%= emailKBArticleSuggestionResolvedSubject %>" />
+						<aui:input cssClass="lfr-input-text-container" label="subject" name="preferences--emailKBArticleSuggestionResolvedSubject--" value="<%= kbGroupServiceConfiguration.emailKBArticleSuggestionResolvedSubject() %>" />
 					</c:when>
 				</c:choose>
 
@@ -377,10 +356,10 @@ if (PortalUtil.isRSSFeedsEnabled()) {
 			</c:when>
 			<c:when test='<%= tabs2.equals("rss") %>'>
 				<liferay-ui:rss-settings
-					delta="<%= rssDelta %>"
-					displayStyle="<%= rssDisplayStyle %>"
-					enabled="<%= enableRSS %>"
-					feedType="<%= rssFeedType %>"
+					delta="<%= kbGroupServiceConfiguration.rssDelta() %>"
+					displayStyle="<%= kbGroupServiceConfiguration.rssDisplayStyle() %>"
+					enabled="<%= kbGroupServiceConfiguration.enableRSS() %>"
+					feedType="<%= kbGroupServiceConfiguration.rssFeedType() %>"
 				/>
 			</c:when>
 		</c:choose>

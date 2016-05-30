@@ -22,7 +22,6 @@ import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
 import com.liferay.knowledge.base.constants.AdminActivityKeys;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
-import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.KBArticleContentException;
@@ -73,7 +72,6 @@ import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -1568,9 +1566,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			long groupId)
 		throws ConfigurationException {
 
-		return configurationProvider.getConfiguration(
-			KBGroupServiceConfiguration.class,
-			new GroupServiceSettingsLocator(groupId, KBConstants.SERVICE_NAME));
+		return configurationProvider.getGroupConfiguration(
+			KBGroupServiceConfiguration.class, groupId);
 	}
 
 	protected KBArticle getNextAncestorKBArticle(

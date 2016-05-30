@@ -94,7 +94,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 			value="<%= HtmlUtil.escape((String)tuple.getObject(1)) %>"
 		/>
 
-		<c:if test="<%= showKBArticleAuthorColumn %>">
+		<c:if test="<%= kbSearchPortletInstanceConfiguration.showKBArticleAuthorColumn() %>">
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
 				name="author"
@@ -104,7 +104,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 			/>
 		</c:if>
 
-		<c:if test="<%= showKBArticleCreateDateColumn %>">
+		<c:if test="<%= kbSearchPortletInstanceConfiguration.showKBArticleCreateDateColumn() %>">
 			<liferay-ui:search-container-column-date
 				cssClass="kb-column-no-wrap"
 				href="<%= rowURL %>"
@@ -114,7 +114,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 			/>
 		</c:if>
 
-		<c:if test="<%= showKBArticleModifiedDateColumn %>">
+		<c:if test="<%= kbSearchPortletInstanceConfiguration.showKBArticleModifiedDateColumn() %>">
 			<liferay-ui:search-container-column-date
 				cssClass="kb-column-no-wrap"
 				href="<%= rowURL %>"
@@ -124,7 +124,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 			/>
 		</c:if>
 
-		<c:if test="<%= showKBArticleViewsColumn %>">
+		<c:if test="<%= kbSearchPortletInstanceConfiguration.showKBArticleViewsColumn() %>">
 			<liferay-ui:search-container-column-text
 				buffer="buffer"
 				cssClass="kb-column-no-wrap"

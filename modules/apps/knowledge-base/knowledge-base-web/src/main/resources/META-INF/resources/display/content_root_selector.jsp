@@ -23,7 +23,7 @@ KBNavigationDisplayContext kbNavigationDisplayContext = (KBNavigationDisplayCont
 
 String currentKBFolderURLTitle = kbNavigationDisplayContext.getCurrentKBFolderURLTitle();
 
-List<KBFolder> kbFolders = KnowledgeBaseUtil.getAlternateRootKBFolders(scopeGroupId, resourcePrimKey);
+List<KBFolder> kbFolders = KnowledgeBaseUtil.getAlternateRootKBFolders(scopeGroupId, kbDisplayPortletInstanceConfiguration.resourcePrimKey());
 %>
 
 <c:if test="<%= kbFolders.size() > 1 %>">
@@ -45,7 +45,7 @@ List<KBFolder> kbFolders = KnowledgeBaseUtil.getAlternateRootKBFolders(scopeGrou
 						selected="<%= currentKBFolderURLTitle.equals(kbFolder.getUrlTitle()) %>"
 						value="<%= kbFolder.getKbFolderId() %>"
 					>
-						<%= contentRootPrefix + " " + kbFolder.getName() %>
+						<%= kbDisplayPortletInstanceConfiguration.contentRootPrefix() + " " + kbFolder.getName() %>
 					</aui:option>
 
 				<%

@@ -30,7 +30,7 @@ public class LayoutBranchVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "layoutBranchId";
+		return "LayoutBranchId";
 	}
 
 	@Override

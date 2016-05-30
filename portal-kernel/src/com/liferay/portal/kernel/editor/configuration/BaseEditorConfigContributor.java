@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -38,7 +39,7 @@ public abstract class BaseEditorConfigContributor
 
 		Locale contentsLocale = getContentsLocale(inputEditorTaglibAttributes);
 
-		return LanguageUtil.get(contentsLocale, "lang.dir");
+		return LanguageUtil.get(contentsLocale, LanguageConstants.KEY_DIR);
 	}
 
 	protected String getContentsLanguageId(

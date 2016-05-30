@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.security.auth;
 
+import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -35,6 +36,35 @@ public class FullNameDefinitionFactory {
 	private FullNameDefinitionFactory() {
 	}
 
+	private FullNameField _getFullNameField(
+		Locale locale, String userNameField, boolean required) {
+
+		FullNameField fullNameField = new FullNameField();
+
+		fullNameField.setName(userNameField);
+
+		String[] values = null;
+
+		if (userNameField.equals(LanguageConstants.VALUE_PREFIX)) {
+			values = StringUtil.split(
+				LanguageUtil.get(
+					locale, LanguageConstants.KEY_USER_NAME_PREFIX_VALUES,
+					StringPool.BLANK));
+		}
+		else if (userNameField.equals(LanguageConstants.VALUE_SUFFIX)) {
+			values = StringUtil.split(
+				LanguageUtil.get(
+					locale, LanguageConstants.KEY_USER_NAME_SUFFIX_VALUES,
+					StringPool.BLANK));
+		}
+
+		fullNameField.setValues(values);
+
+		fullNameField.setRequired(required);
+
+		return fullNameField;
+	}
+
 	private FullNameDefinition _getInstance(Locale locale) {
 		FullNameDefinition fullNameDefinition = _fullNameDefinitions.get(
 			locale);
@@ -52,29 +82,14 @@ public class FullNameDefinitionFactory {
 		}
 
 		String[] fieldNames = StringUtil.split(
-			LanguageUtil.get(locale, "lang.user.name.field.names"));
+			LanguageUtil.get(
+				locale, LanguageConstants.KEY_USER_NAME_FIELD_NAMES));
 
-		fieldNames = ArrayUtil.append(requiredFieldNames, fieldNames);
-
-		ArrayUtil.reverse(fieldNames);
-
-		fieldNames = ArrayUtil.unique(fieldNames);
-
-		ArrayUtil.reverse(fieldNames);
+		fieldNames = _includeRequiredFieldNames(requiredFieldNames, fieldNames);
 
 		for (String userNameField : fieldNames) {
-			FullNameField fullNameField = new FullNameField();
-
-			fullNameField.setName(userNameField);
-
-			String[] values = StringUtil.split(
-				LanguageUtil.get(
-					locale, "lang.user.name." + userNameField + ".values",
-					StringPool.BLANK));
-
-			fullNameField.setValues(values);
-
-			fullNameField.setRequired(
+			FullNameField fullNameField = _getFullNameField(
+				locale, userNameField,
 				fullNameDefinition.isFieldRequired(userNameField));
 
 			fullNameDefinition.addFullNameField(fullNameField);
@@ -87,14 +102,32 @@ public class FullNameDefinitionFactory {
 
 	private String[] _getRequiredFieldNames(Locale locale) {
 		String[] requiredFieldNames = StringUtil.split(
-			LanguageUtil.get(locale, "lang.user.name.required.field.names"));
+			LanguageUtil.get(
+				locale, LanguageConstants.KEY_USER_NAME_REQUIRED_FIELD_NAMES));
 
-		if (!ArrayUtil.contains(requiredFieldNames, "first-name")) {
+		if (!ArrayUtil.contains(
+				requiredFieldNames, LanguageConstants.VALUE_FIRST_NAME)) {
+
 			requiredFieldNames = ArrayUtil.append(
-				new String[] {"first-name"}, requiredFieldNames);
+				new String[] {LanguageConstants.VALUE_FIRST_NAME},
+				requiredFieldNames);
 		}
 
 		return requiredFieldNames;
+	}
+
+	private String[] _includeRequiredFieldNames(
+		String[] requiredFieldNames, String[] fieldNames) {
+
+		fieldNames = ArrayUtil.append(requiredFieldNames, fieldNames);
+
+		ArrayUtil.reverse(fieldNames);
+
+		fieldNames = ArrayUtil.unique(fieldNames);
+
+		ArrayUtil.reverse(fieldNames);
+
+		return fieldNames;
 	}
 
 	private static final FullNameDefinitionFactory _instance =

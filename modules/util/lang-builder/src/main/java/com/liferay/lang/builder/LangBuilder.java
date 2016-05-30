@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.OutputStreamWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.language.LanguageConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.language.util.LanguageValidator;
 import com.liferay.portal.tools.ArgumentsUtil;
 
 import com.memetix.mst.language.Language;
@@ -66,7 +68,8 @@ public class LangBuilder {
 		System.setProperty("line.separator", StringPool.NEW_LINE);
 
 		String langDirName = GetterUtil.getString(
-			arguments.get("lang.dir"), LangBuilderArgs.LANG_DIR_NAME);
+			arguments.get(LanguageConstants.KEY_DIR),
+			LangBuilderArgs.LANG_DIR_NAME);
 		String langFileName = GetterUtil.getString(
 			arguments.get("lang.file"), LangBuilderArgs.LANG_FILE_NAME);
 		boolean plugin = GetterUtil.getBoolean(
@@ -211,6 +214,20 @@ public class LangBuilder {
 		_createProperties(content, "vi"); // Vietnamese
 	}
 
+	private static String _getDefaultLanguageSettingValue(String key) {
+		if (key.equals(LanguageConstants.KEY_DIR)) {
+			return LanguageConstants.VALUE_LTR;
+		}
+		else if (key.equals(LanguageConstants.KEY_LINE_BEGIN)) {
+			return LanguageConstants.VALUE_LEFT;
+		}
+		else if (key.equals(LanguageConstants.KEY_LINE_END)) {
+			return LanguageConstants.VALUE_RIGHT;
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private void _copyProperties(File file, String languageId)
 		throws IOException {
 
@@ -346,17 +363,11 @@ public class LangBuilder {
 								translatedText = value + AUTOMATIC_COPY;
 							}
 						}
-						else if (key.equals("lang.dir")) {
-							translatedText = "ltr";
-						}
-						else if (key.equals("lang.line.begin")) {
-							translatedText = "left";
-						}
-						else if (key.equals("lang.line.end")) {
-							translatedText = "right";
-						}
-						else if (key.startsWith("lang.user.name.")) {
-							translatedText = "";
+						else if (LanguageValidator.isLanguageSettingsProperty(
+									key)) {
+
+							translatedText = _getDefaultLanguageSettingValue(
+								key);
 						}
 						else if (languageId.equals("el") &&
 								 (key.equals("enabled") || key.equals("on") ||

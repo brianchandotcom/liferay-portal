@@ -111,6 +111,13 @@ public class IncorrectLineBreaks1 {
 			}, 5);
 	}
 
+	public void method6(
+		String testStringName1, String testStringName2, String testStringName3,
+		String testStringName4) throws Exception {
+
+		return;
+	}
+
 	public void methodWithASlightlyLongerName(
 		String test1, String test2, String[] testStringArray) throws Exception {
 

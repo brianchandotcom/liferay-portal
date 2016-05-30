@@ -89,8 +89,7 @@ public class SocialActivityDefinition implements Serializable {
 				activityDefinition.getActivityProcessor()) &&
 			(_activityType == activityDefinition.getActivityType()) &&
 			(_countersEnabled == activityDefinition.isCountersEnabled()) &&
-			Objects.equals(
-				_languageKey, activityDefinition.getLanguageKey()) &&
+			Objects.equals(_languageKey, activityDefinition.getLanguageKey()) &&
 			(_logActivity == activityDefinition.isLogActivity()) &&
 			Objects.equals(_modelName, activityDefinition.getModelName())) {
 

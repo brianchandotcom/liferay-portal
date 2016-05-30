@@ -215,8 +215,7 @@ public class I18nServlet extends HttpServlet {
 			I18nData i18nData = (I18nData)obj;
 
 			if (Objects.equals(getI18nPath(), i18nData.getI18nPath()) &&
-				Objects.equals(
-					getLanguageCode(), i18nData.getLanguageCode()) &&
+				Objects.equals(getLanguageCode(), i18nData.getLanguageCode()) &&
 				Objects.equals(getLanguageId(), i18nData.getLanguageId()) &&
 				Objects.equals(getPath(), i18nData.getPath())) {
 

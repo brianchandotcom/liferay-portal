@@ -49,8 +49,7 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		}
 
 		/*
-		if (PropsValues.IMAGE_HOOK_IMPL.equals(
-				DatabaseHook.class.getName()) &&
+		if (PropsValues.IMAGE_HOOK_IMPL.equals(DatabaseHook.class.getName()) &&
 			(imagePersistence.getListeners().length == 0)) {
 
 			runSQL("delete from Image where imageId = " + imageId);

@@ -134,8 +134,9 @@ public class LiferayWorkflowLocalRepositoryWrapper
 
 	@Override
 	public void revertFileEntry(
-		long userId, long fileEntryId, String version,
-		ServiceContext serviceContext) throws PortalException {
+			long userId, long fileEntryId, String version,
+			ServiceContext serviceContext)
+		throws PortalException {
 
 		super.revertFileEntry(userId, fileEntryId, version, serviceContext);
 

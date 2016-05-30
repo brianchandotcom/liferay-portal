@@ -66,8 +66,7 @@ public class DDMForm implements Serializable {
 
 		DDMForm ddmForm = (DDMForm)obj;
 
-		if (Objects.equals(
-				_availableLocales, ddmForm._availableLocales) &&
+		if (Objects.equals(_availableLocales, ddmForm._availableLocales) &&
 			Objects.equals(_defaultLocale, ddmForm._defaultLocale) &&
 			Objects.equals(
 				_ddmFormFields, ddmForm._ddmFormFields)) {

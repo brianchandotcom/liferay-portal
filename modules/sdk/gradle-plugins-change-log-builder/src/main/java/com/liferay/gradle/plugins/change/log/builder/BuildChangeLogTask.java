@@ -212,8 +212,8 @@ public class BuildChangeLogTask extends DefaultTask {
 	}
 
 	protected Set<String> getTicketIds(
-		String rangeStart, String rangeEnd,
-		Repository repository) throws Exception {
+			String rangeStart, String rangeEnd, Repository repository)
+		throws Exception {
 
 		Set<String> ticketIds = new TreeSet<>(
 			new NaturalOrderStringComparator());

@@ -1914,8 +1914,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			String servletClass = GetterUtil.getString(
 				servletClassElement.getText());
 
-			if (servletClass.equals(
-					PortalClassLoaderServlet.class.getName()) ||
+			if (servletClass.equals(PortalClassLoaderServlet.class.getName()) ||
 				servletClass.equals(PortalDelegateServlet.class.getName()) ||
 				servletClass.equals(PortletServlet.class.getName())) {
 

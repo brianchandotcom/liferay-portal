@@ -442,8 +442,7 @@ public class PatchTask extends DefaultTask {
 			ModuleVersionIdentifier moduleVersionIdentifier =
 				resolvedModuleVersion.getId();
 
-			if (moduleGroup.equals(
-					moduleVersionIdentifier.getGroup()) &&
+			if (moduleGroup.equals(moduleVersionIdentifier.getGroup()) &&
 				moduleName.equals(moduleVersionIdentifier.getName()) &&
 				moduleVersion.equals(
 					moduleVersionIdentifier.getVersion())) {

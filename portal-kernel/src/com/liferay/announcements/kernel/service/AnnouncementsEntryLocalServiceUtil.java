@@ -425,6 +425,11 @@ public class AnnouncementsEntryLocalServiceUtil {
 		getService().checkEntries();
 	}
 
+	public static void deleteEntries(long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteEntries(classNameId, classPK);
+	}
+
 	public static void deleteEntry(
 		com.liferay.announcements.kernel.model.AnnouncementsEntry entry)
 		throws com.liferay.portal.kernel.exception.PortalException {

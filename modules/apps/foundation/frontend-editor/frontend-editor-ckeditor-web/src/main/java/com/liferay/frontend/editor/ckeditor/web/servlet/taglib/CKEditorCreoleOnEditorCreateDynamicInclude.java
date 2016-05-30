@@ -48,7 +48,8 @@ public class CKEditorCreoleOnEditorCreateDynamicInclude
 			"/META-INF/resources/ckeditor/extension" +
 				"/creole_dialog_definition.js");
 
-		StreamUtil.transfer(entryURL.openStream(), response.getOutputStream());
+		StreamUtil.transfer(
+			entryURL.openStream(), response.getOutputStream(), false);
 
 		String toolbarSet = (String)request.getAttribute(
 			"liferay-ui:input-editor:toolbarSet");
@@ -58,7 +59,7 @@ public class CKEditorCreoleOnEditorCreateDynamicInclude
 				"/META-INF/resources/ckeditor/extension/creole_dialog_show.js");
 
 			StreamUtil.transfer(
-				entryURL.openStream(), response.getOutputStream());
+				entryURL.openStream(), response.getOutputStream(), false);
 		}
 	}
 

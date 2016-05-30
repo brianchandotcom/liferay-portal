@@ -229,6 +229,8 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 		Files.createDirectories(_deploymentDirPath);
 
+		final List<File> lpkgFiles = new ArrayList<>();
+
 		Files.walkFileTree(
 			_deploymentDirPath,
 			new SimpleFileVisitor<Path>() {
@@ -246,40 +248,40 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 						return FileVisitResult.CONTINUE;
 					}
 
-					try {
-						List<Bundle> bundles = deploy(
-							bundleContext, filePath.toFile());
-
-						for (Bundle bundle : bundles) {
-							Dictionary<String, String> headers =
-								bundle.getHeaders();
-
-							String fragmentHost = headers.get(
-								Constants.FRAGMENT_HOST);
-
-							if (fragmentHost != null) {
-								continue;
-							}
-
-							try {
-								bundle.start();
-							}
-							catch (BundleException be) {
-								_log.error(
-									"Unable to start " + bundle + " for " +
-										filePath,
-									be);
-							}
-						}
-					}
-					catch (Exception e) {
-						_log.error("Unable to deploy LPKG file " + filePath, e);
-					}
+					lpkgFiles.add(filePath.toFile());
 
 					return FileVisitResult.CONTINUE;
 				}
 
 			});
+
+		for (File lpkgFile : lpkgFiles) {
+			try {
+				List<Bundle> bundles = deploy(bundleContext, lpkgFile);
+
+				for (Bundle bundle : bundles) {
+					Dictionary<String, String> headers = bundle.getHeaders();
+
+					String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
+
+					if (fragmentHost != null) {
+						continue;
+					}
+
+					try {
+						bundle.start();
+					}
+					catch (BundleException be) {
+						_log.error(
+							"Unable to start " + bundle + " for " + lpkgFile,
+							be);
+					}
+				}
+			}
+			catch (Exception e) {
+				_log.error("Unable to deploy LPKG file " + lpkgFile, e);
+			}
+		}
 	}
 
 	private void _writeManifest(

@@ -12,17 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.target.platform.indexer;
+package com.liferay.portal.lpkg.deployer.internal;
 
-import java.io.OutputStream;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 /**
- * @author Raymond Augé
+ * @author Shuyang Zhou
  */
-public interface Indexer {
+public class LPKGValidationThreadLocal {
 
-	public static final String DIR_NAME_TARGET_PLATFORM = "target-platform";
+	public static boolean isEnabled() {
+		return _enabled.get();
+	}
 
-	public void index(OutputStream outputStream) throws Exception;
+	public static void setEnabled(boolean enabled) {
+		_enabled.set(enabled);
+	}
+
+	private static final ThreadLocal<Boolean> _enabled =
+		new AutoResetThreadLocal<>(
+			CompanyThreadLocal.class + "._enabled", true);
 
 }

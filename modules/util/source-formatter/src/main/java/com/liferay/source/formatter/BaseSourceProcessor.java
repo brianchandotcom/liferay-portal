@@ -1305,7 +1305,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return line;
 		}
 
-		Matcher matcher = javaSourceInsideJSPTagPattern.matcher(line);
+		Matcher matcher = javaSourceInsideJSPLinePattern.matcher(line);
 
 		while (matcher.find()) {
 			String linePart = matcher.group(1);
@@ -2691,7 +2691,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"GetterUtil\\.get(Boolean|Double|Float|Integer|Number|Object|Short|" +
 			"String)\\((.*?)\\);\n",
 		Pattern.DOTALL);
-	protected static Pattern javaSourceInsideJSPTagPattern = Pattern.compile(
+	protected static Pattern javaSourceInsideJSPLinePattern = Pattern.compile(
 		"<%=(.+?)%>");
 	protected static Pattern jsonObjectPutBlockPattern = Pattern.compile(
 		"(\t*\\w*(json|JSON)Object\\.put\\(\\s*\".*?\\);\n)+", Pattern.DOTALL);

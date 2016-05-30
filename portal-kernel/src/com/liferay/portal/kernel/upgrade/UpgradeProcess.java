@@ -269,7 +269,8 @@ public abstract class UpgradeProcess
 				Set<String> primaryKeyNames = new HashSet<>();
 
 				while (rs1.next()) {
-					String primaryKeyName = rs1.getString("PK_NAME");
+					String primaryKeyName = StringUtil.toUpperCase(
+						rs1.getString("PK_NAME"));
 
 					if (primaryKeyName != null) {
 						primaryKeyNames.add(primaryKeyName);
@@ -279,7 +280,8 @@ public abstract class UpgradeProcess
 				Map<String, Set<String>> columnNamesMap = new HashMap<>();
 
 				while (rs2.next()) {
-					String indexName = rs2.getString("INDEX_NAME");
+					String indexName = StringUtil.toUpperCase(
+						rs2.getString("INDEX_NAME"));
 
 					if ((indexName == null) ||
 						primaryKeyNames.contains(indexName)) {
@@ -295,11 +297,13 @@ public abstract class UpgradeProcess
 						columnNamesMap.put(indexName, columnNames);
 					}
 
-					columnNames.add(rs2.getString("COLUMN_NAME"));
+					columnNames.add(
+						StringUtil.toUpperCase(rs2.getString("COLUMN_NAME")));
 				}
 
 				for (Alterable alterable : alterables) {
-					String columnName = alterable.getIndexedColumnName();
+					String columnName = StringUtil.toUpperCase(
+						alterable.getIndexedColumnName());
 
 					for (Map.Entry<String, Set<String>> entry :
 							columnNamesMap.entrySet()) {
@@ -330,7 +334,8 @@ public abstract class UpgradeProcess
 							objectValuePair.getValue();
 
 						if (!ArrayUtil.contains(
-								indexMetadata.getColumnNames(), columnName)) {
+								indexMetadata.getColumnNames(), columnName,
+								true)) {
 
 							continue;
 						}

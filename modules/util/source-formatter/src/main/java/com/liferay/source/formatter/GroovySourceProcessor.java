@@ -30,7 +30,8 @@ public class GroovySourceProcessor extends JavaSourceProcessor {
 
 	@Override
 	protected void checkInefficientStringMethods(
-		String line, String fileName, String absolutePath, int lineCount) {
+		String line, String fileName, String absolutePath, int lineCount,
+		boolean javaSource) {
 	}
 
 	@Override

@@ -782,10 +782,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					javaSource = false;
 				}
 
-				if (javaSource || trimmedLine.contains("<%= ")) {
-					checkInefficientStringMethods(
-						line, fileName, absolutePath, lineCount);
-				}
+				checkInefficientStringMethods(
+					line, fileName, absolutePath, lineCount, javaSource);
 
 				if (javaSource) {
 					if (portalSource &&
@@ -836,10 +834,24 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				// LPS-55341
 
-				if (!javaSource) {
+				if (javaSource) {
 					line = StringUtil.replace(
 						line, "LanguageUtil.get(locale,",
 						"LanguageUtil.get(request,");
+				}
+				else {
+					Matcher matcher = javaSourceInsideJSPLinePattern.matcher(
+						line);
+
+					while (matcher.find()) {
+						String match = matcher.group(1);
+
+						String replacement = StringUtil.replace(
+							match, "LanguageUtil.get(locale,",
+							"LanguageUtil.get(request,");
+
+						line = StringUtil.replace(line, match, replacement);
+					}
 				}
 
 				// LPS-58529

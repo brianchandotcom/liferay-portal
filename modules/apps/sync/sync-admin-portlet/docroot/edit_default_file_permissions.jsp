@@ -62,7 +62,7 @@ int currentPermissions = GetterUtil.getInteger(group.getTypeSettingsProperty("sy
 						List<String> localizedResourceActions = new ArrayList<String>(resourceActions.size());
 
 						for (String resourceAction : resourceActions) {
-							localizedResourceActions.add(LanguageUtil.get(locale, ResourceActionsUtil.getActionNamePrefix() + resourceAction));
+							localizedResourceActions.add(LanguageUtil.get(request, ResourceActionsUtil.getActionNamePrefix() + resourceAction));
 						}
 					%>
 

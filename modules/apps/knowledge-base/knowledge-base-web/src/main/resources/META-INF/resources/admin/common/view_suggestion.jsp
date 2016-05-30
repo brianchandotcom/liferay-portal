@@ -55,9 +55,7 @@ renderResponse.setTitle(kbCommentTitle);
 				<h5 class="text-default">
 
 					<%
-					KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(
-							kbComment.getClassPK(),
-							WorkflowConstants.STATUS_ANY);
+					KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(kbComment.getClassPK(), WorkflowConstants.STATUS_ANY);
 
 					KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
 

@@ -92,6 +92,12 @@ public class CombineLines
 		if ((i1 == 0) ||
 			(i2 == 0)) {
 		}
+
+		if (StringUtil.contains(
+				test1, "Hello World Hello World Hello") ||
+			StringUtil.contains(
+				test2, "Hello World Hello World Hello World Hello")) {
+		}
 	}
 
 	public void method2(

@@ -836,7 +836,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				// LPS-55341
 
-				if (!javaSource) {
+				if (javaSource) {
 					line = StringUtil.replace(
 						line, "LanguageUtil.get(locale,",
 						"LanguageUtil.get(request,");

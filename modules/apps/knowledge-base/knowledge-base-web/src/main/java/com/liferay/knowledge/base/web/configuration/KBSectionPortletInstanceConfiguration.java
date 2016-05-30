@@ -41,18 +41,6 @@ public interface KBSectionPortletInstanceConfiguration {
 	@Meta.AD(deflt = "title", required = false)
 	public String kbArticleDisplayStyle();
 
-	@Meta.AD(deflt = "maximized", required = false)
-	public String kbArticleWindowState();
-
-	@Meta.AD(deflt = "modified-date", required = false)
-	public String kbArticlesOrderByCol();
-
-	@Meta.AD(deflt = "desc", required = false)
-	public String kbArticlesOrderByType();
-
-	@Meta.AD(deflt = "10", required = false)
-	public int kbArticlesDelta();
-
 	@Meta.AD(deflt = "true", required = false)
 	public boolean showKBArticlesPagination();
 

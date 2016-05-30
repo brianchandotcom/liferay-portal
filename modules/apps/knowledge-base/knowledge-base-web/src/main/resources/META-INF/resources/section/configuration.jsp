@@ -17,6 +17,8 @@
 <%@ include file="/section/init.jsp" %>
 
 <%
+kbSectionPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBSectionPortletInstanceConfiguration.class, kbSectionPortletInstanceConfiguration, request.getParameterMap(), "preferences--", "--");
+
 String tabs2 = ParamUtil.getString(request, "tabs2", "general");
 
 String tabs2Names = "general,display-settings";
@@ -43,7 +45,7 @@ String tabs2Names = "general,display-settings";
 	<aui:fieldset>
 		<c:choose>
 			<c:when test='<%= tabs2.equals("general") %>'>
-				<aui:input label="show-sections-title" name="preferences--showKBArticlesSectionsTitle--" type="checkbox" value="<%= showKBArticlesSectionsTitle %>" />
+				<aui:input label="show-sections-title" name="preferences--showKBArticlesSectionsTitle--" type="checkbox" value="<%= kbSectionPortletInstanceConfiguration.showKBArticlesSectionsTitle() %>" />
 
 				<aui:select cssClass="kb-field-wrapper" ignoreRequestValue="<%= true %>" label="sections" multiple="<%= true %>" name="kbArticlesSections">
 
@@ -57,7 +59,7 @@ String tabs2Names = "general,display-settings";
 					for (Map.Entry<String, String> entry : sectionsMap.entrySet()) {
 					%>
 
-						<aui:option label="<%= entry.getKey() %>" selected="<%= ArrayUtil.contains(kbArticlesSections, entry.getValue()) %>" value="<%= entry.getValue() %>" />
+						<aui:option label="<%= entry.getKey() %>" selected="<%= ArrayUtil.contains(kbSectionPortletInstanceConfiguration.kbArticlesSections(), entry.getValue()) %>" value="<%= entry.getValue() %>" />
 
 					<%
 					}
@@ -65,75 +67,37 @@ String tabs2Names = "general,display-settings";
 
 				</aui:select>
 
-				<aui:select label="article-display-style" name="preferences--kbArticleDisplayStyle--" value="<%= kbArticleDisplayStyle %>">
+				<aui:select label="article-display-style" name="preferences--kbArticleDisplayStyle--" value="<%= kbSectionPortletInstanceConfiguration.kbArticleDisplayStyle() %>">
 					<aui:option label="title" />
 					<aui:option label="abstract" />
 				</aui:select>
 
-				<aui:select label="article-window-state" name="preferences--kbArticleWindowState--" value="<%= kbArticleWindowState %>">
-					<aui:option label="maximized" value="<%= WindowState.MAXIMIZED.toString() %>" />
-					<aui:option label="normal" value="<%= WindowState.NORMAL.toString() %>" />
-				</aui:select>
-
-				<div class="kb-block-labels kb-field-wrapper">
-					<aui:select inlineField="<%= true %>" label="order-by" name="preferences--kbArticlesOrderByCol--" value="<%= kbArticlesOrderByCol %>">
-						<aui:option label="create-date" />
-						<aui:option label="modified-date" />
-						<aui:option label="priority" />
-						<aui:option label="title" />
-						<aui:option label="view-count" />
-					</aui:select>
-
-					<aui:select inlineField="<%= true %>" label="<%= StringPool.NBSP %>" name="preferences--kbArticlesOrderByType--" value="<%= kbArticlesOrderByType %>">
-						<aui:option label="ascending" value="asc" />
-						<aui:option label="descending" value="desc" />
-					</aui:select>
-				</div>
-
-				<aui:select cssClass="kb-field-wrapper" label="items-per-page" name="preferences--kbArticlesDelta--">
-
-					<%
-					int[] pageDeltaValues = GetterUtil.getIntegerValues(PropsUtil.getArray(PropsKeys.SEARCH_CONTAINER_PAGE_DELTA_VALUES));
-
-					Arrays.sort(pageDeltaValues);
-
-					for (int pageDeltaValue : pageDeltaValues) {
-					%>
-
-						<aui:option label="<%= pageDeltaValue %>" selected="<%= kbArticlesDelta == pageDeltaValue %>" />
-
-					<%
-					}
-					%>
-
-				</aui:select>
-
-				<aui:input label="show-pagination" name="preferences--showKBArticlesPagination--" type="checkbox" value="<%= showKBArticlesPagination %>" />
+				<aui:input label="show-pagination" name="preferences--showKBArticlesPagination--" type="checkbox" value="<%= kbSectionPortletInstanceConfiguration.showKBArticlesPagination() %>" />
 			</c:when>
 			<c:when test='<%= tabs2.equals("display-settings") %>'>
-				<aui:input label="enable-description" name="preferences--enableKBArticleDescription--" type="checkbox" value="<%= enableKBArticleDescription %>" />
+				<aui:input label="enable-description" name="preferences--enableKBArticleDescription--" type="checkbox" value="<%= kbSectionPortletInstanceConfiguration.enableKBArticleDescription() %>" />
 
-				<aui:input label="enable-ratings" name="preferences--enableKBArticleRatings--" type="checkbox" value="<%= enableKBArticleRatings %>" />
+				<aui:input label="enable-ratings" name="preferences--enableKBArticleRatings--" type="checkbox" value="<%= kbSectionPortletInstanceConfiguration.enableKBArticleRatings() %>" />
 
-				<aui:input label="show-asset-entries" name="preferences--showKBArticleAssetEntries--" type="checkbox" value="<%= showKBArticleAssetEntries %>" />
+				<aui:input label="show-asset-entries" name="preferences--showKBArticleAssetEntries--" type="checkbox" value="<%= kbSectionPortletInstanceConfiguration.showKBArticleAssetEntries() %>" />
 
-				<aui:input label="show-attachments" name="preferences--showKBArticleAttachments--" type="checkbox" value="<%= showKBArticleAttachments %>" />
+				<aui:input label="show-attachments" name="preferences--showKBArticleAttachments--" type="checkbox" value="<%= kbSectionPortletInstanceConfiguration.showKBArticleAttachments() %>" />
 
-				<aui:input label="enable-related-assets" name="preferences--enableKBArticleAssetLinks--" type="checkbox" value="<%= enableKBArticleAssetLinks %>" />
+				<aui:input label="enable-related-assets" name="preferences--enableKBArticleAssetLinks--" type="checkbox" value="<%= kbSectionPortletInstanceConfiguration.enableKBArticleAssetLinks() %>" />
 
-				<aui:input label="enable-view-count-increment" name="preferences--enableKBArticleViewCountIncrement--" type="checkbox" value="<%= enableKBArticleViewCountIncrement %>" />
+				<aui:input label="enable-view-count-increment" name="preferences--enableKBArticleViewCountIncrement--" type="checkbox" value="<%= kbSectionPortletInstanceConfiguration.enableKBArticleViewCountIncrement() %>" />
 
-				<aui:input label="enable-subscriptions" name="preferences--enableKBArticleSubscriptions--" type="checkbox" value="<%= enableKBArticleSubscriptions %>" />
+				<aui:input label="enable-subscriptions" name="preferences--enableKBArticleSubscriptions--" type="checkbox" value="<%= kbSectionPortletInstanceConfiguration.enableKBArticleSubscriptions() %>" />
 
-				<aui:input label="enable-history" name="preferences--enableKBArticleHistory--" type="checkbox" value="<%= enableKBArticleHistory %>" />
+				<aui:input label="enable-history" name="preferences--enableKBArticleHistory--" type="checkbox" value="<%= kbSectionPortletInstanceConfiguration.enableKBArticleHistory() %>" />
 
-				<aui:input label="enable-print" name="preferences--enableKBArticlePrint--" type="checkbox" value="<%= enableKBArticlePrint %>" />
+				<aui:input label="enable-print" name="preferences--enableKBArticlePrint--" type="checkbox" value="<%= kbSectionPortletInstanceConfiguration.enableKBArticlePrint() %>" />
 
 				<liferay-ui:social-bookmarks-settings
-					displayPosition="<%= socialBookmarksDisplayPosition %>"
-					displayStyle="<%= socialBookmarksDisplayStyle %>"
-					enabled="<%= enableSocialBookmarks %>"
-					types="<%= socialBookmarksTypes %>"
+					displayPosition="<%= kbSectionPortletInstanceConfiguration.socialBookmarksDisplayPosition() %>"
+					displayStyle="<%= kbSectionPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"
+					enabled="<%= kbSectionPortletInstanceConfiguration.enableSocialBookmarks() %>"
+					types="<%= kbSectionPortletInstanceConfiguration.socialBookmarksTypes() %>"
 				/>
 			</c:when>
 		</c:choose>

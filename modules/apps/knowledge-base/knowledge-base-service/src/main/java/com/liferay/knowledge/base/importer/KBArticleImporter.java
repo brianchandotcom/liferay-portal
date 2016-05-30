@@ -16,7 +16,6 @@ package com.liferay.knowledge.base.importer;
 
 import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
-import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
 import com.liferay.knowledge.base.importer.util.KBArticleMarkdownConverter;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -270,10 +268,8 @@ public class KBArticleImporter {
 				groupId, parentKBFolderId, prioritizeByNumericalPrefix);
 
 		KBGroupServiceConfiguration kbGroupServiceConfiguration =
-			_configurationProvider.getConfiguration(
-				KBGroupServiceConfiguration.class,
-				new GroupServiceSettingsLocator(
-					groupId, KBConstants.SERVICE_NAME));
+			_configurationProvider.getGroupConfiguration(
+				KBGroupServiceConfiguration.class, groupId);
 
 		Map<String, List<String>> folderNameFileEntryNamesMap =
 			getFolderNameFileEntryNamesMap(

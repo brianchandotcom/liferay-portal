@@ -32,6 +32,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface KBGroupServiceConfiguration {
 
+	@Meta.AD(deflt = "alloyeditor", required = false)
+	public String getEditorName();
+
 	@Meta.AD(deflt = "true", required = false)
 	public boolean articleIncrementPriorityEnabled();
 

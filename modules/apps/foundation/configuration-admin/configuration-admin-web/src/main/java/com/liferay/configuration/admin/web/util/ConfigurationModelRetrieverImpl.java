@@ -364,8 +364,7 @@ public class ConfigurationModelRetrieverImpl
 				}
 			}
 			else if (configurationCategory1.equals("productivity")) {
-				if (configurationCategory2.equals(
-						"web-experience") ||
+				if (configurationCategory2.equals("web-experience") ||
 					configurationCategory2.equals("collaboration")) {
 
 					return 1;

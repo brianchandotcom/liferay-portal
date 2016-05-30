@@ -1072,8 +1072,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			assetCategoryLocalService.getCategories(className, classPK);
 
 		for (AssetCategory category : oldCategories) {
-			if (!ArrayUtil.contains(
-					categoryIds, category.getCategoryId()) &&
+			if (!ArrayUtil.contains(categoryIds, category.getCategoryId()) &&
 				!AssetCategoryPermission.contains(
 					permissionChecker, category, ActionKeys.VIEW)) {
 

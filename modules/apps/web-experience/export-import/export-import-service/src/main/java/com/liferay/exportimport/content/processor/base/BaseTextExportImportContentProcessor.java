@@ -1194,8 +1194,7 @@ public class BaseTextExportImportContentProcessor
 
 				if (urlWithoutLocale.startsWith(
 						PRIVATE_GROUP_SERVLET_MAPPING) ||
-					urlWithoutLocale.startsWith(
-						PRIVATE_USER_SERVLET_MAPPING) ||
+					urlWithoutLocale.startsWith(PRIVATE_USER_SERVLET_MAPPING) ||
 					urlWithoutLocale.startsWith(
 						PUBLIC_GROUP_SERVLET_MAPPING)) {
 

@@ -1086,8 +1086,7 @@ public class DLImpl implements DL {
 			DLFileVersion dlFileVersion, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Objects.equals(
-				serviceContext.getCommand(), Constants.ADD_WEBDAV) ||
+		if (Objects.equals(serviceContext.getCommand(), Constants.ADD_WEBDAV) ||
 			Objects.equals(
 				serviceContext.getCommand(), Constants.UPDATE_WEBDAV)) {
 

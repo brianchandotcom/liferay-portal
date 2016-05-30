@@ -280,8 +280,7 @@ public class AssetPublisherPortletToolbarContributor
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				AssetUtil.getClassName(className));
 
-		if (!group.isStagedPortlet(
-				assetRendererFactory.getPortletId()) &&
+		if (!group.isStagedPortlet(assetRendererFactory.getPortletId()) &&
 			!group.isStagedRemotely()) {
 
 			curGroupId = group.getLiveGroupId();

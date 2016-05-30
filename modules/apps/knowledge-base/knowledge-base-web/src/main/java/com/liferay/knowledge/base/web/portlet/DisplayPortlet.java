@@ -76,7 +76,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=knowledge-base-portlet knowledge-base-portlet-display",
 		"com.liferay.portlet.display-category=category.cms",
-		"com.liferay.portlet.header-portlet-css=/admin/css/common.css,/display/css/main.css",
+		"com.liferay.portlet.header-portlet-css=/admin/css/common.css",
+		"com.liferay.portlet.header-portlet-css=/display/css/main.css",
 		"com.liferay.portlet.icon=/icons/display.png",
 		"com.liferay.portlet.scopeable=true",
 		"javax.portlet.display-name=Knowledge Base Display",

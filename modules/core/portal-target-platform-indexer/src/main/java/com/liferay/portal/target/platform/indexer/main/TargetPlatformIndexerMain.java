@@ -14,9 +14,22 @@
 
 package com.liferay.portal.target.platform.indexer.main;
 
+import com.liferay.portal.target.platform.indexer.internal.PathUtil;
 import com.liferay.portal.target.platform.indexer.internal.TargetPlatformIndexer;
 
 import java.io.File;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ServiceLoader;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.launch.Framework;
+import org.osgi.framework.launch.FrameworkFactory;
 
 /**
  * @author Raymond Augé
@@ -62,13 +75,45 @@ public class TargetPlatformIndexerMain {
 			return;
 		}
 
-		TargetPlatformIndexer targetPlatformIndexer = new TargetPlatformIndexer(
-			moduleFrameworkBaseDirName, moduleFrameworkModulesDirName,
-			moduleFrameworkPortalDirName);
+		Framework framework = null;
 
-		File indexFile = targetPlatformIndexer.index(targetPlatformDir);
+		Path tempPath = Files.createTempDirectory(null);
 
-		System.out.println("== Wrote index file " + indexFile);
+		try {
+			ServiceLoader<FrameworkFactory> serviceLoader = ServiceLoader.load(
+				FrameworkFactory.class);
+
+			FrameworkFactory frameworkFactory = serviceLoader.iterator().next();
+
+			Map<String, String> properties = new HashMap<>();
+
+			properties.put(
+				org.osgi.framework.Constants.FRAMEWORK_STORAGE,
+				tempPath.toString());
+
+			framework = frameworkFactory.newFramework(properties);
+
+			framework.init();
+
+			BundleContext bundleContext = framework.getBundleContext();
+
+			Bundle systemBundle = bundleContext.getBundle(0);
+
+			TargetPlatformIndexer targetPlatformIndexer =
+				new TargetPlatformIndexer(
+					systemBundle, moduleFrameworkBaseDirName,
+					moduleFrameworkModulesDirName,
+					moduleFrameworkPortalDirName);
+
+			File indexFile = targetPlatformIndexer.index(targetPlatformDir);
+
+			System.out.println("== Wrote index file " + indexFile);
+		}
+		finally {
+			framework.stop();
+
+			PathUtil.deltree(tempPath);
+		}
 	}
 
 }

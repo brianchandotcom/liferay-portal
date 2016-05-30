@@ -841,6 +841,20 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						line, "LanguageUtil.get(locale,",
 						"LanguageUtil.get(request,");
 				}
+				else {
+					Matcher matcher = javaSourceInsideJSPLinePattern.matcher(
+						line);
+
+					while (matcher.find()) {
+						String match = matcher.group(1);
+
+						String replacement = StringUtil.replace(
+							match, "LanguageUtil.get(locale,",
+							"LanguageUtil.get(request,");
+
+						line = StringUtil.replace(line, match, replacement);
+					}
+				}
 
 				// LPS-58529
 

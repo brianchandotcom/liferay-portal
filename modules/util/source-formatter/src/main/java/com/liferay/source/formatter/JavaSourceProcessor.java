@@ -3656,9 +3656,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if ((getLevel(trimmedLine) < 0) &&
-			(line.endsWith(StringPool.COMMA) ||
-			 (trimmedPreviousLine.startsWith("new ") &&
-			  line.endsWith(") {")))) {
+			(line.matches(".*[|&^]") ||
+			 (line.endsWith(StringPool.COMMA) ||
+			  (trimmedPreviousLine.startsWith("new ") &&
+			   line.endsWith(") {"))))) {
 
 			return getCombinedLinesContent(
 				content, fileName, line, trimmedLine, lineLength, lineCount,

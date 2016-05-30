@@ -325,8 +325,9 @@ public class DDMFormEvaluatorHelper {
 	}
 
 	protected void setExpressionVariableValue(
-		DDMExpression<Boolean> ddmExpression, String variableName,
-		String variableType, String variableValue) throws PortalException {
+			DDMExpression<Boolean> ddmExpression, String variableName,
+			String variableType, String variableValue)
+		throws PortalException {
 
 		if (variableType.equals("boolean")) {
 			ddmExpression.setBooleanVariableValue(

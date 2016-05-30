@@ -838,8 +838,8 @@ public class CalEventImporter {
 	}
 
 	protected void importCalendarBookingResourcePermission(
-		ResourcePermission resourcePermission,
-		long calendarBookingId) throws PortalException {
+			ResourcePermission resourcePermission, long calendarBookingId)
+		throws PortalException {
 
 		CalendarBooking calendarBooking =
 			_calendarBookingLocalService.getCalendarBooking(calendarBookingId);

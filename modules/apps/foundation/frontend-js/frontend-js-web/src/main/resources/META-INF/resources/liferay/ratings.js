@@ -193,24 +193,29 @@ AUI.add(
 
 						var nodes = instance._ratingStarNode.all('.rating-element');
 
-						nodes.each(function(node, i) {
-							var ratingText = null;
+						nodes.each(
+							function(node, i) {
+								var ratingMessage = '';
+								var ratingScore = '';
 
-							if (score === (i + 1)) {
-								ratingText = Lang.sub(
-									Liferay.Language.get(i === 0 ? 'you-have-rated-this-x-star-out-of-x' : 'you-have-rated-this-x-stars-out-of-x'),
-									[score, instance.get(STR_SIZE)]
+								if (score === i + 1) {
+									ratingMessage = i === 0 ? Liferay.Language.get('you-have-rated-this-x-star-out-of-x') : Liferay.Language.get('you-have-rated-this-x-stars-out-of-x');
+									ratingScore = score;
+								}
+								else {
+									ratingMessage = i === 0 ? Liferay.Language.get('rate-this-x-star-out-of-x') : Liferay.Language.get('rate-this-x-stars-out-of-x');
+									ratingScore = i + 1;
+								}
+
+								node.attr(
+									'title',
+									Lang.sub(
+										ratingMessage,
+										[ratingScore, instance.get(STR_SIZE)]
+									)
 								);
 							}
-							else {
-								ratingText = Lang.sub(
-									Liferay.Language.get(i === 0 ? 'rate-this-x-star-out-of-x' : 'rate-this-x-stars-out-of-x'),
-									[i + 1, instance.get(STR_SIZE)]
-								);
-							}
-
-							node.attr('title', ratingText);
-						});
+						);
 					}
 				},
 

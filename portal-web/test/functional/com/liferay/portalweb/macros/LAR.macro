@@ -346,7 +346,7 @@
 
 		<execute function="SikuliUploadTempFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${larFileName}" />
 
-		<execute function="Pause" locator1="120000" />
+		<execute function="Pause" locator1="180000" />
 
 		<if>
 			<isset var="importValidationMissingItem" />

@@ -27,9 +27,9 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(kbCommentTitle);
 %>
 
-<div class="kb-suggestion panel" id="<portlet:namespace /><%= kbComment.getKbCommentId() %>">
+<div class="card list-group-card panel" id="<portlet:namespace /><%= kbComment.getKbCommentId() %>">
 	<div class="panel-heading">
-		<div class="card-row list-group-item">
+		<div class="card-row card-row-padded">
 			<div class="card-col-field">
 				<div class="list-group-card-icon">
 					<liferay-ui:user-portrait cssClass="user-icon-lg" userId="<%= kbComment.getUserId() %>" />
@@ -52,7 +52,7 @@ renderResponse.setTitle(kbCommentTitle);
 					<%= kbCommentTitle %>
 				</h4>
 
-				<h5 class="text-default">
+				<h5>
 
 					<%
 					KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(kbComment.getClassPK(), WorkflowConstants.STATUS_ANY);
@@ -62,14 +62,18 @@ renderResponse.setTitle(kbCommentTitle);
 					PortletURL viewKBArticleURL = kbArticleURLHelper.createViewWithRedirectURL(kbArticle, currentURL);
 					%>
 
-					<a class="kb-article-link" href="<%= viewKBArticleURL.toString() %>"><%= HtmlUtil.escape(kbArticle.getTitle()) %></a>
+					<a href="<%= viewKBArticleURL.toString() %>"><%= HtmlUtil.escape(kbArticle.getTitle()) %></a>
 				</h5>
 			</div>
 		</div>
 	</div>
 
-	<div class="panel-body text-default">
-		<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(kbComment.getContent())) %>
+	<div class="divider"></div>
+
+	<div class="panel-body">
+		<div class="text-default">
+			<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(kbComment.getContent())) %>
+		</div>
 	</div>
 </div>
 

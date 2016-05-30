@@ -371,11 +371,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected void checkInefficientStringMethods(
-		String line, String fileName, String absolutePath, int lineCount) {
-
-		if (isExcludedPath(getRunOutsidePortalExcludes(), absolutePath)) {
-			return;
-		}
+		String line, String fileName, int lineCount) {
 
 		String methodName = "toLowerCase";
 
@@ -398,6 +394,28 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				fileName,
 				"Use StringUtil." + methodName + ": " + fileName + " " +
 					lineCount);
+		}
+	}
+
+	protected void checkInefficientStringMethods(
+		String line, String fileName, String absolutePath, int lineCount,
+		boolean javaSource) {
+
+		if (isExcludedPath(getRunOutsidePortalExcludes(), absolutePath)) {
+			return;
+		}
+
+		if (javaSource) {
+			checkInefficientStringMethods(line, fileName, lineCount);
+
+			return;
+		}
+
+		Matcher matcher = javaSourceInsideJSPLinePattern.matcher(line);
+
+		while (matcher.find()) {
+			checkInefficientStringMethods(
+				matcher.group(1), fileName, lineCount);
 		}
 	}
 

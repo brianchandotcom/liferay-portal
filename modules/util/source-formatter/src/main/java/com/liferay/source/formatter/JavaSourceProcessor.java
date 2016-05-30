@@ -2311,7 +2311,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 
 				checkInefficientStringMethods(
-					line, fileName, absolutePath, lineCount);
+					line, fileName, absolutePath, lineCount, true);
 
 				if (trimmedLine.startsWith(StringPool.EQUAL)) {
 					processErrorMessage(

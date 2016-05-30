@@ -782,10 +782,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					javaSource = false;
 				}
 
-				if (javaSource || trimmedLine.contains("<%= ")) {
-					checkInefficientStringMethods(
-						line, fileName, absolutePath, lineCount);
-				}
+				checkInefficientStringMethods(
+					line, fileName, absolutePath, lineCount, javaSource);
 
 				if (javaSource) {
 					if (portalSource &&

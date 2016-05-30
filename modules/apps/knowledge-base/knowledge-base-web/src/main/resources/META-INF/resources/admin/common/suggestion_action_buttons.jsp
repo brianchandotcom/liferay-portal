@@ -41,7 +41,7 @@ int nextStatus = KnowledgeBaseUtil.getNextStatus(kbComment.getStatus());
 			<aui:button cssClass="btn-lg" href="<%= kbSuggestionListDisplayContext.getViewSuggestionURL(nextStatusURL) %>" name="previousStatusButton" type="submit" value="<%= KnowledgeBaseUtil.getStatusTransitionLabel(nextStatus) %>" />
 		</c:if>
 
-		<c:if test="<%= (kbComment.getStatus() == KBCommentConstants.STATUS_COMPLETED) && KBCommentPermission.contains(permissionChecker, kbComment, KBActionKeys.DELETE) %>">
+		<c:if test="<%= KBCommentPermission.contains(permissionChecker, kbComment, KBActionKeys.DELETE) %>">
 			<liferay-portlet:actionURL name="deleteKBComment" varImpl="deleteURL">
 				<portlet:param name="kbCommentId" value="<%= String.valueOf(kbComment.getKbCommentId()) %>" />
 			</liferay-portlet:actionURL>

@@ -14,11 +14,15 @@
 
 package com.liferay.youtube.web.upgrade;
 
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.youtube.web.upgrade.util.UpgradePluginRelease;
 import com.liferay.youtube.web.upgrade.v1_0_0.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
@@ -28,19 +32,30 @@ public class YouTubeWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
+		_upgradeRelease();
+
 		registry.register(
-			"com.liferay.youtube.web", "0.0.0", "1.0.1",
+			"com.liferay.youtube.web", "0.0.0", "1.0.0",
 			new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.youtube.web", "0.0.1", "1.0.1",
+			"com.liferay.youtube.web", "0.0.1", "1.0.0",
 			new UpgradePortletId());
+	}
 
-		// See LPS-65946
+	@Reference
+	protected CounterLocalService counterLocalService;
 
-		registry.register(
-			"com.liferay.youtube.web", "1.0.0", "1.0.1",
-			new UpgradePortletId());
+	private void _upgradeRelease() {
+		try {
+			UpgradePluginRelease upgradePluginRelease =
+				new UpgradePluginRelease(counterLocalService);
+
+			upgradePluginRelease.upgrade();
+		}
+		catch (UpgradeException ue) {
+			throw new RuntimeException(ue);
+		}
 	}
 
 }

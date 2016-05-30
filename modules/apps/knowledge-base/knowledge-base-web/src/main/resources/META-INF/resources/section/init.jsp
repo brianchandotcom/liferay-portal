@@ -17,40 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean showKBArticlesSectionsTitle = kbSectionPortletInstanceConfiguration.showKBArticlesSectionsTitle();
-String[] kbArticlesSections = kbSectionPortletInstanceConfiguration.kbArticlesSections();
-String kbArticleDisplayStyle = kbSectionPortletInstanceConfiguration.kbArticleDisplayStyle();
-String kbArticleWindowState = kbSectionPortletInstanceConfiguration.kbArticleWindowState();
-String kbArticlesOrderByCol = kbSectionPortletInstanceConfiguration.kbArticlesOrderByCol();
-String kbArticlesOrderByType = kbSectionPortletInstanceConfiguration.kbArticlesOrderByType();
-int kbArticlesDelta = kbSectionPortletInstanceConfiguration.kbArticlesDelta();
-boolean showKBArticlesPagination = kbSectionPortletInstanceConfiguration.showKBArticlesPagination();
-
-boolean enableKBArticleDescription = kbSectionPortletInstanceConfiguration.enableKBArticleDescription();
-boolean enableKBArticleRatings = kbSectionPortletInstanceConfiguration.enableKBArticleRatings();
-boolean showKBArticleAssetEntries = kbSectionPortletInstanceConfiguration.showKBArticleAssetEntries();
-boolean showKBArticleAttachments = kbSectionPortletInstanceConfiguration.showKBArticleAttachments();
-boolean enableKBArticleAssetLinks = kbSectionPortletInstanceConfiguration.enableKBArticleAssetLinks();
-boolean enableKBArticleViewCountIncrement = kbSectionPortletInstanceConfiguration.enableKBArticleViewCountIncrement();
-boolean enableKBArticleSubscriptions = kbSectionPortletInstanceConfiguration.enableKBArticleSubscriptions();
-boolean enableKBArticleHistory = kbSectionPortletInstanceConfiguration.enableKBArticleHistory();
-boolean enableKBArticlePrint = kbSectionPortletInstanceConfiguration.enableKBArticlePrint();
-boolean enableSocialBookmarks = kbSectionPortletInstanceConfiguration.enableSocialBookmarks();
-String socialBookmarksDisplayStyle = kbSectionPortletInstanceConfiguration.socialBookmarksDisplayStyle();
-String socialBookmarksDisplayPosition = kbSectionPortletInstanceConfiguration.socialBookmarksDisplayPosition();
-String socialBookmarksTypes = kbSectionPortletInstanceConfiguration.socialBookmarksTypes();
-
-request.setAttribute("init.jsp-enableKBArticleDescription", enableKBArticleDescription);
-request.setAttribute("init.jsp-enableKBArticleRatings", enableKBArticleRatings);
-request.setAttribute("init.jsp-showKBArticleAssetEntries", showKBArticleAssetEntries);
-request.setAttribute("init.jsp-showKBArticleAttachments", showKBArticleAttachments);
-request.setAttribute("init.jsp-enableKBArticleAssetLinks", enableKBArticleAssetLinks);
-request.setAttribute("init.jsp-enableKBArticleViewCountIncrement", enableKBArticleViewCountIncrement);
-request.setAttribute("init.jsp-enableKBArticleSubscriptions", enableKBArticleSubscriptions);
-request.setAttribute("init.jsp-enableKBArticleHistory", enableKBArticleHistory);
-request.setAttribute("init.jsp-enableKBArticlePrint", enableKBArticlePrint);
-request.setAttribute("init.jsp-enableSocialBookmarks", enableSocialBookmarks);
-request.setAttribute("init.jsp-socialBookmarksDisplayStyle", socialBookmarksDisplayStyle);
-request.setAttribute("init.jsp-socialBookmarksDisplayPosition", socialBookmarksDisplayPosition);
-request.setAttribute("init.jsp-socialBookmarksTypes", socialBookmarksTypes);
+request.setAttribute("init.jsp-enableKBArticleDescription", kbSectionPortletInstanceConfiguration.enableKBArticleDescription());
+request.setAttribute("init.jsp-enableKBArticleRatings", kbSectionPortletInstanceConfiguration.enableKBArticleRatings());
+request.setAttribute("init.jsp-showKBArticleAssetEntries", kbSectionPortletInstanceConfiguration.showKBArticleAssetEntries());
+request.setAttribute("init.jsp-showKBArticleAttachments", kbSectionPortletInstanceConfiguration.showKBArticleAttachments());
+request.setAttribute("init.jsp-enableKBArticleAssetLinks", kbSectionPortletInstanceConfiguration.enableKBArticleAssetLinks());
+request.setAttribute("init.jsp-enableKBArticleViewCountIncrement", kbSectionPortletInstanceConfiguration.enableKBArticleViewCountIncrement());
+request.setAttribute("init.jsp-enableKBArticleSubscriptions", kbSectionPortletInstanceConfiguration.enableKBArticleSubscriptions());
+request.setAttribute("init.jsp-enableKBArticleHistory", kbSectionPortletInstanceConfiguration.enableKBArticleHistory());
+request.setAttribute("init.jsp-enableKBArticlePrint", kbSectionPortletInstanceConfiguration.enableKBArticlePrint());
+request.setAttribute("init.jsp-enableSocialBookmarks", kbSectionPortletInstanceConfiguration.enableSocialBookmarks());
+request.setAttribute("init.jsp-socialBookmarksDisplayStyle", kbSectionPortletInstanceConfiguration.socialBookmarksDisplayStyle());
+request.setAttribute("init.jsp-socialBookmarksDisplayPosition", kbSectionPortletInstanceConfiguration.socialBookmarksDisplayPosition());
+request.setAttribute("init.jsp-socialBookmarksTypes", kbSectionPortletInstanceConfiguration.socialBookmarksTypes());
 %>

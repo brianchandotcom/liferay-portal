@@ -2,5 +2,5 @@ dependencies {
 	compile gradleApi()
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.25"
 
-	provided group: "com.liferay", name: "com.liferay.portal.tools.upgrade.table.builder", version: "1.0.3"
+	provided group: "com.liferay", name: "com.liferay.portal.tools.upgrade.table.builder", version: "1.0.4"
 }

@@ -380,6 +380,8 @@
 			<var name="portlet" value="Blogs" />
 		</execute>
 
+		<execute macro="DMPortlet#setDescriptiveView" />
+
 		<execute macro="BlogsEntry#moveToRecycleBinDraftCP">
 			<var name="assetType" value="Blogs Entry" />
 			<var name="entryTitle" value="Blogs Entry Title" />

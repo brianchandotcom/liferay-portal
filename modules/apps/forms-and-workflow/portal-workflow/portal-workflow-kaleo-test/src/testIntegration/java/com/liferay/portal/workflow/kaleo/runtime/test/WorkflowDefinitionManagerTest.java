@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.kaleo.runtime.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -193,13 +194,23 @@ public class WorkflowDefinitionManagerTest {
 
 		String error = assertInvalid(inputStream);
 
-		assertEquals("Fork fork2 and join join1 are not paired", error);
+		if (JavaDetector.isJDK8()) {
+			assertEquals("Fork fork2 and join join1 are not paired", error);
+		}
+		else {
+			assertEquals("Fork fork2 and join join2 are not paired", error);
+		}
 
 		inputStream = getResource("matching-fork-and-join-2.xml");
 
 		error = assertInvalid(inputStream);
 
-		assertEquals("Fork fork2 and join join1 are not paired", error);
+		if (JavaDetector.isJDK8()) {
+			assertEquals("Fork fork2 and join join1 are not paired", error);
+		}
+		else {
+			assertEquals("Fork fork2 and join join2 are not paired", error);
+		}
 
 		inputStream = getResource("matching-fork-and-join-3.xml");
 

@@ -3,5 +3,5 @@ Bundle-SymbolicName: com.liferay.site.admin.web
 Bundle-Version: 1.0.6
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management
-Web-ContextPath: /sites-admin-web
+Web-ContextPath: /site-admin-web
 -dsannotations-options: inherit

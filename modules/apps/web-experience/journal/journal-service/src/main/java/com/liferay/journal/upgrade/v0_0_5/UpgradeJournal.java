@@ -130,7 +130,7 @@ public class UpgradeJournal extends UpgradeProcess {
 			sb.append("JournalArticle.groupId) or (Group_.companyId = ");
 			sb.append("JournalArticle.companyId and Group_.friendlyURL = ?)) ");
 			sb.append("and DDMStructure.structureKey = JournalArticle.");
-			sb.append("ddmStructureKey and JournalArticle.classNameId != ?)");
+			sb.append("DDMStructureKey and JournalArticle.classNameId != ?)");
 
 			try (PreparedStatement ps = connection.prepareStatement(
 					sb.toString())) {
@@ -164,7 +164,7 @@ public class UpgradeJournal extends UpgradeProcess {
 			sb.append("from JournalArticle inner join DDMTemplate on (");
 			sb.append("DDMTemplate.groupId = JournalArticle.groupId and ");
 			sb.append("DDMTemplate.templateKey = ");
-			sb.append("JournalArticle.ddmTemplateKey and ");
+			sb.append("JournalArticle.DDMTemplateKey and ");
 			sb.append("JournalArticle.classNameId != ?)");
 
 			try (PreparedStatement ps = connection.prepareStatement(
@@ -393,8 +393,8 @@ public class UpgradeJournal extends UpgradeProcess {
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"update JournalArticle set ddmStructureKey = ?, " +
-					"ddmTemplateKey = ?, content = ? where id_ = ?")) {
+				"update JournalArticle set DDMStructureKey = ?, " +
+					"DDMTemplateKey = ?, content = ? where id_ = ?")) {
 
 			ps.setString(1, ddmStructureKey);
 			ps.setString(2, ddmTemplateKey);
@@ -430,7 +430,7 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	protected void updateJournalArticles(long companyId) throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select id_, content, ddmStructureKey from " +
+				"select id_, content, DDMStructureKey from " +
 					"JournalArticle where companyId = " + companyId);
 			ResultSet rs = ps.executeQuery()) {
 
@@ -439,7 +439,7 @@ public class UpgradeJournal extends UpgradeProcess {
 			while (rs.next()) {
 				long id = rs.getLong("id_");
 				String content = rs.getString("content");
-				String ddmStructureKey = rs.getString("ddmStructureKey");
+				String ddmStructureKey = rs.getString("DDMStructureKey");
 
 				if (Validator.isNull(ddmStructureKey)) {
 					content = convertStaticContentToDynamic(content);

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeUserNotificationEvent;
 import com.liferay.portal.upgrade.v7_0_1.UpgradeCompany;
 import com.liferay.portal.upgrade.v7_0_1.UpgradeDocumentLibrary;
+import com.liferay.portal.upgrade.v7_0_1.UpgradeLayoutBranch;
 import com.liferay.portal.upgrade.v7_0_1.UpgradeMessageBoards;
 import com.liferay.portal.upgrade.v7_0_1.UpgradeModules;
 import com.liferay.portal.upgrade.v7_0_1.UpgradeSchema;
@@ -39,6 +40,7 @@ public class UpgradeProcess_7_0_1 extends UpgradeProcess {
 
 		upgrade(UpgradeCompany.class);
 		upgrade(UpgradeDocumentLibrary.class);
+		upgrade(UpgradeLayoutBranch.class);
 		upgrade(UpgradeMessageBoards.class);
 		upgrade(UpgradeModules.class);
 		upgrade(UpgradeUserNotificationEvent.class);

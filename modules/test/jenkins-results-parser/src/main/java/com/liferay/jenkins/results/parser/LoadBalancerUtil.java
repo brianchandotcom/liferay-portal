@@ -51,16 +51,16 @@ public class LoadBalancerUtil {
 			String baseInvocationURL = properties.getProperty(
 				"base.invocation.url");
 
-			String hostNamePrefix = getHostNamePrefix(baseInvocationURL);
+			String masterNamePrefix = getMasterNamePrefix(baseInvocationURL);
 
-			if (hostNamePrefix.equals(baseInvocationURL)) {
+			if (masterNamePrefix.equals(baseInvocationURL)) {
 				return baseInvocationURL;
 			}
 
-			List<String> hostNames = getHostNames(properties, hostNamePrefix);
+			List<String> masters = getMasters(masterNamePrefix, properties);
 
-			if (hostNames.size() == 1) {
-				return "http://" + hostNamePrefix + "-1";
+			if (masters.size() == 1) {
+				return "http://" + masterNamePrefix + "-1";
 			}
 
 			int maxAvailableSlaveCount = Integer.MIN_VALUE;
@@ -68,10 +68,10 @@ public class LoadBalancerUtil {
 
 			try {
 				List<FutureTask<Integer>> futureTasks = new ArrayList<>(
-					hostNames.size());
+					masters.size());
 
 				startParallelTasks(
-					hostNames, hostNamePrefix, properties, futureTasks);
+					futureTasks, masters, masterNamePrefix, properties);
 
 				List<Integer> badIndices = new ArrayList<>(futureTasks.size());
 				List<Integer> maxIndices = new ArrayList<>(futureTasks.size());
@@ -90,7 +90,7 @@ public class LoadBalancerUtil {
 					catch (TimeoutException te) {
 						System.out.println(
 							"Unable to assess master availability for " +
-								hostNames.get(i) + ".");
+								masters.get(i) + ".");
 
 						availableSlaveCount = null;
 					}
@@ -101,7 +101,7 @@ public class LoadBalancerUtil {
 						continue;
 					}
 
-					sb.append(hostNames.get(i));
+					sb.append(masters.get(i));
 					sb.append(" : ");
 					sb.append(availableSlaveCount);
 					sb.append("\n");
@@ -135,7 +135,7 @@ public class LoadBalancerUtil {
 				}
 				else {
 					while (true) {
-						x = getRandomValue(0, hostNames.size() - 1);
+						x = getRandomValue(0, masters.size() - 1);
 
 						if (badIndices.contains(x)) {
 							continue;
@@ -146,24 +146,24 @@ public class LoadBalancerUtil {
 				}
 
 				sb.append("\nMost available master ");
-				sb.append(hostNames.get(x));
+				sb.append(masters.get(x));
 				sb.append(" has ");
 				sb.append(maxAvailableSlaveCount);
 				sb.append(" available slaves.");
 
 				System.out.println(sb);
 
-				return "http://" + hostNames.get(x);
+				return "http://" + masters.get(x);
 			}
 			finally {
 				if (recentBatchPeriod > 0) {
-					List<BatchSizeRecord> hostRecentBatchSizes =
-						_recentBatchSizesMap.get(hostNames.get(x));
+					List<BatchSizeRecord> masterRecentBatchSizes =
+						_recentBatchSizesMap.get(masters.get(x));
 
-					if (hostRecentBatchSizes == null) {
-						hostRecentBatchSizes = new ArrayList<>();
+					if (masterRecentBatchSizes == null) {
+						masterRecentBatchSizes = new ArrayList<>();
 						_recentBatchSizesMap.put(
-							hostNames.get(x), hostRecentBatchSizes);
+							masters.get(x), masterRecentBatchSizes);
 					}
 
 					int invokedBatchSize = 0;
@@ -177,7 +177,7 @@ public class LoadBalancerUtil {
 					}
 
 					if (invokedBatchSize != 0) {
-						hostRecentBatchSizes.add(
+						masterRecentBatchSizes.add(
 							new BatchSizeRecord(
 								invokedBatchSize, System.currentTimeMillis()));
 					}
@@ -251,48 +251,48 @@ public class LoadBalancerUtil {
 		return blacklist;
 	}
 
-	protected static String getHostNamePrefix(String baseInvocationURL) {
+	protected static String getMasterNamePrefix(String baseInvocationURL) {
 		Matcher matcher = _urlPattern.matcher(baseInvocationURL);
 
 		if (!matcher.find()) {
 			return baseInvocationURL;
 		}
 
-		return matcher.group("hostNamePrefix");
+		return matcher.group("masterNamePrefix");
 	}
 
-	protected static List<String> getHostNames(
-		Properties properties, String hostNamePrefix) {
+	protected static List<String> getMasters(
+		String masterNamePrefix, Properties properties) {
 
 		List<String> blacklist = getBlacklist(properties);
-		List<String> hostNames = new ArrayList<>();
+		List<String> masters = new ArrayList<>();
 		int i = 1;
 
 		while (true) {
 			String jenkinsLocalURL = properties.getProperty(
-				"jenkins.local.url[" + hostNamePrefix + "-" + i + "]");
+				"jenkins.local.url[" + masterNamePrefix + "-" + i + "]");
 
 			if ((jenkinsLocalURL != null) && (jenkinsLocalURL.length() > 0)) {
-				Matcher matcher = _hostnamePattern.matcher(jenkinsLocalURL);
+				Matcher matcher = _masterNamePattern.matcher(jenkinsLocalURL);
 
 				if (!matcher.find()) {
 					continue;
 				}
 
-				String jenkinsLocalHostName = matcher.group("hostname");
+				String jenkinsLocalMaster = matcher.group("masterName");
 
-				if (!blacklist.contains(jenkinsLocalHostName)) {
-					hostNames.add(jenkinsLocalHostName);
+				if (!blacklist.contains(jenkinsLocalMaster)) {
+					masters.add(jenkinsLocalMaster);
 				}
 
 				i++;
 				continue;
 			}
 
-			System.out.println("Host name prefix: " + hostNamePrefix);
-			System.out.println("Host names: " + hostNames);
+			System.out.println("Master name prefix: " + masterNamePrefix);
+			System.out.println("Masters: " + masters);
 
-			return hostNames;
+			return masters;
 		}
 	}
 
@@ -304,52 +304,55 @@ public class LoadBalancerUtil {
 		return start + (int)Math.round(size * randomDouble);
 	}
 
-	protected static int getRecentBatchSizesTotal(String hostName)
+	protected static int getRecentBatchSizesTotal(String master)
 		throws Exception {
 
-		List<BatchSizeRecord> hostRecentBatchSizes = _recentBatchSizesMap.get(
-			hostName);
+		List<BatchSizeRecord> masterRecentBatchSizes = _recentBatchSizesMap.get(
+			master);
 
-		if ((hostRecentBatchSizes == null) || hostRecentBatchSizes.isEmpty()) {
+		if ((masterRecentBatchSizes == null) ||
+			masterRecentBatchSizes.isEmpty()) {
+
 			return 0;
 		}
 
 		int recentBatchSizesTotal = 0;
 
-		List<BatchSizeRecord> hostRecentBatchSizeEntriesToBeRemoved =
-			new ArrayList<>(hostRecentBatchSizes.size());
+		List<BatchSizeRecord> masterRecentBatchSizeEntriesToBeRemoved =
+			new ArrayList<>(masterRecentBatchSizes.size());
 
-		for (BatchSizeRecord recentBatchSizeRecord : hostRecentBatchSizes) {
+		for (BatchSizeRecord recentBatchSizeRecord : masterRecentBatchSizes) {
 			if ((recentBatchSizeRecord.timestamp + recentBatchPeriod) >
 					System.currentTimeMillis()) {
 
 				recentBatchSizesTotal += recentBatchSizeRecord.size;
 			}
 			else {
-				hostRecentBatchSizeEntriesToBeRemoved.add(
+				masterRecentBatchSizeEntriesToBeRemoved.add(
 					recentBatchSizeRecord);
 			}
 		}
 
-		hostRecentBatchSizes.removeAll(hostRecentBatchSizeEntriesToBeRemoved);
+		masterRecentBatchSizes.removeAll(
+			masterRecentBatchSizeEntriesToBeRemoved);
 
 		return recentBatchSizesTotal;
 	}
 
 	protected static void startParallelTasks(
-			List<String> hostNames, String hostNamePrefix,
-			Properties properties, List<FutureTask<Integer>> futureTasks)
+			List<FutureTask<Integer>> futureTasks, List<String> masters,
+			String masterNamePrefix, Properties properties)
 		throws Exception {
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
-			hostNames.size());
+			masters.size());
 
-		for (String targetHostName : hostNames) {
+		for (String targetMaster : masters) {
 			FutureTask<Integer> futureTask = new FutureTask<>(
 				new AvailableSlaveCallable(
-					getRecentBatchSizesTotal(targetHostName),
+					getRecentBatchSizesTotal(targetMaster),
 					properties.getProperty(
-						"jenkins.local.url[" + targetHostName + "]")));
+						"jenkins.local.url[" + targetMaster + "]")));
 
 			executorService.execute(futureTask);
 
@@ -359,7 +362,7 @@ public class LoadBalancerUtil {
 		executorService.shutdown();
 	}
 
-	protected static void waitForTurn(File file, int hostNameCount)
+	protected static void waitForTurn(File file, int masterCount)
 		throws Exception {
 
 		long start = System.currentTimeMillis();
@@ -402,12 +405,12 @@ public class LoadBalancerUtil {
 
 	private static final long _MAX_AGE = 30 * 1000;
 
-	private static final Pattern _hostnamePattern =
-		Pattern.compile(".*/(?<hostname>[^/]+)/?");
+	private static final Pattern _masterNamePattern =
+		Pattern.compile(".*/(?<masterName>[^/]+)/?");
 	private static final Map<String, List<BatchSizeRecord>>
 		_recentBatchSizesMap = new HashMap<>();
 	private static final Pattern _urlPattern = Pattern.compile(
-		"http://(?<hostNamePrefix>.+-\\d?).liferay.com");
+		"http://(?<masterNamePrefix>.+-\\d?).liferay.com");
 
 	private static class AvailableSlaveCallable implements Callable<Integer> {
 

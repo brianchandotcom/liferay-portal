@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Sergio González
  */
-@Component(immediate = true, service = WikiNavigationWebUpgrade.class)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class WikiNavigationWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override

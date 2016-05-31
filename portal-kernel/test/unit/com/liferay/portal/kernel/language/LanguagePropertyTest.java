@@ -245,7 +245,7 @@ public class LanguagePropertyTest {
 
 		if (!invalidFileNames.isEmpty()) {
 			Assert.fail(
-				"Key \"" + key + "\" is missing from: " + invalidFileNames);
+				"Special key \"" + key + "\" is found in: " + invalidFileNames);
 		}
 	}
 

@@ -206,7 +206,8 @@ public class ClassLoaderTest {
 
 	@Test
 	public void testGet16() throws Exception {
-		PortletClassLoaderUtil.getClassLoader("1_WAR_flashportlet");
+		PortletClassLoaderUtil.getClassLoader(
+			"com_liferay_flash_web_portlet_FlashPortlet");
 	}
 
 	@Test
@@ -222,7 +223,8 @@ public class ClassLoaderTest {
 
 	@Test
 	public void testGet18() throws Exception {
-		PortletClassLoaderUtil.getClassLoader("flash-portlet");
+		PortletClassLoaderUtil.getClassLoader(
+			"com_liferay_flash_web_portlet_FlashPortlet");
 	}
 
 	@Test

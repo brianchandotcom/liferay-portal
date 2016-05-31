@@ -366,7 +366,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 		}
 		%>
 
-		<div class="message-content">
+		<div class="card-row card-row-padded message-content">
 			<%= msgBody %>
 		</div>
 

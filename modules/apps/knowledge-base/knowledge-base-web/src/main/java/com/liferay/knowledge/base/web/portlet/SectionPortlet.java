@@ -54,7 +54,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=knowledge-base-portlet knowledge-base-portlet-section",
 		"com.liferay.portlet.display-category=category.cms",
-		"com.liferay.portlet.header-portlet-css=/admin/css/common.css,/section/css/main.css",
+		"com.liferay.portlet.header-portlet-css=/admin/css/common.css",
+		"com.liferay.portlet.header-portlet-css=/section/css/main.css",
 		"com.liferay.portlet.icon=/icons/section.png",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.scopeable=true",

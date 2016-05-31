@@ -139,6 +139,26 @@ body {
 	}
 }
 
+.portlet-boundary_com_liferay_plugins_admin_web_portlet_PluginsAdminPortlet_ {
+	.lfr-layout-template-column, .lfr-themes-column {
+		max-width: 250px;
+		min-width: 250px;
+	}
+
+	.lfr-layout-template-column .plugin-thumbnail {
+		max-width: 50px;
+	}
+
+	.lfr-themes-column .plugin-thumbnail {
+		max-width: 100px;
+	}
+
+	.plugin-thumbnail {
+		margin-right: 10px;
+		width: 100%;
+	}
+}
+
 .portlet-boundary_com_liferay_portal_workflow_definition_web_portlet_WorkflowDefinitionPortlet_ {
 	.lfr-active-column, .lfr-version-column {
 		width: auto;

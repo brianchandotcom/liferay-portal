@@ -14,8 +14,8 @@ module_framework_base_dir=/home/rotty/AS/liferay-portal/osgi
 #
 jars=(
 	${module_framework_base_dir}/core/com.liferay.portal.bootstrap.jar
-	${module_framework_base_dir}/core/org.eclipse.osgi.jar
 	${module_framework_base_dir}/static/com.liferay.portal.target.platform.indexer.jar
+	${module_framework_base_dir}/core/org.eclipse.osgi.jar
 )
 
 function classpathify { local IFS=":"; echo "$*"; }
@@ -27,52 +27,19 @@ JAVA_OPTS="-Dmodule.framework.base.dir=${module_framework_base_dir}"
 #JAVA_OPTS="${JAVA_OPTS} -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5010"
 
 #
-# Indexing the target platform
-# ============================
+# The following command does 3 things:
+# 1. Index the target platform, save the indexes as a zip file. (Under current work dir with name target-platform-indexes-${timestamp}.zip)
+# 2. Validate the generated indexes, if fails, prints error messages.
+# 3. If passes validation, generates an integrity.properties file. (Under ${module.framework.base.dir}/target-platform/integrity.properties)
 #
-# Execute the following java command and the resulting target platform index
-# file will be placed in ${module_framework_base_dir}/target-platform/
-#
+# This command reads the following system properties:
+# 1. module.framework.base.dir, required, points to ${liferay.home}/osgi.
+# 2. module.framework.static.dir, optional, defaults to ${module.framework.base.dir}/static.
+# 3. module.framework.modules.dir, optional, defaults to ${module.framework.base.dir}/modules.
+# 4. module.framework.portal.dir, optional, defaults to ${module.framework.base.dir}/portal.
+# 5. module.framework.marketplace.dir, optional, defaults to ${module.framework.base.dir}/marketplace.
+# 6. indexes.file, optional, defaults to ${module.framework.base.dir}/target-platform/target-platform-indexes-${timestamp}.zip. When specified will load indexes from the given zip file, rather than indexing from scratch.
+# 7. integrity.properties, optional, defaults to ${module.framework.base.dir}/target-platform/integrity.properties.
 
 java -classpath "$CLASSPATH" ${JAVA_OPTS} \
-	com.liferay.portal.target.platform.indexer.main.TargetPlatformIndexerMain
-
-#
-# Indexing LPKG files
-# ===================
-#
-# Execute the following java command and all identified LPKG files will be 
-# indexed. Any number of arguments are accepted. They can be any 
-# combination of LPKG files or directories containing LPKG files (without 
-# recursion). By default the resulting indexes will be placed in
-# 
-#    ${module_framework_base_dir}/target-platform/
-#
-# Optionally the property
-#
-#    -Doutput.dir=<path>
-#
-# can be used to change the output directory.
-#
-
-java -classpath ${module_framework_base_dir}/static/com.liferay.portal.target.platform.indexer.jar \
-	${JAVA_OPTS} \
-	com.liferay.portal.target.platform.indexer.main.LPKGIndexerMain \
-	${module_framework_base_dir}/marketplace/
-
-#
-# Validating Index files
-# ======================
-#
-# Execute the following java command to validate index files. Any number of 
-# arguments are accepted. They can be either index files, or directories 
-# containing index files (no recursion). Any errors will be reported, one 
-# per line.
-#
-
-JAVA_OPTS="${JAVA_OPTS} -Dinclude.target.platform=true"
-
-java -classpath ${module_framework_base_dir}/static/com.liferay.portal.target.platform.indexer.jar \
-	${JAVA_OPTS} \
-	com.liferay.portal.target.platform.indexer.main.IndexValidatorMain \
-	${module_framework_base_dir}/target-platform/
+	com.liferay.portal.target.platform.indexer.main.TargetPlatformMain

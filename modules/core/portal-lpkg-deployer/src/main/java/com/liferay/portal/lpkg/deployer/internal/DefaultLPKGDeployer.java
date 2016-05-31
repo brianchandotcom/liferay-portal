@@ -146,6 +146,10 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 				bundles.addAll(newBundles);
 			}
 
+			if (LPKGIndexValidatorThreadLocal.isEnabled()) {
+				_lpkgIndexValidator.updateIntegrity();
+			}
+
 			return bundles;
 		}
 		catch (BundleException be) {
@@ -294,6 +298,8 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 					_log.error("Unable to deploy LPKG file " + lpkgFile, e);
 				}
 			}
+
+			_lpkgIndexValidator.updateIntegrity();
 		}
 		finally {
 			LPKGIndexValidatorThreadLocal.setEnabled(enabled);

@@ -331,10 +331,6 @@
 			</then>
 		</if>
 
-		<ant antfile="build-app.xml" dir="modules" target="index-modules-and-app-lpkgs">
-			<property name="osgi.dir" value="${liferay.home}/osgi" />
-		</ant>
-
 		<print-current-time />
 	</target>
 

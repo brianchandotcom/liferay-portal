@@ -19,6 +19,12 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.process.ClassPathUtil;
+import com.liferay.portal.kernel.process.ProcessChannel;
+import com.liferay.portal.kernel.process.ProcessConfig;
+import com.liferay.portal.kernel.process.ProcessConfig.Builder;
+import com.liferay.portal.kernel.process.local.LocalProcessExecutor;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -48,6 +54,7 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -55,6 +62,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.Future;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -67,6 +75,24 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = LPKGIndexValidator.class)
 public class LPKGIndexValidator {
+
+	public LPKGIndexValidator() {
+		Builder builder = new Builder();
+
+		builder.setArguments(Arrays.asList("-Djava.awt.headless=true"));
+
+		String classpath = ClassPathUtil.getGlobalClassPath();
+
+		builder.setBootstrapClassPath(classpath);
+		builder.setReactClassLoader(PortalClassLoaderUtil.getClassLoader());
+		builder.setRuntimeClassPath(
+			classpath.concat(File.pathSeparator).concat(
+				ClassPathUtil.buildClassPath(
+					IndexerFactory.class, Bundle.class,
+					TargetPlatformIndexerProcessCallable.class)));
+
+		_processConfig = builder.build();
+	}
 
 	public boolean checkIntegrity(List<URI> indexURIs) {
 		if (Files.notExists(_integrityPropertiesFilePath)) {
@@ -262,16 +288,29 @@ public class LPKGIndexValidator {
 
 		List<URI> uris = _indexLPKGFiles(files);
 
-		Indexer indexer = _indexerFactory.createTargetPlatformIndexer();
+		byte[] data = null;
 
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
+		LocalProcessExecutor localProcessExecutor = new LocalProcessExecutor();
 
-		indexer.index(unsyncByteArrayOutputStream);
+		try {
+			ProcessChannel<byte[]> processChannel =
+				localProcessExecutor.execute(
+					_processConfig,
+					new TargetPlatformIndexerProcessCallable(
+						PropsValues.MODULE_FRAMEWORK_BASE_DIR + "/static",
+						PropsValues.MODULE_FRAMEWORK_MODULES_DIR,
+						PropsValues.MODULE_FRAMEWORK_PORTAL_DIR));
+
+			Future<byte[]> future = processChannel.getProcessNoticeableFuture();
+
+			data = future.get();
+		}
+		finally {
+			localProcessExecutor.destroy();
+		}
 
 		URL url = _bytesURLProtocolSupport.putData(
-			"liferay-target-platform",
-			unsyncByteArrayOutputStream.toByteArray());
+			"liferay-target-platform", data);
 
 		uris.add(url.toURI());
 
@@ -367,5 +406,6 @@ public class LPKGIndexValidator {
 		PropsValues.MODULE_FRAMEWORK_BASE_DIR, Indexer.DIR_NAME_TARGET_PLATFORM,
 		"integrity.properties");
 	private LPKGDeployer _lpkgDeployer;
+	private final ProcessConfig _processConfig;
 
 }

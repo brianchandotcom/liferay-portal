@@ -206,6 +206,7 @@
 			<!-- Order is important -->
 
 			<fileset dir="${osgi.dir}/static" includes="com.liferay.portal.target.platform.indexer.jar" />
+			<fileset dir="${osgi.dir}/../tools/portal-target-platform-indexer-main" includes="com.liferay.portal.target.platform.indexer.main.jar" />
 			<fileset dir="${osgi.dir}/core" includes="com.liferay.portal.bootstrap.jar,org.eclipse.osgi.jar" />
 		</path>
 

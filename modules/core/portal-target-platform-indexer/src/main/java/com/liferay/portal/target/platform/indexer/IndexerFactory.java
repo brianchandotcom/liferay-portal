@@ -15,14 +15,9 @@
 package com.liferay.portal.target.platform.indexer;
 
 import com.liferay.portal.target.platform.indexer.internal.LPKGIndexer;
-import com.liferay.portal.target.platform.indexer.internal.TargetPlatformIndexer;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -31,22 +26,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = IndexerFactory.class)
 public class IndexerFactory {
 
-	@Activate
-	public void activate(BundleContext bundleContext) {
-		_systemBundle = bundleContext.getBundle(0);
-	}
-
 	public Indexer createLPKGIndexer(File lpkgFile) {
 		return new LPKGIndexer(lpkgFile);
 	}
-
-	public Indexer createTargetPlatformIndexer() {
-		return new TargetPlatformIndexer(
-			_systemBundle, PropsValues.MODULE_FRAMEWORK_BASE_DIR + "/static",
-			PropsValues.MODULE_FRAMEWORK_MODULES_DIR,
-			PropsValues.MODULE_FRAMEWORK_PORTAL_DIR);
-	}
-
-	private Bundle _systemBundle;
 
 }

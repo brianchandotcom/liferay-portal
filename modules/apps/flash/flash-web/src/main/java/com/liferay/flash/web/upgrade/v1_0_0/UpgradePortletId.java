@@ -12,24 +12,21 @@
  * details.
  */
 
-package com.liferay.flash.hook.upgrade;
+package com.liferay.flash.web.upgrade.v1_0_0;
 
-import com.liferay.flash.hook.upgrade.v1_0_0.UpgradePortletPreferences;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.flash.web.constants.FlashPortletKeys;
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 
 /**
- * @author Julio Camarero
+ * @author Peter Fellwock
  */
-public class UpgradeProcess_1_0_0 extends UpgradeProcess {
+public class UpgradePortletId extends BaseUpgradePortletId {
 
 	@Override
-	public int getThreshold() {
-		return 100;
-	}
-
-	@Override
-	protected void doUpgrade() throws Exception {
-		upgrade(UpgradePortletPreferences.class);
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {"1_WAR_flashportlet", FlashPortletKeys.FLASH}
+		};
 	}
 
 }

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.target.platform.indexer.main;
 
-import com.liferay.portal.kernel.util.ReflectionUtil;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -88,7 +86,7 @@ public class BytesURLSupport {
 			return url;
 		}
 		catch (MalformedURLException murle) {
-			return ReflectionUtil.throwException(murle);
+			throw new RuntimeException(murle);
 		}
 	}
 

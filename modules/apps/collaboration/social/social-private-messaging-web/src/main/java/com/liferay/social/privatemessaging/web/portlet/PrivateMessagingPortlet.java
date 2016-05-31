@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -406,6 +407,13 @@ public class PrivateMessagingPortlet extends MVCPortlet {
 		}
 
 		return true;
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.social.privatemessaging.web)(release.schema.version=1.0.1))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	protected void validateAttachment(String fileName, InputStream inputStream)

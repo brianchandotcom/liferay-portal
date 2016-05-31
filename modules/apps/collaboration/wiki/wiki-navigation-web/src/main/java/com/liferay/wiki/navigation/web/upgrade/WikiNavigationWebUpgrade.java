@@ -17,7 +17,7 @@ package com.liferay.wiki.navigation.web.upgrade;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
-import com.liferay.portal.upgrade.legacy.UpgradePluginRelease;
+import com.liferay.portal.upgrade.legacy.UpgradeWebPluginRelease;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.wiki.navigation.web.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.wiki.navigation.web.upgrade.v1_0_1.UpgradePortletId;
@@ -48,12 +48,15 @@ public class WikiNavigationWebUpgrade implements UpgradeStepRegistrator {
 			new UpgradePortletId());
 	}
 
+	@Reference(unbind = "-")
+	protected CounterLocalService counterLocalService;
+
 	private void _upgradeRelease() {
 		try {
-			UpgradePluginRelease upgradePluginRelease =
-				new UpgradePluginRelease(_counterLocalService);
+			UpgradeWebPluginRelease upgradeWebPluginRelease =
+				new UpgradeWebPluginRelease(counterLocalService);
 
-			upgradePluginRelease.upgrade(
+			upgradeWebPluginRelease.upgrade(
 				"com.liferay.wiki.navigation.web",
 				"1_WAR_wikinavigationportlet", "2_WAR_wikinavigationportlet");
 		}
@@ -61,9 +64,5 @@ public class WikiNavigationWebUpgrade implements UpgradeStepRegistrator {
 			throw new RuntimeException(ue);
 		}
 	}
-
-
-	@Reference(unbind = "-")
-	protected CounterLocalService _counterLocalService;
 
 }

@@ -29,9 +29,9 @@ import java.sql.SQLException;
 /**
  * @author Adolfo Pérez
  */
-public class UpgradePluginRelease {
+public class UpgradeWebPluginRelease {
 
-	public UpgradePluginRelease(CounterLocalService counterLocalService) {
+	public UpgradeWebPluginRelease(CounterLocalService counterLocalService) {
 		_counterLocalService = counterLocalService;
 	}
 

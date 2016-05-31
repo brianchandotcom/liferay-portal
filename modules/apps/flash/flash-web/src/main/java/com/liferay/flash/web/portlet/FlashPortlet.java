@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=flash-portlet",
 		"com.liferay.portlet.display-category=category.cms",
-		"com.liferay.portlet.icon=/icons/icon.png",
+		"com.liferay.portlet.icon=/icons/flash.png",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Flash", "javax.portlet.expiration-cache=0",

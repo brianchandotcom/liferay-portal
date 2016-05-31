@@ -5613,10 +5613,6 @@
 			<var name="site" value="Site C" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site C" />
-		</execute>
-
 		<execute macro="ProductMenu#gotoSitesMembers">
 			<var name="portlet" value="Site Memberships" />
 		</execute>

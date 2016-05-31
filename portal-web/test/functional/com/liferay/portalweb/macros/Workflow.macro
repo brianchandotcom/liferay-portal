@@ -142,8 +142,6 @@
 
 		<execute macro="Workflow#confirmAndViewSucessMessageViaDetails" />
 
-		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
-
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
@@ -456,8 +454,6 @@
 
 		<execute macro="Workflow#confirmAndViewSucessMessageViaDetails" />
 
-		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
-
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="Workflow#viewCompletedTask">
@@ -513,8 +509,6 @@
 		<execute function="AssertClick" locator1="MenuItem#RESUBMIT" value1="Resubmit" />
 
 		<execute macro="Workflow#confirmAndViewSucessMessageViaDetails" />
-
-		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />

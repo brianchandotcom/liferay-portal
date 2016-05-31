@@ -126,7 +126,7 @@
 </tr>
 <tr>
 	<td>GEOLOCATION_GOOGLE_MAP</td>
-	<td>//div[@data-fieldname='${key_fieldName}']//div[contains(@class,'lfrmapgoogle')]</td>
+	<td>//div[@data-fieldname='${key_fieldName}' and contains(@class,'geolocation')]</td>
 	<td></td>
 </tr>
 <tr>

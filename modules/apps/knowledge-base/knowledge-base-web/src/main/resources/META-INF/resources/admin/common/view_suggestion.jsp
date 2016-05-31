@@ -73,7 +73,7 @@ renderResponse.setTitle(kbCommentTitle);
 	<div class="divider"></div>
 
 	<div class="panel-body">
-		<div class="text-default">
+		<div class="card-row card-row-padded text-default">
 			<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(kbComment.getContent())) %>
 		</div>
 	</div>

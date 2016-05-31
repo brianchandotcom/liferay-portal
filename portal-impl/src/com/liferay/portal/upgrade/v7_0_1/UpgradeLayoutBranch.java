@@ -26,7 +26,7 @@ public class UpgradeLayoutBranch extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		alter(
 			LayoutBranchTable.class,
-			new AlterColumnName("LayoutBranchId", "layoutBranchId"));
+			new AlterColumnName("LayoutBranchId", "layoutBranchId LONG"));
 	}
 
 }

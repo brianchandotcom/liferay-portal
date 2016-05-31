@@ -60,38 +60,38 @@ public class LanguagePropertyTest {
 	}
 
 	@Test
-	public void testMissingKeyDir() {
-		_testMissingKey(LanguageConstants.KEY_DIR);
+	public void testNoSpecialKeyDir() {
+		_testNoSpecialKey(LanguageConstants.KEY_DIR);
 	}
 
 	@Test
-	public void testMissingKeyLineBegin() {
-		_testMissingKey(LanguageConstants.KEY_LINE_BEGIN);
+	public void testNoSpecialKeyLineBegin() {
+		_testNoSpecialKey(LanguageConstants.KEY_LINE_BEGIN);
 	}
 
 	@Test
-	public void testMissingKeyLineEnd() {
-		_testMissingKey(LanguageConstants.KEY_LINE_END);
+	public void testNoSpecialKeyLineEnd() {
+		_testNoSpecialKey(LanguageConstants.KEY_LINE_END);
 	}
 
 	@Test
-	public void testMissingKeyUserNameFieldNames() {
-		_testMissingKey(LanguageConstants.KEY_USER_NAME_FIELD_NAMES);
+	public void testNoSpecialKeyUserNameFieldNames() {
+		_testNoSpecialKey(LanguageConstants.KEY_USER_NAME_FIELD_NAMES);
 	}
 
 	@Test
-	public void testMissingKeyUserNamePrefixValues() {
-		_testMissingKey(LanguageConstants.KEY_USER_NAME_PREFIX_VALUES);
+	public void testNoSpecialKeyUserNamePrefixValues() {
+		_testNoSpecialKey(LanguageConstants.KEY_USER_NAME_PREFIX_VALUES);
 	}
 
 	@Test
-	public void testMissingKeyUserNameRequiredFieldNames() {
-		_testMissingKey(LanguageConstants.KEY_USER_NAME_REQUIRED_FIELD_NAMES);
+	public void testNoSpecialKeyUserNameRequiredFieldNames() {
+		_testNoSpecialKey(LanguageConstants.KEY_USER_NAME_REQUIRED_FIELD_NAMES);
 	}
 
 	@Test
-	public void testMissingKeyUserNameSuffixValues() {
-		_testMissingKey(LanguageConstants.KEY_USER_NAME_SUFFIX_VALUES);
+	public void testNoSpecialKeyUserNameSuffixValues() {
+		_testNoSpecialKey(LanguageConstants.KEY_USER_NAME_SUFFIX_VALUES);
 	}
 
 	@Test
@@ -228,7 +228,7 @@ public class LanguagePropertyTest {
 		return propertiesMap;
 	}
 
-	private void _testMissingKey(String key) {
+	private void _testNoSpecialKey(String key) {
 		List<String> invalidFileNames = new ArrayList<>();
 
 		Set<String> fileNames = _modulesPropertiesMap.keySet();

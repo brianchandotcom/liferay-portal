@@ -19,6 +19,8 @@ import com.liferay.portal.target.platform.indexer.Indexer;
 import java.io.File;
 import java.io.OutputStream;
 
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -52,6 +54,18 @@ public class LPKGIndexer implements Indexer {
 
 	@Override
 	public void index(OutputStream outputStream) throws Exception {
+		try (FileSystem fileSystem = FileSystems.newFileSystem(
+				_lpkgFile.toPath(), null)) {
+
+			Path indexPath = fileSystem.getPath("index.xml");
+
+			if (Files.exists(indexPath)) {
+				Files.copy(indexPath, outputStream);
+
+				return;
+			}
+		}
+
 		Path tempPath = Files.createTempDirectory(null);
 
 		File tempDir = tempPath.toFile();

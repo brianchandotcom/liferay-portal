@@ -40,6 +40,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
@@ -150,9 +151,12 @@ public class TargetPlatformMain {
 
 			String name = lpkgFile.getName();
 
+			byte[] data = byteArrayOutputStream.toByteArray();
+
 			URL url = BytesURLSupport.putData(
-				name.substring(0, name.length() - 5),
-				byteArrayOutputStream.toByteArray());
+				name.substring(0, name.length() - 5), data);
+
+			_writeIndexToLPKG(lpkgFile, data);
 
 			byteArrayOutputStream.reset();
 
@@ -350,6 +354,26 @@ public class TargetPlatformMain {
 			System.out.printf(
 				"== Time %02d:%02ds\n", MILLISECONDS.toMinutes(duration),
 				MILLISECONDS.toSeconds(duration % 60000));
+		}
+	}
+
+	private static void _writeIndexToLPKG(File lpkg, byte[] data)
+		throws IOException {
+
+		try (FileSystem fileSystem = FileSystems.newFileSystem(
+				lpkg.toPath(), null)) {
+
+			// The StandardOpenOption list should not be needed, but there is a
+			// bug in com.sun.nio.zipfs.ZipFileSystemProvider.newOutputStream(
+			// Path, OpenOption...) which does not follow the api contract of
+			// java.nio.file.Files.write(Path, byte[], OpenOption...) to
+			// automatically add these options. So that these options must be
+			// explicitly listed out until the jdk bug is fixed.
+
+			Files.write(
+				fileSystem.getPath("index.xml"), data,
+				StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING,
+				StandardOpenOption.WRITE);
 		}
 	}
 

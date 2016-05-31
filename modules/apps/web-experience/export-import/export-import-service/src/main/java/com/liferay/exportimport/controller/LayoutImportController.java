@@ -1367,6 +1367,10 @@ public class LayoutImportController implements ImportController {
 			PortletDataHandler portletDataHandler =
 				_portletDataHandlerProvider.provide(companyId, portletId);
 
+			if (portletDataHandler == null) {
+				continue;
+			}
+
 			if (!portletDataHandler.validateSchemaVersion(schemaVersion)) {
 				StringBundler sb = new StringBundler(6);
 

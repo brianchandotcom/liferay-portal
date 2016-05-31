@@ -18,6 +18,7 @@ import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.Connection;
@@ -35,11 +36,13 @@ public class UpgradePluginRelease {
 		_counterLocalService = counterLocalService;
 	}
 
-	public void upgrade() throws UpgradeException {
+	public void upgrade(String bundleSymbolicName, String... portletIds)
+		throws UpgradeException {
+
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection()) {
 			_connection = con;
 
-			_doUpgrade();
+			_doUpgrade(bundleSymbolicName, portletIds);
 		}
 		catch (Exception e) {
 			throw new UpgradeException(e);
@@ -78,17 +81,36 @@ public class UpgradePluginRelease {
 		}
 	}
 
-	private void _doUpgrade() throws SQLException {
-		if (_hasPortlet(_PORTLET_ID)) {
-			_addRelease(_BUNDLE_SYMBOLIC_NAME);
+	private void _doUpgrade(String bundleSymbolicName, String... portletIds)
+		throws SQLException {
+
+		if (_hasAnyPortlet(portletIds)) {
+			_addRelease(bundleSymbolicName);
 		}
 	}
 
-	private boolean _hasPortlet(String portletId) throws SQLException {
-		try (PreparedStatement ps = _connection.prepareStatement(
-				"select portletId from Portlet where portletId = ?")) {
+	private boolean _hasAnyPortlet(String... portletIds) throws SQLException {
+		if (portletIds.length == 0) {
+			return false;
+		}
 
-			ps.setString(1, portletId);
+		StringBundler sb = new StringBundler(portletIds.length + 1);
+
+		sb.append("(?");
+
+		for (int i = 1; i < portletIds.length; i++) {
+			sb.append(", ?");
+		}
+
+		sb.append(CharPool.CLOSE_PARENTHESIS);
+
+		try (PreparedStatement ps = _connection.prepareStatement(
+				"select portletId from Portlet where portletId in " +
+					sb.toString())) {
+
+			for (int i = 0; i < portletIds.length; i++) {
+				ps.setString(i + 1, portletIds[i]);
+			}
 
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
@@ -99,11 +121,6 @@ public class UpgradePluginRelease {
 			}
 		}
 	}
-
-	private static final String _BUNDLE_SYMBOLIC_NAME =
-		"com.liferay.youtube.web";
-
-	private static final String _PORTLET_ID = "1_WAR_youtubeportlet";
 
 	private Connection _connection;
 	private final CounterLocalService _counterLocalService;

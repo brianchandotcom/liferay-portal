@@ -51,7 +51,8 @@ public class YouTubeWebUpgrade implements UpgradeStepRegistrator {
 			UpgradePluginRelease upgradePluginRelease =
 				new UpgradePluginRelease(counterLocalService);
 
-			upgradePluginRelease.upgrade();
+			upgradePluginRelease.upgrade(
+				"com.liferay.youtube.web", "1_WAR_youtubeportlet");
 		}
 		catch (UpgradeException ue) {
 			throw new RuntimeException(ue);

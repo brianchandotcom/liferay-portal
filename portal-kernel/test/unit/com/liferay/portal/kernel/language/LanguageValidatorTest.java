@@ -246,6 +246,23 @@ public class LanguageValidatorTest {
 	}
 
 	@Test
+	public void testIsValidKeyUserNamePrefixValues() {
+		Assert.assertTrue(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_NAME_PREFIX_VALUES, "Mr,Mrs,Dr"));
+		Assert.assertTrue(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_NAME_PREFIX_VALUES,
+				"Any value at all"));
+		Assert.assertFalse(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_NAME_PREFIX_VALUES, ""));
+		Assert.assertFalse(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_NAME_PREFIX_VALUES, null));
+	}
+
+	@Test
 	public void testIsValidKeyUserNameRequiredFieldNames() {
 		Assert.assertTrue(
 			LanguageValidator.isValid(
@@ -410,6 +427,23 @@ public class LanguageValidatorTest {
 		Assert.assertFalse(
 			LanguageValidator.isValid(
 				LanguageConstants.KEY_USER_NAME_REQUIRED_FIELD_NAMES, ""));
+	}
+
+	@Test
+	public void testIsValidKeyUserNameSuffixValues() {
+		Assert.assertTrue(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_NAME_PREFIX_VALUES, "Jr,Sr,II,III"));
+		Assert.assertTrue(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_NAME_PREFIX_VALUES,
+				"Any value at all"));
+		Assert.assertFalse(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_NAME_PREFIX_VALUES, ""));
+		Assert.assertFalse(
+			LanguageValidator.isValid(
+				LanguageConstants.KEY_USER_NAME_PREFIX_VALUES, null));
 	}
 
 }

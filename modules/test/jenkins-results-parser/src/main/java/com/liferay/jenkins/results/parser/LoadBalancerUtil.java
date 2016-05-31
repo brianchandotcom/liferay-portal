@@ -314,7 +314,7 @@ public class LoadBalancerUtil {
 			return 0;
 		}
 
-		int batchSizeTotal = 0;
+		int recentBatchSizesTotal = 0;
 
 		List<BatchSizeRecord> hostRecentBatchSizeEntriesToBeRemoved =
 			new ArrayList<>(hostRecentBatchSizes.size());
@@ -323,7 +323,7 @@ public class LoadBalancerUtil {
 			if ((recentBatchSizeRecord.timestamp + recentBatchPeriod) >
 					System.currentTimeMillis()) {
 
-				batchSizeTotal += recentBatchSizeRecord.size;
+				recentBatchSizesTotal += recentBatchSizeRecord.size;
 			}
 			else {
 				hostRecentBatchSizeEntriesToBeRemoved.add(
@@ -333,7 +333,7 @@ public class LoadBalancerUtil {
 
 		hostRecentBatchSizes.removeAll(hostRecentBatchSizeEntriesToBeRemoved);
 
-		return batchSizeTotal;
+		return recentBatchSizesTotal;
 	}
 
 	protected static void startParallelTasks(

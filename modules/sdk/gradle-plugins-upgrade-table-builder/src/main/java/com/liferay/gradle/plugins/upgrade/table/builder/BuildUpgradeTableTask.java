@@ -25,7 +25,9 @@ import java.util.List;
 
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.JavaExec;
+import org.gradle.api.tasks.Optional;
 
 /**
  * @author Andrea Di Giorgi
@@ -50,6 +52,12 @@ public class BuildUpgradeTableTask extends JavaExec {
 		return GradleUtil.toFile(getProject(), _baseDir);
 	}
 
+	@InputFile
+	@Optional
+	public File getReleaseInfoFile() {
+		return GradleUtil.toFile(getProject(), _releaseInfoFile);
+	}
+
 	@InputDirectory
 	public File getUpgradeTableDir() {
 		return GradleUtil.toFile(getProject(), _upgradeTableDir);
@@ -68,6 +76,10 @@ public class BuildUpgradeTableTask extends JavaExec {
 		_osgiModule = osgiModule;
 	}
 
+	public void setReleaseInfoFile(Object releaseInfoFile) {
+		_releaseInfoFile = releaseInfoFile;
+	}
+
 	public void setUpgradeTableDir(Object upgradeTableDir) {
 		_upgradeTableDir = upgradeTableDir;
 	}
@@ -78,6 +90,9 @@ public class BuildUpgradeTableTask extends JavaExec {
 		args.add("upgrade.base.dir=" + FileUtil.getAbsolutePath(getBaseDir()));
 		args.add("upgrade.osgi.module=" + isOsgiModule());
 		args.add(
+			"upgrade.release.info.file=" +
+				FileUtil.getAbsolutePath(getReleaseInfoFile()));
+		args.add(
 			"upgrade.table.dir=" +
 				FileUtil.getAbsolutePath(getUpgradeTableDir()));
 
@@ -86,6 +101,7 @@ public class BuildUpgradeTableTask extends JavaExec {
 
 	private Object _baseDir = UpgradeTableBuilderArgs.BASE_DIR_NAME;
 	private boolean _osgiModule = UpgradeTableBuilderArgs.OSGI_MODULE;
+	private Object _releaseInfoFile;
 	private Object _upgradeTableDir;
 
 }

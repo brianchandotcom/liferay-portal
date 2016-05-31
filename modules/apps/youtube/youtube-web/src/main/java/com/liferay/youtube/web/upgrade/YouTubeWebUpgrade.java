@@ -17,8 +17,8 @@ package com.liferay.youtube.web.upgrade;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
+import com.liferay.portal.upgrade.legacy.UpgradePluginRelease;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.youtube.web.upgrade.util.UpgradePluginRelease;
 import com.liferay.youtube.web.upgrade.v1_0_0.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;

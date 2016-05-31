@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.youtube.web.upgrade.util;
+package com.liferay.portal.upgrade.legacy;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.kernel.model.ReleaseConstants;

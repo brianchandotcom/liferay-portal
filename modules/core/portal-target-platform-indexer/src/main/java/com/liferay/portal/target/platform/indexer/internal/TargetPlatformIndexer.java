@@ -24,10 +24,7 @@ import com.liferay.portal.target.platform.indexer.Indexer;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-
-import java.net.URL;
 
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -87,7 +84,6 @@ public class TargetPlatformIndexer implements Indexer {
 
 		try {
 			_processSystemBundle(tempDir, jarFiles);
-			_processSystemPackagesExtra(tempDir, jarFiles);
 
 			for (String dirName : _dirNames) {
 				try (DirectoryStream<Path> directoryStream =
@@ -215,30 +211,7 @@ public class TargetPlatformIndexer implements Indexer {
 		}
 	}
 
-	private void _processSystemPackagesExtra(File tempDir, Set<File> jarFiles)
-		throws Exception {
-
-		URL url = _systemBundle.getResource(
-			"META-INF/system.packages.extra.mf");
-
-		try (Jar jar = new Jar("system.packages.extra");
-			InputStream inputStream = url.openStream()) {
-
-			Manifest manifest = new Manifest(inputStream);
-
-			jar.setManifest(manifest);
-
-			File jarFile = new File(tempDir, "system.packages.extra.jar");
-
-			jar.write(jarFile);
-
-			jarFiles.add(jarFile);
-		}
-	}
-
 	private static final Set<String> _ignoredNamespaces = new HashSet<>();
-	private static final Class<?> _targetPlatformMainClass =
-		TargetPlatformIndexer.class;
 
 	static {
 		_ignoredNamespaces.add(BundleNamespace.BUNDLE_NAMESPACE);

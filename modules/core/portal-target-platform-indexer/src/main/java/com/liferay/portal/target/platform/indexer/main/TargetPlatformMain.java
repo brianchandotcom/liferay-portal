@@ -45,11 +45,16 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ServiceLoader;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.launch.Framework;
 import org.osgi.framework.launch.FrameworkFactory;
 
@@ -173,16 +178,32 @@ public class TargetPlatformMain {
 
 		Path tempPath = Files.createTempDirectory(null);
 
+		String systemPackagesExtra = "";
+
+		URL url = _classLoader.getResource(
+			"META-INF/system.packages.extra.mf");
+
+		try (InputStream inputStream = url.openStream()) {
+			Manifest extraPackagesManifest = new Manifest(inputStream);
+
+			Attributes attributes = extraPackagesManifest.getMainAttributes();
+
+			systemPackagesExtra = attributes.getValue("Export-Package");
+		}
+
+		Map<String, String> properties = new HashMap<>();
+
+		properties.put(Constants.FRAMEWORK_STORAGE, tempPath.toString());
+		properties.put(
+			Constants.FRAMEWORK_SYSTEMPACKAGES_EXTRA, systemPackagesExtra);
+
 		try {
 			ServiceLoader<FrameworkFactory> serviceLoader = ServiceLoader.load(
 				FrameworkFactory.class);
 
 			FrameworkFactory frameworkFactory = serviceLoader.iterator().next();
 
-			framework = frameworkFactory.newFramework(
-				Collections.singletonMap(
-					org.osgi.framework.Constants.FRAMEWORK_STORAGE,
-					tempPath.toString()));
+			framework = frameworkFactory.newFramework(properties);
 
 			framework.init();
 
@@ -198,7 +219,7 @@ public class TargetPlatformMain {
 
 			targetPlatformIndexer.index(byteArrayOutputStream);
 
-			URL url = BytesURLSupport.putData(
+			url = BytesURLSupport.putData(
 				"liferay-target-platform", byteArrayOutputStream.toByteArray());
 
 			return url.toURI();
@@ -375,5 +396,8 @@ public class TargetPlatformMain {
 				StandardOpenOption.WRITE);
 		}
 	}
+
+	private static final ClassLoader _classLoader =
+		TargetPlatformMain.class.getClassLoader();
 
 }

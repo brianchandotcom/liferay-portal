@@ -3,7 +3,7 @@ Bundle-SymbolicName: com.liferay.portal.remote.http.tunnel.extender
 Bundle-Version: 2.0.1
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
-Provide-Capability: liferay.extender;liferay.extender="http.tunnel.extender";version:Version="${plugin.full.version}"
+Provide-Capability: liferay.extender;liferay.extender="http.tunnel.extender";version:Version="${Bundle-Version}"
 -includeresource:\
 	@org.apache.felix.utils-[0-9]*.jar!/org/apache/felix/utils/extender/*,\
 	@org.apache.felix.utils-[0-9]*.jar!/org/apache/felix/utils/log/*

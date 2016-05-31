@@ -27,6 +27,10 @@ public class UpgradeTableBuilderArgs {
 		return _baseDirName;
 	}
 
+	public String getReleaseInfoFileName() {
+		return _releaseInfoFileName;
+	}
+
 	public String getUpgradeTableDirName() {
 		return _upgradeTableDirName;
 	}
@@ -43,12 +47,17 @@ public class UpgradeTableBuilderArgs {
 		_osgiModule = osgiModule;
 	}
 
+	public void setReleaseInfoFileName(String releaseInfoFileName) {
+		_releaseInfoFileName = releaseInfoFileName;
+	}
+
 	public void setUpgradeTableDirName(String upgradeTableDirName) {
 		_upgradeTableDirName = upgradeTableDirName;
 	}
 
 	private String _baseDirName = BASE_DIR_NAME;
 	private boolean _osgiModule = OSGI_MODULE;
+	private String _releaseInfoFileName;
 	private String _upgradeTableDirName;
 
 }

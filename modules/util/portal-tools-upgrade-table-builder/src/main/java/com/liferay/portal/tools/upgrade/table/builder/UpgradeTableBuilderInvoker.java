@@ -29,10 +29,16 @@ public class UpgradeTableBuilderInvoker {
 			_getAbsolutePath(baseDir, upgradeTableBuilderArgs.getBaseDirName()),
 			upgradeTableBuilderArgs.isOsgiModule(),
 			_getAbsolutePath(
+				baseDir, upgradeTableBuilderArgs.getReleaseInfoFileName()),
+			_getAbsolutePath(
 				baseDir, upgradeTableBuilderArgs.getUpgradeTableDirName()));
 	}
 
 	private static String _getAbsolutePath(File baseDir, String fileName) {
+		if ((fileName == null) || fileName.isEmpty()) {
+			return null;
+		}
+
 		File file = new File(baseDir, fileName);
 
 		return file.getAbsolutePath();

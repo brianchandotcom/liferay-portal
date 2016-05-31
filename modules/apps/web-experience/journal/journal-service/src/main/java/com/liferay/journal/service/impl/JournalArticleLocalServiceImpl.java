@@ -3796,6 +3796,9 @@ public class JournalArticleLocalServiceImpl
 		trashEntryLocalService.deleteEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
+		restoreVisibleIfThereIsAnApprovedVersion(
+			article.getGroupId(), article.getArticleId());
+
 		// Comment
 
 		if (JournalServiceConfigurationValues.
@@ -7330,6 +7333,20 @@ public class JournalArticleLocalServiceImpl
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		subscriptionSender.flushNotificationsAsync();
+	}
+
+	protected void restoreVisibleIfThereIsAnApprovedVersion(
+			long groupId, String articleId)
+		throws PortalException {
+
+		JournalArticle article = fetchLatestArticle(
+			groupId, articleId, WorkflowConstants.STATUS_APPROVED);
+
+		if (article != null) {
+			assetEntryLocalService.updateVisible(
+					JournalArticle.class.getName(),
+					article.getResourcePrimKey(), true);
+		}
 	}
 
 	protected void saveImages(

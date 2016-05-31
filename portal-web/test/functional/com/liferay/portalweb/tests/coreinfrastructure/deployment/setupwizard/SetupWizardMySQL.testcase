@@ -11,6 +11,59 @@
 		<execute macro="Smoke#runSmoke" />
 	</command>
 
+	<command name="MySQLtoMySQLEditedAdministratorUser" priority="4">
+		<execute macro="SetupWizard#viewDefaultPortalNamePG" />
+		<property name="test.name.skip.portal.instance" value="SetupWizardMySQL#MySQLtoMySQLEditAdministratorUser" />
+
+		<execute macro="SetupWizard#configureSampleDataPG">
+			<var name="addSampleData" value="false" />
+		</execute>
+
+		<execute macro="SetupWizard#configureAdministratorUserPG">
+			<var name="administratorEmail" value="testsetupwizard@liferay.com" />
+			<var name="administratorFirstName" value="TestSetupWizardFN" />
+			<var name="administratorLastName" value="TestSetupWizardLN" />
+		</execute>
+
+		<execute macro="SetupWizard#configureDatabasePG">
+			<var name="databaseName" value="lportal" />
+			<var name="databasePassword" property-value="database.mysql.password" />
+			<var name="databaseType" value="MySQL" />
+			<var name="databaseUserName" property-value="database.mysql.username" />
+			<var name="jdbcDriverClassName" property-value="database.mysql.driver" />
+			<var name="jdbcURL" property-value="database.mysql.url" />
+		</execute>
+
+		<execute macro="SetupWizard#finishConfigurationPG" />
+
+		<execute macro="SetupWizard#viewConfigurationSavedPG" />
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer">
+			<var name="base_branch" value="${base_branch}" />
+			<var name="deleteLiferayHome" value="false" />
+		</execute>
+
+		<execute macro="SetupWizard#viewConfiguredDatabaseInConsole">
+			<var name="databaseType" value="${databaseType}" />
+		</execute>
+
+		<execute macro="User#firstLoginPG">
+			<var name="setupWizardEnabled" value="true" />
+			<var name="userEmailAddress" value="testsetupwizard@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="TextInput#EMAIL_ADDRESS" value1="testsetupwizard@liferay.com" />
+		<execute function="AssertTextEquals" locator1="TextInput#FIRST_NAME" value1="TestSetupWizardFN" />
+		<execute function="AssertTextEquals" locator1="TextInput#LAST_NAME" value1="TestSetupWizardLN" />
+		<execute function="AssertTextEquals" locator1="TextInput#SCREEN_NAME" value1="testsetupwizard" />
+	</command>
+
 	<command name="MySQLtoMySQLLportal1" priority="5">
 		<property name="databases.size" value="1" />
 		<property name="portal.acceptance.tomcat.mysql" value="true" />

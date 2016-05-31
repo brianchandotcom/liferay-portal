@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.navigation.web.portlet;
 
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.navigation.web.constants.WikiNavigationPortletKeys;
@@ -65,6 +66,13 @@ public class WikiNavigationTreeMenuPortlet extends MVCPortlet {
 			_wikiGroupServiceConfiguration);
 
 		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.wiki.navigation.web)(release.schema.version=1.0.1))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	@Reference

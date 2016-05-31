@@ -15,10 +15,12 @@
 package com.liferay.microblogs.web.portlet;
 
 import com.liferay.microblogs.constants.MicroblogsPortletKeys;
+import com.liferay.portal.kernel.model.Release;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -46,4 +48,12 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class MicroblogsStatusUpdatePortlet extends MicroblogsPortlet {
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.microblogs.web)(release.schema.version=1.0.1))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
+	}
+
 }

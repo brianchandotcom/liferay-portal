@@ -84,6 +84,12 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 	}
 
 	@Input
+	@Optional
+	public List<String> getGradleArguments() {
+		return GradleUtil.toStringList(_gradleArguments);
+	}
+
+	@Input
 	public File getGradleDir() {
 		return GradleUtil.toFile(getProject(), _gradleDir);
 	}
@@ -98,6 +104,20 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		Project project = getProject();
 
 		return project.files(_prepNextFiles);
+	}
+
+	public PrintArtifactPublishCommandsTask gradleArguments(
+		Iterable<?> gradleArguments) {
+
+		GUtil.addToCollection(_gradleArguments, gradleArguments);
+
+		return this;
+	}
+
+	public PrintArtifactPublishCommandsTask gradleArguments(
+		Object... gradleArguments) {
+
+		return gradleArguments(Arrays.asList(gradleArguments));
 	}
 
 	public boolean isFirstOnly() {
@@ -200,6 +220,16 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		Object firstPublishExcludedTaskName) {
 
 		_firstPublishExcludedTaskName = firstPublishExcludedTaskName;
+	}
+
+	public void setGradleArguments(Iterable<?> gradleArguments) {
+		_gradleArguments.clear();
+
+		gradleArguments(gradleArguments);
+	}
+
+	public void setGradleArguments(Object... gradleArguments) {
+		setGradleArguments(Arrays.asList(gradleArguments));
 	}
 
 	public void setGradleDaemon(boolean gradleDaemon) {
@@ -339,6 +369,11 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 			sb.append(" --daemon");
 		}
 
+		for (String argument : getGradleArguments()) {
+			sb.append(' ');
+			sb.append(argument);
+		}
+
 		for (String argument : arguments) {
 			sb.append(' ');
 			sb.append(argument);
@@ -396,6 +431,7 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 	private Object _artifactPropertiesFile;
 	private boolean _firstOnly;
 	private Object _firstPublishExcludedTaskName;
+	private final List<Object> _gradleArguments = new ArrayList<>();
 	private boolean _gradleDaemon;
 	private Object _gradleDir;
 	private Object _lowestPublishedVersion = "1.0.0";

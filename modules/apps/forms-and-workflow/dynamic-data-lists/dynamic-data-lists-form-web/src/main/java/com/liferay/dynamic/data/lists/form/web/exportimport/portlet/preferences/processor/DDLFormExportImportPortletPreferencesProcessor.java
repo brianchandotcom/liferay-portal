@@ -14,8 +14,10 @@
 
 package com.liferay.dynamic.data.lists.form.web.exportimport.portlet.preferences.processor;
 
+import com.liferay.dynamic.data.lists.exportimport.staged.model.repository.DDLRecordStagedModelRepository;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -24,6 +26,10 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.capability.ReferencedStagedModelImporterCapability;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -81,7 +87,7 @@ public class DDLFormExportImportPortletPreferencesProcessor
 
 		String portletId = portletDataContext.getPortletId();
 
-		long recordSetId = GetterUtil.getLong(
+		final long recordSetId = GetterUtil.getLong(
 			portletPreferences.getValue("recordSetId", null));
 
 		if (recordSetId == 0) {
@@ -100,6 +106,36 @@ public class DDLFormExportImportPortletPreferencesProcessor
 		if (recordSet != null) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, portletId, recordSet);
+
+			ActionableDynamicQuery recordActionableDynamicQuery =
+				_ddlRecordStagedModelRepository.getExportActionableDynamicQuery(
+					portletDataContext, DDLRecordSetConstants.SCOPE_FORMS);
+
+			final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
+				recordActionableDynamicQuery.getAddCriteriaMethod();
+
+			recordActionableDynamicQuery.setAddCriteriaMethod(
+				new ActionableDynamicQuery.AddCriteriaMethod() {
+
+					@Override
+					public void addCriteria(DynamicQuery dynamicQuery) {
+						addCriteriaMethod.addCriteria(dynamicQuery);
+
+						Property property = PropertyFactoryUtil.forName(
+							"recordSetId");
+
+						dynamicQuery.add(property.eq(recordSetId));
+					}
+
+				});
+
+			try {
+				recordActionableDynamicQuery.performActions();
+			}
+			catch (PortalException pe) {
+				throw new PortletDataException(
+					"Unable to export referenced records", pe);
+			}
 		}
 
 		return portletPreferences;
@@ -142,11 +178,24 @@ public class DDLFormExportImportPortletPreferencesProcessor
 		return portletPreferences;
 	}
 
+	@Reference(
+		target =
+			"(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord)",
+		unbind = "-"
+	)
+	protected void setDDLRecordStagedModelRepository(
+		DDLRecordStagedModelRepository ddlRecordStagedModelRepository) {
+
+		_ddlRecordStagedModelRepository = ddlRecordStagedModelRepository;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLFormExportImportPortletPreferencesProcessor.class);
 
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+
+	private DDLRecordStagedModelRepository _ddlRecordStagedModelRepository;
 
 	@Reference
 	private ReferencedStagedModelImporterCapability

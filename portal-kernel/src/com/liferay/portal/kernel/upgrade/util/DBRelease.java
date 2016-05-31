@@ -12,34 +12,38 @@
  * details.
  */
 
-package com.liferay.youtube.web.upgrade.util;
+package com.liferay.portal.kernel.upgrade.util;
 
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.model.ReleaseConstants;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
 /**
  * @author Adolfo Pérez
  */
-public class UpgradePluginRelease extends UpgradeProcess {
+public class DBRelease {
 
-	public UpgradePluginRelease(CounterLocalService counterLocalService) {
+	public DBRelease(
+		Connection connection, CounterLocalService counterLocalService) {
+
+		_connection = connection;
 		_counterLocalService = counterLocalService;
+		_db = null;
 	}
 
-	protected void doUpgrade() throws Exception {
-		if (_hasPortlet(_PORTLET_ID)) {
-			_addRelease(_BUNDLE_SYMBOLIC_NAME);
-		}
+	public DBRelease(Connection connection, DB db) {
+		_connection = connection;
+		_counterLocalService = null;
+		_db = db;
 	}
 
-	private void _addRelease(String bundleSymbolicName) throws SQLException {
+	public void addRelease(String bundleSymbolicName) throws SQLException {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
 		StringBundler sb = new StringBundler(4);
@@ -49,11 +53,11 @@ public class UpgradePluginRelease extends UpgradeProcess {
 		sb.append("schemaVersion, buildNumber, buildDate, verified, state_, ");
 		sb.append("testString) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-		try (PreparedStatement ps = connection.prepareStatement(
+		try (PreparedStatement ps = _connection.prepareStatement(
 				sb.toString())) {
 
 			ps.setLong(1, 0);
-			ps.setLong(2, _counterLocalService.increment());
+			ps.setLong(2, _increment());
 			ps.setTimestamp(3, timestamp);
 			ps.setTimestamp(4, timestamp);
 			ps.setString(5, bundleSymbolicName);
@@ -68,27 +72,16 @@ public class UpgradePluginRelease extends UpgradeProcess {
 		}
 	}
 
-	private boolean _hasPortlet(String portletId) throws SQLException {
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select portletId from Portlet where portletId = ?")) {
-
-			ps.setString(1, portletId);
-
-			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next()) {
-					return true;
-				}
-
-				return false;
-			}
+	private long _increment() {
+		if (_counterLocalService == null) {
+			return _db.increment();
 		}
+
+		return _counterLocalService.increment();
 	}
 
-	private static final String _BUNDLE_SYMBOLIC_NAME =
-		"com.liferay.youtube.web";
-
-	private static final String _PORTLET_ID = "1_WAR_youtubeportlet";
-
+	private final Connection _connection;
 	private final CounterLocalService _counterLocalService;
+	private final DB _db;
 
 }

@@ -20,6 +20,7 @@ import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.service.MicroblogsEntryLocalService;
 import com.liferay.microblogs.service.MicroblogsEntryService;
 import com.liferay.microblogs.util.MicroblogsUtil;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -156,6 +157,13 @@ public class MicroblogsPortlet extends MVCPortlet {
 		MicroblogsEntryService microblogsEntryService) {
 
 		this.microblogsEntryService = microblogsEntryService;
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.microblogs.web)(release.schema.version=1.0.1))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	protected AssetEntryLocalService assetEntryLocalService;

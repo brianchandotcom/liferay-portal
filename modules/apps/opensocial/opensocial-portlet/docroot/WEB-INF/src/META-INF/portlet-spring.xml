@@ -8,4 +8,5 @@
 	<bean class="com.liferay.opensocial.service.persistence.impl.OAuthConsumerPersistenceImpl" id="com.liferay.opensocial.service.persistence.OAuthConsumerPersistence" parent="basePersistence" />
 	<bean class="com.liferay.opensocial.service.impl.OAuthTokenLocalServiceImpl" id="com.liferay.opensocial.service.OAuthTokenLocalService" />
 	<bean class="com.liferay.opensocial.service.persistence.impl.OAuthTokenPersistenceImpl" id="com.liferay.opensocial.service.persistence.OAuthTokenPersistence" parent="basePersistence" />
+	<bean class="com.liferay.opensocial.service.convert.database.OpenSocialDatabaseConverter" id="com.liferay.opensocial.service.convert.database.OpenSocialDatabaseConverter" />
 </beans>

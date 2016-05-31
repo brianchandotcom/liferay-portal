@@ -6,4 +6,5 @@
 	<bean class="com.liferay.marketplace.service.persistence.impl.AppPersistenceImpl" id="com.liferay.marketplace.service.persistence.AppPersistence" parent="basePersistence" />
 	<bean class="com.liferay.marketplace.service.impl.ModuleLocalServiceImpl" id="com.liferay.marketplace.service.ModuleLocalService" />
 	<bean class="com.liferay.marketplace.service.persistence.impl.ModulePersistenceImpl" id="com.liferay.marketplace.service.persistence.ModulePersistence" parent="basePersistence" />
+	<bean class="com.liferay.marketplace.service.convert.database.MarketplaceDatabaseConverter" id="com.liferay.marketplace.service.convert.database.MarketplaceDatabaseConverter" />
 </beans>

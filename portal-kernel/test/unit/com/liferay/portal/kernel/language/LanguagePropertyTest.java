@@ -158,8 +158,18 @@ public class LanguagePropertyTest {
 	}
 
 	@Test
+	public void testValidKeyUserNamePrefixValues() {
+		_testValidKey(LanguageConstants.KEY_USER_NAME_PREFIX_VALUES);
+	}
+
+	@Test
 	public void testValidKeyUserNameRequiredFieldNames() {
 		_testValidKey(LanguageConstants.KEY_USER_NAME_REQUIRED_FIELD_NAMES);
+	}
+
+	@Test
+	public void testValidKeyUserNameSuffixValues() {
+		_testValidKey(LanguageConstants.KEY_USER_NAME_SUFFIX_VALUES);
 	}
 
 	private static List<String> _getFileNames(String pattern)

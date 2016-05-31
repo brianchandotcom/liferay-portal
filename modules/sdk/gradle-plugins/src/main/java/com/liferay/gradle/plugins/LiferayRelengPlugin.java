@@ -156,9 +156,11 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		configureTaskEnabledIfStale(
 			printArtifactPublishCommandsTask, recordArtifactTask);
 
-		File gitRepoDir = GradleUtil.getRootDir(project, ".gitrepo");
+		String projectPath = project.getPath();
 
-		if (gitRepoDir != null) {
+		if (projectPath.startsWith(":apps:") ||
+			projectPath.startsWith(":private:apps:")) {
+
 			configureTaskEnabledIfLeaf(printArtifactPublishCommandsTask);
 		}
 

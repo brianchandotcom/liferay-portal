@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -279,6 +280,13 @@ public class InviteMembersPortlet extends MVCPortlet {
 		MemberRequestLocalService memberRequestLocalService) {
 
 		_memberRequestLocalService = memberRequestLocalService;
+	}
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.invitation.invite.members.service)(release.schema.version=1.0.1))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
 	}
 
 	@Reference(unbind = "-")

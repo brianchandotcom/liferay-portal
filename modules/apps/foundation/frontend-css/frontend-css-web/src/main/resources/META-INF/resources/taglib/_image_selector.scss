@@ -91,6 +91,7 @@
 
 		.image-wrapper {
 			height: 400px;
+			overflow: hidden;
 			width: 100%;
 
 			@include respond-to(phone) {

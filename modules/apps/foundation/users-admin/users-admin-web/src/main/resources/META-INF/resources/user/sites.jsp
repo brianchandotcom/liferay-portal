@@ -250,7 +250,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 		List<Role> inheritedRoles = new ArrayList<Role>();
 		int inheritedRolesCount = 0;
 
-		if (selUSer != null) {
+		if (selUser != null) {
 			inheritedRoles = RoleLocalServiceUtil.getUserGroupGroupRoles(selUser.getUserId(), inheritedSite.getGroupId(), 0, 50);
 			inheritedRolesCount = RoleLocalServiceUtil.getUserGroupGroupRolesCount(selUser.getUserId(), inheritedSite.getGroupId());
 		}

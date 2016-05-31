@@ -9,4 +9,5 @@
 	<bean class="com.liferay.bookmarks.service.impl.BookmarksFolderServiceImpl" id="com.liferay.bookmarks.service.BookmarksFolderService" />
 	<bean class="com.liferay.bookmarks.service.persistence.impl.BookmarksFolderPersistenceImpl" id="com.liferay.bookmarks.service.persistence.BookmarksFolderPersistence" parent="basePersistence" />
 	<bean class="com.liferay.bookmarks.service.persistence.impl.BookmarksFolderFinderImpl" id="com.liferay.bookmarks.service.persistence.BookmarksFolderFinder" parent="basePersistence" />
+	<bean class="com.liferay.bookmarks.service.convert.database.BookmarksDatabaseConverter" id="com.liferay.bookmarks.service.convert.database.BookmarksDatabaseConverter" />
 </beans>

@@ -19,4 +19,5 @@
 	<bean class="com.liferay.journal.service.impl.JournalFolderServiceImpl" id="com.liferay.journal.service.JournalFolderService" />
 	<bean class="com.liferay.journal.service.persistence.impl.JournalFolderPersistenceImpl" id="com.liferay.journal.service.persistence.JournalFolderPersistence" parent="basePersistence" />
 	<bean class="com.liferay.journal.service.persistence.impl.JournalFolderFinderImpl" id="com.liferay.journal.service.persistence.JournalFolderFinder" parent="basePersistence" />
+	<bean class="com.liferay.journal.service.convert.database.JournalDatabaseConverter" id="com.liferay.journal.service.convert.database.JournalDatabaseConverter" />
 </beans>

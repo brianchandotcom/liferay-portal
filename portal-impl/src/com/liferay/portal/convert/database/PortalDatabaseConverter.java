@@ -30,6 +30,7 @@ import javax.sql.DataSource;
 /**
  * @author Cristina González
  */
+@Deprecated
 public class PortalDatabaseConverter implements DatabaseConverter {
 
 	@Override

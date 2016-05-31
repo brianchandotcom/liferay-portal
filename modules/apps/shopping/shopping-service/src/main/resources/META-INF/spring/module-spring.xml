@@ -25,4 +25,5 @@
 	<bean class="com.liferay.shopping.service.persistence.impl.ShoppingOrderFinderImpl" id="com.liferay.shopping.service.persistence.ShoppingOrderFinder" parent="basePersistence" />
 	<bean class="com.liferay.shopping.service.impl.ShoppingOrderItemLocalServiceImpl" id="com.liferay.shopping.service.ShoppingOrderItemLocalService" />
 	<bean class="com.liferay.shopping.service.persistence.impl.ShoppingOrderItemPersistenceImpl" id="com.liferay.shopping.service.persistence.ShoppingOrderItemPersistence" parent="basePersistence" />
+	<bean class="com.liferay.shopping.service.convert.database.ShoppingDatabaseConverter" id="com.liferay.shopping.service.convert.database.ShoppingDatabaseConverter" />
 </beans>

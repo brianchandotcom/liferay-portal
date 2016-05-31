@@ -218,6 +218,7 @@ public abstract class DDMBaseMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
+		String mode = template.getMode();
 		String templateType = template.getType();
 
 		if (templateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) {
@@ -225,7 +226,7 @@ public abstract class DDMBaseMVCActionCommand extends BaseMVCActionCommand {
 				"displayDDMTemplateId",
 				String.valueOf(template.getTemplateId()));
 		}
-		else {
+		else if (mode.equals(DDMTemplateConstants.TEMPLATE_MODE_CREATE)) {
 			portletPreferences.setValue(
 				"formDDMTemplateId", String.valueOf(template.getTemplateId()));
 		}

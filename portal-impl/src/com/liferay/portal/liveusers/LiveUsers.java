@@ -477,6 +477,9 @@ public class LiveUsers {
 			PortalSessionContext.invalidateSession(sessionId);
 		}
 		catch (Exception e) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Unable to invalidate session", e);
+			}
 		}
 
 		_removeUserTracker(companyId, userId, userTracker);

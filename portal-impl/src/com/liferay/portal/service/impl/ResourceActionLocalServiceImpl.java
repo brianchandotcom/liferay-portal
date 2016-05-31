@@ -122,7 +122,10 @@ public class ResourceActionLocalServiceImpl
 				name, actionId);
 
 			if (resourceAction == null) {
-				if (!actionId.equals(ActionKeys.VIEW)) {
+				if (actionId.equals(ActionKeys.VIEW)) {
+					bitwiseValue = 1;
+				}
+				else {
 					if (availableBitwiseValues.isEmpty()) {
 						throw new SystemException(
 							"There are more than 64 actions for resource " +
@@ -130,9 +133,6 @@ public class ResourceActionLocalServiceImpl
 					}
 
 					bitwiseValue = availableBitwiseValues.pop();
-				}
-				else {
-					bitwiseValue = 1;
 				}
 
 				try {

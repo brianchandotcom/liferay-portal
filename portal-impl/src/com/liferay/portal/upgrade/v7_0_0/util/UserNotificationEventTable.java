@@ -73,19 +73,19 @@ TABLE_COLUMNS_MAP.put("actionRequired", Types.BOOLEAN);
 TABLE_COLUMNS_MAP.put("archived", Types.BOOLEAN);
 
 }
-	public static final String TABLE_SQL_CREATE = "create table UserNotificationEvent (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,userNotificationEventId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(75) null,timestamp LONG,deliveryType INTEGER,deliverBy LONG,delivered BOOLEAN,payload TEXT null,actionRequired BOOLEAN,archived BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table UserNotificationEvent (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,userNotificationEventId LONG not null primary key,companyId LONG,userId LONG,type_ VARCHAR(200) null,timestamp LONG,deliveryType INTEGER,deliverBy LONG,delivered BOOLEAN,payload TEXT null,actionRequired BOOLEAN,archived BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table UserNotificationEvent";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create index IX_BF29100B on UserNotificationEvent (type_[$COLUMN_LENGTH:75$])",
+		"create index IX_BF29100B on UserNotificationEvent (type_[$COLUMN_LENGTH:200$])",
 		"create index IX_5CE95F03 on UserNotificationEvent (userId, actionRequired, archived)",
 		"create index IX_3DBB361A on UserNotificationEvent (userId, archived)",
 		"create index IX_E32CC19 on UserNotificationEvent (userId, delivered, actionRequired)",
 		"create index IX_C4EFBD45 on UserNotificationEvent (userId, deliveryType, actionRequired, archived)",
 		"create index IX_A87A585C on UserNotificationEvent (userId, deliveryType, archived)",
 		"create index IX_A6F83617 on UserNotificationEvent (userId, deliveryType, delivered, actionRequired)",
-		"create index IX_8FB65EC1 on UserNotificationEvent (userId, type_[$COLUMN_LENGTH:75$], deliveryType, delivered)",
+		"create index IX_8FB65EC1 on UserNotificationEvent (userId, type_[$COLUMN_LENGTH:200$], deliveryType, delivered)",
 		"create index IX_A6BAFDFE on UserNotificationEvent (uuid_[$COLUMN_LENGTH:75$], companyId)"
 	};
 

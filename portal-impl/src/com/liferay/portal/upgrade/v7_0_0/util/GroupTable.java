@@ -105,6 +105,7 @@ TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	public static final String TABLE_SQL_DROP = "drop table Group_";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
+		"create index IX_8257E37B on Group_ (classNameId, classPK)",
 		"create index IX_BD3CB13A on Group_ (classNameId, groupId, companyId, parentGroupId)",
 		"create index IX_DDC91A87 on Group_ (companyId, active_)",
 		"create unique index IX_D0D5E397 on Group_ (companyId, classNameId, classPK)",

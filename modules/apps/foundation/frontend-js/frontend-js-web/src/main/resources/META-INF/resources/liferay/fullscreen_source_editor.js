@@ -4,7 +4,7 @@ AUI.add(
 		var Lang = A.Lang;
 
 		var CONTENT_TEMPLATE = '<div class="lfr-fullscreen-source-editor-header row">' +
-				'<div class="col-md-6">' +
+				'<div class="col-xs-6">' +
 					'<button class="btn btn-default btn-xs pull-right" id="switchTheme" type="button">' +
 						'<span class="icon-monospaced">' +
 							'<svg class="lexicon-icon lexicon-icon-moon" role="img">' +
@@ -13,7 +13,7 @@ AUI.add(
 						'</span>' +
 					'</button>' +
 				'</div>' +
-				'<div class="col-md-6 layout-selector">' +
+				'<div class="col-xs-6 layout-selector">' +
 					'<span class="icon-pause" data-layout="vertical"></span>' +
 					'<span class="icon-pause icon-rotate-90" data-layout="horizontal"></span>' +
 					'<span class="icon-stop" data-layout="simple"></span>' +

@@ -908,6 +908,20 @@ app.server.type=@{app.server.type}]]></echo>
 		/>
 	</target>
 
+	<target name="functional-bundle-wildfly-mysql56-jdk8">
+		<run-functional-test
+			app.server.type="wildfly"
+			database.type="mysql"
+			database.version="5.6"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
 	<target name="functional-jboss64-mysql56-jdk8">
 		<run-functional-test app.server.type="jboss" database.type="mysql" />
 	</target>

@@ -232,8 +232,13 @@
 </tr>
 <!--SELECT-->
 <tr>
-	<td>SELECT_OPTION</td>
+	<td>SELECT_FIELD</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_OPTION</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//select/option[contains(.,'${key_selectOption}')]</td>
 	<td></td>
 </tr>
 <tr>

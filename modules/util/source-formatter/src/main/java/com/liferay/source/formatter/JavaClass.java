@@ -1684,8 +1684,7 @@ public class JavaClass {
 		MapUtil.fromArray(
 			new String[] {
 				"boolean", "false", "char", "'\\\\0'", "byte", "0", "double",
-				"0\\.0d", "float", "0\\.0f", "int", "0", "long", "0L", "short",
-				"0"
+				"0\\.0", "float", "0\\.0", "int", "0", "long", "0", "short", "0"
 			});
 	private static final List<String> _underscoreNotAllowedMethodNames =
 		ListUtil.fromArray(new String[] {"readObject", "writeObject"});

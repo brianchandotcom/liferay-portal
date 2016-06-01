@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.nio.intraband.Intraband;
 import com.liferay.portal.kernel.nio.intraband.SystemDataType;
 import com.liferay.portal.kernel.nio.intraband.mailbox.MailboxDatagramReceiveHandler;
@@ -40,7 +41,10 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
+import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalLifecycle;
+import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -52,11 +56,15 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.dependency.ServiceDependencyListener;
 import com.liferay.registry.dependency.ServiceDependencyManager;
 import com.liferay.taglib.servlet.JspFactorySwapper;
 
 import java.io.InputStream;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
@@ -180,6 +188,35 @@ public class StartupAction extends SimpleAction {
 		}
 
 		DBUpgrader.checkRequiredBuildNumber(ReleaseInfo.getParentBuildNumber());
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("module.service.lifecycle", "database.initialized");
+		properties.put("service.vendor", ReleaseInfo.getVendor());
+		properties.put("service.version", ReleaseInfo.getVersion());
+
+		final ServiceRegistration<ModuleServiceLifecycle>
+			moduleServiceLifecycleServiceRegistration =
+				registry.registerService(
+					ModuleServiceLifecycle.class,
+					new ModuleServiceLifecycle() {}, properties);
+
+		PortalLifecycleUtil.register(
+			new BasePortalLifecycle() {
+
+				@Override
+				protected void doPortalDestroy() {
+					moduleServiceLifecycleServiceRegistration.unregister();
+				}
+
+				@Override
+				protected void doPortalInit() {
+				}
+
+			},
+			PortalLifecycle.METHOD_DESTROY);
 
 		// Check class names
 

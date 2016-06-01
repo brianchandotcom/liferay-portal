@@ -25,12 +25,17 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.SanitizerLogWrapper;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.dao.orm.UpgradeOptimizedConnectionProviderRegistryUtil;
+import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortalLifecycle;
+import com.liferay.portal.kernel.util.PortalLifecycleUtil;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
@@ -40,11 +45,16 @@ import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.security.lang.SecurityManagerUtil;
 import com.liferay.portal.spring.context.ArrayApplicationContext;
 import com.liferay.portal.upgrade.dao.orm.UpgradeOptimizedConnectionProviderRegistryImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 import com.liferay.util.log4j.Log4JUtil;
 
 import com.sun.syndication.io.XmlReader;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -221,6 +231,8 @@ public class InitUtil {
 			if (initModuleFramework && registerContext) {
 				registerContext();
 			}
+
+			registerSpringInitialized();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -237,6 +249,37 @@ public class InitUtil {
 		if (_appApplicationContext != null) {
 			ModuleFrameworkUtilAdapter.registerContext(_appApplicationContext);
 		}
+	}
+
+	public static void registerSpringInitialized() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("module.service.lifecycle", "spring.initialized");
+		properties.put("service.vendor", ReleaseInfo.getVendor());
+		properties.put("service.version", ReleaseInfo.getVersion());
+
+		final ServiceRegistration<ModuleServiceLifecycle>
+			moduleServiceLifecycleServiceRegistration =
+				registry.registerService(
+					ModuleServiceLifecycle.class,
+					new ModuleServiceLifecycle() {}, properties);
+
+		PortalLifecycleUtil.register(
+			new BasePortalLifecycle() {
+
+				@Override
+				protected void doPortalDestroy() {
+					moduleServiceLifecycleServiceRegistration.unregister();
+				}
+
+				@Override
+				protected void doPortalInit() {
+				}
+
+			},
+			PortalLifecycle.METHOD_DESTROY);
 	}
 
 	public synchronized static void stopModuleFramework() {

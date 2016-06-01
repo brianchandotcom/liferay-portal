@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.registry;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator.Registry;
@@ -32,6 +33,7 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -132,6 +134,9 @@ public class UpgradeStepRegistratorTracker {
 	protected void deactivate() {
 		_serviceTracker.close();
 	}
+
+	@Reference(target = ModuleServiceLifecycle.DATABASE_INITIALIZED)
+	protected ModuleServiceLifecycle moduleServiceLifecycle;
 
 	private static ServiceRegistration<UpgradeStep> _register(
 		BundleContext bundleContext, String bundleSymbolicName,

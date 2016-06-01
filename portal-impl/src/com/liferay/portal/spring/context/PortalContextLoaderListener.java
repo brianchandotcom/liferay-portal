@@ -302,6 +302,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			_log.error(e, e);
 		}
 
+		InitUtil.registerSpringInitialized();
+
 		if (PropsValues.CACHE_CLEAR_ON_CONTEXT_INITIALIZATION) {
 			CacheRegistryUtil.clear();
 			PortletContextBagPool.clear();

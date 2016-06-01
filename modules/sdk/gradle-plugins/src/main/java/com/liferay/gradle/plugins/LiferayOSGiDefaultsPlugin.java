@@ -1374,10 +1374,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.setProperty(
 			project, "app.server.lib.portal.dir",
 			project.relativePath(appServerLibPortalDir));
-
-		GradleUtil.setProperty(
-			project, "plugin.full.version",
-			String.valueOf(project.getVersion()));
 	}
 
 	protected void configureSourceSetClassesDir(

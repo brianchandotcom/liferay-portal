@@ -1699,6 +1699,20 @@ public class JavaClass {
 
 				return;
 			}
+
+			String strippedCriteria = _stripQuotesAndMethodParameters(criteria);
+
+			if ((_javaSourceProcessor.getLevel(strippedCriteria) == 0) &&
+				(strippedCriteria.contains("|") ||
+				 strippedCriteria.contains("&") ||
+				 strippedCriteria.contains("^"))) {
+
+				_formatBooleanStatement(
+					javaTermContent, booleanStatement, matcher.group(1),
+					matcher.group(2), criteria, "true", "false");
+
+				return;
+			}
 		}
 	}
 
@@ -1838,6 +1852,47 @@ public class JavaClass {
 		}
 
 		return null;
+	}
+
+	private String _stripQuotesAndMethodParameters(String s) {
+		s = _javaSourceProcessor.stripQuotes(s);
+
+		outerLoop:
+		while (true) {
+			int start = -1;
+
+			for (int i = 1; i < s.length(); i++) {
+				char c1 = s.charAt(i);
+
+				if (start == -1) {
+					if (c1 == CharPool.OPEN_PARENTHESIS) {
+						char c2 = s.charAt(i - 1);
+
+						if (Character.isLetterOrDigit(c2)) {
+							start = i;
+						}
+					}
+
+					continue;
+				}
+
+				if (c1 != CharPool.CLOSE_PARENTHESIS) {
+					continue;
+				}
+
+				String part = s.substring(start, i + 1);
+
+				if (_javaSourceProcessor.getLevel(part) == 0) {
+					s = StringUtil.replace(s, part, StringPool.BLANK, start);
+
+					continue outerLoop;
+				}
+			}
+
+			break;
+		}
+
+		return s;
 	}
 
 	private static final String _ACCESS_MODIFIER_PRIVATE = "private";

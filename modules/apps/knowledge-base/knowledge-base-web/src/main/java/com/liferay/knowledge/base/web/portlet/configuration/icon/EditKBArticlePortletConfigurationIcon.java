@@ -16,13 +16,17 @@ package com.liferay.knowledge.base.web.portlet.configuration.icon;
 
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.knowledge.base.service.permission.AdminPermission;
+import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.service.permission.KBArticlePermission;
+import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -31,20 +35,23 @@ import javax.portlet.PortletURL;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Ambrin Chaudhary
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN},
+	property = {
+		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+		"path=/admin/view_article.jsp"
+	},
 	service = PortletConfigurationIcon.class
 )
-public class TemplatesPortletConfigurationIcon
+public class EditKBArticlePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "templates");
+			getResourceBundle(getLocale(portletRequest)), "edit");
 	}
 
 	@Override
@@ -55,19 +62,29 @@ public class TemplatesPortletConfigurationIcon
 			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("mvcPath", "/admin/view_templates.jsp");
+		portletURL.setParameter("mvcPath", "/admin/edit_article.jsp");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
+		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
+			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+
+		portletURL.setParameter(
+			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
+		portletURL.setParameter(
+			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
+		portletURL.setParameter(
+			"status", String.valueOf(WorkflowConstants.STATUS_ANY));
+
 		return portletURL.toString();
 	}
 
 	@Override
 	public double getWeight() {
-		return 101;
+		return 108;
 	}
 
 	@Override
@@ -75,19 +92,18 @@ public class TemplatesPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (AdminPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(),
-				KBActionKeys.VIEW_KB_TEMPLATES)) {
+		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
+			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		if (KBArticlePermission.contains(
+				permissionChecker, kbArticle, KBActionKeys.UPDATE)) {
 
 			return true;
 		}
 
-		return false;
-	}
-
-	@Override
-	public boolean isToolTip() {
 		return false;
 	}
 

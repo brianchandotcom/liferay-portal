@@ -54,7 +54,7 @@ public class AssetTagsNavigationTag extends IncludeTag {
 		_classNameId = 0;
 		_displayStyle = "cloud";
 		_hidePortletWhenEmpty = false;
-		_maxAssetTags = 0;
+		_maxAssetTags = 10;
 		_showAssetCount = false;
 		_showZeroAssetCount = false;
 	}

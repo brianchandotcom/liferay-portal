@@ -71,10 +71,10 @@ public class ProgressTag extends IncludeTag {
 
 	private static final String _PAGE = "/html/taglib/ui/progress/page.jsp";
 
-	private Integer _height;
+	private Integer _height = 25;
 	private String _id;
 	private String _message;
 	private String _sessionKey;
-	private Integer _updatePeriod;
+	private Integer _updatePeriod = 1000;
 
 }

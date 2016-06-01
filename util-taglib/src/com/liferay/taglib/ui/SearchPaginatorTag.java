@@ -64,7 +64,7 @@ public class SearchPaginatorTag<R> extends SearchFormTag<R> {
 	}
 
 	private String _id;
-	private String _markupView;
+	private String _markupView = StringPool.BLANK;
 	private String _type = "regular";
 
 }

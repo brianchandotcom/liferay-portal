@@ -55,7 +55,7 @@ public class JournalContentSearchTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/journal_content_search/page.jsp";
 
-	private boolean _showListed;
+	private boolean _showListed = true;
 	private String _targetPortletId;
 
 }

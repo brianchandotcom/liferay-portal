@@ -88,7 +88,7 @@ public class PortletListTag extends IncludeTag {
 	private static final String _PAGE = "/portlet_list/page.jsp";
 
 	private boolean _disableInputs;
-	private long _exportImportConfigurationId = 0;
+	private long _exportImportConfigurationId;
 	private List<Portlet> _portlets;
 	private boolean _showAllPortlets;
 	private String _type;

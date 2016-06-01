@@ -133,6 +133,6 @@ public class ManagementBarDisplayButtonsTag
 	private Boolean _disabled;
 	private String[] _displayViews;
 	private PortletURL _portletURL;
-	private String _selectedDisplayStyle;
+	private String _selectedDisplayStyle = StringPool.BLANK;
 
 }

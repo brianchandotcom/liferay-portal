@@ -174,7 +174,7 @@ public class IconTag extends IncludeTag {
 		_onClick = null;
 		_src = null;
 		_srcHover = null;
-		_target = null;
+		_target = "_self";
 		_toolTip = null;
 		_url = null;
 		_useDialog = false;

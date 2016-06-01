@@ -109,6 +109,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 	private long[] _groupIds;
 	private String _hiddenInput = "assetCategoryIds";
 	private boolean _ignoreRequestValue;
-	private boolean _showRequiredLabel;
+	private boolean _showRequiredLabel = true;
 
 }

@@ -81,7 +81,11 @@
 			</else>
 		</if>
 
-		<execute macro="PortletEntry#publish" />
+		<execute macro="Button#clickPublish" />
+
+		<execute function="AssertElementPresent" locator1="MessageBoardsThread#THREAD_CONTROLS_MOVE_TO_THE_RECYCLE_BIN" />
+
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="addPGAsAnonymous">

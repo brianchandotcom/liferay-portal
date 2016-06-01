@@ -14,13 +14,16 @@
 
 package com.liferay.portal.test.rule;
 
+import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.BaseTestRule;
 import com.liferay.portal.kernel.test.rule.BaseTestRule.StatementWrapper;
 import com.liferay.portal.kernel.test.rule.callback.CompanyProviderTestCallback;
 import com.liferay.portal.kernel.test.rule.callback.DeleteAfterTestRunTestCallback;
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -41,6 +44,8 @@ import java.util.List;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
+
+import org.springframework.mock.web.MockServletContext;
 
 /**
  * @author Shuyang Zhou
@@ -110,6 +115,12 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 
 								configureLog4j = true;
 							}
+
+							PortalClassLoaderUtil.setClassLoader(
+								ClassLoaderUtil.getContextClassLoader());
+
+							ClassPathUtil.initializeClassPaths(
+								new MockServletContext());
 
 							InitUtil.initWithSpring(
 								configLocations, true, true);

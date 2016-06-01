@@ -1673,10 +1673,10 @@ public class JavaClass {
 	private void _formatBooleanStatements(JavaTerm javaTerm) {
 		String javaTermContent = javaTerm.getContent();
 
-		Matcher matcher = _booleanPattern.matcher(javaTermContent);
+		Matcher matcher1 = _booleanPattern.matcher(javaTermContent);
 
-		while (matcher.find()) {
-			String booleanStatement = matcher.group();
+		while (matcher1.find()) {
+			String booleanStatement = matcher1.group();
 
 			if (booleanStatement.contains("\t//") ||
 				booleanStatement.contains(" {\n")) {
@@ -1684,7 +1684,7 @@ public class JavaClass {
 				continue;
 			}
 
-			String criteria = matcher.group(3);
+			String criteria = matcher1.group(3);
 
 			String[] ternaryOperatorParts = _getTernaryOperatorParts(criteria);
 
@@ -1694,8 +1694,8 @@ public class JavaClass {
 				String trueValue = ternaryOperatorParts[1];
 
 				_formatBooleanStatement(
-					javaTermContent, booleanStatement, matcher.group(1),
-					matcher.group(2), ifCondition, trueValue, falseValue);
+					javaTermContent, booleanStatement, matcher1.group(1),
+					matcher1.group(2), ifCondition, trueValue, falseValue);
 
 				return;
 			}
@@ -1708,8 +1708,19 @@ public class JavaClass {
 				 strippedCriteria.contains("^"))) {
 
 				_formatBooleanStatement(
-					javaTermContent, booleanStatement, matcher.group(1),
-					matcher.group(2), criteria, "true", "false");
+					javaTermContent, booleanStatement, matcher1.group(1),
+					matcher1.group(2), criteria, "true", "false");
+
+				return;
+			}
+
+			Matcher matcher2 = _relationalOperatorPattern.matcher(
+				strippedCriteria);
+
+			if (matcher2.find()) {
+				_formatBooleanStatement(
+					javaTermContent, booleanStatement, matcher1.group(1),
+					matcher1.group(2), criteria, "true", "false");
 
 				return;
 			}

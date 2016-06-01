@@ -112,11 +112,11 @@ request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 						%>
 
 						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-							<%= HtmlUtil.escape(structure.getName(locale)) %>
+							<%= HtmlUtil.escape(structure.getUnambiguousName(structureSearch.getResults(), themeDisplay.getScopeGroupId(), locale)) %>
 						</aui:a>
 					</c:when>
 					<c:otherwise>
-						<span class="text-muted"><%= HtmlUtil.escape(structure.getName(locale)) %></span>
+						<span class="text-muted"><%= HtmlUtil.escape(structure.getUnambiguousName(structureSearch.getResults(), themeDisplay.getScopeGroupId(), locale)) %></span>
 					</c:otherwise>
 				</c:choose>
 			</liferay-ui:search-container-column-text>

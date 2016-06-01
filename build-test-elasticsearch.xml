@@ -113,7 +113,7 @@ logExceptionsOnly=false</echo>
 			<then>
 				<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
 					<arg value="-c" />
-					<arg value="./elasticsearch -d -p pid" />
+					<arg value="./elasticsearch -Des.insecure.allow.root=true -d -p pid" />
 				</exec>
 
 				<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="elasticsearch.server.not.started">

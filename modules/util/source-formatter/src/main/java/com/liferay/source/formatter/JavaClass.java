@@ -285,6 +285,59 @@ public class JavaClass {
 		}
 	}
 
+	protected void checkCleanUpMethodValue(
+		String cleanUpMethodContent, JavaTerm javaTerm, String defaultValue) {
+
+		String javaTermName = javaTerm.getName();
+
+		if (!cleanUpMethodContent.contains(javaTermName + " =")) {
+			return;
+		}
+
+		Pattern pattern = Pattern.compile(javaTermName + " =\\s+[a-z]\\w*\\.");
+
+		Matcher matcher = pattern.matcher(cleanUpMethodContent);
+
+		if (matcher.find()) {
+			return;
+		}
+
+		String javaTermContent = javaTerm.getContent();
+
+		int x = javaTermContent.indexOf(javaTermName);
+
+		String setVariableCommand = javaTermContent.substring(x);
+
+		if (!setVariableCommand.contains(" =")) {
+			setVariableCommand = StringUtil.replaceLast(
+				setVariableCommand, ";", " = " + defaultValue + ";");
+		}
+
+		setVariableCommand = StringUtil.replace(
+			setVariableCommand,
+			new String[] {StringPool.TAB, StringPool.NEW_LINE},
+			new String[] {StringPool.BLANK, StringPool.SPACE});
+
+		String setVariableCommandRegex = StringUtil.replace(
+			setVariableCommand,
+			new String[] {
+				StringPool.CLOSE_PARENTHESIS, StringPool.OPEN_PARENTHESIS,
+				StringPool.SPACE, "0\\.0"
+			},
+			new String[] {"\\)", "\\(", "\\s*", "0(\\.0)?"});
+
+		pattern = Pattern.compile(setVariableCommandRegex);
+
+		matcher = pattern.matcher(cleanUpMethodContent);
+
+		if (!matcher.find()) {
+			_javaSourceProcessor.processErrorMessage(
+				_fileName,
+				"LPS-66242: Initial value differs from value in cleanUp " +
+					"method: " + _fileName + " " + javaTerm.getLineCount());
+		}
+	}
+
 	protected void checkConstructor(JavaTerm javaTerm) throws Exception {
 		String javaTermContent = javaTerm.getContent();
 
@@ -533,6 +586,13 @@ public class JavaClass {
 						_classContent, javaTermContent,
 						matcher.replaceFirst(";$1"));
 				}
+			}
+
+			// LPS-66242
+
+			if (_fileName.endsWith("Tag.java")) {
+				checkCleanUpMethodValue(
+					getCleanUpMethodContent(javaTerms), javaTerm, defaultValue);
 			}
 		}
 
@@ -1041,6 +1101,32 @@ public class JavaClass {
 		pos = line.lastIndexOf(CharPool.SPACE);
 
 		return line.substring(pos + 1);
+	}
+
+	protected String getCleanUpMethodContent(Set<JavaTerm> javaTerms) {
+		if (_cleanUpMethodContent != null) {
+			return _cleanUpMethodContent;
+		}
+
+		String cleanUpMethodContent = StringPool.BLANK;
+
+		for (JavaTerm javaTerm : javaTerms) {
+			if (!javaTerm.isMethod()) {
+				continue;
+			}
+
+			String javaTermName = javaTerm.getName();
+
+			if (javaTermName.equals("cleanUp")) {
+				cleanUpMethodContent = javaTerm.getContent();
+
+				break;
+			}
+		}
+
+		_cleanUpMethodContent = cleanUpMethodContent;
+
+		return _cleanUpMethodContent;
 	}
 
 	protected String getConstructorOrMethodName(String line, int pos) {
@@ -1698,6 +1784,7 @@ public class JavaClass {
 	private final Pattern _classPattern = Pattern.compile(
 		"(private|protected|public) ((abstract|static) )*" +
 			"(class|enum|interface) ([\\s\\S]*?) \\{\n");
+	private String _cleanUpMethodContent;
 	private int _constructorCount;
 	private final String _content;
 	private final Pattern _enumTypePattern = Pattern.compile(

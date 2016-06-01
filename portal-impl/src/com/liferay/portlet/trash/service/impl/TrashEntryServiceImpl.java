@@ -205,7 +205,11 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 
 		int entriesCount = trashEntryPersistence.countByGroupId(groupId);
 
-		boolean approximate = entriesCount > PropsValues.TRASH_SEARCH_LIMIT;
+		boolean approximate = false;
+
+		if (entriesCount > PropsValues.TRASH_SEARCH_LIMIT) {
+			approximate = true;
+		}
 
 		trashEntriesList.setApproximate(approximate);
 

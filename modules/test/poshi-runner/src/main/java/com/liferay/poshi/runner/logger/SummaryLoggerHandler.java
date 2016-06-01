@@ -570,7 +570,11 @@ public final class SummaryLoggerHandler {
 			LoggerElement majorStepLoggerElement = majorStepLoggerElements.get(
 				i);
 
-			boolean lastMajorStep = (i >= (majorStepLoggerElements.size() - 1));
+			boolean lastMajorStep = false;
+
+			if (i >= (majorStepLoggerElements.size() - 1)) {
+				lastMajorStep = true;
+			}
 
 			if (_containsMinorStepWarning && lastMajorStep) {
 				_warnStepLoggerElement(majorStepLoggerElement);

@@ -287,7 +287,12 @@ public class LoggerElement {
 
 		sb.append(">");
 
-		boolean hasChildren = _childLoggerElements.size() > 0;
+		boolean hasChildren = false;
+
+		if (_childLoggerElements.size() > 0) {
+			hasChildren = true;
+		}
+
 		boolean hasText = Validator.isNotNull(_text);
 
 		if (hasChildren || hasText) {

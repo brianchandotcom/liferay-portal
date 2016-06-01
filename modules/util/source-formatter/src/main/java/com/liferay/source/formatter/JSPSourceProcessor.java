@@ -228,90 +228,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected boolean checkTaglibVulnerability(
-		String jspContent, String vulnerability) {
-
-		int pos1 = -1;
-
-		do {
-			pos1 = jspContent.indexOf(vulnerability, pos1 + 1);
-
-			if (pos1 != -1) {
-				int pos2 = jspContent.lastIndexOf(CharPool.LESS_THAN, pos1);
-
-				while ((pos2 > 0) &&
-					   (jspContent.charAt(pos2 + 1) == CharPool.PERCENT)) {
-
-					pos2 = jspContent.lastIndexOf(CharPool.LESS_THAN, pos2 - 1);
-				}
-
-				String tagContent = jspContent.substring(pos2, pos1);
-
-				if (!tagContent.startsWith("<aui:") &&
-					!tagContent.startsWith("<liferay-portlet:") &&
-					!tagContent.startsWith("<liferay-util:") &&
-					!tagContent.startsWith("<portlet:")) {
-
-					return true;
-				}
-			}
-		}
-		while (pos1 != -1);
-
-		return false;
-	}
-
-	protected void checkXSS(String fileName, String jspContent) {
-		Matcher matcher = _xssPattern.matcher(jspContent);
-
-		while (matcher.find()) {
-			boolean xssVulnerable = false;
-
-			String jspVariable = matcher.group(1);
-
-			String anchorVulnerability = " href=\"<%= " + jspVariable + " %>";
-
-			if (checkTaglibVulnerability(jspContent, anchorVulnerability)) {
-				xssVulnerable = true;
-			}
-
-			String inputVulnerability = " value=\"<%= " + jspVariable + " %>";
-
-			if (checkTaglibVulnerability(jspContent, inputVulnerability)) {
-				xssVulnerable = true;
-			}
-
-			String inlineStringVulnerability1 = "'<%= " + jspVariable + " %>";
-
-			if (jspContent.contains(inlineStringVulnerability1)) {
-				xssVulnerable = true;
-			}
-
-			String inlineStringVulnerability2 = "(\"<%= " + jspVariable + " %>";
-
-			if (jspContent.contains(inlineStringVulnerability2)) {
-				xssVulnerable = true;
-			}
-
-			String inlineStringVulnerability3 = " \"<%= " + jspVariable + " %>";
-
-			if (jspContent.contains(inlineStringVulnerability3)) {
-				xssVulnerable = true;
-			}
-
-			String documentIdVulnerability = ".<%= " + jspVariable + " %>";
-
-			if (jspContent.contains(documentIdVulnerability)) {
-				xssVulnerable = true;
-			}
-
-			if (xssVulnerable) {
-				processErrorMessage(
-					fileName, "(xss): " + fileName + " (" + jspVariable + ")");
-			}
-		}
-	}
-
 	protected void checkValidatorEquals(String fileName, String content) {
 		Matcher matcher = validatorEqualsPattern.matcher(content);
 
@@ -480,7 +396,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = formatTaglibVariable(fileName, newContent);
 
-		checkXSS(fileName, newContent);
+		newContent = fixXSSVulnerability(fileName, newContent);
 
 		// LPS-47682
 
@@ -674,6 +590,48 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return newContent;
+	}
+
+	protected String fixXSSVulnerability(String fileName, String content) {
+		Matcher matcher1 = _xssPattern.matcher(content);
+
+		String jspVariable = null;
+		int vulnerabilityPos = -1;
+
+		while (matcher1.find()) {
+			jspVariable = matcher1.group(1);
+
+			String anchorVulnerability = " href=\"<%= " + jspVariable + " %>";
+			String inputVulnerability = " value=\"<%= " + jspVariable + " %>";
+
+			vulnerabilityPos = Math.max(
+				getTaglibXSSVulnerabilityPos(content, anchorVulnerability),
+				getTaglibXSSVulnerabilityPos(content, inputVulnerability));
+
+			if (vulnerabilityPos != -1) {
+				break;
+			}
+
+			Pattern pattern = Pattern.compile(
+				"('|\\(\"| \"|\\.)<%= " + jspVariable + " %>");
+
+			Matcher matcher2 = pattern.matcher(content);
+
+			if (matcher2.find()) {
+				vulnerabilityPos = matcher2.start();
+
+				break;
+			}
+		}
+
+		if (vulnerabilityPos != -1) {
+			return StringUtil.replaceFirst(
+				content, "<%= " + jspVariable + " %>",
+				"<%= HtmlUtil.escape(" + jspVariable + ") %>",
+				vulnerabilityPos);
+		}
+
+		return content;
 	}
 
 	protected String formatDefineObjects(String content) {
@@ -1512,6 +1470,36 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		_primitiveTagAttributeDataTypes = primitiveTagAttributeDataTypes;
 
 		return _primitiveTagAttributeDataTypes;
+	}
+
+	protected int getTaglibXSSVulnerabilityPos(
+		String content, String vulnerability) {
+
+		int x = -1;
+
+		while (true) {
+			x = content.indexOf(vulnerability, x + 1);
+
+			if (x == -1) {
+				return x;
+			}
+
+			int y = content.lastIndexOf(CharPool.LESS_THAN, x);
+
+			while ((y > 0) && (content.charAt(y + 1) == CharPool.PERCENT)) {
+				y = content.lastIndexOf(CharPool.LESS_THAN, y - 1);
+			}
+
+			String tagContent = content.substring(y, x);
+
+			if (!tagContent.startsWith("<aui:") &&
+				!tagContent.startsWith("<liferay-portlet:") &&
+				!tagContent.startsWith("<liferay-util:") &&
+				!tagContent.startsWith("<portlet:")) {
+
+				return x;
+			}
+		}
 	}
 
 	protected String getUtilTaglibSrcDirName() {

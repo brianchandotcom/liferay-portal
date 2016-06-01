@@ -83,6 +83,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testFormatBooleanStatements() throws Exception {
+		test("FormatBooleanStatements.testjava");
+	}
+
+	@Test
 	public void testFormatImports() throws Exception {
 		test("FormatImports.testjava");
 	}

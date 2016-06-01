@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.upgrade;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -88,6 +91,8 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 		}
 
 		_portlets.clear();
+
+		assertFurtherTestsInSameJvmCanAddCompanies();
 	}
 
 	@After
@@ -141,6 +146,14 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 		finally {
 			_testInstanceable = true;
 		}
+	}
+
+	protected static void assertFurtherTestsInSameJvmCanAddCompanies()
+		throws Exception {
+
+		Company company = CompanyTestUtil.addCompany();
+
+		CompanyLocalServiceUtil.deleteCompany(company);
 	}
 
 	protected Layout addLayout() throws Exception {

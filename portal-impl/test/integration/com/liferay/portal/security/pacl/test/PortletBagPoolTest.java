@@ -34,7 +34,7 @@ public class PortletBagPoolTest {
 
 	@Test
 	public void test1() throws Exception {
-		PortletBagPool.get("1_WAR_flashportlet");
+		PortletBagPool.get("1_WAR_pacl_testportlet");
 	}
 
 	@Test
@@ -50,7 +50,7 @@ public class PortletBagPoolTest {
 
 	@Test
 	public void test3() throws Exception {
-		PortletBagPool.get("flash-portlet");
+		PortletBagPool.get("pacl-test-portlet");
 	}
 
 	@Test

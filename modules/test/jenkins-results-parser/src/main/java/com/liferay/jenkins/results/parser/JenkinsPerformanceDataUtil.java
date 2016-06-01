@@ -352,6 +352,6 @@ public class JenkinsPerformanceDataUtil {
 	private static final List<Result> _results = new ArrayList<>();
 	private static int _slaveCount;
 	private static int _testCount;
-	private static long _totalDuration = 0;
+	private static long _totalDuration;
 
 }

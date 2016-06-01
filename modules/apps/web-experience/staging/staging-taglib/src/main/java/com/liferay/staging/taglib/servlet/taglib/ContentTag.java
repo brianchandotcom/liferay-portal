@@ -85,7 +85,7 @@ public class ContentTag extends IncludeTag {
 
 	private String _cmd;
 	private boolean _disableInputs;
-	private long _exportImportConfigurationId = 0;
+	private long _exportImportConfigurationId;
 	private boolean _showAllPortlets;
 	private String _type;
 

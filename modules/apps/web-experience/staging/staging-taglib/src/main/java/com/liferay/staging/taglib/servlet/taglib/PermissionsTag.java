@@ -110,7 +110,7 @@ public class PermissionsTag extends IncludeTag {
 	private String _action = StringPool.BLANK;
 	private String _descriptionCSSClass = StringPool.BLANK;
 	private boolean _disableInputs;
-	private long _exportImportConfigurationId = 0;
+	private long _exportImportConfigurationId;
 	private boolean _global;
 	private String _labelCSSClass = StringPool.BLANK;
 

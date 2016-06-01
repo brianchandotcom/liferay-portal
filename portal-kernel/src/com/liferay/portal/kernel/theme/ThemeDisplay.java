@@ -1814,7 +1814,7 @@ public class ThemeDisplay
 	private Contact _contact;
 	private User _defaultUser;
 	private Device _device;
-	private long _doAsGroupId = 0;
+	private long _doAsGroupId;
 	private String _doAsUserId = StringPool.BLANK;
 	private String _doAsUserLanguageId = StringPool.BLANK;
 	private boolean _facebook;

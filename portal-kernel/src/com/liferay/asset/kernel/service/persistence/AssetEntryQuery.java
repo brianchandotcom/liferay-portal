@@ -703,7 +703,7 @@ public class AssetEntryQuery {
 	private long[] _groupIds = new long[0];
 	private String _keywords;
 	private Layout _layout;
-	private long _linkedAssetEntryId = 0;
+	private long _linkedAssetEntryId;
 	private Boolean _listable = true;
 	private long[] _notAllCategoryIds = new long[0];
 	private long[] _notAllTagIds = new long[0];

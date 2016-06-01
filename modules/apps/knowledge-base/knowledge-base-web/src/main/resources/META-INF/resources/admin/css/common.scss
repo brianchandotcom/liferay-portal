@@ -254,6 +254,10 @@
 	.kb-entity-body {
 		padding: 0 7px;
 
+		img {
+			max-width: 100%;
+		}
+
 		.kb-article-asset-entries {
 			margin: 15px 0 0;
 

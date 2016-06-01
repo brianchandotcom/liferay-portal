@@ -45,6 +45,11 @@ public class TargetPlatformIndexerProcessCallable
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "Target Platform Indexer";
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	private final String[] _dirNames;

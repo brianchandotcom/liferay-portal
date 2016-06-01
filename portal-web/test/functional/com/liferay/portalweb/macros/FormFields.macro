@@ -311,6 +311,30 @@
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#TEXT_LABEL" value1="${fieldLabel}" />
 	</command>
 
+	<command name="viewTextMultilineField">
+		<execute macro="FormFields#viewTextMultilineLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#TEXT_MULTILINE_FIELD" />
+	</command>
+
+	<command name="viewTextMultilineLabel">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertTextEquals#assertText" locator1="FormFields#TEXT_MULTILINE_LABEL" value1="${fieldLabel}" />
+	</command>
+
+	<command name="viewTextMultilineValue">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertTextEquals" locator1="FormFields#TEXT_MULTILINE_FIELD" value1="${fieldValue}" />
+	</command>
+
 	<command name="viewTextValue">
 		<var name="key_fieldName" value="${fieldName}" />
 

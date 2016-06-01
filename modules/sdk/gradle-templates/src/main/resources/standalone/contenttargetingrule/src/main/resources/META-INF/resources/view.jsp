@@ -12,10 +12,10 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <portlet:defineObjects />
 
 <%
-Map<String, Object> displayContext = (Map<String, Object>)request.getAttribute("displayContext");
+Map<String, Object> context = (Map<String, Object>)request.getAttribute("context");
 %>
 
-<aui:select label="_CLASS_" name="matches" value="<%= GetterUtil.getBoolean(displayContext.get("matches")) %>">
+<aui:select label="_CLASS_" name="matches" value="<%= GetterUtil.getBoolean(context.get("matches")) %>">
 	<aui:option label="the-user-always-matches-this-rule" value="true" />
 
 	<aui:option label="the-user-never-matches-this-rule" value="false" />

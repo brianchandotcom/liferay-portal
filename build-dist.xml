@@ -2934,29 +2934,6 @@ plugins.includes=</echo>
 		</xmltask>
 	</target>
 
-	<target name="zip-portal-tools">
-		<tstamp>
-			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
-		</tstamp>
-
-		<mkdir dir="${tstamp.value}" />
-
-		<copy todir="${tstamp.value}">
-			<fileset
-				dir="${liferay.home}/tools"
-			/>
-		</copy>
-
-		<zip destfile="dist/liferay-portal-tools-${lp.version}.zip">
-			<zipfileset
-				dir="${tstamp.value}"
-				prefix="liferay-portal-tools-${lp.version}"
-			/>
-		</zip>
-
-		<delete dir="${tstamp.value}" />
-	</target>
-
 	<target name="zip-executable">
 		<delete failonerror="false" file="dist/${zip.executable.file}-${lp.version}.zip" />
 
@@ -3261,6 +3238,29 @@ plugins.includes=</echo>
 				prefix="liferay-portal-dependencies-${lp.version}"
 			/>
 		</zip>
+	</target>
+
+	<target name="zip-portal-tools">
+		<tstamp>
+			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
+		</tstamp>
+
+		<mkdir dir="${tstamp.value}" />
+
+		<copy todir="${tstamp.value}">
+			<fileset
+				dir="${liferay.home}/tools"
+			/>
+		</copy>
+
+		<zip destfile="dist/liferay-portal-tools-${lp.version}.zip">
+			<zipfileset
+				dir="${tstamp.value}"
+				prefix="liferay-portal-tools-${lp.version}"
+			/>
+		</zip>
+
+		<delete dir="${tstamp.value}" />
 	</target>
 
 	<target name="zip-portal-war">

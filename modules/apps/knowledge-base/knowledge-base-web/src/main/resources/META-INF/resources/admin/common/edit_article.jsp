@@ -162,9 +162,11 @@ if (portletTitleBasedNavigation) {
 
 				<aui:input name="title" type="hidden" />
 
-				<liferay-ui:input-editor contents="<%= content %>" editorName="<%= kbGroupServiceConfiguration.getEditorName() %>" name="contentEditor" placeholder="content" />
+				<div class="kb-entity-body">
+					<liferay-ui:input-editor contents="<%= content %>" editorName="<%= kbGroupServiceConfiguration.getEditorName() %>" name="contentEditor" placeholder="content" />
 
-				<aui:input name="content" type="hidden" />
+					<aui:input name="content" type="hidden" />
+				</div>
 			</aui:fieldset>
 
 			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">

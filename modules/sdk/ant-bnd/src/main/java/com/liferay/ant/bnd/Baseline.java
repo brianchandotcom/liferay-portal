@@ -132,6 +132,8 @@ public abstract class Baseline {
 
 				if (suggestedVersion != null) {
 					if (newerVersion.compareTo(suggestedVersion) > 0) {
+						match = false;
+
 						warnings = "EXCESSIVE VERSION INCREASE";
 					}
 					else if (newerVersion.compareTo(suggestedVersion) < 0) {

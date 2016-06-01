@@ -783,7 +783,7 @@ app.server.type=@{app.server.type}]]></echo>
 								<try>
 									<antcall inheritall="false" target="start-app-server" />
 
-									<gradle-execute dir="modules/core/portal-lpkg-deployer-test" task="testIntegration">
+									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
 										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
 

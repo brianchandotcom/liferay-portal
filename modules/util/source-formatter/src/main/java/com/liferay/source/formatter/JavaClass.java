@@ -1679,35 +1679,6 @@ public class JavaClass {
 				continue;
 			}
 
-			if (returnType.equals("boolean")) {
-				String strippedReturnStatement =
-					_javaSourceProcessor.stripQuotes(returnStatement);
-
-				if (strippedReturnStatement.contains("|") ||
-					strippedReturnStatement.contains("&") ||
-					strippedReturnStatement.contains("^")) {
-
-					_formatReturnStatement(
-						javaTermContent, returnStatement, matcher1.group(1),
-						matcher1.group(2), "true", "false");
-
-					return;
-				}
-
-				Matcher matcher2 = _returnPattern2.matcher(returnStatement);
-
-				if (matcher2.find() &&
-					!ToolsUtil.isInsideQuotes(
-						returnStatement, matcher2.start(1))) {
-
-					_formatReturnStatement(
-						javaTermContent, returnStatement, matcher1.group(1),
-						matcher1.group(2), "true", "false");
-
-					return;
-				}
-			}
-
 			String[] ternaryOperatorParts = _getTernaryOperatorParts(
 				matcher1.group(2));
 
@@ -1719,6 +1690,36 @@ public class JavaClass {
 				_formatReturnStatement(
 					javaTermContent, returnStatement, matcher1.group(1),
 					ifCondition, trueValue, falseValue);
+
+				return;
+			}
+
+			if (!returnType.equals("boolean")) {
+				continue;
+			}
+
+			String strippedReturnStatement = _javaSourceProcessor.stripQuotes(
+				returnStatement);
+
+			if (strippedReturnStatement.contains("|") ||
+				strippedReturnStatement.contains("&") ||
+				strippedReturnStatement.contains("^")) {
+
+				_formatReturnStatement(
+					javaTermContent, returnStatement, matcher1.group(1),
+					matcher1.group(2), "true", "false");
+
+				return;
+			}
+
+			Matcher matcher2 = _returnPattern2.matcher(returnStatement);
+
+			if (matcher2.find() &&
+				!ToolsUtil.isInsideQuotes(returnStatement, matcher2.start(1))) {
+
+				_formatReturnStatement(
+					javaTermContent, returnStatement, matcher1.group(1),
+					matcher1.group(2), "true", "false");
 
 				return;
 			}

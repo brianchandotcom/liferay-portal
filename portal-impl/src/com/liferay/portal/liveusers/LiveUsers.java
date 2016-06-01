@@ -38,8 +38,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.servlet.http.HttpSession;
-
 /**
  * @author Charles May
  * @author Brian Wing Shun Chan
@@ -476,13 +474,12 @@ public class LiveUsers {
 		}
 
 		try {
-			HttpSession session = PortalSessionContext.get(sessionId);
-
-			if (session != null) {
-				session.invalidate();
-			}
+			PortalSessionContext.invalidateSession(sessionId);
 		}
 		catch (Exception e) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Unable to invalidate session", e);
+			}
 		}
 
 		_removeUserTracker(companyId, userId, userTracker);

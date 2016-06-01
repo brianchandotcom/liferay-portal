@@ -14,9 +14,9 @@
 
 package com.liferay.sync.engine.session;
 
+import com.liferay.sync.encryptor.SyncEncryptor;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.service.SyncAccountService;
-import com.liferay.sync.engine.util.Encryptor;
 import com.liferay.sync.engine.util.ServerInfo;
 
 import java.net.URL;
@@ -80,13 +80,13 @@ public class SessionManager {
 					url, syncAccount.getOAuthConsumerKey(),
 					syncAccount.getOAuthConsumerSecret(),
 					syncAccount.getOAuthToken(),
-					Encryptor.decrypt(syncAccount.getOAuthTokenSecret()),
+					SyncEncryptor.decrypt(syncAccount.getOAuthTokenSecret()),
 					syncAccount.isTrustSelfSigned(), maxConnections);
 			}
 			else {
 				session = new Session(
 					url, syncAccount.getLogin(),
-					Encryptor.decrypt(syncAccount.getPassword()),
+					SyncEncryptor.decrypt(syncAccount.getPassword()),
 					syncAccount.isTrustSelfSigned(), maxConnections);
 			}
 

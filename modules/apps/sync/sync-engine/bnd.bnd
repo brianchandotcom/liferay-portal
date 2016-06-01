@@ -6,6 +6,7 @@ Bundle-Version: 3.2.0
 	@com.barbarysoftware.watchservice-[0-9]*.jar,\
 	@com.btr.proxy.vole-[0-9]*.jar,\
 	@com.liferay.petra.io.delta-[0-9]*.jar,\
+	@com.liferay.sync.encryptor-[0-9]*.jar,\
 	@commons-codec-[0-9]*.jar,\
 	@commons-configuration-[0-9]*.jar,\
 	@commons-io-[0-9]*.jar,\

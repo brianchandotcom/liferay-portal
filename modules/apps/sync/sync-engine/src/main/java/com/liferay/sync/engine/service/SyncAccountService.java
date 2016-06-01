@@ -14,6 +14,7 @@
 
 package com.liferay.sync.engine.service;
 
+import com.liferay.sync.encryptor.SyncEncryptor;
 import com.liferay.sync.engine.documentlibrary.util.ServerEventUtil;
 import com.liferay.sync.engine.model.ModelListener;
 import com.liferay.sync.engine.model.SyncAccount;
@@ -22,7 +23,6 @@ import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.model.SyncUser;
 import com.liferay.sync.engine.service.persistence.SyncAccountPersistence;
-import com.liferay.sync.engine.util.Encryptor;
 import com.liferay.sync.engine.util.FileKeyUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.OSDetector;
@@ -98,8 +98,9 @@ public class SyncAccountService {
 		syncAccount.setOAuthConsumerSecret(oAuthConsumerSecret);
 		syncAccount.setOAuthEnabled(oAuthEnabled);
 		syncAccount.setOAuthToken(oAuthToken);
-		syncAccount.setOAuthTokenSecret(Encryptor.encrypt(oAuthTokenSecret));
-		syncAccount.setPassword(Encryptor.encrypt(password));
+		syncAccount.setOAuthTokenSecret(
+			SyncEncryptor.encrypt(oAuthTokenSecret));
+		syncAccount.setPassword(SyncEncryptor.encrypt(password));
 		syncAccount.setPollInterval(pollInterval);
 		syncAccount.setTrustSelfSigned(trustSelfSigned);
 		syncAccount.setUrl(url);

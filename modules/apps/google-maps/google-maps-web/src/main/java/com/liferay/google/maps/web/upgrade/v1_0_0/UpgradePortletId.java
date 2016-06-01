@@ -12,19 +12,23 @@
  * details.
  */
 
-package com.liferay.googlemaps.hook.upgrade.v1_0_0;
+package com.liferay.google.maps.web.upgrade.v1_0_0;
 
-import com.liferay.portal.kernel.upgrade.CamelCaseUpgradePortletPreferences;
+import com.liferay.google.maps.web.constants.GoogleMapsPortletKeys;
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
+
 
 /**
- * @author Julio Camarero
+ * @author Peter Fellwock
  */
-public class UpgradePortletPreferences
-	extends CamelCaseUpgradePortletPreferences {
+public class UpgradePortletId extends BaseUpgradePortletId {
 
 	@Override
-	protected String[] getPortletIds() {
-		return new String[] {"1_WAR_googlemapsportlet_INSTANCE_%"};
+	protected String[][] getRenamePortletIdsArray() {
+		return new String[][] {
+			new String[] {"1_WAR_googlemapsportlet",
+				GoogleMapsPortletKeys.GOOGLE_MAPS}
+		};
 	}
 
 }

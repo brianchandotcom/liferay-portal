@@ -1670,7 +1670,6 @@ public class JavaClass {
 
 		Matcher matcher1 = _returnPattern1.matcher(javaTermContent);
 
-		outerLoop:
 		while (matcher1.find()) {
 			String returnStatement = matcher1.group();
 
@@ -1709,52 +1708,67 @@ public class JavaClass {
 				}
 			}
 
-			String match = matcher1.group(2);
+			String[] ternaryOperatorParts = _getTernaryOperatorParts(
+				matcher1.group(2));
 
-			int x = -1;
-
-			while (true) {
-				x = match.indexOf(StringPool.QUESTION, x + 1);
-
-				if (x == -1) {
-					continue outerLoop;
-				}
-
-				if (!ToolsUtil.isInsideQuotes(match, x) &&
-					_javaSourceProcessor.getLevel(
-						match.substring(0, x), "<", ">") == 0) {
-
-					break;
-				}
-			}
-
-			int y = x;
-
-			while (true) {
-				y = match.indexOf(StringPool.COLON, y + 1);
-
-				if (y == -1) {
-					continue outerLoop;
-				}
-
-				if (!ToolsUtil.isInsideQuotes(match, y)) {
-					break;
-				}
-			}
-
-			String falseValue = StringUtil.trim(match.substring(y + 1));
-			String ifCondition = StringUtil.trim(match.substring(0, x));
-			String trueValue = StringUtil.trim(match.substring(x + 1, y));
-
-			if ((_javaSourceProcessor.getLevel(falseValue) == 0) &&
-				(_javaSourceProcessor.getLevel(ifCondition) == 0) &&
-				(_javaSourceProcessor.getLevel(trueValue) == 0)) {
+			if (ternaryOperatorParts != null) {
+				String falseValue = ternaryOperatorParts[2];
+				String ifCondition = ternaryOperatorParts[0];
+				String trueValue = ternaryOperatorParts[1];
 
 				_formatReturnStatement(
 					javaTermContent, returnStatement, matcher1.group(1),
 					ifCondition, trueValue, falseValue);
+
+				return;
 			}
 		}
+	}
+
+	private String[] _getTernaryOperatorParts(String operator) {
+		int x = -1;
+
+		while (true) {
+			x = operator.indexOf(StringPool.QUESTION, x + 1);
+
+			if (x == -1) {
+				return null;
+			}
+
+			if (!ToolsUtil.isInsideQuotes(operator, x) &&
+				_javaSourceProcessor.getLevel(
+					operator.substring(0, x), "<", ">") == 0) {
+
+				break;
+			}
+		}
+
+		int y = x;
+
+		while (true) {
+			y = operator.indexOf(StringPool.COLON, y + 1);
+
+			if (y == -1) {
+				return null;
+			}
+
+			if (!ToolsUtil.isInsideQuotes(operator, y)) {
+				break;
+			}
+		}
+
+		String falseValue = StringUtil.trim(operator.substring(y + 1));
+		String ifCondition = StringUtil.trim(operator.substring(0, x));
+		String trueValue = StringUtil.trim(operator.substring(x + 1, y));
+
+		if ((_javaSourceProcessor.getLevel(falseValue) == 0) &&
+			(_javaSourceProcessor.getLevel(ifCondition) == 0) &&
+			(_javaSourceProcessor.getLevel(trueValue) == 0)) {
+
+			return new String[] {ifCondition, trueValue, falseValue};
+		}
+
+		return null;
 	}
 
 	private static final String _ACCESS_MODIFIER_PRIVATE = "private";

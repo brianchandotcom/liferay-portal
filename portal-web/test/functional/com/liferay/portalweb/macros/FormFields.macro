@@ -210,6 +210,12 @@
 		<execute function="AssertTextEquals" locator1="FormFields#FIELD_NAME" value1="Field Name:${fieldName}" />
 	</command>
 
+	<command name="viewFieldHelpText">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertTextEquals" locator1="FormFields#HELP_TEXT" value1="${fieldHelpText}" />
+	</command>
+
 	<command name="viewMultilineTextValue">
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_fieldValue" value="${fieldValue}" />

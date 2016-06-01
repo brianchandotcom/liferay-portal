@@ -90,6 +90,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--HELP TEXT-->
+<tr>
+	<td>HELP_TEXT</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//p[@class='liferay-ddm-form-field-tip']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--OPTIONS-->
 <tr>
 	<td>OPTIONS_ADD_ROW_BUTTON</td>

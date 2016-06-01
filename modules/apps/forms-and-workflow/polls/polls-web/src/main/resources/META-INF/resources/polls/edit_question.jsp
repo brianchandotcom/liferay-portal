@@ -79,6 +79,7 @@ portletDisplay.setURLBack(redirect);
 	<aui:input name="neverExpire" type="hidden" value="<%= neverExpire %>" />
 	<aui:input name="choicesCount" type="hidden" value="<%= choicesCount %>" />
 	<aui:input name="choiceName" type="hidden" value="" />
+	<aui:input name="neverExpire" type="hidden" value="<%= neverExpire %>" />
 
 	<liferay-ui:error exception="<%= QuestionChoiceException.class %>" message="please-enter-valid-choices" />
 	<liferay-ui:error exception="<%= QuestionDescriptionException.class %>" message="please-enter-a-valid-description" />

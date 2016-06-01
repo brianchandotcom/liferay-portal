@@ -976,8 +976,17 @@ public class JavadocFormatter {
 			int preTagIndex = cdata.indexOf("<pre>");
 			int tableTagIndex = cdata.indexOf("<table>");
 
-			boolean hasPreTag = (preTagIndex != -1) ? true : false;
-			boolean hasTableTag = (tableTagIndex != -1) ? true : false;
+			boolean hasPreTag = false;
+
+			if (preTagIndex != -1) {
+				hasPreTag = true;
+			}
+
+			boolean hasTableTag = false;
+
+			if (tableTagIndex != -1) {
+				hasTableTag = true;
+			}
 
 			if (!hasPreTag && !hasTableTag) {
 				sb.append(_formatCDATA(cdata));
@@ -985,8 +994,17 @@ public class JavadocFormatter {
 				break;
 			}
 
-			boolean startsWithPreTag = (preTagIndex == 0) ? true : false;
-			boolean startsWithTableTag = (tableTagIndex == 0) ? true : false;
+			boolean startsWithPreTag = false;
+
+			if (preTagIndex == 0) {
+				startsWithPreTag = true;
+			}
+
+			boolean startsWithTableTag = false;
+
+			if (tableTagIndex == 0) {
+				startsWithTableTag = true;
+			}
 
 			if (startsWithPreTag || startsWithTableTag) {
 				sb.append("\n");

@@ -74,6 +74,7 @@ page import="com.liferay.knowledge.base.model.KBTemplateSearchDisplay" %><%@
 page import="com.liferay.knowledge.base.service.KBArticleLocalServiceUtil" %><%@
 page import="com.liferay.knowledge.base.service.KBArticleServiceUtil" %><%@
 page import="com.liferay.knowledge.base.service.KBCommentLocalServiceUtil" %><%@
+page import="com.liferay.knowledge.base.service.KBCommentServiceUtil" %><%@
 page import="com.liferay.knowledge.base.service.KBFolderLocalServiceUtil" %><%@
 page import="com.liferay.knowledge.base.service.KBFolderServiceUtil" %><%@
 page import="com.liferay.knowledge.base.service.KBTemplateServiceUtil" %><%@

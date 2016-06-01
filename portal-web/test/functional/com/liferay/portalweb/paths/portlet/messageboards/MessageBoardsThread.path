@@ -21,12 +21,12 @@
 <!--THREAD-->
 <tr>
 	<td>THREAD_BODY</td>
-	<td>//div[@class='message-content' and contains(.,'${key_threadBody}')]</td>
+	<td>//div[contains(@class,'message-content') and contains(.,'${key_threadBody}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>THREAD_BODY_2</td>
-	<td>xpath=(//div[@class='message-content' and contains(.,'${key_threadBody}')])[2]</td>
+	<td>xpath=(//div[contains(@class,'message-content') and contains(.,'${key_threadBody}')])[2]</td>
 	<td></td>
 </tr>
 

@@ -194,7 +194,7 @@
 			<chainedmapper>
 				<flattenmapper />
 
-				<regexpmapper from="([a-z.]+)-(\d[\d.]+\d)" to="\1#\2##" />
+				<regexpmapper from="^(.+?)-(\d.*?)\.jar$" to="\1#\2##" />
 			</chainedmapper>
 			<fileset dir="${osgi.dir}/marketplace" includes="*.jar" />
 		</pathconvert>

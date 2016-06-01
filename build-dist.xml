@@ -2934,7 +2934,7 @@ plugins.includes=</echo>
 		</xmltask>
 	</target>
 
-	<target name="zip-db-upgrade">
+	<target name="zip-portal-tools">
 		<tstamp>
 			<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 		</tstamp>
@@ -2943,14 +2943,14 @@ plugins.includes=</echo>
 
 		<copy todir="${tstamp.value}">
 			<fileset
-				dir="${liferay.home}/tools/portal-tools-db-upgrade-client"
+				dir="${liferay.home}/tools"
 			/>
 		</copy>
 
-		<zip destfile="dist/liferay-portal-tools-db-upgrade-client-${lp.version}.zip">
+		<zip destfile="dist/liferay-portal-tools-${lp.version}.zip">
 			<zipfileset
 				dir="${tstamp.value}"
-				prefix="liferay-portal-tools-db-upgrade-client-${lp.version}"
+				prefix="liferay-portal-tools-${lp.version}"
 			/>
 		</zip>
 

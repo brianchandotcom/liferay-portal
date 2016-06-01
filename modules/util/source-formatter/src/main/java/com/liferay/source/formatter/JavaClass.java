@@ -1681,8 +1681,12 @@ public class JavaClass {
 			}
 
 			if (returnType.equals("boolean")) {
-				if (returnStatement.contains("|\n") ||
-					returnStatement.contains("&\n")) {
+				String strippedReturnStatement =
+					_javaSourceProcessor.stripQuotes(returnStatement);
+
+				if (strippedReturnStatement.contains("|") ||
+					strippedReturnStatement.contains("&") ||
+					strippedReturnStatement.contains("^")) {
 
 					_formatReturnStatement(
 						javaTermContent, returnStatement, matcher1.group(1),

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.language;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Drew Brokke
@@ -38,6 +39,11 @@ public class LanguageValidator {
 		}
 		else if (key.equals(LanguageConstants.KEY_USER_NAME_FIELD_NAMES)) {
 			return _isValidUserNameFieldNamesValue(value);
+		}
+		else if (key.equals(LanguageConstants.KEY_USER_NAME_PREFIX_VALUES) ||
+				 key.equals(LanguageConstants.KEY_USER_NAME_SUFFIX_VALUES)) {
+
+			return !Validator.isNull(value);
 		}
 		else if (key.equals(
 					LanguageConstants.KEY_USER_NAME_REQUIRED_FIELD_NAMES)) {

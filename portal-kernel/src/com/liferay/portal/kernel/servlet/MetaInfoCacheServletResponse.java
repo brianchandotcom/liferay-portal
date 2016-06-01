@@ -331,7 +331,11 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 	public boolean isCommitted() {
 		ServletResponse servletResponse = getResponse();
 
-		return _committed || servletResponse.isCommitted();
+		if (_committed || servletResponse.isCommitted()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

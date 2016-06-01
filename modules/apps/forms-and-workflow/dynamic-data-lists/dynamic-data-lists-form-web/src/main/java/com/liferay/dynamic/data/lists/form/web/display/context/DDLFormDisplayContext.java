@@ -157,7 +157,11 @@ public class DDLFormDisplayContext {
 		}
 
 		if (isSharedURL()) {
-			return isFormPublished() && isFormShared();
+			if (isFormPublished() && isFormShared()) {
+				return true;
+			}
+
+			return false;
 		}
 
 		if (getRecordSet() != null) {

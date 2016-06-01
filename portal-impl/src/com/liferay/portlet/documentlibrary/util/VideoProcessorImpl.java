@@ -581,7 +581,11 @@ public class VideoProcessorImpl
 			return false;
 		}
 
-		return hasPreviews(fileVersion) && hasThumbnails(fileVersion);
+		if (hasPreviews(fileVersion) && hasThumbnails(fileVersion)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _queueGeneration(

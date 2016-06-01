@@ -75,7 +75,11 @@ public class SetupWizardUtil {
 
 		boolean jndi = Validator.isNotNull(PropsValues.JDBC_DEFAULT_JNDI_NAME);
 
-		return hsqldb && !jndi;
+		if (hsqldb && !jndi) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static void testDatabase(HttpServletRequest request)

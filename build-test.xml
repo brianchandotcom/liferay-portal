@@ -7506,6 +7506,52 @@ if (ppstate.equals("normal")) {
 		</if>
 	</target>
 
+	<target name="record-test-module-names">
+		<selector id="module.pattern">
+			<and>
+				<present targetdir="${project.dir}/modules">
+					<mapper type="regexp" from="(private/)?apps/.*" to="\0/build.gradle" />
+				</present>
+				<present present="srconly" targetdir="${project.dir}/modules" >
+					<mapper type="regexp" from="(private/)?apps/.*" to="\0/.lfrbuild-portal" />
+				</present>
+				<present present="srconly" targetdir="${project.dir}/modules" >
+					<mapper type="regexp" from="(private/)?apps/.*" to="\0/settings.gradle" />
+				</present>
+			</and>
+		</selector>
+
+		<get-test-module-names
+			module.base.dir="${project.dir}/modules"
+			pattern.id="module.pattern"
+		/>
+
+		<echo file="test.module.names.properties">${test.module.names.properties.content}</echo>
+	</target>
+
+	<target name="record-test-module-plugin-names">
+		<selector id="module.plugin.pattern">
+			<and>
+				<present targetdir="${project.dir}/modules">
+					<mapper type="regexp" from="(private/)?apps/.*" to="\0/build.xml" />
+				</present>
+				<present present="srconly" targetdir="${project.dir}/modules" >
+					<mapper type="regexp" from="(private/)?apps/.*" to="\0/.lfrbuild-portal" />
+				</present>
+				<present present="srconly" targetdir="${project.dir}/modules" >
+					<mapper type="regexp" from="(private/)?apps/.*" to="\0/settings.gradle" />
+				</present>
+			</and>
+		</selector>
+
+		<get-test-module-names
+			module.base.dir="${project.dir}/modules"
+			pattern.id="module.plugin.pattern"
+		/>
+
+		<echo file="test.module.plugin.names.properties">${test.module.names.properties.content}</echo>
+	</target>
+
 	<target name="record-test-plugin-names">
 		<loadproperties srcFile="${lp.plugins.dir}/build.properties">
 			<filterchain>

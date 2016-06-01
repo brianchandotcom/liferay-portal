@@ -352,6 +352,7 @@ echo "Sent notification."]]>
 				<try>
 					<antcall target="prepare-test-build">
 						<param name="test.class.groups.size" value="${test.batch.size}" />
+						<param name="test.module.groups.size" value="${test.batch.size}" />
 						<param name="test.plugin.groups.size" value="${test.batch.size}" />
 					</antcall>
 				</try>
@@ -1063,6 +1064,59 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-lpkg-startup-test />
 	</target>
 
+	<target name="modules-compile-jdk7">
+		<run-batch-test>
+			<test-action>
+				<property file="test.module.names.properties" />
+
+				<propertycopy from="TEST_MODULE_GROUP_${axis.variable}" name="test.modules" />
+
+				<for list="${test.modules}" param="test.module">
+					<sequential>
+						<antelope:stringutil property="module.compile.task.name" string="@{test.module}">
+							<antelope:replace regex="/" replacement=":" />
+						</antelope:stringutil>
+
+						<var name="gulpfile.content" unset="true" />
+
+						<if>
+							<available file="modules/@{test.module}/gulpfile.js" />
+							<then>
+								<loadfile srcFile="modules/@{test.module}/gulpfile.js" property="gulpfile.content" />
+							</then>
+						</if>
+
+						<if>
+							<contains string="${gulpfile.content}" substring="require('liferay-theme-tasks')" />
+							<then>
+								<gradle-execute dir="modules" task=":${module.compile.task.name}:assemble" />
+							</then>
+							<else>
+								<gradle-execute dir="modules" task=":${module.compile.task.name}:compileJava" />
+							</else>
+						</if>
+					</sequential>
+				</for>
+			</test-action>
+
+			<test-set-up>
+				<if>
+					<isset property="env.DIST_PATH" />
+					<then>
+						<prepare-test-environment />
+
+						<antcall inheritAll="false" target="record-test-module-names">
+							<param name="test.module.groups.size" value="${test.batch.size}" />
+						</antcall>
+					</then>
+					<else>
+						<prepare-test-build />
+					</else>
+				</if>
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="modules-functional-jdk7">
 		<run-batch-test>
 			<test-action>
@@ -1099,6 +1153,33 @@ app.server.type=@{app.server.type}]]></echo>
 
 	<target name="modules-integration-sybase160-jdk7">
 		<run-modules-integration-test database.type="sybase" />
+	</target>
+
+	<target name="modules-plugins-compile-jdk7">
+		<run-batch-test>
+			<test-action>
+				<ant antfile="build-test-plugins.xml" target="test-plugin-group">
+					<property name="test.modules.plugins" value="true" />
+					<property name="test.plugin.group.index" value="${axis.variable}" />
+				</ant>
+			</test-action>
+
+			<test-set-up>
+				<if>
+					<isset property="env.DIST_PATH" />
+					<then>
+						<prepare-test-environment />
+
+						<antcall inheritAll="false" target="record-test-module-plugin-names">
+							<param name="test.module.groups.size" value="${test.batch.size}" />
+						</antcall>
+					</then>
+					<else>
+						<prepare-test-build />
+					</else>
+				</if>
+			</test-set-up>
+		</run-batch-test>
 	</target>
 
 	<target name="modules-unit-jdk7">

@@ -15,11 +15,13 @@
 package com.liferay.image.uploader.web.portlet;
 
 import com.liferay.image.uploader.web.constants.ImageUploaderPortletKeys;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
@@ -46,4 +48,12 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class ImageUploaderPortlet extends MVCPortlet {
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.image.uploader.web)(release.schema.version=1.0.0))",
+		unbind = "-"
+	)
+	protected void setRelease(Release release) {
+	}
+
 }

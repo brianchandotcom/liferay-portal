@@ -148,8 +148,11 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 
 		CMISCriterion cmisCriterion = null;
 
-		boolean wildcard =
-			CMISSimpleExpressionOperator.LIKE == cmisSimpleExpressionOperator;
+		boolean wildcard = false;
+
+		if (CMISSimpleExpressionOperator.LIKE == cmisSimpleExpressionOperator) {
+			wildcard = true;
+		}
 
 		if (field.equals(Field.FOLDER_ID)) {
 			long folderId = GetterUtil.getLong(value);

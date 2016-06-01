@@ -65,7 +65,12 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 
 					long newPrimKeyId = GetterUtil.getLong(
 						rs.getString("primKey"));
-					boolean newViewActionId = (actionIds % 2 == 1);
+
+					boolean newViewActionId = false;
+
+					if ((actionIds % 2) == 1) {
+						newViewActionId = true;
+					}
 
 					if ((newPrimKeyId == 0) && !newViewActionId) {
 						continue;

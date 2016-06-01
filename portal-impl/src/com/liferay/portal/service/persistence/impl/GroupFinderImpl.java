@@ -485,7 +485,11 @@ public class GroupFinderImpl
 		Long userId = (Long)params.get("usersGroups");
 		boolean inherit = GetterUtil.getBoolean(params.get("inherit"), true);
 
-		boolean doUnion = Validator.isNotNull(userId) && inherit;
+		boolean doUnion = false;
+
+		if (Validator.isNotNull(userId) && inherit) {
+			doUnion = true;
+		}
 
 		long[] groupOrganizationClassNameIds =
 			_getGroupOrganizationClassNameIds();
@@ -742,7 +746,11 @@ public class GroupFinderImpl
 		Long userId = (Long)params.get("usersGroups");
 		boolean inherit = GetterUtil.getBoolean(params.get("inherit"), true);
 
-		boolean doUnion = Validator.isNotNull(userId) && inherit;
+		boolean doUnion = false;
+
+		if (Validator.isNotNull(userId) && inherit) {
+			doUnion = true;
+		}
 
 		if (doUnion) {
 			params2 = new LinkedHashMap<>(params1);

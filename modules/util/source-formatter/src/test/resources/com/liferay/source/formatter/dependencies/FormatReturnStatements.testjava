@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.dependencies;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -32,6 +33,10 @@ public class FormatReturnStatements {
 			integerThatHasARidiculouslyLongName2;
 	}
 
+	public String getGender(User user) {
+		return user.isMale() ? "male" : "female";
+	}
+
 	public boolean hasPermission(
 		ThemeDisplay themeDisplay, long roleId, boolean checkPermission) {
 
@@ -46,6 +51,10 @@ public class FormatReturnStatements {
 			stringThatHasARidiculouslyLongName, "Hello World") ||
 			StringUtil.endsWith(
 				stringThatHasARidiculouslyLongName, "Hello World");
+	}
+
+	public boolean isBelowZero(int i) {
+		return i < 0;
 	}
 
 	public boolean isNull(String s) {

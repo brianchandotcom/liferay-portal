@@ -77,7 +77,7 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.dynamic.data.mapping.service", "1.0.0", "1.0.1",
-			new UpgradeResourceActionName());
+			new UpgradeResourceActionName(_resourceActions));
 	}
 
 	@Reference(unbind = "-")

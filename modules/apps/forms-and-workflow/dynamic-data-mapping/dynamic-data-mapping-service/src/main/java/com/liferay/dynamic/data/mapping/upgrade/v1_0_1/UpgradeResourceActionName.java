@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.upgrade.v1_0_1;
 
 import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -26,43 +27,47 @@ import java.sql.PreparedStatement;
  */
 public class UpgradeResourceActionName extends UpgradeProcess {
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		String fromName =
-			_CLASS_NAME_JOURNAL_ARTICLE + StringPool.DASH +
-				DDMStructure.class.getName();
-
-		String toName =
-			DDMStructure.class.getName() + StringPool.DASH +
-				_CLASS_NAME_JOURNAL_ARTICLE;
-
-		updateResourceActionName(fromName, toName);
-
-		fromName =
-			_CLASS_NAME_JOURNAL_ARTICLE + StringPool.DASH +
-				DDMTemplate.class.getName();
-
-		toName =
-			DDMTemplate.class.getName() + StringPool.DASH +
-				_CLASS_NAME_JOURNAL_ARTICLE;
-
-		updateResourceActionName(fromName, toName);
+	public UpgradeResourceActionName(ResourceActions resourceActions) {
+		_resourceActions = resourceActions;
 	}
 
-	protected void updateResourceActionName(String fromName, String toName)
+	@Override
+	protected void doUpgrade() throws Exception {
+		String oldName =
+			_JOURNAL_ARTICLE_CLASS_NAME + StringPool.DASH +
+				DDMStructure.class.getName();
+
+		String newName = _resourceActions.getCompositeModelName(
+			DDMStructure.class.getName(), _JOURNAL_ARTICLE_CLASS_NAME);
+
+		updateResourceActionName(oldName, newName);
+
+		oldName =
+			_JOURNAL_ARTICLE_CLASS_NAME + StringPool.DASH +
+				DDMTemplate.class.getName();
+
+		newName = _resourceActions.getCompositeModelName(
+			DDMTemplate.class.getName(), _JOURNAL_ARTICLE_CLASS_NAME);
+
+		updateResourceActionName(oldName, newName);
+	}
+
+	protected void updateResourceActionName(String oldName, String newName)
 		throws Exception {
 
 		try (PreparedStatement ps = connection.prepareStatement(
 				"update ResourceAction set name = ? where name = ?")) {
 
-			ps.setString(1, toName);
-			ps.setString(2, fromName);
+			ps.setString(1, newName);
+			ps.setString(2, oldName);
 
 			ps.executeUpdate();
 		}
 	}
 
-	private static final String _CLASS_NAME_JOURNAL_ARTICLE =
+	private static final String _JOURNAL_ARTICLE_CLASS_NAME =
 		"com.liferay.journal.model.JournalArticle";
+
+	private final ResourceActions _resourceActions;
 
 }

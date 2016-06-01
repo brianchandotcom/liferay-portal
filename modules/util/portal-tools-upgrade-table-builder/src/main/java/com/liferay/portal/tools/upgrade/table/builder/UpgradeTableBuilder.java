@@ -16,6 +16,7 @@ package com.liferay.portal.tools.upgrade.table.builder;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
 
 import java.io.BufferedReader;
@@ -54,11 +55,13 @@ public class UpgradeTableBuilder {
 		boolean osgiModule = GetterUtil.getBoolean(
 			arguments.get("upgrade.osgi.module"),
 			UpgradeTableBuilderArgs.OSGI_MODULE);
+		String releaseInfoFileName = arguments.get("upgrade.release.info.file");
 		String upgradeTableDirName = arguments.get("upgrade.table.dir");
 
 		try {
 			new UpgradeTableBuilder(
-				baseDirName, osgiModule, upgradeTableDirName);
+				baseDirName, osgiModule, releaseInfoFileName,
+				upgradeTableDirName);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
@@ -66,11 +69,20 @@ public class UpgradeTableBuilder {
 	}
 
 	public UpgradeTableBuilder(
-			String baseDirName, boolean osgiModule, String upgradeTableDirName)
+			String baseDirName, boolean osgiModule, String releaseInfoFileName,
+			String upgradeTableDirName)
 		throws Exception {
 
 		_baseDirName = baseDirName;
 		_osgiModule = osgiModule;
+
+		if (_osgiModule) {
+			_releaseInfoVersion = null;
+		}
+		else {
+			_releaseInfoVersion = _getReleaseInfoVersion(releaseInfoFileName);
+		}
+
 		_upgradeTableDirName = upgradeTableDirName;
 
 		FileSystem fileSystem = FileSystems.getDefault();
@@ -369,9 +381,36 @@ public class UpgradeTableBuilder {
 		return indexesFilePath;
 	}
 
+	private String _getPackagePath(String content) {
+		Matcher matcher = _packagePathPattern.matcher(content);
+
+		if (matcher.find()) {
+			return matcher.group(1);
+		}
+
+		return null;
+	}
+
+	private String _getReleaseInfoVersion(String fileName) throws IOException {
+		if (Validator.isNull(fileName)) {
+			return ReleaseInfo.getVersion();
+		}
+
+		String releaseInfo = _read(Paths.get(fileName));
+
+		Matcher matcher = _releaseInfoVersionPattern.matcher(releaseInfo);
+
+		if (!matcher.find()) {
+			throw new IOException(
+				"Unable to get release info version from " + fileName);
+		}
+
+		return matcher.group(1);
+	}
+
 	private String _getSchemaVersion() throws IOException {
 		if (!_osgiModule) {
-			return ReleaseInfo.getVersion();
+			return _releaseInfoVersion;
 		}
 
 		Properties properties = new Properties();
@@ -383,16 +422,6 @@ public class UpgradeTableBuilder {
 		}
 
 		return properties.getProperty("Liferay-Require-SchemaVersion");
-	}
-
-	private String _getPackagePath(String content) {
-		Matcher matcher = _packagePathPattern.matcher(content);
-
-		if (matcher.find()) {
-			return matcher.group(1);
-		}
-
-		return null;
 	}
 
 	private Path _getUpgradeFilePath(String fileName) throws IOException {
@@ -415,9 +444,12 @@ public class UpgradeTableBuilder {
 
 	private static final Pattern _packagePathPattern = Pattern.compile(
 		"package (.+?);");
+	private static final Pattern _releaseInfoVersionPattern = Pattern.compile(
+		"private static final String _VERSION = \"(.+)\";");
 
 	private final String _baseDirName;
 	private final boolean _osgiModule;
+	private final String _releaseInfoVersion;
 	private final String _upgradeTableDirName;
 
 }

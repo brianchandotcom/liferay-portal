@@ -58,6 +58,13 @@ public class BuildUpgradeTableMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
+	public void setReleaseInfoFileName(String releaseInfoFileName) {
+		_upgradeTableBuilderArgs.setReleaseInfoFileName(releaseInfoFileName);
+	}
+
+	/**
+	 * @parameter
+	 */
 	public void setUpgradeTableDirName(String upgradeTableDirName) {
 		_upgradeTableBuilderArgs.setUpgradeTableDirName(upgradeTableDirName);
 	}

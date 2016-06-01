@@ -481,6 +481,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 				>
 					<arg value="upgrade.base.dir=." />
 					<arg value="upgrade.osgi.module=false" />
+					<arg value="upgrade.release.info.file=../portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java" />
 					<arg value="upgrade.table.dir=${upgrade.table.dir}" />
 				</java>
 			</then>

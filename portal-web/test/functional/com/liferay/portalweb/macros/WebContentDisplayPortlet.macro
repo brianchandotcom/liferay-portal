@@ -398,7 +398,7 @@
 			<var name="navItem" value="Scope" />
 		</execute>
 
-		<execute function="AssertSelectedLabel" locator1="Select#SCOPE" value1="${scopeSelection}" />
+		<execute function="AssertSelectedLabel#assertPartialSelectedLabel" locator1="Select#SCOPE" value1="${scopeSelection}" />
 	</command>
 
 	<command name="viewContentPageBreak">

@@ -968,11 +968,11 @@
 
 		<execute function="Select" locator1="Select#SCOPE" value1="${siteName1}" />
 
-		<execute function="AssertSelectedLabel" locator1="Select#SCOPE" value1="${siteName1}" />
+		<execute function="AssertSelectedLabel#assertPartialSelectedLabel" locator1="Select#SCOPE" value1="${siteName1}" />
 
 		<execute function="Select" locator1="Select#SCOPE" value1="${siteName2}" />
 
-		<execute function="AssertSelectedLabel" locator1="Select#SCOPE" value1="${siteName2}" />
+		<execute function="AssertSelectedLabel#assertPartialSelectedLabel" locator1="Select#SCOPE" value1="${siteName2}" />
 	</command>
 
 	<command name="viewNoEditLinkPG">

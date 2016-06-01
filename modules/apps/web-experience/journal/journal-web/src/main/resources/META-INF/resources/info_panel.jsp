@@ -50,7 +50,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 
 		<div class="sidebar-header">
 			<c:if test="<%= journalDisplayContext.isShowEditActions() %>">
-				<ul class="list-inline list-unstyled sidebar-header-actions">
+				<ul class="sidebar-header-actions">
 					<li>
 						<liferay-util:include page="/subscribe.jsp" servletContext="<%= application %>" />
 					</li>
@@ -115,7 +115,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(articles)) {
 		%>
 
 		<div class="sidebar-header">
-			<ul class="list-inline list-unstyled sidebar-header-actions">
+			<ul class="sidebar-header-actions">
 				<li>
 					<liferay-util:include page="/article_action.jsp" servletContext="<%= application %>" />
 				</li>

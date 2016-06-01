@@ -32,16 +32,18 @@ body {
 	.sidebar-header {
 		line-height: 32px;
 		padding-bottom: 10px;
+		padding-right: 9px;
 		padding-top: 12px;
 
 		@include sm() {
-			padding: 16px 24px;
+			padding-bottom: 16px;
+			padding-left: 24px;
+			padding-top: 16px;
 		}
 
 		.sidenav-close {
 			float: right;
-			margin-right: -8px;
-			margin-top: -4px;
+			margin-right: -2px;
 		}
 	}
 

@@ -26,7 +26,7 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 
 <c:if test="<%= trashRenderer != null %>">
 	<div class="sidebar-header">
-		<ul class="list-inline list-unstyled sidebar-header-actions">
+		<ul class="sidebar-header-actions">
 			<li>
 				<liferay-util:include page="/container_action.jsp" servletContext="<%= application %>" />
 			</li>

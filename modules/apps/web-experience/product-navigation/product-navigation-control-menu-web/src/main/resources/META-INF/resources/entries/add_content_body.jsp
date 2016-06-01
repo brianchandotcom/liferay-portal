@@ -27,7 +27,7 @@
 			<h4 class="sidebar-header">
 				<span><liferay-ui:message key="add" /></span>
 
-				<aui:icon cssClass="close icon-monospaced" id='<%= portletNamespace + "closePanelAdd" %>' image="times" markupView="lexicon" url="javascript:;" />
+				<aui:icon cssClass="icon-monospaced sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
 			</h4>
 
 			<div class="sidebar-body"></div>
@@ -38,13 +38,6 @@
 		var addToggle = $('#<%= portletNamespace %>addToggleId');
 
 		addToggle.sideNavigation();
-
-		A.one('#<%= portletNamespace %>closePanelAdd').on(
-			'click',
-			function(event) {
-				addToggle.sideNavigation('hide');
-			}
-		);
 
 		Liferay.once(
 			'screenLoad',

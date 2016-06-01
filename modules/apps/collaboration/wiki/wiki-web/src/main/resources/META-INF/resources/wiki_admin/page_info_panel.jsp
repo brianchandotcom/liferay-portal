@@ -26,7 +26,7 @@ WikiPageInfoPanelDisplayContext wikiPageInfoPanelDisplayContext = wikiDisplayCon
 	<div class="sidebar-header">
 		<c:choose>
 			<c:when test="<%= wikiPageInfoPanelDisplayContext.isSinglePageSelection() %>">
-				<ul class="list-inline list-unstyled sidebar-header-actions">
+				<ul class="sidebar-header-actions">
 
 					<%
 					request.setAttribute("page_info_panel.jsp-wikiPage", wikiPageInfoPanelDisplayContext.getFirstPage());
@@ -205,7 +205,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 				%>
 
 					<div>
-						<ul class="list-inline list-unstyled sidebar-header-actions">
+						<ul class="sidebar-header-actions">
 							<li>
 
 								<%
@@ -246,7 +246,7 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 
 					<c:if test="<%= Validator.isNotNull(path) %>">
 						<div>
-							<ul class="list-inline list-unstyled sidebar-header-actions">
+							<ul class="sidebar-header-actions">
 								<li>
 
 									<%

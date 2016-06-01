@@ -27,7 +27,7 @@
 			<h4 class="sidebar-header">
 				<span><liferay-ui:message key="simulation" /></span>
 
-				<aui:icon cssClass="close icon-monospaced" id='<%= portletNamespace + "closeSimulationPanel" %>' image="times" markupView="lexicon" url="javascript:;" />
+				<aui:icon cssClass="icon-monospaced sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
 			</h4>
 
 			<div class="sidebar-body"></div>
@@ -38,13 +38,6 @@
 		var simulationToggle = $('#<%= portletNamespace %>simulationToggleId');
 
 		simulationToggle.sideNavigation();
-
-		A.one('#<%= portletNamespace %>closeSimulationPanel').on(
-			'click',
-			function(event) {
-				simulationToggle.sideNavigation('hide');
-			}
-		);
 
 		var simulationPanel = $('#<%= portletNamespace %>simulationPanelId');
 

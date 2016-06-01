@@ -34,7 +34,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 				%>
 
 				<div class="sidebar-header">
-					<ul class="list-inline list-unstyled sidebar-header-actions">
+					<ul class="sidebar-header-actions">
 						<li>
 							<c:choose>
 								<c:when test="<%= Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">

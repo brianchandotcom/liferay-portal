@@ -43,6 +43,7 @@ BookmarksEntry entry = (BookmarksEntry)request.getAttribute("info_panel.jsp-entr
 
 							<liferay-ui:icon
 								icon="star"
+								linkCssClass="icon-monospaced"
 								markupView="lexicon"
 								message="unsubscribe"
 								url="<%= unsubscribeURL %>"
@@ -57,6 +58,7 @@ BookmarksEntry entry = (BookmarksEntry)request.getAttribute("info_panel.jsp-entr
 
 							<liferay-ui:icon
 								icon="star-o"
+								linkCssClass="icon-monospaced"
 								markupView="lexicon"
 								message="subscribe"
 								url="<%= subscribeURL %>"
@@ -77,6 +79,7 @@ BookmarksEntry entry = (BookmarksEntry)request.getAttribute("info_panel.jsp-entr
 
 							<liferay-ui:icon
 								icon="star"
+								linkCssClass="icon-monospaced"
 								markupView="lexicon"
 								message="unsubscribe"
 								url="<%= unsubscribeURL %>"
@@ -91,6 +94,7 @@ BookmarksEntry entry = (BookmarksEntry)request.getAttribute("info_panel.jsp-entr
 
 							<liferay-ui:icon
 								icon="star-o"
+								linkCssClass="icon-monospaced"
 								markupView="lexicon"
 								message="subscribe"
 								url="<%= subscribeURL %>"

@@ -74,6 +74,7 @@ long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
 						<liferay-ui:icon
 							icon="star"
+							linkCssClass="icon-monospaced"
 							markupView="lexicon"
 							message="unsubscribe"
 							url="<%= unsubscribeURL %>"
@@ -82,6 +83,7 @@ long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 					<c:otherwise>
 						<liferay-ui:icon
 							icon="star"
+							linkCssClass="icon-monospaced"
 							markupView="lexicon"
 							message="subscribed-to-a-parent-folder"
 						/>
@@ -105,6 +107,7 @@ long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
 
 				<liferay-ui:icon
 					icon="star-o"
+					linkCssClass="icon-monospaced"
 					markupView="lexicon"
 					message="subscribe"
 					url="<%= subscribeURL %>"

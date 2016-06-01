@@ -33,7 +33,7 @@ for (FileVersion fileVersion : fileVersions) {
 
 	<aui:row>
 		<aui:col width="<%= 100 %>">
-			<ul class="list-inline list-unstyled sidebar-header-actions">
+			<ul class="sidebar-header-actions">
 				<li>
 					<liferay-util:include page="/document_library/file_entry_history_action.jsp" servletContext="<%= application %>" />
 				</li>

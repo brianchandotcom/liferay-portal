@@ -74,7 +74,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				%>
 
 				<div class="sidebar-header">
-					<ul class="list-inline list-unstyled sidebar-header-actions">
+					<ul class="sidebar-header-actions">
 						<li>
 							<liferay-util:include page="/site_action.jsp" servletContext="<%= application %>" />
 						</li>

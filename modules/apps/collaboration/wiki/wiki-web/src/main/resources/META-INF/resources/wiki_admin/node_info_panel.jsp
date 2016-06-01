@@ -23,7 +23,7 @@ WikiNodeInfoPanelDisplayContext wikiNodeInfoPanelDisplayContext = wikiDisplayCon
 <div class="sidebar-header">
 	<c:choose>
 		<c:when test="<%= wikiNodeInfoPanelDisplayContext.isSingleNodeSelection() %>">
-			<ul class="list-inline list-unstyled sidebar-header-actions">
+			<ul class="sidebar-header-actions">
 
 				<%
 				request.setAttribute("node_info_panel.jsp-wikiNode", wikiNodeInfoPanelDisplayContext.getFirstNode());

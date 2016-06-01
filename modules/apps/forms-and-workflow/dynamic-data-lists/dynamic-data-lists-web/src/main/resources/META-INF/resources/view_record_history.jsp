@@ -30,7 +30,7 @@ for (DDLRecordVersion recordVersion: recordVersions) {
 %>
 
 	<div>
-		<ul class="list-inline list-unstyled sidebar-header-actions">
+		<ul class="sidebar-header-actions">
 			<li>
 				<liferay-util:include page="/record_version_action.jsp" servletContext="<%= application %>" />
 			</li>

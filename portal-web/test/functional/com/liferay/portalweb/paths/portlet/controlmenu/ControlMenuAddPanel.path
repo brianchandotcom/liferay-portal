@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>CLOSE_ADD_PANEL</td>
-	<td>//a[contains(@id,'closePanelAdd') and contains(@class,'close')]</td>
+	<td>//div[contains(@class,'lfr-add-panel')]//a[contains(@class,'sidenav-close')]</td>
 	<td></td>
 </tr>
 <tr>

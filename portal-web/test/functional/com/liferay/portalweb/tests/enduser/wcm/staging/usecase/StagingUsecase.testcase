@@ -3498,7 +3498,7 @@
 			<var name="portlet" value="Staging" />
 		</execute>
 
-		<execute macro="Staging#customPublication" />
+		<execute macro="Staging#publishCustomPublication" />
 
 		<execute macro="User#logoutPG">
 			<var name="password" value="test" />

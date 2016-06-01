@@ -396,7 +396,7 @@
 		</if>
 	</command>
 
-	<command name="customPublication">
+	<command name="publishCustomPublication">
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="AssertClickNoError" locator1="Button#PUBLISH_TO_LIVE" value1="Publish to Live" />

@@ -12,19 +12,21 @@
  * details.
  */
 
-package com.liferay.flash.hook.upgrade.v1_0_0;
+package com.liferay.flash.web.portlet.action;
 
-import com.liferay.portal.kernel.upgrade.CamelCaseUpgradePortletPreferences;
+import com.liferay.flash.web.constants.FlashPortletKeys;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Julio Camarero
+ * @author Peter Fellwock
  */
-public class UpgradePortletPreferences
-	extends CamelCaseUpgradePortletPreferences {
-
-	@Override
-	protected String[] getPortletIds() {
-		return new String[] {"1_WAR_flashportlet_INSTANCE_%"};
-	}
-
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + FlashPortletKeys.FLASH},
+	service = ConfigurationAction.class
+)
+public class FlashConfigurationAction extends DefaultConfigurationAction {
 }

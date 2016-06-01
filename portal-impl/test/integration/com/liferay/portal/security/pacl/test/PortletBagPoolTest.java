@@ -34,7 +34,8 @@ public class PortletBagPoolTest {
 
 	@Test
 	public void test1() throws Exception {
-		PortletBagPool.get("1_WAR_flashportlet");
+		PortletBagPool.get(
+			"com_liferay_flash_web_portlet_FlashPortlet");
 	}
 
 	@Test
@@ -56,7 +57,7 @@ public class PortletBagPoolTest {
 	@Test
 	public void test4() throws Exception {
 		PortletBagPool.put(
-			"1_WAR_flashportlet",
+			"com_liferay_flash_web_portlet_FlashPortlet",
 			new PortletBagImpl(
 				null, null, null, null, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null,
@@ -92,7 +93,7 @@ public class PortletBagPoolTest {
 
 	@Test
 	public void test7() throws Exception {
-		PortletBagPool.remove("1_WAR_flashportlet");
+		PortletBagPool.remove("com_liferay_flash_web_portlet_FlashPortlet");
 	}
 
 	@Test

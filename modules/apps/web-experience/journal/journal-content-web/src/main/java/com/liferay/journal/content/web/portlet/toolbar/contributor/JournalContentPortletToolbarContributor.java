@@ -119,7 +119,12 @@ public class JournalContentPortletToolbarContributor
 			data.put("title", HtmlUtil.escape(title));
 
 			urlMenuItem.setData(data);
-			urlMenuItem.setLabel(ddmStructureName);
+
+			String label = ddmStructure.getUnambiguousName(
+				ddmStructures, themeDisplay.getScopeGroupId(),
+				themeDisplay.getLocale());
+
+			urlMenuItem.setLabel(label);
 			urlMenuItem.setURL(portletURL.toString());
 			urlMenuItem.setUseDialog(true);
 

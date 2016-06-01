@@ -156,7 +156,7 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 		_accordion = false;
 		_cssClass = null;
 		_endPage = null;
-		_extended = false;
+		_extended = null;
 		_id = null;
 		_persistState = false;
 		_startPage = null;

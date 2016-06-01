@@ -180,8 +180,8 @@ public class ManagementBarSortTag extends IncludeTag implements BodyTag {
 	private static final String _PAGE = "/management_bar_sort/page.jsp";
 
 	private Boolean _disabled;
-	private String _orderByCol;
-	private String _orderByType;
+	private String _orderByCol = StringPool.BLANK;
+	private String _orderByType = StringPool.BLANK;
 	private Map<String, String> _orderColumns = new HashMap<>();
 	private PortletURL _portletURL;
 

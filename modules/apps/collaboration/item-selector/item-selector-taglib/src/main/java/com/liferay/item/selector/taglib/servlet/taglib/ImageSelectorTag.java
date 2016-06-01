@@ -108,7 +108,7 @@ public class ImageSelectorTag extends IncludeTag {
 	private String _itemSelectorEventName;
 	private String _itemSelectorURL;
 	private long _maxFileSize;
-	private String _paramName = "imageSelectorFileEntry";
+	private String _paramName = "imageSelectorFileEntryId";
 	private String _uploadURL;
 	private String _validExtensions;
 

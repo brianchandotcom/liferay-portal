@@ -145,9 +145,9 @@ public class UserPortraitTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserPortraitTag.class);
 
-	private String _cssClass;
-	private String _imageCssClass;
+	private String _cssClass = StringPool.BLANK;
+	private String _imageCssClass = StringPool.BLANK;
 	private long _userId;
-	private String _userName;
+	private String _userName = StringPool.BLANK;
 
 }

@@ -1454,6 +1454,12 @@ rerun your task.
 
 	<macrodef name="update-gradle-properties">
 		<sequential>
+			<property file="test.${user.name}.properties" />
+			<property file="test.${env.COMPUTERNAME}.properties" />
+			<property file="test.${env.HOST}.properties" />
+			<property file="test.${env.HOSTNAME}.properties" />
+			<property file="test.properties" />
+
 			<property location="${basedir}/.gradle/gradle.properties" name="gradle.properties.file" />
 
 			<delete file="${gradle.properties.file}" />

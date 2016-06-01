@@ -1668,7 +1668,7 @@ public class JavaClass {
 		String javaTermContent = javaTerm.getContent();
 		String returnType = javaTerm.getReturnType();
 
-		Matcher matcher1 = _returnPattern1.matcher(javaTermContent);
+		Matcher matcher1 = _returnPattern.matcher(javaTermContent);
 
 		while (matcher1.find()) {
 			String returnStatement = matcher1.group();
@@ -1712,7 +1712,8 @@ public class JavaClass {
 				return;
 			}
 
-			Matcher matcher2 = _returnPattern2.matcher(returnStatement);
+			Matcher matcher2 = _relationalOperatorPattern.matcher(
+				returnStatement);
 
 			if (matcher2.find() &&
 				!ToolsUtil.isInsideQuotes(returnStatement, matcher2.start(1))) {
@@ -1821,10 +1822,10 @@ public class JavaClass {
 	private final String _name;
 	private final JavaClass _outerClass;
 	private String _packagePath;
-	private final Pattern _returnPattern1 = Pattern.compile(
-		"\n(\t+)return (.*?);\n", Pattern.DOTALL);
-	private final Pattern _returnPattern2 = Pattern.compile(
+	private final Pattern _relationalOperatorPattern = Pattern.compile(
 		".* (==|!=|<|>|>=|<=)[ \n].*");
+	private final Pattern _returnPattern = Pattern.compile(
+		"\n(\t+)return (.*?);\n", Pattern.DOTALL);
 	private final Pattern _variableNameStartingWithUpperCasePattern =
 		Pattern.compile("\t[\\w\\s<>,]+ ([A-Z]\\w+) =");
 

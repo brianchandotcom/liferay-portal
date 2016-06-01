@@ -116,6 +116,7 @@ public class JavaClass {
 
 			checkUnusedParameters(javaTerm);
 
+			_formatBooleanStatements(javaTerm);
 			_formatReturnStatements(javaTerm);
 
 			if (javaTerm.isMethod() || javaTerm.isConstructor()) {
@@ -1635,6 +1636,72 @@ public class JavaClass {
 		}
 	}
 
+	private void _formatBooleanStatement(
+		String javaTermContent, String booleanStatement, String tabs,
+		String variableName, String ifCondition, String trueValue,
+		String falseValue) {
+
+		StringBundler sb = new StringBundler(19);
+
+		sb.append("\n\n");
+		sb.append(tabs);
+		sb.append("boolean ");
+		sb.append(variableName);
+		sb.append(" = ");
+		sb.append(falseValue);
+		sb.append(";\n\n");
+		sb.append(tabs);
+		sb.append("if (");
+		sb.append(ifCondition);
+		sb.append(") {\n\n");
+		sb.append(tabs);
+		sb.append("\t");
+		sb.append(variableName);
+		sb.append(" = ");
+		sb.append(trueValue);
+		sb.append(";\n");
+		sb.append(tabs);
+		sb.append("}\n");
+
+		String newJavaTermContent = StringUtil.replace(
+			javaTermContent, booleanStatement, sb.toString());
+
+		_classContent = StringUtil.replace(
+			_classContent, javaTermContent, newJavaTermContent);
+	}
+
+	private void _formatBooleanStatements(JavaTerm javaTerm) {
+		String javaTermContent = javaTerm.getContent();
+
+		Matcher matcher = _booleanPattern.matcher(javaTermContent);
+
+		while (matcher.find()) {
+			String booleanStatement = matcher.group();
+
+			if (booleanStatement.contains("\t//") ||
+				booleanStatement.contains(" {\n")) {
+
+				continue;
+			}
+
+			String criteria = matcher.group(3);
+
+			String[] ternaryOperatorParts = _getTernaryOperatorParts(criteria);
+
+			if (ternaryOperatorParts != null) {
+				String falseValue = ternaryOperatorParts[2];
+				String ifCondition = ternaryOperatorParts[0];
+				String trueValue = ternaryOperatorParts[1];
+
+				_formatBooleanStatement(
+					javaTermContent, booleanStatement, matcher.group(1),
+					matcher.group(2), ifCondition, trueValue, falseValue);
+
+				return;
+			}
+		}
+	}
+
 	private void _formatReturnStatement(
 		String javaTermContent, String returnStatement, String tabs,
 		String ifCondition, String trueValue, String falseValue) {
@@ -1796,6 +1863,8 @@ public class JavaClass {
 		ListUtil.fromArray(new String[] {"readObject", "writeObject"});
 
 	private final String _absolutePath;
+	private final Pattern _booleanPattern = Pattern.compile(
+		"\n(\t+)boolean (\\w+) =(.*?);\n", Pattern.DOTALL);
 	private final Pattern _camelCasePattern = Pattern.compile(
 		"([a-z])([A-Z0-9])");
 	private final Pattern _chainingPattern = Pattern.compile(

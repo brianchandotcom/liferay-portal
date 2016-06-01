@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.util.FastDateFormatConstants;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
@@ -82,6 +84,24 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 		List<User> recipients = null;
 
 		if (mbThreadId != 0) {
+			if (Validator.isNull(fetchUserThread(userId, mbThreadId))) {
+				if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(5);
+
+					sb.append("User ");
+					sb.append(userId);
+					sb.append(" attempted to add a message to MBThread ");
+					sb.append(mbThreadId);
+					sb.append(" through the private messaging portlet");
+
+					_log.warn(sb.toString());
+				}
+
+				throw new PrincipalException(
+					"User " + userId + " cannot access MBThread " + mbThreadId +
+						" through the private messaging portlet");
+			}
+
 			List<MBMessage> mbMessages =
 				mbMessageLocalService.getThreadMessages(
 					mbThreadId, WorkflowConstants.STATUS_ANY);

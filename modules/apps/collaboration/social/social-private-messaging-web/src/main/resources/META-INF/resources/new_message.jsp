@@ -62,7 +62,6 @@ to = sb.toString() + to;
 
 <div class="message-body-container">
 	<aui:form enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
-		<aui:input name="userId" type="hidden" value="<%= user.getUserId() %>" />
 		<aui:input name="mbThreadId" type="hidden" value="<%= mbThreadId %>" />
 
 		<div id="<portlet:namespace />autoCompleteContainer">

@@ -32,6 +32,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -42,6 +43,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Shinn Lok
  */
+@Ignore
 @PrepareForTest(FileUtil.class)
 @RunWith(PowerMockRunner.class)
 public class SyncAccountServiceTest extends BaseTestCase {

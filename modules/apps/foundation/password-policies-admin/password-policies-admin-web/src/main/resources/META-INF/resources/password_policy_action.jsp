@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PasswordPolicySearch searchContainer = (PasswordPolicySearch)request.getAttribute("liferay-ui:search:searchContainer");
-
-String redirect = searchContainer.getIteratorURL().toString();
-
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 PasswordPolicy passwordPolicy = (PasswordPolicy)row.getObject();
@@ -30,7 +26,7 @@ PasswordPolicy passwordPolicy = (PasswordPolicy)row.getObject();
 	<c:if test="<%= PasswordPolicyPermissionUtil.contains(permissionChecker, passwordPolicy.getPasswordPolicyId(), ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/edit_password_policy.jsp" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="passwordPolicyId" value="<%= String.valueOf(passwordPolicy.getPasswordPolicyId()) %>" />
 		</portlet:renderURL>
 
@@ -60,7 +56,7 @@ PasswordPolicy passwordPolicy = (PasswordPolicy)row.getObject();
 	<c:if test="<%= PasswordPolicyPermissionUtil.contains(permissionChecker, passwordPolicy.getPasswordPolicyId(), ActionKeys.ASSIGN_MEMBERS) %>">
 		<portlet:renderURL var="assignMembersURL">
 			<portlet:param name="mvcPath" value="/edit_password_policy_assignments.jsp" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="passwordPolicyId" value="<%= String.valueOf(passwordPolicy.getPasswordPolicyId()) %>" />
 		</portlet:renderURL>
 
@@ -72,7 +68,7 @@ PasswordPolicy passwordPolicy = (PasswordPolicy)row.getObject();
 
 	<c:if test="<%= !passwordPolicy.getDefaultPolicy() && PasswordPolicyPermissionUtil.contains(permissionChecker, passwordPolicy.getPasswordPolicyId(), ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deletePasswordPolicy" var="deletePasswordPolicyURL">
-			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="passwordPolicyId" value="<%= String.valueOf(passwordPolicy.getPasswordPolicyId()) %>" />
 		</portlet:actionURL>
 

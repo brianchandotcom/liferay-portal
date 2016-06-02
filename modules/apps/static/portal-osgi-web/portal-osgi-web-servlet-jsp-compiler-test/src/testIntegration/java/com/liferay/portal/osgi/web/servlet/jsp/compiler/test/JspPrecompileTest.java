@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -53,7 +54,9 @@ import java.io.OutputStream;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
@@ -252,21 +255,25 @@ public class JspPrecompileTest {
 		}
 	}
 
-	private static String _buildImportPackageString(Class<?>... classes) {
+	private static String _buildImportPackage(Class<?>... classes) {
+		if (ArrayUtil.isEmpty(classes)) {
+			return StringPool.BLANK;
+		}
+
 		StringBundler sb = new StringBundler(classes.length * 2);
+
+		Set<Package> packages = new HashSet<>();
 
 		for (Class<?> clazz : classes) {
 			Package pkg = clazz.getPackage();
 
-			sb.append(pkg.getName());
-			sb.append(StringPool.COMMA);
+			if (packages.add(pkg)) {
+				sb.append(pkg.getName());
+				sb.append(StringPool.COMMA);
+			}
 		}
 
-		int index = sb.index();
-
-		if (index > 0) {
-			sb.setIndex(index - 1);
-		}
+		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
 	}
@@ -294,7 +301,7 @@ public class JspPrecompileTest {
 				attributes.putValue(Constants.BUNDLE_VERSION, "1.0.0");
 				attributes.putValue(
 					Constants.IMPORT_PACKAGE,
-					_buildImportPackageString(
+					_buildImportPackage(
 						BundleActivator.class, HttpServletRequest.class,
 						MVCPortlet.class, PortalUtil.class, Portlet.class));
 				attributes.putValue("Manifest-Version", "2");

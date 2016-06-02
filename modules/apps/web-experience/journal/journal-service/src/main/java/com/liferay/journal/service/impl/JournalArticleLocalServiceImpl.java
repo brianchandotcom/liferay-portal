@@ -3783,6 +3783,8 @@ public class JournalArticleLocalServiceImpl
 		List<TrashVersion> trashVersions = trashVersionLocalService.getVersions(
 			trashEntry.getEntryId());
 
+		boolean visible = false;
+
 		for (TrashVersion trashVersion : trashVersions) {
 			JournalArticle trashArticleVersion =
 				journalArticlePersistence.findByPrimaryKey(
@@ -3790,14 +3792,21 @@ public class JournalArticleLocalServiceImpl
 
 			trashArticleVersion.setStatus(trashVersion.getStatus());
 
+			if (trashVersion.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+				visible = true;
+			}
+
 			journalArticlePersistence.update(trashArticleVersion);
 		}
 
 		trashEntryLocalService.deleteEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
-		restoreVisibleIfThereIsAnApprovedVersion(
-			article.getGroupId(), article.getArticleId());
+		if (visible) {
+			assetEntryLocalService.updateVisible(
+				JournalArticle.class.getName(), article.getResourcePrimKey(),
+				true);
+		}
 
 		// Comment
 
@@ -7333,20 +7342,6 @@ public class JournalArticleLocalServiceImpl
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		subscriptionSender.flushNotificationsAsync();
-	}
-
-	protected void restoreVisibleIfThereIsAnApprovedVersion(
-			long groupId, String articleId)
-		throws PortalException {
-
-		JournalArticle article = fetchLatestArticle(
-			groupId, articleId, WorkflowConstants.STATUS_APPROVED);
-
-		if (article != null) {
-			assetEntryLocalService.updateVisible(
-					JournalArticle.class.getName(),
-					article.getResourcePrimKey(), true);
-		}
 	}
 
 	protected void saveImages(

@@ -35,7 +35,7 @@
 	</tear-down>
 
 	<command name="AddFolderSiteRoleDefaultPermission" priority="5">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Permissions#setUpSiteRoleCP">
 			<var name="page" value="Public Pages" />
@@ -71,7 +71,8 @@
 	</command>
 
 	<command name="AddFolderSiteRoleDefinePermission" priority="5">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="CPRolesCPWebcontent#AddFolderSiteRoleDefinePermission" />
 
 		<execute macro="Permissions#setUpSiteRoleCP">
 			<var name="page" value="Public Pages" />
@@ -151,7 +152,7 @@
 	</command>
 
 	<command name="AddStructureSiteRoleDefaultPermission" priority="5">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Permissions#setUpSiteRoleCP">
 			<var name="page" value="Public Pages" />
@@ -187,7 +188,8 @@
 	</command>
 
 	<command name="AddStructureSiteRoleDefinePermission" priority="5">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="CPRolesCPWebcontent#AddStructureSiteRoleDefinePermission" />
 
 		<execute macro="Permissions#setUpSiteRoleCP">
 			<var name="page" value="Public Pages" />
@@ -279,7 +281,7 @@
 	</command>
 
 	<command name="AddTemplateSiteRoleDefaultPermission" priority="5">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Permissions#setUpSiteRoleCP">
 			<var name="page" value="Public Pages" />
@@ -315,7 +317,8 @@
 	</command>
 
 	<command name="AddTemplateSiteRoleDefinePermission" priority="5">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="CPRolesCPWebcontent#AddTemplateSiteRoleDefinePermission" />
 
 		<execute macro="Permissions#setUpSiteRoleCP">
 			<var name="page" value="Public Pages" />
@@ -397,7 +400,7 @@
 	</command>
 
 	<command name="AddWebContentSiteRoleDefaultPermission" priority="5">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Permissions#setUpSiteRoleCP">
 			<var name="page" value="Public Pages" />
@@ -432,7 +435,8 @@
 	</command>
 
 	<command name="AddWebContentSiteRoleDefinePermission" priority="5">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="true" />
+		<property name="test.name.skip.portal.instance" value="CPRolesCPWebcontent#AddWebContentSiteRoleDefinePermission" />
 
 		<execute macro="Permissions#setUpSiteRoleCP">
 			<var name="page" value="Public Pages" />

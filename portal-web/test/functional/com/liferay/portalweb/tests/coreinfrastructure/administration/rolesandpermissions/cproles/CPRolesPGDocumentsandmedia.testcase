@@ -36,7 +36,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AddDMDocumentRegRole" priority="5">
+	<command name="AddDMDocumentRegRoleDefaultPermissions" priority="5">
 		<property name="portal.acceptance" value="false" />
 
 		<execute macro="Permissions#setUpRegRolePG">
@@ -59,10 +59,19 @@
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="Toolbar#ADD" value1="Add" />
+	</command>
 
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
+	<command name="AddDMDocumentRegRoleDefinePermissions" priority="5">
+		<property name="portal.acceptance" value="false" />
+
+		<execute macro="Permissions#setUpRegRolePG">
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="portletName" value="Documents and Media" />
+			<var name="roleName" value="Regrole Name" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionCP">

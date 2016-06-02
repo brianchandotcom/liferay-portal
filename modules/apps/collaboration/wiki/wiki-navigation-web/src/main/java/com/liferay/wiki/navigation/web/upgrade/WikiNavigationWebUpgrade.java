@@ -15,7 +15,7 @@
 package com.liferay.wiki.navigation.web.upgrade;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeRelease;
+import com.liferay.portal.upgrade.release.BaseUpgradeRelease;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

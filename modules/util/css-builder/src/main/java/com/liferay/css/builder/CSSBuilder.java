@@ -215,20 +215,20 @@ public class CSSBuilder implements AutoCloseable {
 
 				@Override
 				public FileVisitResult postVisitDirectory(
-						Path dir, IOException exc)
+						Path dirPath, IOException ioe)
 					throws IOException {
 
-					Files.delete(dir);
+					Files.delete(dirPath);
 
 					return FileVisitResult.CONTINUE;
 				}
 
 				@Override
 				public FileVisitResult visitFile(
-						Path file, BasicFileAttributes attrs)
+						Path path, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					Files.delete(file);
+					Files.delete(path);
 
 					return FileVisitResult.CONTINUE;
 				}

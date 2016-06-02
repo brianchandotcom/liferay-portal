@@ -39,8 +39,8 @@ public class CSSBuilderArgs {
 		return _outputDirName;
 	}
 
-	public String getPortalCommonDirName() {
-		return _portalCommonDirName;
+	public String getPortalCommonPath() {
+		return _portalCommonPath;
 	}
 
 	public int getPrecision() {
@@ -79,8 +79,8 @@ public class CSSBuilderArgs {
 		_outputDirName = outputDirName;
 	}
 
-	public void setPortalCommonDirName(String portalCommonDirName) {
-		_portalCommonDirName = portalCommonDirName;
+	public void setPortalCommonPath(String portalCommonPath) {
+		_portalCommonPath = portalCommonPath;
 	}
 
 	public void setPrecision(int precision) {
@@ -107,7 +107,7 @@ public class CSSBuilderArgs {
 	private String _docrootDirName = DOCROOT_DIR_NAME;
 	private boolean _generateSourceMap;
 	private String _outputDirName = OUTPUT_DIR_NAME;
-	private String _portalCommonDirName;
+	private String _portalCommonPath;
 	private int _precision = PRECISION;
 	private String[] _rtlExcludedPathRegexps = new String[0];
 	private String _sassCompilerClassName;

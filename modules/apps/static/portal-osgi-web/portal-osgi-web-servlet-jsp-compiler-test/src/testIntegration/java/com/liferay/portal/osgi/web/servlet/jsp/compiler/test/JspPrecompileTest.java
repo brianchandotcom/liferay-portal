@@ -325,9 +325,13 @@ public class JspPrecompileTest {
 
 				jarOutputStream.putNextEntry(new ZipEntry(path));
 
-				StreamUtil.transfer(
-					classLoader.getResourceAsStream(path), jarOutputStream,
-					false);
+				try (InputStream inputStream = classLoader.getResourceAsStream(
+						path);
+					OutputStream outputStream = StreamUtil.uncloseable(
+						jarOutputStream)) {
+
+					StreamUtil.transfer(inputStream, outputStream);
+				}
 
 				jarOutputStream.closeEntry();
 
@@ -379,9 +383,13 @@ public class JspPrecompileTest {
 
 			jarOutputStream.putNextEntry(new ZipEntry(resourcePath));
 
-			StreamUtil.transfer(
-				classLoader.getResourceAsStream(resourcePath), jarOutputStream,
-				false);
+			try (InputStream inputStream = classLoader.getResourceAsStream(
+					resourcePath);
+				OutputStream outputStream = StreamUtil.uncloseable(
+					jarOutputStream)) {
+
+				StreamUtil.transfer(inputStream, outputStream);
+			}
 
 			jarOutputStream.closeEntry();
 		}

@@ -134,10 +134,7 @@ public class TaskCacheApplicator {
 	protected Task createRefreshDigestTask(final TaskCache taskCache) {
 		Project project = taskCache.getProject();
 
-		String taskName =
-			"refresh" + StringUtil.capitalize(taskCache.getName()) + "Digest";
-
-		Task task = project.task(taskName);
+		Task task = project.task(taskCache.getRefreshDigestTaskName());
 
 		task.doLast(
 			new Action<Task>() {
@@ -159,10 +156,8 @@ public class TaskCacheApplicator {
 	protected Copy createRestoreCacheTask(TaskCache taskCache) {
 		Project project = taskCache.getProject();
 
-		String taskName =
-			"restore" + StringUtil.capitalize(taskCache.getName()) + "Cache";
-
-		Copy copy = GradleUtil.addTask(project, taskName, Copy.class);
+		Copy copy = GradleUtil.addTask(
+			project, taskCache.getRestoreCacheTaskName(), Copy.class);
 
 		copy.exclude(_DIGEST_FILE_NAME);
 		copy.from(taskCache.getCacheDir());
@@ -174,8 +169,7 @@ public class TaskCacheApplicator {
 	}
 
 	protected Copy createSaveCacheTask(TaskCache taskCache) {
-		String taskName =
-			"save" + StringUtil.capitalize(taskCache.getName()) + "Cache";
+		String taskName = taskCache.getSaveCacheTaskName();
 
 		Copy copy = GradleUtil.addTask(
 			taskCache.getProject(), taskName, Copy.class);

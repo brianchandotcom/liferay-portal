@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.cache.task;
 
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.StringUtil;
 
 import groovy.lang.Closure;
 
@@ -110,6 +111,18 @@ public class TaskCache implements PatternFilterable {
 
 	public Project getProject() {
 		return _project;
+	}
+
+	public String getRefreshDigestTaskName() {
+		return "refresh" + StringUtil.capitalize(getName()) + "Digest";
+	}
+
+	public String getRestoreCacheTaskName() {
+		return "restore" + StringUtil.capitalize(getName()) + "Cache";
+	}
+
+	public String getSaveCacheTaskName() {
+		return "save" + StringUtil.capitalize(getName()) + "Cache";
 	}
 
 	public Set<Object> getSkippedTaskDependencies() {

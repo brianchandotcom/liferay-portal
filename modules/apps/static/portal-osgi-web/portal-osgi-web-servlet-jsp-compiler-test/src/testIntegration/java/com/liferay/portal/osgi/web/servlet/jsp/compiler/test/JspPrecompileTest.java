@@ -44,7 +44,6 @@ import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -335,30 +334,11 @@ public class JspPrecompileTest {
 
 				jarOutputStream.closeEntry();
 
-				String tempDir = System.getProperty("java.io.tmpdir");
+				jarOutputStream.putNextEntry(
+					new ZipEntry(
+						"META-INF/resources/".concat(_PRECOMPILE_JSP)));
 
-				File file = new File(
-					tempDir + StringPool.SLASH + _PRECOMPILE_JSP);
-
-				try {
-					file.createNewFile();
-
-					jarOutputStream.putNextEntry(
-						new ZipEntry(
-							"META-INF/resources/".concat(_PRECOMPILE_JSP)));
-
-					try (FileInputStream fileInputStream =
-							new FileInputStream(file)) {
-
-						StreamUtil.transfer(
-							fileInputStream, jarOutputStream, false);
-					}
-
-					jarOutputStream.closeEntry();
-				}
-				finally {
-					file.delete();
-				}
+				jarOutputStream.closeEntry();
 			}
 
 			return new UnsyncByteArrayInputStream(

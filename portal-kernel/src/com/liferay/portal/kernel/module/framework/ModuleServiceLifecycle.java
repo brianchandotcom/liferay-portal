@@ -22,6 +22,12 @@ public interface ModuleServiceLifecycle {
 	public String DATABASE_INITIALIZED =
 		"(module.service.lifecycle=database.initialized)";
 
+	public String LIFECYCLE_VALUE_DATABASE_INITIALIZED = "database.initialized";
+
+	public String LIFECYCLE_VALUE_PORTAL_INITIALIZED = "portal.initialized";
+
+	public String LIFECYCLE_VALUE_SPRING_INITIALIZED = "spring.initialized";
+
 	public String PORTAL_INITIALIZED =
 		"(module.service.lifecycle=portal.initialized)";
 

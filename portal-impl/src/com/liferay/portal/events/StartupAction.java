@@ -193,7 +193,9 @@ public class StartupAction extends SimpleAction {
 
 		Map<String, Object> properties = new HashMap<>();
 
-		properties.put("module.service.lifecycle", "database.initialized");
+		properties.put(
+			"module.service.lifecycle",
+			ModuleServiceLifecycle.LIFECYCLE_VALUE_DATABASE_INITIALIZED);
 		properties.put("service.vendor", ReleaseInfo.getVendor());
 		properties.put("service.version", ReleaseInfo.getVersion());
 

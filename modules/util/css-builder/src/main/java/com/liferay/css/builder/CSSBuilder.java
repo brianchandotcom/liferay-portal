@@ -233,29 +233,6 @@ public class CSSBuilder {
 			});
 	}
 
-	private String _fixRelativePath(String fileName) {
-		String[] paths = StringUtil.split(fileName, CharPool.SLASH);
-
-		StringBundler sb = new StringBundler(paths.length * 2);
-
-		for (String path : paths) {
-			if (path.isEmpty() || path.equals(StringPool.PERIOD)) {
-				continue;
-			}
-
-			if (path.equals(StringPool.DOUBLE_PERIOD) && (sb.length() >= 2)) {
-				sb.setIndex(sb.index() - 2);
-
-				continue;
-			}
-
-			sb.append(StringPool.SLASH);
-			sb.append(path);
-		}
-
-		return sb.toString();
-	}
-
 	private String _getRtlCss(String fileName, String css) throws Exception {
 		String rtlCss = css;
 

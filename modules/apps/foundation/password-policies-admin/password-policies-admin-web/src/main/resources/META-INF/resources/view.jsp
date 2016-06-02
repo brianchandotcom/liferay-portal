@@ -78,7 +78,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"descriptive", "icon", "list"} %>'
 			portletURL="<%= renderResponse.createRenderURL() %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -140,27 +140,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 					<portlet:param name="passwordPolicyId" value="<%= String.valueOf(passwordPolicy.getPasswordPolicyId()) %>" />
 				</portlet:renderURL>
 
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					href="<%= rowURL %>"
-					name="name"
-					property="name"
-				/>
-
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					href="<%= rowURL %>"
-					name="description"
-					orderable="<%= true %>"
-					property="description"
-				/>
-
-				<liferay-ui:search-container-column-jsp
-					path="/password_policy_action.jsp"
-				/>
+				<%@ include file="/search_columns.jspf" %>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= passwordPolicySearchContainer %>" />
+			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= passwordPolicySearchContainer %>" />
 		</liferay-ui:search-container>
 	</c:if>
 </aui:form>

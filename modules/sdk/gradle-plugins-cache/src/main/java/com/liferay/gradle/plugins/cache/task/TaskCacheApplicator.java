@@ -91,6 +91,8 @@ public class TaskCacheApplicator {
 		else {
 			applyOutOfDate(taskCache, task, currentDigest);
 		}
+
+		createRefreshDigestTask(taskCache);
 	}
 
 	protected void applyOutOfDate(
@@ -127,6 +129,31 @@ public class TaskCacheApplicator {
 		task.dependsOn(copy);
 
 		task.setEnabled(false);
+	}
+
+	protected Task createRefreshDigestTask(final TaskCache taskCache) {
+		Project project = taskCache.getProject();
+
+		String taskName =
+			"refresh" + StringUtil.capitalize(taskCache.getName()) + "Digest";
+
+		Task task = project.task(taskName);
+
+		task.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					String digest = getCurrentDigest(taskCache);
+
+					writeDigestFile(taskCache, digest);
+				}
+
+			});
+
+		task.setDescription("Refresh the digest for " + taskCache);
+
+		return task;
 	}
 
 	protected Copy createRestoreCacheTask(TaskCache taskCache) {

@@ -425,7 +425,7 @@
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">
 			<arg value="${curl}" />
-			<arg value="$['groupName']" />
+			<arg value="$['nameCurrentValue']" />
 			<return name="groupName" />
 		</execute>
 

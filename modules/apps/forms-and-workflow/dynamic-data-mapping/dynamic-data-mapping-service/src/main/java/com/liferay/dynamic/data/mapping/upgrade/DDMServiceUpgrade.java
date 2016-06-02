@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeDynamicDataMapping
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeKernelPackage;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeSchema;
+import com.liferay.dynamic.data.mapping.upgrade.v1_0_1.UpgradeResourcePermission;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
@@ -73,6 +74,10 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 				_expandoValueLocalService, _resourceActions,
 				_resourceLocalService, _resourcePermissionLocalService),
 			new UpgradeLastPublishDate());
+
+		registry.register(
+			"com.liferay.dynamic.data.mapping.service", "1.0.0", "1.0.1",
+			new UpgradeResourcePermission(_resourceActions));
 	}
 
 	@Reference(unbind = "-")

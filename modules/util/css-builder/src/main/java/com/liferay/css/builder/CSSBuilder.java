@@ -85,9 +85,15 @@ public class CSSBuilder implements AutoCloseable {
 			arguments.get("sass.docroot.dir"), CSSBuilderArgs.DOCROOT_DIR_NAME);
 		boolean generateSourceMap = GetterUtil.getBoolean(
 			arguments.get("sass.generate.source.map"));
-		String portalCommonPath = arguments.get("sass.portal.common.path");
 		String outputDirName = GetterUtil.getString(
 			arguments.get("sass.output.dir"), CSSBuilderArgs.OUTPUT_DIR_NAME);
+
+		String portalCommonPath = arguments.get("sass.portal.common.path");
+
+		if (Validator.isNull(portalCommonPath)) {
+			portalCommonPath = arguments.get("sass.portal.common.dir");
+		}
+
 		int precision = GetterUtil.getInteger(
 			arguments.get("sass.precision"), CSSBuilderArgs.PRECISION);
 		String[] rtlExcludedPathRegexps = StringUtil.split(

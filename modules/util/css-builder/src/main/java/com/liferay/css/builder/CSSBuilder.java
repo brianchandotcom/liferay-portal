@@ -114,10 +114,11 @@ public class CSSBuilder {
 			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception {
 
-		File portalCommonFile = new File(portalCommonPath);
+		File portalCommonDir = new File(portalCommonPath);
 
-		if (portalCommonFile.isFile()) {
-			portalCommonFile = _unzipPortalCommon(portalCommonFile);
+		if (portalCommonDir.isFile()) {
+			portalCommonDir = _unzipPortalCommon(portalCommonDir);
+
 			_cleanPortalCommonDir = true;
 		}
 		else {
@@ -127,7 +128,7 @@ public class CSSBuilder {
 		_docrootDirName = docrootDirName;
 		_generateSourceMap = generateSourceMap;
 		_outputDirName = outputDirName;
-		_portalCommonDirName = portalCommonFile.getCanonicalPath();
+		_portalCommonDirName = portalCommonDir.getCanonicalPath();
 		_precision = precision;
 		_rtlExcludedPathPatterns = PatternFactory.compile(
 			rtlExcludedPathRegexps);

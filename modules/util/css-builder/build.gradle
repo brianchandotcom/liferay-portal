@@ -1,6 +1,6 @@
 apply plugin: "com.liferay.maven.plugin.builder"
 
-task copyPortalCommonCssJar(type: Copy)
+task copyPortalCommonCSSJar(type: Copy)
 
 buildPluginDescriptor {
 	ext {
@@ -13,7 +13,7 @@ buildPluginDescriptor {
 	goalPrefix = "liferay"
 }
 
-copyPortalCommonCssJar {
+copyPortalCommonCSSJar {
 	from configurations.portalCommonCSS
 	into new File(buildDir, "portal-common-css-jar")
 }
@@ -39,8 +39,8 @@ liferay {
 }
 
 test {
+	dependsOn copyPortalCommonCSSJar
 	dependsOn expandPortalCommonCSS
-	dependsOn copyPortalCommonCssJar
 }
 
 updateFileVersions {

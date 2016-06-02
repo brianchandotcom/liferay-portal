@@ -14,6 +14,10 @@
 
 package com.liferay.gradle.plugins;
 
+import com.liferay.gradle.plugins.cache.CacheExtension;
+import com.liferay.gradle.plugins.cache.CachePlugin;
+import com.liferay.gradle.plugins.cache.task.TaskCache;
+import com.liferay.gradle.plugins.cache.task.TaskCacheApplicator;
 import com.liferay.gradle.plugins.change.log.builder.BuildChangeLogTask;
 import com.liferay.gradle.plugins.change.log.builder.ChangeLogBuilderPlugin;
 import com.liferay.gradle.plugins.tasks.PrintArtifactPublishCommandsTask;
@@ -190,17 +194,28 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					Task task = taskContainer.findByName(
 						UPDATE_VERSION_TASK_NAME);
 
-					if (!(task instanceof ReplaceRegexTask)) {
-						return;
+					if (task instanceof ReplaceRegexTask) {
+						ReplaceRegexTask replaceRegexTask =
+							(ReplaceRegexTask)task;
+
+						Map<String, FileCollection> matches =
+							replaceRegexTask.getMatches();
+
+						printArtifactPublishCommandsTask.prepNextFiles(
+							matches.values());
 					}
 
-					ReplaceRegexTask replaceRegexTask = (ReplaceRegexTask)task;
+					if (GradleUtil.hasPlugin(project, CachePlugin.class)) {
+						CacheExtension cacheExtension = GradleUtil.getExtension(
+							project, CacheExtension.class);
 
-					Map<String, FileCollection> matches =
-						replaceRegexTask.getMatches();
-
-					printArtifactPublishCommandsTask.prepNextFiles(
-						matches.values());
+						for (TaskCache taskCache : cacheExtension.getTasks()) {
+							printArtifactPublishCommandsTask.prepNextFiles(
+								new File(
+									taskCache.getCacheDir(),
+									TaskCacheApplicator.DIGEST_FILE_NAME));
+						}
+					}
 				}
 
 			});

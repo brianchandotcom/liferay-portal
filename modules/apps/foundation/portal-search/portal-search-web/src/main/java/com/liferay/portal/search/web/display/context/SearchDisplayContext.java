@@ -15,9 +15,9 @@
 package com.liferay.portal.search.web.display.context;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -32,10 +32,12 @@ import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherMa
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;
@@ -44,7 +46,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.constants.SearchPortletParameterNames;
 import com.liferay.portal.search.web.facet.SearchFacet;
 import com.liferay.portal.search.web.facet.util.SearchFacetTracker;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
 
@@ -66,11 +67,31 @@ public class SearchDisplayContext {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		this(
+			renderRequest, renderResponse, portletPreferences,
+			PortalUtil.getPortal(), HtmlUtil.getHtml(),
+			LanguageUtil.getLanguage(),
+			FacetedSearcherManagerUtil.getFacetedSearcherManager(),
+			new IndexSearchPropsValuesImpl(), new PortletURLFactoryImpl());
+	}
+
+	public SearchDisplayContext(
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			PortletPreferences portletPreferences, Portal portal, Html html,
+			Language language, FacetedSearcherManager facetedSearcherManager,
+			IndexSearchPropsValues indexSearchPropsValues,
+			PortletURLFactory portletURLFactory)
+		throws Exception {
+
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_portletPreferences = portletPreferences;
+		_indexSearchPropsValues = indexSearchPropsValues;
+		_portletURLFactory = portletURLFactory;
 
-		if (Validator.isNull(getKeywords())) {
+		String keywords = getKeywords();
+
+		if (keywords == null) {
 			_hits = null;
 			_searchContext = null;
 			_searchContainer = null;
@@ -78,21 +99,18 @@ public class SearchDisplayContext {
 			return;
 		}
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+		HttpServletRequest request = portal.getHttpServletRequest(
 			_renderRequest);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String emptyResultMessage = LanguageUtil.format(
+		String emptyResultMessage = language.format(
 			request, "no-results-were-found-that-matched-the-keywords-x",
-			"<strong>" + HtmlUtil.escape(getKeywords()) + "</strong>", false);
+			"<strong>" + html.escape(keywords) + "</strong>", false);
 
 		SearchContainer<Document> searchContainer = new SearchContainer<>(
 			_renderRequest, getPortletURL(), null, emptyResultMessage);
-
-		FacetedSearcherManager facetedSearcherManager =
-			FacetedSearcherManagerUtil.getFacetedSearcherManager();
 
 		FacetedSearcher facetedSearcher =
 			facetedSearcherManager.createFacetedSearcher();
@@ -144,16 +162,18 @@ public class SearchDisplayContext {
 			return _collatedSpellCheckResultDisplayThreshold;
 		}
 
+		int collatedSpellCheckResultScoresThreshold =
+			_indexSearchPropsValues.
+				getCollatedSpellCheckResultScoresThreshold();
+
 		_collatedSpellCheckResultDisplayThreshold = GetterUtil.getInteger(
 			_portletPreferences.getValue(
 				"collatedSpellCheckResultDisplayThreshold", null),
-			PropsValues.
-				INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD);
+			collatedSpellCheckResultScoresThreshold);
 
 		if (_collatedSpellCheckResultDisplayThreshold < 0) {
 			_collatedSpellCheckResultDisplayThreshold =
-				PropsValues.
-					INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD;
+				collatedSpellCheckResultScoresThreshold;
 		}
 
 		return _collatedSpellCheckResultDisplayThreshold;
@@ -184,14 +204,12 @@ public class SearchDisplayContext {
 
 	public String getKeywords() {
 		return ParamUtil.getString(
-			_renderRequest, SearchPortletParameterNames.KEYWORDS);
+			_renderRequest, SearchPortletParameterNames.KEYWORDS, null);
 	}
 
 	public PortletURL getPortletURL() throws PortletException {
-		PortletURL portletURL = PortletURLUtil.getCurrent(
+		return _portletURLFactory.getPortletURL(
 			_renderRequest, _renderResponse);
-
-		return PortletURLUtil.clone(portletURL, _renderResponse);
 	}
 
 	public QueryConfig getQueryConfig() {
@@ -222,11 +240,11 @@ public class SearchDisplayContext {
 
 		_queryIndexingThreshold = GetterUtil.getInteger(
 			_portletPreferences.getValue("queryIndexingThreshold", null),
-			PropsValues.INDEX_SEARCH_QUERY_INDEXING_THRESHOLD);
+			_indexSearchPropsValues.getQueryIndexingThreshold());
 
 		if (_queryIndexingThreshold < 0) {
 			_queryIndexingThreshold =
-				PropsValues.INDEX_SEARCH_QUERY_INDEXING_THRESHOLD;
+				_indexSearchPropsValues.getQueryIndexingThreshold();
 		}
 
 		return _queryIndexingThreshold;
@@ -240,11 +258,11 @@ public class SearchDisplayContext {
 		_querySuggestionsDisplayThreshold = GetterUtil.getInteger(
 			_portletPreferences.getValue(
 				"querySuggestionsDisplayThreshold", null),
-			PropsValues.INDEX_SEARCH_QUERY_SUGGESTION_SCORES_THRESHOLD);
+			_indexSearchPropsValues.getQuerySuggestionScoresThreshold());
 
 		if (_querySuggestionsDisplayThreshold < 0) {
 			_querySuggestionsDisplayThreshold =
-				PropsValues.INDEX_SEARCH_QUERY_SUGGESTION_SCORES_THRESHOLD;
+				_indexSearchPropsValues.getQuerySuggestionScoresThreshold();
 		}
 
 		return _querySuggestionsDisplayThreshold;
@@ -257,11 +275,11 @@ public class SearchDisplayContext {
 
 		_querySuggestionsMax = GetterUtil.getInteger(
 			_portletPreferences.getValue("querySuggestionsMax", null),
-			PropsValues.INDEX_SEARCH_QUERY_SUGGESTION_MAX);
+			_indexSearchPropsValues.getQuerySuggestionMax());
 
 		if (_querySuggestionsMax <= 0) {
 			_querySuggestionsMax =
-				PropsValues.INDEX_SEARCH_QUERY_SUGGESTION_MAX;
+				_indexSearchPropsValues.getQuerySuggestionMax();
 		}
 
 		return _querySuggestionsMax;
@@ -329,7 +347,7 @@ public class SearchDisplayContext {
 		_collatedSpellCheckResultEnabled = GetterUtil.getBoolean(
 			_portletPreferences.getValue(
 				"collatedSpellCheckResultEnabled", null),
-			PropsValues.INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_ENABLED);
+			_indexSearchPropsValues.isCollatedSpellCheckResultEnabled());
 
 		return _collatedSpellCheckResultEnabled;
 	}
@@ -414,7 +432,7 @@ public class SearchDisplayContext {
 
 		_queryIndexingEnabled = GetterUtil.getBoolean(
 			_portletPreferences.getValue("queryIndexingEnabled", null),
-			PropsValues.INDEX_SEARCH_QUERY_INDEXING_ENABLED);
+			_indexSearchPropsValues.isQueryIndexingEnabled());
 
 		return _queryIndexingEnabled;
 	}
@@ -426,7 +444,7 @@ public class SearchDisplayContext {
 
 		_querySuggestionsEnabled = GetterUtil.getBoolean(
 			_portletPreferences.getValue("querySuggestionsEnabled", null),
-			PropsValues.INDEX_SEARCH_QUERY_SUGGESTION_ENABLED);
+			_indexSearchPropsValues.isQuerySuggestionEnabled());
 
 		return _querySuggestionsEnabled;
 	}
@@ -551,7 +569,9 @@ public class SearchDisplayContext {
 	private List<SearchFacet> _enabledSearchFacets;
 	private final Hits _hits;
 	private Boolean _includeSystemPortlets;
+	private final IndexSearchPropsValues _indexSearchPropsValues;
 	private final PortletPreferences _portletPreferences;
+	private final PortletURLFactory _portletURLFactory;
 	private QueryConfig _queryConfig;
 	private Boolean _queryIndexingEnabled;
 	private Integer _queryIndexingThreshold;

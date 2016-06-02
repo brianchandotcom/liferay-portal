@@ -20,12 +20,31 @@
 	</command>
 
 	<command name="getPortalInstanceName" returns="portalInstanceName">
-		<var method="TestPropsUtil#get('portal.url')" name="portalInstanceName" />
+		<var method="TestPropsUtil#get('test.name.skip.portal.instance')" name="testNameSkipPortalInstance" />
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
 
-		<var method="StringUtil#replace('${portalInstanceName}', 'http://', '')" name="portalInstanceName" />
-		<var method="StringUtil#replace('${portalInstanceName}', ':8080', '')" name="portalInstanceName" />
+		<if>
+			<and>
+				<equals arg1="${testPortalInstance}" arg2="true" />
+				<not>
+					<condition function="IsTestName" locator1="" value1="${testNameSkipPortalInstance}" />
+				</not>
+			</and>
+			<then>
+				<execute macro="JSONCompany#getPortalURL">
+					<return from="portalURL" name="portalURL" />
+				</execute>
 
-		<return name="portalInstanceName" value="${portalInstanceName}" />
+				<var method="StringUtil#replace('${portalURL}', 'http://', '')" name="portalInstanceName" />
+
+				<var method="StringUtil#replace('${portalInstanceName}', ':8080', '')" name="portalInstanceName" />
+
+				<return name="portalInstanceName" value="${portalInstanceName}" />
+			</then>
+			<else>
+				<return name="portalInstanceName" value="localhost" />
+			</else>
+		</if>
 	</command>
 
 	<command name="getPortalURL" returns="portalURL">

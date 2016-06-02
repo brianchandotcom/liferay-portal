@@ -72,8 +72,8 @@ public class BuildCSSMojo extends AbstractMojo {
 	 * @parameter
 	 * @required
 	 */
-	public void setPortalCommonDirName(String portalCommonDirName) {
-		_cssBuilderArgs.setPortalCommonDirName(portalCommonDirName);
+	public void setPortalCommonPath(String portalCommonPath) {
+		_cssBuilderArgs.setPortalCommonPath(portalCommonPath);
 	}
 
 	/**

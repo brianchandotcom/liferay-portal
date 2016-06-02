@@ -15,10 +15,10 @@
 package com.liferay.wiki.navigation.web.upgrade;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.upgrade.release.BaseUpgradeRelease;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
 import com.liferay.wiki.navigation.web.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.wiki.navigation.web.upgrade.v1_0_1.UpgradePortletId;
 
@@ -33,19 +33,21 @@ public class WikiNavigationWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		BaseUpgradeRelease upgradeRelease = new BaseUpgradeRelease() {
+		BaseUpgradeWebModuleRelease upgradeRelease =
+			new BaseUpgradeWebModuleRelease() {
 
-			protected String getBundleSymbolicName() {
-				return "com.liferay.wiki.navigation.web";
-			}
+				protected String getBundleSymbolicName() {
+					return "com.liferay.wiki.navigation.web";
+				}
 
-			protected String[] getPortletIds() {
-				return new String[] {
-					"1_WAR_wikinavigationportlet", "2_WAR_wikinavigationportlet"
-				};
-			}
+				protected String[] getPortletIds() {
+					return new String[] {
+						"1_WAR_wikinavigationportlet",
+						"2_WAR_wikinavigationportlet"
+					};
+				}
 
-		};
+			};
 
 		try {
 			upgradeRelease.upgrade();

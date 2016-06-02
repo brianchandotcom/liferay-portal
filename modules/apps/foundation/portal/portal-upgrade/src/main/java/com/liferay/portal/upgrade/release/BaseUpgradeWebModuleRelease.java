@@ -27,7 +27,7 @@ import java.sql.SQLException;
 /**
  * @author Adolfo Pérez
  */
-public abstract class BaseUpgradeRelease extends UpgradeProcess {
+public abstract class BaseUpgradeWebModuleRelease extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

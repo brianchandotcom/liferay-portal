@@ -922,6 +922,10 @@ public class PropsValues {
 
 	public static final int MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL));
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String[] MODULE_FRAMEWORK_INITIAL_BUNDLES = PropsUtil.getArray(PropsKeys.MODULE_FRAMEWORK_INITIAL_BUNDLES);
 
 	public static final String MODULE_FRAMEWORK_MODULES_DIR = PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_MODULES_DIR);

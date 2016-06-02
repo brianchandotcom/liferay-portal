@@ -261,7 +261,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 		_lpkgIndexValidator.setLPKGDeployer(this);
 
-		_lpkgIndexValidator.validate(lpkgFiles);
+		boolean needUpdate = _lpkgIndexValidator.validate(lpkgFiles);
 
 		boolean enabled = LPKGIndexValidatorThreadLocal.isEnabled();
 
@@ -299,7 +299,9 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 				}
 			}
 
-			_lpkgIndexValidator.updateIntegrityProperties();
+			if (needUpdate) {
+				_lpkgIndexValidator.updateIntegrityProperties();
+			}
 		}
 		finally {
 			LPKGIndexValidatorThreadLocal.setEnabled(enabled);

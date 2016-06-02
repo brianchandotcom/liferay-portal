@@ -1343,6 +1343,10 @@ public interface PropsKeys {
 
 	public static final String MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL = "module.framework.dynamic.install.start.level";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String MODULE_FRAMEWORK_INITIAL_BUNDLES = "module.framework.initial.bundles";
 
 	public static final String MODULE_FRAMEWORK_MODULES_DIR = "module.framework.modules.dir";

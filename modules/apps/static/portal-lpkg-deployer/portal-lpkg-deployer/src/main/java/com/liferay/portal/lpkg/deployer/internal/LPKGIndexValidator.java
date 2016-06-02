@@ -212,7 +212,7 @@ public class LPKGIndexValidator {
 		}
 	}
 
-	public void validate(List<File> lpkgFiles) throws Exception {
+	public boolean validate(List<File> lpkgFiles) throws Exception {
 		long start = System.currentTimeMillis();
 
 		List<URI> allIndexURIs = new ArrayList<>();
@@ -226,7 +226,7 @@ public class LPKGIndexValidator {
 		allIndexURIs.addAll(lpkgIndexURIs);
 
 		if (checkIntegrity(allIndexURIs)) {
-			return;
+			return false;
 		}
 
 		IndexValidator indexValidator = _indexValidatorFactory.create(
@@ -268,6 +268,8 @@ public class LPKGIndexValidator {
 						MILLISECONDS.toSeconds(duration % Time.MINUTE)));
 			}
 		}
+
+		return true;
 	}
 
 	private void _cleanUp(List<URI> uris) throws MalformedURLException {

@@ -34,6 +34,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +75,12 @@ public class LPKGBundleTrackerCustomizer
 
 		if (url == null) {
 			return null;
+		}
+
+		String symbolicName = bundle.getSymbolicName();
+
+		if (symbolicName.equals("static")) {
+			return Collections.emptyList();
 		}
 
 		List<Bundle> bundles = new ArrayList<>();

@@ -1121,7 +1121,7 @@
 		<execute macro="ContentTargetingUserSegment#viewRulesCP">
 			<var name="userGroupName" value="User Group Name" />
 			<var name="userSegmentName" value="User Segment Name" />
-			<var name="viewUserSegmentRuleList" value="UserGroup Member" />
+			<var name="viewUserSegmentRuleList" value="User Group Member" />
 		</execute>
 	</command>
 

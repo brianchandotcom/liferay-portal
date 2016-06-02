@@ -25,7 +25,7 @@
 
 				<var name="key_deviceType" value="${deviceType}" />
 
-				<execute function="AssertElementPresent" locator1="PREVIEW_DEVICE_IFRAME" />
+				<execute function="AssertElementPresent" locator1="ControlMenuPreviewPanel#PREVIEW_DEVICE_IFRAME" />
 
 				<take-screenshot />
 			</then>

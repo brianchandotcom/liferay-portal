@@ -14,9 +14,6 @@
 
 package com.liferay.portal.osgi.web.servlet.jsp.compiler.test;
 
-/**
- * @author Matthew Tambara
- */
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -25,6 +22,10 @@ import javax.portlet.Portlet;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
+
+/**
+ * @author Matthew Tambara
+ */
 public class JspPrecompileBundleActivator implements BundleActivator {
 
 	@Override

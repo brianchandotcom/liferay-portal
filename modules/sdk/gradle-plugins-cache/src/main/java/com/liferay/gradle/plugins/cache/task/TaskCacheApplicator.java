@@ -107,23 +107,7 @@ public class TaskCacheApplicator {
 
 				@Override
 				public void execute(Task task) {
-					File digestFile = new File(
-						taskCache.getCacheDir(), _DIGEST_FILE_NAME);
-
-					try {
-						Files.write(
-							digestFile.toPath(),
-							currentDigest.getBytes(StandardCharsets.UTF_8));
-
-						if (_logger.isInfoEnabled()) {
-							_logger.info(
-								"Updated digest file to " + currentDigest);
-						}
-					}
-					catch (IOException ioe) {
-						throw new GradleException(
-							"Unable to write digest file", ioe);
-					}
+					writeDigestFile(taskCache, currentDigest);
 				}
 
 			});
@@ -284,6 +268,22 @@ public class TaskCacheApplicator {
 							taskDependency);
 				}
 			}
+		}
+	}
+
+	protected void writeDigestFile(TaskCache taskCache, String digest) {
+		File digestFile = new File(taskCache.getCacheDir(), _DIGEST_FILE_NAME);
+
+		try {
+			Files.write(
+				digestFile.toPath(), digest.getBytes(StandardCharsets.UTF_8));
+
+			if (_logger.isInfoEnabled()) {
+				_logger.info("Updated digest file to " + digest);
+			}
+		}
+		catch (IOException ioe) {
+			throw new GradleException("Unable to write digest file", ioe);
 		}
 	}
 

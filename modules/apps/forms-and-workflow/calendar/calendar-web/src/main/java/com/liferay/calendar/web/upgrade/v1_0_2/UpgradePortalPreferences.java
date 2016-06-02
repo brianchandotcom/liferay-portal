@@ -37,14 +37,17 @@ public class UpgradePortalPreferences extends RenameUpgradePortalPreferences {
 
 	public UpgradePortalPreferences() {
 		_preferenceNamesMap.put(
-			_SESSION_CLICKS_OLD + "calendar-portlet-default-view",
-			_SESSION_CLICKS_NEW + "com.liferay.calendar.web_defaultView");
+			_OLD_SESSION_CLICKS_NAMESPACE + "calendar-portlet-default-view",
+			_NEW_SESSION_CLICKS_NAMESPACE +
+				"com.liferay.calendar.web_defaultView");
 		_preferenceNamesMap.put(
-			_SESSION_CLICKS_OLD + "calendar-portlet-other-calendars",
-			_SESSION_CLICKS_NEW + "com.liferay.calendar.web_otherCalendars");
+			_OLD_SESSION_CLICKS_NAMESPACE + "calendar-portlet-other-calendars",
+			_NEW_SESSION_CLICKS_NAMESPACE +
+				"com.liferay.calendar.web_otherCalendars");
 		_preferenceNamesMap.put(
-			_SESSION_CLICKS_OLD + "calendar-portlet-column-options-visible",
-			_SESSION_CLICKS_NEW +
+			_OLD_SESSION_CLICKS_NAMESPACE +
+				"calendar-portlet-column-options-visible",
+			_NEW_SESSION_CLICKS_NAMESPACE +
 				"com.liferay.calendar.web_columnOptionsVisible");
 	}
 
@@ -126,10 +129,10 @@ public class UpgradePortalPreferences extends RenameUpgradePortalPreferences {
 		}
 	}
 
-	private static final String _SESSION_CLICKS_NEW =
+	private static final String _NEW_SESSION_CLICKS_NAMESPACE =
 		"com.liferay.portal.kernel.util.SessionClicks#";
 
-	private static final String _SESSION_CLICKS_OLD =
+	private static final String _OLD_SESSION_CLICKS_NAMESPACE =
 		"com.liferay.portal.util.SessionClicks#";
 
 	private static final Pattern _idPattern = Pattern.compile("[0-9]+");
@@ -137,9 +140,11 @@ public class UpgradePortalPreferences extends RenameUpgradePortalPreferences {
 		new HashMap<>();
 	private static final Pattern[] _oldPreferencePatterns = new Pattern[] {
 		Pattern.compile(
-			_SESSION_CLICKS_OLD + "calendar-portlet-calendar-[0-9]+-color"),
+			_OLD_SESSION_CLICKS_NAMESPACE +
+				"calendar-portlet-calendar-[0-9]+-color"),
 		Pattern.compile(
-			_SESSION_CLICKS_OLD + "calendar-portlet-calendar-[0-9]+-visible")
+			_OLD_SESSION_CLICKS_NAMESPACE +
+				"calendar-portlet-calendar-[0-9]+-visible")
 	};
 	private static final Pattern _preferencePattern = Pattern.compile(
 		"[a-z]+$");
@@ -147,11 +152,11 @@ public class UpgradePortalPreferences extends RenameUpgradePortalPreferences {
 	static {
 		_newPreferencePatternsMap.put(
 			"color",
-			_SESSION_CLICKS_NEW +
+			_NEW_SESSION_CLICKS_NAMESPACE +
 				"com.liferay.calendar.web_calendar{calendarId}Color");
 		_newPreferencePatternsMap.put(
 			"visible",
-			_SESSION_CLICKS_NEW +
+			_NEW_SESSION_CLICKS_NAMESPACE +
 				"com.liferay.calendar.web_calendar{calendarId}Visible");
 	}
 

@@ -89,16 +89,12 @@ public class ResourceBlockLocalServiceTest {
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.HYPERSONIC,
-				expectedLog =
-					"integrity constraint violation: unique constraint or " +
-						"index violation:",
+				expectedLog = "integrity constraint violation: unique constraint or index violation:",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.MYSQL,
-				expectedLog =
-					"Deadlock found when trying to get lock; try restarting " +
-						"transaction",
+				expectedLog = "Deadlock found when trying to get lock; try restarting transaction",
 				expectedType = ExpectedType.EXACT
 			),
 			@ExpectedLog(
@@ -118,15 +114,12 @@ public class ResourceBlockLocalServiceTest {
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.POSTGRESQL,
-				expectedLog =
-					"ERROR: duplicate key value violates unique constraint ",
+				expectedLog = "ERROR: duplicate key value violates unique constraint ",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.SYBASE,
-				expectedLog =
-					"Attempt to insert duplicate key row in object " +
-						"'ResourceBlock'",
+				expectedLog = "Attempt to insert duplicate key row in object 'ResourceBlock'",
 				expectedType = ExpectedType.CONTAINS
 			)
 		},
@@ -221,16 +214,12 @@ public class ResourceBlockLocalServiceTest {
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.HYPERSONIC,
-				expectedLog =
-					"integrity constraint violation: unique constraint or " +
-						"index violation:",
+				expectedLog = "integrity constraint violation: unique constraint or index violation:",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.MYSQL,
-				expectedLog =
-					"Deadlock found when trying to get lock; try restarting " +
-						"transaction",
+				expectedLog = "Deadlock found when trying to get lock; try restarting transaction",
 				expectedType = ExpectedType.EXACT
 			),
 			@ExpectedLog(
@@ -250,15 +239,12 @@ public class ResourceBlockLocalServiceTest {
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.POSTGRESQL,
-				expectedLog =
-					"ERROR: duplicate key value violates unique constraint ",
+				expectedLog = "ERROR: duplicate key value violates unique constraint ",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.SYBASE,
-				expectedLog =
-					"Attempt to insert duplicate key row in object " +
-						"'ResourceBlock'",
+				expectedLog = "Attempt to insert duplicate key row in object 'ResourceBlock'",
 				expectedType = ExpectedType.CONTAINS
 			)
 		},

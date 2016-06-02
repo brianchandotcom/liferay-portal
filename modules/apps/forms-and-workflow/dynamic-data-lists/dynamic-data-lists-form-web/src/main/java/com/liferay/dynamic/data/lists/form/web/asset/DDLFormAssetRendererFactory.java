@@ -115,8 +115,7 @@ public class DDLFormAssetRendererFactory
 	}
 
 	@Reference(
-		target =
-			"(osgi.web.symbolicname=com.liferay.dynamic.data.lists.form.web)",
+		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.lists.form.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

@@ -76,16 +76,12 @@ public class LockLocalServiceTest {
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.HYPERSONIC,
-				expectedLog =
-					"integrity constraint violation: unique constraint or " +
-						"index violation: IX_228562AD",
+				expectedLog = "integrity constraint violation: unique constraint or index violation: IX_228562AD",
 				expectedType = ExpectedType.EXACT
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.MYSQL,
-				expectedLog =
-					"Deadlock found when trying to get lock; try restarting " +
-						"transaction",
+				expectedLog = "Deadlock found when trying to get lock; try restarting transaction",
 				expectedType = ExpectedType.EXACT
 			),
 			@ExpectedLog(
@@ -105,8 +101,7 @@ public class LockLocalServiceTest {
 			),
 			@ExpectedLog(
 				expectedDBType = ExpectedDBType.POSTGRESQL,
-				expectedLog =
-					"ERROR: duplicate key value violates unique constraint ",
+				expectedLog = "ERROR: duplicate key value violates unique constraint ",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(

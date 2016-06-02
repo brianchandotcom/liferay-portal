@@ -52,8 +52,7 @@ public interface SystemLDAPConfiguration extends CompanyScopedConfiguration {
 	public int rangeSize();
 
 	@Meta.AD(
-		deflt =
-			"com.sun.jndi.ldap.connect.pool=true|com.sun.jndi.ldap.connect.timeout=500|com.sun.jndi.ldap.read.timeout=15000",
+		deflt = "com.sun.jndi.ldap.connect.pool=true|com.sun.jndi.ldap.connect.timeout=500|com.sun.jndi.ldap.read.timeout=15000",
 		required = false
 	)
 	public String[] connectionProperties();

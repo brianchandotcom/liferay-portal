@@ -16,6 +16,7 @@ package com.liferay.source.formatter.dependencies;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.provider.AddPortletProvider;
@@ -50,6 +51,14 @@ public class CombineLines
 	public static final String
 		STRING_1;
 
+	@DDMFormField(
+		label =
+			"%field-with-a-long-name-so-it-will-surpass-the-max-number-of-characters-for-a-single-line",
+		properties = {
+			"tooltip=%tooltip-with-a-long-name-so-it-will-surpass-the-max-" +
+				"number-of-characters-for-a-single-line"
+		}
+	)
 	public List<String>
 		getList() {
 

@@ -139,9 +139,7 @@ public class ResourcePermissionLocalServiceConcurrentTest {
 			@ExpectedLogs(
 				expectedLogs = {
 					@ExpectedLog(
-						expectedLog =
-							"Application exception overridden by commit " +
-								"exception",
+						expectedLog = "Application exception overridden by commit exception",
 						expectedType = ExpectedType.PREFIX
 					)
 				},

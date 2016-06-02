@@ -43,6 +43,8 @@ import org.gradle.util.Clock;
  */
 public class TaskCacheApplicator {
 
+	public static final String DIGEST_FILE_NAME = ".digest";
+
 	public void apply(CacheExtension cacheExtension, TaskCache taskCache) {
 		Task task = taskCache.getTask();
 
@@ -159,7 +161,7 @@ public class TaskCacheApplicator {
 		Copy copy = GradleUtil.addTask(
 			project, taskCache.getRestoreCacheTaskName(), Copy.class);
 
-		copy.exclude(_DIGEST_FILE_NAME);
+		copy.exclude(DIGEST_FILE_NAME);
 		copy.from(taskCache.getCacheDir());
 		copy.into(taskCache.getBaseDir());
 		copy.setDescription(
@@ -188,7 +190,7 @@ public class TaskCacheApplicator {
 	protected String getCachedDigest(TaskCache taskCache) {
 		try {
 			File digestFile = new File(
-				taskCache.getCacheDir(), _DIGEST_FILE_NAME);
+				taskCache.getCacheDir(), DIGEST_FILE_NAME);
 
 			if (!digestFile.exists()) {
 				return "";
@@ -293,7 +295,7 @@ public class TaskCacheApplicator {
 	}
 
 	protected void writeDigestFile(TaskCache taskCache, String digest) {
-		File digestFile = new File(taskCache.getCacheDir(), _DIGEST_FILE_NAME);
+		File digestFile = new File(taskCache.getCacheDir(), DIGEST_FILE_NAME);
 
 		try {
 			Files.write(
@@ -307,8 +309,6 @@ public class TaskCacheApplicator {
 			throw new GradleException("Unable to write digest file", ioe);
 		}
 	}
-
-	private static final String _DIGEST_FILE_NAME = ".digest";
 
 	private static final char _DIGEST_SEPARATOR = '-';
 

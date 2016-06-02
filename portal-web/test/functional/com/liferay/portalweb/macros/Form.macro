@@ -23,12 +23,10 @@
 		<execute function="Click" locator1="Form#PUBLISH_FORM_SWITCHER" />
 	</command>
 
-	<command name="clickRequireCaptchaSwitcher">
-		<execute function="Click" locator1="Form#REQUIRE_CAPTCHA_SWITCHER" />
-	</command>
-
 	<command name="configureRequireCaptcha">
-		<execute macro="Form#clickRequireCaptchaSwitcher" />
+		<execute macro="FormFields#enableSwitcher">
+			<var name="fieldName" value="requireCaptcha" />
+		</execute>
 
 		<execute macro="Button#clickDone" />
 	</command>

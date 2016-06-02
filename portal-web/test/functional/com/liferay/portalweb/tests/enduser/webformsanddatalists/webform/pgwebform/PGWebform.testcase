@@ -1,6 +1,5 @@
 <definition component-name="portal-web-forms-and-data-lists">
 	<property name="portal.release" value="true" />
-	<property name="osgi.modules.includes" value="web-form-portlet" />
 	<property name="testray.main.component.name" value="Web Form" />
 
 	<var name="pageName" value="Web Form Test Page" />

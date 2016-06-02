@@ -118,20 +118,11 @@
 	</command>
 
 	<command name="setUpOrgRoleLoginUserPG">
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userBirthday" value="${userBirthday}" />
+		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
 			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userGender" value="${userGender}" />
 			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-			<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -145,53 +136,19 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
+		<execute macro="JSONOrganization#addOrganization">
+			<var name="organizationName" value="${orgName}" />
+			<var name="organizationSite" value="true" />
 		</execute>
 
-		<execute macro="Organization#addCP">
-			<var name="organizationName" value="${organizationName}" />
-			<var name="orgName" value="${orgName}" />
-			<var name="orgType" value="${orgType}" />
+		<execute macro="JSONOrganization#assignUserToOrganization">
+			<var name="organizationName" value="${orgName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addSiteCP">
-			<var name="checkEnablePropagationCheckbox" value="${checkEnablePropagationCheckbox}" />
-			<var name="organizationSite" value="${organizationSite}" />
-			<var name="orgName" value="${orgName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#addMemberCP">
-			<var name="orgName" value="${orgName}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Page#add">
-			<var name="page" value="${page}" />
-			<var name="pageName" value="${pageName}" />
-			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
-			<var name="sitePageType" value="${sitePageType}" />
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="${orgName}" />
+			<var name="layoutName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -207,29 +164,14 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#addCP">
-			<var name="roleDescription" value="${roleDescription}" />
+		<execute macro="JSONRole#addOrganizationRole">
 			<var name="roleName" value="${roleName}" />
-			<var name="roleTitle" value="${roleTitle}" />
-			<var name="roleType" value="${roleType}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
-
-		<execute macro="Organization#assignOrgRoleCP">
-			<var name="orgName" value="${orgName}" />
+		<execute macro="JSONGroup#assignGroupRoleToUser">
+			<var name="groupName" value="${orgName}" />
 			<var name="roleName" value="${roleName}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -247,20 +189,11 @@
 			<var name="roleName" value="" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userBirthday" value="${userBirthday}" />
+		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
 			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userGender" value="${userGender}" />
 			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-			<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -274,23 +207,13 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#addCP">
-			<var name="roleDescription" value="${roleDescription}" />
+		<execute macro="JSONRole#addRegularRole">
 			<var name="roleName" value="${roleName}" />
-			<var name="roleTitle" value="${roleTitle}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#assignRegRoleCP">
+		<execute macro="JSONRole#assignRoleToUser">
 			<var name="roleName" value="${roleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -300,12 +223,13 @@
 	</command>
 
 	<command name="setUpRegRoleLoginUserPG">
-		<execute macro="Page#add">
-			<var name="defaultURL" value="${defaultURL}" />
-			<var name="nodePort" value="${nodePort}" />
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="Guest" />
+			<var name="layoutName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="sitePageType" value="${pageType}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -314,20 +238,11 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userBirthday" value="${userBirthday}" />
+		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
 			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userGender" value="${userGender}" />
 			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-			<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -341,23 +256,13 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#addCP">
-			<var name="roleDescription" value="${roleDescription}" />
+		<execute macro="JSONRole#addRegularRole">
 			<var name="roleName" value="${roleName}" />
-			<var name="roleTitle" value="${roleTitle}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#assignRegRoleCP">
+		<execute macro="JSONRole#assignRoleToUser">
 			<var name="roleName" value="${roleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -458,20 +363,11 @@
 			<var name="roleName" value="" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
-
-		<execute macro="User#addCP">
-			<var name="userBirthday" value="${userBirthday}" />
+		<execute macro="JSONUser#addUser">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userEmailAddressVariation" value="${userEmailAddressVariation}" />
 			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userGender" value="${userGender}" />
 			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
-			<var name="userScreenNameVariation" value="${userScreenNameVariation}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -485,69 +381,28 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
+		<execute macro="JSONGroup#addGroup">
+			<var name="groupName" value="${siteName}" />
 		</execute>
 
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="${siteName}" />
+		<execute macro="JSONGroup#assignUserToGroup">
+			<var name="groupName" value="${siteName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
+		<execute macro="JSONLayout#addLayoutByGroupName">
+			<var name="groupName" value="${siteName}" />
+			<var name="layoutName" value="${pageName}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSitesMembers">
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#addMemberCP">
-			<var name="siteName" value="${siteName}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Page#add">
-			<var name="page" value="${page}" />
-			<var name="pageName" value="${pageName}" />
-			<var name="pageTemplateName" value="${pageTemplateName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
-			<var name="sitePageType" value="${sitePageType}" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Roles" />
-		</execute>
-
-		<execute macro="Role#addCP">
-			<var name="roleDescription" value="${roleDescription}" />
+		<execute macro="JSONRole#addSiteRole">
 			<var name="roleName" value="${roleName}" />
-			<var name="roleTitle" value="${roleTitle}" />
-			<var name="roleType" value="${roleType}" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSitesMembers">
-			<var name="portlet" value="Site Memberships" />
-		</execute>
-
-		<execute macro="Site#assignRoleCP">
+		<execute macro="JSONGroup#assignGroupRoleToUser">
+			<var name="groupName" value="${siteName}" />
 			<var name="roleName" value="${roleName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

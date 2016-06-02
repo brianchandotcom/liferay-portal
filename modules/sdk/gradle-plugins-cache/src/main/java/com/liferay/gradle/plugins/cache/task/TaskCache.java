@@ -229,6 +229,11 @@ public class TaskCache implements PatternFilterable {
 		return testFile(Arrays.asList(testFiles));
 	}
 
+	@Override
+	public String toString() {
+		return "task cache '" + _name + "'";
+	}
+
 	private Object _baseDir;
 	private Object _cacheDir;
 	private boolean _disabled;

@@ -46,6 +46,9 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
+		<finder name="Completed" return-type="Collection">
+			<finder-column name="completed" />
+		</finder>
 		<finder name="Status" return-type="Collection">
 			<finder-column name="status" />
 		</finder>

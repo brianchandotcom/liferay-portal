@@ -44,6 +44,8 @@
 			</c:if>
 		</c:otherwise>
 	</c:choose>
+
+	Liferay.BrowserSelectors.run();
 </aui:script>
 
 <aui:script use="aui-base">

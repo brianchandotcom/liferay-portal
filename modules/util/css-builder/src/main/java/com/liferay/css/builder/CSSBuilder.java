@@ -377,12 +377,11 @@ public class CSSBuilder {
 		_writeOutputFile(fileName, rtlContent, true);
 	}
 
-	private File _unzipPortalCommon(File portalCommonZip) throws IOException {
-		Path portalCommonCssPath = Files.createTempDirectory("portalCommonCss");
+	private File _unzipPortalCommon(File portalCommonFile) throws IOException {
+		Path portalCommonCssDirPath = Files.createTempDirectory(
+			"portalCommonCss");
 
-		File portalCommonCssDir = portalCommonCssPath.toFile();
-
-		try (ZipFile zipFile = new ZipFile(portalCommonZip)) {
+		try (ZipFile zipFile = new ZipFile(portalCommonFile)) {
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
 			while (enumeration.hasMoreElements()) {
@@ -395,25 +394,20 @@ public class CSSBuilder {
 
 					continue;
 				}
-				else {
-					name = name.replace("META-INF/resources", "");
 
-					File file = new File(portalCommonCssDir, name);
+				name = name.substring(19);
 
-					File parentFile = file.getParentFile();
+				Path path = portalCommonCssDirPath.resolve(name);
 
-					if (!parentFile.exists()) {
-						parentFile.mkdirs();
-					}
+				Files.createDirectories(path.getParent());
 
-					Files.copy(
-						zipFile.getInputStream(zipEntry), file.toPath(),
-						StandardCopyOption.REPLACE_EXISTING);
-				}
+				Files.copy(
+					zipFile.getInputStream(zipEntry), path,
+					StandardCopyOption.REPLACE_EXISTING);
 			}
 		}
 
-		return portalCommonCssDir;
+		return portalCommonCssDirPath.toFile();
 	}
 
 	private void _write(File file, String content) throws Exception {

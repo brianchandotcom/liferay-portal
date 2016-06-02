@@ -68,6 +68,13 @@
 		<execute function="Type" locator1="FormFields#PARAGRAPH_BODY_TEXT_FIELD" value1="${fieldValue}" />
 	</command>
 
+	<command name="editRepeatableTextMultiline">
+		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_repeatableFieldNumber" value="${repeatableFieldNumber}" />
+
+		<execute function="Type" locator1="FormFields#REPEATABLE_TEXT_MULTILINE_FIELD" value1="${fieldValue}" />
+	</command>
+
 	<command name="editRepeatingText">
 		<var name="key_fieldName" value="${fieldName}" />
 
@@ -267,6 +274,45 @@
 
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#TEXT_LABEL" value1="${fieldLabel}" />
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#TEXT_LABEL_2" value1="${fieldLabel}" />
+	</command>
+
+	<command name="viewRepeatableTextMultilineField">
+		<execute macro="FormFields#viewRepeatableTextMultilineLabel">
+			<var name="fieldLabel" value="${fieldLabel}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="repeatableFieldNumber" value="${repeatableFieldNumber}" />
+		</execute>
+
+		<if>
+			<isset var="fieldHelpText" />
+			<then>
+				<execute macro="FormFields#viewRepeatableFieldHelpText">
+					<var name="fieldHelpText" value="${fieldHelpText}" />
+					<var name="fieldName" value="${fieldName}" />
+					<var name="repeatableFieldNumber" value="${repeatableFieldNumber}" />
+				</execute>
+			</then>
+		</if>
+
+		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_repeatableFieldNumber" value="${repeatableFieldNumber}" />
+
+		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#REPEATABLE_TEXT_MULTILINE_FIELD" />
+	</command>
+
+	<command name="viewRepeatableTextMultilineLabel">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_repeatableFieldNumber" value="${repeatableFieldNumber}" />
+
+		<execute function="AssertTextEquals#assertText" locator1="FormFields#REPEATABLE_TEXT_MULTILINE_LABEL" value1="${fieldLabel}" />
+	</command>
+
+	<command name="viewRepeatableTextMultilineValue">
+		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_repeatableFieldNumber" value="${repeatableFieldNumber}" />
+
+		<execute function="AssertTextEquals" locator1="FormFields#REPEATABLE_TEXT_MULTILINE_FIELD" value1="${fieldValue}" />
 	</command>
 
 	<command name="viewRequiredAsterisk">

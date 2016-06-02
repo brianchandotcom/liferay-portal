@@ -175,6 +175,16 @@
 </tr>
 <!--TEXT-->
 <tr>
+	<td>REPEATABLE_TEXT_MULTILINE_FIELD</td>
+	<td>//div[contains(@class,'form-field-container')][${key_repeatableFieldNumber}]//textarea[contains(@id,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEATABLE_TEXT_MULTILINE_LABEL</td>
+	<td>//div[contains(@class,'form-field-container')][${key_repeatableFieldNumber}]//div[contains(@data-fieldname,'${key_fieldName}')]//label[contains(.,'${key_fieldLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEXT_FIELD</td>
 	<td>//input[@type='text' and contains(@id,'${key_fieldName}')]</td>
 	<td></td>

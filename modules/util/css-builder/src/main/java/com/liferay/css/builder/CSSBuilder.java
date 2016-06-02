@@ -138,9 +138,7 @@ public class CSSBuilder implements AutoCloseable {
 	@Override
 	public void close() throws Exception {
 		if (_cleanPortalCommonDir) {
-			File portalCommonDir = new File(_portalCommonDirName);
-
-			_deltree(portalCommonDir.toPath());
+			_deltree(_portalCommonDirName);
 		}
 	}
 
@@ -210,9 +208,9 @@ public class CSSBuilder implements AutoCloseable {
 		}
 	}
 
-	private void _deltree(Path path) throws IOException {
+	private void _deltree(String dirName) throws IOException {
 		Files.walkFileTree(
-			path,
+			Paths.get(dirName),
 			new SimpleFileVisitor<Path>() {
 
 				@Override

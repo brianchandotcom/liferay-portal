@@ -39,9 +39,9 @@ childPages = ListUtil.sort(childPages);
 <%
 for (WikiPage childPage : childPages) {
 	if (Validator.isNull(childPage.getRedirectTitle())) {
-		request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_PARENT, childPage);
-		request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_PAGE, wikiPage);
 		request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_DEPTH, depth + 1);
+		request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_PAGE, wikiPage);
+		request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_PARENT, childPage);
 %>
 
 		<liferay-util:include page="/wiki/page_tree.jsp" servletContext="<%= application %>" />

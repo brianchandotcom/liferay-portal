@@ -62,8 +62,8 @@ else {
 		request.setAttribute("view.jsp-assetEntryIndex", Integer.valueOf(0));
 
 		request.setAttribute("view.jsp-assetEntry", assetEntry);
-		request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
 		request.setAttribute("view.jsp-assetRenderer", assetRenderer);
+		request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
 
 		request.setAttribute("view.jsp-title", title);
 

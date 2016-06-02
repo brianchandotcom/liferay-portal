@@ -56,8 +56,8 @@
 
 					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 
-					request.setAttribute(WebKeys.ASSET_RENDERER_FACTORY, assetRendererFactory);
 					request.setAttribute(WebKeys.ASSET_RENDERER, assetRenderer);
+					request.setAttribute(WebKeys.ASSET_RENDERER_FACTORY, assetRendererFactory);
 				%>
 
 					<strong><%= assetEntry.getTitle() %></strong>

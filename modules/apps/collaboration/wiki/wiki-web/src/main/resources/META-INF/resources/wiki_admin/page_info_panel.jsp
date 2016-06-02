@@ -250,8 +250,8 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 								<li>
 
 									<%
-									request.setAttribute("page_info_panel.jsp-socialActivity", socialActivity);
 									request.setAttribute(WikiWebKeys.WIKI_PAGE, wikiPage);
+									request.setAttribute("page_info_panel.jsp-socialActivity", socialActivity);
 									%>
 
 									<liferay-util:include page="<%= path %>" servletContext="<%= application %>" />

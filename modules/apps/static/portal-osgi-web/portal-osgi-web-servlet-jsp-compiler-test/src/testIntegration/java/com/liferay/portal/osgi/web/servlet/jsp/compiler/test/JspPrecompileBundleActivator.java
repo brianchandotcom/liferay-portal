@@ -14,8 +14,9 @@
 
 package com.liferay.portal.osgi.web.servlet.jsp.compiler.test;
 
+import com.liferay.portal.kernel.util.HashMapDictionary;
+
 import java.util.Dictionary;
-import java.util.Hashtable;
 
 import javax.portlet.Portlet;
 
@@ -30,7 +31,7 @@ public class JspPrecompileBundleActivator implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) {
-		Dictionary<String, String> dictionary = new Hashtable<>();
+		Dictionary<String, String> dictionary = new HashMapDictionary<>();
 
 		dictionary.put("javax.portlet.name", JspPrecompilePortlet.PORTLET_NAME);
 		dictionary.put("javax.portlet.display-name", "Jsp Precompile Portlet");

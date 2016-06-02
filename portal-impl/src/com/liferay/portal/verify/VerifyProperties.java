@@ -1787,6 +1787,7 @@ public class VerifyProperties extends VerifyProcess {
 		"journal.article.form.add", "journal.article.form.default.values",
 		"journal.article.form.update", "journal.article.form.translate",
 		"journal.article.types", "journal.articles.page.delta.values",
+		"journal.browse.by.structures.sorted.by.name",
 		"journal.template.language.parser[css]",
 		"journal.template.language.parser[ftl]",
 		"journal.template.language.parser[vm]",
@@ -1860,7 +1861,7 @@ public class VerifyProperties extends VerifyProcess {
 		"webdav.storage.show.edit.url", "webdav.storage.show.view.url",
 		"webdav.storage.tokens", "wiki.email.page.added.signature",
 		"wiki.email.page.updated.signature", "xss.allow", "ym.login",
-		"ym.password", "journal.browse.by.structures.sorted.by.name"
+		"ym.password"
 	};
 
 	private static final String[] _OBSOLETE_SYSTEM_KEYS = new String[] {

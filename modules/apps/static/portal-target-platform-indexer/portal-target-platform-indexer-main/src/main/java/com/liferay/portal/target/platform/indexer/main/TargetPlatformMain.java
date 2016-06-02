@@ -52,13 +52,11 @@ import java.util.List;
 public class TargetPlatformMain {
 
 	public static void main(String[] args) throws Exception {
-		String moduleFrameworkBaseDirName = System.getProperty(
-			"module.framework.base.dir");
+		String liferatHome = System.getProperty("liferay.home");
 
-		if (moduleFrameworkBaseDirName == null) {
+		if (liferatHome == null) {
 			System.err.println(
-				"== -Dmodule.framework.base.dir must point to a valid " +
-					"directory");
+				"== -Dliferay.home must point to a valid directory");
 
 			return;
 		}
@@ -67,21 +65,21 @@ public class TargetPlatformMain {
 
 		String indexesFileName = System.getProperty(
 			"indexes.file",
-			moduleFrameworkBaseDirName + "/" +
+			liferatHome + "/osgi/" +
 				Indexer.DIR_NAME_TARGET_PLATFORM + "/target-platform-indexes-" +
 					System.currentTimeMillis() + ".zip");
 		String moduleFrameworkStaticDirName = System.getProperty(
 			"module.framework.static.dir",
-			moduleFrameworkBaseDirName.concat("/static"));
+			liferatHome.concat("/osgi/static"));
 		String moduleFrameworkModulesDirName = System.getProperty(
 			"module.framework.modules.dir",
-			moduleFrameworkBaseDirName.concat("/modules"));
+			liferatHome.concat("/osgi/modules"));
 		String moduleFrameworkPortalDirName = System.getProperty(
 			"module.framework.portal.dir",
-			moduleFrameworkBaseDirName.concat("/portal"));
+			liferatHome.concat("/osgi/portal"));
 		String moduleFrameworkMarketplaceDir = System.getProperty(
 			"module.framework.marketplace.dir",
-			moduleFrameworkBaseDirName.concat("/marketplace"));
+			liferatHome.concat("/osgi/marketplace"));
 
 		List<URI> uris = _index(
 			indexesFileName, moduleFrameworkStaticDirName,
@@ -91,7 +89,7 @@ public class TargetPlatformMain {
 		if (_validate(uris)) {
 			String integrityPropertiesFileName = System.getProperty(
 				"integrity.properties",
-				moduleFrameworkBaseDirName + "/" +
+				liferatHome + "/osgi/" +
 					Indexer.DIR_NAME_TARGET_PLATFORM + "/integrity.properties");
 
 			_updateIntegrityProperties(

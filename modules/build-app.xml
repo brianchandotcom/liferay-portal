@@ -3,6 +3,7 @@
 
 <project name="build-app">
 	<property name="osgi.dir" value="${basedir}/../../bundles/osgi" />
+	<property name="liferay.home" value="${osgi.dir}/.." />
 
 	<macrodef name="set-artifact-versions-previous-release">
 		<attribute name="app.version.previous.release" />
@@ -204,7 +205,7 @@
 
 			<!-- Order is important -->
 
-			<fileset dir="${osgi.dir}/../tools/portal-target-platform-indexer-main" includes="com.liferay.portal.target.platform.indexer.jar,com.liferay.portal.target.platform.indexer.main.jar" />
+			<fileset dir="${liferay.home}/tools/portal-target-platform-indexer-main" includes="com.liferay.portal.target.platform.indexer.jar,com.liferay.portal.target.platform.indexer.main.jar" />
 			<fileset dir="${osgi.dir}/core" includes="com.liferay.portal.bootstrap.jar,org.eclipse.osgi.jar" />
 		</path>
 
@@ -214,7 +215,7 @@
 			fork="true"
 			newenvironment="true"
 		>
-			<jvmarg value="-Dmodule.framework.base.dir=${osgi.dir}" />
+			<jvmarg value="-Dliferay.home=${liferay.home}" />
 		</java>
 	</target>
 

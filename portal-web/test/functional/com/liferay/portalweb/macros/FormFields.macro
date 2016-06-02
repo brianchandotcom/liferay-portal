@@ -357,6 +357,16 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
+		<if>
+			<isset var="fieldHelpText" />
+			<then>
+				<execute macro="FormFields#viewFieldHelpText">
+					<var name="fieldHelpText" value="${fieldHelpText}" />
+					<var name="fieldName" value="${fieldName}" />
+				</execute>
+			</then>
+		</if>
+
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#TEXT_FIELD" />

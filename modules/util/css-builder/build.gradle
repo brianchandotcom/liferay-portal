@@ -2,10 +2,6 @@ apply plugin: "com.liferay.maven.plugin.builder"
 
 task copyPortalCommonCssJar(type: Copy)
 
-configurations {
-	portalCommonCssJar
-}
-
 buildPluginDescriptor {
 	ext {
 		autoClean = false
@@ -18,7 +14,7 @@ buildPluginDescriptor {
 }
 
 copyPortalCommonCssJar {
-	from configurations.portalCommonCssJar
+	from configurations.portalCommonCSS
 	into new File(buildDir, "portal-common-css-jar")
 }
 
@@ -28,8 +24,6 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.sass.compiler.ruby", version: "2.0.3"
 	compile group: "org.apache.ant", name: "ant", version: "1.9.4"
 	compile group: "org.slf4j", name: "slf4j-log4j12", version: "1.7.2"
-
-	portalCommonCssJar group: "com.liferay", name: "com.liferay.frontend.css.common", version: "2.0.1"
 
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"

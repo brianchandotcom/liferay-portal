@@ -254,13 +254,13 @@ YUI.add(
 			run: function() {
 				var documentElement = DOC.documentElement;
 
-				var selectors = this.getSelectors().split(' ');
+				var selectors = this.getSelectors();
 
-				if (selectors.indexOf(YUI3_JS_ENABLED) === -1) {
-					selectors.push(YUI3_JS_ENABLED);
+				if (documentElement.className.indexOf(YUI3_JS_ENABLED) === -1 && selectors.indexOf(YUI3_JS_ENABLED) === -1) {
+					selectors += ' ' + YUI3_JS_ENABLED;
 				}
 
-				documentElement.className += ' ' + selectors.join(' ');
+				documentElement.className += ' ' + selectors;
 			}
 		};
 

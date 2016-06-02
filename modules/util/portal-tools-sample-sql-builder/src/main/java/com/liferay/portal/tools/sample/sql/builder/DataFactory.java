@@ -136,6 +136,7 @@ import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -213,6 +214,7 @@ import java.io.InputStreamReader;
 import java.text.Format;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -2224,13 +2226,9 @@ public class DataFactory {
 		List<ResourcePermissionModel> resourcePermissionModels =
 			new ArrayList<>(3);
 
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(getClassName(ddmStructureModel.getClassNameId()));
-		sb.append(StringPool.DASH);
-		sb.append(DDMStructure.class.getName());
-
-		String name = sb.toString();
+		String name = _getResourcePermissionModelName(
+			DDMStructure.class.getName(),
+			getClassName(ddmStructureModel.getClassNameId()));
 
 		String primKey = String.valueOf(ddmStructureModel.getStructureId());
 
@@ -2254,13 +2252,9 @@ public class DataFactory {
 		List<ResourcePermissionModel> resourcePermissionModels =
 			new ArrayList<>(3);
 
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(getClassName(ddmTemplateModel.getResourceClassNameId()));
-		sb.append(StringPool.DASH);
-		sb.append(DDMTemplate.class.getName());
-
-		String name = sb.toString();
+		String name = _getResourcePermissionModelName(
+			DDMTemplate.class.getName(),
+			getClassName(ddmTemplateModel.getResourceClassNameId()));
 
 		String primKey = String.valueOf(ddmTemplateModel.getTemplateId());
 
@@ -3262,6 +3256,25 @@ public class DataFactory {
 	protected Date nextFutureDate() {
 		return new Date(
 			_FUTURE_TIME + (_futureDateCounter.get() * Time.SECOND));
+	}
+
+	private String _getResourcePermissionModelName(String... classNames) {
+		if (ArrayUtil.isEmpty(classNames)) {
+			return StringPool.BLANK;
+		}
+
+		Arrays.sort(classNames);
+
+		StringBundler sb = new StringBundler(classNames.length * 2);
+
+		for (String className : classNames) {
+			sb.append(className);
+			sb.append(StringPool.DASH);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	private static final long _CURRENT_TIME = System.currentTimeMillis();

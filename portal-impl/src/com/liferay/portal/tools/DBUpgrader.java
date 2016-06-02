@@ -96,29 +96,13 @@ public class DBUpgrader {
 			upgrade();
 			verify();
 
-			Registry registry = RegistryUtil.getRegistry();
-
-			Map<String, Object> properties = new HashMap<>();
-
-			properties.put("module.service.lifecycle", "database.initialized");
-			properties.put("service.vendor", ReleaseInfo.getVendor());
-			properties.put("service.version", ReleaseInfo.getVersion());
-
-			registry.registerService(
-				ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
-				properties);
+			_registerModuleServiceLifecycle(
+				ModuleServiceLifecycle.LIFECYCLE_VALUE_DATABASE_INITIALIZED);
 
 			InitUtil.registerContext();
 
-			properties = new HashMap<>();
-
-			properties.put("module.service.lifecycle", "portal.initialized");
-			properties.put("service.vendor", ReleaseInfo.getVendor());
-			properties.put("service.version", ReleaseInfo.getVersion());
-
-			registry.registerService(
-				ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
-				properties);
+			_registerModuleServiceLifecycle(
+				ModuleServiceLifecycle.LIFECYCLE_VALUE_PORTAL_INITIALIZED);
 
 			System.out.println(
 				"\nCompleted Liferay core upgrade and verify processes in " +
@@ -315,6 +299,22 @@ public class DBUpgrader {
 		properties.put("servlet.context.name", release.getServletContextName());
 
 		serviceRegistrar.registerService(Release.class, release, properties);
+	}
+
+	private static void _registerModuleServiceLifecycle(
+		String lifecycleValue) {
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("module.service.lifecycle", lifecycleValue);
+		properties.put("service.vendor", ReleaseInfo.getVendor());
+		properties.put("service.version", ReleaseInfo.getVersion());
+
+		registry.registerService(
+			ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
+			properties);
 	}
 
 	private static void _checkPermissionAlgorithm() throws Exception {

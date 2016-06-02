@@ -39,16 +39,19 @@
 	<command name="AddDMDocumentRegRole" priority="5">
 		<property name="portal.acceptance" value="false" />
 
-		<execute macro="Permissions#setUpRegRoleLoginUserPG">
+		<execute macro="Permissions#setUpRegRolePG">
 			<var name="pageName" value="Documents and Media Page" />
 			<var name="portletName" value="Documents and Media" />
 			<var name="roleName" value="Regrole Name" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -57,10 +60,18 @@
 
 		<execute function="AssertElementNotPresent" locator1="Toolbar#ADD" value1="Add" />
 
-		<execute macro="Permissions#definePermissionLoginUserCP">
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Permissions#definePermissionCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Add Document" />
 			<var name="roleName" value="Regrole Name" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
@@ -74,10 +85,18 @@
 			<var name="dmDocumentTitle" value="Document_1.doc" />
 		</execute>
 
-		<execute macro="Permissions#removePermissionLoginUserCP">
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Permissions#removePermissionCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Add Document" />
 			<var name="roleName" value="Regrole Name" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>

@@ -81,13 +81,29 @@ public class CSSBuilderTest {
 	}
 
 	@Test
-	public void testJniSassToCssBuilder() throws Exception {
-		_testSassToCssBuilder("jni");
+	public void testCssBuilderWithJni() throws Exception {
+		_testCssBuilder("jni", "build/portal-common-css");
 	}
 
 	@Test
-	public void testRubySassToCssBuilder() throws Exception {
-		_testSassToCssBuilder("ruby");
+	public void testCssBuilderWithJniWithPortalCommonJar() throws Exception {
+		_testCssBuilder(
+			"jni",
+			"build/portal-common-css-jar/" +
+				"com.liferay.frontend.css.common-2.0.1.jar");
+	}
+
+	@Test
+	public void testCssBuilderWithRuby() throws Exception {
+		_testCssBuilder("ruby", "build/portal-common-css");
+	}
+
+	@Test
+	public void testCssBuilderWithRubyWithPortalCommonJar() throws Exception {
+		_testCssBuilder(
+			"ruby",
+			"build/portal-common-css-jar/" +
+				"com.liferay.frontend.css.common-2.0.1.jar");
 	}
 
 	private String _read(String fileName) throws Exception {
@@ -99,12 +115,12 @@ public class CSSBuilderTest {
 			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 	}
 
-	private void _testSassToCssBuilder(String compiler) throws Exception {
+	private void _testCssBuilder(String compiler, String portalCommonCssPath)
+		throws Exception {
+
 		CSSBuilder cssBuilder = new CSSBuilder(
-			_docrootDirName, false,
-			"../../apps/foundation/frontend-css/frontend-css-common/tmp" +
-				"/META-INF/resources",
-			6, new String[0], compiler);
+			_docrootDirName, false, portalCommonCssPath, 6, new String[0],
+			compiler);
 
 		cssBuilder.execute(Arrays.asList(new String[] {"/css"}));
 

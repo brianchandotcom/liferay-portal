@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.css-class-wrapper=google-maps-portlet",
 		"com.liferay.portlet.display-category=category.google",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
-		"com.liferay.portlet.icon=/icons/icon.png",
+		"com.liferay.portlet.icon=/icons/google_maps.png",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.footer-portlet-javascript=/js/main.js",
 		"com.liferay.portlet.use-default-template=true",

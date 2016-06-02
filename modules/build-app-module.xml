@@ -34,11 +34,11 @@
 		<available file="build.xml" />
 	</condition>
 
-	<target depends="download-artifact,record-artifact-change-log" name="dist-module-artifact" />
+	<target depends="download-artifact,download-artifact-dependencies,record-artifact-change-log" name="dist-module-artifact" />
 
 	<target depends="move-artifact,move-artifact-dependencies" name="dist-module-artifact-lpkg" />
 
-	<target name="download-artifact">
+	<target name="download-artifact" unless="artifact.exclude">
 		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
 			<condition>
 				<not>
@@ -56,6 +56,15 @@
 		</loadproperties>
 
 		<get dest="${dist.dir}" src="${artifact.url}" />
+	</target>
+
+	<target if="artifact.deploy.dependencies" name="download-artifact-dependencies">
+		<exec dir="${modules.dir}" executable="${modules.dir}/../gradlew${gradlew.suffix}">
+			<arg value="${gradle.project.path}:deployDependencies" />
+			<arg value="-Ddeploy.dependencies.keep.versions=true" />
+			<arg value="-Dforced.cache.enabled=true" />
+			<arg value="-Pforced.deploy.dir=${dist.dir}" />
+		</exec>
 	</target>
 
 	<target

@@ -34,7 +34,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.gradle.api.DefaultTask;
-import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
@@ -66,10 +65,6 @@ public class ReplaceRegexTask extends DefaultTask {
 
 	public List<Closure<Boolean>> getReplaceOnlyIf() {
 		return _replaceOnlyIfClosures;
-	}
-
-	public boolean isIgnoreUnmatched() {
-		return _ignoreUnmatched;
 	}
 
 	public ReplaceRegexTask match(String regex, Iterable<Object> files) {
@@ -131,10 +126,6 @@ public class ReplaceRegexTask extends DefaultTask {
 				replaceRegex(file, pattern);
 			}
 		}
-	}
-
-	public void setIgnoreUnmatched(boolean ignoreUnmatched) {
-		_ignoreUnmatched = ignoreUnmatched;
 	}
 
 	public void setMatches(Map<String, FileCollection> matches) {
@@ -224,19 +215,6 @@ public class ReplaceRegexTask extends DefaultTask {
 						" in " + file);
 			}
 		}
-		else if (content.equals(newContent)) {
-			String message = "Unable to match " + pattern + " in " + file;
-
-			if (isIgnoreUnmatched()) {
-				if (_logger.isInfoEnabled()) {
-					_logger.info(message);
-				}
-
-				return;
-			}
-
-			throw new GradleException(message);
-		}
 
 		if (!content.equals(newContent)) {
 			Files.write(path, newContent.getBytes(StandardCharsets.UTF_8));
@@ -252,7 +230,6 @@ public class ReplaceRegexTask extends DefaultTask {
 	private static final Logger _logger = Logging.getLogger(
 		ReplaceRegexTask.class);
 
-	private boolean _ignoreUnmatched;
 	private final Map<String, FileCollection> _matches = new LinkedHashMap<>();
 	private final List<Closure<String>> _preClosures = new ArrayList<>();
 	private Object _replacement;

@@ -105,12 +105,10 @@ public class JspPrecompileTest {
 
 		_bundle.start();
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(PropsUtil.get(PropsKeys.LIFERAY_HOME));
-		sb.append(StringPool.SLASH);
-		sb.append("work");
-		sb.append(StringPool.SLASH);
+		sb.append("/work/");
 		sb.append(_bundle.getSymbolicName());
 		sb.append(StringPool.DASH);
 		sb.append(_bundle.getVersion());
@@ -164,13 +162,14 @@ public class JspPrecompileTest {
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		StringBundler sb = new StringBundler(3);
+		StringBundler sb = new StringBundler(4);
 
+		sb.append(_parentWorkDir);
 		sb.append(StringPool.SLASH);
 		sb.append(_JSP_PATH);
 		sb.append(_PRECOMPILE_JSP_CLASS);
 
-		File file = new File(_parentWorkDir.concat(sb.toString()));
+		File file = new File(sb.toString());
 
 		File parentFile = file.getParentFile();
 
@@ -213,15 +212,15 @@ public class JspPrecompileTest {
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
 
-			StringBundler message = new StringBundler(4);
+			sb.setIndex(0);
 
-			message.append("Compiling JSP: ");
-			message.append(_JSP_PACKAGE);
-			message.append(
+			sb.append("Compiling JSP: ");
+			sb.append(_JSP_PACKAGE);
+			sb.append(
 				StringUtil.replace(
 					_PRECOMPILE_JSP, CharPool.PERIOD, CharPool.UNDERLINE));
 
-			if (_containsLog(loggingEvents, message.toString())) {
+			if (_containsLog(loggingEvents, sb.toString())) {
 				Assert.fail("JSP was compiled at runtime");
 			}
 		}
@@ -240,7 +239,7 @@ public class JspPrecompileTest {
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
 
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(3);
 
 			sb.append("Compiling JSP: ");
 			sb.append(_JSP_PACKAGE);
@@ -392,14 +391,13 @@ public class JspPrecompileTest {
 	}
 
 	private void _doJspTest(String jsp) throws IOException {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append("http://localhost:8080/web");
 		sb.append(_group.getFriendlyURL());
 		sb.append(StringPool.QUESTION);
 		sb.append(JspPrecompilePortlet.JSP_PARAMETER);
-		sb.append(StringPool.EQUAL);
-		sb.append(StringPool.SLASH);
+		sb.append("=/");
 		sb.append(jsp);
 
 		URL url = new URL(sb.toString());

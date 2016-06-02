@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -143,26 +142,11 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			Map<Locale, String> alternateURLs = SitemapUtil.getAlternateURLs(
 				articleURL, themeDisplay, layout);
 
-			SitemapUtil.addURLElement(
-				element, articleURL, null, journalArticle.getModifiedDate(),
-				articleURL, alternateURLs);
-
-			if (alternateURLs.size() > 1) {
-				Locale defaultLocale = LocaleUtil.getSiteDefault();
-
-				for (Map.Entry<Locale, String> entry :
-						alternateURLs.entrySet()) {
-
-					Locale availableLocale = entry.getKey();
-					String alternateURL = entry.getValue();
-
-					if (!availableLocale.equals(defaultLocale)) {
-						SitemapUtil.addURLElement(
-							element, alternateURL, null,
-							journalArticle.getModifiedDate(), articleURL,
-							alternateURLs);
-					}
-				}
+			for (String alternateURL : alternateURLs.values()) {
+				SitemapUtil.addURLElement(
+					element, alternateURL, null,
+					journalArticle.getModifiedDate(), articleURL,
+					alternateURLs);
 			}
 
 			processedArticleIds.add(journalArticle.getArticleId());

@@ -232,6 +232,27 @@
 	<td>//input[contains(@class,'message-input')]</td>
 	<td></td>
 </tr>
+<!--CAPTCHA-->
+<tr>
+	<td>CAPTCHA_FIELD</td>
+	<td>//div[@class='taglib-captcha']/img[contains(@id, 'captcha')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAPTCHA_FIELD_REFRESH</td>
+	<td>//div[@class='taglib-captcha']//a[contains(@id, 'refreshCaptcha')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAPTCHA_LABEL</td>
+	<td>//div[@class='taglib-captcha']//label[@class='control-label']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAPTCHA_TEXT_VERIFICATION</td>
+	<td>//div[@class='taglib-captcha']//input[@type='text' and contains(@id, 'captchaText')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td></td>
 	<td></td>

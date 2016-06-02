@@ -1787,6 +1787,7 @@ public class VerifyProperties extends VerifyProcess {
 		"journal.article.form.add", "journal.article.form.default.values",
 		"journal.article.form.update", "journal.article.form.translate",
 		"journal.article.types", "journal.articles.page.delta.values",
+		"journal.browse.by.structures.sorted.by.name",
 		"journal.template.language.parser[css]",
 		"journal.template.language.parser[ftl]",
 		"journal.template.language.parser[vm]",

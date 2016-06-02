@@ -4,7 +4,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.alloy.taglib", version: "1.0.1"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.cache", version: "1.0.9"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.change.log.builder", version: "1.0.1"
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "1.0.12"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "1.0.13"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.gulp", version: "1.0.2"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.jasper.jspc", version: "1.0.8"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.javadoc.formatter", version: "1.0.7"

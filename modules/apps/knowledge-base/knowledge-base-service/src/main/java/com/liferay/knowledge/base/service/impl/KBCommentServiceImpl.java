@@ -70,7 +70,25 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 				getPermissionChecker(), groupId,
 				KBActionKeys.VIEW_SUGGESTIONS)) {
 
-			return kbCommentPersistence.findByG_S(groupId, status, start, end);
+			return kbCommentLocalService.getKBComments(
+				groupId, status, start, end);
+		}
+
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<KBComment> getKBComments(
+			long groupId, int status, int start, int end,
+			OrderByComparator<KBComment> obc)
+		throws PortalException {
+
+		if (AdminPermission.contains(
+				getPermissionChecker(), groupId,
+				KBActionKeys.VIEW_SUGGESTIONS)) {
+
+			return kbCommentLocalService.getKBComments(
+				groupId, status, start, end, obc);
 		}
 
 		return Collections.emptyList();
@@ -85,7 +103,8 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 				getPermissionChecker(), groupId,
 				KBActionKeys.VIEW_SUGGESTIONS)) {
 
-			return kbCommentPersistence.findByGroupId(groupId, start, end, obc);
+			return kbCommentLocalService.getKBComments(
+				groupId, start, end, obc);
 		}
 
 		return Collections.emptyList();
@@ -103,6 +122,23 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 
 			return kbCommentLocalService.getKBComments(
 				className, classPK, status, start, end);
+		}
+
+		return Collections.emptyList();
+	}
+
+	@Override
+	public List<KBComment> getKBComments(
+			long groupId, String className, long classPK, int status, int start,
+			int end, OrderByComparator<KBComment> obc)
+		throws PortalException {
+
+		if (SuggestionPermission.contains(
+				getPermissionChecker(), groupId, className, classPK,
+				KBActionKeys.VIEW_SUGGESTIONS)) {
+
+			return kbCommentLocalService.getKBComments(
+				className, classPK, status, start, end, obc);
 		}
 
 		return Collections.emptyList();
@@ -145,7 +181,7 @@ public class KBCommentServiceImpl extends KBCommentServiceBaseImpl {
 				getPermissionChecker(), groupId,
 				KBActionKeys.VIEW_SUGGESTIONS)) {
 
-			return kbCommentPersistence.countByG_S(groupId, status);
+			return kbCommentLocalService.getKBCommentsCount(groupId, status);
 		}
 
 		return 0;

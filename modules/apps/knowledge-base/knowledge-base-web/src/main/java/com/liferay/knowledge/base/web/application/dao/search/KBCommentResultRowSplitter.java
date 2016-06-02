@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -38,8 +39,16 @@ public class KBCommentResultRowSplitter implements ResultRowSplitter {
 		KBSuggestionListDisplayContext kbSuggestionListDisplayContext,
 		ResourceBundle resourceBundle) {
 
+		this(kbSuggestionListDisplayContext, resourceBundle, "desc");
+	}
+
+	public KBCommentResultRowSplitter(
+		KBSuggestionListDisplayContext kbSuggestionListDisplayContext,
+		ResourceBundle resourceBundle, String orderByType) {
+
 		_kbSuggestionListDisplayContext = kbSuggestionListDisplayContext;
 		_resourceBundle = resourceBundle;
+		_orderByType = orderByType;
 	}
 
 	@Override
@@ -83,6 +92,10 @@ public class KBCommentResultRowSplitter implements ResultRowSplitter {
 			resultRowSplitterEntries.add(
 				new ResultRowSplitterEntry(
 					getCompletedKBCommentsLabel(), completedResultRows));
+		}
+
+		if (_orderByType.equals("asc")) {
+			Collections.reverse(resultRowSplitterEntries);
 		}
 
 		return resultRowSplitterEntries;
@@ -149,6 +162,7 @@ public class KBCommentResultRowSplitter implements ResultRowSplitter {
 
 	private final KBSuggestionListDisplayContext
 		_kbSuggestionListDisplayContext;
+	private final String _orderByType;
 	private final ResourceBundle _resourceBundle;
 
 }

@@ -15,33 +15,33 @@
 package com.liferay.knowledge.base.util.comparator;
 
 import com.liferay.knowledge.base.model.KBComment;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * @author Sergio González
+ * @author Roberto Díaz
  */
-public class KBCommentModifiedDateComparator
-	extends OrderByComparator<KBComment> {
+public class KBCommentUserNameComparator extends OrderByComparator<KBComment> {
 
-	public static final String ORDER_BY_ASC = "KBComment.modifiedDate ASC";
+	public static final String ORDER_BY_ASC = "KBComment.userName ASC";
 
-	public static final String ORDER_BY_DESC = "KBComment.modifiedDate DESC";
+	public static final String ORDER_BY_DESC = "KBComment.userName DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
+	public static final String[] ORDER_BY_FIELDS = {"userName"};
 
-	public KBCommentModifiedDateComparator() {
+	public KBCommentUserNameComparator() {
 		this(false);
 	}
 
-	public KBCommentModifiedDateComparator(boolean ascending) {
+	public KBCommentUserNameComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(KBComment kbComment1, KBComment kbComment2) {
-		int value = DateUtil.compareTo(
-			kbComment1.getModifiedDate(), kbComment2.getModifiedDate());
+		String userName1 = kbComment1.getUserName();
+		String userName2 = kbComment2.getUserName();
+
+		int value = userName1.compareToIgnoreCase(userName2);
 
 		if (_ascending) {
 			return value;

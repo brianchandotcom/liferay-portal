@@ -30,4 +30,6 @@ request.setAttribute("init.jsp-enableSocialBookmarks", false);
 request.setAttribute("init.jsp-socialBookmarksDisplayStyle", "menu");
 request.setAttribute("init.jsp-socialBookmarksDisplayPosition", "bottom");
 request.setAttribute("init.jsp-socialBookmarksTypes", PropsUtil.get(PropsKeys.SOCIAL_BOOKMARK_TYPES));
+
+PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 %>

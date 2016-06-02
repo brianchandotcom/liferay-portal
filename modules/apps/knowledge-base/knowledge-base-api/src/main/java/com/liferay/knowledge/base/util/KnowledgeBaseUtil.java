@@ -33,6 +33,8 @@ import com.liferay.knowledge.base.util.comparator.KBArticleVersionComparator;
 import com.liferay.knowledge.base.util.comparator.KBArticleViewCountComparator;
 import com.liferay.knowledge.base.util.comparator.KBCommentCreateDateComparator;
 import com.liferay.knowledge.base.util.comparator.KBCommentModifiedDateComparator;
+import com.liferay.knowledge.base.util.comparator.KBCommentStatusComparator;
+import com.liferay.knowledge.base.util.comparator.KBCommentUserNameComparator;
 import com.liferay.knowledge.base.util.comparator.KBTemplateCreateDateComparator;
 import com.liferay.knowledge.base.util.comparator.KBTemplateModifiedDateComparator;
 import com.liferay.knowledge.base.util.comparator.KBTemplateTitleComparator;
@@ -300,7 +302,7 @@ public class KnowledgeBaseUtil {
 		String orderByCol, String orderByType) {
 
 		if (Validator.isNull(orderByCol) || Validator.isNull(orderByType)) {
-			return null;
+			return new KBCommentStatusComparator();
 		}
 
 		boolean ascending = false;
@@ -314,6 +316,12 @@ public class KnowledgeBaseUtil {
 		}
 		else if (orderByCol.equals("modified-date")) {
 			return new KBCommentModifiedDateComparator(ascending);
+		}
+		else if (orderByCol.equals("status")) {
+			return new KBCommentStatusComparator(ascending);
+		}
+		else if (orderByCol.equals("user-name")) {
+			return new KBCommentUserNameComparator(ascending);
 		}
 
 		return null;

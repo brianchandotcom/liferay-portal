@@ -23,6 +23,7 @@
 			<package-name>org.antlr.*</package-name>
 			<package-name>org.apache.commons.lang.*</package-name>
 			<package-name>org.mozilla.*</package-name>
+			<package-name>org.objectweb.asm.*</package-name>
 			<package-name>org.xmlpull.*</package-name>
 		</prefer-application-packages>
 		<optimistic-serialization>true</optimistic-serialization>

@@ -1207,49 +1207,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return content;
 	}
 
-	protected String sortPutOrSetCalls(
-		String content, Pattern codeBlockPattern, Pattern singleLinePattern) {
-
-		Matcher codeBlockMatcher = codeBlockPattern.matcher(content);
-
-		PutOrSetParameterNameComparator putOrSetParameterNameComparator =
-			new PutOrSetParameterNameComparator();
-
-		while (codeBlockMatcher.find()) {
-			String codeBlock = codeBlockMatcher.group();
-
-			Matcher singleLineMatcher = singleLinePattern.matcher(codeBlock);
-
-			String previousParameters = null;
-			String previousPutOrSetParameterName = null;
-
-			while (singleLineMatcher.find()) {
-				String parameters = singleLineMatcher.group(1);
-
-				List<String> parametersList = splitParameters(parameters);
-
-				String putOrSetParameterName = parametersList.get(0);
-
-				if ((previousPutOrSetParameterName != null) &&
-					(previousPutOrSetParameterName.compareToIgnoreCase(
-						putOrSetParameterName) > 0)) {
-
-					String newCodeBlock = StringUtil.replaceFirst(
-						codeBlock, previousParameters, parameters);
-					newCodeBlock = StringUtil.replaceLast(
-						newCodeBlock, parameters, previousParameters);
-
-					return StringUtil.replace(content, codeBlock, newCodeBlock);
-				}
-
-				previousParameters = parameters;
-				previousPutOrSetParameterName = putOrSetParameterName;
-			}
-		}
-
-		return content;
-	}
-
 	protected String formatStringBundler(
 		String fileName, String content, int maxLineLength) {
 
@@ -2533,6 +2490,49 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String line, String value, String attributeAndValue) {
 
 		return line;
+	}
+
+	protected String sortPutOrSetCalls(
+		String content, Pattern codeBlockPattern, Pattern singleLinePattern) {
+
+		Matcher codeBlockMatcher = codeBlockPattern.matcher(content);
+
+		PutOrSetParameterNameComparator putOrSetParameterNameComparator =
+			new PutOrSetParameterNameComparator();
+
+		while (codeBlockMatcher.find()) {
+			String codeBlock = codeBlockMatcher.group();
+
+			Matcher singleLineMatcher = singleLinePattern.matcher(codeBlock);
+
+			String previousParameters = null;
+			String previousPutOrSetParameterName = null;
+
+			while (singleLineMatcher.find()) {
+				String parameters = singleLineMatcher.group(1);
+
+				List<String> parametersList = splitParameters(parameters);
+
+				String putOrSetParameterName = parametersList.get(0);
+
+				if ((previousPutOrSetParameterName != null) &&
+					(previousPutOrSetParameterName.compareToIgnoreCase(
+						putOrSetParameterName) > 0)) {
+
+					String newCodeBlock = StringUtil.replaceFirst(
+						codeBlock, previousParameters, parameters);
+					newCodeBlock = StringUtil.replaceLast(
+						newCodeBlock, parameters, previousParameters);
+
+					return StringUtil.replace(content, codeBlock, newCodeBlock);
+				}
+
+				previousParameters = parameters;
+				previousPutOrSetParameterName = putOrSetParameterName;
+			}
+		}
+
+		return content;
 	}
 
 	protected List<String> splitParameters(String parameters) {

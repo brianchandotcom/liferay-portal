@@ -627,7 +627,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteBlogsEntryOrgRole" priority="5">
+	<command name="DeleteBlogsEntryOrgRoleDefaultPermission" priority="5">
 		<property name="portal.acceptance" value="false" />
 
 		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
@@ -665,6 +665,43 @@
 
 		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
 			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+	</command>
+
+	<command name="DeleteBlogsEntryOrgRoleDefinePermission" priority="5">
+		<property name="portal.acceptance" value="false" />
+
+		<execute macro="Permissions#setUpOrgRoleLoginUserPG">
+			<var name="orgName" value="Organization Name" />
+			<var name="orgType" value="Organization" />
+			<var name="page" value="Public Pages" />
+			<var name="pageName" value="Blogs Page" />
+			<var name="portletName" value="Blogs" />
+			<var name="roleName" value="Roles Orgrole Name" />
+			<var name="roleType" value="Organization" />
+			<var name="siteName" value="Organization Name" />
+			<var name="siteURL" value="true" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Permissions#addBlogsEntryLoginUserPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="pageName" value="Blogs Page" />
+			<var name="siteName" value="Organization Name" />
+			<var name="siteURLTemp" value="true" />
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">

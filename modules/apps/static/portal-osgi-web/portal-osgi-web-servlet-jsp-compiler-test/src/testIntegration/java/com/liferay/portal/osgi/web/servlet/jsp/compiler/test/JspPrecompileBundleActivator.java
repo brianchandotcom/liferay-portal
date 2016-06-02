@@ -28,7 +28,7 @@ import org.osgi.framework.ServiceRegistration;
 public class JspPrecompileBundleActivator implements BundleActivator {
 
 	@Override
-	public void start(BundleContext bundleContext) throws Exception {
+	public void start(BundleContext bundleContext) {
 		Dictionary<String, String> dictionary = new Hashtable<>();
 
 		dictionary.put("javax.portlet.name", JspPrecompilePortlet.PORTLET_NAME);
@@ -39,7 +39,7 @@ public class JspPrecompileBundleActivator implements BundleActivator {
 	}
 
 	@Override
-	public void stop(BundleContext bundleContext) throws Exception {
+	public void stop(BundleContext bundleContext) {
 		_serviceRegistration.unregister();
 	}
 

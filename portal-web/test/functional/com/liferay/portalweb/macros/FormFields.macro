@@ -32,7 +32,9 @@
 		<var name="key_fieldValue" value="${fieldValue}" />
 
 		<execute function="Click" locator1="FormFields#FIELD_NAME_PLACEHOLDER" />
+
 		<execute function="Type" locator1="FormFields#FIELD_NAME_EDIT" value1="${fieldValue}" />
+
 		<execute function="Click" locator1="FormFields#FIELD_NAME_EDIT_DONE" />
 
 		<execute function="AssertTextEquals" locator1="FormFields#FIELD_NAME" value1="Field Name:${fieldValue}" />
@@ -50,7 +52,9 @@
 		<var name="key_rowNumber" value="${rowNumber}" />
 
 		<execute function="Click" locator1="FormFields#OPTIONS_OPTION_NAME_FIELD_PLACEHOLDER" />
+
 		<execute function="Type" locator1="FormFields#OPTIONS_OPTION_NAME_FIELD_EDIT" value1="${optionValue}" />
+
 		<execute function="Click" locator1="FormFields#OPTIONS_OPTION_NAME_FIELD_EDIT_DONE" />
 
 		<execute function="AssertTextEquals" locator1="FormFields#OPTIONS_OPTION_NAME_FIELD" value1="Field Name:${optionValue}" />

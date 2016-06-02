@@ -35,11 +35,11 @@ public final class PrecompileTestServlet extends HttpServlet {
 
 		PrintWriter printWriter = response.getWriter();
 
-		printWriter.write("<HTML>\n");
-		printWriter.write("<HEAD><TITLE>JspPrecompileTest</TITLE></HEAD>\n");
-		printWriter.write("<H1>Precompiled</H1>\n");
-		printWriter.write("</BODY>\n");
-		printWriter.write("</HTML>\n");
+		printWriter.println("<HTML>");
+		printWriter.println("<HEAD><TITLE>JspPrecompileTest</TITLE></HEAD>");
+		printWriter.println("<H1>Precompiled</H1>");
+		printWriter.println("</BODY>");
+		printWriter.println("</HTML>");
 	}
 
 }

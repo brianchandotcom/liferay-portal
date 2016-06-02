@@ -26,13 +26,6 @@
 		</filterchain>
 	</loadfile>
 
-	<condition property="artifact.exclude">
-		<or>
-			<contains string="${basedir}" substring="portal-target-platform-indexer-main" />
-			<contains string="${basedir}" substring="required-dependencies" />
-		</or>
-	</condition>
-
 	<condition property="artifact.json">
 		<available file="package.json" />
 	</condition>
@@ -149,10 +142,7 @@
 		<property name="artifact.location.dest" value="${osgi.dir}/marketplace/${Bundle-SymbolicName}-${Bundle-Version}.jar" />
 
 		<condition property="artifact.location.src" value="${osgi.dir}/static/${Bundle-SymbolicName}.jar">
-			<or>
-				<contains string="${osgi.static.modules}" substring="${Bundle-SymbolicName}.jar" />
-				<equals arg1="${Bundle-SymbolicName}" arg2="com.liferay.required.dependencies" />
-			</or>
+			<contains string="${osgi.static.modules}" substring="${Bundle-SymbolicName}.jar" />
 		</condition>
 
 		<condition property="artifact.location.src" value="${osgi.dir}/portal/${Bundle-SymbolicName}.jar">
@@ -243,7 +233,7 @@
 		</condition>
 	</target>
 
-	<target depends="get-artifact-properties" name="move-artifact" unless="artifact.exclude">
+	<target depends="get-artifact-properties" name="move-artifact">
 		<move file="${artifact.location.src}" tofile="${artifact.location.dest}" />
 	</target>
 

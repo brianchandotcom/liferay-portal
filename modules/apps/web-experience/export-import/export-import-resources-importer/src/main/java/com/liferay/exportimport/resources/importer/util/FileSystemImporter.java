@@ -94,6 +94,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.search.index.IndexStatusManager;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -215,7 +216,7 @@ public class FileSystemImporter extends BaseImporter {
 			if (!updateModeEnabled || (ddmTemplate == null)) {
 				ddmTemplateLocalService.addTemplate(
 					userId, groupId, classNameId, 0,
-					portal.getClassNameId(JournalArticle.class),
+					portal.getClassNameId(PortletDisplayTemplate.class),
 					getKey(fileName), getMap(name), null,
 					DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 					StringPool.BLANK, getDDMTemplateLanguage(file.getName()),

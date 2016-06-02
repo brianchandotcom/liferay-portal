@@ -390,7 +390,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		checkLanguageKeys(
 			fileName, absolutePath, newContent, _taglibLanguageKeyPattern3);
 
-		newContent = formatJSONObject(newContent);
+		newContent = sortPutOrSetCalls(
+			newContent, jsonObjectPutBlockPattern, jsonObjectPutPattern);
 
 		newContent = formatStringBundler(fileName, newContent, -1);
 

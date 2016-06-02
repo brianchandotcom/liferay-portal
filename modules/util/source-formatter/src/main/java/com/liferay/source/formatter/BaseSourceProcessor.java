@@ -1207,41 +1207,43 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return content;
 	}
 
-	protected String formatJSONObject(String content) {
-		Matcher jsonObjectPutBlockMatcher = jsonObjectPutBlockPattern.matcher(
-			content);
+	protected String sortPutOrSetCalls(
+		String content, Pattern codeBlockPattern, Pattern singleLinePattern) {
 
-		while (jsonObjectPutBlockMatcher.find()) {
-			String jsonObjectPutBlock = jsonObjectPutBlockMatcher.group();
+		Matcher codeBlockMatcher = codeBlockPattern.matcher(content);
 
-			Matcher jsonObjectPutMatcher = jsonObjectPutPattern.matcher(
-				jsonObjectPutBlock);
+		PutOrSetParameterNameComparator putOrSetParameterNameComparator =
+			new PutOrSetParameterNameComparator();
+
+		while (codeBlockMatcher.find()) {
+			String codeBlock = codeBlockMatcher.group();
+
+			Matcher singleLineMatcher = singleLinePattern.matcher(codeBlock);
 
 			String previousParameters = null;
-			String previousPutObjectName = null;
+			String previousPutOrSetParameterName = null;
 
-			while (jsonObjectPutMatcher.find()) {
-				String parameters = jsonObjectPutMatcher.group(2);
+			while (singleLineMatcher.find()) {
+				String parameters = singleLineMatcher.group(1);
 
 				List<String> parametersList = splitParameters(parameters);
 
-				String putObjectName = parametersList.get(0);
+				String putOrSetParameterName = parametersList.get(0);
 
-				if ((previousPutObjectName != null) &&
-					(previousPutObjectName.compareToIgnoreCase(putObjectName) >
-						0)) {
+				if ((previousPutOrSetParameterName != null) &&
+					(previousPutOrSetParameterName.compareToIgnoreCase(
+						putOrSetParameterName) > 0)) {
 
-					String newJSONObjectPutBlock = StringUtil.replaceFirst(
-						jsonObjectPutBlock, previousParameters, parameters);
-					newJSONObjectPutBlock = StringUtil.replaceLast(
-						newJSONObjectPutBlock, parameters, previousParameters);
+					String newCodeBlock = StringUtil.replaceFirst(
+						codeBlock, previousParameters, parameters);
+					newCodeBlock = StringUtil.replaceLast(
+						newCodeBlock, parameters, previousParameters);
 
-					return StringUtil.replace(
-						content, jsonObjectPutBlock, newJSONObjectPutBlock);
+					return StringUtil.replace(content, codeBlock, newCodeBlock);
 				}
 
 				previousParameters = parameters;
-				previousPutObjectName = putObjectName;
+				previousPutOrSetParameterName = putOrSetParameterName;
 			}
 		}
 
@@ -2714,7 +2716,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static Pattern jsonObjectPutBlockPattern = Pattern.compile(
 		"(\t*\\w*(json|JSON)Object\\.put\\(\\s*\".*?\\);\n)+", Pattern.DOTALL);
 	protected static Pattern jsonObjectPutPattern = Pattern.compile(
-		"\t*\\w*(json|JSON)Object\\.put\\((.*?)\\);\n", Pattern.DOTALL);
+		"\t*\\w*(?:json|JSON)Object\\.put\\((.*?)\\);\n", Pattern.DOTALL);
 	protected static Pattern languageKeyPattern = Pattern.compile(
 		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
 	protected static Pattern mergeLangPattern = Pattern.compile(

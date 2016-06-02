@@ -893,7 +893,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		checkLanguageKeys(
 			fileName, absolutePath, newContent, languageKeyPattern);
 
-		newContent = formatJSONObject(newContent);
+		newContent = sortPutOrSetCalls(
+			newContent, jsonObjectPutBlockPattern, jsonObjectPutPattern);
 
 		newContent = formatStringBundler(fileName, newContent, _maxLineLength);
 

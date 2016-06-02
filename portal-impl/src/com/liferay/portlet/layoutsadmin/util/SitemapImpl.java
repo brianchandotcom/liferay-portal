@@ -21,12 +21,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -34,6 +37,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.util.PropsValues;
 
 import java.text.DateFormat;
@@ -192,29 +196,83 @@ public class SitemapImpl implements Sitemap {
 
 		document.setXMLEncoding(StringPool.UTF8);
 
-		Element rootElement = document.addElement(
-			"urlset", "http://www.sitemaps.org/schemas/sitemap/0.9");
+		Element rootElement = null;
+
+		if (Validator.isNull(layoutUuid)) {
+			rootElement = document.addElement(
+				"sitemapindex", "http://www.sitemaps.org/schemas/sitemap/0.9");
+		}
+		else {
+			rootElement = document.addElement(
+				"urlset", "http://www.sitemaps.org/schemas/sitemap/0.9");
+		}
 
 		rootElement.addAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
 
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			groupId, privateLayout);
 
+		if (Validator.isNull(layoutUuid)) {
+			visitLayoutSet(rootElement, layoutSet, themeDisplay);
+
+			return document.asXML();
+		}
+
 		List<SitemapURLProvider> sitemapURLProviders =
 			SitemapURLProviderRegistryUtil.getSitemapURLProviders();
 
 		for (SitemapURLProvider sitemapURLProvider : sitemapURLProviders) {
-			if (Validator.isNull(layoutUuid)) {
-				sitemapURLProvider.visitLayoutSet(
-					rootElement, layoutSet, themeDisplay);
-			}
-			else {
-				sitemapURLProvider.visitLayout(
-					rootElement, layoutSet, layoutUuid, themeDisplay);
-			}
+			sitemapURLProvider.visitLayout(
+				rootElement, layoutSet, layoutUuid, themeDisplay);
 		}
 
 		return document.asXML();
+	}
+
+	protected void visitLayoutSet(
+			Element element, LayoutSet layoutSet, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (layoutSet.isPrivateLayout()) {
+			return;
+		}
+
+		String portalURL = themeDisplay.getPortalURL();
+
+		Map<String, LayoutTypeController> layoutTypeControllers =
+			LayoutTypeControllerTracker.getLayoutTypeControllers();
+
+		for (Map.Entry<String, LayoutTypeController> entry :
+				layoutTypeControllers.entrySet()) {
+
+			LayoutTypeController layoutTypeController = entry.getValue();
+
+			if (!layoutTypeController.isSitemapable()) {
+				continue;
+			}
+
+			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+				layoutSet.getGroupId(), layoutSet.getPrivateLayout(),
+				entry.getKey());
+
+			for (Layout layout : layouts) {
+				Element sitemapElement = element.addElement("sitemap");
+
+				Element locationElement = sitemapElement.addElement("loc");
+
+				StringBundler sb = new StringBundler(7);
+
+				sb.append(portalURL);
+				sb.append("/sitemap.xml?groupId=");
+				sb.append(layoutSet.getGroupId());
+				sb.append("&layoutUuid=");
+				sb.append(layout.getUuid());
+				sb.append("&privateLayout=");
+				sb.append(layout.getPrivateLayout());
+
+				locationElement.addText(sb.toString());
+			}
+		}
 	}
 
 }

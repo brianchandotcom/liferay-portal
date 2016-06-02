@@ -96,11 +96,21 @@ public class DBUpgrader {
 			upgrade();
 			verify();
 
-			InitUtil.registerContext();
-
 			Registry registry = RegistryUtil.getRegistry();
 
 			Map<String, Object> properties = new HashMap<>();
+
+			properties.put("module.service.lifecycle", "database.initialized");
+			properties.put("service.vendor", ReleaseInfo.getVendor());
+			properties.put("service.version", ReleaseInfo.getVersion());
+
+			registry.registerService(
+				ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
+				properties);
+
+			InitUtil.registerContext();
+
+			properties = new HashMap<>();
 
 			properties.put("module.service.lifecycle", "portal.initialized");
 			properties.put("service.vendor", ReleaseInfo.getVendor());

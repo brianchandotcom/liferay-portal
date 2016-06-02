@@ -386,7 +386,7 @@
 		</execute>
 	</command>
 
-	<command name="setUpSiteRoleLoginUserCP">
+	<command name="setUpSiteRoleCP">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
 		</execute>
@@ -435,6 +435,25 @@
 			<var name="groupName" value="${siteName}" />
 			<var name="roleName" value="${roleName}" />
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userLoginEmailAddress}" />
+			<var name="userLoginFullName" value="${userLoginFullName}" />
+		</execute>
+	</command>
+
+	<command name="setUpSiteRoleLoginUserCP">
+		<execute macro="Permissions#setUpSiteRoleCP">
+			<var name="newPassword" value="${newPassword}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="syntaxCheckingEnabled" value="${syntaxCheckingEnabled}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

@@ -36,6 +36,7 @@ import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
@@ -140,8 +141,26 @@ public class BuildCSSTask extends JavaExec {
 	}
 
 	@InputDirectory
+	@Optional
 	public File getPortalCommonDir() {
 		return GradleUtil.toFile(getProject(), _portalCommonDir);
+	}
+
+	@InputFile
+	@Optional
+	public File getPortalCommonFile() {
+		return GradleUtil.toFile(getProject(), _portalCommonFile);
+	}
+
+	@Input
+	public File getPortalCommonPath() {
+		File portalCommonPath = getPortalCommonDir();
+
+		if (portalCommonPath == null) {
+			portalCommonPath = getPortalCommonFile();
+		}
+
+		return portalCommonPath;
 	}
 
 	@Input
@@ -220,6 +239,10 @@ public class BuildCSSTask extends JavaExec {
 		_portalCommonDir = portalCommonDir;
 	}
 
+	public void setPortalCommonFile(Object portalCommonFile) {
+		_portalCommonFile = portalCommonFile;
+	}
+
 	public void setPrecision(Object precision) {
 		_precision = precision;
 	}
@@ -262,10 +285,10 @@ public class BuildCSSTask extends JavaExec {
 
 		args.add("sass.generate.source.map=" + isGenerateSourceMap());
 
-		String portalCommonDirName = FileUtil.getAbsolutePath(
-			getPortalCommonDir());
+		String portalCommonPath = FileUtil.getAbsolutePath(
+			getPortalCommonPath());
 
-		args.add("sass.portal.common.dir=" + portalCommonDirName);
+		args.add("sass.portal.common.path=" + portalCommonPath);
 
 		args.add("sass.precision=" + getPrecision());
 
@@ -315,6 +338,7 @@ public class BuildCSSTask extends JavaExec {
 	private Object _docrootDir;
 	private boolean _generateSourceMap;
 	private Object _portalCommonDir;
+	private Object _portalCommonFile;
 	private Object _precision = CSSBuilderArgs.PRECISION;
 	private final Set<Object> _rtlExcludedPathRegexps = new LinkedHashSet<>();
 	private Object _sassCompilerClassName;

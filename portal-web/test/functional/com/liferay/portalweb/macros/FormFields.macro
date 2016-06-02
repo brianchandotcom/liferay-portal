@@ -6,6 +6,9 @@
 	</command>
 
 	<command name="addRepeatableField">
+		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_repeatableFieldNumber" value="${repeatableFieldNumber}" />
+
 		<execute function="Click" locator1="FormFields#FIELD_ADD" />
 	</command>
 

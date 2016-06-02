@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>FIELD_ADD</td>
-	<td>//div[contains(@class,'form-field-repeatable-toolbar')]//a[contains(@class,'add-button')]</td>
+	<td>//div[contains(@class,'form-field-container')][${key_repeatableFieldNumber}]//div[contains(@data-fieldname,'${key_fieldName}')]/../div[contains(@class,'form-field-repeatable-toolbar')]//a[contains(@class,'add-button')]</td>
 	<td></td>
 </tr>
 <tr>

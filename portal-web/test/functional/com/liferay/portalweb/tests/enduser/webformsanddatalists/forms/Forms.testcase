@@ -2525,8 +2525,8 @@
 		</execute>
 
 		<execute macro="FormFields#addRepeatableField">
-			<var name="fieldLabel" value="Text Field" />
 			<var name="fieldName" value="TextField" />
+			<var name="repeatableFieldNumber" value="1" />
 		</execute>
 
 		<execute macro="FormFields#editRepeatingText">
@@ -3027,8 +3027,8 @@
 		</execute>
 
 		<execute macro="FormFields#addRepeatableField">
-			<var name="fieldLabel" value="Text Field" />
 			<var name="fieldName" value="TextField" />
+			<var name="repeatableFieldNumber" value="1" />
 		</execute>
 
 		<execute macro="FormFields#viewRepeatableTextFieldLabel">

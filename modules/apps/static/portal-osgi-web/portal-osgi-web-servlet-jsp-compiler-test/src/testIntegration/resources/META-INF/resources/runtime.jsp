@@ -16,6 +16,7 @@
 
 <HTML>
 <HEAD><TITLE>JspPrecompileTest</TITLE></HEAD>
+<BODY>
 <H1>Runtime Compiled</H1>
 </BODY>
 </HTML>

@@ -174,7 +174,7 @@ public class ReplaceRegexTask extends DefaultTask {
 
 		Matcher matcher = pattern.matcher(newContent);
 
-		if (matcher.find()) {
+		while (matcher.find()) {
 			boolean replace = true;
 
 			int groupCount = matcher.groupCount();

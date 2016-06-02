@@ -72,6 +72,32 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	protected String checkAnnotationLineBreaks(
+		String content, String annotation) {
+
+		Matcher matcher = _annotationLineBreakPattern1.matcher(annotation);
+
+		if (matcher.find()) {
+			String replacement = StringUtil.replaceFirst(
+				annotation, matcher.group(1), StringPool.BLANK,
+				matcher.start());
+
+			return StringUtil.replace(content, annotation, replacement);
+		}
+
+		matcher = _annotationLineBreakPattern2.matcher(annotation);
+
+		if (matcher.find()) {
+			String replacement = StringUtil.replaceFirst(
+				annotation, matcher.group(1), StringPool.SPACE,
+				matcher.start());
+
+			return StringUtil.replace(content, annotation, replacement);
+		}
+
+		return content;
+	}
+
 	protected String checkAnnotationMetaTypeProperties(
 		String content, String annotation) {
 
@@ -1614,6 +1640,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						content, annotation);
 
 					newContent = checkAnnotationMetaTypeProperties(
+						newContent, annotation);
+
+					newContent = checkAnnotationLineBreaks(
 						newContent, annotation);
 
 					if (!newContent.equals(content)) {
@@ -4520,6 +4549,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	private boolean _addMissingDeprecationReleaseVersion;
 	private boolean _allowUseServiceUtilInServiceImpl;
+	private final Pattern _annotationLineBreakPattern1 = Pattern.compile(
+		"[{=]\n.*(\" \\+\n\t*\")");
+	private final Pattern _annotationLineBreakPattern2 = Pattern.compile(
+		"=(\n\t*)\"");
 	private final Pattern _annotationMetaTypePattern = Pattern.compile(
 		"\\s(name|description) = \"%");
 	private final Pattern _anonymousClassPattern = Pattern.compile(

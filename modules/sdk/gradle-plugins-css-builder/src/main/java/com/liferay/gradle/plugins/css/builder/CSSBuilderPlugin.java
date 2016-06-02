@@ -27,6 +27,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -156,9 +157,9 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTaskBuildCSSClasspath(
-		BuildCSSTask buildCSSTask, Configuration cssBuilderConfiguration) {
+		BuildCSSTask buildCSSTask, FileCollection classpath) {
 
-		buildCSSTask.setClasspath(cssBuilderConfiguration);
+		buildCSSTask.setClasspath(classpath);
 	}
 
 	protected void configureTaskBuildCSSForJavaPlugin(

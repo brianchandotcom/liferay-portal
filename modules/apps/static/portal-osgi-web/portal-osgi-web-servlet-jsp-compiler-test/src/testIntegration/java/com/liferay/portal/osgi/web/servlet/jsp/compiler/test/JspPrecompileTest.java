@@ -286,10 +286,11 @@ public class JspPrecompileTest {
 					Constants.BUNDLE_ACTIVATOR,
 					JspPrecompileBundleActivator.class.getName());
 				attributes.putValue(Constants.BUNDLE_MANIFESTVERSION, "2");
+
+				Package pkg = JspPrecompileTest.class.getPackage();
+
 				attributes.putValue(
-					Constants.BUNDLE_SYMBOLICNAME,
-					"com.liferay.portal.osgi.web.servlet.jsp.compiler.test." +
-						"bundle");
+					Constants.BUNDLE_SYMBOLICNAME, pkg.getName() + ".bundle");
 				attributes.putValue(Constants.BUNDLE_VERSION, "1.0.0");
 				attributes.putValue(
 					Constants.IMPORT_PACKAGE,

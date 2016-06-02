@@ -15,9 +15,6 @@
 package com.liferay.gradle.plugins.css.builder;
 
 import com.liferay.gradle.util.GradleUtil;
-import com.liferay.gradle.util.copy.StripPathSegmentsAction;
-
-import groovy.lang.Closure;
 
 import java.io.File;
 
@@ -30,15 +27,12 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.file.FileCollection;
-import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.plugins.WarPluginConvention;
-import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
 
@@ -50,9 +44,6 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 	public static final String BUILD_CSS_TASK_NAME = "buildCSS";
 
 	public static final String CSS_BUILDER_CONFIGURATION_NAME = "cssBuilder";
-
-	public static final String EXPAND_PORTAL_COMMON_CSS_TASK_NAME =
-		"expandPortalCommonCSS";
 
 	public static final String PORTAL_COMMON_CSS_CONFIGURATION_NAME =
 		"portalCommonCSS";
@@ -66,11 +57,8 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 
 		addTaskBuildCSS(project);
 
-		Copy expandPortalCommonCSSTask = addTaskExpandPortalCommonCSS(
-			project, portalCommonCSSConfiguration);
-
 		configureTasksBuildCSS(
-			project, cssBuilderConfiguration, expandPortalCommonCSSTask);
+			project, cssBuilderConfiguration, portalCommonCSSConfiguration);
 	}
 
 	protected Configuration addConfigurationCSSBuilder(final Project project) {
@@ -167,63 +155,10 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 		return buildCSSTask;
 	}
 
-	protected Copy addTaskExpandPortalCommonCSS(
-		final Project project,
-		final Configuration portalCommonCSSConfiguration) {
-
-		Copy copy = GradleUtil.addTask(
-			project, EXPAND_PORTAL_COMMON_CSS_TASK_NAME, Copy.class);
-
-		copy.eachFile(new StripPathSegmentsAction(2));
-
-		Closure<Void> closure = new Closure<Void>(null) {
-
-			@SuppressWarnings("unused")
-			public FileTree doCall() {
-				return project.zipTree(
-					portalCommonCSSConfiguration.getSingleFile());
-			}
-
-		};
-
-		copy.from(closure);
-
-		copy.include("META-INF/resources/**");
-		copy.into(new File(project.getBuildDir(), "portal-common-css"));
-		copy.setIncludeEmptyDirs(false);
-
-		return copy;
-	}
-
 	protected void configureTaskBuildCSSClasspath(
 		BuildCSSTask buildCSSTask, Configuration cssBuilderConfiguration) {
 
 		buildCSSTask.setClasspath(cssBuilderConfiguration);
-	}
-
-	protected void configureTaskBuildCSSDependsOn(
-		BuildCSSTask buildCSSTask, final Copy expandPortalCommonCSSTask) {
-
-		Closure<Task> closure = new Closure<Task>(null) {
-
-			@SuppressWarnings("unused")
-			public Task doCall(BuildCSSTask buildCSSTask) {
-				FileCollection cssFiles = buildCSSTask.getCSSFiles();
-				File portalCommonDir = buildCSSTask.getPortalCommonDir();
-
-				if (!cssFiles.isEmpty() &&
-					portalCommonDir.equals(
-						expandPortalCommonCSSTask.getDestinationDir())) {
-
-					return expandPortalCommonCSSTask;
-				}
-
-				return null;
-			}
-
-		};
-
-		buildCSSTask.dependsOn(closure);
 	}
 
 	protected void configureTaskBuildCSSForJavaPlugin(
@@ -259,15 +194,16 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureTaskBuildCSSPortalCommonDir(
-		BuildCSSTask buildCSSTask, final Copy expandPortalCommonCSSTask) {
+	protected void configureTaskBuildCSSPortalCommonFile(
+		BuildCSSTask buildCSSTask,
+		final Configuration portalCommonCSSConfiguration) {
 
-		buildCSSTask.setPortalCommonDir(
+		buildCSSTask.setPortalCommonFile(
 			new Callable<File>() {
 
 				@Override
 				public File call() throws Exception {
-					return expandPortalCommonCSSTask.getDestinationDir();
+					return portalCommonCSSConfiguration.getSingleFile();
 				}
 
 			});
@@ -275,7 +211,7 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 
 	protected void configureTasksBuildCSS(
 		Project project, final Configuration cssBuilderConfiguration,
-		final Copy expandPortalCommonCSSTask) {
+		final Configuration portalCommonCSSConfiguration) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -287,10 +223,8 @@ public class CSSBuilderPlugin implements Plugin<Project> {
 				public void execute(BuildCSSTask buildCSSTask) {
 					configureTaskBuildCSSClasspath(
 						buildCSSTask, cssBuilderConfiguration);
-					configureTaskBuildCSSDependsOn(
-						buildCSSTask, expandPortalCommonCSSTask);
-					configureTaskBuildCSSPortalCommonDir(
-						buildCSSTask, expandPortalCommonCSSTask);
+					configureTaskBuildCSSPortalCommonFile(
+						buildCSSTask, portalCommonCSSConfiguration);
 				}
 
 			});

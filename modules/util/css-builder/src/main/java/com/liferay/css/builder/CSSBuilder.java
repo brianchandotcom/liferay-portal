@@ -15,9 +15,7 @@
 package com.liferay.css.builder;
 
 import com.liferay.portal.kernel.regex.PatternFactory;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -88,6 +86,8 @@ public class CSSBuilder {
 		boolean generateSourceMap = GetterUtil.getBoolean(
 			arguments.get("sass.generate.source.map"));
 		String portalCommonPath = arguments.get("sass.portal.common.path");
+		String outputDirName = GetterUtil.getString(
+			arguments.get("sass.output.dir"), CSSBuilderArgs.OUTPUT_DIR_NAME);
 		int precision = GetterUtil.getInteger(
 			arguments.get("sass.precision"), CSSBuilderArgs.PRECISION);
 		String[] rtlExcludedPathRegexps = StringUtil.split(
@@ -97,8 +97,9 @@ public class CSSBuilder {
 
 		try {
 			CSSBuilder cssBuilder = new CSSBuilder(
-				docrootDirName, generateSourceMap, portalCommonPath, precision,
-				rtlExcludedPathRegexps, sassCompilerClassName);
+				docrootDirName, generateSourceMap, outputDirName,
+				portalCommonPath, precision, rtlExcludedPathRegexps,
+				sassCompilerClassName);
 
 			cssBuilder.execute(dirNames);
 		}
@@ -109,7 +110,7 @@ public class CSSBuilder {
 
 	public CSSBuilder(
 			String docrootDirName, boolean generateSourceMap,
-			String portalCommonPath, int precision,
+			String outputDirName, String portalCommonPath, int precision,
 			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception {
 
@@ -125,6 +126,7 @@ public class CSSBuilder {
 
 		_docrootDirName = docrootDirName;
 		_generateSourceMap = generateSourceMap;
+		_outputDirName = outputDirName;
 		_portalCommonDirName = portalCommonFile.getCanonicalPath();
 		_precision = precision;
 		_rtlExcludedPathPatterns = PatternFactory.compile(
@@ -300,7 +302,8 @@ public class CSSBuilder {
 			fileName = _normalizeFileName(dirName, fileName);
 
 			File file = new File(fileName);
-			File cacheFile = CSSBuilderUtil.getCacheFile(fileName);
+			File cacheFile = CSSBuilderUtil.getOutputFile(
+				fileName, _outputDirName);
 
 			if (file.lastModified() != cacheFile.lastModified()) {
 				return true;
@@ -353,7 +356,7 @@ public class CSSBuilder {
 
 		String ltrContent = _parseSass(fileName);
 
-		_writeCacheFile(fileName, ltrContent, false);
+		_writeOutputFile(fileName, ltrContent, false);
 
 		if (isRtlExcludedPath(fileName)) {
 			return;
@@ -370,7 +373,7 @@ public class CSSBuilder {
 			rtlContent += _parseSass(rtlCustomFileName);
 		}
 
-		_writeCacheFile(fileName, rtlContent, true);
+		_writeOutputFile(fileName, rtlContent, true);
 	}
 
 	private File _unzipPortalCommon(File portalCommonZip) throws IOException {
@@ -424,29 +427,29 @@ public class CSSBuilder {
 		Files.write(path, content.getBytes(StringPool.UTF8));
 	}
 
-	private void _writeCacheFile(String fileName, String content, boolean rtl)
+	private void _writeOutputFile(String fileName, String content, boolean rtl)
 		throws Exception {
 
-		String cacheFileName;
+		String outputFileName;
 
 		if (rtl) {
 			String rtlFileName = CSSBuilderUtil.getRtlCustomFileName(fileName);
 
-			cacheFileName = CSSBuilderUtil.getCacheFileName(
-				rtlFileName, StringPool.BLANK);
+			outputFileName = CSSBuilderUtil.getOutputFileName(
+				rtlFileName, _outputDirName, StringPool.BLANK);
 		}
 		else {
-			cacheFileName = CSSBuilderUtil.getCacheFileName(
-				fileName, StringPool.BLANK);
+			outputFileName = CSSBuilderUtil.getOutputFileName(
+				fileName, _outputDirName, StringPool.BLANK);
 		}
 
-		File cacheFile = new File(_docrootDirName, cacheFileName);
+		File outputFile = new File(_docrootDirName, outputFileName);
 
-		_write(cacheFile, content);
+		_write(outputFile, content);
 
 		File file = new File(_docrootDirName, fileName);
 
-		cacheFile.setLastModified(file.lastModified());
+		outputFile.setLastModified(file.lastModified());
 	}
 
 	private static RTLCSSConverter _rtlCSSConverter;
@@ -454,6 +457,7 @@ public class CSSBuilder {
 	private final boolean _cleanPortalCommonDir;
 	private final String _docrootDirName;
 	private final boolean _generateSourceMap;
+	private final String _outputDirName;
 	private final String _portalCommonDirName;
 	private final int _precision;
 	private final Pattern[] _rtlExcludedPathPatterns;

@@ -29,15 +29,19 @@ import java.io.File;
  */
 public class CSSBuilderUtil {
 
-	public static File getCacheFile(String fileName) {
-		return getCacheFile(fileName, StringPool.BLANK);
+	public static File getOutputFile(String fileName, String outputDirName) {
+		return getOutputFile(fileName, outputDirName, StringPool.BLANK);
 	}
 
-	public static File getCacheFile(String fileName, String suffix) {
-		return new File(getCacheFileName(fileName, suffix));
+	public static File getOutputFile(
+		String fileName, String outputDirName, String suffix) {
+
+		return new File(getOutputFileName(fileName, outputDirName, suffix));
 	}
 
-	public static String getCacheFileName(String fileName, String suffix) {
+	public static String getOutputFileName(
+		String fileName, String outputDirName, String suffix) {
+
 		String cacheFileName = StringUtil.replace(
 			fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
@@ -48,7 +52,7 @@ public class CSSBuilderUtil {
 			cacheFileName = cacheFileName.substring(0, y + 1) + "css";
 		}
 
-		return cacheFileName.substring(0, x + 1) + ".sass-cache/" +
+		return cacheFileName.substring(0, x + 1) + outputDirName +
 			cacheFileName.substring(x + 1, y) + suffix +
 				cacheFileName.substring(y);
 	}

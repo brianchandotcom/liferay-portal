@@ -119,8 +119,8 @@ public class CSSBuilderTest {
 		throws Exception {
 
 		CSSBuilder cssBuilder = new CSSBuilder(
-			_docrootDirName, false, portalCommonCssPath, 6, new String[0],
-			compiler);
+			_docrootDirName, false, ".sass-cache/", portalCommonCssPath, 6,
+			new String[0], compiler);
 
 		cssBuilder.execute(Arrays.asList(new String[] {"/css"}));
 

@@ -60,6 +60,10 @@ public class BuildCSSTask extends Task {
 		_cssBuilderArgs.setGenerateSourceMap(generateSourceMap);
 	}
 
+	public void setOutputDirName(String outputDirName) {
+		_cssBuilderArgs.setOutputDirName(outputDirName);
+	}
+
 	public void setPortalCommonDirName(String portalCommonDirName) {
 		_cssBuilderArgs.setPortalCommonDirName(portalCommonDirName);
 	}

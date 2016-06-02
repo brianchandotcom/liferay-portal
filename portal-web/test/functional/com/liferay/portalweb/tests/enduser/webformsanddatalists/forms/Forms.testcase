@@ -797,6 +797,7 @@
 
 	<command name="SubmitFormContainingCaptchaAndViewTextFieldValue" priority="3">
 		<description message="This is a use case for LPS-60818." />
+		<property name="custom.properties" value="captcha.max.challenges=0" />
 
 		<execute macro="Navigator#openURL" />
 

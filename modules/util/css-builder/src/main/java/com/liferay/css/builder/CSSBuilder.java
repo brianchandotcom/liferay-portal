@@ -29,16 +29,24 @@ import com.liferay.sass.compiler.jni.internal.JniSassCompiler;
 import com.liferay.sass.compiler.ruby.internal.RubySassCompiler;
 
 import java.io.File;
+import java.io.IOException;
 
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import org.apache.tools.ant.DirectoryScanner;
 
@@ -79,7 +87,7 @@ public class CSSBuilder {
 			arguments.get("sass.docroot.dir"), CSSBuilderArgs.DOCROOT_DIR_NAME);
 		boolean generateSourceMap = GetterUtil.getBoolean(
 			arguments.get("sass.generate.source.map"));
-		String portalCommonDirName = arguments.get("sass.portal.common.dir");
+		String portalCommonPath = arguments.get("sass.portal.common.path");
 		int precision = GetterUtil.getInteger(
 			arguments.get("sass.precision"), CSSBuilderArgs.PRECISION);
 		String[] rtlExcludedPathRegexps = StringUtil.split(
@@ -89,8 +97,8 @@ public class CSSBuilder {
 
 		try {
 			CSSBuilder cssBuilder = new CSSBuilder(
-				docrootDirName, generateSourceMap, portalCommonDirName,
-				precision, rtlExcludedPathRegexps, sassCompilerClassName);
+				docrootDirName, generateSourceMap, portalCommonPath, precision,
+				rtlExcludedPathRegexps, sassCompilerClassName);
 
 			cssBuilder.execute(dirNames);
 		}
@@ -101,13 +109,23 @@ public class CSSBuilder {
 
 	public CSSBuilder(
 			String docrootDirName, boolean generateSourceMap,
-			String portalCommonDirName, int precision,
+			String portalCommonPath, int precision,
 			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception {
 
+		File portalCommonFile = new File(portalCommonPath);
+
+		if (portalCommonFile.isFile()) {
+			portalCommonFile = _unzipPortalCommon(portalCommonFile);
+			_cleanPortalCommonDir = true;
+		}
+		else {
+			_cleanPortalCommonDir = false;
+		}
+
 		_docrootDirName = docrootDirName;
 		_generateSourceMap = generateSourceMap;
-		_portalCommonDirName = portalCommonDirName;
+		_portalCommonDirName = portalCommonFile.getCanonicalPath();
 		_precision = precision;
 		_rtlExcludedPathPatterns = PatternFactory.compile(
 			rtlExcludedPathRegexps);
@@ -130,6 +148,12 @@ public class CSSBuilder {
 			System.out.println(
 				"Parsed " + fileName + " in " +
 					(System.currentTimeMillis() - startTime) + "ms");
+		}
+
+		if (_cleanPortalCommonDir) {
+			File portalCommonDir = new File(_portalCommonDirName);
+
+			_deltree(portalCommonDir.toPath());
 		}
 	}
 
@@ -179,6 +203,34 @@ public class CSSBuilder {
 
 			fileNames.add(_normalizeFileName(dirName, fileName));
 		}
+	}
+
+	private void _deltree(Path path) throws IOException {
+		Files.walkFileTree(
+			path,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult postVisitDirectory(
+						Path dir, IOException exc)
+					throws IOException {
+
+					Files.delete(dir);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path file, BasicFileAttributes attrs)
+					throws IOException {
+
+					Files.delete(file);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	private String _fixRelativePath(String fileName) {
@@ -344,6 +396,45 @@ public class CSSBuilder {
 		_writeCacheFile(fileName, rtlContent, true);
 	}
 
+	private File _unzipPortalCommon(File portalCommonZip) throws IOException {
+		Path portalCommonCssPath = Files.createTempDirectory("portalCommonCss");
+
+		File portalCommonCssDir = portalCommonCssPath.toFile();
+
+		try (ZipFile zipFile = new ZipFile(portalCommonZip)) {
+			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+			while (enumeration.hasMoreElements()) {
+				ZipEntry zipEntry = enumeration.nextElement();
+
+				String name = zipEntry.getName();
+
+				if (name.endsWith("/") ||
+					!name.startsWith("META-INF/resources/")) {
+
+					continue;
+				}
+				else {
+					name = name.replace("META-INF/resources", "");
+
+					File file = new File(portalCommonCssDir, name);
+
+					File parentFile = file.getParentFile();
+
+					if (!parentFile.exists()) {
+						parentFile.mkdirs();
+					}
+
+					Files.copy(
+						zipFile.getInputStream(zipEntry), file.toPath(),
+						StandardCopyOption.REPLACE_EXISTING);
+				}
+			}
+		}
+
+		return portalCommonCssDir;
+	}
+
 	private void _write(File file, String content) throws Exception {
 		File parentFile = file.getParentFile();
 
@@ -383,6 +474,7 @@ public class CSSBuilder {
 
 	private static RTLCSSConverter _rtlCSSConverter;
 
+	private final boolean _cleanPortalCommonDir;
 	private final String _docrootDirName;
 	private final boolean _generateSourceMap;
 	private final String _portalCommonDirName;

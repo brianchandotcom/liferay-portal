@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPEATABLE_HELP_TEXT</td>
+	<td>//div[contains(@class,'form-field-container')][${key_repeatableFieldNumber}]//div[contains(@data-fieldname,'${key_fieldName}')]//p[@class='liferay-ddm-form-field-tip']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

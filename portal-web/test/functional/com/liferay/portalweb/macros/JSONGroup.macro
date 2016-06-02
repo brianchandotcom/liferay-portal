@@ -110,6 +110,21 @@
 				-d userIds=${userId}
 		</var>
 
+		<execute macro="JSONGroup#getGroupName">
+			<var name="groupId" value="${groupId}" />
+			<return from="groupName" name="groupName" />
+		</execute>
+
+		<execute macro="JSONRole#getRoleName">
+			<var name="roleId" value="${roleId}" />
+			<return from="roleName" name="roleName" />
+		</execute>
+
+		<execute macro="JSONUser#getUserEmailAddress">
+			<var name="userId" value="${userId}" />
+			<return from="userEmailAddress" name="userEmailAddress" />
+		</execute>
+
 		<echo>## Assign a 'Group Role' to a 'User' with the following info using JSONWS:</echo>
 
 		<echo>## * Group Name: ${groupName}</echo>
@@ -390,7 +405,7 @@
 				<isset var="groupId" />
 			</not>
 			<then>
-				<fail message="Please set 'groupName'." />
+				<fail message="Please set 'groupId'." />
 			</then>
 		</if>
 
@@ -405,9 +420,7 @@
 		<var name="curl">
 			${portalURL}/api/jsonws/group/get-group \
 				-u test@liferay.com:test \
-				-d companyId=${companyId} \
-				-d parentGroupId=0 \
-				-d site=true
+				-d groupId=${groupId}
 		</var>
 
 		<execute class="com.liferay.poshi.runner.util.JSONCurlUtil" method="get">

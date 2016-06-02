@@ -172,8 +172,6 @@ YUI.add(
 
 					UA.renderer = '';
 
-					UA.dir = documentElement.getAttribute('dir') || 'ltr';
-
 					if (UA.ie) {
 						UA.renderer = 'trident';
 					}
@@ -195,7 +193,6 @@ YUI.add(
 
 					var selectors = [
 						UA.renderer,
-						UA.dir,
 						'js'
 					].concat(browserList);
 
@@ -255,6 +252,12 @@ YUI.add(
 				var documentElement = DOC.documentElement;
 
 				var selectors = this.getSelectors();
+
+				UA.dir = documentElement.getAttribute('dir') || 'ltr';
+
+				if (documentElement.className.indexOf(UA.dir) === -1) {
+					selectors += ' ' + UA.dir;
+				}
 
 				if (documentElement.className.indexOf(YUI3_JS_ENABLED) === -1 && selectors.indexOf(YUI3_JS_ENABLED) === -1) {
 					selectors += ' ' + YUI3_JS_ENABLED;

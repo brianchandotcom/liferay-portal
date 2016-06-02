@@ -8006,7 +8006,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<equals arg1="${os.name}" arg2="SunOS" />
 			</not>
 			<then>
-				<antcall inheritAll="false" target="clean-up-db2-processes" />
 				<antcall inheritAll="false" target="clean-up-java-processes" />
 			</then>
 		</if>

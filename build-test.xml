@@ -6566,29 +6566,52 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		<ant antfile="build-dist.xml" inheritAll="false" target="unzip-${app.server.type}-custom" />
 
 		<if>
-			<equals arg1="${app.server.type}" arg2="websphere" />
+			<equals arg1="${app.server.type}" arg2="weblogic" />
 			<then>
-				<replace
-					dir="${app.server.websphere.dir}"
-					includes="**/*.js,**/*.metadata,**/*.properties,**/*.props,**/*.sh,**/*.txt,**/*.xml"
-				>
-					<replacefilter token="/opt/dev/projects/github/liferay-portal/bundles" value="${app.server.parent.dir}" />
-				</replace>
-
-				<replace
-					dir="${app.server.websphere.dir}"
-					includes="**/*.sh"
-				>
-					<replacefilter token="#!/bin/sh" value="#!/bin/bash" />
-				</replace>
+				<replaceregexp
+					file="${app.server.weblogic.bin.dir}/stopWebLogic.sh"
+					flags="g"
+					match="(t3:\/\/)[^\:]*(\:\d+)"
+					replace="\1${env.HOSTNAME}\2"
+				/>
 
 				<chmod perm="a+x">
-					<fileset dir="${app.server.websphere.dir}">
-						<include name="bin/**/*.sh" />
-						<include name="java*/bin/*" />
+					<fileset dir="${app.server.weblogic.bin.dir}">
+						<include name="**/*.sh" />
+					</fileset>
+				</chmod>
+
+				<chmod perm="a+x">
+					<fileset dir="${app.server.weblogic.instance.dir}">
+						<include name="**/*.sh" />
 					</fileset>
 				</chmod>
 			</then>
+			<elseif>
+				<equals arg1="${app.server.type}" arg2="websphere" />
+				<then>
+					<replace
+						dir="${app.server.websphere.dir}"
+						includes="**/*.js,**/*.metadata,**/*.properties,**/*.props,**/*.sh,**/*.txt,**/*.xml"
+					>
+						<replacefilter token="/opt/dev/projects/github/liferay-portal/bundles" value="${app.server.parent.dir}" />
+					</replace>
+
+					<replace
+						dir="${app.server.websphere.dir}"
+						includes="**/*.sh"
+					>
+						<replacefilter token="#!/bin/sh" value="#!/bin/bash" />
+					</replace>
+
+					<chmod perm="a+x">
+						<fileset dir="${app.server.websphere.dir}">
+							<include name="bin/**/*.sh" />
+							<include name="java*/bin/*" />
+						</fileset>
+					</chmod>
+				</then>
+			</elseif>
 		</if>
 
 		<chmod perm="a+x">

@@ -87,10 +87,7 @@ public class CSSBuilderTest {
 
 	@Test
 	public void testCssBuilderWithJniWithPortalCommonJar() throws Exception {
-		_testCssBuilder(
-			"jni",
-			"build/portal-common-css-jar/" +
-				"com.liferay.frontend.css.common-2.0.1.jar");
+		_testCssBuilder("jni", _PORTAL_COMMON_CSS_JAR_FILE_NAME);
 	}
 
 	@Test
@@ -100,10 +97,7 @@ public class CSSBuilderTest {
 
 	@Test
 	public void testCssBuilderWithRubyWithPortalCommonJar() throws Exception {
-		_testCssBuilder(
-			"ruby",
-			"build/portal-common-css-jar/" +
-				"com.liferay.frontend.css.common-2.0.1.jar");
+		_testCssBuilder("ruby", _PORTAL_COMMON_CSS_JAR_FILE_NAME);
 	}
 
 	private String _read(String fileName) throws Exception {
@@ -168,6 +162,9 @@ public class CSSBuilderTest {
 
 	private static final String _PORTAL_COMMON_CSS_DIR_NAME =
 		"build/portal-common-css";
+
+	private static final String _PORTAL_COMMON_CSS_JAR_FILE_NAME =
+		"build/portal-common-css-jar/com.liferay.frontend.css.common.jar";
 
 	private static String _docrootDirName;
 

@@ -33,6 +33,7 @@ import java.io.File;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
+import org.gradle.api.DomainObjectCollection;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -99,6 +100,17 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		configureTasksExecuteGulp(
 			project, expandFrontendCSSCommonTask, frontendThemeStyledProject,
 			frontendThemeUnstyledProject, gulpBuildTaskCache);
+
+		GradleUtil.withPlugin(
+			project, CachePlugin.class,
+			new Action<CachePlugin>() {
+
+				@Override
+				public void execute(CachePlugin cachePlugin) {
+					configureTaskUpdateVersionForCachePlugin(updateVersionTask);
+				}
+
+			});
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -351,6 +363,27 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 						executeGulpTask, expandFrontendCSSCommonTask,
 						frontendThemeStyledProject,
 						frontendThemeUnstyledProject, taskCache);
+				}
+
+			});
+	}
+
+	protected void configureTaskUpdateVersionForCachePlugin(
+		final ReplaceRegexTask updateVersionTask) {
+
+		CacheExtension cacheExtension = GradleUtil.getExtension(
+			updateVersionTask.getProject(), CacheExtension.class);
+
+		DomainObjectCollection<TaskCache> taskCaches =
+			cacheExtension.getTasks();
+
+		taskCaches.all(
+			new Action<TaskCache>() {
+
+				@Override
+				public void execute(TaskCache taskCache) {
+					updateVersionTask.finalizedBy(
+						taskCache.getRefreshDigestTaskName());
 				}
 
 			});

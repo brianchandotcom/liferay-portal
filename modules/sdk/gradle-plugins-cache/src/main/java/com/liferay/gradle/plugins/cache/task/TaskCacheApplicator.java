@@ -43,6 +43,8 @@ import org.gradle.util.Clock;
  */
 public class TaskCacheApplicator {
 
+	public static final String DIGEST_FILE_NAME = ".digest";
+
 	public void apply(CacheExtension cacheExtension, TaskCache taskCache) {
 		Task task = taskCache.getTask();
 
@@ -91,6 +93,8 @@ public class TaskCacheApplicator {
 		else {
 			applyOutOfDate(taskCache, task, currentDigest);
 		}
+
+		createRefreshDigestTask(taskCache);
 	}
 
 	protected void applyOutOfDate(
@@ -107,23 +111,7 @@ public class TaskCacheApplicator {
 
 				@Override
 				public void execute(Task task) {
-					File digestFile = new File(
-						taskCache.getCacheDir(), _DIGEST_FILE_NAME);
-
-					try {
-						Files.write(
-							digestFile.toPath(),
-							currentDigest.getBytes(StandardCharsets.UTF_8));
-
-						if (_logger.isInfoEnabled()) {
-							_logger.info(
-								"Updated digest file to " + currentDigest);
-						}
-					}
-					catch (IOException ioe) {
-						throw new GradleException(
-							"Unable to write digest file", ioe);
-					}
+					writeDigestFile(taskCache, currentDigest);
 				}
 
 			});
@@ -145,15 +133,35 @@ public class TaskCacheApplicator {
 		task.setEnabled(false);
 	}
 
+	protected Task createRefreshDigestTask(final TaskCache taskCache) {
+		Project project = taskCache.getProject();
+
+		Task task = project.task(taskCache.getRefreshDigestTaskName());
+
+		task.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					String digest = getCurrentDigest(taskCache);
+
+					writeDigestFile(taskCache, digest);
+				}
+
+			});
+
+		task.setDescription("Refresh the digest for " + taskCache);
+
+		return task;
+	}
+
 	protected Copy createRestoreCacheTask(TaskCache taskCache) {
 		Project project = taskCache.getProject();
 
-		String taskName =
-			"restore" + StringUtil.capitalize(taskCache.getName()) + "Cache";
+		Copy copy = GradleUtil.addTask(
+			project, taskCache.getRestoreCacheTaskName(), Copy.class);
 
-		Copy copy = GradleUtil.addTask(project, taskName, Copy.class);
-
-		copy.exclude(_DIGEST_FILE_NAME);
+		copy.exclude(DIGEST_FILE_NAME);
 		copy.from(taskCache.getCacheDir());
 		copy.into(taskCache.getBaseDir());
 		copy.setDescription(
@@ -163,8 +171,7 @@ public class TaskCacheApplicator {
 	}
 
 	protected Copy createSaveCacheTask(TaskCache taskCache) {
-		String taskName =
-			"save" + StringUtil.capitalize(taskCache.getName()) + "Cache";
+		String taskName = taskCache.getSaveCacheTaskName();
 
 		Copy copy = GradleUtil.addTask(
 			taskCache.getProject(), taskName, Copy.class);
@@ -183,7 +190,7 @@ public class TaskCacheApplicator {
 	protected String getCachedDigest(TaskCache taskCache) {
 		try {
 			File digestFile = new File(
-				taskCache.getCacheDir(), _DIGEST_FILE_NAME);
+				taskCache.getCacheDir(), DIGEST_FILE_NAME);
 
 			if (!digestFile.exists()) {
 				return "";
@@ -287,7 +294,21 @@ public class TaskCacheApplicator {
 		}
 	}
 
-	private static final String _DIGEST_FILE_NAME = ".digest";
+	protected void writeDigestFile(TaskCache taskCache, String digest) {
+		File digestFile = new File(taskCache.getCacheDir(), DIGEST_FILE_NAME);
+
+		try {
+			Files.write(
+				digestFile.toPath(), digest.getBytes(StandardCharsets.UTF_8));
+
+			if (_logger.isInfoEnabled()) {
+				_logger.info("Updated digest file to " + digest);
+			}
+		}
+		catch (IOException ioe) {
+			throw new GradleException("Unable to write digest file", ioe);
+		}
+	}
 
 	private static final char _DIGEST_SEPARATOR = '-';
 

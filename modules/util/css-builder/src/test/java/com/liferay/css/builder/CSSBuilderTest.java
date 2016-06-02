@@ -118,11 +118,12 @@ public class CSSBuilderTest {
 	private void _testCssBuilder(String compiler, String portalCommonCssPath)
 		throws Exception {
 
-		CSSBuilder cssBuilder = new CSSBuilder(
-			_docrootDirName, false, ".sass-cache/", portalCommonCssPath, 6,
-			new String[0], compiler);
+		try (CSSBuilder cssBuilder = new CSSBuilder(
+				_docrootDirName, false, ".sass-cache/", portalCommonCssPath, 6,
+				new String[0], compiler)) {
 
-		cssBuilder.execute(Arrays.asList(new String[] {"/css"}));
+			cssBuilder.execute(Arrays.asList(new String[] {"/css"}));
+		}
 
 		String expectedTestContent = _read(
 			_docrootDirName + "/expected/test.css");

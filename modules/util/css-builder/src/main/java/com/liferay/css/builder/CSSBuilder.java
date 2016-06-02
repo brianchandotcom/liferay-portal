@@ -55,7 +55,7 @@ import org.apache.tools.ant.DirectoryScanner;
  * @author Shuyang Zhou
  * @author David Truong
  */
-public class CSSBuilder {
+public class CSSBuilder implements AutoCloseable {
 
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
@@ -95,11 +95,10 @@ public class CSSBuilder {
 		String sassCompilerClassName = arguments.get(
 			"sass.compiler.class.name");
 
-		try {
-			CSSBuilder cssBuilder = new CSSBuilder(
+		try (CSSBuilder cssBuilder = new CSSBuilder(
 				docrootDirName, generateSourceMap, outputDirName,
 				portalCommonPath, precision, rtlExcludedPathRegexps,
-				sassCompilerClassName);
+				sassCompilerClassName)) {
 
 			cssBuilder.execute(dirNames);
 		}
@@ -136,6 +135,15 @@ public class CSSBuilder {
 		_initSassCompiler(sassCompilerClassName);
 	}
 
+	@Override
+	public void close() throws Exception {
+		if (_cleanPortalCommonDir) {
+			File portalCommonDir = new File(_portalCommonDirName);
+
+			_deltree(portalCommonDir.toPath());
+		}
+	}
+
 	public void execute(List<String> dirNames) throws Exception {
 		List<String> fileNames = new ArrayList<>();
 
@@ -151,12 +159,6 @@ public class CSSBuilder {
 			System.out.println(
 				"Parsed " + fileName + " in " +
 					(System.currentTimeMillis() - startTime) + "ms");
-		}
-
-		if (_cleanPortalCommonDir) {
-			File portalCommonDir = new File(_portalCommonDirName);
-
-			_deltree(portalCommonDir.toPath());
 		}
 	}
 

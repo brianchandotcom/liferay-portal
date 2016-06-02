@@ -178,9 +178,9 @@ public class InputLocalizedTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:input-localized:defaultLanguageId", _defaultLanguageId);
 		request.setAttribute(
-			"liferay-ui:input-localized:displayWidth", _displayWidth);
-		request.setAttribute(
 			"liferay-ui:input-localized:disabled", String.valueOf(_disabled));
+		request.setAttribute(
+			"liferay-ui:input-localized:displayWidth", _displayWidth);
 		request.setAttribute(
 			"liferay-ui:input-localized:dynamicAttributes",
 			getDynamicAttributes());

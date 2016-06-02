@@ -683,8 +683,8 @@ public class ServicePreAction extends Action {
 			colorScheme = ThemeLocalServiceUtil.getColorScheme(
 				companyId, theme.getThemeId(), colorSchemeId);
 
-			request.setAttribute(WebKeys.THEME, theme);
 			request.setAttribute(WebKeys.COLOR_SCHEME, colorScheme);
+			request.setAttribute(WebKeys.THEME, theme);
 		}
 
 		boolean themeCssFastLoad = PropsValues.THEME_CSS_FAST_LOAD;

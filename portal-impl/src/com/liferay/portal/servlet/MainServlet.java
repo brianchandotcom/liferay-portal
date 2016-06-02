@@ -1038,9 +1038,9 @@ public class MainServlet extends ActionServlet {
 
 		HttpSession session = request.getSession();
 
+		session.setAttribute(Globals.LOCALE_KEY, user.getLocale());
 		session.setAttribute(WebKeys.USER, user);
 		session.setAttribute(WebKeys.USER_ID, Long.valueOf(userId));
-		session.setAttribute(Globals.LOCALE_KEY, user.getLocale());
 
 		session.removeAttribute("j_remoteuser");
 

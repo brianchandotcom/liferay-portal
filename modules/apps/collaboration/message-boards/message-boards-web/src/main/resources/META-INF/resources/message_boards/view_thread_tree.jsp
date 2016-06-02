@@ -38,12 +38,12 @@ if (message.getMessageId() == selMessage.getMessageId()) {
 <c:if test="<%= (message.getMessageId() != selMessage.getMessageId()) || MBUtil.isViewableMessage(themeDisplay, message) %>">
 
 	<%
-	request.setAttribute("edit_message.jsp-category", category);
-	request.setAttribute("edit_message.jsp-editable", Boolean.TRUE);
-	request.setAttribute("edit_message.jsp-message", message);
 	request.setAttribute("edit-message.jsp-showDeletedAttachmentsFileEntries", Boolean.TRUE);
 	request.setAttribute("edit-message.jsp-showPermanentLink", Boolean.TRUE);
 	request.setAttribute("edit-message.jsp-showRecentPosts", Boolean.TRUE);
+	request.setAttribute("edit_message.jsp-category", category);
+	request.setAttribute("edit_message.jsp-editable", Boolean.TRUE);
+	request.setAttribute("edit_message.jsp-message", message);
 	request.setAttribute("edit_message.jsp-thread", thread);
 	%>
 

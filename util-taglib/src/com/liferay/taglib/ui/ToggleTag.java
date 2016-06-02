@@ -104,17 +104,17 @@ public class ToggleTag extends IncludeTag {
 				ToggleTag.class.getName());
 		}
 
-		request.setAttribute("liferay-ui:toggle:id", id);
-		request.setAttribute("liferay-ui:toggle:showImage", showImage);
-		request.setAttribute("liferay-ui:toggle:hideImage", hideImage);
-		request.setAttribute("liferay-ui:toggle:showMessage", showMessage);
-		request.setAttribute("liferay-ui:toggle:hideMessage", hideMessage);
-		request.setAttribute("liferay-ui:toggle:stateVar", stateVar);
-		request.setAttribute(
-			"liferay-ui:toggle:defaultStateValue", defaultStateValue);
 		request.setAttribute("liferay-ui:toggle:defaultImage", defaultImage);
 		request.setAttribute(
 			"liferay-ui:toggle:defaultMessage", defaultMessage);
+		request.setAttribute(
+			"liferay-ui:toggle:defaultStateValue", defaultStateValue);
+		request.setAttribute("liferay-ui:toggle:hideImage", hideImage);
+		request.setAttribute("liferay-ui:toggle:hideMessage", hideMessage);
+		request.setAttribute("liferay-ui:toggle:id", id);
+		request.setAttribute("liferay-ui:toggle:showImage", showImage);
+		request.setAttribute("liferay-ui:toggle:showMessage", showMessage);
+		request.setAttribute("liferay-ui:toggle:stateVar", stateVar);
 
 		RequestDispatcher requestDispatcher =
 			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(

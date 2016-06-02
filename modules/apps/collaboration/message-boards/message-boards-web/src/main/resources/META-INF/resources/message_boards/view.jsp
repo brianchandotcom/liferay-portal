@@ -54,8 +54,8 @@ request.setAttribute("view.jsp-categorySubscriptionClassPKs", categorySubscripti
 request.setAttribute("view.jsp-threadSubscriptionClassPKs", threadSubscriptionClassPKs);
 
 request.setAttribute("view.jsp-categoryId", categoryId);
-request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 request.setAttribute("view.jsp-portletURL", portletURL);
+request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 
 MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDisplayContext(request, response, categoryId);
 %>

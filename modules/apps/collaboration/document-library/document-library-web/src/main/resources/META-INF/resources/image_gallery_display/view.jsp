@@ -154,8 +154,8 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 
 			igSearchContainer.setResults(results);
 
-			request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
 			request.setAttribute("view.jsp-igSearchContainer", igSearchContainer);
+			request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
 			%>
 
 			<div id="<portlet:namespace />imageGalleryAssetInfo">
@@ -234,8 +234,8 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 
 			igSearchContainer.setResults(results);
 
-			request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
 			request.setAttribute("view.jsp-igSearchContainer", igSearchContainer);
+			request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
 			%>
 
 			<aui:row>

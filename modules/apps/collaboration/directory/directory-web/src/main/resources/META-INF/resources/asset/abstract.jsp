@@ -25,15 +25,15 @@ Contact selContact = selUser.getContact();
 
 List<Organization> organizations = OrganizationLocalServiceUtil.getUserOrganizations(selUser.getUserId());
 
-request.setAttribute("user.selUser", selUser);
-request.setAttribute("user.selContact", selContact);
-request.setAttribute("user.organizations", organizations);
 request.setAttribute("addresses.className", Contact.class.getName());
 request.setAttribute("addresses.classPK", selContact.getContactId());
 request.setAttribute("emailAddresses.className", Contact.class.getName());
 request.setAttribute("emailAddresses.classPK", selContact.getContactId());
 request.setAttribute("phones.className", Contact.class.getName());
 request.setAttribute("phones.classPK", selContact.getContactId());
+request.setAttribute("user.organizations", organizations);
+request.setAttribute("user.selContact", selContact);
+request.setAttribute("user.selUser", selUser);
 request.setAttribute("websites.className", Contact.class.getName());
 request.setAttribute("websites.classPK", selContact.getContactId());
 %>

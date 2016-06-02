@@ -232,10 +232,10 @@ public class LayoutsTreeTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-layout:layouts-tree:checkedNodes", getCheckedNodes());
-		request.setAttribute(
 			"liferay-layout:layouts-tree:checkContentDisplayPage",
 			String.valueOf(_checkContentDisplayPage));
+		request.setAttribute(
+			"liferay-layout:layouts-tree:checkedNodes", getCheckedNodes());
 		request.setAttribute(
 			"liferay-layout:layouts-tree:defaultStateChecked",
 			String.valueOf(_defaultStateChecked));

@@ -46,13 +46,13 @@ request.setAttribute("view.jsp-results", assetEntries);
 				request.setAttribute("view.jsp-assetEntryIndex", Integer.valueOf(assetEntryIndex));
 
 				request.setAttribute("view.jsp-assetEntry", assetEntry);
-				request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
 				request.setAttribute("view.jsp-assetRenderer", assetRenderer);
+				request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
 
 				request.setAttribute("view.jsp-title", title);
 
-				request.setAttribute("view.jsp-show", Boolean.valueOf(show));
 				request.setAttribute("view.jsp-print", Boolean.valueOf(print));
+				request.setAttribute("view.jsp-show", Boolean.valueOf(show));
 
 				try {
 			%>

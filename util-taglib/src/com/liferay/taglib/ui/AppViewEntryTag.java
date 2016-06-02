@@ -308,8 +308,8 @@ public class AppViewEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-entry:thumbnailStyle", _thumbnailStyle);
 		request.setAttribute("liferay-ui:app-view-entry:title", _title);
-		request.setAttribute("liferay-ui:app-view-entry:version", _version);
 		request.setAttribute("liferay-ui:app-view-entry:url", _url);
+		request.setAttribute("liferay-ui:app-view-entry:version", _version);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

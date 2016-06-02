@@ -63,14 +63,14 @@ public class UserGroupSearchContainerResultsTag<R> extends IncludeTag {
 			searchContainerTag.getSearchContainer();
 
 		request.setAttribute(
-			"liferay-ui:user-group-search-container-results:useIndexer",
-			_useIndexer);
-		request.setAttribute(
 			"liferay-ui:user-group-search-container-results:searchContainer",
 			searchContainer);
 		request.setAttribute(
 			"liferay-ui:user-group-search-container-results:searchTerms",
 			_searchTerms);
+		request.setAttribute(
+			"liferay-ui:user-group-search-container-results:useIndexer",
+			_useIndexer);
 		request.setAttribute(
 			"liferay-ui:user-group-search-container-results:userGroupParams",
 			_userGroupParams);

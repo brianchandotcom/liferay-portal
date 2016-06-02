@@ -46,8 +46,8 @@ for (int assetEntryIndex = 0; assetEntryIndex < assetEntries.size(); assetEntryI
 	request.setAttribute("view.jsp-assetEntryIndex", Integer.valueOf(assetEntryIndex));
 
 	request.setAttribute("view.jsp-assetEntry", assetEntry);
-	request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
 	request.setAttribute("view.jsp-assetRenderer", assetRenderer);
+	request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory);
 
 	request.setAttribute("view.jsp-title", title);
 

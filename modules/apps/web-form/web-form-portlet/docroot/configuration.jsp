@@ -165,9 +165,9 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 				int index = 1;
 
 				for (int formFieldsIndex : formFieldsIndexes) {
-					request.setAttribute("configuration.jsp-index", String.valueOf(index));
-					request.setAttribute("configuration.jsp-formFieldsIndex", String.valueOf(formFieldsIndex));
 					request.setAttribute("configuration.jsp-fieldsEditingDisabled", String.valueOf(fieldsEditingDisabled));
+					request.setAttribute("configuration.jsp-formFieldsIndex", String.valueOf(formFieldsIndex));
+					request.setAttribute("configuration.jsp-index", String.valueOf(index));
 				%>
 
 					<div class="lfr-form-row" id="<portlet:namespace />fieldset<%= formFieldsIndex %>">

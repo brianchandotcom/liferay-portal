@@ -64,18 +64,18 @@ public class SectionTag extends IncludeTag {
 			_tabsTag.incrementSection();
 
 			request.setAttribute("liferay-ui:section:data", _data);
-			request.setAttribute("liferay-ui:section:param", sectionParam);
 			request.setAttribute("liferay-ui:section:name", sectionName);
+			request.setAttribute("liferay-ui:section:param", sectionParam);
+			request.setAttribute("liferay-ui:section:scroll", sectionScroll);
 			request.setAttribute(
 				"liferay-ui:section:selected", _sectionSelected);
-			request.setAttribute("liferay-ui:section:scroll", sectionScroll);
 
-			pageContext.setAttribute("sectionSelected", _sectionSelected);
-			pageContext.setAttribute("sectionParam", sectionParam);
 			pageContext.setAttribute("sectionName", sectionName);
-			pageContext.setAttribute("sectionScroll", sectionScroll);
+			pageContext.setAttribute("sectionParam", sectionParam);
 			pageContext.setAttribute(
 				"sectionRedirectParams", sectionRedirectParams);
+			pageContext.setAttribute("sectionScroll", sectionScroll);
+			pageContext.setAttribute("sectionSelected", _sectionSelected);
 
 			include(getStartPage(), true);
 

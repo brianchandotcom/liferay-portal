@@ -112,8 +112,6 @@ public class SPIAgentSerializableTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
-			distributedSerializable, distributedSerializable);
-		mockHttpServletRequest.setAttribute(
 			distributedNonserializable,
 			new Object() {
 
@@ -123,6 +121,8 @@ public class SPIAgentSerializableTest {
 				}
 
 			});
+		mockHttpServletRequest.setAttribute(
+			distributedSerializable, distributedSerializable);
 
 		String nondistributed = "NONDISTRIBUTED";
 

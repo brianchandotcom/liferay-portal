@@ -320,8 +320,8 @@ public class SecureFilter extends BasePortalFilter {
 
 		request = new ProtectedServletRequest(request, userIdString, authType);
 
-		session.setAttribute(WebKeys.USER, user);
 		session.setAttribute(_AUTHENTICATED_USER, userIdString);
+		session.setAttribute(WebKeys.USER, user);
 
 		initThreadLocals(request);
 

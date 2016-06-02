@@ -58,9 +58,9 @@ public class FacebookServlet extends HttpServlet {
 				String facebookCanvasPageURL = facebookData[0];
 				String redirect = facebookData[1];
 
+				request.setAttribute(GZipFilter.SKIP_FILTER, Boolean.TRUE);
 				request.setAttribute(
 					WebKeys.FACEBOOK_CANVAS_PAGE_URL, facebookCanvasPageURL);
-				request.setAttribute(GZipFilter.SKIP_FILTER, Boolean.TRUE);
 
 				ServletContext servletContext = getServletContext();
 

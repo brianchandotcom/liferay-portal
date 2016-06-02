@@ -282,9 +282,9 @@ public class JournalArticleIndexVersionsTest {
 			_group.getGroupId());
 
 		if (!head) {
-			searchContext.setAttribute("head", Boolean.FALSE);
 			searchContext.setAttribute(
 				Field.STATUS, WorkflowConstants.STATUS_ANY);
+			searchContext.setAttribute("head", Boolean.FALSE);
 		}
 
 		searchContext.setGroupIds(new long[] {_group.getGroupId()});

@@ -17,11 +17,15 @@ package com.liferay.dynamic.data.lists.web.display.context;
 import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordCreateDateComparator;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordModifiedDateComparator;
+import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -30,7 +34,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Rafael Praxedes
@@ -83,11 +89,7 @@ public class DDLViewRecordsDisplayContext {
 			List<DDMFormField> ddmFormFields = new ArrayList<>();
 
 			for (DDMFormField ddmFormField : ddmForm.getDDMFormFields()) {
-				if (isDDMFormFieldTransient(ddmFormField)) {
-					continue;
-				}
-
-				ddmFormFields.add(ddmFormField);
+				addDDMFormField(ddmFormFields, ddmFormField);
 			}
 
 			int totalColumns = _TOTAL_COLUMNS;
@@ -100,6 +102,25 @@ public class DDLViewRecordsDisplayContext {
 		}
 
 		return _ddmFormFields;
+	}
+
+	public Map<String, List<DDMFormFieldValue>> getDDMFormFieldValuesMap(
+			DDLRecordVersion recordVersion)
+		throws StorageException {
+
+		DDMFormValues ddmFormValues = recordVersion.getDDMFormValues();
+
+		List<DDMFormFieldValue> ddmFormFieldValues =
+			ddmFormValues.getDDMFormFieldValues();
+
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
+			new LinkedHashMap<>();
+
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			putDDMFormFieldValue(ddmFormFieldValuesMap, ddmFormFieldValue);
+		}
+
+		return ddmFormFieldValuesMap;
 	}
 
 	public DDMStructure getDDMStructure() {
@@ -124,12 +145,52 @@ public class DDLViewRecordsDisplayContext {
 		return orderByType;
 	}
 
+	protected void addDDMFormField(
+		List<DDMFormField> ddmFormFields, DDMFormField ddmFormField) {
+
+		if (!isDDMFormFieldTransient(ddmFormField)) {
+			ddmFormFields.add(ddmFormField);
+
+			return;
+		}
+
+		for (DDMFormField nestedDDMFormField :
+				ddmFormField.getNestedDDMFormFields()) {
+
+			addDDMFormField(ddmFormFields, nestedDDMFormField);
+		}
+	}
+
 	protected boolean isDDMFormFieldTransient(DDMFormField ddmFormField) {
 		if (Validator.isNull(ddmFormField.getDataType())) {
 			return true;
 		}
 
 		return false;
+	}
+
+	protected void putDDMFormFieldValue(
+		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap,
+		DDMFormFieldValue ddmFormFieldValue) {
+
+		List<DDMFormFieldValue> ddmFormFieldValues = ddmFormFieldValuesMap.get(
+			ddmFormFieldValue.getName());
+
+		if (ddmFormFieldValues == null) {
+			ddmFormFieldValues = new ArrayList<>();
+
+			ddmFormFieldValuesMap.put(
+				ddmFormFieldValue.getName(), ddmFormFieldValues);
+		}
+
+		ddmFormFieldValues.add(ddmFormFieldValue);
+
+		for (DDMFormFieldValue nestedDDMFormFieldValue :
+				ddmFormFieldValue.getNestedDDMFormFieldValues()) {
+
+			putDDMFormFieldValue(
+				ddmFormFieldValuesMap, nestedDDMFormFieldValue);
+		}
 	}
 
 	private static final int _TOTAL_COLUMNS = 5;

@@ -60,30 +60,38 @@ public class DDMFormValuesToFieldsConverterImpl
 		return ddmFields;
 	}
 
-	protected void addDDMFields(
+	protected void addDDMField(
 			DDMStructure ddmStructure, DDMFormFieldValue ddmFormFieldValue,
 			Fields ddmFields, Locale defaultLocale)
 		throws PortalException {
 
 		String fieldName = ddmFormFieldValue.getName();
 
-		if (!ddmStructure.hasField(fieldName)) {
+		if (!ddmStructure.hasField(fieldName) ||
+			ddmStructure.isFieldTransient(fieldName)) {
+
 			return;
 		}
 
-		if (!ddmStructure.isFieldTransient(fieldName)) {
-			Field ddmField = createDDMField(
-				ddmStructure, ddmFormFieldValue, defaultLocale);
+		Field ddmField = createDDMField(
+			ddmStructure, ddmFormFieldValue, defaultLocale);
 
-			Field existingDDMField = ddmFields.get(ddmField.getName());
+		Field existingDDMField = ddmFields.get(ddmField.getName());
 
-			if (existingDDMField == null) {
-				ddmFields.put(ddmField);
-			}
-			else {
-				addDDMFieldValues(existingDDMField, ddmField);
-			}
+		if (existingDDMField == null) {
+			ddmFields.put(ddmField);
 		}
+		else {
+			addDDMFieldValues(existingDDMField, ddmField);
+		}
+	}
+
+	protected void addDDMFields(
+			DDMStructure ddmStructure, DDMFormFieldValue ddmFormFieldValue,
+			Fields ddmFields, Locale defaultLocale)
+		throws PortalException {
+
+		addDDMField(ddmStructure, ddmFormFieldValue, ddmFields, defaultLocale);
 
 		addFieldDisplayValue(
 			ddmFields.get(DDMImpl.FIELDS_DISPLAY_NAME),

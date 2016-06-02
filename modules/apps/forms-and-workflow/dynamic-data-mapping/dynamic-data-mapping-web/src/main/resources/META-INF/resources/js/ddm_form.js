@@ -1640,7 +1640,7 @@ AUI.add(
 					getFieldNodes: function() {
 						var instance = this;
 
-						return instance.get('container').all('.field-wrapper');
+						return instance.get('container').all('> fieldset > div > .field-wrapper');
 					}
 				}
 			}

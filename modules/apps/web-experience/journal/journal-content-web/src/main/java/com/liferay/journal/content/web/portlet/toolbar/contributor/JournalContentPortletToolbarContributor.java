@@ -98,11 +98,6 @@ public class JournalContentPortletToolbarContributor
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				JournalFolderConstants.RESTRICTION_TYPE_INHERIT);
 
-		Map<String, Object> data = new HashMap<>();
-
-		data.put(
-			"id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
-
 		for (DDMStructure ddmStructure : ddmStructures) {
 			portletURL.setParameter(
 				"ddmStructureId",
@@ -115,6 +110,12 @@ public class JournalContentPortletToolbarContributor
 
 			String title = LanguageUtil.format(
 				themeDisplay.getLocale(), "new-x", ddmStructureName);
+
+			Map<String, Object> data = new HashMap<>();
+
+			data.put(
+				"id",
+				HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
 
 			data.put("title", HtmlUtil.escape(title));
 

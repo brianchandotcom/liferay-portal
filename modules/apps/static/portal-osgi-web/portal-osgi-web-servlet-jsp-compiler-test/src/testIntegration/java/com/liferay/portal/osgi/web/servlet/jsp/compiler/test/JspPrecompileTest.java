@@ -295,8 +295,8 @@ public class JspPrecompileTest {
 				attributes.putValue(
 					Constants.IMPORT_PACKAGE,
 					_buildImportPackageString(
-						MVCPortlet.class, PortalUtil.class, Portlet.class,
-						HttpServletRequest.class, BundleActivator.class));
+						BundleActivator.class, HttpServletRequest.class,
+						MVCPortlet.class, PortalUtil.class, Portlet.class));
 				attributes.putValue("Manifest-Version", "2");
 
 				jarOutputStream.putNextEntry(
@@ -307,8 +307,8 @@ public class JspPrecompileTest {
 				jarOutputStream.closeEntry();
 
 				_writeClasses(
-					jarOutputStream, JspPrecompilePortlet.class,
-					JspPrecompileBundleActivator.class);
+					jarOutputStream, JspPrecompileBundleActivator.class,
+					JspPrecompilePortlet.class);
 
 				ClassLoader classLoader =
 					JspPrecompileTest.class.getClassLoader();

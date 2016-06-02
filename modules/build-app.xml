@@ -2,7 +2,6 @@
 <!DOCTYPE project>
 
 <project name="build-app">
-	<property name="build.modules.excludes" value="apps/static/required-dependencies/required-dependencies" />
 	<property name="osgi.dir" value="${basedir}/../../bundles/osgi" />
 
 	<macrodef name="set-artifact-versions-previous-release">
@@ -29,7 +28,7 @@
 		<pathconvert pathsep="," property="app.names">
 			<globmapper from="${modules.dir}${file.separator}apps${file.separator}*" to="*" />
 			<path>
-				<dirset dir="${basedir}" excludes="apps/static" includes="apps/*" />
+				<dirset dir="${basedir}" includes="apps/*" />
 			</path>
 		</pathconvert>
 

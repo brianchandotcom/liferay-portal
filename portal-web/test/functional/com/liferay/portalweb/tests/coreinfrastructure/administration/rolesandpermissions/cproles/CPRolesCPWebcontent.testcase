@@ -429,6 +429,7 @@
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Web Content Page" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="Button#PLUS" />

@@ -1469,7 +1469,7 @@
 		<execute macro="Form#editDescription" />
 
 		<execute macro="Form#gotoAddFirstField">
-			<var name="fieldType" value="Text" />
+			<var name="fieldType" value="Text Field" />
 		</execute>
 
 		<execute macro="Form#editFieldLabel">

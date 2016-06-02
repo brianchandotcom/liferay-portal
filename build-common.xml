@@ -1550,6 +1550,12 @@ rerun your task.
 
 	<macrodef name="update-sdk-properties">
 		<sequential>
+			<property file="release.${user.name}.properties" />
+			<property file="release.${env.COMPUTERNAME}.properties" />
+			<property file="release.${env.HOST}.properties" />
+			<property file="release.${env.HOSTNAME}.properties" />
+			<property file="release.properties" />
+
 			<property location="${sdk.dir}/build.${env.COMPUTERNAME}.properties" name="sdk.properties.file" />
 
 			<delete file="${sdk.properties.file}" />
@@ -1563,6 +1569,7 @@ rerun your task.
 					<propertyref name="junit.java.unit.gc.logging" />
 					<propertyref name="junit.test.excludes" />
 					<propertyref name="liferay.home" />
+					<propertyref name="lp.version" />
 					<propertyref name="microsoft.translator.client.id" />
 					<propertyref name="microsoft.translator.client.secret" />
 					<propertyref name="sass.compiler.class.name" />

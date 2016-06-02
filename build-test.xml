@@ -6605,6 +6605,12 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					</replace>
 
 					<chmod perm="a+x">
+						<fileset dir="${app.server.websphere.bin.dir}">
+							<include name="**/*.sh" />
+						</fileset>
+					</chmod>
+
+					<chmod perm="a+x">
 						<fileset dir="${app.server.websphere.dir}">
 							<include name="bin/**/*.sh" />
 							<include name="java*/bin/*" />
@@ -6613,12 +6619,6 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				</then>
 			</elseif>
 		</if>
-
-		<chmod perm="a+x">
-			<fileset dir="${app.server.bin.dir}">
-				<include name="**/*.sh" />
-			</fileset>
-		</chmod>
 
 		<ant inheritAll="false" target="deploy" />
 

@@ -33,6 +33,8 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 		super.doUpgrade();
 
 		updateNestedPortletLayoutTypeSettings();
+
+		updateNestedPortletLayoutRevisionTypeSettings();
 	}
 
 	@Override
@@ -42,6 +44,37 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 				"118", NestedPortletsPortletKeys.NESTED_PORTLETS
 			}
 		};
+	}
+
+	protected void updateNestedPortletLayoutRevisionTypeSettings()
+		throws Exception {
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select layoutRevisionId, typeSettings from LayoutRevision " +
+					"where typeSettings LIKE '%nested-column-ids%'");
+
+			ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				long layoutRevisionId = rs.getLong("layoutRevisionId");
+				String typeSettings = rs.getString("typeSettings");
+
+				String oldPortletId = "_118_INSTANCE_";
+				String newPortletId =
+					"_" + NestedPortletsPortletKeys.NESTED_PORTLETS +
+						"_INSTANCE_";
+
+				String newTypeSettings = StringUtil.replace(
+					typeSettings, oldPortletId, newPortletId);
+
+				updateLayoutRevision(layoutRevisionId, newTypeSettings);
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
 	}
 
 	protected void updateNestedPortletLayoutTypeSettings() throws Exception {

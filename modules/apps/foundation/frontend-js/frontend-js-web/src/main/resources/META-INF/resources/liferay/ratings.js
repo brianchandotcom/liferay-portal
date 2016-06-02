@@ -186,6 +186,36 @@ AUI.add(
 
 							firstNode.attr('title', averageRatingText);
 						}
+					},
+
+					_updateScoreText: function(score) {
+						var instance = this;
+
+						var nodes = instance._ratingStarNode.all('.rating-element');
+
+						nodes.each(
+							function(node, i) {
+								var ratingMessage = '';
+								var ratingScore = '';
+
+								if (score === i + 1) {
+									ratingMessage = i === 0 ? Liferay.Language.get('you-have-rated-this-x-star-out-of-x') : Liferay.Language.get('you-have-rated-this-x-stars-out-of-x');
+									ratingScore = score;
+								}
+								else {
+									ratingMessage = i === 0 ? Liferay.Language.get('rate-this-x-star-out-of-x') : Liferay.Language.get('rate-this-x-stars-out-of-x');
+									ratingScore = i + 1;
+								}
+
+								node.attr(
+									'title',
+									Lang.sub(
+										ratingMessage,
+										[ratingScore, instance.get(STR_SIZE)]
+									)
+								);
+							}
+						);
 					}
 				},
 
@@ -297,6 +327,7 @@ AUI.add(
 						var namespace = instance.get(STR_NAMESPACE);
 
 						instance._ratingScoreNode = A.one('#' + namespace + 'ratingScoreContent');
+						instance._ratingStarNode = A.one('#' + namespace + 'ratingStarContent');
 
 						if (themeDisplay.isSignedIn()) {
 							var yourScore = instance.get(STR_YOUR_SCORE) * instance.get(STR_SIZE);
@@ -337,6 +368,8 @@ AUI.add(
 
 						var averageScore = json.averageScore * instance.get(STR_SIZE);
 
+						var score = json.score * instance.get(STR_SIZE);
+
 						var label = instance._getLabel(description, json.totalEntries);
 
 						var averageIndex = instance.get('round') ? Math.round(averageScore) : Math.floor(averageScore);
@@ -360,6 +393,7 @@ AUI.add(
 						);
 
 						instance._updateAverageScoreText(averageScore);
+						instance._updateScoreText(score);
 					}
 				}
 			}

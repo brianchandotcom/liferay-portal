@@ -133,9 +133,9 @@ YUI.add(
 					var versionMajor = 0;
 
 					var browser;
-					var version;
 					var uaVersionMajor;
 					var uaVersionMinor;
+					var version;
 
 					var versionObj = {
 						major: versionMajor,
@@ -223,8 +223,8 @@ YUI.add(
 					vml = !(svg = !!(CONFIG.win.SVGAngle || DOC.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#BasicStructure', '1.1')));
 
 					if (vml) {
-						var div = DOC.createElement('div');
 						var behaviorObj;
+						var div = DOC.createElement('div');
 
 						div.innerHTML = '<v:shape adj="1"/>';
 

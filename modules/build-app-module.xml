@@ -2,6 +2,8 @@
 <!DOCTYPE project>
 
 <project name="build-app-module">
+	<import file="build-common.xml" />
+
 	<pathconvert property="releng.module.dir">
 		<filtermapper>
 			<replacestring from="modules${file.separator}apps" to="modules${file.separator}.releng${file.separator}apps" />
@@ -16,6 +18,14 @@
 		<available file="bnd.bnd" />
 	</condition>
 
+	<loadfile failonerror="false" property="artifact.deploy.dependencies" srcFile="build.gradle">
+		<filterchain>
+			<linecontains>
+				<contains value="task deployDependencies(type: Copy)" />
+			</linecontains>
+		</filterchain>
+	</loadfile>
+
 	<condition property="artifact.json">
 		<available file="package.json" />
 	</condition>
@@ -24,11 +34,11 @@
 		<available file="build.xml" />
 	</condition>
 
-	<target depends="download-artifact,record-artifact-change-log" name="dist-module-artifact" />
+	<target depends="download-artifact,download-artifact-dependencies,record-artifact-change-log" name="dist-module-artifact" />
 
-	<target depends="move-artifact" name="dist-module-artifact-lpkg" />
+	<target depends="move-artifact,move-artifact-dependencies" name="dist-module-artifact-lpkg" />
 
-	<target name="download-artifact">
+	<target name="download-artifact" unless="artifact.exclude">
 		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
 			<condition>
 				<not>
@@ -46,6 +56,15 @@
 		</loadproperties>
 
 		<get dest="${dist.dir}" src="${artifact.url}" />
+	</target>
+
+	<target if="artifact.deploy.dependencies" name="download-artifact-dependencies">
+		<exec dir="${modules.dir}" executable="${modules.dir}/../gradlew${gradlew.suffix}">
+			<arg value="${gradle.project.path}:deployDependencies" />
+			<arg value="-Ddeploy.dependencies.keep.versions=true" />
+			<arg value="-Dforced.cache.enabled=true" />
+			<arg value="-Pforced.deploy.dir=${dist.dir}" />
+		</exec>
 	</target>
 
 	<target
@@ -122,17 +141,18 @@
 
 		<property name="artifact.location.dest" value="${osgi.dir}/marketplace/${Bundle-SymbolicName}-${Bundle-Version}.jar" />
 
+		<condition property="artifact.location.src" value="${osgi.dir}/static/${Bundle-SymbolicName}.jar">
+			<contains string="${osgi.static.modules}" substring="${Bundle-SymbolicName}.jar" />
+		</condition>
+
 		<condition property="artifact.location.src" value="${osgi.dir}/portal/${Bundle-SymbolicName}.jar">
 			<contains string="${Bundle-SymbolicName}" substring="com.liferay.portal" />
 		</condition>
 
 		<property name="artifact.location.src" value="${osgi.dir}/modules/${Bundle-SymbolicName}.jar" />
 
+		<dirname file="${artifact.location.src}" property="artifact.dir.name" />
 		<basename file="${artifact.location.src}" property="artifact.file.name" />
-
-		<condition property="osgi.static">
-			<contains string="${osgi.static.modules}" substring="${artifact.file.name}" />
-		</condition>
 	</target>
 
 	<target if="artifact.json" name="get-artifact-properties-json">
@@ -213,8 +233,39 @@
 		</condition>
 	</target>
 
-	<target depends="get-artifact-properties" name="move-artifact" unless="osgi.static">
+	<target depends="get-artifact-properties" name="move-artifact">
 		<move file="${artifact.location.src}" tofile="${artifact.location.dest}" />
+	</target>
+
+	<target depends="get-artifact-properties" if="artifact.deploy.dependencies" name="move-artifact-dependencies">
+		<tempfile destdir="tmp" prefix="deployDependencies" property="artifact.dependencies.tmp.dir" />
+
+		<exec dir="${modules.dir}" executable="${modules.dir}/../gradlew${gradlew.suffix}">
+			<arg value="${gradle.project.path}:deployDependencies" />
+			<arg value="-Ddeploy.dependencies.keep.versions=true" />
+			<arg value="-Dforced.cache.enabled=true" />
+			<arg value="-Pforced.deploy.dir=${artifact.dependencies.tmp.dir}" />
+		</exec>
+
+		<fileset dir="${artifact.dependencies.tmp.dir}" id="artifact.dependencies.files" />
+
+		<pathconvert pathsep="," property="artifact.dependencies.file.names" refid="artifact.dependencies.files">
+			<chainedmapper>
+				<flattenmapper />
+
+				<regexpmapper from="^(.+?)-\d.*?\.jar$" to="\1.jar" />
+			</chainedmapper>
+		</pathconvert>
+
+		<delete>
+			<fileset dir="${artifact.dir.name}" includes="${artifact.dependencies.file.names}" />
+		</delete>
+
+		<move todir="${osgi.dir}/marketplace">
+			<fileset refid="artifact.dependencies.files" />
+		</move>
+
+		<delete dir="artifact.dependencies.tmp.dir" quiet="true" />
 	</target>
 
 	<target
@@ -226,7 +277,14 @@
 		<echo append="true" file="${dist.dir}/ticket.list.tmp">${artifact.change.log.ticket.list} </echo>
 	</target>
 
-	<target name="reset-artifact">
+	<target depends="reset-artifact-dependencies" name="reset-artifact">
 		<move failonerror="false" file="${artifact.location.dest}" tofile="${artifact.location.src}" />
+	</target>
+
+	<target if="artifact.deploy.dependencies" name="reset-artifact-dependencies">
+		<exec dir="${modules.dir}" executable="${modules.dir}/../gradlew${gradlew.suffix}">
+			<arg value="${gradle.project.path}:deployDependencies" />
+			<arg value="-Dforced.cache.enabled=true" />
+		</exec>
 	</target>
 </project>

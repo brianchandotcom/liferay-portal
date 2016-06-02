@@ -1,4 +1,5 @@
 import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.GradleUtil
 
 buildscript {
 	apply from: rootProject.file("build-buildscript.gradle"), to: buildscript
@@ -34,6 +35,12 @@ gradle.beforeProject {
 
 			afterEvaluate {
 				bundle.jarBuilderFactory.contextClassLoader = buildscript.classLoader
+
+				File forcedDeployDir = GradleUtil.getProperty(project, "forced.deploy.dir", (File)null)
+
+				if (forcedDeployDir) {
+					liferay.deployDir = forcedDeployDir
+				}
 			}
 
 			configurations {

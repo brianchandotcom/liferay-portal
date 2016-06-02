@@ -1,7 +1,22 @@
+task deployTool(type: Copy)
+
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.2.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.4.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.4.0"
 	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	provided project(":core:portal-bootstrap")
+}
+
+deploy {
+	finalizedBy deployTool
+}
+
+deployTool {
+	from jar
+	into new File(liferay.liferayHome, "tools/portal-target-platform-indexer-main")
+
+	rename {
+		"com.liferay.portal.target.platform.indexer.jar"
+	}
 }

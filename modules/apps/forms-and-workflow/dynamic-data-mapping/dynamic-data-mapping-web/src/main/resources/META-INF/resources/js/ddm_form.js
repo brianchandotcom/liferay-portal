@@ -1196,7 +1196,7 @@ AUI.add(
 
 						var parsedValue = instance.getParsedValue(value);
 
-						if (!parsedValue.assetclasspk && !parsedValue.assetentryid) {
+						if (!parsedValue.className && !parsedValue.classPK) {
 							value = '';
 						}
 						else {
@@ -1275,7 +1275,7 @@ AUI.add(
 								if (event.details.length > 0) {
 									var webContentSelected = event.details[0];
 
-									instance.setValue(webContentSelected);
+									instance.setValue({ className: webContentSelected.assetclassname, classPK: webContentSelected.assetclasspk });
 								}
 							}
 						);

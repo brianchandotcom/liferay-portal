@@ -16,7 +16,7 @@
 		<if>
 			<available file="${project.dir}/modules/private/apps/foundation/portal/portal-dao-db" type="dir" />
 			<then>
-				<gradle-execute dir="${project.dir}/modules/private/apps/foundation/portal/portal-dao-db" task="jar" />
+				<gradle-execute dir="${project.dir}/modules" task=":private:apps:foundation:portal:portal-dao-db:jar" />
 
 				<path id="db.builder.classpath">
 					<fileset dir="${sdk.dir}/dist" includes="com.liferay.portal.dao.db-*.jar" />

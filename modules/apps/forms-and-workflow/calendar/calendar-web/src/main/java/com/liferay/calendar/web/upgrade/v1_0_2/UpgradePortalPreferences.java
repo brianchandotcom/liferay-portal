@@ -16,6 +16,7 @@ package com.liferay.calendar.web.upgrade.v1_0_2;
 
 import com.liferay.portal.kernel.upgrade.RenameUpgradePortalPreferences;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -90,9 +91,15 @@ public class UpgradePortalPreferences extends RenameUpgradePortalPreferences {
 	}
 
 	protected void populatePreferenceNamesMap() throws Exception {
+		StringBundler sb = new StringBundler(120);
+
+		sb.append("select preferences from PortalPreferences where ");
+		sb.append("preferences like '%");
+		sb.append(_OLD_SESSION_CLICKS_NAMESPACE);
+		sb.append("calendar-%'");
+
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps1 = connection.prepareStatement(
-				"select preferences from PortalPreferences");
+			PreparedStatement ps1 = connection.prepareStatement(sb.toString());
 			ResultSet rs = ps1.executeQuery();) {
 
 			while (rs.next()) {

@@ -155,6 +155,7 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 		List<DiffResult>[] diffResults = DiffUtil.diff(
 			new InputStreamReader(sourceIs), new InputStreamReader(targetIs));
 
+		renderRequest.setAttribute(WebKeys.DIFF_RESULTS, diffResults);
 		renderRequest.setAttribute(
 			WebKeys.SOURCE_NAME,
 			sourceFileVersion.getTitle() + StringPool.SPACE +
@@ -163,7 +164,6 @@ public class CompareVersionsMVCRenderCommand implements MVCRenderCommand {
 			WebKeys.TARGET_NAME,
 			targetFileVersion.getTitle() + StringPool.SPACE +
 				targetFileVersion.getVersion());
-		renderRequest.setAttribute(WebKeys.DIFF_RESULTS, diffResults);
 	}
 
 	@Reference(unbind = "-")

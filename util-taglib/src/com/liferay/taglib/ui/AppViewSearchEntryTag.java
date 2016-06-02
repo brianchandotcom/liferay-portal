@@ -168,10 +168,10 @@ public class AppViewSearchEntryTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:app-view-search-entry:actionJsp", _actionJsp);
-		request.setAttribute(
 			"liferay-ui:app-view-entry:actionJspServletContext",
 			getActionJspServletContext());
+		request.setAttribute(
+			"liferay-ui:app-view-search-entry:actionJsp", _actionJsp);
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:commentRelatedSearchResults",
 			_commentRelatedSearchResults);

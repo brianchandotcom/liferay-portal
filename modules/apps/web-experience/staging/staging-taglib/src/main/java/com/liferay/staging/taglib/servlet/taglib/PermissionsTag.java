@@ -91,6 +91,7 @@ public class PermissionsTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute("liferay-staging:deletions:global", _global);
 		request.setAttribute("liferay-staging:permissions:action", _action);
 		request.setAttribute(
 			"liferay-staging:permissions:descriptionCSSClass",
@@ -100,7 +101,6 @@ public class PermissionsTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-staging:permissions:exportImportConfigurationId",
 			_exportImportConfigurationId);
-		request.setAttribute("liferay-staging:deletions:global", _global);
 		request.setAttribute(
 			"liferay-staging:permissions:labelCSSClass", _labelCSSClass);
 	}

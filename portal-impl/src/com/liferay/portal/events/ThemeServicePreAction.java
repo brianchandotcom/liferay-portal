@@ -83,8 +83,8 @@ public class ThemeServicePreAction extends Action {
 				themeDisplay.getCompanyId(), theme.getThemeId(), colorSchemeId);
 		}
 
-		request.setAttribute(WebKeys.THEME, theme);
 		request.setAttribute(WebKeys.COLOR_SCHEME, colorScheme);
+		request.setAttribute(WebKeys.THEME, theme);
 
 		themeDisplay.setLookAndFeel(theme, colorScheme);
 	}

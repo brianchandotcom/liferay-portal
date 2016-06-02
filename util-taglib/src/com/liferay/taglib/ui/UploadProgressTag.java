@@ -63,8 +63,8 @@ public class UploadProgressTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute("liferay-ui:progress:id", _id);
 		request.setAttribute("liferay-ui:progress:height", _height);
+		request.setAttribute("liferay-ui:progress:id", _id);
 		request.setAttribute("liferay-ui:progress:message", _message);
 		request.setAttribute("liferay-ui:progress:updatePeriod", _updatePeriod);
 	}

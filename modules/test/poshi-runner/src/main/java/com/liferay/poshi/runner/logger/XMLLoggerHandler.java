@@ -469,9 +469,9 @@ public final class XMLLoggerHandler {
 
 		if (element.attributeValue("macro") != null) {
 			lineContainerLoggerElement.setAttribute(
-				"onmouseover", "macroHover(this, true)");
-			lineContainerLoggerElement.setAttribute(
 				"onmouseout", "macroHover(this, false)");
+			lineContainerLoggerElement.setAttribute(
+				"onmouseover", "macroHover(this, true)");
 		}
 
 		StringBuilder sb = new StringBuilder();

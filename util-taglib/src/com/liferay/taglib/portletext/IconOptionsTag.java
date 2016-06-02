@@ -99,12 +99,12 @@ public class IconOptionsTag extends IconTag {
 	protected void setAttributes(HttpServletRequest request) {
 		super.setAttributes(request);
 
-		request.setAttribute("liferay-ui:icon:direction", _direction);
-		request.setAttribute(
-			"liferay-ui:icon:showArrow", String.valueOf(_showArrow));
 		request.setAttribute(
 			"liferay-ui:icon-options:portletConfigurationIcons",
 			getPortletConfigurationIcons());
+		request.setAttribute("liferay-ui:icon:direction", _direction);
+		request.setAttribute(
+			"liferay-ui:icon:showArrow", String.valueOf(_showArrow));
 	}
 
 	private String _direction = "right";

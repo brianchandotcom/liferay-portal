@@ -97,17 +97,17 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 			_id = StringUtil.randomId();
 		}
 
-		request.setAttribute("liferay-ui:panel-container:id", _id);
 		request.setAttribute(
 			"liferay-ui:panel-container:accordion", String.valueOf(_accordion));
-		request.setAttribute(
-			"liferay-ui:panel-container:persistState",
-			String.valueOf(_persistState));
-		request.setAttribute("liferay-ui:panel-container:extended", _extended);
 		request.setAttribute("liferay-ui:panel-container:cssClass", _cssClass);
+		request.setAttribute("liferay-ui:panel-container:extended", _extended);
+		request.setAttribute("liferay-ui:panel-container:id", _id);
 		request.setAttribute(
 			"liferay-ui:panel-container:panelCount" + _id,
 			new IntegerWrapper());
+		request.setAttribute(
+			"liferay-ui:panel-container:persistState",
+			String.valueOf(_persistState));
 
 		return EVAL_BODY_BUFFERED;
 	}

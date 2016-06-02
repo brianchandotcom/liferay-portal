@@ -67,20 +67,20 @@ public class ToggleAreaTag extends IncludeTag {
 			HttpServletRequest request =
 				(HttpServletRequest)pageContext.getRequest();
 
+			request.setAttribute("liferay-ui:toggle-area:align", _align);
+			request.setAttribute(
+				"liferay-ui:toggle-area:defaultShowContent",
+				String.valueOf(_defaultShowContent));
+			request.setAttribute(
+				"liferay-ui:toggle-area:hideImage", _hideImage);
+			request.setAttribute(
+				"liferay-ui:toggle-area:hideMessage", _hideMessage);
 			request.setAttribute("liferay-ui:toggle-area:id", _id);
 			request.setAttribute(
 				"liferay-ui:toggle-area:showImage", _showImage);
 			request.setAttribute(
-				"liferay-ui:toggle-area:hideImage", _hideImage);
-			request.setAttribute(
 				"liferay-ui:toggle-area:showMessage", _showMessage);
-			request.setAttribute(
-				"liferay-ui:toggle-area:hideMessage", _hideMessage);
-			request.setAttribute(
-				"liferay-ui:toggle-area:defaultShowContent",
-				String.valueOf(_defaultShowContent));
 			request.setAttribute("liferay-ui:toggle-area:stateVar", _stateVar);
-			request.setAttribute("liferay-ui:toggle-area:align", _align);
 
 			include(getStartPage(), true);
 

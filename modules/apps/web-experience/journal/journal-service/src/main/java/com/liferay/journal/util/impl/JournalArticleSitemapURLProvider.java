@@ -52,12 +52,54 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	@Override
+	public void visitLayout(
+			Element element, LayoutSet layoutSet, String layoutUuid,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		List<JournalArticle> journalArticles =
+			_journalArticleService.getArticlesByLayoutUuid(
+				layoutSet.getGroupId(), layoutUuid);
+
+		visitArticles(element, layoutSet, themeDisplay, journalArticles);
+	}
+
+	@Override
 	public void visitLayoutSet(
 			Element element, LayoutSet layoutSet, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		List<JournalArticle> journalArticles =
 			_journalArticleService.getLayoutArticles(layoutSet.getGroupId());
+
+		visitArticles(element, layoutSet, themeDisplay, journalArticles);
+	}
+
+	@Reference(unbind = "-")
+	protected void setJournalArticleService(
+		JournalArticleService journalArticleService) {
+
+		_journalArticleService = journalArticleService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutSetLocalService(
+		LayoutSetLocalService layoutSetLocalService) {
+
+		_layoutSetLocalService = layoutSetLocalService;
+	}
+
+	protected void visitArticles(
+			Element element, LayoutSet layoutSet, ThemeDisplay themeDisplay,
+			List<JournalArticle> journalArticles)
+		throws PortalException {
 
 		if (journalArticles.isEmpty()) {
 			return;
@@ -125,27 +167,6 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 			processedArticleIds.add(journalArticle.getArticleId());
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setJournalArticleService(
-		JournalArticleService journalArticleService) {
-
-		_journalArticleService = journalArticleService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setLayoutSetLocalService(
-		LayoutSetLocalService layoutSetLocalService) {
-
-		_layoutSetLocalService = layoutSetLocalService;
 	}
 
 	private JournalArticleService _journalArticleService;

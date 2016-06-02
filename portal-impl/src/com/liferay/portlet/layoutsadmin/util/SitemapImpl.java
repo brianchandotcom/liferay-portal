@@ -180,6 +180,14 @@ public class SitemapImpl implements Sitemap {
 			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
 		throws PortalException {
 
+		return getSitemap(groupId, null, privateLayout, themeDisplay);
+	}
+
+	public String getSitemap(
+			long groupId, String layoutUuid, boolean privateLayout,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
 		Document document = SAXReaderUtil.createDocument();
 
 		document.setXMLEncoding(StringPool.UTF8);
@@ -196,8 +204,14 @@ public class SitemapImpl implements Sitemap {
 			SitemapURLProviderRegistryUtil.getSitemapURLProviders();
 
 		for (SitemapURLProvider sitemapURLProvider : sitemapURLProviders) {
-			sitemapURLProvider.visitLayoutSet(
-				rootElement, layoutSet, themeDisplay);
+			if (Validator.isNull(layoutUuid)) {
+				sitemapURLProvider.visitLayoutSet(
+					rootElement, layoutSet, themeDisplay);
+			}
+			else {
+				sitemapURLProvider.visitLayout(
+					rootElement, layoutSet, layoutUuid, themeDisplay);
+			}
 		}
 
 		return document.asXML();

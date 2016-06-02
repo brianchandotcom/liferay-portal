@@ -82,7 +82,7 @@ public class CSSBuilderTest {
 
 	@Test
 	public void testCssBuilderWithJni() throws Exception {
-		_testCssBuilder("jni", "build/portal-common-css");
+		_testCssBuilder("jni", _PORTAL_COMMON_CSS_DIR_NAME);
 	}
 
 	@Test
@@ -95,7 +95,7 @@ public class CSSBuilderTest {
 
 	@Test
 	public void testCssBuilderWithRuby() throws Exception {
-		_testCssBuilder("ruby", "build/portal-common-css");
+		_testCssBuilder("ruby", _PORTAL_COMMON_CSS_DIR_NAME);
 	}
 
 	@Test
@@ -165,6 +165,9 @@ public class CSSBuilderTest {
 
 		Assert.assertEquals(expectedUnicodeContent, actualTestUnicodeContent);
 	}
+
+	private static final String _PORTAL_COMMON_CSS_DIR_NAME =
+		"build/portal-common-css";
 
 	private static String _docrootDirName;
 

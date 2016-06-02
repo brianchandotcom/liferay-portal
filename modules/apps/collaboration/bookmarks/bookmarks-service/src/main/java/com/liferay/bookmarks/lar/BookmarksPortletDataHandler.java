@@ -187,8 +187,7 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Reference(
-		target =
-			"(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)",
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)",
 		unbind = "-"
 	)
 	protected void setBookmarksEntryStagedModelRepository(
@@ -200,8 +199,7 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Reference(
-		target =
-			"(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)",
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)",
 		unbind = "-"
 	)
 	protected void setBookmarksFolderStagedModelRepository(

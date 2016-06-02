@@ -41,9 +41,7 @@ public interface SAPConfiguration {
 	public String systemDefaultSAPEntryDescription();
 
 	@Meta.AD(
-		deflt =
-			"com.liferay.portal.kernel.service.CountryService#getCountries\n" +
-				"com.liferay.portal.kernel.service.RegionService#getRegions",
+		deflt = "com.liferay.portal.kernel.service.CountryService#getCountries\ncom.liferay.portal.kernel.service.RegionService#getRegions",
 		required = false
 	)
 	public String systemDefaultSAPEntryServiceSignatures();
@@ -52,9 +50,7 @@ public interface SAPConfiguration {
 	public String systemUserPasswordSAPEntryName();
 
 	@Meta.AD(
-		deflt =
-			"System Service Access Policy for Requests Authenticated Using " +
-				"User Password",
+		deflt = "System Service Access Policy for Requests Authenticated Using User Password",
 		required = false
 	)
 	public String systemUserPasswordSAPEntryDescription();

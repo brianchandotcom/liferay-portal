@@ -56,7 +56,9 @@
 	</target>
 
 	<target depends="check-app-version,init-build-app" name="check-stale-artifacts">
-		<exec executable="${gradle.wrapper.path}" outputproperty="stale.artifacts.output">
+		<property location="${gradle.wrapper.path}" name="gradle.wrapper.path.absolute" />
+
+		<exec dir="${app.dir}" executable="${gradle.wrapper.path.absolute}" outputproperty="stale.artifacts.output">
 			<arg value="printStaleArtifact" />
 			<arg value="-q" />
 		</exec>

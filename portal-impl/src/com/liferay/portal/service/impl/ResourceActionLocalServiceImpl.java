@@ -14,16 +14,21 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceAction;
-import com.liferay.portal.kernel.model.ResourceBlockPermission;
+import com.liferay.portal.kernel.model.ResourceBlock;
+import com.liferay.portal.kernel.model.ResourceBlockConstants;
+import com.liferay.portal.kernel.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.ResourceTypePermission;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -31,12 +36,14 @@ import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.ResourceActionLocalServiceBaseImpl;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -213,79 +220,164 @@ public class ResourceActionLocalServiceImpl
 
 	@Override
 	public ResourceAction deleteResourceAction(ResourceAction resourceAction) {
+		final String name = resourceAction.getName();
+		final long bitwiseValue = resourceAction.getBitwiseValue();
+
+		ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property nameProperty = PropertyFactoryUtil.forName("name");
+
+					dynamicQuery.add(nameProperty.eq(name));
+				}
+
+			};
+
+		for (final Company company : companyLocalService.getCompanies()) {
+			if (resourceBlockLocalService.isSupported(
+					resourceAction.getName())) {
+
+				ActionableDynamicQuery resourceBlockActionableDynamicQuery =
+					resourceBlockLocalService.getActionableDynamicQuery();
+
+				resourceBlockActionableDynamicQuery.setCompanyId(
+					company.getCompanyId());
+
+				resourceBlockActionableDynamicQuery.setAddCriteriaMethod(
+					addCriteriaMethod);
+
+				resourceBlockActionableDynamicQuery.setPerformActionMethod(
+					new ActionableDynamicQuery.
+						PerformActionMethod<ResourceBlock>() {
+
+						@Override
+						public void performAction(ResourceBlock resourceBlock) {
+							ResourceBlockPermissionsContainer
+								resourceBlockPermissionsContainer =
+									resourceBlockPermissionLocalService.
+										getResourceBlockPermissionsContainer(
+											resourceBlock.getResourceBlockId());
+
+							Set<Long> roleIds =
+								resourceBlockPermissionsContainer.getRoleIds();
+
+							for (long roleId : roleIds) {
+								resourceBlockPermissionsContainer.
+									removePermission(roleId, bitwiseValue);
+
+								resourceBlockPermissionLocalService.
+									updateResourceBlockPermission(
+										resourceBlock.getResourceBlockId(),
+										roleId, bitwiseValue,
+										ResourceBlockConstants.OPERATOR_REMOVE);
+							}
+
+							resourceBlock.setPermissionsHash(
+								resourceBlockPermissionsContainer.
+									getPermissionsHash());
+
+							resourceBlockPersistence.update(resourceBlock);
+						}
+
+					});
+
+				try {
+					resourceBlockActionableDynamicQuery.performActions();
+				}
+				catch (PortalException pe) {
+					throw new SystemException(pe);
+				}
+
+				ActionableDynamicQuery resourceTypeActionableDynamicQuery =
+					resourceTypePermissionLocalService.
+						getActionableDynamicQuery();
+
+				resourceTypeActionableDynamicQuery.setCompanyId(
+					company.getCompanyId());
+
+				resourceTypeActionableDynamicQuery.setAddCriteriaMethod(
+					addCriteriaMethod);
+
+				resourceTypeActionableDynamicQuery.setPerformActionMethod(
+					new ActionableDynamicQuery.
+						PerformActionMethod<ResourceTypePermission>() {
+
+						@Override
+						public void performAction(
+							ResourceTypePermission resourceTypePermission) {
+
+							long actionIds =
+								resourceTypePermission.getActionIds();
+
+							if ((actionIds & bitwiseValue) != 0) {
+								resourceTypePermission.setActionIds(
+									actionIds & (~bitwiseValue));
+
+								resourceTypePermissionPersistence.update(
+									resourceTypePermission);
+							}
+						}
+
+					});
+
+				try {
+					resourceTypeActionableDynamicQuery.performActions();
+				}
+				catch (PortalException pe) {
+					throw new SystemException(pe);
+				}
+			}
+			else {
+				ActionableDynamicQuery actionableDynamicQuery =
+					resourcePermissionLocalService.getActionableDynamicQuery();
+
+				actionableDynamicQuery.setCompanyId(company.getCompanyId());
+
+				actionableDynamicQuery.setAddCriteriaMethod(addCriteriaMethod);
+
+				actionableDynamicQuery.setPerformActionMethod(
+					new ActionableDynamicQuery.
+						PerformActionMethod<ResourcePermission>() {
+
+						@Override
+						public void performAction(
+							ResourcePermission resourcePermission) {
+
+							long actionIds = resourcePermission.getActionIds();
+
+							if ((actionIds & bitwiseValue) != 0) {
+								actionIds = actionIds & (~bitwiseValue);
+
+								resourcePermission.setActionIds(actionIds);
+								resourcePermission.setViewActionId(
+									actionIds % 2 == 1);
+
+								resourcePermissionPersistence.update(
+									resourcePermission);
+							}
+						}
+
+					});
+
+				try {
+					actionableDynamicQuery.performActions();
+				}
+				catch (PortalException pe) {
+					throw new SystemException(pe);
+				}
+			}
+		}
+
 		_resourceActions.remove(
 			encodeKey(resourceAction.getName(), resourceAction.getActionId()));
 
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionLocalService.getResourceResourcePermissions(
-				resourceAction.getName());
+		resourceActionPersistence.remove(resourceAction);
 
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			long actionIds = resourcePermission.getActionIds();
+		PermissionCacheUtil.clearCache();
 
-			if ((actionIds & resourceAction.getBitwiseValue()) != 0) {
-				actionIds = actionIds ^ resourceAction.getBitwiseValue();
-
-				resourcePermission.setActionIds(actionIds);
-
-				resourcePermissionPersistence.update(resourcePermission);
-			}
-		}
-
-		List<ResourceTypePermission> resourceTypePermissions =
-			new ArrayList<>();
-
-		List<ResourceBlockPermission> resourceBlockPermissions =
-			new ArrayList<>();
-
-		for (Company company : companyLocalService.getCompanies()) {
-			long companyId = company.getCompanyId();
-
-			for (Role role : roleLocalService.getRoles(companyId)) {
-				resourceTypePermissions.addAll(
-					resourceTypePermissionLocalService.
-						getGroupScopeResourceTypePermissions(
-							companyId, resourceAction.getName(),
-							role.getRoleId()));
-			}
-
-			resourceBlockPermissions.addAll(
-				resourceBlockPermissionLocalService.
-					getResourceResourceBlockPermissions(
-						companyId, resourceAction.getName()));
-		}
-
-		for (ResourceTypePermission resourceTypePermission :
-				resourceTypePermissions) {
-
-			long actionIds = resourceTypePermission.getActionIds();
-
-			if ((actionIds & resourceAction.getBitwiseValue()) != 0) {
-				actionIds = actionIds ^ resourceAction.getBitwiseValue();
-
-				resourceTypePermission.setActionIds(actionIds);
-
-				resourceTypePermissionPersistence.update(
-					resourceTypePermission);
-			}
-		}
-
-		for (ResourceBlockPermission resourceBlockPermission :
-				resourceBlockPermissions) {
-
-			long actionIds = resourceBlockPermission.getActionIds();
-
-			if ((actionIds & resourceAction.getBitwiseValue()) != 0) {
-				actionIds = actionIds ^ resourceAction.getBitwiseValue();
-
-				resourceBlockPermission.setActionIds(actionIds);
-
-				resourceBlockPermissionPersistence.update(
-					resourceBlockPermission);
-			}
-		}
-
-		return resourceActionPersistence.remove(resourceAction);
+		return resourceAction;
 	}
 
 	@Override

@@ -539,6 +539,10 @@ public class JournalArticleAssetRenderer
 		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
+		if ((portletRequest == null) || (portletResponse == null)) {
+			return null;
+		}
+
 		return new PortletRequestModel(portletRequest, portletResponse);
 	}
 

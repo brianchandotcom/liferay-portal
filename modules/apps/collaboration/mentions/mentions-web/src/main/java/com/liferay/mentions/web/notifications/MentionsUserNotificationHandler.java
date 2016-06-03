@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ResourceBundle;
@@ -88,7 +90,9 @@ public class MentionsUserNotificationHandler
 			return LanguageUtil.format(
 				resourceBundle, "x-mentioned-you-in-a-comment-in-a-x",
 				new String[] {
-					HtmlUtil.escape(assetRenderer.getUserName()),
+					HtmlUtil.escape(
+						PortalUtil.getUserName(
+							jsonObject.getLong("userId"), StringPool.BLANK)),
 					StringUtil.toLowerCase(HtmlUtil.escape(typeName))
 				},
 				false);
@@ -97,7 +101,9 @@ public class MentionsUserNotificationHandler
 			return LanguageUtil.format(
 				resourceBundle, "x-mentioned-you-in-a-x",
 				new String[] {
-					HtmlUtil.escape(assetRenderer.getUserName()),
+					HtmlUtil.escape(
+						PortalUtil.getUserName(
+							jsonObject.getLong("userId"), StringPool.BLANK)),
 					StringUtil.toLowerCase(HtmlUtil.escape(typeName))
 				},
 				false);

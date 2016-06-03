@@ -31,7 +31,6 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -44,7 +43,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Shinn Lok
  */
-@Ignore
 @PrepareForTest({FileEventUtil.class})
 @RunWith(PowerMockRunner.class)
 public class SyncFileServiceTest extends BaseTestCase {

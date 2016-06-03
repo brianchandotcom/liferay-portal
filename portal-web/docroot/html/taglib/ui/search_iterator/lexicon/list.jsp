@@ -38,7 +38,7 @@ if (!resultRowSplitterEntries.isEmpty()) {
 %>
 
 <div class="table-responsive">
-	<table class="table table-list table-autofit table-heading-nowrap">
+	<table class="table table-autofit table-heading-nowrap table-list">
 		<c:if test="<%= ListUtil.isNotNull(headerNames) %>">
 			<thead>
 				<tr>

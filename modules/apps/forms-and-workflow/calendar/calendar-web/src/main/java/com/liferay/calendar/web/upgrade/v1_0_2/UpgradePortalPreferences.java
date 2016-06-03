@@ -91,7 +91,7 @@ public class UpgradePortalPreferences extends RenameUpgradePortalPreferences {
 	}
 
 	protected void populatePreferenceNamesMap() throws Exception {
-		StringBundler sb = new StringBundler(120);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("select preferences from PortalPreferences where ");
 		sb.append("preferences like '%");

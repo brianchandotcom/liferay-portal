@@ -92,7 +92,8 @@ public class LayoutSetPrototypeDisplayContext {
 			return _orderByCol;
 		}
 
-		_orderByCol = ParamUtil.getString(_request, "orderByCol", "name");
+		_orderByCol = ParamUtil.getString(
+			_request, "orderByCol", "create-date");
 
 		return _orderByCol;
 	}

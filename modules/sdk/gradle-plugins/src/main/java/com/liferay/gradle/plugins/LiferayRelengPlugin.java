@@ -156,8 +156,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		printArtifactPublishCommandsTask.setDescription(
 			"Prints the artifact publish commands if this project has been " +
 				"changed since the last publish.");
-		printArtifactPublishCommandsTask.setGradleArguments(
-			"-Dforced.cache.enabled=true");
 
 		configureTaskEnabledIfStale(
 			printArtifactPublishCommandsTask, recordArtifactTask);

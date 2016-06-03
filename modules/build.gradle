@@ -33,14 +33,6 @@ gradle.beforeProject {
 		pluginManager.withPlugin("com.liferay.osgi.plugin") {
 			apply plugin: "pmd"
 
-			/*afterEvaluate {
-				def baselineTask = tasks.findByName("baseline")
-
-				if (baselineTask && baselineTask.hasProperty("ignoreFailures")) {
-					baselineTask.ignoreFailures = true
-				}
-			}*/
-
 			afterEvaluate {
 				bundle.jarBuilderFactory.contextClassLoader = buildscript.classLoader
 

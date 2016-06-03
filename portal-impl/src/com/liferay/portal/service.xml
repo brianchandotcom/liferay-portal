@@ -2083,10 +2083,10 @@
 		<!-- References -->
 
 		<reference entity="Company" package-path="com.liferay.portal" />
+		<reference entity="ResourceBlock" package-path="com.liferay.portal" />
 		<reference entity="ResourceBlockPermission" package-path="com.liferay.portal" />
 		<reference entity="ResourcePermission" package-path="com.liferay.portal" />
 		<reference entity="ResourceTypePermission" package-path="com.liferay.portal" />
-		<reference entity="Role" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="ResourceBlock" remote-service="true">
 

@@ -1524,11 +1524,12 @@ public class JavaClass {
 		}
 
 		for (JavaTerm curJavaTerm : getJavaTerms()) {
+			String content = curJavaTerm.getContent();
+
 			if (curJavaTerm.isMethod() ||
 				(curJavaTerm.isConstructor() &&
-				 !javaTermClassName.equals(_name))) {
-
-				String content = curJavaTerm.getContent();
+				 !javaTermClassName.equals(_name)) ||
+				(curJavaTerm.isVariable() && content.contains("{\n\n"))) {
 
 				Matcher matcher = pattern.matcher(content);
 

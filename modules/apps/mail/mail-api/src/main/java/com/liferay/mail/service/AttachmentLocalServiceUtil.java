@@ -16,51 +16,30 @@ package com.liferay.mail.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.mail.model.Attachment;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Projection;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.PersistedModel;
-import com.liferay.portal.kernel.search.Indexable;
-import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.service.BaseLocalService;
-import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.transaction.Isolation;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.OrderByComparator;
-
-import java.io.File;
-import java.io.InputStream;
-import java.io.Serializable;
-
-import java.util.List;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
- * Provides the local service interface for Attachment. Methods of this
- * service will not have security checks based on the propagated JAAS
- * credentials because this service can only be accessed from within the same
- * VM.
+ * Provides the local service utility for Attachment. This utility wraps
+ * {@link com.liferay.mail.service.impl.AttachmentLocalServiceImpl} and is the
+ * primary access point for service operations in application layer code running
+ * on the local server. Methods of this service will not have security checks
+ * based on the propagated JAAS credentials because this service can only be
+ * accessed from within the same VM.
  *
  * @author Brian Wing Shun Chan
- * @see AttachmentLocalServiceUtil
+ * @see AttachmentLocalService
  * @see com.liferay.mail.service.base.AttachmentLocalServiceBaseImpl
  * @see com.liferay.mail.service.impl.AttachmentLocalServiceImpl
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface AttachmentLocalService extends BaseLocalService,
-	PersistedModelLocalService {
+public class AttachmentLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link AttachmentLocalServiceUtil} to access the attachment local service. Add custom service methods to {@link com.liferay.mail.service.impl.AttachmentLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.mail.service.impl.AttachmentLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -69,12 +48,19 @@ public interface AttachmentLocalService extends BaseLocalService,
 	* @param attachment the attachment
 	* @return the attachment that was added
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Attachment addAttachment(Attachment attachment);
+	public static com.liferay.mail.model.Attachment addAttachment(
+		com.liferay.mail.model.Attachment attachment) {
+		return getService().addAttachment(attachment);
+	}
 
-	public Attachment addAttachment(long userId, long messageId,
-		java.lang.String contentPath, java.lang.String fileName, long size,
-		File file) throws PortalException;
+	public static com.liferay.mail.model.Attachment addAttachment(long userId,
+		long messageId, java.lang.String contentPath,
+		java.lang.String fileName, long size, java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addAttachment(userId, messageId, contentPath, fileName,
+			size, file);
+	}
 
 	/**
 	* Creates a new attachment with the primary key. Does not add the attachment to the database.
@@ -82,7 +68,10 @@ public interface AttachmentLocalService extends BaseLocalService,
 	* @param attachmentId the primary key for the new attachment
 	* @return the new attachment
 	*/
-	public Attachment createAttachment(long attachmentId);
+	public static com.liferay.mail.model.Attachment createAttachment(
+		long attachmentId) {
+		return getService().createAttachment(attachmentId);
+	}
 
 	/**
 	* Deletes the attachment from the database. Also notifies the appropriate model listeners.
@@ -90,8 +79,10 @@ public interface AttachmentLocalService extends BaseLocalService,
 	* @param attachment the attachment
 	* @return the attachment that was removed
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public Attachment deleteAttachment(Attachment attachment);
+	public static com.liferay.mail.model.Attachment deleteAttachment(
+		com.liferay.mail.model.Attachment attachment) {
+		return getService().deleteAttachment(attachment);
+	}
 
 	/**
 	* Deletes the attachment with the primary key from the database. Also notifies the appropriate model listeners.
@@ -100,12 +91,16 @@ public interface AttachmentLocalService extends BaseLocalService,
 	* @return the attachment that was removed
 	* @throws PortalException if a attachment with the primary key could not be found
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public Attachment deleteAttachment(long attachmentId)
-		throws PortalException;
+	public static com.liferay.mail.model.Attachment deleteAttachment(
+		long attachmentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteAttachment(attachmentId);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Attachment fetchAttachment(long attachmentId);
+	public static com.liferay.mail.model.Attachment fetchAttachment(
+		long attachmentId) {
+		return getService().fetchAttachment(attachmentId);
+	}
 
 	/**
 	* Returns the attachment with the primary key.
@@ -114,9 +109,11 @@ public interface AttachmentLocalService extends BaseLocalService,
 	* @return the attachment
 	* @throws PortalException if a attachment with the primary key could not be found
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Attachment getAttachment(long attachmentId)
-		throws PortalException;
+	public static com.liferay.mail.model.Attachment getAttachment(
+		long attachmentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAttachment(attachmentId);
+	}
 
 	/**
 	* Updates the attachment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -124,50 +121,65 @@ public interface AttachmentLocalService extends BaseLocalService,
 	* @param attachment the attachment
 	* @return the attachment that was updated
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Attachment updateAttachment(Attachment attachment);
+	public static com.liferay.mail.model.Attachment updateAttachment(
+		com.liferay.mail.model.Attachment attachment) {
+		return getService().updateAttachment(attachment);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
 
-	public DynamicQuery dynamicQuery();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
 
 	/**
 	* @throws PortalException
 	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
 
 	/**
 	* Returns the number of attachments.
 	*
 	* @return the number of attachments
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAttachmentsCount();
+	public static int getAttachmentsCount() {
+		return getService().getAttachmentsCount();
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public File getFile(long attachmentId) throws PortalException;
+	public static java.io.File getFile(long attachmentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getFile(attachmentId);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public InputStream getInputStream(long attachmentId)
-		throws PortalException;
+	public static java.io.InputStream getInputStream(long attachmentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getInputStream(attachmentId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -175,7 +187,10 @@ public interface AttachmentLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQuery(dynamicQuery);
+	}
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -189,8 +204,11 @@ public interface AttachmentLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) {
+		return getService().dynamicQuery(dynamicQuery, start, end);
+	}
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -205,8 +223,13 @@ public interface AttachmentLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		return getService()
+				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
 
 	/**
 	* Returns a range of all the attachments.
@@ -219,11 +242,15 @@ public interface AttachmentLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of attachments (not inclusive)
 	* @return the range of attachments
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Attachment> getAttachments(int start, int end);
+	public static java.util.List<com.liferay.mail.model.Attachment> getAttachments(
+		int start, int end) {
+		return getService().getAttachments(start, end);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Attachment> getAttachments(long messageId);
+	public static java.util.List<com.liferay.mail.model.Attachment> getAttachments(
+		long messageId) {
+		return getService().getAttachments(messageId);
+	}
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -231,7 +258,10 @@ public interface AttachmentLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -240,9 +270,21 @@ public interface AttachmentLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
 
-	public void deleteAttachments(long companyId, long messageId)
-		throws PortalException;
+	public static void deleteAttachments(long companyId, long messageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteAttachments(companyId, messageId);
+	}
+
+	public static AttachmentLocalService getService() {
+		return _serviceTracker.getService();
+	}
+
+	private static ServiceTracker<AttachmentLocalService, AttachmentLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(AttachmentLocalService.class);
 }

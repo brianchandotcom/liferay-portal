@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.liferay.mail.service.impl.AccountLocalServiceImpl" id="com.liferay.mail.service.AccountLocalService" />
+	<bean class="com.liferay.mail.service.persistence.impl.AccountPersistenceImpl" id="com.liferay.mail.service.persistence.AccountPersistence" parent="basePersistence" />
+	<bean class="com.liferay.mail.service.impl.AttachmentLocalServiceImpl" id="com.liferay.mail.service.AttachmentLocalService" />
+	<bean class="com.liferay.mail.service.persistence.impl.AttachmentPersistenceImpl" id="com.liferay.mail.service.persistence.AttachmentPersistence" parent="basePersistence" />
+	<bean class="com.liferay.mail.service.impl.FolderLocalServiceImpl" id="com.liferay.mail.service.FolderLocalService" />
+	<bean class="com.liferay.mail.service.persistence.impl.FolderPersistenceImpl" id="com.liferay.mail.service.persistence.FolderPersistence" parent="basePersistence" />
+	<bean class="com.liferay.mail.service.impl.MessageLocalServiceImpl" id="com.liferay.mail.service.MessageLocalService" />
+	<bean class="com.liferay.mail.service.persistence.impl.MessagePersistenceImpl" id="com.liferay.mail.service.persistence.MessagePersistence" parent="basePersistence" />
+</beans>

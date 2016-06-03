@@ -200,13 +200,6 @@ public class AccountLocalServiceWrapper implements AccountLocalService,
 		return _accountLocalService.getAccountsCount();
 	}
 
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _accountLocalService.invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*

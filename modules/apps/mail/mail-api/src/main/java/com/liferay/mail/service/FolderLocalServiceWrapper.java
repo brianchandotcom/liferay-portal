@@ -196,13 +196,6 @@ public class FolderLocalServiceWrapper implements FolderLocalService,
 		return _folderLocalService.getRemotePageCount(folderId, messagesPerPage);
 	}
 
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _folderLocalService.invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*

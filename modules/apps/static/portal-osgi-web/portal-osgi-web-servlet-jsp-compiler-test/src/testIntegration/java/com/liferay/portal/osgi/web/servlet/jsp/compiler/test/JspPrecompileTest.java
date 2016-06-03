@@ -201,6 +201,9 @@ public class JspPrecompileTest {
 				"JSP was compiled at runtime",
 				_containsCompilerLog(captureAppender, _PRECOMPILE_JSP));
 		}
+		finally {
+			Files.delete(jspClassPath);
+		}
 	}
 
 	@Test

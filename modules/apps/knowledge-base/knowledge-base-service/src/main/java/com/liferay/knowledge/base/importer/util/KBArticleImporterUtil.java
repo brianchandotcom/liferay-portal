@@ -65,12 +65,13 @@ public class KBArticleImporterUtil {
 		}
 
 		try {
+			String fileName = _buildImagePath(
+				kbGroupServiceConfiguration.markdownImporterImageFolder(),
+				imageFileName);
+
 			return addImageFileEntry(
 				userId, kbArticle, imageFileName,
-				zipReader.getEntryAsInputStream(
-					kbGroupServiceConfiguration.markdownImporterImageFolder() +
-						imageFileName),
-				fileEntriesMap);
+				zipReader.getEntryAsInputStream(fileName), fileEntriesMap);
 		}
 		catch (Exception e) {
 			StringBuilder sb = new StringBuilder(4);
@@ -176,6 +177,17 @@ public class KBArticleImporterUtil {
 		fileEntriesMap.put(imageFileName, fileEntry);
 
 		return fileEntry;
+	}
+
+	private static String _buildImagePath(
+		String imageFolder, String imageFileName) {
+
+		if (imageFolder.endsWith(StringPool.SLASH)) {
+			return imageFolder + imageFileName;
+		}
+		else {
+			return imageFolder + StringPool.SLASH + imageFileName;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -224,6 +224,7 @@
 <c:if test="<%= layoutSetPrototypeDisplayContext.isShowAddButton() %>">
 	<portlet:renderURL var="addLayoutSetPrototypeURL">
 		<portlet:param name="mvcPath" value="/edit_layout_set_prototype.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>

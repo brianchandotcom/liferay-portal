@@ -29,13 +29,10 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.IOException;
@@ -47,8 +44,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -164,11 +159,6 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 				layoutSetPrototypeService.addLayoutSetPrototype(
 					nameMap, descriptionMap, active, layoutsUpdateable,
 					serviceContext);
-
-			MultiSessionMessages.add(
-				actionRequest,
-				LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS +
-					"requestProcessed");
 		}
 		else {
 
@@ -191,19 +181,9 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		settingsProperties.setProperty(
 			"customJspServletContextName", customJspServletContextName);
 
-		layoutSetPrototype = layoutSetPrototypeService.updateLayoutSetPrototype(
+		layoutSetPrototypeService.updateLayoutSetPrototype(
 			layoutSetPrototype.getLayoutSetPrototypeId(),
 			settingsProperties.toString());
-
-		PortletURL siteAdministrationURL = PortalUtil.getControlPanelPortletURL(
-			actionRequest, layoutSetPrototype.getGroup(),
-			LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS, 0, 0,
-			PortletRequest.RENDER_PHASE);
-
-		actionRequest.setAttribute(
-			WebKeys.REDIRECT, siteAdministrationURL.toString());
-
-		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Override

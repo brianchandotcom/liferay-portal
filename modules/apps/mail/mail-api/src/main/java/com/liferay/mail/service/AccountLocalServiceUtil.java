@@ -16,49 +16,30 @@ package com.liferay.mail.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.mail.model.Account;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Projection;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.PersistedModel;
-import com.liferay.portal.kernel.search.Indexable;
-import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.service.BaseLocalService;
-import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.transaction.Isolation;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.OrderByComparator;
-
-import java.io.Serializable;
-
-import java.util.List;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
- * Provides the local service interface for Account. Methods of this
- * service will not have security checks based on the propagated JAAS
- * credentials because this service can only be accessed from within the same
- * VM.
+ * Provides the local service utility for Account. This utility wraps
+ * {@link com.liferay.mail.service.impl.AccountLocalServiceImpl} and is the
+ * primary access point for service operations in application layer code running
+ * on the local server. Methods of this service will not have security checks
+ * based on the propagated JAAS credentials because this service can only be
+ * accessed from within the same VM.
  *
  * @author Brian Wing Shun Chan
- * @see AccountLocalServiceUtil
+ * @see AccountLocalService
  * @see com.liferay.mail.service.base.AccountLocalServiceBaseImpl
  * @see com.liferay.mail.service.impl.AccountLocalServiceImpl
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
-public interface AccountLocalService extends BaseLocalService,
-	PersistedModelLocalService {
+public class AccountLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link AccountLocalServiceUtil} to access the account local service. Add custom service methods to {@link com.liferay.mail.service.impl.AccountLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.mail.service.impl.AccountLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -67,19 +48,29 @@ public interface AccountLocalService extends BaseLocalService,
 	* @param account the account
 	* @return the account that was added
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Account addAccount(Account account);
+	public static com.liferay.mail.model.Account addAccount(
+		com.liferay.mail.model.Account account) {
+		return getService().addAccount(account);
+	}
 
-	public Account addAccount(long userId, java.lang.String address,
-		java.lang.String personalName, java.lang.String protocol,
-		java.lang.String incomingHostName, int incomingPort,
-		boolean incomingSecure, java.lang.String outgoingHostName,
-		int outgoingPort, boolean outgoingSecure, java.lang.String login,
+	public static com.liferay.mail.model.Account addAccount(long userId,
+		java.lang.String address, java.lang.String personalName,
+		java.lang.String protocol, java.lang.String incomingHostName,
+		int incomingPort, boolean incomingSecure,
+		java.lang.String outgoingHostName, int outgoingPort,
+		boolean outgoingSecure, java.lang.String login,
 		java.lang.String password, boolean savePassword,
 		java.lang.String signature, boolean useSignature,
 		java.lang.String folderPrefix, long inboxFolderId, long draftFolderId,
 		long sentFolderId, long trashFolderId, boolean defaultSender)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addAccount(userId, address, personalName, protocol,
+			incomingHostName, incomingPort, incomingSecure, outgoingHostName,
+			outgoingPort, outgoingSecure, login, password, savePassword,
+			signature, useSignature, folderPrefix, inboxFolderId,
+			draftFolderId, sentFolderId, trashFolderId, defaultSender);
+	}
 
 	/**
 	* Creates a new account with the primary key. Does not add the account to the database.
@@ -87,7 +78,9 @@ public interface AccountLocalService extends BaseLocalService,
 	* @param accountId the primary key for the new account
 	* @return the new account
 	*/
-	public Account createAccount(long accountId);
+	public static com.liferay.mail.model.Account createAccount(long accountId) {
+		return getService().createAccount(accountId);
+	}
 
 	/**
 	* Deletes the account from the database. Also notifies the appropriate model listeners.
@@ -96,8 +89,11 @@ public interface AccountLocalService extends BaseLocalService,
 	* @return the account that was removed
 	* @throws PortalException
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public Account deleteAccount(Account account) throws PortalException;
+	public static com.liferay.mail.model.Account deleteAccount(
+		com.liferay.mail.model.Account account)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteAccount(account);
+	}
 
 	/**
 	* Deletes the account with the primary key from the database. Also notifies the appropriate model listeners.
@@ -106,11 +102,14 @@ public interface AccountLocalService extends BaseLocalService,
 	* @return the account that was removed
 	* @throws PortalException if a account with the primary key could not be found
 	*/
-	@Indexable(type = IndexableType.DELETE)
-	public Account deleteAccount(long accountId) throws PortalException;
+	public static com.liferay.mail.model.Account deleteAccount(long accountId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteAccount(accountId);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Account fetchAccount(long accountId);
+	public static com.liferay.mail.model.Account fetchAccount(long accountId) {
+		return getService().fetchAccount(accountId);
+	}
 
 	/**
 	* Returns the account with the primary key.
@@ -119,12 +118,16 @@ public interface AccountLocalService extends BaseLocalService,
 	* @return the account
 	* @throws PortalException if a account with the primary key could not be found
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Account getAccount(long accountId) throws PortalException;
+	public static com.liferay.mail.model.Account getAccount(long accountId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAccount(accountId);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Account getAccount(long userId, java.lang.String address)
-		throws PortalException;
+	public static com.liferay.mail.model.Account getAccount(long userId,
+		java.lang.String address)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAccount(userId, address);
+	}
 
 	/**
 	* Updates the account in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -132,53 +135,74 @@ public interface AccountLocalService extends BaseLocalService,
 	* @param account the account
 	* @return the account that was updated
 	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public Account updateAccount(Account account);
+	public static com.liferay.mail.model.Account updateAccount(
+		com.liferay.mail.model.Account account) {
+		return getService().updateAccount(account);
+	}
 
-	public Account updateAccount(long accountId, java.lang.String personalName,
-		java.lang.String password, boolean savePassword,
-		java.lang.String signature, boolean useSignature,
+	public static com.liferay.mail.model.Account updateAccount(long accountId,
+		java.lang.String personalName, java.lang.String password,
+		boolean savePassword, java.lang.String signature, boolean useSignature,
 		java.lang.String folderPrefix, boolean defaultSender)
-		throws PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateAccount(accountId, personalName, password,
+			savePassword, signature, useSignature, folderPrefix, defaultSender);
+	}
 
-	public Account updateFolders(long accountId, long inboxFolderId,
-		long draftFolderId, long sentFolderId, long trashFolderId)
-		throws PortalException;
+	public static com.liferay.mail.model.Account updateFolders(long accountId,
+		long inboxFolderId, long draftFolderId, long sentFolderId,
+		long trashFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateFolders(accountId, inboxFolderId, draftFolderId,
+			sentFolderId, trashFolderId);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
 
-	public DynamicQuery dynamicQuery();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
 
 	/**
 	* @throws PortalException
 	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
 
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
 
 	/**
 	* Returns the number of accounts.
 	*
 	* @return the number of accounts
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAccountsCount();
+	public static int getAccountsCount() {
+		return getService().getAccountsCount();
+	}
 
 	/**
 	* Returns the OSGi service identifier.
 	*
 	* @return the OSGi service identifier
 	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -186,7 +210,10 @@ public interface AccountLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
 	*/
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQuery(dynamicQuery);
+	}
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -200,8 +227,11 @@ public interface AccountLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
 	*/
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end);
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) {
+		return getService().dynamicQuery(dynamicQuery, start, end);
+	}
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -216,8 +246,13 @@ public interface AccountLocalService extends BaseLocalService,
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
 	*/
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator);
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		return getService()
+				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
 
 	/**
 	* Returns a range of all the accounts.
@@ -230,11 +265,15 @@ public interface AccountLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of accounts (not inclusive)
 	* @return the range of accounts
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Account> getAccounts(int start, int end);
+	public static java.util.List<com.liferay.mail.model.Account> getAccounts(
+		int start, int end) {
+		return getService().getAccounts(start, end);
+	}
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Account> getAccounts(long userId);
+	public static java.util.List<com.liferay.mail.model.Account> getAccounts(
+		long userId) {
+		return getService().getAccounts(userId);
+	}
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -242,7 +281,10 @@ public interface AccountLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -251,8 +293,21 @@ public interface AccountLocalService extends BaseLocalService,
 	* @param projection the projection to apply to the query
 	* @return the number of rows matching the dynamic query
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
 
-	public void deleteAccounts(long userId) throws PortalException;
+	public static void deleteAccounts(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteAccounts(userId);
+	}
+
+	public static AccountLocalService getService() {
+		return _serviceTracker.getService();
+	}
+
+	private static ServiceTracker<AccountLocalService, AccountLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(AccountLocalService.class);
 }

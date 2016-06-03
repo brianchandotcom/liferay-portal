@@ -197,20 +197,9 @@ public class JspPrecompileTest {
 
 			_doJspTest(_PRECOMPILE_JSP, "Precompiled");
 
-			List<LoggingEvent> loggingEvents =
-				captureAppender.getLoggingEvents();
-
-			StringBundler sb = new StringBundler(3);
-
-			sb.append("Compiling JSP: ");
-			sb.append(_JSP_PACKAGE);
-			sb.append(
-				StringUtil.replace(
-					_PRECOMPILE_JSP, CharPool.PERIOD, CharPool.UNDERLINE));
-
 			Assert.assertFalse(
 				"JSP was compiled at runtime",
-				_containsLog(loggingEvents, sb.toString()));
+				_containsCompilerLog(captureAppender, _PRECOMPILE_JSP));
 		}
 	}
 
@@ -222,20 +211,9 @@ public class JspPrecompileTest {
 
 			_doJspTest(_RUNTIME_COMPILE_JSP, "Runtime Compiled");
 
-			List<LoggingEvent> loggingEvents =
-				captureAppender.getLoggingEvents();
-
-			StringBundler sb = new StringBundler(3);
-
-			sb.append("Compiling JSP: ");
-			sb.append(_JSP_PACKAGE);
-			sb.append(
-				StringUtil.replace(
-					_RUNTIME_COMPILE_JSP, CharPool.PERIOD, CharPool.UNDERLINE));
-
 			Assert.assertTrue(
 				"No JSP was compiled at runtime",
-				_containsLog(loggingEvents, sb.toString()));
+				_containsCompilerLog(captureAppender, _RUNTIME_COMPILE_JSP));
 		}
 	}
 
@@ -360,13 +338,22 @@ public class JspPrecompileTest {
 		}
 	}
 
-	private boolean _containsLog(
-		List<LoggingEvent> loggingEvents, String expected) {
+	private boolean _containsCompilerLog(
+		CaptureAppender captureAppender, String jspName) {
 
-		for (LoggingEvent loggingEvent : loggingEvents) {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("Compiling JSP: ");
+		sb.append(_JSP_PACKAGE);
+		sb.append(
+			StringUtil.replace(jspName, CharPool.PERIOD, CharPool.UNDERLINE));
+
+		String compilerLog = sb.toString();
+
+		for (LoggingEvent loggingEvent : captureAppender.getLoggingEvents()) {
 			String message = loggingEvent.getRenderedMessage();
 
-			if (message.equals(expected)) {
+			if (message.equals(compilerLog)) {
 				return true;
 			}
 		}

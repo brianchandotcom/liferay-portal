@@ -99,6 +99,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_SPECIFIC_FORM_FIELD_REQUIRED</td>
+	<td>//div[contains(@data-fieldname,'${key_fieldName}')]/../../div[contains(@class,'has-error')]//div[@class='help-block']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO</td>
 	<td>//div[contains(@class,'alert alert-info') and not(contains(@class,'hide'))]</td>
 	<td></td>

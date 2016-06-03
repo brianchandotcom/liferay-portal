@@ -226,6 +226,12 @@
 		<execute function="AssertTextEquals" locator1="FormFields#HELP_TEXT" value1="${fieldHelpText}" />
 	</command>
 
+	<command name="viewFieldValidationErrorMessage">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertTextEquals" locator1="Message#ERROR_SPECIFIC_FORM_FIELD_REQUIRED" value1="${fieldValidationErrorMessage}" />
+	</command>
+
 	<command name="viewMultilineTextValue">
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_fieldValue" value="${fieldValue}" />

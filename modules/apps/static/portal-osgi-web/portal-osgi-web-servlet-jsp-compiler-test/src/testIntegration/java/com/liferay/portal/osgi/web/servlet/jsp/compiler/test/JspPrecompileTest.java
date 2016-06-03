@@ -197,9 +197,7 @@ public class JspPrecompileTest {
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.portal.osgi.web.servlet.jsp.compiler." +
-						"internal.JspCompiler",
-					Level.DEBUG)) {
+					_JSP_COMPILER_CLASS_NAME, Level.DEBUG)) {
 
 			_doJspTest(_PRECOMPILE_JSP);
 
@@ -224,9 +222,7 @@ public class JspPrecompileTest {
 	public void testRuntimeCompiledJsp() throws Exception {
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.portal.osgi.web.servlet.jsp.compiler." +
-						"internal.JspCompiler",
-					Level.DEBUG)) {
+					_JSP_COMPILER_CLASS_NAME, Level.DEBUG)) {
 
 			_doJspTest(_RUNTIME_COMPILE_JSP);
 
@@ -429,6 +425,9 @@ public class JspPrecompileTest {
 			}
 		}
 	}
+
+	private static final String _JSP_COMPILER_CLASS_NAME =
+		"com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.JspCompiler";
 
 	private static final String _JSP_PACKAGE = "org.apache.jsp.";
 

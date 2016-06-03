@@ -74,9 +74,7 @@
 
 		<fail message="Stale artifacts detected:${line.separator}${module.stale.artifacts}">
 			<condition>
-				<not>
-					<equals arg1="${stale.artifacts.output}" arg2="" />
-				</not>
+				<isset property="module.stale.artifacts" />
 			</condition>
 		</fail>
 	</target>

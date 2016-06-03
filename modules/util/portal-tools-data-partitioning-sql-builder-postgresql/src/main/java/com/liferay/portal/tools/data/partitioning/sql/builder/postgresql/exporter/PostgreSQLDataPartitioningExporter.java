@@ -85,7 +85,7 @@ public class PostgreSQLDataPartitioningExporter
 
 			String value = (String)field;
 
-			sb.append(value.replace("'", "\\'"));
+			sb.append(value.replace("'", "''"));
 
 			sb.append("'");
 		}

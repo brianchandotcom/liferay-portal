@@ -15,6 +15,7 @@
 package com.liferay.portal.osgi.web.servlet.jsp.compiler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
@@ -23,9 +24,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.CharPool;
@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.test.servlet.PrecompileTestServlet;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.io.File;
@@ -68,12 +67,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -93,11 +91,6 @@ import org.osgi.framework.FrameworkUtil;
  */
 @RunWith(Arquillian.class)
 public class JspPrecompileTest {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -156,6 +149,11 @@ public class JspPrecompileTest {
 		LayoutLocalServiceUtil.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
+	}
+
+	@After
+	public void tearDown() throws PortalException {
+		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -459,7 +457,6 @@ public class JspPrecompileTest {
 	private static Bundle _bundle;
 	private static String _parentWorkDir;
 
-	@DeleteAfterTestRun
 	private Group _group;
 
 }

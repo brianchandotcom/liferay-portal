@@ -1,4 +1,4 @@
-package _package_;
+package _package_.content.targeting.rule;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.api.model.BaseJSPRule;

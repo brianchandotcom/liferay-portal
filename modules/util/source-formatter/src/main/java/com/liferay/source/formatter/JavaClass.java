@@ -1524,19 +1524,18 @@ public class JavaClass {
 		}
 
 		for (JavaTerm curJavaTerm : getJavaTerms()) {
-			if (!curJavaTerm.isMethod() &&
-				(!curJavaTerm.isConstructor() ||
-				 javaTermClassName.equals(_name))) {
-
-				continue;
-			}
-
 			String content = curJavaTerm.getContent();
 
-			Matcher matcher = pattern.matcher(content);
+			if (curJavaTerm.isMethod() ||
+				(curJavaTerm.isConstructor() &&
+				 !javaTermClassName.equals(_name)) ||
+				(curJavaTerm.isVariable() && content.contains("{\n\n"))) {
 
-			if (content.contains(javaTerm.getName()) && matcher.find()) {
-				return false;
+				Matcher matcher = pattern.matcher(content);
+
+				if (content.contains(javaTerm.getName()) && matcher.find()) {
+					return false;
+				}
 			}
 		}
 

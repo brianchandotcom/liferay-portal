@@ -1096,7 +1096,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		Map<String, Object> bundleDefaultInstructions = new HashMap<>();
 
-		bundleDefaultInstructions.put("-check", "all");
+		bundleDefaultInstructions.put("-check", "exports");
 		bundleDefaultInstructions.put(Constants.BUNDLE_VENDOR, "Liferay, Inc.");
 		bundleDefaultInstructions.put(
 			Constants.DONOTCOPY,

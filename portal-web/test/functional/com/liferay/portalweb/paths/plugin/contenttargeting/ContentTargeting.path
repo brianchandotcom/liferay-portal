@@ -113,6 +113,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PREVIEW_BUTTON_STAGING_LIVE_MODE</td>
+	<td>//div/h2[contains(@class,'portlet-title') and contains(.,'${key_portletName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_ENTRY_CONTENT</td>
+	<td>//div[contains(@id,'content_targeting') and contains(.,'${key_portletName}')]//div[@class='full-content']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PREVIEW_BUTTON_EXPANDED</td>
 	<td>//div[contains(@class,'preview-button')]/button[@aria-expanded='true']</td>
 	<td></td>

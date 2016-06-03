@@ -2068,11 +2068,19 @@
 
 		<execute macro="PortletEntry#save" />
 
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Site Name" />
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Navigator#gotoStagedView" />
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
 			<var name="portlet" value="Audience Targeting" />
@@ -2167,7 +2175,7 @@
 		</execute>
 
 		<execute macro="UserSegmentContentListPortlet#configureDisplayFilter">
-			<var name="assetTypeFilter" value="Basic Web Content" />
+			<var name="assetTypeFilter" value="Web Content Article" />
 		</execute>
 
 		<execute macro="Navigator#gotoStagedSitePage">
@@ -2209,16 +2217,18 @@
 			<var name="viewEntryContentList" value="Web Content Content" />
 		</execute>
 
-		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
+		<execute macro="ContentTargeting#viewEntryOnStagingLiveMode">
 			<var name="entryContentText" value="Web Content Content" />
-			<var name="previewUserSegmentList" value="Male Users,default" />
-			<var name="viewUserSegmentSelected" value="Male Users" />
+			<var name="portletName" value="User Segment Content Display" />
+			<var name="previewContentList" value="Male Users,default" />
+			<var name="viewSelectedContent" value="Male Users" />
 		</execute>
 
-		<execute macro="CampaignDisplayPortlet#viewPG">
+		<execute macro="ContentTargeting#viewEntryOnStagingLiveMode">
 			<var name="entryContentText" value="Web Content Content" />
-			<var name="previewCampaignList" value="Campaign Name,default" />
-			<var name="viewCampaignSelected" value="Campaign Name" />
+			<var name="portletName" value="Campaign Content Display" />
+			<var name="previewContentList" value="Campaign Name,default" />
+			<var name="viewSelectedContent" value="Campaign Name" />
 		</execute>
 	</command>
 
@@ -2646,6 +2656,15 @@
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page Name" />
 			<var name="siteName" value="Site Name" />
 		</execute>

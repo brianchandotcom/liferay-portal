@@ -13,4 +13,37 @@
 			</then>
 		</if>
 	</command>
+
+	<command name="expandPreviewOnStagingLiveMode">
+		<if>
+			<condition function="IsElementNotPresent" locator1="ContentTargeting#PREVIEW_BUTTON_EXPANDED" />
+			<then>
+				<var name="key_portletName" value="${portletName}" />
+
+				<execute function="MouseOver" locator1="ContentTargeting#PREVIEW_BUTTON_STAGING_LIVE_MODE" />
+
+				<execute function="Click" locator1="ContentTargeting#PREVIEW_BUTTON" />
+
+				<execute function="AssertElementPresent" locator1="ContentTargeting#PREVIEW_BUTTON_EXPANDED" />
+			</then>
+		</if>
+	</command>
+
+	<command name="viewEntryOnStagingLiveMode">
+		<var name="key_portletName" value="${portletName}" />
+
+		<execute function="AssertTextEquals" locator1="ContentTargeting#VIEW_ENTRY_CONTENT" value1="${entryContentText}" />
+
+		<for list="${previewContentList}" param="previewEntry">
+			<execute macro="ContentTargeting#expandPreviewOnStagingLiveMode">
+				<var name="portletName" value="${portletName}" />
+			</execute>
+
+			<var name="key_previewEntry" value="${previewEntry}" />
+			<var name="key_viewEntrySelected" value="${viewSelectedContent}" />
+
+			<execute function="AssertElementPresent" locator1="ContentTargeting#PREVIEW_ENTRY_SELECTED" />
+			<execute function="AssertTextEquals" locator1="ContentTargeting#PREVIEW" value1="${previewEntry}" />
+		</for>
+	</command>
 </definition>

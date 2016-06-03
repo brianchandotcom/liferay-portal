@@ -42,14 +42,16 @@ import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 import java.net.URL;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.util.HashSet;
 import java.util.List;
@@ -103,24 +105,16 @@ public class JspPrecompileTest {
 
 		_bundle.start();
 
-		StringBundler sb = new StringBundler(5);
+		_workDirPath = Paths.get(
+			PropsValues.LIFERAY_HOME, "work",
+			_bundle.getSymbolicName() + StringPool.DASH + _bundle.getVersion());
 
-		sb.append(PropsValues.LIFERAY_HOME);
-		sb.append("/work/");
-		sb.append(_bundle.getSymbolicName());
-		sb.append(StringPool.DASH);
-		sb.append(_bundle.getVersion());
-
-		_parentWorkDir = sb.toString();
-
-		File file = new File(_parentWorkDir);
-
-		file.mkdir();
+		Files.createDirectories(_workDirPath);
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws BundleException {
-		FileUtil.deltree(_parentWorkDir);
+		FileUtil.deltree(_workDirPath.toFile());
 
 		_bundle.uninstall();
 	}
@@ -156,25 +150,17 @@ public class JspPrecompileTest {
 
 	@Test
 	public void testPrecompiledJsp() throws Exception {
-		StringBundler sb = new StringBundler(4);
+		Path jspClassPath = _workDirPath.resolve(
+			_JSP_PATH.concat(_PRECOMPILE_JSP_CLASS));
 
-		sb.append(_parentWorkDir);
-		sb.append(StringPool.SLASH);
-		sb.append(_JSP_PATH);
-		sb.append(_PRECOMPILE_JSP_CLASS);
+		Files.createDirectories(jspClassPath.getParent());
 
-		File file = new File(sb.toString());
-
-		File parentFile = file.getParentFile();
-
-		parentFile.mkdirs();
-
-		file.createNewFile();
+		Files.createFile(jspClassPath);
 
 		try (InputStream inputStream =
 				PrecompileTestServlet.class.getResourceAsStream(
 					PrecompileTestServlet.class.getSimpleName() + ".class");
-			OutputStream outputStream = new FileOutputStream(file)) {
+			OutputStream outputStream = Files.newOutputStream(jspClassPath)) {
 
 			ClassReader classReader = new ClassReader(inputStream);
 
@@ -202,7 +188,7 @@ public class JspPrecompileTest {
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
 
-			sb.setIndex(0);
+			StringBundler sb = new StringBundler(3);
 
 			sb.append("Compiling JSP: ");
 			sb.append(_JSP_PACKAGE);
@@ -436,7 +422,7 @@ public class JspPrecompileTest {
 	private static final String _RUNTIME_COMPILE_JSP = "runtime.jsp";
 
 	private static Bundle _bundle;
-	private static String _parentWorkDir;
+	private static Path _workDirPath;
 
 	private Group _group;
 

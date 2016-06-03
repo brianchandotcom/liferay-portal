@@ -517,31 +517,32 @@ public class ShoppingUtil {
 			}
 		}
 
-		if ((shoppingGroupServiceOverriddenConfiguration != null) &&
-			shoppingGroupServiceOverriddenConfiguration.getTaxState(
-				).equals(stateId)) {
-
-			double subtotal = 0.0;
-
-			for (Map.Entry<ShoppingCartItem, Integer> entry :
-					items.entrySet()) {
-
-				ShoppingCartItem cartItem = entry.getKey();
-				Integer count = entry.getValue();
-
-				ShoppingItem item = cartItem.getItem();
-
-				if (item.isTaxable()) {
-					subtotal += calculatePrice(item, count.intValue());
-				}
-			}
-
-			tax =
-				shoppingGroupServiceOverriddenConfiguration.getTaxRate() *
-					subtotal;
+		if (shoppingGroupServiceOverriddenConfiguration == null) {
+			return tax;
 		}
 
-		return tax;
+		String taxState =
+			shoppingGroupServiceOverriddenConfiguration.getTaxState();
+
+		if (!taxState.equals(stateId)) {
+			return tax;
+		}
+
+		double subtotal = 0.0;
+
+		for (Map.Entry<ShoppingCartItem, Integer> entry : items.entrySet()) {
+			ShoppingCartItem cartItem = entry.getKey();
+			Integer count = entry.getValue();
+
+			ShoppingItem item = cartItem.getItem();
+
+			if (item.isTaxable()) {
+				subtotal += calculatePrice(item, count.intValue());
+			}
+		}
+
+		return shoppingGroupServiceOverriddenConfiguration.getTaxRate() *
+			subtotal;
 	}
 
 	public static double calculateTotal(

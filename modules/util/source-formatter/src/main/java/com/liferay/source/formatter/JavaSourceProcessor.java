@@ -2611,6 +2611,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							fileName,
 							"line break: " + fileName + " " + lineCount);
 					}
+
+					if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS) &&
+						trimmedLine.startsWith(StringPool.CLOSE_PARENTHESIS)) {
+
+						processErrorMessage(
+							fileName,
+							"line break: " + fileName + " " + lineCount);
+					}
 				}
 
 				if (line.contains("    ") && !line.matches("\\s*\\*.*")) {
@@ -3889,7 +3897,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				break;
 			}
 
-			if (Character.isLetterOrDigit(line.charAt(x - 1))) {
+			if (Character.isLetterOrDigit(line.charAt(x - 1)) &&
+				(line.charAt(x + 1) != CharPool.CLOSE_PARENTHESIS)) {
+
 				return x + 1;
 			}
 		}

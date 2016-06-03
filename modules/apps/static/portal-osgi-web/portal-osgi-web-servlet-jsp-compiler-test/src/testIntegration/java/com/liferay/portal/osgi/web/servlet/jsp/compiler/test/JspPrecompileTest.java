@@ -52,7 +52,6 @@ import java.io.OutputStream;
 
 import java.net.URL;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -212,9 +211,9 @@ public class JspPrecompileTest {
 				StringUtil.replace(
 					_PRECOMPILE_JSP, CharPool.PERIOD, CharPool.UNDERLINE));
 
-			if (_containsLog(loggingEvents, sb.toString())) {
-				Assert.fail("JSP was compiled at runtime");
-			}
+			Assert.assertFalse(
+				"JSP was compiled at runtime",
+				_containsLog(loggingEvents, sb.toString()));
 		}
 	}
 
@@ -237,9 +236,9 @@ public class JspPrecompileTest {
 				StringUtil.replace(
 					_RUNTIME_COMPILE_JSP, CharPool.PERIOD, CharPool.UNDERLINE));
 
-			if (!_containsLog(loggingEvents, sb.toString())) {
-				Assert.fail("No JSP was compiled at runtime");
-			}
+			Assert.assertTrue(
+				"No JSP was compiled at runtime",
+				_containsLog(loggingEvents, sb.toString()));
 		}
 	}
 
@@ -367,8 +366,6 @@ public class JspPrecompileTest {
 	private boolean _containsLog(
 		List<LoggingEvent> loggingEvents, String expected) {
 
-		List<String> strings = new ArrayList<>();
-
 		for (LoggingEvent loggingEvent : loggingEvents) {
 			String message = loggingEvent.getRenderedMessage();
 
@@ -415,9 +412,7 @@ public class JspPrecompileTest {
 			while (true) {
 				line = unsyncBufferedReader.readLine();
 
-				if (line == null) {
-					Assert.fail();
-				}
+				Assert.assertNotNull(line);
 
 				if (line.contains(string)) {
 					return;

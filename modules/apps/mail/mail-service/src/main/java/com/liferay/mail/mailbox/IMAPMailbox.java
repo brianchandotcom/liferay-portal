@@ -33,6 +33,7 @@ import com.liferay.mail.util.AccountLock;
 import com.liferay.mail.util.AttachmentHandler;
 import com.liferay.mail.util.DefaultAttachmentHandler;
 import com.liferay.mail.util.MailConstants;
+import com.liferay.petra.mail.InternetAddressUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -44,7 +45,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.util.mail.InternetAddressUtil;
 
 import java.io.File;
 import java.io.IOException;

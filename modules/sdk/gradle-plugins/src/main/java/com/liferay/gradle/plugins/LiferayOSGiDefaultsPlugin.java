@@ -477,6 +477,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 				});
 
+			String ignoreFailures = GradleUtil.getTaskPrefixedProperty(
+				baselineTask, "ignoreFailures");
+
+			if (Validator.isNotNull(ignoreFailures)) {
+				baselineTask.setIgnoreFailures(
+					Boolean.parseBoolean(ignoreFailures));
+			}
+
 			baselineTask.setNewJarFile(
 				new Callable<File>() {
 

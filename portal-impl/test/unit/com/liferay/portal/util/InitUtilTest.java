@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.rule.LogAssertionTestRule;
 
+import java.io.IOException;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import java.util.Arrays;
 
 import org.junit.Rule;
@@ -31,7 +36,7 @@ import org.junit.Test;
 public class InitUtilTest {
 
 	@Test
-	public void testBaseSeleniumTestCaseSpringConfigs() {
+	public void testBaseSeleniumTestCaseSpringConfigs() throws IOException {
 		String log4jConfigureOnStartup = SystemProperties.get(
 			_LOG4J_CONFIGURE_ON_STARTUP);
 
@@ -51,6 +56,9 @@ public class InitUtilTest {
 			PropsValues.class, "SPRING_INFRASTRUCTURE_CONFIGS", new String[0]);
 
 		_fileImpl.deltree(PropsValues.MODULE_FRAMEWORK_STATE_DIR);
+
+		Files.createDirectories(
+			Paths.get(PropsValues.MODULE_FRAMEWORK_BASE_DIR, "static"));
 
 		try {
 			InitUtil.initWithSpring(

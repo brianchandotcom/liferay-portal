@@ -1030,7 +1030,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		final List<Path> lpkgPaths = new ArrayList<>();
 
 		Files.walkFileTree(
-			Paths.get(PropsValues.MODULE_FRAMEWORK_BASE_DIR, "/static/"),
+			Paths.get(PropsValues.MODULE_FRAMEWORK_BASE_DIR, "static"),
 			new SimpleFileVisitor<Path>() {
 
 				@Override

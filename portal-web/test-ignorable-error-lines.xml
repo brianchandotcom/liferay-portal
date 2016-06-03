@@ -213,6 +213,10 @@
 			<contains>Unable to add taglib</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-66314, temporary workaround until Jürgen Kappler fixes it">
+			<contains>Unable to add folder menu item</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LRQA-14442, temporary workaround until Kiyoshi Lee fixes it">
 			<contains>[org_eclipse_equinox_http_servlet.*Framework Event Dispatcher: Equinox Container:</contains>
 			<matches></matches>

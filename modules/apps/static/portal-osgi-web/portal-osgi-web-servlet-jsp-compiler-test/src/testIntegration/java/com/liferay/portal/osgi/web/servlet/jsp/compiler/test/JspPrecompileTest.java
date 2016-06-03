@@ -78,8 +78,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.Opcodes;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
@@ -164,17 +165,30 @@ public class JspPrecompileTest {
 
 			ClassReader classReader = new ClassReader(inputStream);
 
-			ClassNode classNode = new ClassNode();
+			ClassWriter classWriter = new ClassWriter(classReader, 0);
 
-			classReader.accept(classNode, 0);
+			ClassVisitor classVisitor =
+				new ClassVisitor(Opcodes.ASM5, classWriter) {
 
-			classNode.name = _JSP_PATH.concat(
-				_PRECOMPILE_JSP_CLASS.substring(
-					0, _PRECOMPILE_JSP_CLASS.indexOf(StringPool.PERIOD)));
+					@Override
+					public void visit(
+						int version, int access, String name, String signature,
+						String superName, String[] interfaces) {
 
-			ClassWriter classWriter = new ClassWriter(0);
+						name = _JSP_PATH.concat(
+							_PRECOMPILE_JSP_CLASS.substring(
+								0,
+								_PRECOMPILE_JSP_CLASS.indexOf(
+									StringPool.PERIOD)));
 
-			classNode.accept(classWriter);
+						super.visit(
+							version, access, name, signature, superName,
+							interfaces);
+					}
+
+				};
+
+			classReader.accept(classVisitor, 0);
 
 			outputStream.write(classWriter.toByteArray());
 		}

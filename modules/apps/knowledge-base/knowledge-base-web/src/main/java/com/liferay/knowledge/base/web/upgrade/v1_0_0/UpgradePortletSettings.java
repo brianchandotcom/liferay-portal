@@ -12,29 +12,28 @@
  * details.
  */
 
-package com.liferay.knowledge.base.configuration.definition;
+package com.liferay.knowledge.base.web.upgrade.v1_0_0;
 
 import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
-import com.liferay.knowledge.base.constants.KBConstants;
-import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.knowledge.base.constants.KBPortletKeys;
+import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.util.PortletKeys;
 
 /**
  * @author Roberto Díaz
  */
-@Component
-public class KBGroupServiceConfigurationPidMapping
-	implements ConfigurationPidMapping {
+public class UpgradePortletSettings
+	extends com.liferay.portal.upgrade.v7_0_0.UpgradePortletSettings {
 
-	@Override
-	public Class<?> getConfigurationBeanClass() {
-		return KBGroupServiceConfiguration.class;
+	public UpgradePortletSettings(SettingsFactory settingsFactory) {
+		super(settingsFactory);
 	}
 
-	@Override
-	public String getConfigurationPid() {
-		return KBConstants.SERVICE_NAME;
+	protected void doUpgrade() throws Exception {
+		upgradeMainPortlet(
+			KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+			KBGroupServiceConfiguration.class.getName(),
+			PortletKeys.PREFS_OWNER_TYPE_GROUP, false);
 	}
 
 }

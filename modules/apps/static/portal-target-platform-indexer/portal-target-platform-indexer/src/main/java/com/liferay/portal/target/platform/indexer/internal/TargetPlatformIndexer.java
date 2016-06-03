@@ -87,7 +87,7 @@ public class TargetPlatformIndexer implements Indexer {
 
 			for (String dirName : _dirNames) {
 				try (DirectoryStream<Path> directoryStream =
-						Files.newDirectoryStream(Paths.get(dirName))) {
+						Files.newDirectoryStream(Paths.get(dirName), "*.jar")) {
 
 					Iterator<Path> iterator = directoryStream.iterator();
 

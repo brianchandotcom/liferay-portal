@@ -57,6 +57,7 @@ else if (navigation.equals("inactive")) {
 	searchTerms.setStatus(WorkflowConstants.STATUS_INACTIVE);
 }
 
+portletURL.setParameter("displayStyle", displayStyle);
 portletURL.setParameter("navigation", navigation);
 portletURL.setParameter("status", String.valueOf(status));
 
@@ -84,7 +85,7 @@ boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS
 
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= renderResponse.createRenderURL() %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>

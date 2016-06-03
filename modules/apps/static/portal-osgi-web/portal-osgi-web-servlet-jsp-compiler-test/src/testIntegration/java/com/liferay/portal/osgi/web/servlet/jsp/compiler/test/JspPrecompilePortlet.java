@@ -15,7 +15,9 @@
 package com.liferay.portal.osgi.web.servlet.jsp.compiler.test;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
@@ -34,9 +36,9 @@ public class JspPrecompilePortlet extends MVCPortlet {
 
 	public static final String JSP_PARAMETER = "jsp";
 
-	public static final String PORTLET_NAME =
-		"com_liferay_portal_osgi_web_servlet_jsp_compiler_test_" +
-			"JspPrecompilePortlet";
+	public static final String PORTLET_NAME = StringUtil.replace(
+		JspPrecompilePortlet.class.getName(), CharPool.PERIOD,
+		CharPool.UNDERLINE);
 
 	@Override
 	public void render(

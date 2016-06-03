@@ -1056,7 +1056,7 @@
 		<execute function="AssertTextEquals" locator1="MediaGallery#IMAGE_TITLE" value1="${mgDocumentTitleEdit}" />
 	</command>
 
-	<command name="editPublishPG">
+	<command name="editSavePG">
 		<execute macro="DMDocument#editCmdPG">
 			<var name="changeLog" value="${changeLog}" />
 			<var name="checkedOut" value="${checkedOut}" />
@@ -1069,7 +1069,7 @@
 			<var name="userName" value="${userName}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -1510,7 +1510,32 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE_AND_CHECKIN" value1="Save and Check In" />
 
-		<execute macro="PortletEntry#save" />
+		<if>
+			<condition function="IsElementPresent" locator1="Radio#MAJOR_VERSION" />
+			<then>
+				<if>
+					<equals arg1="${revision}" arg2="Major" />
+					<then>
+						<execute function="Click" locator1="Radio#MAJOR_VERSION" />
+					</then>
+					<elseif>
+						<equals arg1="${revision}" arg2="Minor" />
+						<then>
+							<execute function="Click" locator1="Radio#MINOR_VERSION" />
+						</then>
+					</elseif>
+				</if>
+
+				<if>
+					<isset var="changeLog" />
+					<then>
+						<execute function="Type" locator1="TextArea#CHANGE_LOG" value1="${changeLog}" />
+					</then>
+				</if>
+
+				<execute macro="PortletEntry#save" />
+			</then>
+		</if>
 	</command>
 
 	<command name="saveAsDraftPG">

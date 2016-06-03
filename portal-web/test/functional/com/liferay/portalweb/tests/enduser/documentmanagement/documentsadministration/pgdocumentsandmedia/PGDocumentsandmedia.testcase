@@ -1889,6 +1889,7 @@
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="dmDocumentVersionNumber" value="2.0" />
 		</execute>
 	</command>
 

@@ -260,14 +260,14 @@
 				<var name="dmDocumentTitle" value="Document_1.doc" />
 			</execute>
 
-			<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+			<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 			<execute macro="Navigator#gotoPage">
 				<var name="pageName" value="${pageName}" />
 			</execute>
 		</for>
 
-		<execute macro="DMDocument#editPublishPG">
+		<execute macro="DMDocument#editSavePG">
 			<var name="dmDocumentTitle" value="Document_1.doc" />
 			<var name="dmDocumentTitleEdit" value="Document1" />
 		</execute>
@@ -310,6 +310,7 @@
 
 		<execute macro="DMDocument#saveAndCheckinEditedDocumentPG">
 			<var name="dmDocumentTitle" value="Document1" />
+			<var name="revision" value="Minor" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoDocumentPG">
@@ -347,7 +348,7 @@
 			</then>
 		</while>
 
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute macro="DMDocument#viewDocumentVersionNumberCmdPG">
 			<var name="dmDocumentVersionNumber" value="PWC" />
@@ -359,6 +360,7 @@
 
 		<execute macro="DMDocument#checkinPG">
 			<var name="dmDocumentTitle" value="Document1" />
+			<var name="revision" value="Minor" />
 		</execute>
 
 		<execute macro="DMDocument#viewDocumentVersionNumberCmdPG">

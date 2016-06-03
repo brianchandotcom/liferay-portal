@@ -16,7 +16,6 @@ package com.liferay.portal.osgi.web.servlet.jsp.compiler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.model.Group;
@@ -44,7 +43,6 @@ import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 import java.net.URL;
@@ -391,29 +389,12 @@ public class JspPrecompileTest {
 		URL url = new URL(sb.toString());
 
 		try (InputStream inputStream = url.openStream()) {
-			_verifyCompiledJsp(inputStream, expectedMessage);
-		}
-	}
+			String content = StringUtil.read(inputStream);
 
-	private void _verifyCompiledJsp(InputStream inputStream, String string)
-		throws IOException {
-
-		try (InputStreamReader inputStreamReader = new InputStreamReader(
-				inputStream);
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(inputStreamReader)) {
-
-			String line = null;
-
-			while (true) {
-				line = unsyncBufferedReader.readLine();
-
-				Assert.assertNotNull(line);
-
-				if (line.contains(string)) {
-					return;
-				}
-			}
+			Assert.assertTrue(
+				"Content {" + content + "} does not contain expected message " +
+					"{" + expectedMessage + "}",
+				content.contains(expectedMessage));
 		}
 	}
 

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Tools Target Platform Indexer Client
+Bundle-SymbolicName: com.liferay.portal.tools.target.platform.indexer.client
+Bundle-Version: 1.0.0
+Main-Class: com.liferay.portal.tools.target.platform.indexer.client.TargetPlatformMain

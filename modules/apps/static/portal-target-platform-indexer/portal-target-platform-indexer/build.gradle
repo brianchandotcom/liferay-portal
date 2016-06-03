@@ -13,7 +13,7 @@ deploy {
 
 deployTool {
 	from jar
-	into new File(liferay.liferayHome, "tools/portal-target-platform-indexer-main")
+	into new File(liferay.liferayHome, "tools/portal-tools-target-platform-indexer-client")
 
 	rename {
 		"com.liferay.portal.target.platform.indexer.jar"

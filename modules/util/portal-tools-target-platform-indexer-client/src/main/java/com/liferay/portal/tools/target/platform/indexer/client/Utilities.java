@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.target.platform.indexer.main;
+package com.liferay.portal.tools.target.platform.indexer.client;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

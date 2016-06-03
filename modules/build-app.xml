@@ -208,12 +208,12 @@
 
 			<!-- Order is important -->
 
-			<fileset dir="${liferay.home}/tools/portal-target-platform-indexer-main" includes="com.liferay.portal.target.platform.indexer.jar,com.liferay.portal.target.platform.indexer.main.jar" />
+			<fileset dir="${liferay.home}/tools/portal-tools-target-platform-indexer-client" includes="com.liferay.portal.target.platform.indexer.jar,com.liferay.portal.tools.target.platform.indexer.client.jar" />
 			<fileset dir="${osgi.dir}/core" includes="com.liferay.portal.bootstrap.jar,org.eclipse.osgi.jar" />
 		</path>
 
 		<java
-			classname="com.liferay.portal.target.platform.indexer.main.TargetPlatformMain"
+			classname="com.liferay.portal.tools.target.platform.indexer.client.TargetPlatformMain"
 			classpathref="target.platform.indexer.classpath"
 			fork="true"
 			newenvironment="true"

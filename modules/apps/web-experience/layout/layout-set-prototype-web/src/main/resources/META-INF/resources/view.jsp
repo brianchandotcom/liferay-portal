@@ -104,7 +104,7 @@
 						%>
 
 						<h6 class="text-default">
-							<span><liferay-ui:message arguments="<%= modifiedDateDescription %>" key="modified-x-ago" /></span>
+							<span><liferay-ui:message arguments="<%= modifiedDateDescription %>" key="created-x-ago" /></span>
 						</h6>
 
 						<h5>
@@ -153,7 +153,7 @@
 								%>
 
 								<label class="text-default">
-									<liferay-ui:message arguments="<%= modifiedDateDescription %>" key="modified-x-ago" />
+									<liferay-ui:message arguments="<%= modifiedDateDescription %>" key="created-x-ago" />
 								</label>
 							</liferay-frontend:vertical-card-header>
 
@@ -224,6 +224,7 @@
 <c:if test="<%= layoutSetPrototypeDisplayContext.isShowAddButton() %>">
 	<portlet:renderURL var="addLayoutSetPrototypeURL">
 		<portlet:param name="mvcPath" value="/edit_layout_set_prototype.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>

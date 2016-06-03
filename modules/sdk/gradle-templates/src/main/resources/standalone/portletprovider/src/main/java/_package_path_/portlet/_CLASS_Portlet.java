@@ -2,15 +2,29 @@ package _package_.portlet;
 
 import _package_.constants._CLASS_PortletKeys;
 
-import javax.portlet.GenericPortlet;
-import javax.portlet.Portlet;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.portlet.GenericPortlet;
+import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 @Component(
 	immediate = true,
@@ -30,9 +44,47 @@ public class _CLASS_Portlet extends GenericPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String portletId = PortalUtil.getPortletId(renderRequest);
+
+		String message = "_NAME_ Add Portlet Provider";
+
+		try {
+			PortletPreferences preferences =
+				PortletPreferencesFactoryUtil.getPortletSetup(
+					renderRequest, portletId);
+
+			String className = preferences.getValue(
+				"className", StringPool.BLANK);
+
+			long classPK = GetterUtil.getLong(
+				preferences.getValue("classPK", StringPool.BLANK));
+
+			if (Validator.isNotNull(className) && (classPK > 0)) {
+				AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+					className, classPK);
+
+				message = assetEntry.getTitle(themeDisplay.getLocale());
+			}
+
+		}
+		catch (PortalException pe) {
+		}
+
 		PrintWriter printWriter = renderResponse.getWriter();
 
-		printWriter.print("_NAME_ Add Portlet Provider");
+		printWriter.print(message);
 	}
+
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	private AssetEntryLocalService _assetEntryLocalService;
 
 }

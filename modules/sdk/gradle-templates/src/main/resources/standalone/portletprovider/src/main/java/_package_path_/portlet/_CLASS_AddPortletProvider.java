@@ -31,6 +31,9 @@ public class _CLASS_AddPortletProvider
 			PortletPreferences portletPreferences, String portletId,
 			String className, long classPK, ThemeDisplay themeDisplay)
 		throws Exception {
+
+		portletPreferences.setValue("className", className);
+		portletPreferences.setValue("classPK", String.valueOf(classPK));
 	}
 
 }

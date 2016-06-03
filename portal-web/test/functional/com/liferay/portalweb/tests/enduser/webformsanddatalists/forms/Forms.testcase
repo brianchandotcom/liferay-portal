@@ -558,6 +558,212 @@
 		<execute macro="Form#save" />
 	</command>
 
+	<command name="EditAllFormFieldsTypesUsedBySystemSettings" priority="5">
+		<description message="This is a use case for LPS-50757." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="Forms and Workflow" />
+		</execute>
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="FormFields#viewCheckboxLabel">
+			<var name="fieldLabel" value="Changeable Default Language" />
+			<var name="fieldName" value="changeableDefaultLanguage" />
+		</execute>
+
+		<execute macro="FormFields#viewCheckboxNotChecked">
+			<var name="fieldName" value="changeableDefaultLanguage" />
+		</execute>
+
+		<execute macro="FormFields#viewFieldHelpText">
+			<var name="fieldHelpText" value="If checked, the default language of data definitions will be changeable. The default language of data definitions is inherited from the site settings." />
+			<var name="fieldName" value="changeableDefaultLanguage" />
+		</execute>
+
+		<execute macro="FormFields#viewSelectLabel">
+			<var name="fieldLabel" value="Default display view" />
+			<var name="fieldName" value="defaultDisplayView" />
+		</execute>
+
+		<execute macro="FormFields#viewSelectValue">
+			<var name="fieldName" value="defaultDisplayView" />
+		</execute>
+
+		<execute macro="FormFields#enableCheckbox">
+			<var name="fieldName" value="changeableDefaultLanguage" />
+		</execute>
+
+		<execute macro="FormFields#selectSelectOption">
+			<var name="fieldName" value="defaultDisplayView" />
+			<var name="selectOption" value="Descriptive" />
+		</execute>
+
+		<execute macro="SystemSettings#saveConfiguration" />
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="FormFields#viewCheckboxChecked">
+			<var name="fieldName" value="changeableDefaultLanguage" />
+		</execute>
+
+		<execute macro="FormFields#viewSelectOption">
+			<var name="fieldName" value="defaultDisplayView" />
+			<var name="selectOption" value="Descriptive" />
+		</execute>
+
+		<execute macro="SystemSettings#exitEditConfiguration" />
+
+		<execute macro="SystemSettings#resetConfiguration">
+			<var name="category" value="Forms and Workflow" />
+			<var name="configurationName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="Dynamic Data Mapping Service" />
+		</execute>
+
+		<execute macro="FormFields#viewRepeatableTextMultilineField">
+			<var name="fieldHelpText" value="Set the allowed file extensions for template images. A file extension of * will permit all file extensions." />
+			<var name="fieldLabel" value="Small image extensions" />
+			<var name="fieldName" value="smallImageExtensions" />
+			<var name="repeatableFieldNumber" value="4" />
+		</execute>
+
+		<execute macro="FormFields#addRepeatableField">
+			<var name="fieldName" value="smallImageExtensions" />
+			<var name="repeatableFieldNumber" value="4" />
+		</execute>
+
+		<execute macro="FormFields#viewRepeatableTextMultilineField">
+			<var name="fieldHelpText" value="Set the allowed file extensions for template images. A file extension of * will permit all file extensions." />
+			<var name="fieldLabel" value="Small image extensions" />
+			<var name="fieldName" value="smallImageExtensions" />
+			<var name="repeatableFieldNumber" value="5" />
+		</execute>
+
+		<execute macro="FormFields#viewTextField">
+			<var name="fieldHelpText" value="Set the maximum file size for template images in bytes. A value of 0 can be used to indicate unlimited file size." />
+			<var name="fieldLabel" value="Small image max size" />
+			<var name="fieldName" value="smallImageMaxSize" />
+		</execute>
+
+		<execute macro="FormFields#editRepeatableTextMultiline">
+			<var name="fieldName" value="smallImageExtensions" />
+			<var name="fieldValue" value=".svg" />
+			<var name="repeatableFieldNumber" value="4" />
+		</execute>
+
+		<execute macro="FormFields#editRepeatableTextMultiline">
+			<var name="fieldName" value="smallImageExtensions" />
+			<var name="fieldValue" value="*" />
+			<var name="repeatableFieldNumber" value="5" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="smallImageMaxSize" />
+			<var name="fieldValue" value="5120" />
+		</execute>
+
+		<execute macro="SystemSettings#saveConfiguration" />
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="Dynamic Data Mapping Service" />
+		</execute>
+
+		<execute macro="FormFields#viewRepeatableTextMultilineValue">
+			<var name="fieldName" value="smallImageExtensions" />
+			<var name="fieldValue" value=".svg" />
+			<var name="repeatableFieldNumber" value="4" />
+		</execute>
+
+		<execute macro="FormFields#viewRepeatableTextMultilineValue">
+			<var name="fieldName" value="smallImageExtensions" />
+			<var name="fieldValue" value="*" />
+			<var name="repeatableFieldNumber" value="5" />
+		</execute>
+
+		<execute macro="FormFields#viewTextValue">
+			<var name="fieldName" value="smallImageMaxSize" />
+			<var name="fieldValue" value="5120" />
+		</execute>
+
+		<execute macro="SystemSettings#exitEditConfiguration" />
+
+		<execute macro="SystemSettings#resetConfiguration">
+			<var name="category" value="Forms and Workflow" />
+			<var name="configurationName" value="Dynamic Data Mapping Service" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="Other" />
+		</execute>
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="Apache Felix Declarative Service Implementation" />
+		</execute>
+
+		<execute macro="FormFields#viewTextField">
+			<var name="fieldHelpText" value="How long a lock is held before releasing due to suspected deadlock" />
+			<var name="fieldLabel" value="Lock timeout milliseconds" />
+			<var name="fieldName" value="ds.lock.timeout.milliseconds" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="ds.lock.timeout.milliseconds" />
+			<var name="fieldValue" value="" />
+		</execute>
+
+		<execute macro="FormFields#viewFieldValidationErrorMessage">
+			<var name="fieldName" value="ds.lock.timeout.milliseconds" />
+			<var name="fieldValidationErrorMessage" value="This field is required." />
+		</execute>
+
+		<execute macro="SystemSettings#exitEditConfiguration" />
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="JavaScript Loader" />
+		</execute>
+
+		<execute macro="FormFields#viewTextMultilineField">
+			<var name="fieldLabel" value="Global JSVariable" />
+			<var name="fieldName" value="globalJSVariable" />
+		</execute>
+
+		<execute macro="FormFields#editTextMultiline">
+			<var name="fieldName" value="globalJSVariable" />
+			<var name="fieldValue" value="LIFERAY" />
+		</execute>
+
+		<execute macro="SystemSettings#saveConfiguration" />
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="JavaScript Loader" />
+		</execute>
+
+		<execute macro="FormFields#viewTextMultilineValue">
+			<var name="fieldName" value="globalJSVariable" />
+			<var name="fieldValue" value="LIFERAY" />
+		</execute>
+
+		<execute macro="SystemSettings#exitEditConfiguration" />
+
+		<execute macro="SystemSettings#resetConfiguration">
+			<var name="category" value="Other" />
+			<var name="configurationName" value="JavaScript Loader" />
+		</execute>
+	</command>
+
 	<command name="EditFormsConfigurationViaSystemSettings" priority="3">
 		<description message="This is a use case for LPS-59749" />
 

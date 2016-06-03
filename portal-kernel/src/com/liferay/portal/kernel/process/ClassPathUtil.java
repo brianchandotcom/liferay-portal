@@ -157,9 +157,12 @@ public class ClassPathUtil {
 		sb.append(
 			_buildClassPath(
 				classLoader, "com.liferay.portal.servlet.MainServlet"));
-		sb.append(File.pathSeparator);
-		sb.append(servletContext.getRealPath(""));
-		sb.append("/WEB-INF/classes");
+
+		if (servletContext != null) {
+			sb.append(File.pathSeparator);
+			sb.append(servletContext.getRealPath(""));
+			sb.append("/WEB-INF/classes");
+		}
 
 		_portalClassPath = sb.toString();
 

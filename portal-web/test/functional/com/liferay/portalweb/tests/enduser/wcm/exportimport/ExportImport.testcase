@@ -212,6 +212,8 @@
 
 		<execute function="DownloadTempFile" />
 
+		<execute function="Pause" locator1="5000" />
+
 		<execute macro="LAR#importSiteCP">
 			<var name="larFileName" value="${larFileName}" />
 			<var name="siteName" value="Site Name" />
@@ -427,6 +429,8 @@
 
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
+
+		<execute function="Pause" locator1="5000" />
 
 		<execute macro="LAR#importSiteCP">
 			<var name="larFileName" value="${larFileName}" />

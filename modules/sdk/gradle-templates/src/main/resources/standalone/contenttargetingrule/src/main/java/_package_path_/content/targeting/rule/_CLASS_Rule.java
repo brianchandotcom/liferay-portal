@@ -44,7 +44,7 @@ public class _CLASS_Rule extends BaseJSPRule {
 
 	@Override
 	public boolean evaluate(
-			HttpServletRequest request, RuleInstance ruleInstance,
+			HttpServletRequest httpServletRequest, RuleInstance ruleInstance,
 			AnonymousUser anonymousUser)
 		throws Exception {
 
@@ -53,7 +53,7 @@ public class _CLASS_Rule extends BaseJSPRule {
 		String typeSettings = ruleInstance.getTypeSettings();
 
 		// Return true if the AnonymousUser matches this Rule
-		
+
 		return _getMatches(typeSettings);
 	}
 
@@ -80,27 +80,29 @@ public class _CLASS_Rule extends BaseJSPRule {
 			"content.Language", locale, getClass());
 
 		if (matches) {
-			return LanguageUtil.get(resourceBundle, "the-user-always-matches-this-rule");
+			return LanguageUtil.get(
+				resourceBundle, "the-user-always-matches-this-rule");
 		}
 		else {
-			return LanguageUtil.get(resourceBundle, "the-user-never-matches-this-rule");
+			return LanguageUtil.get(
+				resourceBundle, "the-user-never-matches-this-rule");
 		}
 	}
 
 	@Override
 	public String processRule(
-		PortletRequest request, PortletResponse response, String id,
-		Map<String, String> values) {
+		PortletRequest portletRequest, PortletResponse portletResponse,
+		String id, Map<String, String> values) {
 
 		// Logic to Store the configuration of the Rule
 
 		boolean matches = GetterUtil.getBoolean(values.get("matches"));
 
-		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObj.put("matches", matches);
+		jsonObject.put("matches", matches);
 
-		return jsonObj.toString();
+		return jsonObject.toString();
 	}
 
 	@Override
@@ -138,13 +140,14 @@ public class _CLASS_Rule extends BaseJSPRule {
 
 	private boolean _getMatches(String typeSettings) {
 		try {
-			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				typeSettings);
 
-			return jsonObj.getBoolean("matches");
+			return jsonObject.getBoolean("matches");
 		}
 		catch (JSONException jsone) {
 		}
-		
+
 		return false;
 	}
 

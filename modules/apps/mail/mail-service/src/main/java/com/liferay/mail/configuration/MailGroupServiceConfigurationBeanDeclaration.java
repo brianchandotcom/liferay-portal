@@ -12,21 +12,22 @@
  * details.
  */
 
-package com.liferay.mail.util;
+package com.liferay.mail.configuration;
+
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
-public interface PortletPropsKeys {
+@Component
+public class MailGroupServiceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
-	public static final String DEFAULT_ACCOUNTS = "default.accounts";
-
-	public static final String INCOMING_PORTS = "incoming.ports";
-
-	public static final String JAVAMAIL_DEBUG = "javamail.debug";
-
-	public static final String MESSAGES_SYNC_COUNT = "messages.sync.count";
-
-	public static final String OUTGOING_PORTS = "outgoing.ports";
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return MailGroupServiceConfiguration.class;
+	}
 
 }

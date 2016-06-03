@@ -18,7 +18,7 @@
 				<div class="card-row card-row-layout-fixed card-row-padded card-row-valign-top taglib-vertical-card-footer">
 					<div class="card-col-content lfr-card-details-column">
 						<c:if test="<%= Validator.isNotNull(header) %>">
-							<span class="lfr-card-modified-by-text truncate-text" title="<%= header %>">
+							<span class="lfr-card-modified-by-text truncate-text">
 								<%= header %>
 							</span>
 						</c:if>

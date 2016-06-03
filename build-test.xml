@@ -7077,26 +7077,41 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 		/>
 
 		<if>
-			<equals arg1="${database.type}" arg2="mariadb" />
+			<equals arg1="${database.type}" arg2="db2" />
 			<then>
-				<antcall target="rebuild-database">
-					<param name="database.type" value="${database.type}" />
-					<param name="sql.dir" value="sql/create-bare/" />
-					<param name="sql.file" value="create-bare-mysql.sql" />
-				</antcall>
+				<echo>chmod -v 777 ${liferay.home}</echo>
 
-				<get-database-property property.name="database.password" />
-				<get-database-property property.name="database.schema" />
-				<get-database-property property.name="database.username" />
+				<chmod file="${liferay.home}" perm="777" type="dir" verbose="true" />
+				<echo>db2 restore database lportal from ${liferay.home} replace existing</echo>
 
-				<exec executable="${mariadb.executable}" input="${liferay.home}/${database.type}.sql">
-					<arg value="--database=${database.schema}" />
-					<arg value="--password=${database.password}" />
-					<arg value="--user=${database.username}" />
+				<exec executable="db2" outputproperty="db2.executable.output">
+					<arg line="restore database lportal from ${liferay.home} replace existing" />
 				</exec>
 
-				<exec executable="mysql_upgrade" />
+				<echo>${db2.executable.output}</echo>
 			</then>
+			<elseif>
+				<equals arg1="${database.type}" arg2="mariadb" />
+				<then>
+					<antcall target="rebuild-database">
+						<param name="database.type" value="${database.type}" />
+						<param name="sql.dir" value="sql/create-bare/" />
+						<param name="sql.file" value="create-bare-mysql.sql" />
+					</antcall>
+
+					<get-database-property property.name="database.password" />
+					<get-database-property property.name="database.schema" />
+					<get-database-property property.name="database.username" />
+
+					<exec executable="${mariadb.executable}" input="${liferay.home}/${database.type}.sql">
+						<arg value="--database=${database.schema}" />
+						<arg value="--password=${database.password}" />
+						<arg value="--user=${database.username}" />
+					</exec>
+
+					<exec executable="mysql_upgrade" />
+				</then>
+			</elseif>
 			<elseif>
 				<equals arg1="${database.type}" arg2="mysql" />
 				<then>

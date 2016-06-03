@@ -149,12 +149,19 @@ public class JspPrecompileTest {
 
 	@Test
 	public void testPrecompiledJsp() throws Exception {
-		Path jspClassPath = _workDirPath.resolve(
-			_JSP_PATH.concat(_PRECOMPILE_JSP_CLASS));
+		String packagePathString = _JSP_PACKAGE.replace(
+			CharPool.PERIOD, CharPool.SLASH);
 
-		Files.createDirectories(jspClassPath.getParent());
+		Path packagePath = _workDirPath.resolve(packagePathString);
 
-		Files.createFile(jspClassPath);
+		Files.createDirectories(packagePath);
+
+		String jspClassName = _PRECOMPILE_JSP.replace(
+			CharPool.PERIOD, CharPool.UNDERLINE);
+
+		Path jspClassPath = packagePath.resolve(jspClassName.concat(".class"));
+
+		final String className = packagePathString.concat(jspClassName);
 
 		try (InputStream inputStream =
 				PrecompileTestServlet.class.getResourceAsStream(
@@ -173,14 +180,8 @@ public class JspPrecompileTest {
 						int version, int access, String name, String signature,
 						String superName, String[] interfaces) {
 
-						name = _JSP_PATH.concat(
-							_PRECOMPILE_JSP_CLASS.substring(
-								0,
-								_PRECOMPILE_JSP_CLASS.indexOf(
-									StringPool.PERIOD)));
-
 						super.visit(
-							version, access, name, signature, superName,
+							version, access, className, signature, superName,
 							interfaces);
 					}
 
@@ -393,13 +394,7 @@ public class JspPrecompileTest {
 
 	private static final String _JSP_PACKAGE = "org.apache.jsp.";
 
-	private static final String _JSP_PATH = StringUtil.replace(
-		_JSP_PACKAGE, CharPool.PERIOD, CharPool.SLASH);
-
 	private static final String _PRECOMPILE_JSP = "PrecompileTestServlet.jsp";
-
-	private static final String _PRECOMPILE_JSP_CLASS =
-		"PrecompileTestServlet_jsp.class";
 
 	private static final String _RUNTIME_COMPILE_JSP = "runtime.jsp";
 

@@ -311,11 +311,6 @@ boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS
 			%>
 
 			<%@ include file="/user/search_columns.jspf" %>
-
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/user_action.jsp"
-			/>
 		</liferay-ui:search-container-row>
 
 		<%
@@ -331,7 +326,7 @@ boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS
 		}
 		%>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

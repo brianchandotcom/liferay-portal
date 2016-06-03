@@ -216,14 +216,14 @@
 		<execute function="AssertTextEquals" locator1="FormFields#DATE_FIELD" value1="${fieldValue}" />
 	</command>
 
-	<command name="viewFieldName">
-		<execute function="AssertTextEquals" locator1="FormFields#FIELD_NAME" value1="Field Name:${fieldName}" />
-	</command>
-
 	<command name="viewFieldHelpText">
 		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute function="AssertTextEquals" locator1="FormFields#HELP_TEXT" value1="${fieldHelpText}" />
+	</command>
+
+	<command name="viewFieldName">
+		<execute function="AssertTextEquals" locator1="FormFields#FIELD_NAME" value1="Field Name:${fieldName}" />
 	</command>
 
 	<command name="viewFieldValidationErrorMessage">

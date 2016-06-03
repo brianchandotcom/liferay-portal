@@ -158,10 +158,6 @@ public class JspPrecompileTest {
 
 	@Test
 	public void testPrecompiledJsp() throws Exception {
-		Class clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
 		StringBundler sb = new StringBundler(4);
 
 		sb.append(_parentWorkDir);
@@ -177,11 +173,9 @@ public class JspPrecompileTest {
 
 		file.createNewFile();
 
-		String name = PrecompileTestServlet.class.getName();
-
-		try (InputStream inputStream = classLoader.getResourceAsStream(
-				StringUtil.replace(
-					name, CharPool.PERIOD, CharPool.SLASH).concat(".class"));
+		try (InputStream inputStream =
+				PrecompileTestServlet.class.getResourceAsStream(
+					PrecompileTestServlet.class.getSimpleName() + ".class");
 			OutputStream outputStream = new FileOutputStream(file)) {
 
 			ClassReader classReader = new ClassReader(inputStream);

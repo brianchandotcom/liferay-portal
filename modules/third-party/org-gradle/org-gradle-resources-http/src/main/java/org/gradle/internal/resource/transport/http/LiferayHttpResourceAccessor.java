@@ -63,7 +63,7 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 
 	@Override
 	public ExternalResourceMetaData getMetaData(URI uri) {
-		if (!_FORCED_CACHE_ENABLED) {
+		if (!_isForcedCacheEnabled()) {
 			return super.getMetaData(uri);
 		}
 
@@ -88,7 +88,7 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 
 	@Override
 	public HttpResponseResource openResource(URI uri) {
-		if (!_FORCED_CACHE_ENABLED) {
+		if (!_isForcedCacheEnabled()) {
 			return super.openResource(uri);
 		}
 
@@ -362,11 +362,12 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 		return new HttpResponseResource(HttpGet.METHOD_NAME, uri, httpResponse);
 	}
 
+	private boolean _isForcedCacheEnabled() {
+		return Boolean.getBoolean("forced.cache.enabled");
+	}
+
 	private static final String _FILES_CACHE_DIR_NAME =
 		"caches/modules-2/files-2.1";
-
-	private static final boolean _FORCED_CACHE_ENABLED = Boolean.getBoolean(
-		"forced.cache.enabled");
 
 	private static final String[] _REPOSITORY_URLS = {
 		"http://cdn.repository.liferay.com/nexus/content/groups/public/",
@@ -377,11 +378,5 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 
 	private static final Logger _logger = LoggerFactory.getLogger(
 		LiferayHttpResourceAccessor.class);
-
-	static {
-		if (_FORCED_CACHE_ENABLED) {
-			System.out.println("Forced cache is enabled.");
-		}
-	}
 
 }

@@ -23,13 +23,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * @author Shinn Lok
  */
-@Ignore
 public class ModelListenerTest extends BaseTestCase {
 
 	@Test

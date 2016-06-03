@@ -255,7 +255,7 @@ public abstract class BaseTestCase {
 		try {
 			inputStream = getInputStream(fileName);
 
-			return IOUtils.toString(inputStream);
+			return IOUtils.toString(inputStream, "UTF-8");
 		}
 		catch (IOException ioe) {
 			_logger.error(ioe.getMessage(), ioe);

@@ -7082,9 +7082,9 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 				<echo>chmod -v 777 ${liferay.home}</echo>
 
 				<chmod file="${liferay.home}" perm="777" type="dir" verbose="true" />
-				<echo>db2 restore database lportal from ${liferay.home} replace existing</echo>
+				<echo>${db2.executable} restore database lportal from ${liferay.home} replace existing</echo>
 
-				<exec executable="db2" outputproperty="db2.executable.output">
+				<exec executable="${db2.executable}" outputproperty="db2.executable.output">
 					<arg line="restore database lportal from ${liferay.home} replace existing" />
 				</exec>
 

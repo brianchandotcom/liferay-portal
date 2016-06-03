@@ -98,7 +98,7 @@
 						%>
 
 						<h6 class="text-default">
-							<span><liferay-ui:message arguments="<%= modifiedDateDescription %>" key="modified-x-ago" /></span>
+							<span><liferay-ui:message arguments="<%= modifiedDateDescription %>" key="created-x-ago" /></span>
 						</h6>
 
 						<h5>
@@ -147,7 +147,7 @@
 								%>
 
 								<label class="text-default">
-									<liferay-ui:message arguments="<%= modifiedDateDescription %>" key="modified-x-ago" />
+									<liferay-ui:message arguments="<%= modifiedDateDescription %>" key="created-x-ago" />
 								</label>
 							</liferay-frontend:vertical-card-header>
 

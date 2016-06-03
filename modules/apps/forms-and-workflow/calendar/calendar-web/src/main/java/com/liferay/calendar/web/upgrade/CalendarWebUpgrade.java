@@ -45,6 +45,11 @@ public class CalendarWebUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.calendar.web", "1.0.0", "1.0.1",
 			new com.liferay.calendar.web.upgrade.v1_0_1.
 				UpgradePortletPreferences());
+
+		registry.register(
+			"com.liferay.calendar.web", "1.0.1", "1.0.2",
+			new com.liferay.calendar.web.upgrade.v1_0_2.
+				UpgradePortalPreferences());
 	}
 
 }

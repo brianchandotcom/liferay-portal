@@ -1,8 +1,14 @@
 <definition>
-	<command name="addCP">
-		<execute function="AssertClick" locator1="KnowledgeBase#MENUBAR_ADD" value1="Add" />
+	<command name="_gotoAddFolder">
+		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#FOLDER" value1="Folder" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Folder">
+			<var name="key_menuItem" value="Folder" />
+		</execute>
+	</command>
+
+	<command name="addCP">
+		<execute macro="KBFolder#_gotoAddFolder" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${kbFolderName}" />
 

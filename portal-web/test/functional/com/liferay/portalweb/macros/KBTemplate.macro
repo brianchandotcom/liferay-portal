@@ -52,8 +52,9 @@
 	</command>
 
 	<command name="viewCPViaAddTemplate">
-		<execute function="AssertClick" locator1="KnowledgeBase#MENUBAR_ADD" value1="Add" />
-		<execute function="AssertClick" locator1="KnowledgeBase#ADD_ARTICLE_VIA_TEMPLATE" value1="${kbTemplateTitle}" />
+		<execute macro="KBArticle#_gotoAddArticleViaTemplate">
+			<var name="kbTemplateTitle" value="${kbTemplateTitle}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="" />
 

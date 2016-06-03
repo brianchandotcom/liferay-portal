@@ -1,12 +1,38 @@
 <definition>
+	<command name="_gotoAddArticleViaTemplate">
+		<var name="key_kbTemplateTitle" value="${kbTemplateTitle}" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${kbTemplateTitle}">
+			<var name="key_menuItem" value="${kbTemplateTitle}" />
+		</execute>
+	</command>
+
+	<command name="_gotoAddBasicArticle">
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Article">
+			<var name="key_menuItem" value="Basic Article" />
+		</execute>
+	</command>
+
+	<command name="_gotoImportArticle">
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Import">
+			<var name="key_menuItem" value="Import" />
+		</execute>
+	</command>
+
 	<command name="addChildPGViaKBAdmin">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="Click" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CHILD_ARTICLE" value1="Add Child Article" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${kbChildArticleTitle}" />
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbChildArticleContent}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbChildArticleTitle}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbChildArticleContent}" />
 		<execute macro="PortletEntry#publish" />
 	</command>
 
@@ -14,8 +40,8 @@
 		<execute function="Click" locator1="KnowledgeBase#DISPLAY_ACTIONS_BUTTON" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CHILD_ARTICLE" value1="Add Child Article" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${kbArticleTitle}" />
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbArticleContent}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitle}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContent}" />
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 	</command>
 
@@ -23,27 +49,31 @@
 		<if>
 			<isset var="kbTemplateTitle" />
 			<then>
-				<execute function="AssertClick" locator1="KnowledgeBase#MENUBAR_ADD" value1="Add" />
-				<execute function="AssertClick" locator1="KnowledgeBase#ADD_ARTICLE_VIA_TEMPLATE" value1="${kbTemplateTitle}" />
+				<execute macro="KBArticle#_gotoAddArticleViaTemplate">
+					<var name="kbTemplateTitle" value="${kbTemplateTitle" />
+				</execute>
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="KnowledgeBase#MENUBAR_ADD" value1="Add" />
-				<execute function="AssertClick" locator1="MenuItem#BASIC_ARTICLE" value1="Basic Article" />
+				<execute macro="KBArticle#_gotoAddBasicArticle" />
 			</else>
 		</if>
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${kbArticleTitle}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitle}" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Configuration" />
+		</execute>
 
 		<if>
 			<isset var="kbArticleFriendlyURL" />
 			<then>
-				<var method="StringUtil#lowerCase('/${kbArticleFriendlyURL}')" name="kbArticleTitleFormatted" />
+				<var method="StringUtil#lowerCase('${kbArticleFriendlyURL}')" name="kbArticleTitleFormatted" />
 				<var method="StringUtil#replace('${kbArticleTitleFormatted}', ' ', '-')" name="kbArticleTitleFormatted" />
 
 				<execute function="Type" locator1="KnowledgeBaseArticle#EDIT_FRIENDLY_URL_FIELD" value1="${kbArticleTitleFormatted}" />
 			</then>
 			<else>
-				<var method="StringUtil#lowerCase('/${kbArticleTitle}')" name="kbArticleTitleFormatted" />
+				<var method="StringUtil#lowerCase('${kbArticleTitle}')" name="kbArticleTitleFormatted" />
 				<var method="StringUtil#replace('${kbArticleTitleFormatted}', ' ', '-')" name="kbArticleTitleFormatted" />
 
 				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#EDIT_FRIENDLY_URL_FIELD" value1="${kbArticleTitleFormatted}" />
@@ -57,7 +87,7 @@
 				<execute function="Type" locator1="CKEditor#FIELD_SOURCE_ON" value1="${kbArticleContentSource}" />
 			</then>
 			<else>
-				<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbArticleContent}" />
+				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContent}" />
 			</else>
 		</if>
 
@@ -155,9 +185,9 @@
 
 		<execute function="AssertClick" locator1="MenuItem#BASIC_ARTICLE" value1="Basic Article" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${kbArticleTitle}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitle}" />
 
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbArticleContent}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContent}" />
 
 		<execute macro="KBArticle#selectAttachmentCP">
 			<var name="kbArticleAttachment" value="${kbArticleAttachment}" />
@@ -172,8 +202,8 @@
 		<execute function="AssertClick" locator1="KnowledgeBase#MENUBAR_ADD" value1="Add" />
 		<execute function="AssertClick" locator1="MenuItem#BASIC_ARTICLE" value1="Basic Article" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${kbArticleTitle}" />
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbArticleContent}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitle}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContent}" />
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#EDIT_TITLE_FIELD_REQUIRED" value1="Required" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#EDIT_TITLE_FIELD_REQUIRED_ALERT" value1="This field is required." />
@@ -454,8 +484,8 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
-		<execute function="Type" locator1="TextInput#TITLE" value1="${kbArticleTitleEdit}" />
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbArticleContentEdit}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitleEdit}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContentEdit}" />
 
 		<if>
 			<isset var="kbArticleAttachment" />
@@ -492,8 +522,8 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
-		<execute function="Type" locator1="TextInput#TITLE" value1="${kbArticleTitleEdit}" />
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbArticleContentEdit}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitleEdit}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContentEdit}" />
 		<execute macro="PortletEntry#publish" />
 	</command>
 
@@ -505,8 +535,8 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Editar" />
 
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayEditarticle#HEADER_TITLE" value1="${kbArticleTitle}" />
-		<execute function="Type" locator1="TextInput#TITLE" value1="${kbArticleTitleEdit}" />
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbArticleContentEdit}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitleEdit}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContentEdit}" />
 
 		<execute function="AssertClick" locator1="xpath=//button[contains(@id,'_knowledgebaseportlet_publish')]" value1="Publicar" />
 
@@ -622,8 +652,7 @@
 	<command name="importCP">
 		<var name="key_kbZipFile" value="${kbZipFile}" />
 
-		<execute function="AssertClick" locator1="KnowledgeBase#MENUBAR_ADD" value1="Add" />
-		<execute function="AssertClick" locator1="MenuItem#IMPORT" value1="Import" />
+		<execute macro="KBArticle#_gotoImportArticle" />
 
 		<execute function="UploadCommonFile" locator1="TextInput#UPLOAD_FILE" value1="${kbZipFile}" />
 

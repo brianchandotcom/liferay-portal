@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.ResourceBlockPermission;
 import com.liferay.portal.kernel.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.service.base.ResourceBlockPermissionLocalServiceBaseImpl;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -156,25 +155,6 @@ public class ResourceBlockPermissionLocalServiceImpl
 
 		return resourceBlockPermissionPersistence.countByR_R(
 			resourceBlockId, roleId);
-	}
-
-	@Override
-	public List<ResourceBlockPermission> getResourceResourceBlockPermissions(
-		long companyId, String name) {
-
-		List<ResourceBlock> resourceBlocks = resourceBlockPersistence.findByC_N(
-			companyId, name);
-
-		List<ResourceBlockPermission> resourceBlockPermissions =
-			new ArrayList<>();
-
-		for (ResourceBlock resourceBlock : resourceBlocks) {
-			resourceBlockPermissions.addAll(
-				resourceBlockPermissionPersistence.findByResourceBlockId(
-					resourceBlock.getResourceBlockId()));
-		}
-
-		return resourceBlockPermissions;
 	}
 
 	@Override

@@ -73,4 +73,4 @@ Provide-Capability:\
 		uri="http://liferay.com/tld/util";\
 		version:Version="${Bundle-Version}"
 -baseline: *;file=${project.dir}/.bnd/ant-baseline-cache/com.liferay.util.taglib-2.3.0.jar
--include: ../modules/apps/foundation/app.bnd
+-include: ../modules/apps/static/app.bnd

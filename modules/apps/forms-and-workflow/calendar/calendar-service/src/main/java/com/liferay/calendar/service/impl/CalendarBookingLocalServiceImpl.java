@@ -876,7 +876,8 @@ public class CalendarBookingLocalServiceImpl
 		calendarBooking.setSecondReminder(secondReminder);
 		calendarBooking.setSecondReminderType(secondReminderType);
 
-		if (!calendarBooking.isPending() || !calendarBooking.isDraft()) {
+		if (calendarBooking.isMasterBooking() &&
+			(!calendarBooking.isPending() && !calendarBooking.isDraft())) {
 			calendarBooking.setStatus(WorkflowConstants.STATUS_DRAFT);
 		}
 

@@ -197,7 +197,7 @@ public class JspPrecompileTest {
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					_JSP_COMPILER_CLASS_NAME, Level.DEBUG)) {
 
-			_doJspTest(_PRECOMPILE_JSP);
+			_doJspTest(_PRECOMPILE_JSP, "Precompiled");
 
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
@@ -222,7 +222,7 @@ public class JspPrecompileTest {
 				Log4JLoggerTestUtil.configureLog4JLogger(
 					_JSP_COMPILER_CLASS_NAME, Level.DEBUG)) {
 
-			_doJspTest(_RUNTIME_COMPILE_JSP);
+			_doJspTest(_RUNTIME_COMPILE_JSP, "Runtime Compiled");
 
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
@@ -376,7 +376,9 @@ public class JspPrecompileTest {
 		return false;
 	}
 
-	private void _doJspTest(String jsp) throws IOException {
+	private void _doJspTest(String jsp, String expectedMessage)
+		throws IOException {
+
 		StringBundler sb = new StringBundler(6);
 
 		sb.append("http://localhost:8080/web");
@@ -389,12 +391,7 @@ public class JspPrecompileTest {
 		URL url = new URL(sb.toString());
 
 		try (InputStream inputStream = url.openStream()) {
-			if (jsp.equals(_RUNTIME_COMPILE_JSP)) {
-				_verifyCompiledJsp(inputStream, "Runtime Compiled");
-			}
-			else if (jsp.equals(_PRECOMPILE_JSP)) {
-				_verifyCompiledJsp(inputStream, "Precompiled");
-			}
+			_verifyCompiledJsp(inputStream, expectedMessage);
 		}
 	}
 

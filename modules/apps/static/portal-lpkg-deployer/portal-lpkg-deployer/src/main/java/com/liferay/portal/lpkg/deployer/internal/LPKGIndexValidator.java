@@ -81,17 +81,16 @@ public class LPKGIndexValidator {
 
 		builder.setArguments(Arrays.asList("-Djava.awt.headless=true"));
 
-		String classpath = ClassPathUtil.getGlobalClassPath();
-
-		builder.setBootstrapClassPath(classpath);
-		builder.setReactClassLoader(PortalClassLoaderUtil.getClassLoader());
-
-		String runtimeClasspath = ClassPathUtil.buildClassPath(
+		String classpath = ClassPathUtil.buildClassPath(
 			IndexerFactory.class, Bundle.class,
 			TargetPlatformIndexerProcessCallable.class);
 
-		builder.setRuntimeClassPath(
-			runtimeClasspath.concat(File.pathSeparator).concat(classpath));
+		classpath = classpath.concat(File.pathSeparator).concat(
+			ClassPathUtil.getGlobalClassPath());
+
+		builder.setBootstrapClassPath(classpath);
+		builder.setReactClassLoader(PortalClassLoaderUtil.getClassLoader());
+		builder.setRuntimeClassPath(classpath);
 
 		_processConfig = builder.build();
 	}

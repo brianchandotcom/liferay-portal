@@ -3286,7 +3286,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 			<echo>Waiting for ${app.server.waiting.url} to load</echo>
 
-			<waitfor maxwait="15" maxwaitunit="minute" timeoutproperty="app.server.waiting.timeout">
+			<waitfor maxwait="${timeout.app.server.wait}" maxwaitunit="second" timeoutproperty="app.server.waiting.timeout">
 				<http url="${app.server.waiting.url}" />
 			</waitfor>
 
@@ -3384,6 +3384,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 							System.out.println("Waiting for server startup message");
 
+							int timeout = Integer.parseInt(project.getProperty("timeout.app.server.wait"));
+
 							int second = 0;
 
 							while (true) {
@@ -3398,8 +3400,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 									e.printStackTrace();
 								}
 
-								if (second >= 900) {
-									project.setProperty("wait.for.app.server.log.timed.out.message", "Unable to find startup message after 15 minutes.");
+								if (second >= timeout) {
+									project.setProperty("wait.for.app.server.log.timed.out.message", "Unable to find startup message after " + (timeout / 60) + " minutes.");
 
 									break;
 								}

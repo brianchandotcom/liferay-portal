@@ -57,10 +57,6 @@ gradle.beforeProject {
 				ruleSets = []
 			}
 
-			startTestableTomcat {
-				checkTimeout = 15 * 60 * 1000
-			}
-
 			testIntegration {
 				doLast {
 					String databaseType = System.properties["database.type"]

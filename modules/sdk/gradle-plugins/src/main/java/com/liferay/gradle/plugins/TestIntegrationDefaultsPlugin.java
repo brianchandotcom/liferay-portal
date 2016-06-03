@@ -79,6 +79,14 @@ public class TestIntegrationDefaultsPlugin
 			(StartTestableTomcatTask)GradleUtil.getTask(
 				project, TestIntegrationPlugin.START_TESTABLE_TOMCAT_TASK_NAME);
 
+		Object checkTimeout = GradleUtil.getProperty(
+			project, "timeout.app.server.wait");
+
+		if (checkTimeout != null) {
+			startTestableTomcatTask.setCheckTimeout(
+				GradleUtil.toInteger(checkTimeout) * 1000);
+		}
+
 		startTestableTomcatTask.setExecutable(
 			new Callable<String>() {
 

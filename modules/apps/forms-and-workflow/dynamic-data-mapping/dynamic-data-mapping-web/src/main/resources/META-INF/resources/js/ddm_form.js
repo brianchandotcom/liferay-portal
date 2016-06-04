@@ -1152,15 +1152,11 @@ AUI.add(
 					syncUI: function() {
 						var instance = this;
 
-						var parsedValue = instance.getParsedValue(instance.getValue());
-
-						var titleNode = A.one('#' + instance.getInputName() + 'Title');
-
-						titleNode.val(parsedValue.assettitle || '');
-
 						var clearButtonNode = A.one('#' + instance.getInputName() + 'ClearButton');
 
-						clearButtonNode.toggle(!!parsedValue.assetclasspk);
+						var parsedValue = instance.getParsedValue(instance.getValue());
+
+						clearButtonNode.toggle(!!parsedValue.classPK);
 					},
 
 					getParsedValue: function(value) {
@@ -1189,6 +1185,14 @@ AUI.add(
 						url.setWindowState('pop_up');
 
 						return url;
+					},
+
+					setTitle: function(title) {
+						var instance = this;
+
+						var titleNode = A.one('#' + instance.getInputName() + 'Title');
+
+						titleNode.val(title);
 					},
 
 					setValue: function(value) {
@@ -1249,11 +1253,11 @@ AUI.add(
 						}
 					},
 
-					_handleClearButtonClick: function(event) {
+					_handleClearButtonClick: function() {
 						var instance = this;
 
+						instance.setTitle('');
 						instance.setValue('');
-
 					},
 
 					_handleSelectButtonClick: function(event) {
@@ -1273,9 +1277,16 @@ AUI.add(
 							},
 							function(event) {
 								if (event.details.length > 0) {
-									var webContentSelected = event.details[0];
+									var selectedWebContent = event.details[0];
 
-									instance.setValue({ className: webContentSelected.assetclassname, classPK: webContentSelected.assetclasspk });
+									instance.setTitle(selectedWebContent.assettitle || '');
+
+									instance.setValue(
+										{
+											className: selectedWebContent.assetclassname,
+											classPK: selectedWebContent.assetclasspk
+										}
+									);
 								}
 							}
 						);

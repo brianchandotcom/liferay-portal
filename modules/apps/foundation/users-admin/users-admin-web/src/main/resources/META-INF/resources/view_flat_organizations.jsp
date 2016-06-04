@@ -29,6 +29,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
+portletURL.setParameter("displayStyle", displayStyle);
+
 boolean showList = true;
 
 if (filterManageableOrganizations) {
@@ -84,7 +86,7 @@ boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionC
 
 			<liferay-frontend:management-bar-buttons>
 				<liferay-frontend:management-bar-display-buttons
-					displayViews='<%= new String[] {"list"} %>'
+					displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 					selectedDisplayStyle="<%= displayStyle %>"
 				/>
@@ -149,14 +151,9 @@ boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionC
 					%>
 
 					<%@ include file="/organization/search_columns.jspf" %>
-
-					<liferay-ui:search-container-column-jsp
-						cssClass="entry-action-column"
-						path="/organization_action.jsp"
-					/>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator markupView="lexicon" />
+				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 			</liferay-ui:search-container>
 		</aui:form>
 	</c:when>

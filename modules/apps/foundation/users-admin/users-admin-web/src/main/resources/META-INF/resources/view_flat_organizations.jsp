@@ -71,21 +71,21 @@ boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionC
 			<liferay-frontend:management-bar-filters>
 				<liferay-frontend:management-bar-navigation
 					navigationKeys='<%= new String[] {"all"} %>'
-					portletURL="<%= renderResponse.createRenderURL() %>"
+					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 				/>
 
 				<liferay-frontend:management-bar-sort
 					orderByCol="<%= searchContainer.getOrderByCol() %>"
 					orderByType="<%= searchContainer.getOrderByType() %>"
 					orderColumns='<%= new String[] {"name", "type"} %>'
-					portletURL="<%= portletURL %>"
+					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 				/>
 			</liferay-frontend:management-bar-filters>
 
 			<liferay-frontend:management-bar-buttons>
 				<liferay-frontend:management-bar-display-buttons
 					displayViews='<%= new String[] {"list"} %>'
-					portletURL="<%= renderResponse.createRenderURL() %>"
+					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 					selectedDisplayStyle="<%= displayStyle %>"
 				/>
 			</liferay-frontend:management-bar-buttons>

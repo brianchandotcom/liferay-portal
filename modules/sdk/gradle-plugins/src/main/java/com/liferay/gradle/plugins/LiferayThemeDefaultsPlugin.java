@@ -366,6 +366,10 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		addTaskSkippedDependency(
 			executeGulpTask, taskCache,
 			themeProject.getPath() + ":" + JavaPlugin.CLASSES_TASK_NAME);
+
+		if (taskCache != null) {
+			taskCache.testFile(dir);
+		}
 	}
 
 	protected void configureTasksExecuteGulp(

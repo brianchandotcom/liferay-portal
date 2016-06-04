@@ -8,13 +8,14 @@
 #
 
 liferay_home=/opt/liferay
+portal_lib_dir=/opt/liferay/tomcat/webapps/ROOT/WEB-INF/lib
 
 #
 # This is the classpath to TargetPlatformIndexerClient
 #
 jars=(
 	${liferay_home}/osgi/core/com.liferay.portal.bootstrap.jar
-	${liferay_home}/osgi/static/com.liferay.portal.target.platform.indexer.jar
+	${liferay_home}/tools/portal-tools-target-platform-indexer-client/com.liferay.portal.target.platform.indexer.jar
 	${liferay_home}/tools/portal-tools-target-platform-indexer-client/com.liferay.portal.tools.target.platform.indexer.client.jar
 	${liferay_home}/osgi/core/org.eclipse.osgi.jar
 )
@@ -23,7 +24,7 @@ function classpathify { local IFS=":"; echo "$*"; }
 
 CLASSPATH=$(classpathify "${jars[@]}")
 
-JAVA_OPTS="-Dliferay.home=${liferay_home}"
+JAVA_OPTS="-Dliferay.home=${liferay_home} -Dportal.lib.dir=${portal_lib_dir}"
 
 #JAVA_OPTS="${JAVA_OPTS} -agentlib:jdwp=transport=dt_socket,address=5010,server=y,suspend=y"
 
@@ -35,12 +36,13 @@ JAVA_OPTS="-Dliferay.home=${liferay_home}"
 #
 # This command reads the following system properties:
 # 1. liferay.home, required, points to ${liferay.home}.
-# 2. module.framework.static.dir, optional, defaults to ${liferay.home}/osgi/static.
-# 3. module.framework.modules.dir, optional, defaults to ${liferay.home}/osgi/modules.
-# 4. module.framework.portal.dir, optional, defaults to ${liferay.home}/osgi/portal.
-# 5. module.framework.marketplace.dir, optional, defaults to ${liferay.home}/osgi/marketplace.
-# 6. indexes.file, optional, defaults to ${liferay.home}/osgi/target-platform/target-platform-indexes-${timestamp}.zip. When specified will load indexes from the given zip file, rather than indexing from scratch.
-# 7. integrity.properties, optional, defaults to ${liferay.home}/osgi/target-platform/integrity.properties.
+# 2. portal.lib.dir, required, points to ${portal.lib.dir}
+# 3. module.framework.static.dir, optional, defaults to ${liferay.home}/osgi/static.
+# 4. module.framework.modules.dir, optional, defaults to ${liferay.home}/osgi/modules.
+# 5. module.framework.portal.dir, optional, defaults to ${liferay.home}/osgi/portal.
+# 6. module.framework.marketplace.dir, optional, defaults to ${liferay.home}/osgi/marketplace.
+# 7. indexes.file, optional, defaults to ${liferay.home}/osgi/target-platform/target-platform-indexes-${timestamp}.zip. When specified will load indexes from the given zip file, rather than indexing from scratch.
+# 8. integrity.properties, optional, defaults to ${liferay.home}/osgi/target-platform/integrity.properties.
 
 java -classpath "$CLASSPATH" ${JAVA_OPTS} \
 	com.liferay.portal.tools.target.platform.indexer.client.TargetPlatformIndexerClient

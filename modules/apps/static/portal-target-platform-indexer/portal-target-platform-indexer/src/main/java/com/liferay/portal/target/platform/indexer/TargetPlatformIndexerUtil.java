@@ -17,6 +17,7 @@ package com.liferay.portal.target.platform.indexer;
 import com.liferay.portal.target.platform.indexer.internal.PathUtil;
 import com.liferay.portal.target.platform.indexer.internal.TargetPlatformIndexer;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -24,6 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.jar.Attributes;
@@ -41,7 +43,8 @@ import org.osgi.framework.launch.FrameworkFactory;
 public class TargetPlatformIndexerUtil {
 
 	public static void indexTargetPlatform(
-			OutputStream outputStream, String... dirNames)
+			OutputStream outputStream, List<File> additionalJarFiles,
+			String... dirNames)
 		throws Exception {
 
 		Framework framework = null;
@@ -80,7 +83,8 @@ public class TargetPlatformIndexerUtil {
 			Bundle systemBundle = bundleContext.getBundle(0);
 
 			TargetPlatformIndexer targetPlatformIndexer =
-				new TargetPlatformIndexer(systemBundle, dirNames);
+				new TargetPlatformIndexer(
+					systemBundle, additionalJarFiles, dirNames);
 
 			targetPlatformIndexer.index(outputStream);
 		}

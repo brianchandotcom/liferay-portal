@@ -2,7 +2,14 @@
 <!DOCTYPE project>
 
 <project name="build-app">
+	<property file="../app.server.${user.name}.properties" />
+	<property file="../app.server.${env.COMPUTERNAME}.properties" />
+	<property file="../app.server.${env.HOST}.properties" />
+	<property file="../app.server.${env.HOSTNAME}.properties" />
+	<property file="../app.server.properties" />
+
 	<property name="liferay.home" value="${basedir}/../bundles" />
+	<property name="portal.lib.dir" value="${app.server.tomcat.lib.portal.dir}" />
 
 	<property name="osgi.dir" value="${liferay.home}/osgi" />
 
@@ -217,6 +224,7 @@
 			newenvironment="true"
 		>
 			<jvmarg value="-Dliferay.home=${liferay.home}" />
+			<jvmarg value="-Dportal.lib.dir=${portal.lib.dir}" />
 		</java>
 	</target>
 

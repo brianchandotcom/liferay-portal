@@ -18,9 +18,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.net.URLStreamHandler;
 import java.net.URLStreamHandlerFactory;
 
@@ -79,14 +79,15 @@ public class BytesURLSupport {
 
 	public static URL putBytes(String id, byte[] bytes) {
 		try {
-			URL url = new URL("bytes://localhost/".concat(id));
+			URL url = new URL(
+				"bytes://localhost/".concat(URLEncoder.encode(id, "UTF-8")));
 
 			_bytesMap.put(url, bytes);
 
 			return url;
 		}
-		catch (MalformedURLException murle) {
-			throw new RuntimeException(murle);
+		catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 

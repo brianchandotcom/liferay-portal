@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLDecoder;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
@@ -43,6 +44,7 @@ import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -57,6 +59,15 @@ public class TargetPlatformIndexerClient {
 		if (liferayHome == null) {
 			System.err.println(
 				"== -Dliferay.home must point to a valid directory");
+
+			return;
+		}
+
+		String portalLibDirName = System.getProperty("portal.lib.dir");
+
+		if (portalLibDirName == null) {
+			System.err.println(
+				"== -Dportal.lib.dir must point to a valid directory");
 
 			return;
 		}
@@ -80,9 +91,10 @@ public class TargetPlatformIndexerClient {
 			liferayHome.concat("/osgi/marketplace"));
 
 		List<URI> uris = _index(
-			indexesFileName, moduleFrameworkStaticDirName,
-			moduleFrameworkModulesDirName, moduleFrameworkPortalDirName,
-			moduleFrameworkMarketplaceDir);
+			indexesFileName,
+			Arrays.asList(new File(portalLibDirName, "util-taglib.jar")),
+			moduleFrameworkStaticDirName, moduleFrameworkModulesDirName,
+			moduleFrameworkPortalDirName, moduleFrameworkMarketplaceDir);
 
 		if (_validate(uris)) {
 			String integrityPropertiesFileName = System.getProperty(
@@ -96,7 +108,8 @@ public class TargetPlatformIndexerClient {
 	}
 
 	private static List<URI> _index(
-			String indexesFileName, String moduleFrameworkStaticDirName,
+			String indexesFileName, List<File> additionalJarFiles,
+			String moduleFrameworkStaticDirName,
 			String moduleFrameworkModulesDirName,
 			String moduleFrameworkPortalDirName,
 			String moduleFrameworkMarketplaceDirName)
@@ -112,8 +125,8 @@ public class TargetPlatformIndexerClient {
 
 		uris.add(
 			_indexTargetPlatform(
-				moduleFrameworkStaticDirName, moduleFrameworkModulesDirName,
-				moduleFrameworkPortalDirName));
+				additionalJarFiles, moduleFrameworkStaticDirName,
+				moduleFrameworkModulesDirName, moduleFrameworkPortalDirName));
 
 		uris.addAll(
 			_indexLPKGFiles(
@@ -155,14 +168,15 @@ public class TargetPlatformIndexerClient {
 		return uris;
 	}
 
-	private static URI _indexTargetPlatform(String... dirNames)
+	private static URI _indexTargetPlatform(
+			List<File> additionalJarFiles, String... dirNames)
 		throws Exception {
 
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
 		TargetPlatformIndexerUtil.indexTargetPlatform(
-			byteArrayOutputStream, dirNames);
+			byteArrayOutputStream, additionalJarFiles, dirNames);
 
 		URL url = BytesURLSupport.putBytes(
 			"liferay-target-platform", byteArrayOutputStream.toByteArray());
@@ -248,6 +262,8 @@ public class TargetPlatformIndexerClient {
 				if (index != -1) {
 					name = name.substring(0, index);
 				}
+
+				name = URLDecoder.decode(name, "UTF-8");
 
 				try (InputStream inputStream = url.openStream()) {
 					Files.copy(

@@ -17,6 +17,7 @@ package com.liferay.portal.lpkg.deployer.internal;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,7 +57,8 @@ public class BytesURLProtocolSupport {
 
 	public URL putBytes(String id, byte[] bytes) {
 		try {
-			URL url = new URL("bytes://localhost/".concat(id));
+			URL url = new URL(
+				"bytes://localhost/".concat(URLCodec.encodeURL(id)));
 
 			_bytesMap.put(url, bytes);
 

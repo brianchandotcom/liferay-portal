@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.lpkg.deployer.LPKGVerifyException;
 import com.liferay.portal.target.platform.indexer.IndexValidator;
@@ -301,6 +302,10 @@ public class LPKGIndexValidator {
 				localProcessExecutor.execute(
 					_processConfig,
 					new TargetPlatformIndexerProcessCallable(
+						Arrays.asList(
+							new File(
+								PropsValues.LIFERAY_LIB_PORTAL_DIR,
+								"util-taglib.jar")),
 						PropsValues.MODULE_FRAMEWORK_BASE_DIR + "/static",
 						PropsValues.MODULE_FRAMEWORK_MODULES_DIR,
 						PropsValues.MODULE_FRAMEWORK_PORTAL_DIR));
@@ -388,7 +393,7 @@ public class LPKGIndexValidator {
 			integrityKey = integrityKey.substring(index + 1);
 		}
 
-		return integrityKey;
+		return URLCodec.decodeURL(integrityKey);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -3476,8 +3476,6 @@
 			<var name="site" value="Global" />
 		</execute>
 
-		<execute macro="Navigator#gotoStagedView" />
-
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -3492,6 +3490,10 @@
 
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="http://localhost:9080/" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPublishing">

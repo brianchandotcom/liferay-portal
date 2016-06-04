@@ -15,9 +15,7 @@
 package com.liferay.css.builder;
 
 import com.liferay.portal.kernel.regex.PatternFactory;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -29,16 +27,24 @@ import com.liferay.sass.compiler.jni.internal.JniSassCompiler;
 import com.liferay.sass.compiler.ruby.internal.RubySassCompiler;
 
 import java.io.File;
+import java.io.IOException;
 
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import org.apache.tools.ant.DirectoryScanner;
 
@@ -49,7 +55,7 @@ import org.apache.tools.ant.DirectoryScanner;
  * @author Shuyang Zhou
  * @author David Truong
  */
-public class CSSBuilder {
+public class CSSBuilder implements AutoCloseable {
 
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
@@ -79,7 +85,15 @@ public class CSSBuilder {
 			arguments.get("sass.docroot.dir"), CSSBuilderArgs.DOCROOT_DIR_NAME);
 		boolean generateSourceMap = GetterUtil.getBoolean(
 			arguments.get("sass.generate.source.map"));
-		String portalCommonDirName = arguments.get("sass.portal.common.dir");
+		String outputDirName = GetterUtil.getString(
+			arguments.get("sass.output.dir"), CSSBuilderArgs.OUTPUT_DIR_NAME);
+
+		String portalCommonPath = arguments.get("sass.portal.common.path");
+
+		if (Validator.isNull(portalCommonPath)) {
+			portalCommonPath = arguments.get("sass.portal.common.dir");
+		}
+
 		int precision = GetterUtil.getInteger(
 			arguments.get("sass.precision"), CSSBuilderArgs.PRECISION);
 		String[] rtlExcludedPathRegexps = StringUtil.split(
@@ -87,10 +101,10 @@ public class CSSBuilder {
 		String sassCompilerClassName = arguments.get(
 			"sass.compiler.class.name");
 
-		try {
-			CSSBuilder cssBuilder = new CSSBuilder(
-				docrootDirName, generateSourceMap, portalCommonDirName,
-				precision, rtlExcludedPathRegexps, sassCompilerClassName);
+		try (CSSBuilder cssBuilder = new CSSBuilder(
+				docrootDirName, generateSourceMap, outputDirName,
+				portalCommonPath, precision, rtlExcludedPathRegexps,
+				sassCompilerClassName)) {
 
 			cssBuilder.execute(dirNames);
 		}
@@ -101,18 +115,37 @@ public class CSSBuilder {
 
 	public CSSBuilder(
 			String docrootDirName, boolean generateSourceMap,
-			String portalCommonDirName, int precision,
+			String outputDirName, String portalCommonPath, int precision,
 			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception {
 
+		File portalCommonDir = new File(portalCommonPath);
+
+		if (portalCommonDir.isFile()) {
+			portalCommonDir = _unzipPortalCommon(portalCommonDir);
+
+			_cleanPortalCommonDir = true;
+		}
+		else {
+			_cleanPortalCommonDir = false;
+		}
+
 		_docrootDirName = docrootDirName;
 		_generateSourceMap = generateSourceMap;
-		_portalCommonDirName = portalCommonDirName;
+		_outputDirName = outputDirName;
+		_portalCommonDirName = portalCommonDir.getCanonicalPath();
 		_precision = precision;
 		_rtlExcludedPathPatterns = PatternFactory.compile(
 			rtlExcludedPathRegexps);
 
 		_initSassCompiler(sassCompilerClassName);
+	}
+
+	@Override
+	public void close() throws Exception {
+		if (_cleanPortalCommonDir) {
+			_deltree(_portalCommonDirName);
+		}
 	}
 
 	public void execute(List<String> dirNames) throws Exception {
@@ -181,27 +214,32 @@ public class CSSBuilder {
 		}
 	}
 
-	private String _fixRelativePath(String fileName) {
-		String[] paths = StringUtil.split(fileName, CharPool.SLASH);
+	private void _deltree(String dirName) throws IOException {
+		Files.walkFileTree(
+			Paths.get(dirName),
+			new SimpleFileVisitor<Path>() {
 
-		StringBundler sb = new StringBundler(paths.length * 2);
+				@Override
+				public FileVisitResult postVisitDirectory(
+						Path dirPath, IOException ioe)
+					throws IOException {
 
-		for (String path : paths) {
-			if (path.isEmpty() || path.equals(StringPool.PERIOD)) {
-				continue;
-			}
+					Files.delete(dirPath);
 
-			if (path.equals(StringPool.DOUBLE_PERIOD) && (sb.length() >= 2)) {
-				sb.setIndex(sb.index() - 2);
+					return FileVisitResult.CONTINUE;
+				}
 
-				continue;
-			}
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
 
-			sb.append(StringPool.SLASH);
-			sb.append(path);
-		}
+					Files.delete(path);
 
-		return sb.toString();
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	private String _getRtlCss(String fileName, String css) throws Exception {
@@ -271,7 +309,8 @@ public class CSSBuilder {
 			fileName = _normalizeFileName(dirName, fileName);
 
 			File file = new File(fileName);
-			File cacheFile = CSSBuilderUtil.getCacheFile(fileName);
+			File cacheFile = CSSBuilderUtil.getOutputFile(
+				fileName, _outputDirName);
 
 			if (file.lastModified() != cacheFile.lastModified()) {
 				return true;
@@ -324,7 +363,7 @@ public class CSSBuilder {
 
 		String ltrContent = _parseSass(fileName);
 
-		_writeCacheFile(fileName, ltrContent, false);
+		_writeOutputFile(fileName, ltrContent, false);
 
 		if (isRtlExcludedPath(fileName)) {
 			return;
@@ -341,7 +380,40 @@ public class CSSBuilder {
 			rtlContent += _parseSass(rtlCustomFileName);
 		}
 
-		_writeCacheFile(fileName, rtlContent, true);
+		_writeOutputFile(fileName, rtlContent, true);
+	}
+
+	private File _unzipPortalCommon(File portalCommonFile) throws IOException {
+		Path portalCommonCssDirPath = Files.createTempDirectory(
+			"portalCommonCss");
+
+		try (ZipFile zipFile = new ZipFile(portalCommonFile)) {
+			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+			while (enumeration.hasMoreElements()) {
+				ZipEntry zipEntry = enumeration.nextElement();
+
+				String name = zipEntry.getName();
+
+				if (name.endsWith("/") ||
+					!name.startsWith("META-INF/resources/")) {
+
+					continue;
+				}
+
+				name = name.substring(19);
+
+				Path path = portalCommonCssDirPath.resolve(name);
+
+				Files.createDirectories(path.getParent());
+
+				Files.copy(
+					zipFile.getInputStream(zipEntry), path,
+					StandardCopyOption.REPLACE_EXISTING);
+			}
+		}
+
+		return portalCommonCssDirPath.toFile();
 	}
 
 	private void _write(File file, String content) throws Exception {
@@ -356,35 +428,37 @@ public class CSSBuilder {
 		Files.write(path, content.getBytes(StringPool.UTF8));
 	}
 
-	private void _writeCacheFile(String fileName, String content, boolean rtl)
+	private void _writeOutputFile(String fileName, String content, boolean rtl)
 		throws Exception {
 
-		String cacheFileName;
+		String outputFileName;
 
 		if (rtl) {
 			String rtlFileName = CSSBuilderUtil.getRtlCustomFileName(fileName);
 
-			cacheFileName = CSSBuilderUtil.getCacheFileName(
-				rtlFileName, StringPool.BLANK);
+			outputFileName = CSSBuilderUtil.getOutputFileName(
+				rtlFileName, _outputDirName, StringPool.BLANK);
 		}
 		else {
-			cacheFileName = CSSBuilderUtil.getCacheFileName(
-				fileName, StringPool.BLANK);
+			outputFileName = CSSBuilderUtil.getOutputFileName(
+				fileName, _outputDirName, StringPool.BLANK);
 		}
 
-		File cacheFile = new File(_docrootDirName, cacheFileName);
+		File outputFile = new File(_docrootDirName, outputFileName);
 
-		_write(cacheFile, content);
+		_write(outputFile, content);
 
 		File file = new File(_docrootDirName, fileName);
 
-		cacheFile.setLastModified(file.lastModified());
+		outputFile.setLastModified(file.lastModified());
 	}
 
 	private static RTLCSSConverter _rtlCSSConverter;
 
+	private final boolean _cleanPortalCommonDir;
 	private final String _docrootDirName;
 	private final boolean _generateSourceMap;
+	private final String _outputDirName;
 	private final String _portalCommonDirName;
 	private final int _precision;
 	private final Pattern[] _rtlExcludedPathPatterns;

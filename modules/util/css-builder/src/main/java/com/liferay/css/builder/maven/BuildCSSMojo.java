@@ -63,10 +63,17 @@ public class BuildCSSMojo extends AbstractMojo {
 
 	/**
 	 * @parameter
+	 */
+	public void setOutputDirName(String outputDirName) {
+		_cssBuilderArgs.setOutputDirName(outputDirName);
+	}
+
+	/**
+	 * @parameter
 	 * @required
 	 */
-	public void setPortalCommonDirName(String portalCommonDirName) {
-		_cssBuilderArgs.setPortalCommonDirName(portalCommonDirName);
+	public void setPortalCommonPath(String portalCommonPath) {
+		_cssBuilderArgs.setPortalCommonPath(portalCommonPath);
 	}
 
 	/**

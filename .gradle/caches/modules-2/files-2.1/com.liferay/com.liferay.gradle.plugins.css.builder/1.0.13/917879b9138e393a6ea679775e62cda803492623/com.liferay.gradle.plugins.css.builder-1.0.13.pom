@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.gradle.plugins.css.builder</artifactId>
-  <version>1.0.12</version>
+  <version>1.0.13</version>
   <licenses>
     <license>
       <name>LGPL 2.1</name>
@@ -19,22 +19,22 @@
     </developer>
   </developers>
   <scm>
-    <connection>scm:git:git@github.com:liferay/liferay-portal.git</connection>
-    <developerConnection>scm:git:git@github.com:liferay/liferay-portal.git</developerConnection>
-    <url>http://github.com/liferay/liferay-portal</url>
+    <connection>scm:git:git@github.com:liferay/liferay-plugins.git</connection>
+    <developerConnection>scm:git:git@github.com:liferay/liferay-plugins.git</developerConnection>
+    <url>http://github.com/liferay/liferay-plugins</url>
   </scm>
   <dependencies>
-    <dependency>
-      <groupId>com.liferay</groupId>
-      <artifactId>com.liferay.css.builder</artifactId>
-      <version>1.0.17</version>
-      <scope>provided</scope>
-    </dependency>
     <dependency>
       <groupId>com.liferay</groupId>
       <artifactId>com.liferay.gradle.util</artifactId>
       <version>1.0.25</version>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liferay</groupId>
+      <artifactId>com.liferay.css.builder</artifactId>
+      <version>1.0.18</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 </project>

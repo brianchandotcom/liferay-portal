@@ -36,6 +36,7 @@ import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
@@ -73,23 +74,6 @@ public class BuildCSSTask extends JavaExec {
 		super.exec();
 	}
 
-	@OutputDirectories
-	public FileCollection getCSSCacheDirs() {
-		Project project = getProject();
-
-		Set<File> cssCacheDirs = new HashSet<>();
-
-		FileCollection cssFiles = getCSSFiles();
-
-		for (File cssFile : cssFiles) {
-			File cssCacheDir = project.file(cssFile + "/../.sass-cache");
-
-			cssCacheDirs.add(cssCacheDir);
-		}
-
-		return project.files(cssCacheDirs);
-	}
-
 	@InputFiles
 	@SkipWhenEmpty
 	public FileCollection getCSSFiles() {
@@ -105,7 +89,7 @@ public class BuildCSSTask extends JavaExec {
 		Map<String, Object> args = new HashMap<>();
 
 		args.put("dir", docrootDir);
-		args.put("exclude", "**/.sass-cache/**");
+		args.put("exclude", "**/" + _addTrailingSlash(getOutputDirName()));
 
 		for (String dirName : dirNames) {
 			dirName = dirName.replace('\\', '/');
@@ -139,9 +123,51 @@ public class BuildCSSTask extends JavaExec {
 		return GradleUtil.toFile(getProject(), _docrootDir);
 	}
 
+	@Input
+	public String getOutputDirName() {
+		return GradleUtil.toString(_outputDirName);
+	}
+
+	@OutputDirectories
+	public FileCollection getOutputDirs() {
+		Project project = getProject();
+
+		Set<File> outputDirs = new HashSet<>();
+
+		FileCollection cssFiles = getCSSFiles();
+
+		String outputDirName = _removeTrailingSlash(getOutputDirName());
+
+		for (File cssFile : cssFiles) {
+			File outputDir = project.file(cssFile + "/../" + outputDirName);
+
+			outputDirs.add(outputDir);
+		}
+
+		return project.files(outputDirs);
+	}
+
 	@InputDirectory
+	@Optional
 	public File getPortalCommonDir() {
 		return GradleUtil.toFile(getProject(), _portalCommonDir);
+	}
+
+	@InputFile
+	@Optional
+	public File getPortalCommonFile() {
+		return GradleUtil.toFile(getProject(), _portalCommonFile);
+	}
+
+	@Input
+	public File getPortalCommonPath() {
+		File portalCommonPath = getPortalCommonDir();
+
+		if (portalCommonPath == null) {
+			portalCommonPath = getPortalCommonFile();
+		}
+
+		return portalCommonPath;
 	}
 
 	@Input
@@ -216,8 +242,16 @@ public class BuildCSSTask extends JavaExec {
 		_generateSourceMap = generateSourceMap;
 	}
 
+	public void setOutputDirName(Object outputDirName) {
+		_outputDirName = outputDirName;
+	}
+
 	public void setPortalCommonDir(Object portalCommonDir) {
 		_portalCommonDir = portalCommonDir;
+	}
+
+	public void setPortalCommonFile(Object portalCommonFile) {
+		_portalCommonFile = portalCommonFile;
 	}
 
 	public void setPrecision(Object precision) {
@@ -262,10 +296,12 @@ public class BuildCSSTask extends JavaExec {
 
 		args.add("sass.generate.source.map=" + isGenerateSourceMap());
 
-		String portalCommonDirName = FileUtil.getAbsolutePath(
-			getPortalCommonDir());
+		args.add("sass.output.dir=" + _addTrailingSlash(getOutputDirName()));
 
-		args.add("sass.portal.common.dir=" + portalCommonDirName);
+		String portalCommonPath = FileUtil.getAbsolutePath(
+			getPortalCommonPath());
+
+		args.add("sass.portal.common.path=" + portalCommonPath);
 
 		args.add("sass.precision=" + getPrecision());
 
@@ -281,6 +317,20 @@ public class BuildCSSTask extends JavaExec {
 		}
 
 		return args;
+	}
+
+	private String _addTrailingSlash(String path) {
+		if (Validator.isNull(path)) {
+			return path;
+		}
+
+		path = path.replace('\\', '/');
+
+		if (path.charAt(path.length() - 1) != '/') {
+			path += '/';
+		}
+
+		return path;
 	}
 
 	private String _removeLeadingSlash(String path) {
@@ -314,7 +364,9 @@ public class BuildCSSTask extends JavaExec {
 	private final Set<Object> _dirNames = new LinkedHashSet<>();
 	private Object _docrootDir;
 	private boolean _generateSourceMap;
+	private Object _outputDirName = CSSBuilderArgs.OUTPUT_DIR_NAME;
 	private Object _portalCommonDir;
+	private Object _portalCommonFile;
 	private Object _precision = CSSBuilderArgs.PRECISION;
 	private final Set<Object> _rtlExcludedPathRegexps = new LinkedHashSet<>();
 	private Object _sassCompilerClassName;

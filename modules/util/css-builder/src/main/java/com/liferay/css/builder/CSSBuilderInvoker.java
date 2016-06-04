@@ -49,9 +49,12 @@ public class CSSBuilderInvoker {
 		args.add(
 			"sass.generate.source.map=" + cssBuilderArgs.isGenerateSourceMap());
 		args.add(
-			"sass.portal.common.dir=" +
+			"sass.output.dir=" +
+				_getAbsolutePath(baseDir, cssBuilderArgs.getOutputDirName()));
+		args.add(
+			"sass.portal.common.path=" +
 				_getAbsolutePath(
-					baseDir, cssBuilderArgs.getPortalCommonDirName()));
+					baseDir, cssBuilderArgs.getPortalCommonPath()));
 		args.add("sass.precision=" + cssBuilderArgs.getPrecision());
 
 		String[] rtlExcludedPathRegexps =

@@ -1,4 +1,9 @@
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
+
 apply plugin: "com.liferay.maven.plugin.builder"
+
+task copyPortalCommonCSSJar(type: Copy)
+task unzipPortalCommonCSS(type: Copy)
 
 buildPluginDescriptor {
 	ext {
@@ -9,6 +14,15 @@ buildPluginDescriptor {
 	finalizedBy formatXML
 
 	goalPrefix = "liferay"
+}
+
+copyPortalCommonCSSJar {
+	from configurations.portalCommonCSS
+	into new File(buildDir, "portal-common-css-jar")
+
+	rename {
+		"com.liferay.frontend.css.common.jar"
+	}
 }
 
 dependencies {
@@ -32,7 +46,20 @@ liferay {
 }
 
 test {
-	dependsOn ":apps:foundation:frontend-css:frontend-css-common:buildCssCommon"
+	dependsOn copyPortalCommonCSSJar
+	dependsOn unzipPortalCommonCSS
+}
+
+unzipPortalCommonCSS {
+	eachFile new StripPathSegmentsAction(2)
+
+	from {
+		zipTree(configurations.portalCommonCSS.singleFile)
+	}
+
+	include "META-INF/resources/**"
+	into new File(buildDir, "portal-common-css")
+	includeEmptyDirs = false
 }
 
 updateFileVersions {

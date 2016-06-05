@@ -24,6 +24,33 @@
 	}
 }
 
+.calendar-change-recurring-event-modal-content {
+	.action-description {
+		margin-bottom: 0;
+		margin-top: 5px;
+	}
+
+	button {
+		display: block;
+		margin-bottom: 5px;
+		width: 100%;
+	}
+
+	table {
+		margin-top: 18px;
+	}
+
+	td {
+		vertical-align: top;
+	}
+
+	tr {
+		td:first-child {
+			padding-right: 10px;
+		}
+	}
+}
+
 .calendar-list-empty-message {
 	color: #666;
 	margin-top: 4px;

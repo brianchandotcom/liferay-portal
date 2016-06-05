@@ -527,7 +527,7 @@
 <!--RECURRING_EVENT_DIALOG_BOX-->
 <tr>
 	<td>RECURRING_EVENT_DIALOG_BOX_HEADER</td>
-	<td>//div[contains(@class,'modal-header')]</td>
+	<td>//h3[@class='modal-title' and contains(.,'Recurring Event')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -536,18 +536,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ONLY_THIS_INSTANCE_BUTTON</td>
-	<td>//button[@type='button' and contains(.,'Only This Instance')]</td>
+	<td>SINGLE_EVENT_BUTTON</td>
+	<td>//button[@role='button' and contains(.,'Single Event')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ALL_FOLLOWING_BUTTON</td>
-	<td>//button[@type='button' and contains(.,'All Following')]</td>
+	<td>FOLLOWING_EVENTS_BUTTON</td>
+	<td>//button[@role='button' and contains(.,'Following Events')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ALL_EVENTS_IN_THE_SERIES_BUTTON</td>
-	<td>//button[@type='button' and contains(.,'All Events in the Series')]</td>
+	<td>ENTIRE_SERIES_BUTTON</td>
+	<td>//button[@role='button' and contains(.,'Entire Series')]</td>
 	<td></td>
 </tr>
 <tr>

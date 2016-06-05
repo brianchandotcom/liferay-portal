@@ -747,7 +747,7 @@
 								<execute function="Pause" value1="1000" />
 								<execute function="ClickNoError" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
-								<execute function="AssertClick" locator1="CalendarEditEvent#ALL_EVENTS_IN_THE_SERIES_BUTTON" value1="All Events in the Series"  />
+								<execute function="AssertClick" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" value1="Entire Series"  />
 								<execute function="Pause" value1="10000" />
 							</else>
 						</if>
@@ -810,14 +810,14 @@
 
 		<if>
 			<or>
-				<equals arg1="${deleteOptionSet}" arg2="All Events in the Series" />
-				<equals arg1="${deleteOptionSet}" arg2="Only This Instance" />
+				<equals arg1="${deleteOptionSet}" arg2="Entire Series" />
+				<equals arg1="${deleteOptionSet}" arg2="Single Event" />
 			</or>
 			<then>
 				<execute function="AssertClick" locator1="CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_1" value1="${eventTitle}" />
 			</then>
 			<elseif>
-				<equals arg1="${deleteOptionSet}" arg2="All Following" />
+				<equals arg1="${deleteOptionSet}" arg2="Following Events" />
 				<then>
 					<execute function="AssertClick" locator1="CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_2" value1="${eventTitle}" />
 				</then>
@@ -829,26 +829,26 @@
 		<execute function="ClickNoError" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
 		<if>
-			<equals arg1="${deleteOptionSet}" arg2="All Events in the Series" />
+			<equals arg1="${deleteOptionSet}" arg2="Entire Series" />
 			<then>
-				<execute function="AssertClick" locator1="CalendarEditEvent#ALL_EVENTS_IN_THE_SERIES_BUTTON" value1="All Events in the Series" />
+				<execute function="AssertClick" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" value1="Entire Series" />
 
 				<execute function="AssertElementNotPresent" locator1="CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_1" value1="${eventTitle}" />
 				<execute function="AssertElementNotPresent" locator1="CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_2" value1="${eventTitle}" />
 			</then>
 			<elseif>
-				<equals arg1="${deleteOptionSet}" arg2="All Following" />
+				<equals arg1="${deleteOptionSet}" arg2="Following Events" />
 				<then>
-					<execute function="AssertClick" locator1="CalendarEditEvent#ALL_FOLLOWING_BUTTON" value1="All Following" />
+					<execute function="AssertClick" locator1="CalendarEditEvent#FOLLOWING_EVENTS_BUTTON" value1="Following Events" />
 
 					<execute function="AssertElementPresent" locator1="CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_1" value1="${eventTitle}" />
 					<execute function="AssertElementNotPresent" locator1="CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_2" value1="${eventTitle}" />
 				</then>
 			</elseif>
 			<elseif>
-				<equals arg1="${deleteOptionSet}" arg2="Only This Instance" />
+				<equals arg1="${deleteOptionSet}" arg2="Single Event" />
 				<then>
-					<execute function="AssertClick" locator1="CalendarEditEvent#ONLY_THIS_INSTANCE_BUTTON" value1="Only This Instance" />
+					<execute function="AssertClick" locator1="CalendarEditEvent#SINGLE_EVENT_BUTTON" value1="Single Event" />
 
 					<execute function="AssertElementPresent" locator1="CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_1" value1="${eventTitle}" />
 					<execute function="AssertElementNotPresent" locator1="CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC_2" value1="${eventTitle}" />
@@ -1008,9 +1008,9 @@
 					<execute function="Click" locator1="Button#PUBLISH" />
 
 					<if>
-						<condition function="IsElementPresent" locator1="CalendarEditEvent#ALL_EVENTS_IN_THE_SERIES_BUTTON" />
+						<condition function="IsElementPresent" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" />
 						<then>
-							<execute function="AssertClick" locator1="CalendarEditEvent#ALL_EVENTS_IN_THE_SERIES_BUTTON" value1="All Events in the Series"  />
+							<execute function="AssertClick" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" value1="Entire Series"  />
 						</then>
 					</if>
 

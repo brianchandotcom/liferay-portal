@@ -11,7 +11,11 @@
 <#if fieldRawValue != "">
 	<#assign fieldJournalJSONObject = jsonFactoryUtil.createJSONObject(fieldRawValue)>
 
-	<#assign selectedAssetTitle = getterUtil.getString(fieldJournalJSONObject.get("assettitle"))>
+	<#assign journalArticle = fetchLatestArticle(fieldJournalJSONObject)>
+
+	<#if journalArticle != "">
+		<#assign selectedAssetTitle = journalArticle.getTitle(requestedLocale)>
+	</#if>
 
 </#if>
 

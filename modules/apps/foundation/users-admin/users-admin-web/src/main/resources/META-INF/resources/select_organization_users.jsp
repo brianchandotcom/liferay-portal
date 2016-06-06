@@ -17,33 +17,19 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1");
-
-int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
-
-String redirect = ParamUtil.getString(request, "redirect");
-
 long organizationId = ParamUtil.getLong(request, "organizationId");
 
 Organization organization = OrganizationServiceUtil.fetchOrganization(organizationId);
 
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUsers");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "/users_admin/edit_organization_assignments");
-portletURL.setParameter("tabs1", tabs1);
-portletURL.setParameter("redirect", redirect);
+portletURL.setParameter("mvcPath", "/select_organization_users.jsp");
 portletURL.setParameter("organizationId", String.valueOf(organization.getOrganizationId()));
-
-UsersAdminUtil.addPortletBreadcrumbEntries(organization, request, renderResponse);
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-members"), currentURL);
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle(organization.getName());
+portletURL.setParameter("eventName", eventName);
 
 SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 %>
@@ -90,26 +76,20 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 </liferay-frontend:management-bar>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="assignmentsRedirect" type="hidden" />
-	<aui:input name="organizationId" type="hidden" value="<%= organization.getOrganizationId() %>" />
-
-	<aui:input name="addUserIds" type="hidden" />
-	<aui:input name="removeUserIds" type="hidden" />
-
 	<liferay-ui:search-container
 		id="users"
 		rowChecker="<%= new UserOrganizationChecker(renderResponse, organization) %>"
 		searchContainer="<%= userSearchContainer %>"
 	>
+
 		<%
 		UserSearchTerms searchTerms = (UserSearchTerms)userSearchContainer.getSearchTerms();
 
 		LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
-		userParams.put("usersOrgsTree", user.getOrganizations(true));
+		if (PropsValues.ORGANIZATIONS_ASSIGNMENT_STRICT && !permissionChecker.isCompanyAdmin() && !permissionChecker.hasPermission(scopeGroupId, User.class.getName(), User.class.getName(), ActionKeys.VIEW)) {
+			userParams.put("usersOrgsTree", user.getOrganizations(true));
+		}
 		%>
 
 		<liferay-ui:user-search-container-results userParams="<%= userParams %>" />
@@ -122,12 +102,14 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 			rowIdProperty="screenName"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="content-column name-column title-column"
 				name="name"
 				property="fullName"
 				truncate="<%= true %>"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="content-column screen-name-column"
 				name="screen-name"
 				property="screenName"
 				truncate="<%= true %>"
@@ -138,14 +120,24 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script>
-	function <portlet:namespace />updateOrganizationUsers(assignmentsRedirect) {
-		var form = AUI.$(document.<portlet:namespace />fm);
+<aui:script use="liferay-search-container">
+	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />users');
 
-		form.fm('assignmentsRedirect').val(assignmentsRedirect);
-		form.fm('addUserIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-		form.fm('removeUserIds').val(Liferay.Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));
+	searchContainer.on(
+		'rowToggled',
+		function(event) {
+			var selectedItems = event.elements.allSelectedElements;
+			var unselectedItems = event.elements.allElements.filter('input[type=checkbox]:enabled:not(:checked)');
 
-		submitForm(form, '<portlet:actionURL name="/users_admin/edit_organization_assignments" />');
-	}
+			Liferay.Util.getOpener().Liferay.fire(
+				'<%= HtmlUtil.escapeJS(eventName) %>',
+				{
+					data: {
+						selected: selectedItems.get('value').join(','),
+						unselected: unselectedItems.get('value').join(',')
+					}
+				}
+			);
+		}
+	);
 </aui:script>

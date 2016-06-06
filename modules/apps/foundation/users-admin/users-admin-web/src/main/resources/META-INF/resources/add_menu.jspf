@@ -53,13 +53,7 @@ boolean hasAddUserPermission = PortalPermissionUtil.contains(permissionChecker, 
 		</c:if>
 
 		<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.ASSIGN_MEMBERS) %>">
-			<portlet:renderURL var="assignMembersURL">
-				<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization_assignments" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="organizationId" value="<%= String.valueOf(organizationId) %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "assign-users") %>' url="<%= assignMembersURL.toString() %>" />
+			<liferay-frontend:add-menu-item id="assignUsers" title='<%= LanguageUtil.get(request, "assign-users") %>' url="javascript:;" />
 		</c:if>
 	</liferay-frontend:add-menu>
 </c:if>

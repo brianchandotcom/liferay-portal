@@ -368,12 +368,15 @@ public class JspPrecompileTest {
 	private void _doJspTest(String jsp, String expectedMessage)
 		throws IOException {
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("http://localhost:8080/web");
 		sb.append(_group.getFriendlyURL());
 		sb.append(StringPool.QUESTION);
-		sb.append(JspPrecompilePortlet.JSP_PARAMETER);
+		sb.append("p_p_id=");
+		sb.append(JspPrecompilePortlet.PORTLET_NAME);
+		sb.append(StringPool.AMPERSAND);
+		sb.append(JspPrecompilePortlet.getJSPParameterName());
 		sb.append("=/");
 		sb.append(jsp);
 

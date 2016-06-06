@@ -16,7 +16,8 @@ package com.liferay.portal.osgi.web.servlet.jsp.compiler.test;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -27,35 +28,36 @@ import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Matthew Tambara
  */
 public class JspPrecompilePortlet extends MVCPortlet {
 
-	public static final String JSP_PARAMETER = "jsp";
-
 	public static final String PORTLET_NAME = StringUtil.replace(
 		JspPrecompilePortlet.class.getName(), CharPool.PERIOD,
 		CharPool.UNDERLINE);
+
+	public static String getJSPParameterName() {
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(StringPool.UNDERLINE);
+		sb.append(PORTLET_NAME);
+		sb.append(StringPool.UNDERLINE);
+		sb.append(_JSP_PARAMETER);
+
+		return sb.toString();
+	}
 
 	@Override
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(renderRequest);
-
-		httpServletRequest = PortalUtil.getOriginalServletRequest(
-			httpServletRequest);
-
-		String jsp = httpServletRequest.getParameter(JSP_PARAMETER);
+		String jsp = renderRequest.getParameter(_JSP_PARAMETER);
 
 		if (jsp == null) {
 			throw new IllegalArgumentException(
-				JSP_PARAMETER + " query must not be null");
+				_JSP_PARAMETER + " query must not be null");
 		}
 
 		PortletContext portletContext = getPortletContext();
@@ -65,5 +67,7 @@ public class JspPrecompilePortlet extends MVCPortlet {
 
 		portletRequestDispatcher.include(renderRequest, renderResponse);
 	}
+
+	private static final String _JSP_PARAMETER = "jsp";
 
 }

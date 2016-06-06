@@ -42,7 +42,9 @@ import com.liferay.exportimport.resources.importer.portlet.preferences.PortletPr
 import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
+import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -133,6 +135,7 @@ public class FileSystemImporter extends BaseImporter {
 		DLFolderLocalService dlFolderLocalService,
 		IndexStatusManager indexStatusManager, IndexerRegistry indexerRegistry,
 		JournalArticleLocalService journalArticleLocalService,
+		JournalFolderLocalService journalFolderLocalService,
 		LayoutLocalService layoutLocalService,
 		LayoutPrototypeLocalService layoutPrototypeLocalService,
 		LayoutSetLocalService layoutSetLocalService,
@@ -157,6 +160,7 @@ public class FileSystemImporter extends BaseImporter {
 		this.indexStatusManager = indexStatusManager;
 		this.indexerRegistry = indexerRegistry;
 		this.journalArticleLocalService = journalArticleLocalService;
+		this.journalFolderLocalService = journalFolderLocalService;
 		this.layoutLocalService = layoutLocalService;
 		this.layoutPrototypeLocalService = layoutPrototypeLocalService;
 		this.layoutSetLocalService = layoutSetLocalService;
@@ -716,7 +720,8 @@ public class FileSystemImporter extends BaseImporter {
 
 		addJournalArticles(
 			ddmStructureKey, ddmTemplate.getTemplateKey(),
-			_JOURNAL_ARTICLES_DIR_NAME + fileName);
+			_JOURNAL_ARTICLES_DIR_NAME + fileName,
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	protected void addDLFileEntries(String dirName) throws Exception {
@@ -850,7 +855,8 @@ public class FileSystemImporter extends BaseImporter {
 	}
 
 	protected void addJournalArticles(
-			String ddmStructureKey, String ddmTemplateKey, String dirName)
+			String ddmStructureKey, String ddmTemplateKey, String dirName,
+			long folderId)
 		throws Exception {
 
 		File dir = new File(_resourcesDir, dirName);
@@ -869,7 +875,7 @@ public class FileSystemImporter extends BaseImporter {
 					new FileInputStream(file));
 
 				addJournalArticles(
-					ddmStructureKey, ddmTemplateKey, file.getName(),
+					ddmStructureKey, ddmTemplateKey, file.getName(), folderId,
 					inputStream);
 			}
 			finally {
@@ -882,7 +888,7 @@ public class FileSystemImporter extends BaseImporter {
 
 	protected void addJournalArticles(
 			String ddmStructureKey, String ddmTemplateKey, String fileName,
-			InputStream inputStream)
+			long folderId, InputStream inputStream)
 		throws Exception {
 
 		String title = FileUtil.stripExtension(fileName);
@@ -940,7 +946,7 @@ public class FileSystemImporter extends BaseImporter {
 		try {
 			if (journalArticle == null) {
 				journalArticle = journalArticleLocalService.addArticle(
-					userId, groupId, 0, 0, 0, journalArticleId, false,
+					userId, groupId, folderId, 0, 0, journalArticleId, false,
 					JournalArticleConstants.VERSION_DEFAULT,
 					getMap(articleDefaultLocale, title), descriptionMap,
 					content, ddmStructureKey, ddmTemplateKey, StringPool.BLANK,
@@ -951,7 +957,7 @@ public class FileSystemImporter extends BaseImporter {
 			}
 			else {
 				journalArticle = journalArticleLocalService.updateArticle(
-					userId, groupId, 0, journalArticleId,
+					userId, groupId, folderId, journalArticleId,
 					journalArticle.getVersion(),
 					getMap(articleDefaultLocale, title), descriptionMap,
 					content, ddmStructureKey, ddmTemplateKey, StringPool.BLANK,
@@ -1936,6 +1942,7 @@ public class FileSystemImporter extends BaseImporter {
 	protected final IndexerRegistry indexerRegistry;
 	protected final IndexStatusManager indexStatusManager;
 	protected final JournalArticleLocalService journalArticleLocalService;
+	protected final JournalFolderLocalService journalFolderLocalService;
 	protected final LayoutLocalService layoutLocalService;
 	protected final LayoutPrototypeLocalService layoutPrototypeLocalService;
 	protected final LayoutSetLocalService layoutSetLocalService;

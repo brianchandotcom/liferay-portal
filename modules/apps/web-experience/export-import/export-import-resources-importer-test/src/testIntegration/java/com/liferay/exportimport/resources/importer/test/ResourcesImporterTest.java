@@ -29,7 +29,9 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -224,6 +226,17 @@ public class ResourcesImporterTest {
 				"/Basic Article.xml");
 		addWebInfResource(
 			webArchive,
+			"classes/resources-importer/journal/articles/BASIC_WEB_CONTENT" +
+				"/Basic Web Content Parent Folder" +
+					"/Basic Article in Parent Folder.xml");
+		addWebInfResource(
+			webArchive,
+			"classes/resources-importer/journal/articles/BASIC_WEB_CONTENT" +
+				"/Basic Web Content Parent Folder" +
+					"/Basic Web Content Child Folder" +
+						"/Basic Article in Child Folder.xml");
+		addWebInfResource(
+			webArchive,
 			"classes/resources-importer/journal/structures" +
 				"/BASIC_WEB_CONTENT.json");
 		addWebInfResource(
@@ -320,7 +333,7 @@ public class ResourcesImporterTest {
 			JournalArticleLocalServiceUtil.getArticles(
 				importedGroup.getGroupId());
 
-		Assert.assertEquals(3, journalArticles.size());
+		Assert.assertEquals(5, journalArticles.size());
 
 		int ddmStructuresCount =
 			DDMStructureLocalServiceUtil.getStructuresCount(
@@ -353,6 +366,33 @@ public class ResourcesImporterTest {
 			assetEntry.getEntryId());
 
 		Assert.assertEquals(1, assetTags.size());
+
+		JournalFolder parentJournalFolder =
+			JournalFolderLocalServiceUtil.fetchFolder(
+				importedGroup.getGroupId(), "Basic Web Content Parent Folder");
+
+		JournalArticle articleInParentFolder =
+			JournalArticleLocalServiceUtil.getArticle(
+				importedGroup.getGroupId(), "BASIC-ARTICLE-IN-PARENT-FOLDER");
+
+		Assert.assertNotNull(parentJournalFolder);
+
+		Assert.assertEquals(
+			articleInParentFolder.getFolder(), parentJournalFolder);
+
+		JournalFolder childJournalFolder =
+			JournalFolderLocalServiceUtil.fetchFolder(
+				importedGroup.getGroupId(), "Basic Web Content Child Folder");
+
+		Assert.assertEquals(
+			parentJournalFolder, childJournalFolder.getParentFolder());
+
+		JournalArticle articleInChildFolder =
+			JournalArticleLocalServiceUtil.getArticle(
+				importedGroup.getGroupId(), "BASIC-ARTICLE-IN-CHILD-FOLDER");
+
+		Assert.assertEquals(
+			articleInChildFolder.getFolder(), childJournalFolder);
 	}
 
 	protected void validateLayouts(Group importedGroup) throws Exception {

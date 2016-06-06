@@ -753,12 +753,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 						sb.append("TEST_MODULE_GROUP_");
 						sb.append(i);
 						sb.append("=");
-
-						for (String testModule : testModuleGroup) {
-							sb.append(testModule);
-							sb.append(",");
-						}
-
+						sb.append(StringUtils.join(testModuleGroup.toArray(), ','));
 						sb.append("\n\n");
 					}
 
@@ -766,11 +761,10 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 					for (int i = 0; i < allTestModuleGroupsSize; i++) {
 						sb.append(i);
-						sb.append(" ");
-					}
 
-					if (allTestModuleGroupsSize > 0) {
-						sb.setLength(sb.length() - 1);
+						if (i < (allTestModuleGroupsSize - 1)) {
+							sb.append(" ");
+						}
 					}
 
 					project.setProperty("test.module.names.properties.content", sb.toString());

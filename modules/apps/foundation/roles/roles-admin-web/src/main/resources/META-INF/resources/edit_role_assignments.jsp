@@ -17,8 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1");
-String tabs2 = ParamUtil.getString(request, "tabs2", "users");
+String tabs1 = ParamUtil.getString(request, "tabs1", "users");
 
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
@@ -36,7 +35,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/edit_role_assignments.jsp");
 portletURL.setParameter("tabs1", tabs1);
-portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("tabs3", "current");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
@@ -84,7 +82,32 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item href="<%= portletURL.toString() %>" label="assignees" selected="<%= true %>" />
+
+		<%
+		PortletURL entityPortletURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+		entityPortletURL.setParameter("tabs1", "users");
+		%>
+
+		<aui:nav-item href="<%= entityPortletURL.toString() %>" label="users" selected='<%= tabs1.equals("users") %>' />
+
+		<%
+		entityPortletURL.setParameter("tabs1", "sites");
+		%>
+
+		<aui:nav-item href="<%= entityPortletURL.toString() %>" label="sites" selected='<%= tabs1.equals("sites") %>' />
+
+		<%
+		entityPortletURL.setParameter("tabs1", "organizations");
+		%>
+
+		<aui:nav-item href="<%= entityPortletURL.toString() %>" label="organizations" selected='<%= tabs1.equals("organizations") %>' />
+
+		<%
+		entityPortletURL.setParameter("tabs1", "user-groups");
+		%>
+
+		<aui:nav-item href="<%= entityPortletURL.toString() %>" label="user-groups" selected='<%= tabs1.equals("user-groups") %>' />
 	</aui:nav>
 
 	<aui:nav-bar-search>
@@ -100,8 +123,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"users", "sites", "organizations", "user-groups"} %>'
-			navigationParam="tabs2"
+			navigationKeys='<%= new String[] {"all"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 		/>
 
@@ -132,7 +154,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="tabs3" type="hidden" value="current" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="roleId" type="hidden" value="<%= role.getRoleId() %>" />
@@ -151,16 +172,16 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 	/>
 
 	<c:choose>
-		<c:when test='<%= tabs2.equals("users") %>'>
+		<c:when test='<%= tabs1.equals("users") %>'>
 			<liferay-util:include page="/edit_role_assignments_users.jsp" servletContext="<%= application %>" />
 		</c:when>
-		<c:when test='<%= tabs2.equals("sites") %>'>
+		<c:when test='<%= tabs1.equals("sites") %>'>
 			<liferay-util:include page="/edit_role_assignments_sites.jsp" servletContext="<%= application %>" />
 		</c:when>
-		<c:when test='<%= tabs2.equals("organizations") %>'>
+		<c:when test='<%= tabs1.equals("organizations") %>'>
 			<liferay-util:include page="/edit_role_assignments_organizations.jsp" servletContext="<%= application %>" />
 		</c:when>
-		<c:when test='<%= tabs2.equals("user-groups") %>'>
+		<c:when test='<%= tabs1.equals("user-groups") %>'>
 			<liferay-util:include page="/edit_role_assignments_user_groups.jsp" servletContext="<%= application %>" />
 		</c:when>
 	</c:choose>
@@ -173,7 +194,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 		<portlet:param name="mvcPath" value="/select_assignees.jsp" />
 		<portlet:param name="roleId" value="<%= String.valueOf(roleId) %>" />
 		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
-		<portlet:param name="tabs2" value="<%= tabs2 %>" />
+		<portlet:param name="tabs1" value="<%= tabs1 %>" />
 	</portlet:renderURL>
 
 	AUI.$('#<portlet:namespace />addUsers').on(
@@ -196,7 +217,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 									form.fm('addGroupIds').val(selectedItem.value);
 								}
 
-								assignmentsRedirect.setParameter('tabs2', selectedItem.type);
+								assignmentsRedirect.setParameter('tabs1', selectedItem.type);
 
 								form.fm('redirect').val(assignmentsRedirect.toString());
 
@@ -216,7 +237,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 	AUI.$('#<portlet:namespace />unsetRoleAssignments').on(
 		'click',
 		function() {
-			var assigneeType = '<%= HtmlUtil.escapeJS(tabs2) %>';
+			var assigneeType = '<%= HtmlUtil.escapeJS(tabs1) %>';
 			var ids = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds');
 
 			form.fm('assignmentsRedirect').val('<%= portletURL.toString() %>');
@@ -242,7 +263,7 @@ assignMembersURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-members"), assignMembersURL.toString());
 
-assignMembersURL.setParameter("tabs2", tabs2);
+assignMembersURL.setParameter("tabs1", tabs1);
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs2), assignMembersURL.toString());
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, tabs1), assignMembersURL.toString());
 %>

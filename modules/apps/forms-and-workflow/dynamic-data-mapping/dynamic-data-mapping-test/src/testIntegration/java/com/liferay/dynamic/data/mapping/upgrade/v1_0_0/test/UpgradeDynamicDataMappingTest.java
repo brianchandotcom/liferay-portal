@@ -1503,6 +1503,8 @@ public class UpgradeDynamicDataMappingTest {
 						if (className.contains("UpgradeDynamicDataMapping")) {
 							_upgradeDynamicDataMapping =
 								(UpgradeProcess)upgradeStep;
+
+							break;
 						}
 					}
 				}

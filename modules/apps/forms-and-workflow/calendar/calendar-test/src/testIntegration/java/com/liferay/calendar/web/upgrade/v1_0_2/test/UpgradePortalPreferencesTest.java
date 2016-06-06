@@ -275,14 +275,14 @@ public class UpgradePortalPreferencesTest {
 						if (className.contains("UpgradePortalPreferences")) {
 							_upgradePortalPreferences =
 								(UpgradeProcess)upgradeStep;
+
+							break;
 						}
 					}
 				}
 
 			});
 	}
-
-	protected UpgradeProcess _upgradePortalPreferences;
 
 	private static final String _NEW_SESSION_CLICKS_NAMESPACE =
 		"com.liferay.portal.kernel.util.SessionClicks";
@@ -292,6 +292,8 @@ public class UpgradePortalPreferencesTest {
 
 	@DeleteAfterTestRun
 	private PortalPreferences _portalPreferences;
+
+	private UpgradeProcess _upgradePortalPreferences;
 
 	@DeleteAfterTestRun
 	private User _user;

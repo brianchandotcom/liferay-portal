@@ -6693,79 +6693,31 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 				</tstamp>
 
-				<mirrors-get
-					dest="${tstamp.value}.zip"
-					src="${test.build.bundle.zip.url}"
-				/>
+				<mirrors-get dest="${tstamp.value}.zip" src="${test.build.bundle.zip.url}" />
 
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-*/${app.server.name}-*/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="\1"
-						type="regexp"
-					/>
+				<unzip dest="${app.server.parent.dir}" src="${tstamp.value}.zip">
+					<patternset includes="liferay-*/${app.server.name}-*/**" />
+					<mapper from="[^/]+/(.*)" to="\1" type="regexp" />
 				</unzip>
 
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-*/deploy/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="${app.server.parent.dir}//\1"
-						type="regexp"
-					/>
+				<unzip dest="${app.server.parent.dir}" src="${tstamp.value}.zip">
+					<patternset	includes="liferay-*/deploy/**" />
+					<mapper	from="[^/]+/(.*)" to="${app.server.parent.dir}//\1" type="regexp" />
 				</unzip>
 
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-*/osgi/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="${app.server.parent.dir}//\1"
-						type="regexp"
-					/>
+				<unzip dest="${app.server.parent.dir}" src="${tstamp.value}.zip">
+					<patternset	includes="liferay-*/osgi/**" />
+					<mapper	from="[^/]+/(.*)" to="${app.server.parent.dir}//\1" type="regexp" />
 				</unzip>
 
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-*/patching-tool/patches/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="${app.server.dir}//\1"
-						type="regexp"
-					/>
+				<unzip dest="${app.server.parent.dir}" src="${tstamp.value}.zip">
+					<patternset	includes="liferay-*/patching-tool/patches/**" />
+					<mapper	from="[^/]+/(.*)" to="${app.server.dir}//\1" type="regexp" />
 				</unzip>
 
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${tstamp.value}.zip"
-				>
-					<patternset
-						includes="liferay-*/tools/**"
-					/>
-					<mapper
-						from="[^/]+/(.*)"
-						to="${app.server.parent.dir}//\1"
-						type="regexp"
-					/>
+				<unzip dest="${app.server.parent.dir}" src="${tstamp.value}.zip">
+					<patternset	includes="liferay-*/tools/**" />
+					<mapper from="[^/]+/(.*)" to="${app.server.parent.dir}//\1" type="regexp" />
 				</unzip>
 
 				<delete file="${tstamp.value}.zip" />
@@ -6803,15 +6755,9 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 				<mkdir dir="dist" />
 
-				<mirrors-get
-					dest="dist/liferay-portal-${lp.version}.war"
-					src="${test.build.portal.war.url}"
-				/>
+				<mirrors-get dest="dist/liferay-portal-${lp.version}.war" src="${test.build.portal.war.url}" />
 
-				<unzip
-					dest="${app.server.portal.dir}"
-					src="dist/liferay-portal-${lp.version}.war"
-				/>
+				<unzip dest="${app.server.portal.dir}" src="dist/liferay-portal-${lp.version}.war" />
 
 				<delete dir="dist" />
 
@@ -6819,20 +6765,10 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 				<ant antfile="build.xml" inheritAll="false" target="update-app-server-scripts" />
 
-				<mirrors-get
-					dest="liferay-portal-dependencies.zip"
-					src="${test.build.portal.dependencies.zip.url}"
-				/>
+				<mirrors-get dest="liferay-portal-dependencies.zip" src="${test.build.portal.dependencies.zip.url}" />
 
-				<unzip
-					dest="${app.server.lib.global.dir}"
-					src="liferay-portal-dependencies.zip"
-				>
-					<mapper
-						from="[^/]+/(.*)"
-						to="\1"
-						type="regexp"
-					/>
+				<unzip dest="${app.server.lib.global.dir}" src="liferay-portal-dependencies.zip">
+					<mapper from="[^/]+/(.*)" to="\1" type="regexp" />
 				</unzip>
 
 				<delete file="liferay-portal-dependencies.zip" />

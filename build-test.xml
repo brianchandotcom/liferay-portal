@@ -8456,7 +8456,8 @@ jdbc.default.url=${database.url}
 jdbc.default.username=${database.username}
 jdbc.default.password=${database.password}</echo>
 
-		<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">liferay.home=${liferay.home}</echo>
+		<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">liferay.home=${liferay.home}
+liferay.lib.portal.dir=${app.server.dir}/webapps/ROOT/WEB-INF/lib</echo>
 
 		<get-testcase-property property.name="portal.version" />
 

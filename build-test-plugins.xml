@@ -241,6 +241,16 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 		<mkdir dir="${lp.plugins.dir}/dist" />
 	</target>
 
+	<target name="test-module-plugin">
+		<echo>Compiling ${test.module.plugin}.</echo>
+
+		<antelope:stringutil property="module.plugin.compile.task.name" string="${test.module.plugin}">
+			<antelope:replace regex="/" replacement=":" />
+		</antelope:stringutil>
+
+		<gradle-execute dir="${project.dir}/modules" task=":${module.plugin.compile.task.name}:compile" />
+	</target>
+
 	<target name="test-plugin">
 		<echo>Compiling ${test.plugin}.</echo>
 
@@ -307,17 +317,37 @@ plugins.includes=${test.plugin}</echo>
 			</then>
 		</if>
 
-		<property file="${project.dir}/test.plugin.names.properties" />
+		<if>
+			<equals arg1="${test.modules.plugins}" arg2="true" />
+			<then>
+				<property file="${project.dir}/test.module.plugin.names.properties" />
 
-		<propertycopy from="TEST_PLUGIN_GROUP_${test.plugin.group.index}" name="test.plugins" />
+				<propertycopy from="TEST_MODULE_GROUP_${test.plugin.group.index}" name="test.plugins" />
+			</then>
+			<else>
+				<property file="${project.dir}/test.plugin.names.properties" />
+
+				<propertycopy from="TEST_PLUGIN_GROUP_${test.plugin.group.index}" name="test.plugins" />
+			</else>
+		</if>
 
 		<for list="${test.plugins}" param="test.plugin">
 			<sequential>
 				<trycatch>
 					<try>
-						<antcall target="test-plugin">
-							<param name="test.plugin" value="@{test.plugin}" />
-						</antcall>
+						<if>
+							<equals arg1="${test.modules.plugins}" arg2="true" />
+							<then>
+								<antcall target="test-module-plugin">
+									<param name="test.module.plugin" value="@{test.plugin}" />
+								</antcall>
+							</then>
+							<else>
+								<antcall target="test-plugin">
+									<param name="test.plugin" value="@{test.plugin}" />
+								</antcall>
+							</else>
+						</if>
 					</try>
 					<catch>
 						<echo append="true" file="plugins-compile-failure">@{test.plugin},</echo>

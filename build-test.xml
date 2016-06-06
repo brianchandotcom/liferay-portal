@@ -706,6 +706,73 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-test-module-names">
+		<attribute name="module.base.dir" />
+		<attribute name="pattern.id" />
+
+		<sequential>
+			<dirset id="dirset" dir="@{module.base.dir}">
+				<selector refid="@{pattern.id}" />
+			</dirset>
+
+			<property name="module.list" refid="dirset" />
+
+			<beanshell>
+				<![CDATA[
+					import org.apache.commons.lang.StringUtils;
+
+					List getModuleTestGroups(List moduleNames, int groupsSize) {
+						List moduleNameGroups = new ArrayList(groupsSize);
+
+						for (int i = 0; i < groupsSize; i++) {
+							moduleNameGroups.add(new ArrayList());
+						}
+
+						int i = 0;
+
+						for (String moduleName : moduleNames) {
+							List moduleNameGroup = moduleNameGroups.get(i++ % groupsSize);
+
+							moduleNameGroup.add(moduleName);
+						}
+
+						return moduleNameGroups;
+					}
+
+					StringBuilder sb = new StringBuilder();
+
+					int allTestModuleGroupsSize = Integer.parseInt(project.getProperty("test.module.groups.size"));
+
+					List moduleList = Arrays.asList(StringUtils.split(project.getProperty("module.list"), ";"));
+
+					List testModuleGroups = getModuleTestGroups(moduleList, allTestModuleGroupsSize);
+
+					for (i = 0; i < allTestModuleGroupsSize; i++) {
+						List testModuleGroup = testModuleGroups.get(i);
+
+						sb.append("TEST_MODULE_GROUP_");
+						sb.append(i);
+						sb.append("=");
+						sb.append(StringUtils.join(testModuleGroup.toArray(), ','));
+						sb.append("\n\n");
+					}
+
+					sb.append("TEST_MODULE_GROUPS_=");
+
+					for (int i = 0; i < allTestModuleGroupsSize; i++) {
+						sb.append(i);
+
+						if (i < (allTestModuleGroupsSize - 1)) {
+							sb.append(" ");
+						}
+					}
+
+					project.setProperty("test.module.names.properties.content", sb.toString());
+				]]>
+			</beanshell>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-test-simple-class-name">
 		<sequential>
 			<fail message="Please set the property ${test.class}." unless="test.class" />
@@ -6549,6 +6616,10 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 
 		<record-test-class-file-names />
 
+		<antcall inheritAll="false" target="record-test-module-names" />
+
+		<antcall inheritAll="false" target="record-test-module-plugin-names" />
+
 		<antcall inheritAll="false" target="record-test-plugin-names" />
 
 		<echo if:set="env.JENKINS_HOME">
@@ -7431,6 +7502,52 @@ if (ppstate.equals("normal")) {
 				<echo></echo>
 			</then>
 		</if>
+	</target>
+
+	<target name="record-test-module-names">
+		<selector id="module.pattern">
+			<and>
+				<present targetdir="${project.dir}/modules">
+					<mapper type="regexp" from="(private/)?apps/.*" to="\0/build.gradle" />
+				</present>
+				<present present="srconly" targetdir="${project.dir}/modules" >
+					<mapper type="regexp" from="(private/)?apps/.*" to="\0/.lfrbuild-portal" />
+				</present>
+				<present present="srconly" targetdir="${project.dir}/modules" >
+					<mapper type="regexp" from="(private/)?apps/.*" to="\0/settings.gradle" />
+				</present>
+			</and>
+		</selector>
+
+		<get-test-module-names
+			module.base.dir="${project.dir}/modules"
+			pattern.id="module.pattern"
+		/>
+
+		<echo file="test.module.names.properties">${test.module.names.properties.content}</echo>
+	</target>
+
+	<target name="record-test-module-plugin-names">
+		<selector id="module.plugin.pattern">
+			<and>
+				<present targetdir="${project.dir}/modules">
+					<mapper type="regexp" from="(private/)?apps/.*" to="\0/build.xml" />
+				</present>
+				<present present="srconly" targetdir="${project.dir}/modules" >
+					<mapper type="regexp" from="(private/)?apps/.*" to="\0/.lfrbuild-portal" />
+				</present>
+				<present present="srconly" targetdir="${project.dir}/modules" >
+					<mapper type="regexp" from="(private/)?apps/.*" to="\0/settings.gradle" />
+				</present>
+			</and>
+		</selector>
+
+		<get-test-module-names
+			module.base.dir="${project.dir}/modules"
+			pattern.id="module.plugin.pattern"
+		/>
+
+		<echo file="test.module.plugin.names.properties">${test.module.names.properties.content}</echo>
 	</target>
 
 	<target name="record-test-plugin-names">

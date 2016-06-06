@@ -129,7 +129,7 @@ public class KeyStoreLoaderImpl implements KeyStoreLoader {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Attempting to laod from the file system because " + fileName +
+				"Attempting to load from the file system because " + fileName +
 					" is not in the class path");
 		}
 

@@ -100,11 +100,11 @@ public class MDRRuleGroupStagedModelDataHandler
 	@Override
 	protected void doImportMissingReference(
 		PortletDataContext portletDataContext, String uuid, long groupId,
-		long classPK) {
+		long ruleGroupId) {
 
-		MDRRuleGroup mdrRuleGroup = fetchMissingReference(uuid, groupId);
+		MDRRuleGroup existingRuleGroup = fetchMissingReference(uuid, groupId);
 
-		if (mdrRuleGroup == null) {
+		if (existingRuleGroup == null) {
 			return;
 		}
 
@@ -112,7 +112,7 @@ public class MDRRuleGroupStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				MDRRuleGroup.class);
 
-		ruleGroupIds.put(classPK, mdrRuleGroup.getRuleGroupId());
+		ruleGroupIds.put(ruleGroupId, existingRuleGroup.getRuleGroupId());
 	}
 
 	@Override

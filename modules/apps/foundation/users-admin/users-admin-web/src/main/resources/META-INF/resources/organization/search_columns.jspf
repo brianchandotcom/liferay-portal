@@ -47,7 +47,23 @@
 		/>
 	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
-		<%--Icon view--%>
+
+		<%
+		row.setCssClass("entry-card lfr-asset-item");
+		%>
+
+		<liferay-ui:search-container-column-text>
+			<liferay-frontend:icon-vertical-card
+					actionJsp="/organization_action.jsp"
+					actionJspServletContext="<%= application %>"
+					cssClass="entry-display-style"
+					icon="users"
+					resultRow="<%= row %>"
+					rowChecker="<%= rowChecker %>"
+					subtitle="<%= LanguageUtil.get(request, organization.getType()) %>"
+					title="<%= organization.getName() %>"
+			/>
+		</liferay-ui:search-container-column-text>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text

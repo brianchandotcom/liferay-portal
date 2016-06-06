@@ -29,7 +29,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
  */
 @DDMForm
 @DDMFormLayout(
-	{
+	value = {
 		@DDMFormLayoutPage(
 			title = "basic",
 			value = {
@@ -64,7 +64,9 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 				)
 			}
 		)
-	}
+	},
+	paginationMode =
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout.SETTINGS_MODE
 )
 public interface SelectDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {

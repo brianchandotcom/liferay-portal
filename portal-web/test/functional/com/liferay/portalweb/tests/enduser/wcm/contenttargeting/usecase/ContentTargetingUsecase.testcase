@@ -251,8 +251,11 @@
 
 		<execute macro="CampaignDisplayPortlet#viewPG">
 			<var name="entryContentText" value="Web Content Content Higher Priority" />
-			<var name="previewCampaignList" value="Higher Priority Campaign Name,Low Priority Campaign Name,default" />
 			<var name="viewCampaignSelected" value="Higher Priority Campaign Name" />
+		</execute>
+
+		<execute macro="CampaignDisplayPortlet#viewPG">
+			<var name="previewCampaignList" value="Higher Priority Campaign Name,Low Priority Campaign Name,default" />
 		</execute>
 	</command>
 

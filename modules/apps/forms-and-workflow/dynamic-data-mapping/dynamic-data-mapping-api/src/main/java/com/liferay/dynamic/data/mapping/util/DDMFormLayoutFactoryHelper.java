@@ -55,6 +55,7 @@ public class DDMFormLayoutFactoryHelper {
 			new com.liferay.dynamic.data.mapping.model.DDMFormLayout();
 
 		ddmFormLayout.setDefaultLocale(_defaultLocale);
+		ddmFormLayout.setPaginationMode(_ddmFormLayout.paginationMode());
 
 		for (DDMFormLayoutPage ddmFormLayoutPage : _ddmFormLayout.value()) {
 			ddmFormLayout.addDDMFormLayoutPage(

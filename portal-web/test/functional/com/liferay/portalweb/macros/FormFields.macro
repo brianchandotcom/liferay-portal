@@ -9,7 +9,7 @@
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_repeatableFieldNumber" value="${repeatableFieldNumber}" />
 
-		<execute function="Click" locator1="FormFields#FIELD_ADD" />
+		<execute function="Click" locator1="FormFields#SPECIFIC_FIELD_ADD" />
 	</command>
 
 	<command name="disableCheckbox">

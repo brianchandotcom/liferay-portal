@@ -6682,14 +6682,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 	</target>
 
 	<target name="prepare-test-bundle">
-		<if>
-			<not>
-				<isset property="app.server.name" />
-			</not>
-			<then>
-				<property name="app.server.name" value="${app.server.type}" />
-			</then>
-		</if>
+		<property name="app.server.name" value="${app.server.type}" />
 
 		<if>
 			<matches pattern="http" string="${test.build.bundle.zip.url}" />

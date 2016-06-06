@@ -99,7 +99,7 @@
 </tr>
 <tr>
 	<td>MESSAGE_BOARDS_THREAD_CONTENT</td>
-	<td>//div[@class='panel-body']/div[@class='message-content']</td>
+	<td>//div[@class='panel-body']/div[contains(@class,'message-content')]</td>
 	<td></td>
 </tr>
 <tr>

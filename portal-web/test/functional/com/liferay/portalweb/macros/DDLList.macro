@@ -143,6 +143,8 @@
 	<command name="saveViaDDLDisplayPG">
 		<execute macro="DDLList#clickSave" />
 
+		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="Pause" locator1="5000" />
 	</command>
 

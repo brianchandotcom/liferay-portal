@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPORT_VIA_TEMPLATE_FILE_NAME</td>
+	<td>//input[contains(@id,'ExportPortlet_name')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILE_TITLE</td>
 	<td>//span[@class='file-title']</td>
 	<td></td>

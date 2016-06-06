@@ -141,8 +141,10 @@
 		<execute macro="LAR#exportExportTemplateCP">
 			<var name="exportTemplateDescription" value="Export Template Description" />
 			<var name="exportTemplateName" value="Export Template Name" />
-			<var name="larFileName" value="Export.Template.lar" />
+			<var name="larFileName" value="Export.Template" />
 		</execute>
+
+		<execute function="Pause" locator1="3000" />
 
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 
@@ -157,7 +159,7 @@
 		</execute>
 
 		<execute macro="LAR#importSiteCP">
-			<var name="larFileName" value="Export.Template.lar" />
+			<var name="larFileName" value="Export.Template" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 
@@ -366,7 +368,9 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
-		<execute macro="LAR#configureExportSiteCP" />
+		<execute macro="LAR#configureExportSiteCP" >
+			<var name="larFileName" value="DMExport" />
+		</execute>
 
 		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
 

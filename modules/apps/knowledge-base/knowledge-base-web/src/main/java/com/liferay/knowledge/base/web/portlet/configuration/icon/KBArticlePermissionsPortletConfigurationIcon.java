@@ -16,14 +16,13 @@ package com.liferay.knowledge.base.web.portlet.configuration.icon;
 
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.knowledge.base.model.KBTemplate;
-import com.liferay.knowledge.base.service.permission.KBTemplatePermission;
+import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -41,11 +40,11 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-		"path=/admin/view_template.jsp"
+		"path=/admin/view_article.jsp"
 	},
 	service = PortletConfigurationIcon.class
 )
-public class PermissionsKBTemplatePortletConfigurationIcon
+public class KBArticlePermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
@@ -63,14 +62,14 @@ public class PermissionsKBTemplatePortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		KBTemplate kbTemplate = (KBTemplate)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
+		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
+			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
 		try {
-			String modelResource = KBTemplate.class.getName();
-			String modelResourceDescription = kbTemplate.getTitle();
+			String modelResource = KBArticle.class.getName();
+			String modelResourceDescription = kbArticle.getTitle();
 			String resourcePrimKey = String.valueOf(
-				kbTemplate.getKbTemplateId());
+				kbArticle.getResourcePrimKey());
 
 			url = PermissionsURLTag.doTag(
 				StringPool.BLANK, modelResource, modelResourceDescription, null,
@@ -85,7 +84,7 @@ public class PermissionsKBTemplatePortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 102;
+		return 106;
 	}
 
 	@Override
@@ -93,14 +92,13 @@ public class PermissionsKBTemplatePortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
+		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
+			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
 
-		KBTemplate kbTemplate = (KBTemplate)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
-
-		if (KBTemplatePermission.contains(
-				permissionChecker, kbTemplate, KBActionKeys.PERMISSIONS)) {
+		if (kbArticle.isRoot() &&
+			KBArticlePermission.contains(
+				themeDisplay.getPermissionChecker(), kbArticle,
+				KBActionKeys.PERMISSIONS)) {
 
 			return true;
 		}

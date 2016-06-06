@@ -16,35 +16,47 @@ package com.liferay.knowledge.base.web.portlet.configuration.icon;
 
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
+import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.permission.AdminPermission;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sergio González
+ * @author Roberto Díaz
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN},
+	property = {
+		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "path=-"
+	},
 	service = PortletConfigurationIcon.class
 )
-public class KBTemplatesPortletConfigurationIcon
+public class KBArticleGroupSubscriptionPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
+		String key = "subscribe";
+
+		if (_isSubscribed(portletRequest)) {
+			key = "unsubscribe";
+		}
+
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "templates");
+			getResourceBundle(getLocale(portletRequest)), key);
 	}
 
 	@Override
@@ -53,21 +65,26 @@ public class KBTemplatesPortletConfigurationIcon
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-			PortletRequest.RENDER_PHASE);
+			PortletRequest.ACTION_PHASE);
 
-		portletURL.setParameter("mvcPath", "/admin/view_templates.jsp");
+		if (_isSubscribed(portletRequest)) {
+			portletURL.setParameter(
+				ActionRequest.ACTION_NAME, "unsubscribeGroupKBArticles");
+		}
+		else {
+			portletURL.setParameter(
+				ActionRequest.ACTION_NAME, "subscribeGroupKBArticles");
+		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		portletURL.setParameter(
+			"redirect", PortalUtil.getCurrentURL(portletRequest));
 
 		return portletURL.toString();
 	}
 
 	@Override
 	public double getWeight() {
-		return 102;
+		return 101;
 	}
 
 	@Override
@@ -75,20 +92,27 @@ public class KBTemplatesPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (AdminPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(),
-				KBActionKeys.VIEW_KB_TEMPLATES)) {
-
-			return true;
-		}
-
-		return false;
+		return AdminPermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroupId(),
+			KBActionKeys.SUBSCRIBE);
 	}
 
-	@Override
-	public boolean isToolTip() {
-		return false;
+	@Reference(unbind = "-")
+	protected void setSubscriptionLocalService(
+		SubscriptionLocalService subscriptionLocalService) {
+
+		_subscriptionLocalService = subscriptionLocalService;
 	}
+
+	private boolean _isSubscribed(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _subscriptionLocalService.isSubscribed(
+			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+			KBArticle.class.getName(), themeDisplay.getScopeGroupId());
+	}
+
+	private SubscriptionLocalService _subscriptionLocalService;
 
 }

@@ -16,53 +16,71 @@ package com.liferay.knowledge.base.web.portlet.configuration.icon;
 
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.knowledge.base.service.permission.AdminPermission;
+import com.liferay.knowledge.base.model.KBTemplate;
+import com.liferay.knowledge.base.service.permission.KBTemplatePermission;
+import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Ambrin Chaudhary
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN},
+	property = {
+		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
+		"path=/admin/view_template.jsp"
+	},
 	service = PortletConfigurationIcon.class
 )
-public class KBTemplatesPortletConfigurationIcon
+public class KBTemplatePermissionsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "templates");
+			getResourceBundle(getLocale(portletRequest)), "permissions");
 	}
 
 	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
-			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("mvcPath", "/admin/view_templates.jsp");
+		String url = StringPool.BLANK;
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		KBTemplate kbTemplate = (KBTemplate)portletRequest.getAttribute(
+			KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
 
-		return portletURL.toString();
+		try {
+			String modelResource = KBTemplate.class.getName();
+			String modelResourceDescription = kbTemplate.getTitle();
+			String resourcePrimKey = String.valueOf(
+				kbTemplate.getKbTemplateId());
+
+			url = PermissionsURLTag.doTag(
+				StringPool.BLANK, modelResource, modelResourceDescription, null,
+				resourcePrimKey, LiferayWindowState.POP_UP.toString(), null,
+				themeDisplay.getRequest());
+		}
+		catch (Exception e) {
+		}
+
+		return url;
 	}
 
 	@Override
@@ -75,10 +93,14 @@ public class KBTemplatesPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (AdminPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(),
-				KBActionKeys.VIEW_KB_TEMPLATES)) {
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		KBTemplate kbTemplate = (KBTemplate)portletRequest.getAttribute(
+			KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
+
+		if (KBTemplatePermission.contains(
+				permissionChecker, kbTemplate, KBActionKeys.PERMISSIONS)) {
 
 			return true;
 		}
@@ -87,8 +109,8 @@ public class KBTemplatesPortletConfigurationIcon
 	}
 
 	@Override
-	public boolean isToolTip() {
-		return false;
+	public boolean isUseDialog() {
+		return true;
 	}
 
 }

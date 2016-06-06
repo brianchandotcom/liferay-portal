@@ -774,6 +774,13 @@ public class JournalArticleStagedModelDataHandler
 				articleIds.put(
 					article.getArticleId(), importedArticle.getArticleId());
 			}
+
+			Map<Long, Long> primaryKeys =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					JournalArticle.class + ".primaryKey");
+
+			primaryKeys.put(
+				article.getPrimaryKey(), importedArticle.getPrimaryKey());
 		}
 		finally {
 			if (smallFile != null) {

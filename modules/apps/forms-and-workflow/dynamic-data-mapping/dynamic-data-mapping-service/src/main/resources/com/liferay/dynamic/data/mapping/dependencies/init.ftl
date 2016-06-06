@@ -159,3 +159,11 @@
 <#function getFileJSONObject fieldValue>
 	<#return jsonFactoryUtil.createJSONObject(fieldValue)>
 </#function>
+
+<#assign journalArticleLocalService = serviceLocator.findService("com.liferay.journal.service.JournalArticleLocalService")>
+
+<#function fetchLatestArticle journalArticleJSONObject>
+	<#assign resourcePrimKey = journalArticleJSONObject.getLong("classPK")>
+
+	<#return journalArticleLocalService.fetchLatestArticle(resourcePrimKey)!"">
+</#function>

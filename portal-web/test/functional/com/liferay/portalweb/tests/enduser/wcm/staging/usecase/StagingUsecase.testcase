@@ -3480,11 +3480,12 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMDocument#addPG">
+		<execute function="Pause" locator1="3000" />
+
+		<execute macro="DMDocument#addCP">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.jpg" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
-			<var name="nodePort" value="9080" />
 			<var name="siteScopeName" value="Global" />
 		</execute>
 

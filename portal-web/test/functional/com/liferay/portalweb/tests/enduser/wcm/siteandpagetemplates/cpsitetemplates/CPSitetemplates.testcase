@@ -38,6 +38,10 @@
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
+		<execute macro="SiteTemplates#viewCP">
+			<var name="siteTemplateNameList" value="Site Template Name" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>

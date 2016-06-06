@@ -35,13 +35,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="Site Template Settings" />
-		</execute>
-
-		<var name="key_siteTemplateName" value="${siteTemplateName}" />
-
-		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${siteTemplateName}" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="addSitePageViaSiteTemplateCP">
@@ -237,6 +231,14 @@
 		</if>
 
 		<execute macro="Button#clickSave" />
+	</command>
+
+	<command name="viewCP">
+		<for list="${siteTemplateNameList}" param="siteTemplateName" >
+			<var name="key_siteTemplateName" value="${siteTemplateName}" />
+
+			<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
+		</for>
 	</command>
 
 	<command name="viewDefaultCP">

@@ -368,7 +368,7 @@ public class ResourcesImporterTest {
 		Assert.assertEquals(1, assetTags.size());
 
 		JournalFolder parentJournalFolder =
-			JournalFolderLocalServiceUtil.fetchFolder(
+			JournalFolderLocalServiceUtil.getFolder(
 				importedGroup.getGroupId(), "Basic Web Content Parent Folder");
 
 		JournalArticle articleInParentFolder =

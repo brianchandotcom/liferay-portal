@@ -29,7 +29,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
  */
 @DDMForm
 @DDMFormLayout(
-	{
+	value = {
 		@DDMFormLayoutPage(
 			title = "basic",
 			value = {
@@ -61,7 +61,9 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 				)
 			}
 		)
-	}
+	},
+	paginationMode =
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout.SETTINGS_MODE
 )
 public interface ParagraphDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {

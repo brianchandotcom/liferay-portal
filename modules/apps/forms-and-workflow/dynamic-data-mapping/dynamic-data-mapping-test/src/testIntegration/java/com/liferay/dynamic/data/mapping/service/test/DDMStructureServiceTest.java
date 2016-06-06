@@ -21,10 +21,18 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -204,6 +212,78 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			false);
 
 		Assert.assertEquals(3, count);
+	}
+
+	@Test
+	public void testSearchWithSiteAdminPermission() throws Exception {
+		List<Role> roles = RoleLocalServiceUtil.getRoles(
+			TestPropsValues.getCompanyId());
+
+		DDMStructure structure = addStructure(
+			_classNameId, StringUtil.randomString());
+
+		structure = addStructure(_classNameId, StringUtil.randomString());
+
+		String modelName = ResourceActionsUtil.getCompositeModelName(
+			PortalUtil.getClassName(_classNameId),
+			DDMStructure.class.getName());
+
+		for (Role role : roles) {
+			ResourcePermissionServiceUtil.removeResourcePermission(
+				structure.getGroupId(), structure.getCompanyId(), modelName,
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(structure.getPrimaryKey()), role.getRoleId(),
+				ActionKeys.VIEW);
+		}
+
+		long[] groupIds = {group.getGroupId(), group.getGroupId()};
+
+		List<DDMStructure> structures = DDMStructureServiceUtil.search(
+			TestPropsValues.getCompanyId(), groupIds, _classNameId,
+			StringPool.BLANK, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(2, structures.size());
+	}
+
+	@Test
+	public void testSearchWithSiteMemberPermission() throws Exception {
+		List<Role> roles = RoleLocalServiceUtil.getRoles(
+			TestPropsValues.getCompanyId());
+
+		DDMStructure structure = addStructure(
+			_classNameId, StringUtil.randomString());
+
+		structure = addStructure(_classNameId, StringUtil.randomString());
+
+		String modelName = ResourceActionsUtil.getCompositeModelName(
+			PortalUtil.getClassName(_classNameId),
+			DDMStructure.class.getName());
+
+		for (Role role : roles) {
+			ResourcePermissionServiceUtil.removeResourcePermission(
+				structure.getGroupId(), structure.getCompanyId(), modelName,
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(structure.getPrimaryKey()), role.getRoleId(),
+				ActionKeys.VIEW);
+		}
+
+		long[] groupIds = {group.getGroupId(), group.getGroupId()};
+
+		User siteMemberUser = UserTestUtil.addGroupUser(
+			group, RoleConstants.SITE_MEMBER);
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(siteMemberUser);
+
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+		List<DDMStructure> structures = DDMStructureServiceUtil.search(
+			TestPropsValues.getCompanyId(), groupIds, _classNameId,
+			StringPool.BLANK, WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(1, structures.size());
 	}
 
 	protected void setUpPermissionThreadLocal() throws Exception {

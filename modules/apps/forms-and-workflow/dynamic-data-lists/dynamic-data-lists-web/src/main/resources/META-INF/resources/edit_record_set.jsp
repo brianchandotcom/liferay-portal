@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String closeRedirect = ParamUtil.getString(request, "closeRedirect");
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 String portletResource = ParamUtil.getString(request, "portletResource");
@@ -62,6 +64,7 @@ if (ddlDisplayContext.isAdminPortlet()) {
 
 <aui:form action="<%= (recordSet == null) ? addRecordSetURL : updateRecordSetURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveRecordSet();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="recordSetId" type="hidden" value="<%= recordSetId %>" />

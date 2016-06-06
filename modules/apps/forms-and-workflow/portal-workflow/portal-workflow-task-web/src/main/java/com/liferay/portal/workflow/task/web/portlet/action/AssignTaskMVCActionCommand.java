@@ -14,12 +14,16 @@
 
 package com.liferay.portal.workflow.task.web.portlet.action;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
+import com.liferay.portal.workflow.task.web.permission.WorkflowTaskPermissionChecker;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -55,9 +59,25 @@ public class AssignTaskMVCActionCommand
 			actionRequest, "assigneeUserId");
 		String comment = ParamUtil.getString(actionRequest, "comment");
 
+		WorkflowTask workflowTask = WorkflowTaskManagerUtil.getWorkflowTask(
+			themeDisplay.getCompanyId(), workflowTaskId);
+
+		if (!_workflowTaskPermissionChecker.hasAssignmentPermission(
+				themeDisplay.getScopeGroupId(), workflowTask,
+				themeDisplay.getPermissionChecker())) {
+
+			throw new PrincipalException(
+				"User " + themeDisplay.getUserId() + " does not have " +
+				"permissions to assign the task " + workflowTaskId +
+				"to someone.");
+		}
+
 		WorkflowTaskManagerUtil.assignWorkflowTaskToUser(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 			workflowTaskId, assigneeUserId, comment, null, null);
 	}
+
+	private final WorkflowTaskPermissionChecker _workflowTaskPermissionChecker =
+		new WorkflowTaskPermissionChecker();
 
 }

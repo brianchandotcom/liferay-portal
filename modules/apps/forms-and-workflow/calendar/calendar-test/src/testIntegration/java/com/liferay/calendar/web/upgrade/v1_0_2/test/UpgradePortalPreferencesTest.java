@@ -275,6 +275,8 @@ public class UpgradePortalPreferencesTest {
 						if (className.contains("UpgradePortalPreferences")) {
 							_upgradePortalPreferences =
 								(UpgradeProcess)upgradeStep;
+
+							break;
 						}
 					}
 				}

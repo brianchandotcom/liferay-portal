@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins.node.tasks;
 
-import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.util.NodeExecutor;
 
 import java.io.File;
@@ -32,8 +31,6 @@ public class ExecuteNodeTask extends DefaultTask {
 
 	public ExecuteNodeTask() {
 		_nodeExecutor = new NodeExecutor(getProject());
-
-		dependsOn(NodePlugin.DOWNLOAD_NODE_TASK_NAME);
 	}
 
 	public ExecuteNodeTask args(Iterable<?> args) {

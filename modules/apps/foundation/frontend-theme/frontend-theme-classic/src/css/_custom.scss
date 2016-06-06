@@ -212,9 +212,12 @@ body {
 		right: 4px;
 		top: 50%;
 
-		@include sm {
-			padding: 0 0 0 8px;
+		@include media-query(sm, null) {
 			position: relative;
+		}
+
+		@include md {
+			padding: 0 0 0 8px;
 
 			.lexicon-icon {
 				width: 8px;

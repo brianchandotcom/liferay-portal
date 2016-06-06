@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Calendar;
@@ -59,7 +60,7 @@ public class SampleAppStartupAction extends SimpleAction {
 
 		long creatorUserId = 0;
 		boolean autoPassword = false;
-		String password1 = "test";
+		String password1 = PwdGenerator.getPassword();
 		String password2 = password1;
 		boolean autoScreenName = false;
 		String screenName = "paul";

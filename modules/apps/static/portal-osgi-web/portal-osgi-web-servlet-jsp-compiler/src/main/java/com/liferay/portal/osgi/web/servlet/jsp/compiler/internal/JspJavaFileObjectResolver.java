@@ -15,6 +15,8 @@
 package com.liferay.portal.osgi.web.servlet.jsp.compiler.internal;
 
 import com.liferay.portal.kernel.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
@@ -44,8 +46,6 @@ import java.util.Set;
 
 import javax.tools.JavaFileObject;
 
-import org.apache.felix.utils.log.Logger;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleWiring;
@@ -58,14 +58,13 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 
 	public JspJavaFileObjectResolver(
 		BundleWiring bundleWiring, BundleWiring jspBundleWiring,
-		Map<BundleWiring, Set<String>> bundleWiringPackageNames, Logger logger,
+		Map<BundleWiring, Set<String>> bundleWiringPackageNames,
 		ServiceTracker<Map<String, List<URL>>, Map<String, List<URL>>>
 			serviceTracker) {
 
 		_bundleWiring = bundleWiring;
 		_jspBundleWiring = jspBundleWiring;
 		_bundleWiringPackageNames = bundleWiringPackageNames;
-		_logger = logger;
 		_serviceTracker = serviceTracker;
 	}
 
@@ -147,7 +146,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 					resourceName);
 			}
 			catch (IOException ioe) {
-				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
+				_log.error(ioe.getMessage(), ioe);
 			}
 		}
 		else if (protocol.equals("vfs")) {
@@ -156,7 +155,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 					className, resourceURL, resourceName);
 			}
 			catch (MalformedURLException murle) {
-				_logger.log(Logger.LOG_ERROR, murle.getMessage(), murle);
+				_log.error(murle.getMessage(), murle);
 			}
 		}
 
@@ -201,7 +200,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 				}
 			}
 			catch (IOException ioe) {
-				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
+				_log.error(ioe.getMessage(), ioe);
 			}
 		}
 
@@ -216,9 +215,11 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 				File file = ClassPathUtil.getFile(url);
 
 				if (file == null) {
-					_logger.log(
-						Logger.LOG_WARNING,
-						"Ignoring " + url + " while handling system bundle");
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Ignoring " + url +
+								" while handling system bundle");
+					}
 
 					continue;
 				}
@@ -263,7 +264,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 				}
 			}
 			catch (IOException ioe) {
-				_logger.log(Logger.LOG_ERROR, ioe.getMessage(), ioe);
+				_log.error(ioe.getMessage(), ioe);
 			}
 		}
 
@@ -315,13 +316,15 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 		return javaFileObjects;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		JspJavaFileObjectResolver.class);
+
 	private final BundleWiring _bundleWiring;
 	private final Map<BundleWiring, Set<String>> _bundleWiringPackageNames;
 	private final Map<String, Collection<JavaFileObject>> _javaFileObjects =
 		new ConcurrentReferenceValueHashMap<>(
 			FinalizeManager.SOFT_REFERENCE_FACTORY);
 	private final BundleWiring _jspBundleWiring;
-	private final Logger _logger;
 	private final ServiceTracker<Map<String, List<URL>>, Map<String, List<URL>>>
 		_serviceTracker;
 

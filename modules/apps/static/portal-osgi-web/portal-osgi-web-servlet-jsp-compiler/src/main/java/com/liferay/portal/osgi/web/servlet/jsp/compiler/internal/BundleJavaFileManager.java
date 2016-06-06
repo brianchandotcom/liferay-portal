@@ -14,6 +14,8 @@
 
 package com.liferay.portal.osgi.web.servlet.jsp.compiler.internal;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaDetector;
@@ -38,8 +40,6 @@ import javax.tools.JavaFileObject.Kind;
 import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
 
-import org.apache.felix.utils.log.Logger;
-
 /**
  * @author Raymond Augé
  * @author Shuyang Zhou
@@ -51,15 +51,13 @@ public class BundleJavaFileManager
 
 	public BundleJavaFileManager(
 		ClassLoader classLoader, Set<String> systemPackageNames,
-		JavaFileManager javaFileManager, Logger logger, boolean verbose,
+		JavaFileManager javaFileManager,
 		JavaFileObjectResolver javaFileObjectResolver) {
 
 		super(javaFileManager);
 
 		_classLoader = classLoader;
 		_systemPackageNames = systemPackageNames;
-		_logger = logger;
-		_verbose = verbose;
 		_javaFileObjectResolver = javaFileObjectResolver;
 	}
 
@@ -79,10 +77,8 @@ public class BundleJavaFileManager
 
 			BaseJavaFileObject baseJavaFileObject = (BaseJavaFileObject)file;
 
-			if (_verbose) {
-				_logger.log(
-					Logger.LOG_INFO,
-					"Inferring binary name from " + baseJavaFileObject);
+			if (_log.isInfoEnabled()) {
+				_log.info("Inferring binary name from " + baseJavaFileObject);
 			}
 
 			return baseJavaFileObject.getClassName();
@@ -115,7 +111,7 @@ public class BundleJavaFileManager
 			return Collections.emptyList();
 		}
 
-		if ((location == StandardLocation.CLASS_PATH) && _verbose) {
+		if ((location == StandardLocation.CLASS_PATH) && _log.isInfoEnabled()) {
 			StringBundler sb = new StringBundler(9);
 
 			sb.append("List for {kinds=");
@@ -128,7 +124,7 @@ public class BundleJavaFileManager
 			sb.append(recurse);
 			sb.append(StringPool.CLOSE_CURLY_BRACE);
 
-			_logger.log(Logger.LOG_INFO, sb.toString());
+			_log.info(sb.toString());
 		}
 
 		String packagePath = packageName.replace(
@@ -198,6 +194,9 @@ public class BundleJavaFileManager
 		return nameField;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		BundleJavaFileManager.class);
+
 	private static final Set<Kind> _kinds = EnumSet.of(Kind.CLASS);
 	private static SoftReference<Field> _nameFieldReference;
 
@@ -211,8 +210,6 @@ public class BundleJavaFileManager
 
 	private final ClassLoader _classLoader;
 	private final JavaFileObjectResolver _javaFileObjectResolver;
-	private final Logger _logger;
 	private final Set<String> _systemPackageNames;
-	private final boolean _verbose;
 
 }

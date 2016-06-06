@@ -14,11 +14,14 @@
 
 package com.liferay.mail.imap;
 
+import com.liferay.mail.configuration.MailGroupServiceConfiguration;
 import com.liferay.mail.exception.MailException;
 import com.liferay.mail.model.Account;
-import com.liferay.mail.util.PortletPropsValues;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
@@ -67,8 +70,7 @@ public class IMAPConnection {
 
 		Properties properties = new Properties();
 
-		properties.put(
-			"mail.debug", String.valueOf(PortletPropsValues.JAVAMAIL_DEBUG));
+		properties.put("mail.debug", String.valueOf(isJavaMailDebug()));
 		properties.put("mail.imap.host", _incomingHostName);
 		properties.put("mail.imap.port", _incomingPort);
 		properties.put("mail.imaps.auth", "true");
@@ -90,7 +92,7 @@ public class IMAPConnection {
 
 		_session = Session.getInstance(properties);
 
-		_session.setDebug(PortletPropsValues.JAVAMAIL_DEBUG);
+		_session.setDebug(isJavaMailDebug());
 
 		return _session;
 	}
@@ -203,6 +205,23 @@ public class IMAPConnection {
 		}
 	}
 
+	protected boolean isJavaMailDebug() {
+		if (_mailGroupServiceConfiguration == null) {
+			long companyId = PortalUtil.getDefaultCompanyId();
+
+			try {
+				_mailGroupServiceConfiguration =
+					ConfigurationProviderUtil.getCompanyConfiguration(
+						MailGroupServiceConfiguration.class, companyId);
+			}
+			catch (ConfigurationException ce) {
+				_log.error("Unable to get mail configuration", ce);
+			}
+		}
+
+		return _mailGroupServiceConfiguration.javamailDebug();
+	}
+
 	protected void testIncomingConnection() throws MailException {
 		StopWatch stopWatch = new StopWatch();
 
@@ -266,6 +285,7 @@ public class IMAPConnection {
 	private final int _incomingPort;
 	private final boolean _incomingSecure;
 	private final String _login;
+	private MailGroupServiceConfiguration _mailGroupServiceConfiguration;
 	private final String _outgoingHostName;
 	private final int _outgoingPort;
 	private final boolean _outgoingSecure;

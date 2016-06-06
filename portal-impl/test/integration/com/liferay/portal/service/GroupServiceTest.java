@@ -440,7 +440,7 @@ public class GroupServiceTest {
 		Assert.assertEquals(
 			1,
 			GroupLocalServiceUtil.searchCount(
-				TestPropsValues.getCompanyId(), null, "liferay", groupParams));
+				TestPropsValues.getCompanyId(), null, "liferay%", groupParams));
 	}
 
 	@Test
@@ -453,7 +453,7 @@ public class GroupServiceTest {
 		Assert.assertEquals(
 			1,
 			GroupLocalServiceUtil.searchCount(
-				TestPropsValues.getCompanyId(), null, "Liferay", groupParams));
+				TestPropsValues.getCompanyId(), null, "Liferay%", groupParams));
 	}
 
 	@Test

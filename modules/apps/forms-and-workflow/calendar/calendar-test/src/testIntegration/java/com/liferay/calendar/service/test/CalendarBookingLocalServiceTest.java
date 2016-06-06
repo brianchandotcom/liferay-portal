@@ -644,6 +644,7 @@ public class CalendarBookingLocalServiceTest {
 			false, false, serviceContext);
 
 		long startTime = System.currentTimeMillis();
+		long endTime = startTime + 36000000;
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
@@ -654,8 +655,8 @@ public class CalendarBookingLocalServiceTest {
 				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), startTime, startTime + 36000000,
-				false, null, 0, null, 0, null, serviceContext);
+				RandomTestUtil.randomString(), startTime, endTime, false, null,
+				0, null, 0, null, serviceContext);
 
 		CalendarBooking childCalendarBooking = getChildCalendarBooking(
 			calendarBooking);
@@ -673,7 +674,7 @@ public class CalendarBookingLocalServiceTest {
 			new long[] {invitedCalendar.getCalendarId()},
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomString(), startTime, startTime + 36000000,
+			RandomTestUtil.randomString(), startTime, endTime,
 			calendarBooking.getAllDay(), calendarBooking.getRecurrence(),
 			calendarBooking.getFirstReminder(),
 			calendarBooking.getFirstReminderType(),
@@ -686,13 +687,15 @@ public class CalendarBookingLocalServiceTest {
 			CalendarBookingWorkflowConstants.STATUS_MAYBE,
 			childCalendarBooking.getStatus());
 
+		long newEndTime = endTime + 1000000;
+
 		calendarBooking = CalendarBookingLocalServiceUtil.updateCalendarBooking(
 			_user.getUserId(), calendarBooking.getCalendarBookingId(),
 			calendarBooking.getCalendarId(),
 			new long[] {invitedCalendar.getCalendarId()},
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomString(), startTime, startTime + 37000000,
+			RandomTestUtil.randomString(), startTime, newEndTime,
 			calendarBooking.getAllDay(), calendarBooking.getRecurrence(),
 			calendarBooking.getFirstReminder(),
 			calendarBooking.getFirstReminderType(),
@@ -827,6 +830,72 @@ public class CalendarBookingLocalServiceTest {
 		Map<Locale, String> titleMap = calendarBooking.getTitleMap();
 
 		Assert.assertFalse(titleMap.containsKey(LocaleUtil.GERMANY));
+	}
+
+	@Test
+	public void testUpdateChildCalendarBookingPreservesStatus()
+		throws Exception {
+
+		ServiceContext serviceContext = createServiceContext();
+
+		CalendarResource calendarResource =
+			CalendarResourceUtil.getUserCalendarResource(
+				_user.getUserId(), serviceContext);
+
+		Calendar calendar = calendarResource.getDefaultCalendar();
+
+		Calendar invitedCalendar = CalendarLocalServiceUtil.addCalendar(
+			_user.getUserId(), _user.getGroupId(),
+			calendarResource.getCalendarResourceId(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			calendarResource.getTimeZoneId(), RandomTestUtil.randomInt(), false,
+			false, false, serviceContext);
+
+		long startTime = System.currentTimeMillis();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		CalendarBooking calendarBooking =
+			CalendarBookingLocalServiceUtil.addCalendarBooking(
+				_user.getUserId(), calendar.getCalendarId(),
+				new long[] {invitedCalendar.getCalendarId()},
+				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), startTime, startTime + 36000000,
+				false, null, 0, null, 0, null, serviceContext);
+
+		CalendarBooking childCalendarBooking = getChildCalendarBooking(
+			calendarBooking);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_PENDING, childCalendarBooking.getStatus());
+
+		childCalendarBooking = CalendarBookingLocalServiceUtil.updateStatus(
+			_user.getUserId(), childCalendarBooking,
+			CalendarBookingWorkflowConstants.STATUS_MAYBE, serviceContext);
+
+		childCalendarBooking =
+			CalendarBookingLocalServiceUtil.updateCalendarBooking(
+				_user.getUserId(), childCalendarBooking.getCalendarBookingId(),
+				childCalendarBooking.getCalendarId(),
+				new long[] {invitedCalendar.getCalendarId()},
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), startTime, startTime + 36000000,
+				childCalendarBooking.getAllDay(),
+				childCalendarBooking.getRecurrence(),
+				childCalendarBooking.getFirstReminder(),
+				childCalendarBooking.getFirstReminderType(),
+				childCalendarBooking.getSecondReminder(),
+				childCalendarBooking.getSecondReminderType(), serviceContext);
+
+		childCalendarBooking = getChildCalendarBooking(calendarBooking);
+
+		Assert.assertEquals(
+			CalendarBookingWorkflowConstants.STATUS_MAYBE,
+			childCalendarBooking.getStatus());
 	}
 
 	protected ServiceContext createServiceContext() {

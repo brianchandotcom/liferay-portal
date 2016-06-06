@@ -14,6 +14,7 @@
 
 package com.liferay.mail.imap;
 
+import com.liferay.mail.configuration.MailGroupServiceConfiguration;
 import com.liferay.mail.exception.MailException;
 import com.liferay.mail.exception.NoSuchMessageException;
 import com.liferay.mail.model.Account;
@@ -24,14 +25,16 @@ import com.liferay.mail.service.MessageLocalServiceUtil;
 import com.liferay.mail.util.AttachmentHandler;
 import com.liferay.mail.util.HtmlContentUtil;
 import com.liferay.mail.util.MailConstants;
-import com.liferay.mail.util.PortletPropsValues;
 import com.liferay.petra.mail.InternetAddressUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -72,6 +75,7 @@ import org.apache.commons.lang.time.StopWatch;
 
 /**
  * @author Scott Lee
+ * @author Peter Fellwock
  */
 public class IMAPAccessor {
 
@@ -551,7 +555,7 @@ public class IMAPAccessor {
 				}
 
 				int startingMessageNumber =
-					messageCount - PortletPropsValues.MESSAGES_SYNC_COUNT;
+					messageCount - getMessageSyncContact();
 
 				if (startingMessageNumber < 1) {
 					startingMessageNumber = 1;
@@ -582,8 +586,7 @@ public class IMAPAccessor {
 					}
 
 					int startingMessageNumber =
-						oldestMessageNumber -
-							PortletPropsValues.MESSAGES_SYNC_COUNT;
+						oldestMessageNumber - getMessageSyncContact();
 
 					if (startingMessageNumber < 1) {
 						startingMessageNumber = 1;
@@ -928,6 +931,23 @@ public class IMAPAccessor {
 		return uidFolder.getMessagesByUID(remoteMessageIds);
 	}
 
+	protected int getMessageSyncContact() {
+		if (_mailGroupServiceConfiguration == null) {
+			long companyId = PortalUtil.getDefaultCompanyId();
+
+			try {
+				_mailGroupServiceConfiguration =
+					ConfigurationProviderUtil.getCompanyConfiguration(
+						MailGroupServiceConfiguration.class, companyId);
+			}
+			catch (ConfigurationException ce) {
+				_log.error("Unable to get mail configuration", ce);
+			}
+		}
+
+		return _mailGroupServiceConfiguration.messagesSyncCount();
+	}
+
 	protected Part getPart(Part part, String contentPath)
 		throws IOException, MessagingException {
 
@@ -1067,6 +1087,7 @@ public class IMAPAccessor {
 
 	private final Account _account;
 	private final IMAPConnection _imapConnection;
+	private MailGroupServiceConfiguration _mailGroupServiceConfiguration;
 	private final String _password;
 	private final User _user;
 

@@ -16,11 +16,11 @@
 
 		<execute function="Select" locator1="MyAccount#LANGUAGE_SELECT" value1="${languageName}" />
 
-		<var name="key_saveButton" value="${saveButton}" />
-
-		<execute function="AssertClick" locator1="Button#SAVE_LOCALIZED" value1="${saveButton}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+
+		<execute function="AssertClick" locator1="MyAccount#LANGUAGE_PAGE_DISPLAY_MESSAGE" value1="${languagePageDisplayMessage}" />
 	</command>
 
 	<command name="configureDisplaySettingsLanguageLocalized">
@@ -36,6 +36,8 @@
 		<execute function="AssertClick" locator1="Button#SAVE_LOCALIZED" value1="${saveButton}" />
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+
+		<execute function="AssertClick" locator1="MyAccount#LANGUAGE_PAGE_DISPLAY_MESSAGE" value1="${languagePageDisplayMessage}" />
 	</command>
 
 	<command name="view">

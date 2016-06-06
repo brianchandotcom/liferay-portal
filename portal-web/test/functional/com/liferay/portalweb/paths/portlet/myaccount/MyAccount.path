@@ -226,6 +226,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LANGUAGE_PAGE_DISPLAY_MESSAGE</td>
+	<td>//div[@id='portalMessageContainer']//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

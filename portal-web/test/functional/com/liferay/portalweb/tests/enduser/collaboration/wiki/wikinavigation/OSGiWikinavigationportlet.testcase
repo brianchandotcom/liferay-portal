@@ -16,8 +16,6 @@
 	</tear-down>
 
 	<command name="WikiNavigationPortletSmoke" priority="4">
-		<property name="portlet.plugins.includes" value="wiki-navigation-portlet" />
-
 		<var name="appName" value="Wiki Navigation" />
 
 		<execute macro="Navigator#gotoPage">

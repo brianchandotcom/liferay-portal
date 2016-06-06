@@ -1267,8 +1267,6 @@
 	</command>
 
 	<command name="ViewBlogsEntryWorkflowViaNotifications" priority="3">
-		<property name="portlet.plugins.includes" value="notifications-portlet" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">

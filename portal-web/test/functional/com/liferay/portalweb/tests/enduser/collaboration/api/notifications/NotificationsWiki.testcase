@@ -1,7 +1,6 @@
 <definition component-name="portal-collaboration">
 	<property name="portal.release" value="true" />
 	<property name="custom.properties" value="default.layout.template.id=1_column" />
-	<property name="portlet.plugins.includes" value="notifications-portlet" />
 	<property name="testray.main.component.name" value="Notifications" />
 
 	<var name="pageName" value="Wiki Test Page" />

@@ -315,6 +315,7 @@ if (recurrence != null) {
 										}
 										else {
 											repeatCheckboxNode.set('checked', false);
+
 											summaryNode.empty();
 										}
 
@@ -351,10 +352,12 @@ if (recurrence != null) {
 
 			if (!checked) {
 				currentRecurrence = recurrenceDialogController.get('recurrence');
+
 				summaryNode.empty();
 			}
 			else {
 				currentRecurrence = null;
+
 				window.<portlet:namespace />updateSummaries();
 			}
 

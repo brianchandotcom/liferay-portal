@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mail.hook.listeners;
+package com.liferay.mail.model.listener;
 
 import com.liferay.mail.mailbox.Mailbox;
 import com.liferay.mail.mailbox.MailboxFactoryUtil;

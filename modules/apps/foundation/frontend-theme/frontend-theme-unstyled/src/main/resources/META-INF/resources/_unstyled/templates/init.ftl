@@ -41,6 +41,8 @@
 	<#assign company_url = portalUtil.getURLWithSessionId(company_url, request.getSession().getId()) />
 </#if>
 
+<#-- ---------- LPS-66428 ---------- -->
+
 <#assign user_id = user.getUserId() />
 <#assign is_default_user = user.isDefaultUser() />
 <#assign is_setup_complete = user.isSetupComplete() />

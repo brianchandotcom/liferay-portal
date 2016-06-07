@@ -41,6 +41,8 @@
 	#set ($company_url = $portalUtil.getURLWithSessionId($company_url, $request.getSession().getId()))
 #end
 
+## ---------- LPS-66428 ---------- ##
+
 #set ($user_id = $user.getUserId())
 #set ($is_default_user = $user.isDefaultUser())
 #set ($is_setup_complete = $user.isSetupComplete())

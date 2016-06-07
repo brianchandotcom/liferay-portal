@@ -25,44 +25,24 @@ SearchContainer userGroupSearchContainer = (SearchContainer)request.getAttribute
 if (Validator.isNotNull(searchTerms.getKeywords())) {
 	useIndexer = true;
 }
-
-Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(UserGroup.class);
 %>
 
 <liferay-ui:search-container id="<%= userGroupSearchContainer.getId(request, namespace) %>" searchContainer="<%= userGroupSearchContainer %>">
 	<liferay-ui:search-container-results>
-		<c:choose>
-			<c:when test="<%= useIndexer && indexer.isIndexerEnabled() && PropsValues.USER_GROUPS_SEARCH_WITH_INDEX %>">
 
-				<%
-				BaseModelSearchResult<UserGroup> baseModelSearchResult = null;
+		<%
+		if (useIndexer) {
+			userGroupParams.put("expandoAttributes", searchTerms.getKeywords());
+		}
 
-				userGroupParams.put("expandoAttributes", searchTerms.getKeywords());
+		total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
 
-				Sort sort = SortFactoryUtil.getSort(UserGroup.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
+		searchContainer.setTotal(total);
 
-				baseModelSearchResult = UserGroupLocalServiceUtil.searchUserGroups(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
+		results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
-				results = baseModelSearchResult.getBaseModels();
+		searchContainer.setResults(results);
+		%>
 
-				searchContainer.setResults(results);
-				searchContainer.setTotal(baseModelSearchResult.getLength());
-				%>
-
-			</c:when>
-			<c:otherwise>
-
-				<%
-				total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
-
-				searchContainer.setTotal(total);
-
-				results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
-				searchContainer.setResults(results);
-				%>
-
-			</c:otherwise>
-		</c:choose>
 	</liferay-ui:search-container-results>
 </liferay-ui:search-container>

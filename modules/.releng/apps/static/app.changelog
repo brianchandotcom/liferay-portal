@@ -8,16 +8,16 @@ app.artifacts-7.0=\
 	com.liferay.portal.configuration.metatype-2.0.2.jar,\
 	com.liferay.portal.configuration.persistence-2.0.1.jar,\
 	com.liferay.portal.log4j.extender-2.0.2.jar,\
-	com.liferay.portal.lpkg.deployer-1.0.3.jar,\
+	com.liferay.portal.lpkg.deployer-1.0.4.jar,\
 	com.liferay.portal.osgi.web.portlet.tracker-2.0.2.jar,\
 	com.liferay.portal.osgi.web.servlet.context.helper-2.1.0.jar,\
-	com.liferay.portal.osgi.web.servlet.jsp.compiler-2.0.4.jar,\
+	com.liferay.portal.osgi.web.servlet.jsp.compiler-2.0.5.jar,\
 	com.liferay.portal.osgi.web.wab.extender-2.0.6.jar,\
 	com.liferay.portal.osgi.web.wab.generator-2.1.3.jar,\
 	com.liferay.portal.osgi.web.wab.reference.support-1.0.2.jar,\
 	com.liferay.portal.profile-1.0.2.jar,\
 	com.liferay.portal.remote.dependency.manager.tccl-2.0.1.jar,\
-	com.liferay.portal.target.platform.indexer-2.0.1.jar,\
+	com.liferay.portal.target.platform.indexer-3.0.0.jar,\
 	javax.el-3.0.1-b05.jar,\
 	javax.servlet.jsp-api-2.3.2-b01.jar,\
 	javax.servlet.jsp.jstl-1.2.3.LIFERAY-PATCHED-2.jar,\
@@ -43,6 +43,6 @@ app.artifacts-7.0=\
 	org.osgi.service.http-3.5.0-20150611.165350-3.LIFERAY-PATCHED-2.jar,\
 	org.osgi.service.metatype-1.3.0.jar
 
-app.change.log-7.0=LPS-49566 LPS-55854 LPS-61088 LPS-61099 LPS-61420 LPS-61987 LPS-62450 LPS-63121 LPS-63162 LPS-63325 LPS-63462 LPS-63801 LPS-63828 LPS-63848 LPS-63855 LPS-63948 LPS-64021 LPS-64029 LPS-64031 LPS-64056 LPS-64076 LPS-64091 LPS-64092 LPS-64120 LPS-64130 LPS-64181 LPS-64182 LPS-64185 LPS-64191 LPS-64253 LPS-64262 LPS-64336 LPS-64400 LPS-64414 LPS-64419 LPS-64483 LPS-64533 LPS-64534 LPS-64543 LPS-64569 LPS-64691 LPS-64827 LPS-65012 LPS-65062 LPS-65225 LPS-65232 LPS-65329 LPS-65362 LPS-65510 LPS-65693 LPS-66223 LPS-66244 LPS-66300 LPS-66361 
+app.change.log-7.0=LPS-49566 LPS-55854 LPS-61088 LPS-61099 LPS-61420 LPS-61987 LPS-62450 LPS-63121 LPS-63162 LPS-63325 LPS-63462 LPS-63801 LPS-63828 LPS-63848 LPS-63855 LPS-63948 LPS-64021 LPS-64029 LPS-64031 LPS-64056 LPS-64076 LPS-64091 LPS-64092 LPS-64120 LPS-64130 LPS-64181 LPS-64182 LPS-64185 LPS-64191 LPS-64253 LPS-64262 LPS-64336 LPS-64400 LPS-64414 LPS-64419 LPS-64483 LPS-64533 LPS-64534 LPS-64543 LPS-64569 LPS-64691 LPS-64827 LPS-65012 LPS-65062 LPS-65225 LPS-65232 LPS-65329 LPS-65362 LPS-65510 LPS-65693 LPS-65866 LPS-66223 LPS-66244 LPS-66300 LPS-66361 
 
-app.git.id-7.0=426b89601cc070c54d3a5f672b030b194b4f5fff
+app.git.id-7.0=02a9a187bd9502ca9f9b73e461a9399ee1033f89

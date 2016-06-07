@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mail.hook.events;
+package com.liferay.mail.web.portlet.action;
 
 import com.liferay.mail.mailbox.MailboxFactory;
 import com.liferay.mail.mailbox.MailboxFactoryUtil;

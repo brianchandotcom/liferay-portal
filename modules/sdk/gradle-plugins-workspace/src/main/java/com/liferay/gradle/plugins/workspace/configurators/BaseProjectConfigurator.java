@@ -16,10 +16,13 @@ package com.liferay.gradle.plugins.workspace.configurators;
 
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.initialization.Settings;
@@ -30,16 +33,28 @@ import org.gradle.api.initialization.Settings;
 public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 
 	public BaseProjectConfigurator(Settings settings) {
-		File defaultRootDir = new File(
-			settings.getRootDir(), getDefaultRootDirName());
+		String defaultRootDirNames = GradleUtil.getProperty(
+			settings, getDefaultRootDirPropertyName(), (String)null);
 
-		_defaultRootDir = GradleUtil.getProperty(
-			settings, getDefaultRootDirPropertyName(), defaultRootDir);
+		if (Validator.isNotNull(defaultRootDirNames)) {
+			_defaultRootDirs = new HashSet<>();
+
+			for (String dirName : defaultRootDirNames.split("\\s*,\\s*")) {
+				File dir = new File(settings.getRootDir(), dirName);
+
+				_defaultRootDirs.add(dir);
+			}
+		}
+		else {
+			File dir = new File(settings.getRootDir(), getDefaultRootDirName());
+
+			_defaultRootDirs = Collections.singleton(dir);
+		}
 	}
 
 	@Override
-	public File getDefaultRootDir() {
-		return _defaultRootDir;
+	public Iterable<File> getDefaultRootDirs() {
+		return _defaultRootDirs;
 	}
 
 	@Override
@@ -68,6 +83,6 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 		return WorkspacePlugin.PROPERTY_PREFIX + getName() + ".dir";
 	}
 
-	private final File _defaultRootDir;
+	private final Set<File> _defaultRootDirs;
 
 }

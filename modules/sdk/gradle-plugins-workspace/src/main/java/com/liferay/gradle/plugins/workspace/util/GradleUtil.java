@@ -19,7 +19,6 @@ import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
-import org.gradle.api.initialization.Settings;
 import org.gradle.api.internal.DynamicObject;
 import org.gradle.api.internal.DynamicObjectUtil;
 
@@ -80,18 +79,6 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		}
 
 		return toString(value);
-	}
-
-	public static File getProperty(
-		Settings settings, String name, File defaultValue) {
-
-		String value = getProperty(settings, name, (String)null);
-
-		if (Validator.isNull(value)) {
-			return defaultValue;
-		}
-
-		return new File(settings.getRootDir(), value);
 	}
 
 }

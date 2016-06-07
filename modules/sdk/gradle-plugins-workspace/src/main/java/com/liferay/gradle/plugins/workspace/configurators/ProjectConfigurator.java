@@ -24,7 +24,7 @@ import org.gradle.api.Project;
  */
 public interface ProjectConfigurator extends Plugin<Project> {
 
-	public File getDefaultRootDir();
+	public Iterable<File> getDefaultRootDirs();
 
 	public String getName();
 

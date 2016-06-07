@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.mail.portlet;
+package com.liferay.mail.web.portlet;
 
+import com.liferay.mail.constants.MailPortletKeys;
 import com.liferay.mail.model.Attachment;
 import com.liferay.mail.service.AttachmentLocalServiceUtil;
 import com.liferay.mail.util.AttachmentHandler;
@@ -28,15 +29,42 @@ import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
 
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Scott Lee
+ * @author Peter Fellwock
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.css-class-wrapper=mail-portlet",
+		"com.liferay.portlet.display-category=category.collaboration",
+		"com.liferay.portlet.footer-portlet-javascript=/js/main.js",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.icon=/icons/mail.png",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=Mail",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + MailPortletKeys.MAIL,
+		"javax.portlet.portlet-info.keywords=Mail",
+		"javax.portlet.portlet-info.short-title=Mail",
+		"javax.portlet.portlet-info.title=Mail",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
 public class MailPortlet extends MVCPortlet {
 
 	@Override

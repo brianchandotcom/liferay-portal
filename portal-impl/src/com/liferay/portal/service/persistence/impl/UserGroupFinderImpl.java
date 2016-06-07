@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.UserGroupImpl;
+import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Iterator;
@@ -381,19 +382,21 @@ public class UserGroupFinderImpl
 	protected String getJoin(String key) {
 		String join = StringPool.BLANK;
 
-		if (key.equals("userGroupGroupRole")) {
+		if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUP_GROUP_ROLE)) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_GROUP_ROLE);
 		}
-		else if (key.equals("userGroupsGroups")) {
+		else if (key.equals(
+					UserGroupFinderConstants.PARAM_USER_GROUPS_GROUPS)) {
+
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_GROUPS);
 		}
-		else if (key.equals("userGroupsRoles")) {
+		else if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUPS_ROLES)) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_ROLES);
 		}
-		else if (key.equals("userGroupsTeams")) {
+		else if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUPS_TEAMS)) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_TEAMS);
 		}
-		else if (key.equals("userGroupsUsers")) {
+		else if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUPS_USERS)) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_USERS);
 		}
 
@@ -430,10 +433,12 @@ public class UserGroupFinderImpl
 	protected String getWhere(String key, Object value) {
 		String join = StringPool.BLANK;
 
-		if (key.equals("userGroupGroupRole")) {
+		if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUP_GROUP_ROLE)) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUP_GROUP_ROLE);
 		}
-		else if (key.equals("userGroupsGroups")) {
+		else if (key.equals(
+					UserGroupFinderConstants.PARAM_USER_GROUPS_GROUPS)) {
+
 			if (value instanceof Long) {
 				join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_GROUPS);
 			}
@@ -463,13 +468,13 @@ public class UserGroupFinderImpl
 				}
 			}
 		}
-		else if (key.equals("userGroupsRoles")) {
+		else if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUPS_ROLES)) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_ROLES);
 		}
-		else if (key.equals("userGroupsTeams")) {
+		else if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUPS_TEAMS)) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_TEAMS);
 		}
-		else if (key.equals("userGroupsUsers")) {
+		else if (key.equals(UserGroupFinderConstants.PARAM_USER_GROUPS_USERS)) {
 			join = CustomSQLUtil.get(JOIN_BY_USER_GROUPS_USERS);
 		}
 

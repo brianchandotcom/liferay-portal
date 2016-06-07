@@ -18,6 +18,7 @@ import com.liferay.mail.model.Account;
 import com.liferay.mail.util.MailManager;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -25,9 +26,16 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Scott Lee
+ * @author Peter Fellwock
  */
+@Component(
+	immediate = true, property = {"key=login.events.post"},
+	service = LifecycleAction.class
+)
 public class LoginPostAction extends Action {
 
 	@Override

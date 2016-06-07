@@ -55,6 +55,9 @@ renderResponse.setTitle(kbCommentTitle);
 				</h4>
 
 				<h5>
+					<span class="kb-comment-status text-default">
+						<liferay-ui:message key="<%= KnowledgeBaseUtil.getStatusLabel(kbComment.getStatus()) %>" />
+					</span>
 
 					<%
 					KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(kbComment.getClassPK(), WorkflowConstants.STATUS_ANY);

@@ -247,6 +247,10 @@
 		width: 85px;
 	}
 
+	.kb-comment-status {
+		margin-right: 15px;
+	}
+
 	.kb-edit-link {
 		margin: 5px 0 0;
 	}
@@ -378,6 +382,10 @@
 /* Skin */
 
 .knowledge-base-portlet {
+	a.text-default, a.text-default:hover {
+		color: #869CAD;
+	}
+
 	.lfr-panel-container {
 		border-width: 0;
 	}
@@ -452,5 +460,4 @@
 			word-wrap: break-word;
 		}
 	}
-
 }

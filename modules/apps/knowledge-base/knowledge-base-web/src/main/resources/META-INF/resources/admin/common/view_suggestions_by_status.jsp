@@ -68,7 +68,10 @@ KBCommentResultRowSplitter resultRowSplitter = (KBCommentResultRowSplitter)reque
 					</aui:a>
 				</h4>
 
-				<h5 class="text-default">
+				<h5>
+					<span class="kb-comment-status text-default">
+						<liferay-ui:message key="<%= KnowledgeBaseUtil.getStatusLabel(kbComment.getStatus()) %>" />
+					</span>
 
 					<%
 					KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(kbComment.getClassPK(), WorkflowConstants.STATUS_ANY);
@@ -81,7 +84,7 @@ KBCommentResultRowSplitter resultRowSplitter = (KBCommentResultRowSplitter)reque
 					%>
 
 					<c:if test="<%= kbSuggestionListDisplayContext.isShowKBArticleTitle() %>">
-						<a class="kb-article-link" href="<%= viewKBArticleURL.toString() %>"><%= HtmlUtil.escape(kbArticle.getTitle()) %></a>
+						<a class="kb-article-link text-default" href="<%= viewKBArticleURL.toString() %>"><%= HtmlUtil.escape(kbArticle.getTitle()) %></a>
 					</c:if>
 				</h5>
 			</liferay-ui:search-container-column-text>

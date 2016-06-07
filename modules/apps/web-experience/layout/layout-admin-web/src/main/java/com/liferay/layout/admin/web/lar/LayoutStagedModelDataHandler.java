@@ -57,7 +57,6 @@ import com.liferay.portal.kernel.service.LayoutTemplateLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
@@ -340,29 +339,12 @@ public class LayoutStagedModelDataHandler
 		Element layoutElement =
 			portletDataContext.getImportDataStagedModelElement(layout);
 
-		String layoutUuid = GetterUtil.getString(
-			layoutElement.attributeValue("layout-uuid"));
-
 		long layoutId = GetterUtil.getInteger(
 			layoutElement.attributeValue("layout-id"));
 
 		long oldLayoutId = layoutId;
 
 		boolean privateLayout = portletDataContext.isPrivateLayout();
-
-		String action = layoutElement.attributeValue(Constants.ACTION);
-
-		if (action.equals(Constants.DELETE)) {
-			Layout deletingLayout =
-				_layoutLocalService.fetchLayoutByUuidAndGroupId(
-					layoutUuid, groupId, privateLayout);
-
-			_layoutLocalService.deleteLayout(
-				deletingLayout, false,
-				ServiceContextThreadLocal.getServiceContext());
-
-			return;
-		}
 
 		Map<Long, Layout> layouts =
 			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(

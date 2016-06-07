@@ -21,6 +21,8 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONDeserializerImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldRule;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldRuleType;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormFieldTypeSettingsTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
@@ -30,6 +32,7 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import java.lang.reflect.Field;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -165,6 +168,24 @@ public class DDMFormJSONDeserializerTest
 			"You must check this box to continue.",
 			ddmFormFieldValidation.getErrorMessage());
 		Assert.assertEquals("true", ddmFormField.getVisibilityExpression());
+
+		List<DDMFormFieldRule> ddmFormFieldRules =
+			ddmFormField.getDDMFormFieldRules();
+
+		Assert.assertEquals(2, ddmFormFieldRules.size());
+
+		DDMFormFieldRule ddmFormFieldRule = ddmFormFieldRules.get(0);
+
+		Assert.assertEquals("1+2>3", ddmFormFieldRule.getExpression());
+		Assert.assertEquals(
+			DDMFormFieldRuleType.VISIBILITY, ddmFormFieldRule.getType());
+
+		ddmFormFieldRule = ddmFormFieldRules.get(1);
+		Assert.assertEquals(
+			"isReadOnly(Date2510) && isVisible(Decimal3479)",
+			ddmFormFieldRule.getExpression());
+		Assert.assertEquals(
+			DDMFormFieldRuleType.READ_ONLY, ddmFormFieldRule.getType());
 	}
 
 	@Override

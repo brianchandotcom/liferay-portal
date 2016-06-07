@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins.node.tasks;
 
-import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.util.NodeExecutor;
 
 import java.io.File;
@@ -23,7 +22,6 @@ import java.util.List;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.TaskAction;
-import org.gradle.process.ExecResult;
 
 /**
  * @author Andrea Di Giorgi
@@ -32,8 +30,6 @@ public class ExecuteNodeTask extends DefaultTask {
 
 	public ExecuteNodeTask() {
 		_nodeExecutor = new NodeExecutor(getProject());
-
-		dependsOn(NodePlugin.DOWNLOAD_NODE_TASK_NAME);
 	}
 
 	public ExecuteNodeTask args(Iterable<?> args) {
@@ -49,8 +45,8 @@ public class ExecuteNodeTask extends DefaultTask {
 	}
 
 	@TaskAction
-	public void executeNode() {
-		_execResult = _nodeExecutor.execute();
+	public void executeNode() throws Exception {
+		_nodeExecutor.execute();
 	}
 
 	public List<String> getArgs() {
@@ -59,10 +55,6 @@ public class ExecuteNodeTask extends DefaultTask {
 
 	public String getCommand() {
 		return _nodeExecutor.getCommand();
-	}
-
-	public ExecResult getExecResult() {
-		return _execResult;
 	}
 
 	public File getNodeDir() {
@@ -93,7 +85,6 @@ public class ExecuteNodeTask extends DefaultTask {
 		_nodeExecutor.setWorkingDir(workingDir);
 	}
 
-	private ExecResult _execResult;
 	private final NodeExecutor _nodeExecutor;
 
 }

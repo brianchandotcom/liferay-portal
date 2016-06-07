@@ -18,7 +18,7 @@ import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
-import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.plugins.node.util.GradleUtil;
 
 import groovy.json.JsonSlurper;
 
@@ -179,12 +179,30 @@ public class NodePlugin implements Plugin<Project> {
 	protected void configureTaskExecuteNode(
 		ExecuteNodeTask executeNodeTask, final NodeExtension nodeExtension) {
 
+		executeNodeTask.dependsOn(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					if (nodeExtension.isDownload()) {
+						return DOWNLOAD_NODE_TASK_NAME;
+					}
+
+					return null;
+				}
+
+			});
+
 		executeNodeTask.setNodeDir(
 			new Callable<File>() {
 
 				@Override
 				public File call() throws Exception {
-					return nodeExtension.getNodeDir();
+					if (nodeExtension.isDownload()) {
+						return nodeExtension.getNodeDir();
+					}
+
+					return null;
 				}
 
 			});

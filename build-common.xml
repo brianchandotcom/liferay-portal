@@ -275,7 +275,9 @@
 	</condition>
 
 	<condition else="Liferay" property="liferay.releng.app.title.prefix" value="Liferay CE">
-		<istrue value="${liferay.releng.ee}" />
+		<not>
+			<istrue value="${liferay.releng.ee}" />
+		</not>
 	</condition>
 
 	<condition else="false" property="liferay.releng.public">

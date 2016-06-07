@@ -28,7 +28,7 @@ body.open-admin-panel, body.sidenav-transition {
 
 .lfr-admin-panel {
 	&.sidenav-menu-slider {
-		z-index: 501;
+		z-index: $admin-panel-zindex;
 
 		.product-menu {
 			width: $admin-panel-width;

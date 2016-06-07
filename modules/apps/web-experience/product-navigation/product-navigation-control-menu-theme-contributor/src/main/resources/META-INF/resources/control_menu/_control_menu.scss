@@ -29,7 +29,7 @@ body.open {
 	position: fixed;
 	right: 0;
 	top: 0;
-	z-index: 500;
+	z-index: $control-menu-zindex;
 }
 
 .control-menu-icon {

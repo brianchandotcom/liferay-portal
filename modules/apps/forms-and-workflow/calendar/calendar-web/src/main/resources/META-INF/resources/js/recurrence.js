@@ -587,6 +587,8 @@ AUI.add(
 							instance.set('limitDate', data.untilDate);
 							instance.set('limitType', data.endValue);
 							instance.set('positionalDayOfWeek', data.positionalWeekday);
+
+							instance._updateUI();
 						}
 					},
 
@@ -637,6 +639,18 @@ AUI.add(
 
 						instance._toggleView('weeklyRecurrenceOptions', instance.get('frequency') === FREQUENCY_WEEKLY);
 						instance._toggleView('monthlyRecurrenceOptions', instance._isPositionalFrequency());
+					},
+
+					_updateUI: function() {
+						var instance = this;
+
+						instance._setPositionInputValue();
+						instance._toggleDisabledLimitCountInput();
+						instance._toggleDisabledLimitDateDatePicker();
+						instance._toggleViewPositionalDayOfWeek();
+						instance._toggleViewWeeklyRecurrence();
+
+						instance.fire('recurrenceChange');
 					}
 				}
 			}

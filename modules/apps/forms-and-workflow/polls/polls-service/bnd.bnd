@@ -4,5 +4,5 @@ Bundle-Version: 3.0.2
 Export-Package: com.liferay.polls.lar
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Polls
-Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.4
 Liferay-Service: true

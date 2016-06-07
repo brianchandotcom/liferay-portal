@@ -383,6 +383,29 @@ AUI.add(
 				return calendarsMenu;
 			},
 
+			getCurrentTime: function(callback) {
+				var instance = this;
+
+				instance.invokeResourceURL(
+					{
+						callback: function(dateObj) {
+							callback(instance.getDateFromObject(dateObj));
+						},
+						resourceId: 'currentTime'
+					}
+				);
+			},
+
+			getDateFromObject: function(object) {
+				var day = toInt(object.day);
+				var hour = toInt(object.hour);
+				var minute = toInt(object.minute);
+				var month = toInt(object.month);
+				var year = toInt(object.year);
+
+				return new Date(year, month, day, hour, minute);
+			},
+
 			getDatesList: function(startDate, total) {
 				var instance = this;
 

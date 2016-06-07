@@ -516,6 +516,10 @@ AUI.add(
 		var Scheduler = A.Component.create(
 			{
 				ATTRS: {
+					currentTimeFn: {
+						value: A.bind(CalendarUtil.getCurrentTime, CalendarUtil)
+					},
+
 					filterCalendarBookings: {
 						validator: isFunction
 					},

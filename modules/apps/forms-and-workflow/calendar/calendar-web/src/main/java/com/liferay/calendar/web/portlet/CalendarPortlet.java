@@ -321,6 +321,9 @@ public class CalendarPortlet extends MVCPortlet {
 			else if (resourceID.equals("calendarResources")) {
 				serveCalendarResources(resourceRequest, resourceResponse);
 			}
+			else if (resourceID.equals("currentTime")) {
+				serveCurrentTime(resourceRequest, resourceResponse);
+			}
 			else if (resourceID.equals("exportCalendar")) {
 				serveExportCalendar(resourceRequest, resourceResponse);
 			}
@@ -1286,6 +1289,45 @@ public class CalendarPortlet extends MVCPortlet {
 		}
 
 		writeJSON(resourceRequest, resourceResponse, jsonArray);
+	}
+
+	protected void serveCurrentTime(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletPreferences portletPreferences =
+			resourceRequest.getPreferences();
+
+		User user = themeDisplay.getUser();
+
+		String timeZoneId = portletPreferences.getValue(
+			"timeZoneId", user.getTimeZoneId());
+
+		boolean usePortalTimeZone = GetterUtil.getBoolean(
+			portletPreferences.getValue(
+				"usePortalTimeZone", Boolean.TRUE.toString()));
+
+		if (usePortalTimeZone) {
+			timeZoneId = user.getTimeZoneId();
+		}
+
+		TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
+
+		java.util.Calendar nowCalendar = CalendarFactoryUtil.getCalendar(
+			timeZone);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("day", nowCalendar.get(java.util.Calendar.DAY_OF_MONTH));
+		jsonObject.put("hour", nowCalendar.get(java.util.Calendar.HOUR_OF_DAY));
+		jsonObject.put("minute", nowCalendar.get(java.util.Calendar.MINUTE));
+		jsonObject.put("month", nowCalendar.get(java.util.Calendar.MONTH));
+		jsonObject.put("year", nowCalendar.get(java.util.Calendar.YEAR));
+
+		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
 
 	protected void serveExportCalendar(

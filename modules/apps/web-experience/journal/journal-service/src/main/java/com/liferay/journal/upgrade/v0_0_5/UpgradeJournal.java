@@ -113,7 +113,7 @@ public class UpgradeJournal extends UpgradeProcess {
 
 		Element structureElement = structureElements.get(0);
 
-		return structureElement.elementText("name");
+		return StringUtil.toUpperCase(structureElement.elementText("name"));
 	}
 
 	protected void addDDMStorageLinks() throws Exception {

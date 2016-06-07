@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.web.portlet;
 
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
+import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
@@ -75,6 +76,9 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Adolfo Pérez
@@ -513,6 +517,17 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		return false;
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void setDLMimeTypeDisplayContext(
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
+
+		this.dlMimeTypeDisplayContext = dlMimeTypeDisplayContext;
+	}
+
 	@Reference(unbind = "-")
 	protected void setJSONFactory(JSONFactory jsonFactory) {
 		this.jsonFactory = jsonFactory;
@@ -550,6 +565,13 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		this.portal = portal;
 	}
 
+	protected void unsetDLMimeTypeDisplayContext(
+		DLMimeTypeDisplayContext dlMimeTypeDisplayContext) {
+
+		this.dlMimeTypeDisplayContext = null;
+	}
+
+	protected DLMimeTypeDisplayContext dlMimeTypeDisplayContext;
 	protected JSONFactory jsonFactory;
 	protected KBArticleService kbArticleService;
 	protected KBCommentLocalService kbCommentLocalService;

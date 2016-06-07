@@ -90,6 +90,10 @@ public class SectionPortlet extends BaseKBPortlet {
 
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
+
+			renderRequest.setAttribute(
+				KBWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
+				dlMimeTypeDisplayContext);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchArticleException ||

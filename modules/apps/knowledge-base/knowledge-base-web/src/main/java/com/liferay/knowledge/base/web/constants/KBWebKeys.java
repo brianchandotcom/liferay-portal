@@ -20,6 +20,9 @@ package com.liferay.knowledge.base.web.constants;
  */
 public class KBWebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
+	public static final String DL_MIME_TYPE_DISPLAY_CONTEXT =
+		"DL_MIME_TYPE_DISPLAY_CONTEXT";
+
 	public static final String KNOWLEDGE_BASE_EXACT_MATCH =
 		"KNOWLEDGE_BASE_EXACT_MATCH";
 

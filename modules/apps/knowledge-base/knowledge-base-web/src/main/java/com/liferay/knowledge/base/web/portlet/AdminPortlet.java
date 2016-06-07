@@ -243,6 +243,10 @@ public class AdminPortlet extends BaseKBPortlet {
 
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE, kbTemplate);
+
+			renderRequest.setAttribute(
+				KBWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
+				dlMimeTypeDisplayContext);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchArticleException ||

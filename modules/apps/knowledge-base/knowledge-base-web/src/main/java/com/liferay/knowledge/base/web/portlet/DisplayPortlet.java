@@ -131,6 +131,10 @@ public class DisplayPortlet extends BaseKBPortlet {
 
 				response.setStatus(404);
 			}
+
+			renderRequest.setAttribute(
+				KBWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
+				dlMimeTypeDisplayContext);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchArticleException ||

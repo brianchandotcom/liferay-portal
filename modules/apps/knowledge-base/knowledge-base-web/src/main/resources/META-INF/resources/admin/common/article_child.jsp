@@ -27,43 +27,38 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 %>
 
 <c:if test="<%= !childKBArticles.isEmpty() %>">
-	<div class="kb-article-child">
-		<div class="kb-elements">
+	<h4 class="text-default">
+		<liferay-ui:message arguments="<%= childKBArticles.size() %>" key="child-articles-x" translateArguments="<%= false %>" />
+	</h4>
+
+	<div class="panel">
+		<ul class="list-group">
 
 			<%
 			for (KBArticle childrenKBArticle : childKBArticles) {
 			%>
 
-				<section class="kb-element">
-					<h2 class="kb-element-header">
+				<li class="list-group-item">
+					<div class="list-group-item-content">
+						<h3>
 
-						<%
-						PortletURL viewKBArticleURL = null;
+							<%
+							PortletURL viewKBArticleURL = null;
 
-						if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
-							viewKBArticleURL = kbArticleURLHelper.createViewWithRedirectURL(childrenKBArticle, currentURL);
-						}
-						else {
-							viewKBArticleURL = kbArticleURLHelper.createViewURL(childrenKBArticle);
-						}
-						%>
+							if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
+								viewKBArticleURL = kbArticleURLHelper.createViewWithRedirectURL(childrenKBArticle, currentURL);
+							}
+							else {
+								viewKBArticleURL = kbArticleURLHelper.createViewURL(childrenKBArticle);
+							}
+							%>
 
-						<aui:a href="<%= viewKBArticleURL.toString() %>"><%= childrenKBArticle.getTitle() %></aui:a>
-					</h2>
+							<aui:a href="<%= viewKBArticleURL.toString() %>"><%= childrenKBArticle.getTitle() %></aui:a>
+						</h3>
 
-					<div class="kb-element-body">
-						<c:choose>
-							<c:when test="<%= Validator.isNotNull(childrenKBArticle.getDescription()) %>">
-								<%= childrenKBArticle.getDescription() %>
-							</c:when>
-							<c:otherwise>
-								<p><%= StringUtil.shorten(HtmlUtil.extractText(childrenKBArticle.getContent()), 200) %></p>
-
-								<aui:a href="<%= viewKBArticleURL.toString() %>"><liferay-ui:message key="read-more" /></aui:a>
-							</c:otherwise>
-						</c:choose>
+						<p class="text-default"><%= StringUtil.shorten(HtmlUtil.extractText(childrenKBArticle.getContent()), 200) %></p>
 					</div>
-				</section>
+				</li>
 
 			<%
 			}

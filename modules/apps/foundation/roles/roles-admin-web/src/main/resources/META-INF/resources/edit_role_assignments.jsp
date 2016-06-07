@@ -30,10 +30,10 @@ Role role = RoleServiceUtil.fetchRole(roleId);
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(RolesAdminPortletKeys.ROLES_ADMIN, "users-display-style", "list");
+	displayStyle = portalPreferences.getValue(RolesAdminPortletKeys.ROLES_ADMIN, "assignees-display-style", "list");
 }
 else {
-	portalPreferences.setValue(RolesAdminPortletKeys.ROLES_ADMIN, "users-display-style", displayStyle);
+	portalPreferences.setValue(RolesAdminPortletKeys.ROLES_ADMIN, "assignees-display-style", displayStyle);
 
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }
@@ -87,7 +87,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 %>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addUsers" title='<%= LanguageUtil.format(request, "add-x", tabs1) %>' url="javascript:;" />
+	<liferay-frontend:add-menu-item id="addAssignees" title='<%= LanguageUtil.format(request, "add-x", tabs1) %>' url="javascript:;" />
 </liferay-frontend:add-menu>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -207,7 +207,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 		<portlet:param name="tabs1" value="<%= tabs1 %>" />
 	</portlet:renderURL>
 
-	AUI.$('#<portlet:namespace />addUsers').on(
+	AUI.$('#<portlet:namespace />addAssignees').on(
 		'click',
 		function(event) {
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog(

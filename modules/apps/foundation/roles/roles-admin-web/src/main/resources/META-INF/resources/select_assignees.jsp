@@ -30,10 +30,10 @@ Role role = RoleServiceUtil.fetchRole(roleId);
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(RolesAdminPortletKeys.ROLES_ADMIN, "users-display-style", "list");
+	displayStyle = portalPreferences.getValue(RolesAdminPortletKeys.ROLES_ADMIN, "assignees-display-style", "list");
 }
 else {
-	portalPreferences.setValue(RolesAdminPortletKeys.ROLES_ADMIN, "users-display-style", displayStyle);
+	portalPreferences.setValue(RolesAdminPortletKeys.ROLES_ADMIN, "assignees-display-style", displayStyle);
 
 	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
 }

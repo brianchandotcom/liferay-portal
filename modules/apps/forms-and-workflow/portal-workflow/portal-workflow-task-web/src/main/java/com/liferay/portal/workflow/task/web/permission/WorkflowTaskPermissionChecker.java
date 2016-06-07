@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
  */
 public class WorkflowTaskPermissionChecker {
 
-	public boolean hasAssignmentPermission(
+	public boolean hasPermission(
 		long groupId, WorkflowTask workflowTask,
 		PermissionChecker permissionChecker) {
 

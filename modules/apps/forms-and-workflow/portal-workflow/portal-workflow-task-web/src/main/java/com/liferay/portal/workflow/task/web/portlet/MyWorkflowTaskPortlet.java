@@ -18,7 +18,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -32,6 +31,7 @@ import com.liferay.portal.workflow.task.web.configuration.WorkflowTaskWebConfigu
 import com.liferay.portal.workflow.task.web.permission.WorkflowTaskPermissionChecker;
 
 import java.io.IOException;
+
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -119,6 +119,22 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 			WorkflowTaskWebConfiguration.class, properties);
 	}
 
+	protected void checkWorkflowTaskViewPermission(
+			WorkflowTask workflowTask, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (!_workflowTaskPermissionChecker.hasPermission(
+				themeDisplay.getScopeGroupId(), workflowTask,
+				themeDisplay.getPermissionChecker())) {
+
+			throw new PrincipalException(
+				String.format(
+					"User %d does not have permissions to view the task %d ",
+					themeDisplay.getUserId(),
+					workflowTask.getWorkflowTaskId()));
+		}
+	}
+
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -160,21 +176,10 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			PermissionChecker permissionChecker =
-				themeDisplay.getPermissionChecker();
-
 			WorkflowTask workflowTask = WorkflowTaskManagerUtil.getWorkflowTask(
 				themeDisplay.getCompanyId(), workflowTaskId);
 
-			if (!_workflowTaskPermissionChecker.hasAssignmentPermission(
-					themeDisplay.getScopeGroupId(), workflowTask,
-					permissionChecker)) {
-
-				throw new PrincipalException(
-					"User " + themeDisplay.getUserId() + " does not have " +
-					"permissions to assign the task " + workflowTaskId +
-					"to someone.");
-			}
+			checkWorkflowTaskViewPermission(workflowTask, themeDisplay);
 
 			renderRequest.setAttribute(WebKeys.WORKFLOW_TASK, workflowTask);
 		}

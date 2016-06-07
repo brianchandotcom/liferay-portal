@@ -14,7 +14,6 @@
 
 package com.liferay.portal.workflow.task.web.portlet.action;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -44,6 +43,25 @@ import org.osgi.service.component.annotations.Component;
 public class AssignTaskMVCActionCommand
 	extends WorkflowTaskBaseMVCActionCommand {
 
+	protected void checkWorkflowTaskAssignmentPermission(
+			long workflowTaskId, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		WorkflowTask workflowTask = WorkflowTaskManagerUtil.getWorkflowTask(
+			themeDisplay.getCompanyId(), workflowTaskId);
+
+		if (!_workflowTaskPermissionChecker.hasPermission(
+				themeDisplay.getScopeGroupId(), workflowTask,
+				themeDisplay.getPermissionChecker())) {
+
+			throw new PrincipalException(
+				String.format(
+					"User %d does not have permissions to assign the task " +
+						"%d to someone.",
+					themeDisplay.getUserId(), workflowTaskId));
+		}
+	}
+
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -59,18 +77,7 @@ public class AssignTaskMVCActionCommand
 			actionRequest, "assigneeUserId");
 		String comment = ParamUtil.getString(actionRequest, "comment");
 
-		WorkflowTask workflowTask = WorkflowTaskManagerUtil.getWorkflowTask(
-			themeDisplay.getCompanyId(), workflowTaskId);
-
-		if (!_workflowTaskPermissionChecker.hasAssignmentPermission(
-				themeDisplay.getScopeGroupId(), workflowTask,
-				themeDisplay.getPermissionChecker())) {
-
-			throw new PrincipalException(
-				"User " + themeDisplay.getUserId() + " does not have " +
-				"permissions to assign the task " + workflowTaskId +
-				"to someone.");
-		}
+		checkWorkflowTaskAssignmentPermission(workflowTaskId, themeDisplay);
 
 		WorkflowTaskManagerUtil.assignWorkflowTaskToUser(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(),

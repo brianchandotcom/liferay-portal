@@ -14,8 +14,12 @@
 
 package com.liferay.gradle.plugins.node.tasks;
 
+import com.liferay.gradle.plugins.node.util.GradleUtil;
+import com.liferay.gradle.util.FileUtil;
+
 import java.io.File;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
@@ -24,16 +28,76 @@ import java.util.concurrent.Callable;
 public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 
 	public ExecuteNpmTask() {
+		setCacheDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					File nodeDir = getNodeDir();
+
+					if (nodeDir == null) {
+						return null;
+					}
+
+					return new File(getNodeDir(), ".cache");
+				}
+
+			});
+
+		setCommand(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					if (getNodeDir() == null) {
+						return "npm";
+					}
+
+					return "node";
+				}
+
+			});
+
 		setScriptFile(
 			new Callable<File>() {
 
 				@Override
 				public File call() throws Exception {
+					File nodeDir = getNodeDir();
+
+					if (nodeDir == null) {
+						return null;
+					}
+
 					return new File(
 						getNodeDir(), "lib/node_modules/npm/bin/npm-cli.js");
 				}
 
 			});
 	}
+
+	public File getCacheDir() {
+		return GradleUtil.toFile(getProject(), _cacheDir);
+	}
+
+	public void setCacheDir(Object cacheDir) {
+		_cacheDir = cacheDir;
+	}
+
+	@Override
+	protected List<String> getCompleteArgs() {
+		List<String> completeArgs = super.getCompleteArgs();
+
+		File cacheDir = getCacheDir();
+
+		if (cacheDir != null) {
+			completeArgs.add("--cache");
+			completeArgs.add(FileUtil.getAbsolutePath(cacheDir));
+		}
+
+		return completeArgs;
+	}
+
+	private Object _cacheDir;
 
 }

@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins.node.util;
 
-import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.Validator;
 
@@ -22,14 +21,10 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.gradle.api.Action;
 import org.gradle.api.Project;
-import org.gradle.process.ExecResult;
-import org.gradle.process.ExecSpec;
 import org.gradle.util.GUtil;
 
 /**
@@ -52,26 +47,17 @@ public class NodeExecutor {
 		return args(Arrays.asList(args));
 	}
 
-	public ExecResult execute() {
-		return _project.exec(
-			new Action<ExecSpec>() {
+	public void execute() throws Exception {
+		ProcessBuilder processBuilder = new ProcessBuilder(getCommandLine());
 
-				@Override
-				public void execute(ExecSpec execSpec) {
-					if (OSDetector.isWindows()) {
-						execSpec.setArgs(getWindowsArgs());
-						execSpec.setExecutable("cmd");
-					}
-					else {
-						execSpec.setArgs(_args);
-						execSpec.setExecutable(getExecutable());
-					}
+		processBuilder.inheritIO();
+		processBuilder.directory(getWorkingDir());
 
-					execSpec.setEnvironment(getEnvironment());
-					execSpec.setWorkingDir(_workingDir);
-				}
+		updateEnvironment(processBuilder.environment());
 
-			});
+		Process process = processBuilder.start();
+
+		process.waitFor();
 	}
 
 	public List<String> getArgs() {
@@ -112,10 +98,88 @@ public class NodeExecutor {
 		_workingDir = workingDir;
 	}
 
-	protected Map<String, String> getEnvironment() {
-		Map<String, String> environment = new HashMap<>(System.getenv());
+	protected List<String> getCommandLine() {
+		List<String> commandLine = new ArrayList<>();
+
+		if (OSDetector.isWindows()) {
+			commandLine.add("cmd");
+			commandLine.addAll(getWindowsArgs());
+		}
+		else {
+			commandLine.add(getExecutable());
+			commandLine.addAll(getArgs());
+		}
+
+		return commandLine;
+	}
+
+	protected String getExecutable() {
+		String executable = GradleUtil.toString(_command);
 
 		File executableDir = getExecutableDir();
+
+		if (executableDir != null) {
+			File executableFile = new File(executableDir, executable);
+
+			executable = executableFile.getAbsolutePath();
+		}
+
+		return executable;
+	}
+
+	protected File getExecutableDir() {
+		File nodeDir = getNodeDir();
+
+		if (nodeDir == null) {
+			return null;
+		}
+
+		return new File(nodeDir, "bin");
+	}
+
+	protected List<String> getWindowsArgs() {
+		List<String> windowsArgs = new ArrayList<>(2);
+
+		windowsArgs.add("/c");
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append('"');
+
+		String executable = getExecutable();
+
+		if (executable.indexOf(File.separatorChar) == -1) {
+			sb.append(executable);
+		}
+		else {
+			sb.append('"');
+			sb.append(executable);
+			sb.append('"');
+		}
+
+		for (String arg : getArgs()) {
+			sb.append(" \"");
+
+			if (Validator.isNotNull(arg)) {
+				sb.append(arg);
+			}
+
+			sb.append('"');
+		}
+
+		sb.append('"');
+
+		windowsArgs.add(sb.toString());
+
+		return windowsArgs;
+	}
+
+	protected void updateEnvironment(Map<String, String> environment) {
+		File executableDir = getExecutableDir();
+
+		if (executableDir == null) {
+			return;
+		}
 
 		for (String pathKey : _PATH_KEYS) {
 			String path = environment.get(pathKey);
@@ -128,44 +192,6 @@ public class NodeExecutor {
 
 			environment.put(pathKey, path);
 		}
-
-		return environment;
-	}
-
-	protected File getExecutable() {
-		return new File(getExecutableDir(), GradleUtil.toString(_command));
-	}
-
-	protected File getExecutableDir() {
-		return new File(getNodeDir(), "bin");
-	}
-
-	protected List<String> getWindowsArgs() {
-		List<String> windowsArgs = new ArrayList<>(2);
-
-		windowsArgs.add("/c");
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("\"\"");
-		sb.append(getExecutable());
-		sb.append('\"');
-
-		for (String arg : getArgs()) {
-			sb.append(" \"");
-
-			if (Validator.isNotNull(arg)) {
-				sb.append(arg);
-			}
-
-			sb.append('\"');
-		}
-
-		sb.append('\"');
-
-		windowsArgs.add(sb.toString());
-
-		return windowsArgs;
 	}
 
 	private static final String[] _PATH_KEYS = {"Path", "PATH"};

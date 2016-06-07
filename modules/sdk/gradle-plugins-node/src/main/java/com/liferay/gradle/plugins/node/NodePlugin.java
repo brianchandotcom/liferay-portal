@@ -18,7 +18,7 @@ import com.liferay.gradle.plugins.node.tasks.DownloadNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
-import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.plugins.node.util.GradleUtil;
 
 import groovy.json.JsonSlurper;
 
@@ -53,7 +53,7 @@ public class NodePlugin implements Plugin<Project> {
 		final NodeExtension nodeExtension = GradleUtil.addExtension(
 			project, EXTENSION_NAME, NodeExtension.class);
 
-		addTaskDownloadNode(project);
+		addTaskDownloadNode(project, nodeExtension);
 		addTaskNpmInstall(project);
 
 		configureTasksDownloadNode(project, nodeExtension);
@@ -71,9 +71,26 @@ public class NodePlugin implements Plugin<Project> {
 			});
 	}
 
-	protected DownloadNodeTask addTaskDownloadNode(Project project) {
-		return GradleUtil.addTask(
+	protected DownloadNodeTask addTaskDownloadNode(
+		Project project, final NodeExtension nodeExtension) {
+
+		DownloadNodeTask downloadNodeTask = GradleUtil.addTask(
 			project, DOWNLOAD_NODE_TASK_NAME, DownloadNodeTask.class);
+
+		downloadNodeTask.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return nodeExtension.isDownload();
+				}
+
+			});
+
+		downloadNodeTask.setDescription(
+			"Downloads Node.js in the project build directory.");
+
+		return downloadNodeTask;
 	}
 
 	protected ExecuteNpmTask addTaskNpmInstall(Project project) {
@@ -184,7 +201,11 @@ public class NodePlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					return nodeExtension.getNodeDir();
+					if (nodeExtension.isDownload()) {
+						return nodeExtension.getNodeDir();
+					}
+
+					return null;
 				}
 
 			});

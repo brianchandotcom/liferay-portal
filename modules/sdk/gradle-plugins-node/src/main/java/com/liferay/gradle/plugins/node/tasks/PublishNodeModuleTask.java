@@ -14,8 +14,8 @@
 
 package com.liferay.gradle.plugins.node.tasks;
 
+import com.liferay.gradle.plugins.node.util.GradleUtil;
 import com.liferay.gradle.util.FileUtil;
-import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
 import groovy.json.JsonOutput;
@@ -36,7 +36,6 @@ import java.util.Map;
 
 import org.codehaus.groovy.runtime.EncodingGroovyMethods;
 
-import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
@@ -50,15 +49,12 @@ import org.gradle.api.tasks.Optional;
 public class PublishNodeModuleTask extends ExecuteNpmTask {
 
 	@Override
-	public void executeNode() {
+	public void executeNode() throws Exception {
 		try {
 			createNpmrcFile();
 			createPackageJsonFile();
 
 			super.executeNode();
-		}
-		catch (IOException ioe) {
-			throw new GradleException(ioe.getMessage(), ioe);
 		}
 		finally {
 			Project project = getProject();

@@ -14,8 +14,8 @@
 
 package com.liferay.gradle.plugins.node.tasks;
 
+import com.liferay.gradle.plugins.node.util.GradleUtil;
 import com.liferay.gradle.util.FileUtil;
-import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
 
@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.Optional;
 
 /**
  * @author Andrea Di Giorgi
@@ -30,13 +31,14 @@ import org.gradle.api.tasks.Input;
 public class ExecuteNodeScriptTask extends ExecuteNodeTask {
 
 	@Override
-	public void executeNode() {
+	public void executeNode() throws Exception {
 		setArgs(getCompleteArgs());
 
 		super.executeNode();
 	}
 
 	@Input
+	@Optional
 	public File getScriptFile() {
 		return GradleUtil.toFile(getProject(), _scriptFile);
 	}
@@ -46,9 +48,15 @@ public class ExecuteNodeScriptTask extends ExecuteNodeTask {
 	}
 
 	protected List<String> getCompleteArgs() {
+		File scriptFile = getScriptFile();
+
+		if (scriptFile == null) {
+			return getArgs();
+		}
+
 		List<String> completeArgs = new ArrayList<>();
 
-		completeArgs.add(FileUtil.getAbsolutePath(getScriptFile()));
+		completeArgs.add(FileUtil.getAbsolutePath(scriptFile));
 
 		completeArgs.addAll(getArgs());
 

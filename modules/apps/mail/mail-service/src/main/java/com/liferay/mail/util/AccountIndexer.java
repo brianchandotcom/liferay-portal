@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.search.Summary;
@@ -44,9 +45,13 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
+ * @author Peter Fellwock
  */
+@Component(immediate = true, service = Indexer.class)
 public class AccountIndexer extends BaseIndexer<Account> {
 
 	public static final String CLASS_NAME = Account.class.getName();

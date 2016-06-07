@@ -643,6 +643,12 @@
 			<finder-column name="privateLayout" />
 			<finder-column name="parentLayoutId" />
 		</finder>
+		<finder name="G_P_P_CD" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="privateLayout" />
+			<finder-column name="parentLayoutId" />
+			<finder-column comparator="&lt;=" name="createDate" />
+		</finder>
 		<finder name="G_P_T" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />

@@ -15,6 +15,7 @@
 package com.liferay.portal.lpkg.deployer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.lpkg.StaticLPKGResolver;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -149,7 +150,10 @@ public class LPKGDeployerTest {
 				String name = zipEntry.getName();
 
 				if (name.endsWith(".jar")) {
-					if (symbolicName.equals("static")) {
+					if (symbolicName.equals(
+							StaticLPKGResolver.
+								getStaticLPKGBundleSymbolicName())) {
+
 						Bundle bundle = bundleContext.getBundle(
 							"reference:" + StringPool.SLASH + name);
 

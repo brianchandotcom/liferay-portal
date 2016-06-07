@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.lpkg.StaticLPKGResolver;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -1079,7 +1080,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		File file = new File(
 			bundleContext.getProperty("lpkg.deployer.dir") + StringPool.SLASH +
-				"static.lpkg");
+				StaticLPKGResolver.getStaticLPKGFileName());
 
 		if (file.exists()) {
 			try (ZipFile zipFile = new ZipFile(file)) {

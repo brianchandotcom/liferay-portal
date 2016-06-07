@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.lpkg.StaticLPKGResolver;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -79,7 +80,9 @@ public class LPKGBundleTrackerCustomizer
 
 		String symbolicName = bundle.getSymbolicName();
 
-		if (symbolicName.equals("static")) {
+		if (symbolicName.equals(
+				StaticLPKGResolver.getStaticLPKGBundleSymbolicName())) {
+
 			return Collections.emptyList();
 		}
 

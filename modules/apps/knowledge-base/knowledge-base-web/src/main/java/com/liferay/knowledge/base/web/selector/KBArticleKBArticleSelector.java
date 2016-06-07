@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.web.selector;
 
+import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -46,6 +47,12 @@ public class KBArticleKBArticleSelector implements KBArticleSelector {
 			return new KBArticleSelection(null, false);
 		}
 
+		if (resourcePrimKey ==
+				KBArticleConstants.DEFAULT_PARENT_RESOURCE_PRIM_KEY) {
+
+			return new KBArticleSelection(ancestorKBArticle, true);
+		}
+
 		KBArticle kbArticle = _kbArticleLocalService.fetchLatestKBArticle(
 			resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 
@@ -65,7 +72,7 @@ public class KBArticleKBArticleSelector implements KBArticleSelector {
 				ancestorResourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 
 		if (ancestorKBArticle == null) {
-			return null;
+			return new KBArticleSelection(null, false);
 		}
 
 		KBArticle kbArticle =

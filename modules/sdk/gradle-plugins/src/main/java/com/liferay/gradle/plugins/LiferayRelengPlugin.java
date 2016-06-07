@@ -477,6 +477,12 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	protected void configureTaskEnabledIfStale(
 		Task task, final WritePropertiesTask recordArtifactTask) {
 
+		String force = GradleUtil.getTaskPrefixedProperty(task, "force");
+
+		if (Boolean.parseBoolean(force)) {
+			return;
+		}
+
 		task.onlyIf(
 			new Spec<Task>() {
 

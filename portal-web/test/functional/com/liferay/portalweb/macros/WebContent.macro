@@ -46,8 +46,19 @@
 	</command>
 
 	<command name="addCP">
-		<execute function="Type#mouseOverFocusType" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
+		<if>
+			<isset var="webContentTitle" />
+			<then>
+				<execute function="Type#mouseOverFocusType" locator1="TextInput#TITLE" value1="${webContentTitle}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="webContentContent" />
+			<then>
+				<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="addDraftCP">

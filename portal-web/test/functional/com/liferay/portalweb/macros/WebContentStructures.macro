@@ -66,44 +66,6 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="addPGViaWCD">
-		<execute macro="WebContentNavigator#gotoAddPGViaWCD" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Structure and Template" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
-		<execute function="SelectFrame" />
-
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
-		<execute function="Click" locator1="Button#PLUS" />
-		<execute function="SelectFrame" />
-
-		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
-		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${structureName}" />
-
-		<for list="${structureFieldNames}" param="structureFieldName">
-			<execute macro="DynamicDataMapping#addField">
-				<var name="field" value="${structureFieldName}" />
-				<var name="fieldFieldLabel" value="${structureFieldName}" />
-				<var method="StringUtil#replace(${structureFieldName}, ' ', '')" name="fieldName" />
-			</execute>
-		</for>
-
-		<execute macro="DDLDataDefinition#save" />
-
-		<var name="key_ddlDataDefinitionName" value="${structureName}" />
-
-		<execute function="AssertClickNoError" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${structureName}" />
-
-		<execute function="Confirm#assertConfirmationNoWait" value1="Selecting a new structure changes the available input fields and available templates. Do you want to proceed?" />
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
-		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-	</command>
-
 	<command name="advancedSearchCP">
 		<var name="key_ddlDataDefinitionName" value="${structureName}" />
 

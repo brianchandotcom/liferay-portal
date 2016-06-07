@@ -2157,6 +2157,27 @@
 	</command>
 
 	<command name="WebcontentAdministrationTemplateValidation" priority="4">
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="WC Structure Description" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Image" />
+			<var name="fieldFieldLabel" value="Image" />
+			<var name="fieldName" value="Image" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP" />
+
+		<execute macro="Navigator#openURL" />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -2165,11 +2186,11 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute macro="WebContentStructures#addPGViaWCD">
-			<var name="structureDescription" value="WC Structure Description" />
-			<var name="structureFieldNames" value="Image" />
+		<execute macro="WebContentNavigator#gotoAddPGViaWCD">
 			<var name="structureName" value="WC Structure Name" />
-			<var name="webContentContent" value="WC WebContent Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 

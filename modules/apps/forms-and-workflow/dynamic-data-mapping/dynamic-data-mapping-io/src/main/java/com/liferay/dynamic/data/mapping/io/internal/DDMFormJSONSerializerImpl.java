@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldRule;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
@@ -214,12 +215,32 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 		return jsonArray;
 	}
 
+	protected JSONArray toJSONArray(List<DDMFormFieldRule> ddmFormFieldRules) {
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		for (DDMFormFieldRule ddmFormFieldRule : ddmFormFieldRules) {
+			jsonArray.put(toJSONObject(ddmFormFieldRule));
+		}
+
+		return jsonArray;
+	}
+
 	protected JSONObject toJSONObject(DDMFormField ddmFormField) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		addProperties(jsonObject, ddmFormField);
 
 		addNestedFields(jsonObject, ddmFormField.getNestedDDMFormFields());
+		addFormFieldRules(jsonObject, ddmFormField.getDDMFormFieldRules());
+
+		return jsonObject;
+	}
+
+	protected JSONObject toJSONObject(DDMFormFieldRule ddmFormFieldRule) {
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		jsonObject.put("expression", ddmFormFieldRule.getExpression());
+		jsonObject.put("type", ddmFormFieldRule.getType());
 
 		return jsonObject;
 	}
@@ -256,6 +277,16 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 		}
 
 		return jsonObject;
+	}
+
+	protected void addFormFieldRules(
+		JSONObject jsonObject, List<DDMFormFieldRule> ddmFormFieldRules) {
+
+		if (ddmFormFieldRules.isEmpty()) {
+			return;
+		}
+
+		jsonObject.put("rules", toJSONArray(ddmFormFieldRules));
 	}
 
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;

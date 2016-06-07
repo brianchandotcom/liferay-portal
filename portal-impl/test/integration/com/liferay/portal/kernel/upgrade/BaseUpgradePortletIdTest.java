@@ -82,7 +82,9 @@ public class BaseUpgradePortletIdTest extends BaseUpgradePortletId {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		for (Portlet portlet : _portlets) {
-			PortletLocalServiceUtil.deployPortlet(portlet);
+			if (!portlet.isUndeployedPortlet()) {
+				PortletLocalServiceUtil.deployPortlet(portlet);
+			}
 		}
 
 		_portlets.clear();

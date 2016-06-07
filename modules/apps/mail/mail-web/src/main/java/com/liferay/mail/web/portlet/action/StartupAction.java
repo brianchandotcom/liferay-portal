@@ -17,14 +17,22 @@ package com.liferay.mail.web.portlet.action;
 import com.liferay.mail.mailbox.MailboxFactory;
 import com.liferay.mail.mailbox.MailboxFactoryUtil;
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Scott Lee
+ * @author Peter Fellwock
  */
+@Component(
+	immediate = true, property = {"key=application.startup.events"},
+	service = LifecycleAction.class
+)
 public class StartupAction extends SimpleAction {
 
 	@Override

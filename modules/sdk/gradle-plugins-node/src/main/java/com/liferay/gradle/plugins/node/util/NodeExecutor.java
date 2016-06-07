@@ -21,14 +21,10 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.gradle.api.Action;
 import org.gradle.api.Project;
-import org.gradle.process.ExecResult;
-import org.gradle.process.ExecSpec;
 import org.gradle.util.GUtil;
 
 /**
@@ -51,31 +47,17 @@ public class NodeExecutor {
 		return args(Arrays.asList(args));
 	}
 
-	public ExecResult execute() {
-		return _project.exec(
-			new Action<ExecSpec>() {
+	public void execute() throws Exception {
+		ProcessBuilder processBuilder = new ProcessBuilder(getCommandLine());
 
-				@Override
-				public void execute(ExecSpec execSpec) {
-					if (OSDetector.isWindows()) {
-						execSpec.setArgs(getWindowsArgs());
-						execSpec.setExecutable("cmd");
-					}
-					else {
-						execSpec.setArgs(_args);
-						execSpec.setExecutable(getExecutable());
-					}
+		processBuilder.inheritIO();
+		processBuilder.directory(getWorkingDir());
 
-					Map<String, String> environment = getEnvironment();
+		updateEnvironment(processBuilder.environment());
 
-					if (environment != null) {
-						execSpec.setEnvironment(getEnvironment());
-					}
+		Process process = processBuilder.start();
 
-					execSpec.setWorkingDir(_workingDir);
-				}
-
-			});
+		process.waitFor();
 	}
 
 	public List<String> getArgs() {
@@ -116,28 +98,19 @@ public class NodeExecutor {
 		_workingDir = workingDir;
 	}
 
-	protected Map<String, String> getEnvironment() {
-		File executableDir = getExecutableDir();
+	protected List<String> getCommandLine() {
+		List<String> commandLine = new ArrayList<>();
 
-		if (executableDir == null) {
-			return null;
+		if (OSDetector.isWindows()) {
+			commandLine.add("cmd");
+			commandLine.addAll(getWindowsArgs());
+		}
+		else {
+			commandLine.add(getExecutable());
+			commandLine.addAll(getArgs());
 		}
 
-		Map<String, String> environment = new HashMap<>(System.getenv());
-
-		for (String pathKey : _PATH_KEYS) {
-			String path = environment.get(pathKey);
-
-			if (Validator.isNull(path)) {
-				continue;
-			}
-
-			path = executableDir.getAbsolutePath() + File.pathSeparator + path;
-
-			environment.put(pathKey, path);
-		}
-
-		return environment;
+		return commandLine;
 	}
 
 	protected String getExecutable() {
@@ -199,6 +172,26 @@ public class NodeExecutor {
 		windowsArgs.add(sb.toString());
 
 		return windowsArgs;
+	}
+
+	protected void updateEnvironment(Map<String, String> environment) {
+		File executableDir = getExecutableDir();
+
+		if (executableDir == null) {
+			return;
+		}
+
+		for (String pathKey : _PATH_KEYS) {
+			String path = environment.get(pathKey);
+
+			if (Validator.isNull(path)) {
+				continue;
+			}
+
+			path = executableDir.getAbsolutePath() + File.pathSeparator + path;
+
+			environment.put(pathKey, path);
+		}
 	}
 
 	private static final String[] _PATH_KEYS = {"Path", "PATH"};

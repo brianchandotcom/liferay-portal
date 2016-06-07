@@ -31,7 +31,7 @@ import org.gradle.api.tasks.Optional;
 public class ExecuteNodeScriptTask extends ExecuteNodeTask {
 
 	@Override
-	public void executeNode() {
+	public void executeNode() throws Exception {
 		setArgs(getCompleteArgs());
 
 		super.executeNode();

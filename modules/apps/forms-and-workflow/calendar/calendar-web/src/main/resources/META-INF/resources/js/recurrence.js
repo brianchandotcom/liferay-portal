@@ -402,10 +402,6 @@ AUI.add(
 
 						var currentTarget = event.currentTarget;
 
-						var limitCountInput = instance.get('limitCountInput');
-
-						var limitType = instance.get('limitType');
-
 						if (currentTarget === instance.get('frequencySelect')) {
 							instance._toggleView('weeklyRecurrenceOptions', instance.get('frequency') === FREQUENCY_WEEKLY);
 							instance._toggleView('monthlyRecurrenceOptions', instance._isPositionalFrequency());
@@ -424,13 +420,8 @@ AUI.add(
 							positionInput.val(instance._calculatePosition());
 						}
 
+						instance._toggleDisabledLimitCountInput();
 						instance._toggleDisabledLimitDateDatePicker();
-
-						var disableLimitCountInput = (limitType === LIMIT_UNLIMITED) || (limitType === LIMIT_DATE);
-
-						Liferay.Util.toggleDisabled(limitCountInput, disableLimitCountInput);
-
-						limitCountInput.selectText();
 
 						instance.fire('recurrenceChange');
 					},
@@ -596,6 +587,20 @@ AUI.add(
 							instance.set('limitType', data.endValue);
 							instance.set('positionalDayOfWeek', data.positionalWeekday);
 						}
+					},
+
+					_toggleDisabledLimitCountInput: function() {
+						var instance = this;
+
+						var limitCountInput = instance.get('limitCountInput');
+
+						var limitType = instance.get('limitType');
+
+						var disableLimitCountInput = (limitType === LIMIT_UNLIMITED) || (limitType === LIMIT_DATE);
+
+						Liferay.Util.toggleDisabled(limitCountInput, disableLimitCountInput);
+
+						limitCountInput.selectText();
 					},
 
 					_toggleDisabledLimitDateDatePicker: function() {

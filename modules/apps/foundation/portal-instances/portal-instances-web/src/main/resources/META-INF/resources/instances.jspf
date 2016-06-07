@@ -44,18 +44,21 @@
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			href="<%= rowURL %>"
 			name="web-id"
 			property="webId"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			href="<%= rowURL %>"
 			name="virtual-host"
 			value="<%= curCompany.getVirtualHostname() %>"
 		/>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			href="<%= rowURL %>"
 			name="mail-domain"
 			property="mx"
@@ -84,7 +87,6 @@
 		/>
 
 		<liferay-ui:search-container-column-jsp
-			cssClass="list-group-item-field"
 			path="/instance_actions.jsp"
 		/>
 	</liferay-ui:search-container-row>

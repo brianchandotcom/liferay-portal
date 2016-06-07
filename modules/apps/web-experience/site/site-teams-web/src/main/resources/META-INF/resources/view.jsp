@@ -142,7 +142,6 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 				</c:when>
 				<c:when test="<%= siteTeamsDisplayContext.isListView() %>">
 					<liferay-ui:search-container-column-text
-						cssClass="content-column name-column title-column"
 						href="<%= rowURL %>"
 						name="name"
 						property="name"
@@ -150,7 +149,6 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="content-column description-column"
 						href="<%= rowURL %>"
 						name="description"
 						property="description"
@@ -158,7 +156,6 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 					/>
 
 					<liferay-ui:search-container-column-jsp
-						cssClass="entry-action-column"
 						path="/team_action.jsp"
 					/>
 				</c:when>

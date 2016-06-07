@@ -71,6 +71,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="title"
+			truncate="<%= true %>"
 			value="<%= role.getTitle(locale) %>"
 		/>
 
@@ -83,6 +84,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="description"
+			truncate="<%= true %>"
 			value="<%= role.getDescription(locale) %>"
 		/>
 	</liferay-ui:search-container-row>

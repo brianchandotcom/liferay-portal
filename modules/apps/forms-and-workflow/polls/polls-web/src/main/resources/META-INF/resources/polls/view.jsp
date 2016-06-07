@@ -54,7 +54,6 @@ portletURL.setParameter("mvcRenderCommandName", "/polls/view");
 				%>
 
 				<liferay-ui:search-container-column-text
-					cssClass="content-column title-column"
 					href="<%= rowURL %>"
 					name="title"
 					truncate="<%= true %>"
@@ -62,7 +61,6 @@ portletURL.setParameter("mvcRenderCommandName", "/polls/view");
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="num-of-votes-column"
 					href="<%= rowURL %>"
 					name="num-of-votes"
 					value="<%= String.valueOf(PollsVoteLocalServiceUtil.getQuestionVotesCount(question.getQuestionId())) %>"
@@ -71,7 +69,6 @@ portletURL.setParameter("mvcRenderCommandName", "/polls/view");
 				<c:choose>
 					<c:when test="<%= question.getLastVoteDate() != null %>">
 						<liferay-ui:search-container-column-date
-							cssClass="last-vote-date-column text-column"
 							href="<%= rowURL %>"
 							name="last-vote-date"
 							value="<%= question.getLastVoteDate() %>"
@@ -79,7 +76,6 @@ portletURL.setParameter("mvcRenderCommandName", "/polls/view");
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:search-container-column-text
-							cssClass="last-vote-date-column text-column"
 							href="<%= rowURL %>"
 							name="last-vote-date"
 							value='<%= LanguageUtil.get(request, "never") %>'
@@ -90,7 +86,6 @@ portletURL.setParameter("mvcRenderCommandName", "/polls/view");
 				<c:choose>
 					<c:when test="<%= question.getExpirationDate() != null %>">
 						<liferay-ui:search-container-column-date
-							cssClass="expiration-date-column text-column"
 							href="<%= rowURL %>"
 							name="expiration-date"
 							value="<%= question.getExpirationDate() %>"
@@ -98,7 +93,6 @@ portletURL.setParameter("mvcRenderCommandName", "/polls/view");
 					</c:when>
 					<c:otherwise>
 						<liferay-ui:search-container-column-text
-							cssClass="expiration-date-column text-column"
 							href="<%= rowURL %>"
 							name="expiration-date"
 							value='<%= LanguageUtil.get(request, "never") %>'
@@ -107,8 +101,6 @@ portletURL.setParameter("mvcRenderCommandName", "/polls/view");
 				</c:choose>
 
 				<liferay-ui:search-container-column-jsp
-					align="right"
-					cssClass="entry-action-column"
 					path="/polls/question_action.jsp"
 				/>
 			</liferay-ui:search-container-row>

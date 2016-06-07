@@ -84,7 +84,6 @@ for (long defaultTeamId : defaultTeamIds) {
 		modelVar="role"
 	>
 		<liferay-ui:search-container-column-text
-			cssClass="content-column title-column"
 			name="title"
 			truncate="<%= true %>"
 			value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
@@ -121,7 +120,6 @@ for (long defaultTeamId : defaultTeamIds) {
 		modelVar="team"
 	>
 		<liferay-ui:search-container-column-text
-			cssClass="content-column title-column"
 			name="title"
 			truncate="<%= true %>"
 			value="<%= HtmlUtil.escape(team.getName()) %>"

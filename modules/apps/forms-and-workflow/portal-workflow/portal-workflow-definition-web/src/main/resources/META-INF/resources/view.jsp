@@ -126,11 +126,13 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 			modelVar="workflowDefinition"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="name"
 				value="<%= workflowDefinitionDisplayContext.getName(workflowDefinition) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="title"
 				value="<%= workflowDefinitionDisplayContext.getTitle(workflowDefinition) %>"
 			/>
@@ -146,8 +148,6 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				align="right"
-				cssClass="entry-action"
 				path="/workflow_definition_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

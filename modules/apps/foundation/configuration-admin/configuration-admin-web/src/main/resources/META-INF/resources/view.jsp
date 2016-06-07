@@ -103,7 +103,10 @@ if (Validator.isNotNull(keywords)) {
 				<portlet:param name="factoryPid" value="<%= configurationModel.getFactoryPid() %>" />
 			</portlet:renderURL>
 
-			<liferay-ui:search-container-column-text name="name">
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="name"
+			>
 
 				<%
 				ResourceBundleLoader resourceBundleLoader = resourceBundleLoaderProvider.getResourceBundleLoader(configurationModel.getBundleSymbolicName());
@@ -123,7 +126,10 @@ if (Validator.isNotNull(keywords)) {
 				</c:choose>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text name="scope">
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="scope"
+			>
 				<c:choose>
 					<c:when test="<%= ExtendedObjectClassDefinition.Scope.COMPANY.equals(configurationModel.getScope()) %>">
 						<liferay-ui:message key="default-settings-for-all-instances" />
@@ -144,8 +150,6 @@ if (Validator.isNotNull(keywords)) {
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
-				align="right"
-				cssClass="entry-action"
 				name=""
 			>
 				<liferay-ui:icon-menu

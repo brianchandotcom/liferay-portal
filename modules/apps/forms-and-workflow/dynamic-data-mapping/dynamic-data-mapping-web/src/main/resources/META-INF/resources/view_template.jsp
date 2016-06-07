@@ -153,7 +153,6 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 
 				<c:if test='<%= !excludedColumnNames.contains("id") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="id-column"
 						href="<%= rowHREF %>"
 						name="id"
 						orderable="<%= true %>"
@@ -164,7 +163,6 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 
 				<c:if test='<%= !excludedColumnNames.contains("name") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="content-column name-column title-column"
 						href="<%= rowHREF %>"
 						name="name"
 						truncate="<%= true %>"
@@ -173,7 +171,6 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 				</c:if>
 
 				<liferay-ui:search-container-column-jsp
-					cssClass="content-column description-column"
 					name="description"
 					path="/template_description.jsp"
 					truncate="<%= true %>"
@@ -192,7 +189,6 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 					%>
 
 					<liferay-ui:search-container-column-text
-						cssClass="structure-column text-column"
 						href="<%= rowHREF %>"
 						name="structure"
 						value="<%= HtmlUtil.escape(structureName) %>"
@@ -201,7 +197,6 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 
 				<c:if test='<%= !excludedColumnNames.contains("type") && (classNameId == 0) %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="text-column type-column"
 						href="<%= rowHREF %>"
 						name="type"
 						value="<%= HtmlUtil.escape(ddmDisplay.getTemplateType(template, locale)) %>"
@@ -210,7 +205,6 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 
 				<c:if test='<%= !excludedColumnNames.contains("mode") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="mode-column text-column"
 						href="<%= rowHREF %>"
 						name="mode"
 						value="<%= LanguageUtil.get(request, template.getMode()) %>"
@@ -219,7 +213,6 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 
 				<c:if test='<%= !excludedColumnNames.contains("language") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="language-column text-column"
 						href="<%= rowHREF %>"
 						name="language"
 						value='<%= LanguageUtil.get(request, template.getLanguage() + "[stands-for]") %>'
@@ -233,7 +226,6 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 					%>
 
 					<liferay-ui:search-container-column-text
-						cssClass="scope-column text-column"
 						name="scope"
 						value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
 					/>
@@ -241,7 +233,6 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 
 				<c:if test='<%= !excludedColumnNames.contains("modified-date") %>'>
 					<liferay-ui:search-container-column-date
-						cssClass="modified-date-column text-column"
 						href="<%= rowHREF %>"
 						name="modified-date"
 						orderable="<%= true %>"
@@ -251,7 +242,6 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 				</c:if>
 
 				<liferay-ui:search-container-column-jsp
-					cssClass="entry-action-column"
 					path="/template_action.jsp"
 				/>
 			</liferay-ui:search-container-row>

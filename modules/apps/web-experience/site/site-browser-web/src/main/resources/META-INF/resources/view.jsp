@@ -171,7 +171,6 @@ GroupSearch groupSearch = siteBrowserDisplayContext.getGroupSearch();
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="content-column name-column title-column"
 						name="name"
 						truncate="<%= true %>"
 					>
@@ -188,7 +187,6 @@ GroupSearch groupSearch = siteBrowserDisplayContext.getGroupSearch();
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
-						cssClass="text-column type-column"
 						name="type"
 						value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
 					/>

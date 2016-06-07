@@ -60,14 +60,12 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
-			cssClass="content-column name-column title-column"
 			name="name"
 			property="fullName"
 			truncate="<%= true %>"
 		/>
 
 		<liferay-ui:search-container-column-text
-			cssClass="content-column screen-name-column"
 			name="screen-name"
 			property="screenName"
 			truncate="<%= true %>"
@@ -75,7 +73,6 @@
 
 		<c:if test="<%= showActions %>">
 			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
 				path="/user_action.jsp"
 			/>
 		</c:if>

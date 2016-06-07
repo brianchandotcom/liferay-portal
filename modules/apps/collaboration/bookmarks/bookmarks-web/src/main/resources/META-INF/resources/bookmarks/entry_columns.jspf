@@ -31,21 +31,17 @@ for (int j = 0; j < entryColumns.length; j++) {
 			%>
 
 			<liferay-ui:search-container-column-jsp
-				align="<%= align %>"
-				cssClass="entry-action-column"
 				path="/bookmarks/entry_action.jsp"
 			/>
 		</c:when>
 		<c:when test='<%= curEntryColumn.equals("modified-date") %>'>
 			<liferay-ui:search-container-column-date
-				cssClass="modified-date-column text-column"
 				name="<%= curEntryColumn %>"
 				value="<%= entry.getModifiedDate() %>"
 			/>
 		</c:when>
 		<c:when test='<%= curEntryColumn.equals("name") %>'>
 			<liferay-ui:search-container-column-text
-				cssClass="content-column title-column"
 				href="<%= entryHREF %>"
 				name="<%= curEntryColumn %>"
 				truncate="<%= true %>"
@@ -54,7 +50,7 @@ for (int j = 0; j < entryColumns.length; j++) {
 		</c:when>
 		<c:when test='<%= curEntryColumn.equals("url") %>'>
 			<liferay-ui:search-container-column-text
-				cssClass="content-column row-url url-column"
+				cssClass="row-url"
 				name="<%= curEntryColumn %>"
 				truncate="<%= true %>"
 				value="<%= HtmlUtil.escape(entry.getUrl()) %>"
@@ -62,7 +58,6 @@ for (int j = 0; j < entryColumns.length; j++) {
 		</c:when>
 		<c:when test='<%= curEntryColumn.equals("visits") %>'>
 			<liferay-ui:search-container-column-text
-				cssClass="visits-column"
 				name="<%= curEntryColumn %>"
 				value="<%= String.valueOf(entry.getVisits()) %>"
 			/>

@@ -137,20 +137,17 @@
 				</c:when>
 				<c:when test='<%= Objects.equals(assetTagsDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
-						cssClass="content-column title-column name-column"
 						name="name"
 						truncate="<%= true %>"
 						value="<%= tag.getName() %>"
 					/>
 
 					<liferay-ui:search-container-column-text
-						cssClass="usages-column"
 						name="usages"
 						value="<%= String.valueOf(fullTagsCount) %>"
 					/>
 
 					<liferay-ui:search-container-column-jsp
-						cssClass="entry-action-column"
 						path="/tag_action.jsp"
 					/>
 				</c:when>

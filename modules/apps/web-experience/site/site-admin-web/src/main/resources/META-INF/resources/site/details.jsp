@@ -185,21 +185,17 @@ else if (group != null) {
 			modelVar="curGroup"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="content-column name-column title-column"
 				name="name"
 				truncate="<%= true %>"
 				value="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				cssClass="text-column type-column"
 				name="type"
 				value="<%= LanguageUtil.get(request, curGroup.getTypeLabel()) %>"
 			/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="entry-action-column"
-			>
+			<liferay-ui:search-container-column-text>
 				<a class="modify-link" data-rowId="<%= curGroup.getGroupId() %>" href="javascript:;"><%= removeGroupIcon %></a>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>

@@ -15,30 +15,27 @@
 --%>
 
 <liferay-ui:search-container-column-text
-	cssClass="content-column first-name-column"
+	cssClass="table-cell-content"
 	href="<%= rowURL %>"
 	name="name"
 	orderable="<%= true %>"
-	truncate="<%= true %>"
 >
 	<aui:a href="<%= String.valueOf(rowURL) %>"><strong><%= user2.getFullName() %></strong></aui:a>
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
-	cssClass="content-column screen-name-column"
+	cssClass="table-cell-content"
 	href="<%= rowURL %>"
 	name="screen-name"
 	orderable="<%= true %>"
 	property="screenName"
-	truncate="<%= true %>"
 />
 
 <liferay-ui:search-container-column-text
-	cssClass="content-column job-title-column"
+	cssClass="table-cell-content"
 	href="<%= rowURL %>"
 	name="job-title"
 	orderable="<%= true %>"
-	truncate="<%= true %>"
 	value="<%= user2.getJobTitle() %>"
 />
 
@@ -51,7 +48,7 @@
 		%>
 
 		<liferay-ui:search-container-column-text
-			cssClass="content-column organization-roles-column text-column"
+			cssClass="table-cell-content"
 			href="<%= rowURL %>"
 			name="organization-roles"
 			value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR, userGroupRolesCount)) %>"
@@ -65,7 +62,7 @@
 		%>
 
 		<liferay-ui:search-container-column-text
-			cssClass="content-column organizations-column text-column"
+			cssClass="table-cell-content"
 			href="<%= rowURL %>"
 			name="organizations"
 			value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userOrganizations, Organization.NAME_ACCESSOR, userOrganizationsCount)) %>"
@@ -79,7 +76,7 @@ int userUserGroupsCount = UserGroupLocalServiceUtil.getUserUserGroupsCount(user2
 %>
 
 <liferay-ui:search-container-column-text
-	cssClass="content-column text-column user-groups-column"
+	cssClass="table-cell-content"
 	href="<%= rowURL %>"
 	name="user-groups"
 	value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userUserGroups, UserGroup.NAME_ACCESSOR, userUserGroupsCount)) %>"

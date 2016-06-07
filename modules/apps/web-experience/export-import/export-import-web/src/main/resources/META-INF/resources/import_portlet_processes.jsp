@@ -56,7 +56,6 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 		modelVar="backgroundTask"
 	>
 		<liferay-ui:search-container-column-text
-			cssClass="background-task-user-column"
 			name="user"
 		>
 			<liferay-ui:user-display
@@ -68,21 +67,18 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-jsp
-			cssClass="background-task-status-column content-column"
 			name="status"
 			path="/publish_process_message.jsp"
 			truncate="<%= true %>"
 		/>
 
 		<liferay-ui:search-container-column-date
-			cssClass="create-date-column text-column"
 			name="create-date"
 			orderable="<%= true %>"
 			value="<%= backgroundTask.getCreateDate() %>"
 		/>
 
 		<liferay-ui:search-container-column-date
-			cssClass="completion-date-column text-column"
 			name="completion-date"
 			orderable="<%= true %>"
 			value="<%= backgroundTask.getCompletionDate() %>"

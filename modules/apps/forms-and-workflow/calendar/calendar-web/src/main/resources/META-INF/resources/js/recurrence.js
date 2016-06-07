@@ -206,7 +206,6 @@ AUI.add(
 						container.delegate('keypress', A.bind(instance._onInputChange, instance), 'select');
 
 						limitDateDatePicker.after('selectionChange', A.bind(instance._onInputChange, instance));
-
 						startDateDatePicker.after('selectionChange', A.bind(instance._onStartDateDatePickerChange, instance));
 					},
 
@@ -406,11 +405,8 @@ AUI.add(
 							instance._toggleViewWeeklyRecurrence();
 						}
 
-						if (currentTarget === instance.get('repeatOnDayOfMonthRadioButton')) {
-							instance._toggleView('positionalDayOfWeekOptions', !currentTarget.get('checked'));
-						}
-						else if (currentTarget === instance.get('repeatOnDayOfWeekRadioButton')) {
-							instance._toggleView('positionalDayOfWeekOptions', currentTarget.get('checked') && instance._canChooseLastDayOfWeek());
+						if (currentTarget === instance.get('repeatOnDayOfMonthRadioButton') || currentTarget === instance.get('repeatOnDayOfWeekRadioButton')) {
+							instance._toggleViewPositionalDayOfWeek();
 						}
 
 						if (currentTarget === instance.get('lastPositionCheckbox')) {
@@ -620,6 +616,14 @@ AUI.add(
 						if (viewNode) {
 							viewNode.toggle(show);
 						}
+					},
+
+					_toggleViewPositionalDayOfWeek: function() {
+						var instance = this;
+
+						var repeatOnDayOfWeek = instance.get('repeatOnDayOfWeekRadioButton').get('checked');
+
+						instance._toggleView('positionalDayOfWeekOptions', repeatOnDayOfWeek && instance._canChooseLastDayOfWeek());
 					},
 
 					_toggleViewWeeklyRecurrence: function() {

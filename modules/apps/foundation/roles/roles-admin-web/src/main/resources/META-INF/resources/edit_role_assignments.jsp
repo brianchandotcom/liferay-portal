@@ -87,7 +87,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), currentURL);
 %>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addUsers" title='<%= LanguageUtil.get(request, "add-assignees") %>' url="javascript:;" />
+	<liferay-frontend:add-menu-item id="addUsers" title='<%= LanguageUtil.format(request, "add-x", tabs1) %>' url="javascript:;" />
 </liferay-frontend:add-menu>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">

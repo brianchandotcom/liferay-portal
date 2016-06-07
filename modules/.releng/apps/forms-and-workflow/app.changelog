@@ -252,13 +252,13 @@ app.git.id-1.3=ec239d5ecded0af27fb19a5dbfe1ba02c502ff86
 
 app.artifacts-7.0=\
 	com.liferay.calendar.api-2.0.1.jar,\
-	com.liferay.calendar.service-2.0.1.jar,\
+	com.liferay.calendar.service-2.0.2.jar,\
 	com.liferay.calendar.web-1.0.6.jar,\
 	com.liferay.dynamic.data.lists.api-2.0.3.jar,\
-	com.liferay.dynamic.data.lists.form.web-1.0.7.jar,\
-	com.liferay.dynamic.data.lists.service-1.1.1.jar,\
-	com.liferay.dynamic.data.lists.web-1.1.3.jar,\
-	com.liferay.dynamic.data.mapping.api-3.1.0.jar,\
+	com.liferay.dynamic.data.lists.form.web-1.0.8.jar,\
+	com.liferay.dynamic.data.lists.service-1.1.2.jar,\
+	com.liferay.dynamic.data.lists.web-1.1.4.jar,\
+	com.liferay.dynamic.data.mapping.api-3.2.0.jar,\
 	com.liferay.dynamic.data.mapping.data.provider-2.0.2.jar,\
 	com.liferay.dynamic.data.mapping.data.provider.rest-2.0.2.jar,\
 	com.liferay.dynamic.data.mapping.data.provider.web-1.0.4.jar,\
@@ -270,29 +270,29 @@ app.artifacts-7.0=\
 	com.liferay.dynamic.data.mapping.form.values.query-2.0.3.jar,\
 	com.liferay.dynamic.data.mapping.io-2.0.4.jar,\
 	com.liferay.dynamic.data.mapping.lang-2.0.1.jar,\
-	com.liferay.dynamic.data.mapping.service-2.1.2.jar,\
+	com.liferay.dynamic.data.mapping.service-2.1.3.jar,\
 	com.liferay.dynamic.data.mapping.taglib-2.0.2.jar,\
 	com.liferay.dynamic.data.mapping.type.captcha-2.0.2.jar,\
-	com.liferay.dynamic.data.mapping.type.checkbox-2.0.4.jar,\
-	com.liferay.dynamic.data.mapping.type.date-2.0.4.jar,\
-	com.liferay.dynamic.data.mapping.type.editor-2.0.5.jar,\
-	com.liferay.dynamic.data.mapping.type.key.value-2.0.3.jar,\
+	com.liferay.dynamic.data.mapping.type.checkbox-2.0.5.jar,\
+	com.liferay.dynamic.data.mapping.type.date-2.0.5.jar,\
+	com.liferay.dynamic.data.mapping.type.editor-2.0.6.jar,\
+	com.liferay.dynamic.data.mapping.type.key.value-2.0.4.jar,\
 	com.liferay.dynamic.data.mapping.type.options-2.0.3.jar,\
-	com.liferay.dynamic.data.mapping.type.paragraph-2.0.3.jar,\
-	com.liferay.dynamic.data.mapping.type.radio-2.0.5.jar,\
-	com.liferay.dynamic.data.mapping.type.select-2.0.4.jar,\
-	com.liferay.dynamic.data.mapping.type.text-2.0.4.jar,\
+	com.liferay.dynamic.data.mapping.type.paragraph-2.0.4.jar,\
+	com.liferay.dynamic.data.mapping.type.radio-2.0.6.jar,\
+	com.liferay.dynamic.data.mapping.type.select-2.0.5.jar,\
+	com.liferay.dynamic.data.mapping.type.text-2.0.5.jar,\
 	com.liferay.dynamic.data.mapping.type.validation-2.0.3.jar,\
 	com.liferay.dynamic.data.mapping.validator-2.1.0.jar,\
-	com.liferay.dynamic.data.mapping.web-1.0.7.jar,\
+	com.liferay.dynamic.data.mapping.web-1.0.8.jar,\
 	com.liferay.polls.api-4.0.0.jar,\
-	com.liferay.polls.service-3.0.0.jar,\
-	com.liferay.polls.web-2.0.3.jar,\
+	com.liferay.polls.service-3.0.1.jar,\
+	com.liferay.polls.web-2.0.4.jar,\
 	com.liferay.portal.reports.engine.api-3.0.0.jar,\
 	com.liferay.portal.rules.engine.api-2.0.1.jar,\
 	com.liferay.portal.rules.engine.wiring-2.0.1.jar,\
-	com.liferay.portal.workflow.definition.link.web-1.0.2.jar,\
-	com.liferay.portal.workflow.definition.web-1.0.2.jar,\
+	com.liferay.portal.workflow.definition.link.web-1.0.3.jar,\
+	com.liferay.portal.workflow.definition.web-1.0.3.jar,\
 	com.liferay.portal.workflow.instance.web-1.0.3.jar,\
 	com.liferay.portal.workflow.kaleo.api-2.0.1.jar,\
 	com.liferay.portal.workflow.kaleo.definition.api-2.0.1.jar,\
@@ -300,10 +300,10 @@ app.artifacts-7.0=\
 	com.liferay.portal.workflow.kaleo.runtime.api-2.1.0.jar,\
 	com.liferay.portal.workflow.kaleo.runtime.impl-2.0.4.jar,\
 	com.liferay.portal.workflow.kaleo.runtime.scripting.impl-1.0.1.jar,\
-	com.liferay.portal.workflow.kaleo.service-2.0.4.jar,\
+	com.liferay.portal.workflow.kaleo.service-2.0.5.jar,\
 	com.liferay.portal.workflow.lang-2.0.1.jar,\
 	com.liferay.portal.workflow.task.web-1.0.3.jar
 
-app.change.log-7.0=LPS-40401 LPS-46193 LPS-52104 LPS-52177 LPS-52932 LPS-53408 LPS-57200 LPS-61016 LPS-61088 LPS-61099 LPS-61257 LPS-61420 LPS-61443 LPS-61756 LPS-61821 LPS-62191 LPS-62440 LPS-62982 LPS-63057 LPS-63235 LPS-63242 LPS-63366 LPS-63370 LPS-63382 LPS-63602 LPS-63617 LPS-63686 LPS-63695 LPS-63794 LPS-63812 LPS-63843 LPS-63903 LPS-63907 LPS-63953 LPS-63969 LPS-63976 LPS-64006 LPS-64007 LPS-64021 LPS-64024 LPS-64029 LPS-64030 LPS-64031 LPS-64032 LPS-64033 LPS-64035 LPS-64037 LPS-64038 LPS-64049 LPS-64054 LPS-64056 LPS-64066 LPS-64073 LPS-64075 LPS-64083 LPS-64086 LPS-64087 LPS-64090 LPS-64094 LPS-64100 LPS-64111 LPS-64113 LPS-64128 LPS-64129 LPS-64138 LPS-64144 LPS-64164 LPS-64165 LPS-64166 LPS-64178 LPS-64182 LPS-64193 LPS-64201 LPS-64203 LPS-64205 LPS-64228 LPS-64230 LPS-64237 LPS-64238 LPS-64247 LPS-64252 LPS-64272 LPS-64275 LPS-64277 LPS-64282 LPS-64288 LPS-64289 LPS-64294 LPS-64296 LPS-64297 LPS-64298 LPS-64300 LPS-64301 LPS-64302 LPS-64303 LPS-64322 LPS-64335 LPS-64340 LPS-64343 LPS-64353 LPS-64361 LPS-64363 LPS-64376 LPS-64379 LPS-64383 LPS-64385 LPS-64387 LPS-64407 LPS-64414 LPS-64419 LPS-64427 LPS-64456 LPS-64460 LPS-64464 LPS-64477 LPS-64489 LPS-64491 LPS-64507 LPS-64515 LPS-64527 LPS-64528 LPS-64535 LPS-64550 LPS-64562 LPS-64582 LPS-64583 LPS-64591 LPS-64593 LPS-64610 LPS-64645 LPS-64651 LPS-64666 LPS-64668 LPS-64672 LPS-64679 LPS-64685 LPS-64687 LPS-64691 LPS-64699 LPS-64704 LPS-64713 LPS-64720 LPS-64742 LPS-64744 LPS-64746 LPS-64764 LPS-64783 LPS-64787 LPS-64795 LPS-64798 LPS-64820 LPS-64827 LPS-64831 LPS-64840 LPS-64841 LPS-64847 LPS-64858 LPS-64863 LPS-64866 LPS-64897 LPS-64900 LPS-64906 LPS-64917 LPS-64921 LPS-64933 LPS-64944 LPS-64946 LPS-64975 LPS-65012 LPS-65036 LPS-65045 LPS-65063 LPS-65069 LPS-65075 LPS-65078 LPS-65079 LPS-65083 LPS-65088 LPS-65094 LPS-65107 LPS-65118 LPS-65119 LPS-65127 LPS-65135 LPS-65154 LPS-65168 LPS-65224 LPS-65225 LPS-65229 LPS-65243 LPS-65263 LPS-65270 LPS-65282 LPS-65312 LPS-65317 LPS-65322 LPS-65323 LPS-65333 LPS-65362 LPS-65385 LPS-65427 LPS-65430 LPS-65441 LPS-65448 LPS-65450 LPS-65453 LPS-65467 LPS-65479 LPS-65493 LPS-65509 LPS-65547 LPS-65555 LPS-65557 LPS-65567 LPS-65569 LPS-65571 LPS-65583 LPS-65596 LPS-65604 LPS-65623 LPS-65629 LPS-65647 LPS-65651 LPS-65656 LPS-65677 LPS-65681 LPS-65683 LPS-65684 LPS-65685 LPS-65690 LPS-65700 LPS-65712 LPS-65714 LPS-65718 LPS-65728 LPS-65738 LPS-65748 LPS-65776 LPS-65778 LPS-65794 LPS-65810 LPS-65816 LPS-65818 LPS-65838 LPS-65868 LPS-65873 LPS-65889 LPS-65896 LPS-65909 LPS-65914 LPS-65916 LPS-65938 LPS-65960 LPS-65989 LPS-65992 LPS-65999 LPS-66017 LPS-66040 LPS-66044 LPS-66061 LPS-66064 LPS-66075 LPS-66078 LPS-66099 LPS-66164 LPS-66174 LPS-66183 LPS-66212 LPS-66219 LPS-66227 LPS-66228 LPS-66259 LPS-66296 LPS-68510
+app.change.log-7.0=LPS-40401 LPS-46193 LPS-52104 LPS-52177 LPS-52932 LPS-53408 LPS-57200 LPS-61016 LPS-61088 LPS-61099 LPS-61257 LPS-61420 LPS-61443 LPS-61756 LPS-61821 LPS-62191 LPS-62440 LPS-62982 LPS-63057 LPS-63235 LPS-63242 LPS-63366 LPS-63370 LPS-63382 LPS-63602 LPS-63617 LPS-63686 LPS-63695 LPS-63794 LPS-63812 LPS-63843 LPS-63903 LPS-63907 LPS-63953 LPS-63969 LPS-63976 LPS-64006 LPS-64007 LPS-64021 LPS-64024 LPS-64029 LPS-64030 LPS-64031 LPS-64032 LPS-64033 LPS-64035 LPS-64037 LPS-64038 LPS-64049 LPS-64054 LPS-64056 LPS-64066 LPS-64073 LPS-64075 LPS-64083 LPS-64086 LPS-64087 LPS-64090 LPS-64094 LPS-64100 LPS-64111 LPS-64113 LPS-64128 LPS-64129 LPS-64138 LPS-64144 LPS-64164 LPS-64165 LPS-64166 LPS-64178 LPS-64182 LPS-64193 LPS-64201 LPS-64203 LPS-64205 LPS-64228 LPS-64230 LPS-64237 LPS-64238 LPS-64247 LPS-64252 LPS-64272 LPS-64275 LPS-64277 LPS-64282 LPS-64288 LPS-64289 LPS-64294 LPS-64296 LPS-64297 LPS-64298 LPS-64300 LPS-64301 LPS-64302 LPS-64303 LPS-64322 LPS-64335 LPS-64340 LPS-64343 LPS-64353 LPS-64361 LPS-64363 LPS-64376 LPS-64379 LPS-64383 LPS-64385 LPS-64387 LPS-64407 LPS-64414 LPS-64419 LPS-64427 LPS-64456 LPS-64460 LPS-64464 LPS-64477 LPS-64489 LPS-64491 LPS-64507 LPS-64515 LPS-64527 LPS-64528 LPS-64535 LPS-64550 LPS-64562 LPS-64582 LPS-64583 LPS-64591 LPS-64593 LPS-64610 LPS-64645 LPS-64651 LPS-64666 LPS-64668 LPS-64672 LPS-64679 LPS-64685 LPS-64687 LPS-64691 LPS-64699 LPS-64704 LPS-64713 LPS-64720 LPS-64742 LPS-64744 LPS-64746 LPS-64764 LPS-64783 LPS-64787 LPS-64795 LPS-64798 LPS-64820 LPS-64827 LPS-64831 LPS-64840 LPS-64841 LPS-64847 LPS-64858 LPS-64863 LPS-64866 LPS-64897 LPS-64900 LPS-64906 LPS-64917 LPS-64921 LPS-64933 LPS-64944 LPS-64946 LPS-64975 LPS-65012 LPS-65036 LPS-65045 LPS-65063 LPS-65069 LPS-65075 LPS-65078 LPS-65079 LPS-65083 LPS-65088 LPS-65094 LPS-65107 LPS-65118 LPS-65119 LPS-65127 LPS-65135 LPS-65154 LPS-65168 LPS-65224 LPS-65225 LPS-65229 LPS-65243 LPS-65263 LPS-65270 LPS-65282 LPS-65312 LPS-65317 LPS-65322 LPS-65323 LPS-65333 LPS-65362 LPS-65381 LPS-65385 LPS-65427 LPS-65430 LPS-65441 LPS-65448 LPS-65450 LPS-65453 LPS-65467 LPS-65479 LPS-65493 LPS-65509 LPS-65547 LPS-65555 LPS-65557 LPS-65567 LPS-65569 LPS-65571 LPS-65583 LPS-65596 LPS-65604 LPS-65623 LPS-65629 LPS-65647 LPS-65651 LPS-65656 LPS-65677 LPS-65681 LPS-65683 LPS-65684 LPS-65685 LPS-65690 LPS-65700 LPS-65712 LPS-65714 LPS-65718 LPS-65728 LPS-65738 LPS-65748 LPS-65776 LPS-65778 LPS-65794 LPS-65810 LPS-65816 LPS-65818 LPS-65838 LPS-65868 LPS-65873 LPS-65889 LPS-65896 LPS-65909 LPS-65914 LPS-65916 LPS-65938 LPS-65960 LPS-65989 LPS-65992 LPS-65999 LPS-66017 LPS-66040 LPS-66044 LPS-66050 LPS-66061 LPS-66064 LPS-66075 LPS-66078 LPS-66099 LPS-66164 LPS-66174 LPS-66183 LPS-66212 LPS-66219 LPS-66227 LPS-66228 LPS-66259 LPS-66296 LPS-66381 LPS-68510
 
-app.git.id-7.0=f6978ef6be11ce1b9b656c3163733a674984946e
+app.git.id-7.0=5ed4a93dfce38edadd1a5bb40387d2e00241e32a

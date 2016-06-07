@@ -210,7 +210,7 @@
 </tr>
 <tr>
 	<td>LEXICON_SELECT_ALL</td>
-	<td>//*[@data-qa-id='selectAllCheckbox']</td>
+	<td>//div[contains(@class,'collapse on')]//input</td>
 	<td></td>
 </tr>
 <tr>

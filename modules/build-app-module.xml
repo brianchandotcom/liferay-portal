@@ -91,6 +91,8 @@
 					<regexp pattern="[0-9a-f]{40}\^\.\.[0-9a-f]{40}" />
 				</linecontainsregexp>
 
+				<tailfilter lines="1" />
+
 				<tokenfilter>
 					<filetokenizer />
 					<replaceregex flags="g" pattern="[0-9a-f]{40}\^\.\.[0-9a-f]{40}=" replace="" />

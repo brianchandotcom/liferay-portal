@@ -51,8 +51,7 @@ public class StaticLPKGResolver {
 			_STATIC_LPKG_BUNDLE_SYMBOLIC_NAME = staticLPKGBundleSymbolicName;
 		}
 
-		String staticLPKGFileName = System.getProperty(
-			"static.lpkg.file.name");
+		String staticLPKGFileName = System.getProperty("static.lpkg.file.name");
 
 		if (staticLPKGFileName == null) {
 			_STATIC_LPKG_FILE_NAME = _STATIC_LPKG_BUNDLE_SYMBOLIC_NAME.concat(

@@ -1381,6 +1381,47 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-additional-osgi-jars">
+		<attribute name="osgi.dir" />
+		<attribute name="additional.dependencies" />
+		<attribute name="repository.url" />
+
+		<sequential>
+			<for list="@{additional.dependencies}" param="additional.dependency">
+				<sequential>
+					<get-dependency-group dependency.string="@{additional.dependency}" />
+					<get-dependency-name dependency.string="@{additional.dependency}" />
+					<get-dependency-version dependency.string="@{additional.dependency}" />
+
+					<local name="group.path" />
+
+					<propertyregex
+						input="${dependency.group}"
+						global="true"
+						property="group.path"
+						regexp="\."
+						replace="/"
+					/>
+
+					<first id="dependency.jar">
+						<fileset dir="@{osgi.dir}" includes="**/${dependency.name}*.jar" />
+					</first>
+
+					<local name="dependency.jar" />
+
+					<condition property="dependency.jar" value="@{osgi.dir}/modules/${dependency.name}.jar" else="${toString:dependency.jar}">
+						<equals arg1="${toString:dependency.jar}" arg2="" />
+					</condition>
+
+					<mirrors-get
+						dest="${dependency.jar}"
+						src="@{repository.url}/${group.path}/${dependency.name}/${dependency.version}/${dependency.name}-${dependency.version}.jar"
+					/>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="prepare-chrome-driver">
 		<sequential>
 			<if>

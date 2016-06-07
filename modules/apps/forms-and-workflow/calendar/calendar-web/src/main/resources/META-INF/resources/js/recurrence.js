@@ -403,8 +403,7 @@ AUI.add(
 						var currentTarget = event.currentTarget;
 
 						if (currentTarget === instance.get('frequencySelect')) {
-							instance._toggleView('weeklyRecurrenceOptions', instance.get('frequency') === FREQUENCY_WEEKLY);
-							instance._toggleView('monthlyRecurrenceOptions', instance._isPositionalFrequency());
+							instance._toggleViewWeeklyRecurrence();
 						}
 
 						if (currentTarget === instance.get('repeatOnDayOfMonthRadioButton')) {
@@ -621,6 +620,13 @@ AUI.add(
 						if (viewNode) {
 							viewNode.toggle(show);
 						}
+					},
+
+					_toggleViewWeeklyRecurrence: function() {
+						var instance = this;
+
+						instance._toggleView('weeklyRecurrenceOptions', instance.get('frequency') === FREQUENCY_WEEKLY);
+						instance._toggleView('monthlyRecurrenceOptions', instance._isPositionalFrequency());
 					}
 				}
 			}

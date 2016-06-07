@@ -225,9 +225,10 @@ public class NotificationUtil {
 		users.add(UserLocalServiceUtil.fetchUser(calendarResource.getUserId()));
 
 		for (User user : users) {
-			if(user == null) {
+			if (user == null) {
 				continue;
 			}
+
 			notificationRecipients.add(new NotificationRecipient(user));
 		}
 

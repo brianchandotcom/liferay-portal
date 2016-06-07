@@ -6523,7 +6523,9 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 	</target>
 
 	<target name="prepare-system-ext-properties">
-		<echo file="${app.server.classes.portal.dir}/system-ext.properties">log.sanitizer.enabled=false</echo>
+		<echo file="${app.server.classes.portal.dir}/system-ext.properties">log.sanitizer.enabled=false
+static.lpkg.bundle.symbolic.name=static
+static.lpkg.file.name=static.lpkg</echo>
 	</target>
 
 	<target name="prepare-test-build">

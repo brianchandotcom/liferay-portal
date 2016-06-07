@@ -41,6 +41,26 @@
 	<#assign company_url = portalUtil.getURLWithSessionId(company_url, request.getSession().getId()) />
 </#if>
 
+<#assign user_id = user.getUserId() />
+<#assign is_default_user = user.isDefaultUser() />
+<#assign is_setup_complete = user.isSetupComplete() />
+<#assign user_first_name = user.getFirstName() />
+<#assign user_middle_name = user.getMiddleName() />
+<#assign user_last_name = user.getLastName() />
+<#assign user_name = user.getFullName() />
+<#assign is_male = user.isMale() />
+<#assign is_female = user.isFemale() />
+<#assign user_birthday = user.getBirthday() />
+<#assign user_email_address = user.getEmailAddress() />
+<#assign language = locale.getLanguage() />
+<#assign language_id = user.getLanguageId() />
+<#assign w3c_language_id = localeUtil.toW3cLanguageId(theme_display.getLanguageId()) />
+<#assign time_zone = user.getTimeZoneId() />
+<#assign user_greeting = htmlUtil.escape(user.getGreeting()) />
+<#assign user_comments = user.getComments() />
+<#assign user_login_ip = user.getLoginIP() />
+<#assign user_last_login_ip = user.getLastLoginIP() />
+
 <#assign is_login_redirect_required = portalUtil.isLoginRedirectRequired(request) />
 <#assign is_signed_in = theme_display.isSignedIn() />
 

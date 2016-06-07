@@ -286,31 +286,6 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="get-dependency-string-entry">
-		<attribute name="dependency.string" />
-		<attribute name="index" />
-
-		<sequential>
-			<local name="dependency.string" />
-			<local name="index" />
-
-			<property name="dependency.string" value="@{dependency.string}" />
-			<property name="index" value="@{index}" />
-
-			<beanshell>
-				<![CDATA[
-					int index = Integer.parseInt(project.getProperty("index"));
-
-					String dependencyString = project.getProperty("dependency.string");
-
-					String[] dependencyInfo = dependencyString.split(":", 3);
-
-					project.setProperty("dependency.string.entry", dependencyInfo[index]);
-				]]>
-			</beanshell>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="get-dependency-group">
 		<attribute name="dependency.string" />
 
@@ -336,6 +311,31 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 			<get-dependency-string-entry dependency.string="@{dependency.string}" index="1" />
 
 			<property name="dependency.name" value="${dependency.string.entry}" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-dependency-string-entry">
+		<attribute name="dependency.string" />
+		<attribute name="index" />
+
+		<sequential>
+			<local name="dependency.string" />
+			<local name="index" />
+
+			<property name="dependency.string" value="@{dependency.string}" />
+			<property name="index" value="@{index}" />
+
+			<beanshell>
+				<![CDATA[
+					int index = Integer.parseInt(project.getProperty("index"));
+
+					String dependencyString = project.getProperty("dependency.string");
+
+					String[] dependencyInfo = dependencyString.split(":", 3);
+
+					project.setProperty("dependency.string.entry", dependencyInfo[index]);
+				]]>
+			</beanshell>
 		</sequential>
 	</macrodef>
 
@@ -1409,7 +1409,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 					<local name="dependency.jar" />
 
-					<condition property="dependency.jar" value="@{osgi.dir}/modules/${dependency.name}.jar" else="${toString:dependency.jar}">
+					<condition else="${toString:dependency.jar}" property="dependency.jar" value="@{osgi.dir}/modules/${dependency.name}.jar">
 						<equals arg1="${toString:dependency.jar}" arg2="" />
 					</condition>
 

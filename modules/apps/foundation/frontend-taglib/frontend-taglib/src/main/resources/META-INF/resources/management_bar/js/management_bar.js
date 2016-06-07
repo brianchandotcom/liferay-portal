@@ -9,7 +9,7 @@ AUI.add(
 
 		var STR_HASH = '#';
 
-		var STR_ON = 'on';
+		var STR_SECONDARY_BAR_OPEN = 'secondary-bar-open';
 
 		var STR_SELECT_ALL_CHECKBOXES_SELECTOR = 'selectAllCheckBoxesSelector';
 
@@ -150,7 +150,9 @@ AUI.add(
 					_toggleSecondaryBar: function(show) {
 						var instance = this;
 
-						instance.get('secondaryBar').toggleClass(STR_ON, show);
+						var managementBarContainer = instance.get('secondaryBar').ancestor('.management-bar-container');
+
+						managementBarContainer.toggleClass(STR_SECONDARY_BAR_OPEN, show);
 					},
 
 					_toggleSelectAll: function(event) {
@@ -199,8 +201,10 @@ AUI.add(
 
 						var secondaryBar = node.one(STR_HASH + params.secondaryBarId);
 
+						var managementBarContainer = secondaryBar.ancestor('.management-bar-container');
+
 						if (secondaryBar && totalSelectedItems > 0) {
-							secondaryBar.addClass(STR_ON);
+							managementBarContainer.addClass(STR_SECONDARY_BAR_OPEN);
 						}
 
 						var searchContainerNode = node.one(STR_HASH + params.searchContainerNodeId);

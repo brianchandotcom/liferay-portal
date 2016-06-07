@@ -54,7 +54,7 @@
 	</div>
 
 	<c:if test="<%= Validator.isNotNull(actionButtons) || includeCheckBox %>">
-		<div class="management-bar management-bar-default management-bar-no-collapse" id="<%= namespace %>actionButtons">
+		<div class="management-bar management-bar-default management-bar-no-collapse management-bar-secondary-bar" id="<%= namespace %>actionButtons">
 			<div class="container-fluid-1280">
 				<div class="management-bar-header">
 					<c:if test="<%= includeCheckBox %>">

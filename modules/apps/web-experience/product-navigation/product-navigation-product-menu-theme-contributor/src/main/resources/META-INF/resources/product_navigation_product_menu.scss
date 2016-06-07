@@ -1,10 +1,17 @@
 @import "bourbon";
 @import "variables";
+@import "mixins";
 
 body {
 	&.open #wrapper {
 		@include sm() {
-			padding-left: 320px;
+			padding-left: $product-menu-width;
+		}
+	}
+
+	&.open .control-menu {
+		@include sm() {
+			left: $product-menu-width;
 		}
 	}
 
@@ -24,7 +31,7 @@ body {
 
 	&.open,
 	.sidenav-menu {
-		width: 320px;
+		width: $product-menu-width;
 	}
 }
 

@@ -1,11 +1,3 @@
-body.open {
-	.control-menu {
-		@include sm() {
-			left: 320px;
-		}
-	}
-}
-
 .has-control-menu {
 	#wrapper {
 		margin-top: $has-control-menu-margin-top-mobile;

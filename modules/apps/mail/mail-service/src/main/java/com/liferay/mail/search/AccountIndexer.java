@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.mail.util;
+package com.liferay.mail.search;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil;
-import com.liferay.mail.model.Folder;
-import com.liferay.mail.service.FolderLocalServiceUtil;
+import com.liferay.mail.model.Account;
+import com.liferay.mail.service.AccountLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -52,9 +52,9 @@ import org.osgi.service.component.annotations.Component;
  * @author Peter Fellwock
  */
 @Component(immediate = true, service = Indexer.class)
-public class FolderIndexer extends BaseIndexer<Folder> {
+public class AccountIndexer extends BaseIndexer<Account> {
 
-	public static final String CLASS_NAME = Folder.class.getName();
+	public static final String CLASS_NAME = Account.class.getName();
 
 	@Override
 	public String getClassName() {
@@ -62,10 +62,10 @@ public class FolderIndexer extends BaseIndexer<Folder> {
 	}
 
 	@Override
-	protected void doDelete(Folder folder) throws Exception {
+	protected void doDelete(Account account) throws Exception {
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setCompanyId(folder.getCompanyId());
+		searchContext.setCompanyId(account.getCompanyId());
 		searchContext.setEnd(QueryUtil.ALL_POS);
 		searchContext.setSearchEngineId(getSearchEngineId());
 		searchContext.setSorts(SortFactoryUtil.getDefaultSorts());
@@ -75,7 +75,7 @@ public class FolderIndexer extends BaseIndexer<Folder> {
 
 		booleanQuery.addRequiredTerm(Field.ENTRY_CLASS_NAME, CLASS_NAME);
 
-		booleanQuery.addRequiredTerm("folderId", folder.getFolderId());
+		booleanQuery.addRequiredTerm("accountId", account.getAccountId());
 
 		Hits hits = IndexSearcherHelperUtil.search(searchContext, booleanQuery);
 
@@ -88,20 +88,18 @@ public class FolderIndexer extends BaseIndexer<Folder> {
 		}
 
 		IndexWriterHelperUtil.deleteDocuments(
-			getSearchEngineId(), folder.getCompanyId(), uids,
+			getSearchEngineId(), account.getCompanyId(), uids,
 			isCommitImmediately());
 	}
 
 	@Override
-	protected Document doGetDocument(Folder folder) throws Exception {
-		Document document = getBaseModelDocument(CLASS_NAME, folder);
+	protected Document doGetDocument(Account account) throws Exception {
+		Document document = getBaseModelDocument(CLASS_NAME, account);
 
-		ExpandoBridge expandoBridge = folder.getExpandoBridge();
+		ExpandoBridge expandoBridge = account.getExpandoBridge();
 
-		document.addKeyword(Field.FOLDER_ID, folder.getFolderId());
-		document.addText(Field.NAME, folder.getDisplayName());
-
-		document.addKeyword("accountId", folder.getAccountId());
+		document.addKeyword("accountId", account.getAccountId());
+		document.addText(Field.NAME, account.getAddress());
 
 		ExpandoBridgeIndexerUtil.addAttributes(document, expandoBridge);
 
@@ -117,19 +115,19 @@ public class FolderIndexer extends BaseIndexer<Folder> {
 	}
 
 	@Override
-	protected void doReindex(Folder folder) throws Exception {
-		Document document = getDocument(folder);
+	protected void doReindex(Account account) throws Exception {
+		Document document = getDocument(account);
 
 		IndexWriterHelperUtil.updateDocument(
-			getSearchEngineId(), folder.getCompanyId(), document,
+			getSearchEngineId(), account.getCompanyId(), document,
 			isCommitImmediately());
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		Folder folder = FolderLocalServiceUtil.getFolder(classPK);
+		Account account = AccountLocalServiceUtil.getAccount(classPK);
 
-		doReindex(folder);
+		doReindex(account);
 	}
 
 	@Override
@@ -141,26 +139,26 @@ public class FolderIndexer extends BaseIndexer<Folder> {
 
 	protected void reindexMessages(long companyId) throws PortalException {
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			FolderLocalServiceUtil.getIndexableActionableDynamicQuery();
+			AccountLocalServiceUtil.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<Folder>() {
+			new ActionableDynamicQuery.PerformActionMethod<Account>() {
 
 				@Override
-				public void performAction(Folder folder)
+				public void performAction(Account account)
 					throws PortalException {
 
 					try {
-						Document document = getDocument(folder);
+						Document document = getDocument(account);
 
 						indexableActionableDynamicQuery.addDocuments(document);
 					}
 					catch (PortalException pe) {
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"Unable to index folder " +
-									folder.getFolderId(),
+								"Unable to index account " +
+									account.getAccountId(),
 								pe);
 						}
 					}
@@ -172,6 +170,6 @@ public class FolderIndexer extends BaseIndexer<Folder> {
 		indexableActionableDynamicQuery.performActions();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(FolderIndexer.class);
+	private static final Log _log = LogFactoryUtil.getLog(AccountIndexer.class);
 
 }

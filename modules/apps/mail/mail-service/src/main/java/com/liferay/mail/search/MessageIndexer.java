@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mail.util;
+package com.liferay.mail.search;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil;

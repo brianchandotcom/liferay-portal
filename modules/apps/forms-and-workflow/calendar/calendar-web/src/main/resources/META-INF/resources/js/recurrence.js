@@ -410,9 +410,7 @@ AUI.add(
 						}
 
 						if (currentTarget === instance.get('lastPositionCheckbox')) {
-							var positionInput = instance.get('positionInput');
-
-							positionInput.val(instance._calculatePosition());
+							instance._setPositionInputValue();
 						}
 
 						instance._toggleDisabledLimitCountInput();
@@ -568,6 +566,14 @@ AUI.add(
 						repeatOnDayOfWeekRadioButton.simulate('change');
 
 						return value;
+					},
+
+					_setPositionInputValue: function() {
+						var instance = this;
+
+						var positionInput = instance.get('positionInput');
+
+						positionInput.val(instance._calculatePosition());
 					},
 
 					_setRecurrence: function(data) {

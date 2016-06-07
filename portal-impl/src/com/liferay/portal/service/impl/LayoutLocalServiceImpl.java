@@ -417,6 +417,15 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			friendlyURLMap, serviceContext);
 	}
 
+	@Override
+	public int countLayouts(
+		long groupId, boolean privateLayout, long parentLayoutId,
+		Date lastCreateDate) {
+
+		return layoutPersistence.countByG_P_P_CD(
+			groupId, privateLayout, parentLayoutId, lastCreateDate);
+	}
+
 	/**
 	 * Deletes the layout, its child layouts, and its associated resources.
 	 *

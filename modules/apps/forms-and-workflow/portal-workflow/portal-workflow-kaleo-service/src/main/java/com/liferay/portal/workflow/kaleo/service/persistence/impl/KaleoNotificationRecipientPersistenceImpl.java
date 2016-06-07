@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -2063,12 +2062,14 @@ public class KaleoNotificationRecipientPersistenceImpl
 	 */
 	@Override
 	public KaleoNotificationRecipient fetchByPrimaryKey(Serializable primaryKey) {
-		KaleoNotificationRecipient kaleoNotificationRecipient = (KaleoNotificationRecipient)entityCache.getResult(KaleoNotificationRecipientModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(KaleoNotificationRecipientModelImpl.ENTITY_CACHE_ENABLED,
 				KaleoNotificationRecipientImpl.class, primaryKey);
 
-		if (kaleoNotificationRecipient == _nullKaleoNotificationRecipient) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		KaleoNotificationRecipient kaleoNotificationRecipient = (KaleoNotificationRecipient)serializable;
 
 		if (kaleoNotificationRecipient == null) {
 			Session session = null;
@@ -2085,7 +2086,7 @@ public class KaleoNotificationRecipientPersistenceImpl
 				else {
 					entityCache.putResult(KaleoNotificationRecipientModelImpl.ENTITY_CACHE_ENABLED,
 						KaleoNotificationRecipientImpl.class, primaryKey,
-						_nullKaleoNotificationRecipient);
+						nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2140,18 +2141,20 @@ public class KaleoNotificationRecipientPersistenceImpl
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			KaleoNotificationRecipient kaleoNotificationRecipient = (KaleoNotificationRecipient)entityCache.getResult(KaleoNotificationRecipientModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(KaleoNotificationRecipientModelImpl.ENTITY_CACHE_ENABLED,
 					KaleoNotificationRecipientImpl.class, primaryKey);
 
-			if (kaleoNotificationRecipient == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, kaleoNotificationRecipient);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (KaleoNotificationRecipient)serializable);
+				}
 			}
 		}
 
@@ -2194,8 +2197,7 @@ public class KaleoNotificationRecipientPersistenceImpl
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(KaleoNotificationRecipientModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoNotificationRecipientImpl.class, primaryKey,
-					_nullKaleoNotificationRecipient);
+					KaleoNotificationRecipientImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2433,24 +2435,4 @@ public class KaleoNotificationRecipientPersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No KaleoNotificationRecipient exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No KaleoNotificationRecipient exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(KaleoNotificationRecipientPersistenceImpl.class);
-	private static final KaleoNotificationRecipient _nullKaleoNotificationRecipient =
-		new KaleoNotificationRecipientImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<KaleoNotificationRecipient> toCacheModel() {
-				return _nullKaleoNotificationRecipientCacheModel;
-			}
-		};
-
-	private static final CacheModel<KaleoNotificationRecipient> _nullKaleoNotificationRecipientCacheModel =
-		new CacheModel<KaleoNotificationRecipient>() {
-			@Override
-			public KaleoNotificationRecipient toEntityModel() {
-				return _nullKaleoNotificationRecipient;
-			}
-		};
 }

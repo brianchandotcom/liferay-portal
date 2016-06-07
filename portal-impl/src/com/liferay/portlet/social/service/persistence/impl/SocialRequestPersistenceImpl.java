@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -6911,12 +6910,14 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	 */
 	@Override
 	public SocialRequest fetchByPrimaryKey(Serializable primaryKey) {
-		SocialRequest socialRequest = (SocialRequest)entityCache.getResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
 				SocialRequestImpl.class, primaryKey);
 
-		if (socialRequest == _nullSocialRequest) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		SocialRequest socialRequest = (SocialRequest)serializable;
 
 		if (socialRequest == null) {
 			Session session = null;
@@ -6932,7 +6933,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 				}
 				else {
 					entityCache.putResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-						SocialRequestImpl.class, primaryKey, _nullSocialRequest);
+						SocialRequestImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -6986,18 +6987,20 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			SocialRequest socialRequest = (SocialRequest)entityCache.getResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
 					SocialRequestImpl.class, primaryKey);
 
-			if (socialRequest == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, socialRequest);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (SocialRequest)serializable);
+				}
 			}
 		}
 
@@ -7039,7 +7042,7 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(SocialRequestModelImpl.ENTITY_CACHE_ENABLED,
-					SocialRequestImpl.class, primaryKey, _nullSocialRequest);
+					SocialRequestImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -7282,22 +7285,4 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "type"
 			});
-	private static final SocialRequest _nullSocialRequest = new SocialRequestImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<SocialRequest> toCacheModel() {
-				return _nullSocialRequestCacheModel;
-			}
-		};
-
-	private static final CacheModel<SocialRequest> _nullSocialRequestCacheModel = new CacheModel<SocialRequest>() {
-			@Override
-			public SocialRequest toEntityModel() {
-				return _nullSocialRequest;
-			}
-		};
 }

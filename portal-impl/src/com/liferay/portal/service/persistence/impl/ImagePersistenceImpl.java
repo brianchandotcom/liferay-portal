@@ -29,9 +29,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Image;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.ImagePersistence;
@@ -854,12 +852,14 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	 */
 	@Override
 	public Image fetchByPrimaryKey(Serializable primaryKey) {
-		Image image = (Image)entityCache.getResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
 				ImageImpl.class, primaryKey);
 
-		if (image == _nullImage) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		Image image = (Image)serializable;
 
 		if (image == null) {
 			Session session = null;
@@ -874,7 +874,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 				}
 				else {
 					entityCache.putResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
-						ImageImpl.class, primaryKey, _nullImage);
+						ImageImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -928,18 +928,20 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Image image = (Image)entityCache.getResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
 					ImageImpl.class, primaryKey);
 
-			if (image == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, image);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (Image)serializable);
+				}
 			}
 		}
 
@@ -981,7 +983,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(ImageModelImpl.ENTITY_CACHE_ENABLED,
-					ImageImpl.class, primaryKey, _nullImage);
+					ImageImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -1223,33 +1225,4 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"type", "size"
 			});
-	private static final Image _nullImage = new ImageImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<Image> toCacheModel() {
-				return _nullImageCacheModel;
-			}
-		};
-
-	private static final CacheModel<Image> _nullImageCacheModel = new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<Image>, MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public Image toEntityModel() {
-			return _nullImage;
-		}
-	}
 }

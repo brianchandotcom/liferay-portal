@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -2459,12 +2458,14 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	 */
 	@Override
 	public SocialActivityLimit fetchByPrimaryKey(Serializable primaryKey) {
-		SocialActivityLimit socialActivityLimit = (SocialActivityLimit)entityCache.getResult(SocialActivityLimitModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(SocialActivityLimitModelImpl.ENTITY_CACHE_ENABLED,
 				SocialActivityLimitImpl.class, primaryKey);
 
-		if (socialActivityLimit == _nullSocialActivityLimit) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		SocialActivityLimit socialActivityLimit = (SocialActivityLimit)serializable;
 
 		if (socialActivityLimit == null) {
 			Session session = null;
@@ -2480,8 +2481,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 				}
 				else {
 					entityCache.putResult(SocialActivityLimitModelImpl.ENTITY_CACHE_ENABLED,
-						SocialActivityLimitImpl.class, primaryKey,
-						_nullSocialActivityLimit);
+						SocialActivityLimitImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2535,18 +2535,20 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			SocialActivityLimit socialActivityLimit = (SocialActivityLimit)entityCache.getResult(SocialActivityLimitModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(SocialActivityLimitModelImpl.ENTITY_CACHE_ENABLED,
 					SocialActivityLimitImpl.class, primaryKey);
 
-			if (socialActivityLimit == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, socialActivityLimit);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (SocialActivityLimit)serializable);
+				}
 			}
 		}
 
@@ -2589,8 +2591,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(SocialActivityLimitModelImpl.ENTITY_CACHE_ENABLED,
-					SocialActivityLimitImpl.class, primaryKey,
-					_nullSocialActivityLimit);
+					SocialActivityLimitImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2825,23 +2826,4 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No SocialActivityLimit exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SocialActivityLimit exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(SocialActivityLimitPersistenceImpl.class);
-	private static final SocialActivityLimit _nullSocialActivityLimit = new SocialActivityLimitImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<SocialActivityLimit> toCacheModel() {
-				return _nullSocialActivityLimitCacheModel;
-			}
-		};
-
-	private static final CacheModel<SocialActivityLimit> _nullSocialActivityLimitCacheModel =
-		new CacheModel<SocialActivityLimit>() {
-			@Override
-			public SocialActivityLimit toEntityModel() {
-				return _nullSocialActivityLimit;
-			}
-		};
 }

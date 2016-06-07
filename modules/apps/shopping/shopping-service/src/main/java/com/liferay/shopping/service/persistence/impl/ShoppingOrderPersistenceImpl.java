@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -2997,12 +2996,14 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	 */
 	@Override
 	public ShoppingOrder fetchByPrimaryKey(Serializable primaryKey) {
-		ShoppingOrder shoppingOrder = (ShoppingOrder)entityCache.getResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
 				ShoppingOrderImpl.class, primaryKey);
 
-		if (shoppingOrder == _nullShoppingOrder) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		ShoppingOrder shoppingOrder = (ShoppingOrder)serializable;
 
 		if (shoppingOrder == null) {
 			Session session = null;
@@ -3018,7 +3019,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 				}
 				else {
 					entityCache.putResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
-						ShoppingOrderImpl.class, primaryKey, _nullShoppingOrder);
+						ShoppingOrderImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -3072,18 +3073,20 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			ShoppingOrder shoppingOrder = (ShoppingOrder)entityCache.getResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
 					ShoppingOrderImpl.class, primaryKey);
 
-			if (shoppingOrder == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, shoppingOrder);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (ShoppingOrder)serializable);
+				}
 			}
 		}
 
@@ -3125,7 +3128,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
-					ShoppingOrderImpl.class, primaryKey, _nullShoppingOrder);
+					ShoppingOrderImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3380,22 +3383,4 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"number"
 			});
-	private static final ShoppingOrder _nullShoppingOrder = new ShoppingOrderImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<ShoppingOrder> toCacheModel() {
-				return _nullShoppingOrderCacheModel;
-			}
-		};
-
-	private static final CacheModel<ShoppingOrder> _nullShoppingOrderCacheModel = new CacheModel<ShoppingOrder>() {
-			@Override
-			public ShoppingOrder toEntityModel() {
-				return _nullShoppingOrder;
-			}
-		};
 }

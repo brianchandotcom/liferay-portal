@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -7100,12 +7099,14 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	 */
 	@Override
 	public CalendarResource fetchByPrimaryKey(Serializable primaryKey) {
-		CalendarResource calendarResource = (CalendarResource)entityCache.getResult(CalendarResourceModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(CalendarResourceModelImpl.ENTITY_CACHE_ENABLED,
 				CalendarResourceImpl.class, primaryKey);
 
-		if (calendarResource == _nullCalendarResource) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		CalendarResource calendarResource = (CalendarResource)serializable;
 
 		if (calendarResource == null) {
 			Session session = null;
@@ -7121,8 +7122,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 				}
 				else {
 					entityCache.putResult(CalendarResourceModelImpl.ENTITY_CACHE_ENABLED,
-						CalendarResourceImpl.class, primaryKey,
-						_nullCalendarResource);
+						CalendarResourceImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -7176,18 +7176,20 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			CalendarResource calendarResource = (CalendarResource)entityCache.getResult(CalendarResourceModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(CalendarResourceModelImpl.ENTITY_CACHE_ENABLED,
 					CalendarResourceImpl.class, primaryKey);
 
-			if (calendarResource == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, calendarResource);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (CalendarResource)serializable);
+				}
 			}
 		}
 
@@ -7229,8 +7231,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(CalendarResourceModelImpl.ENTITY_CACHE_ENABLED,
-					CalendarResourceImpl.class, primaryKey,
-					_nullCalendarResource);
+					CalendarResourceImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -7477,23 +7478,4 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "code", "active"
 			});
-	private static final CalendarResource _nullCalendarResource = new CalendarResourceImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<CalendarResource> toCacheModel() {
-				return _nullCalendarResourceCacheModel;
-			}
-		};
-
-	private static final CacheModel<CalendarResource> _nullCalendarResourceCacheModel =
-		new CacheModel<CalendarResource>() {
-			@Override
-			public CalendarResource toEntityModel() {
-				return _nullCalendarResource;
-			}
-		};
 }

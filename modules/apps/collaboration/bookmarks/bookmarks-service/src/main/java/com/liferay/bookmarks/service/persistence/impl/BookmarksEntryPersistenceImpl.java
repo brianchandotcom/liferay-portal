@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -12898,12 +12897,14 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	 */
 	@Override
 	public BookmarksEntry fetchByPrimaryKey(Serializable primaryKey) {
-		BookmarksEntry bookmarksEntry = (BookmarksEntry)entityCache.getResult(BookmarksEntryModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(BookmarksEntryModelImpl.ENTITY_CACHE_ENABLED,
 				BookmarksEntryImpl.class, primaryKey);
 
-		if (bookmarksEntry == _nullBookmarksEntry) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		BookmarksEntry bookmarksEntry = (BookmarksEntry)serializable;
 
 		if (bookmarksEntry == null) {
 			Session session = null;
@@ -12919,8 +12920,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 				}
 				else {
 					entityCache.putResult(BookmarksEntryModelImpl.ENTITY_CACHE_ENABLED,
-						BookmarksEntryImpl.class, primaryKey,
-						_nullBookmarksEntry);
+						BookmarksEntryImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -12974,18 +12974,20 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			BookmarksEntry bookmarksEntry = (BookmarksEntry)entityCache.getResult(BookmarksEntryModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(BookmarksEntryModelImpl.ENTITY_CACHE_ENABLED,
 					BookmarksEntryImpl.class, primaryKey);
 
-			if (bookmarksEntry == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, bookmarksEntry);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (BookmarksEntry)serializable);
+				}
 			}
 		}
 
@@ -13027,7 +13029,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(BookmarksEntryModelImpl.ENTITY_CACHE_ENABLED,
-					BookmarksEntryImpl.class, primaryKey, _nullBookmarksEntry);
+					BookmarksEntryImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -13274,23 +13276,4 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final BookmarksEntry _nullBookmarksEntry = new BookmarksEntryImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<BookmarksEntry> toCacheModel() {
-				return _nullBookmarksEntryCacheModel;
-			}
-		};
-
-	private static final CacheModel<BookmarksEntry> _nullBookmarksEntryCacheModel =
-		new CacheModel<BookmarksEntry>() {
-			@Override
-			public BookmarksEntry toEntityModel() {
-				return _nullBookmarksEntry;
-			}
-		};
 }

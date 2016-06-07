@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchWebDAVPropsException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.WebDAVProps;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -690,12 +688,14 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 	 */
 	@Override
 	public WebDAVProps fetchByPrimaryKey(Serializable primaryKey) {
-		WebDAVProps webDAVProps = (WebDAVProps)entityCache.getResult(WebDAVPropsModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(WebDAVPropsModelImpl.ENTITY_CACHE_ENABLED,
 				WebDAVPropsImpl.class, primaryKey);
 
-		if (webDAVProps == _nullWebDAVProps) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		WebDAVProps webDAVProps = (WebDAVProps)serializable;
 
 		if (webDAVProps == null) {
 			Session session = null;
@@ -711,7 +711,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 				}
 				else {
 					entityCache.putResult(WebDAVPropsModelImpl.ENTITY_CACHE_ENABLED,
-						WebDAVPropsImpl.class, primaryKey, _nullWebDAVProps);
+						WebDAVPropsImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -765,18 +765,20 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			WebDAVProps webDAVProps = (WebDAVProps)entityCache.getResult(WebDAVPropsModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(WebDAVPropsModelImpl.ENTITY_CACHE_ENABLED,
 					WebDAVPropsImpl.class, primaryKey);
 
-			if (webDAVProps == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, webDAVProps);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (WebDAVProps)serializable);
+				}
 			}
 		}
 
@@ -818,7 +820,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(WebDAVPropsModelImpl.ENTITY_CACHE_ENABLED,
-					WebDAVPropsImpl.class, primaryKey, _nullWebDAVProps);
+					WebDAVPropsImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -1053,34 +1055,4 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No WebDAVProps exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No WebDAVProps exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(WebDAVPropsPersistenceImpl.class);
-	private static final WebDAVProps _nullWebDAVProps = new WebDAVPropsImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<WebDAVProps> toCacheModel() {
-				return _nullWebDAVPropsCacheModel;
-			}
-		};
-
-	private static final CacheModel<WebDAVProps> _nullWebDAVPropsCacheModel = new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<WebDAVProps>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public WebDAVProps toEntityModel() {
-			return _nullWebDAVProps;
-		}
-	}
 }

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -4531,12 +4530,14 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 	 */
 	@Override
 	public SAPEntry fetchByPrimaryKey(Serializable primaryKey) {
-		SAPEntry sapEntry = (SAPEntry)entityCache.getResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
 				SAPEntryImpl.class, primaryKey);
 
-		if (sapEntry == _nullSAPEntry) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		SAPEntry sapEntry = (SAPEntry)serializable;
 
 		if (sapEntry == null) {
 			Session session = null;
@@ -4551,7 +4552,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 				}
 				else {
 					entityCache.putResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
-						SAPEntryImpl.class, primaryKey, _nullSAPEntry);
+						SAPEntryImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -4605,18 +4606,20 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			SAPEntry sapEntry = (SAPEntry)entityCache.getResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
 					SAPEntryImpl.class, primaryKey);
 
-			if (sapEntry == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, sapEntry);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (SAPEntry)serializable);
+				}
 			}
 		}
 
@@ -4658,7 +4661,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
-					SAPEntryImpl.class, primaryKey, _nullSAPEntry);
+					SAPEntryImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -4912,22 +4915,4 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final SAPEntry _nullSAPEntry = new SAPEntryImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<SAPEntry> toCacheModel() {
-				return _nullSAPEntryCacheModel;
-			}
-		};
-
-	private static final CacheModel<SAPEntry> _nullSAPEntryCacheModel = new CacheModel<SAPEntry>() {
-			@Override
-			public SAPEntry toEntityModel() {
-				return _nullSAPEntry;
-			}
-		};
 }

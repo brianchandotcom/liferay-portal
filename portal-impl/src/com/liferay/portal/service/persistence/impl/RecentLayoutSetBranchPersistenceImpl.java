@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchRecentLayoutSetBranchException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.RecentLayoutSetBranch;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
@@ -2278,12 +2276,14 @@ public class RecentLayoutSetBranchPersistenceImpl extends BasePersistenceImpl<Re
 	 */
 	@Override
 	public RecentLayoutSetBranch fetchByPrimaryKey(Serializable primaryKey) {
-		RecentLayoutSetBranch recentLayoutSetBranch = (RecentLayoutSetBranch)entityCache.getResult(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
 				RecentLayoutSetBranchImpl.class, primaryKey);
 
-		if (recentLayoutSetBranch == _nullRecentLayoutSetBranch) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		RecentLayoutSetBranch recentLayoutSetBranch = (RecentLayoutSetBranch)serializable;
 
 		if (recentLayoutSetBranch == null) {
 			Session session = null;
@@ -2299,8 +2299,7 @@ public class RecentLayoutSetBranchPersistenceImpl extends BasePersistenceImpl<Re
 				}
 				else {
 					entityCache.putResult(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-						RecentLayoutSetBranchImpl.class, primaryKey,
-						_nullRecentLayoutSetBranch);
+						RecentLayoutSetBranchImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2354,18 +2353,20 @@ public class RecentLayoutSetBranchPersistenceImpl extends BasePersistenceImpl<Re
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			RecentLayoutSetBranch recentLayoutSetBranch = (RecentLayoutSetBranch)entityCache.getResult(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
 					RecentLayoutSetBranchImpl.class, primaryKey);
 
-			if (recentLayoutSetBranch == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, recentLayoutSetBranch);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (RecentLayoutSetBranch)serializable);
+				}
 			}
 		}
 
@@ -2408,8 +2409,7 @@ public class RecentLayoutSetBranchPersistenceImpl extends BasePersistenceImpl<Re
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(RecentLayoutSetBranchModelImpl.ENTITY_CACHE_ENABLED,
-					RecentLayoutSetBranchImpl.class, primaryKey,
-					_nullRecentLayoutSetBranch);
+					RecentLayoutSetBranchImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2644,35 +2644,4 @@ public class RecentLayoutSetBranchPersistenceImpl extends BasePersistenceImpl<Re
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No RecentLayoutSetBranch exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No RecentLayoutSetBranch exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(RecentLayoutSetBranchPersistenceImpl.class);
-	private static final RecentLayoutSetBranch _nullRecentLayoutSetBranch = new RecentLayoutSetBranchImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<RecentLayoutSetBranch> toCacheModel() {
-				return _nullRecentLayoutSetBranchCacheModel;
-			}
-		};
-
-	private static final CacheModel<RecentLayoutSetBranch> _nullRecentLayoutSetBranchCacheModel =
-		new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<RecentLayoutSetBranch>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public RecentLayoutSetBranch toEntityModel() {
-			return _nullRecentLayoutSetBranch;
-		}
-	}
 }

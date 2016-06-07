@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -23026,12 +23025,14 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByPrimaryKey(Serializable primaryKey) {
-		WikiPage wikiPage = (WikiPage)entityCache.getResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 				WikiPageImpl.class, primaryKey);
 
-		if (wikiPage == _nullWikiPage) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		WikiPage wikiPage = (WikiPage)serializable;
 
 		if (wikiPage == null) {
 			Session session = null;
@@ -23046,7 +23047,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				}
 				else {
 					entityCache.putResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
-						WikiPageImpl.class, primaryKey, _nullWikiPage);
+						WikiPageImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -23100,18 +23101,20 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			WikiPage wikiPage = (WikiPage)entityCache.getResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 					WikiPageImpl.class, primaryKey);
 
-			if (wikiPage == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, wikiPage);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (WikiPage)serializable);
+				}
 			}
 		}
 
@@ -23153,7 +23156,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
-					WikiPageImpl.class, primaryKey, _nullWikiPage);
+					WikiPageImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -23407,22 +23410,4 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final WikiPage _nullWikiPage = new WikiPageImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<WikiPage> toCacheModel() {
-				return _nullWikiPageCacheModel;
-			}
-		};
-
-	private static final CacheModel<WikiPage> _nullWikiPageCacheModel = new CacheModel<WikiPage>() {
-			@Override
-			public WikiPage toEntityModel() {
-				return _nullWikiPage;
-			}
-		};
 }

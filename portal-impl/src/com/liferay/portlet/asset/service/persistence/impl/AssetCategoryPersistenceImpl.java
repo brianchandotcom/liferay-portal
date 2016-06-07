@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -11345,12 +11344,14 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	 */
 	@Override
 	public AssetCategory fetchByPrimaryKey(Serializable primaryKey) {
-		AssetCategory assetCategory = (AssetCategory)entityCache.getResult(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
 				AssetCategoryImpl.class, primaryKey);
 
-		if (assetCategory == _nullAssetCategory) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		AssetCategory assetCategory = (AssetCategory)serializable;
 
 		if (assetCategory == null) {
 			Session session = null;
@@ -11366,7 +11367,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				}
 				else {
 					entityCache.putResult(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
-						AssetCategoryImpl.class, primaryKey, _nullAssetCategory);
+						AssetCategoryImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -11420,18 +11421,20 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			AssetCategory assetCategory = (AssetCategory)entityCache.getResult(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
 					AssetCategoryImpl.class, primaryKey);
 
-			if (assetCategory == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, assetCategory);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (AssetCategory)serializable);
+				}
 			}
 		}
 
@@ -11473,7 +11476,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
-					AssetCategoryImpl.class, primaryKey, _nullAssetCategory);
+					AssetCategoryImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -12290,22 +12293,4 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final AssetCategory _nullAssetCategory = new AssetCategoryImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<AssetCategory> toCacheModel() {
-				return _nullAssetCategoryCacheModel;
-			}
-		};
-
-	private static final CacheModel<AssetCategory> _nullAssetCategoryCacheModel = new CacheModel<AssetCategory>() {
-			@Override
-			public AssetCategory toEntityModel() {
-				return _nullAssetCategory;
-			}
-		};
 }

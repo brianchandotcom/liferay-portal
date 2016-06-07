@@ -28,9 +28,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ListType;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.service.persistence.ListTypePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1280,12 +1278,14 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	 */
 	@Override
 	public ListType fetchByPrimaryKey(Serializable primaryKey) {
-		ListType listType = (ListType)entityCache.getResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 				ListTypeImpl.class, primaryKey);
 
-		if (listType == _nullListType) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		ListType listType = (ListType)serializable;
 
 		if (listType == null) {
 			Session session = null;
@@ -1300,7 +1300,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 				}
 				else {
 					entityCache.putResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-						ListTypeImpl.class, primaryKey, _nullListType);
+						ListTypeImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -1354,18 +1354,20 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			ListType listType = (ListType)entityCache.getResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 					ListTypeImpl.class, primaryKey);
 
-			if (listType == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, listType);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (ListType)serializable);
+				}
 			}
 		}
 
@@ -1407,7 +1409,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
-					ListTypeImpl.class, primaryKey, _nullListType);
+					ListTypeImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -1647,34 +1649,4 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"type"
 			});
-	private static final ListType _nullListType = new ListTypeImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<ListType> toCacheModel() {
-				return _nullListTypeCacheModel;
-			}
-		};
-
-	private static final CacheModel<ListType> _nullListTypeCacheModel = new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<ListType>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public ListType toEntityModel() {
-			return _nullListType;
-		}
-	}
 }

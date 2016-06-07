@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchResourceTypePermissionException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ResourceTypePermission;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
@@ -1960,12 +1958,14 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	 */
 	@Override
 	public ResourceTypePermission fetchByPrimaryKey(Serializable primaryKey) {
-		ResourceTypePermission resourceTypePermission = (ResourceTypePermission)entityCache.getResult(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
 				ResourceTypePermissionImpl.class, primaryKey);
 
-		if (resourceTypePermission == _nullResourceTypePermission) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		ResourceTypePermission resourceTypePermission = (ResourceTypePermission)serializable;
 
 		if (resourceTypePermission == null) {
 			Session session = null;
@@ -1981,8 +1981,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 				}
 				else {
 					entityCache.putResult(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
-						ResourceTypePermissionImpl.class, primaryKey,
-						_nullResourceTypePermission);
+						ResourceTypePermissionImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2037,18 +2036,20 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			ResourceTypePermission resourceTypePermission = (ResourceTypePermission)entityCache.getResult(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
 					ResourceTypePermissionImpl.class, primaryKey);
 
-			if (resourceTypePermission == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, resourceTypePermission);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (ResourceTypePermission)serializable);
+				}
 			}
 		}
 
@@ -2091,8 +2092,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(ResourceTypePermissionModelImpl.ENTITY_CACHE_ENABLED,
-					ResourceTypePermissionImpl.class, primaryKey,
-					_nullResourceTypePermission);
+					ResourceTypePermissionImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2327,35 +2327,4 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ResourceTypePermission exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ResourceTypePermission exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(ResourceTypePermissionPersistenceImpl.class);
-	private static final ResourceTypePermission _nullResourceTypePermission = new ResourceTypePermissionImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<ResourceTypePermission> toCacheModel() {
-				return _nullResourceTypePermissionCacheModel;
-			}
-		};
-
-	private static final CacheModel<ResourceTypePermission> _nullResourceTypePermissionCacheModel =
-		new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<ResourceTypePermission>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public ResourceTypePermission toEntityModel() {
-			return _nullResourceTypePermission;
-		}
-	}
 }

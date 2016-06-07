@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -1453,12 +1452,14 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 	 */
 	@Override
 	public MeetupsEntry fetchByPrimaryKey(Serializable primaryKey) {
-		MeetupsEntry meetupsEntry = (MeetupsEntry)entityCache.getResult(MeetupsEntryModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(MeetupsEntryModelImpl.ENTITY_CACHE_ENABLED,
 				MeetupsEntryImpl.class, primaryKey);
 
-		if (meetupsEntry == _nullMeetupsEntry) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		MeetupsEntry meetupsEntry = (MeetupsEntry)serializable;
 
 		if (meetupsEntry == null) {
 			Session session = null;
@@ -1474,7 +1475,7 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 				}
 				else {
 					entityCache.putResult(MeetupsEntryModelImpl.ENTITY_CACHE_ENABLED,
-						MeetupsEntryImpl.class, primaryKey, _nullMeetupsEntry);
+						MeetupsEntryImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -1528,18 +1529,20 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			MeetupsEntry meetupsEntry = (MeetupsEntry)entityCache.getResult(MeetupsEntryModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(MeetupsEntryModelImpl.ENTITY_CACHE_ENABLED,
 					MeetupsEntryImpl.class, primaryKey);
 
-			if (meetupsEntry == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, meetupsEntry);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (MeetupsEntry)serializable);
+				}
 			}
 		}
 
@@ -1581,7 +1584,7 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(MeetupsEntryModelImpl.ENTITY_CACHE_ENABLED,
-					MeetupsEntryImpl.class, primaryKey, _nullMeetupsEntry);
+					MeetupsEntryImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -1818,22 +1821,4 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No MeetupsEntry exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MeetupsEntry exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(MeetupsEntryPersistenceImpl.class);
-	private static final MeetupsEntry _nullMeetupsEntry = new MeetupsEntryImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<MeetupsEntry> toCacheModel() {
-				return _nullMeetupsEntryCacheModel;
-			}
-		};
-
-	private static final CacheModel<MeetupsEntry> _nullMeetupsEntryCacheModel = new CacheModel<MeetupsEntry>() {
-			@Override
-			public MeetupsEntry toEntityModel() {
-				return _nullMeetupsEntry;
-			}
-		};
 }

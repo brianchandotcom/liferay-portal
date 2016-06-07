@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -9063,12 +9061,14 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public Role fetchByPrimaryKey(Serializable primaryKey) {
-		Role role = (Role)entityCache.getResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
 				RoleImpl.class, primaryKey);
 
-		if (role == _nullRole) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		Role role = (Role)serializable;
 
 		if (role == null) {
 			Session session = null;
@@ -9083,7 +9083,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 				}
 				else {
 					entityCache.putResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
-						RoleImpl.class, primaryKey, _nullRole);
+						RoleImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -9137,18 +9137,20 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Role role = (Role)entityCache.getResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
 					RoleImpl.class, primaryKey);
 
-			if (role == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, role);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (Role)serializable);
+				}
 			}
 		}
 
@@ -9190,7 +9192,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
-					RoleImpl.class, primaryKey, _nullRole);
+					RoleImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -10052,33 +10054,4 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "type"
 			});
-	private static final Role _nullRole = new RoleImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<Role> toCacheModel() {
-				return _nullRoleCacheModel;
-			}
-		};
-
-	private static final CacheModel<Role> _nullRoleCacheModel = new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<Role>, MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public Role toEntityModel() {
-			return _nullRole;
-		}
-	}
 }

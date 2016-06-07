@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -3578,12 +3577,14 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 	 */
 	@Override
 	public Gadget fetchByPrimaryKey(Serializable primaryKey) {
-		Gadget gadget = (Gadget)entityCache.getResult(GadgetModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(GadgetModelImpl.ENTITY_CACHE_ENABLED,
 				GadgetImpl.class, primaryKey);
 
-		if (gadget == _nullGadget) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		Gadget gadget = (Gadget)serializable;
 
 		if (gadget == null) {
 			Session session = null;
@@ -3598,7 +3599,7 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 				}
 				else {
 					entityCache.putResult(GadgetModelImpl.ENTITY_CACHE_ENABLED,
-						GadgetImpl.class, primaryKey, _nullGadget);
+						GadgetImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -3652,18 +3653,20 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Gadget gadget = (Gadget)entityCache.getResult(GadgetModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(GadgetModelImpl.ENTITY_CACHE_ENABLED,
 					GadgetImpl.class, primaryKey);
 
-			if (gadget == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, gadget);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (Gadget)serializable);
+				}
 			}
 		}
 
@@ -3705,7 +3708,7 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(GadgetModelImpl.ENTITY_CACHE_ENABLED,
-					GadgetImpl.class, primaryKey, _nullGadget);
+					GadgetImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3957,22 +3960,4 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final Gadget _nullGadget = new GadgetImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<Gadget> toCacheModel() {
-				return _nullGadgetCacheModel;
-			}
-		};
-
-	private static final CacheModel<Gadget> _nullGadgetCacheModel = new CacheModel<Gadget>() {
-			@Override
-			public Gadget toEntityModel() {
-				return _nullGadget;
-			}
-		};
 }

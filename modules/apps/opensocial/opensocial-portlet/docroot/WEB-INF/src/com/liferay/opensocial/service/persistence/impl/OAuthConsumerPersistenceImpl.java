@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -1338,12 +1337,14 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 	 */
 	@Override
 	public OAuthConsumer fetchByPrimaryKey(Serializable primaryKey) {
-		OAuthConsumer oAuthConsumer = (OAuthConsumer)entityCache.getResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
 				OAuthConsumerImpl.class, primaryKey);
 
-		if (oAuthConsumer == _nullOAuthConsumer) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		OAuthConsumer oAuthConsumer = (OAuthConsumer)serializable;
 
 		if (oAuthConsumer == null) {
 			Session session = null;
@@ -1359,7 +1360,7 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 				}
 				else {
 					entityCache.putResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
-						OAuthConsumerImpl.class, primaryKey, _nullOAuthConsumer);
+						OAuthConsumerImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -1413,18 +1414,20 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			OAuthConsumer oAuthConsumer = (OAuthConsumer)entityCache.getResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
 					OAuthConsumerImpl.class, primaryKey);
 
-			if (oAuthConsumer == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, oAuthConsumer);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (OAuthConsumer)serializable);
+				}
 			}
 		}
 
@@ -1466,7 +1469,7 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
-					OAuthConsumerImpl.class, primaryKey, _nullOAuthConsumer);
+					OAuthConsumerImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -1701,22 +1704,4 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No OAuthConsumer exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No OAuthConsumer exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(OAuthConsumerPersistenceImpl.class);
-	private static final OAuthConsumer _nullOAuthConsumer = new OAuthConsumerImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<OAuthConsumer> toCacheModel() {
-				return _nullOAuthConsumerCacheModel;
-			}
-		};
-
-	private static final CacheModel<OAuthConsumer> _nullOAuthConsumerCacheModel = new CacheModel<OAuthConsumer>() {
-			@Override
-			public OAuthConsumer toEntityModel() {
-				return _nullOAuthConsumer;
-			}
-		};
 }

@@ -29,9 +29,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchLayoutBranchException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.LayoutBranch;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.LayoutBranchPersistence;
@@ -2437,12 +2435,14 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	 */
 	@Override
 	public LayoutBranch fetchByPrimaryKey(Serializable primaryKey) {
-		LayoutBranch layoutBranch = (LayoutBranch)entityCache.getResult(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
 				LayoutBranchImpl.class, primaryKey);
 
-		if (layoutBranch == _nullLayoutBranch) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		LayoutBranch layoutBranch = (LayoutBranch)serializable;
 
 		if (layoutBranch == null) {
 			Session session = null;
@@ -2458,7 +2458,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 				}
 				else {
 					entityCache.putResult(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
-						LayoutBranchImpl.class, primaryKey, _nullLayoutBranch);
+						LayoutBranchImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2512,18 +2512,20 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			LayoutBranch layoutBranch = (LayoutBranch)entityCache.getResult(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
 					LayoutBranchImpl.class, primaryKey);
 
-			if (layoutBranch == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, layoutBranch);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (LayoutBranch)serializable);
+				}
 			}
 		}
 
@@ -2565,7 +2567,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutBranchImpl.class, primaryKey, _nullLayoutBranch);
+					LayoutBranchImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2800,34 +2802,4 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No LayoutBranch exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No LayoutBranch exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(LayoutBranchPersistenceImpl.class);
-	private static final LayoutBranch _nullLayoutBranch = new LayoutBranchImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<LayoutBranch> toCacheModel() {
-				return _nullLayoutBranchCacheModel;
-			}
-		};
-
-	private static final CacheModel<LayoutBranch> _nullLayoutBranchCacheModel = new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<LayoutBranch>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public LayoutBranch toEntityModel() {
-			return _nullLayoutBranch;
-		}
-	}
 }

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -5162,12 +5161,14 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	 */
 	@Override
 	public JournalContentSearch fetchByPrimaryKey(Serializable primaryKey) {
-		JournalContentSearch journalContentSearch = (JournalContentSearch)entityCache.getResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
 				JournalContentSearchImpl.class, primaryKey);
 
-		if (journalContentSearch == _nullJournalContentSearch) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		JournalContentSearch journalContentSearch = (JournalContentSearch)serializable;
 
 		if (journalContentSearch == null) {
 			Session session = null;
@@ -5183,8 +5184,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 				}
 				else {
 					entityCache.putResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-						JournalContentSearchImpl.class, primaryKey,
-						_nullJournalContentSearch);
+						JournalContentSearchImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -5238,18 +5238,20 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			JournalContentSearch journalContentSearch = (JournalContentSearch)entityCache.getResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
 					JournalContentSearchImpl.class, primaryKey);
 
-			if (journalContentSearch == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, journalContentSearch);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (JournalContentSearch)serializable);
+				}
 			}
 		}
 
@@ -5292,8 +5294,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(JournalContentSearchModelImpl.ENTITY_CACHE_ENABLED,
-					JournalContentSearchImpl.class, primaryKey,
-					_nullJournalContentSearch);
+					JournalContentSearchImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -5530,23 +5531,4 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No JournalContentSearch exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No JournalContentSearch exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(JournalContentSearchPersistenceImpl.class);
-	private static final JournalContentSearch _nullJournalContentSearch = new JournalContentSearchImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<JournalContentSearch> toCacheModel() {
-				return _nullJournalContentSearchCacheModel;
-			}
-		};
-
-	private static final CacheModel<JournalContentSearch> _nullJournalContentSearchCacheModel =
-		new CacheModel<JournalContentSearch>() {
-			@Override
-			public JournalContentSearch toEntityModel() {
-				return _nullJournalContentSearch;
-			}
-		};
 }

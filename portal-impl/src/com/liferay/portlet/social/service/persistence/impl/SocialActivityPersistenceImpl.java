@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -6785,12 +6784,14 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	 */
 	@Override
 	public SocialActivity fetchByPrimaryKey(Serializable primaryKey) {
-		SocialActivity socialActivity = (SocialActivity)entityCache.getResult(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
 				SocialActivityImpl.class, primaryKey);
 
-		if (socialActivity == _nullSocialActivity) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		SocialActivity socialActivity = (SocialActivity)serializable;
 
 		if (socialActivity == null) {
 			Session session = null;
@@ -6806,8 +6807,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 				}
 				else {
 					entityCache.putResult(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
-						SocialActivityImpl.class, primaryKey,
-						_nullSocialActivity);
+						SocialActivityImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -6861,18 +6861,20 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			SocialActivity socialActivity = (SocialActivity)entityCache.getResult(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
 					SocialActivityImpl.class, primaryKey);
 
-			if (socialActivity == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, socialActivity);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (SocialActivity)serializable);
+				}
 			}
 		}
 
@@ -6914,7 +6916,7 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(SocialActivityModelImpl.ENTITY_CACHE_ENABLED,
-					SocialActivityImpl.class, primaryKey, _nullSocialActivity);
+					SocialActivityImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -7157,23 +7159,4 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"type"
 			});
-	private static final SocialActivity _nullSocialActivity = new SocialActivityImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<SocialActivity> toCacheModel() {
-				return _nullSocialActivityCacheModel;
-			}
-		};
-
-	private static final CacheModel<SocialActivity> _nullSocialActivityCacheModel =
-		new CacheModel<SocialActivity>() {
-			@Override
-			public SocialActivity toEntityModel() {
-				return _nullSocialActivity;
-			}
-		};
 }

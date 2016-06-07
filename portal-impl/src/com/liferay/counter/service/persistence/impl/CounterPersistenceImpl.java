@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -361,12 +360,14 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 */
 	@Override
 	public Counter fetchByPrimaryKey(Serializable primaryKey) {
-		Counter counter = (Counter)entityCache.getResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
 				CounterImpl.class, primaryKey);
 
-		if (counter == _nullCounter) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		Counter counter = (Counter)serializable;
 
 		if (counter == null) {
 			Session session = null;
@@ -381,7 +382,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 				}
 				else {
 					entityCache.putResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
-						CounterImpl.class, primaryKey, _nullCounter);
+						CounterImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -435,18 +436,20 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Counter counter = (Counter)entityCache.getResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
 					CounterImpl.class, primaryKey);
 
-			if (counter == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, counter);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (Counter)serializable);
+				}
 			}
 		}
 
@@ -490,7 +493,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
-					CounterImpl.class, primaryKey, _nullCounter);
+					CounterImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -719,22 +722,4 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	private static final String _ORDER_BY_ENTITY_ALIAS = "counter.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Counter exists with the primary key ";
 	private static final Log _log = LogFactoryUtil.getLog(CounterPersistenceImpl.class);
-	private static final Counter _nullCounter = new CounterImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<Counter> toCacheModel() {
-				return _nullCounterCacheModel;
-			}
-		};
-
-	private static final CacheModel<Counter> _nullCounterCacheModel = new CacheModel<Counter>() {
-			@Override
-			public Counter toEntityModel() {
-				return _nullCounter;
-			}
-		};
 }

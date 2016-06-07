@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchPhoneException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -4413,12 +4411,14 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	 */
 	@Override
 	public Phone fetchByPrimaryKey(Serializable primaryKey) {
-		Phone phone = (Phone)entityCache.getResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
 				PhoneImpl.class, primaryKey);
 
-		if (phone == _nullPhone) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		Phone phone = (Phone)serializable;
 
 		if (phone == null) {
 			Session session = null;
@@ -4433,7 +4433,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 				}
 				else {
 					entityCache.putResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-						PhoneImpl.class, primaryKey, _nullPhone);
+						PhoneImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -4487,18 +4487,20 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Phone phone = (Phone)entityCache.getResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
 					PhoneImpl.class, primaryKey);
 
-			if (phone == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, phone);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (Phone)serializable);
+				}
 			}
 		}
 
@@ -4540,7 +4542,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(PhoneModelImpl.ENTITY_CACHE_ENABLED,
-					PhoneImpl.class, primaryKey, _nullPhone);
+					PhoneImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -4782,33 +4784,4 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "number", "primary"
 			});
-	private static final Phone _nullPhone = new PhoneImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<Phone> toCacheModel() {
-				return _nullPhoneCacheModel;
-			}
-		};
-
-	private static final CacheModel<Phone> _nullPhoneCacheModel = new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<Phone>, MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public Phone toEntityModel() {
-			return _nullPhone;
-		}
-	}
 }

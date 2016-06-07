@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchUserNotificationEventException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
@@ -8915,12 +8913,14 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	 */
 	@Override
 	public UserNotificationEvent fetchByPrimaryKey(Serializable primaryKey) {
-		UserNotificationEvent userNotificationEvent = (UserNotificationEvent)entityCache.getResult(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
 				UserNotificationEventImpl.class, primaryKey);
 
-		if (userNotificationEvent == _nullUserNotificationEvent) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		UserNotificationEvent userNotificationEvent = (UserNotificationEvent)serializable;
 
 		if (userNotificationEvent == null) {
 			Session session = null;
@@ -8936,8 +8936,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 				}
 				else {
 					entityCache.putResult(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
-						UserNotificationEventImpl.class, primaryKey,
-						_nullUserNotificationEvent);
+						UserNotificationEventImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -8991,18 +8990,20 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			UserNotificationEvent userNotificationEvent = (UserNotificationEvent)entityCache.getResult(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
 					UserNotificationEventImpl.class, primaryKey);
 
-			if (userNotificationEvent == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, userNotificationEvent);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (UserNotificationEvent)serializable);
+				}
 			}
 		}
 
@@ -9045,8 +9046,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(UserNotificationEventModelImpl.ENTITY_CACHE_ENABLED,
-					UserNotificationEventImpl.class, primaryKey,
-					_nullUserNotificationEvent);
+					UserNotificationEventImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -9289,35 +9289,4 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "type"
 			});
-	private static final UserNotificationEvent _nullUserNotificationEvent = new UserNotificationEventImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<UserNotificationEvent> toCacheModel() {
-				return _nullUserNotificationEventCacheModel;
-			}
-		};
-
-	private static final CacheModel<UserNotificationEvent> _nullUserNotificationEventCacheModel =
-		new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<UserNotificationEvent>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public UserNotificationEvent toEntityModel() {
-			return _nullUserNotificationEvent;
-		}
-	}
 }

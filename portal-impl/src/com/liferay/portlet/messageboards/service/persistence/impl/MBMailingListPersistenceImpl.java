@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -2720,12 +2719,14 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	 */
 	@Override
 	public MBMailingList fetchByPrimaryKey(Serializable primaryKey) {
-		MBMailingList mbMailingList = (MBMailingList)entityCache.getResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 				MBMailingListImpl.class, primaryKey);
 
-		if (mbMailingList == _nullMBMailingList) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		MBMailingList mbMailingList = (MBMailingList)serializable;
 
 		if (mbMailingList == null) {
 			Session session = null;
@@ -2741,7 +2742,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 				}
 				else {
 					entityCache.putResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
-						MBMailingListImpl.class, primaryKey, _nullMBMailingList);
+						MBMailingListImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2795,18 +2796,20 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			MBMailingList mbMailingList = (MBMailingList)entityCache.getResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 					MBMailingListImpl.class, primaryKey);
 
-			if (mbMailingList == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, mbMailingList);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (MBMailingList)serializable);
+				}
 			}
 		}
 
@@ -2848,7 +2851,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
-					MBMailingListImpl.class, primaryKey, _nullMBMailingList);
+					MBMailingListImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3091,22 +3094,4 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "active"
 			});
-	private static final MBMailingList _nullMBMailingList = new MBMailingListImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<MBMailingList> toCacheModel() {
-				return _nullMBMailingListCacheModel;
-			}
-		};
-
-	private static final CacheModel<MBMailingList> _nullMBMailingListCacheModel = new CacheModel<MBMailingList>() {
-			@Override
-			public MBMailingList toEntityModel() {
-				return _nullMBMailingList;
-			}
-		};
 }

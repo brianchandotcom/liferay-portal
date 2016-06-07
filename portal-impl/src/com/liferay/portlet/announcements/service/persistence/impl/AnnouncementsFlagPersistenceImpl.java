@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -1229,12 +1228,14 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	 */
 	@Override
 	public AnnouncementsFlag fetchByPrimaryKey(Serializable primaryKey) {
-		AnnouncementsFlag announcementsFlag = (AnnouncementsFlag)entityCache.getResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
 				AnnouncementsFlagImpl.class, primaryKey);
 
-		if (announcementsFlag == _nullAnnouncementsFlag) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		AnnouncementsFlag announcementsFlag = (AnnouncementsFlag)serializable;
 
 		if (announcementsFlag == null) {
 			Session session = null;
@@ -1250,8 +1251,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 				}
 				else {
 					entityCache.putResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-						AnnouncementsFlagImpl.class, primaryKey,
-						_nullAnnouncementsFlag);
+						AnnouncementsFlagImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -1305,18 +1305,20 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			AnnouncementsFlag announcementsFlag = (AnnouncementsFlag)entityCache.getResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
 					AnnouncementsFlagImpl.class, primaryKey);
 
-			if (announcementsFlag == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, announcementsFlag);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (AnnouncementsFlag)serializable);
+				}
 			}
 		}
 
@@ -1358,8 +1360,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
-					AnnouncementsFlagImpl.class, primaryKey,
-					_nullAnnouncementsFlag);
+					AnnouncementsFlagImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -1594,23 +1595,4 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AnnouncementsFlag exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AnnouncementsFlag exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(AnnouncementsFlagPersistenceImpl.class);
-	private static final AnnouncementsFlag _nullAnnouncementsFlag = new AnnouncementsFlagImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<AnnouncementsFlag> toCacheModel() {
-				return _nullAnnouncementsFlagCacheModel;
-			}
-		};
-
-	private static final CacheModel<AnnouncementsFlag> _nullAnnouncementsFlagCacheModel =
-		new CacheModel<AnnouncementsFlag>() {
-			@Override
-			public AnnouncementsFlag toEntityModel() {
-				return _nullAnnouncementsFlag;
-			}
-		};
 }

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -1124,12 +1123,14 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 	 */
 	@Override
 	public DLSyncEvent fetchByPrimaryKey(Serializable primaryKey) {
-		DLSyncEvent dlSyncEvent = (DLSyncEvent)entityCache.getResult(DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
 				DLSyncEventImpl.class, primaryKey);
 
-		if (dlSyncEvent == _nullDLSyncEvent) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		DLSyncEvent dlSyncEvent = (DLSyncEvent)serializable;
 
 		if (dlSyncEvent == null) {
 			Session session = null;
@@ -1145,7 +1146,7 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 				}
 				else {
 					entityCache.putResult(DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
-						DLSyncEventImpl.class, primaryKey, _nullDLSyncEvent);
+						DLSyncEventImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -1199,18 +1200,20 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			DLSyncEvent dlSyncEvent = (DLSyncEvent)entityCache.getResult(DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
 					DLSyncEventImpl.class, primaryKey);
 
-			if (dlSyncEvent == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, dlSyncEvent);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (DLSyncEvent)serializable);
+				}
 			}
 		}
 
@@ -1252,7 +1255,7 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
-					DLSyncEventImpl.class, primaryKey, _nullDLSyncEvent);
+					DLSyncEventImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -1495,22 +1498,4 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"type"
 			});
-	private static final DLSyncEvent _nullDLSyncEvent = new DLSyncEventImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<DLSyncEvent> toCacheModel() {
-				return _nullDLSyncEventCacheModel;
-			}
-		};
-
-	private static final CacheModel<DLSyncEvent> _nullDLSyncEventCacheModel = new CacheModel<DLSyncEvent>() {
-			@Override
-			public DLSyncEvent toEntityModel() {
-				return _nullDLSyncEvent;
-			}
-		};
 }

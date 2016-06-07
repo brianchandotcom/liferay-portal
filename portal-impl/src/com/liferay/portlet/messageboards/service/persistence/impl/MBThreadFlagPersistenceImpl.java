@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -3215,12 +3214,14 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	 */
 	@Override
 	public MBThreadFlag fetchByPrimaryKey(Serializable primaryKey) {
-		MBThreadFlag mbThreadFlag = (MBThreadFlag)entityCache.getResult(MBThreadFlagModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(MBThreadFlagModelImpl.ENTITY_CACHE_ENABLED,
 				MBThreadFlagImpl.class, primaryKey);
 
-		if (mbThreadFlag == _nullMBThreadFlag) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		MBThreadFlag mbThreadFlag = (MBThreadFlag)serializable;
 
 		if (mbThreadFlag == null) {
 			Session session = null;
@@ -3236,7 +3237,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 				}
 				else {
 					entityCache.putResult(MBThreadFlagModelImpl.ENTITY_CACHE_ENABLED,
-						MBThreadFlagImpl.class, primaryKey, _nullMBThreadFlag);
+						MBThreadFlagImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -3290,18 +3291,20 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			MBThreadFlag mbThreadFlag = (MBThreadFlag)entityCache.getResult(MBThreadFlagModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(MBThreadFlagModelImpl.ENTITY_CACHE_ENABLED,
 					MBThreadFlagImpl.class, primaryKey);
 
-			if (mbThreadFlag == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, mbThreadFlag);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (MBThreadFlag)serializable);
+				}
 			}
 		}
 
@@ -3343,7 +3346,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(MBThreadFlagModelImpl.ENTITY_CACHE_ENABLED,
-					MBThreadFlagImpl.class, primaryKey, _nullMBThreadFlag);
+					MBThreadFlagImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3586,22 +3589,4 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final MBThreadFlag _nullMBThreadFlag = new MBThreadFlagImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<MBThreadFlag> toCacheModel() {
-				return _nullMBThreadFlagCacheModel;
-			}
-		};
-
-	private static final CacheModel<MBThreadFlag> _nullMBThreadFlagCacheModel = new CacheModel<MBThreadFlag>() {
-			@Override
-			public MBThreadFlag toEntityModel() {
-				return _nullMBThreadFlag;
-			}
-		};
 }

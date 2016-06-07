@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -2647,12 +2645,14 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	 */
 	@Override
 	public WorkflowDefinitionLink fetchByPrimaryKey(Serializable primaryKey) {
-		WorkflowDefinitionLink workflowDefinitionLink = (WorkflowDefinitionLink)entityCache.getResult(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
 				WorkflowDefinitionLinkImpl.class, primaryKey);
 
-		if (workflowDefinitionLink == _nullWorkflowDefinitionLink) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		WorkflowDefinitionLink workflowDefinitionLink = (WorkflowDefinitionLink)serializable;
 
 		if (workflowDefinitionLink == null) {
 			Session session = null;
@@ -2668,8 +2668,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 				}
 				else {
 					entityCache.putResult(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
-						WorkflowDefinitionLinkImpl.class, primaryKey,
-						_nullWorkflowDefinitionLink);
+						WorkflowDefinitionLinkImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2724,18 +2723,20 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			WorkflowDefinitionLink workflowDefinitionLink = (WorkflowDefinitionLink)entityCache.getResult(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
 					WorkflowDefinitionLinkImpl.class, primaryKey);
 
-			if (workflowDefinitionLink == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, workflowDefinitionLink);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (WorkflowDefinitionLink)serializable);
+				}
 			}
 		}
 
@@ -2778,8 +2779,7 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(WorkflowDefinitionLinkModelImpl.ENTITY_CACHE_ENABLED,
-					WorkflowDefinitionLinkImpl.class, primaryKey,
-					_nullWorkflowDefinitionLink);
+					WorkflowDefinitionLinkImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3014,35 +3014,4 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No WorkflowDefinitionLink exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No WorkflowDefinitionLink exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(WorkflowDefinitionLinkPersistenceImpl.class);
-	private static final WorkflowDefinitionLink _nullWorkflowDefinitionLink = new WorkflowDefinitionLinkImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<WorkflowDefinitionLink> toCacheModel() {
-				return _nullWorkflowDefinitionLinkCacheModel;
-			}
-		};
-
-	private static final CacheModel<WorkflowDefinitionLink> _nullWorkflowDefinitionLinkCacheModel =
-		new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<WorkflowDefinitionLink>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public WorkflowDefinitionLink toEntityModel() {
-			return _nullWorkflowDefinitionLink;
-		}
-	}
 }

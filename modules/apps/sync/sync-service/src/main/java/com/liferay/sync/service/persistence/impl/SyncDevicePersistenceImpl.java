@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -2164,12 +2163,14 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 	 */
 	@Override
 	public SyncDevice fetchByPrimaryKey(Serializable primaryKey) {
-		SyncDevice syncDevice = (SyncDevice)entityCache.getResult(SyncDeviceModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(SyncDeviceModelImpl.ENTITY_CACHE_ENABLED,
 				SyncDeviceImpl.class, primaryKey);
 
-		if (syncDevice == _nullSyncDevice) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		SyncDevice syncDevice = (SyncDevice)serializable;
 
 		if (syncDevice == null) {
 			Session session = null;
@@ -2185,7 +2186,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 				}
 				else {
 					entityCache.putResult(SyncDeviceModelImpl.ENTITY_CACHE_ENABLED,
-						SyncDeviceImpl.class, primaryKey, _nullSyncDevice);
+						SyncDeviceImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2239,18 +2240,20 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			SyncDevice syncDevice = (SyncDevice)entityCache.getResult(SyncDeviceModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(SyncDeviceModelImpl.ENTITY_CACHE_ENABLED,
 					SyncDeviceImpl.class, primaryKey);
 
-			if (syncDevice == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, syncDevice);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (SyncDevice)serializable);
+				}
 			}
 		}
 
@@ -2292,7 +2295,7 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(SyncDeviceModelImpl.ENTITY_CACHE_ENABLED,
-					SyncDeviceImpl.class, primaryKey, _nullSyncDevice);
+					SyncDeviceImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2537,22 +2540,4 @@ public class SyncDevicePersistenceImpl extends BasePersistenceImpl<SyncDevice>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "type"
 			});
-	private static final SyncDevice _nullSyncDevice = new SyncDeviceImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<SyncDevice> toCacheModel() {
-				return _nullSyncDeviceCacheModel;
-			}
-		};
-
-	private static final CacheModel<SyncDevice> _nullSyncDeviceCacheModel = new CacheModel<SyncDevice>() {
-			@Override
-			public SyncDevice toEntityModel() {
-				return _nullSyncDevice;
-			}
-		};
 }

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -5684,12 +5683,14 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	 */
 	@Override
 	public MicroblogsEntry fetchByPrimaryKey(Serializable primaryKey) {
-		MicroblogsEntry microblogsEntry = (MicroblogsEntry)entityCache.getResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
 				MicroblogsEntryImpl.class, primaryKey);
 
-		if (microblogsEntry == _nullMicroblogsEntry) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		MicroblogsEntry microblogsEntry = (MicroblogsEntry)serializable;
 
 		if (microblogsEntry == null) {
 			Session session = null;
@@ -5705,8 +5706,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 				}
 				else {
 					entityCache.putResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
-						MicroblogsEntryImpl.class, primaryKey,
-						_nullMicroblogsEntry);
+						MicroblogsEntryImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -5760,18 +5760,20 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			MicroblogsEntry microblogsEntry = (MicroblogsEntry)entityCache.getResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
 					MicroblogsEntryImpl.class, primaryKey);
 
-			if (microblogsEntry == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, microblogsEntry);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (MicroblogsEntry)serializable);
+				}
 			}
 		}
 
@@ -5813,7 +5815,7 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(MicroblogsEntryModelImpl.ENTITY_CACHE_ENABLED,
-					MicroblogsEntryImpl.class, primaryKey, _nullMicroblogsEntry);
+					MicroblogsEntryImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -6058,23 +6060,4 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"type"
 			});
-	private static final MicroblogsEntry _nullMicroblogsEntry = new MicroblogsEntryImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<MicroblogsEntry> toCacheModel() {
-				return _nullMicroblogsEntryCacheModel;
-			}
-		};
-
-	private static final CacheModel<MicroblogsEntry> _nullMicroblogsEntryCacheModel =
-		new CacheModel<MicroblogsEntry>() {
-			@Override
-			public MicroblogsEntry toEntityModel() {
-				return _nullMicroblogsEntry;
-			}
-		};
 }

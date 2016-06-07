@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -2416,12 +2414,14 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public Lock fetchByPrimaryKey(Serializable primaryKey) {
-		Lock lock = (Lock)entityCache.getResult(LockModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(LockModelImpl.ENTITY_CACHE_ENABLED,
 				LockImpl.class, primaryKey);
 
-		if (lock == _nullLock) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		Lock lock = (Lock)serializable;
 
 		if (lock == null) {
 			Session session = null;
@@ -2436,7 +2436,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 				}
 				else {
 					entityCache.putResult(LockModelImpl.ENTITY_CACHE_ENABLED,
-						LockImpl.class, primaryKey, _nullLock);
+						LockImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2490,18 +2490,20 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Lock lock = (Lock)entityCache.getResult(LockModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(LockModelImpl.ENTITY_CACHE_ENABLED,
 					LockImpl.class, primaryKey);
 
-			if (lock == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, lock);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (Lock)serializable);
+				}
 			}
 		}
 
@@ -2543,7 +2545,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(LockModelImpl.ENTITY_CACHE_ENABLED,
-					LockImpl.class, primaryKey, _nullLock);
+					LockImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2787,33 +2789,4 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "key"
 			});
-	private static final Lock _nullLock = new LockImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<Lock> toCacheModel() {
-				return _nullLockCacheModel;
-			}
-		};
-
-	private static final CacheModel<Lock> _nullLockCacheModel = new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<Lock>, MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public Lock toEntityModel() {
-			return _nullLock;
-		}
-	}
 }

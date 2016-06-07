@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -5434,12 +5433,14 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	 */
 	@Override
 	public ExpandoValue fetchByPrimaryKey(Serializable primaryKey) {
-		ExpandoValue expandoValue = (ExpandoValue)entityCache.getResult(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED,
 				ExpandoValueImpl.class, primaryKey);
 
-		if (expandoValue == _nullExpandoValue) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		ExpandoValue expandoValue = (ExpandoValue)serializable;
 
 		if (expandoValue == null) {
 			Session session = null;
@@ -5455,7 +5456,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 				}
 				else {
 					entityCache.putResult(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED,
-						ExpandoValueImpl.class, primaryKey, _nullExpandoValue);
+						ExpandoValueImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -5509,18 +5510,20 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			ExpandoValue expandoValue = (ExpandoValue)entityCache.getResult(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED,
 					ExpandoValueImpl.class, primaryKey);
 
-			if (expandoValue == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, expandoValue);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (ExpandoValue)serializable);
+				}
 			}
 		}
 
@@ -5562,7 +5565,7 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(ExpandoValueModelImpl.ENTITY_CACHE_ENABLED,
-					ExpandoValueImpl.class, primaryKey, _nullExpandoValue);
+					ExpandoValueImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -5805,22 +5808,4 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"rowId", "data"
 			});
-	private static final ExpandoValue _nullExpandoValue = new ExpandoValueImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<ExpandoValue> toCacheModel() {
-				return _nullExpandoValueCacheModel;
-			}
-		};
-
-	private static final CacheModel<ExpandoValue> _nullExpandoValueCacheModel = new CacheModel<ExpandoValue>() {
-			@Override
-			public ExpandoValue toEntityModel() {
-				return _nullExpandoValue;
-			}
-		};
 }

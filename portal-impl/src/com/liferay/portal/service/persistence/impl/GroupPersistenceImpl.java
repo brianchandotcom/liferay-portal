@@ -29,9 +29,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.GroupPersistence;
@@ -10289,12 +10287,14 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 */
 	@Override
 	public Group fetchByPrimaryKey(Serializable primaryKey) {
-		Group group = (Group)entityCache.getResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
 				GroupImpl.class, primaryKey);
 
-		if (group == _nullGroup) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		Group group = (Group)serializable;
 
 		if (group == null) {
 			Session session = null;
@@ -10309,7 +10309,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 				}
 				else {
 					entityCache.putResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
-						GroupImpl.class, primaryKey, _nullGroup);
+						GroupImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -10363,18 +10363,20 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Group group = (Group)entityCache.getResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
 					GroupImpl.class, primaryKey);
 
-			if (group == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, group);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (Group)serializable);
+				}
 			}
 		}
 
@@ -10416,7 +10418,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
-					GroupImpl.class, primaryKey, _nullGroup);
+					GroupImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -11890,33 +11892,4 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "type", "active"
 			});
-	private static final Group _nullGroup = new GroupImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<Group> toCacheModel() {
-				return _nullGroupCacheModel;
-			}
-		};
-
-	private static final CacheModel<Group> _nullGroupCacheModel = new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<Group>, MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public Group toEntityModel() {
-			return _nullGroup;
-		}
-	}
 }

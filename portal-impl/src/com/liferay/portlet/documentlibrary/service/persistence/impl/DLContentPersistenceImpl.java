@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -2628,12 +2627,14 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	 */
 	@Override
 	public DLContent fetchByPrimaryKey(Serializable primaryKey) {
-		DLContent dlContent = (DLContent)entityCache.getResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 				DLContentImpl.class, primaryKey);
 
-		if (dlContent == _nullDLContent) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		DLContent dlContent = (DLContent)serializable;
 
 		if (dlContent == null) {
 			Session session = null;
@@ -2649,7 +2650,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 				}
 				else {
 					entityCache.putResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
-						DLContentImpl.class, primaryKey, _nullDLContent);
+						DLContentImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2703,18 +2704,20 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			DLContent dlContent = (DLContent)entityCache.getResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 					DLContentImpl.class, primaryKey);
 
-			if (dlContent == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, dlContent);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (DLContent)serializable);
+				}
 			}
 		}
 
@@ -2756,7 +2759,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
-					DLContentImpl.class, primaryKey, _nullDLContent);
+					DLContentImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2999,22 +3002,4 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"path", "data", "size"
 			});
-	private static final DLContent _nullDLContent = new DLContentImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<DLContent> toCacheModel() {
-				return _nullDLContentCacheModel;
-			}
-		};
-
-	private static final CacheModel<DLContent> _nullDLContentCacheModel = new CacheModel<DLContent>() {
-			@Override
-			public DLContent toEntityModel() {
-				return _nullDLContent;
-			}
-		};
 }

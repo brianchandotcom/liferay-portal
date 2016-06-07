@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -3414,12 +3413,14 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	 */
 	@Override
 	public AssetLink fetchByPrimaryKey(Serializable primaryKey) {
-		AssetLink assetLink = (AssetLink)entityCache.getResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 				AssetLinkImpl.class, primaryKey);
 
-		if (assetLink == _nullAssetLink) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		AssetLink assetLink = (AssetLink)serializable;
 
 		if (assetLink == null) {
 			Session session = null;
@@ -3435,7 +3436,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 				}
 				else {
 					entityCache.putResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
-						AssetLinkImpl.class, primaryKey, _nullAssetLink);
+						AssetLinkImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -3489,18 +3490,20 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			AssetLink assetLink = (AssetLink)entityCache.getResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 					AssetLinkImpl.class, primaryKey);
 
-			if (assetLink == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, assetLink);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (AssetLink)serializable);
+				}
 			}
 		}
 
@@ -3542,7 +3545,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
-					AssetLinkImpl.class, primaryKey, _nullAssetLink);
+					AssetLinkImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3785,22 +3788,4 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"type"
 			});
-	private static final AssetLink _nullAssetLink = new AssetLinkImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<AssetLink> toCacheModel() {
-				return _nullAssetLinkCacheModel;
-			}
-		};
-
-	private static final CacheModel<AssetLink> _nullAssetLinkCacheModel = new CacheModel<AssetLink>() {
-			@Override
-			public AssetLink toEntityModel() {
-				return _nullAssetLink;
-			}
-		};
 }

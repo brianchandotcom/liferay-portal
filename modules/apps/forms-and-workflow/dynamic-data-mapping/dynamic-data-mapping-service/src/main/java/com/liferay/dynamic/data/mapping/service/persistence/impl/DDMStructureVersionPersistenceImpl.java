@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -1821,12 +1820,14 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	 */
 	@Override
 	public DDMStructureVersion fetchByPrimaryKey(Serializable primaryKey) {
-		DDMStructureVersion ddmStructureVersion = (DDMStructureVersion)entityCache.getResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
 				DDMStructureVersionImpl.class, primaryKey);
 
-		if (ddmStructureVersion == _nullDDMStructureVersion) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		DDMStructureVersion ddmStructureVersion = (DDMStructureVersion)serializable;
 
 		if (ddmStructureVersion == null) {
 			Session session = null;
@@ -1842,8 +1843,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 				}
 				else {
 					entityCache.putResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
-						DDMStructureVersionImpl.class, primaryKey,
-						_nullDDMStructureVersion);
+						DDMStructureVersionImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -1897,18 +1897,20 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			DDMStructureVersion ddmStructureVersion = (DDMStructureVersion)entityCache.getResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
 					DDMStructureVersionImpl.class, primaryKey);
 
-			if (ddmStructureVersion == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, ddmStructureVersion);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (DDMStructureVersion)serializable);
+				}
 			}
 		}
 
@@ -1951,8 +1953,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
-					DDMStructureVersionImpl.class, primaryKey,
-					_nullDDMStructureVersion);
+					DDMStructureVersionImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2197,23 +2198,4 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"type"
 			});
-	private static final DDMStructureVersion _nullDDMStructureVersion = new DDMStructureVersionImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<DDMStructureVersion> toCacheModel() {
-				return _nullDDMStructureVersionCacheModel;
-			}
-		};
-
-	private static final CacheModel<DDMStructureVersion> _nullDDMStructureVersionCacheModel =
-		new CacheModel<DDMStructureVersion>() {
-			@Override
-			public DDMStructureVersion toEntityModel() {
-				return _nullDDMStructureVersion;
-			}
-		};
 }

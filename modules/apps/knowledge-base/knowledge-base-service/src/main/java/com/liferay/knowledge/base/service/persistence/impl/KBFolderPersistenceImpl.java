@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -3519,12 +3518,14 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 	 */
 	@Override
 	public KBFolder fetchByPrimaryKey(Serializable primaryKey) {
-		KBFolder kbFolder = (KBFolder)entityCache.getResult(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
 				KBFolderImpl.class, primaryKey);
 
-		if (kbFolder == _nullKBFolder) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		KBFolder kbFolder = (KBFolder)serializable;
 
 		if (kbFolder == null) {
 			Session session = null;
@@ -3539,7 +3540,7 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 				}
 				else {
 					entityCache.putResult(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-						KBFolderImpl.class, primaryKey, _nullKBFolder);
+						KBFolderImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -3593,18 +3594,20 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			KBFolder kbFolder = (KBFolder)entityCache.getResult(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
 					KBFolderImpl.class, primaryKey);
 
-			if (kbFolder == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, kbFolder);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (KBFolder)serializable);
+				}
 			}
 		}
 
@@ -3646,7 +3649,7 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(KBFolderModelImpl.ENTITY_CACHE_ENABLED,
-					KBFolderImpl.class, primaryKey, _nullKBFolder);
+					KBFolderImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3900,22 +3903,4 @@ public class KBFolderPersistenceImpl extends BasePersistenceImpl<KBFolder>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final KBFolder _nullKBFolder = new KBFolderImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<KBFolder> toCacheModel() {
-				return _nullKBFolderCacheModel;
-			}
-		};
-
-	private static final CacheModel<KBFolder> _nullKBFolderCacheModel = new CacheModel<KBFolder>() {
-			@Override
-			public KBFolder toEntityModel() {
-				return _nullKBFolder;
-			}
-		};
 }

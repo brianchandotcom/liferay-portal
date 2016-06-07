@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -1696,12 +1695,14 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	 */
 	@Override
 	public ExpandoRow fetchByPrimaryKey(Serializable primaryKey) {
-		ExpandoRow expandoRow = (ExpandoRow)entityCache.getResult(ExpandoRowModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(ExpandoRowModelImpl.ENTITY_CACHE_ENABLED,
 				ExpandoRowImpl.class, primaryKey);
 
-		if (expandoRow == _nullExpandoRow) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		ExpandoRow expandoRow = (ExpandoRow)serializable;
 
 		if (expandoRow == null) {
 			Session session = null;
@@ -1717,7 +1718,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 				}
 				else {
 					entityCache.putResult(ExpandoRowModelImpl.ENTITY_CACHE_ENABLED,
-						ExpandoRowImpl.class, primaryKey, _nullExpandoRow);
+						ExpandoRowImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -1771,18 +1772,20 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			ExpandoRow expandoRow = (ExpandoRow)entityCache.getResult(ExpandoRowModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(ExpandoRowModelImpl.ENTITY_CACHE_ENABLED,
 					ExpandoRowImpl.class, primaryKey);
 
-			if (expandoRow == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, expandoRow);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (ExpandoRow)serializable);
+				}
 			}
 		}
 
@@ -1824,7 +1827,7 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(ExpandoRowModelImpl.ENTITY_CACHE_ENABLED,
-					ExpandoRowImpl.class, primaryKey, _nullExpandoRow);
+					ExpandoRowImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2067,22 +2070,4 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"rowId"
 			});
-	private static final ExpandoRow _nullExpandoRow = new ExpandoRowImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<ExpandoRow> toCacheModel() {
-				return _nullExpandoRowCacheModel;
-			}
-		};
-
-	private static final CacheModel<ExpandoRow> _nullExpandoRowCacheModel = new CacheModel<ExpandoRow>() {
-			@Override
-			public ExpandoRow toEntityModel() {
-				return _nullExpandoRow;
-			}
-		};
 }

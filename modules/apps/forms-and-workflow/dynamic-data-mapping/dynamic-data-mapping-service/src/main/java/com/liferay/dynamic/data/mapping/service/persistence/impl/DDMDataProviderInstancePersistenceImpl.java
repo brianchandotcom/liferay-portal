@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -3846,12 +3845,14 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public DDMDataProviderInstance fetchByPrimaryKey(Serializable primaryKey) {
-		DDMDataProviderInstance ddmDataProviderInstance = (DDMDataProviderInstance)entityCache.getResult(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
 				DDMDataProviderInstanceImpl.class, primaryKey);
 
-		if (ddmDataProviderInstance == _nullDDMDataProviderInstance) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		DDMDataProviderInstance ddmDataProviderInstance = (DDMDataProviderInstance)serializable;
 
 		if (ddmDataProviderInstance == null) {
 			Session session = null;
@@ -3867,8 +3868,7 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 				}
 				else {
 					entityCache.putResult(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-						DDMDataProviderInstanceImpl.class, primaryKey,
-						_nullDDMDataProviderInstance);
+						DDMDataProviderInstanceImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -3923,18 +3923,20 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			DDMDataProviderInstance ddmDataProviderInstance = (DDMDataProviderInstance)entityCache.getResult(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
 					DDMDataProviderInstanceImpl.class, primaryKey);
 
-			if (ddmDataProviderInstance == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, ddmDataProviderInstance);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (DDMDataProviderInstance)serializable);
+				}
 			}
 		}
 
@@ -3977,8 +3979,7 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(DDMDataProviderInstanceModelImpl.ENTITY_CACHE_ENABLED,
-					DDMDataProviderInstanceImpl.class, primaryKey,
-					_nullDDMDataProviderInstance);
+					DDMDataProviderInstanceImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -4235,23 +4236,4 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "type"
 			});
-	private static final DDMDataProviderInstance _nullDDMDataProviderInstance = new DDMDataProviderInstanceImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<DDMDataProviderInstance> toCacheModel() {
-				return _nullDDMDataProviderInstanceCacheModel;
-			}
-		};
-
-	private static final CacheModel<DDMDataProviderInstance> _nullDDMDataProviderInstanceCacheModel =
-		new CacheModel<DDMDataProviderInstance>() {
-			@Override
-			public DDMDataProviderInstance toEntityModel() {
-				return _nullDDMDataProviderInstance;
-			}
-		};
 }

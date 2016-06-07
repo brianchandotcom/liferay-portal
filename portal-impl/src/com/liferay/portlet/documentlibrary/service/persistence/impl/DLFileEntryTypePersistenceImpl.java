@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -3583,12 +3582,14 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 */
 	@Override
 	public DLFileEntryType fetchByPrimaryKey(Serializable primaryKey) {
-		DLFileEntryType dlFileEntryType = (DLFileEntryType)entityCache.getResult(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
 				DLFileEntryTypeImpl.class, primaryKey);
 
-		if (dlFileEntryType == _nullDLFileEntryType) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		DLFileEntryType dlFileEntryType = (DLFileEntryType)serializable;
 
 		if (dlFileEntryType == null) {
 			Session session = null;
@@ -3604,8 +3605,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 				}
 				else {
 					entityCache.putResult(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
-						DLFileEntryTypeImpl.class, primaryKey,
-						_nullDLFileEntryType);
+						DLFileEntryTypeImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -3659,18 +3659,20 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			DLFileEntryType dlFileEntryType = (DLFileEntryType)entityCache.getResult(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
 					DLFileEntryTypeImpl.class, primaryKey);
 
-			if (dlFileEntryType == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, dlFileEntryType);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (DLFileEntryType)serializable);
+				}
 			}
 		}
 
@@ -3712,7 +3714,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileEntryTypeImpl.class, primaryKey, _nullDLFileEntryType);
+					DLFileEntryTypeImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -4277,23 +4279,4 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final DLFileEntryType _nullDLFileEntryType = new DLFileEntryTypeImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<DLFileEntryType> toCacheModel() {
-				return _nullDLFileEntryTypeCacheModel;
-			}
-		};
-
-	private static final CacheModel<DLFileEntryType> _nullDLFileEntryTypeCacheModel =
-		new CacheModel<DLFileEntryType>() {
-			@Override
-			public DLFileEntryType toEntityModel() {
-				return _nullDLFileEntryType;
-			}
-		};
 }

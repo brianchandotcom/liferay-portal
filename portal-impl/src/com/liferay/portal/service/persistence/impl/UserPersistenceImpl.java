@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -8219,12 +8217,14 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public User fetchByPrimaryKey(Serializable primaryKey) {
-		User user = (User)entityCache.getResult(UserModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(UserModelImpl.ENTITY_CACHE_ENABLED,
 				UserImpl.class, primaryKey);
 
-		if (user == _nullUser) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		User user = (User)serializable;
 
 		if (user == null) {
 			Session session = null;
@@ -8239,7 +8239,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 				}
 				else {
 					entityCache.putResult(UserModelImpl.ENTITY_CACHE_ENABLED,
-						UserImpl.class, primaryKey, _nullUser);
+						UserImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -8293,18 +8293,20 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			User user = (User)entityCache.getResult(UserModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(UserModelImpl.ENTITY_CACHE_ENABLED,
 					UserImpl.class, primaryKey);
 
-			if (user == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, user);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (User)serializable);
+				}
 			}
 		}
 
@@ -8346,7 +8348,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(UserModelImpl.ENTITY_CACHE_ENABLED,
-					UserImpl.class, primaryKey, _nullUser);
+					UserImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -10124,33 +10126,4 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "password"
 			});
-	private static final User _nullUser = new UserImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<User> toCacheModel() {
-				return _nullUserCacheModel;
-			}
-		};
-
-	private static final CacheModel<User> _nullUserCacheModel = new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<User>, MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public User toEntityModel() {
-			return _nullUser;
-		}
-	}
 }

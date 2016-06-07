@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -2781,12 +2780,14 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	 */
 	@Override
 	public KBTemplate fetchByPrimaryKey(Serializable primaryKey) {
-		KBTemplate kbTemplate = (KBTemplate)entityCache.getResult(KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
 				KBTemplateImpl.class, primaryKey);
 
-		if (kbTemplate == _nullKBTemplate) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		KBTemplate kbTemplate = (KBTemplate)serializable;
 
 		if (kbTemplate == null) {
 			Session session = null;
@@ -2802,7 +2803,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 				}
 				else {
 					entityCache.putResult(KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-						KBTemplateImpl.class, primaryKey, _nullKBTemplate);
+						KBTemplateImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2856,18 +2857,20 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			KBTemplate kbTemplate = (KBTemplate)entityCache.getResult(KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
 					KBTemplateImpl.class, primaryKey);
 
-			if (kbTemplate == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, kbTemplate);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (KBTemplate)serializable);
+				}
 			}
 		}
 
@@ -2909,7 +2912,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(KBTemplateModelImpl.ENTITY_CACHE_ENABLED,
-					KBTemplateImpl.class, primaryKey, _nullKBTemplate);
+					KBTemplateImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3164,22 +3167,4 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final KBTemplate _nullKBTemplate = new KBTemplateImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<KBTemplate> toCacheModel() {
-				return _nullKBTemplateCacheModel;
-			}
-		};
-
-	private static final CacheModel<KBTemplate> _nullKBTemplateCacheModel = new CacheModel<KBTemplate>() {
-			@Override
-			public KBTemplate toEntityModel() {
-				return _nullKBTemplate;
-			}
-		};
 }

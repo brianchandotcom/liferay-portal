@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -5633,12 +5632,14 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 	 */
 	@Override
 	public KBComment fetchByPrimaryKey(Serializable primaryKey) {
-		KBComment kbComment = (KBComment)entityCache.getResult(KBCommentModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(KBCommentModelImpl.ENTITY_CACHE_ENABLED,
 				KBCommentImpl.class, primaryKey);
 
-		if (kbComment == _nullKBComment) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		KBComment kbComment = (KBComment)serializable;
 
 		if (kbComment == null) {
 			Session session = null;
@@ -5654,7 +5655,7 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 				}
 				else {
 					entityCache.putResult(KBCommentModelImpl.ENTITY_CACHE_ENABLED,
-						KBCommentImpl.class, primaryKey, _nullKBComment);
+						KBCommentImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -5708,18 +5709,20 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			KBComment kbComment = (KBComment)entityCache.getResult(KBCommentModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(KBCommentModelImpl.ENTITY_CACHE_ENABLED,
 					KBCommentImpl.class, primaryKey);
 
-			if (kbComment == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, kbComment);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (KBComment)serializable);
+				}
 			}
 		}
 
@@ -5761,7 +5764,7 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(KBCommentModelImpl.ENTITY_CACHE_ENABLED,
-					KBCommentImpl.class, primaryKey, _nullKBComment);
+					KBCommentImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -6006,22 +6009,4 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final KBComment _nullKBComment = new KBCommentImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<KBComment> toCacheModel() {
-				return _nullKBCommentCacheModel;
-			}
-		};
-
-	private static final CacheModel<KBComment> _nullKBCommentCacheModel = new CacheModel<KBComment>() {
-			@Override
-			public KBComment toEntityModel() {
-				return _nullKBComment;
-			}
-		};
 }

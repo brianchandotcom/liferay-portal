@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -2917,12 +2916,14 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	 */
 	@Override
 	public DLFileRank fetchByPrimaryKey(Serializable primaryKey) {
-		DLFileRank dlFileRank = (DLFileRank)entityCache.getResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
 				DLFileRankImpl.class, primaryKey);
 
-		if (dlFileRank == _nullDLFileRank) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		DLFileRank dlFileRank = (DLFileRank)serializable;
 
 		if (dlFileRank == null) {
 			Session session = null;
@@ -2938,7 +2939,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 				}
 				else {
 					entityCache.putResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
-						DLFileRankImpl.class, primaryKey, _nullDLFileRank);
+						DLFileRankImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2992,18 +2993,20 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			DLFileRank dlFileRank = (DLFileRank)entityCache.getResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
 					DLFileRankImpl.class, primaryKey);
 
-			if (dlFileRank == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, dlFileRank);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (DLFileRank)serializable);
+				}
 			}
 		}
 
@@ -3045,7 +3048,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileRankImpl.class, primaryKey, _nullDLFileRank);
+					DLFileRankImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3288,22 +3291,4 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"active"
 			});
-	private static final DLFileRank _nullDLFileRank = new DLFileRankImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<DLFileRank> toCacheModel() {
-				return _nullDLFileRankCacheModel;
-			}
-		};
-
-	private static final CacheModel<DLFileRank> _nullDLFileRankCacheModel = new CacheModel<DLFileRank>() {
-			@Override
-			public DLFileRank toEntityModel() {
-				return _nullDLFileRank;
-			}
-		};
 }

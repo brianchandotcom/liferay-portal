@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -1244,12 +1243,14 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 	 */
 	@Override
 	public Folder fetchByPrimaryKey(Serializable primaryKey) {
-		Folder folder = (Folder)entityCache.getResult(FolderModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(FolderModelImpl.ENTITY_CACHE_ENABLED,
 				FolderImpl.class, primaryKey);
 
-		if (folder == _nullFolder) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		Folder folder = (Folder)serializable;
 
 		if (folder == null) {
 			Session session = null;
@@ -1264,7 +1265,7 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 				}
 				else {
 					entityCache.putResult(FolderModelImpl.ENTITY_CACHE_ENABLED,
-						FolderImpl.class, primaryKey, _nullFolder);
+						FolderImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -1318,18 +1319,20 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Folder folder = (Folder)entityCache.getResult(FolderModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(FolderModelImpl.ENTITY_CACHE_ENABLED,
 					FolderImpl.class, primaryKey);
 
-			if (folder == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, folder);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (Folder)serializable);
+				}
 			}
 		}
 
@@ -1371,7 +1374,7 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(FolderModelImpl.ENTITY_CACHE_ENABLED,
-					FolderImpl.class, primaryKey, _nullFolder);
+					FolderImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -1605,22 +1608,4 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Folder exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Folder exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(FolderPersistenceImpl.class);
-	private static final Folder _nullFolder = new FolderImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<Folder> toCacheModel() {
-				return _nullFolderCacheModel;
-			}
-		};
-
-	private static final CacheModel<Folder> _nullFolderCacheModel = new CacheModel<Folder>() {
-			@Override
-			public Folder toEntityModel() {
-				return _nullFolder;
-			}
-		};
 }

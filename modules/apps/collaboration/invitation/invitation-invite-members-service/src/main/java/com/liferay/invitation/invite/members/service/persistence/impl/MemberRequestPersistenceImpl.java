@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -2115,12 +2114,14 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 	 */
 	@Override
 	public MemberRequest fetchByPrimaryKey(Serializable primaryKey) {
-		MemberRequest memberRequest = (MemberRequest)entityCache.getResult(MemberRequestModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(MemberRequestModelImpl.ENTITY_CACHE_ENABLED,
 				MemberRequestImpl.class, primaryKey);
 
-		if (memberRequest == _nullMemberRequest) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		MemberRequest memberRequest = (MemberRequest)serializable;
 
 		if (memberRequest == null) {
 			Session session = null;
@@ -2136,7 +2137,7 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 				}
 				else {
 					entityCache.putResult(MemberRequestModelImpl.ENTITY_CACHE_ENABLED,
-						MemberRequestImpl.class, primaryKey, _nullMemberRequest);
+						MemberRequestImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2190,18 +2191,20 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			MemberRequest memberRequest = (MemberRequest)entityCache.getResult(MemberRequestModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(MemberRequestModelImpl.ENTITY_CACHE_ENABLED,
 					MemberRequestImpl.class, primaryKey);
 
-			if (memberRequest == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, memberRequest);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (MemberRequest)serializable);
+				}
 			}
 		}
 
@@ -2243,7 +2246,7 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(MemberRequestModelImpl.ENTITY_CACHE_ENABLED,
-					MemberRequestImpl.class, primaryKey, _nullMemberRequest);
+					MemberRequestImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2488,22 +2491,4 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"key"
 			});
-	private static final MemberRequest _nullMemberRequest = new MemberRequestImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<MemberRequest> toCacheModel() {
-				return _nullMemberRequestCacheModel;
-			}
-		};
-
-	private static final CacheModel<MemberRequest> _nullMemberRequestCacheModel = new CacheModel<MemberRequest>() {
-			@Override
-			public MemberRequest toEntityModel() {
-				return _nullMemberRequest;
-			}
-		};
 }

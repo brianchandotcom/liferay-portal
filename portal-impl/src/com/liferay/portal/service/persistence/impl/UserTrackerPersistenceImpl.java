@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchUserTrackerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.UserTracker;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
@@ -1990,12 +1988,14 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	 */
 	@Override
 	public UserTracker fetchByPrimaryKey(Serializable primaryKey) {
-		UserTracker userTracker = (UserTracker)entityCache.getResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 				UserTrackerImpl.class, primaryKey);
 
-		if (userTracker == _nullUserTracker) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		UserTracker userTracker = (UserTracker)serializable;
 
 		if (userTracker == null) {
 			Session session = null;
@@ -2011,7 +2011,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 				}
 				else {
 					entityCache.putResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-						UserTrackerImpl.class, primaryKey, _nullUserTracker);
+						UserTrackerImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2065,18 +2065,20 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			UserTracker userTracker = (UserTracker)entityCache.getResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 					UserTrackerImpl.class, primaryKey);
 
-			if (userTracker == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, userTracker);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (UserTracker)serializable);
+				}
 			}
 		}
 
@@ -2118,7 +2120,7 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(UserTrackerModelImpl.ENTITY_CACHE_ENABLED,
-					UserTrackerImpl.class, primaryKey, _nullUserTracker);
+					UserTrackerImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2353,34 +2355,4 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No UserTracker exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No UserTracker exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(UserTrackerPersistenceImpl.class);
-	private static final UserTracker _nullUserTracker = new UserTrackerImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<UserTracker> toCacheModel() {
-				return _nullUserTrackerCacheModel;
-			}
-		};
-
-	private static final CacheModel<UserTracker> _nullUserTrackerCacheModel = new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<UserTracker>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public UserTracker toEntityModel() {
-			return _nullUserTracker;
-		}
-	}
 }

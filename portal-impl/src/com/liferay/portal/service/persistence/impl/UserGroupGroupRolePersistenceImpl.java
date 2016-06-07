@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchUserGroupGroupRoleException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
@@ -3099,12 +3097,14 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 	 */
 	@Override
 	public UserGroupGroupRole fetchByPrimaryKey(Serializable primaryKey) {
-		UserGroupGroupRole userGroupGroupRole = (UserGroupGroupRole)entityCache.getResult(UserGroupGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(UserGroupGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
 				UserGroupGroupRoleImpl.class, primaryKey);
 
-		if (userGroupGroupRole == _nullUserGroupGroupRole) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		UserGroupGroupRole userGroupGroupRole = (UserGroupGroupRole)serializable;
 
 		if (userGroupGroupRole == null) {
 			Session session = null;
@@ -3120,8 +3120,7 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 				}
 				else {
 					entityCache.putResult(UserGroupGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-						UserGroupGroupRoleImpl.class, primaryKey,
-						_nullUserGroupGroupRole);
+						UserGroupGroupRoleImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -3391,35 +3390,4 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No UserGroupGroupRole exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No UserGroupGroupRole exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(UserGroupGroupRolePersistenceImpl.class);
-	private static final UserGroupGroupRole _nullUserGroupGroupRole = new UserGroupGroupRoleImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<UserGroupGroupRole> toCacheModel() {
-				return _nullUserGroupGroupRoleCacheModel;
-			}
-		};
-
-	private static final CacheModel<UserGroupGroupRole> _nullUserGroupGroupRoleCacheModel =
-		new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<UserGroupGroupRole>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public UserGroupGroupRole toEntityModel() {
-			return _nullUserGroupGroupRole;
-		}
-	}
 }

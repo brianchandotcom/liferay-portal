@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -2911,12 +2910,14 @@ public class UserThreadPersistenceImpl extends BasePersistenceImpl<UserThread>
 	 */
 	@Override
 	public UserThread fetchByPrimaryKey(Serializable primaryKey) {
-		UserThread userThread = (UserThread)entityCache.getResult(UserThreadModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(UserThreadModelImpl.ENTITY_CACHE_ENABLED,
 				UserThreadImpl.class, primaryKey);
 
-		if (userThread == _nullUserThread) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		UserThread userThread = (UserThread)serializable;
 
 		if (userThread == null) {
 			Session session = null;
@@ -2932,7 +2933,7 @@ public class UserThreadPersistenceImpl extends BasePersistenceImpl<UserThread>
 				}
 				else {
 					entityCache.putResult(UserThreadModelImpl.ENTITY_CACHE_ENABLED,
-						UserThreadImpl.class, primaryKey, _nullUserThread);
+						UserThreadImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2986,18 +2987,20 @@ public class UserThreadPersistenceImpl extends BasePersistenceImpl<UserThread>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			UserThread userThread = (UserThread)entityCache.getResult(UserThreadModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(UserThreadModelImpl.ENTITY_CACHE_ENABLED,
 					UserThreadImpl.class, primaryKey);
 
-			if (userThread == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, userThread);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (UserThread)serializable);
+				}
 			}
 		}
 
@@ -3039,7 +3042,7 @@ public class UserThreadPersistenceImpl extends BasePersistenceImpl<UserThread>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(UserThreadModelImpl.ENTITY_CACHE_ENABLED,
-					UserThreadImpl.class, primaryKey, _nullUserThread);
+					UserThreadImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3284,22 +3287,4 @@ public class UserThreadPersistenceImpl extends BasePersistenceImpl<UserThread>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"read"
 			});
-	private static final UserThread _nullUserThread = new UserThreadImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<UserThread> toCacheModel() {
-				return _nullUserThreadCacheModel;
-			}
-		};
-
-	private static final CacheModel<UserThread> _nullUserThreadCacheModel = new CacheModel<UserThread>() {
-			@Override
-			public UserThread toEntityModel() {
-				return _nullUserThread;
-			}
-		};
 }

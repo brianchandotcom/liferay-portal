@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchMembershipRequestException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.MembershipRequest;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
@@ -2614,12 +2612,14 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	 */
 	@Override
 	public MembershipRequest fetchByPrimaryKey(Serializable primaryKey) {
-		MembershipRequest membershipRequest = (MembershipRequest)entityCache.getResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 				MembershipRequestImpl.class, primaryKey);
 
-		if (membershipRequest == _nullMembershipRequest) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		MembershipRequest membershipRequest = (MembershipRequest)serializable;
 
 		if (membershipRequest == null) {
 			Session session = null;
@@ -2635,8 +2635,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 				}
 				else {
 					entityCache.putResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
-						MembershipRequestImpl.class, primaryKey,
-						_nullMembershipRequest);
+						MembershipRequestImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2690,18 +2689,20 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			MembershipRequest membershipRequest = (MembershipRequest)entityCache.getResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
 					MembershipRequestImpl.class, primaryKey);
 
-			if (membershipRequest == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, membershipRequest);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (MembershipRequest)serializable);
+				}
 			}
 		}
 
@@ -2743,8 +2744,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(MembershipRequestModelImpl.ENTITY_CACHE_ENABLED,
-					MembershipRequestImpl.class, primaryKey,
-					_nullMembershipRequest);
+					MembershipRequestImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2979,35 +2979,4 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No MembershipRequest exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MembershipRequest exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(MembershipRequestPersistenceImpl.class);
-	private static final MembershipRequest _nullMembershipRequest = new MembershipRequestImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<MembershipRequest> toCacheModel() {
-				return _nullMembershipRequestCacheModel;
-			}
-		};
-
-	private static final CacheModel<MembershipRequest> _nullMembershipRequestCacheModel =
-		new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<MembershipRequest>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public MembershipRequest toEntityModel() {
-			return _nullMembershipRequest;
-		}
-	}
 }

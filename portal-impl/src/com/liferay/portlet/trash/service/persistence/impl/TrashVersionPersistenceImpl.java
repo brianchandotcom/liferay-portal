@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -1748,12 +1747,14 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	 */
 	@Override
 	public TrashVersion fetchByPrimaryKey(Serializable primaryKey) {
-		TrashVersion trashVersion = (TrashVersion)entityCache.getResult(TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
 				TrashVersionImpl.class, primaryKey);
 
-		if (trashVersion == _nullTrashVersion) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		TrashVersion trashVersion = (TrashVersion)serializable;
 
 		if (trashVersion == null) {
 			Session session = null;
@@ -1769,7 +1770,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 				}
 				else {
 					entityCache.putResult(TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
-						TrashVersionImpl.class, primaryKey, _nullTrashVersion);
+						TrashVersionImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -1823,18 +1824,20 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			TrashVersion trashVersion = (TrashVersion)entityCache.getResult(TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
 					TrashVersionImpl.class, primaryKey);
 
-			if (trashVersion == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, trashVersion);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (TrashVersion)serializable);
+				}
 			}
 		}
 
@@ -1876,7 +1879,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
-					TrashVersionImpl.class, primaryKey, _nullTrashVersion);
+					TrashVersionImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2111,22 +2114,4 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No TrashVersion exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No TrashVersion exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(TrashVersionPersistenceImpl.class);
-	private static final TrashVersion _nullTrashVersion = new TrashVersionImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<TrashVersion> toCacheModel() {
-				return _nullTrashVersionCacheModel;
-			}
-		};
-
-	private static final CacheModel<TrashVersion> _nullTrashVersionCacheModel = new CacheModel<TrashVersion>() {
-			@Override
-			public TrashVersion toEntityModel() {
-				return _nullTrashVersion;
-			}
-		};
 }

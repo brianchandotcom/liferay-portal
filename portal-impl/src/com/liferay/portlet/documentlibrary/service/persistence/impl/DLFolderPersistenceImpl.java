@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -12940,12 +12939,14 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	 */
 	@Override
 	public DLFolder fetchByPrimaryKey(Serializable primaryKey) {
-		DLFolder dlFolder = (DLFolder)entityCache.getResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
 				DLFolderImpl.class, primaryKey);
 
-		if (dlFolder == _nullDLFolder) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		DLFolder dlFolder = (DLFolder)serializable;
 
 		if (dlFolder == null) {
 			Session session = null;
@@ -12960,7 +12961,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 				}
 				else {
 					entityCache.putResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
-						DLFolderImpl.class, primaryKey, _nullDLFolder);
+						DLFolderImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -13014,18 +13015,20 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			DLFolder dlFolder = (DLFolder)entityCache.getResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
 					DLFolderImpl.class, primaryKey);
 
-			if (dlFolder == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, dlFolder);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (DLFolder)serializable);
+				}
 			}
 		}
 
@@ -13067,7 +13070,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
-					DLFolderImpl.class, primaryKey, _nullDLFolder);
+					DLFolderImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -13634,22 +13637,4 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "hidden"
 			});
-	private static final DLFolder _nullDLFolder = new DLFolderImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<DLFolder> toCacheModel() {
-				return _nullDLFolderCacheModel;
-			}
-		};
-
-	private static final CacheModel<DLFolder> _nullDLFolderCacheModel = new CacheModel<DLFolder>() {
-			@Override
-			public DLFolder toEntityModel() {
-				return _nullDLFolder;
-			}
-		};
 }

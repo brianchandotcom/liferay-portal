@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -6751,12 +6750,14 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 	 */
 	@Override
 	public SyncDLObject fetchByPrimaryKey(Serializable primaryKey) {
-		SyncDLObject syncDLObject = (SyncDLObject)entityCache.getResult(SyncDLObjectModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(SyncDLObjectModelImpl.ENTITY_CACHE_ENABLED,
 				SyncDLObjectImpl.class, primaryKey);
 
-		if (syncDLObject == _nullSyncDLObject) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		SyncDLObject syncDLObject = (SyncDLObject)serializable;
 
 		if (syncDLObject == null) {
 			Session session = null;
@@ -6772,7 +6773,7 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 				}
 				else {
 					entityCache.putResult(SyncDLObjectModelImpl.ENTITY_CACHE_ENABLED,
-						SyncDLObjectImpl.class, primaryKey, _nullSyncDLObject);
+						SyncDLObjectImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -6826,18 +6827,20 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			SyncDLObject syncDLObject = (SyncDLObject)entityCache.getResult(SyncDLObjectModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(SyncDLObjectModelImpl.ENTITY_CACHE_ENABLED,
 					SyncDLObjectImpl.class, primaryKey);
 
-			if (syncDLObject == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, syncDLObject);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (SyncDLObject)serializable);
+				}
 			}
 		}
 
@@ -6879,7 +6882,7 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(SyncDLObjectModelImpl.ENTITY_CACHE_ENABLED,
-					SyncDLObjectImpl.class, primaryKey, _nullSyncDLObject);
+					SyncDLObjectImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -7124,22 +7127,4 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"size", "type"
 			});
-	private static final SyncDLObject _nullSyncDLObject = new SyncDLObjectImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<SyncDLObject> toCacheModel() {
-				return _nullSyncDLObjectCacheModel;
-			}
-		};
-
-	private static final CacheModel<SyncDLObject> _nullSyncDLObjectCacheModel = new CacheModel<SyncDLObject>() {
-			@Override
-			public SyncDLObject toEntityModel() {
-				return _nullSyncDLObject;
-			}
-		};
 }

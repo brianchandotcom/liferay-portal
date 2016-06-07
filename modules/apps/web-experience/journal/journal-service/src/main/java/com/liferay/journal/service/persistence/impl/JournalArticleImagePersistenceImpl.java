@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -2642,12 +2641,14 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	 */
 	@Override
 	public JournalArticleImage fetchByPrimaryKey(Serializable primaryKey) {
-		JournalArticleImage journalArticleImage = (JournalArticleImage)entityCache.getResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
 				JournalArticleImageImpl.class, primaryKey);
 
-		if (journalArticleImage == _nullJournalArticleImage) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		JournalArticleImage journalArticleImage = (JournalArticleImage)serializable;
 
 		if (journalArticleImage == null) {
 			Session session = null;
@@ -2663,8 +2664,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 				}
 				else {
 					entityCache.putResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
-						JournalArticleImageImpl.class, primaryKey,
-						_nullJournalArticleImage);
+						JournalArticleImageImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2718,18 +2718,20 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			JournalArticleImage journalArticleImage = (JournalArticleImage)entityCache.getResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
 					JournalArticleImageImpl.class, primaryKey);
 
-			if (journalArticleImage == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, journalArticleImage);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (JournalArticleImage)serializable);
+				}
 			}
 		}
 
@@ -2772,8 +2774,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(JournalArticleImageModelImpl.ENTITY_CACHE_ENABLED,
-					JournalArticleImageImpl.class, primaryKey,
-					_nullJournalArticleImage);
+					JournalArticleImageImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3010,23 +3011,4 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No JournalArticleImage exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No JournalArticleImage exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(JournalArticleImagePersistenceImpl.class);
-	private static final JournalArticleImage _nullJournalArticleImage = new JournalArticleImageImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<JournalArticleImage> toCacheModel() {
-				return _nullJournalArticleImageCacheModel;
-			}
-		};
-
-	private static final CacheModel<JournalArticleImage> _nullJournalArticleImageCacheModel =
-		new CacheModel<JournalArticleImage>() {
-			@Override
-			public JournalArticleImage toEntityModel() {
-				return _nullJournalArticleImage;
-			}
-		};
 }

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -5095,12 +5094,14 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	 */
 	@Override
 	public AssetVocabulary fetchByPrimaryKey(Serializable primaryKey) {
-		AssetVocabulary assetVocabulary = (AssetVocabulary)entityCache.getResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
 				AssetVocabularyImpl.class, primaryKey);
 
-		if (assetVocabulary == _nullAssetVocabulary) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		AssetVocabulary assetVocabulary = (AssetVocabulary)serializable;
 
 		if (assetVocabulary == null) {
 			Session session = null;
@@ -5116,8 +5117,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 				}
 				else {
 					entityCache.putResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
-						AssetVocabularyImpl.class, primaryKey,
-						_nullAssetVocabulary);
+						AssetVocabularyImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -5171,18 +5171,20 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			AssetVocabulary assetVocabulary = (AssetVocabulary)entityCache.getResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
 					AssetVocabularyImpl.class, primaryKey);
 
-			if (assetVocabulary == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, assetVocabulary);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (AssetVocabulary)serializable);
+				}
 			}
 		}
 
@@ -5224,7 +5226,7 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(AssetVocabularyModelImpl.ENTITY_CACHE_ENABLED,
-					AssetVocabularyImpl.class, primaryKey, _nullAssetVocabulary);
+					AssetVocabularyImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -5477,23 +5479,4 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "settings"
 			});
-	private static final AssetVocabulary _nullAssetVocabulary = new AssetVocabularyImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<AssetVocabulary> toCacheModel() {
-				return _nullAssetVocabularyCacheModel;
-			}
-		};
-
-	private static final CacheModel<AssetVocabulary> _nullAssetVocabularyCacheModel =
-		new CacheModel<AssetVocabulary>() {
-			@Override
-			public AssetVocabulary toEntityModel() {
-				return _nullAssetVocabulary;
-			}
-		};
 }

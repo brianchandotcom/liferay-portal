@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -8810,12 +8808,14 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	 */
 	@Override
 	public BackgroundTask fetchByPrimaryKey(Serializable primaryKey) {
-		BackgroundTask backgroundTask = (BackgroundTask)entityCache.getResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
 				BackgroundTaskImpl.class, primaryKey);
 
-		if (backgroundTask == _nullBackgroundTask) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		BackgroundTask backgroundTask = (BackgroundTask)serializable;
 
 		if (backgroundTask == null) {
 			Session session = null;
@@ -8831,8 +8831,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 				}
 				else {
 					entityCache.putResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
-						BackgroundTaskImpl.class, primaryKey,
-						_nullBackgroundTask);
+						BackgroundTaskImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -8886,18 +8885,20 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			BackgroundTask backgroundTask = (BackgroundTask)entityCache.getResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
 					BackgroundTaskImpl.class, primaryKey);
 
-			if (backgroundTask == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, backgroundTask);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (BackgroundTask)serializable);
+				}
 			}
 		}
 
@@ -8939,7 +8940,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(BackgroundTaskModelImpl.ENTITY_CACHE_ENABLED,
-					BackgroundTaskImpl.class, primaryKey, _nullBackgroundTask);
+					BackgroundTaskImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -9176,35 +9177,4 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No BackgroundTask exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No BackgroundTask exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(BackgroundTaskPersistenceImpl.class);
-	private static final BackgroundTask _nullBackgroundTask = new BackgroundTaskImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<BackgroundTask> toCacheModel() {
-				return _nullBackgroundTaskCacheModel;
-			}
-		};
-
-	private static final CacheModel<BackgroundTask> _nullBackgroundTaskCacheModel =
-		new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<BackgroundTask>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public BackgroundTask toEntityModel() {
-			return _nullBackgroundTask;
-		}
-	}
 }

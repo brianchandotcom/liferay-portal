@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchServiceComponentException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ServiceComponent;
 import com.liferay.portal.kernel.service.persistence.ServiceComponentPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -1291,12 +1289,14 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	 */
 	@Override
 	public ServiceComponent fetchByPrimaryKey(Serializable primaryKey) {
-		ServiceComponent serviceComponent = (ServiceComponent)entityCache.getResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 				ServiceComponentImpl.class, primaryKey);
 
-		if (serviceComponent == _nullServiceComponent) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		ServiceComponent serviceComponent = (ServiceComponent)serializable;
 
 		if (serviceComponent == null) {
 			Session session = null;
@@ -1312,8 +1312,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 				}
 				else {
 					entityCache.putResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-						ServiceComponentImpl.class, primaryKey,
-						_nullServiceComponent);
+						ServiceComponentImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -1367,18 +1366,20 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			ServiceComponent serviceComponent = (ServiceComponent)entityCache.getResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 					ServiceComponentImpl.class, primaryKey);
 
-			if (serviceComponent == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, serviceComponent);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (ServiceComponent)serializable);
+				}
 			}
 		}
 
@@ -1420,8 +1421,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
-					ServiceComponentImpl.class, primaryKey,
-					_nullServiceComponent);
+					ServiceComponentImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -1662,35 +1662,4 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"data"
 			});
-	private static final ServiceComponent _nullServiceComponent = new ServiceComponentImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<ServiceComponent> toCacheModel() {
-				return _nullServiceComponentCacheModel;
-			}
-		};
-
-	private static final CacheModel<ServiceComponent> _nullServiceComponentCacheModel =
-		new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<ServiceComponent>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public ServiceComponent toEntityModel() {
-			return _nullServiceComponent;
-		}
-	}
 }

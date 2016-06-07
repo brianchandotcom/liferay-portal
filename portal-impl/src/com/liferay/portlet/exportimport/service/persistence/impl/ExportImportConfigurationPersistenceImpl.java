@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -3261,12 +3259,14 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public ExportImportConfiguration fetchByPrimaryKey(Serializable primaryKey) {
-		ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration)entityCache.getResult(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 				ExportImportConfigurationImpl.class, primaryKey);
 
-		if (exportImportConfiguration == _nullExportImportConfiguration) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration)serializable;
 
 		if (exportImportConfiguration == null) {
 			Session session = null;
@@ -3283,7 +3283,7 @@ public class ExportImportConfigurationPersistenceImpl
 				else {
 					entityCache.putResult(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 						ExportImportConfigurationImpl.class, primaryKey,
-						_nullExportImportConfiguration);
+						nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -3338,18 +3338,20 @@ public class ExportImportConfigurationPersistenceImpl
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration)entityCache.getResult(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
 					ExportImportConfigurationImpl.class, primaryKey);
 
-			if (exportImportConfiguration == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, exportImportConfiguration);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (ExportImportConfiguration)serializable);
+				}
 			}
 		}
 
@@ -3392,8 +3394,7 @@ public class ExportImportConfigurationPersistenceImpl
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(ExportImportConfigurationModelImpl.ENTITY_CACHE_ENABLED,
-					ExportImportConfigurationImpl.class, primaryKey,
-					_nullExportImportConfiguration);
+					ExportImportConfigurationImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3637,36 +3638,4 @@ public class ExportImportConfigurationPersistenceImpl
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"type", "settings"
 			});
-	private static final ExportImportConfiguration _nullExportImportConfiguration =
-		new ExportImportConfigurationImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<ExportImportConfiguration> toCacheModel() {
-				return _nullExportImportConfigurationCacheModel;
-			}
-		};
-
-	private static final CacheModel<ExportImportConfiguration> _nullExportImportConfigurationCacheModel =
-		new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<ExportImportConfiguration>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public ExportImportConfiguration toEntityModel() {
-			return _nullExportImportConfiguration;
-		}
-	}
 }

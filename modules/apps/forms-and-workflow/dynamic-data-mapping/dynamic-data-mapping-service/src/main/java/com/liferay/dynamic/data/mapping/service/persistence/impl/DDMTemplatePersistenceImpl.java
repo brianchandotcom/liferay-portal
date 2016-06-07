@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -12627,12 +12626,14 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 */
 	@Override
 	public DDMTemplate fetchByPrimaryKey(Serializable primaryKey) {
-		DDMTemplate ddmTemplate = (DDMTemplate)entityCache.getResult(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
 				DDMTemplateImpl.class, primaryKey);
 
-		if (ddmTemplate == _nullDDMTemplate) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		DDMTemplate ddmTemplate = (DDMTemplate)serializable;
 
 		if (ddmTemplate == null) {
 			Session session = null;
@@ -12648,7 +12649,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 				}
 				else {
 					entityCache.putResult(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
-						DDMTemplateImpl.class, primaryKey, _nullDDMTemplate);
+						DDMTemplateImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -12702,18 +12703,20 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			DDMTemplate ddmTemplate = (DDMTemplate)entityCache.getResult(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
 					DDMTemplateImpl.class, primaryKey);
 
-			if (ddmTemplate == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, ddmTemplate);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (DDMTemplate)serializable);
+				}
 			}
 		}
 
@@ -12755,7 +12758,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
-					DDMTemplateImpl.class, primaryKey, _nullDDMTemplate);
+					DDMTemplateImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -13010,22 +13013,4 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "type", "mode"
 			});
-	private static final DDMTemplate _nullDDMTemplate = new DDMTemplateImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<DDMTemplate> toCacheModel() {
-				return _nullDDMTemplateCacheModel;
-			}
-		};
-
-	private static final CacheModel<DDMTemplate> _nullDDMTemplateCacheModel = new CacheModel<DDMTemplate>() {
-			@Override
-			public DDMTemplate toEntityModel() {
-				return _nullDDMTemplate;
-			}
-		};
 }

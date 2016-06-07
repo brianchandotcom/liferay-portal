@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchPortletItemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -2043,12 +2041,14 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	 */
 	@Override
 	public PortletItem fetchByPrimaryKey(Serializable primaryKey) {
-		PortletItem portletItem = (PortletItem)entityCache.getResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
 				PortletItemImpl.class, primaryKey);
 
-		if (portletItem == _nullPortletItem) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		PortletItem portletItem = (PortletItem)serializable;
 
 		if (portletItem == null) {
 			Session session = null;
@@ -2064,7 +2064,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 				}
 				else {
 					entityCache.putResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-						PortletItemImpl.class, primaryKey, _nullPortletItem);
+						PortletItemImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2118,18 +2118,20 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			PortletItem portletItem = (PortletItem)entityCache.getResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
 					PortletItemImpl.class, primaryKey);
 
-			if (portletItem == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, portletItem);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (PortletItem)serializable);
+				}
 			}
 		}
 
@@ -2171,7 +2173,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
-					PortletItemImpl.class, primaryKey, _nullPortletItem);
+					PortletItemImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2406,34 +2408,4 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No PortletItem exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PortletItem exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(PortletItemPersistenceImpl.class);
-	private static final PortletItem _nullPortletItem = new PortletItemImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<PortletItem> toCacheModel() {
-				return _nullPortletItemCacheModel;
-			}
-		};
-
-	private static final CacheModel<PortletItem> _nullPortletItemCacheModel = new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<PortletItem>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public PortletItem toEntityModel() {
-			return _nullPortletItem;
-		}
-	}
 }

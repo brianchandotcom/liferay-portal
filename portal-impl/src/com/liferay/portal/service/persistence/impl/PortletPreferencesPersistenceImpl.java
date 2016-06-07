@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
@@ -5021,12 +5019,14 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	 */
 	@Override
 	public PortletPreferences fetchByPrimaryKey(Serializable primaryKey) {
-		PortletPreferences portletPreferences = (PortletPreferences)entityCache.getResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 				PortletPreferencesImpl.class, primaryKey);
 
-		if (portletPreferences == _nullPortletPreferences) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		PortletPreferences portletPreferences = (PortletPreferences)serializable;
 
 		if (portletPreferences == null) {
 			Session session = null;
@@ -5042,8 +5042,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 				}
 				else {
 					entityCache.putResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-						PortletPreferencesImpl.class, primaryKey,
-						_nullPortletPreferences);
+						PortletPreferencesImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -5097,18 +5096,20 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			PortletPreferences portletPreferences = (PortletPreferences)entityCache.getResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 					PortletPreferencesImpl.class, primaryKey);
 
-			if (portletPreferences == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, portletPreferences);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (PortletPreferences)serializable);
+				}
 			}
 		}
 
@@ -5151,8 +5152,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-					PortletPreferencesImpl.class, primaryKey,
-					_nullPortletPreferences);
+					PortletPreferencesImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -5387,35 +5387,4 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No PortletPreferences exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No PortletPreferences exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(PortletPreferencesPersistenceImpl.class);
-	private static final PortletPreferences _nullPortletPreferences = new PortletPreferencesImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<PortletPreferences> toCacheModel() {
-				return _nullPortletPreferencesCacheModel;
-			}
-		};
-
-	private static final CacheModel<PortletPreferences> _nullPortletPreferencesCacheModel =
-		new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<PortletPreferences>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public PortletPreferences toEntityModel() {
-			return _nullPortletPreferences;
-		}
-	}
 }

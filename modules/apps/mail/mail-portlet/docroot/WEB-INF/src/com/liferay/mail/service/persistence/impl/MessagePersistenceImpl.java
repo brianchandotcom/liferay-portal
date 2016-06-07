@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -1745,12 +1744,14 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 	 */
 	@Override
 	public Message fetchByPrimaryKey(Serializable primaryKey) {
-		Message message = (Message)entityCache.getResult(MessageModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(MessageModelImpl.ENTITY_CACHE_ENABLED,
 				MessageImpl.class, primaryKey);
 
-		if (message == _nullMessage) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		Message message = (Message)serializable;
 
 		if (message == null) {
 			Session session = null;
@@ -1765,7 +1766,7 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 				}
 				else {
 					entityCache.putResult(MessageModelImpl.ENTITY_CACHE_ENABLED,
-						MessageImpl.class, primaryKey, _nullMessage);
+						MessageImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -1819,18 +1820,20 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Message message = (Message)entityCache.getResult(MessageModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(MessageModelImpl.ENTITY_CACHE_ENABLED,
 					MessageImpl.class, primaryKey);
 
-			if (message == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, message);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (Message)serializable);
+				}
 			}
 		}
 
@@ -1872,7 +1875,7 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(MessageModelImpl.ENTITY_CACHE_ENABLED,
-					MessageImpl.class, primaryKey, _nullMessage);
+					MessageImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2114,22 +2117,4 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"to", "size"
 			});
-	private static final Message _nullMessage = new MessageImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<Message> toCacheModel() {
-				return _nullMessageCacheModel;
-			}
-		};
-
-	private static final CacheModel<Message> _nullMessageCacheModel = new CacheModel<Message>() {
-			@Override
-			public Message toEntityModel() {
-				return _nullMessage;
-			}
-		};
 }

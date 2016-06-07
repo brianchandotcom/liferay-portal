@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -5084,12 +5083,14 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	 */
 	@Override
 	public WikiNode fetchByPrimaryKey(Serializable primaryKey) {
-		WikiNode wikiNode = (WikiNode)entityCache.getResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
 				WikiNodeImpl.class, primaryKey);
 
-		if (wikiNode == _nullWikiNode) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		WikiNode wikiNode = (WikiNode)serializable;
 
 		if (wikiNode == null) {
 			Session session = null;
@@ -5104,7 +5105,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 				}
 				else {
 					entityCache.putResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
-						WikiNodeImpl.class, primaryKey, _nullWikiNode);
+						WikiNodeImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -5158,18 +5159,20 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			WikiNode wikiNode = (WikiNode)entityCache.getResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
 					WikiNodeImpl.class, primaryKey);
 
-			if (wikiNode == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, wikiNode);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (WikiNode)serializable);
+				}
 			}
 		}
 
@@ -5211,7 +5214,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
-					WikiNodeImpl.class, primaryKey, _nullWikiNode);
+					WikiNodeImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -5465,22 +5468,4 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final WikiNode _nullWikiNode = new WikiNodeImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<WikiNode> toCacheModel() {
-				return _nullWikiNodeCacheModel;
-			}
-		};
-
-	private static final CacheModel<WikiNode> _nullWikiNodeCacheModel = new CacheModel<WikiNode>() {
-			@Override
-			public WikiNode toEntityModel() {
-				return _nullWikiNode;
-			}
-		};
 }

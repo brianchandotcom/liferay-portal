@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -32658,12 +32657,14 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	 */
 	@Override
 	public JournalArticle fetchByPrimaryKey(Serializable primaryKey) {
-		JournalArticle journalArticle = (JournalArticle)entityCache.getResult(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 				JournalArticleImpl.class, primaryKey);
 
-		if (journalArticle == _nullJournalArticle) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		JournalArticle journalArticle = (JournalArticle)serializable;
 
 		if (journalArticle == null) {
 			Session session = null;
@@ -32679,8 +32680,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 				}
 				else {
 					entityCache.putResult(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-						JournalArticleImpl.class, primaryKey,
-						_nullJournalArticle);
+						JournalArticleImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -32734,18 +32734,20 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			JournalArticle journalArticle = (JournalArticle)entityCache.getResult(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
 					JournalArticleImpl.class, primaryKey);
 
-			if (journalArticle == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, journalArticle);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (JournalArticle)serializable);
+				}
 			}
 		}
 
@@ -32787,7 +32789,7 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(JournalArticleModelImpl.ENTITY_CACHE_ENABLED,
-					JournalArticleImpl.class, primaryKey, _nullJournalArticle);
+					JournalArticleImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -33042,23 +33044,4 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "id"
 			});
-	private static final JournalArticle _nullJournalArticle = new JournalArticleImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<JournalArticle> toCacheModel() {
-				return _nullJournalArticleCacheModel;
-			}
-		};
-
-	private static final CacheModel<JournalArticle> _nullJournalArticleCacheModel =
-		new CacheModel<JournalArticle>() {
-			@Override
-			public JournalArticle toEntityModel() {
-				return _nullJournalArticle;
-			}
-		};
 }

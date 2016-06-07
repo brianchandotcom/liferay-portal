@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
@@ -6985,12 +6983,14 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	 */
 	@Override
 	public ResourcePermission fetchByPrimaryKey(Serializable primaryKey) {
-		ResourcePermission resourcePermission = (ResourcePermission)entityCache.getResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
 				ResourcePermissionImpl.class, primaryKey);
 
-		if (resourcePermission == _nullResourcePermission) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		ResourcePermission resourcePermission = (ResourcePermission)serializable;
 
 		if (resourcePermission == null) {
 			Session session = null;
@@ -7006,8 +7006,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				}
 				else {
 					entityCache.putResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
-						ResourcePermissionImpl.class, primaryKey,
-						_nullResourcePermission);
+						ResourcePermissionImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -7061,18 +7060,20 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			ResourcePermission resourcePermission = (ResourcePermission)entityCache.getResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
 					ResourcePermissionImpl.class, primaryKey);
 
-			if (resourcePermission == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, resourcePermission);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (ResourcePermission)serializable);
+				}
 			}
 		}
 
@@ -7115,8 +7116,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
-					ResourcePermissionImpl.class, primaryKey,
-					_nullResourcePermission);
+					ResourcePermissionImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -7351,35 +7351,4 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ResourcePermission exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ResourcePermission exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(ResourcePermissionPersistenceImpl.class);
-	private static final ResourcePermission _nullResourcePermission = new ResourcePermissionImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<ResourcePermission> toCacheModel() {
-				return _nullResourcePermissionCacheModel;
-			}
-		};
-
-	private static final CacheModel<ResourcePermission> _nullResourcePermissionCacheModel =
-		new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<ResourcePermission>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public ResourcePermission toEntityModel() {
-			return _nullResourcePermission;
-		}
-	}
 }

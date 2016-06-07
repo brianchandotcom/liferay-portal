@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -6305,12 +6304,14 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	 */
 	@Override
 	public DLFileVersion fetchByPrimaryKey(Serializable primaryKey) {
-		DLFileVersion dlFileVersion = (DLFileVersion)entityCache.getResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
 				DLFileVersionImpl.class, primaryKey);
 
-		if (dlFileVersion == _nullDLFileVersion) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		DLFileVersion dlFileVersion = (DLFileVersion)serializable;
 
 		if (dlFileVersion == null) {
 			Session session = null;
@@ -6326,7 +6327,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 				}
 				else {
 					entityCache.putResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
-						DLFileVersionImpl.class, primaryKey, _nullDLFileVersion);
+						DLFileVersionImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -6380,18 +6381,20 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			DLFileVersion dlFileVersion = (DLFileVersion)entityCache.getResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
 					DLFileVersionImpl.class, primaryKey);
 
-			if (dlFileVersion == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, dlFileVersion);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (DLFileVersion)serializable);
+				}
 			}
 		}
 
@@ -6433,7 +6436,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileVersionImpl.class, primaryKey, _nullDLFileVersion);
+					DLFileVersionImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -6676,22 +6679,4 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "size"
 			});
-	private static final DLFileVersion _nullDLFileVersion = new DLFileVersionImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<DLFileVersion> toCacheModel() {
-				return _nullDLFileVersionCacheModel;
-			}
-		};
-
-	private static final CacheModel<DLFileVersion> _nullDLFileVersionCacheModel = new CacheModel<DLFileVersion>() {
-			@Override
-			public DLFileVersion toEntityModel() {
-				return _nullDLFileVersion;
-			}
-		};
 }

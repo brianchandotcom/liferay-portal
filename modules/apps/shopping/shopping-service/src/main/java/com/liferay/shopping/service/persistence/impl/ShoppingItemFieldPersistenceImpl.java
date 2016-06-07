@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -907,12 +906,14 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 	 */
 	@Override
 	public ShoppingItemField fetchByPrimaryKey(Serializable primaryKey) {
-		ShoppingItemField shoppingItemField = (ShoppingItemField)entityCache.getResult(ShoppingItemFieldModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(ShoppingItemFieldModelImpl.ENTITY_CACHE_ENABLED,
 				ShoppingItemFieldImpl.class, primaryKey);
 
-		if (shoppingItemField == _nullShoppingItemField) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		ShoppingItemField shoppingItemField = (ShoppingItemField)serializable;
 
 		if (shoppingItemField == null) {
 			Session session = null;
@@ -928,8 +929,7 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 				}
 				else {
 					entityCache.putResult(ShoppingItemFieldModelImpl.ENTITY_CACHE_ENABLED,
-						ShoppingItemFieldImpl.class, primaryKey,
-						_nullShoppingItemField);
+						ShoppingItemFieldImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -983,18 +983,20 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			ShoppingItemField shoppingItemField = (ShoppingItemField)entityCache.getResult(ShoppingItemFieldModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(ShoppingItemFieldModelImpl.ENTITY_CACHE_ENABLED,
 					ShoppingItemFieldImpl.class, primaryKey);
 
-			if (shoppingItemField == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, shoppingItemField);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (ShoppingItemField)serializable);
+				}
 			}
 		}
 
@@ -1036,8 +1038,7 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(ShoppingItemFieldModelImpl.ENTITY_CACHE_ENABLED,
-					ShoppingItemFieldImpl.class, primaryKey,
-					_nullShoppingItemField);
+					ShoppingItemFieldImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -1282,23 +1283,4 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"values"
 			});
-	private static final ShoppingItemField _nullShoppingItemField = new ShoppingItemFieldImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<ShoppingItemField> toCacheModel() {
-				return _nullShoppingItemFieldCacheModel;
-			}
-		};
-
-	private static final CacheModel<ShoppingItemField> _nullShoppingItemFieldCacheModel =
-		new CacheModel<ShoppingItemField>() {
-			@Override
-			public ShoppingItemField toEntityModel() {
-				return _nullShoppingItemField;
-			}
-		};
 }

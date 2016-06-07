@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -2326,12 +2325,14 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	 */
 	@Override
 	public DDMStructureLink fetchByPrimaryKey(Serializable primaryKey) {
-		DDMStructureLink ddmStructureLink = (DDMStructureLink)entityCache.getResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 				DDMStructureLinkImpl.class, primaryKey);
 
-		if (ddmStructureLink == _nullDDMStructureLink) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		DDMStructureLink ddmStructureLink = (DDMStructureLink)serializable;
 
 		if (ddmStructureLink == null) {
 			Session session = null;
@@ -2347,8 +2348,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 				}
 				else {
 					entityCache.putResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
-						DDMStructureLinkImpl.class, primaryKey,
-						_nullDDMStructureLink);
+						DDMStructureLinkImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2402,18 +2402,20 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			DDMStructureLink ddmStructureLink = (DDMStructureLink)entityCache.getResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 					DDMStructureLinkImpl.class, primaryKey);
 
-			if (ddmStructureLink == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, ddmStructureLink);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (DDMStructureLink)serializable);
+				}
 			}
 		}
 
@@ -2455,8 +2457,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
-					DDMStructureLinkImpl.class, primaryKey,
-					_nullDDMStructureLink);
+					DDMStructureLinkImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2693,23 +2694,4 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No DDMStructureLink exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No DDMStructureLink exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(DDMStructureLinkPersistenceImpl.class);
-	private static final DDMStructureLink _nullDDMStructureLink = new DDMStructureLinkImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<DDMStructureLink> toCacheModel() {
-				return _nullDDMStructureLinkCacheModel;
-			}
-		};
-
-	private static final CacheModel<DDMStructureLink> _nullDDMStructureLinkCacheModel =
-		new CacheModel<DDMStructureLink>() {
-			@Override
-			public DDMStructureLink toEntityModel() {
-				return _nullDDMStructureLink;
-			}
-		};
 }

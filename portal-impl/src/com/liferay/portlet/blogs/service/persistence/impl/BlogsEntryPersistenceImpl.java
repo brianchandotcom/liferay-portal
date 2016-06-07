@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -19412,12 +19411,14 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	 */
 	@Override
 	public BlogsEntry fetchByPrimaryKey(Serializable primaryKey) {
-		BlogsEntry blogsEntry = (BlogsEntry)entityCache.getResult(BlogsEntryModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(BlogsEntryModelImpl.ENTITY_CACHE_ENABLED,
 				BlogsEntryImpl.class, primaryKey);
 
-		if (blogsEntry == _nullBlogsEntry) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		BlogsEntry blogsEntry = (BlogsEntry)serializable;
 
 		if (blogsEntry == null) {
 			Session session = null;
@@ -19433,7 +19434,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 				}
 				else {
 					entityCache.putResult(BlogsEntryModelImpl.ENTITY_CACHE_ENABLED,
-						BlogsEntryImpl.class, primaryKey, _nullBlogsEntry);
+						BlogsEntryImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -19487,18 +19488,20 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			BlogsEntry blogsEntry = (BlogsEntry)entityCache.getResult(BlogsEntryModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(BlogsEntryModelImpl.ENTITY_CACHE_ENABLED,
 					BlogsEntryImpl.class, primaryKey);
 
-			if (blogsEntry == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, blogsEntry);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (BlogsEntry)serializable);
+				}
 			}
 		}
 
@@ -19540,7 +19543,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(BlogsEntryModelImpl.ENTITY_CACHE_ENABLED,
-					BlogsEntryImpl.class, primaryKey, _nullBlogsEntry);
+					BlogsEntryImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -19793,22 +19796,4 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final BlogsEntry _nullBlogsEntry = new BlogsEntryImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<BlogsEntry> toCacheModel() {
-				return _nullBlogsEntryCacheModel;
-			}
-		};
-
-	private static final CacheModel<BlogsEntry> _nullBlogsEntryCacheModel = new CacheModel<BlogsEntry>() {
-			@Override
-			public BlogsEntry toEntityModel() {
-				return _nullBlogsEntry;
-			}
-		};
 }

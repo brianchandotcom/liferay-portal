@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -2486,12 +2485,14 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 	 */
 	@Override
 	public KaleoTimerInstanceToken fetchByPrimaryKey(Serializable primaryKey) {
-		KaleoTimerInstanceToken kaleoTimerInstanceToken = (KaleoTimerInstanceToken)entityCache.getResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
 				KaleoTimerInstanceTokenImpl.class, primaryKey);
 
-		if (kaleoTimerInstanceToken == _nullKaleoTimerInstanceToken) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		KaleoTimerInstanceToken kaleoTimerInstanceToken = (KaleoTimerInstanceToken)serializable;
 
 		if (kaleoTimerInstanceToken == null) {
 			Session session = null;
@@ -2507,8 +2508,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 				}
 				else {
 					entityCache.putResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
-						KaleoTimerInstanceTokenImpl.class, primaryKey,
-						_nullKaleoTimerInstanceToken);
+						KaleoTimerInstanceTokenImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2563,18 +2563,20 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			KaleoTimerInstanceToken kaleoTimerInstanceToken = (KaleoTimerInstanceToken)entityCache.getResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
 					KaleoTimerInstanceTokenImpl.class, primaryKey);
 
-			if (kaleoTimerInstanceToken == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, kaleoTimerInstanceToken);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (KaleoTimerInstanceToken)serializable);
+				}
 			}
 		}
 
@@ -2617,8 +2619,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(KaleoTimerInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoTimerInstanceTokenImpl.class, primaryKey,
-					_nullKaleoTimerInstanceToken);
+					KaleoTimerInstanceTokenImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2856,23 +2857,4 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No KaleoTimerInstanceToken exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No KaleoTimerInstanceToken exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(KaleoTimerInstanceTokenPersistenceImpl.class);
-	private static final KaleoTimerInstanceToken _nullKaleoTimerInstanceToken = new KaleoTimerInstanceTokenImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<KaleoTimerInstanceToken> toCacheModel() {
-				return _nullKaleoTimerInstanceTokenCacheModel;
-			}
-		};
-
-	private static final CacheModel<KaleoTimerInstanceToken> _nullKaleoTimerInstanceTokenCacheModel =
-		new CacheModel<KaleoTimerInstanceToken>() {
-			@Override
-			public KaleoTimerInstanceToken toEntityModel() {
-				return _nullKaleoTimerInstanceToken;
-			}
-		};
 }

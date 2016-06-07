@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchTeamException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -3053,12 +3051,14 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 */
 	@Override
 	public Team fetchByPrimaryKey(Serializable primaryKey) {
-		Team team = (Team)entityCache.getResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
 				TeamImpl.class, primaryKey);
 
-		if (team == _nullTeam) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		Team team = (Team)serializable;
 
 		if (team == null) {
 			Session session = null;
@@ -3073,7 +3073,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 				}
 				else {
 					entityCache.putResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
-						TeamImpl.class, primaryKey, _nullTeam);
+						TeamImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -3127,18 +3127,20 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Team team = (Team)entityCache.getResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
 					TeamImpl.class, primaryKey);
 
-			if (team == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, team);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (Team)serializable);
+				}
 			}
 		}
 
@@ -3180,7 +3182,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
-					TeamImpl.class, primaryKey, _nullTeam);
+					TeamImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -4046,33 +4048,4 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final Team _nullTeam = new TeamImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<Team> toCacheModel() {
-				return _nullTeamCacheModel;
-			}
-		};
-
-	private static final CacheModel<Team> _nullTeamCacheModel = new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<Team>, MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public Team toEntityModel() {
-			return _nullTeam;
-		}
-	}
 }

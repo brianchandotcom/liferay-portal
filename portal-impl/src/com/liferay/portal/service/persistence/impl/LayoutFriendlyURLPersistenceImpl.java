@@ -29,9 +29,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchLayoutFriendlyURLException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -5483,12 +5481,14 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByPrimaryKey(Serializable primaryKey) {
-		LayoutFriendlyURL layoutFriendlyURL = (LayoutFriendlyURL)entityCache.getResult(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 				LayoutFriendlyURLImpl.class, primaryKey);
 
-		if (layoutFriendlyURL == _nullLayoutFriendlyURL) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		LayoutFriendlyURL layoutFriendlyURL = (LayoutFriendlyURL)serializable;
 
 		if (layoutFriendlyURL == null) {
 			Session session = null;
@@ -5504,8 +5504,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 				}
 				else {
 					entityCache.putResult(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
-						LayoutFriendlyURLImpl.class, primaryKey,
-						_nullLayoutFriendlyURL);
+						LayoutFriendlyURLImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -5559,18 +5558,20 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			LayoutFriendlyURL layoutFriendlyURL = (LayoutFriendlyURL)entityCache.getResult(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
 					LayoutFriendlyURLImpl.class, primaryKey);
 
-			if (layoutFriendlyURL == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, layoutFriendlyURL);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (LayoutFriendlyURL)serializable);
+				}
 			}
 		}
 
@@ -5612,8 +5613,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(LayoutFriendlyURLModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutFriendlyURLImpl.class, primaryKey,
-					_nullLayoutFriendlyURL);
+					LayoutFriendlyURLImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -5856,35 +5856,4 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final LayoutFriendlyURL _nullLayoutFriendlyURL = new LayoutFriendlyURLImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<LayoutFriendlyURL> toCacheModel() {
-				return _nullLayoutFriendlyURLCacheModel;
-			}
-		};
-
-	private static final CacheModel<LayoutFriendlyURL> _nullLayoutFriendlyURLCacheModel =
-		new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<LayoutFriendlyURL>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public LayoutFriendlyURL toEntityModel() {
-			return _nullLayoutFriendlyURL;
-		}
-	}
 }

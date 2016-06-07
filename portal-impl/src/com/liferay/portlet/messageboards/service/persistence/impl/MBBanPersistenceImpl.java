@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -3684,12 +3683,14 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	 */
 	@Override
 	public MBBan fetchByPrimaryKey(Serializable primaryKey) {
-		MBBan mbBan = (MBBan)entityCache.getResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
 				MBBanImpl.class, primaryKey);
 
-		if (mbBan == _nullMBBan) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		MBBan mbBan = (MBBan)serializable;
 
 		if (mbBan == null) {
 			Session session = null;
@@ -3704,7 +3705,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 				}
 				else {
 					entityCache.putResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
-						MBBanImpl.class, primaryKey, _nullMBBan);
+						MBBanImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -3758,18 +3759,20 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			MBBan mbBan = (MBBan)entityCache.getResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
 					MBBanImpl.class, primaryKey);
 
-			if (mbBan == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, mbBan);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (MBBan)serializable);
+				}
 			}
 		}
 
@@ -3811,7 +3814,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(MBBanModelImpl.ENTITY_CACHE_ENABLED,
-					MBBanImpl.class, primaryKey, _nullMBBan);
+					MBBanImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -4053,22 +4056,4 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final MBBan _nullMBBan = new MBBanImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<MBBan> toCacheModel() {
-				return _nullMBBanCacheModel;
-			}
-		};
-
-	private static final CacheModel<MBBan> _nullMBBanCacheModel = new CacheModel<MBBan>() {
-			@Override
-			public MBBan toEntityModel() {
-				return _nullMBBan;
-			}
-		};
 }

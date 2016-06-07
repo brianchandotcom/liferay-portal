@@ -28,9 +28,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Country;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.service.persistence.CountryPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1698,12 +1696,14 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	 */
 	@Override
 	public Country fetchByPrimaryKey(Serializable primaryKey) {
-		Country country = (Country)entityCache.getResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
 				CountryImpl.class, primaryKey);
 
-		if (country == _nullCountry) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		Country country = (Country)serializable;
 
 		if (country == null) {
 			Session session = null;
@@ -1718,7 +1718,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 				}
 				else {
 					entityCache.putResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
-						CountryImpl.class, primaryKey, _nullCountry);
+						CountryImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -1772,18 +1772,20 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Country country = (Country)entityCache.getResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
 					CountryImpl.class, primaryKey);
 
-			if (country == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, country);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (Country)serializable);
+				}
 			}
 		}
 
@@ -1825,7 +1827,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
-					CountryImpl.class, primaryKey, _nullCountry);
+					CountryImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2065,34 +2067,4 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"number", "idd", "active"
 			});
-	private static final Country _nullCountry = new CountryImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<Country> toCacheModel() {
-				return _nullCountryCacheModel;
-			}
-		};
-
-	private static final CacheModel<Country> _nullCountryCacheModel = new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<Country>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public Country toEntityModel() {
-			return _nullCountry;
-		}
-	}
 }

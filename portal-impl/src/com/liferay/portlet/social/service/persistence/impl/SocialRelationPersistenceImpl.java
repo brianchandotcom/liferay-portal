@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -6236,12 +6235,14 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 */
 	@Override
 	public SocialRelation fetchByPrimaryKey(Serializable primaryKey) {
-		SocialRelation socialRelation = (SocialRelation)entityCache.getResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 				SocialRelationImpl.class, primaryKey);
 
-		if (socialRelation == _nullSocialRelation) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		SocialRelation socialRelation = (SocialRelation)serializable;
 
 		if (socialRelation == null) {
 			Session session = null;
@@ -6257,8 +6258,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 				}
 				else {
 					entityCache.putResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
-						SocialRelationImpl.class, primaryKey,
-						_nullSocialRelation);
+						SocialRelationImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -6312,18 +6312,20 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			SocialRelation socialRelation = (SocialRelation)entityCache.getResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 					SocialRelationImpl.class, primaryKey);
 
-			if (socialRelation == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, socialRelation);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (SocialRelation)serializable);
+				}
 			}
 		}
 
@@ -6365,7 +6367,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
-					SocialRelationImpl.class, primaryKey, _nullSocialRelation);
+					SocialRelationImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -6608,23 +6610,4 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "type"
 			});
-	private static final SocialRelation _nullSocialRelation = new SocialRelationImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<SocialRelation> toCacheModel() {
-				return _nullSocialRelationCacheModel;
-			}
-		};
-
-	private static final CacheModel<SocialRelation> _nullSocialRelationCacheModel =
-		new CacheModel<SocialRelation>() {
-			@Override
-			public SocialRelation toEntityModel() {
-				return _nullSocialRelation;
-			}
-		};
 }

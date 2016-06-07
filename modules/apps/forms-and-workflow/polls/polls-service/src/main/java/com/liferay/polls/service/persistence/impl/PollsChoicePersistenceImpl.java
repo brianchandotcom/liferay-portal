@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -2732,12 +2731,14 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 */
 	@Override
 	public PollsChoice fetchByPrimaryKey(Serializable primaryKey) {
-		PollsChoice pollsChoice = (PollsChoice)entityCache.getResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
 				PollsChoiceImpl.class, primaryKey);
 
-		if (pollsChoice == _nullPollsChoice) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		PollsChoice pollsChoice = (PollsChoice)serializable;
 
 		if (pollsChoice == null) {
 			Session session = null;
@@ -2753,7 +2754,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 				}
 				else {
 					entityCache.putResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-						PollsChoiceImpl.class, primaryKey, _nullPollsChoice);
+						PollsChoiceImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2807,18 +2808,20 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			PollsChoice pollsChoice = (PollsChoice)entityCache.getResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
 					PollsChoiceImpl.class, primaryKey);
 
-			if (pollsChoice == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, pollsChoice);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (PollsChoice)serializable);
+				}
 			}
 		}
 
@@ -2860,7 +2863,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
-					PollsChoiceImpl.class, primaryKey, _nullPollsChoice);
+					PollsChoiceImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3105,22 +3108,4 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final PollsChoice _nullPollsChoice = new PollsChoiceImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<PollsChoice> toCacheModel() {
-				return _nullPollsChoiceCacheModel;
-			}
-		};
-
-	private static final CacheModel<PollsChoice> _nullPollsChoiceCacheModel = new CacheModel<PollsChoice>() {
-			@Override
-			public PollsChoice toEntityModel() {
-				return _nullPollsChoice;
-			}
-		};
 }

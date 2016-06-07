@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -2789,12 +2787,14 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	 */
 	@Override
 	public Repository fetchByPrimaryKey(Serializable primaryKey) {
-		Repository repository = (Repository)entityCache.getResult(RepositoryModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(RepositoryModelImpl.ENTITY_CACHE_ENABLED,
 				RepositoryImpl.class, primaryKey);
 
-		if (repository == _nullRepository) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		Repository repository = (Repository)serializable;
 
 		if (repository == null) {
 			Session session = null;
@@ -2810,7 +2810,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 				}
 				else {
 					entityCache.putResult(RepositoryModelImpl.ENTITY_CACHE_ENABLED,
-						RepositoryImpl.class, primaryKey, _nullRepository);
+						RepositoryImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2864,18 +2864,20 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Repository repository = (Repository)entityCache.getResult(RepositoryModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(RepositoryModelImpl.ENTITY_CACHE_ENABLED,
 					RepositoryImpl.class, primaryKey);
 
-			if (repository == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, repository);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (Repository)serializable);
+				}
 			}
 		}
 
@@ -2917,7 +2919,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(RepositoryModelImpl.ENTITY_CACHE_ENABLED,
-					RepositoryImpl.class, primaryKey, _nullRepository);
+					RepositoryImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3160,34 +3162,4 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final Repository _nullRepository = new RepositoryImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<Repository> toCacheModel() {
-				return _nullRepositoryCacheModel;
-			}
-		};
-
-	private static final CacheModel<Repository> _nullRepositoryCacheModel = new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<Repository>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public Repository toEntityModel() {
-			return _nullRepository;
-		}
-	}
 }

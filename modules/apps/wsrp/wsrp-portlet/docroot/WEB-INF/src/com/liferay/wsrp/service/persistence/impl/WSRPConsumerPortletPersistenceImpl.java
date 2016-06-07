@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -2487,12 +2486,14 @@ public class WSRPConsumerPortletPersistenceImpl extends BasePersistenceImpl<WSRP
 	 */
 	@Override
 	public WSRPConsumerPortlet fetchByPrimaryKey(Serializable primaryKey) {
-		WSRPConsumerPortlet wsrpConsumerPortlet = (WSRPConsumerPortlet)entityCache.getResult(WSRPConsumerPortletModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(WSRPConsumerPortletModelImpl.ENTITY_CACHE_ENABLED,
 				WSRPConsumerPortletImpl.class, primaryKey);
 
-		if (wsrpConsumerPortlet == _nullWSRPConsumerPortlet) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		WSRPConsumerPortlet wsrpConsumerPortlet = (WSRPConsumerPortlet)serializable;
 
 		if (wsrpConsumerPortlet == null) {
 			Session session = null;
@@ -2508,8 +2509,7 @@ public class WSRPConsumerPortletPersistenceImpl extends BasePersistenceImpl<WSRP
 				}
 				else {
 					entityCache.putResult(WSRPConsumerPortletModelImpl.ENTITY_CACHE_ENABLED,
-						WSRPConsumerPortletImpl.class, primaryKey,
-						_nullWSRPConsumerPortlet);
+						WSRPConsumerPortletImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2563,18 +2563,20 @@ public class WSRPConsumerPortletPersistenceImpl extends BasePersistenceImpl<WSRP
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			WSRPConsumerPortlet wsrpConsumerPortlet = (WSRPConsumerPortlet)entityCache.getResult(WSRPConsumerPortletModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(WSRPConsumerPortletModelImpl.ENTITY_CACHE_ENABLED,
 					WSRPConsumerPortletImpl.class, primaryKey);
 
-			if (wsrpConsumerPortlet == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, wsrpConsumerPortlet);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (WSRPConsumerPortlet)serializable);
+				}
 			}
 		}
 
@@ -2617,8 +2619,7 @@ public class WSRPConsumerPortletPersistenceImpl extends BasePersistenceImpl<WSRP
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(WSRPConsumerPortletModelImpl.ENTITY_CACHE_ENABLED,
-					WSRPConsumerPortletImpl.class, primaryKey,
-					_nullWSRPConsumerPortlet);
+					WSRPConsumerPortletImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2861,23 +2862,4 @@ public class WSRPConsumerPortletPersistenceImpl extends BasePersistenceImpl<WSRP
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static final WSRPConsumerPortlet _nullWSRPConsumerPortlet = new WSRPConsumerPortletImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<WSRPConsumerPortlet> toCacheModel() {
-				return _nullWSRPConsumerPortletCacheModel;
-			}
-		};
-
-	private static final CacheModel<WSRPConsumerPortlet> _nullWSRPConsumerPortletCacheModel =
-		new CacheModel<WSRPConsumerPortlet>() {
-			@Override
-			public WSRPConsumerPortlet toEntityModel() {
-				return _nullWSRPConsumerPortlet;
-			}
-		};
 }

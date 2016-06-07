@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -2022,12 +2021,14 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	 */
 	@Override
 	public KaleoNode fetchByPrimaryKey(Serializable primaryKey) {
-		KaleoNode kaleoNode = (KaleoNode)entityCache.getResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
 				KaleoNodeImpl.class, primaryKey);
 
-		if (kaleoNode == _nullKaleoNode) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		KaleoNode kaleoNode = (KaleoNode)serializable;
 
 		if (kaleoNode == null) {
 			Session session = null;
@@ -2043,7 +2044,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 				}
 				else {
 					entityCache.putResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
-						KaleoNodeImpl.class, primaryKey, _nullKaleoNode);
+						KaleoNodeImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2097,18 +2098,20 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			KaleoNode kaleoNode = (KaleoNode)entityCache.getResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
 					KaleoNodeImpl.class, primaryKey);
 
-			if (kaleoNode == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, kaleoNode);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (KaleoNode)serializable);
+				}
 			}
 		}
 
@@ -2150,7 +2153,7 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(KaleoNodeModelImpl.ENTITY_CACHE_ENABLED,
-					KaleoNodeImpl.class, primaryKey, _nullKaleoNode);
+					KaleoNodeImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2395,22 +2398,4 @@ public class KaleoNodePersistenceImpl extends BasePersistenceImpl<KaleoNode>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"type", "initial"
 			});
-	private static final KaleoNode _nullKaleoNode = new KaleoNodeImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<KaleoNode> toCacheModel() {
-				return _nullKaleoNodeCacheModel;
-			}
-		};
-
-	private static final CacheModel<KaleoNode> _nullKaleoNodeCacheModel = new CacheModel<KaleoNode>() {
-			@Override
-			public KaleoNode toEntityModel() {
-				return _nullKaleoNode;
-			}
-		};
 }

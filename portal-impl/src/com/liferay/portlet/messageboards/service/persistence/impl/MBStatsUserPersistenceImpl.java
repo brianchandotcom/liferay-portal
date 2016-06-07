@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -2270,12 +2269,14 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	 */
 	@Override
 	public MBStatsUser fetchByPrimaryKey(Serializable primaryKey) {
-		MBStatsUser mbStatsUser = (MBStatsUser)entityCache.getResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
 				MBStatsUserImpl.class, primaryKey);
 
-		if (mbStatsUser == _nullMBStatsUser) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		MBStatsUser mbStatsUser = (MBStatsUser)serializable;
 
 		if (mbStatsUser == null) {
 			Session session = null;
@@ -2291,7 +2292,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 				}
 				else {
 					entityCache.putResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-						MBStatsUserImpl.class, primaryKey, _nullMBStatsUser);
+						MBStatsUserImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2345,18 +2346,20 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			MBStatsUser mbStatsUser = (MBStatsUser)entityCache.getResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
 					MBStatsUserImpl.class, primaryKey);
 
-			if (mbStatsUser == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, mbStatsUser);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (MBStatsUser)serializable);
+				}
 			}
 		}
 
@@ -2398,7 +2401,7 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(MBStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-					MBStatsUserImpl.class, primaryKey, _nullMBStatsUser);
+					MBStatsUserImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2633,22 +2636,4 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No MBStatsUser exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MBStatsUser exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(MBStatsUserPersistenceImpl.class);
-	private static final MBStatsUser _nullMBStatsUser = new MBStatsUserImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<MBStatsUser> toCacheModel() {
-				return _nullMBStatsUserCacheModel;
-			}
-		};
-
-	private static final CacheModel<MBStatsUser> _nullMBStatsUserCacheModel = new CacheModel<MBStatsUser>() {
-			@Override
-			public MBStatsUser toEntityModel() {
-				return _nullMBStatsUser;
-			}
-		};
 }

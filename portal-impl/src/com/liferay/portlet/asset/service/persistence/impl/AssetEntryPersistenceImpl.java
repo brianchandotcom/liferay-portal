@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -4278,12 +4277,14 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	@Override
 	public AssetEntry fetchByPrimaryKey(Serializable primaryKey) {
-		AssetEntry assetEntry = (AssetEntry)entityCache.getResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 				AssetEntryImpl.class, primaryKey);
 
-		if (assetEntry == _nullAssetEntry) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		AssetEntry assetEntry = (AssetEntry)serializable;
 
 		if (assetEntry == null) {
 			Session session = null;
@@ -4299,7 +4300,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 				}
 				else {
 					entityCache.putResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
-						AssetEntryImpl.class, primaryKey, _nullAssetEntry);
+						AssetEntryImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -4353,18 +4354,20 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			AssetEntry assetEntry = (AssetEntry)entityCache.getResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 					AssetEntryImpl.class, primaryKey);
 
-			if (assetEntry == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, assetEntry);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (AssetEntry)serializable);
+				}
 			}
 		}
 
@@ -4406,7 +4409,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
-					AssetEntryImpl.class, primaryKey, _nullAssetEntry);
+					AssetEntryImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -5265,22 +5268,4 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AssetEntry exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AssetEntry exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(AssetEntryPersistenceImpl.class);
-	private static final AssetEntry _nullAssetEntry = new AssetEntryImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<AssetEntry> toCacheModel() {
-				return _nullAssetEntryCacheModel;
-			}
-		};
-
-	private static final CacheModel<AssetEntry> _nullAssetEntryCacheModel = new CacheModel<AssetEntry>() {
-			@Override
-			public AssetEntry toEntityModel() {
-				return _nullAssetEntry;
-			}
-		};
 }

@@ -29,9 +29,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchLayoutRevisionException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.LayoutRevision;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -6460,12 +6458,14 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	 */
 	@Override
 	public LayoutRevision fetchByPrimaryKey(Serializable primaryKey) {
-		LayoutRevision layoutRevision = (LayoutRevision)entityCache.getResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
 				LayoutRevisionImpl.class, primaryKey);
 
-		if (layoutRevision == _nullLayoutRevision) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		LayoutRevision layoutRevision = (LayoutRevision)serializable;
 
 		if (layoutRevision == null) {
 			Session session = null;
@@ -6481,8 +6481,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 				}
 				else {
 					entityCache.putResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-						LayoutRevisionImpl.class, primaryKey,
-						_nullLayoutRevision);
+						LayoutRevisionImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -6536,18 +6535,20 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			LayoutRevision layoutRevision = (LayoutRevision)entityCache.getResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
 					LayoutRevisionImpl.class, primaryKey);
 
-			if (layoutRevision == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, layoutRevision);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (LayoutRevision)serializable);
+				}
 			}
 		}
 
@@ -6589,7 +6590,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(LayoutRevisionModelImpl.ENTITY_CACHE_ENABLED,
-					LayoutRevisionImpl.class, primaryKey, _nullLayoutRevision);
+					LayoutRevisionImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -6824,35 +6825,4 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No LayoutRevision exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No LayoutRevision exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(LayoutRevisionPersistenceImpl.class);
-	private static final LayoutRevision _nullLayoutRevision = new LayoutRevisionImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<LayoutRevision> toCacheModel() {
-				return _nullLayoutRevisionCacheModel;
-			}
-		};
-
-	private static final CacheModel<LayoutRevision> _nullLayoutRevisionCacheModel =
-		new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<LayoutRevision>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public LayoutRevision toEntityModel() {
-			return _nullLayoutRevision;
-		}
-	}
 }

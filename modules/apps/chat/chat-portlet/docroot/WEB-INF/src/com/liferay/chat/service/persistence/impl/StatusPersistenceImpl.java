@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -2220,12 +2219,14 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 	 */
 	@Override
 	public Status fetchByPrimaryKey(Serializable primaryKey) {
-		Status status = (Status)entityCache.getResult(StatusModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(StatusModelImpl.ENTITY_CACHE_ENABLED,
 				StatusImpl.class, primaryKey);
 
-		if (status == _nullStatus) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		Status status = (Status)serializable;
 
 		if (status == null) {
 			Session session = null;
@@ -2240,7 +2241,7 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 				}
 				else {
 					entityCache.putResult(StatusModelImpl.ENTITY_CACHE_ENABLED,
-						StatusImpl.class, primaryKey, _nullStatus);
+						StatusImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2294,18 +2295,20 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Status status = (Status)entityCache.getResult(StatusModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(StatusModelImpl.ENTITY_CACHE_ENABLED,
 					StatusImpl.class, primaryKey);
 
-			if (status == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, status);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (Status)serializable);
+				}
 			}
 		}
 
@@ -2347,7 +2350,7 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(StatusModelImpl.ENTITY_CACHE_ENABLED,
-					StatusImpl.class, primaryKey, _nullStatus);
+					StatusImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2587,22 +2590,4 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"online"
 			});
-	private static final Status _nullStatus = new StatusImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<Status> toCacheModel() {
-				return _nullStatusCacheModel;
-			}
-		};
-
-	private static final CacheModel<Status> _nullStatusCacheModel = new CacheModel<Status>() {
-			@Override
-			public Status toEntityModel() {
-				return _nullStatus;
-			}
-		};
 }

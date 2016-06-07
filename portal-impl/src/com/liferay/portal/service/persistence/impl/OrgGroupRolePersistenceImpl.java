@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchOrgGroupRoleException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.OrgGroupRole;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
@@ -1417,12 +1415,14 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	 */
 	@Override
 	public OrgGroupRole fetchByPrimaryKey(Serializable primaryKey) {
-		OrgGroupRole orgGroupRole = (OrgGroupRole)entityCache.getResult(OrgGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(OrgGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
 				OrgGroupRoleImpl.class, primaryKey);
 
-		if (orgGroupRole == _nullOrgGroupRole) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		OrgGroupRole orgGroupRole = (OrgGroupRole)serializable;
 
 		if (orgGroupRole == null) {
 			Session session = null;
@@ -1438,7 +1438,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 				}
 				else {
 					entityCache.putResult(OrgGroupRoleModelImpl.ENTITY_CACHE_ENABLED,
-						OrgGroupRoleImpl.class, primaryKey, _nullOrgGroupRole);
+						OrgGroupRoleImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -1707,34 +1707,4 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No OrgGroupRole exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No OrgGroupRole exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(OrgGroupRolePersistenceImpl.class);
-	private static final OrgGroupRole _nullOrgGroupRole = new OrgGroupRoleImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<OrgGroupRole> toCacheModel() {
-				return _nullOrgGroupRoleCacheModel;
-			}
-		};
-
-	private static final CacheModel<OrgGroupRole> _nullOrgGroupRoleCacheModel = new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<OrgGroupRole>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public OrgGroupRole toEntityModel() {
-			return _nullOrgGroupRole;
-		}
-	}
 }

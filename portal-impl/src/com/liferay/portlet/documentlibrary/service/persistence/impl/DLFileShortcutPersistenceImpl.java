@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -6537,12 +6536,14 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	 */
 	@Override
 	public DLFileShortcut fetchByPrimaryKey(Serializable primaryKey) {
-		DLFileShortcut dlFileShortcut = (DLFileShortcut)entityCache.getResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
 				DLFileShortcutImpl.class, primaryKey);
 
-		if (dlFileShortcut == _nullDLFileShortcut) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		DLFileShortcut dlFileShortcut = (DLFileShortcut)serializable;
 
 		if (dlFileShortcut == null) {
 			Session session = null;
@@ -6558,8 +6559,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 				}
 				else {
 					entityCache.putResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
-						DLFileShortcutImpl.class, primaryKey,
-						_nullDLFileShortcut);
+						DLFileShortcutImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -6613,18 +6613,20 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			DLFileShortcut dlFileShortcut = (DLFileShortcut)entityCache.getResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
 					DLFileShortcutImpl.class, primaryKey);
 
-			if (dlFileShortcut == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, dlFileShortcut);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (DLFileShortcut)serializable);
+				}
 			}
 		}
 
@@ -6666,7 +6668,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
-					DLFileShortcutImpl.class, primaryKey, _nullDLFileShortcut);
+					DLFileShortcutImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -6919,23 +6921,4 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "active"
 			});
-	private static final DLFileShortcut _nullDLFileShortcut = new DLFileShortcutImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<DLFileShortcut> toCacheModel() {
-				return _nullDLFileShortcutCacheModel;
-			}
-		};
-
-	private static final CacheModel<DLFileShortcut> _nullDLFileShortcutCacheModel =
-		new CacheModel<DLFileShortcut>() {
-			@Override
-			public DLFileShortcut toEntityModel() {
-				return _nullDLFileShortcut;
-			}
-		};
 }

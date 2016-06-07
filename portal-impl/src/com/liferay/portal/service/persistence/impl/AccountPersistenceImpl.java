@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.exception.NoSuchAccountException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Account;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.AccountPersistence;
@@ -410,12 +408,14 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	 */
 	@Override
 	public Account fetchByPrimaryKey(Serializable primaryKey) {
-		Account account = (Account)entityCache.getResult(AccountModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(AccountModelImpl.ENTITY_CACHE_ENABLED,
 				AccountImpl.class, primaryKey);
 
-		if (account == _nullAccount) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		Account account = (Account)serializable;
 
 		if (account == null) {
 			Session session = null;
@@ -430,7 +430,7 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 				}
 				else {
 					entityCache.putResult(AccountModelImpl.ENTITY_CACHE_ENABLED,
-						AccountImpl.class, primaryKey, _nullAccount);
+						AccountImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -484,18 +484,20 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Account account = (Account)entityCache.getResult(AccountModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(AccountModelImpl.ENTITY_CACHE_ENABLED,
 					AccountImpl.class, primaryKey);
 
-			if (account == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, account);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (Account)serializable);
+				}
 			}
 		}
 
@@ -537,7 +539,7 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(AccountModelImpl.ENTITY_CACHE_ENABLED,
-					AccountImpl.class, primaryKey, _nullAccount);
+					AccountImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -776,34 +778,4 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"type", "size"
 			});
-	private static final Account _nullAccount = new AccountImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<Account> toCacheModel() {
-				return _nullAccountCacheModel;
-			}
-		};
-
-	private static final CacheModel<Account> _nullAccountCacheModel = new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<Account>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public Account toEntityModel() {
-			return _nullAccount;
-		}
-	}
 }

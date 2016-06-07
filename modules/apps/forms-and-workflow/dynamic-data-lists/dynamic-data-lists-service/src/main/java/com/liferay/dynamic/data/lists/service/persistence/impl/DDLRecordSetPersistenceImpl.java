@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -3556,12 +3555,14 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	 */
 	@Override
 	public DDLRecordSet fetchByPrimaryKey(Serializable primaryKey) {
-		DDLRecordSet ddlRecordSet = (DDLRecordSet)entityCache.getResult(DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
 				DDLRecordSetImpl.class, primaryKey);
 
-		if (ddlRecordSet == _nullDDLRecordSet) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		DDLRecordSet ddlRecordSet = (DDLRecordSet)serializable;
 
 		if (ddlRecordSet == null) {
 			Session session = null;
@@ -3577,7 +3578,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 				}
 				else {
 					entityCache.putResult(DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-						DDLRecordSetImpl.class, primaryKey, _nullDDLRecordSet);
+						DDLRecordSetImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -3631,18 +3632,20 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			DDLRecordSet ddlRecordSet = (DDLRecordSet)entityCache.getResult(DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
 					DDLRecordSetImpl.class, primaryKey);
 
-			if (ddlRecordSet == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, ddlRecordSet);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (DDLRecordSet)serializable);
+				}
 			}
 		}
 
@@ -3684,7 +3687,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
-					DDLRecordSetImpl.class, primaryKey, _nullDDLRecordSet);
+					DDLRecordSetImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3939,22 +3942,4 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "settings"
 			});
-	private static final DDLRecordSet _nullDDLRecordSet = new DDLRecordSetImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<DDLRecordSet> toCacheModel() {
-				return _nullDDLRecordSetCacheModel;
-			}
-		};
-
-	private static final CacheModel<DDLRecordSet> _nullDDLRecordSetCacheModel = new CacheModel<DDLRecordSet>() {
-			@Override
-			public DDLRecordSet toEntityModel() {
-				return _nullDDLRecordSet;
-			}
-		};
 }

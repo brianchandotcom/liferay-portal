@@ -28,9 +28,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchClassNameException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -649,12 +647,14 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	 */
 	@Override
 	public ClassName fetchByPrimaryKey(Serializable primaryKey) {
-		ClassName className = (ClassName)entityCache.getResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
 				ClassNameImpl.class, primaryKey);
 
-		if (className == _nullClassName) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		ClassName className = (ClassName)serializable;
 
 		if (className == null) {
 			Session session = null;
@@ -670,7 +670,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 				}
 				else {
 					entityCache.putResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-						ClassNameImpl.class, primaryKey, _nullClassName);
+						ClassNameImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -724,18 +724,20 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			ClassName className = (ClassName)entityCache.getResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
 					ClassNameImpl.class, primaryKey);
 
-			if (className == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, className);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (ClassName)serializable);
+				}
 			}
 		}
 
@@ -777,7 +779,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
-					ClassNameImpl.class, primaryKey, _nullClassName);
+					ClassNameImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -1010,34 +1012,4 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ClassName exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ClassName exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(ClassNamePersistenceImpl.class);
-	private static final ClassName _nullClassName = new ClassNameImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<ClassName> toCacheModel() {
-				return _nullClassNameCacheModel;
-			}
-		};
-
-	private static final CacheModel<ClassName> _nullClassNameCacheModel = new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<ClassName>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public ClassName toEntityModel() {
-			return _nullClassName;
-		}
-	}
 }

@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchResourceBlockException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ResourceBlock;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
@@ -2063,12 +2061,14 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 */
 	@Override
 	public ResourceBlock fetchByPrimaryKey(Serializable primaryKey) {
-		ResourceBlock resourceBlock = (ResourceBlock)entityCache.getResult(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 				ResourceBlockImpl.class, primaryKey);
 
-		if (resourceBlock == _nullResourceBlock) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		ResourceBlock resourceBlock = (ResourceBlock)serializable;
 
 		if (resourceBlock == null) {
 			Session session = null;
@@ -2084,7 +2084,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 				}
 				else {
 					entityCache.putResult(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-						ResourceBlockImpl.class, primaryKey, _nullResourceBlock);
+						ResourceBlockImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -2138,18 +2138,20 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			ResourceBlock resourceBlock = (ResourceBlock)entityCache.getResult(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 					ResourceBlockImpl.class, primaryKey);
 
-			if (resourceBlock == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, resourceBlock);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (ResourceBlock)serializable);
+				}
 			}
 		}
 
@@ -2191,7 +2193,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
-					ResourceBlockImpl.class, primaryKey, _nullResourceBlock);
+					ResourceBlockImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2426,34 +2428,4 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ResourceBlock exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ResourceBlock exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(ResourceBlockPersistenceImpl.class);
-	private static final ResourceBlock _nullResourceBlock = new ResourceBlockImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<ResourceBlock> toCacheModel() {
-				return _nullResourceBlockCacheModel;
-			}
-		};
-
-	private static final CacheModel<ResourceBlock> _nullResourceBlockCacheModel = new NullCacheModel();
-
-	private static class NullCacheModel implements CacheModel<ResourceBlock>,
-		MVCCModel {
-		@Override
-		public long getMvccVersion() {
-			return -1;
-		}
-
-		@Override
-		public void setMvccVersion(long mvccVersion) {
-		}
-
-		@Override
-		public ResourceBlock toEntityModel() {
-			return _nullResourceBlock;
-		}
-	}
 }

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -3094,12 +3093,14 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	 */
 	@Override
 	public JournalFeed fetchByPrimaryKey(Serializable primaryKey) {
-		JournalFeed journalFeed = (JournalFeed)entityCache.getResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 				JournalFeedImpl.class, primaryKey);
 
-		if (journalFeed == _nullJournalFeed) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		JournalFeed journalFeed = (JournalFeed)serializable;
 
 		if (journalFeed == null) {
 			Session session = null;
@@ -3115,7 +3116,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 				}
 				else {
 					entityCache.putResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
-						JournalFeedImpl.class, primaryKey, _nullJournalFeed);
+						JournalFeedImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -3169,18 +3170,20 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			JournalFeed journalFeed = (JournalFeed)entityCache.getResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 					JournalFeedImpl.class, primaryKey);
 
-			if (journalFeed == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, journalFeed);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (JournalFeed)serializable);
+				}
 			}
 		}
 
@@ -3222,7 +3225,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
-					JournalFeedImpl.class, primaryKey, _nullJournalFeed);
+					JournalFeedImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3477,22 +3480,4 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid", "id"
 			});
-	private static final JournalFeed _nullJournalFeed = new JournalFeedImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<JournalFeed> toCacheModel() {
-				return _nullJournalFeedCacheModel;
-			}
-		};
-
-	private static final CacheModel<JournalFeed> _nullJournalFeedCacheModel = new CacheModel<JournalFeed>() {
-			@Override
-			public JournalFeed toEntityModel() {
-				return _nullJournalFeed;
-			}
-		};
 }

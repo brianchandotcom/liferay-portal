@@ -20,6 +20,7 @@ import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarBookingConstants;
 import com.liferay.calendar.model.CalendarResource;
+import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.recurrence.Frequency;
 import com.liferay.calendar.recurrence.PositionalWeekday;
 import com.liferay.calendar.recurrence.Recurrence;
@@ -621,6 +622,89 @@ public class CalendarBookingLocalServiceTest {
 			startTime + (Time.HOUR * 10), false,
 			RecurrenceSerializer.serialize(recurrence), 0, null, 0, null,
 			serviceContext);
+	}
+
+	@Test
+	public void testUpdateCalendarBookingPreservesChildReminders()
+		throws Exception {
+
+		ServiceContext serviceContext = createServiceContext();
+
+		CalendarResource calendarResource =
+			CalendarResourceUtil.getUserCalendarResource(
+				_user.getUserId(), serviceContext);
+
+		Calendar calendar = calendarResource.getDefaultCalendar();
+
+		Calendar invitedCalendar = CalendarLocalServiceUtil.addCalendar(
+			_user.getUserId(), _user.getGroupId(),
+			calendarResource.getCalendarResourceId(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			calendarResource.getTimeZoneId(), RandomTestUtil.randomInt(), false,
+			false, false, serviceContext);
+
+		long startTime = System.currentTimeMillis();
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		CalendarBooking calendarBooking =
+			CalendarBookingLocalServiceUtil.addCalendarBooking(
+				_user.getUserId(), calendar.getCalendarId(),
+				new long[] {invitedCalendar.getCalendarId()},
+				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString(), startTime, startTime + 36000000,
+				false, null, RandomTestUtil.randomInt(),
+				NotificationType.EMAIL.getValue(), RandomTestUtil.randomInt(),
+				NotificationType.EMAIL.getValue(), serviceContext);
+
+		CalendarBooking childCalendarBooking = getChildCalendarBooking(
+			calendarBooking);
+		childCalendarBooking = CalendarBookingLocalServiceUtil.updateStatus(
+			_user.getUserId(), childCalendarBooking,
+			CalendarBookingWorkflowConstants.STATUS_MAYBE, serviceContext);
+
+		int firstReminder = RandomTestUtil.randomInt();
+		int secondReminder = RandomTestUtil.randomInt(1, firstReminder);
+
+		childCalendarBooking =
+			CalendarBookingLocalServiceUtil.updateCalendarBooking(
+				_user.getUserId(), childCalendarBooking.getCalendarBookingId(),
+				childCalendarBooking.getCalendarId(), new long[0],
+				childCalendarBooking.getTitleMap(),
+				childCalendarBooking.getDescriptionMap(),
+				childCalendarBooking.getLocation(), startTime,
+				startTime + 36000000, childCalendarBooking.getAllDay(),
+				childCalendarBooking.getRecurrence(), firstReminder,
+				NotificationType.EMAIL.getValue(), secondReminder,
+				NotificationType.EMAIL.getValue(), serviceContext);
+
+		calendarBooking = CalendarBookingLocalServiceUtil.updateCalendarBooking(
+			_user.getUserId(), calendarBooking.getCalendarBookingId(),
+			calendarBooking.getCalendarId(),
+			new long[] {invitedCalendar.getCalendarId()},
+			calendarBooking.getTitleMap(), calendarBooking.getDescriptionMap(),
+			calendarBooking.getLocation(), startTime, startTime + 37000000,
+			calendarBooking.getAllDay(), calendarBooking.getRecurrence(),
+			RandomTestUtil.randomInt(), calendarBooking.getFirstReminderType(),
+			RandomTestUtil.randomInt(), calendarBooking.getSecondReminderType(),
+			serviceContext);
+
+		childCalendarBooking = getChildCalendarBooking(calendarBooking);
+
+		Assert.assertNotEquals(
+			calendarBooking.getFirstReminder(),
+			childCalendarBooking.getFirstReminder());
+		Assert.assertNotEquals(
+			calendarBooking.getSecondReminder(),
+			childCalendarBooking.getSecondReminder());
+
+		Assert.assertEquals(
+			firstReminder, childCalendarBooking.getFirstReminder());
+		Assert.assertEquals(
+			secondReminder, childCalendarBooking.getSecondReminder());
 	}
 
 	@Test

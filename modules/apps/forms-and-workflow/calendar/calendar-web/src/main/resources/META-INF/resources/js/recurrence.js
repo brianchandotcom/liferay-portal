@@ -497,7 +497,6 @@ AUI.add(
 						var frequencySelect = instance.get('frequencySelect');
 
 						frequencySelect.set('value', value);
-						frequencySelect.simulate('change');
 
 						return value;
 					},
@@ -508,7 +507,6 @@ AUI.add(
 						var intervalSelect = instance.get('intervalSelect');
 
 						intervalSelect.set('value', value);
-						intervalSelect.simulate('change');
 
 						return value;
 					},
@@ -542,7 +540,6 @@ AUI.add(
 							function(node, index) {
 								if (node.get('value') === value) {
 									node.set('checked', true);
-									node.simulate('change');
 								}
 							}
 						);
@@ -560,10 +557,6 @@ AUI.add(
 						lastPositionCheckbox.set('checked', (value && value.position === '-1'));
 						repeatOnDayOfMonthRadioButton.set('checked', !value);
 						repeatOnDayOfWeekRadioButton.set('checked', !!value);
-
-						lastPositionCheckbox.simulate('change');
-						repeatOnDayOfMonthRadioButton.simulate('change');
-						repeatOnDayOfWeekRadioButton.simulate('change');
 
 						return value;
 					},

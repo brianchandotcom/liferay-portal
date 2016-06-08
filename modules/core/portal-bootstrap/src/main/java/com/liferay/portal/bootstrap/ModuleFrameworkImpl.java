@@ -1055,14 +1055,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			});
 
-		Path utilTaglibPath = Paths.get(
+		File utilTaglibFile = new File(
 			PropsValues.LIFERAY_LIB_PORTAL_DIR, "util-taglib.jar");
 
-		if (Files.exists(utilTaglibPath)) {
-			jarPaths.add(utilTaglibPath);
+		if (utilTaglibFile.exists()) {
+			jarPaths.add(utilTaglibFile.toPath());
 		}
 		else {
-			_log.error("Missing " + utilTaglibPath);
+			_log.error("Missing " + utilTaglibFile);
 		}
 
 		Collections.sort(jarPaths);

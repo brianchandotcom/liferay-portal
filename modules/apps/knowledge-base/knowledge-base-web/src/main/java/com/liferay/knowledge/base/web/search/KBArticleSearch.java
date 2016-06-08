@@ -14,9 +14,11 @@
 
 package com.liferay.knowledge.base.web.search;
 
+import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
+import com.liferay.knowledge.base.util.comparator.KBEntriesTitleComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Objects;
@@ -36,7 +39,7 @@ import javax.portlet.PortletURL;
  * @author Peter Shin
  * @author Brian Wing Shun Chan
  */
-public class KBArticleSearch extends SearchContainer<KBArticle> {
+public class KBArticleSearch extends SearchContainer<Object> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-articles-were-found";
 
@@ -44,41 +47,8 @@ public class KBArticleSearch extends SearchContainer<KBArticle> {
 		PortletRequest portletRequest, PortletURL iteratorURL) {
 
 		super(
-			portletRequest, new KBArticleDisplayTerms(portletRequest),
-			new KBArticleSearchTerms(portletRequest), DEFAULT_CUR_PARAM,
-			DEFAULT_DELTA, iteratorURL, null, EMPTY_RESULTS_MESSAGE);
-
-		KBArticleDisplayTerms displayTerms =
-			(KBArticleDisplayTerms)getDisplayTerms();
-
-		iteratorURL.setParameter(
-			KBArticleDisplayTerms.ANYTIME,
-			String.valueOf(displayTerms.isAnytime()));
-		iteratorURL.setParameter(
-			KBArticleDisplayTerms.CONTENT, displayTerms.getContent());
-		iteratorURL.setParameter(
-			KBArticleDisplayTerms.END_DATE_DAY,
-			String.valueOf(displayTerms.getEndDateDay()));
-		iteratorURL.setParameter(
-			KBArticleDisplayTerms.END_DATE_MONTH,
-			String.valueOf(displayTerms.getEndDateMonth()));
-		iteratorURL.setParameter(
-			KBArticleDisplayTerms.END_DATE_YEAR,
-			String.valueOf(displayTerms.getEndDateYear()));
-		iteratorURL.setParameter(
-			KBArticleDisplayTerms.START_DATE_DAY,
-			String.valueOf(displayTerms.getStartDateDay()));
-		iteratorURL.setParameter(
-			KBArticleDisplayTerms.START_DATE_MONTH,
-			String.valueOf(displayTerms.getStartDateMonth()));
-		iteratorURL.setParameter(
-			KBArticleDisplayTerms.START_DATE_YEAR,
-			String.valueOf(displayTerms.getStartDateYear()));
-		iteratorURL.setParameter(
-			KBArticleDisplayTerms.STATUS,
-			String.valueOf(displayTerms.getStatus()));
-		iteratorURL.setParameter(
-			KBArticleDisplayTerms.TITLE, displayTerms.getTitle());
+			portletRequest, null, null, DEFAULT_CUR_PARAM, DEFAULT_DELTA,
+			iteratorURL, null, EMPTY_RESULTS_MESSAGE);
 
 		try {
 			PortalPreferences preferences =
@@ -114,16 +84,27 @@ public class KBArticleSearch extends SearchContainer<KBArticle> {
 				preferences.setValue(
 					KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 					"kb-articles-order-by-type", orderByType);
-
-				KBArticleSearchTerms searchTerms =
-					(KBArticleSearchTerms)getSearchTerms();
-
-				searchTerms.setCurStartValues(new int[0]);
 			}
 
-			OrderByComparator<KBArticle> orderByComparator =
-				KnowledgeBaseUtil.getKBArticleOrderByComparator(
-					orderByCol, orderByType);
+			long kbFolderClassNameId = PortalUtil.getClassNameId(
+				KBFolderConstants.getClassName());
+
+			long parentResourceClassNameId = ParamUtil.getLong(
+				portletRequest, "parentResourceClassNameId",
+				kbFolderClassNameId);
+
+			OrderByComparator<Object> orderByComparator = null;
+
+			if (parentResourceClassNameId ==
+					PortalUtil.getClassNameId(KBFolder.class)) {
+
+				orderByComparator = new KBEntriesTitleComparator<>(false, true);
+			}
+			else {
+				orderByComparator =
+					KnowledgeBaseUtil.getKBArticleOrderByComparator(
+						orderByCol, orderByType);
+			}
 
 			setOrderByCol(orderByCol);
 			setOrderByType(orderByType);

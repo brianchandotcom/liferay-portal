@@ -33,4 +33,44 @@
 			KBFolder.urlTitle = ? AND
 			KBArticle.status IN ([$WORKFLOW_STATUS$])
 	</sql>
+	<sql id="com.liferay.knowledge.base.service.persistence.KBFolderFinder.countA_ByG_P">
+		SELECT
+			COUNT(DISTINCT kbArticleId) AS COUNT_VALUE
+		FROM
+			KBArticle
+		WHERE
+			(KBArticle.groupId = ?) AND
+			(KBArticle.kbFolderId = ?) AND
+			(KBArticle.main = ?) AND
+			([$STATUS$])
+	</sql>
+	<sql id="com.liferay.knowledge.base.service.persistence.KBFolderFinder.countF_ByG_P">
+		SELECT
+			COUNT(DISTINCT kbFolderId) AS COUNT_VALUE
+		FROM
+			KBFolder
+		WHERE
+			(KBFolder.groupId = ?) AND
+			(KBFolder.parentKBFolderId = ?)
+	</sql>
+	<sql id="com.liferay.knowledge.base.service.persistence.KBFolderFinder.findA_ByG_P">
+		SELECT
+			DISTINCT kbArticleId as modelId, 0 as modelFolder, KBArticle.title as title
+		FROM
+			KBArticle
+		WHERE
+			(KBArticle.groupId = ?) AND
+			(KBArticle.kbFolderId = ?) AND
+			(KBArticle.main = ?) AND
+			([$STATUS$])
+	</sql>
+	<sql id="com.liferay.knowledge.base.service.persistence.KBFolderFinder.findF_ByG_P">
+		SELECT
+			DISTINCT kbFolderId as modelId, 1 as modelFolder, KBFolder.name as title
+		FROM
+			KBFolder
+		WHERE
+			(KBFolder.groupId = ?) AND
+			(KBFolder.parentKBFolderId = ?)
+	</sql>
 </custom-sql>

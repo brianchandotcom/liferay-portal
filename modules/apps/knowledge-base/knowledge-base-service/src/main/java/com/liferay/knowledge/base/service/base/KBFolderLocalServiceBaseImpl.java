@@ -27,6 +27,7 @@ import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.knowledge.base.service.persistence.KBArticleFinder;
 import com.liferay.knowledge.base.service.persistence.KBArticlePersistence;
 import com.liferay.knowledge.base.service.persistence.KBCommentPersistence;
+import com.liferay.knowledge.base.service.persistence.KBFolderFinder;
 import com.liferay.knowledge.base.service.persistence.KBFolderPersistence;
 import com.liferay.knowledge.base.service.persistence.KBTemplatePersistence;
 
@@ -562,6 +563,24 @@ public abstract class KBFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the k b folder finder.
+	 *
+	 * @return the k b folder finder
+	 */
+	public KBFolderFinder getKBFolderFinder() {
+		return kbFolderFinder;
+	}
+
+	/**
+	 * Sets the k b folder finder.
+	 *
+	 * @param kbFolderFinder the k b folder finder
+	 */
+	public void setKBFolderFinder(KBFolderFinder kbFolderFinder) {
+		this.kbFolderFinder = kbFolderFinder;
+	}
+
+	/**
 	 * Returns the k b template local service.
 	 *
 	 * @return the k b template local service
@@ -778,6 +797,8 @@ public abstract class KBFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected KBFolderLocalService kbFolderLocalService;
 	@BeanReference(type = KBFolderPersistence.class)
 	protected KBFolderPersistence kbFolderPersistence;
+	@BeanReference(type = KBFolderFinder.class)
+	protected KBFolderFinder kbFolderFinder;
 	@BeanReference(type = com.liferay.knowledge.base.service.KBTemplateLocalService.class)
 	protected com.liferay.knowledge.base.service.KBTemplateLocalService kbTemplateLocalService;
 	@BeanReference(type = KBTemplatePersistence.class)

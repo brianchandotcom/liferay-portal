@@ -225,6 +225,13 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 		return _kbFolderLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public int getKBFoldersAndKBArticlesCount(long groupId,
+		long parentResourcePrimKey, int status) {
+		return _kbFolderLocalService.getKBFoldersAndKBArticlesCount(groupId,
+			parentResourcePrimKey, status);
+	}
+
 	/**
 	* Returns the number of k b folders.
 	*
@@ -327,6 +334,15 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbFolderLocalService.getKBFolders(groupId, parentKBFolderId,
 			start, end);
+	}
+
+	@Override
+	public java.util.List<java.lang.Object> getKBFoldersAndKBArticles(
+		long groupId, long parentResourcePrimKey, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator) {
+		return _kbFolderLocalService.getKBFoldersAndKBArticles(groupId,
+			parentResourcePrimKey, status, start, end, orderByComparator);
 	}
 
 	/**

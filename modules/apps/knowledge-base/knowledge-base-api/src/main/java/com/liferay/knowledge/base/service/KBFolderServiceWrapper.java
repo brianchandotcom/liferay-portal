@@ -82,6 +82,13 @@ public class KBFolderServiceWrapper implements KBFolderService,
 	}
 
 	@Override
+	public int getKBFoldersAndKBArticlesCount(long groupId,
+		long parentResourcePrimKey, int status) {
+		return _kbFolderService.getKBFoldersAndKBArticlesCount(groupId,
+			parentResourcePrimKey, status);
+	}
+
+	@Override
 	public int getKBFoldersCount(long groupId, long parentKBFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbFolderService.getKBFoldersCount(groupId, parentKBFolderId);
@@ -103,6 +110,15 @@ public class KBFolderServiceWrapper implements KBFolderService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbFolderService.getKBFolders(groupId, parentKBFolderId, start,
 			end);
+	}
+
+	@Override
+	public java.util.List<java.lang.Object> getKBFoldersAndKBArticles(
+		long groupId, long parentResourcePrimKey, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator) {
+		return _kbFolderService.getKBFoldersAndKBArticles(groupId,
+			parentResourcePrimKey, status, start, end, orderByComparator);
 	}
 
 	@Override

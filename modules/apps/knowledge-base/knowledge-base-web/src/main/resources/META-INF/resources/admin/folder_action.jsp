@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(KBWebKeys.SEARCH_CONTAINER_RESUL
 KBFolder kbFolder = (KBFolder)row.getObject();
 %>
 
-<liferay-ui:icon-menu>
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= KBFolderPermission.contains(permissionChecker, kbFolder, KBActionKeys.UPDATE) %>">
 		<liferay-portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value='<%= templatePath + "common/edit_folder.jsp" %>' />
@@ -31,8 +31,7 @@ KBFolder kbFolder = (KBFolder)row.getObject();
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
-			image="edit"
-			method="get"
+			message="edit"
 			url="<%= editURL %>"
 		/>
 	</c:if>
@@ -48,9 +47,7 @@ KBFolder kbFolder = (KBFolder)row.getObject();
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
-			image="forward"
 			message="move"
-			method="get"
 			url="<%= moveKBFolderURL %>"
 		/>
 	</c:if>
@@ -77,8 +74,7 @@ KBFolder kbFolder = (KBFolder)row.getObject();
 		/>
 
 		<liferay-ui:icon
-			image="permissions"
-			method="get"
+			message="permissions"
 			url="<%= permissionsURL %>"
 			useDialog="<%= true %>"
 		/>

@@ -22,354 +22,275 @@ long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassN
 long parentResourceClassNameId = ParamUtil.getLong(request, "parentResourceClassNameId", kbFolderClassNameId);
 long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey", KBFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
+String keywords = ParamUtil.getString(request, "keywords");
+
+SearchContainer kbEntriesSearchContainer = new KBArticleSearch(renderRequest, PortletURLUtil.clone(currentURLObj, renderResponse));
+
+boolean kbFolderView = (parentResourceClassNameId == kbFolderClassNameId);
+
+if (Validator.isNotNull(keywords)) {
+	KBArticleSearchDisplay kbArticleSearchDisplay = KBArticleServiceUtil.getKBArticleSearchDisplay(scopeGroupId, keywords, keywords, WorkflowConstants.STATUS_ANY, null, null, false, new int[0], kbEntriesSearchContainer.getCur(), kbEntriesSearchContainer.getDelta(), kbEntriesSearchContainer.getOrderByComparator());
+
+	kbEntriesSearchContainer.setResults(kbArticleSearchDisplay.getResults());
+	kbEntriesSearchContainer.setTotal(kbArticleSearchDisplay.getTotal());
+}
+else if (kbFolderView) {
+	kbEntriesSearchContainer.setTotal(KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY));
+	kbEntriesSearchContainer.setResults(KBFolderServiceUtil.getKBFoldersAndKBArticles(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY, kbEntriesSearchContainer.getStart(), kbEntriesSearchContainer.getEnd(), kbEntriesSearchContainer.getOrderByComparator()));
+}
+else {
+	kbEntriesSearchContainer.setTotal(KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY));
+	kbEntriesSearchContainer.setResults(KBArticleServiceUtil.getKBArticles(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY, kbEntriesSearchContainer.getStart(), kbEntriesSearchContainer.getEnd(), kbEntriesSearchContainer.getOrderByComparator()));
+}
+
+kbEntriesSearchContainer.setRowChecker(new EntriesChecker(liferayPortletRequest, liferayPortletResponse));
+
+List kbEntries = kbEntriesSearchContainer.getResults();
+
 KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
+
+if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	String headerTitle = StringPool.BLANK;
+
+	if (kbFolderView) {
+		KBFolder kbFolder = KBFolderLocalServiceUtil.getKBFolder(parentResourcePrimKey);
+
+		headerTitle = kbFolder.getName();
+	}
+	else {
+		KBArticle kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+		headerTitle = kbArticle.getTitle();
+	}
+
+	renderResponse.setTitle(headerTitle);
+}
 %>
 
 <liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
 
-<liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="mvcPath" value="/admin/view.jsp" />
-</liferay-portlet:renderURL>
-
-<aui:form action="<%= searchURL %>" method="get" name="fm">
-	<liferay-portlet:renderURLParams varImpl="searchURL" />
-	<aui:input name="resourcePrimKeys" type="hidden" />
-
-	<liferay-ui:error exception="<%= KBArticlePriorityException.class %>" message='<%= LanguageUtil.format(request, "please-enter-a-priority-that-is-greater-than-x", "0", false) %>' translateMessage="<%= false %>" />
-
-	<c:if test='<%= SessionMessages.contains(renderRequest, "importedKBArticlesCount") %>'>
+<liferay-frontend:management-bar
+	disabled="<%= kbEntries.isEmpty() %>"
+	includeCheckBox="<%= true %>"
+	searchContainerId="kbEntries"
+>
+	<c:if test="<%= Validator.isNull(keywords) %>">
 
 		<%
-		int importedKBArticlesCount = GetterUtil.getInteger(SessionMessages.get(renderRequest, "importedKBArticlesCount"));
+		PortletURL displayStyleURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
 		%>
 
-		<c:choose>
-			<c:when test="<%= importedKBArticlesCount > 0 %>">
-				<div class="alert alert-success">
-					<liferay-ui:message key="your-request-completed-successfully" />
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-display-buttons
+				displayViews='<%= new String[] {"descriptive"} %>'
+				portletURL="<%= displayStyleURL %>"
+				selectedDisplayStyle="descriptive"
+			/>
+		</liferay-frontend:management-bar-buttons>
 
-					<liferay-ui:message arguments="<%= importedKBArticlesCount %>" key="a-total-of-x-articles-have-been-imported" />
-				</div>
-			</c:when>
-			<c:otherwise>
-				<div class="alert alert-warning">
-					<liferay-ui:message
-						arguments="<%= StringUtil.merge(kbGroupServiceConfiguration.markdownImporterArticleExtensions(), StringPool.COMMA_AND_SPACE) %>"
-						key="nothing-was-imported-no-articles-were-found-with-one-of-the-supported-extensions-x"
-					/>
-				</div>
-			</c:otherwise>
-		</c:choose>
+		<%
+		PortletURL navigationPortletURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
+		%>
+
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-navigation
+				navigationKeys='<%= new String[] {"all"} %>'
+				portletURL="<%= navigationPortletURL %>"
+			/>
+		</liferay-frontend:management-bar-filters>
 	</c:if>
 
-	<liferay-portlet:renderURL varImpl="iteratorURL">
-		<portlet:param name="mvcPath" value="/admin/view.jsp" />
-		<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(parentResourceClassNameId) %>" />
-		<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
-	</liferay-portlet:renderURL>
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>' icon="times" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>
+
+<div class="container-fluid-1280">
 
 	<%
-	boolean hasDeleteKBArticlesPermission = AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.DELETE_KB_ARTICLES);
-	boolean hasUpdateKBArticlesPrioritiesPermission = AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.UPDATE_KB_ARTICLES_PRIORITIES);
+	KnowledgeBaseUtil.addPortletBreadcrumbEntries(parentResourceClassNameId, parentResourcePrimKey, "/admin/view.jsp", request, renderResponse);
 	%>
 
-	<aui:nav-bar>
-		<aui:nav cssClass="navbar-nav">
-			<c:if test="<%= hasDeleteKBArticlesPermission || hasUpdateKBArticlesPrioritiesPermission %>">
-				<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="actionsButton" label="actions">
-					<c:if test="<%= hasUpdateKBArticlesPrioritiesPermission %>">
-						<aui:nav-item iconCssClass="icon-save" id="updateKBArticlesPriorities" label="save" />
-					</c:if>
+	<liferay-ui:breadcrumb
+		showCurrentGroup="<%= false %>"
+		showGuestGroup="<%= false %>"
+		showLayout="<%= false %>"
+		showParentGroups="<%= false %>"
+	/>
 
-					<c:if test="<%= hasDeleteKBArticlesPermission %>">
-						<aui:nav-item cssClass="item-remove" iconCssClass="icon-remove" id="deleteKBArticles" label="delete" />
-					</c:if>
-				</aui:nav-item>
-			</c:if>
-		</aui:nav>
+	<liferay-portlet:actionURL name="deleteKBArticlesAndFolders" varImpl="deleteKBArticlesAndFoldersURL" />
 
-		<aui:nav-bar-search
-			cssClass="navbar-search-advanced"
-		>
+	<aui:form action="<%= deleteKBArticlesAndFoldersURL %>" name="fm">
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+
+		<liferay-ui:error exception="<%= KBArticlePriorityException.class %>" message='<%= LanguageUtil.format(request, "please-enter-a-priority-that-is-greater-than-x", "0", false) %>' translateMessage="<%= false %>" />
+
+		<c:if test='<%= SessionMessages.contains(renderRequest, "importedKBArticlesCount") %>'>
 
 			<%
-			request.setAttribute("view.jsp-displayTerms", new KBArticleDisplayTerms(renderRequest));
+			int importedKBArticlesCount = GetterUtil.getInteger(SessionMessages.get(renderRequest, "importedKBArticlesCount"));
 			%>
 
-			<liferay-ui:search-form
-				page="/admin/article_search.jsp"
-				servletContext="<%= application %>"
-			/>
-		</aui:nav-bar-search>
-	</aui:nav-bar>
+			<c:choose>
+				<c:when test="<%= importedKBArticlesCount > 0 %>">
+					<div class="alert alert-success">
+						<liferay-ui:message key="your-request-completed-successfully" />
 
-	<div class="container-fluid-1280">
-
-		<%
-		KnowledgeBaseUtil.addPortletBreadcrumbEntries(parentResourceClassNameId, parentResourcePrimKey, "/admin/view.jsp", request, renderResponse);
-		%>
-
-		<liferay-ui:breadcrumb
-			showCurrentGroup="<%= false %>"
-			showGuestGroup="<%= false %>"
-			showLayout="<%= false %>"
-			showParentGroups="<%= false %>"
-		/>
-
-		<c:if test="<%= parentResourceClassNameId == kbFolderClassNameId %>">
-			<liferay-ui:search-container
-				curParam="cur1"
-				id="kbFoldersAdminSearchContainer"
-				total="<%= KBFolderServiceUtil.getKBFoldersCount(scopeGroupId, parentResourcePrimKey) %>"
-			>
-
-				<%
-				searchContainer.setResults(KBFolderServiceUtil.getKBFolders(scopeGroupId, parentResourcePrimKey, searchContainer.getStart(), searchContainer.getEnd()));
-				%>
-
-				<liferay-ui:search-container-row
-					className="com.liferay.knowledge.base.model.KBFolder"
-					escapedModel="<%= true %>"
-					keyProperty="kbFolderId"
-					modelVar="kbFolder"
-				>
-					<liferay-portlet:renderURL varImpl="rowURL">
-						<portlet:param name="mvcPath" value="/admin/view.jsp" />
-						<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbFolder.getClassNameId()) %>" />
-						<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbFolder.getKbFolderId()) %>" />
-					</liferay-portlet:renderURL>
-
-					<liferay-ui:search-container-column-text
-						name="folder"
-					>
-						<a class="icon-folder-open" href="<%= rowURL %>">
-							<%= kbFolder.getName() %>
-						</a>
-					</liferay-ui:search-container-column-text>
-
-					<liferay-ui:search-container-column-text
-						href="<%= rowURL %>"
-						name="author"
-						property="userName"
-					/>
-
-					<liferay-ui:search-container-column-date
-						href="<%= rowURL %>"
-						name="create-date"
-						property="createDate"
-					/>
-
-					<liferay-ui:search-container-column-date
-						href="<%= rowURL %>"
-						name="modified-date"
-						property="modifiedDate"
-					/>
-
-					<liferay-ui:search-container-column-jsp
-						align="right"
-						path="/admin/folder_action.jsp"
-					/>
-				</liferay-ui:search-container-row>
-
-				<liferay-ui:search-iterator />
-			</liferay-ui:search-container>
+						<liferay-ui:message arguments="<%= importedKBArticlesCount %>" key="a-total-of-x-articles-have-been-imported" />
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="alert alert-warning">
+						<liferay-ui:message
+							arguments="<%= StringUtil.merge(kbGroupServiceConfiguration.markdownImporterArticleExtensions(), StringPool.COMMA_AND_SPACE) %>"
+							key="nothing-was-imported-no-articles-were-found-with-one-of-the-supported-extensions-x"
+						/>
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</c:if>
 
 		<liferay-ui:search-container
-			curParam="cur2"
-			id="kbArticlesAdminSearchContainer"
-			rowChecker="<%= (hasDeleteKBArticlesPermission || hasUpdateKBArticlesPrioritiesPermission) ? new RowChecker(renderResponse) : null %>"
-			searchContainer="<%= new KBArticleSearch(renderRequest, iteratorURL) %>"
+			id="kbEntries"
+			searchContainer="<%= kbEntriesSearchContainer %>"
 		>
-
-			<%
-			KBArticleSearchTerms searchTerms = (KBArticleSearchTerms)searchContainer.getSearchTerms();
-			%>
-
-			<%@ include file="/admin/article_search_results.jspf" %>
-
 			<liferay-ui:search-container-row
-				className="com.liferay.knowledge.base.model.KBArticle"
-				escapedModel="<%= true %>"
-				keyProperty="resourcePrimKey"
-				modelVar="kbArticle"
+				className="Object"
+				modelVar="kbEntry"
 			>
-				<liferay-portlet:renderURL varImpl="rowURL">
-					<portlet:param name="mvcPath" value="/admin/view.jsp" />
-					<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
-					<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
-				</liferay-portlet:renderURL>
+				<c:choose>
+					<c:when test="<%= kbEntry instanceof KBFolder %>">
 
-				<%
-				if (KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY) == 0) {
-					rowURL = null;
-				}
-				%>
+						<%
+						KBFolder kbFolder = (KBFolder)kbEntry;
 
-				<liferay-ui:search-container-column-text
-					name="priority"
-					orderable="<%= true %>"
-				>
-					<c:choose>
-						<c:when test="<%= hasUpdateKBArticlesPrioritiesPermission %>">
-							<aui:input cssClass="kb-article-priority" label="" name='<%= "priority" + kbArticle.getResourcePrimKey() %>' size="5" title="priority" type="text" value="<%= BigDecimal.valueOf(kbArticle.getPriority()).toPlainString() %>" />
-						</c:when>
-						<c:otherwise>
-							<%= BigDecimal.valueOf(kbArticle.getPriority()).toPlainString() %>
-						</c:otherwise>
-					</c:choose>
-				</liferay-ui:search-container-column-text>
+						kbFolder = kbFolder.toEscapedModel();
 
-				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
-					orderable="<%= true %>"
-					property="title"
-				/>
+						Date modifiedDate = kbFolder.getModifiedDate();
 
-				<liferay-ui:search-container-column-text
-					href="<%= rowURL %>"
-					name="author"
-					orderable="<%= true %>"
-					orderableProperty="user-name"
-					property="userName"
-				/>
+						String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
 
-				<liferay-ui:search-container-column-date
-					cssClass="kb-column-no-wrap"
-					href="<%= rowURL %>"
-					name="create-date"
-					orderable="<%= true %>"
-					value="<%= kbArticle.getCreateDate() %>"
-				/>
+						row.setPrimaryKey(String.valueOf(kbFolder.getKbFolderId()));
+						%>
 
-				<liferay-ui:search-container-column-date
-					cssClass="kb-column-no-wrap"
-					href="<%= rowURL %>"
-					name="modified-date"
-					orderable="<%= true %>"
-					value="<%= kbArticle.getModifiedDate() %>"
-				/>
+						<liferay-ui:search-container-column-icon
+							icon="folder"
+							toggleRowChecker="<%= true %>"
+						/>
 
-				<liferay-ui:search-container-column-status
-					href="<%= rowURL %>"
-					name="status"
-					orderable="<%= true %>"
-				/>
+						<liferay-portlet:renderURL varImpl="rowURL">
+							<portlet:param name="mvcPath" value="/admin/view.jsp" />
+							<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbFolder.getClassNameId()) %>" />
+							<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbFolder.getKbFolderId()) %>" />
+							<portlet:param name="redirect" value="<%= currentURL %>" />
+						</liferay-portlet:renderURL>
 
-				<liferay-ui:search-container-column-text
-					cssClass="kb-column-no-wrap"
-					href="<%= rowURL %>"
-					name="views"
-					orderable="<%= true %>"
-					orderableProperty="view-count"
-					property="viewCount"
-				/>
+						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+							<h5 class="text-default">
+								<liferay-ui:message arguments="<%= new String[] {kbFolder.getUserName(), modifiedDateDescription} %>" key="x-modified-x-ago" />
+							</h5>
 
-				<liferay-ui:search-container-column-jsp
-					align="right"
-					cssClass="entry-action"
-					path="/admin/article_action.jsp"
-				/>
+							<h4>
+								<aui:a href="<%= rowURL.toString() %>">
+									<%= kbFolder.getName() %>
+								</aui:a>
+							</h4>
+						</liferay-ui:search-container-column-text>
+
+						<liferay-ui:search-container-column-jsp
+							path="/admin/folder_action.jsp"
+						/>
+					</c:when>
+					<c:otherwise>
+
+						<%
+						KBArticle kbArticle = (KBArticle)kbEntry;
+
+						kbArticle = kbArticle.toEscapedModel();
+
+						Date modifiedDate = kbArticle.getModifiedDate();
+
+						String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+
+						row.setPrimaryKey(String.valueOf(kbArticle.getResourcePrimKey()));
+						%>
+
+						<liferay-ui:search-container-column-user
+							cssClass="user-icon-lg"
+							showDetails="<%= false %>"
+							userId="<%= kbArticle.getUserId() %>"
+						/>
+
+						<%
+						PortletURL viewURL = kbArticleURLHelper.createViewWithRedirectURL(kbArticle, currentURL);
+						%>
+
+						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+							<h5 class="text-default">
+								<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(kbArticle.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+							</h5>
+
+							<h4>
+								<aui:a href="<%= viewURL.toString() %>">
+									<%= kbArticle.getTitle() %>
+								</aui:a>
+							</h4>
+
+							<h5 class="text-default">
+								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
+
+								<%
+								int childKBArticlesCount = KBArticleServiceUtil.getKBArticlesCount(scopeGroupId, kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);
+								%>
+
+								<c:if test="<%= childKBArticlesCount > 0 %>">
+									<liferay-portlet:renderURL varImpl="childKBArticlesURL">
+										<portlet:param name="mvcPath" value="/admin/view.jsp" />
+										<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
+										<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
+										<portlet:param name="redirect" value="<%= currentURL %>" />
+									</liferay-portlet:renderURL>
+
+									<span class="kb-article-descriptive-details">
+										<aui:a href="<%= childKBArticlesURL.toString() %>">
+											<liferay-ui:message arguments="<%= childKBArticlesCount %>" key="x-child-articles" />
+										</aui:a>
+									</span>
+								</c:if>
+
+								<span class="kb-article-descriptive-details">
+									<liferay-ui:message arguments="<%= BigDecimal.valueOf(kbArticle.getPriority()).toPlainString() %>" key="priority-x" />
+								</span>
+
+								<span class="kb-article-descriptive-details">
+									<liferay-ui:message arguments="<%= kbArticle.getViewCount() %>" key="x-views" />
+								</span>
+							</h5>
+						</liferay-ui:search-container-column-text>
+
+						<liferay-ui:search-container-column-jsp
+							align="right"
+							cssClass="entry-action"
+							path="/admin/article_action.jsp"
+						/>
+					</c:otherwise>
+				</c:choose>
 			</liferay-ui:search-container-row>
 
-			<c:if test="<%= !searchTerms.hasSearchTerms() && (parentResourceClassNameId != kbFolderClassNameId) && (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>">
-
-				<%
-				searchContainer.setEmptyResultsMessage(null);
-				%>
-
-				<div class="alert alert-info">
-
-					<%
-					KBArticle parentKBArticle = KBArticleServiceUtil.getLatestKBArticle(parentResourcePrimKey, WorkflowConstants.STATUS_ANY);
-
-					PortletURL viewKBArticleURL = kbArticleURLHelper.createViewURL(parentKBArticle);
-
-					StringBundler sb = new StringBundler(5);
-
-					sb.append("<a href=\"");
-					sb.append(viewKBArticleURL.toString());
-					sb.append("\">");
-					sb.append(BeanPropertiesUtil.getString(parentKBArticle, "title"));
-					sb.append("</a>");
-					%>
-
-					<c:choose>
-						<c:when test="<%= total > 0 %>">
-							<%= LanguageUtil.format(request, "child-articles-for-x", sb.toString(), false) %>
-						</c:when>
-						<c:otherwise>
-							<%= LanguageUtil.format(request, "there-are-no-child-articles-for-x", sb.toString(), false) %>
-						</c:otherwise>
-					</c:choose>
-				</div>
-			</c:if>
-
-			<liferay-ui:search-iterator type='<%= searchTerms.hasSearchTerms() ? "more" : "regular" %>' />
+			<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" resultRowSplitter="<%= kbFolderView ? new KBResultRowSplitter() : null %>" />
 		</liferay-ui:search-container>
-	</div>
-</aui:form>
+	</aui:form>
+</div>
 
 <liferay-util:include page="/admin/add_button.jsp" servletContext="<%= application %>" />
 
-<aui:script use="aui-base,liferay-util-list-fields">
-	var deleteKBArticles = A.one('#<portlet:namespace />deleteKBArticles');
-	var kbArticlesAdminSearchContainer = A.one('#<portlet:namespace />kbArticlesAdminSearchContainer');
-	var updateKBArticlesPriorities = A.one('#<portlet:namespace />updateKBArticlesPriorities');
-
-	if (updateKBArticlesPriorities) {
-		updateKBArticlesPriorities.on(
-			'click',
-			function() {
-				document.<portlet:namespace />fm.method = 'post';
-
-				submitForm(document.<portlet:namespace />fm, '<liferay-portlet:actionURL name="updateKBArticlesPriorities"><portlet:param name="mvcPath" value="/admin/view.jsp" /><portlet:param name="redirect" value="<%= redirect %>" /></liferay-portlet:actionURL>');
-			}
-		);
+<aui:script>
+	function <portlet:namespace />deleteEntries() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
+			submitForm($(document.<portlet:namespace />fm));
+		}
 	}
-
-	if (deleteKBArticles) {
-		deleteKBArticles.on(
-			'click',
-			function() {
-				if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-articles") %>')) {
-					document.<portlet:namespace />fm.method = 'post';
-					document.<portlet:namespace />fm.<portlet:namespace />resourcePrimKeys.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
-
-					submitForm(document.<portlet:namespace />fm, '<liferay-portlet:actionURL name="deleteKBArticles"><portlet:param name="mvcPath" value="/admin/view.jsp" /><portlet:param name="redirect" value="<%= redirect %>" /></liferay-portlet:actionURL>');
-				}
-			}
-		);
-	}
-
-	kbArticlesAdminSearchContainer.delegate(
-		'click',
-		function() {
-			var hide = (Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);
-
-			var actionsButton = A.one('#<portlet:namespace />actionsButton');
-
-			if (actionsButton) {
-				actionsButton.toggle(!hide);
-			}
-		},
-		'input[type=checkbox]'
-	);
-
-	kbArticlesAdminSearchContainer.delegate(
-		'key',
-		function() {
-			var parentTr = this.ancestor('tr');
-
-			var rowIdsNode = parentTr.one('input[type="checkbox"]');
-
-			rowIdsNode.attr('checked', true);
-
-			document.<portlet:namespace />fm.method = 'post';
-
-			submitForm(document.<portlet:namespace />fm, '<liferay-portlet:actionURL name="updateKBArticlesPriorities"><portlet:param name="mvcPath" value="/admin/view.jsp" /><portlet:param name="redirect" value="<%= redirect %>" /></liferay-portlet:actionURL>');
-		},
-		'enter',
-		'input[type=text]'
-	);
 </aui:script>

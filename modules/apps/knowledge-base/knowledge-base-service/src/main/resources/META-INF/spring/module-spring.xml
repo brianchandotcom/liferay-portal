@@ -11,6 +11,7 @@
 	<bean class="com.liferay.knowledge.base.service.impl.KBFolderLocalServiceImpl" id="com.liferay.knowledge.base.service.KBFolderLocalService" />
 	<bean class="com.liferay.knowledge.base.service.impl.KBFolderServiceImpl" id="com.liferay.knowledge.base.service.KBFolderService" />
 	<bean class="com.liferay.knowledge.base.service.persistence.impl.KBFolderPersistenceImpl" id="com.liferay.knowledge.base.service.persistence.KBFolderPersistence" parent="basePersistence" />
+	<bean class="com.liferay.knowledge.base.service.persistence.impl.KBFolderFinderImpl" id="com.liferay.knowledge.base.service.persistence.KBFolderFinder" parent="basePersistence" />
 	<bean class="com.liferay.knowledge.base.service.impl.KBTemplateLocalServiceImpl" id="com.liferay.knowledge.base.service.KBTemplateLocalService" />
 	<bean class="com.liferay.knowledge.base.service.impl.KBTemplateServiceImpl" id="com.liferay.knowledge.base.service.KBTemplateService" />
 	<bean class="com.liferay.knowledge.base.service.persistence.impl.KBTemplatePersistenceImpl" id="com.liferay.knowledge.base.service.persistence.KBTemplatePersistence" parent="basePersistence" />

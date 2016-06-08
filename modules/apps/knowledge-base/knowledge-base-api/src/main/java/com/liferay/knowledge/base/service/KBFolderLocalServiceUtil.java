@@ -215,6 +215,13 @@ public class KBFolderLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static int getKBFoldersAndKBArticlesCount(long groupId,
+		long parentResourcePrimKey, int status) {
+		return getService()
+				   .getKBFoldersAndKBArticlesCount(groupId,
+			parentResourcePrimKey, status);
+	}
+
 	/**
 	* Returns the number of k b folders.
 	*
@@ -308,6 +315,15 @@ public class KBFolderLocalServiceUtil {
 		long groupId, long parentKBFolderId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getKBFolders(groupId, parentKBFolderId, start, end);
+	}
+
+	public static java.util.List<java.lang.Object> getKBFoldersAndKBArticles(
+		long groupId, long parentResourcePrimKey, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<?> orderByComparator) {
+		return getService()
+				   .getKBFoldersAndKBArticles(groupId, parentResourcePrimKey,
+			status, start, end, orderByComparator);
 	}
 
 	/**

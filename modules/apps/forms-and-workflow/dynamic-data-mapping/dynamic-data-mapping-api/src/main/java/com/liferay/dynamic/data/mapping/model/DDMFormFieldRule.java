@@ -21,7 +21,9 @@ import java.io.Serializable;
  */
 public class DDMFormFieldRule implements Serializable {
 
-	public DDMFormFieldRule() {
+	public DDMFormFieldRule(DDMFormFieldRule ddmFormFieldRule) {
+		_expression = ddmFormFieldRule._expression;
+		_type = ddmFormFieldRule._type;
 	}
 
 	public DDMFormFieldRule(String expression, DDMFormFieldRuleType type) {

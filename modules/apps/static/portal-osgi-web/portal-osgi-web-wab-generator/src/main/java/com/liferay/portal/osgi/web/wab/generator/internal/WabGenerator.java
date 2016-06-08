@@ -147,12 +147,10 @@ public class WabGenerator
 		Set<String> locations = new HashSet<>();
 
 		try (DirectoryStream<Path> directoryStream =
-				Files.newDirectoryStream(path, "*.war")) {
+				Files.newDirectoryStream(path.toRealPath(), "*.war")) {
 
 			for (Path warPath : directoryStream) {
-				Path realPath = warPath.toRealPath();
-
-				URI uri = realPath.toUri();
+				URI uri = warPath.toUri();
 
 				try (ZipFile zipFile = new ZipFile(new File(uri));
 					InputStream inputStream = zipFile.getInputStream(

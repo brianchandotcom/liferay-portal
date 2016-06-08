@@ -14,13 +14,17 @@
 
 package com.liferay.portal.template.freemarker;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentHashSet;
+
 import java.io.IOException;
 
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.Set;
 
 import org.osgi.framework.Bundle;
 
@@ -37,7 +41,11 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 			throw new IllegalArgumentException("Bundles are empty");
 		}
 
-		_bundles = bundles;
+		_bundles.addAll(Arrays.asList(bundles));
+	}
+
+	public void addBundle(Bundle bundle) {
+		_bundles.add(bundle);
 	}
 
 	@Override
@@ -70,8 +78,12 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 		return Collections.enumeration(Collections.<URL>emptyList());
 	}
 
+	/**
+	 * @deprecated As of 7.0.1, with no direct replacement
+	 */
+	@Deprecated
 	public Bundle[] getBundles() {
-		return _bundles;
+		return _bundles.toArray(new Bundle[_bundles.size()]);
 	}
 
 	@Override
@@ -82,6 +94,10 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 	@Override
 	public Enumeration<URL> getResources(String name) {
 		return findResources(name);
+	}
+
+	public void removeBundle(Bundle bundle) {
+		_bundles.remove(bundle);
 	}
 
 	@Override
@@ -111,6 +127,6 @@ public class FreeMarkerBundleClassloader extends URLClassLoader {
 		return clazz;
 	}
 
-	private final Bundle[] _bundles;
+	private final Set<Bundle> _bundles = new ConcurrentHashSet<>();
 
 }

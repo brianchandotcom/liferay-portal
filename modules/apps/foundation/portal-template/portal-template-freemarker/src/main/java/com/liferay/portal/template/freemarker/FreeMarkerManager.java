@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
@@ -568,11 +567,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 				Object value = attributes.get("osgi.extender");
 
 				if (value.equals("jsp.taglib")) {
-					Bundle[] bundles = ArrayUtil.append(
-						_freeMarkerBundleClassloader.getBundles(), bundle);
-
-					_freeMarkerBundleClassloader =
-						new FreeMarkerBundleClassloader(bundles);
+					_freeMarkerBundleClassloader.addBundle(bundle);
 
 					track = true;
 
@@ -596,14 +591,7 @@ public class FreeMarkerManager extends BaseSingleTemplateManager {
 		public void removedBundle(
 			Bundle bundle, BundleEvent bundleEvent, Set<String> trackedKeys) {
 
-			Bundle[] bundles = _freeMarkerBundleClassloader.getBundles();
-
-			if (ArrayUtil.contains(bundles, bundle)) {
-				bundles = ArrayUtil.remove(bundles, bundle);
-
-				_freeMarkerBundleClassloader = new FreeMarkerBundleClassloader(
-					bundles);
-			}
+			_freeMarkerBundleClassloader.removeBundle(bundle);
 
 			for (String key : trackedKeys) {
 				_taglibMappings.remove(key);

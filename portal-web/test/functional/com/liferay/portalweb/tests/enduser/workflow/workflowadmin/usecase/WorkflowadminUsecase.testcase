@@ -1321,9 +1321,15 @@
 			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="WorkflowAsset#gotoViaNotification">
-			<var name="assetType" value="Blogs Entry" />
-			<var name="user" value="Test Test" />
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="workflowAssetContent" value="Blogs Entry Content" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssignedTo" value="Test Test" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#clickApproveByDetails" />

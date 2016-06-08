@@ -66,6 +66,11 @@ userSearch.setResults(users);
 	searchContainerId="users"
 >
 	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-sidenav-toggler-button
+			icon="info-circle"
+			label="info"
+		/>
+
 		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</liferay-portlet:actionURL>
@@ -92,6 +97,11 @@ userSearch.setResults(users);
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-sidenav-toggler-button
+			icon="info-circle"
+			label="info"
+		/>
+
 		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ASSIGN_USER_ROLES) %>">
 			<liferay-frontend:management-bar-button href="javascript:;" icon="users" id="selectSiteRole" label="assign-site-roles" />
 		</c:if>
@@ -100,41 +110,56 @@ userSearch.setResults(users);
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
+<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/user/info_panel" var="sidebarPanelURL">
+		<portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
+	</liferay-portlet:resourceURL>
 
-<portlet:actionURL name="deleteGroupUsers" var="deleteGroupUsersURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
-
-<aui:form action="<%= deleteGroupUsersURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="tabs1" type="hidden" value="users" />
-	<aui:input name="addUserIds" type="hidden" />
-
-	<liferay-ui:membership-policy-error />
-
-	<liferay-ui:search-container
-		id="users"
-		rowChecker="<%= rowChecker %>"
-		searchContainer="<%= userSearch %>"
+	<liferay-frontend:sidebar-panel
+		resourceURL="<%= sidebarPanelURL %>"
+		searchContainerId="users"
 	>
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.model.User"
-			escapedModel="<%= true %>"
-			keyProperty="userId"
-			modelVar="user2"
-			rowIdProperty="screenName"
-		>
+		<liferay-util:include page="/user_info_panel.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:sidebar-panel>
 
-			<%
-			boolean selectUsers = false;
-			%>
+	<div class="sidenav-content">
+		<liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
 
-			<%@ include file="/user_columns.jspf" %>
-		</liferay-ui:search-container-row>
+		<portlet:actionURL name="deleteGroupUsers" var="deleteGroupUsersURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</portlet:actionURL>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
-	</liferay-ui:search-container>
-</aui:form>
+		<aui:form action="<%= deleteGroupUsersURL %>" method="post" name="fm">
+			<aui:input name="tabs1" type="hidden" value="users" />
+			<aui:input name="addUserIds" type="hidden" />
+
+			<liferay-ui:membership-policy-error />
+
+			<liferay-ui:search-container
+				id="users"
+				rowChecker="<%= rowChecker %>"
+				searchContainer="<%= userSearch %>"
+			>
+				<liferay-ui:search-container-row
+					className="com.liferay.portal.kernel.model.User"
+					escapedModel="<%= true %>"
+					keyProperty="userId"
+					modelVar="user2"
+					rowIdProperty="screenName"
+				>
+
+					<%
+					boolean selectUsers = false;
+					%>
+
+					<%@ include file="/user_columns.jspf" %>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+			</liferay-ui:search-container>
+		</aui:form>
+	</div>
+</div>
 
 <portlet:actionURL name="addGroupUsers" var="addGroupUsersURL" />
 

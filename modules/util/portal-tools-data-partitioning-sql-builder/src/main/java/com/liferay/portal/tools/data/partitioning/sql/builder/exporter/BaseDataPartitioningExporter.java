@@ -174,11 +174,11 @@ public abstract class BaseDataPartitioningExporter
 		try (Connection connection = dataSource.getConnection();
 			PreparedStatement preparedStatement = buildPreparedStatement(
 				connection,
-				"select * from " + tableName +" where companyId = ?",
+				"select count(1) from " + tableName +" where companyId = ?",
 				companyId);
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			if (resultSet.next()) {
+			if (resultSet.next() && (resultSet.getInt(1) > 0)) {
 				String deleteSQL =
 					"delete from " + tableName + " where companyId = " +
 						companyId + ";\n";

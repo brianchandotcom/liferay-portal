@@ -37,6 +37,8 @@ if (Validator.isNotNull(keywords)) {
 	portletURL.setParameter("keywords", keywords);
 }
 
+long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
+
 request.setAttribute("view.jsp-categoryId", categoryId);
 request.setAttribute("view.jsp-portletURL", portletURL);
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
@@ -138,14 +140,61 @@ request.setAttribute("view.jsp-displayStyle", "descriptive");
 request.setAttribute("view.jsp-entriesSearchContainer", searchContainer);
 %>
 
-<liferay-util:include page="/message_boards_admin/view_entries.jsp" servletContext="<%= application %>" />
+<c:choose>
+	<c:when test="<%= mbListDisplayContext.isShowRecentPosts() %>">
+		<div class="container-fluid-1280">
 
-<%
-if (category != null) {
-	PortalUtil.setPageSubtitle(category.getName(), request);
-	PortalUtil.setPageDescription(category.getDescription(), request);
-}
-%>
+			<%
+			if (themeDisplay.isSignedIn()) {
+				groupThreadsUserId = user.getUserId();
+			}
+
+			if (groupThreadsUserId > 0) {
+				portletURL.setParameter("groupThreadsUserId", String.valueOf(groupThreadsUserId));
+			}
+			%>
+
+			<c:if test="<%= groupThreadsUserId > 0 %>">
+				<div class="alert alert-info">
+					<liferay-ui:message key="filter-by-user" />: <%= HtmlUtil.escape(PortalUtil.getUserName(groupThreadsUserId, StringPool.BLANK)) %>
+				</div>
+			</c:if>
+
+			<c:if test="<%= enableRSS %>">
+				<liferay-ui:rss
+					delta="<%= rssDelta %>"
+					displayStyle="<%= rssDisplayStyle %>"
+					feedType="<%= rssFeedType %>"
+					message="subscribe-to-recent-posts"
+					url="<%= MBUtil.getRSSURL(plid, 0, 0, groupThreadsUserId, themeDisplay) %>"
+				/>
+			</c:if>
+		</div>
+
+		<liferay-util:include page='<%= "/message_boards_admin/view_entries.jsp" %>' servletContext="<%= application %>">
+			<liferay-util:param name="showBreadcrumb" value="<%= Boolean.FALSE.toString() %>" />
+		</liferay-util:include>
+
+		<%
+		String pageSubtitle = "recent-posts";
+
+		PortalUtil.setPageSubtitle(LanguageUtil.get(request, StringUtil.replace(pageSubtitle, CharPool.UNDERLINE, CharPool.DASH)), request);
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format(pageSubtitle, TextFormatter.O)), portletURL.toString());
+		%>
+
+	</c:when>
+	<c:otherwise>
+		<liferay-util:include page="/message_boards_admin/view_entries.jsp" servletContext="<%= application %>" />
+
+		<%
+		if (category != null) {
+			PortalUtil.setPageSubtitle(category.getName(), request);
+			PortalUtil.setPageDescription(category.getDescription(), request);
+		}
+		%>
+
+	</c:otherwise>
+</c:choose>
 
 <c:if test="<%= !mbListDisplayContext.isShowSearch() %>">
 	<liferay-util:include page="/message_boards_admin/add_button.jsp" servletContext="<%= application %>" />

@@ -273,6 +273,10 @@ public class ModuleLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static void deleteModules(long appId) {
+		getService().deleteModules(appId);
+	}
+
 	public static ModuleLocalService getService() {
 		return _serviceTracker.getService();
 	}

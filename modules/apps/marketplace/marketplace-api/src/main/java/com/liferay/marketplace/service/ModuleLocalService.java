@@ -235,4 +235,6 @@ public interface ModuleLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	public void deleteModules(long appId);
 }

@@ -35,4 +35,5 @@
 	<bean class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoTimerInstanceTokenPersistenceImpl" id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTimerInstanceTokenPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portal.workflow.kaleo.service.impl.KaleoTransitionLocalServiceImpl" id="com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService" />
 	<bean class="com.liferay.portal.workflow.kaleo.service.persistence.impl.KaleoTransitionPersistenceImpl" id="com.liferay.portal.workflow.kaleo.service.persistence.KaleoTransitionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.workflow.kaleo.service.convert.database.KaleoDatabaseConverter" id="com.liferay.portal.workflow.kaleo.service.convert.database.KaleoDatabaseConverter" />
 </beans>

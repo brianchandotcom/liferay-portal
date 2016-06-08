@@ -4,4 +4,5 @@
 	<bean class="com.liferay.portal.background.task.service.impl.BackgroundTaskLocalServiceImpl" id="com.liferay.portal.background.task.service.BackgroundTaskLocalService" />
 	<bean class="com.liferay.portal.background.task.service.impl.BackgroundTaskServiceImpl" id="com.liferay.portal.background.task.service.BackgroundTaskService" />
 	<bean class="com.liferay.portal.background.task.service.persistence.impl.BackgroundTaskPersistenceImpl" id="com.liferay.portal.background.task.service.persistence.BackgroundTaskPersistence" parent="basePersistence" />
+	<bean class="com.liferay.portal.background.task.service.convert.database.BackgroundTaskDatabaseConverter" id="com.liferay.portal.background.task.service.convert.database.BackgroundTaskDatabaseConverter" />
 </beans>

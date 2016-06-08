@@ -9,4 +9,5 @@
 	<bean class="com.liferay.mail.service.persistence.impl.FolderPersistenceImpl" id="com.liferay.mail.service.persistence.FolderPersistence" parent="basePersistence" />
 	<bean class="com.liferay.mail.service.impl.MessageLocalServiceImpl" id="com.liferay.mail.service.MessageLocalService" />
 	<bean class="com.liferay.mail.service.persistence.impl.MessagePersistenceImpl" id="com.liferay.mail.service.persistence.MessagePersistence" parent="basePersistence" />
+	<bean class="com.liferay.mail.service.convert.database.MailDatabaseConverter" id="com.liferay.mail.service.convert.database.MailDatabaseConverter" />
 </beans>

@@ -43,3 +43,5 @@
 		</#if>
 	</#if>
 </#list>
+
+<bean class="${packagePath}.service.convert.database.${databaseConverterName}" id="${packagePath}.service.convert.database.${databaseConverterName}" />

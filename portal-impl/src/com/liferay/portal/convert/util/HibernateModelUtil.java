@@ -25,6 +25,7 @@ import java.util.List;
 /**
  * @author Cristina González
  */
+@Deprecated
 public class HibernateModelUtil {
 
 	public static List<Class<? extends BaseModel<?>>> getModelClassNames(

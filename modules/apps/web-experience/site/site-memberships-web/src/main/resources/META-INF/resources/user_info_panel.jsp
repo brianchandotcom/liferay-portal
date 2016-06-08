@@ -20,31 +20,50 @@
 Group group = siteMembershipsDisplayContext.getGroup();
 %>
 
-<div class="alert alert-info container-fluid-1280 site-membership-type">
-	<liferay-ui:message key="membership-type" />, <liferay-ui:message key="<%= GroupConstants.getTypeLabel(group.getType()) %>" />
-
-	<liferay-ui:icon-help message='<%= LanguageUtil.get(request, "membership-type-" + GroupConstants.getTypeLabel(group.getType()) + "-help") %>' />
-
-	<c:if test="<%= group.getType() == GroupConstants.TYPE_SITE_RESTRICTED %>">
+<div class="sidebar-header">
+	<h4>
+		<liferay-ui:message key="membership-type" />: <liferay-ui:message key="<%= GroupConstants.getTypeLabel(group.getType()) %>" />
 
 		<%
-		int pendingRequests = MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), MembershipRequestConstants.STATUS_PENDING);
+		int pendingRequests = 0;
+
+		if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
+			pendingRequests = MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), MembershipRequestConstants.STATUS_PENDING);
+		}
 		%>
 
 		<c:if test="<%= pendingRequests > 0 %>">
-			<br />
-
 			<portlet:renderURL var="viewMembershipRequestsURL">
 				<portlet:param name="mvcPath" value="/view_membership_requests.jsp" />
 				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 			</portlet:renderURL>
 
-			<liferay-ui:icon
-				cssClass="alert-link"
-				label="<%= true %>"
-				message='<%= LanguageUtil.format(request, "there-are-x-membership-requests-pending", String.valueOf(pendingRequests), false) %>'
-				url="<%= viewMembershipRequestsURL %>"
-			/>
+			<aui:a cssClass="badge badge-primary badge-sm" href="<%= viewMembershipRequestsURL %>" label="<%= String.valueOf(pendingRequests) %>" title='<%= LanguageUtil.format(request, "there-are-x-membership-requests-pending", String.valueOf(pendingRequests), false) %>' />
 		</c:if>
-	</c:if>
+	</h4>
+
+	<h6 class="text-muted">
+		<liferay-ui:message key='<%= "membership-type-" + GroupConstants.getTypeLabel(group.getType()) + "-help" %>' />
+	</h6>
+</div>
+
+<aui:nav-bar markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item label="details" selected="<%= true %>" />
+	</aui:nav>
+</aui:nav-bar>
+
+<div class="sidebar-body">
+	<h5><liferay-ui:message key="num-of-users" /></h5>
+
+	<%
+	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
+
+	userParams.put("inherit", Boolean.TRUE);
+	userParams.put("usersGroups", Long.valueOf(siteMembershipsDisplayContext.getGroupId()));
+	%>
+
+	<p>
+		<%= UserLocalServiceUtil.searchCount(company.getCompanyId(), StringPool.BLANK, WorkflowConstants.STATUS_APPROVED, userParams) %>
+	</p>
 </div>

@@ -333,6 +333,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 			Constants.BUNDLE_VERSION, properties.getProperty("version"));
 		attributes.putValue("Liferay-Releng-Bundle-Type", "lpkg");
 		attributes.putValue("Manifest-Version", "2");
+		attributes.putValue("Liferay-Releng-Bundle-Type", "lpkg");
 
 		jarOutputStream.putNextEntry(new ZipEntry(JarFile.MANIFEST_NAME));
 

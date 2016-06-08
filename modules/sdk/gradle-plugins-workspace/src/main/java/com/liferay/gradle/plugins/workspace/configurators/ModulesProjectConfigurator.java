@@ -69,8 +69,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
-		GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
-		GradleUtil.applyPlugin(project, PoshiRunnerPlugin.class);
+		applyPlugins(project);
 
 		addRepositoryDefault(project, workspaceExtension);
 		configureLiferay(project, workspaceExtension);
@@ -116,6 +115,11 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 				}
 
 			});
+	}
+
+	protected void applyPlugins(Project project) {
+		GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
+		GradleUtil.applyPlugin(project, PoshiRunnerPlugin.class);
 	}
 
 	protected void configureLiferay(

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -31,6 +30,8 @@ import com.liferay.portal.util.ShutdownUtil;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.nio.file.Files;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -128,12 +129,7 @@ public class BundleManager {
 
 		File installFile = new File(getInstallDirName(), file.getName());
 
-		boolean moved = FileUtil.move(file, installFile);
-
-		if (!moved) {
-			throw new AutoDeployException(
-				"Unable to move LPKG to install directory");
-		}
+		Files.move(file.toPath(), installFile.toPath());
 
 		if (isRestartRequired(installFile)) {
 			ShutdownUtil.shutdown(0);

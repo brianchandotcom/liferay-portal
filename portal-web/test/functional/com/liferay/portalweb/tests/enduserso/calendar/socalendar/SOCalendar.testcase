@@ -1353,8 +1353,6 @@
 		<execute macro="LAR#configureExportSiteCP">
 			<var name="exportPermissions" value="false" />
 			<var name="larFileName" value="${larFileName}" />
-			<var name="siteName" value="${siteName}" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="SOSite#tearDownCP" />

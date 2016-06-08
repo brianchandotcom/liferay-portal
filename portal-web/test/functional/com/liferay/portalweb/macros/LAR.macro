@@ -399,21 +399,37 @@
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute macro="LAR#_configureExportSiteOptions">
+			<var name="checkContentNameList" value="${checkContentNameList}" />
+			<var name="checkPageName" value="${checkPageName}" />
+			<var name="contentDeletion" value="${contentDeletion}" />
+			<var name="contentName" value="${contentName}" />
+			<var name="deleteMissingPages" value="${deleteMissingPages}" />
 			<var name="exportPermissions" value="${exportPermissions}" />
 			<var name="larFileName" value="${larFileName}" />
 			<var name="mainContent" value="${mainContent}" />
+			<var name="subContent" value="${subContent}" />
 			<var name="uncheckContentNameList" value="${uncheckContentNameList}" />
+			<var name="uncheckLogo" value="${uncheckLogo}" />
 			<var name="uncheckSubContent" value="${uncheckSubContent}" />
+			<var name="uncheckSubSubContent" value="${uncheckSubSubContent}" />
 		</execute>
 	</command>
 
 	<command name="configureExportSiteOptions">
 		<execute macro="LAR#_configureExportSiteOptions">
-			<var name="checkContentNameList" value="${exportPermissions}" />
+			<var name="checkContentNameList" value="${checkContentNameList}" />
+			<var name="checkPageName" value="${checkPageName}" />
 			<var name="contentDeletion" value="${contentDeletion}" />
+			<var name="contentName" value="${contentName}" />
+			<var name="deleteMissingPages" value="${deleteMissingPages}" />
 			<var name="exportPermissions" value="${exportPermissions}" />
+			<var name="larFileName" value="${larFileName}" />
+			<var name="mainContent" value="${mainContent}" />
+			<var name="subContent" value="${subContent}" />
 			<var name="uncheckContentNameList" value="${uncheckContentNameList}" />
+			<var name="uncheckLogo" value="${uncheckLogo}" />
 			<var name="uncheckSubContent" value="${uncheckSubContent}" />
+			<var name="uncheckSubSubContent" value="${uncheckSubSubContent}" />
 		</execute>
 	</command>
 

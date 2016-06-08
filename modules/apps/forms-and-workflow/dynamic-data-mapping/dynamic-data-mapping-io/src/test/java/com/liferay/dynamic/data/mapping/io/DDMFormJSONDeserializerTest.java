@@ -176,7 +176,7 @@ public class DDMFormJSONDeserializerTest
 
 		DDMFormFieldRule ddmFormFieldRule = ddmFormFieldRules.get(0);
 
-		Assert.assertEquals("1+2>3", ddmFormFieldRule.getExpression());
+		Assert.assertEquals("1 + 2 > 3", ddmFormFieldRule.getExpression());
 		Assert.assertEquals(
 			DDMFormFieldRuleType.VISIBILITY, ddmFormFieldRule.getType());
 

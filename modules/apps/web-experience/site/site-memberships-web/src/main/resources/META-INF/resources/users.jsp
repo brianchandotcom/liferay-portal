@@ -123,8 +123,6 @@ userSearch.setResults(users);
 	</liferay-frontend:sidebar-panel>
 
 	<div class="sidenav-content">
-		<liferay-util:include page="/info_message.jsp" servletContext="<%= application %>" />
-
 		<portlet:actionURL name="deleteGroupUsers" var="deleteGroupUsersURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:actionURL>

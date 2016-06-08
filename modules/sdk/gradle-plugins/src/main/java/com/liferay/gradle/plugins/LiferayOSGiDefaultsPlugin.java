@@ -1764,6 +1764,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	protected void configureTaskJavadocOptions(Javadoc javadoc) {
 		StandardJavadocDocletOptions standardJavadocDocletOptions =
 			(StandardJavadocDocletOptions)javadoc.getOptions();
+
+		standardJavadocDocletOptions.setEncoding(StandardCharsets.UTF_8.name());
+
 		Project project = javadoc.getProject();
 
 		File overviewFile = null;

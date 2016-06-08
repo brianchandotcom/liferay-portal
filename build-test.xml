@@ -1337,8 +1337,8 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 	</macrodef>
 
 	<macrodef name="prepare-additional-osgi-jars">
-		<attribute name="osgi.dir" />
 		<attribute name="additional.dependencies" />
+		<attribute name="osgi.dir" />
 		<attribute name="repository.url" />
 
 		<sequential>

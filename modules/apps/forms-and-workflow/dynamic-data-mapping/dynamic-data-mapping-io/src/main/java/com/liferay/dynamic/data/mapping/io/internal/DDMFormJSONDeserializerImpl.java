@@ -203,7 +203,6 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 
 		setDDMFormFieldProperties(jsonObject, ddmFormField);
 
-		setDDMFormFieldRules(jsonObject.getJSONArray("rules"), ddmFormField);
 		setNestedDDMFormField(
 			jsonObject.getJSONArray("nestedFields"), ddmFormField);
 
@@ -229,8 +228,10 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 
 	protected DDMFormFieldRule getDDMFormFieldRule(JSONObject jsonObject) {
 		String expression = jsonObject.getString("expression");
+
 		DDMFormFieldRuleType type = DDMFormFieldRuleType.parse(
 			jsonObject.getString("type"));
+
 		return new DDMFormFieldRule(expression, type);
 	}
 
@@ -346,6 +347,8 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 			setDDMFormFieldProperty(
 				jsonObject, ddmFormField, ddmFormFieldTypeSetting);
 		}
+
+		setDDMFormFieldRules(jsonObject.getJSONArray("rules"), ddmFormField);
 	}
 
 	protected void setDDMFormFieldProperty(
@@ -371,6 +374,7 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 
 		List<DDMFormFieldRule> ddmFormFieldRules = getDDMFormFieldRules(
 			jsonArray);
+
 		ddmFormField.setDDMFormFieldRules(ddmFormFieldRules);
 	}
 

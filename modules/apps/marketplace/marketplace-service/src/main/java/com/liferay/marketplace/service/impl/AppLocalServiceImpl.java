@@ -276,6 +276,8 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 			List<Bundle> bundles = BundleManagerUtil.installLPKG(file);
 
+			moduleLocalService.deleteModules(app.getAppId());
+
 			for (int i = 1; i < bundles.size(); i++) {
 				Bundle bundle = bundles.get(i);
 

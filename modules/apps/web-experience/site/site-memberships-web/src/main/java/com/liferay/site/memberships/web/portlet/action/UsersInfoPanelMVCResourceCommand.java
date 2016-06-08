@@ -14,9 +14,13 @@
 
 package com.liferay.site.memberships.web.portlet.action;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.site.memberships.web.constants.SiteMembershipWebKeys;
 import com.liferay.site.memberships.web.constants.SiteMembershipsPortletKeys;
+
+import java.util.List;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -40,6 +44,10 @@ public class UsersInfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
+
+		List<User> users = ActionUtil.getUsers(resourceRequest);
+
+		resourceRequest.setAttribute(SiteMembershipWebKeys.USERS, users);
 
 		include(resourceRequest, resourceResponse, "/user_info_panel.jsp");
 	}

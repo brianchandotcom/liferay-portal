@@ -28,40 +28,42 @@ public class AppServer {
 
 	public static AppServer getJBossEAPAppServer() {
 		return new AppServer(
-			"../../jboss-eap-6.4.0", "", "/modules/com/liferay/portal/main",
+			"jboss", "../../jboss-eap-6.4.0", "",
+			"/modules/com/liferay/portal/main",
 			"/standalone/deployments/ROOT.war");
 	}
 
 	public static AppServer getJOnASAppServer() {
 		return new AppServer(
-			"../../jonas-5.2.3", "", "/lib/ext", "/deploy/liferay-portal");
+			"jonas", "../../jonas-5.2.3", "", "/lib/ext",
+			"/deploy/liferay-portal");
 	}
 
 	public static AppServer getResinAppServer() {
 		return new AppServer(
-			"../../resin-4.0.44", "", "/ext-lib", "/webapps/ROOT");
+			"resin", "../../resin-4.0.44", "", "/ext-lib", "/webapps/ROOT");
 	}
 
 	public static AppServer getTCServerAppServer() {
 		return new AppServer(
-			"../../tc-server-2.9.11", "", "/liferay/lib",
+			"tomcat", "../../tc-server-2.9.11", "", "/liferay/lib",
 			"/liferay/webapps/ROOT");
 	}
 
 	public static AppServer getTomcatAppServer() {
 		return new AppServer(
-			"../../tomcat-8.0.32", "/bin", "/lib", "/webapps/ROOT");
+			"tomcat", "../../tomcat-8.0.32", "/bin", "/lib", "/webapps/ROOT");
 	}
 
 	public static AppServer getWebLogicAppServer() {
 		return new AppServer(
-			"../../weblogic-12.1.3", "", "/domains/liferay/lib",
+			"weblogic", "../../weblogic-12.1.3", "", "/domains/liferay/lib",
 			"/domains/liferay/autodeploy/ROOT");
 	}
 
 	public static AppServer getWebSphereAppServer() {
 		return new AppServer(
-			"../../websphere-8.5.5.0", "", "/lib/ext",
+			"websphere", "../../websphere-8.5.5.0", "", "/lib/ext",
 			"/profiles/liferay/installedApps/liferay-cell/liferay-portal.ear" +
 				"/liferay-portal.war");
 	}
@@ -81,15 +83,16 @@ public class AppServer {
 		sb.append("javax/transaction");
 
 		return new AppServer(
-			"../../wildfly-10.0.0", sb.toString(),
+			"wildfly", "../../wildfly-10.0.0", sb.toString(),
 			"/modules/com/liferay/portal/main",
 			"/standalone/deployments/ROOT.war");
 	}
 
 	public AppServer(
-		String dirName, String extraLibDirNames, String globalLibDirName,
-		String portalDirName) {
+		String serverId, String dirName, String extraLibDirNames,
+		String globalLibDirName, String portalDirName) {
 
+		_serverId = serverId;
 		_dir = new File(dirName);
 
 		if (extraLibDirNames != null) {
@@ -130,6 +133,10 @@ public class AppServer {
 		return new File(_portalDir, "/WEB-INF/lib");
 	}
 
+	public String getServerId() {
+		return _serverId;
+	}
+
 	public void setDirName(String dirName) {
 		_dir = new File(dirName);
 	}
@@ -154,5 +161,6 @@ public class AppServer {
 	private final List<File> _extraLibDirs = new ArrayList<>();
 	private File _globalLibDir;
 	private File _portalDir;
+	private final String _serverId;
 
 }

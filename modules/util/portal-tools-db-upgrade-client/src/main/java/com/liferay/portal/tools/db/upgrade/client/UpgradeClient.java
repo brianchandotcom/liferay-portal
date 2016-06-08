@@ -165,6 +165,7 @@ public class UpgradeClient {
 		commands.add(_getClassPath());
 		commands.addAll(Arrays.asList(_jvmOpts.split(" ")));
 		commands.add("-Dexternal-properties=portal-upgrade.properties");
+		commands.add("-DserverId=" + _appServer.getServerId());
 		commands.add("com.liferay.portal.tools.DBUpgrader");
 
 		processBuilder.command(commands);
@@ -519,7 +520,8 @@ public class UpgradeClient {
 		}
 		else {
 			_appServer = new AppServer(
-				value, _appServerProperties.getProperty("extra.lib.dirs"),
+				"tomcat", value,
+				_appServerProperties.getProperty("extra.lib.dirs"),
 				_appServerProperties.getProperty("global.lib.dir"),
 				_appServerProperties.getProperty("portal.dir"));
 		}

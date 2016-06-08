@@ -19,6 +19,8 @@ import com.liferay.gradle.plugins.LiferayOSGiDefaultsPlugin;
 import com.liferay.gradle.plugins.LiferayOSGiPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.poshi.runner.PoshiRunnerPlugin;
+import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
+import com.liferay.gradle.plugins.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.util.GradleUtil;
@@ -69,8 +71,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
-		GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
-		GradleUtil.applyPlugin(project, PoshiRunnerPlugin.class);
+		applyPlugins(project);
 
 		addRepositoryDefault(project, workspaceExtension);
 		configureLiferay(project, workspaceExtension);
@@ -116,6 +117,15 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 				}
 
 			});
+	}
+
+	protected void applyPlugins(Project project) {
+		GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
+		GradleUtil.applyPlugin(project, PoshiRunnerPlugin.class);
+
+		if (FileUtil.exists(project, "service.xml")) {
+			GradleUtil.applyPlugin(project, ServiceBuilderPlugin.class);
+		}
 	}
 
 	protected void configureLiferay(

@@ -26,7 +26,7 @@
 		</if>
 	</tear-down>
 
-	<command name="RemoteIndexOnStartup" priority="5">
+	<command name="AssertIndexOnStartupViaRemote" priority="5">
 		<description message="This test asserts that index on startup works consistently on remote Elasticsearch." />
 
 		<property name="remote.elasticsearch.enabled" value="true" />

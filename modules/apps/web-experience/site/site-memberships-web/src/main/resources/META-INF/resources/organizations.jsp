@@ -94,7 +94,7 @@ organizationSearch.setResults(organizations);
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedOrganizations" label="delete" />
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedOrganizations" label="remove-membership" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

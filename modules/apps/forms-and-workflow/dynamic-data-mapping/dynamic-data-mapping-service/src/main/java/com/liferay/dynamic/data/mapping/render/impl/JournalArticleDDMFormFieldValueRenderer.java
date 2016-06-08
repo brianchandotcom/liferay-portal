@@ -51,11 +51,12 @@ public class JournalArticleDDMFormFieldValueRenderer
 				JSONObject jsonObject = createJSONObject(
 					value.getString(locale));
 
-				long assetEntryId = jsonObject.getLong("assetentryid");
+				String className = jsonObject.getString("className");
+				long classPK = jsonObject.getLong("classPK");
 
 				try {
-					AssetEntry assetEntry =
-						AssetEntryLocalServiceUtil.getAssetEntry(assetEntryId);
+					AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+						className, classPK);
 
 					return assetEntry.getTitle(locale);
 				}

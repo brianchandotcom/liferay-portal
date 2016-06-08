@@ -16,6 +16,7 @@ package com.liferay.portal.osgi.web.wab.generator.internal;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.osgi.web.wab.generator.internal.artifact.ArtifactURLUtil;
 import com.liferay.portal.osgi.web.wab.generator.internal.artifact.WarArtifactUrlTransformer;
 import com.liferay.portal.osgi.web.wab.generator.internal.handler.WabURLStreamHandlerService;
@@ -98,7 +99,7 @@ public class WabGenerator
 
 			@Override
 			public Void addingBundle(Bundle bundle, BundleEvent bundleEvent) {
-				String location = bundle.getLocation();
+				String location = StringUtil.toLowerCase(bundle.getLocation());
 
 				if (requiredForStartupLocations.remove(location) &&
 					requiredForStartupLocations.isEmpty()) {
@@ -153,7 +154,7 @@ public class WabGenerator
 
 					URL url = ArtifactURLUtil.transform(uri.toURL());
 
-					locations.add(url.toString());
+					locations.add(StringUtil.toLowerCase(url.toString()));
 				}
 			}
 		}

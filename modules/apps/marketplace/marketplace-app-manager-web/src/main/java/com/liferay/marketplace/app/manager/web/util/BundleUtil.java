@@ -15,6 +15,7 @@
 package com.liferay.marketplace.app.manager.web.util;
 
 import com.liferay.marketplace.app.manager.web.constants.BundleConstants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Dictionary;
@@ -35,6 +36,17 @@ public class BundleUtil {
 			Bundle bundle = iterator.next();
 
 			if ((state > 0) && (bundle.getState() != state)) {
+				iterator.remove();
+
+				continue;
+			}
+
+			Dictionary<String, String> headers = bundle.getHeaders();
+
+			String bundleType = GetterUtil.getString(
+				headers.get("Liferay-Releng-Bundle-Type"));
+
+			if (bundleType.equals("lpkg")) {
 				iterator.remove();
 			}
 		}

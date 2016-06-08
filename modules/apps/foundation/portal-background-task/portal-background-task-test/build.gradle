@@ -1,5 +1,6 @@
 dependencies {
-	testCompile group: "com.liferay", name: "com.liferay.portal.background.task.api", version: "2.0.0"
+	provided project(":apps:foundation:portal-background-task:portal-background-task-api")
+
 	testCompile group: "com.liferay", name: "com.liferay.portal.background.task.service", version: "2.0.0"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 

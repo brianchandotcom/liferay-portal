@@ -543,7 +543,7 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addDraftCP">
+		<execute macro="WebContent#addDraft">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
@@ -776,6 +776,7 @@
 		<execute macro="WebContentTemplates#addStructure">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateFieldNames" value="Image" />
+			<var name="templateLanguage" value="ftl" />
 		</execute>
 
 		<execute macro="PortletEntry#save" />
@@ -1611,7 +1612,7 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addDraftCP">
+		<execute macro="WebContent#addDraft">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>

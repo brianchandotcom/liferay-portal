@@ -217,7 +217,7 @@
 		<execute function="Pause" locator1="5000" />
 
 		<execute macro="LAR#importSiteCP">
-			<var name="larFileName" value="${larFileName}" />
+			<var name="larFileName" value="Export Template Name Edit" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 

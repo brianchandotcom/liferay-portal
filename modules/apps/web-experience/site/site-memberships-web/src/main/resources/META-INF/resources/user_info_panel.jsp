@@ -97,6 +97,27 @@ Group group = siteMembershipsDisplayContext.getGroup();
 		<div class="sidebar-body">
 
 			<%
+			List<String> names = new ArrayList<String>();
+
+			names.addAll(SitesUtil.getOrganizationNames(group, curUser));
+
+			names.addAll(SitesUtil.getUserGroupNames(group, curUser));
+			%>
+
+			<c:if test="<%= ListUtil.isNotEmpty(names) %>">
+				<p>
+					<c:choose>
+						<c:when test="<%= names.size() == 1 %>">
+							<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), HtmlUtil.escape(names.get(0))} %>" key="this-user-is-a-member-of-x-because-he-belongs-to-x" translateArguments="<%= false %>" />
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:message arguments='<%= new Object[] {HtmlUtil.escape(group.getDescriptiveName(locale)), HtmlUtil.escape(StringUtil.merge(names.subList(0, names.size() - 1).toArray(new String[names.size() - 1]), ", ")), HtmlUtil.escape(names.get(names.size() - 1))} %>' key="this-user-is-a-member-of-x-because-he-belongs-to-x-and-x" translateArguments="<%= false %>" />
+						</c:otherwise>
+					</c:choose>
+				</p>
+			</c:if>
+
+			<%
 			String portraitURL = curUser.getPortraitURL(themeDisplay);
 			%>
 

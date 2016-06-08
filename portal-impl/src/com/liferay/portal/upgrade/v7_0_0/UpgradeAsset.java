@@ -70,7 +70,7 @@ public class UpgradeAsset extends UpgradeProcess {
 	protected void updateAssetEntries() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			long classNameId = PortalUtil.getClassNameId(
-				"com.liferay.journal.model.JournalArticle");
+				"com.liferay.portlet.journal.model.JournalArticle");
 
 			StringBundler sb = new StringBundler(10);
 

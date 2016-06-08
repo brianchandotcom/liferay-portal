@@ -72,3 +72,18 @@ app.artifacts-5=\
 app.change.log-5=LPS-61420 LPS-61987 LPS-64031 LPS-65225 LPS-65339 LPS-65909 LPS-66064 LPS-66445 LPS-66446
 
 app.git.id-5=e34d1d9d9deef7f646f04b238b31806863a35284
+
+#
+# Liferay App Version 5
+#
+
+app.artifacts-5=\
+	com.liferay.marketplace.api-4.1.0.jar,\
+	com.liferay.marketplace.app.manager.web-1.0.7.jar,\
+	com.liferay.marketplace.deployer-2.0.4.jar,\
+	com.liferay.marketplace.service-2.1.3.jar,\
+	com.liferay.marketplace.store.web-2.0.2.jar
+
+app.change.log-5=LPS-61420 LPS-61987 LPS-64031 LPS-65225 LPS-65339 LPS-65693 LPS-65909 LPS-66064 LPS-66445 LPS-66446
+
+app.git.id-5=650de6aed5ee4be3fc9e1e8f88d9f76c2e76f5da

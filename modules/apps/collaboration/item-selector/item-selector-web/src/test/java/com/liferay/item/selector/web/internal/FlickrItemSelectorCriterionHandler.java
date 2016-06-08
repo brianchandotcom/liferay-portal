@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.item.selector.web;
+package com.liferay.item.selector.web.internal;
 
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorView;
@@ -23,23 +23,23 @@ import java.util.List;
 /**
  * @author Iván Zaera
  */
-public class MediaItemSelectorCriterionHandler
-	implements ItemSelectorCriterionHandler<MediaItemSelectorCriterion> {
+public class FlickrItemSelectorCriterionHandler
+	implements ItemSelectorCriterionHandler<FlickrItemSelectorCriterion> {
 
 	@Override
-	public Class<MediaItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return MediaItemSelectorCriterion.class;
+	public Class<FlickrItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return FlickrItemSelectorCriterion.class;
 	}
 
 	@Override
-	public List<ItemSelectorView<MediaItemSelectorCriterion>>
+	public List<ItemSelectorView<FlickrItemSelectorCriterion>>
 		getItemSelectorViews(
-			MediaItemSelectorCriterion mediaItemSelectorCriterion) {
+			FlickrItemSelectorCriterion flickrItemSelectorCriterion) {
 
-		List<ItemSelectorView<MediaItemSelectorCriterion>> itemSelectorViews =
+		List<ItemSelectorView<FlickrItemSelectorCriterion>> itemSelectorViews =
 			new ArrayList<>();
 
-		itemSelectorViews.add(new MediaItemSelectorView());
+		itemSelectorViews.add(new FlickrItemSelectorView());
 
 		return itemSelectorViews;
 	}

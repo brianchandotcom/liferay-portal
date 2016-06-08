@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.item.selector.web.util;
+package com.liferay.item.selector.web.internal.util;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.web.FlickrItemSelectorCriterion;
-import com.liferay.item.selector.web.TestFileEntryItemSelectorReturnType;
-import com.liferay.item.selector.web.TestStringItemSelectorReturnType;
-import com.liferay.item.selector.web.TestURLItemSelectorReturnType;
+import com.liferay.item.selector.web.internal.FlickrItemSelectorCriterion;
+import com.liferay.item.selector.web.internal.TestFileEntryItemSelectorReturnType;
+import com.liferay.item.selector.web.internal.TestStringItemSelectorReturnType;
+import com.liferay.item.selector.web.internal.TestURLItemSelectorReturnType;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 

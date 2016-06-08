@@ -2227,6 +2227,11 @@
 			<var name="viewSelectedContent" value="Male Users" />
 		</execute>
 
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="ContentTargeting#viewEntryOnStagingLiveMode">
 			<var name="entryContentText" value="Web Content Content" />
 			<var name="portletName" value="Campaign Content Display" />
@@ -3120,7 +3125,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
+		<execute macro="UserSegmentContentDisplayPortlet#viewContentOnly">
 			<var name="entryContentText" value="WC Content Male" />
 		</execute>
 
@@ -3139,7 +3144,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
+		<execute macro="UserSegmentContentDisplayPortlet#viewContentOnly">
 			<var name="entryContentText" value="WC Content Page Visited" />
 		</execute>
 
@@ -3153,7 +3158,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
+		<execute macro="UserSegmentContentDisplayPortlet#viewContentOnly">
 			<var name="entryContentText" value="WC Content Woman" />
 		</execute>
 	</command>

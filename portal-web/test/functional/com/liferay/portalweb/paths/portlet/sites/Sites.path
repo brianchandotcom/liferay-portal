@@ -26,7 +26,7 @@
 </tr>
 <tr>
 	<td>SITE_TABLE_NAME</td>
-	<td>//*[@data-qa-id='row']//span[contains(.,'${key_siteName}')]</td>
+	<td>//*[@data-qa-id='row']//*[contains(.,'${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>

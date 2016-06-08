@@ -130,6 +130,24 @@ Group group = siteMembershipsDisplayContext.getGroup();
 			<p>
 				<%= curUser.getEmailAddress() %>
 			</p>
+
+			<%
+			List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(curUser.getUserId(), siteMembershipsDisplayContext.getGroupId());
+
+			List<Team> teams = TeamLocalServiceUtil.getUserOrUserGroupTeams(siteMembershipsDisplayContext.getGroupId(), curUser.getUserId());
+
+			List<String> siteRolesAndTeamsNames = ListUtil.toList(userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR);
+
+			siteRolesAndTeamsNames.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
+			%>
+
+			<c:if test="<%= !ListUtil.isEmpty(siteRolesAndTeamsNames) %>">
+				<h5><liferay-ui:message key="site-roles-and-teams" /></h5>
+
+				<p>
+					<%= HtmlUtil.escape(StringUtil.merge(siteRolesAndTeamsNames, StringPool.COMMA_AND_SPACE)) %>
+				</p>
+			</c:if>
 		</div>
 	</c:when>
 	<c:when test="<%= ListUtil.isNotEmpty(users) && (users.size() > 1) %>">

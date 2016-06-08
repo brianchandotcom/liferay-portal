@@ -14,6 +14,8 @@
 
 package com.liferay.portal.osgi.web.wab.reference.support.internal;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -70,15 +72,15 @@ public class WabDirURLStreamHandlerService
 
 			File warDir = new File(uri);
 
-			if (contextName == StringPool.BLANK) {
+			if (contextName.equals(StringPool.BLANK)) {
 				contextName = _getContextNameFromDirectory(warDir);
 			}
 
-			if (contextName == StringPool.BLANK) {
+			if (contextName.equals(StringPool.BLANK)) {
 				contextName = _getContextNameFromXMLFile(warDir);
 			}
 
-			if (contextName == StringPool.BLANK) {
+			if (contextName.equals(StringPool.BLANK)) {
 				throw new IllegalArgumentException(
 					"Unable to determine context name from " + url);
 			}
@@ -97,6 +99,9 @@ public class WabDirURLStreamHandlerService
 			return wabDirHandler.openConnection(url);
 		}
 		catch (IOException | URISyntaxException e) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Error opening connection", e);
+			}
 		}
 
 		return null;
@@ -163,6 +168,9 @@ public class WabDirURLStreamHandlerService
 			throw new IOException(de);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		WabDirURLStreamHandlerService.class);
 
 	private static final Pattern _pattern = Pattern.compile(
 		".*\\/(.*-(T|t)heme)\\/.*");

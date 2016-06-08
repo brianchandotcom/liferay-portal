@@ -95,7 +95,7 @@ userGroupSearch.setResults(userGroups);
 			<liferay-frontend:management-bar-button href="javascript:;" icon="users" id="selectSiteRole" label="assign-site-roles" />
 		</c:if>
 
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedUserGroups" label="delete" />
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedUserGroups" label="remove-membership" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

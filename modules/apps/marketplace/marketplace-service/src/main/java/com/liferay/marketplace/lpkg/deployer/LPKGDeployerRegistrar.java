@@ -77,6 +77,8 @@ public class LPKGDeployerRegistrar {
 			0, remoteAppId, title, description, category, iconURL, version,
 			required, null);
 
+		_moduleLocalService.deleteModules(app.getAppId());
+
 		String[] bundleStrings = StringUtil.split(
 			properties.getProperty("bundles"));
 

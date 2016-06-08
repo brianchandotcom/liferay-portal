@@ -282,6 +282,11 @@ public class ModuleLocalServiceWrapper implements ModuleLocalService,
 	}
 
 	@Override
+	public void deleteModules(long appId) {
+		_moduleLocalService.deleteModules(appId);
+	}
+
+	@Override
 	public ModuleLocalService getWrappedService() {
 		return _moduleLocalService;
 	}

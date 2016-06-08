@@ -25,7 +25,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.mail.model.Account" %><%@
+<%@ page import="com.liferay.mail.configuration.MailGroupServiceConfiguration" %><%@
+page import="com.liferay.mail.model.Account" %><%@
 page import="com.liferay.mail.model.Attachment" %><%@
 page import="com.liferay.mail.model.Folder" %><%@
 page import="com.liferay.mail.model.MailFile" %><%@
@@ -37,11 +38,11 @@ page import="com.liferay.mail.service.FolderLocalServiceUtil" %><%@
 page import="com.liferay.mail.service.MessageLocalServiceUtil" %><%@
 page import="com.liferay.mail.util.MailConstants" %><%@
 page import="com.liferay.mail.util.MailManager" %><%@
-page import="com.liferay.mail.util.PortletPropsValues" %><%@
 page import="com.liferay.portal.kernel.json.JSONArray" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.upload.UploadPortletRequest" %><%@
 page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
@@ -50,6 +51,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
+
 
 <%@ page import="java.io.File" %>
 
@@ -63,5 +65,8 @@ page import="java.util.List" %>
 <portlet:defineObjects />
 
 <%
+
+MailGroupServiceConfiguration mailGroupServiceConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(MailGroupServiceConfiguration.class, themeDisplay.getCompanyId());
+
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

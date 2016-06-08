@@ -19,7 +19,7 @@
 <%
 MailManager mailManager = MailManager.getInstance(request);
 
-JSONObject defaultAccountsJSONObject = JSONFactoryUtil.createJSONObject(PortletPropsValues.DEFAULT_ACCOUNTS);
+JSONObject defaultAccountsJSONObject = JSONFactoryUtil.createJSONObject(mailGroupServiceConfiguration.defaultAccounts());
 
 JSONArray accountsJSONArray = defaultAccountsJSONObject.getJSONArray("accounts");
 
@@ -108,7 +108,7 @@ for (int i = 0; i < accountsJSONArray.length(); i++) {
 						<aui:select name="incomingPort">
 
 							<%
-							for (int curIncomingPort : PortletPropsValues.INCOMING_PORTS) {
+							for (int curIncomingPort : mailGroupServiceConfiguration.incomingPorts()) {
 							%>
 
 								<aui:option selected="<%= incomingPort == curIncomingPort %>" value="<%= curIncomingPort %>"><%= curIncomingPort %></aui:option>
@@ -128,7 +128,7 @@ for (int i = 0; i < accountsJSONArray.length(); i++) {
 						<aui:select name="outgoingPort">
 
 							<%
-							for (int curOutgoingPort : PortletPropsValues.OUTGOING_PORTS) {
+							for (int curOutgoingPort : mailGroupServiceConfiguration.outgoingPorts()) {
 							%>
 
 								<aui:option selected="<%= outgoingPort == curOutgoingPort %>" value="<%= curOutgoingPort %>"><%= curOutgoingPort %></aui:option>

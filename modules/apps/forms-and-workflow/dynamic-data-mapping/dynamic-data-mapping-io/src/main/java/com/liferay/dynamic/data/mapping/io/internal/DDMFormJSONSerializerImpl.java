@@ -114,6 +114,8 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 
 			addProperty(jsonObject, ddmFormField, ddmFormFieldTypeSetting);
 		}
+
+		addFormFieldRules(jsonObject, ddmFormField.getDDMFormFieldRules());
 	}
 
 	protected void addProperty(
@@ -245,7 +247,6 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 		addProperties(jsonObject, ddmFormField);
 
 		addNestedFields(jsonObject, ddmFormField.getNestedDDMFormFields());
-		addFormFieldRules(jsonObject, ddmFormField.getDDMFormFieldRules());
 
 		return jsonObject;
 	}

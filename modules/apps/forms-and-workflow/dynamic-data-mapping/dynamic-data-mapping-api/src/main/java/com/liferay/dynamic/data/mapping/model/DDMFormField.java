@@ -42,11 +42,18 @@ public class DDMFormField implements Serializable {
 		setDDMFormFieldOptions(
 			new DDMFormFieldOptions(ddmFormField.getDDMFormFieldOptions()));
 
+		for (DDMFormFieldRule ddmFormFieldRule :
+				ddmFormField._ddmFormFieldRules) {
+
+			addDDMFormFieldRule(new DDMFormFieldRule(ddmFormFieldRule));
+		}
+
 		DDMFormFieldValidation ddmFormFieldValidation =
 			ddmFormField.getDDMFormFieldValidation();
 
 		if (ddmFormFieldValidation != null) {
-			setDDMFormFieldValidation(ddmFormFieldValidation);
+			setDDMFormFieldValidation(
+				new DDMFormFieldValidation(ddmFormFieldValidation));
 		}
 
 		setLabel(new LocalizedValue(ddmFormField.getLabel()));
@@ -58,7 +65,7 @@ public class DDMFormField implements Serializable {
 		for (DDMFormField nestedDDMFormField :
 				ddmFormField._nestedDDMFormFields) {
 
-			addNestedDDMFormField(nestedDDMFormField);
+			addNestedDDMFormField(new DDMFormField(nestedDDMFormField));
 		}
 	}
 

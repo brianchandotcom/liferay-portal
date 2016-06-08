@@ -23,31 +23,33 @@ public class DDMFormFieldRule implements Serializable {
 
 	public DDMFormFieldRule(DDMFormFieldRule ddmFormFieldRule) {
 		_expression = ddmFormFieldRule._expression;
-		_type = ddmFormFieldRule._type;
+		_ddmFormFieldRuleType = ddmFormFieldRule._ddmFormFieldRuleType;
 	}
 
-	public DDMFormFieldRule(String expression, DDMFormFieldRuleType type) {
+	public DDMFormFieldRule(
+		String expression, DDMFormFieldRuleType ddmFormFieldRuleType) {
+
 		_expression = expression;
-		_type = type;
+		_ddmFormFieldRuleType = ddmFormFieldRuleType;
+	}
+
+	public DDMFormFieldRuleType getDDMFormFieldRuleType() {
+		return _ddmFormFieldRuleType;
 	}
 
 	public String getExpression() {
 		return _expression;
 	}
 
-	public DDMFormFieldRuleType getType() {
-		return _type;
-	}
-
 	public void setExpression(String expression) {
 		_expression = expression;
 	}
 
-	public void setType(DDMFormFieldRuleType type) {
-		_type = type;
+	public void setType(DDMFormFieldRuleType ddmFormFieldRuleType) {
+		_ddmFormFieldRuleType = ddmFormFieldRuleType;
 	}
 
+	private DDMFormFieldRuleType _ddmFormFieldRuleType;
 	private String _expression;
-	private DDMFormFieldRuleType _type;
 
 }

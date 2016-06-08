@@ -229,10 +229,10 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 	protected DDMFormFieldRule getDDMFormFieldRule(JSONObject jsonObject) {
 		String expression = jsonObject.getString("expression");
 
-		DDMFormFieldRuleType type = DDMFormFieldRuleType.parse(
+		DDMFormFieldRuleType ddmFormFieldRuleType = DDMFormFieldRuleType.parse(
 			jsonObject.getString("type"));
 
-		return new DDMFormFieldRule(expression, type);
+		return new DDMFormFieldRule(expression, ddmFormFieldRuleType);
 	}
 
 	protected List<DDMFormFieldRule> getDDMFormFieldRules(JSONArray jsonArray) {

@@ -178,14 +178,16 @@ public class DDMFormJSONDeserializerTest
 
 		Assert.assertEquals("1 + 2 > 3", ddmFormFieldRule.getExpression());
 		Assert.assertEquals(
-			DDMFormFieldRuleType.VISIBILITY, ddmFormFieldRule.getType());
+			DDMFormFieldRuleType.VISIBILITY,
+			ddmFormFieldRule.getDDMFormFieldRuleType());
 
 		ddmFormFieldRule = ddmFormFieldRules.get(1);
 		Assert.assertEquals(
 			"isReadOnly(Date2510) && isVisible(Decimal3479)",
 			ddmFormFieldRule.getExpression());
 		Assert.assertEquals(
-			DDMFormFieldRuleType.READ_ONLY, ddmFormFieldRule.getType());
+			DDMFormFieldRuleType.READ_ONLY,
+			ddmFormFieldRule.getDDMFormFieldRuleType());
 	}
 
 	@Override

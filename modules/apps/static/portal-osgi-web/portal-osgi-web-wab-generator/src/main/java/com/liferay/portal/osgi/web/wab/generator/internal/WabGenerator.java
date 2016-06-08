@@ -104,7 +104,7 @@ public class WabGenerator
 				String location = StringUtil.toLowerCase(bundle.getLocation());
 
 				if (_log.isDebugEnabled()) {
-					_log.debug("WAB activated at location: " + location);
+					_log.debug("Bundle activated at location: " + location);
 
 					if (requiredForStartupLocations.contains(location)) {
 						_log.debug("WAB is required for startup");

@@ -108,7 +108,7 @@ public class AddLayoutSetPrototypePortalInstanceLifecycleListener
 
 		preferences.put("anyAssetType", Boolean.FALSE.toString());
 		preferences.put(
-			"portletSetupTitle_" + LocaleUtil.getDefault(), "Upcoming Events");
+			"portletSetupTitle_" + LocaleUtil.getDefault(), "Recent Content");
 		preferences.put("portletSetupUseCustomTitle", Boolean.TRUE.toString());
 
 		DefaultLayoutPrototypesUtil.updatePortletSetup(

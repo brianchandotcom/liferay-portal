@@ -105,16 +105,18 @@ public class WabGenerator
 
 				if (_log.isDebugEnabled()) {
 					_log.debug("Bundle activated at location: " + location);
-
-					if (requiredForStartupLocations.contains(location)) {
-						_log.debug("WAB is required for startup");
-					}
 				}
 
-				if (requiredForStartupLocations.remove(location) &&
-					requiredForStartupLocations.isEmpty()) {
+				if (requiredForStartupLocations.remove(location)) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"WAB bundle at " + location +
+								" is required for startup");
+					}
 
-					countDownLatch.countDown();
+					if (requiredForStartupLocations.isEmpty()) {
+						countDownLatch.countDown();
+					}
 				}
 
 				return null;

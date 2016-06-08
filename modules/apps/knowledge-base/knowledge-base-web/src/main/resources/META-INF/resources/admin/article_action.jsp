@@ -26,18 +26,7 @@ KBArticle kbArticle = (KBArticle)row.getObject();
 KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
 %>
 
-<liferay-ui:icon-menu cssClass="kb-article-action">
-
-	<%
-	PortletURL viewURL = kbArticleURLHelper.createViewWithRedirectURL(kbArticle, currentURL);
-	%>
-
-	<liferay-ui:icon
-		image="view"
-		method="get"
-		url="<%= viewURL.toString() %>"
-	/>
-
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE) %>">
 		<liferay-portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value='<%= templatePath + "edit_article.jsp" %>' />
@@ -46,7 +35,6 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editURL %>"
 		/>
@@ -61,10 +49,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
-			image="add_article"
-			label="<%= true %>"
 			message="add-child-article"
-			method="get"
 			url="<%= addKBArticleURL %>"
 		/>
 	</c:if>
@@ -79,7 +64,6 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 		/>
 
 		<liferay-ui:icon
-			iconCssClass="icon-lock"
 			message="permissions"
 			url="<%= permissionsURL %>"
 			useDialog="<%= true %>"
@@ -95,7 +79,6 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 				</liferay-portlet:actionURL>
 
 				<liferay-ui:icon
-					iconCssClass="icon-remove-sign"
 					message="unsubscribe"
 					url="<%= unsubscribeKBArticleURL %>"
 				/>
@@ -107,7 +90,6 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 				</liferay-portlet:actionURL>
 
 				<liferay-ui:icon
-					iconCssClass="icon-ok-sign"
 					message="subscribe"
 					url="<%= subscribeKBArticleURL %>"
 				/>
@@ -126,7 +108,6 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-move"
 			message="move"
 			url="<%= moveKBArticleURL %>"
 		/>

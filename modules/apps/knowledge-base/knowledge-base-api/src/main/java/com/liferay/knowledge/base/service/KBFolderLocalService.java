@@ -192,6 +192,10 @@ public interface KBFolderLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getKBFoldersAndKBArticlesCount(long groupId,
+		long parentResourcePrimKey, int status);
+
 	/**
 	* Returns the number of k b folders.
 	*
@@ -267,6 +271,11 @@ public interface KBFolderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBFolder> getKBFolders(long groupId, long parentKBFolderId,
 		int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Object> getKBFoldersAndKBArticles(long groupId,
+		long parentResourcePrimKey, int status, int start, int end,
+		OrderByComparator<?> orderByComparator);
 
 	/**
 	* Returns all the k b folders matching the UUID and company.

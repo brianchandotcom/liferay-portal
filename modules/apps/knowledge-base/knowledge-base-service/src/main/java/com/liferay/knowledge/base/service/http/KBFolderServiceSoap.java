@@ -162,6 +162,21 @@ public class KBFolderServiceSoap {
 		}
 	}
 
+	public static int getKBFoldersAndKBArticlesCount(long groupId,
+		long parentResourcePrimKey, int status) throws RemoteException {
+		try {
+			int returnValue = KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(groupId,
+					parentResourcePrimKey, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getKBFoldersCount(long groupId, long parentKBFolderId)
 		throws RemoteException {
 		try {

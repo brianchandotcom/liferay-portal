@@ -124,7 +124,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_BUTTON_EXPANDED</td>
-	<td>//div[contains(@class,'preview-button')]/button[@aria-expanded='true']</td>
+	<td>//div[h2[contains(.,'${key_portletName}')]]//button[@aria-expanded='true']</td>
 	<td></td>
 </tr>
 <tr>

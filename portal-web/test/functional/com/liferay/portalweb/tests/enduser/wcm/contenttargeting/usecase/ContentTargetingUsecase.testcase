@@ -4234,7 +4234,7 @@
 		</execute>
 
 		<execute macro="UserSegmentContentListPortlet#configureDisplayFilter">
-			<var name="assetTypeFilter" value="Basic Web Content" />
+			<var name="assetTypeFilter" value="Web Content Article" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

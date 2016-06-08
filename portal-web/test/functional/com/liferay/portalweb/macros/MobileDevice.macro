@@ -50,7 +50,7 @@
 				<then>
 					<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_DESKTOP" />
 
-					<execute function="AssertElementPresent" locator1="PREVIEW_DEVICE_GENERAL_IFRAME" />
+					<execute function="AssertElementPresent" locator1="ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME" />
 
 					<take-screenshot />
 				</then>
@@ -60,7 +60,7 @@
 				<then>
 					<execute function="Click" locator1="ControlMenuPreviewPanel#PREVIEW_CUSTOM" />
 
-					<execute function="AssertElementPresent" locator1="PREVIEW_DEVICE_GENERAL_IFRAME" />
+					<execute function="AssertElementPresent" locator1="ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME" />
 
 					<take-screenshot />
 

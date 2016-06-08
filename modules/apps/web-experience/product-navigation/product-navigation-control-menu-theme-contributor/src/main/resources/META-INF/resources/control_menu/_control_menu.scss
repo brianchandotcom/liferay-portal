@@ -1,11 +1,3 @@
-body.open {
-	.control-menu {
-		@include sm() {
-			left: 320px;
-		}
-	}
-}
-
 .has-control-menu {
 	#wrapper {
 		margin-top: $has-control-menu-margin-top-mobile;
@@ -29,7 +21,7 @@ body.open {
 	position: fixed;
 	right: 0;
 	top: 0;
-	z-index: 500;
+	z-index: $control-menu-zindex;
 }
 
 .control-menu-icon {
@@ -64,7 +56,7 @@ body.open {
 .control-menu-level-1-heading {
 	color: #FFF;
 	font-size: 19px;
-	font-weight: 700;
+	font-weight: bold;
 }
 
 .control-menu-level-1-nav {

@@ -1,5 +1,39 @@
 @import "bourbon";
 @import "variables";
+@import "mixins";
+
+body {
+	&.open #wrapper {
+		@include sm() {
+			padding-left: $product-menu-width;
+		}
+	}
+
+	&.open .control-menu {
+		@include sm() {
+			left: $product-menu-width;
+		}
+	}
+
+	&.open, &.sidenav-transition {
+		@include sm() {
+			overflow-x: hidden;
+		}
+	}
+
+	&.sidenav-transition #wrapper {
+		@include transition(padding 0.5s ease);
+	}
+}
+
+.lfr-product-menu-panel.sidenav-menu-slider {
+	z-index: $product-menu-zindex;
+
+	&.open,
+	.sidenav-menu {
+		width: $product-menu-width;
+	}
+}
 
 .product-menu {
 	background-color: $product-menu-body-bg;

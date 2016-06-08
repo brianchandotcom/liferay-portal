@@ -6787,13 +6787,16 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					</fileset>
 				</chmod>
 
-				<property name="test.build.additional.osgi.dependencies" value="" />
-
-				<prepare-additional-osgi-jars
-					additional.dependencies="${test.build.additional.osgi.dependencies}"
-					osgi.dir="${app.server.parent.dir}/osgi"
-					repository.url="${sonatype.release.url}"
-				/>
+				<if>
+					<isset property="test.build.additional.osgi.dependencies" />
+					<then>
+						<prepare-additional-osgi-jars
+							additional.dependencies="${test.build.additional.osgi.dependencies}"
+							osgi.dir="${app.server.parent.dir}/osgi"
+							repository.url="${sonatype.release.url}"
+						/>
+					</then>
+				</if>
 
 				<prepare-fix-pack-bundle />
 			</then>

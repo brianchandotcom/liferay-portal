@@ -63,6 +63,20 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 			<h6>
 				<%= LanguageUtil.get(request, organization.getType()) %>
 			</h6>
+
+			<%
+			Group group = siteMembershipsDisplayContext.getGroup();
+			%>
+
+			<c:if test="<%= group.getOrganizationId() == organization.getOrganizationId() %>">
+				<p class="h6 text-muted">
+					<liferay-ui:message arguments="<%= new String[] {organization.getName(), LanguageUtil.get(request, organization.getType())} %>" key="this-site-belongs-to-x-which-is-an-organization-of-type-x" translateArguments="<%= false %>" />
+				</p>
+
+				<p class="h6 text-muted">
+					<liferay-ui:message arguments="<%= organization.getName() %>" key="all-users-of-x-are-automatically-members-of-the-site" translateArguments="<%= false %>" />
+				</p>
+			</c:if>
 		</div>
 
 		<aui:nav-bar markupView="lexicon">

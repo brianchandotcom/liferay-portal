@@ -14,18 +14,6 @@
  */
 --%>
 
-<%
-Group group = siteMembershipsDisplayContext.getGroup();
-%>
-
-<liferay-util:buffer var="name">
-	<%= organization.getName() %>
-
-	<c:if test="<%= group.getOrganizationId() == organization.getOrganizationId() %>">
-		<liferay-ui:icon-help message='<%= LanguageUtil.format(request, "this-site-belongs-to-x-which-is-an-organization-of-type-x", new String[] {organization.getName(), LanguageUtil.get(request, organization.getType())}, false) + StringPool.SPACE + LanguageUtil.format(request, "all-users-of-x-are-automatically-members-of-the-site", organization.getName(), false) %>' />
-	</c:if>
-</liferay-util:buffer>
-
 <c:choose>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
 
@@ -42,7 +30,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 				resultRow="<%= row %>"
 				rowChecker="<%= rowChecker %>"
 				subtitle="<%= LanguageUtil.get(request, organization.getType()) %>"
-				title="<%= name %>"
+				title="<%= organization.getName() %>"
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:when>
@@ -55,7 +43,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 		<liferay-ui:search-container-column-text
 			colspan="<%= 2 %>"
 		>
-			<h5><%= name %></h5>
+			<h5><%= organization.getName() %></h5>
 
 			<h6 class="text-default">
 				<span><%= HtmlUtil.escape(organization.getParentOrganizationName()) %></span>
@@ -83,7 +71,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 			name="name"
 			orderable="<%= true %>"
 			truncate="<%= true %>"
-			value="<%= name %>"
+			value="<%= organization.getName() %>"
 		/>
 
 		<liferay-ui:search-container-column-text

@@ -363,6 +363,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		}
 
 		SyncFileService.update(targetSyncFile);
+
+		IODeltaUtil.copyChecksums(sourceSyncFile, targetSyncFile);
 	}
 
 	protected void deleteFile(SyncFile sourceSyncFile, SyncFile targetSyncFile)

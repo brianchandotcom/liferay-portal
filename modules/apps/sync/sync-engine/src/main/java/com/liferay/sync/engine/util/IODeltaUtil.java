@@ -97,6 +97,12 @@ public class IODeltaUtil {
 	public static Path copyChecksums(
 		SyncFile sourceSyncFile, SyncFile targetSyncFile) {
 
+		if (isIgnoredFilePatchingExtension(sourceSyncFile) ||
+			isIgnoredFilePatchingExtension(targetSyncFile)) {
+
+			return null;
+		}
+
 		try {
 			Path sourceChecksumsFilePath = getChecksumsFilePath(sourceSyncFile);
 

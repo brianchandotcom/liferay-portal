@@ -244,7 +244,7 @@ else {
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:search-container-column-text
-								cssClass="text-strong"
+								cssClass="table-cell-content"
 								href="<%= rowURL %>"
 								name="title"
 								value="<%= curPage.getTitle() %>"
@@ -279,7 +279,6 @@ else {
 							/>
 
 							<liferay-ui:search-container-column-jsp
-								cssClass="entry-action"
 								path="/wiki/page_action.jsp"
 							/>
 						</c:otherwise>

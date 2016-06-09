@@ -213,9 +213,9 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
 								href="<%= rowURL %>"
 								name="wiki"
-								truncate="<%= true %>"
 								value="<%= HtmlUtil.escape(node.getName()) %>"
 							/>
 

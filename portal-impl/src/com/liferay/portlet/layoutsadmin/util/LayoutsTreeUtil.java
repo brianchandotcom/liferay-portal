@@ -212,7 +212,7 @@ public class LayoutsTreeUtil {
 		LayoutTreeNodes layoutTreeNodes = new LayoutTreeNodes(
 			layoutTreeNodesList, total);
 
-		return LayoutsTreeUtil._toJSONObject(request, groupId, layoutTreeNodes);
+		return _toJSONObject(request, groupId, layoutTreeNodes);
 	}
 
 	private static Layout _fetchCurrentLayout(HttpServletRequest request) {

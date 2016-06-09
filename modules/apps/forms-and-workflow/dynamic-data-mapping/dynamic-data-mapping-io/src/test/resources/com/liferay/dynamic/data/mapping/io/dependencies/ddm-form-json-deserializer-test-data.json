@@ -19,6 +19,16 @@
 			"readOnly": false,
 			"repeatable": true,
 			"required": false,
+			"rules": [
+				{
+					"expression": "1 + 2 > 3",
+					"type": "VISIBILITY"
+				},
+				{
+					"expression": "isReadOnly(Date2510) && isVisible(Decimal3479)",
+					"type": "READ_ONLY"
+				}
+			],
 			"showLabel": false,
 			"tip": {
 				"en_US": "",

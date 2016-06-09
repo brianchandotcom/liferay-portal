@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.mail.util;
+package com.liferay.mail.web.util;
 
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.mail.attachment.AttachmentHandler;
+import com.liferay.mail.constants.MailConstants;
 import com.liferay.mail.exception.MailException;
 import com.liferay.mail.mailbox.Mailbox;
 import com.liferay.mail.mailbox.MailboxFactoryUtil;

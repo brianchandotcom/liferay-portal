@@ -68,6 +68,7 @@ organizationSearch.setResults(organizations);
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
+			<portlet:param name="mvcPath" value="/select_organizations.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</liferay-portlet:actionURL>
 

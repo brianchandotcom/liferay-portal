@@ -73,6 +73,7 @@ userSearch.setResults(users);
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">
+			<portlet:param name="mvcPath" value="/select_users.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</liferay-portlet:actionURL>
 

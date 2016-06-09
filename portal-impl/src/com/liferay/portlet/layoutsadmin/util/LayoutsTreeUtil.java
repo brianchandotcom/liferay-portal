@@ -519,12 +519,10 @@ public class LayoutsTreeUtil {
 		for (LayoutTreeNode layoutTreeNode : layoutTreeNodes) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			String childrenJSON = _toJSONObject(
-				request, groupId,
-				layoutTreeNode.getChildLayoutTreeNodes()).toString();
+			JSONObject childrenJSONObject = _toJSONObject(
+				request, groupId, layoutTreeNode.getChildLayoutTreeNodes());
 
-			jsonObject.put(
-				"children", JSONFactoryUtil.createJSONObject(childrenJSON));
+			jsonObject.put("children", childrenJSONObject);
 
 			Layout layout = layoutTreeNode.getLayout();
 

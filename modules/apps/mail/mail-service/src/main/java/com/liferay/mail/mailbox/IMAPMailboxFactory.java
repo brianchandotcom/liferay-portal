@@ -14,13 +14,20 @@
 
 package com.liferay.mail.mailbox;
 
+import com.liferay.mail.constants.MailPortletKeys;
 import com.liferay.mail.model.Account;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.StringPool;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Scott Lee
  */
+@Component(
+	immediate = true, property = {"javax.portlet.name=" + MailPortletKeys.MAIL},
+	service = MailboxFactory.class
+)
 public class IMAPMailboxFactory implements MailboxFactory {
 
 	public Mailbox getMailbox(User user, Account account, String password) {
@@ -29,6 +36,11 @@ public class IMAPMailboxFactory implements MailboxFactory {
 
 	public Mailbox getMailbox(User user, String protocol) {
 		return new IMAPMailbox(user, null, StringPool.BLANK);
+	}
+
+	@Override
+	public String getMailboxFactoryName() {
+		return "imap";
 	}
 
 	public void initialize() {

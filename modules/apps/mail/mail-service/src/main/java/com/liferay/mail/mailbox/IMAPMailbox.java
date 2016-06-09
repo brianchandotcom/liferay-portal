@@ -14,6 +14,9 @@
 
 package com.liferay.mail.mailbox;
 
+import com.liferay.mail.attachment.AttachmentHandler;
+import com.liferay.mail.attachment.DefaultAttachmentHandler;
+import com.liferay.mail.constants.MailConstants;
 import com.liferay.mail.exception.MailException;
 import com.liferay.mail.exception.NoSuchFolderException;
 import com.liferay.mail.exception.NoSuchMessageException;
@@ -30,9 +33,6 @@ import com.liferay.mail.service.AttachmentLocalServiceUtil;
 import com.liferay.mail.service.FolderLocalServiceUtil;
 import com.liferay.mail.service.MessageLocalServiceUtil;
 import com.liferay.mail.util.AccountLock;
-import com.liferay.mail.util.AttachmentHandler;
-import com.liferay.mail.util.DefaultAttachmentHandler;
-import com.liferay.mail.util.MailConstants;
 import com.liferay.petra.mail.InternetAddressUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;

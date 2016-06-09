@@ -27,6 +27,8 @@ public interface MailboxFactory {
 
 	public Mailbox getMailbox(User user, String protocol);
 
+	public String getMailboxFactoryName();
+
 	public void initialize() throws PortalException;
 
 }

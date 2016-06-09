@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
@@ -57,10 +57,14 @@ public class CKEditorCreoleConfigContributor
 			(Map<String, String>)inputEditorTaglibAttributes.get(
 				"liferay-ui:input-editor:fileBrowserParams");
 
-		String attachmentURLPrefix = fileBrowserParams.get(
-			"attachmentURLPrefix");
+		if (fileBrowserParams != null) {
+			String attachmentURLPrefix = fileBrowserParams.get(
+				"attachmentURLPrefix");
 
-		jsonObject.put("attachmentURLPrefix", attachmentURLPrefix);
+			if (Validator.isNotNull(attachmentURLPrefix)) {
+				jsonObject.put("attachmentURLPrefix", attachmentURLPrefix);
+			}
+		}
 
 		jsonObject.put("decodeLinks", Boolean.TRUE);
 		jsonObject.put("disableObjectResizing", Boolean.TRUE);
@@ -103,17 +107,10 @@ public class CKEditorCreoleConfigContributor
 				"['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent']"));
 		jsonArray.put(toJSONArray("['Format']"));
 		jsonArray.put(toJSONArray("['Link', 'Unlink']"));
-
-		String buttons = "['Table', '-',";
-
-		if (isIncludeButtonImage(inputEditorTaglibAttributes)) {
-			buttons = buttons.concat("'ImageSelector', '-', ");
-		}
-
-		buttons = buttons.concat("'HorizontalRule', '-', 'SpecialChar']");
-
-		jsonArray.put(toJSONArray(buttons));
-
+		jsonArray.put(
+			toJSONArray(
+				"['Table', '-','ImageSelector', '-', 'HorizontalRule', '-', " +
+					"'SpecialChar']"));
 		jsonArray.put("/");
 		jsonArray.put(
 			toJSONArray(
@@ -138,10 +135,7 @@ public class CKEditorCreoleConfigContributor
 		jsonArray.put(toJSONArray("['Bold', 'Italic']"));
 		jsonArray.put(toJSONArray("['NumberedList', 'BulletedList']"));
 		jsonArray.put(toJSONArray("['Link', 'Unlink']"));
-
-		if (isIncludeButtonImage(inputEditorTaglibAttributes)) {
-			jsonArray.put(toJSONArray("['ImageSelector']"));
-		}
+		jsonArray.put(toJSONArray("['ImageSelector']"));
 
 		if (isShowSource(inputEditorTaglibAttributes)) {
 			jsonArray.put(toJSONArray("['Source']"));
@@ -161,32 +155,13 @@ public class CKEditorCreoleConfigContributor
 				"['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent']"));
 		jsonArray.put(toJSONArray("['Format']"));
 		jsonArray.put(toJSONArray("['Link', 'Unlink']"));
-
-		if (isIncludeButtonImage(inputEditorTaglibAttributes)) {
-			jsonArray.put(toJSONArray("['ImageSelector']"));
-		}
+		jsonArray.put(toJSONArray("['ImageSelector']"));
 
 		if (isShowSource(inputEditorTaglibAttributes)) {
 			jsonArray.put(toJSONArray("['Source']"));
 		}
 
 		return jsonArray;
-	}
-
-	protected boolean isIncludeButtonImage(
-		Map<String, Object> inputEditorTaglibAttributes) {
-
-		Map<String, String> fileBrowserParams =
-			(Map<String, String>)inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:fileBrowserParams");
-
-		if (GetterUtil.getLong(
-				fileBrowserParams.get("wikiPageResourcePrimKey")) > 0) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 }

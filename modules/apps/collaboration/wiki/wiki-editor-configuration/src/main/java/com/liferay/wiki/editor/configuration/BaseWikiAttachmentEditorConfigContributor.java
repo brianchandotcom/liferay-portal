@@ -21,9 +21,6 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -33,30 +30,19 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
  * @author Roberto Díaz
  */
-@Component(
-	property = {
-		"javax.portlet.name=" + WikiPortletKeys.WIKI,
-		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
-		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
-		"service.ranking:Integer=100"
-	},
-	service = EditorConfigContributor.class
-)
-public class WikiAttachmentEditorConfigContributor
+public abstract class BaseWikiAttachmentEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
@@ -70,6 +56,8 @@ public class WikiAttachmentEditorConfigContributor
 				"liferay-ui:input-editor:allowBrowseDocuments"));
 
 		if (!allowBrowseDocuments) {
+			removeImageButton(jsonObject);
+
 			return;
 		}
 
@@ -154,46 +142,7 @@ public class WikiAttachmentEditorConfigContributor
 		_itemSelector = itemSelector;
 	}
 
-	protected void removeImageButton(JSONObject jsonObject) {
-		JSONObject toolbarsJSONObject = jsonObject.getJSONObject("toolbars");
-
-		if (toolbarsJSONObject == null) {
-			return;
-		}
-
-		JSONObject addJSONObject = toolbarsJSONObject.getJSONObject("add");
-
-		if (addJSONObject == null) {
-			return;
-		}
-
-		JSONArray buttonsJSONArray = addJSONObject.getJSONArray("buttons");
-
-		if (buttonsJSONArray == null) {
-			return;
-		}
-
-		JSONArray newButtonsJSONArray = JSONFactoryUtil.createJSONArray();
-
-		Iterator iterator = buttonsJSONArray.iterator();
-
-		while (iterator.hasNext()) {
-			Object buttonObject = iterator.next();
-
-			if (buttonObject instanceof String) {
-				String buttonString = (String)buttonObject;
-
-				if (!buttonString.equals("image")) {
-					newButtonsJSONArray.put(buttonString);
-				}
-			}
-			else {
-				newButtonsJSONArray.put(buttonObject);
-			}
-		}
-
-		addJSONObject.put("buttons", newButtonsJSONArray);
-	}
+	protected abstract void removeImageButton(JSONObject jsonObject);
 
 	private ItemSelector _itemSelector;
 

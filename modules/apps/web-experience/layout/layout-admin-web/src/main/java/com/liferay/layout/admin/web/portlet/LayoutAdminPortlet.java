@@ -395,11 +395,10 @@ public class LayoutAdminPortlet extends MVCPortlet {
 
 		Layout deleteLayout = layoutLocalService.getLayout(selPlid);
 
-		Object[] returnValue = SitesUtil.deleteLayout(
-			actionRequest, actionResponse);
+		SitesUtil.deleteLayout(actionRequest, actionResponse);
 
 		if (selPlid == themeDisplay.getRefererPlid()) {
-			long newRefererPlid = (Long)returnValue[2];
+			long newRefererPlid = getNewPlid(deleteLayout, selPlid);
 
 			Layout redirectLayout = layoutLocalService.fetchLayout(
 				newRefererPlid);
@@ -863,6 +862,47 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		}
 
 		return new byte[0];
+	}
+
+	protected long getNewPlid(Layout layout, long selPlid) {
+		long newPlid = LayoutConstants.DEFAULT_PLID;
+
+		if (layout.getParentLayoutId() !=
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+
+			Layout parentLayout = layoutLocalService.fetchLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getParentLayoutId());
+
+			if (parentLayout != null) {
+				newPlid = parentLayout.getPlid();
+			}
+		}
+
+		if (newPlid <= 0) {
+			Layout firstLayout = layoutLocalService.fetchFirstLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			if ((firstLayout != null) && (firstLayout.getPlid() != selPlid)) {
+				newPlid = firstLayout.getPlid();
+			}
+
+			if (newPlid <= 0) {
+				Layout otherLayoutSetFirstLayout =
+					layoutLocalService.fetchFirstLayout(
+						layout.getGroupId(), !layout.isPrivateLayout(),
+						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+				if ((otherLayoutSetFirstLayout != null) &&
+					(otherLayoutSetFirstLayout.getPlid() != selPlid)) {
+
+					newPlid = otherLayoutSetFirstLayout.getPlid();
+				}
+			}
+		}
+
+		return newPlid;
 	}
 
 	protected void inheritMobileRuleGroups(

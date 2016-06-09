@@ -8467,54 +8467,6 @@ jdbc.default.password=${database.password}</echo>
 
 		<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">liferay.home=${liferay.home}</echo>
 
-		<get-testcase-property property.name="portal.version" />
-
-		<propertyregex
-			input="${portal.version}"
-			property="portal.major.version"
-			regexp="(\d+\.\d+)\.\d+"
-			select="\1"
-		/>
-
-		<if>
-			<or>
-				<equals arg1="${portal.major.version}" arg2="6.0" />
-				<equals arg1="${portal.major.version}" arg2="6.1" />
-				<equals arg1="${portal.major.version}" arg2="6.2" />
-			</or>
-			<then>
-				<prepare-portal-legacy-properties
-					portal.ext.properties.file.path="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties"
-					portal.major.version="6.2"
-				/>
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<equals arg1="${portal.major.version}" arg2="6.0" />
-				<equals arg1="${portal.major.version}" arg2="6.1" />
-			</or>
-			<then>
-				<prepare-portal-legacy-properties
-					portal.ext.properties.file.path="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties"
-					portal.major.version="6.1"
-				/>
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<equals arg1="${portal.major.version}" arg2="6.0" />
-			</or>
-			<then>
-				<prepare-portal-legacy-properties
-					portal.ext.properties.file.path="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties"
-					portal.major.version="6.0"
-				/>
-			</then>
-		</if>
-
 		<trycatch property="upgrade.error">
 			<try>
 				<java

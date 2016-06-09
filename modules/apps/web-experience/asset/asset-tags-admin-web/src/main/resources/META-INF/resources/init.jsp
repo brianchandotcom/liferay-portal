@@ -28,6 +28,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.asset.kernel.exception.DuplicateTagException" %><%@
 page import="com.liferay.asset.kernel.exception.NoSuchTagException" %><%@
 page import="com.liferay.asset.kernel.model.AssetTag" %><%@
+page import="com.liferay.asset.tags.admin.web.constants.AssetTagsConstants" %><%@
 page import="com.liferay.asset.tags.admin.web.display.context.AssetTagsDisplayContext" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

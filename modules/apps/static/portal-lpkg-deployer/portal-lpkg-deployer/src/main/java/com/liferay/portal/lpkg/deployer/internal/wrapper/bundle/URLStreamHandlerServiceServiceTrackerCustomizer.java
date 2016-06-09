@@ -19,6 +19,7 @@ import java.net.URLConnection;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.startlevel.BundleStartLevel;
 import org.osgi.service.url.AbstractURLStreamHandlerService;
@@ -63,10 +64,13 @@ public class URLStreamHandlerServiceServiceTrackerCustomizer
 			// The WAB URL must not change over reboots. See
 			// LPKGBundleTrackerCustomizer#_toWARWrapperBundle.
 
+			Bundle bundle = _bundleContext.getBundle();
+
 			URL wabURL = new URL(
 				"webbundle", null, -1,
 				_lpkgURL.toExternalForm() + "?Web-ContextPath=/" +
-					_contextName,
+					_contextName + "&" + Constants.BUNDLE_VERSION + "=" +
+						bundle.getVersion(),
 				abstractURLStreamHandlerService);
 
 			URLConnection urlConnection =

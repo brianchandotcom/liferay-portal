@@ -231,9 +231,13 @@ public class LPKGBundleTrackerCustomizer
 		String contextName = pathString.substring(
 			pathString.lastIndexOf('/') + 1, pathString.lastIndexOf(".war"));
 
+		String version = String.valueOf(bundle.getVersion());
+
 		int index = contextName.lastIndexOf('-');
 
 		if (index >= 0) {
+			version = contextName.substring(index + 1);
+
 			contextName = contextName.substring(0, index);
 		}
 
@@ -261,7 +265,8 @@ public class LPKGBundleTrackerCustomizer
 			try (JarOutputStream jarOutputStream = new JarOutputStream(
 					unsyncByteArrayOutputStream)) {
 
-				_writeManifest(bundle, contextName, lpkgURL, jarOutputStream);
+				_writeManifest(
+					bundle, contextName, version, lpkgURL, jarOutputStream);
 
 				_writeClasses(
 					jarOutputStream, WARBundleWrapperBundleActivator.class,
@@ -299,7 +304,7 @@ public class LPKGBundleTrackerCustomizer
 	}
 
 	private void _writeManifest(
-			Bundle bundle, String contextName, String lpkgURL,
+			Bundle bundle, String contextName, String version, String lpkgURL,
 			JarOutputStream jarOutputStream)
 		throws IOException {
 
@@ -315,9 +320,7 @@ public class LPKGBundleTrackerCustomizer
 			Constants.BUNDLE_SYMBOLICNAME,
 			bundle.getSymbolicName() + "-" + contextName + "-wrapper");
 
-		Version version = bundle.getVersion();
-
-		attributes.putValue(Constants.BUNDLE_VERSION, version.toString());
+		attributes.putValue(Constants.BUNDLE_VERSION, version);
 		attributes.putValue(
 			Constants.IMPORT_PACKAGE,
 			_buildImportPackageString(

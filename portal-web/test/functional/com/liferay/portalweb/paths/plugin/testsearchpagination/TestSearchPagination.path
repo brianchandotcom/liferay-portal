@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>TestSearchPagination</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">TestSearchPagination</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>SEARCH_RESULTS</td>
+	<td>//small[@class='search-results']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

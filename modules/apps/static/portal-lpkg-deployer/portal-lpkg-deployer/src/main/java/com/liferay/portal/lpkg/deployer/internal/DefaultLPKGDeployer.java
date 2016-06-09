@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lpkg.deployer.internal;
 
+import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -59,7 +60,10 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
+import org.osgi.framework.FrameworkEvent;
+import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.startlevel.BundleStartLevel;
+import org.osgi.framework.wiring.FrameworkWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -97,7 +101,9 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 						_deploymentDirPath);
 		}
 
-		for (Bundle bundle : _lpkgVerifier.verify(lpkgFile)) {
+		List<Bundle> oldBundles = _lpkgVerifier.verify(lpkgFile);
+
+		for (Bundle bundle : oldBundles) {
 			try {
 				bundle.uninstall();
 
@@ -149,10 +155,14 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 				_lpkgIndexValidator.updateIntegrityProperties();
 			}
 
+			if (!oldBundles.isEmpty()) {
+				_refreshRemovalPendingBundles(bundleContext, lpkgBundle);
+			}
+
 			return bundles;
 		}
-		catch (BundleException be) {
-			throw new IOException(be);
+		catch (Exception e) {
+			throw new IOException(e);
 		}
 	}
 
@@ -298,6 +308,58 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 		}
 		finally {
 			LPKGIndexValidatorThreadLocal.setEnabled(enabled);
+		}
+	}
+
+	private void _refreshRemovalPendingBundles(
+			BundleContext bundleContext, Bundle bundle)
+		throws Exception {
+
+		Bundle systemBundle = bundleContext.getBundle(0);
+
+		FrameworkWiring frameworkWiring = systemBundle.adapt(
+			FrameworkWiring.class);
+
+		final DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Starting removal pending bundles freshing for the upgrade " +
+					"of " + bundle);
+		}
+
+		frameworkWiring.refreshBundles(
+			null,
+			new FrameworkListener() {
+
+				@Override
+				public void frameworkEvent(FrameworkEvent frameworkEvent) {
+					if (frameworkEvent.getType() == FrameworkEvent.ERROR) {
+						defaultNoticeableFuture.setException(
+							frameworkEvent.getThrowable());
+					}
+					else {
+						defaultNoticeableFuture.set(frameworkEvent);
+					}
+				}
+
+			});
+
+		FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
+
+		if (frameworkEvent.getType() == FrameworkEvent.PACKAGES_REFRESHED) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Removal pending bundles refreshed for the upgrade of " +
+						bundle);
+			}
+		}
+		else {
+			throw new Exception(
+				"Unexpected FrameworkEvent from removal pending bundles " +
+					"refreshing " + frameworkEvent + " for the upgrade of " +
+						bundle);
 		}
 	}
 

@@ -81,10 +81,18 @@ public class WikiSocialActivityHelper {
 			JSONObject extraDataJSONObject, ResourceBundle resourceBundle)
 		throws PortalException {
 
-		double version = extraDataJSONObject.getDouble("version");
+		double version = extraDataJSONObject.getDouble("version", 0);
 
-		WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(
-			page.getNodeId(), page.getTitle(), version);
+		WikiPage socialActivityWikiPage = null;
+
+		if (version == 0) {
+			socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(
+				page.getNodeId(), page.getTitle());
+		}
+		else {
+			socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(
+				page.getNodeId(), page.getTitle(), version);
+		}
 
 		User socialActivityUser = UserLocalServiceUtil.fetchUser(
 			socialActivity.getUserId());
@@ -151,7 +159,14 @@ public class WikiSocialActivityHelper {
 				 (type == WikiActivityKeys.ADD_PAGE) ||
 				 (type == WikiActivityKeys.UPDATE_PAGE)) {
 
-			String pageURL = getPageURL(socialActivityWikiPage, version);
+			String pageURL = null;
+
+			if (version == 0) {
+				pageURL = getPageURL(socialActivityWikiPage);
+			}
+			else {
+				pageURL = getPageURL(socialActivityWikiPage, version);
+			}
 
 			if (type == SocialActivityConstants.TYPE_MOVE_TO_TRASH) {
 				return LanguageUtil.format(

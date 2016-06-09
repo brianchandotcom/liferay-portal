@@ -220,6 +220,20 @@ public class DDMFormTemplateContextFactoryImpl
 			"/dynamic-data-mapping-form-evaluator/");
 	}
 
+	protected Map<String, List<Object>> getDDMFormFieldsTemplateContextMap(
+			DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext)
+		throws DDMFormRenderingException {
+
+		DDMFormRendererHelper ddmFormRendererHelper = new DDMFormRendererHelper(
+			ddmForm, ddmFormRenderingContext);
+
+		ddmFormRendererHelper.setDDMFormFieldTypeServicesTracker(
+			_ddmFormFieldTypeServicesTracker);
+		ddmFormRendererHelper.setDDMFormEvaluator(_ddmFormEvaluator);
+
+		return ddmFormRendererHelper.getDDMFormFieldsTemplateContextMap();
+	}
+
 	protected Map<String, String> getLanguageStringsMap(
 		ResourceBundle resourceBundle) {
 
@@ -237,12 +251,13 @@ public class DDMFormTemplateContextFactoryImpl
 			DDMFormRenderingContext ddmFormRenderingContext)
 		throws DDMFormRenderingException {
 
-		Map<String, String> renderedDDMFormFieldsMap =
-			getRenderedDDMFormFieldsMap(ddmForm, ddmFormRenderingContext);
+		Map<String, List<Object>> ddmFormFieldsTemplateContextMap =
+			getDDMFormFieldsTemplateContextMap(
+				ddmForm, ddmFormRenderingContext);
 
 		DDMFormLayoutTransformer ddmFormLayoutTransformer =
 			new DDMFormLayoutTransformer(
-				ddmForm, ddmFormLayout, renderedDDMFormFieldsMap,
+				ddmForm, ddmFormLayout, ddmFormFieldsTemplateContextMap,
 				ddmFormRenderingContext.isShowRequiredFieldsWarning(),
 				ddmFormRenderingContext.getLocale());
 
@@ -261,20 +276,6 @@ public class DDMFormTemplateContextFactoryImpl
 		}
 
 		return jsonArray;
-	}
-
-	protected Map<String, String> getRenderedDDMFormFieldsMap(
-			DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext)
-		throws DDMFormRenderingException {
-
-		DDMFormRendererHelper ddmFormRendererHelper = new DDMFormRendererHelper(
-			ddmForm, ddmFormRenderingContext);
-
-		ddmFormRendererHelper.setDDMFormFieldTypeServicesTracker(
-			_ddmFormFieldTypeServicesTracker);
-		ddmFormRendererHelper.setDDMFormEvaluator(_ddmFormEvaluator);
-
-		return ddmFormRendererHelper.getRenderedDDMFormFieldsMap();
 	}
 
 	protected String getRequiredFieldsWarningMessageHTML(

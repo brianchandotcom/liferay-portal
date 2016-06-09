@@ -35,7 +35,7 @@ public class DDMFormLayoutTransformer {
 
 	public DDMFormLayoutTransformer(
 		DDMForm ddmForm, DDMFormLayout ddmFormLayout,
-		Map<String, String> renderedDDMFormFieldsMap,
+		Map<String, List<Object>> renderedDDMFormFieldsMap,
 		boolean showRequiredFieldsWarning, Locale locale) {
 
 		_ddmFormLayout = ddmFormLayout;
@@ -86,11 +86,11 @@ public class DDMFormLayoutTransformer {
 		return columns;
 	}
 
-	protected List<String> getFields(List<String> ddmFormFieldNames) {
-		List<String> renderedDDMFormFields = new ArrayList<>();
+	protected List<Object> getFields(List<String> ddmFormFieldNames) {
+		List<Object> renderedDDMFormFields = new ArrayList<>();
 
 		for (String ddmFormFieldName : ddmFormFieldNames) {
-			renderedDDMFormFields.add(
+			renderedDDMFormFields.addAll(
 				_renderedDDMFormFieldsMap.get(ddmFormFieldName));
 		}
 
@@ -174,7 +174,7 @@ public class DDMFormLayoutTransformer {
 	private final Map<String, DDMFormField> _ddmFormFieldsMap;
 	private final DDMFormLayout _ddmFormLayout;
 	private final Locale _locale;
-	private final Map<String, String> _renderedDDMFormFieldsMap;
+	private final Map<String, List<Object>> _renderedDDMFormFieldsMap;
 	private final boolean _showRequiredFieldsWarning;
 
 }

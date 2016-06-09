@@ -436,7 +436,7 @@ public class UpgradeClient {
 	}
 
 	private void _verifyAppServerProperties() throws IOException {
-		String value = _appServerProperties.getProperty("dir");
+		String value = _appServerProperties.getProperty("server.id");
 
 		if ((value == null) || value.isEmpty()) {
 			String response = null;
@@ -519,10 +519,12 @@ public class UpgradeClient {
 				"global.lib.dir", _getRelativeFileName(dir, globalLibDir));
 			_appServerProperties.setProperty(
 				"portal.dir", _getRelativeFileName(dir, portalDir));
+			_appServerProperties.setProperty(
+				"server.id", _appServer.getServerDetectorServerId());
 		}
 		else {
 			_appServer = new AppServer(
-				"tomcat", value,
+				value, _appServerProperties.getProperty("dir"),
 				_appServerProperties.getProperty("extra.lib.dirs"),
 				_appServerProperties.getProperty("global.lib.dir"),
 				_appServerProperties.getProperty("portal.dir"));

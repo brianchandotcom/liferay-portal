@@ -233,10 +233,6 @@
 			<contains>No binary licenses found</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LRQA-25876">
-			<contains></contains>
-			<matches>.*Portal property.*is obsolete.*</matches>
-		</ignore-error>
 		<ignore-error description="WCM-202">
 			<contains>No score point assigners available</contains>
 			<matches></matches>

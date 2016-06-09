@@ -558,7 +558,7 @@
 		<execute macro="Form#save" />
 	</command>
 
-	<command name="EditAllFormFieldsTypesUsedBySystemSettings" priority="5">
+	<command name="EditAllFormFieldsTypesUsedBySystemSettings" priority="4">
 		<description message="This is a use case for LPS-50757." />
 
 		<execute macro="Navigator#openURL" />

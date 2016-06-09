@@ -79,11 +79,9 @@ YUI.add(
 
 		var BrowserSelectors = {
 			getSelectors: function() {
-				var documentElement = DOC.documentElement;
-
 				// The methods in this if block only run once across all instances
 
-				if (!documentElement._yuid) {
+				if (!UA.selectors) {
 					if (UA.ie) {
 						UAX.aol = getVersion(/America Online Browser ([^\s]*);/, userAgent);
 
@@ -238,8 +236,6 @@ YUI.add(
 
 					YUI._VML = vml;
 					YUI._SVG = svg;
-
-					A.stamp(documentElement);
 
 					UA.vml = YUI._VML;
 					UA.svg = YUI._SVG;

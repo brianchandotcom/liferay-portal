@@ -90,6 +90,7 @@ page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
+page import="com.liferay.site.memberships.web.constants.SiteMembershipWebKeys" %><%@
 page import="com.liferay.site.memberships.web.constants.SiteMembershipsPortletKeys" %><%@
 page import="com.liferay.site.memberships.web.display.context.SiteMembershipsDisplayContext" %><%@
 page import="com.liferay.sites.kernel.util.SitesUtil" %><%@

@@ -14,10 +14,11 @@
 
 package com.liferay.sync.upgrade;
 
-import com.liferay.portal.kernel.service.ReleaseLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.sync.upgrade.v1_0_2.UpgradeSchema;
+import com.liferay.sync.upgrade.v1_0_2.UpgradeSyncDLObject;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,17 +38,15 @@ public class SyncServiceUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.sync.service", "1.0.0", "1.0.1",
 			new DummyUpgradeStep());
 		registry.register(
-			"com.liferay.sync.service", "1.0.1", "1.0.2",
-			new UpgradeSchema(_releaseLocalService));
+			"com.liferay.sync.service", "1.0.1", "1.0.2", new UpgradeSchema(),
+			new UpgradeSyncDLObject(_groupLocalService));
 	}
 
 	@Reference(unbind = "-")
-	protected void setReleaseLocalService(
-		ReleaseLocalService releaseLocalService) {
-
-		_releaseLocalService = releaseLocalService;
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
 	}
 
-	private ReleaseLocalService _releaseLocalService;
+	private GroupLocalService _groupLocalService;
 
 }

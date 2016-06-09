@@ -56,7 +56,20 @@ import org.osgi.util.tracker.ServiceTracker;
 public class LPKGDeployerTest {
 
 	@Test
-	public void testDeployedLPKGs() throws Exception {
+	public void testPostUpgradeDeployedLPKGS() throws Exception {
+		if (!Boolean.getBoolean("before.upgrade")) {
+			testDeployedLPKGs();
+		}
+	}
+
+	@Test
+	public void testPreUpgradeDeployedLPKGS() throws Exception {
+		if (Boolean.getBoolean("before.upgrade")) {
+			testDeployedLPKGs();
+		}
+	}
+
+	protected void testDeployedLPKGs() throws Exception {
 		Bundle testBundle = FrameworkUtil.getBundle(LPKGDeployerTest.class);
 
 		BundleContext bundleContext = testBundle.getBundleContext();

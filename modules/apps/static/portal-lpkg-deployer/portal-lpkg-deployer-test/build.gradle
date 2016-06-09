@@ -8,3 +8,7 @@ dependencies {
 test {
 	systemProperty "liferay.home", System.getProperty("liferay.home")
 }
+
+testIntegration {
+	systemProperty "before.upgrade", System.getProperty("before.upgrade")
+}

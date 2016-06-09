@@ -225,10 +225,10 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 		var form = AUI.$(document.<portlet:namespace />fm);
 
 		var emailKBArticleAddedEditor = window.<portlet:namespace />emailKBArticleAdded;
-		var emailKBArticleUpdatedEditor = window.<portlet:namespace />emailKBArticleUpdated;
-		var emailKBArticleSuggestionReceivedEditor = window.<portlet:namespace />emailKBArticleSuggestionReceived;
 		var emailKBArticleSuggestionInProgressEditor = window.<portlet:namespace />emailKBArticleSuggestionInProgress;
+		var emailKBArticleSuggestionReceivedEditor = window.<portlet:namespace />emailKBArticleSuggestionReceived;
 		var emailKBArticleSuggestionResolvedEditor = window.<portlet:namespace />emailKBArticleSuggestionResolved;
+		var emailKBArticleUpdatedEditor = window.<portlet:namespace />emailKBArticleUpdated;
 
 		form.fm('preferences--emailKBArticleAddedBody--').val(emailKBArticleAddedEditor.getHTML());
 		form.fm('preferences--emailKBArticleUpdatedBody--').val(emailKBArticleUpdatedEditor.getHTML());

@@ -387,9 +387,9 @@ mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSite
 
 						if (lang != '<%= defaultLanguageId %>') {
 							for (var i = 0; i < 10; i++) {
-								var defaultImage = form.fm('priorityImage' + i + '_' + '<%= defaultLanguageId %>').val();
-								var defaultName = form.fm('priorityName' + i + '_' + '<%= defaultLanguageId %>').val();
-								var defaultValue = form.fm('priorityValue' + i + '_' + '<%= defaultLanguageId %>').val();
+								var defaultImage = form.fm('priorityImage' + i + '_<%= defaultLanguageId %>').val();
+								var defaultName = form.fm('priorityName' + i + '_<%= defaultLanguageId %>').val();
+								var defaultValue = form.fm('priorityValue' + i + '_<%= defaultLanguageId %>').val();
 
 								var priorityImage = form.fm('priorityImage' + i + '_' + lang).val();
 								var priorityName = form.fm('priorityName' + i + '_' + lang).val();

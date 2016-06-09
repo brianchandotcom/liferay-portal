@@ -92,7 +92,7 @@ $horizontal-spacing: 35px;
 		color: #869CAD;
 		cursor: pointer;
 		font-size: 15px;
-		font-weight: 400;
+		font-weight: normal;
 		line-height: 16px;
 		list-style-type: none;
 		padding: 11px 0;
@@ -145,7 +145,7 @@ $horizontal-spacing: 35px;
 		}
 
 		.has-error .key-value-editor {
-			display: none
+			display: none;
 		}
 
 		.key-value-editor {
@@ -475,7 +475,7 @@ $horizontal-spacing: 35px;
 		.ddl-form-name,
 		.ddl-form-description {
 			border-width: 0;
-			color: white;
+			color: #FFF;
 			margin: 0;
 			padding-left: 0;
 
@@ -498,7 +498,7 @@ $horizontal-spacing: 35px;
 		}
 
 		.ddl-form-description {
-			font-weight: 400;
+			font-weight: normal;
 			padding: 17px 0 0 0;
 
 			p {
@@ -610,7 +610,7 @@ $horizontal-spacing: 35px;
 	.lfr-ddm-form-page-description,
 	.lfr-ddm-form-page-title {
 		color: #728694;
-		font-weight: 400;
+		font-weight: normal;
 		resize: none;
 		word-break: break-all;
 	}

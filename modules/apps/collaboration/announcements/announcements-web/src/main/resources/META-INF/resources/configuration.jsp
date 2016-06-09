@@ -260,7 +260,7 @@ if (!roles.isEmpty()) {
 
 			displayTitle.append('<span class="modified-notice"> (<liferay-ui:message key="modified" />) </span>');
 		}
-	}
+	};
 
 	var customizeAnnouncementsDisplayedCheckbox = form.one('#<portlet:namespace />customizeAnnouncementsDisplayed');
 

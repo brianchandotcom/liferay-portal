@@ -98,8 +98,8 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
 			// File is not a text file
 
-			if (_logger.isInfoEnabled()) {
-				_logger.info(file + " is not a text file", ioe);
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(file + " is not a text file", ioe);
 			}
 
 			HashValue hashValue = HashUtil.sha1(file);

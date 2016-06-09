@@ -6911,7 +6911,16 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 				<isset property="skip.rebuild-database" />
 			</not>
 			<then>
-				<antcall target="delete-liferay-home" />
+				<get-testcase-property property.name="portal.version" />
+
+				<if>
+					<not>
+						<isset property="portal.version" />
+					</not>
+					<then>
+						<antcall target="delete-liferay-home" />
+					</then>
+				</if>
 
 				<if>
 					<equals arg1="${database.type}" arg2="db2" />

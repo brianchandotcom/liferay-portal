@@ -29,6 +29,7 @@ public class SocialActivityDefinitionNameComparator
 
 	public SocialActivityDefinitionNameComparator(Locale locale) {
 		_locale = locale;
+		_collator = Collator.getInstance(_locale);
 	}
 
 	@Override
@@ -36,14 +37,13 @@ public class SocialActivityDefinitionNameComparator
 		SocialActivityDefinition activityDefinition1,
 		SocialActivityDefinition activityDefinition2) {
 
-		Collator collator = Collator.getInstance(_locale);
-
 		String name1 = activityDefinition1.getName(_locale);
 		String name2 = activityDefinition2.getName(_locale);
 
-		return collator.compare(name1, name2);
+		return _collator.compare(name1, name2);
 	}
 
+	private final Collator _collator;
 	private final Locale _locale;
 
 }

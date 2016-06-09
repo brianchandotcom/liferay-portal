@@ -32,6 +32,7 @@ public class PortletCategoryComparator
 
 	public PortletCategoryComparator(Locale locale) {
 		_locale = locale;
+		_collator = Collator.getInstance(_locale);
 	}
 
 	@Override
@@ -50,14 +51,13 @@ public class PortletCategoryComparator
 			return 1;
 		}
 
-		Collator collator = Collator.getInstance(_locale);
-
 		name1 = LanguageUtil.get(_locale, name1);
 		name2 = LanguageUtil.get(_locale, name2);
 
-		return collator.compare(name1, name2);
+		return _collator.compare(name1, name2);
 	}
 
+	private final Collator _collator;
 	private final Locale _locale;
 
 }

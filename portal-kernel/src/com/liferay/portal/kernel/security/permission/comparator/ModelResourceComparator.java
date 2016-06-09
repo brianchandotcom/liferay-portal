@@ -31,18 +31,18 @@ public class ModelResourceComparator
 
 	public ModelResourceComparator(Locale locale) {
 		_locale = locale;
+		_collator = Collator.getInstance(_locale);
 	}
 
 	@Override
 	public int compare(String resource1, String resource2) {
-		Collator collator = Collator.getInstance(_locale);
-
 		resource1 = ResourceActionsUtil.getModelResource(_locale, resource1);
 		resource2 = ResourceActionsUtil.getModelResource(_locale, resource2);
 
-		return collator.compare(resource1, resource2);
+		return _collator.compare(resource1, resource2);
 	}
 
+	private final Collator _collator;
 	private final Locale _locale;
 
 }

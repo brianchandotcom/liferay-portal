@@ -31,20 +31,20 @@ public class TemplateHandlerComparator
 
 	public TemplateHandlerComparator(Locale locale) {
 		_locale = locale;
+		_collator = Collator.getInstance(_locale);
 	}
 
 	@Override
 	public int compare(
 		TemplateHandler templateHandler1, TemplateHandler templateHandler2) {
 
-		Collator collator = Collator.getInstance(_locale);
-
 		String templateHandlerName1 = templateHandler1.getName(_locale);
 		String templateHandlerName2 = templateHandler2.getName(_locale);
 
-		return collator.compare(templateHandlerName1, templateHandlerName2);
+		return _collator.compare(templateHandlerName1, templateHandlerName2);
 	}
 
+	private final Collator _collator;
 	private final Locale _locale;
 
 }

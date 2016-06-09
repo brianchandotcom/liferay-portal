@@ -43,6 +43,7 @@ public class WorkflowDefinitionActiveComparator
 
 		_ascending = ascending;
 		_locale = locale;
+		_collator = Collator.getInstance(_locale);
 	}
 
 	@Override
@@ -50,12 +51,10 @@ public class WorkflowDefinitionActiveComparator
 		WorkflowDefinition workflowDefinition1,
 		WorkflowDefinition workflowDefinition2) {
 
-		Collator collator = Collator.getInstance(_locale);
-
 		String activeLabel1 = getActiveLabel(workflowDefinition1.isActive());
 		String activeLabel2 = getActiveLabel(workflowDefinition2.isActive());
 
-		int value = collator.compare(activeLabel1, activeLabel2);
+		int value = _collator.compare(activeLabel1, activeLabel2);
 
 		if (_ascending) {
 			return value;
@@ -94,6 +93,7 @@ public class WorkflowDefinitionActiveComparator
 	}
 
 	private final boolean _ascending;
+	private final Collator _collator;
 	private final Locale _locale;
 
 }

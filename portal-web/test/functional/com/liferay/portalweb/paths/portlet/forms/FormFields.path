@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_ADD_SPECIFIC</td>
+	<td>//div[contains(@class,'form-field-container')][${key_repeatableFieldNumber}]//div[contains(@data-fieldname,'${key_fieldName}')]/../div[contains(@class,'form-field-repeatable-toolbar')]//a[contains(@class,'add-button')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_REMOVE</td>
 	<td>//div[contains(@class,'form-field-repeatable-toolbar')]//a[contains(@class,'delete-button') and not(contains(@class,'hide'))]</td>
 	<td></td>
@@ -46,11 +51,6 @@
 <tr>
 	<td>FIELD_NAME_EDIT_DONE</td>
 	<td>//div[contains(@class,'key-value-editor')]/a[contains(@class,'done')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SPECIFIC_FIELD_ADD</td>
-	<td>//div[contains(@class,'form-field-container')][${key_repeatableFieldNumber}]//div[contains(@data-fieldname,'${key_fieldName}')]/../div[contains(@class,'form-field-repeatable-toolbar')]//a[contains(@class,'add-button')]</td>
 	<td></td>
 </tr>
 <tr>

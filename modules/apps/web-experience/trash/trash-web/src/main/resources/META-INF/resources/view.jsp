@@ -275,8 +275,8 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 						</c:when>
 						<c:when test="<%= trashDisplayContext.isListView() %>">
 							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
 								name="name"
-								truncate="<%= true %>"
 							>
 								<c:choose>
 									<c:when test="<%= !trashHandler.isContainerModel() %>">

@@ -51,7 +51,7 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 		if (getParentKBFolderId() ==
 				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			return "(" + LanguageUtil.get(locale, "none") + ")";
+			return LanguageUtil.get(locale, "home");
 		}
 
 		KBFolder kbFolder = KBFolderServiceUtil.getKBFolder(

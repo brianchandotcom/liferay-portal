@@ -40,7 +40,7 @@
 			KBArticle
 		WHERE
 			(KBArticle.groupId = ?) AND
-			(KBArticle.kbFolderId = ?) AND
+			(KBArticle.parentResourcePrimKey = ?) AND
 			(KBArticle.main = ?) AND
 			([$STATUS$])
 	</sql>
@@ -60,7 +60,7 @@
 			KBArticle
 		WHERE
 			(KBArticle.groupId = ?) AND
-			(KBArticle.kbFolderId = ?) AND
+			(KBArticle.parentResourcePrimKey = ?) AND
 			(KBArticle.main = ?) AND
 			([$STATUS$])
 	</sql>

@@ -125,7 +125,7 @@ public class KBArticleImpl extends KBArticleBaseImpl {
 		throws PortalException {
 
 		if (isRoot()) {
-			return "(" + LanguageUtil.get(locale, "none") + ")";
+			return LanguageUtil.get(locale, "home");
 		}
 
 		if (getParentResourceClassNameId() == getClassNameId()) {

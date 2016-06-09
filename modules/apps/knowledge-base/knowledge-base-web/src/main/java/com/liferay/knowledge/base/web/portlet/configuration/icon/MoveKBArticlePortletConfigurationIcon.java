@@ -75,6 +75,12 @@ public class MoveKBArticlePortletConfigurationIcon
 		portletURL.setParameter(
 			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
 		portletURL.setParameter(
+			"parentResourceClassNameId",
+			String.valueOf(kbArticle.getParentResourceClassNameId()));
+		portletURL.setParameter(
+			"parentResourcePrimKey",
+			String.valueOf(kbArticle.getParentResourcePrimKey()));
+		portletURL.setParameter(
 			"status", String.valueOf(
 				portletRequest.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS)));
 

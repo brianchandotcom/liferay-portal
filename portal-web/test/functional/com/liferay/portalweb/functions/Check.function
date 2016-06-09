@@ -13,7 +13,7 @@
 			</then>
 		</if>
 
-		<execute argument1="//div[contains(@class,'collapse on')]//input" selenium="assertChecked" />
+		<execute argument1="xpath=( //div[@class='checkbox']//input[@title='Select All'])[2]" selenium="assertChecked" />
 
 		<execute selenium="assertJavaScriptErrors" />
 

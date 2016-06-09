@@ -54,9 +54,9 @@ portletURL.setParameter("mvcRenderCommandName", "/polls/view");
 				%>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-content"
 					href="<%= rowURL %>"
 					name="title"
-					truncate="<%= true %>"
 					value="<%= HtmlUtil.escape(question.getTitle(locale)) %>"
 				/>
 

@@ -83,10 +83,6 @@
 		margin: 1em;
 	}
 
-	.page-tags {
-		color: #7D7D7D;
-	}
-
 	.portlet-body {
 		h1.page-title .return-to-page {
 			background: url(@theme_image_path@/wiki/return_to_page.png) no-repeat 0 50%;
@@ -208,6 +204,10 @@
 			text-align: right;
 
 			img {
+				margin-left: 5px;
+			}
+
+			& > span {
 				margin-left: 5px;
 			}
 		}

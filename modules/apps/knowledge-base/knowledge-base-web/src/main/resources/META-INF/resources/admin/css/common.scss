@@ -215,8 +215,12 @@
 	}
 
 	.kb-article-tools {
-		float: right;
-		margin: 5px 0 5px;
+		margin-bottom: 15px;
+		text-align: right;
+
+		& > span {
+			margin-left: 5px;
+		}
 	}
 
 	.kb-attachments {
@@ -261,7 +265,7 @@
 		}
 
 		.kb-article-asset-entries {
-			margin: 15px 0 0;
+			margin: 15px 0;
 
 			.kb-info {
 				padding-left: 5px;
@@ -269,7 +273,7 @@
 
 			.kb-most-popular-column {
 				padding: 0 0 0 20px;
-				width: 40%;
+				width: 50%;
 
 				.kb-header {
 					margin: 0 -7px 0 -27px;
@@ -279,7 +283,7 @@
 
 			.kb-most-recent-column {
 				padding: 0 20px;
-				width: 60%;
+				width: 50%;
 
 				.kb-header {
 					margin: 0 0 0 -27px;
@@ -415,10 +419,6 @@
 					font-weight: bold;
 				}
 			}
-		}
-
-		.kb-article-assets {
-			color: #7D7D7D;
 		}
 
 		.kb-article-comments, .kb-template-comments {

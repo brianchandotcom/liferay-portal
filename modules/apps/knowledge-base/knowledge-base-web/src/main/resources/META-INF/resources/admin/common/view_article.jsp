@@ -27,12 +27,13 @@ if (enableKBArticleViewCountIncrement && kbArticle.isApproved()) {
 	AssetEntryServiceUtil.incrementViewCounter(KBArticle.class.getName(), latestKBArticle.getClassPK());
 }
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle(kbArticle.getTitle());
-
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+	renderResponse.setTitle(kbArticle.getTitle());
+}
 %>
 
 <c:if test="<%= portletTitleBasedNavigation %>">
@@ -56,6 +57,10 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 	</c:if>
 
 	<div class="sidenav-content">
+		<c:if test="<%= !portletTitleBasedNavigation %>">
+			<liferay-ui:header title="<%= kbArticle.getTitle() %>" />
+		</c:if>
+
 		<c:if test='<%= enableSocialBookmarks && socialBookmarksDisplayPosition.equals("top") %>'>
 			<liferay-util:include page="/admin/common/article_social_bookmarks.jsp" servletContext="<%= application %>" />
 		</c:if>
@@ -64,18 +69,12 @@ boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getIni
 			<liferay-util:include page="/admin/common/article_tools.jsp" servletContext="<%= application %>" />
 		</div>
 
-		<div class="main-content-card panel">
-			<div class="panel-body text-default">
-				<h1>
-					<%= HtmlUtil.escape(kbArticle.getTitle()) %>
-				</h1>
-
-				<%
-				request.setAttribute("article_icons.jsp-kb_article", kbArticle);
-				%>
-
-				<c:if test="<%= !rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN) %>">
-					<liferay-util:include page="/admin/common/article_icons.jsp" servletContext="<%= application %>" />
+		<div <%= portletTitleBasedNavigation ? "class=\"main-content-card panel\"" : StringPool.BLANK %>>
+			<div class="kb-entity-body <%= portletTitleBasedNavigation ? "panel-body" : StringPool.BLANK %>">
+				<c:if test="<%= portletTitleBasedNavigation %>">
+					<h1>
+						<%= HtmlUtil.escape(kbArticle.getTitle()) %>
+					</h1>
 				</c:if>
 
 				<div id="<portlet:namespace /><%= kbArticle.getResourcePrimKey() %>">

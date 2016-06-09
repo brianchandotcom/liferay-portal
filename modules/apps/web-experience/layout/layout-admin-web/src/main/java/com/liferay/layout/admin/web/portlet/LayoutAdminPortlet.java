@@ -374,11 +374,6 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
 		long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
 
 		if (selPlid <= 0) {
@@ -395,24 +390,9 @@ public class LayoutAdminPortlet extends MVCPortlet {
 
 		Layout deleteLayout = layoutLocalService.getLayout(selPlid);
 
+		String redirect = getRedirect(actionRequest, deleteLayout);
+
 		SitesUtil.deleteLayout(actionRequest, actionResponse);
-
-		if (selPlid == themeDisplay.getRefererPlid()) {
-			long newRefererPlid = getNewPlid(deleteLayout, selPlid);
-
-			Layout redirectLayout = layoutLocalService.fetchLayout(
-				newRefererPlid);
-
-			if (redirectLayout != null) {
-				redirect = PortalUtil.getLayoutFullURL(
-					redirectLayout, themeDisplay);
-			}
-			else {
-				redirect = getEmptyLayoutSetURL(
-					actionRequest, deleteLayout.getGroupId(),
-					deleteLayout.isPrivateLayout());
-			}
-		}
 
 		MultiSessionMessages.add(actionRequest, "layoutDeleted", selPlid);
 
@@ -864,7 +844,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		return new byte[0];
 	}
 
-	protected long getNewPlid(Layout layout, long selPlid) {
+	protected long getNewPlid(Layout layout) {
 		long newPlid = LayoutConstants.DEFAULT_PLID;
 
 		if (layout.getParentLayoutId() !=
@@ -884,7 +864,9 @@ public class LayoutAdminPortlet extends MVCPortlet {
 				layout.getGroupId(), layout.isPrivateLayout(),
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-			if ((firstLayout != null) && (firstLayout.getPlid() != selPlid)) {
+			if ((firstLayout != null) &&
+				(firstLayout.getPlid() != layout.getPlid())) {
+
 				newPlid = firstLayout.getPlid();
 			}
 
@@ -895,7 +877,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 				if ((otherLayoutSetFirstLayout != null) &&
-					(otherLayoutSetFirstLayout.getPlid() != selPlid)) {
+					(otherLayoutSetFirstLayout.getPlid() != layout.getPlid())) {
 
 					newPlid = otherLayoutSetFirstLayout.getPlid();
 				}
@@ -903,6 +885,54 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		}
 
 		return newPlid;
+	}
+
+	protected String getRedirect(ActionRequest actionRequest, Layout layout)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		Layout refererLayout = layoutLocalService.fetchLayout(
+			themeDisplay.getRefererPlid());
+
+		if (refererLayout == null) {
+			return redirect;
+		}
+
+		boolean isAncestorLayout = false;
+
+		if (layout.getPlid() == themeDisplay.getRefererPlid()) {
+			isAncestorLayout = true;
+		}
+		else {
+			for (Layout parentLayout : refererLayout.getAncestors()) {
+				if (parentLayout.getPlid() == layout.getPlid()) {
+					isAncestorLayout = true;
+				}
+			}
+		}
+
+		if (!isAncestorLayout) {
+			return redirect;
+		}
+
+		long newRefererPlid = getNewPlid(layout);
+
+		Layout redirectLayout = layoutLocalService.fetchLayout(newRefererPlid);
+
+		if (redirectLayout != null) {
+			redirect = PortalUtil.getLayoutFullURL(
+				redirectLayout, themeDisplay);
+		}
+		else {
+			redirect = getEmptyLayoutSetURL(
+				actionRequest, layout.getGroupId(), layout.isPrivateLayout());
+		}
+
+		return redirect;
 	}
 
 	protected void inheritMobileRuleGroups(

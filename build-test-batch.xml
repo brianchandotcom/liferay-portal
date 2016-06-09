@@ -802,6 +802,9 @@ app.server.type=@{app.server.type}]]></echo>
 							<antcall inheritall="false" target="stop-app-server" />
 
 							<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="test">
+								<arg value="test" />
+								<arg value="--tests" />
+								<arg value="*.LPKGUpgradeTest" />
 								<arg value="-Dliferay.home=${liferay.home}" />
 								<arg value="-Dmodules.only.build=true" />
 							</gradle-execute>
@@ -811,6 +814,13 @@ app.server.type=@{app.server.type}]]></echo>
 									<antcall inheritall="false" target="start-app-server-preserve-liferay-home" />
 
 									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
+										<arg value="-Dmodules.only.build=true" />
+									</gradle-execute>
+
+									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="test">
+										<arg value="test" />
+										<arg value="--tests" />
+										<arg value="*.LPKGUpgradeLogAssertorTest" />
 										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
 

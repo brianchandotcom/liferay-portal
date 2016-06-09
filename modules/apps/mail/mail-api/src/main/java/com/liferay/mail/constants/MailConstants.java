@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mail.util;
+package com.liferay.mail.constants;
 
 /**
  * @author Scott Lee

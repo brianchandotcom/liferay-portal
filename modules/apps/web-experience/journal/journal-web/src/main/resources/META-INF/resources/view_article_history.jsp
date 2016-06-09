@@ -199,8 +199,8 @@ JournalArticle article = journalDisplayContext.getArticle();
 							/>
 
 							<liferay-ui:search-container-column-text
+								cssClass="table-cell-content"
 								name="title"
-								truncate="<%= true %>"
 								value="<%= HtmlUtil.escape(articleVersion.getTitle(locale)) %>"
 							/>
 

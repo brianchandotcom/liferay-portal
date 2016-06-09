@@ -19,6 +19,8 @@ package com.liferay.site.memberships.web.constants;
  */
 public class SiteMembershipWebKeys {
 
+	public static final String ORGANIZATIONS = "ORGANIZATIONS";
+
 	public static final String USERS = "USERS";
 
 }

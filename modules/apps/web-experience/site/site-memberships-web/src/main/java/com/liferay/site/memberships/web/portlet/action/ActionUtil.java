@@ -14,7 +14,9 @@
 
 package com.liferay.site.memberships.web.portlet.action;
 
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -27,6 +29,23 @@ import javax.portlet.ResourceRequest;
  * @author Eudaldo Alonso
  */
 public class ActionUtil {
+
+	public static List<Organization> getOrganizations(ResourceRequest request)
+		throws Exception {
+
+		long[] organizationIds = ParamUtil.getLongValues(request, "rowIds");
+
+		List<Organization> organizations = new ArrayList<>();
+
+		for (long organizationId : organizationIds) {
+			Organization organization =
+				OrganizationLocalServiceUtil.getOrganization(organizationId);
+
+			organizations.add(organization);
+		}
+
+		return organizations;
+	}
 
 	public static List<User> getUsers(ResourceRequest request)
 		throws Exception {

@@ -29,6 +29,15 @@ public interface SitemapURLProvider {
 
 	public String getClassName();
 
+	public void visitLayout(
+			Element element, LayoutSet layoutSet, String layoutUuid,
+			ThemeDisplay themeDisplay)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void visitLayoutSet(
 			Element element, LayoutSet layoutSet, ThemeDisplay themeDisplay)
 		throws PortalException;

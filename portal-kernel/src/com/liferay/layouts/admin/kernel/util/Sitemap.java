@@ -14,6 +14,7 @@
 
 package com.liferay.layouts.admin.kernel.util;
 
+import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -27,6 +28,7 @@ import java.util.Map;
 /**
  * @author Raymond Augé
  */
+@ProviderType
 public interface Sitemap {
 
 	public void addURLElement(
@@ -42,6 +44,11 @@ public interface Sitemap {
 
 	public String getSitemap(
 			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
+		throws PortalException;
+
+	public String getSitemap(
+			long groupId, String layoutUuid, boolean privateLayout,
+			ThemeDisplay themeDisplay)
 		throws PortalException;
 
 }

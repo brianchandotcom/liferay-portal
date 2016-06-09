@@ -60,6 +60,8 @@ public class SitemapAction extends Action {
 				WebKeys.THEME_DISPLAY);
 
 			long groupId = ParamUtil.getLong(request, "groupId");
+			String layoutUuid = ParamUtil.getString(
+				request, "layoutUuid", null);
 			boolean privateLayout = ParamUtil.getBoolean(
 				request, "privateLayout");
 
@@ -107,7 +109,7 @@ public class SitemapAction extends Action {
 			}
 
 			String sitemap = SitemapUtil.getSitemap(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+				layoutSet.getGroupId(), layoutUuid, layoutSet.isPrivateLayout(),
 				themeDisplay);
 
 			ServletResponseUtil.sendFile(

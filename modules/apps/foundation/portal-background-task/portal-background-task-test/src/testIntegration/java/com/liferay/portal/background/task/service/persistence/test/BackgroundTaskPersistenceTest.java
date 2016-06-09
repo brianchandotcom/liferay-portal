@@ -208,6 +208,13 @@ public class BackgroundTaskPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCompleted() throws Exception {
+		_persistence.countByCompleted(RandomTestUtil.randomBoolean());
+
+		_persistence.countByCompleted(RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByStatus() throws Exception {
 		_persistence.countByStatus(RandomTestUtil.nextInt());
 

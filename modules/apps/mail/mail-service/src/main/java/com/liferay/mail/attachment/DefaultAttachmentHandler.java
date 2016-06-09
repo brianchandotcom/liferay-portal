@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mail.util;
+package com.liferay.mail.attachment;
 
 import java.io.InputStream;
 

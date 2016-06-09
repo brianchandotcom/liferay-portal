@@ -5,6 +5,5 @@ Export-Package:\
 	com.liferay.chat.exception,\
 	com.liferay.chat.model,\
 	com.liferay.chat.service,\
-	com.liferay.chat.service.messaging,\
 	com.liferay.chat.service.persistence,\
 	com.liferay.chat.util.comparator

@@ -8515,13 +8515,47 @@ jdbc.default.password=${database.password}</echo>
 			</then>
 		</if>
 
-		<java
-			dir="${liferay.home}/tools/portal-tools-db-upgrade-client"
-			failonerror="true"
-			fork="true"
-			jar="${liferay.home}/tools/portal-tools-db-upgrade-client/com.liferay.portal.tools.db.upgrade.client.jar"
-			timeout="900000"
-		/>
+		<trycatch property="upgrade.error">
+			<try>
+				<java
+					dir="${liferay.home}/tools/portal-tools-db-upgrade-client"
+					failonerror="true"
+					fork="true"
+					jar="${liferay.home}/tools/portal-tools-db-upgrade-client/com.liferay.portal.tools.db.upgrade.client.jar"
+					timeout="900000"
+				/>
+			</try>
+			<catch>
+				<execute>
+					jps > jps_output
+				</execute>
+
+				<var name="jps.output" unset="true" />
+
+				<loadfile property="jps.output" srcfile="jps_output" />
+
+				<if>
+					<contains string="${jps.output}" substring="DBUpgrader" />
+					<then>
+						<propertyregex
+							input="${jps.output}"
+							override="true"
+							property="db.upgrader.pid"
+							regexp="(|[\S\s]*\n)([0-9]+) DBUpgrader[\S\s]*"
+							replace="\2"
+						/>
+
+						<execute>
+							jstack ${db.upgrader.pid}
+						</execute>
+					</then>
+				</if>
+
+				<delete file="jps_output" />
+
+				<fail message="${upgrade.error}" />
+			</catch>
+		</trycatch>
 
 		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexStatusManagerConfiguration.cfg">indexReadOnly=false</echo>
 	</target>

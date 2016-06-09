@@ -30,18 +30,18 @@ public class ActionComparator implements Comparator<String>, Serializable {
 
 	public ActionComparator(Locale locale) {
 		_locale = locale;
+		_collator = Collator.getInstance(_locale);
 	}
 
 	@Override
 	public int compare(String action1, String action2) {
-		Collator collator = Collator.getInstance(_locale);
-
 		action1 = ResourceActionsUtil.getAction(_locale, action1);
 		action2 = ResourceActionsUtil.getAction(_locale, action2);
 
-		return collator.compare(action1, action2);
+		return _collator.compare(action1, action2);
 	}
 
+	private final Collator _collator;
 	private final Locale _locale;
 
 }

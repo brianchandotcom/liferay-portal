@@ -39,22 +39,22 @@ public class PluginComparator implements Comparator, Serializable {
 
 	public PluginComparator() {
 		_locale = LocaleUtil.getDefault();
+		_collator = Collator.getInstance(_locale);
 		_servletContext = ServletContextPool.get(PortalUtil.getPathContext());
 	}
 
 	public PluginComparator(ServletContext servletContext, Locale locale) {
 		_servletContext = servletContext;
 		_locale = locale;
+		_collator = Collator.getInstance(_locale);
 	}
 
 	@Override
 	public int compare(Object plugin1, Object plugin2) {
-		Collator collator = Collator.getInstance(_locale);
-
 		String name1 = _getName(plugin1);
 		String name2 = _getName(plugin2);
 
-		return collator.compare(name1, name2);
+		return _collator.compare(name1, name2);
 	}
 
 	private String _getName(Object plugin) {
@@ -80,6 +80,7 @@ public class PluginComparator implements Comparator, Serializable {
 		return StringUtil.toLowerCase(name);
 	}
 
+	private final Collator _collator;
 	private final Locale _locale;
 	private final ServletContext _servletContext;
 

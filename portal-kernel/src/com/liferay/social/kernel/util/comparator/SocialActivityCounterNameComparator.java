@@ -28,22 +28,22 @@ public class SocialActivityCounterNameComparator implements Comparator<String> {
 
 	public SocialActivityCounterNameComparator(Locale locale) {
 		_locale = locale;
+		_collator = Collator.getInstance(_locale);
 	}
 
 	@Override
 	public int compare(
 		String activityCounterName1, String activityCounterName2) {
 
-		Collator collator = Collator.getInstance(_locale);
-
 		String name1 = LanguageUtil.get(
 			_locale, "social.counter." + activityCounterName1);
 		String name2 = LanguageUtil.get(
 			_locale, "social.counter." + activityCounterName2);
 
-		return collator.compare(name1, name2);
+		return _collator.compare(name1, name2);
 	}
 
+	private final Collator _collator;
 	private final Locale _locale;
 
 }

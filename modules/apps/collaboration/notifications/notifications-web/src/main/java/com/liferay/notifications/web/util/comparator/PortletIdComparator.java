@@ -28,18 +28,18 @@ public class PortletIdComparator implements Comparator<String> {
 
 	public PortletIdComparator(Locale locale) {
 		_locale = locale;
+		_collator = Collator.getInstance(_locale);
 	}
 
 	@Override
 	public int compare(String portletId1, String portletId2) {
-		Collator collator = Collator.getInstance(_locale);
-
 		String portletTitle1 = PortalUtil.getPortletTitle(portletId1, _locale);
 		String portletTitle2 = PortalUtil.getPortletTitle(portletId2, _locale);
 
-		return collator.compare(portletTitle1, portletTitle2);
+		return _collator.compare(portletTitle1, portletTitle2);
 	}
 
+	private final Collator _collator;
 	private final Locale _locale;
 
 }

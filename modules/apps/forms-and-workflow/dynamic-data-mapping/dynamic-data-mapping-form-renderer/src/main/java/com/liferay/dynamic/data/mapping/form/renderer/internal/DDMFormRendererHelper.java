@@ -24,13 +24,11 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -58,7 +56,11 @@ public class DDMFormRendererHelper {
 			ddmFormRenderingContext.getDDMFormValues();
 
 		if (ddmFormValues == null) {
-			_ddmFormValues = createDefaultDDMFormValues();
+			DefaultDDMFormValuesFactory defaultDDMFormValuesFactory =
+				new DefaultDDMFormValuesFactory(
+					ddmForm, ddmFormRenderingContext.getLocale());
+
+			_ddmFormValues = defaultDDMFormValuesFactory.create();
 		}
 		else {
 			_ddmFormValues = ddmFormValues;
@@ -148,42 +150,6 @@ public class DDMFormRendererHelper {
 		return ddmFormFieldTemplateContext;
 	}
 
-	protected DDMFormFieldValue createDefaultDDMFormFieldValue(
-		DDMFormField ddmFormField) {
-
-		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
-
-		ddmFormFieldValue.setName(ddmFormField.getName());
-
-		Value value = createDefaultValue(ddmFormField);
-
-		ddmFormFieldValue.setValue(value);
-
-		for (DDMFormField nestedDDMFormField :
-				ddmFormField.getNestedDDMFormFields()) {
-
-			ddmFormFieldValue.addNestedDDMFormFieldValue(
-				createDefaultDDMFormFieldValue(nestedDDMFormField));
-		}
-
-		return ddmFormFieldValue;
-	}
-
-	protected DDMFormValues createDefaultDDMFormValues() {
-		DDMFormValues ddmFormValues = new DDMFormValues(_ddmForm);
-
-		ddmFormValues.setDefaultLocale(_ddmFormRenderingContext.getLocale());
-
-		for (DDMFormField ddmFormField : _ddmForm.getDDMFormFields()) {
-			DDMFormFieldValue ddmFormFieldValue =
-				createDefaultDDMFormFieldValue(ddmFormField);
-
-			ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
-		}
-
-		return ddmFormValues;
-	}
-
 	protected Value createDefaultLocalizedValue(String defaultValueString) {
 		Value value = new LocalizedValue(_ddmFormRenderingContext.getLocale());
 
@@ -191,19 +157,6 @@ public class DDMFormRendererHelper {
 			_ddmFormRenderingContext.getLocale(), defaultValueString);
 
 		return value;
-	}
-
-	protected Value createDefaultValue(DDMFormField ddmFormField) {
-		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
-
-		String defaultValueString = GetterUtil.getString(
-			predefinedValue.getString(_ddmFormRenderingContext.getLocale()));
-
-		if (ddmFormField.isLocalizable()) {
-			return createDefaultLocalizedValue(defaultValueString);
-		}
-
-		return new UnlocalizedValue(defaultValueString);
 	}
 
 	protected Map<String, DDMFormFieldEvaluationResult>

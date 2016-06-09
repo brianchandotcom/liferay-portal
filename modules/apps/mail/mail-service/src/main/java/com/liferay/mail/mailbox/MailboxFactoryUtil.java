@@ -14,6 +14,7 @@
 
 package com.liferay.mail.mailbox;
 
+import com.liferay.mail.constants.MailPortletKeys;
 import com.liferay.mail.model.Account;
 import com.liferay.mail.service.AccountLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,10 +25,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Scott Lee
  */
+@Component(
+	immediate = true, property = {"javax.portlet.name=" + MailPortletKeys.MAIL},
+	service = MailboxFactoryUtil.class
+)
 public class MailboxFactoryUtil {
 
 	public static Mailbox getMailbox(
@@ -78,6 +87,22 @@ public class MailboxFactoryUtil {
 		Map<String, MailboxFactory> mailboxFactories) {
 
 		_mailboxFactories = mailboxFactories;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMailboxFactory(MailboxFactory mailboxFactory) {
+		_addMailboxFactory(
+			mailboxFactory.getMailboxFactoryName(), mailboxFactory);
+	}
+
+	private void _addMailboxFactory(
+		String mailboxFactoryName, MailboxFactory mailboxFactory) {
+
+		if (_mailboxFactories == null) {
+			_mailboxFactories = new ConcurrentHashMap<>();
+		}
+
+		_mailboxFactories.put(mailboxFactoryName, mailboxFactory);
 	}
 
 	private static Map<String, MailboxFactory> _mailboxFactories;

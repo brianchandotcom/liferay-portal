@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>TITLE</td>
-	<td>//h3[@class='header-title']/span</td>
+	<td>//div[contains(@class,'panel-body')]/h1</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT</td>
-	<td>//div[@class='kb-article-body']</td>
+	<td>//div[contains(@class,'panel-body')]//p</td>
 	<td></td>
 </tr>
 <tr>

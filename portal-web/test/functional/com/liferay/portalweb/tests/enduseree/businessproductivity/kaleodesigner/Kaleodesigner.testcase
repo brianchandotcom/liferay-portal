@@ -1,6 +1,5 @@
 <definition component-name="portal-business-productivity-ee">
 	<property name="portal.release" value="true" />
-	<property name="portlet.plugins.includes" value="kaleo-designer-portlet,kaleo-forms-portlet" />
 	<property name="testray.main.component.name" value="Kaleo Designer" />
 
 	<set-up>

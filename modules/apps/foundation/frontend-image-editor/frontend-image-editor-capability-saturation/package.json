@@ -1,6 +1,11 @@
 {
 	"devDependencies": {
-		"metal-components": "1.0.0-rc.19"
+		"gulp": "3.9.1",
+		"gulp-metal": "1.5.3",
+		"metal-components": "1.0.0-rc.19",
+		"metal-karma-config": "2.1.0",
+		"resemblejs": "2.2.1",
+		"simulate-dom-event": "1.0.3"
 	},
 	"name": "frontend-image-editor-capability-saturation",
 	"version": "1.0.4"

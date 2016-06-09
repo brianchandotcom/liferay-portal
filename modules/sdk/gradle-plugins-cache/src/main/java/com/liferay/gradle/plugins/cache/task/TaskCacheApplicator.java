@@ -16,8 +16,8 @@ package com.liferay.gradle.plugins.cache.task;
 
 import com.liferay.gradle.plugins.cache.CacheExtension;
 import com.liferay.gradle.plugins.cache.util.FileUtil;
+import com.liferay.gradle.plugins.cache.util.StringUtil;
 import com.liferay.gradle.util.GradleUtil;
-import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
@@ -27,6 +27,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 import java.util.Set;
+import java.util.SortedSet;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -214,14 +215,17 @@ public class TaskCacheApplicator {
 
 		StringBuilder sb = new StringBuilder();
 
-		Set<File> testFiles = null;
+		SortedSet<File> testFiles = null;
 
 		try {
-			testFiles = FileUtil.flattenAndSort(
-				taskCache.getTestFiles(), taskCache.getBaseDir());
+			testFiles = FileUtil.flattenAndSort(taskCache.getTestFiles());
 		}
 		catch (IOException ioe) {
 			throw new GradleException("Unable to flatten test files", ioe);
+		}
+
+		if (taskCache.isExcludeIgnoredTestFiles()) {
+			FileUtil.removeIgnoredFiles(taskCache.getProject(), testFiles);
 		}
 
 		for (File testFile : testFiles) {

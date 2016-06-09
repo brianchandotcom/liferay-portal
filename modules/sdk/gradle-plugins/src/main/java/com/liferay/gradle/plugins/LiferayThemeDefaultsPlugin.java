@@ -368,7 +368,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			themeProject.getPath() + ":" + JavaPlugin.CLASSES_TASK_NAME);
 
 		if (taskCache != null) {
-			taskCache.testFile(dir);
+			taskCache.testFile(themeProject.getBuildFile(), dir);
 		}
 	}
 

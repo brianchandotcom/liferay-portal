@@ -8514,13 +8514,6 @@ jdbc.default.password=${database.password}</echo>
 			timeout="900000"
 		/>
 
-		<waitfor maxwait="15" maxwaitunit="minute">
-			<resourcecontains
-				resource="${liferay.home}/tools/portal-tools-db-upgrade-client/upgrade.log"
-				substring="Checking to see if all upgrades have completed... done."
-			/>
-		</waitfor>
-
 		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.configuration.IndexStatusManagerConfiguration.cfg">indexReadOnly=false</echo>
 	</target>
 

@@ -34,6 +34,8 @@ import org.gradle.util.GUtil;
 public class NodeExtension {
 
 	public NodeExtension(final Project project) {
+		_download = GradleUtil.getProperty(project, "nodeDownload", true);
+
 		_nodeDir = new Callable<File>() {
 
 			@Override
@@ -188,7 +190,7 @@ public class NodeExtension {
 		setNpmArgs(Arrays.asList(npmArgs));
 	}
 
-	private boolean _download = true;
+	private boolean _download;
 	private Object _nodeDir;
 	private Object _nodeExeUrl;
 	private Object _nodeUrl;

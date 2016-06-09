@@ -43,7 +43,7 @@ public class ContactsCenterUserNotificationDefinition
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(
 				"website", UserNotificationDeliveryConstants.TYPE_WEBSITE, true,
-				false));
+				true));
 	}
 
 }

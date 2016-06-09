@@ -45,7 +45,7 @@ public class InviteMembersUserNotificationDefinition
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(
 				"website", UserNotificationDeliveryConstants.TYPE_WEBSITE, true,
-				false));
+				true));
 	}
 
 }

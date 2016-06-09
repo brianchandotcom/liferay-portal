@@ -14,11 +14,15 @@
 
 package com.liferay.chat.web.upgrade;
 
-import com.liferay.chat.web.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
+import com.liferay.chat.web.upgrade.v1_0_0.UpgradePortletId;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Fellwock
@@ -28,13 +32,40 @@ public class ChatWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
+		BaseUpgradeWebModuleRelease upgradeWebModuleRelease =
+			new BaseUpgradeWebModuleRelease() {
+
+				@Override
+				protected String getBundleSymbolicName() {
+					return "com.liferay.chat.web";
+				}
+
+				@Override
+				protected String[] getPortletIds() {
+					return new String[] {"1_WAR_chatportlet"};
+				}
+
+			};
+
+		try {
+			upgradeWebModuleRelease.upgrade();
+		}
+		catch (UpgradeException ue) {
+			throw new RuntimeException(ue);
+		}
+
 		registry.register(
-			"com.liferay.directory.web", "0.0.0", "1.0.1",
+			"com.liferay.chat.web", "0.0.0", "1.0.0",
 			new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.directory.web", "0.0.1", "1.0.1",
+			"com.liferay.chat.web", "0.0.1", "1.0.0",
 			new UpgradePortletId());
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

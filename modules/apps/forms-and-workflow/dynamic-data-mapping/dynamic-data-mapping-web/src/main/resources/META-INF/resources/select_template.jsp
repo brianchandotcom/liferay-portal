@@ -101,15 +101,13 @@ templateSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 				modelVar="template"
 			>
 				<liferay-ui:search-container-column-text
-					cssClass="id-column text-column"
 					name="id"
 					value="<%= String.valueOf(template.getTemplateId()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					cssClass="content-column name-column title-column"
+					cssClass="table-cell-content"
 					name="name"
-					truncate="<%= true %>"
 				>
 					<c:choose>
 						<c:when test="<%= template.getTemplateId() != templateId %>">
@@ -134,20 +132,18 @@ templateSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 							</aui:a>
 						</c:when>
 						<c:otherwise>
-							<span class="text-muted"><%= HtmlUtil.escape(template.getName(locale)) %></span>
+							<%= HtmlUtil.escape(template.getName(locale)) %>
 						</c:otherwise>
 					</c:choose>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-jsp
-					cssClass="content-column description-column"
+					cssClass="table-cell-content"
 					name="description"
 					path="/template_description.jsp"
-					truncate="<%= true %>"
 				/>
 
 				<liferay-ui:search-container-column-date
-					cssClass="modified-date-column text-column"
 					name="modified-date"
 					value="<%= template.getModifiedDate() %>"
 				/>

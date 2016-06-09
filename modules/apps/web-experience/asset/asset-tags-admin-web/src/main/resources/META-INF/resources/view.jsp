@@ -137,8 +137,8 @@
 				</c:when>
 				<c:when test='<%= Objects.equals(assetTagsDisplayContext.getDisplayStyle(), "list") %>'>
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
 						name="name"
-						truncate="<%= true %>"
 						value="<%= tag.getName() %>"
 					/>
 

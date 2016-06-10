@@ -190,7 +190,7 @@ public class LPKGDeployerTest {
 						contextName = contextName.substring(0, index);
 					}
 
-					StringBundler sb = new StringBundler(8);
+					StringBundler sb = new StringBundler(10);
 
 					sb.append("webbundle:lpkg://");
 					sb.append(lpkgBundle.getSymbolicName());
@@ -198,7 +198,9 @@ public class LPKGDeployerTest {
 					sb.append(lpkgBundle.getVersion());
 					sb.append(StringPool.SLASH);
 					sb.append(contextName);
-					sb.append(".war?Web-ContextPath=/");
+					sb.append(".war?Bundle-Version=");
+					sb.append(bundle.getVersion());
+					sb.append("&Web-ContextPath=/");
 					sb.append(contextName);
 
 					String location = sb.toString();

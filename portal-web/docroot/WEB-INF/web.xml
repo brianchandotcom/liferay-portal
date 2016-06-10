@@ -24,6 +24,7 @@
 	<filter>
 		<filter-name>Invoker Filter - ERROR</filter-name>
 		<filter-class>com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter</filter-class>
+		<async-supported>true</async-supported>
 		<init-param>
 			<param-name>dispatcher</param-name>
 			<param-value>ERROR</param-value>
@@ -36,6 +37,7 @@
 	<filter>
 		<filter-name>Invoker Filter - FORWARD</filter-name>
 		<filter-class>com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter</filter-class>
+		<async-supported>true</async-supported>
 		<init-param>
 			<param-name>dispatcher</param-name>
 			<param-value>FORWARD</param-value>
@@ -48,6 +50,7 @@
 	<filter>
 		<filter-name>Invoker Filter - INCLUDE</filter-name>
 		<filter-class>com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter</filter-class>
+		<async-supported>true</async-supported>
 		<init-param>
 			<param-name>dispatcher</param-name>
 			<param-value>INCLUDE</param-value>
@@ -60,6 +63,7 @@
 	<filter>
 		<filter-name>Invoker Filter - REQUEST</filter-name>
 		<filter-class>com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter</filter-class>
+		<async-supported>true</async-supported>
 		<init-param>
 			<param-name>dispatcher</param-name>
 			<param-value>REQUEST</param-value>
@@ -190,6 +194,7 @@
 		<servlet-name>Module Framework Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.module.framework.ModuleFrameworkServletAdapter</servlet-class>
 		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
 		<servlet-name>Netvibes Servlet</servlet-name>

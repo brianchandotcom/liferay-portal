@@ -1317,7 +1317,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 	}
 
 	public String getInvokerFilterContent(String dispatcher) {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(24);
 
 		sb.append("<filter>");
 		sb.append("<filter-name>Invoker Filter - ");
@@ -1326,6 +1326,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		sb.append("<filter-class>");
 		sb.append(InvokerFilter.class.getName());
 		sb.append("</filter-class>");
+		sb.append("<async-supported>true</async-supported>");
 		sb.append("<init-param>");
 		sb.append("<param-name>dispatcher</param-name>");
 		sb.append("<param-value>");

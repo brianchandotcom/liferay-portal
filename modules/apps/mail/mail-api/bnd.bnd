@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Mail API
+Bundle-SymbolicName: com.liferay.mail.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.mail.constants,\
+	com.liferay.mail.exception,\
+	com.liferay.mail.model,\
+	com.liferay.mail.service,\
+	com.liferay.mail.service.persistence

@@ -224,6 +224,8 @@ public class TargetPlatformIndexer implements Indexer {
 
 		newContent = prefix.concat(String.valueOf(size)).concat(postfix);
 
+		newContent = newContent.replace("\r\n", "\n");
+
 		return newContent.getBytes("UTF-8");
 	}
 

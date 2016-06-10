@@ -1229,6 +1229,13 @@ public class DLAppHelperLocalServiceImpl
 					fileEntry.getFileEntryId());
 			}
 
+			// Index
+
+			Indexer<DLFileEntry> indexer =
+				IndexerRegistryUtil.nullSafeGetIndexer(DLFileEntry.class);
+
+			indexer.reindex((DLFileEntry)fileEntry.getModel());
+
 			return fileEntry;
 		}
 
@@ -1314,6 +1321,13 @@ public class DLAppHelperLocalServiceImpl
 		SocialActivityManagerUtil.addActivity(
 			userId, fileEntry, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
+
+		// Index
+
+		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			DLFileEntry.class);
+
+		indexer.reindex((DLFileEntry)fileEntry.getModel());
 
 		return fileEntry;
 	}
@@ -1401,6 +1415,13 @@ public class DLAppHelperLocalServiceImpl
 		dlFileEntry.setTitle(trashTitle);
 
 		dlFileEntryPersistence.update(dlFileEntry);
+
+		// Index
+
+		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			DLFileEntry.class);
+
+		indexer.reindex(dlFileEntry);
 
 		if (!DLAppHelperThreadLocal.isEnabled()) {
 			return fileEntry;
@@ -1551,6 +1572,13 @@ public class DLAppHelperLocalServiceImpl
 		SocialActivityManagerUtil.addActivity(
 			userId, folder, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
+
+		// Index
+
+		Indexer<DLFolder> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			DLFolder.class);
+
+		indexer.reindex(dlFolder);
 
 		return new LiferayFolder(dlFolder);
 	}

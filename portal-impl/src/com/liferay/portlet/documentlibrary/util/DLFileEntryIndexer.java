@@ -78,6 +78,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
+import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -406,7 +407,14 @@ public class DLFileEntryIndexer
 			document.addKeyword(Field.HIDDEN, dlFileEntry.isInHiddenFolder());
 			document.addText(
 				Field.PROPERTIES, dlFileEntry.getLuceneProperties());
-			document.addText(Field.TITLE, dlFileEntry.getTitle());
+
+			String title = dlFileEntry.getTitle();
+
+			if (dlFileEntry.isInTrash()) {
+				title = TrashUtil.getOriginalTitle(title);
+			}
+
+			document.addText(Field.TITLE, title);
 			document.addKeyword(
 				Field.TREE_PATH,
 				StringUtil.split(dlFileEntry.getTreePath(), CharPool.SLASH));

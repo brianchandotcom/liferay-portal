@@ -614,6 +614,7 @@ public class JournalFolderLocalServiceImpl
 			folderId, parentFolderId, serviceContext);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalFolder moveFolderToTrash(long userId, long folderId)
 		throws PortalException {

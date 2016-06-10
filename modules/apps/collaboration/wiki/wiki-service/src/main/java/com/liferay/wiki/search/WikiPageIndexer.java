@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.exception.WikiFormatException;
 import com.liferay.wiki.model.WikiNode;
@@ -193,8 +194,6 @@ public class WikiPageIndexer
 	protected Document doGetDocument(WikiPage wikiPage) throws Exception {
 		Document document = getBaseModelDocument(CLASS_NAME, wikiPage);
 
-		document.addUID(CLASS_NAME, wikiPage.getResourcePrimKey());
-
 		try {
 			String content = HtmlUtil.extractText(
 				_wikiEngineRenderer.convert(wikiPage, null, null, null));
@@ -209,7 +208,14 @@ public class WikiPageIndexer
 		}
 
 		document.addKeyword(Field.NODE_ID, wikiPage.getNodeId());
-		document.addText(Field.TITLE, wikiPage.getTitle());
+
+		String title = wikiPage.getTitle();
+
+		if (wikiPage.isInTrash()) {
+			title = TrashUtil.getOriginalTitle(title);
+		}
+
+		document.addText(Field.TITLE, title);
 
 		return document;
 	}

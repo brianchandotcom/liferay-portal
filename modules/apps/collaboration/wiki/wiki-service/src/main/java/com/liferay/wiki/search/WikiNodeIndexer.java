@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
@@ -86,10 +87,15 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 	protected Document doGetDocument(WikiNode wikiNode) throws Exception {
 		Document document = getBaseModelDocument(CLASS_NAME, wikiNode);
 
-		document.addUID(CLASS_NAME, wikiNode.getNodeId());
-
 		document.addText(Field.DESCRIPTION, wikiNode.getDescription());
-		document.addText(Field.TITLE, wikiNode.getName());
+
+		String title = wikiNode.getName();
+
+		if (wikiNode.isInTrash()) {
+			title = TrashUtil.getOriginalTitle(title);
+		}
+
+		document.addText(Field.TITLE, title);
 
 		return document;
 	}

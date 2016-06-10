@@ -257,7 +257,7 @@
 
 									<mirrors-get
 										dest="${baseline.file}"
-										src="${sonatype.release.url}/com/liferay/portal/${baseline.file.name}/${baseline.file.version}/${baseline.file.name}-${baseline.file.version}.jar"
+										src="${baseline.jar.url}/com/liferay/portal/${baseline.file.name}/${baseline.file.version}/${baseline.file.name}-${baseline.file.version}.jar"
 									/>
 								</then>
 							</if>

@@ -298,7 +298,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 				<![CDATA[
 					String dependency = project.getProperty("dependency");
 
-					String[] dependencyInfo = dependencyString.split(":");
+					String[] dependencyInfo = dependency.split(":");
 
 					project.setProperty("dependency.group", dependencyInfo[0]);
 					project.setProperty("dependency.name", dependencyInfo[1]);

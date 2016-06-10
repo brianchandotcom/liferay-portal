@@ -108,7 +108,7 @@ RowChecker rowChecker = new UserTeamChecker(renderResponse, team);
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
-<aui:form cssClass="container-fluid-1280" name="selectUserFm">
+<aui:form cssClass="container-fluid-1280 portlet-site-teams-select-users" name="selectUserFm">
 	<liferay-ui:search-container
 		id="users"
 		rowChecker="<%= rowChecker %>"

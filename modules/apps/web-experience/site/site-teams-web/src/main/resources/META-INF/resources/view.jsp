@@ -142,17 +142,17 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 				</c:when>
 				<c:when test="<%= siteTeamsDisplayContext.isListView() %>">
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
 						href="<%= rowURL %>"
 						name="name"
 						property="name"
-						truncate="<%= true %>"
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
 						href="<%= rowURL %>"
 						name="description"
 						property="description"
-						truncate="<%= true %>"
 					/>
 
 					<liferay-ui:search-container-column-jsp

@@ -158,6 +158,10 @@ public class WabGenerator
 						new ZipEntry(
 							"WEB-INF/liferay-plugin-package.properties"))) {
 
+					if (inputStream == null) {
+						continue;
+					}
+
 					Properties properties = new Properties();
 
 					properties.load(inputStream);

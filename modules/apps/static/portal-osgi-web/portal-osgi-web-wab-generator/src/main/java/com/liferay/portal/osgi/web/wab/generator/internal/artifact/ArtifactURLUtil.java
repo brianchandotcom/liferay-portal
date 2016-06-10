@@ -105,6 +105,10 @@ public class ArtifactURLUtil {
 			InputStream inputStream = zipFile.getInputStream(
 				new ZipEntry("WEB-INF/liferay-plugin-package.properties"))) {
 
+			if (inputStream == null) {
+				return null;
+			}
+
 			Properties properties = new Properties();
 
 			properties.load(inputStream);

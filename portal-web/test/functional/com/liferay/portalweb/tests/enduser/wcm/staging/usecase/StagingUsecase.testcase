@@ -3448,7 +3448,7 @@
 	<command name="StagingRemoteDMViaGlobalScope" priority="3">
 		<property name="app.server.bundles.size" value="1" />
 		<property name="cluster.enabled" value="true" />
-		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}dl.store.impl=com.liferay.portal.store.db.DBStore" />
+		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
 		<property name="test.name.skip.portal.instance" value="StagingUsecase#StagingRemoteDMViaGlobalScope" />
 
 		<execute macro="Navigator#openURL" />

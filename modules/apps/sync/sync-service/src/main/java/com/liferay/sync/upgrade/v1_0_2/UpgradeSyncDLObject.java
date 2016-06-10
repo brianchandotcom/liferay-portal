@@ -15,6 +15,7 @@
 package com.liferay.sync.upgrade.v1_0_2;
 
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.service.DLSyncEventLocalService;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -50,7 +51,11 @@ import java.sql.Timestamp;
  */
 public class UpgradeSyncDLObject extends UpgradeProcess {
 
-	public UpgradeSyncDLObject(GroupLocalService groupLocalService) {
+	public UpgradeSyncDLObject(
+		DLSyncEventLocalService dlSyncEventLocalService,
+		GroupLocalService groupLocalService) {
+
+		_dlSyncEventLocalService = dlSyncEventLocalService;
 		_groupLocalService = groupLocalService;
 	}
 
@@ -103,6 +108,8 @@ public class UpgradeSyncDLObject extends UpgradeProcess {
 				});
 
 			actionableDynamicQuery.performActions();
+
+			_dlSyncEventLocalService.deleteDLSyncEvents();
 		}
 	}
 
@@ -318,6 +325,7 @@ public class UpgradeSyncDLObject extends UpgradeProcess {
 		return db.increment();
 	}
 
+	private final DLSyncEventLocalService _dlSyncEventLocalService;
 	private final GroupLocalService _groupLocalService;
 
 }

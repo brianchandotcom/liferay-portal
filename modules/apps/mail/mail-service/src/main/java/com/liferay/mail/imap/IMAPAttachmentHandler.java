@@ -14,7 +14,7 @@
 
 package com.liferay.mail.imap;
 
-import com.liferay.mail.util.DefaultAttachmentHandler;
+import com.liferay.mail.attachment.DefaultAttachmentHandler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 

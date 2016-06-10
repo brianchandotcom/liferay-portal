@@ -14,11 +14,11 @@
 
 package com.liferay.mail.web.portlet;
 
+import com.liferay.mail.attachment.AttachmentHandler;
 import com.liferay.mail.constants.MailPortletKeys;
 import com.liferay.mail.model.Attachment;
 import com.liferay.mail.service.AttachmentLocalServiceUtil;
-import com.liferay.mail.util.AttachmentHandler;
-import com.liferay.mail.util.MailManager;
+import com.liferay.mail.web.util.MailManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;

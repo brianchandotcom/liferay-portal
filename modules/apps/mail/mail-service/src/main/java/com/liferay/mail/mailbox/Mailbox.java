@@ -14,12 +14,12 @@
 
 package com.liferay.mail.mailbox;
 
+import com.liferay.mail.attachment.AttachmentHandler;
 import com.liferay.mail.model.Account;
 import com.liferay.mail.model.Folder;
 import com.liferay.mail.model.MailFile;
 import com.liferay.mail.model.Message;
 import com.liferay.mail.model.MessagesDisplay;
-import com.liferay.mail.util.AttachmentHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 

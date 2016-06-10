@@ -26,6 +26,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.mail.configuration.MailGroupServiceConfiguration" %><%@
+page import="com.liferay.mail.constants.MailConstants" %><%@
 page import="com.liferay.mail.model.Account" %><%@
 page import="com.liferay.mail.model.Attachment" %><%@
 page import="com.liferay.mail.model.Folder" %><%@
@@ -36,8 +37,7 @@ page import="com.liferay.mail.model.MessagesDisplay" %><%@
 page import="com.liferay.mail.service.AccountLocalServiceUtil" %><%@
 page import="com.liferay.mail.service.FolderLocalServiceUtil" %><%@
 page import="com.liferay.mail.service.MessageLocalServiceUtil" %><%@
-page import="com.liferay.mail.util.MailConstants" %><%@
-page import="com.liferay.mail.util.MailManager" %><%@
+page import="com.liferay.mail.web.util.MailManager" %><%@
 page import="com.liferay.portal.kernel.json.JSONArray" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@

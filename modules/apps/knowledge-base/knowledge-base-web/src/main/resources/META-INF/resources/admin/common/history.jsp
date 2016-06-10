@@ -28,6 +28,15 @@ String orderByCol = ParamUtil.getString(request, "orderByCol", "version");
 String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 
 KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, renderResponse, templatePath);
+
+boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
+
+if (portletTitleBasedNavigation) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle(kbArticle.getTitle());
+}
 %>
 
 <liferay-portlet:renderURL varImpl="compareVersionsURL">
@@ -41,7 +50,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 	<aui:input name="sourceVersion" type="hidden" value="<%= sourceVersion %>" />
 	<aui:input name="targetVersion" type="hidden" value="<%= targetVersion %>" />
 
-	<aui:fieldset>
+	<aui:fieldset cssClass='<%= portletTitleBasedNavigation ? "container-fluid-1280 main-content-card panel" : StringPool.BLANK %>' markupView="lexicon">
 
 		<%
 		RowChecker rowChecker = new RowChecker(renderResponse);
@@ -168,36 +177,34 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 				</c:if>
 			</liferay-ui:search-container-row>
 
-			<div class="float-container kb-entity-header">
-				<div class="kb-title">
-					<liferay-ui:diff-html diffHtmlResults='<%= AdminUtil.getKBArticleDiff(kbArticle.getResourcePrimKey(), sourceVersion, targetVersion, "title") %>' />
-				</div>
+			<h1>
+				<liferay-ui:diff-html diffHtmlResults='<%= AdminUtil.getKBArticleDiff(kbArticle.getResourcePrimKey(), sourceVersion, targetVersion, "title") %>' />
+			</h1>
 
-				<div class="kb-tools">
+			<div class="kb-article-tools">
 
-					<%
-					PortletURL viewKBArticleURL = kbArticleURLHelper.createViewURL(kbArticle);
-					%>
+				<%
+				PortletURL viewKBArticleURL = kbArticleURLHelper.createViewURL(kbArticle);
+				%>
 
-					<liferay-ui:icon
-						iconCssClass="icon-file-alt"
-						label="<%= true %>"
-						message="latest-version"
-						method="get"
-						url="<%= viewKBArticleURL.toString() %>"
-					/>
-				</div>
+				<liferay-ui:icon
+					iconCssClass="icon-file-alt"
+					label="<%= true %>"
+					message="latest-version"
+					method="get"
+					url="<%= viewKBArticleURL.toString() %>"
+				/>
 			</div>
 
-			<div class="kb-entity-body">
+			<div id="<portlet:namespace /><%= kbArticle.getResourcePrimKey() %>">
 				<liferay-ui:diff-html diffHtmlResults='<%= AdminUtil.getKBArticleDiff(kbArticle.getResourcePrimKey(), sourceVersion, targetVersion, "content") %>' />
 			</div>
 
-			<aui:button-row cssClass="kb-bulk-action-button-holder">
+			<aui:button-row>
 				<aui:button type="submit" value="compare-versions" />
 			</aui:button-row>
 
-			<liferay-ui:search-iterator />
+			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:fieldset>
 </aui:form>

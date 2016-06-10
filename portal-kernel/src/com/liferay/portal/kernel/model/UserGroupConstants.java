@@ -34,6 +34,23 @@ public class UserGroupConstants {
 
 	public static final String NAME_RESERVED_WORDS = StringPool.NULL;
 
+	public static final String PARAM_USER_GROUP_GROUP_ROLE =
+		"userGroupGroupRole";
+
+	public static final String PARAM_USER_GROUPS_GROUPS = "userGroupsGroups";
+
+	public static final String PARAM_USER_GROUPS_ROLES = "userGroupsRoles";
+
+	public static final String PARAM_USER_GROUPS_TEAMS = "userGroupsTeams";
+
+	public static final String PARAM_USER_GROUPS_USERS = "userGroupsUsers";
+
+	public static final String[] PARAMS_USER_GROUP_FINDER = {
+		PARAM_USER_GROUP_GROUP_ROLE, PARAM_USER_GROUPS_GROUPS,
+		PARAM_USER_GROUPS_ROLES, PARAM_USER_GROUPS_TEAMS,
+		PARAM_USER_GROUPS_USERS
+	};
+
 	public static String getNameGeneralRestrictions(
 		Locale locale, boolean allowNumeric) {
 

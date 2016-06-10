@@ -88,17 +88,17 @@
 <!--CHILD_PAGE-->
 <tr>
 	<td>CHILD_PAGE_HEADER</td>
-	<td>//div[@class='child-pages']/h5</td>
+	<td>//div[@class='sidenav-content']/h4</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CHILD_PAGE_TITLE</td>
-	<td>//tr[@data-qa-id='row']//a[contains(.,'${key_wikiChildPageTitle}')]</td>
+	<td>//div[@class='list-group-item-content']//a[contains(.,'${key_wikiChildPageTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CHILD_PAGE_GENERIC</td>
-	<td>//div[@class='child-pages']/ul/li/a</td>
+	<td>//div[@class='list-group-item-content']//a</td>
 	<td></td>
 </tr>
 <tr>

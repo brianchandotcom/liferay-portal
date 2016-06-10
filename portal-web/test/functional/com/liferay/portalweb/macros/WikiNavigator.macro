@@ -44,7 +44,7 @@
 	<command name="gotoChildPagePG">
 		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
 
-		<execute function="AssertTextEquals" locator1="Wiki#CHILD_PAGE_HEADER" value1="Children Pages" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Wiki#CHILD_PAGE_HEADER" value1="Child Page" />
 		<execute function="AssertClick" locator1="Wiki#CHILD_PAGE_TITLE" value1="${wikiChildPageTitle}" />
 	</command>
 

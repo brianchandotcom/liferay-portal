@@ -294,6 +294,14 @@ if (portletTitleBasedNavigation) {
 
 									<%
 									}
+
+									if (!formats.contains(selectedFormat)) {
+									%>
+
+										<aui:option label="<%= selectedFormat %>" selected="<%= true %>" value="<%= selectedFormat %>" />
+
+									<%
+									}
 									%>
 
 								</aui:select>

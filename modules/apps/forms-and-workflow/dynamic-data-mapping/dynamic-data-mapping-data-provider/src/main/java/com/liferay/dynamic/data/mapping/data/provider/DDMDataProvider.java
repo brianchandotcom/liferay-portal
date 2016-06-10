@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.data.provider;
 
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.util.KeyValuePair;
 
 import java.util.List;
@@ -22,6 +23,9 @@ import java.util.List;
  * @author Luca Comin
  */
 public interface DDMDataProvider {
+
+	public JSONArray doGet(DDMDataProviderContext ddmDataProviderContext)
+		throws DDMDataProviderException;
 
 	public List<KeyValuePair> getData(
 			DDMDataProviderContext ddmDataProviderContext)

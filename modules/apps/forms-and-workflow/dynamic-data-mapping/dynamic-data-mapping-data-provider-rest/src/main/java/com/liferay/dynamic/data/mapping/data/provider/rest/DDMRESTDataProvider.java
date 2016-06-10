@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -42,6 +43,45 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, property = "ddm.data.provider.type=rest")
 public class DDMRESTDataProvider implements DDMDataProvider {
+
+	@Override
+	public JSONArray doGet(DDMDataProviderContext ddmDataProviderContext)
+		throws DDMDataProviderException {
+
+		try {
+			DDMRESTDataProviderSettings ddmRESTDataProviderSettings =
+				ddmDataProviderContext.getSettingsInstance(
+					DDMRESTDataProviderSettings.class);
+
+			HttpRequest httpRequest = HttpRequest.get(
+				ddmRESTDataProviderSettings.url());
+
+			if (Validator.isNotNull(ddmRESTDataProviderSettings.username())) {
+				httpRequest.basicAuthentication(
+					ddmRESTDataProviderSettings.username(),
+					ddmRESTDataProviderSettings.password());
+			}
+
+			httpRequest.query(ddmDataProviderContext.getParameters());
+
+			HttpResponse httpResponse = httpRequest.send();
+
+			String body = httpResponse.body();
+
+			try {
+				return _jsonFactory.createJSONArray(body);
+			}
+			catch (JSONException jsone) {
+				JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+				jsonArray.put(_jsonFactory.createJSONObject(body));
+				return jsonArray;
+			}
+		}
+		catch (Exception e) {
+			throw new DDMDataProviderException(e);
+		}
+	}
 
 	@Override
 	public List<KeyValuePair> getData(

@@ -249,13 +249,15 @@ public class JournalContentExportImportPortletPreferencesProcessor
 
 				portletPreferences.setValue("groupId", String.valueOf(groupId));
 
-				Layout layout = _layoutLocalService.fetchLayout(
-					portletDataContext.getPlid());
+				if (portletDataContext.getPlid() > 0) {
+					Layout layout = _layoutLocalService.fetchLayout(
+						portletDataContext.getPlid());
 
-				_journalContentSearchLocalService.updateContentSearch(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getLayoutId(), portletDataContext.getPortletId(),
-					articleId, true);
+					_journalContentSearchLocalService.updateContentSearch(
+						layout.getGroupId(), layout.isPrivateLayout(),
+						layout.getLayoutId(), portletDataContext.getPortletId(),
+						articleId, true);
+				}
 			}
 			else {
 				portletPreferences.setValue("groupId", StringPool.BLANK);

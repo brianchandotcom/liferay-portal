@@ -52,7 +52,6 @@ page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
 
-
 <%@ page import="java.io.File" %>
 
 <%@ page import="java.text.Format" %>
@@ -65,7 +64,6 @@ page import="java.util.List" %>
 <portlet:defineObjects />
 
 <%
-
 MailGroupServiceConfiguration mailGroupServiceConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(MailGroupServiceConfiguration.class, themeDisplay.getCompanyId());
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

@@ -213,6 +213,22 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 			}
 		}
 
+		for (String key : _REPOSITORY_URL_PROPERTY_KEYS) {
+			String repositoryUrl = System.getProperty(key);
+
+			if ((repositoryUrl == null) || repositoryUrl.isEmpty()) {
+				continue;
+			}
+
+			if (repositoryUrl.charAt(repositoryUrl.length() - 1) != '/') {
+				repositoryUrl += '/';
+			}
+
+			if (location.startsWith(repositoryUrl)) {
+				return location.substring(repositoryUrl.length());
+			}
+		}
+
 		return null;
 	}
 
@@ -368,6 +384,10 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 
 	private static final String _FILES_CACHE_DIR_NAME =
 		"caches/modules-2/files-2.1";
+
+	private static final String[] _REPOSITORY_URL_PROPERTY_KEYS = {
+		"repository.private.url", "repository.url"
+	};
 
 	private static final String[] _REPOSITORY_URLS = {
 		"http://cdn.repository.liferay.com/nexus/content/groups/public/",

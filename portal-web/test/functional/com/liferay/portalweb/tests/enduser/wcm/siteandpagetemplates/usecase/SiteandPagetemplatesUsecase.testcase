@@ -407,7 +407,7 @@
 			<var name="siteName" value="Site Template Name" />
 		</execute>
 
-		<execute function="SelectWindow" locator1="title=home - Site Template Name - Liferay" />
+		<execute function="SelectWindow" locator1="title=home - Site Template Name - ${siteName}" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="home" />
@@ -451,7 +451,7 @@
 			<var name="siteName" value="Site Template Name" />
 		</execute>
 
-		<execute function="SelectWindow" locator1="title=home - Site Template Name - Liferay" />
+		<execute function="SelectWindow" locator1="title=home - Site Template Name - ${siteName}" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page Name" />
@@ -582,7 +582,7 @@
 			<var name="siteName" value="Site Template Name" />
 		</execute>
 
-		<execute function="SelectWindow" locator1="title=home - Site Template Name - Liferay" />
+		<execute function="SelectWindow" locator1="title=home - Site Template Name - ${siteName}" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page Name" />
@@ -938,7 +938,7 @@
 			<var name="pageTemplateName" value="Wiki" />
 		</execute>
 
-		<execute function="SelectWindow" locator1="title=Wiki - Liferay" />
+		<execute function="SelectWindow" locator1="title=Wiki - ${siteName}" />
 
 		<execute macro="Dockbar#viewAddTabsWithNoAddPagePermission" />
 	</command>

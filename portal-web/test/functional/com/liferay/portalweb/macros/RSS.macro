@@ -66,7 +66,7 @@
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="RSSFeed#FEEDS_TITLE" value1="${feedTitle}" />
 
-		<execute function="SelectWindow" locator1="title=Site Page Name 2 - Site Name - Liferay" />
+		<execute function="SelectWindow" locator1="title=Site Page Name 2 - Site Name - ${siteName}" />
 	</command>
 
 	<command name="viewCorruptScript">

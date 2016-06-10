@@ -653,7 +653,7 @@
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_LINK" value1="report" />
 
-		<execute function="SelectWindow" locator1="title=Reports Admin - Liferay" />
+		<execute function="SelectWindow" locator1="title=Reports Admin - ${siteName}" />
 
 		<execute macro="ReportsAdmin#viewReportEntryFields">
 			<var name="dataSource" value="portal" />

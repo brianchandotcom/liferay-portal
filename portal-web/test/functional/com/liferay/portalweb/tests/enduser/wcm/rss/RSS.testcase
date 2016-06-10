@@ -480,6 +480,7 @@
 
 		<execute macro="RSS#openFeed">
 			<var name="feedTitle" value="Asset Publisher" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">

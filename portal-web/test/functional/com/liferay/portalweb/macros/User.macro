@@ -1571,7 +1571,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#IMPERSONATE_USER" value1="Impersonate User" />
 
-		<execute function="SelectWindow" locator1="title=Welcome - Liferay" />
+		<execute function="SelectWindow" locator1="title=Welcome - ${siteName}" />
 
 		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 		<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />

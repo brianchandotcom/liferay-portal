@@ -656,7 +656,7 @@
 
 		<execute function="Click" locator1="Gmail#EMAIL_ADDRESS_VERIFICATION_URL" />
 
-		<execute function="SelectWindow" locator1="title=Verify Email Address - Site Name - Liferay" />
+		<execute function="SelectWindow" locator1="title=Verify Email Address - Site Name - ${siteName}" />
 		<execute function="AssertLocation" value1="${emailAddressVerificationURL}" />
 
 		<execute macro="Site#viewDefaultThemePG" />

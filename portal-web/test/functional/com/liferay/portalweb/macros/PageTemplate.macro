@@ -181,7 +181,7 @@
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
 
-		<execute function="SelectWindow" locator1="title=${pageTemplateName} - Liferay" />
+		<execute function="SelectWindow" locator1="title=${pageTemplateName} - ${siteName}" />
 
 		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${pageTemplateName}" />
 		<execute function="AssertTextEquals" locator1="Home#PAGE_TEMPLATE" value1="${pageTemplateName}" />

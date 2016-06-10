@@ -225,7 +225,7 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="Regrole Name" />
+			<var name="roleName" value="Regrole1 Name" />
 			<var name="roleType" value="Site" />
 		</execute>
 

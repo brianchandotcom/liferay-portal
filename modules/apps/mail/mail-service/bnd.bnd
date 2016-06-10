@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Mail Service
+Bundle-SymbolicName: com.liferay.mail.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.mail.attachment,\
+	com.liferay.mail.configuration,\
+	com.liferay.mail.mailbox,\
+	com.liferay.mail.model.impl
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

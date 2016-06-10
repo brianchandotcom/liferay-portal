@@ -358,6 +358,11 @@
 	</command>
 
 	<command name="SitesDynamicTemplates" priority="3">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Site Templates" />
 		</execute>
@@ -920,6 +925,11 @@
 	</command>
 
 	<command name="ViewNoAddPageTabViaPageTemplatesCP" priority="3">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+		
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Page Templates" />
 		</execute>

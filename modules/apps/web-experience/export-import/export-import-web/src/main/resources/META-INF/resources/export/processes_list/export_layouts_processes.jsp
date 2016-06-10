@@ -222,8 +222,8 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
 						name="title"
-						truncate="<%= true %>"
 					>
 						<span id="<%= liferayPortletResponse.getNamespace() + "backgroundTaskName" + String.valueOf(backgroundTask.getBackgroundTaskId()) %>">
 							<liferay-ui:message key="<%= HtmlUtil.escape(backgroundTaskName) %>" />
@@ -248,8 +248,8 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 					/>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
 						name="download"
-						truncate="<%= true %>"
 					>
 
 						<%

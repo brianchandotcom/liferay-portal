@@ -248,9 +248,13 @@ public class WikiEngineRenderer {
 	public void renderEditPageHTML(
 			String format, PageContext pageContext, WikiNode node,
 			WikiPage page)
-		throws IOException, ServletException {
+		throws IOException, ServletException, WikiFormatException {
 
 		WikiEngine wikiEngine = _wikiEngineTracker.getWikiEngine(format);
+
+		if (wikiEngine == null) {
+			throw new WikiFormatException();
+		}
 
 		HttpServletResponse response =
 			(HttpServletResponse)pageContext.getResponse();

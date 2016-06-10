@@ -205,7 +205,20 @@ if (portletTitleBasedNavigation) {
 						<div>
 
 							<%
-							wikiEngineRenderer.renderEditPageHTML(selectedFormat, pageContext, node, wikiPage);
+							try {
+								wikiEngineRenderer.renderEditPageHTML(selectedFormat, pageContext, node, wikiPage);
+							}
+							catch (WikiFormatException wfe) {
+							%>
+
+								<div class="alert alert-danger">
+									<liferay-ui:message key="the-format-of-this-page-is-not-supported-the-page-content-will-be-shown-unformatted" />
+								</div>
+
+								<aui:input name="content" type="textarea" value="<%= wikiPage.getContent() %>" />
+
+							<%
+							}
 							%>
 
 						</div>

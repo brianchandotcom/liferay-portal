@@ -15,7 +15,7 @@
 package com.liferay.sync.engine.service;
 
 import com.liferay.sync.engine.BaseTestCase;
-import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
+import com.liferay.sync.engine.document.library.util.FileEventUtil;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.persistence.SyncFilePersistence;
 import com.liferay.sync.engine.util.FileUtil;

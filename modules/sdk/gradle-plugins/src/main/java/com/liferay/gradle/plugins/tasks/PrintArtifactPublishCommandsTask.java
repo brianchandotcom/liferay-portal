@@ -164,7 +164,7 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		Task baselineTask = getTask(
 			LiferayOSGiDefaultsPlugin.BASELINE_TASK_NAME);
 
-		if (baselineTask instanceof BaselineTask) {
+		if (baselineTask != null) {
 			commands.add(getGradleCommand(baselineTask));
 
 			commands.add(

@@ -91,7 +91,9 @@ import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.maven.Conf2ScopeMapping;
 import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer;
+import org.gradle.api.artifacts.repositories.AuthenticationContainer;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
+import org.gradle.api.artifacts.repositories.PasswordCredentials;
 import org.gradle.api.execution.TaskExecutionGraph;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
@@ -135,6 +137,7 @@ import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
 import org.gradle.execution.ProjectConfigurer;
 import org.gradle.external.javadoc.CoreJavadocOptions;
 import org.gradle.external.javadoc.StandardJavadocDocletOptions;
+import org.gradle.internal.authentication.DefaultBasicAuthentication;
 import org.gradle.internal.service.ServiceRegistry;
 import org.gradle.plugins.ide.eclipse.EclipsePlugin;
 import org.gradle.plugins.ide.eclipse.model.EclipseClasspath;
@@ -356,6 +359,53 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		if (Validator.isNotNull(_REPOSITORY_PRIVATE_PASSWORD) &&
+			Validator.isNotNull(_REPOSITORY_PRIVATE_URL) &&
+			Validator.isNotNull(_REPOSITORY_PRIVATE_USER_NAME)) {
+
+			MavenArtifactRepository mavenArtifactRepository =
+				repositoryHandler.maven(
+					new Action<MavenArtifactRepository>() {
+
+						@Override
+						public void execute(
+							MavenArtifactRepository mavenArtifactRepository) {
+
+							mavenArtifactRepository.setUrl(
+								_REPOSITORY_PRIVATE_URL);
+						}
+
+					});
+
+			mavenArtifactRepository.authentication(
+				new Action<AuthenticationContainer>() {
+
+					@Override
+					public void execute(
+						AuthenticationContainer authenticationContainer) {
+
+						authenticationContainer.add(
+							new DefaultBasicAuthentication("basic"));
+					}
+
+				});
+
+			mavenArtifactRepository.credentials(
+				new Action<PasswordCredentials>() {
+
+					@Override
+					public void execute(
+						PasswordCredentials passwordCredentials) {
+
+						passwordCredentials.setPassword(
+							_REPOSITORY_PRIVATE_PASSWORD);
+						passwordCredentials.setUsername(
+							_REPOSITORY_PRIVATE_USER_NAME);
+					}
+
+				});
+		}
 	}
 
 	protected static boolean isTestProject(Project project) {
@@ -2181,6 +2231,15 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final boolean _MAVEN_LOCAL_IGNORE = Boolean.getBoolean(
 		"maven.local.ignore");
+
+	private static final String _REPOSITORY_PRIVATE_PASSWORD =
+		System.getProperty("repository.private.password");
+
+	private static final String _REPOSITORY_PRIVATE_URL = System.getProperty(
+		"repository.private.url");
+
+	private static final String _REPOSITORY_PRIVATE_USER_NAME =
+		System.getProperty("repository.private.user.name");
 
 	private static final String _REPOSITORY_URL = System.getProperty(
 		"repository.url", DEFAULT_REPOSITORY_URL);

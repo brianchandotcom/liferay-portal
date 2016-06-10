@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.lpkg.StaticLPKGResolver;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 
 import java.io.File;
@@ -190,15 +191,17 @@ public class LPKGDeployerTest {
 						contextName = contextName.substring(0, index);
 					}
 
-					StringBundler sb = new StringBundler(8);
+					StringBundler sb = new StringBundler(10);
 
 					sb.append("webbundle:lpkg://");
-					sb.append(lpkgBundle.getSymbolicName());
+					sb.append(URLCodec.encodeURL(lpkgBundle.getSymbolicName()));
 					sb.append(StringPool.DASH);
 					sb.append(lpkgBundle.getVersion());
 					sb.append(StringPool.SLASH);
 					sb.append(contextName);
-					sb.append(".war?Web-ContextPath=/");
+					sb.append(".war?Bundle-Version=");
+					sb.append(bundle.getVersion());
+					sb.append("&Web-ContextPath=/");
 					sb.append(contextName);
 
 					String location = sb.toString();

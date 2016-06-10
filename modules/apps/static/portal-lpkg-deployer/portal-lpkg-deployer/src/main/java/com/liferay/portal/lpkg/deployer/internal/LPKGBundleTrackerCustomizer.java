@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.lpkg.deployer.internal.wrapper.bundle.URLStreamHandlerServiceServiceTrackerCustomizer;
 import com.liferay.portal.lpkg.deployer.internal.wrapper.bundle.WARBundleWrapperBundleActivator;
 import com.liferay.portal.util.PropsValues;
@@ -244,7 +245,7 @@ public class LPKGBundleTrackerCustomizer
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("lpkg://");
-		sb.append(bundle.getSymbolicName());
+		sb.append(URLCodec.encodeURL(bundle.getSymbolicName()));
 		sb.append(StringPool.DASH);
 		sb.append(bundle.getVersion());
 		sb.append(StringPool.SLASH);

@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Mail Test
+Bundle-SymbolicName: com.liferay.mail.test
+Bundle-Version: 1.0.0
+Import-Package:\
+	!org.junit.experimental.theories,\
+	*
+-includeresource: test-classes/integration

@@ -82,6 +82,20 @@
 		</fail>
 	</target>
 
+	<target name="check-current-branch">
+		<exec executable="git" outputproperty="liferay.releng.branch">
+			<arg value="rev-parse" />
+			<arg value="--abbrev-ref" />
+			<arg value="HEAD" />
+		</exec>
+
+		<echo message="Current branch detected: ${liferay.releng.branch}" />
+
+		<condition property="current.branch.private">
+			<contains string="${liferay.releng.branch}" substring="ee-" />
+		</condition>
+	</target>
+
 	<target depends="check-app-version,init-build-app" name="check-stale-artifacts">
 		<property location="${gradle.wrapper.path}" name="gradle.wrapper.path.absolute" />
 
@@ -104,6 +118,25 @@
 				<isset property="module.stale.artifacts" />
 			</condition>
 		</fail>
+	</target>
+
+	<target depends="check-current-branch" if="${current.branch.private}" name="checkout-public-modules-releng">
+		<loadfile property="liferay.releng.branch.public">
+			<filterchain>
+				<tokenfilter>
+					<replacestring from="ee-" to="" />
+				</tokenfilter>
+			</filterchain>
+			<propertyresource name="liferay.releng.branch" />
+		</loadfile>
+
+		<echo message="Checking out public releng info from branch: ${liferay.releng.branch.public}" />
+
+		<exec executable="git">
+			<arg value="checkout" />
+			<arg value="upstream/${liferay.releng.branch.public}" />
+			<arg value=".releng" />
+		</exec>
 	</target>
 
 	<target depends="init-build-app" name="clean-app">

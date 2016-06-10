@@ -1593,6 +1593,9 @@ rerun your task.
 			</echoproperties>
 
 			<propertyfile file="${sdk.properties.file}">
+				<entry key="ivy.repository.liferay.private.password" value="${build.repository.private.password}" />
+				<entry key="ivy.repository.liferay.private.url" value="${build.repository.private.url}" />
+				<entry key="ivy.repository.liferay.private.username" value="${build.repository.private.username}" />
 				<entry key="lp.portal.project.dir" value="${project.dir}" />
 				<entry key="module.framework.base.dir" value="${liferay.home}/osgi" />
 			</propertyfile>

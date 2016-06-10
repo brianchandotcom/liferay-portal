@@ -7,6 +7,7 @@
 	<pathconvert property="releng.module.dir">
 		<filtermapper>
 			<replacestring from="modules${file.separator}apps" to="modules${file.separator}.releng${file.separator}apps" />
+			<replacestring from="modules${file.separator}private${file.separator}apps" to="modules${file.separator}.releng${file.separator}private${file.separator}apps" />
 		</filtermapper>
 
 		<path>
@@ -16,6 +17,10 @@
 
 	<condition property="artifact.bnd">
 		<available file="bnd.bnd" />
+	</condition>
+
+	<condition property="artifact.private">
+		<contains string="${basedir}" substring="private${file.separator}" />
 	</condition>
 
 	<loadfile failonerror="false" property="artifact.deploy.dependencies" srcFile="build.gradle">
@@ -62,7 +67,15 @@
 			</filterchain>
 		</loadproperties>
 
-		<get dest="${dist.dir}" src="${artifact.url}" />
+		<if>
+			<contains string="${basedir}" substring="private${file.separator}" />
+			<then>
+				<get dest="${dist.dir}" password="${build.repository.private.password}" src="${artifact.url}" username="${build.repository.private.username}" />
+			</then>
+			<else>
+				<get dest="${dist.dir}" src="${artifact.url}" />
+			</else>
+		</if>
 	</target>
 
 	<target if="artifact.deploy.dependencies" name="download-artifact-dependencies">

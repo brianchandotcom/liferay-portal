@@ -2,6 +2,8 @@
 <!DOCTYPE project>
 
 <project name="build-app">
+	<property file="../build.properties" />
+
 	<property file="../app.server.${user.name}.properties" />
 	<property file="../app.server.${env.COMPUTERNAME}.properties" />
 	<property file="../app.server.${env.HOST}.properties" />
@@ -82,6 +84,20 @@
 		</fail>
 	</target>
 
+	<target name="check-current-branch">
+		<exec executable="git" outputproperty="liferay.releng.branch">
+			<arg value="rev-parse" />
+			<arg value="--abbrev-ref" />
+			<arg value="HEAD" />
+		</exec>
+
+		<echo message="Current branch detected: ${liferay.releng.branch}" />
+
+		<condition property="current.branch.private">
+			<contains string="${liferay.releng.branch}" substring="ee-" />
+		</condition>
+	</target>
+
 	<target depends="check-app-version,init-build-app" name="check-stale-artifacts">
 		<property location="${gradle.wrapper.path}" name="gradle.wrapper.path.absolute" />
 
@@ -106,6 +122,25 @@
 		</fail>
 	</target>
 
+	<target depends="check-current-branch" if="${current.branch.private}" name="checkout-public-modules-releng">
+		<loadfile property="liferay.releng.branch.public">
+			<filterchain>
+				<tokenfilter>
+					<replacestring from="ee-" to="" />
+				</tokenfilter>
+			</filterchain>
+			<propertyresource name="liferay.releng.branch" />
+		</loadfile>
+
+		<echo message="Checking out public releng info from branch: ${liferay.releng.branch.public}" />
+
+		<exec executable="git">
+			<arg value="checkout" />
+			<arg value="upstream/${liferay.releng.branch.public}" />
+			<arg value=".releng" />
+		</exec>
+	</target>
+
 	<target depends="init-build-app" name="clean-app">
 		<delete dir="${dist.dir}" />
 
@@ -127,6 +162,8 @@
 			<dirset dir="${modules.dir}" excludes="${build.modules.excludes}" includes="${app.module.dirs}" />
 			<property name="app.first.version" value="${app.first.version}" />
 			<property name="artifact.versions.previous.release" value="${artifact.versions.previous.release}" />
+			<property name="build.repository.private.password" value="${build.repository.private.password}" />
+			<property name="build.repository.private.username" value="${build.repository.private.username}" />
 			<property name="dist.dir" value="${dist.dir}" />
 		</subant>
 	</target>
@@ -248,7 +285,7 @@
 		</java>
 	</target>
 
-	<target name="init-build-app">
+	<target depends="checkout-public-modules-releng" name="init-build-app">
 		<fail message="Please specify a value for &quot;app.name&quot; when running this command.">
 			<condition>
 				<not>
@@ -262,9 +299,13 @@
 
 		<basename file="${basedir}" property="app.name" />
 
-		<property name="app.dir" value="${basedir}/apps/${app.name}" />
+		<condition else="${basedir}/apps/${app.name}" property="app.dir" value="${basedir}/private/apps/${app.name}">
+			<available file="${basedir}/private/apps/${app.name}" />
+		</condition>
 
-		<property name="releng.app.dir" value="${basedir}/.releng/apps/${app.name}" />
+		<condition else="${basedir}/.releng/apps/${app.name}" property="releng.app.dir" value="${basedir}/.releng/private/apps/${app.name}">
+			<available file="${basedir}/.releng/private/apps/${app.name}" />
+		</condition>
 
 		<property name="dist.dir" value="${releng.app.dir}/dist" />
 
@@ -278,10 +319,12 @@
 					</linecontains>
 
 					<replacestring from="-dxp" to="" />
+
+					<replacestring from="private${file.separator}" to="" />
 				</filtermapper>
 			</chainedmapper>
 			<path>
-				<dirset dir="${basedir}" excludes="**/*-test*" includes="apps/${app.name}/**">
+				<dirset dir="${basedir}" excludes="**/*-test*" includes="apps/${app.name}/**,private/apps/${app.name}/**">
 					<present targetdir="${basedir}">
 						<mapper from="*" to="*/.lfrbuild-portal" type="glob" />
 					</present>
@@ -292,7 +335,7 @@
 		<pathconvert pathsep="," property="app.module.dirs">
 			<globmapper from="${modules.dir}${file.separator}*" to="*" />
 			<path>
-				<dirset dir="${basedir}" excludes="**/*-test*,${app.module.dirs.excludes}" includes="apps/${app.name}/**">
+				<dirset dir="${basedir}" excludes="**/*-test*,${app.module.dirs.excludes}" includes="apps/${app.name}/**,private/apps/${app.name}/**">
 					<present targetdir="${basedir}">
 						<mapper from="*" to="*/.lfrbuild-portal" type="glob" />
 					</present>
@@ -323,7 +366,11 @@
 			<flattenmapper />
 		</pathconvert>
 
-		<loadproperties srcFile="${app.dir}/app.bnd">
+		<pathconvert property="app.bnd.file">
+			<fileset dir="${basedir}" includes="apps/${app.name}/app.bnd,private/apps/${app.name}/app.bnd" />
+		</pathconvert>
+
+		<loadproperties srcFile="${app.bnd.file}">
 			<filterchain>
 				<linecontains>
 					<contains value="Liferay-Releng-App-Title" />

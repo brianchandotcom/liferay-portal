@@ -821,6 +821,7 @@ app.server.type=@{app.server.type}]]></echo>
 										<arg value="test" />
 										<arg value="--tests" />
 										<arg value="*.LPKGUpgradeLogAssertorTest" />
+										<arg value="-Dliferay.home=${liferay.home}" />
 										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
 

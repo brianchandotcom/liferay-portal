@@ -15,7 +15,6 @@
 package com.liferay.portal.lpkg;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -45,10 +44,15 @@ public class LPKGUpgradeLogAssertorTest {
 
 	@Test
 	public void testUpgradeLog() throws IOException {
+		String liferayHome = System.getProperty("liferay.home");
+
+		Assert.assertNotNull(
+			"Missing system property liferay.home", liferayHome);
+
 		final Set<String> symbolicNames = new HashSet<>();
 
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				Paths.get(PropsValues.LIFERAY_HOME, "/osgi/marketplace"))) {
+				Paths.get(liferayHome, "/osgi/marketplace"))) {
 
 			for (Path lpkgPath : directoryStream) {
 				try (ZipFile zipFile = new ZipFile(lpkgPath.toFile());
@@ -67,8 +71,7 @@ public class LPKGUpgradeLogAssertorTest {
 		Files.walkFileTree(
 			Paths.get(
 				System.getProperty(
-					"liferay.log.dir",
-					PropsValues.LIFERAY_HOME.concat("/logs"))),
+					"liferay.log.dir", liferayHome.concat("/logs"))),
 			new SimpleFileVisitor<Path>() {
 
 				@Override

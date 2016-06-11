@@ -8352,7 +8352,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 		<start-app-server
 			app.server.bundle.index="${app.server.bundle.index}"
-			delete.liferay.home="true"
 			testable.portal.started.marker.file="${testable.portal.started.marker.file}"
 		/>
 	</target>

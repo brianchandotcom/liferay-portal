@@ -98,7 +98,7 @@
 		</condition>
 	</target>
 
-	<target depends="check-app-version,init-build-app" name="check-stale-artifacts">
+	<target depends="check-app-version,init-build-app" name="check-stale-artifacts" unless="check.stale.artifacts.skip">
 		<property location="${gradle.wrapper.path}" name="gradle.wrapper.path.absolute" />
 
 		<exec dir="${app.dir}" executable="${gradle.wrapper.path.absolute}" outputproperty="stale.artifacts.output">
@@ -123,20 +123,17 @@
 	</target>
 
 	<target depends="check-current-branch" if="${current.branch.private}" name="checkout-public-modules-releng">
-		<loadfile property="liferay.releng.branch.public">
+		<loadfile property="git.commit.portal.public" srcfile="../git-commit-portal-7.0.x">
 			<filterchain>
-				<tokenfilter>
-					<replacestring from="ee-" to="" />
-				</tokenfilter>
+				<striplinebreaks />
 			</filterchain>
-			<propertyresource name="liferay.releng.branch" />
 		</loadfile>
 
-		<echo message="Checking out public releng info from branch: ${liferay.releng.branch.public}" />
+		<echo message="Checking out public releng info from commit ID: ${git.commit.portal.public}" />
 
 		<exec executable="git">
 			<arg value="checkout" />
-			<arg value="upstream/${liferay.releng.branch.public}" />
+			<arg value="${git.commit.portal.public}" />
 			<arg value=".releng" />
 		</exec>
 	</target>
@@ -302,7 +299,6 @@
 		<condition else="${basedir}/apps/${app.name}" property="app.dir" value="${basedir}/private/apps/${app.name}">
 			<available file="${basedir}/private/apps/${app.name}" />
 		</condition>
-
 		<condition else="${basedir}/.releng/apps/${app.name}" property="releng.app.dir" value="${basedir}/.releng/private/apps/${app.name}">
 			<available file="${basedir}/.releng/private/apps/${app.name}" />
 		</condition>
@@ -377,6 +373,15 @@
 				</linecontains>
 			</filterchain>
 		</loadproperties>
+
+		<condition property="check.stale.artifacts.skip">
+			<and>
+				<istrue value="${current.branch.private}" />
+				<not>
+					<available file="${basedir}/private/apps/${app.name}" />
+				</not>
+			</and>
+		</condition>
 	</target>
 
 	<target name="reset-all">

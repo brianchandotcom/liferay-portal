@@ -32,6 +32,7 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -41,9 +42,13 @@ public class LPKGUpgradeTest {
 
 	@Test
 	public void testUpgradeLPKG() throws IOException {
+		String liferayHome = System.getProperty("liferay.home");
+
+		Assert.assertNotNull(
+			"Missing system property liferay.home", liferayHome);
+
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				Paths.get(
-					System.getProperty("liferay.home"), "/osgi/marketplace"))) {
+				Paths.get(liferayHome, "/osgi/marketplace"))) {
 
 			for (Path lpkgPath : directoryStream) {
 				try (FileSystem fileSystem = FileSystems.newFileSystem(

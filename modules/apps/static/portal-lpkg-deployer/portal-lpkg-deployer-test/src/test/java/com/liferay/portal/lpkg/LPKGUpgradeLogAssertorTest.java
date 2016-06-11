@@ -14,19 +14,14 @@
 
 package com.liferay.portal.lpkg;
 
-import com.liferay.portal.kernel.util.StringUtil;
-
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.HashSet;
 import java.util.Properties;
@@ -68,53 +63,46 @@ public class LPKGUpgradeLogAssertorTest {
 			}
 		}
 
-		Files.walkFileTree(
-			Paths.get(
-				System.getProperty(
-					"liferay.log.dir", liferayHome.concat("/logs"))),
-			new SimpleFileVisitor<Path>() {
+		Path logsPath = Paths.get(
+			System.getProperty("liferay.log.dir", liferayHome.concat("/logs")));
 
-				@Override
-				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
-					throws IOException {
+		boolean hasLog = false;
 
-					String pathString = StringUtil.toLowerCase(path.toString());
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				logsPath, "*.log")) {
 
-					if (pathString.endsWith(".log")) {
-						assertUpgrade(path, symbolicNames);
-					}
+			for (Path logPath : directoryStream) {
+				hasLog = true;
 
-					return FileVisitResult.CONTINUE;
-				}
+				assertUpgrade(logPath, symbolicNames);
+			}
+		}
 
-			});
+		Assert.assertTrue(
+			"Unable to find any log file under " + logsPath, hasLog);
 	}
 
 	protected void assertUpgrade(Path path, Set<String> symbolicNames)
 		throws IOException {
 
-		try (InputStream inputStream = new FileInputStream(path.toFile())) {
-			String log = StringUtil.read(inputStream);
+		String logContent = new String(
+			Files.readAllBytes(path), StandardCharsets.UTF_8);
 
-			for (String symbolicName : symbolicNames) {
-				Assert.assertTrue(
-					symbolicName.concat(" was not uninstalled for upgrade"),
-					log.contains(
-						"Uninstalled older LPKG bundle ".concat(symbolicName)));
-				Assert.assertTrue(
-					symbolicName.concat(
-						" did not start refreshing for upgrade"),
-					log.contains(
-						"Start refreshing references to point to the new " +
-							"bundle ".concat(symbolicName)));
-				Assert.assertTrue(
-					symbolicName.concat(
-						" did not finish refreshing for upgrade"),
-					log.contains(
-						"Finished refreshing references to point to the new " +
-							"bundle ".concat(symbolicName)));
-			}
+		for (String symbolicName : symbolicNames) {
+			Assert.assertTrue(
+				symbolicName.concat(" was not uninstalled for upgrade"),
+				logContent.contains(
+					"Uninstalled older LPKG bundle ".concat(symbolicName)));
+			Assert.assertTrue(
+				symbolicName.concat(" did not start refreshing for upgrade"),
+				logContent.contains(
+					"Start refreshing references to point to the new " +
+						"bundle ".concat(symbolicName)));
+			Assert.assertTrue(
+				symbolicName.concat(" did not finish refreshing for upgrade"),
+				logContent.contains(
+					"Finished refreshing references to point to the new " +
+						"bundle ".concat(symbolicName)));
 		}
 	}
 

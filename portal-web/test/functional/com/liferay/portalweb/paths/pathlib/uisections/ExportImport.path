@@ -180,6 +180,11 @@
 </tr>
 <!--PAGES-->
 <tr>
+	<td>PAGES_ALL_PUBLIC_PAGES_CHECKBOX</td>
+	<td>xpath=(//div[contains(.,'Public Pages')]//span[contains(@class,'icon-check')])[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGES_CHANGE_LINK</td>
 	<td>//div/a[contains(@id,'pagesLink')]</td>
 	<td></td>
@@ -312,6 +317,12 @@
 <tr>
 	<td>VALIDATION_ERROR_MESSAGE</td>
 	<td>//span[@class='error-message']</td>
+	<td></td>
+</tr>
+<!-- PERMISSIONS -->
+<tr>
+	<td>PERMISSIONS</td>
+	<td>//input[contains(@id,'PERMISSIONS')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -441,8 +441,8 @@ AUI.add(
 					},
 
 					_restoreField: function(field, contextValue) {
-						field.set('key', contextValue.value);
 						field.set('value', contextValue.label);
+						field.set('key', contextValue.value);
 					},
 
 					_syncFieldUI: function(field) {

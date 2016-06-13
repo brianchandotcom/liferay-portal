@@ -38,72 +38,20 @@ body {
 	}
 }
 
-.portlet-boundary_com_liferay_users_admin_web_portlet_UsersAdminPortlet_ {
-	.lfr-job-title-column, .lfr-name-column, .lfr-organizations-column, .lfr-screen-name-column, .lfr-user-groups-column {
-		max-width: 150px;
-		min-width: 150px;
-	}
-}
-
-.portlet-boundary_com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet_ {
-	.lfr-description-column {
-		max-width: 400px;
-		min-width: 400px;
-	}
-
-	.lfr-name-column {
-		max-width: 150px;
-		min-width: 150px;
-		width: 250px;
-	}
-
-	.lfr-users-column {
-		white-space: nowrap;
-	}
-}
-
-.portlet-boundary_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_ {
-	.lfr-description-column {
-		max-width: 250px;
-		min-width: 250px;
-	}
-
-	.lfr-title-column {
-		max-width: 150px;
-		min-width: 150px;
-		width: 250px;
-	}
-}
+// Password Policies Admin
 
 .portlet-boundary_com_liferay_password_policies_admin_web_portlet_PasswordPoliciesAdminPortlet_ {
-	.lfr-description-column {
-		max-width: 300px;
-		min-width: 300px;
-	}
-
 	.lfr-name-column,
 	.lfr-parent-organization-column,
 	.lfr-screen-name-column {
-		max-width: 175px;
-		min-width: 175px;
-		width: 250px;
-	}
-
-	.lfr-city-column,
-	.lfr-region-column {
-		@include sm {
-			max-width: 100px;
-			min-width: 100px;
-		}
+		max-width: 150px;
+		min-width: 150px;
 	}
 }
 
-.portlet-boundary_com_liferay_site_admin_web_portlet_SiteAdminPortlet_ {
-	.lfr-name-column {
-		max-width: 200px;
-		min-width: 200px;
-	}
+// Sites
 
+.portlet-boundary_com_liferay_site_admin_web_portlet_SiteAdminPortlet_ {
 	.lfr-child-sites-column,
 	.lfr-members-column {
 		white-space: nowrap;
@@ -114,23 +62,16 @@ body {
 	}
 }
 
+// Site Templates, Page Templates
+
 .portlet-boundary_com_liferay_layout_prototype_web_portlet_LayoutPrototypePortlet_,
 .portlet-boundary_com_liferay_layout_set_prototype_web_portlet_LayoutSetPrototypePortlet_ {
-	.lfr-create-date-column {
-		white-space: nowrap;
-	}
-
 	.lfr-description-column {
-		max-width: 400px;
-		min-width: 400px;
-	}
-
-	.lfr-name-column {
-		max-width: 150px;
-		min-width: 150px;
-		width: 200px;
+		width: 60%;
 	}
 }
+
+// Virtual Instances
 
 .portlet-boundary_com_liferay_portal_instances_web_portlet_PortalInstancesPortlet_ {
 	.lfr-mail-domain-column, .lfr-virtual-host-column, .lfr-web-id-column {
@@ -139,14 +80,20 @@ body {
 	}
 }
 
+// Components
+
 .portlet-boundary_com_liferay_plugins_admin_web_portlet_PluginsAdminPortlet_ {
-	.lfr-layout-template-column, .lfr-themes-column {
+	.lfr-layout-template-column, .lfr-portlet-column, .lfr-themes-column {
 		max-width: 250px;
 		min-width: 250px;
 	}
 
 	.lfr-layout-template-column .plugin-thumbnail {
 		max-width: 50px;
+	}
+
+	.lfr-portlet-column {
+		width: 50%;
 	}
 
 	.lfr-themes-column .plugin-thumbnail {
@@ -159,21 +106,113 @@ body {
 	}
 }
 
+// Workflow Definition
+
 .portlet-boundary_com_liferay_portal_workflow_definition_web_portlet_WorkflowDefinitionPortlet_ {
 	.lfr-active-column, .lfr-version-column {
 		width: auto;
 	}
 }
 
+// Service Access Policy
+
 .portlet-boundary_com_liferay_portal_security_service_access_policy_web_portlet_SAPPortlet_ {
+	.lfr-name-column {
+		width: 20%;
+	}
+}
+
+// Site Memberships
+
+.portlet-boundary_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_ {
+	.lfr-email-address-column, .lfr-user-column {
+		max-width: 175px;
+		min-width: 175px;
+		width: 10%;
+	}
+
+	.lfr-name-column, .lfr-parent-organization-column {
+		min-width: 150px;
+		max-width: 150px;
+		width: 20%;
+	}
+
+	.lfr-user-comments-column {
+		max-width: 300px;
+		min-width: 300px;
+		width: 50%;
+	}
+}
+
+.portlet-site-memberships-select-users {
+	.lfr-name-column, .lfr-screen-name-column {
+		width: 40%;
+	}
+}
+
+.portlet-site-memberships-assign-site-roles {
 	.lfr-description-column {
-		max-width: 400px;
-		min-width: 400px;
+		width: 80%;
+	}
+
+	.lfr-title-column {
+		width: 20%;
+	}
+}
+
+.portlet-site-memberships-user-groups {
+	.lfr-description-column {
+		width: 60%;
+	}
+
+	.lfr-site-roles-column {
+		max-width: 200px;
+		min-width: 200px;
+		width: 20%;
+	}
+}
+
+.portlet-site-memberships-users {
+	.lfr-screen-name-column {
+		width: 20%;
+	}
+
+	.lfr-site-roles-and-teams-column {
+		min-width: 300px;
+		max-width: 300px;
+		width: 50%;
+	}
+}
+
+// Site Teams
+
+.portlet-boundary_com_liferay_site_teams_web_portlet_SiteTeamsPortlet_ {
+	.lfr-description-column {
+		width: 80%;
 	}
 
 	.lfr-name-column {
-		max-width: 200px;
-		min-width: 200px;
-		width: 300px;
+		width: 20%;
+	}
+}
+
+.portlet-site-teams-select-users,
+.portlet-site-teams-users {
+	.lfr-name-column, .lfr-screen-name-column {
+		width: 40%;
+	}
+}
+
+// Mobile Device Rules
+
+.portlet-boundary_com_liferay_mobile_device_rules_web_portlet_MDRPortlet_ {
+	.lfr-description-column {
+		width: 60%;
+	}
+
+	.lfr-name-column {
+		max-width: 150px;
+		min-width: 150px;
+		width: 20%;
 	}
 }

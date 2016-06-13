@@ -267,11 +267,7 @@ AUI.add(
 			getCalendarName: function(name, calendarResourceName) {
 				var instance = this;
 
-				if (name !== calendarResourceName) {
-					name = [calendarResourceName, STR_DASH, name].join(STR_SPACE);
-				}
-
-				return name;
+				return [calendarResourceName, STR_DASH, name].join(STR_SPACE);
 			},
 
 			getCalendarRenderingRules: function(calendarIds, startDate, endDate, ruleName, callback) {

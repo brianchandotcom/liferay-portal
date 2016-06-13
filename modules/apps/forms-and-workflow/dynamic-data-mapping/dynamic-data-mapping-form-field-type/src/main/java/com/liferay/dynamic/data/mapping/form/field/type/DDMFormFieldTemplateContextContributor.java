@@ -14,31 +14,18 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type;
 
-import java.util.List;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Marcellus Tavares
  */
-public interface DDMFormFieldTypeServicesTracker {
+public interface DDMFormFieldTemplateContextContributor {
 
-	public DDMFormFieldRenderer getDDMFormFieldRenderer(String name);
-
-	public DDMFormFieldTemplateContextContributor
-		getDDMFormFieldTemplateContextContributor(String name);
-
-	public DDMFormFieldType getDDMFormFieldType(String name);
-
-	public Set<String> getDDMFormFieldTypeNames();
-
-	public Map<String, Object> getDDMFormFieldTypeProperties(String name);
-
-	public List<DDMFormFieldType> getDDMFormFieldTypes();
-
-	public <T> DDMFormFieldValueAccessor<T> getDDMFormFieldValueAccessor(
-		String name);
-
-	public DDMFormFieldValueRenderer getDDMFormFieldValueRenderer(String name);
+	public Map<String, Object> getParameters(
+		DDMFormField ddmFormField,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext);
 
 }

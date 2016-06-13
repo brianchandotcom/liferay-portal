@@ -390,13 +390,6 @@ public class LayoutPermissionImpl
 		if (!group.isActive()) {
 			return false;
 		}
-		else if (group.isStagingGroup()) {
-			Group liveGroup = group.getLiveGroup();
-
-			if (!liveGroup.isActive()) {
-				return false;
-			}
-		}
 
 		// User private layouts are only viewable by the user and anyone who can
 		// update the user. The user must also be active.

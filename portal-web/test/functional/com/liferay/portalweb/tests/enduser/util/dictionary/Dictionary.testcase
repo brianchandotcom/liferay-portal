@@ -34,6 +34,11 @@
 	<command name="FindDictionaryWord" priority="2">
 		<var name="dictionaryTerm" value="dog" />
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Dictionary Page" />
 		</execute>
@@ -48,6 +53,6 @@
 		<execute function="AssertTextEquals" locator1="Dictionary#WORD" value1="${dictionaryTerm}" />
 
 		<execute function="Close" locator1="title=Dog | Define Dog at Dictionary.com" />
-		<execute function="SelectWindow" locator1="title=Dictionary Page - Liferay" />
+		<execute function="SelectWindow" locator1="title=Dictionary Page - ${siteName}" />
 	</command>
 </definition>

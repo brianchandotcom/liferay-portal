@@ -121,10 +121,10 @@
 		<if>
 			<isset var="contentTitle" />
 			<then>
-				<execute function="SelectWindow" locator1="title=${contentTitle} - ${pageName} - Liferay" />
+				<execute function="SelectWindow" locator1="title=${contentTitle} - ${pageName} - ${siteName}" />
 			</then>
 			<else>
-				<execute function="SelectWindow" locator1="title=${pageName} - Liferay" />
+				<execute function="SelectWindow" locator1="title=${pageName} - ${siteName}" />
 			</else>
 		</if>
 	</command>
@@ -142,10 +142,10 @@
 		<if>
 			<isset var="contentTitle" />
 			<then>
-				<execute function="SelectWindow" locator1="title=${contentTitle} - ${pageName} - Liferay" />
+				<execute function="SelectWindow" locator1="title=${contentTitle} - ${pageName} - ${siteName}" />
 			</then>
 			<else>
-				<execute function="SelectWindow" locator1="title=${pageName} - Liferay" />
+				<execute function="SelectWindow" locator1="title=${pageName} - ${siteName}" />
 			</else>
 		</if>
 	</command>

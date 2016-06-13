@@ -128,6 +128,11 @@
 	</command>
 
 	<command name="ImpersonatingAdministratorandOwner" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Roles" />
 		</execute>
@@ -231,11 +236,12 @@
 
 		<execute macro="User#impersonateCP">
 			<var name="notAdmin" value="true" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 
-		<execute function="Close#closeWindow" locator1="title=Welcome - Liferay" />
-		<execute function="SelectWindow" locator1="title=Users and Organizations - Control Panel - Liferay" />
+		<execute function="Close#closeWindow" locator1="title=Welcome - ${siteName}" />
+		<execute function="SelectWindow" locator1="title=Users and Organizations - Control Panel - ${siteName}" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -243,6 +249,7 @@
 
 		<execute macro="User#attemptImpersonateCP">
 			<var name="notAdmin" value="true" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userScreenName" value="usersn3" />
 		</execute>
 
@@ -252,6 +259,7 @@
 
 		<execute macro="User#attemptImpersonateCP">
 			<var name="notAdmin" value="true" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userScreenName" value="test" />
 		</execute>
 
@@ -279,33 +287,36 @@
 		</execute>
 
 		<execute macro="User#impersonateCP">
+			<var name="siteName" value="${siteName}" />
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 
-		<execute function="Close#closeWindow" locator1="title=Welcome - Liferay" />
-		<execute function="SelectWindow" locator1="title=Users and Organizations - Control Panel - Liferay" />
+		<execute function="Close#closeWindow" locator1="title=Welcome - ${siteName}" />
+		<execute function="SelectWindow" locator1="title=Users and Organizations - Control Panel - ${siteName}" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#impersonateCP">
+			<var name="siteName" value="${siteName}" />
 			<var name="userScreenName" value="usersn3" />
 		</execute>
 
-		<execute function="Close#closeWindow" locator1="title=Welcome - Liferay" />
-		<execute function="SelectWindow" locator1="title=Users and Organizations - Control Panel - Liferay" />
+		<execute function="Close#closeWindow" locator1="title=Welcome - ${siteName}" />
+		<execute function="SelectWindow" locator1="title=Users and Organizations - Control Panel - ${siteName}" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="User#impersonateCP">
+			<var name="siteName" value="${siteName}" />
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute function="Close#closeWindow" locator1="title=Welcome - Liferay" />
-		<execute function="SelectWindow" locator1="title=Users and Organizations - Control Panel - Liferay" />
+		<execute function="Close#closeWindow" locator1="title=Welcome - ${siteName}" />
+		<execute function="SelectWindow" locator1="title=Users and Organizations - Control Panel - ${siteName}" />
 	</command>
 
 	<command name="MultipleUsersandOrganizations" priority="4">

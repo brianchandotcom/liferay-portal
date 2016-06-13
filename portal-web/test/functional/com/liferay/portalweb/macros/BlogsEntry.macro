@@ -987,10 +987,10 @@
 	<command name="viewRSS">
 		<execute function="AssertClick" locator1="Link#RSS" value1="RSS" />
 
-		<execute function="SelectWindow" locator1="title=Liferay" />
+		<execute function="SelectWindow" locator1="title=${siteName}" />
 
-		<execute function="AssertTextEquals" locator1="Blogs#RSS_FEED_TITLE" value1="Liferay" />
-		<execute function="AssertTextEquals" locator1="Blogs#RSS_FEED_SUBTITLE" value1="Liferay" />
+		<execute function="AssertTextEquals" locator1="Blogs#RSS_FEED_TITLE" value1="${siteName}" />
+		<execute function="AssertTextEquals" locator1="Blogs#RSS_FEED_SUBTITLE" value1="${siteName}" />
 		<execute function="AssertTextEquals" locator1="Blogs#RSS_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals" locator1="Blogs#RSS_ENTRY_CONTENT" value1="${entryContent}" />
 	</command>

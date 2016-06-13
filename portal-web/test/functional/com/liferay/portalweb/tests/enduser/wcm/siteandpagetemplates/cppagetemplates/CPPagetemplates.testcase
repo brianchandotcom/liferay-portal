@@ -295,8 +295,14 @@
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="PageTemplate#viewPG">
 			<var name="pageTemplateName" value="Page Template Name" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -310,6 +316,7 @@
 
 		<execute macro="PageTemplate#viewPG">
 			<var name="pageTemplateName" value="Page Template Name Edit" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 	</command>
 </definition>

@@ -509,6 +509,11 @@
 	<command name="ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured" priority="3">
 		<property name="custom.properties" value="layout.default.template.id=2_columns_iii${line.separator}layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.enabled=false${line.separator}layout.user.public.layouts.auto.create=false${line.separator}layout.user.public.layouts.power.user.required=true" />
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
 		</execute>
@@ -651,7 +656,7 @@
 
 		<execute function="Click" locator1="Gmail#EMAIL_ADDRESS_VERIFICATION_URL" />
 
-		<execute function="SelectWindow" locator1="title=Verify Email Address - Site Name - Liferay" />
+		<execute function="SelectWindow" locator1="title=Verify Email Address - Site Name - ${siteName}" />
 		<execute function="AssertLocation" value1="${emailAddressVerificationURL}" />
 
 		<execute macro="Site#viewDefaultThemePG" />

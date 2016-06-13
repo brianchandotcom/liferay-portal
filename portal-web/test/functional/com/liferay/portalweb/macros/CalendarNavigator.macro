@@ -189,10 +189,6 @@
 		<execute function="Click" locator1="Calendar#VIEW_NEXT_BUTTON" />
 	</command>
 
-	<command name="gotoPageWindow">
-		<execute function="SelectWindow" locator1="title=${pageName} - Liferay" />
-	</command>
-
 	<command name="gotoPreviousDay">
 		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Day" />

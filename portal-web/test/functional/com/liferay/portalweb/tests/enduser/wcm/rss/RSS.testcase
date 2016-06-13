@@ -395,6 +395,11 @@
 	</command>
 
 	<command name="EnableRSSFeedFromAssetpublisher" priority="3">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="SitePageNavigator#gotoPages">
 			<var name="page" value="Public Pages" />
 			<var name="site" value="Site Name" />
@@ -475,6 +480,7 @@
 
 		<execute macro="RSS#openFeed">
 			<var name="feedTitle" value="Asset Publisher" />
+			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetPG">

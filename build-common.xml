@@ -926,6 +926,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 			<prepare-portal-artifact-pom snapshot.version.suffix="${snapshot.version.suffix}" />
 
+			<delete dir="${user.home}/.m2/repository/com/liferay/portal/com.liferay.${processed.artifact.name}" />
+
 			<artifact:install file="${artifact.name}.@{packaging}">
 				<attach-files />
 				<pom file="pom.xml" />

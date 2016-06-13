@@ -36,8 +36,8 @@ public interface MailGroupServiceConfiguration {
 	)
 	public String defaultAccounts();
 
-	@Meta.AD(deflt = "109,110,143,220,993,995,1110,2221", required = false)
-	public int[] incomingPorts();
+	@Meta.AD(deflt = "109|110|143|220|993|995|1110|2221", required = false)
+	public String[] incomingPorts();
 
 	@Meta.AD(deflt = "false", required = false)
 	public boolean javamailDebug();
@@ -46,8 +46,8 @@ public interface MailGroupServiceConfiguration {
 	public int messagesSyncCount();
 
 	@Meta.AD(
-		deflt = "25,26,79,110,143,465,587,2500,2525,3535", required = false
+		deflt = "25|26|79|110|143|465|587|2500|2525|3535", required = false
 	)
-	public int[] outgoingPorts();
+	public String[] outgoingPorts();
 
 }

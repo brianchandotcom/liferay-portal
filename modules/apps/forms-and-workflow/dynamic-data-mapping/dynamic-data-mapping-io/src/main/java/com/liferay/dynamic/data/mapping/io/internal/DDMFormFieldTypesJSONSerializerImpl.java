@@ -14,13 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.io.internal;
 
-import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldRenderer;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -67,20 +63,6 @@ public class DDMFormFieldTypesJSONSerializerImpl
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDMFormJSONSerializer(
-		DDMFormJSONSerializer ddmFormJSONSerializer) {
-
-		_ddmFormJSONSerializer = ddmFormJSONSerializer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormLayoutJSONSerializer(
-		DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer) {
-
-		_ddmFormLayoutJSONSerializer = ddmFormLayoutJSONSerializer;
-	}
-
-	@Reference(unbind = "-")
 	protected void setJSONFactory(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}
@@ -123,45 +105,15 @@ public class DDMFormFieldTypesJSONSerializerImpl
 		}
 
 		jsonObject.put("name", ddmFormFieldType.getName());
-
-		DDMFormFieldTypeSettingsSerializerHelper
-			ddmFormFieldTypeSettingsSerializerHelper =
-				new DDMFormFieldTypeSettingsSerializerHelper(
-					ddmFormFieldType.getDDMFormFieldTypeSettings(),
-					_ddmFormJSONSerializer, _ddmFormLayoutJSONSerializer,
-					_jsonFactory);
-
-		jsonObject.put(
-			"settings",
-			ddmFormFieldTypeSettingsSerializerHelper.getSettingsJSONObject());
-		jsonObject.put(
-			"settingsLayout",
-			ddmFormFieldTypeSettingsSerializerHelper.
-				getSettingsLayoutJSONObject());
 		jsonObject.put(
 			"system",
 			MapUtil.getBoolean(
 				ddmFormFieldTypeProperties, "ddm.form.field.type.system"));
 
-		DDMFormFieldRenderer ddmFormFieldRenderer =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldRenderer(
-				ddmFormFieldType.getName());
-
-		if (ddmFormFieldRenderer instanceof BaseDDMFormFieldRenderer) {
-			BaseDDMFormFieldRenderer baseDDMFormFieldRenderer =
-				(BaseDDMFormFieldRenderer)ddmFormFieldRenderer;
-
-			jsonObject.put(
-				"templateNamespace",
-				baseDDMFormFieldRenderer.getTemplateNamespace());
-		}
-
 		return jsonObject;
 	}
 
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
-	private DDMFormJSONSerializer _ddmFormJSONSerializer;
-	private DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer;
 	private JSONFactory _jsonFactory;
 
 }

@@ -17,11 +17,7 @@ package com.liferay.dynamic.data.mapping.io;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
-import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormFieldTypesJSONSerializerImpl;
-import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONSerializerImpl;
-import com.liferay.dynamic.data.mapping.io.internal.DDMFormLayoutJSONSerializerImpl;
-import com.liferay.dynamic.data.mapping.test.util.DDMFormFieldTypeSettingsTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -41,8 +37,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import org.mockito.Matchers;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
@@ -57,8 +51,6 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 		super.setUp();
 
 		setUpDDMFormFieldTypesJSONSerializer();
-		setUpDDMFormJSONSerializer();
-		setUpDDMFormLayoutJSONSerializer();
 	}
 
 	@Test
@@ -103,8 +95,6 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 	protected DDMFormFieldType getMockedDDMFormFieldType() {
 		DDMFormFieldType ddmFormFieldType = mock(DDMFormFieldType.class);
 
-		whenDDMFormFieldTypeGetDDMFormFieldTypeSettings(
-			ddmFormFieldType, DDMFormFieldTypeSettingsTestUtil.getSettings());
 		whenDDMFormFieldTypeGetName(ddmFormFieldType, "Text");
 
 		return ddmFormFieldType;
@@ -153,65 +143,9 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 			getMockedDDMFormFieldTypeServicesTracker());
 
 		field = ReflectionUtil.getDeclaredField(
-			DDMFormFieldTypesJSONSerializerImpl.class,
-			"_ddmFormJSONSerializer");
-
-		field.set(_ddmFormFieldTypesJSONSerializer, _ddmFormJSONSerializer);
-
-		field = ReflectionUtil.getDeclaredField(
-			DDMFormFieldTypesJSONSerializerImpl.class,
-			"_ddmFormLayoutJSONSerializer");
-
-		field.set(
-			_ddmFormFieldTypesJSONSerializer, _ddmFormLayoutJSONSerializer);
-
-		field = ReflectionUtil.getDeclaredField(
 			DDMFormFieldTypesJSONSerializerImpl.class, "_jsonFactory");
 
 		field.set(_ddmFormFieldTypesJSONSerializer, new JSONFactoryImpl());
-	}
-
-	protected void setUpDDMFormJSONSerializer() throws Exception {
-		Field field = ReflectionUtil.getDeclaredField(
-			DDMFormJSONSerializerImpl.class,
-			"_ddmFormFieldTypeServicesTracker");
-
-		field.set(
-			_ddmFormJSONSerializer, getMockedDDMFormFieldTypeServicesTracker());
-
-		field = ReflectionUtil.getDeclaredField(
-			DDMFormJSONSerializerImpl.class, "_jsonFactory");
-
-		field.set(_ddmFormJSONSerializer, new JSONFactoryImpl());
-	}
-
-	protected void setUpDDMFormLayoutJSONSerializer() throws Exception {
-		Field field = ReflectionUtil.getDeclaredField(
-			DDMFormLayoutJSONSerializerImpl.class, "_jsonFactory");
-
-		field.set(_ddmFormLayoutJSONSerializer, new JSONFactoryImpl());
-	}
-
-	protected void whenDDMFormFieldTypeGetDDMFormFieldTypeSettings(
-		DDMFormFieldType ddmFormFieldType,
-		final Class<? extends DDMFormFieldTypeSettings>
-			returnDDMFormFieldTypeSettings) {
-
-		when(
-			ddmFormFieldType.getDDMFormFieldTypeSettings()
-		).then(
-			new Answer<Class<? extends DDMFormFieldTypeSettings>>() {
-
-				@Override
-				public Class<? extends DDMFormFieldTypeSettings> answer(
-						InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					return returnDDMFormFieldTypeSettings;
-				}
-
-			}
-		);
 	}
 
 	protected void whenDDMFormFieldTypeGetName(
@@ -227,9 +161,5 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 	private final DDMFormFieldTypesJSONSerializer
 		_ddmFormFieldTypesJSONSerializer =
 			new DDMFormFieldTypesJSONSerializerImpl();
-	private final DDMFormJSONSerializer _ddmFormJSONSerializer =
-		new DDMFormJSONSerializerImpl();
-	private final DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer =
-		new DDMFormLayoutJSONSerializerImpl();
 
 }

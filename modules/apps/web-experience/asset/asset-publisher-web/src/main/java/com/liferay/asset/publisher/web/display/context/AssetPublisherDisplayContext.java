@@ -31,6 +31,10 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -38,6 +42,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
@@ -55,6 +60,7 @@ import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -62,6 +68,9 @@ import java.util.TimeZone;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -81,9 +90,13 @@ public class AssetPublisherDisplayContext {
 	};
 
 	public AssetPublisherDisplayContext(
-		HttpServletRequest request, PortletPreferences portletPreferences) {
+		PortletRequest portletRequest, PortletResponse portletResponse,
+		PortletPreferences portletPreferences) {
 
-		_request = request;
+		_request = PortalUtil.getHttpServletRequest(portletRequest);
+		_portletRequest = portletRequest;
+		_portletResponse = portletResponse;
+
 		_portletPreferences = portletPreferences;
 	}
 
@@ -588,6 +601,57 @@ public class AssetPublisherDisplayContext {
 			"rssName", portletDisplay.getTitle());
 
 		return _rssName;
+	}
+
+	public Map<Long, Map<String, PortletURL>> getScopeAddPortletURLs(int max)
+		throws Exception {
+
+		long[] groupIds = getGroupIds();
+
+		if (groupIds.length == 0) {
+			return Collections.emptyMap();
+		}
+
+		Map<Long, Map<String, PortletURL>> scopeAddPortletURLs = new HashMap();
+
+		LiferayPortletResponse liferayPortletResponse =
+			(LiferayPortletResponse)_portletResponse;
+
+		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
+
+		redirectURL.setParameter(
+			"hideDefaultSuccessMessage", Boolean.TRUE.toString());
+		redirectURL.setParameter("mvcPath", "/add_asset_redirect.jsp");
+
+		LiferayPortletRequest liferayPortletRequest =
+			(LiferayPortletRequest)_portletRequest;
+
+		PortletURL currentURLObj = PortletURLUtil.getCurrent(
+			liferayPortletRequest, liferayPortletResponse);
+
+		redirectURL.setParameter("redirect", currentURLObj.toString());
+
+		redirectURL.setWindowState(LiferayWindowState.POP_UP);
+
+		String redirect = redirectURL.toString();
+
+		for (long groupId : groupIds) {
+			Map<String, PortletURL> addPortletURLs =
+				AssetUtil.getAddPortletURLs(
+					liferayPortletRequest, liferayPortletResponse, groupId,
+					getClassNameIds(), getClassTypeIds(),
+					getAllAssetCategoryIds(), getAllAssetTagNames(), redirect);
+
+			if (MapUtil.isNotEmpty(addPortletURLs)) {
+				scopeAddPortletURLs.put(groupId, addPortletURLs);
+			}
+
+			if (scopeAddPortletURLs.size() > max) {
+				break;
+			}
+		}
+
+		return scopeAddPortletURLs;
 	}
 
 	public Long getScopeGroupId() {
@@ -1280,7 +1344,9 @@ public class AssetPublisherDisplayContext {
 	private String _orderByType2;
 	private String _paginationType;
 	private final PortletPreferences _portletPreferences;
+	private final PortletRequest _portletRequest;
 	private String _portletResource;
+	private final PortletResponse _portletResponse;
 	private long[] _referencedModelsGroupIds;
 	private final HttpServletRequest _request;
 	private String _rootPortletId;

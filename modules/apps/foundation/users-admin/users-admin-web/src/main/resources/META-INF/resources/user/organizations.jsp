@@ -43,6 +43,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 
 <liferay-ui:search-container
 	compactEmptyResultsMessage="<%= true %>"
+	cssClass="lfr-search-container-organizations"
 	curParam="organizationsCur"
 	emptyResultsMessage="this-user-does-not-belong-to-an-organization"
 	headerNames="name,type,roles,null"
@@ -60,6 +61,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 		modelVar="organization"
 	>
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			name="name"
 			property="name"
 		/>
@@ -80,12 +82,13 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 		%>
 
 		<liferay-ui:search-container-column-text
+			cssClass="table-cell-content"
 			name="roles"
 			value="<%= HtmlUtil.escape(UsersAdminUtil.getUserColumnText(locale, userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR, userGroupRolesCount)) %>"
 		/>
 
 		<c:if test="<%= !portletName.equals(myAccountPortletId) && ((selUser == null) || !OrganizationMembershipPolicyUtil.isMembershipProtected(permissionChecker, selUser.getUserId(), organization.getOrganizationId())) %>">
-			<liferay-ui:search-container-column-text cssClass="list-group-item-field">
+			<liferay-ui:search-container-column-text>
 				<a class="modify-link" data-rowId="<%= organization.getOrganizationId() %>" href="javascript:;"><%= removeOrganizationIcon %></a>
 			</liferay-ui:search-container-column-text>
 		</c:if>

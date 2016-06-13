@@ -105,11 +105,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "user-groups"));
 			modelVar="userGroup"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="name"
 				value="<%= HtmlUtil.escape(userGroup.getName()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="description"
 				value="<%= HtmlUtil.escape(userGroup.getDescription()) %>"
 			/>

@@ -167,7 +167,7 @@ for (Group group : allGroups) {
 	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:renderURL>
 
-<aui:form action="<%= editUserActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:form action="<%= editUserActionURL %>" cssClass="container-fluid-1280 portlet-users-admin-edit-user" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (selUser == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= editUserRenderURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />

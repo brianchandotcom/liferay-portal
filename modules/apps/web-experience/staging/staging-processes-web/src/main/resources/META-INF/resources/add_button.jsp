@@ -55,6 +55,6 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 			<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
 		</portlet:renderURL>
 
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "custom-publication") %>' url="<%= addNewCustomProcessURL %>" />
+		<liferay-frontend:add-menu-item title="custom-publication" url="<%= addNewCustomProcessURL %>" />
 	</liferay-frontend:add-menu>
 </c:if>

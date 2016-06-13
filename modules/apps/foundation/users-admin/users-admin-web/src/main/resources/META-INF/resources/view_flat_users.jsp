@@ -346,7 +346,7 @@ boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS
 			<portlet:param name="redirect" value="<%= viewUsersURL %>" />
 		</portlet:renderURL>
 
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "user") %>' url="<%= addUserURL.toString() %>" />
+		<liferay-frontend:add-menu-item title="user" url="<%= addUserURL.toString() %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 

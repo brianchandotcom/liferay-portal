@@ -208,7 +208,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-vocabulary") %>' url="<%= addVocabularyURL.toString() %>" />
+		<liferay-frontend:add-menu-item title="add-vocabulary" url="<%= addVocabularyURL.toString() %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 

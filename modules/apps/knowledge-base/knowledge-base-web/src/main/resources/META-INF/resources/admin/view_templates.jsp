@@ -193,7 +193,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 	</liferay-portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-template") %>' url="<%= addKBTemplateURL %>" />
+		<liferay-frontend:add-menu-item title="add-template" url="<%= addKBTemplateURL %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 

@@ -162,7 +162,7 @@ organizationSearch.setResults(organizations);
 
 <c:if test="<%= hasAssignMembersPermission %>">
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item id="selectOrganizations" title='<%= LanguageUtil.get(request, "assign-organizations") %>' url="javascript:;" />
+		<liferay-frontend:add-menu-item id="selectOrganizations" title="assign-organizations" url="javascript:;" />
 	</liferay-frontend:add-menu>
 </c:if>
 

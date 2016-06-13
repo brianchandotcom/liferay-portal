@@ -34,7 +34,7 @@ renderResponse.setTitle(layoutsAdminDisplayContext.getRootNodeName());
 		%>
 
 		<liferay-frontend:add-menu>
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, layoutsAdminDisplayContext.isPrivateLayout() ? "add-private-page" : "add-public-page") %>' url="<%= addLayoutURL.toString() %>" />
+			<liferay-frontend:add-menu-item title='<%= layoutsAdminDisplayContext.isPrivateLayout() ? "add-private-page" : "add-public-page" %>' url="<%= addLayoutURL.toString() %>" />
 		</liferay-frontend:add-menu>
 	</c:if>
 </div>

@@ -28,7 +28,7 @@ boolean hasAddUserPermission = PortalPermissionUtil.contains(permissionChecker, 
 				<portlet:param name="organizationsSearchContainerPrimaryKeys" value="<%= String.valueOf(organizationId) %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "user") %>' url="<%= addUserURL.toString() %>" />
+			<liferay-frontend:add-menu-item title="user" url="<%= addUserURL.toString() %>" />
 		</c:if>
 
 		<c:if test="<%= hasAddOrganizationPermission %>">
@@ -44,7 +44,7 @@ boolean hasAddUserPermission = PortalPermissionUtil.contains(permissionChecker, 
 					<portlet:param name="type" value="<%= organizationType %>" />
 				</portlet:renderURL>
 
-				<liferay-frontend:add-menu-item title="<%= LanguageUtil.get(request, organizationType) %>" url="<%= addOrganizationURL.toString() %>" />
+				<liferay-frontend:add-menu-item title="<%= organizationType %>" url="<%= addOrganizationURL.toString() %>" />
 
 			<%
 			}

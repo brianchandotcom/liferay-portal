@@ -107,7 +107,7 @@ portletURL.setParameter("displayStyle", displayStyle);
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "new-form") %>' url="<%= addRecordSetURL.toString() %>" />
+		<liferay-frontend:add-menu-item title="new-form" url="<%= addRecordSetURL.toString() %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 

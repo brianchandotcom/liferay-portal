@@ -203,6 +203,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-feed") %>' url="<%= editFeedURL %>" />
+		<liferay-frontend:add-menu-item title="add-feed" url="<%= editFeedURL %>" />
 	</liferay-frontend:add-menu>
 </c:if>

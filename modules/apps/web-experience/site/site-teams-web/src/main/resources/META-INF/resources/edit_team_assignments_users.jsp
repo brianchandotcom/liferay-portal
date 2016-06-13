@@ -131,7 +131,7 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 </aui:form>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addUsers" title='<%= LanguageUtil.get(request, "add-team-members") %>' url="javascript:;" />
+	<liferay-frontend:add-menu-item id="addUsers" title="add-team-members" url="javascript:;" />
 </liferay-frontend:add-menu>
 
 <aui:script use="liferay-item-selector-dialog">

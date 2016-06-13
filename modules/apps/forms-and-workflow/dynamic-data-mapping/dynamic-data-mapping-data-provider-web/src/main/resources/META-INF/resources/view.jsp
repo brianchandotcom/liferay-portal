@@ -101,7 +101,7 @@ ddmDataProviderSearch.setOrderByType(ddmDataProviderDisplayContext.getOrderByTyp
 				<portlet:param name="type" value="<%= ddmDataProviderType %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu-item title="<%= LanguageUtil.get(request, ddmDataProviderType) %>" url="<%= addDataProviderURL.toString() %>" />
+			<liferay-frontend:add-menu-item title="<%= ddmDataProviderType %>" url="<%= addDataProviderURL.toString() %>" />
 
 		<%
 		}

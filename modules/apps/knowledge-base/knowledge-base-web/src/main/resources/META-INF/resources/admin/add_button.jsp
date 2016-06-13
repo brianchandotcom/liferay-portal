@@ -50,7 +50,7 @@ else {
 			<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
 		</liferay-portlet:renderURL>
 
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "basic-article") %>' url="<%= addBasicKBArticleURL.toString() %>" />
+		<liferay-frontend:add-menu-item title="basic-article" url="<%= addBasicKBArticleURL.toString() %>" />
 
 		<c:if test="<%= !kbTemplates.isEmpty() %>">
 
@@ -66,7 +66,7 @@ else {
 					<portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" />
 				</liferay-portlet:renderURL>
 
-				<liferay-frontend:add-menu-item title="<%= LanguageUtil.get(resourceBundle, HtmlUtil.escape(kbTemplate.getTitle())) %>" url="<%= addKBArticleURL.toString() %>" />
+				<liferay-frontend:add-menu-item title="<%= HtmlUtil.escape(kbTemplate.getTitle()) %>" url="<%= addKBArticleURL.toString() %>" />
 
 			<%
 			}
@@ -83,7 +83,7 @@ else {
 			<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
 		</portlet:renderURL>
 
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "folder") %>' url="<%= addFolderURL.toString() %>" />
+		<liferay-frontend:add-menu-item title="folder" url="<%= addFolderURL.toString() %>" />
 	</c:if>
 
 	<c:if test="<%= (parentResourceClassNameId == kbFolderClassNameId) && AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_ARTICLE) %>">
@@ -93,6 +93,6 @@ else {
 			<portlet:param name="parentKBFolderId" value="<%= String.valueOf(parentResourcePrimKey) %>" />
 		</portlet:renderURL>
 
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "import") %>' url="<%= importURL.toString() %>" />
+		<liferay-frontend:add-menu-item title="import" url="<%= importURL.toString() %>" />
 	</c:if>
 </liferay-frontend:add-menu>

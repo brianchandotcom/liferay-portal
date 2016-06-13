@@ -230,7 +230,7 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 	</liferay-portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-device-family") %>' url="<%= addRuleGroupURL %>" />
+		<liferay-frontend:add-menu-item title="add-device-family" url="<%= addRuleGroupURL %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 

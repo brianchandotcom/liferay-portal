@@ -136,6 +136,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addSAPEntryURL %>" />
+		<liferay-frontend:add-menu-item title="add" url="<%= addSAPEntryURL %>" />
 	</liferay-frontend:add-menu>
 </c:if>

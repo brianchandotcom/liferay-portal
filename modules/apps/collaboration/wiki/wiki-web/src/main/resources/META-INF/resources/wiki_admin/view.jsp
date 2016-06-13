@@ -234,7 +234,7 @@ boolean showAddNodeButton = WikiResourcePermissionChecker.contains(permissionChe
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-wiki") %>' url="<%= addNodeURL %>" />
+		<liferay-frontend:add-menu-item title="add-wiki" url="<%= addNodeURL %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 

@@ -155,6 +155,6 @@ if (liveGroup == null) {
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "new") %>' url="<%= addExportConfigurationURL %>" />
+		<liferay-frontend:add-menu-item title="new" url="<%= addExportConfigurationURL %>" />
 	</liferay-frontend:add-menu>
 </div>

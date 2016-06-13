@@ -212,7 +212,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, passwordPolicy.getName(), null);
 </aui:form>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addMembers" title='<%= LanguageUtil.get(request, "add-members") %>' url="javascript:;" />
+	<liferay-frontend:add-menu-item id="addMembers" title="add-members" url="javascript:;" />
 </liferay-frontend:add-menu>
 
 <aui:script use="liferay-item-selector-dialog">

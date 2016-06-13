@@ -34,6 +34,10 @@ public class DDMFormRenderingContext {
 		return _ddmFormValues;
 	}
 
+	public String getEvaluatorURL() {
+		return _evaluatorURL;
+	}
+
 	public HttpServletRequest getHttpServletRequest() {
 		return _httpServletRequest;
 	}
@@ -74,6 +78,10 @@ public class DDMFormRenderingContext {
 		_ddmFormValues = ddmFormValues;
 	}
 
+	public void setEvaluatorURL(String evaluatorURL) {
+		_evaluatorURL = evaluatorURL;
+	}
+
 	public void setHttpServletRequest(HttpServletRequest httpServletRequest) {
 		_httpServletRequest = httpServletRequest;
 	}
@@ -112,6 +120,7 @@ public class DDMFormRenderingContext {
 
 	private String _containerId;
 	private DDMFormValues _ddmFormValues;
+	private String _evaluatorURL;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
 	private Locale _locale;

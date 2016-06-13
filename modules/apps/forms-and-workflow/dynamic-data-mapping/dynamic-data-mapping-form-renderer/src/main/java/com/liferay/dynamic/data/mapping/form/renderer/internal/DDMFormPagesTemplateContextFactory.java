@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -60,6 +61,11 @@ public class DDMFormPagesTemplateContextFactory {
 					ddmForm, ddmFormRenderingContext.getLocale());
 
 			ddmFormValues = defaultDDMFormValuesFactory.create();
+		}
+		else {
+			removeStaleDDMFormFieldValues(
+				ddmForm.getDDMFormFieldsMap(true),
+				ddmFormValues.getDDMFormFieldValues());
 		}
 
 		_ddmFormValues = ddmFormValues;
@@ -247,6 +253,25 @@ public class DDMFormPagesTemplateContextFactory {
 		}
 
 		return false;
+	}
+
+	protected void removeStaleDDMFormFieldValues(
+		Map<String, DDMFormField> ddmFormFieldsMap,
+		List<DDMFormFieldValue> ddmFormFieldValues) {
+
+		Iterator<DDMFormFieldValue> iterator = ddmFormFieldValues.iterator();
+
+		while (iterator.hasNext()) {
+			DDMFormFieldValue ddmFormFieldValue = iterator.next();
+
+			if (!ddmFormFieldsMap.containsKey(ddmFormFieldValue.getName())) {
+				iterator.remove();
+			}
+
+			removeStaleDDMFormFieldValues(
+				ddmFormFieldsMap,
+				ddmFormFieldValue.getNestedDDMFormFieldValues());
+		}
 	}
 
 	protected void setDDMFormEvaluator(DDMFormEvaluator ddmFormEvaluator) {

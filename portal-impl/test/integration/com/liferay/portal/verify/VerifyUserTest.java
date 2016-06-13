@@ -60,7 +60,7 @@ public class VerifyUserTest extends BaseVerifyProcessTestCase {
 
 		group = _user.getGroup();
 
-		Assert.assertFalse(group.isActive());
+		Assert.assertFalse(GroupLocalServiceUtil.isActive(group));
 	}
 
 	@Override

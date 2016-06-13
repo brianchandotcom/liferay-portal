@@ -3602,7 +3602,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			// Filter by active
 
 			if (active != null) {
-				if (active != group.isActive()) {
+				if (active != isActive(group)) {
 					iterator.remove();
 
 					continue;

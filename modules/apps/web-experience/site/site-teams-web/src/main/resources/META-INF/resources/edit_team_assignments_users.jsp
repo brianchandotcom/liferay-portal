@@ -135,8 +135,6 @@ RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 </liferay-frontend:add-menu>
 
 <aui:script use="liferay-item-selector-dialog">
-	var Util = Liferay.Util;
-
 	var form = $(document.<portlet:namespace />fm);
 
 	<portlet:renderURL var="selectUserURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

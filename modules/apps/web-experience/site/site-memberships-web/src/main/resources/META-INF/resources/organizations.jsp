@@ -167,8 +167,6 @@ organizationSearch.setResults(organizations);
 </c:if>
 
 <aui:script use="liferay-item-selector-dialog">
-	var Util = Liferay.Util;
-
 	var form = $(document.<portlet:namespace />fm);
 
 	$('#<portlet:namespace />deleteSelectedOrganizations').on(

@@ -17,7 +17,7 @@ package com.liferay.mail.web.portlet;
 import com.liferay.mail.attachment.AttachmentHandler;
 import com.liferay.mail.constants.MailPortletKeys;
 import com.liferay.mail.model.Attachment;
-import com.liferay.mail.service.AttachmentLocalServiceUtil;
+import com.liferay.mail.service.AttachmentLocalService;
 import com.liferay.mail.web.util.MailManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,6 +37,7 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Scott Lee
@@ -85,8 +86,8 @@ public class MailPortlet extends MVCPortlet {
 			try {
 				MailManager mailManager = MailManager.getInstance(request);
 
-				Attachment attachment =
-					AttachmentLocalServiceUtil.getAttachment(attachmentId);
+				Attachment attachment = _attachmentLocalService.getAttachment(
+					attachmentId);
 
 				attachmentHandler = mailManager.getAttachment(attachmentId);
 
@@ -112,6 +113,15 @@ public class MailPortlet extends MVCPortlet {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setAttachmentLocalService(
+		AttachmentLocalService attachmentLocalService) {
+
+		_attachmentLocalService = attachmentLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(MailPortlet.class);
+
+	private static AttachmentLocalService _attachmentLocalService;
 
 }

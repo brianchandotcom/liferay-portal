@@ -16,10 +16,10 @@ package com.liferay.mail.mailbox;
 
 import com.liferay.mail.constants.MailPortletKeys;
 import com.liferay.mail.model.Account;
-import com.liferay.mail.service.AccountLocalServiceUtil;
+import com.liferay.mail.service.AccountLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +43,8 @@ public class MailboxFactoryUtil {
 			long userId, long accountId, String password)
 		throws PortalException {
 
-		User user = UserLocalServiceUtil.getUser(userId);
-		Account account = AccountLocalServiceUtil.getAccount(accountId);
+		User user = _userLocalService.getUser(userId);
+		Account account = _accountLocalService.getAccount(accountId);
 
 		MailboxFactory mailboxFactory = _mailboxFactories.get(
 			account.getProtocol());
@@ -60,7 +60,7 @@ public class MailboxFactoryUtil {
 	public static Mailbox getMailbox(long userId, String protocol)
 		throws PortalException {
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		MailboxFactory mailboxFactory = _mailboxFactories.get(protocol);
 
@@ -90,9 +90,21 @@ public class MailboxFactoryUtil {
 	}
 
 	@Reference(unbind = "-")
+	protected void setAccountLocalService(
+		AccountLocalService accountLocalService) {
+
+		_accountLocalService = accountLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setMailboxFactory(MailboxFactory mailboxFactory) {
 		_addMailboxFactory(
 			mailboxFactory.getMailboxFactoryName(), mailboxFactory);
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
 	}
 
 	private void _addMailboxFactory(
@@ -105,6 +117,8 @@ public class MailboxFactoryUtil {
 		_mailboxFactories.put(mailboxFactoryName, mailboxFactory);
 	}
 
+	private static AccountLocalService _accountLocalService;
 	private static Map<String, MailboxFactory> _mailboxFactories;
+	private static UserLocalService _userLocalService;
 
 }

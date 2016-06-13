@@ -387,15 +387,8 @@ public class LayoutPermissionImpl
 
 		// Inactive sites are not viewable
 
-		if (!group.isActive()) {
+		if (!GroupLocalServiceUtil.isActive(group)) {
 			return false;
-		}
-		else if (group.isStagingGroup()) {
-			Group liveGroup = group.getLiveGroup();
-
-			if (!liveGroup.isActive()) {
-				return false;
-			}
 		}
 
 		// User private layouts are only viewable by the user and anyone who can

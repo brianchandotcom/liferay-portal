@@ -68,7 +68,17 @@ public class LayoutsTreeUtil {
 
 	public static String getLayoutsJSON(
 			HttpServletRequest request, long groupId, boolean privateLayout,
-			boolean incomplete, long includedLayoutId, int quantity)
+			long parentLayoutId, boolean incomplete, String treeId)
+		throws Exception {
+
+		return getLayoutsJSON(
+			request, groupId, privateLayout, parentLayoutId, null, incomplete,
+			treeId);
+	}
+
+	public static String getLayoutsJSON(
+			HttpServletRequest request, long groupId, boolean privateLayout,
+			long includedLayoutId, int quantity)
 		throws Exception {
 
 		Layout includedLayout = LayoutLocalServiceUtil.getLayout(
@@ -111,7 +121,7 @@ public class LayoutsTreeUtil {
 		}
 
 		List<Layout> layouts = LayoutServiceUtil.getLayouts(
-			groupId, privateLayout, parentLayoutId, incomplete, start, end);
+			groupId, privateLayout, parentLayoutId, true, start, end);
 
 		JSONObject response = _convertListLayoutToJSONObject(
 			layouts, request, groupId, total);
@@ -121,16 +131,6 @@ public class LayoutsTreeUtil {
 		response.put("startIndex", start);
 
 		return response.toString();
-	}
-
-	public static String getLayoutsJSON(
-			HttpServletRequest request, long groupId, boolean privateLayout,
-			long parentLayoutId, boolean incomplete, String treeId)
-		throws Exception {
-
-		return getLayoutsJSON(
-			request, groupId, privateLayout, parentLayoutId, null, incomplete,
-			treeId);
 	}
 
 	public static String getLayoutsJSON(

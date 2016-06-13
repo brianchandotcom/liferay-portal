@@ -2980,6 +2980,11 @@ plugins.includes=</echo>
 						dir="tools/zip_tmpl"
 						prefix="liferay-portal-${lp.version}"
 					/>
+					<zipfileset
+						dir="${zip.executable.dir}/.."
+						includes=".liferay-home"
+						prefix="liferay-portal-${lp.version}"
+					/>
 				</zip>
 
 				<if>

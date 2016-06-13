@@ -33,7 +33,10 @@
 
 	<condition property="artifact.exclude">
 		<or>
+			<contains string="${basedir}" substring="portal-dao-db" />
+			<contains string="${basedir}" substring="portal-plugin-deployment-extension" />
 			<contains string="${basedir}" substring="portal-target-platform-indexer-main" />
+			<contains string="${basedir}" substring="portal-upgrade-dao-orm" />
 			<contains string="${basedir}" substring="required-dependencies" />
 		</or>
 	</condition>

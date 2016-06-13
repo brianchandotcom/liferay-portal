@@ -3,12 +3,6 @@
 		<execute function="Uncheck" locator1="CalendarConfiguration#USER_SETTINGS_GLOBAL_TIME_ZONE_CHECKBOX" />
 	</command>
 
-	<command name="editTimeZoneUTC">
-		<execute macro="CalendarConfiguration#disableGlobalTimeZone" />
-
-		<execute function="Select" locator1="CalendarConfiguration#USER_SETTINGS_TIME_ZONE_SELECT" value1="(UTC) Coordinated Universal Time" />
-	</command>
-
 	<command name="editTimeZonePacific">
 		<execute macro="CalendarConfiguration#disableGlobalTimeZone" />
 
@@ -21,6 +15,12 @@
 				<execute function="Select" locator1="CalendarConfiguration#USER_SETTINGS_TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time" />
 			</else>
 		</if>
+	</command>
+
+	<command name="editTimeZoneUTC">
+		<execute macro="CalendarConfiguration#disableGlobalTimeZone" />
+
+		<execute function="Select" locator1="CalendarConfiguration#USER_SETTINGS_TIME_ZONE_SELECT" value1="(UTC) Coordinated Universal Time" />
 	</command>
 
 	<command name="enableGlobalTimeZone">

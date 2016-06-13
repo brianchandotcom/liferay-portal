@@ -52,7 +52,7 @@ entrySearch.setResults(trashEntries);
 
 EmptyOnClickRowChecker emptyOnClickRowChecker = new EmptyOnClickRowChecker(renderResponse);
 
-emptyOnClickRowChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.getNamespace() + "redirect).*(/entry/)");
+emptyOnClickRowChecker.setRememberCheckBoxStateURLRegex("^(?!.*" + liferayPortletResponse.getNamespace() + "redirect).*^(?!.*/entry/)");
 
 entrySearch.setRowChecker(emptyOnClickRowChecker);
 

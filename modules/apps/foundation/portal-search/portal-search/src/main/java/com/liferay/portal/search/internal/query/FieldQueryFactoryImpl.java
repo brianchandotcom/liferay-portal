@@ -68,6 +68,14 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 				booleanQuery.add(query, BooleanClauseOccur.SHOULD);
 			}
 
+			MatchQuery matchQuery = new MatchQuery(field, value);
+
+			matchQuery.setType(MatchQuery.Type.PHRASE);
+
+			booleanQuery.add(matchQuery, BooleanClauseOccur.SHOULD);
+
+			matchQuery.setBoost(_PHRASE_MATCH_QUERY_BOOST);
+
 			return booleanQuery;
 		}
 
@@ -169,6 +177,8 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 			_keywordTokenizer = null;
 		}
 	}
+
+	private static final float _PHRASE_MATCH_QUERY_BOOST = 2.0f;
 
 	private KeywordTokenizer _defaultKeywordTokenizer;
 	private KeywordTokenizer _keywordTokenizer;

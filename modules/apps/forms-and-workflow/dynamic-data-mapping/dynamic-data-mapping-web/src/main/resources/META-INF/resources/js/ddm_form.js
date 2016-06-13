@@ -1388,7 +1388,6 @@ AUI.add(
 					},
 
 					setValue: function(value) {
-// console.log(value);
 						var instance = this;
 
 						var container = instance.get('container');
@@ -1712,14 +1711,14 @@ AUI.add(
 							var lastIndex = path[path.length - 1];
 
 							var key = [lastIndex.layoutId, lastIndex.groupId, lastIndex.privateLayout].join('-');
-console.log(lastIndex.layoutId, layoutId);
+
 							instance.set(
 								'selectedLayout',
 								{
 									groupId: groupId,
 									label: label,
 									layoutId: layoutId,
-									levelKey: key,
+									path: path,
 									privateLayout: privateLayout
 								}
 							);
@@ -1870,18 +1869,17 @@ console.log(lastIndex.layoutId, layoutId);
 							var lastIndex = path[path.length - 1];
 
 							var key = [lastIndex.layoutId, lastIndex.groupId, lastIndex.privateLayout].join('-');
-// console.log(key);
+
 							instance.set(
 								'selectedLayout',
 								{
 									groupId: value.groupId,
 									label: value.label,
 									layoutId: value.layoutId,
-									levelKey: key,
+									path: path.slice(),
 									privateLayout: privateLayout
 								}
 							);
-							// instance.set('selectedLayout', value);
 
 							instance._renderLayoutsList(privateLayout);
 						}
@@ -2093,10 +2091,18 @@ console.log(lastIndex.layoutId, layoutId);
 					_requestSiblingLayouts: function(groupId, privateLayout, callback) {
 						var instance = this;
 
+						var cache;
+
 						var selectedLayout = instance.get('selectedLayout');
 
-						var cache = instance._getCache(selectedLayout.levelKey);
-console.log(selectedLayout.levelKey);
+						var path = selectedLayout;
+
+						var lastIndex  = path.length - 1;
+
+						if (lastIndex >= 0) {
+							cache = instance._getCache(path[lastIndex]);
+						}
+
 						if (cache) {
 							callback.call(instance, cache.layouts);
 						}
@@ -2189,12 +2195,12 @@ console.log(selectedLayout.levelKey);
 						var instance = this;
 
 						if (!instance._cache[key]) {
-var path = instance.get('selectedLayoutPath');
-// console.log(path);
+							var path = instance.get('selectedLayoutPath');
+
 							instance._cache[key] = {
 								end: end,
 								layouts: layouts,
-								path: path,
+								path: path.slice(),
 								start: start,
 								total: total
 							};

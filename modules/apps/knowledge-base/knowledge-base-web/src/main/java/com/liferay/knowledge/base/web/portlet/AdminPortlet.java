@@ -494,14 +494,14 @@ public class AdminPortlet extends BaseKBPortlet {
 	protected List<KBArticle> getKBArticles(HttpServletRequest request)
 		throws Exception {
 
-		long[] kbArticleIds = ParamUtil.getLongValues(
+		long[] kbArticleResourcePrimKeys = ParamUtil.getLongValues(
 			request, "rowIdsKBArticle");
 
 		List<KBArticle> kbArticles = new ArrayList<>();
 
-		for (long kbArticleId : kbArticleIds) {
+		for (long kbArticleResourcePrimKey : kbArticleResourcePrimKeys) {
 			KBArticle kbArticle = kbArticleService.getLatestKBArticle(
-				kbArticleId, WorkflowConstants.STATUS_ANY);
+				kbArticleResourcePrimKey, WorkflowConstants.STATUS_ANY);
 
 			kbArticles.add(kbArticle);
 		}

@@ -266,9 +266,11 @@ while (manageableCalendarsIterator.hasNext()) {
 						if ((calendarBooking != null) && (curCalendar.getCalendarId() != calendarId) && (CalendarBookingLocalServiceUtil.getCalendarBookingsCount(curCalendar.getCalendarId(), calendarBooking.getParentCalendarBookingId()) > 0)) {
 							continue;
 						}
+
+						CalendarResource curCalendarResource = curCalendar.getCalendarResource();
 					%>
 
-						<aui:option selected="<%= curCalendar.getCalendarId() == calendarId %>" value="<%= curCalendar.getCalendarId() %>"><%= HtmlUtil.escape(curCalendar.getName(locale)) %></aui:option>
+						<aui:option selected="<%= curCalendar.getCalendarId() == calendarId %>" value="<%= curCalendar.getCalendarId() %>"><%= HtmlUtil.escape(curCalendarResource.getName(locale) + StringPool.SPACE + StringPool.DASH + StringPool.SPACE + curCalendar.getName(locale)) %></aui:option>
 
 					<%
 					}

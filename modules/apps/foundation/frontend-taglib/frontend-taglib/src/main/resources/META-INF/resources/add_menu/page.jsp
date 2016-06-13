@@ -35,11 +35,11 @@ List<AddMenuItem> addMenuItems = (List<AddMenuItem>)request.getAttribute("lifera
 		String title = addMenuItem.getLabel();
 
 		if (Validator.isNull(title)) {
-			title = LanguageUtil.get(request, "new-item");
+			title = "new-item";
 		}
 		%>
 
-		<a <%= AUIUtil.buildData(addMenuItem.getAnchorData()) %> class="btn btn-action btn-bottom-right btn-primary" data-placement="left" data-qa-id="addButton" data-toggle="tooltip" href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + id %>" title="<%= title %>">
+		<a <%= AUIUtil.buildData(addMenuItem.getAnchorData()) %> class="btn btn-action btn-bottom-right btn-primary" data-placement="left" data-qa-id="addButton" data-toggle="tooltip" href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + id %>" title="<%= HtmlUtil.escapeAttribute(LanguageUtil.get(request, title)) %>">
 			<aui:icon image="plus" markupView="lexicon" />
 		</a>
 

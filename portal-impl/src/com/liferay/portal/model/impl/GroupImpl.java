@@ -809,6 +809,21 @@ public class GroupImpl extends GroupBaseImpl {
 		}
 	}
 
+	@Override
+	public boolean isActive() {
+		if (!isStagingGroup()) {
+			return super.isActive();
+		}
+
+		Group liveGroup = getLiveGroup();
+
+		if (liveGroup == null) {
+			return false;
+		}
+
+		return liveGroup.isActive();
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #hasAncestor}
 	 */

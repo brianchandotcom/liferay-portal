@@ -130,7 +130,7 @@ else {
 
 			Liferay.Mail.setStatus('info', '<liferay-ui:message key="sending-message" />', true);
 
-			var editor = A.one('#_1_WAR_mailportlet_editor').getDOM().contentWindow;
+			var editor = A.one('#_<%= MailPortletKeys.MAIL %>_editor').getDOM().contentWindow;
 
 			document.<portlet:namespace />fm.<portlet:namespace />body.value = window.<portlet:namespace />editor.getHTML();
 

@@ -97,12 +97,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "organizations"));
 			modelVar="organization"
 		>
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="name"
 				orderable="<%= true %>"
 				property="name"
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
 				name="parent-organization"
 				value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
 			/>

@@ -15,9 +15,8 @@
 --%>
 
 <liferay-ui:search-container-column-text
-	cssClass="content-column name-column"
+	cssClass="table-cell-content"
 	name="name"
-	truncate="<%= true %>"
 >
 
 	<%
@@ -66,13 +65,12 @@
 </liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
+	cssClass="table-cell-content"
 	href="<%= rowURL %>"
 	name="type"
 	value="<%= LanguageUtil.get(request, curOrganization.getType()) %>"
 />
 
 <liferay-ui:search-container-column-jsp
-	align="right"
-	cssClass="entry-action"
 	path="/organization_action.jsp"
 />

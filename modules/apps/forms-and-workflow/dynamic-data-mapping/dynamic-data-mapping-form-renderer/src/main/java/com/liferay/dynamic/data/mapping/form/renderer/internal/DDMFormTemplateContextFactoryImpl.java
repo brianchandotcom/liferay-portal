@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
-import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
@@ -220,20 +219,6 @@ public class DDMFormTemplateContextFactoryImpl
 			"/dynamic-data-mapping-form-evaluator/");
 	}
 
-	protected Map<String, List<Object>> getDDMFormFieldsTemplateContextMap(
-			DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext)
-		throws DDMFormRenderingException {
-
-		DDMFormRendererHelper ddmFormRendererHelper = new DDMFormRendererHelper(
-			ddmForm, ddmFormRenderingContext);
-
-		ddmFormRendererHelper.setDDMFormFieldTypeServicesTracker(
-			_ddmFormFieldTypeServicesTracker);
-		ddmFormRendererHelper.setDDMFormEvaluator(_ddmFormEvaluator);
-
-		return ddmFormRendererHelper.getDDMFormFieldsTemplateContextMap();
-	}
-
 	protected Map<String, String> getLanguageStringsMap(
 		ResourceBundle resourceBundle) {
 
@@ -247,21 +232,19 @@ public class DDMFormTemplateContextFactoryImpl
 	}
 
 	protected List<Object> getPages(
-			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
-			DDMFormRenderingContext ddmFormRenderingContext)
-		throws DDMFormRenderingException {
+		DDMForm ddmForm, DDMFormLayout ddmFormLayout,
+		DDMFormRenderingContext ddmFormRenderingContext) {
 
-		Map<String, List<Object>> ddmFormFieldsTemplateContextMap =
-			getDDMFormFieldsTemplateContextMap(
-				ddmForm, ddmFormRenderingContext);
+		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
+			new DDMFormPagesTemplateContextFactory(
+				ddmForm, ddmFormLayout, ddmFormRenderingContext);
 
-		DDMFormLayoutTransformer ddmFormLayoutTransformer =
-			new DDMFormLayoutTransformer(
-				ddmForm, ddmFormLayout, ddmFormFieldsTemplateContextMap,
-				ddmFormRenderingContext.isShowRequiredFieldsWarning(),
-				ddmFormRenderingContext.getLocale());
+		ddmFormPagesTemplateContextFactory.setDDMFormEvaluator(
+			_ddmFormEvaluator);
+		ddmFormPagesTemplateContextFactory.setDDMFormFieldTypeServicesTracker(
+			_ddmFormFieldTypeServicesTracker);
 
-		return ddmFormLayoutTransformer.getPages();
+		return ddmFormPagesTemplateContextFactory.create();
 	}
 
 	protected JSONArray getReadOnlyFieldsJSONArray(DDMForm ddmForm) {

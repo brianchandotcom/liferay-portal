@@ -61,6 +61,10 @@ AUI.add(
 					scheduler: {
 					},
 
+					showCalendarResourceName: {
+						value: true
+					},
+
 					simpleMenu: {
 						setter: '_setSimpleMenu',
 						validator: isObject,
@@ -340,6 +344,8 @@ AUI.add(
 
 						var scheduler = instance.get('scheduler');
 
+						var showCalendarResourceName = instance.get('showCalendarResourceName');
+
 						val.forEach(
 							function(item, index) {
 								var calendar = item;
@@ -353,6 +359,7 @@ AUI.add(
 								calendar.addTarget(instance);
 
 								calendar.set('scheduler', scheduler);
+								calendar.set('showCalendarResourceName', showCalendarResourceName);
 							}
 						);
 

@@ -206,10 +206,10 @@
 		<execute macro="LAR#exportExportTemplateCP">
 			<var name="exportTemplateDescription" value="Export Template Description Edit" />
 			<var name="exportTemplateName" value="Export Template Name Edit" />
-			<var name="larFileName" value="Export Template Name Edit" />
+			<var name="larFileName" value="Edited Export Template Name" />
 		</execute>
 
-		<var group="1" input="Export Template Name Edit" name="larFile" pattern="([a-zA-z0-9_.-]*)[(0-9KB)]*" />
+		<var group="1" input="Edited Export Template Name" name="larFile" pattern="([a-zA-z0-9_.-]*)[(0-9KB)]*" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 

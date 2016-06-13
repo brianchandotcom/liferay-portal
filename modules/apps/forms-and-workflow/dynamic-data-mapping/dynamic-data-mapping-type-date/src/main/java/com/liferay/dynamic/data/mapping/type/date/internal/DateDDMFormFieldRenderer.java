@@ -68,15 +68,16 @@ public class DateDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 		Template template, DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		String displayValue = dateDDMFormFieldValueRenderer.render(
-			ddmFormFieldRenderingContext.getValue(),
-			ddmFormFieldRenderingContext.getLocale());
+		Map<String, Object> parameters =
+			dateDDMFormFieldTemplateContextContributor.getParameters(
+				ddmFormField, ddmFormFieldRenderingContext);
 
-		template.put("displayValue", displayValue);
+		template.putAll(parameters);
 	}
 
 	@Reference
-	protected DateDDMFormFieldValueRenderer dateDDMFormFieldValueRenderer;
+	protected DateDDMFormFieldTemplateContextContributor
+		dateDDMFormFieldTemplateContextContributor;
 
 	private TemplateResource _templateResource;
 

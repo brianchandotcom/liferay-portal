@@ -54,10 +54,10 @@ for (int i = 0; i < accountsJSONArray.length(); i++) {
 		boolean useLocalPartAsLogin = accountJSONObject.getBoolean("useLocalPartAsLogin");
 		boolean hideSettings = accountJSONObject.getBoolean("hideSettings");
 		String incomingHostName = accountJSONObject.getString("incomingHostName");
-		int incomingPort = accountJSONObject.getInt("incomingPort");
+		String incomingPort = accountJSONObject.getString("incomingPort");
 		boolean incomingSecure = accountJSONObject.getBoolean("incomingSecure");
 		String outgoingHostName = accountJSONObject.getString("outgoingHostName");
-		int outgoingPort = accountJSONObject.getInt("outgoingPort");
+		String outgoingPort = accountJSONObject.getString("outgoingPort");
 		boolean outgoingSecure = accountJSONObject.getBoolean("outgoingSecure");
 		String folderPrefix = accountJSONObject.getString("folderPrefix");
 	%>
@@ -108,10 +108,10 @@ for (int i = 0; i < accountsJSONArray.length(); i++) {
 						<aui:select name="incomingPort">
 
 							<%
-							for (int curIncomingPort : mailGroupServiceConfiguration.incomingPorts()) {
+							for (String curIncomingPort : mailGroupServiceConfiguration.incomingPorts()) {
 							%>
 
-								<aui:option selected="<%= incomingPort == curIncomingPort %>" value="<%= curIncomingPort %>"><%= curIncomingPort %></aui:option>
+								<aui:option selected="<%= (incomingPort.equals(curIncomingPort) %>" value="<%= curIncomingPort %>"><%= curIncomingPort %></aui:option>
 
 							<%
 							}
@@ -128,10 +128,10 @@ for (int i = 0; i < accountsJSONArray.length(); i++) {
 						<aui:select name="outgoingPort">
 
 							<%
-							for (int curOutgoingPort : mailGroupServiceConfiguration.outgoingPorts()) {
+							for (String curOutgoingPort : mailGroupServiceConfiguration.outgoingPorts()) {
 							%>
 
-								<aui:option selected="<%= outgoingPort == curOutgoingPort %>" value="<%= curOutgoingPort %>"><%= curOutgoingPort %></aui:option>
+								<aui:option selected="<%= (outgoingPort.equals(curOutgoingPort) %>" value="<%= curOutgoingPort %>"><%= curOutgoingPort %></aui:option>
 
 							<%
 							}

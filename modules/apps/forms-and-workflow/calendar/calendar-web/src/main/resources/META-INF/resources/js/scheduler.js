@@ -393,6 +393,10 @@ AUI.add(
 						},
 						validator: isObject,
 						value: {}
+					},
+
+					showCalendarResourceName: {
+						value: true
 					}
 				},
 
@@ -404,10 +408,17 @@ AUI.add(
 					getDisplayName: function() {
 						var instance = this;
 
-						var calendarResourceName = instance.get('calendarResourceName');
 						var name = instance.get('name');
 
-						return CalendarUtil.getCalendarName(name, calendarResourceName);
+						var showCalendarResourceName = instance.get('showCalendarResourceName');
+
+						if (showCalendarResourceName) {
+							var calendarResourceName = instance.get('calendarResourceName');
+
+							name = CalendarUtil.getCalendarName(name, calendarResourceName);
+						}
+
+						return name; 
 					},
 
 					_afterColorChange: function(event) {

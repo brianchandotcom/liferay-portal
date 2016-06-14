@@ -1221,21 +1221,10 @@
 	</command>
 
 	<command name="SiteTeamsPermissions" priority="4">
-		<var name="pageName" value="Blog Page Template" />
-		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-		<var name="permissionInLineCheckLists" value="ACTION_ADD_DISCUSSION,ACTION_ADD_LAYOUT,ACTION_CONFIGURE_PORTLETS,ACTION_CUSTOMIZE,ACTION_DELETE,ACTION_DELETE_DISCUSSION,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_UPDATE_DISCUSSION,ACTION_VIEW" />
-		<var name="permissionInLineUncheckLists" value="CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
-		<var name="siteName" value="Site Name" />
-		<var name="teamDescription" value="Site Team Description" />
-		<var name="teamName" value="Site Team Name" />
-		<var name="userEmailAddress1" value="userea1@liferay.com" />
-		<var name="userEmailAddress2" value="userea2@liferay.com" />
-		<var name="userFirstName1" value="userfn1" />
-		<var name="userFirstName2" value="userfn2" />
-		<var name="userLastName1" value="userln1" />
-		<var name="userLastName2" value="userln2" />
-		<var name="userScreenName1" value="usersn1" />
-		<var name="userScreenName2" value="usersn2" />
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -1338,7 +1327,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Liferay" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPublicPages" />
@@ -1350,7 +1339,7 @@
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Blog Page Template" />
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="PermissionsInline#gotoPagePG">
@@ -1364,7 +1353,7 @@
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Blog Page Template" />
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="PermissionsInline#gotoPagePG">
@@ -1381,7 +1370,7 @@
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Blog Page Template" />
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="PermissionsInline#gotoPagePG">

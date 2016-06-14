@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.message.boards.parser.bbcode;
+package com.liferay.message.boards.parser.bbcode.internal;
 
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.util.HtmlImpl;

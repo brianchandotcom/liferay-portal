@@ -246,7 +246,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		addTaskCopyLibs(project);
 
 		if (deployToTools) {
-			addTaskDeployTool(project);
+			addTaskAlias(
+				project, DEPLOY_TOOL_TASK_NAME,
+				LiferayBasePlugin.DEPLOY_TASK_NAME);
 		}
 
 		final Jar jarJavadocTask = addTaskJarJavadoc(project);
@@ -505,6 +507,20 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			"org.springframework", "spring-test", "3.2.15.RELEASE");
 	}
 
+	protected Task addTaskAlias(
+		Project project, String taskName, String originalTaskName) {
+
+		Task task = project.task(taskName);
+
+		Task originalTask = GradleUtil.getTask(project, originalTaskName);
+
+		task.dependsOn(originalTask);
+		task.setDescription("Alias for " + originalTask);
+		task.setGroup(originalTask.getGroup());
+
+		return task;
+	}
+
 	protected Task addTaskBaseline(
 		final Project project, final Configuration baselineConfiguration) {
 
@@ -747,19 +763,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		classesTask.dependsOn(copy);
 
 		return copy;
-	}
-
-	protected Task addTaskDeployTool(Project project) {
-		Task task = project.task(DEPLOY_TOOL_TASK_NAME);
-
-		Task deployTask = GradleUtil.getTask(
-			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
-
-		task.dependsOn(deployTask);
-		task.setDescription("Alias for " + deployTask);
-		task.setGroup(BasePlugin.BUILD_GROUP);
-
-		return task;
 	}
 
 	protected InstallCacheTask addTaskInstallCache(final Project project) {

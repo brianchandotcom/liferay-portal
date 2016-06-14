@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.exportimport.UserGroupImportTransactionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -1159,6 +1160,24 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 
 			throw new DuplicateUserGroupException("{name=" + name + "}");
 		}
+	}
+
+	private LinkedHashMap<String, Object> _getFinderSafeParams(
+		LinkedHashMap<String, Object> params) {
+
+		LinkedHashMap<String, Object> finderSafeParams = new LinkedHashMap<>();
+
+		MapUtil.copy(params, finderSafeParams);
+
+		for (String key : params.keySet()) {
+			if (!ArrayUtil.contains(
+					UserGroupConstants.PARAMS_USER_GROUP_FINDER, key)) {
+
+				finderSafeParams.remove(key);
+			}
+		}
+
+		return finderSafeParams;
 	}
 
 }

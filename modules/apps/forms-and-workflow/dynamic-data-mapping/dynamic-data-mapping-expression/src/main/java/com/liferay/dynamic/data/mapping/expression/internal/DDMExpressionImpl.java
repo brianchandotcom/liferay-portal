@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.expression.VariableDependencies;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
@@ -409,8 +410,10 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 						return BigDecimal.ONE;
 					}
 
-					String string1 = decodeString(parameter1);
-					String string2 = decodeString(parameter2);
+					String string1 = StringUtil.toLowerCase(
+						decodeString(parameter1));
+					String string2 = StringUtil.toLowerCase(
+						decodeString(parameter2));
 
 					if (string1.contains(string2)) {
 						return BigDecimal.ONE;

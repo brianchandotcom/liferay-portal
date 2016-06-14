@@ -17,6 +17,7 @@ package com.liferay.marketplace.lpkg.deployer;
 import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.service.AppLocalService;
 import com.liferay.marketplace.service.ModuleLocalService;
+import com.liferay.marketplace.util.ContextUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 
 import java.net.URL;
 
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -47,13 +49,17 @@ public class LPKGDeployerRegistrar {
 		Map<Bundle, List<Bundle>> deployedLPKGBundles =
 			_lpkgDeployer.getDeployedLPKGBundles();
 
-		for (Bundle bundle : deployedLPKGBundles.keySet()) {
-			_register(bundle);
+		for (Map.Entry<Bundle, List<Bundle>> entry :
+				deployedLPKGBundles.entrySet()) {
+
+			_register(entry.getKey(), entry.getValue());
 		}
 	}
 
-	private void _register(Bundle bundle) throws Exception {
-		URL url = bundle.getEntry("liferay-marketplace.properties");
+	private void _register(Bundle lpkgBundle, List<Bundle> bundles)
+		throws Exception {
+
+		URL url = lpkgBundle.getEntry("liferay-marketplace.properties");
 
 		Properties properties = PropertiesUtil.load(
 			url.openStream(), StringPool.ISO_8859_1);
@@ -79,29 +85,43 @@ public class LPKGDeployerRegistrar {
 
 		_moduleLocalService.deleteModules(app.getAppId());
 
-		String[] bundleStrings = StringUtil.split(
-			properties.getProperty("bundles"));
+		if (!bundles.isEmpty()) {
+			for (Bundle bundle : bundles) {
+				Dictionary<String, String> headers = bundle.getHeaders();
 
-		for (String bundleString : bundleStrings) {
-			String[] bundleStringParts = StringUtil.split(
-				bundleString, CharPool.POUND);
+				String contextName = ContextUtil.getContextName(
+					GetterUtil.getString(headers.get("Web-ContextPath")));
 
-			String bundleSymbolicName = bundleStringParts[0];
-			String bundleVersion = bundleStringParts[1];
-			String contextName = bundleStringParts[2];
-
-			_moduleLocalService.addModule(
-				0, app.getAppId(), bundleSymbolicName, bundleVersion,
-				contextName);
+				_moduleLocalService.addModule(
+					app.getUserId(), app.getAppId(), bundle.getSymbolicName(),
+					String.valueOf(bundle.getVersion()), contextName);
+			}
 		}
+		else {
+			String[] bundleStrings = StringUtil.split(
+				properties.getProperty("bundles"));
 
-		String[] contextNames = StringUtil.split(
-			properties.getProperty("context-names"));
+			for (String bundleString : bundleStrings) {
+				String[] bundleStringParts = StringUtil.split(
+					bundleString, CharPool.POUND);
 
-		for (String contextName : contextNames) {
-			_moduleLocalService.addModule(
-				0, app.getAppId(), StringPool.BLANK, StringPool.BLANK,
-				contextName);
+				String bundleSymbolicName = bundleStringParts[0];
+				String bundleVersion = bundleStringParts[1];
+				String contextName = bundleStringParts[2];
+
+				_moduleLocalService.addModule(
+					0, app.getAppId(), bundleSymbolicName, bundleVersion,
+					contextName);
+			}
+
+			String[] contextNames = StringUtil.split(
+				properties.getProperty("context-names"));
+
+			for (String contextName : contextNames) {
+				_moduleLocalService.addModule(
+					0, app.getAppId(), contextName, StringPool.BLANK,
+					contextName);
+			}
 		}
 	}
 

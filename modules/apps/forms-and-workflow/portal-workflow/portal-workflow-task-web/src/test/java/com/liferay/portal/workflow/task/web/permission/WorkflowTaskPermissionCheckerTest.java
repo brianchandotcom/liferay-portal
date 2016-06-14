@@ -29,16 +29,12 @@ import java.util.ArrayList;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Adam Brandizzi
  */
-@RunWith(PowerMockRunner.class)
 public class WorkflowTaskPermissionCheckerTest {
 
 	@Test

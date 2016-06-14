@@ -32,6 +32,11 @@
 	</tear-down>
 
 	<command name="MarkAsNotSpamWikiPage" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+		
 		<execute macro="ProductMenu#gotoControlPanelApps">
 			<var name="portlet" value="Akismet" />
 		</execute>
@@ -56,7 +61,7 @@
 		</execute>
 
 		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
@@ -177,6 +182,11 @@
 	</command>
 
 	<command name="MarkAsSpamWikiPage" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoControlPanelApps">
 			<var name="portlet" value="Akismet" />
 		</execute>
@@ -201,7 +211,7 @@
 		</execute>
 
 		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 

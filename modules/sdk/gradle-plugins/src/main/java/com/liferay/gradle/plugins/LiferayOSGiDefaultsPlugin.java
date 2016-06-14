@@ -1340,6 +1340,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 							"tools/" + project.getName());
 					}
 
+					if (FileUtil.exists(project, ".lfrbuild-app-server-lib")) {
+						return new File(
+							liferayExtension.getAppServerPortalDir(),
+							"WEB-INF/lib");
+					}
+
 					if (FileUtil.exists(project, ".lfrbuild-static")) {
 						return new File(
 							liferayExtension.getLiferayHome(), "osgi/static");

@@ -33,9 +33,7 @@
 
 	<condition property="artifact.exclude">
 		<or>
-			<contains string="${basedir}" substring="portal-dao-db" />
-			<contains string="${basedir}" substring="portal-plugin-deployment-extension" />
-			<contains string="${basedir}" substring="portal-upgrade-dao-orm" />
+			<available file=".lfrbuild-app-server-lib" />
 			<contains string="${basedir}" substring="required-dependencies" />
 		</or>
 	</condition>

@@ -1025,9 +1025,9 @@ public class WabProcessor {
 			_servicePackageName = rootElement.attributeValue("package-path");
 
 			String[] partialPackageNames = {
-				"", ".model", ".model.impl", ".service", ".service.base",
-				".service.http", ".service.impl", ".service.persistence",
-				".service.persistence.impl"
+				"", ".exception", ".model", ".model.impl", ".service",
+				".service.base", ".service.http", ".service.impl",
+				".service.persistence", ".service.persistence.impl"
 			};
 
 			for (String partialPackageName : partialPackageNames) {

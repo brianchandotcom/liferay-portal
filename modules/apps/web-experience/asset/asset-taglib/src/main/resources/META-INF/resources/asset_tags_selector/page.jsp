@@ -52,8 +52,8 @@ if (!ignoreRequestValue) {
 	</c:if>
 </div>
 
-<aui:script use="liferay-asset-tags-selector">
-	var assetTagsSelector = new Liferay.AssetTagsSelector(
+<aui:script use="liferay-asset-taglib-tags-selector">
+	var assetTaglibTagsSelector = new Liferay.AssetTaglibTagsSelector(
 		{
 			allowAddEntry: <%= allowAddEntry %>,
 			contentBox: '#<portlet:namespace /><%= id %>assetTagsSelector',
@@ -96,10 +96,10 @@ if (!ignoreRequestValue) {
 		}
 	).render();
 
-	Liferay.component('<portlet:namespace />tagsSelector', assetTagsSelector);
+	Liferay.component('<portlet:namespace />tagsSelector', assetTaglibTagsSelector);
 
 	<c:if test="<%= Validator.isNotNull(addCallback) %>">
-		assetTagsSelector.entries.on(
+		assetTaglibTagsSelector.entries.on(
 			'add',
 			function(event) {
 				window['<portlet:namespace /><%= addCallback %>'](event.item);
@@ -108,7 +108,7 @@ if (!ignoreRequestValue) {
 	</c:if>
 
 	<c:if test="<%= Validator.isNotNull(removeCallback) %>">
-		assetTagsSelector.entries.on(
+		assetTaglibTagsSelector.entries.on(
 			'remove',
 			function(event) {
 				window['<portlet:namespace /><%= removeCallback %>'](event.item);

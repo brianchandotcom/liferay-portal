@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-asset-tags-selector',
+	'liferay-asset-taglib-tags-selector',
 	function(A) {
 		var Lang = A.Lang;
 
@@ -60,7 +60,7 @@ AUI.add(
 		 * portalModelResource {boolean}: Whether the asset model is on the portal level.
 		 */
 
-		var AssetTagsSelector = A.Component.create(
+		var AssetTaglibTagsSelector = A.Component.create(
 			{
 				ATTRS: {
 					allowAddEntry: {
@@ -148,7 +148,7 @@ AUI.add(
 					renderUI: function() {
 						var instance = this;
 
-						AssetTagsSelector.superclass.renderUI.apply(instance, arguments);
+						AssetTaglibTagsSelector.superclass.renderUI.apply(instance, arguments);
 
 						instance._renderIcons();
 
@@ -160,7 +160,7 @@ AUI.add(
 					bindUI: function() {
 						var instance = this;
 
-						AssetTagsSelector.superclass.bindUI.apply(instance, arguments);
+						AssetTaglibTagsSelector.superclass.bindUI.apply(instance, arguments);
 
 						instance._bindTagsSelector();
 
@@ -173,7 +173,7 @@ AUI.add(
 					syncUI: function() {
 						var instance = this;
 
-						AssetTagsSelector.superclass.syncUI.apply(instance, arguments);
+						AssetTaglibTagsSelector.superclass.syncUI.apply(instance, arguments);
 
 						var curEntries = instance.get('curEntries');
 
@@ -400,7 +400,7 @@ AUI.add(
 			}
 		);
 
-		Liferay.AssetTagsSelector = AssetTagsSelector;
+		Liferay.AssetTaglibTagsSelector = AssetTaglibTagsSelector;
 	},
 	'',
 	{

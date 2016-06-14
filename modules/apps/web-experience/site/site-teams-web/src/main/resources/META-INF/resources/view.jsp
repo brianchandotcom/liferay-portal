@@ -175,7 +175,7 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 	%>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-team") %>' url="<%= addTeamURL.toString() %>" />
+		<liferay-frontend:add-menu-item title="add-team" url="<%= addTeamURL.toString() %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 

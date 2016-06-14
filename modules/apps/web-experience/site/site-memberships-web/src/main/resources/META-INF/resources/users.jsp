@@ -174,7 +174,7 @@ userSearch.setResults(users);
 
 <c:if test="<%= hasAssignMembersPermission %>">
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item id="selectUsers" title='<%= LanguageUtil.get(request, "assign-users") %>' url="javascript:;" />
+		<liferay-frontend:add-menu-item id="selectUsers" title="assign-users" url="javascript:;" />
 	</liferay-frontend:add-menu>
 </c:if>
 

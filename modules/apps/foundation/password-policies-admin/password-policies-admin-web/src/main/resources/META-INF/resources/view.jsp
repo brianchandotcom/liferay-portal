@@ -194,6 +194,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addPasswordPolicyURL.toString() %>" />
+		<liferay-frontend:add-menu-item title="add" url="<%= addPasswordPolicyURL.toString() %>" />
 	</liferay-frontend:add-menu>
 </c:if>

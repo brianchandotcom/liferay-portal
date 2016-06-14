@@ -137,7 +137,7 @@ int exportImportConfigurationType = stagingGroup.isStagedRemotely() ? ExportImpo
 		</portlet:renderURL>
 
 		<liferay-frontend:add-menu>
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "new") %>' url="<%= addPublishConfigurationURL %>" />
+			<liferay-frontend:add-menu-item title="new" url="<%= addPublishConfigurationURL %>" />
 		</liferay-frontend:add-menu>
 	</aui:form>
 </div>

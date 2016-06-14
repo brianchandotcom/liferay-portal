@@ -207,5 +207,5 @@ renderResponse.setTitle(ruleGroup.getName(locale));
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-classification-rule") %>' url="<%= addURL.toString() %>" />
+	<liferay-frontend:add-menu-item title="add-classification-rule" url="<%= addURL.toString() %>" />
 </liferay-frontend:add-menu>

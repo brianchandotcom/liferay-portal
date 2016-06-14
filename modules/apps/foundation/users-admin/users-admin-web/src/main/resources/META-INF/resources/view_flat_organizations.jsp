@@ -184,7 +184,7 @@ boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionC
 				<portlet:param name="type" value="<%= organizationType %>" />
 			</portlet:renderURL>
 
-			<liferay-frontend:add-menu-item title="<%= LanguageUtil.get(request, organizationType) %>" url="<%= addOrganizationURL.toString() %>" />
+			<liferay-frontend:add-menu-item title="<%= organizationType %>" url="<%= addOrganizationURL.toString() %>" />
 
 		<%
 		}

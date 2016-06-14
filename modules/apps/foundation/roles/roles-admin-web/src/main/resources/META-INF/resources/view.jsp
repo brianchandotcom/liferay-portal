@@ -79,7 +79,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, breadcrumbTitle, currentURL);
 		}
 		%>
 
-		<liferay-frontend:add-menu-item title="<%= LanguageUtil.get(request, title) %>" url="<%= addRoleURL.toString() %>" />
+		<liferay-frontend:add-menu-item title="<%= title %>" url="<%= addRoleURL.toString() %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 

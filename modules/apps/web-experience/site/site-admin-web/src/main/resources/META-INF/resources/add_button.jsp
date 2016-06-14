@@ -37,10 +37,10 @@
 	<liferay-frontend:add-menu>
 		<c:choose>
 			<c:when test="<%= layoutSetPrototypes.isEmpty() %>">
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addSiteURL.toString() %>" />
+				<liferay-frontend:add-menu-item title="add" url="<%= addSiteURL.toString() %>" />
 			</c:when>
 			<c:otherwise>
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "blank-site") %>' url="<%= addSiteURL.toString() %>" />
+				<liferay-frontend:add-menu-item title="blank-site" url="<%= addSiteURL.toString() %>" />
 
 				<%
 				for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {

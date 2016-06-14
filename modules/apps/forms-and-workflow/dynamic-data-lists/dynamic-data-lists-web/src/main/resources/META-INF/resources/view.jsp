@@ -114,7 +114,7 @@ RecordSetSearch recordSetSearch = ddlDisplayContext.getRecordSetSearch(portletUR
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addRecordSetURL.toString() %>" />
+		<liferay-frontend:add-menu-item title="add" url="<%= addRecordSetURL.toString() %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 

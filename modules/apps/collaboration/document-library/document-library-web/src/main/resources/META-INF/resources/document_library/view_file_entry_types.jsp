@@ -104,7 +104,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "document-types"));
 		</portlet:renderURL>
 
 		<liferay-frontend:add-menu>
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addFileEntryTypeURL %>" />
+			<liferay-frontend:add-menu-item title="add" url="<%= addFileEntryTypeURL %>" />
 		</liferay-frontend:add-menu>
 	</c:if>
 </div>

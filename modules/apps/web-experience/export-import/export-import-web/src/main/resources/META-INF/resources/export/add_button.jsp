@@ -57,5 +57,5 @@ List<ExportImportConfiguration> exportImportConfigurations = ExportImportConfigu
 		<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 	</liferay-portlet:renderURL>
 
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "custom-export") %>' url="<%= addNewCustomExportProcessURL %>" />
+	<liferay-frontend:add-menu-item title="custom-export" url="<%= addNewCustomExportProcessURL %>" />
 </liferay-frontend:add-menu>

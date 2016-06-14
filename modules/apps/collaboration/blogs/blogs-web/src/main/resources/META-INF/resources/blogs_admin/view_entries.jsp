@@ -153,7 +153,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-blog-entry") %>' url="<%= addEntryURL %>" />
+		<liferay-frontend:add-menu-item title="add-blog-entry" url="<%= addEntryURL %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 

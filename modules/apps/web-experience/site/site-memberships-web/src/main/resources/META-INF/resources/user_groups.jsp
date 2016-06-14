@@ -144,7 +144,7 @@ userGroupSearch.setResults(userGroups);
 
 <c:if test="<%= hasAssignMembersPermission %>">
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item id="selectUserGroups" title='<%= LanguageUtil.get(request, "assign-user-groups") %>' url="javascript:;" />
+		<liferay-frontend:add-menu-item id="selectUserGroups" title="assign-user-groups" url="javascript:;" />
 	</liferay-frontend:add-menu>
 </c:if>
 

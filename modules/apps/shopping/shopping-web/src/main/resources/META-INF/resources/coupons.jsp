@@ -161,7 +161,7 @@ couponSearch.setResults(coupons);
 </portlet:renderURL>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-coupon") %>' url="<%= editCouponURL.toString() %>" />
+	<liferay-frontend:add-menu-item title="add-coupon" url="<%= editCouponURL.toString() %>" />
 </liferay-frontend:add-menu>
 
 <aui:script>

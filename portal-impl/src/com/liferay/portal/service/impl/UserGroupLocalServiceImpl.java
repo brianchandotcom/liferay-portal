@@ -672,12 +672,12 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			UserGroup.class);
 
-		if (!indexer.isIndexerEnabled() ||
-			!PropsValues.USER_GROUPS_SEARCH_WITH_INDEX ||
-			isUseCustomSQL(params)) {
+		if (isUseCustomSQL(params, indexer)) {
+			LinkedHashMap<String, Object> finderSafeParams =
+				_getFinderSafeParams(params);
 
 			return userGroupFinder.filterCountByKeywords(
-				companyId, keywords, params);
+				companyId, keywords, finderSafeParams);
 		}
 
 		String name = null;
@@ -731,12 +731,12 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			UserGroup.class);
 
-		if (!indexer.isIndexerEnabled() ||
-			!PropsValues.USER_GROUPS_SEARCH_WITH_INDEX ||
-			isUseCustomSQL(params)) {
+		if (isUseCustomSQL(params, indexer)) {
+			LinkedHashMap<String, Object> finderSafeParams =
+				_getFinderSafeParams(params);
 
 			return userGroupFinder.filterCountByC_N_D(
-				companyId, name, description, params, andOperator);
+				companyId, name, description, finderSafeParams, andOperator);
 		}
 
 		try {
@@ -1132,11 +1132,24 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	}
 
 	protected boolean isUseCustomSQL(LinkedHashMap<String, Object> params) {
-		if (MapUtil.isEmpty(params)) {
+		return isUseCustomSQL(
+			params, IndexerRegistryUtil.nullSafeGetIndexer(UserGroup.class));
+	}
+
+	protected boolean isUseCustomSQL(
+		LinkedHashMap<String, Object> params, Indexer<?> indexer) {
+
+		if (indexer.isIndexerEnabled() &&
+			PropsValues.USER_GROUPS_SEARCH_WITH_INDEX &&
+			MapUtil.isEmpty(params)) {
+
 			return false;
 		}
 
-		return true;
+		LinkedHashMap<String, Object> finderSafeParams = _getFinderSafeParams(
+			params);
+
+		return !finderSafeParams.isEmpty();
 	}
 
 	protected void validate(long userGroupId, long companyId, String name)

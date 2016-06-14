@@ -91,6 +91,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.InputStream;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -201,11 +202,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// Workflow
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			user.getCompanyId(), groupId, userId, KBArticle.class.getName(),
-			resourcePrimKey, kbArticle, serviceContext);
-
-		return kbArticle;
+			resourcePrimKey, kbArticle, serviceContext,
+			Collections.<String, Serializable>emptyMap());
 	}
 
 	@Override
@@ -1130,12 +1130,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// Workflow
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			user.getCompanyId(), kbArticle.getGroupId(), userId,
 			KBArticle.class.getName(), resourcePrimKey, kbArticle,
-			serviceContext);
-
-		return kbArticle;
+			serviceContext, Collections.<String, Serializable>emptyMap());
 	}
 
 	@Override

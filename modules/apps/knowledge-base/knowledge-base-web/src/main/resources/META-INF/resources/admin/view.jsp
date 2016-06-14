@@ -24,7 +24,7 @@ long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey",
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-SearchContainer kbEntriesSearchContainer = new KBArticleSearch(renderRequest, PortletURLUtil.clone(currentURLObj, renderResponse));
+SearchContainer kbEntriesSearchContainer = new KBEntriesSearch(renderRequest, PortletURLUtil.clone(currentURLObj, renderResponse));
 
 boolean kbFolderView = (parentResourceClassNameId == kbFolderClassNameId);
 
@@ -99,6 +99,23 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			<liferay-frontend:management-bar-navigation
 				navigationKeys='<%= new String[] {"all"} %>'
 				portletURL="<%= navigationPortletURL %>"
+			/>
+
+			<%
+			Map<String, String> orderColumns = new HashMap<String, String>();
+
+			orderColumns.put("priority", "priority");
+			orderColumns.put("modified-date", "modified-date");
+			orderColumns.put("title", "title");
+
+			PortletURL sortURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
+			%>
+
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= kbEntriesSearchContainer.getOrderByCol() %>"
+				orderByType="<%= kbEntriesSearchContainer.getOrderByType() %>"
+				orderColumns="<%= orderColumns %>"
+				portletURL="<%= sortURL %>"
 			/>
 		</liferay-frontend:management-bar-filters>
 	</c:if>

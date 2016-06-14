@@ -16,9 +16,7 @@ package com.liferay.knowledge.base.web.search;
 
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
-import com.liferay.knowledge.base.util.comparator.KBEntriesTitleComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,7 +25,6 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Objects;
 
@@ -39,11 +36,11 @@ import javax.portlet.PortletURL;
  * @author Peter Shin
  * @author Brian Wing Shun Chan
  */
-public class KBArticleSearch extends SearchContainer<Object> {
+public class KBEntriesSearch extends SearchContainer<Object> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-articles-were-found";
 
-	public KBArticleSearch(
+	public KBEntriesSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {
 
 		super(
@@ -59,9 +56,9 @@ public class KBArticleSearch extends SearchContainer<Object> {
 				PortletPreferencesFactoryUtil.getPortletSetup(portletRequest);
 
 			String portletOrderByCol = portletPreferences.getValue(
-				"kbArticlesOrderByCol", StringPool.BLANK);
+				"kbArticlesOrderByCol", "priority");
 			String portletOrderByType = portletPreferences.getValue(
-				"kbArticlesOrderByType", StringPool.BLANK);
+				"kbArticlesOrderByType", "asc");
 
 			String oldOrderByCol = preferences.getValue(
 				KBPortletKeys.KNOWLEDGE_BASE_ADMIN, "kb-articles-order-by-col",
@@ -95,10 +92,10 @@ public class KBArticleSearch extends SearchContainer<Object> {
 
 			OrderByComparator<Object> orderByComparator = null;
 
-			if (parentResourceClassNameId ==
-					PortalUtil.getClassNameId(KBFolder.class)) {
-
-				orderByComparator = new KBEntriesTitleComparator<>(false, true);
+			if (parentResourceClassNameId == kbFolderClassNameId) {
+				orderByComparator =
+					KnowledgeBaseUtil.getKBEntriesOrderByComparator(
+						orderByCol, orderByType);
 			}
 			else {
 				orderByComparator =
@@ -116,6 +113,6 @@ public class KBArticleSearch extends SearchContainer<Object> {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		KBArticleSearch.class);
+		KBEntriesSearch.class);
 
 }

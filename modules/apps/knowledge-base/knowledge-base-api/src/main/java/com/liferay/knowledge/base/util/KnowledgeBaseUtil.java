@@ -35,6 +35,9 @@ import com.liferay.knowledge.base.util.comparator.KBCommentCreateDateComparator;
 import com.liferay.knowledge.base.util.comparator.KBCommentModifiedDateComparator;
 import com.liferay.knowledge.base.util.comparator.KBCommentStatusComparator;
 import com.liferay.knowledge.base.util.comparator.KBCommentUserNameComparator;
+import com.liferay.knowledge.base.util.comparator.KBEntriesModifiedDateComparator;
+import com.liferay.knowledge.base.util.comparator.KBEntriesPriorityComparator;
+import com.liferay.knowledge.base.util.comparator.KBEntriesTitleComparator;
 import com.liferay.knowledge.base.util.comparator.KBTemplateCreateDateComparator;
 import com.liferay.knowledge.base.util.comparator.KBTemplateModifiedDateComparator;
 import com.liferay.knowledge.base.util.comparator.KBTemplateTitleComparator;
@@ -322,6 +325,32 @@ public class KnowledgeBaseUtil {
 		}
 		else if (orderByCol.equals("user-name")) {
 			return new KBCommentUserNameComparator(ascending);
+		}
+
+		return null;
+	}
+
+	public static OrderByComparator<Object> getKBEntriesOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		if (Validator.isNull(orderByCol) || Validator.isNull(orderByType)) {
+			return null;
+		}
+
+		boolean ascending = false;
+
+		if (orderByType.equals("asc")) {
+			ascending = true;
+		}
+
+		if (orderByCol.equals("modified-date")) {
+			return new KBEntriesModifiedDateComparator(ascending, true);
+		}
+		else if (orderByCol.equals("priority")) {
+			return new KBEntriesPriorityComparator(ascending);
+		}
+		else if (orderByCol.equals("title")) {
+			return new KBEntriesTitleComparator(ascending, true);
 		}
 
 		return null;

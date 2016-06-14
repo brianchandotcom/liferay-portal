@@ -1063,7 +1063,7 @@
 				<then>
 					<var name="key_userScreenName" value="${userScreenName}" />
 
-					<execute function="Check" locator1="Checkbox#SELECT_ALL" />
+					<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 
 					<execute function="AssertClickNoError" locator1="Button#DEACTIVATE" value1="Deactivate" />
 

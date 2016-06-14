@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.item.selector.web.display.context;
 
+import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.item.selector.criterion.KnowlegeBaseAttachmentItemSelectorCriterion;
 import com.liferay.knowledge.base.item.selector.web.KnowlegeBaseAttachmentItemSelectorView;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
@@ -85,6 +87,23 @@ public class KnowlegeBaseAttachmentItemSelectorViewDisplayContext {
 
 	public String getTitle(Locale locale) {
 		return _knowlegeBaseAttachmentItemSelectorView.getTitle(locale);
+	}
+
+	public PortletURL getUploadURL(
+		LiferayPortletResponse liferayPortletResponse) {
+
+		PortletURL portletURL = liferayPortletResponse.createActionURL(
+			KBPortletKeys.KNOWLEDGE_BASE_ADMIN);
+
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "uploadKBArticleAttachments");
+		portletURL.setParameter(
+			"resourcePrimKey",
+			String.valueOf(
+				_knowlegeBaseAttachmentItemSelectorCriterion.
+					getResourcePrimKey()));
+
+		return portletURL;
 	}
 
 	public boolean isSearch() {

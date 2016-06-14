@@ -90,6 +90,7 @@ else {
 	repositoryEntriesCount="<%= portletFileEntriesCount %>"
 	showDragAndDropZone="<%= false %>"
 	tabName="<%= knowlegeBaseAttachmentItemSelectorViewDisplayContext.getTitle(locale) %>"
+	uploadURL="<%= knowlegeBaseAttachmentItemSelectorViewDisplayContext.getUploadURL(liferayPortletResponse) %>"
 />
 
 <%!

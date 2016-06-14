@@ -17,9 +17,10 @@ package com.liferay.knowledge.base.editor.configuration;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.item.selector.criterion.KnowlegeBaseAttachmentItemSelectorCriterion;
@@ -28,13 +29,20 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.language.LanguageResources;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
@@ -80,8 +88,8 @@ public class KBContentEditorConfigContributor
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
 
-		desiredItemSelectorReturnTypes.add(
-			new FileEntryItemSelectorReturnType());
+		desiredItemSelectorReturnTypes.add(new UploadableFileReturnType());
+		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
 
 		if (resourcePrimKey != 0) {
 			ItemSelectorCriterion attachmentItemSelectorCriterion =
@@ -118,6 +126,39 @@ public class KBContentEditorConfigContributor
 		itemSelectorCriteria = ArrayUtil.append(
 			itemSelectorCriteria, urlItemSelectorCriterion);
 
+		if (resourcePrimKey != 0) {
+			PortletURL portletURL =
+				requestBackedPortletURLFactory.createActionURL(
+					KBPortletKeys.KNOWLEDGE_BASE_ADMIN);
+
+			portletURL.setParameter(
+				ActionRequest.ACTION_NAME, "uploadKBArticleAttachments");
+			portletURL.setParameter(
+				"resourcePrimKey", String.valueOf(resourcePrimKey));
+
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(
+					LocaleUtil.toLanguageId(themeDisplay.getLocale()));
+
+			ItemSelectorCriterion uploadItemSelectorCriterion =
+				new UploadItemSelectorCriterion(
+					portletURL.toString(),
+					ResourceBundleUtil.getString(
+						resourceBundle, "article-attachments"));
+
+			List<ItemSelectorReturnType> uploadDesiredItemSelectorReturnTypes =
+				new ArrayList<>();
+
+			uploadDesiredItemSelectorReturnTypes.add(
+				new UploadableFileReturnType());
+
+			uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+				uploadDesiredItemSelectorReturnTypes);
+
+			itemSelectorCriteria = ArrayUtil.append(
+				itemSelectorCriteria, uploadItemSelectorCriterion);
+		}
+
 		String namespace = GetterUtil.getString(
 			inputEditorTaglibAttributes.get(
 				"liferay-ui:input-editor:namespace"));
@@ -138,6 +179,18 @@ public class KBContentEditorConfigContributor
 		_itemSelector = itemSelector;
 	}
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.knowledge.base.item.selector.web)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader, LanguageResources.RESOURCE_BUNDLE_LOADER);
+	}
+
 	private ItemSelector _itemSelector;
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

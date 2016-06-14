@@ -16,15 +16,12 @@ package com.liferay.taglib.aui;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseSelectTag;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,38 +35,17 @@ import javax.servlet.jsp.JspException;
 public class SelectTag extends BaseSelectTag {
 
 	@Override
-	public int doEndTag() throws JspException {
-		updateFormValidators();
-
-		return super.doEndTag();
-	}
-
-	@Override
 	public int doStartTag() throws JspException {
-		addRequiredValidatorTag();
+		if (getRequired()) {
+			addRequiredValidatorTag();
+		}
 
 		return super.doStartTag();
 	}
 
-	protected void addRequiredValidatorTag() {
-		if (!getRequired()) {
-			return;
-		}
-
-		ValidatorTag validatorTag = new ValidatorTagImpl(
-			"required", null, null, false);
-
-		addValidatorTag("required", validatorTag);
-	}
-
-	protected void addValidatorTag(
-		String validatorName, ValidatorTag validatorTag) {
-
-		if (_validators == null) {
-			_validators = new HashMap<>();
-		}
-
-		_validators.put(validatorName, validatorTag);
+	@Override
+	public String getInputName() {
+		return getName();
 	}
 
 	@Override
@@ -140,30 +116,17 @@ public class SelectTag extends BaseSelectTag {
 		setNamespacedAttribute(request, "listTypeFieldName", listTypeFieldName);
 		setNamespacedAttribute(request, "title", String.valueOf(title));
 		setNamespacedAttribute(request, "value", value);
-	}
 
-	protected void updateFormValidators() {
-		if (_validators == null) {
-			return;
-		}
+		Map<String, ValidatorTag> validatorTags = getValidatorTags();
 
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
+		if ((validatorTags != null) &&
+			(validatorTags.get("required") != null)) {
 
-		Map<String, List<ValidatorTag>> validatorTagsMap =
-			(Map<String, List<ValidatorTag>>)request.getAttribute(
-				"aui:form:validatorTagsMap");
-
-		if (validatorTagsMap != null) {
-			List<ValidatorTag> validatorTags = ListUtil.fromMapValues(
-				_validators);
-
-			validatorTagsMap.put(getName(), validatorTags);
+			setNamespacedAttribute(
+				request, "required", Boolean.TRUE.toString());
 		}
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
-
-	private Map<String, ValidatorTag> _validators;
 
 }

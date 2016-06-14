@@ -119,7 +119,7 @@ public class LPKGDeployerRegistrar {
 
 			for (String contextName : contextNames) {
 				_moduleLocalService.addModule(
-					0, app.getAppId(), StringPool.BLANK, StringPool.BLANK,
+					0, app.getAppId(), contextName, StringPool.BLANK,
 					contextName);
 			}
 		}

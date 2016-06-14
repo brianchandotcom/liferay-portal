@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.knowledge.base.web.internal.editor.configuration;
+package com.liferay.knowledge.base.editor.configuration.internal;
 
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;

@@ -40,6 +40,7 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.plugins.WarPluginConvention;
+import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
@@ -306,7 +307,8 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTaskBuildWSDL(
-		BuildWSDLTask buildWSDLTask, Configuration wsdlBuilderConfiguration) {
+		final BuildWSDLTask buildWSDLTask, Copy processResourcesTask,
+		Configuration wsdlBuilderConfiguration) {
 
 		FileCollection fileCollection = buildWSDLTask.getSource();
 
@@ -325,6 +327,19 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 			GradleUtil.addDependency(
 				buildWSDLTask.getProject(),
 				JavaPlugin.COMPILE_CONFIGURATION_NAME, taskOutputs.getFiles());
+		}
+
+		if (buildWSDLTask.isIncludeWSDLs() && (processResourcesTask != null)) {
+			processResourcesTask.into(
+				"wsdl",
+				new Closure<Void>(null) {
+
+					@SuppressWarnings("unused")
+					public void doCall(CopySpec copySpec) {
+						copySpec.from(buildWSDLTask.getSource());
+					}
+
+				});
 		}
 	}
 
@@ -366,6 +381,9 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 
 		TaskContainer taskContainer = project.getTasks();
 
+		final Copy processResourcesTask = (Copy)taskContainer.findByName(
+			JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+
 		taskContainer.withType(
 			BuildWSDLTask.class,
 			new Action<BuildWSDLTask>() {
@@ -373,7 +391,8 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 				@Override
 				public void execute(BuildWSDLTask buildWSDLTask) {
 					configureTaskBuildWSDL(
-						buildWSDLTask, wsdlBuilderConfiguration);
+						buildWSDLTask, processResourcesTask,
+						wsdlBuilderConfiguration);
 				}
 
 			});

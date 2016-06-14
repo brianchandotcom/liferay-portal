@@ -240,7 +240,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		addTaskCopyLibs(project);
 
-		if (isDeployToTools(project)) {
+		if (deployToTools) {
 			addTaskDeployTool(project);
 		}
 

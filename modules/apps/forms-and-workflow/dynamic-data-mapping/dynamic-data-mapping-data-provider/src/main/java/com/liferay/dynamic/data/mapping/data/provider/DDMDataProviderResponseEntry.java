@@ -14,15 +14,32 @@
 
 package com.liferay.dynamic.data.mapping.data.provider;
 
+import java.io.Serializable;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * @author Luca Comin
+ * @author Marcellus Tavares
  */
-public interface DDMDataProvider {
+public class DDMDataProviderResponseEntry implements Serializable {
 
-	public DDMDataProviderResponse getData(
-			DDMDataProviderContext ddmDataProviderContext)
-		throws DDMDataProviderException;
+	public Map<String, Object> getProperties() {
+		return _properties;
+	}
 
-	public Class<?> getSettings();
+	public <T> T getProperty(String name) {
+		return (T)_properties.get(name);
+	}
+
+	public void setProperties(Map<String, Object> properties) {
+		_properties.putAll(properties);
+	}
+
+	public void setProperty(String name, Object value) {
+		_properties.put(name, value);
+	}
+
+	private final Map<String, Object> _properties = new HashMap<>();
 
 }

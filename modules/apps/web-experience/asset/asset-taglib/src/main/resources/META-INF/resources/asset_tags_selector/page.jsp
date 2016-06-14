@@ -53,6 +53,15 @@ if (!ignoreRequestValue) {
 </div>
 
 <aui:script use="liferay-asset-tags-selector">
+
+	<%
+	PortletURL portletURL = PortletProviderUtil.getPortletURL(request, AssetTag.class.getName(), PortletProvider.Action.BROWSE);
+
+	portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+	String portletId = PortletProviderUtil.getPortletId(AssetTag.class.getName(), PortletProvider.Action.BROWSE);
+	%>
+
 	var assetTagsSelector = new Liferay.AssetTagsSelector(
 		{
 			allowAddEntry: <%= allowAddEntry %>,
@@ -70,7 +79,9 @@ if (!ignoreRequestValue) {
 			</c:if>
 
 			instanceVar: '<portlet:namespace /><%= id %>',
-			portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>
+			namespace: '<%= PortalUtil.getPortletNamespace(portletId) %>',
+			portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
+			portletURL: '<%= portletURL.toString() %>'
 		}
 	).render();
 

@@ -1,36 +1,8 @@
-FileTree modulesFileTree
-
-if (Boolean.getBoolean("portal.build")) {
-	modulesFileTree = fileTree(dir: rootDir, include: "*/**/.lfrbuild-portal")
-}
-else {
-	modulesFileTree = fileTree(rootDir) {
-		exclude "**/bin/"
-		exclude "**/tmp/"
-		exclude "sdk/*/samples/"
-		exclude "sdk/gradle-templates/classes/"
-		exclude "sdk/gradle-templates/src/"
-		exclude "util/*/samples/"
-
-		include "*/**/build.gradle"
-
-		if (!Boolean.getBoolean("modules.only.build")) {
-			include "**/apps/foundation/frontend-theme/*/gulpfile.js"
-			include "*/**/build.xml"
-		}
-	}
+buildscript {
+	apply from: "build-buildscript.gradle", to: buildscript
 }
 
-URI rootURI = rootDir.toURI()
-
-modulesFileTree.each {
-	String dirName = rootURI.relativize(it.parentFile.toURI())
-
-	dirName = dirName[0 .. -2]
-	dirName = dirName.replace("/" as char, ":" as char)
-
-	include ":" + dirName
-}
+apply plugin: "com.liferay.settings.plugin"
 
 String testClassGroupIndex = System.getProperty("test.class.group.index")
 

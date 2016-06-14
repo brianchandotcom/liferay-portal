@@ -1,24 +1,15 @@
-import groovy.io.FileType
-import groovy.io.FileVisitResult
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins", version: "latest.release"
+	}
 
-URI rootURI = rootDir.toURI()
+	repositories {
+		mavenLocal()
 
-rootDir.traverse(
-	preDir: {
-		File bndBndFile = new File(it, "bnd.bnd")
-		File gulpfileJsFile = new File(it, "gulpfile.js")
-
-		if (!bndBndFile.exists() && !gulpfileJsFile.exists()) {
-			return FileVisitResult.CONTINUE
+		maven {
+			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
 		}
+	}
+}
 
-		String dirName = rootURI.relativize(it.toURI())
-
-		dirName = dirName[0 .. -2]
-
-		include dirName.replace('/' as char, ':' as char)
-
-		return FileVisitResult.SKIP_SUBTREE
-	},
-	type: FileType.DIRECTORIES
-)
+apply plugin: "com.liferay.settings.plugin"

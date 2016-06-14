@@ -18,6 +18,7 @@ import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.service.AppLocalService;
 import com.liferay.marketplace.service.ModuleLocalService;
 import com.liferay.marketplace.util.ContextUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -84,15 +85,43 @@ public class LPKGDeployerRegistrar {
 
 		_moduleLocalService.deleteModules(app.getAppId());
 
-		for (Bundle bundle : bundles) {
-			Dictionary<String, String> headers = bundle.getHeaders();
+		if (!bundles.isEmpty()) {
+			for (Bundle bundle : bundles) {
+				Dictionary<String, String> headers = bundle.getHeaders();
 
-			String contextName = ContextUtil.getContextName(
-				GetterUtil.getString(headers.get("Web-ContextPath")));
+				String contextName = ContextUtil.getContextName(
+					GetterUtil.getString(headers.get("Web-ContextPath")));
 
-			_moduleLocalService.addModule(
-				app.getUserId(), app.getAppId(), bundle.getSymbolicName(),
-				String.valueOf(bundle.getVersion()), contextName);
+				_moduleLocalService.addModule(
+					app.getUserId(), app.getAppId(), bundle.getSymbolicName(),
+					String.valueOf(bundle.getVersion()), contextName);
+			}
+		}
+		else {
+			String[] bundleStrings = StringUtil.split(
+				properties.getProperty("bundles"));
+
+			for (String bundleString : bundleStrings) {
+				String[] bundleStringParts = StringUtil.split(
+					bundleString, CharPool.POUND);
+
+				String bundleSymbolicName = bundleStringParts[0];
+				String bundleVersion = bundleStringParts[1];
+				String contextName = bundleStringParts[2];
+
+				_moduleLocalService.addModule(
+					0, app.getAppId(), bundleSymbolicName, bundleVersion,
+					contextName);
+			}
+
+			String[] contextNames = StringUtil.split(
+				properties.getProperty("context-names"));
+
+			for (String contextName : contextNames) {
+				_moduleLocalService.addModule(
+					0, app.getAppId(), StringPool.BLANK, StringPool.BLANK,
+					contextName);
+			}
 		}
 	}
 

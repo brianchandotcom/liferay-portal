@@ -56,6 +56,11 @@ public class BuildWSDLTask extends SourceTask {
 		return _includeSource;
 	}
 
+	@Input
+	public boolean isIncludeWSDLs() {
+		return _includeWSDLs;
+	}
+
 	public void setBuildLibs(boolean buildLibs) {
 		_buildLibs = buildLibs;
 	}
@@ -68,9 +73,14 @@ public class BuildWSDLTask extends SourceTask {
 		_includeSource = includeSource;
 	}
 
+	public void setIncludeWSDLs(boolean includeWSDLs) {
+		_includeWSDLs = includeWSDLs;
+	}
+
 	private boolean _buildLibs = true;
 	private Object _destinationDir;
 	private final GenerateOptions _generateOptions = new GenerateOptions();
 	private boolean _includeSource = true;
+	private boolean _includeWSDLs = true;
 
 }

@@ -9,12 +9,6 @@ AUI.add(
 
 		var CSS_INPUT_NODE = 'lfr-tag-selector-input';
 
-		var CSS_NO_MATCHES = 'no-matches';
-
-		var CSS_POPUP = 'lfr-tag-selector-popup';
-
-		var CSS_TAGS_LIST = 'lfr-tags-selector-list';
-
 		var MAP_INVALID_CHARACTERS = AArray.hash(
 			[
 				'"',
@@ -49,26 +43,6 @@ AUI.add(
 		var NAME = 'tagselector';
 
 		var STR_BLANK = '';
-
-		var TPL_CHECKED = ' checked="checked" ';
-
-		var TPL_LOADING = '<div class="loading-animation" />';
-
-		var TPL_SEARCH_FORM = '<form action="javascript:;" class="form-search lfr-tag-selector-search">' +
-				'<input class="form-control lfr-tag-selector-input search-query" placeholder="{0}" type="text" />' +
-			'</form>';
-
-		var TPL_TAG = new A.Template(
-			'<div class="lfr-tag-selector-tags {[(!values.tags || !values.tags.length) ? "', CSS_NO_MATCHES, '" : "', STR_BLANK, '" ]}">',
-				'<tpl for="tags">',
-					'<label class="checkbox" title="{name}"><input {checked} type="checkbox" value="{name}" /> <span class="lfr-tag-text">{name}</span></label>',
-				'</tpl>',
-
-				'<div class="lfr-tag-message">{message}</div>',
-			'</div>'
-		);
-
-		var TPL_TAGS_CONTAINER = '<div class="' + CSS_TAGS_LIST + '"></div>';
 
 		/**
 		 * OPTIONS
@@ -143,12 +117,20 @@ AUI.add(
 						value: ''
 					},
 
+					namespace: {
+						validator: Lang.isString
+					},
+
 					matchKey: {
 						value: 'value'
 					},
 
 					portalModelResource: {
 						value: false
+					},
+
+					portletURL: {
+						validator: Lang.isString
 					},
 
 					schema: {
@@ -237,61 +219,6 @@ AUI.add(
 						instance.get('boundingBox').on('keypress', instance._onKeyPress, instance);
 					},
 
-					_getEntries: function(callback) {
-						var instance = this;
-
-						Liferay.Service(
-							'/assettag/get-groups-tags',
-							{
-								groupIds: instance.get('groupIds')
-							},
-							callback
-						);
-					},
-
-					_getPopup: function() {
-						var instance = this;
-
-						if (!instance._popup) {
-							var popup = Liferay.Util.getTop().Liferay.Util.Window.getWindow(
-								{
-									dialog: {
-										cssClass: CSS_POPUP,
-										hideClass: 'hide-accessible',
-										width: 600
-									}
-								}
-							);
-
-							var bodyNode = popup.bodyNode;
-
-							bodyNode.html(STR_BLANK);
-
-							var searchForm = A.Node.create(Lang.sub(TPL_SEARCH_FORM, [Liferay.Language.get('search')]));
-
-							bodyNode.append(searchForm);
-
-							var searchField = searchForm.one('input');
-
-							var entriesNode = A.Node.create(TPL_TAGS_CONTAINER);
-
-							bodyNode.append(entriesNode);
-
-							popup.searchField = searchField;
-							popup.entriesNode = entriesNode;
-
-							instance._popup = popup;
-
-							instance._initSearch();
-
-							var onCheckboxClick = A.bind('_onCheckboxClick', instance);
-
-							entriesNode.delegate('click', onCheckboxClick, 'input[type=checkbox]');
-						}
-
-						return instance._popup;
-					},
-
 					_getTagsDataSource: function() {
 						var instance = this;
 
@@ -342,47 +269,10 @@ AUI.add(
 						return dataSource;
 					},
 
-					_initSearch: function() {
-						var instance = this;
-
-						var popup = instance._popup;
-
-						popup.liveSearch = new A.LiveSearch(
-							{
-								after: {
-									search: function() {
-										var fieldsets = popup.entriesNode.all('fieldset');
-
-										fieldsets.each(
-											function(item, index) {
-												var visibleEntries = item.one('label:not(.hide)');
-
-												var action = 'addClass';
-
-												if (visibleEntries) {
-													action = 'removeClass';
-												}
-
-												item[action](CSS_NO_MATCHES);
-											}
-										);
-									}
-								},
-								data: function(node) {
-									var value = node.attr('title');
-
-									return value.toLowerCase();
-								},
-								input: popup.searchField,
-								nodes: '.' + CSS_TAGS_LIST + ' label'
-							}
-						);
-					},
-
 					_namespace: function(name) {
 						var instance = this;
 
-						return instance.get('instanceVar') + name + instance.get('guid');
+						return instance.get('namespace');
 					},
 
 					_onAddEntryClick: function(event) {
@@ -391,22 +281,6 @@ AUI.add(
 						event.domEvent.preventDefault();
 
 						instance._addEntries();
-					},
-
-					_onCheckboxClick: function(event) {
-						var instance = this;
-
-						var checkbox = event.currentTarget;
-						var checked = checkbox.get('checked');
-						var value = checkbox.val();
-
-						var action = 'remove';
-
-						if (checked) {
-							action = 'add';
-						}
-
-						instance[action](value);
 					},
 
 					_onKeyPress: function(event) {
@@ -464,58 +338,43 @@ AUI.add(
 						instance.entryHolder.placeAfter(iconsBoundingBox);
 					},
 
-					_renderTemplate: function(data) {
-						var instance = this;
-
-						var popup = instance._popup;
-
-						TPL_TAG.render(
-							{
-								checked: data.checked,
-								message: Liferay.Language.get('no-tags-were-found'),
-								name: data.name,
-								tags: data
-							},
-							popup.entriesNode
-						);
-
-						popup.searchField.val('');
-
-						popup.liveSearch.get('nodes').refresh();
-
-						popup.liveSearch.refreshIndex();
-					},
-
 					_setGroupIds: function(value) {
 						return value.split(',');
-					},
-
-					_showPopup: function(event) {
-						var instance = this;
-
-						event.domEvent.preventDefault();
-
-						var popup = instance._getPopup();
-
-						popup.entriesNode.append(
-							A.Node.create(TPL_LOADING)
-						);
-
-						popup.show();
 					},
 
 					_showSelectPopup: function(event) {
 						var instance = this;
 
-						instance._showPopup(event);
+						event.domEvent.preventDefault();
 
-						instance._popup.titleNode.html(Liferay.Language.get('tags'));
+						var uri = instance.get('portletURL');
 
-						instance._getEntries(
-							function(entries) {
-								instance._updateSelectList(entries);
+						uri = Liferay.Util.addParams(instance.get('namespace') + 'eventName=' + instance.get('namespace') + 'selectTag', uri);
+
+						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+							{
+								eventName: instance.get('namespace') + 'selectTag',
+								on: {
+									selectedItemChange: function(event) {
+										var selectedItem = event.newVal;
+
+										if (selectedItem) {
+											AArray.each(
+												selectedItem.split(','),
+												function(value) {
+													instance['add'](value);
+												}
+											);
+										}
+									}
+								},
+								'strings.add': Liferay.Language.get('done'),
+								title: Liferay.Language.get('tags'),
+								url: uri
 							}
 						);
+
+						itemSelectorDialog.open();
 					},
 
 					_updateHiddenInput: function(event) {
@@ -524,34 +383,6 @@ AUI.add(
 						var hiddenInput = instance.get('hiddenInput');
 
 						hiddenInput.val(instance.entries.keys.join());
-
-						var popup = instance._popup;
-
-						if (popup && popup.get('visible')) {
-							var checkbox = popup.bodyNode.one('input[value=' + event.attrName + ']');
-
-							if (checkbox) {
-								var checked = false;
-
-								if (event.type == 'dataset:add') {
-									checked = true;
-								}
-
-								checkbox.attr('checked', checked);
-							}
-						}
-					},
-
-					_updateSelectList: function(data) {
-						var instance = this;
-
-						for (var i = 0; i < data.length; i++) {
-							var tag = data[i];
-
-							tag.checked = instance.entries.indexOfKey(tag.name) > -1 ? TPL_CHECKED : STR_BLANK;
-						}
-
-						instance._renderTemplate(data);
 					}
 				}
 			}
@@ -561,6 +392,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['array-extras', 'async-queue', 'aui-autocomplete-deprecated', 'aui-io-plugin-deprecated', 'aui-io-request', 'aui-live-search-deprecated', 'aui-template-deprecated', 'aui-textboxlist', 'datasource-cache', 'liferay-service-datasource', 'liferay-util-window']
+		requires: ['array-extras', 'async-queue', 'aui-autocomplete-deprecated', 'aui-io-plugin-deprecated', 'aui-io-request', 'aui-live-search-deprecated', 'aui-template-deprecated', 'aui-textboxlist', 'datasource-cache', 'liferay-item-selector-dialog', 'liferay-service-datasource', 'liferay-util-window']
 	}
 );

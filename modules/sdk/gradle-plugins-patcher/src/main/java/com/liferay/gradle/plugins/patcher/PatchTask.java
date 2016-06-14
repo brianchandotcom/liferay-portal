@@ -156,7 +156,7 @@ public class PatchTask extends DefaultTask {
 	}
 
 	@InputFile
-	public File getOriginalLibSrcFile() throws Exception {
+	public File getOriginalLibSrcFile() {
 		return GradleUtil.toFile(getProject(), _originalLibSrcFile);
 	}
 

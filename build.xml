@@ -327,6 +327,7 @@
 				<gradle-execute dir="${project.dir}/modules" task="deployTool">
 					<arg value="--parallel" />
 					<arg value="-Dportal.build=true" />
+					<arg value="deployAppServerLib" />
 					<arg value="deployConfigs" />
 				</gradle-execute>
 

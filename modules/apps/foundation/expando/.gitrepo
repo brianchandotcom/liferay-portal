@@ -4,7 +4,7 @@
 ;
 [subrepo]
 	cmdver = liferay
-	commit = 013c0e2725b608ef25f01d2d9b78d3e65a427241
+	commit = d7cb8baf1b8e4495cd0898a3da7e6b6172852bd7
 	mode = push
-	parent = e48e5e99b7fa5d0ddae02bc4ba5ccdfb328e7ba1
+	parent = 31a2c621b789b1e59508fe8ee0367ab2733ce1df
 	remote = git@github.com:liferay/com-liferay-expando.git

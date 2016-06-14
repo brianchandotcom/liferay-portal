@@ -164,6 +164,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/" +
 			"public";
 
+	public static final String DEPLOY_APP_SERVER_LIB_TASK_NAME =
+		"deployAppServerLib";
+
 	public static final String DEPLOY_TOOL_TASK_NAME = "deployTool";
 
 	public static final String INSTALL_CACHE_TASK_NAME = "installCache";
@@ -193,7 +196,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project.getRootProject(), "portal-impl");
 		final boolean publishing = isPublishing(project);
 		boolean testProject = isTestProject(project);
-		boolean deployToTools = isDeployToTools(project);
+
+		boolean deployToAppServerLibs = false;
+		boolean deployToTools = false;
+
+		if (FileUtil.exists(project, ".lfrbuild-app-server-lib")) {
+			deployToAppServerLibs = true;
+		}
+		else if (FileUtil.exists(project, ".lfrbuild-tool")) {
+			deployToTools = true;
+		}
 
 		applyPlugins(project);
 
@@ -240,8 +252,15 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		addTaskCopyLibs(project);
 
-		if (isDeployToTools(project)) {
-			addTaskDeployTool(project);
+		if (deployToAppServerLibs) {
+			addTaskAlias(
+				project, DEPLOY_APP_SERVER_LIB_TASK_NAME,
+				LiferayBasePlugin.DEPLOY_TASK_NAME);
+		}
+		else if (deployToTools) {
+			addTaskAlias(
+				project, DEPLOY_TOOL_TASK_NAME,
+				LiferayBasePlugin.DEPLOY_TASK_NAME);
 		}
 
 		final Jar jarJavadocTask = addTaskJarJavadoc(project);
@@ -256,7 +275,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		configureBasePlugin(project, portalRootDir);
 		configureBundleDefaultInstructions(project, portalRootDir, publishing);
 		configureConfigurations(project);
-		configureDeployDir(project, deployToTools);
+		configureDeployDir(project, deployToAppServerLibs, deployToTools);
 		configureJavaPlugin(project);
 		configureProject(project);
 		configureRepositories(project);
@@ -498,6 +517,20 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
 			"org.springframework", "spring-test", "3.2.15.RELEASE");
+	}
+
+	protected Task addTaskAlias(
+		Project project, String taskName, String originalTaskName) {
+
+		Task task = project.task(taskName);
+
+		Task originalTask = GradleUtil.getTask(project, originalTaskName);
+
+		task.dependsOn(originalTask);
+		task.setDescription("Alias for " + originalTask);
+		task.setGroup(originalTask.getGroup());
+
+		return task;
 	}
 
 	protected Task addTaskBaseline(
@@ -742,19 +775,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		classesTask.dependsOn(copy);
 
 		return copy;
-	}
-
-	protected Task addTaskDeployTool(Project project) {
-		Task task = project.task(DEPLOY_TOOL_TASK_NAME);
-
-		Task deployTask = GradleUtil.getTask(
-			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
-
-		task.dependsOn(deployTask);
-		task.setDescription("Alias for " + deployTask);
-		task.setGroup(BasePlugin.BUILD_GROUP);
-
-		return task;
 	}
 
 	protected InstallCacheTask addTaskInstallCache(final Project project) {
@@ -1324,7 +1344,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	protected void configureDeployDir(
-		final Project project, final boolean deployToTools) {
+		final Project project, final boolean deployToAppServerLibs,
+		final boolean deployToTools) {
 
 		final LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
@@ -1334,16 +1355,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
+					if (deployToAppServerLibs) {
+						return new File(
+							liferayExtension.getAppServerPortalDir(),
+							"WEB-INF/lib");
+					}
+
 					if (deployToTools) {
 						return new File(
 							liferayExtension.getLiferayHome(),
 							"tools/" + project.getName());
-					}
-
-					if (FileUtil.exists(project, ".lfrbuild-app-server-lib")) {
-						return new File(
-							liferayExtension.getAppServerPortalDir(),
-							"WEB-INF/lib");
 					}
 
 					if (FileUtil.exists(project, ".lfrbuild-static")) {
@@ -2194,14 +2215,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		sourceDirectorySet = sourceSet.getAllSource();
 
 		if (!sourceDirectorySet.isEmpty()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isDeployToTools(Project project) {
-		if (FileUtil.exists(project, ".lfrbuild-tool")) {
 			return true;
 		}
 

@@ -3453,6 +3453,10 @@
 
 		<execute macro="Navigator#openURL" />
 
+		<execute macro="Page#assertNodePortPG">
+			<var name="nodePort" value="8080" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Global" />
 		</execute>

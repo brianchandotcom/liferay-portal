@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.exportimport.UserGroupImportTransactionThreadLocal;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
@@ -503,8 +505,30 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		long companyId, String keywords, LinkedHashMap<String, Object> params,
 		int start, int end, OrderByComparator<UserGroup> obc) {
 
-		return userGroupFinder.filterFindByKeywords(
-			companyId, keywords, params, start, end, obc);
+		if (isUseCustomSQL(params)) {
+			LinkedHashMap<String, Object> finderSafeParams =
+				_getFinderSafeParams(params);
+
+			return userGroupFinder.filterFindByKeywords(
+				companyId, keywords, finderSafeParams, start, end, obc);
+		}
+
+		String orderByType = StringPool.BLANK;
+
+		if (obc.isAscending()) {
+			orderByType = "asc";
+		}
+
+		Sort sort = SortFactoryUtil.getSort(
+			UserGroup.class, obc.getOrderBy(), orderByType);
+
+		try {
+			return UsersAdminUtil.getUserGroups(
+				search(companyId, keywords, params, start, end, sort));
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	/**
@@ -597,8 +621,33 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		LinkedHashMap<String, Object> params, boolean andOperator, int start,
 		int end, OrderByComparator<UserGroup> obc) {
 
-		return userGroupFinder.filterFindByC_N_D(
-			companyId, name, description, params, andOperator, start, end, obc);
+		if (isUseCustomSQL(params)) {
+			LinkedHashMap<String, Object> finderSafeParams =
+				_getFinderSafeParams(params);
+
+			return userGroupFinder.filterFindByC_N_D(
+				companyId, name, description, finderSafeParams, andOperator,
+				start, end, obc);
+		}
+
+		String orderByType = StringPool.BLANK;
+
+		if (obc.isAscending()) {
+			orderByType = "asc";
+		}
+
+		Sort sort = SortFactoryUtil.getSort(
+			UserGroup.class, obc.getOrderBy(), orderByType);
+
+		try {
+			return UsersAdminUtil.getUserGroups(
+				search(
+					companyId, name, description, params, andOperator, start,
+					end, sort));
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
 	}
 
 	/**

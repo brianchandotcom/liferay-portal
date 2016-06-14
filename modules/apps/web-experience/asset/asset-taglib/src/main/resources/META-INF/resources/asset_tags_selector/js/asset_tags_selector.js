@@ -305,15 +305,19 @@ AUI.add(
 
 						var contentBox = instance.get('contentBox');
 
-						var buttonGroup = [
-							{
-								label: Liferay.Language.get('select'),
-								on: {
-									click: A.bind('_showSelectPopup', instance)
-								},
-								title: Liferay.Language.get('select-tags')
-							}
-						];
+						var buttonGroup = [];
+
+						if (instance.get('portletURL')) {
+							buttonGroup.unshift(
+								{
+									label: Liferay.Language.get('select'),
+									on: {
+										click: A.bind('_showSelectPopup', instance)
+									},
+									title: Liferay.Language.get('select-tags')
+								}
+							);
+						}
 
 						if (instance.get('allowAddEntry')) {
 							buttonGroup.unshift(

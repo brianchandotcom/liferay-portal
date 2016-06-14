@@ -193,7 +193,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project.getRootProject(), "portal-impl");
 		final boolean publishing = isPublishing(project);
 		boolean testProject = isTestProject(project);
-		boolean deployToTools = isDeployToTools(project);
+
+		boolean deployToTools = false;
+
+		if (FileUtil.exists(project, ".lfrbuild-tool")) {
+			deployToTools = true;
+		}
 
 		applyPlugins(project);
 
@@ -2194,14 +2199,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		sourceDirectorySet = sourceSet.getAllSource();
 
 		if (!sourceDirectorySet.isEmpty()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	protected boolean isDeployToTools(Project project) {
-		if (FileUtil.exists(project, ".lfrbuild-tool")) {
 			return true;
 		}
 

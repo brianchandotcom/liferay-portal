@@ -188,7 +188,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 		copy.eachFile(new StripPathSegmentsAction(2));
 
 		copy.from(
-			new Closure<Void>(null) {
+			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
 				public FileTree doCall() {
@@ -266,7 +266,7 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 
 		return cacheExtension.task(
 			LiferayThemePlugin.GULP_BUILD_TASK_NAME,
-			new Closure<Void>(null) {
+			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
 				public void doCall(TaskCache taskCache) {

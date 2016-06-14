@@ -345,7 +345,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		TaskExecutionGraph taskExecutionGraph = gradle.getTaskGraph();
 
 		taskExecutionGraph.whenReady(
-			new Closure<Void>(null) {
+			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
 				public void doCall(TaskExecutionGraph taskExecutionGraph) {
@@ -922,7 +922,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, UPDATE_FILE_VERSIONS_TASK_NAME, ReplaceRegexTask.class);
 
 		replaceRegexTask.pre(
-			new Closure<String>(null) {
+			new Closure<String>(project) {
 
 				@SuppressWarnings("unused")
 				public String doCall(String content, File file) {
@@ -941,7 +941,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			});
 
 		replaceRegexTask.replaceOnlyIf(
-			new Closure<Boolean>(null) {
+			new Closure<Boolean>(project) {
 
 				@SuppressWarnings("unused")
 				public Boolean doCall(
@@ -1623,7 +1623,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTaskJarSources(final Jar jarSourcesTask) {
-		Project project = jarSourcesTask.getProject();
+		final Project project = jarSourcesTask.getProject();
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -1638,14 +1638,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 							@Override
 							public FileCollection call() throws Exception {
-								Project project = patchTask.getProject();
-
 								return project.zipTree(
 									patchTask.getOriginalLibSrcFile());
 							}
 
 						},
-						new Closure<Void>(null) {
+						new Closure<Void>(project) {
 
 							@SuppressWarnings("unused")
 							public void doCall(CopySpec copySpec) {
@@ -1681,7 +1679,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 							}
 
 						},
-						new Closure<Void>(null) {
+						new Closure<Void>(project) {
 
 							@SuppressWarnings("unused")
 							public void doCall(CopySpec copySpec) {

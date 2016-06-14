@@ -134,16 +134,15 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 	public static void unzip(
 		Project project, final File file, final File destinationDir) {
 
-		Closure<Void> closure = new Closure<Void>(null) {
+		project.ant(
+			new Closure<Void>(project) {
 
-			@SuppressWarnings("unused")
-			public void doCall(AntBuilder antBuilder) {
-				_invokeAntMethodUnzip(antBuilder, file, destinationDir);
-			}
+				@SuppressWarnings("unused")
+				public void doCall(AntBuilder antBuilder) {
+					_invokeAntMethodUnzip(antBuilder, file, destinationDir);
+				}
 
-		};
-
-		project.ant(closure);
+			});
 	}
 
 	private static void _invokeAntMethodUnzip(

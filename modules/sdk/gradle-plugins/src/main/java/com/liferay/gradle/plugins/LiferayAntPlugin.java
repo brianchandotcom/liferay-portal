@@ -67,7 +67,7 @@ public class LiferayAntPlugin implements Plugin<Project> {
 
 		artifacts.add(
 			Dependency.ARCHIVES_CONFIGURATION, pluginFile,
-			new Closure<Void>(null) {
+			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
 				public void doCall(

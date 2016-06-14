@@ -237,18 +237,19 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 		BuildWSDLTask buildWSDLTask, File inputFile, Task compileTask,
 		final Task generateTask) {
 
+		Project project = buildWSDLTask.getProject();
+
 		String taskName = GradleUtil.getTaskName(
 			buildWSDLTask.getName(), inputFile);
 
-		Jar jar = GradleUtil.addTask(
-			buildWSDLTask.getProject(), taskName, Jar.class);
+		Jar jar = GradleUtil.addTask(project, taskName, Jar.class);
 
 		jar.from(compileTask.getOutputs());
 
 		if (buildWSDLTask.isIncludeSource()) {
 			jar.into(
 				"OSGI-OPT/src",
-				new Closure<Void>(null) {
+				new Closure<Void>(project) {
 
 					@SuppressWarnings("unused")
 					public void doCall(CopySpec copySpec) {
@@ -316,6 +317,8 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 			return;
 		}
 
+		Project project = buildWSDLTask.getProject();
+
 		for (File inputFile : fileCollection) {
 			addTaskBuildWSDLTasks(
 				buildWSDLTask, inputFile, wsdlBuilderConfiguration);
@@ -325,14 +328,14 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 			TaskOutputs taskOutputs = buildWSDLTask.getOutputs();
 
 			GradleUtil.addDependency(
-				buildWSDLTask.getProject(),
-				JavaPlugin.COMPILE_CONFIGURATION_NAME, taskOutputs.getFiles());
+				project, JavaPlugin.COMPILE_CONFIGURATION_NAME,
+				taskOutputs.getFiles());
 		}
 
 		if (buildWSDLTask.isIncludeWSDLs() && (processResourcesTask != null)) {
 			processResourcesTask.into(
 				"wsdl",
-				new Closure<Void>(null) {
+				new Closure<Void>(project) {
 
 					@SuppressWarnings("unused")
 					public void doCall(CopySpec copySpec) {

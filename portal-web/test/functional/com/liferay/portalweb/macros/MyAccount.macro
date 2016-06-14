@@ -41,7 +41,7 @@
 	</command>
 
 	<command name="view">
-		<for list="Password,Organization,Sites,User Groups,Roles,Categorization" param="key_panelHeading">
+		<for list="Password,Organizations,Sites,User Groups,Roles,Categorization" param="key_panelHeading">
 			<execute function="AssertElementPresent" locator1="Panel#PANEL_HEADING_COLLAPSED" />
 		</for>
 	</command>

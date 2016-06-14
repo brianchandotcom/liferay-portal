@@ -118,6 +118,10 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
 		<execute macro="DMPortlet#viewNoPermissionCP" />
 
 		<execute macro="Permissions#removePermissionLoginUserCP">

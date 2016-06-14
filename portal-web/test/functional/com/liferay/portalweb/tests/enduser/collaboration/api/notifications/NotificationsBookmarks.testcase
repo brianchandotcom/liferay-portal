@@ -117,6 +117,10 @@
 			<var name="bookmarkURL" value="https://www.liferay.com" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="Notifications#viewBadgeCount">
 			<var name="notificationCount" value="0" />
 		</execute>
@@ -188,6 +192,10 @@
 		<execute macro="Bookmark#addPG">
 			<var name="bookmarkName" value="Bookmark Name" />
 			<var name="bookmarkURL" value="https://www.liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Notifications#viewBadgeCount">

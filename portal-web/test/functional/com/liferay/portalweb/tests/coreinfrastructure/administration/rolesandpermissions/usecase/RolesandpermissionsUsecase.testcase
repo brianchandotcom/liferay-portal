@@ -309,6 +309,10 @@
 			<var name="bookmarkViewableBy" value="Owner" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Bookmarks Page" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -345,6 +349,11 @@
 			<var name="bookmarkName" value="Test Bookmark2 Name" />
 			<var name="bookmarkURL" value="http://www.google.com" />
 			<var name="bookmarkViewableBy" value="Owner" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Bookmarks Page" />
+			<var name="siteName" value="google.com Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -2023,6 +2032,10 @@
 			<var name="bookmarkViewableBy" value="Owner" />
 		</execute>
 
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Bookmarks Page" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -2094,6 +2107,10 @@
 		<execute macro="Bookmark#viewBookmark">
 			<var name="bookmarkName" value="Test Bookmark Name" />
 			<var name="bookmarkURL" value="https://www.liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="User#logoutPG" />

@@ -22,6 +22,8 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
+		<var name="key_userScreenName" value="${userScreenName}" />
+
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_NAME" value1="${userName}" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>

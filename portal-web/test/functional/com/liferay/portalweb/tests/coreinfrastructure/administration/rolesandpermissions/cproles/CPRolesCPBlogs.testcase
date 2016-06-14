@@ -231,6 +231,10 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Blogs" />
+		</execute>
+
 		<execute macro="BlogsConfiguration#viewNoPermissionCP" />
 
 		<execute macro="Permissions#removePermissionLoginUserCP">

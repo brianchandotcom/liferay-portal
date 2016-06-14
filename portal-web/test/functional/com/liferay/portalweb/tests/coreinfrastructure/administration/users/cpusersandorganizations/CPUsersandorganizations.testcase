@@ -1699,6 +1699,8 @@
 		<execute macro="User#basicSearchCP">
 			<var name="userBasicSearch" value="Full Name" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
 			<var name="userName" value="userfn userln" />
 			<var name="userScreenName" value="usersn" />
 		</execute>

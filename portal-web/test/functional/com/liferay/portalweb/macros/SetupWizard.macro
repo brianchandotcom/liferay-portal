@@ -53,7 +53,9 @@
 			<var name="deleteLiferayHome" value="false" />
 		</execute>
 
-		<execute macro="User#firstLoginPG" />
+		<execute macro="User#firstLoginPG">
+			<var name="setupWizardEnabled" value="true" />
+		</execute>
 	</command>
 
 	<command name="configurePG" summary="Configure JDBC to ${databaseType} for Liferay with the Setup Wizard">

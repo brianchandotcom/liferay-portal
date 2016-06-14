@@ -25,8 +25,8 @@
 	</tear-down>
 
 	<command name="ViewNoDisplayPortletConfigurationPermission" priority="4">
-		<var name="url1" value="http://localhost:8080/testxxx/?p_p_id=86&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;_86_struts_action=%2Fportlet_configuration%2Fedit_configuration&amp;_86_portletResource=125" />
-		<var name="url2" value="http://localhost:8080/testxxx/?p_p_id=125&amp;p_p_state=maximized" />
+		<var name="url1" value="http://localhost:8080/testxxx/?p_p_id=com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_mvcPath=%2Fedit_configuration.jsp&amp;_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_portletResource=com_liferay_users_admin_web_portlet_UsersAdminPortlet" />
+		<var name="url2" value="http://localhost:8080/testxxx/?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet&amp;p_p_state=maximized" />
 
 		<execute macro="Page#add">
 			<var name="pageName" value="testxxx" />
@@ -35,7 +35,7 @@
 		<execute macro="User#logoutPG" />
 
 		<execute function="Open" locator1="${url1}" />
-		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the required permissions." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 
 		<execute function="Open" locator1="${url2}" />
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the roles required to access this portlet." />

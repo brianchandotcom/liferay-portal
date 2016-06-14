@@ -285,8 +285,6 @@
 		<var name="key_assetName" value="${bookmarkName}" />
 
 		<execute function="AssertTextEquals" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${bookmarkName}" />
-
-		<execute function="AssertClick" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${bookmarkName}" />
 	</command>
 
 	<command name="moveToFolderPG">
@@ -471,6 +469,7 @@
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
 
 		<var name="key_bookmarkName" value="${bookmarkName}" />
+		<var name="key_bookmarkURL" value="${bookmarkURL}" />
 
 		<execute function="AssertTextEquals" locator1="Bookmarks#BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />
 		<execute function="AssertTextEquals" locator1="Bookmarks#BOOKMARKS_TABLE_URL" value1="${bookmarkURL}" />

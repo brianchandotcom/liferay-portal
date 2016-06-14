@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>DEFAULT_LANGUAGE</td>
-	<td>//div[label[contains(.,'Default Language')]]/select</td>
+	<td>//div[contains(.,'Default Language')]//select</td>
 	<td></td>
 </tr>
 <tr>

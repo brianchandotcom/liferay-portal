@@ -164,6 +164,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/" +
 			"public";
 
+	public static final String DEPLOY_APP_SERVER_LIB_TASK_NAME =
+		"deployAppServerLib";
+
 	public static final String DEPLOY_TOOL_TASK_NAME = "deployTool";
 
 	public static final String INSTALL_CACHE_TASK_NAME = "installCache";
@@ -194,9 +197,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		final boolean publishing = isPublishing(project);
 		boolean testProject = isTestProject(project);
 
+		boolean deployToAppServerLibs = false;
 		boolean deployToTools = false;
 
-		if (FileUtil.exists(project, ".lfrbuild-tool")) {
+		if (FileUtil.exists(project, ".lfrbuild-app-server-lib")) {
+			deployToAppServerLibs = true;
+		}
+		else if (FileUtil.exists(project, ".lfrbuild-tool")) {
 			deployToTools = true;
 		}
 
@@ -245,7 +252,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		addTaskCopyLibs(project);
 
-		if (deployToTools) {
+		if (deployToAppServerLibs) {
+			addTaskAlias(
+				project, DEPLOY_APP_SERVER_LIB_TASK_NAME,
+				LiferayBasePlugin.DEPLOY_TASK_NAME);
+		}
+		else if (deployToTools) {
 			addTaskAlias(
 				project, DEPLOY_TOOL_TASK_NAME,
 				LiferayBasePlugin.DEPLOY_TASK_NAME);
@@ -263,7 +275,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		configureBasePlugin(project, portalRootDir);
 		configureBundleDefaultInstructions(project, portalRootDir, publishing);
 		configureConfigurations(project);
-		configureDeployDir(project, deployToTools);
+		configureDeployDir(project, deployToAppServerLibs, deployToTools);
 		configureJavaPlugin(project);
 		configureProject(project);
 		configureRepositories(project);
@@ -1332,7 +1344,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	protected void configureDeployDir(
-		final Project project, final boolean deployToTools) {
+		final Project project, final boolean deployToAppServerLibs,
+		final boolean deployToTools) {
 
 		final LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
@@ -1342,16 +1355,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
+					if (deployToAppServerLibs) {
+						return new File(
+							liferayExtension.getAppServerPortalDir(),
+							"WEB-INF/lib");
+					}
+
 					if (deployToTools) {
 						return new File(
 							liferayExtension.getLiferayHome(),
 							"tools/" + project.getName());
-					}
-
-					if (FileUtil.exists(project, ".lfrbuild-app-server-lib")) {
-						return new File(
-							liferayExtension.getAppServerPortalDir(),
-							"WEB-INF/lib");
 					}
 
 					if (FileUtil.exists(project, ".lfrbuild-static")) {

@@ -129,6 +129,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		configureDescription(project);
 		configureSourceSetMain(project);
 		configureTaskClean(project);
+		configureTaskJar(project);
 		configureTaskJavadoc(project);
 		configureTaskTest(project);
 		configureTasksTest(project);
@@ -775,6 +776,20 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		};
 
 		delete.dependsOn(closure);
+	}
+
+	protected void configureTaskJar(Project project) {
+		File bndFile = project.file("bnd.bnd");
+
+		if (!bndFile.exists()) {
+			return;
+		}
+
+		Task jarTask = GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+
+		TaskInputs taskInputs = jarTask.getInputs();
+
+		taskInputs.file(bndFile);
 	}
 
 	protected void configureTaskJavaCompileFork(

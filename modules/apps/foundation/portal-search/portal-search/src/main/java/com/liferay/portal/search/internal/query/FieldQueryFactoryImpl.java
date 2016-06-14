@@ -47,6 +47,17 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 	public Query createQuery(
 		String field, String value, boolean like, boolean splitKeywords) {
 
+		boolean isSubstringSearchAlways = false;
+
+		if (_queryPreProcessConfiguration != null) {
+			isSubstringSearchAlways =
+				_queryPreProcessConfiguration.isSubstringSearchAlways(field);
+		}
+
+		if (!isSubstringSearchAlways) {
+			return doCreateQueryForFullTextSearch(field, value);
+		}
+
 		KeywordTokenizer keywordTokenizer = getKeywordTokenizer();
 
 		if (!splitKeywords && (keywordTokenizer != null)) {
@@ -94,26 +105,13 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 	}
 
 	protected Query doCreateQuery(String field, String value, boolean like) {
-		boolean isSubstringSearchAlways = false;
-
-		if (_queryPreProcessConfiguration != null) {
-			isSubstringSearchAlways =
-				_queryPreProcessConfiguration.isSubstringSearchAlways(field);
-		}
-
 		Query query = doCreatePhraseMatchQuery(field, value);
 
 		if (query != null) {
 			return query;
 		}
 
-		if (like || isSubstringSearchAlways) {
-			return doCreateQueryForSubstringSearch(
-				field, value, isSubstringSearchAlways);
-		}
-		else {
-			return doCreateQueryForFullTextSearch(field, value);
-		}
+		return doCreateQueryForSubstringSearch(field, value);
 	}
 
 	protected Query doCreateQueryForFullTextExactMatch(
@@ -170,19 +168,17 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 	}
 
 	protected Query doCreateQueryForSubstringSearch(
-		String field, String value, boolean isSubstringSearchAlways) {
+		String field, String value) {
 
 		value = StringUtil.replace(value, CharPool.PERCENT, StringPool.BLANK);
 
-		if (isSubstringSearchAlways) {
-			if (value.length() == 0) {
-				value = StringPool.STAR;
-			}
-			else {
-				value = StringUtil.toLowerCase(value);
+		if (value.length() == 0) {
+			value = StringPool.STAR;
+		}
+		else {
+			value = StringUtil.toLowerCase(value);
 
-				value = StringPool.STAR + value + StringPool.STAR;
-			}
+			value = StringPool.STAR + value + StringPool.STAR;
 		}
 
 		return new WildcardQueryImpl(new QueryTermImpl(field, value));

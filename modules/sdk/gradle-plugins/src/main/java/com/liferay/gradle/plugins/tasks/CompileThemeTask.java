@@ -20,8 +20,6 @@ import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
-import groovy.lang.Closure;
-
 import java.io.File;
 
 import java.util.ArrayList;
@@ -32,6 +30,7 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.gradle.api.Action;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
@@ -175,17 +174,16 @@ public class CompileThemeTask extends DefaultTask {
 			return;
 		}
 
-		Closure<Void> closure = new Closure<Void>(null) {
+		_project.copy(
+			new Action<CopySpec>() {
 
-			@SuppressWarnings("unused")
-			public void doCall(CopySpec copySpec) {
-				copySpec.from(diffsDir);
-				copySpec.into(getThemeRootDir());
-			}
+				@Override
+				public void execute(CopySpec copySpec) {
+					copySpec.from(diffsDir);
+					copySpec.into(getThemeRootDir());
+				}
 
-		};
-
-		_project.copy(closure);
+			});
 	}
 
 	protected void copyPortalThemeDir(
@@ -204,23 +202,22 @@ public class CompileThemeTask extends DefaultTask {
 		final File frontendThemesWebDir = getFrontendThemesWebDir();
 
 		if (frontendThemesWebDir != null) {
-			Closure<Void> closure = new Closure<Void>(null) {
+			_project.copy(
+				new Action<CopySpec>() {
 
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					copySpec.from(new File(frontendThemesWebDir, prefix));
+					@Override
+					public void execute(CopySpec copySpec) {
+						copySpec.from(new File(frontendThemesWebDir, prefix));
 
-					if (ArrayUtil.isNotEmpty(excludes)) {
-						copySpec.exclude(excludes);
+						if (ArrayUtil.isNotEmpty(excludes)) {
+							copySpec.exclude(excludes);
+						}
+
+						copySpec.include(includes);
+						copySpec.into(getThemeRootDir());
 					}
 
-					copySpec.include(includes);
-					copySpec.into(getThemeRootDir());
-				}
-
-			};
-
-			_project.copy(closure);
+				});
 		}
 		else {
 			String jarPrefix = "META-INF/resources/" + prefix;
@@ -231,25 +228,24 @@ public class CompileThemeTask extends DefaultTask {
 			final String[] prefixedIncludes = StringUtil.prepend(
 				includes, jarPrefix);
 
-			Closure<Void> closure = new Closure<Void>(null) {
+			_project.copy(
+				new Action<CopySpec>() {
 
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					copySpec.eachFile(new StripPathSegmentsAction(3));
+					@Override
+					public void execute(CopySpec copySpec) {
+						copySpec.eachFile(new StripPathSegmentsAction(3));
 
-					if (ArrayUtil.isNotEmpty(prefixedExcludes)) {
-						copySpec.exclude(prefixedExcludes);
+						if (ArrayUtil.isNotEmpty(prefixedExcludes)) {
+							copySpec.exclude(prefixedExcludes);
+						}
+
+						copySpec.from(_project.zipTree(frontendThemeFile));
+						copySpec.include(prefixedIncludes);
+						copySpec.into(getThemeRootDir());
+						copySpec.setIncludeEmptyDirs(false);
 					}
 
-					copySpec.from(_project.zipTree(frontendThemeFile));
-					copySpec.include(prefixedIncludes);
-					copySpec.into(getThemeRootDir());
-					copySpec.setIncludeEmptyDirs(false);
-				}
-
-			};
-
-			_project.copy(closure);
+				});
 		}
 	}
 

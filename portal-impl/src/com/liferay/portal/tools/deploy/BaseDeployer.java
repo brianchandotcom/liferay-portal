@@ -942,7 +942,9 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			deployDir = jbossPrefix + deployDir;
 		}
 		else if (appServerType.equals(ServerDetector.WILDFLY_ID)) {
-			deployDir = wildflyPrefix + deployDir;
+			deployDir =
+				(wildflyPrefix == null? StringPool.BLANK: wildflyPrefix) +
+					deployDir;
 		}
 		else if (appServerType.equals(ServerDetector.GLASSFISH_ID) ||
 				 appServerType.equals(ServerDetector.JETTY_ID) ||

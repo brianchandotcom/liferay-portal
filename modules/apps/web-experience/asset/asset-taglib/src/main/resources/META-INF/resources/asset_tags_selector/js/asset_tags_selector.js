@@ -365,6 +365,12 @@ AUI.add(
 										var selectedItem = event.newVal;
 
 										if (selectedItem) {
+											instance.entries.each(
+												function(item) {
+													instance.entries.remove(item);
+												}
+											);
+
 											AArray.each(
 												selectedItem.split(','),
 												function(value) {

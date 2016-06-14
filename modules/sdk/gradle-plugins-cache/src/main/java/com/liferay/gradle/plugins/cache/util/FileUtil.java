@@ -14,6 +14,9 @@
 
 package com.liferay.gradle.plugins.cache.util;
 
+import com.liferay.gradle.util.Validator;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -24,26 +27,33 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.gradle.api.Action;
+import org.gradle.api.Project;
+import org.gradle.api.UncheckedIOException;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.internal.hash.HashUtil;
 import org.gradle.internal.hash.HashValue;
+import org.gradle.process.ExecSpec;
+import org.gradle.process.internal.ExecException;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
-	public static Set<File> flattenAndSort(Iterable<File> files, File rootDir)
+	public static SortedSet<File> flattenAndSort(Iterable<File> files)
 		throws IOException {
 
-		final Set<File> sortedFiles = new TreeSet<>(
-			new FileComparator(rootDir));
+		final SortedSet<File> sortedFiles = new TreeSet<>(new FileComparator());
 
 		for (File file : files) {
 			if (file.isDirectory()) {
@@ -88,8 +98,8 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
 			// File is not a text file
 
-			if (_logger.isInfoEnabled()) {
-				_logger.info(file + " is not a text file", ioe);
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(file + " is not a text file", ioe);
 			}
 
 			HashValue hashValue = HashUtil.sha1(file);
@@ -104,33 +114,121 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		return digest;
 	}
 
+	public static boolean removeIgnoredFiles(
+		Project project, SortedSet<File> files) {
+
+		if (files.isEmpty()) {
+			return false;
+		}
+
+		File rootDir = null;
+
+		File firstFile = files.first();
+
+		if (files.size() == 1) {
+			rootDir = firstFile.getParentFile();
+		}
+		else {
+			String dirName = StringUtil.getCommonPrefix(
+				'/', _getCanonicalPath(firstFile),
+				_getCanonicalPath(files.last()));
+
+			if (Validator.isNotNull(dirName)) {
+				rootDir = new File(dirName);
+			}
+		}
+
+		if (rootDir == null) {
+			if (_logger.isWarnEnabled()) {
+				_logger.warn(
+					"Unable to remove ignored files, common parent directory " +
+						"cannot be found");
+			}
+
+			return false;
+		}
+
+		String result = _getGitResult(
+			project, rootDir, "ls-files", "--cached", "--deleted",
+			"--exclude-standard", "--modified", "--others", "-z");
+
+		if (Validator.isNull(result)) {
+			if (_logger.isWarnEnabled()) {
+				_logger.warn(
+					"Unable to remove ignored files, Git returned an empty " +
+						"result");
+			}
+
+			return false;
+		}
+
+		String[] committedFileNames = result.split("\\000");
+
+		Set<File> committedFiles = new HashSet<>();
+
+		for (String fileName : committedFileNames) {
+			committedFiles.add(new File(rootDir, fileName));
+		}
+
+		return files.retainAll(committedFiles);
+	}
+
+	private static String _getCanonicalPath(File file) {
+		try {
+			String canonicalPath = file.getCanonicalPath();
+
+			if (File.separatorChar != '/') {
+				canonicalPath = canonicalPath.replace(File.separatorChar, '/');
+			}
+
+			return canonicalPath;
+		}
+		catch (IOException ioe) {
+			throw new UncheckedIOException(
+				"Unable to get canonical path of " + file, ioe);
+		}
+	}
+
+	private static String _getGitResult(
+		Project project, final File workingDir, final String... args) {
+
+		final ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		try {
+			project.exec(
+				new Action<ExecSpec>() {
+
+					@Override
+					public void execute(ExecSpec execSpec) {
+						execSpec.setArgs(Arrays.asList(args));
+						execSpec.setExecutable("git");
+						execSpec.setStandardOutput(byteArrayOutputStream);
+						execSpec.setWorkingDir(workingDir);
+					}
+
+				});
+		}
+		catch (ExecException ee) {
+			if (_logger.isInfoEnabled()) {
+				_logger.info(ee.getMessage(), ee);
+			}
+		}
+
+		return byteArrayOutputStream.toString();
+	}
+
 	private static final Logger _logger = Logging.getLogger(FileUtil.class);
 
 	private static class FileComparator implements Comparator<File> {
 
-		public FileComparator(File rootDir) {
-			_rootDir = rootDir;
-		}
-
 		@Override
 		public int compare(File file1, File file2) {
-			String relativePath1 = _getRelativePath(file1);
-			String relativePath2 = _getRelativePath(file2);
+			String canonicalPath1 = _getCanonicalPath(file1);
+			String canonicalPath2 = _getCanonicalPath(file2);
 
-			return relativePath1.compareTo(relativePath2);
+			return canonicalPath1.compareTo(canonicalPath2);
 		}
-
-		private String _getRelativePath(File file) {
-			String relativePath = relativize(file, _rootDir);
-
-			if (File.separatorChar != '/') {
-				relativePath = relativePath.replace(File.separatorChar, '/');
-			}
-
-			return relativePath;
-		}
-
-		private final File _rootDir;
 
 	}
 

@@ -10,5 +10,5 @@ test {
 }
 
 testIntegration {
-	systemProperty "before.upgrade", System.getProperty("before.upgrade")
+	systemProperty "before.lpkg.upgrade", System.getProperty("before.lpkg.upgrade")
 }

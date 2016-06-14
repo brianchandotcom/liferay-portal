@@ -57,14 +57,14 @@ public class LPKGDeployerTest {
 
 	@Test
 	public void testPostUpgradeDeployedLPKGS() throws Exception {
-		if (!Boolean.getBoolean("before.upgrade")) {
+		if (!Boolean.getBoolean("before.lpkg.upgrade")) {
 			testDeployedLPKGs();
 		}
 	}
 
 	@Test
 	public void testPreUpgradeDeployedLPKGS() throws Exception {
-		if (Boolean.getBoolean("before.upgrade")) {
+		if (Boolean.getBoolean("before.lpkg.upgrade")) {
 			testDeployedLPKGs();
 		}
 	}

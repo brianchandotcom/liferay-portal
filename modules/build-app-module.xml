@@ -32,7 +32,10 @@
 	</loadfile>
 
 	<condition property="artifact.exclude">
-		<contains string="${basedir}" substring="required-dependencies" />
+		<or>
+			<available file=".lfrbuild-app-server-lib" />
+			<contains string="${basedir}" substring="required-dependencies" />
+		</or>
 	</condition>
 
 	<condition property="artifact.json">

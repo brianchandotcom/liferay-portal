@@ -939,7 +939,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_REPOSITORY_CHECKBOX</td>
-	<td>//tbody//input[contains(@value,'documentlibraryADD_REPOSITORY')]</td>
+	<td>//tbody//input[contains(@value,'document.libraryADD_REPOSITORY')]</td>
 	<td></td>
 </tr>
 <tr>

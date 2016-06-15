@@ -237,6 +237,7 @@ if (recurrence != null) {
 
 <aui:script use="liferay-util-window,liferay-calendar-recurrence-dialog">
 	var currentRecurrence = null;
+	var editEventFromNode = A.one('#<portlet:namespace />fm');
 	var recurrenceContainerNode = A.one('#<portlet:namespace />recurrenceContainer');
 	var repeatCheckboxNode = A.one('#<portlet:namespace />repeat');
 	var summaryNode = A.one('#<portlet:namespace />summary');
@@ -278,6 +279,12 @@ if (recurrence != null) {
 	window.<portlet:namespace />openRecurrenceDialog = function(visible) {
 		recurrenceContainerNode.toggle(visible);
 
+		editEventFromNode.once('key', function(event) {
+			if (window.<portlet:namespace />recurrenceDialog.get('visible')) {
+				event.stopPropagation();
+			}
+		}, 'esc');
+
 		window.<portlet:namespace />recurrenceDialog = Liferay.Util.Window.getWindow(
 			{
 				dialog: {
@@ -292,6 +299,11 @@ if (recurrence != null) {
 					},
 					bodyContent: recurrenceContainerNode,
 					centered: true,
+					hideOn: [{
+						node: editEventFromNode,
+						eventName: 'key',
+						keyCode: 'esc'
+					}],
 					height: 600,
 					id: '<portlet:namespace />recurrenceDialog',
 					modal: true,

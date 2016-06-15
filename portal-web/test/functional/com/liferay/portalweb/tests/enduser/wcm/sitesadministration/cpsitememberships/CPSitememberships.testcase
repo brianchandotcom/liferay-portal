@@ -1055,6 +1055,11 @@
 	</command>
 
 	<command name="ViewNoManualMembershipManagement" priority="3">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+		
 		<execute macro="Site#manageMembershipOptions">
 			<var name="allowManualMembershipManagement" value="true" />
 		</execute>
@@ -1072,7 +1077,7 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Liferay" />
+			<var name="site" value="${siteName}" />
 		</execute>
 
 		<execute function="AssertNotVisible" locator1="ControlMenu#ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />

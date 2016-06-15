@@ -1770,6 +1770,11 @@
 		<var name="userName" value="Test Test" />
 		<var name="userScreenName" value="usersn" />
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="Page#add">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -1807,7 +1812,7 @@
 		</execute>
 
 		<execute macro="User#editUserSiteCP">
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 

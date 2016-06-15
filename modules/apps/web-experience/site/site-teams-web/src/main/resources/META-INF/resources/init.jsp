@@ -61,6 +61,7 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
+page import="com.liferay.portal.service.persistence.constants.UserGroupFinderConstants" %><%@
 page import="com.liferay.portlet.sitesadmin.search.UserGroupTeamChecker" %><%@
 page import="com.liferay.portlet.sitesadmin.search.UserTeamChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %><%@

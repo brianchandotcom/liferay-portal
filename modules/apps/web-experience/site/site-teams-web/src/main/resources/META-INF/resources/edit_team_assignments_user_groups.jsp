@@ -35,7 +35,7 @@ userGroupSearchContainer.setEmptyResultsMessageCssClass(searchTerms.isSearch() ?
 
 LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
-userGroupParams.put("userGroupsTeams", Long.valueOf(team.getTeamId()));
+userGroupParams.put(UserGroupFinderConstants.PARAM_USER_GROUPS_TEAMS, Long.valueOf(team.getTeamId()));
 
 int userGroupsCount = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
 

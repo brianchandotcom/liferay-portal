@@ -314,6 +314,15 @@ public class KBArticleLocalServiceWrapper implements KBArticleLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry addAttachment(
+		long userId, long resourcePrimKey, java.lang.String fileName,
+		java.io.InputStream inputStream, java.lang.String mimeType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbArticleLocalService.addAttachment(userId, resourcePrimKey,
+			fileName, inputStream, mimeType);
+	}
+
+	@Override
 	public int addKBArticlesMarkdown(long userId, long groupId,
 		long parentKbFolderId, java.lang.String fileName,
 		boolean prioritizeByNumericalPrefix, java.io.InputStream inputStream,

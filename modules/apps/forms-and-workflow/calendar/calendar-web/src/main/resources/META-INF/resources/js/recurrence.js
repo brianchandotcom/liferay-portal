@@ -187,8 +187,10 @@ AUI.add(
 				NAME: 'recurrence-dialog',
 
 				prototype: {
-					initializer: function() {
+					initializer: function(config) {
 						var instance = this;
+
+						instance._namespace = config.namespace;
 
 						instance.bindUI();
 					},
@@ -376,6 +378,16 @@ AUI.add(
 						var recurrence = instance.get('recurrence');
 
 						return Liferay.RecurrenceUtil.getSummary(recurrence);
+					},
+
+					_hideModal: function(event, confirmed) {
+						var instance = this;
+
+						if (confirmed) {
+							instance._confimeChanges = true;
+						}
+
+						window[instance._namespace + 'recurrenceDialog'].hide();
 					},
 
 					_isLastDayOfWeekInMonth: function() {

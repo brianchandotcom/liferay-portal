@@ -253,6 +253,7 @@ if (recurrence != null) {
 			limitDateDatePicker: Liferay.component('<%= renderResponse.getNamespace() + HtmlUtil.getAUICompatibleId("untilDateDatePicker") %>'),
 			limitDateRadioButton: '[name=<portlet:namespace />ends][value=on]',
 			monthlyRecurrenceOptions: '#<portlet:namespace />viewPositionInMonth',
+			namespace: '<portlet:namespace />',
 			noLimitRadioButton: '[name=<portlet:namespace />ends][value=never]',
 			positionalDayOfWeekOptions: '#<portlet:namespace />viewPositionalWeekday',
 			positionInput: '#<portlet:namespace />position',
@@ -295,41 +296,30 @@ if (recurrence != null) {
 					id: '<portlet:namespace />recurrenceDialog',
 					modal: true,
 					render: '#<portlet:namespace />fm',
-					toolbars: {
-						footer: [
-							{
-								label: '<liferay-ui:message key="done" />',
-								cssClass: 'btn-primary',
-								on: {
-									click: function() {
-										window.<portlet:namespace />recurrenceDialog.hide();
-									}
-								}
-							},
-							{
-								label: '<liferay-ui:message key="cancel" />',
-								on: {
-									click: function() {
-										if (currentRecurrence !== null) {
-											recurrenceDialogController.set('recurrence', currentRecurrence);
-										}
-										else {
-											repeatCheckboxNode.set('checked', false);
-
-											summaryNode.empty();
-										}
-
-										window.<portlet:namespace />recurrenceDialog.hide();
-									}
-								}
-							}
-						]
-					},
 					visible: visible,
 					width: 600
 				},
 				title: getRecurrenceDialogTitle()
 			}
+		);
+
+		window.<portlet:namespace />recurrenceDialog.addToolbar(
+			[
+				{
+					label: '<liferay-ui:message key="done" />',
+					cssClass: 'btn-primary',
+					on: {
+						click: A.rbind('_hideModal', recurrenceDialogController, true)
+					}
+				},
+				{
+					label: '<liferay-ui:message key="cancel" />',
+					on: {
+						click: A.rbind('_hideModal', recurrenceDialogController)
+					}
+				}
+			],
+			'footer'
 		);
 
 		var destroyRecurrenceDialog = function(event) {

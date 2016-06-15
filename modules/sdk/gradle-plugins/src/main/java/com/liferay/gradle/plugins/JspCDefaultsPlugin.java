@@ -35,6 +35,7 @@ import org.gradle.api.UncheckedIOException;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.compile.JavaCompile;
 
@@ -126,16 +127,18 @@ public class JspCDefaultsPlugin
 
 		String dirName = null;
 
-		if (GradleUtil.hasPlugin(project, LiferayRelengPlugin.class)) {
-			WritePropertiesTask writePropertiesTask =
-				(WritePropertiesTask)GradleUtil.getTask(
-					project, LiferayRelengPlugin.RECORD_ARTIFACT_TASK_NAME);
+		TaskContainer taskContainer = project.getTasks();
 
+		WritePropertiesTask recordArtifactTask =
+			(WritePropertiesTask)taskContainer.findByName(
+				LiferayRelengPlugin.RECORD_ARTIFACT_TASK_NAME);
+
+		if (recordArtifactTask != null) {
 			Properties artifactProperties;
 
 			try {
 				artifactProperties = FileUtil.readProperties(
-					writePropertiesTask.getOutputFile());
+					recordArtifactTask.getOutputFile());
 			}
 			catch (IOException ioe) {
 				throw new UncheckedIOException(ioe);

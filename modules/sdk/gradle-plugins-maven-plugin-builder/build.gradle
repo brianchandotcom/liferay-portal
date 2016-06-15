@@ -1,5 +1,5 @@
 dependencies {
 	compile gradleApi()
-	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.25"
+	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.26"
 	compile group: "com.thoughtworks.qdox", name: "qdox", version: "1.12.1"
 }

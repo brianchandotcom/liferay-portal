@@ -1,6 +1,6 @@
 dependencies {
 	compile gradleApi()
-	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.25"
+	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.26"
 
 	provided group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "1.0.119"
 }

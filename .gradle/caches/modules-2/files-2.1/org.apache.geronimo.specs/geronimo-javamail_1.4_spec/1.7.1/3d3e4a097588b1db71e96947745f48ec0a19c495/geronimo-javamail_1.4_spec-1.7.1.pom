@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<!-- $Rev: 953646 $ $Date: 2010-06-11 06:38:13 -0400 (Fri, 11 Jun 2010) $ -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.apache.geronimo.genesis</groupId>
+        <artifactId>genesis-java5-flava</artifactId>
+        <version>2.0</version>
+    </parent>
+
+    <groupId>org.apache.geronimo.specs</groupId>
+    <artifactId>geronimo-javamail_1.4_spec</artifactId>
+    <packaging>bundle</packaging>
+    <name>JavaMail 1.4</name>
+    <version>1.7.1</version>
+
+    <description>Javamail 1.4 Specification</description>
+
+    <url>http://geronimo.apache.org/maven/${siteId}/${version}</url>
+    <distributionManagement>
+        <site>
+            <id>apache-website</id>
+            <url>${site.deploy.url}/maven/${siteId}/${version}</url>
+        </site>
+    </distributionManagement>
+
+    <properties>
+        <siteId>specs/${artifactId}</siteId>
+        <geronimo.osgi.private.pkg>org.apache.geronimo.mail*</geronimo.osgi.private.pkg>
+        <geronimo.osgi.resources>src/main/resources/,META-INF/LICENSE.txt=LICENSE.txt,META-INF/NOTICE.txt=NOTICE.txt</geronimo.osgi.resources>
+    </properties>
+
+    <scm>
+        <connection>scm:svn:https://svn.apache.org/repos/asf/geronimo/specs/tags/geronimo-javamail_1.4_spec-1.7.1</connection>
+        <developerConnection>scm:svn:https://svn.apache.org/repos/asf/geronimo/specs/tags/geronimo-javamail_1.4_spec-1.7.1</developerConnection>
+        <url>https://svn.apache.org/repos/asf/geronimo/specs/tags/geronimo-javamail_1.4_spec-1.7.1</url>
+    </scm>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-activation_1.1_spec</artifactId>
+            <version>1.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>4.2.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.compendium</artifactId>
+            <version>4.2.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-osgi-locator</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${groupId}.${artifactId};singleton=true</Bundle-SymbolicName>
+                        <Specification-Title>JSR-919 Javamail API 1.4</Specification-Title>
+                        <Specification-Vendor>Sun Microsystems, Inc.</Specification-Vendor>
+                        <Specification-Version>1.4</Specification-Version>
+                        <Export-Package>javax.mail*;version=1.4,org.apache.geronimo.mail.util;version=1.4,org.apache.geronimo.mail.handlers;version=1.4</Export-Package>
+                        <Import-Package>org.apache.geronimo.osgi.registry.api;resolution:=optional,*</Import-Package>
+                        <Private-Package>org.apache.geronimo.osgi.locator,org.apache.geronimo.mail</Private-Package>
+                        <Bundle-Activator>org.apache.geronimo.mail.Activator</Bundle-Activator>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>rat</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <!-- Override of default rat checks.  To use, type "mvn -Prat verify". -->
+                        <groupId>org.apache.rat</groupId>
+                        <artifactId>apache-rat-plugin</artifactId>
+                        <version>0.6</version>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <reportFile>${project.build.directory}/${project.build.finalName}.rat</reportFile>
+                            <excludeSubProjects>false</excludeSubProjects>
+                            <excludes>
+                                <exclude>**/target/**/*</exclude>
+                                <exclude>**/appended-resources/**/*</exclude>
+                                <exclude>**/velocity.log</exclude>
+                                <!-- manifest files don't support comments so don't contain the ASL2.0 header -->
+                                <exclude>**/*.MF</exclude>
+                                <!-- This is a test file that needs to be in exactly the format it is. -->
+                                <exclude>**/wmtom.bin</exclude>
+                                <!--RAT doesn't seem to recognize MIT style licenses-->
+                                <exclude>manual/src/styles/print.css</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

@@ -1868,7 +1868,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		java.lang.String sourcePrototypeLayoutUuid);
 
 	/**
-	* Returns all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &lt; &#63;.
+	* Returns all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
@@ -1880,7 +1880,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		boolean privateLayout, long parentLayoutId, int priority);
 
 	/**
-	* Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &lt; &#63;.
+	* Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -1899,7 +1899,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		int end);
 
 	/**
-	* Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &lt; &#63;.
+	* Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -1920,7 +1920,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		com.liferay.portal.kernel.util.OrderByComparator<Layout> orderByComparator);
 
 	/**
-	* Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &lt; &#63;.
+	* Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -1943,7 +1943,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		boolean retrieveFromCache);
 
 	/**
-	* Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &lt; &#63;.
+	* Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
@@ -1959,7 +1959,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		throws NoSuchLayoutException;
 
 	/**
-	* Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &lt; &#63;.
+	* Returns the first layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
@@ -1973,7 +1973,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		com.liferay.portal.kernel.util.OrderByComparator<Layout> orderByComparator);
 
 	/**
-	* Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &lt; &#63;.
+	* Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
@@ -1989,7 +1989,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		throws NoSuchLayoutException;
 
 	/**
-	* Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &lt; &#63;.
+	* Returns the last layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
@@ -2003,7 +2003,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		com.liferay.portal.kernel.util.OrderByComparator<Layout> orderByComparator);
 
 	/**
-	* Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &lt; &#63;.
+	* Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
 	*
 	* @param plid the primary key of the current layout
 	* @param groupId the group ID
@@ -2020,7 +2020,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		throws NoSuchLayoutException;
 
 	/**
-	* Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &lt; &#63;.
+	* Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
@@ -2032,7 +2032,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		boolean privateLayout, long parentLayoutId, int priority);
 
 	/**
-	* Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &lt; &#63;.
+	* Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -2051,7 +2051,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		int end);
 
 	/**
-	* Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &lt; &#63;.
+	* Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -2072,7 +2072,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		com.liferay.portal.kernel.util.OrderByComparator<Layout> orderByComparator);
 
 	/**
-	* Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &lt; &#63;.
+	* Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
 	*
 	* @param plid the primary key of the current layout
 	* @param groupId the group ID
@@ -2089,7 +2089,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		throws NoSuchLayoutException;
 
 	/**
-	* Removes all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &lt; &#63; from the database.
+	* Removes all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63; from the database.
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
@@ -2100,7 +2100,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		long parentLayoutId, int priority);
 
 	/**
-	* Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &lt; &#63;.
+	* Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
@@ -2112,7 +2112,7 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 		long parentLayoutId, int priority);
 
 	/**
-	* Returns the number of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &lt; &#63;.
+	* Returns the number of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and priority &le; &#63;.
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout

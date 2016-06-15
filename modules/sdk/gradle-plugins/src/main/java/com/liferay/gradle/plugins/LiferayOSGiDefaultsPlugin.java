@@ -761,12 +761,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		copy.from(configuration);
 		copy.into(libDir);
-
-		Closure<String> closure = new RenameDependencyClosure(
-			project, configuration.getName());
-
-		copy.rename(closure);
-
+		copy.rename(
+			new RenameDependencyClosure(project, configuration.getName()));
 		copy.setEnabled(false);
 
 		Task classesTask = GradleUtil.getTask(

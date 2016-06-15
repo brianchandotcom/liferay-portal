@@ -22,8 +22,6 @@
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="DDMEditStructure#NAME_FIELD" value1="${kfFormName}" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addProcess">
@@ -114,7 +112,9 @@
 	<command name="chooseForm">
 		<var name="key_kfFormName" value="${kfFormName}" />
 
-		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#CHOOSE_FORM_BUTTON" value1="Choose" />
+		<execute function="AssertClick" locator1="KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME_LINK" value1="${kfFormName}" />
+
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="chooseWorkflow">

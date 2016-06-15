@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHOOSE_FORM_BUTTON</td>
-	<td>//button[@data-name='${key_kfFormName}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -32,6 +27,11 @@
 <tr>
 	<td>FORM_TABLE_NAME_2</td>
 	<td>xpath=(//div[contains(@id,'kaleoformsportlet_ddmTemplates')]//tr[contains(.,'${key_kfFormName}')]/td[1])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_TABLE_NAME_LINK</td>
+	<td>//table[contains(@data-searchcontainerid,'ddmTemplatesSearchContainer')]//a[@data-name='${key_kfFormName}']</td>
 	<td></td>
 </tr>
 <tr>

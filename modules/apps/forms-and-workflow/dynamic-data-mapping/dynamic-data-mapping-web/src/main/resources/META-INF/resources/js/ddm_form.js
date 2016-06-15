@@ -1731,11 +1731,9 @@ AUI.add(
 
 						var delta = instance.get('delta');
 
-						var value = instance.getParsedValue(instance.getValue());
-
-						var groupId = value.groupId;
+						var groupId = themeDisplay.getScopeGroupId();
 						var parentLayoutId = instance._currentParentLayoutId;
-						var privateLayout = !!value.privateLayout;
+						var privateLayout = !!instance._navbar.one('.private').hasClass('active');
 
 						var key = [parentLayoutId, groupId, privateLayout].join('-');
 

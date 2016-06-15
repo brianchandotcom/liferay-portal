@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.MembershipRequestConstants;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -264,7 +265,8 @@ public class SiteAdminDisplayContext {
 
 		Company company = themeDisplay.getCompany();
 
-		userGroupParams.put("userGroupsGroups", group.getGroupId());
+		userGroupParams.put(
+			UserGroupConstants.PARAM_USER_GROUPS_GROUPS, group.getGroupId());
 
 		return UserGroupLocalServiceUtil.searchCount(
 			company.getCompanyId(), null, userGroupParams);

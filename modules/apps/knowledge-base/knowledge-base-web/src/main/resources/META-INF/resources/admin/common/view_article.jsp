@@ -52,7 +52,16 @@ if (portletTitleBasedNavigation) {
 <div <%= portletTitleBasedNavigation ? "class=\"closed container-fluid-1280 kb-article sidenav-container sidenav-right\" id=\"" + liferayPortletResponse.getNamespace() + "infoPanelId\"" : StringPool.BLANK %>>
 	<c:if test="<%= portletTitleBasedNavigation %>">
 		<liferay-frontend:sidebar-panel>
-			<liferay-util:include page="/admin/common/article_info_panel.jsp" servletContext="<%= application %>" />
+
+			<%
+			List<KBArticle> kbArticles = new ArrayList<KBArticle>();
+
+			kbArticles.add(kbArticle);
+
+			request.setAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLES, kbArticles);
+			%>
+
+			<liferay-util:include page="/admin/info_panel.jsp" servletContext="<%= application %>" />
 		</liferay-frontend:sidebar-panel>
 	</c:if>
 

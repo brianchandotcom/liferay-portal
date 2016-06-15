@@ -52,19 +52,28 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.portlet.WindowStateException;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -283,6 +292,38 @@ public class AdminPortlet extends BaseKBPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	public void serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
+
+		try {
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				resourceRequest);
+
+			List<KBArticle> kbArticles = getKBArticles(request);
+
+			resourceRequest.setAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLES, kbArticles);
+
+			List<KBFolder> kbFolders = getKBFolders(request);
+
+			resourceRequest.setAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_KB_FOLDERS, kbFolders);
+
+			PortletSession portletSession = resourceRequest.getPortletSession();
+
+			PortletContext portletContext = portletSession.getPortletContext();
+
+			PortletRequestDispatcher portletRequestDispatcher =
+				portletContext.getRequestDispatcher("/admin/info_panel.jsp");
+
+			portletRequestDispatcher.include(resourceRequest, resourceResponse);
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
+	}
+
 	public void subscribeGroupKBArticles(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -448,6 +489,40 @@ public class AdminPortlet extends BaseKBPortlet {
 		else {
 			super.doDispatch(renderRequest, renderResponse);
 		}
+	}
+
+	protected List<KBArticle> getKBArticles(HttpServletRequest request)
+		throws Exception {
+
+		long[] kbArticleResourcePrimKeys = ParamUtil.getLongValues(
+			request, "rowIdsKBArticle");
+
+		List<KBArticle> kbArticles = new ArrayList<>();
+
+		for (long kbArticleResourcePrimKey : kbArticleResourcePrimKeys) {
+			KBArticle kbArticle = kbArticleService.getLatestKBArticle(
+				kbArticleResourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+			kbArticles.add(kbArticle);
+		}
+
+		return kbArticles;
+	}
+
+	protected List<KBFolder> getKBFolders(HttpServletRequest request)
+		throws Exception {
+
+		long[] kbFolderIds = ParamUtil.getLongValues(request, "rowIdsKBFolder");
+
+		List<KBFolder> kbFolders = new ArrayList<>();
+
+		for (long kbFolderId : kbFolderIds) {
+			KBFolder kbFolder = kbFolderService.getKBFolder(kbFolderId);
+
+			kbFolders.add(kbFolder);
+		}
+
+		return kbFolders;
 	}
 
 	@Override

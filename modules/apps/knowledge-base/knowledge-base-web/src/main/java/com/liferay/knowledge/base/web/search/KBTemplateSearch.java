@@ -43,38 +43,8 @@ public class KBTemplateSearch extends SearchContainer<KBTemplate> {
 		PortletRequest portletRequest, PortletURL iteratorURL) {
 
 		super(
-			portletRequest, new KBTemplateDisplayTerms(portletRequest),
-			new KBTemplateSearchTerms(portletRequest), DEFAULT_CUR_PARAM,
-			DEFAULT_DELTA, iteratorURL, null, EMPTY_RESULTS_MESSAGE);
-
-		KBTemplateDisplayTerms displayTerms =
-			(KBTemplateDisplayTerms)getDisplayTerms();
-
-		iteratorURL.setParameter(
-			KBTemplateDisplayTerms.ANYTIME,
-			String.valueOf(displayTerms.isAnytime()));
-		iteratorURL.setParameter(
-			KBTemplateDisplayTerms.CONTENT, displayTerms.getContent());
-		iteratorURL.setParameter(
-			KBTemplateDisplayTerms.END_DATE_DAY,
-			String.valueOf(displayTerms.getEndDateDay()));
-		iteratorURL.setParameter(
-			KBTemplateDisplayTerms.END_DATE_MONTH,
-			String.valueOf(displayTerms.getEndDateMonth()));
-		iteratorURL.setParameter(
-			KBTemplateDisplayTerms.END_DATE_YEAR,
-			String.valueOf(displayTerms.getEndDateYear()));
-		iteratorURL.setParameter(
-			KBTemplateDisplayTerms.START_DATE_DAY,
-			String.valueOf(displayTerms.getStartDateDay()));
-		iteratorURL.setParameter(
-			KBTemplateDisplayTerms.START_DATE_MONTH,
-			String.valueOf(displayTerms.getStartDateMonth()));
-		iteratorURL.setParameter(
-			KBTemplateDisplayTerms.START_DATE_YEAR,
-			String.valueOf(displayTerms.getStartDateYear()));
-		iteratorURL.setParameter(
-			KBTemplateDisplayTerms.TITLE, displayTerms.getTitle());
+			portletRequest, null, null, DEFAULT_CUR_PARAM, DEFAULT_DELTA,
+			iteratorURL, null, EMPTY_RESULTS_MESSAGE);
 
 		try {
 			PortalPreferences preferences =
@@ -102,11 +72,6 @@ public class KBTemplateSearch extends SearchContainer<KBTemplate> {
 				preferences.setValue(
 					KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
 					"kb-templates-order-by-type", orderByType);
-
-				KBTemplateSearchTerms searchTerms =
-					(KBTemplateSearchTerms)getSearchTerms();
-
-				searchTerms.setCurStartValues(new int[0]);
 			}
 
 			OrderByComparator<KBTemplate> orderByComparator =

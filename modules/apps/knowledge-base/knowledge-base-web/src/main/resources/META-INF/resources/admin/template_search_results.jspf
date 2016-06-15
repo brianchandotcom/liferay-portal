@@ -17,27 +17,15 @@
 <%
 List results = new ArrayList();
 
-if (!searchTerms.hasSearchTerms()) {
+if (Validator.isNull(keywords)) {
 	total = KBTemplateServiceUtil.getGroupKBTemplatesCount(scopeGroupId);
 
 	searchContainer.setTotal(total);
 
 	results = KBTemplateServiceUtil.getGroupKBTemplates(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 }
-else if (searchTerms.isAdvancedSearch()) {
-	KBTemplateSearchDisplay kbTemplateSearchDisplay = KBTemplateServiceUtil.getKBTemplateSearchDisplay(scopeGroupId, searchTerms.getTitle(), searchTerms.getContent(), searchTerms.getStartDate(timeZone), searchTerms.getEndDate(timeZone), searchTerms.isAndOperator(), searchTerms.getCurStartValues(), searchContainer.getCur(), searchContainer.getDelta(), searchContainer.getOrderByComparator());
-
-	iteratorURL.setParameter(searchTerms.CUR_START_VALUES, StringUtil.merge(kbTemplateSearchDisplay.getCurStartValues()));
-
-	results = kbTemplateSearchDisplay.getResults();
-	total = kbTemplateSearchDisplay.getTotal();
-
-	searchContainer.setTotal(total);
-}
 else {
-	KBTemplateSearchDisplay kbTemplateSearchDisplay = KBTemplateServiceUtil.getKBTemplateSearchDisplay(scopeGroupId, searchTerms.getKeywords(), searchTerms.getKeywords(), null, null, false, searchTerms.getCurStartValues(), searchContainer.getCur(), searchContainer.getDelta(), searchContainer.getOrderByComparator());
-
-	iteratorURL.setParameter(searchTerms.CUR_START_VALUES, StringUtil.merge(kbTemplateSearchDisplay.getCurStartValues()));
+	KBTemplateSearchDisplay kbTemplateSearchDisplay = KBTemplateServiceUtil.getKBTemplateSearchDisplay(scopeGroupId, keywords, keywords, null, null, false, new int[0], searchContainer.getCur(), searchContainer.getDelta(), searchContainer.getOrderByComparator());
 
 	results = kbTemplateSearchDisplay.getResults();
 	total = kbTemplateSearchDisplay.getTotal();

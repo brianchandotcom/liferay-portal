@@ -103,7 +103,6 @@ page import="com.liferay.knowledge.base.web.search.EntriesChecker" %><%@
 page import="com.liferay.knowledge.base.web.search.KBArticleSearch" %><%@
 page import="com.liferay.knowledge.base.web.search.KBCommentsChecker" %><%@
 page import="com.liferay.knowledge.base.web.search.KBTemplateSearch" %><%@
-page import="com.liferay.knowledge.base.web.search.KBTemplateSearchTerms" %><%@
 page import="com.liferay.knowledge.base.web.util.KBArticleAssetEntriesUtil" %><%@
 page import="com.liferay.message.boards.kernel.model.MBMessage" %><%@
 page import="com.liferay.portal.configuration.metatype.util.ParameterMapUtil" %><%@

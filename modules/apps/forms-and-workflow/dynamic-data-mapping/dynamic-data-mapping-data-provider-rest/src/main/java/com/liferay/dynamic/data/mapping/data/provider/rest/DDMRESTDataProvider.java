@@ -17,19 +17,15 @@ package com.liferay.dynamic.data.mapping.data.provider.rest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponseEntry;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.io.Serializable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
@@ -43,8 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, property = "ddm.data.provider.type=rest")
 public class DDMRESTDataProvider implements DDMDataProvider {
 
-	@Override
-	public List<KeyValuePair> getData(
+	public DDMDataProviderResponse getData(
 			DDMDataProviderContext ddmDataProviderContext)
 		throws DDMDataProviderException {
 
@@ -61,7 +56,18 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		return DDMRESTDataProviderSettings.class;
 	}
 
-	protected List<KeyValuePair> doGetData(
+	protected DDMDataProviderResponseEntry createDDMDataProviderResponseEntry(
+		String key, String value) {
+
+		DDMDataProviderResponseEntry ddmDataProviderResponseEntry =
+			new DDMDataProviderResponseEntry();
+
+		ddmDataProviderResponseEntry.setProperty(key, value);
+
+		return ddmDataProviderResponseEntry;
+	}
+
+	protected DDMDataProviderResponse doGetData(
 			DDMDataProviderContext ddmDataProviderContext)
 		throws PortalException {
 
@@ -82,20 +88,20 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 		String cacheKey = getCacheKey(httpRequest);
 
-		DDMRESTDataProviderResult ddmRESTDataProviderResult = _portalCache.get(
+		DDMDataProviderResponse ddmDataProviderResponse = _portalCache.get(
 			cacheKey);
 
-		if ((ddmRESTDataProviderResult != null) &&
+		if ((ddmDataProviderResponse != null) &&
 			ddmRESTDataProviderSettings.cacheable()) {
 
-			return ddmRESTDataProviderResult.getKeyValuePairs();
+			return ddmDataProviderResponse;
 		}
 
 		HttpResponse httpResponse = httpRequest.send();
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray(httpResponse.body());
 
-		List<KeyValuePair> results = new ArrayList<>();
+		ddmDataProviderResponse = new DDMDataProviderResponse();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -105,14 +111,15 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 			String value = jsonObject.getString(
 				ddmRESTDataProviderSettings.value());
 
-			results.add(new KeyValuePair(key, value));
+			ddmDataProviderResponse.addDDMDataProviderResponseEntry(
+				createDDMDataProviderResponseEntry(key, value));
 		}
 
 		if (ddmRESTDataProviderSettings.cacheable()) {
-			_portalCache.put(cacheKey, new DDMRESTDataProviderResult(results));
+			_portalCache.put(cacheKey, ddmDataProviderResponse);
 		}
 
-		return results;
+		return ddmDataProviderResponse;
 	}
 
 	protected String getCacheKey(HttpRequest httpRequest) {
@@ -127,25 +134,11 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 	@Reference(unbind = "-")
 	protected void setMultiVMPool(MultiVMPool multiVMPool) {
 		_portalCache =
-			(PortalCache<String, DDMRESTDataProviderResult>)
+			(PortalCache<String, DDMDataProviderResponse>)
 				multiVMPool.getPortalCache(DDMRESTDataProvider.class.getName());
 	}
 
 	private JSONFactory _jsonFactory;
-	private PortalCache<String, DDMRESTDataProviderResult> _portalCache;
-
-	private static class DDMRESTDataProviderResult implements Serializable {
-
-		public DDMRESTDataProviderResult(List<KeyValuePair> keyValuePairs) {
-			_keyValuePairs = keyValuePairs;
-		}
-
-		public List<KeyValuePair> getKeyValuePairs() {
-			return _keyValuePairs;
-		}
-
-		private final List<KeyValuePair> _keyValuePairs;
-
-	}
+	private PortalCache<String, DDMDataProviderResponse> _portalCache;
 
 }

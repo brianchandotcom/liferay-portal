@@ -17,6 +17,8 @@ package com.liferay.dynamic.data.mapping.data.provider.internal.servlet;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContextContributor;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponseEntry;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
@@ -33,7 +35,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -178,25 +179,40 @@ public class DDMDataProviderServlet extends HttpServlet {
 		_jsonFactory = jsonFactory;
 	}
 
-	protected JSONArray toJSONArray(List<KeyValuePair> keyValuePairs) {
+	protected JSONArray toJSONArray(
+		DDMDataProviderResponse ddmDataProviderResponse) {
+
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		for (KeyValuePair keyValuePair : keyValuePairs) {
-			JSONObject jsonObject = _jsonFactory.createJSONObject();
+		for (DDMDataProviderResponseEntry ddmDataProviderResponseEntry :
+				ddmDataProviderResponse.getDDMDataProviderResponseEntries()) {
 
+			jsonArray.put(toJSONObject(ddmDataProviderResponseEntry));
+		}
+
+		return jsonArray;
+	}
+
+	protected JSONObject toJSONObject(
+		DDMDataProviderResponseEntry ddmDataProviderResponseEntry) {
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		Map<String, Object> properties =
+			ddmDataProviderResponseEntry.getProperties();
+
+		for (Map.Entry<String, Object> property : properties.entrySet()) {
 			JSONObject labelJSONObject = _jsonFactory.createJSONObject();
 
 			labelJSONObject.put(
 				LanguageUtil.getLanguageId(LocaleUtil.getDefault()),
-				keyValuePair.getKey());
+				property.getKey());
 
 			jsonObject.put("label", labelJSONObject);
-			jsonObject.put("value", keyValuePair.getValue());
-
-			jsonArray.put(jsonObject);
+			jsonObject.put("value", property.getValue());
 		}
 
-		return jsonArray;
+		return jsonObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

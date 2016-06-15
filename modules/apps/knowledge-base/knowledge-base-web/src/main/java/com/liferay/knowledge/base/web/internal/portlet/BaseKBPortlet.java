@@ -38,7 +38,6 @@ import com.liferay.knowledge.base.service.KBCommentService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.service.KBTemplateService;
 import com.liferay.knowledge.base.service.util.KnowledgeBaseConstants;
-import com.liferay.knowledge.base.web.upload.KBArticleAttachmentKBUploadHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -52,7 +51,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
-import com.liferay.portal.kernel.upload.UploadHandler;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Constants;
@@ -438,19 +436,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		kbCommentService.updateStatus(kbCommentId, status, serviceContext);
 
 		SessionMessages.add(actionRequest, "suggestionStatusUpdated");
-	}
-
-	public void uploadKBArticleAttachments(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
-
-		long resourcePrimKey = ParamUtil.getLong(
-			actionRequest, "resourcePrimKey");
-
-		UploadHandler uploadHandler =
-			new KBArticleAttachmentKBUploadHandler(resourcePrimKey);
-
-		uploadHandler.upload(actionRequest, actionResponse);
 	}
 
 	protected String buildEditURL(

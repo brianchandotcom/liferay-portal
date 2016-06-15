@@ -17,6 +17,10 @@ package com.liferay.item.selector.criteria;
 import com.liferay.item.selector.ItemSelectorReturnType;
 
 /**
+ * When used in an {@link com.liferay.item.selector.ItemSelectorView} it should
+ * return, in order to be fully compatible with other cases in portal, a String
+ * with the URL.
+ *
  * @author Sergio González
  */
 public class URLItemSelectorReturnType implements ItemSelectorReturnType {

@@ -17,6 +17,10 @@ package com.liferay.item.selector.criteria;
 import com.liferay.item.selector.ItemSelectorReturnType;
 
 /**
+ * When used in an {@link com.liferay.item.selector.ItemSelectorView} it should
+ * return, in order to be fully compatible with other cases in portal, a String
+ * with the BASE64 code for the element.
+ *
  * @author Roberto Díaz
  */
 public class Base64ItemSelectorReturnType implements ItemSelectorReturnType {

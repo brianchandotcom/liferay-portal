@@ -15,7 +15,6 @@
 package com.liferay.knowledge.base.web.upload;
 
 import com.liferay.knowledge.base.constants.KBActionKeys;
-import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
@@ -38,22 +37,18 @@ public class KBArticleAttachmentKBUploadHandler extends BaseUploadHandler {
 		_resourcePrimKey = resourcePrimKey;
 	}
 
+	@Override
 	protected FileEntry addFileEntry(
 			long userId, long groupId, long folderId, String fileName,
 			String contentType, InputStream inputStream, long size,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		KBArticle kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
-			_resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
-
-		return PortletFileRepositoryUtil.addPortletFileEntry(
-			kbArticle.getGroupId(), userId, KBArticle.class.getName(),
-			kbArticle.getClassPK(), KBPortletKeys.KNOWLEDGE_BASE_ARTICLE,
-			kbArticle.getAttachmentsFolderId(), inputStream, fileName,
-			contentType, false);
+		return KBArticleLocalServiceUtil.addAttachment(
+			userId, _resourcePrimKey, fileName, inputStream, contentType);
 	}
 
+	@Override
 	protected void checkPermission(
 			long groupId, long folderId, PermissionChecker permissionChecker)
 		throws PortalException {
@@ -65,6 +60,7 @@ public class KBArticleAttachmentKBUploadHandler extends BaseUploadHandler {
 			permissionChecker, kbArticle, KBActionKeys.UPDATE);
 	}
 
+	@Override
 	protected FileEntry fetchFileEntry(
 			long userId, long groupId, long folderId, String fileName)
 		throws PortalException {
@@ -81,10 +77,12 @@ public class KBArticleAttachmentKBUploadHandler extends BaseUploadHandler {
 		}
 	}
 
+	@Override
 	protected String getParameterName() {
 		return "imageSelectorFileName";
 	}
 
+	@Override
 	protected void validateFile(String fileName, String contentType, long size)
 		throws PortalException {
 	}

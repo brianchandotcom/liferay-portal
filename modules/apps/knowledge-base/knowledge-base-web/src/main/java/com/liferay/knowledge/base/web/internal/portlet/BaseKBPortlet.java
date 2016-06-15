@@ -38,7 +38,7 @@ import com.liferay.knowledge.base.service.KBCommentService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.service.KBTemplateService;
 import com.liferay.knowledge.base.service.util.KnowledgeBaseConstants;
-import com.liferay.knowledge.base.web.upload.KBUploadHandler;
+import com.liferay.knowledge.base.web.upload.KBArticleAttachmentKBUploadHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -447,7 +447,8 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		long resourcePrimKey = ParamUtil.getLong(
 			actionRequest, "resourcePrimKey");
 
-		UploadHandler uploadHandler = new KBUploadHandler(resourcePrimKey);
+		UploadHandler uploadHandler =
+			new KBArticleAttachmentKBUploadHandler(resourcePrimKey);
 
 		uploadHandler.upload(actionRequest, actionResponse);
 	}

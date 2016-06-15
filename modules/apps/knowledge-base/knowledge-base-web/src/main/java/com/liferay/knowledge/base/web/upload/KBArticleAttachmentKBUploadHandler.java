@@ -32,9 +32,9 @@ import java.io.InputStream;
 /**
  * @author Roberto Díaz
  */
-public class KBUploadHandler extends BaseUploadHandler {
+public class KBArticleAttachmentKBUploadHandler extends BaseUploadHandler {
 
-	public KBUploadHandler(long resourcePrimKey) {
+	public KBArticleAttachmentKBUploadHandler(long resourcePrimKey) {
 		_resourcePrimKey = resourcePrimKey;
 	}
 

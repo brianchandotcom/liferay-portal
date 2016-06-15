@@ -313,7 +313,7 @@
 
 	<fail message="Please use Ant 1.7.0 or above.">
 		<not>
-			<equals arg1="${correct.ant.version}" arg2="true" />
+			<istrue value="${correct.ant.version}" />
 		</not>
 	</fail>
 

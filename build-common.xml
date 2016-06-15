@@ -311,14 +311,11 @@
 		<antversion atleast="1.7.0" />
 	</condition>
 
-	<if>
+	<fail message="Please use Ant 1.7.0 or above.">
 		<not>
-			<equals arg1="${correct.ant.version}" arg2="true" />
+			<istrue value="${correct.ant.version}" />
 		</not>
-		<then>
-			<fail>Please use Ant 1.7.0 or above.</fail>
-		</then>
-	</if>
+	</fail>
 
 	<whichresource property="google.errorprone.compiler" resource="/com/google/errorprone/ErrorProneAntCompilerAdapter.class" />
 

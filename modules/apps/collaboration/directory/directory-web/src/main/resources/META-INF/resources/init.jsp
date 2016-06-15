@@ -47,6 +47,7 @@ page import="com.liferay.portal.kernel.model.Phone" %><%@
 page import="com.liferay.portal.kernel.model.Region" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.model.UserGroup" %><%@
+page import="com.liferay.portal.kernel.model.UserGroupConstants" %><%@
 page import="com.liferay.portal.kernel.model.Website" %><%@
 page import="com.liferay.portal.kernel.service.AddressServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.CountryServiceUtil" %><%@

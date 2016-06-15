@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import com.liferay.portal.model.impl.GroupImpl;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -87,6 +86,17 @@ public class GroupURLProvider {
 	}
 
 	public String getGroupURL(Group group, PortletRequest portletRequest) {
+		return getGroupURL(group, portletRequest, true);
+	}
+
+	public String getLiveGroupURL(Group group, PortletRequest portletRequest) {
+		return getGroupURL(group, portletRequest, false);
+	}
+
+	protected String getGroupURL(
+		Group group, PortletRequest portletRequest,
+		boolean includeStagingGroup) {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -102,7 +112,7 @@ public class GroupURLProvider {
 			return HttpUtil.removeParameter(groupDisplayURL, "p_p_id");
 		}
 
-		if (group.hasStagingGroup()) {
+		if (includeStagingGroup && group.hasStagingGroup()) {
 			try {
 				if (GroupPermissionUtil.contains(
 						themeDisplay.getPermissionChecker(), group,
@@ -111,7 +121,7 @@ public class GroupURLProvider {
 					return getGroupURL(group.getStagingGroup(), portletRequest);
 				}
 			}
-			catch (PortalException e) {
+			catch (PortalException pe) {
 				_log.error(
 					"Unable to check permission on group " +
 					group.getGroupId());
@@ -133,8 +143,8 @@ public class GroupURLProvider {
 		_panelCategoryRegistry = panelCategoryRegistry;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(GroupURLProvider.class);
-
+	private static final Log _log = LogFactoryUtil.getLog(
+		GroupURLProvider.class);
 
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;

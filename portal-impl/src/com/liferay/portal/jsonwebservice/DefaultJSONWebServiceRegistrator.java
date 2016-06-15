@@ -17,6 +17,7 @@ package com.liferay.portal.jsonwebservice;
 import com.liferay.portal.kernel.annotation.AnnotationLocator;
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.BeanLocatorException;
+import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMappingResolver;
@@ -26,12 +27,20 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceRegistrator;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceScannerStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.spring.aop.AdvisedSupportProxy;
+import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.util.PropsValues;
 
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.aop.TargetSource;
+import org.springframework.aop.framework.AdvisedSupport;
 
 /**
  * @author Igor Spasic
@@ -104,8 +113,22 @@ public class DefaultJSONWebServiceRegistrator
 			return;
 		}
 
+		Class<?> targetClass = null;
+
+		try {
+			targetClass = getTargetClass(bean);
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to compute target class of bean " + beanName +
+					" with type " + bean.getClass(),
+				e);
+
+			return;
+		}
+
 		JSONWebService jsonWebService = AnnotationLocator.locate(
-			bean.getClass(), JSONWebService.class);
+			targetClass, JSONWebService.class);
 
 		if (jsonWebService != null) {
 			try {
@@ -144,6 +167,47 @@ public class DefaultJSONWebServiceRegistrator
 
 	public void setWireViaUtil(boolean wireViaUtil) {
 		this._wireViaUtil = wireViaUtil;
+	}
+
+	protected Class<?> getTargetClass(Object service) throws Exception {
+		while (ProxyUtil.isProxyClass(service.getClass())) {
+			InvocationHandler invocationHandler =
+				ProxyUtil.getInvocationHandler(service);
+
+			if (invocationHandler instanceof AdvisedSupportProxy) {
+				AdvisedSupport advisedSupport =
+					ServiceBeanAopProxy.getAdvisedSupport(service);
+
+				TargetSource targetSource = advisedSupport.getTargetSource();
+
+				service = targetSource.getTarget();
+			}
+			else if (invocationHandler instanceof ClassLoaderBeanHandler) {
+				ClassLoaderBeanHandler classLoaderBeanHandler =
+					(ClassLoaderBeanHandler)invocationHandler;
+
+				Object bean = classLoaderBeanHandler.getBean();
+
+				if (bean instanceof ServiceWrapper) {
+					ServiceWrapper<?> serviceWrapper = (ServiceWrapper<?>)bean;
+
+					service = serviceWrapper.getWrappedService();
+				}
+				else {
+					service = bean;
+				}
+			}
+			else {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to handle proxy of type " + invocationHandler);
+				}
+
+				break;
+			}
+		}
+
+		return service.getClass();
 	}
 
 	protected Class<?> loadUtilClass(Class<?> implementationClass)

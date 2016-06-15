@@ -60,6 +60,7 @@ page import="com.liferay.portal.kernel.model.ResourceConstants" %><%@
 page import="com.liferay.portal.kernel.model.Role" %><%@
 page import="com.liferay.portal.kernel.model.RoleConstants" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
+page import="com.liferay.portal.kernel.model.UserGroupConstants" %><%@
 page import="com.liferay.portal.kernel.model.UserGroupRole" %><%@
 page import="com.liferay.portal.kernel.model.UserPersonalSite" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@

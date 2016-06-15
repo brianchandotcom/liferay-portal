@@ -662,7 +662,7 @@
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
 			<finder-column name="parentLayoutId" />
-			<finder-column comparator="&lt;" name="priority" />
+			<finder-column comparator="&lt;=" name="priority" />
 		</finder>
 
 		<!-- References -->

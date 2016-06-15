@@ -23,6 +23,7 @@ Export-Package:\
 	com.liferay.portal.security.lang,\
 	com.liferay.portal.service.http,\
 	com.liferay.portal.service.permission,\
+	com.liferay.portal.service.persistence.constants,\
 	com.liferay.portal.servlet,\
 	com.liferay.portal.servlet.filters.authverifier,\
 	com.liferay.portal.spring.aop,\

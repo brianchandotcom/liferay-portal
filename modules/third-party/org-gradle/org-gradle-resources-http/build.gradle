@@ -10,7 +10,7 @@ if (gradleVersion != gradle.gradleVersion) {
 }
 
 dependencies {
-	compile gradleApi()
+	compile fileTree(dir: gradle.gradleHomeDir, include: "lib/**/*.jar")
 }
 
 jar {

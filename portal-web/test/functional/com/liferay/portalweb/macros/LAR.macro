@@ -10,40 +10,47 @@
 		<if>
 			<equals arg1="${exportPermissions}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="Checkbox#PERMISSIONS" />
+				<execute function="Check#checkToggleSwitch" locator1="ExportImport#PERMISSIONS" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${deleteMissingPages}" arg2="true" />
 			<then>
-				<execute function="AssertClick" locator1="ExportImport#PAGES_CHANGE_LINK" value1="Change" />
-				<execute function="Check" locator1="PagesConfiguration#PAGES_DELETE_MISSING_PAGES_CHECKBOX" />
-				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+				<execute macro="Panel#expandPanel">
+					<var name="panelHeading" value="Deletions" />
+				</execute>
+
+				<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#REPLICATE_INDIVIDUAL_DELETIONS" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${uncheckLogo}" arg2="true" />
 			<then>
-				<execute function="AssertClick" locator1="ExportImport#PAGES_CHANGE_LINK" value1="Change" />
 				<execute function="Uncheck" locator1="PagesConfiguration#PAGES_LOGO_CHECKBOX" />
-				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="checkPageName" />
 			<then>
-				<execute function="AssertClick" locator1="ExportImport#PAGES_CHANGE_LINK" value1="Change" />
+				<execute function="Click" locator1="ExportImport#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
+
+				<execute function="Click" locator1="ExportImport#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
 
 				<for list="${checkPageName}" param="pageName">
 					<var name="key_pageName" value="${pageName}" />
 
-					<execute function="Click" locator1="PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME" />
-				</for>
+					<if>
+						<condition function="IsElementNotPresent" locator1="PagesConfiguration#PAGES_SPECIFIC_PAGE_CHECKED" />
+						<then>
+							<var name="key_pageName" value="${pageName}" />
 
-				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+							<execute function="Click" locator1="PagesConfiguration#PAGES_SPECIFIC_PAGE_NAME" />
+						</then>
+					</if>
+				</for>
 			</then>
 		</if>
 

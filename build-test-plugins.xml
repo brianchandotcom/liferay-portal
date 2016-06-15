@@ -52,7 +52,12 @@
 						</path>
 					</pathconvert>
 
-					<dirname file="${plugin.build.path}" property="plugin.path" />
+					<if>
+						<isset property="plugin.build.path" />
+						<then>
+							<dirname file="${plugin.build.path}" property="plugin.path" />
+						</then>
+					</if>
 				</else>
 			</if>
 

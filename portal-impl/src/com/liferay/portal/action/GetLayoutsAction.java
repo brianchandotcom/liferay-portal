@@ -46,25 +46,14 @@ public class GetLayoutsAction extends JSONAction {
 		if (cmd.equals("get")) {
 			return getLayoutsJSON(request, groupId, treeId);
 		}
-		else if (cmd.equals("getLayoutsIn")) {
-			return getLayoutsInJSON(request, groupId);
+		else if (cmd.equals("getSiblingLayouts")) {
+			return getSiblingLayouts(request, groupId);
 		}
 		else if (cmd.equals("getAll")) {
 			return LayoutsTreeUtil.getLayoutsJSON(request, groupId, treeId);
 		}
 
 		return null;
-	}
-
-	protected String getLayoutsInJSON(HttpServletRequest request, long groupId)
-		throws Exception {
-
-		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-		long includedLayoutId = ParamUtil.getLong(request, "includedLayoutId");
-		int quantity = ParamUtil.getInteger(request, "quantity");
-
-		return LayoutsTreeUtil.getLayoutsJSON(
-			request, groupId, privateLayout, includedLayoutId, quantity);
 	}
 
 	protected String getLayoutsJSON(
@@ -78,6 +67,17 @@ public class GetLayoutsAction extends JSONAction {
 		return LayoutsTreeUtil.getLayoutsJSON(
 			request, groupId, privateLayout, parentLayoutId, incomplete,
 			treeId);
+	}
+
+	protected String getSiblingLayouts(HttpServletRequest request, long groupId)
+		throws Exception {
+
+		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
+		long layoutId = ParamUtil.getLong(request, "layoutId");
+		int quantity = ParamUtil.getInteger(request, "quantity");
+
+		return LayoutsTreeUtil.getLayoutsJSON(
+			request, groupId, privateLayout, layoutId, quantity);
 	}
 
 }

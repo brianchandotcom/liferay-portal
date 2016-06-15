@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1465496756127
+Bnd-LastModified: 1465997570343
 Bundle-ManifestVersion: 2
 Bundle-Name: system.packages.extra
 Bundle-SymbolicName: system.packages.extra
 Bundle-Vendor: Liferay, Inc.
 Bundle-Version: 1.0.0
-Created-By: 1.7.0_71 (Oracle Corporation)
+Created-By: 1.8.0_45 (Oracle Corporation)
 Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  u.impl;version="4.0.1";uses:="com.liferay.ibm.icu.math,com.liferay.ib
  m.icu.text,com.liferay.ibm.icu.util",com.liferay.ibm.icu.impl.coll;ve
@@ -2841,7 +2841,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ernel.security.sso;version="1.0.0";uses:="javax.servlet.http",com.lif
  eray.portal.kernel.security.xml;version="1.0.0";uses:="javax.xml.pars
  ers,javax.xml.stream,org.xml.sax",com.liferay.portal.kernel.service;v
- ersion="1.3.0";uses:="com.liferay.announcements.kernel.model,com.life
+ ersion="1.4.0";uses:="com.liferay.announcements.kernel.model,com.life
  ray.expando.kernel.model,com.liferay.exportimport.kernel.lar,com.life
  ray.exportimport.kernel.model,com.liferay.portal.kernel.cache.thread.
  local,com.liferay.portal.kernel.cluster,com.liferay.portal.kernel.dao
@@ -2869,7 +2869,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ="1.0.0";uses:="com.liferay.portal.kernel.exception,com.liferay.porta
  l.kernel.model,com.liferay.portal.kernel.security.auth,com.liferay.po
  rtal.kernel.security.permission,javax.portlet,javax.servlet.http",com
- .liferay.portal.kernel.service.persistence;version="1.1.0";uses:="com
+ .liferay.portal.kernel.service.persistence;version="1.2.0";uses:="com
  .liferay.portal.kernel.dao.orm,com.liferay.portal.kernel.exception,co
  m.liferay.portal.kernel.model,com.liferay.portal.kernel.security.perm
  ission,com.liferay.portal.kernel.service,com.liferay.portal.kernel.ut
@@ -3227,7 +3227,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  .kernel.configuration,com.liferay.portal.kernel.service,com.liferay.p
  ortal.kernel.service.configuration,com.liferay.portal.kernel.service.
  configuration.configurator";version="1.0.0",com.liferay.portal.servic
- e.http;version="1.1.0";uses:="com.liferay.announcements.kernel.model,
+ e.http;version="1.2.0";uses:="com.liferay.announcements.kernel.model,
  com.liferay.exportimport.kernel.lar,com.liferay.exportimport.kernel.m
  odel,com.liferay.portal.kernel.exception,com.liferay.portal.kernel.js
  on,com.liferay.portal.kernel.model,com.liferay.portal.kernel.reposito
@@ -4245,6 +4245,8 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  apache.xml.serializer;version="2.7.1",org.objectweb.asm.attrs;version
  ="5.0.1",sun.misc;version="1.0.0",sun.security.provider;version="1.0.
  0"
+Git-Descriptor: 2379411-dirty
+Git-SHA: 237941153ada5e04cb2528a500dc2022ff175ccb
 Javac-Debug: on
 Javac-Deprecation: off
 Javac-Encoding: UTF-8

@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.analysis.KeywordTokenizer;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -154,6 +156,14 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 			doCreateQueryForFullTextProximity(field, value),
 			BooleanClauseOccur.SHOULD);
 
+		List<String> phrases = getEmbeddedPhrases(value);
+
+		for (String phrase : phrases) {
+			booleanQueryImpl.add(
+				doCreatePhraseMatchQuery(field, phrase),
+				BooleanClauseOccur.MUST);
+		}
+
 		return booleanQueryImpl;
 	}
 
@@ -182,6 +192,26 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		}
 
 		return new WildcardQueryImpl(new QueryTermImpl(field, value));
+	}
+
+	protected List<String> getEmbeddedPhrases(String value) {
+		KeywordTokenizer keywordTokenizer = getKeywordTokenizer();
+
+		if (keywordTokenizer == null) {
+			return Collections.emptyList();
+		}
+
+		List<String> tokens = keywordTokenizer.tokenize(value);
+
+		List<String> phrases = new ArrayList<>(tokens.size());
+
+		for (String token : tokens) {
+			if (isPhrase(token)) {
+				phrases.add(token);
+			}
+		}
+
+		return phrases;
 	}
 
 	protected KeywordTokenizer getKeywordTokenizer() {

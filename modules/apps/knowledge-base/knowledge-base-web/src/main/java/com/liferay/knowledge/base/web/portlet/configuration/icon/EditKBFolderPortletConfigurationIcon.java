@@ -16,44 +16,41 @@ package com.liferay.knowledge.base.web.portlet.configuration.icon;
 
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.knowledge.base.service.permission.KBArticlePermission;
+import com.liferay.knowledge.base.model.KBFolder;
+import com.liferay.knowledge.base.service.permission.KBFolderPermission;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Ambrin Chaudhary
+ * @author Roberto Díaz
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-		"path=/admin/view_article.jsp"
+		"path=/admin/view_folders.jsp"
 	},
 	service = PortletConfigurationIcon.class
 )
-public class SubscribeKBArticlePortletConfigurationIcon
+public class EditKBFolderPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return LanguageUtil.get(
-			getResourceBundle(getLocale(portletRequest)), "subscribe");
+			getResourceBundle(getLocale(portletRequest)), "edit");
 	}
 
 	@Override
@@ -62,30 +59,24 @@ public class SubscribeKBArticlePortletConfigurationIcon
 
 		PortletURL portletURL = PortalUtil.getControlPanelPortletURL(
 			portletRequest, KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-			PortletRequest.ACTION_PHASE);
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/admin/common/edit_folder.jsp");
+		portletURL.setParameter(
+			"redirect", PortalUtil.getCurrentURL(portletRequest));
+
+		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
+			KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
 
 		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "subscribeKBArticle");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
-		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
-
-		portletURL.setParameter(
-			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
-		portletURL.setParameter(
-			"resourcePrimKey", String.valueOf(kbArticle.getResourcePrimKey()));
+			"kbFolderId", String.valueOf(kbFolder.getKbFolderId()));
 
 		return portletURL.toString();
 	}
 
 	@Override
 	public double getWeight() {
-		return 110;
+		return 104;
 	}
 
 	@Override
@@ -93,32 +84,19 @@ public class SubscribeKBArticlePortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+		KBFolder kbFolder = (KBFolder)portletRequest.getAttribute(
+			KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if ((kbArticle.isApproved() || !kbArticle.isFirstVersion()) &&
-			KBArticlePermission.contains(
-				permissionChecker, kbArticle, KBActionKeys.SUBSCRIBE) &&
-			!_subscriptionLocalService.isSubscribed(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				KBArticle.class.getName(), kbArticle.getResourcePrimKey())) {
+		if (KBFolderPermission.contains(
+				permissionChecker, kbFolder, KBActionKeys.UPDATE)) {
 
 			return true;
 		}
 
 		return false;
 	}
-
-	@Reference(unbind = "-")
-	protected void setSubscriptionLocalService(
-		SubscriptionLocalService subscriptionLocalService) {
-
-		_subscriptionLocalService = subscriptionLocalService;
-	}
-
-	private SubscriptionLocalService _subscriptionLocalService;
 
 }

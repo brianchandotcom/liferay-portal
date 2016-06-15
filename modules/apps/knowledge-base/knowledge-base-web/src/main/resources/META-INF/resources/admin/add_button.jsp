@@ -45,7 +45,7 @@ else {
 
 		<liferay-portlet:renderURL var="addBasicKBArticleURL">
 			<portlet:param name="mvcPath" value='<%= templatePath + "edit_article.jsp" %>' />
-			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(parentResourceClassNameId) %>" />
 			<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
 		</liferay-portlet:renderURL>
@@ -60,7 +60,7 @@ else {
 
 				<liferay-portlet:renderURL var="addKBArticleURL">
 					<portlet:param name="mvcPath" value='<%= templatePath + "edit_article.jsp" %>' />
-					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(parentResourceClassNameId) %>" />
 					<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
 					<portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" />
@@ -78,7 +78,7 @@ else {
 	<c:if test="<%= hasAddKBFolderPermission %>">
 		<portlet:renderURL var="addFolderURL">
 			<portlet:param name="mvcPath" value="/admin/common/edit_folder.jsp" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(KBFolderConstants.getClassName())) %>" />
 			<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
 		</portlet:renderURL>
@@ -89,7 +89,7 @@ else {
 	<c:if test="<%= (parentResourceClassNameId == kbFolderClassNameId) && AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_ARTICLE) %>">
 		<portlet:renderURL var="importURL">
 			<portlet:param name="mvcPath" value="/admin/import.jsp" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="parentKBFolderId" value="<%= String.valueOf(parentResourcePrimKey) %>" />
 		</portlet:renderURL>
 

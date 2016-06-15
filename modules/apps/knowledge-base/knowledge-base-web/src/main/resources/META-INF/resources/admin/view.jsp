@@ -111,7 +111,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 <div class="container-fluid-1280">
 
 	<%
-	KnowledgeBaseUtil.addPortletBreadcrumbEntries(parentResourceClassNameId, parentResourcePrimKey, "/admin/view.jsp", request, renderResponse);
+	KnowledgeBaseUtil.addPortletBreadcrumbEntries(parentResourceClassNameId, parentResourcePrimKey, StringPool.BLANK, request, renderResponse);
 	%>
 
 	<liferay-ui:breadcrumb
@@ -182,7 +182,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 						/>
 
 						<liferay-portlet:renderURL varImpl="rowURL">
-							<portlet:param name="mvcPath" value="/admin/view.jsp" />
+							<portlet:param name="mvcPath" value="/admin/view_folders.jsp" />
 							<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbFolder.getClassNameId()) %>" />
 							<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbFolder.getKbFolderId()) %>" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -248,7 +248,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
 								<c:if test="<%= childKBArticlesCount > 0 %>">
 									<liferay-portlet:renderURL varImpl="childKBArticlesURL">
-										<portlet:param name="mvcPath" value="/admin/view.jsp" />
+										<portlet:param name="mvcPath" value="/admin/view_articles.jsp" />
 										<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbArticle.getClassNameId()) %>" />
 										<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 										<portlet:param name="redirect" value="<%= currentURL %>" />

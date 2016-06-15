@@ -18,9 +18,7 @@ import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
-import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -41,12 +39,12 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-		"path=/admin/view_article.jsp"
+		"path=/admin/view_article.jsp", "path=/admin/view_articles.jsp"
 	},
 	service = PortletConfigurationIcon.class
 )
 public class EditKBArticlePortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseGetKBArticlePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -64,13 +62,10 @@ public class EditKBArticlePortletConfigurationIcon
 
 		portletURL.setParameter("mvcPath", "/admin/edit_article.jsp");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		portletURL.setParameter(
+			"redirect", PortalUtil.getCurrentURL(portletRequest));
 
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-
-		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+		KBArticle kbArticle = getKBArticle(portletRequest);
 
 		portletURL.setParameter(
 			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
@@ -92,8 +87,7 @@ public class EditKBArticlePortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+		KBArticle kbArticle = getKBArticle(portletRequest);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();

@@ -30,19 +30,19 @@ long kbArticleClassNameId = PortalUtil.getClassNameId(KBArticleConstants.getClas
 
 long[] selectableClassNameIds = ParamUtil.getLongValues(request, "selectableClassNameIds", new long[] {kbFolderClassNameId, kbArticleClassNameId});
 
-String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectKBEntry");
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectKBObject");
 
 boolean kbFolderView = (resourceClassNameId == kbFolderClassNameId);
 
-SearchContainer kbEntriesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, "there-are-no-entries");
+SearchContainer kbObjectSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, "there-are-no-entries");
 
 if (kbFolderView) {
-	kbEntriesSearchContainer.setTotal(KBFolderServiceUtil.getKBFoldersCount(scopeGroupId, parentResourcePrimKey));
-	kbEntriesSearchContainer.setResults(KBFolderServiceUtil.getKBFolders(scopeGroupId, parentResourcePrimKey, kbEntriesSearchContainer.getStart(), kbEntriesSearchContainer.getEnd()));
+	kbObjectSearchContainer.setTotal(KBFolderServiceUtil.getKBFoldersCount(scopeGroupId, parentResourcePrimKey));
+	kbObjectSearchContainer.setResults(KBFolderServiceUtil.getKBFolders(scopeGroupId, parentResourcePrimKey, kbObjectSearchContainer.getStart(), kbObjectSearchContainer.getEnd()));
 }
 else {
-	kbEntriesSearchContainer.setTotal(KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY));
-	kbEntriesSearchContainer.setResults(KBFolderServiceUtil.getKBFoldersAndKBArticles(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY, kbEntriesSearchContainer.getStart(), kbEntriesSearchContainer.getEnd(), new KBEntriesTitleComparator<Object>()));
+	kbObjectSearchContainer.setTotal(KBFolderServiceUtil.getKBFoldersAndKBArticlesCount(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY));
+	kbObjectSearchContainer.setResults(KBFolderServiceUtil.getKBFoldersAndKBArticles(scopeGroupId, parentResourcePrimKey, WorkflowConstants.STATUS_ANY, kbObjectSearchContainer.getStart(), kbObjectSearchContainer.getEnd(), new KBObjectsTitleComparator<Object>()));
 }
 
 String parentTitle = LanguageUtil.get(request, "home");
@@ -92,17 +92,17 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 		</c:if>
 
 		<liferay-ui:search-container
-			searchContainer="<%= kbEntriesSearchContainer %>"
+			searchContainer="<%= kbObjectSearchContainer %>"
 		>
 			<liferay-ui:search-container-row
 				className="Object"
-				modelVar="kbEntry"
+				modelVar="kbObject"
 			>
 				<c:choose>
-					<c:when test="<%= kbEntry instanceof KBFolder %>">
+					<c:when test="<%= kbObject instanceof KBFolder %>">
 
 						<%
-						KBFolder kbFolder = (KBFolder)kbEntry;
+						KBFolder kbFolder = (KBFolder)kbObject;
 
 						kbFolder = kbFolder.toEscapedModel();
 						%>
@@ -176,7 +176,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 					<c:otherwise>
 
 						<%
-						KBArticle kbArticle = (KBArticle)kbEntry;
+						KBArticle kbArticle = (KBArticle)kbObject;
 
 						kbArticle = kbArticle.toEscapedModel();
 						%>

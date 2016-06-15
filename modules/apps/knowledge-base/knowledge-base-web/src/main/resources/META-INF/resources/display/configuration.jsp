@@ -71,7 +71,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 
 								<liferay-ui:input-resource id="configurationKBObject" url="<%= title %>" />
 
-								<aui:button name="selectKBEntryButton" value="select" />
+								<aui:button name="selectKBObjectButton" value="select" />
 							</aui:field-wrapper>
 						</div>
 					</aui:fieldset>
@@ -120,7 +120,7 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 
 <c:if test='<%= tabsNames.contains("general") %>'>
 	<aui:script>
-		AUI.$('#<portlet:namespace />selectKBEntryButton').on(
+		AUI.$('#<portlet:namespace />selectKBObjectButton').on(
 			'click',
 			function(event) {
 				Liferay.Util.selectEntity(
@@ -131,30 +131,30 @@ kbDisplayPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBDispl
 							modal: true,
 							width: 600
 						},
-						id: '<portlet:namespace />selectKBEntry',
+						id: '<portlet:namespace />selectKBObject',
 						title: '<liferay-ui:message key="select-parent" />',
 
-						<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectKBEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 							<portlet:param name="mvcPath" value="/display/select_parent.jsp" />
 							<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(kbDisplayPortletInstanceConfiguration.resourceClassNameId()) %>" />
 							<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbDisplayPortletInstanceConfiguration.resourcePrimKey()) %>" />
 							<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(kbDisplayPortletInstanceConfiguration.resourcePrimKey()) %>" />
-							<portlet:param name="eventName" value="<%= liferayPortletResponse.getNamespace() + "selectKBEntry" %>" />
+							<portlet:param name="eventName" value="<%= liferayPortletResponse.getNamespace() + "selectKBObject" %>" />
 						</liferay-portlet:renderURL>
 
-						uri: '<%= selectKBEntryURL %>'
+						uri: '<%= selectKBObjectURL %>'
 					},
 					function(event) {
 						document.<portlet:namespace />fm.<portlet:namespace />resourceClassNameId.value = event.resourceclassnameid;
 
-						var kbEntryData = {
+						var kbObjectData = {
 							idString: 'resourcePrimKey',
 							idValue: event.resourceprimkey,
 							nameString: 'configurationKBObject',
 							nameValue: event.title
 						};
 
-						Liferay.Util.selectFolder(kbEntryData, '<portlet:namespace />');
+						Liferay.Util.selectFolder(kbObjectData, '<portlet:namespace />');
 					}
 				);
 			}

@@ -18,7 +18,6 @@ import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.web.constants.KBWebKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -37,12 +36,12 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + KBPortletKeys.KNOWLEDGE_BASE_ADMIN,
-		"path=/admin/view_article.jsp"
+		"path=/admin/view_article.jsp", "path=/admin/view_articles.jsp"
 	},
 	service = PortletConfigurationIcon.class
 )
 public class HistoryKBArticlePortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseGetKBArticlePortletConfigurationIcon {
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
@@ -65,8 +64,7 @@ public class HistoryKBArticlePortletConfigurationIcon
 
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
-		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+		KBArticle kbArticle = getKBArticle(portletRequest);
 
 		portletURL.setParameter(
 			"resourceClassNameId", String.valueOf(kbArticle.getClassNameId()));
@@ -86,8 +84,7 @@ public class HistoryKBArticlePortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		KBArticle kbArticle = (KBArticle)portletRequest.getAttribute(
-			KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
+		KBArticle kbArticle = getKBArticle(portletRequest);
 
 		if (kbArticle.isApproved() || !kbArticle.isFirstVersion()) {
 			return true;

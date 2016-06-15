@@ -20,7 +20,7 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
-import com.liferay.knowledge.base.util.comparator.KBEntriesTitleComparator;
+import com.liferay.knowledge.base.util.comparator.KBObjectsTitleComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -144,7 +144,7 @@ public class KBFolderLocalServiceTest {
 				_group.getGroupId(), _kbFolder.getKbFolderId(),
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS,
-				new KBEntriesTitleComparator<KBArticle>(true, true));
+				new KBObjectsTitleComparator<KBArticle>(true, true));
 
 		KBFolder currentKBFolder = (KBFolder)kbFolderAndKBArticles.get(0);
 		KBArticle currentKBArticle1 = (KBArticle)kbFolderAndKBArticles.get(1);
@@ -168,7 +168,7 @@ public class KBFolderLocalServiceTest {
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
 				_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new KBEntriesTitleComparator<>(false, true));
+				QueryUtil.ALL_POS, new KBObjectsTitleComparator<>(false, true));
 
 		KBFolder currentKBFolder = (KBFolder)kbFolderAndKBArticles.get(0);
 		KBArticle currentKBArticle = (KBArticle)kbFolderAndKBArticles.get(1);
@@ -191,7 +191,7 @@ public class KBFolderLocalServiceTest {
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
 				_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				WorkflowConstants.STATUS_DRAFT, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new KBEntriesTitleComparator<>(false, true));
+				QueryUtil.ALL_POS, new KBObjectsTitleComparator<>(false, true));
 
 		KBFolder currentKBFolder = (KBFolder)kbFolderAndKBArticles.get(0);
 
@@ -215,7 +215,7 @@ public class KBFolderLocalServiceTest {
 			KBFolderLocalServiceUtil.getKBFoldersAndKBArticles(
 				_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new KBEntriesTitleComparator<>(false, true));
+				QueryUtil.ALL_POS, new KBObjectsTitleComparator<>(false, true));
 
 		KBFolder currentKBFolder = (KBFolder)kbFolderAndKBArticles.get(0);
 		KBArticle currentKBArticle1 = (KBArticle)kbFolderAndKBArticles.get(1);

@@ -102,19 +102,19 @@ kbArticlePortletInstanceConfiguration = ParameterMapUtil.setParameterMap(KBArtic
 							modal: true,
 							width: 600
 						},
-						id: '<portlet:namespace />selectKBEntry',
+						id: '<portlet:namespace />selectKBObject',
 						title: '<liferay-ui:message key="select-parent" />',
 
-						<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectKBEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 							<portlet:param name="mvcPath" value="/article/select_parent.jsp" />
-							<portlet:param name="eventName" value='<%= liferayPortletResponse.getNamespace() + "selectKBEntry" %>' />
+							<portlet:param name="eventName" value='<%= liferayPortletResponse.getNamespace() + "selectKBObject" %>' />
 							<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(KBArticleConstants.getClassName())) %>" />
 							<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(kbArticlePortletInstanceConfiguration.resourcePrimKey()) %>" />
 							<portlet:param name="originalParentResourcePrimKey" value="<%= String.valueOf(kbArticlePortletInstanceConfiguration.resourcePrimKey()) %>" />
 							<portlet:param name="selectableClassNameIds" value="<%= String.valueOf(PortalUtil.getClassNameId(KBArticleConstants.getClassName())) %>" />
 						</liferay-portlet:renderURL>
 
-						uri: '<%= selectKBEntryURL %>'
+						uri: '<%= selectKBObjectURL %>'
 					},
 					function(event) {
 						var kbArticleData = {

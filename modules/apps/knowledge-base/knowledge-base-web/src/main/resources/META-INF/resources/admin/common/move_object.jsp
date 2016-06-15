@@ -91,7 +91,7 @@ if (portletTitleBasedNavigation) {
 						<aui:input cssClass="input-mini" id="parentPriority" label="priority" name="priority" type="text" value="<%= BigDecimal.valueOf(priority).toPlainString() %>" />
 					</div>
 
-					<aui:button name="selectKBEntryButton" value="select" />
+					<aui:button name="selectKBObjectButton" value="select" />
 				</aui:field-wrapper>
 			</aui:fieldset>
 		</aui:fieldset-group>
@@ -105,7 +105,7 @@ if (portletTitleBasedNavigation) {
 </div>
 
 <aui:script>
-	AUI.$('#<portlet:namespace />selectKBEntryButton').on(
+	AUI.$('#<portlet:namespace />selectKBObjectButton').on(
 		'click',
 		function(event) {
 			Liferay.Util.selectEntity(
@@ -116,10 +116,10 @@ if (portletTitleBasedNavigation) {
 						modal: true,
 						width: 600
 					},
-					id: '<portlet:namespace />selectKBEntry',
+					id: '<portlet:namespace />selectKBObject',
 					title: '<liferay-ui:message key="select-parent" />',
 
-					<liferay-portlet:renderURL var="selectKBEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<liferay-portlet:renderURL var="selectKBObjectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 						<portlet:param name="mvcPath" value='<%= templatePath + "select_parent.jsp" %>' />
 						<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
 						<portlet:param name="resourcePrimKey" value="<%= String.valueOf(resourcePrimKey) %>" />
@@ -130,7 +130,7 @@ if (portletTitleBasedNavigation) {
 						<portlet:param name="status" value="<%= String.valueOf(status) %>" />
 					</liferay-portlet:renderURL>
 
-					uri: '<%= selectKBEntryURL %>'
+					uri: '<%= selectKBObjectURL %>'
 				},
 				function(event) {
 					document.<portlet:namespace />fm.<portlet:namespace />parentPriority.value = event.priority;

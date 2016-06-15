@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 /**
  * @author Roberto Díaz
  */
-public class KBEntriesTitleComparator<T> extends OrderByComparator<T> {
+public class KBObjectsTitleComparator<T> extends OrderByComparator<T> {
 
 	public static final String ORDER_BY_ASC = "title ASC";
 
@@ -35,15 +35,15 @@ public class KBEntriesTitleComparator<T> extends OrderByComparator<T> {
 	public static final String ORDER_BY_MODEL_DESC =
 		"modelFolder DESC, title DESC";
 
-	public KBEntriesTitleComparator() {
+	public KBObjectsTitleComparator() {
 		this(false, false);
 	}
 
-	public KBEntriesTitleComparator(boolean ascending) {
+	public KBObjectsTitleComparator(boolean ascending) {
 		this(ascending, false);
 	}
 
-	public KBEntriesTitleComparator(boolean ascending, boolean orderByModel) {
+	public KBObjectsTitleComparator(boolean ascending, boolean orderByModel) {
 		_ascending = ascending;
 		_orderByModel = orderByModel;
 	}

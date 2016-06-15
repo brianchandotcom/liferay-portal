@@ -3,26 +3,29 @@
 
 <routes>
 	<route>
-		<pattern>/articles</pattern>
+		<pattern></pattern>
 		<implicit-parameter name="mvcPath">/admin/view.jsp</implicit-parameter>
-		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/articles</pattern>
+		<implicit-parameter name="mvcPath">/admin/view_articles.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/folders</pattern>
+		<implicit-parameter name="mvcPath">/admin/view_folders.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/templates</pattern>
 		<implicit-parameter name="mvcPath">/admin/view_templates.jsp</implicit-parameter>
-		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
-		<pattern>/articles/{p_p_state}</pattern>
-		<implicit-parameter name="mvcPath">/admin/view.jsp</implicit-parameter>
-	</route>
-	<route>
-		<pattern>/suggestions/{p_p_state}</pattern>
+		<pattern>/suggestions</pattern>
 		<implicit-parameter name="mvcPath">/admin/view_suggestions.jsp</implicit-parameter>
-	</route>
-	<route>
-		<pattern>/templates/{p_p_state}</pattern>
-		<implicit-parameter name="mvcPath">/admin/view_templates.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/article/{resourcePrimKey:\d+}/{p_p_state}</pattern>
@@ -43,7 +46,7 @@
 	<route>
 		<pattern>/article/{resourcePrimKey:\d+}/{status:-?\d+}/history</pattern>
 		<implicit-parameter name="mvcPath">/admin/history.jsp</implicit-parameter>
-		<implicit-parameter name="p_p_state">normal</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/article/{resourcePrimKey:\d+}/{status:-?\d+}/history/{p_p_state}</pattern>

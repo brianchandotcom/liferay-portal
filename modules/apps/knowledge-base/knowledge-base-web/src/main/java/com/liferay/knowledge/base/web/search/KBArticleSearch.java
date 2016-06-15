@@ -18,7 +18,7 @@ import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
-import com.liferay.knowledge.base.util.comparator.KBEntriesTitleComparator;
+import com.liferay.knowledge.base.util.comparator.KBObjectsTitleComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -98,7 +98,7 @@ public class KBArticleSearch extends SearchContainer<Object> {
 			if (parentResourceClassNameId ==
 					PortalUtil.getClassNameId(KBFolder.class)) {
 
-				orderByComparator = new KBEntriesTitleComparator<>(false, true);
+				orderByComparator = new KBObjectsTitleComparator<>(false, true);
 			}
 			else {
 				orderByComparator =

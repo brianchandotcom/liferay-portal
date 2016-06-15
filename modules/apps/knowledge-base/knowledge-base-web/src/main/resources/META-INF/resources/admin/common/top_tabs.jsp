@@ -23,12 +23,12 @@ String mvcPath = ParamUtil.getString(request, "mvcPath");
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, plid, portletDisplay.getId(), KBActionKeys.VIEW) %>">
-			<portlet:renderURL var="viewKBArticlesURL">
+			<portlet:renderURL var="viewKBObjectsURL">
 				<portlet:param name="mvcPath" value="/admin/view.jsp" />
 			</portlet:renderURL>
 
 			<aui:nav-item
-				href="<%= viewKBArticlesURL %>"
+				href="<%= viewKBObjectsURL %>"
 				label="articles"
 				selected='<%= !mvcPath.equals("/admin/view_suggestions.jsp") %>'
 			/>
@@ -49,7 +49,7 @@ String mvcPath = ParamUtil.getString(request, "mvcPath");
 
 	<aui:nav-bar-search>
 		<liferay-portlet:renderURL varImpl="searchURL">
-			<portlet:param name="mvcPath" value="/admin/view.jsp" />
+			<portlet:param name="mvcPath" value="/admin/search.jsp" />
 		</liferay-portlet:renderURL>
 
 		<aui:form action="<%= searchURL %>" method="get" name="searchFm">

@@ -17,10 +17,9 @@
 <%@ include file="/admin/common/init.jsp" %>
 
 <%
-KBArticle kbArticle = (KBArticle)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE);
-int status = (Integer)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_STATUS);
+KBArticle kbArticle = (KBArticle)request.getAttribute("info_panel.jsp-kbArticle");
 
-int selStatus = KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE) ? WorkflowConstants.STATUS_ANY : status;
+int selStatus = KBArticlePermission.contains(permissionChecker, kbArticle, KBActionKeys.UPDATE) ? WorkflowConstants.STATUS_ANY : WorkflowConstants.STATUS_APPROVED;
 
 String orderByCol = ParamUtil.getString(request, "orderByCol", "version");
 String orderByType = ParamUtil.getString(request, "orderByType", "desc");

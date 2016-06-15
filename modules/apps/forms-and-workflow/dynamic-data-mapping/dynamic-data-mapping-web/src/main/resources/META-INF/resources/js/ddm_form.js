@@ -1472,6 +1472,10 @@ AUI.add(
 						else {
 							container.append(entryNode);
 						}
+
+						if (selected) {
+							entryNode.scrollIntoView();
+						}
 					},
 
 					_afterSelectedLayoutChange: function(event) {
@@ -1944,7 +1948,7 @@ AUI.add(
 								instance._addListElement(layouts[index], listNode, false, true);
 							}
 
-							if (cache.start > 0) {
+							if (cache.start > 0 && listNode.get('scrollTop') === 0) {
 								listNode.set('scrollTop', 60);
 							}
 						}
@@ -1985,7 +1989,7 @@ AUI.add(
 
 									instance._renderLayouts(layouts);
 
-									if (cache.start > 0) {
+									if (cache.start > 0 && listNode.get('scrollTop') === 0) {
 										listNode.set('scrollTop', 50);
 									}
 								}

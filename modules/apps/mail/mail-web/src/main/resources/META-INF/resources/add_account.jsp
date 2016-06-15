@@ -111,7 +111,7 @@ for (int i = 0; i < accountsJSONArray.length(); i++) {
 							for (String curIncomingPort : mailGroupServiceConfiguration.incomingPorts()) {
 							%>
 
-								<aui:option selected="<%= (incomingPort.equals(curIncomingPort) %>" value="<%= curIncomingPort %>"><%= curIncomingPort %></aui:option>
+								<aui:option selected="<%= incomingPort.equals(curIncomingPort) %>" value="<%= curIncomingPort %>"><%= curIncomingPort %></aui:option>
 
 							<%
 							}
@@ -131,7 +131,7 @@ for (int i = 0; i < accountsJSONArray.length(); i++) {
 							for (String curOutgoingPort : mailGroupServiceConfiguration.outgoingPorts()) {
 							%>
 
-								<aui:option selected="<%= (outgoingPort.equals(curOutgoingPort) %>" value="<%= curOutgoingPort %>"><%= curOutgoingPort %></aui:option>
+								<aui:option selected="<%= outgoingPort.equals(curOutgoingPort) %>" value="<%= curOutgoingPort %>"><%= curOutgoingPort %></aui:option>
 
 							<%
 							}

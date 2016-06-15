@@ -262,13 +262,12 @@ if (recurrence != null) {
 			repeatOnDayOfMonthRadioButton: '[name=<portlet:namespace />repeatOnWeekday][value=false]',
 			repeatOnDayOfWeekRadioButton: '[name=<portlet:namespace />repeatOnWeekday][value=true]',
 			startDateDatePicker: Liferay.component('<portlet:namespace />startTimeDatePicker'),
+			summaryNode: '#<portlet:namespace />summary',
 			weeklyRecurrenceOptions: '#<portlet:namespace />view<%= Frequency.WEEKLY %>'
 		}
 	);
 
-	if (repeatCheckboxNode.get('checked')) {
-		currentRecurrence = recurrenceDialogController.get('recurrence');
-	}
+	recurrenceDialogController.saveState();
 
 	var getRecurrenceDialogTitle = function() {
 		var summary = recurrenceDialogController.get('summary');
@@ -289,13 +288,7 @@ if (recurrence != null) {
 			{
 				dialog: {
 					after: {
-						visibleChange: function(event) {
-							var instance = this;
-
-							recurrenceContainerNode.toggle(event.newVal);
-
-							instance.fillHeight(instance.bodyNode);
-						}
+						visibleChange: A.rbind('_afterVisibilityChange', recurrenceDialogController)
 					},
 					bodyContent: recurrenceContainerNode,
 					centered: true,
@@ -353,13 +346,9 @@ if (recurrence != null) {
 			var checked = event.currentTarget.get('checked');
 
 			if (!checked) {
-				currentRecurrence = recurrenceDialogController.get('recurrence');
-
 				summaryNode.empty();
 			}
 			else {
-				currentRecurrence = null;
-
 				window.<portlet:namespace />updateSummaries();
 			}
 
@@ -370,8 +359,6 @@ if (recurrence != null) {
 	summaryNode.on(
 		'click',
 		function(event) {
-			currentRecurrence = recurrenceDialogController.get('recurrence');
-
 			<portlet:namespace />openRecurrenceDialog(true);
 
 			event.halt();

@@ -26,6 +26,10 @@ AUI.add(
 						value: null
 					},
 
+					currentSavedState: {
+						value: null
+					},
+
 					dayOfWeekInput: {
 						setter: A.one,
 						value: null
@@ -178,6 +182,11 @@ AUI.add(
 						getter: '_getSummary'
 					},
 
+					summaryNode: {
+						setter: A.one,
+						value: null
+					},
+
 					weeklyRecurrenceOptions: {
 						setter: A.one,
 						value: null
@@ -209,6 +218,43 @@ AUI.add(
 
 						limitDateDatePicker.after('selectionChange', A.bind(instance._onInputChange, instance));
 						startDateDatePicker.after('selectionChange', A.bind(instance._onStartDateDatePickerChange, instance));
+					},
+
+					saveState: function() {
+						var instance = this;
+
+						var currentSavedState = instance.get('recurrence');
+
+						currentSavedState.setAsRepeatable = instance.get('repeatCheckbox').get('checked');
+
+						instance.set('currentSavedState', currentSavedState);
+					},
+
+					_afterVisibilityChange: function(event) {
+						var instance = this;
+
+						var recurrenceDialog = window[instance._namespace + 'recurrenceDialog'];
+
+						if (!instance._confimeChanges) {
+							var currentRecurrence = instance.get('currentSavedState');
+
+							instance.set('recurrence', currentRecurrence);
+
+							instance.get('repeatCheckbox').set('checked', currentRecurrence.setAsRepeatable);
+
+							if (!currentRecurrence.setAsRepeatable) {
+								instance.get('summaryNode').empty();
+							}
+						}
+						else {
+							instance.saveState();
+						}
+
+						delete instance._confimeChanges;
+
+						recurrenceDialog.bodyNode.toggle(event.newVal);
+
+						recurrenceDialog.fillHeight(recurrenceDialog.bodyNode);
 					},
 
 					_calculatePosition: function() {

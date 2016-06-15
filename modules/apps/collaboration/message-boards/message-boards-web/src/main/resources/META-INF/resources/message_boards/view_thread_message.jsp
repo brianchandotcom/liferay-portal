@@ -374,7 +374,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 		String assetTagNames = (String)request.getAttribute("edit_message.jsp-assetTagNames");
 		%>
 
-		<div class="tags">
+		<div class="card-row card-row-padded tags">
 			<liferay-ui:asset-tags-summary
 				assetTagNames="<%= assetTagNames %>"
 				className="<%= MBMessage.class.getName() %>"
@@ -383,7 +383,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 		</div>
 
 		<liferay-ui:custom-attributes-available className="<%= MBMessage.class.getName() %>">
-			<div class="custom-attributes">
+			<div class="card-row card-row-padded custom-attributes">
 				<liferay-ui:custom-attribute-list
 					className="<%= MBMessage.class.getName() %>"
 					classPK="<%= (message != null) ? message.getMessageId() : 0 %>"
@@ -393,7 +393,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 			</div>
 		</liferay-ui:custom-attributes-available>
 
-		<div class="entry-links">
+		<div class="card-row card-row-padded entry-links">
 			<liferay-ui:asset-links
 				className="<%= MBMessage.class.getName() %>"
 				classPK="<%= message.getMessageId() %>"
@@ -408,7 +408,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 			%>
 
 			<c:if test="<%= (attachmentsFileEntriesCount > 0) || ((deletedAttachmentsFileEntriesCount > 0) && TrashUtil.isTrashEnabled(scopeGroupId) && MBMessagePermission.contains(permissionChecker, message, ActionKeys.UPDATE)) %>">
-				<div class="message-attachments">
+				<div class="card-row card-row-padded message-attachments">
 					<h3><liferay-ui:message key="attachments" />:</h3>
 
 					<%

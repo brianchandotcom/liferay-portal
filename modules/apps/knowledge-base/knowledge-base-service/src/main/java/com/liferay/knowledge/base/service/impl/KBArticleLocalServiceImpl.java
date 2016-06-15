@@ -108,6 +108,21 @@ import java.util.Map;
 @ProviderType
 public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
+	public FileEntry addAttachment(
+			long userId, long resourcePrimKey, String fileName,
+			InputStream inputStream, String mimeType)
+		throws PortalException {
+
+		KBArticle kbArticle = kbArticleLocalService.getLatestKBArticle(
+			resourcePrimKey, WorkflowConstants.STATUS_ANY);
+
+		return portletFileRepository.addPortletFileEntry(
+			kbArticle.getGroupId(), userId, KBArticle.class.getName(),
+			kbArticle.getClassPK(), KBConstants.SERVICE_NAME,
+			kbArticle.getAttachmentsFolderId(), inputStream, fileName, mimeType,
+			false);
+	}
+
 	@Override
 	public KBArticle addKBArticle(
 			long userId, long parentResourceClassNameId,
@@ -1333,21 +1348,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		kbArticle.setViewCount(viewCount);
 
 		kbArticlePersistence.update(kbArticle);
-	}
-
-	public FileEntry addAttachment(
-			long userId, long resourcePrimKey, String fileName,
-			InputStream inputStream, String mimeType)
-		throws PortalException {
-
-		KBArticle kbArticle = kbArticleLocalService.getLatestKBArticle(
-			resourcePrimKey, WorkflowConstants.STATUS_ANY);
-
-		return portletFileRepository.addPortletFileEntry(
-			kbArticle.getGroupId(), userId, KBArticle.class.getName(),
-			kbArticle.getClassPK(), KBConstants.SERVICE_NAME,
-			kbArticle.getAttachmentsFolderId(), inputStream, fileName, mimeType,
-			false);
 	}
 
 	protected void addKBArticleAttachment(

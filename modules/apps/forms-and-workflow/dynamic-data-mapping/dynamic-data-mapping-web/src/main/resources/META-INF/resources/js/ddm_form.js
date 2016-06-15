@@ -1647,7 +1647,6 @@ AUI.add(
 
 						instance.setValue('');
 
-						// instance.set('selectedLayout', null);
 						instance.set('selectedLayout', instance.get('selectedLayoutPath')[0]);
 					},
 
@@ -1707,10 +1706,6 @@ AUI.add(
 						}
 						else if (event.target.hasClass('lfr-ddm-page-radio')) {
 							var path = instance.get('selectedLayoutPath');
-
-							var lastIndex = path[path.length - 1];
-
-							var key = [lastIndex.layoutId, lastIndex.groupId, lastIndex.privateLayout].join('-');
 
 							instance.set(
 								'selectedLayout',
@@ -1865,10 +1860,6 @@ AUI.add(
 						}
 						else {
 							var path = instance.get('selectedLayoutPath');
-
-							var lastIndex = path[path.length - 1];
-
-							var key = [lastIndex.layoutId, lastIndex.groupId, lastIndex.privateLayout].join('-');
 
 							instance.set(
 								'selectedLayout',
@@ -2097,7 +2088,7 @@ AUI.add(
 
 						var path = selectedLayout;
 
-						var lastIndex  = path.length - 1;
+						var lastIndex = path.length - 1;
 
 						if (lastIndex >= 0) {
 							cache = instance._getCache(path[lastIndex]);
@@ -2136,10 +2127,10 @@ AUI.add(
 										}
 									},
 									data: {
-										cmd: 'getLayoutsIn',
+										cmd: 'getSiblingLayouts',
 										expandParentLayouts: false,
 										groupId: groupId,
-										includedLayoutId: selectedLayout.layoutId,
+										layoutId: selectedLayout.layoutId,
 										p_auth: Liferay.authToken,
 										paginate: true,
 										privateLayout: privateLayout,

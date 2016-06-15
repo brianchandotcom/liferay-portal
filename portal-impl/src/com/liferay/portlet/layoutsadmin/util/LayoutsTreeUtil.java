@@ -78,17 +78,16 @@ public class LayoutsTreeUtil {
 
 	public static String getLayoutsJSON(
 			HttpServletRequest request, long groupId, boolean privateLayout,
-			long includedLayoutId, int quantity)
+			long layoutId, int quantity)
 		throws Exception {
 
-		Layout includedLayout = LayoutLocalServiceUtil.getLayout(
-			groupId, privateLayout, includedLayoutId);
+		Layout layout = LayoutLocalServiceUtil.getLayout(
+			groupId, privateLayout, layoutId);
 
-		long parentLayoutId = includedLayout.getParentLayoutId();
+		long parentLayoutId = layout.getParentLayoutId();
 
 		long includedLayoutIndex = LayoutServiceUtil.getLayoutsCount(
-			groupId, privateLayout, parentLayoutId,
-			includedLayout.getPriority());
+			groupId, privateLayout, parentLayoutId, layout.getPriority());
 
 		int total = LayoutServiceUtil.getLayoutsCount(
 			groupId, privateLayout, parentLayoutId);
@@ -107,7 +106,7 @@ public class LayoutsTreeUtil {
 		}
 
 		List<Layout> ancestorLayouts = LayoutServiceUtil.getAncestorLayouts(
-			includedLayout.getPlid());
+			layout.getPlid());
 
 		long[] ancestorLayoutsIds = new long[ancestorLayouts.size()];
 

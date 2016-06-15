@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.util;
+package com.liferay.wsrp.constants;
 
 /**
  * @author Michael Young

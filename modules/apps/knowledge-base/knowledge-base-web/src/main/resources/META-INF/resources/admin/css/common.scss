@@ -84,7 +84,7 @@
 		}
 
 		.kb-article-assets, .kb-attachments, .taglib-asset-links,
-		.kb-article-ratings, .kb-article-suggestion-actions {
+		.kb-article-ratings {
 			margin-top: 20px;
 		}
 	}
@@ -93,72 +93,9 @@
 		font-weight: normal;
 	}
 
-	.kb-article-comment {
-		border-top: 1px dotted;
-		margin: 20px;
-		padding: 10px;
-
-		.lfr-table {
-			vertical-align: top;
-			width: 100%;
-
-			.kb-article-comment-body {
-				word-wrap: break-word;
-			}
-
-			.kb-article-comment-user {
-				text-align: center;
-				width: 30%;
-			}
-		}
-	}
-
-	.kb-article-previous-comments {
-		clear: both;
-		margin-left: 15px;
-
-		.kb-article-add-comment {
-			margin: 10px 25px;
-		}
-
-		.kb-suggestion-actions {
-			margin: 10px 0;
-		}
-	}
-
 	.kb-article-ratings {
 		display: inline-block;
 		width: 100%;
-	}
-
-	.kb-article-suggestion {
-		clear: both;
-
-		textarea {
-			min-width: 98%;
-			padding: 1%;
-			width: 98%;
-		}
-
-		div.control-group {
-			margin-bottom: 5px;
-		}
-	}
-
-	@include respond-to(desktop) {
-		.kb-article-suggestion {
-			margin-left: 15px;
-			margin-top: 15px;
-
-			textarea {
-				max-width: 500px;
-			}
-		}
-	}
-
-	.kb-article-suggestion-actions {
-		clear: both;
-		display: inline-block;
 	}
 
 	.kb-article-siblings {
@@ -208,10 +145,6 @@
 				padding-left: 15px;
 			}
 		}
-	}
-
-	.kb-article-comment-date, .kb-article-comment-helpful {
-		margin-top: 10px;
 	}
 
 	.kb-article-tools {
@@ -374,6 +307,10 @@
 	.kb-select-article-breadcrumbs {
 		margin: 0 0 5px;
 	}
+}
+
+#wrapper .knowledge-base-portlet .card-horizontal.main-content-card {
+	min-height: 0;
 }
 
 /* Skin */

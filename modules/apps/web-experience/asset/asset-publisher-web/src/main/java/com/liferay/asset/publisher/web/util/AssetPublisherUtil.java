@@ -104,9 +104,11 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1313,10 +1315,7 @@ public class AssetPublisherUtil {
 				layout.getCompanyId(), subscriptionClassName,
 				getSubscriptionClassPK(plid, portletId));
 
-		for (Subscription subscription : subscriptions) {
-			notifySubscriber(
-				subscription.getUserId(), portletPreferences, assetEntries);
-		}
+		_notifySubscribers(subscriptions, portletPreferences, assetEntries);
 	}
 
 	public static void processAssetEntryQuery(
@@ -1918,6 +1917,70 @@ public class AssetPublisherUtil {
 		return subscriptionSender;
 	}
 
+	private static void _notifySubscribers(
+			List<Subscription> subscriptions,
+			PortletPreferences portletPreferences,
+			List<AssetEntry> assetEntries)
+		throws PortalException {
+
+		if (getEmailAssetEntryAddedEnabled(portletPreferences)) {
+			return;
+		}
+
+		Map<List<AssetEntry>, List<User>> assetEntriesToUsersMap =
+			new HashMap<>();
+
+		for (Subscription subscription : subscriptions) {
+			long userId = subscription.getUserId();
+
+			User user = _userLocalService.fetchUser(userId);
+
+			if ((user == null) || !user.isActive()) {
+				continue;
+			}
+
+			List<AssetEntry> filteredAssetEntries = _filterAssetEntries(
+				userId, assetEntries);
+
+			if (filteredAssetEntries.isEmpty()) {
+				continue;
+			}
+
+			List<User> users = assetEntriesToUsersMap.get(filteredAssetEntries);
+
+			if (users == null) {
+				users = new LinkedList<>();
+
+				assetEntriesToUsersMap.put(filteredAssetEntries, users);
+			}
+
+			users.add(user);
+		}
+
+		for (Map.Entry<List<AssetEntry>, List<User>> entry :
+				assetEntriesToUsersMap.entrySet()) {
+
+			List<AssetEntry> filteredAssetEntries = entry.getKey();
+			List<User> users = entry.getValue();
+
+			SubscriptionSender subscriptionSender = _getSubscriptionSender(
+				portletPreferences, filteredAssetEntries);
+
+			if (subscriptionSender == null) {
+				continue;
+			}
+
+			for (User user : users) {
+				subscriptionSender.addRuntimeSubscribers(
+					user.getEmailAddress(), user.getFullName());
+			}
+
+			subscriptionSender.setBulk(true);
+
+			subscriptionSender.flushNotificationsAsync();
+		}
+	}
+
 	private void _checkAssetEntries(
 			com.liferay.portal.kernel.model.PortletPreferences
 				portletPreferencesModel)
@@ -1973,10 +2036,7 @@ public class AssetPublisherUtil {
 					portletPreferencesModel.getPlid(),
 					portletPreferencesModel.getPortletId()));
 
-		for (Subscription subscription : subscriptions) {
-			notifySubscriber(
-				subscription.getUserId(), portletPreferences, assetEntries);
-		}
+		_notifySubscribers(subscriptions, portletPreferences, assetEntries);
 
 		try {
 			portletPreferences.setValues(

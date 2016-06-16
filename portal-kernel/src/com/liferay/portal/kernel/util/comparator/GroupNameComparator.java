@@ -15,7 +15,12 @@
 package com.liferay.portal.kernel.util.comparator;
 
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.text.Collator;
+
+import java.util.Locale;
 
 /**
  * @author Brian Wing Shun Chan
@@ -33,15 +38,22 @@ public class GroupNameComparator extends OrderByComparator<Group> {
 	}
 
 	public GroupNameComparator(boolean ascending) {
+		this(ascending, LocaleUtil.getDefault());
+	}
+
+	public GroupNameComparator(boolean ascending, Locale locale) {
 		_ascending = ascending;
+		_locale = locale;
+
+		_collator = Collator.getInstance(_locale);
 	}
 
 	@Override
 	public int compare(Group group1, Group group2) {
-		String name1 = group1.getName();
-		String name2 = group2.getName();
+		String name1 = group1.getName(_locale);
+		String name2 = group2.getName(_locale);
 
-		int value = name1.compareTo(name2);
+		int value = _collator.compare(name1, name2);
 
 		if (_ascending) {
 			return value;
@@ -72,5 +84,7 @@ public class GroupNameComparator extends OrderByComparator<Group> {
 	}
 
 	private final boolean _ascending;
+	private final Collator _collator;
+	private final Locale _locale;
 
 }

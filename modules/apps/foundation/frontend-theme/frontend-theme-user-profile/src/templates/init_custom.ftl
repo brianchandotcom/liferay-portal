@@ -5,7 +5,9 @@
 </#if>
 
 <#assign main_menu_style = "">
+<#assign main_menu_user_name = "">
 
 <#if user2??>
 	<#assign main_menu_style = "style='background-image: url(${user2.getPortraitURL(theme_display)});'">
+	<#assign main_menu_user_name = user2.getFullName() />
 </#if>

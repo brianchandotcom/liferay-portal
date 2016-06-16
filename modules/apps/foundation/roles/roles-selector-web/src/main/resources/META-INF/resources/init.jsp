@@ -34,6 +34,7 @@ page import="com.liferay.portal.kernel.model.Organization" %><%@
 page import="com.liferay.portal.kernel.model.Role" %><%@
 page import="com.liferay.portal.kernel.model.RoleConstants" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@
+page import="com.liferay.portal.kernel.model.UserGroupConstants" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.OrganizationLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.RoleLocalServiceUtil" %><%@

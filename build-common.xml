@@ -1390,6 +1390,8 @@ rerun your task.
 
 			<property location="${basedir}/.gradle/gradle.properties" name="gradle.properties.file" />
 
+			<mkdir dir="${basedir}/.gradle" />
+
 			<delete file="${gradle.properties.file}" />
 
 			<condition else="false" property="jsp.precompile.enabled">

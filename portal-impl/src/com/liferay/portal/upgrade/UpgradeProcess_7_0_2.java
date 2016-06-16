@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.upgrade.v7_0_2.UpgradeDiscussion;
 
 /**
  * @author Adolfo Pérez
@@ -29,6 +30,8 @@ public class UpgradeProcess_7_0_2 extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		upgrade(UpgradeDiscussion.class);
+
 		clearIndexesCache();
 	}
 

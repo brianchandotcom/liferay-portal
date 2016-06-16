@@ -22,13 +22,14 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Jürgen Kappler
  */
 public class GoogleMapsDisplayContext {
 
-	public GoogleMapsDisplayContext(PortletRequest request) {
+	public GoogleMapsDisplayContext(HttpServletRequest request) {
 		_request = request;
 	}
 
@@ -82,6 +83,6 @@ public class GoogleMapsDisplayContext {
 	}
 
 	private String _googleMapsAPIKey;
-	private final PortletRequest _request;
+	private final HttpServletRequest _request;
 
 }

@@ -27,7 +27,7 @@
 
 	<logger name="com.liferay.nativity" level="ERROR" />
 
-	<logger name="com.liferay.sync.engine.documentlibrary.event.GetSyncContextEvent" level="ERROR" />
+	<logger name="com.liferay.sync.engine.document.library.event.GetSyncContextEvent" level="ERROR" />
 
 	<logger name="org.apache" level="ERROR" />
 

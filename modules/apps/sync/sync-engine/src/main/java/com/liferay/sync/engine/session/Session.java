@@ -16,7 +16,7 @@ package com.liferay.sync.engine.session;
 
 import com.btr.proxy.search.ProxySearch;
 
-import com.liferay.sync.engine.documentlibrary.handler.Handler;
+import com.liferay.sync.engine.document.library.handler.Handler;
 import com.liferay.sync.engine.util.OSDetector;
 import com.liferay.sync.engine.util.PropsValues;
 import com.liferay.sync.engine.util.ReleaseInfo;

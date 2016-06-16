@@ -14,7 +14,7 @@
 
 package com.liferay.sync.engine.util;
 
-import com.liferay.sync.engine.documentlibrary.model.SyncContext;
+import com.liferay.sync.engine.document.library.model.SyncContext;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.service.SyncAccountService;
 

@@ -1284,35 +1284,12 @@ public class AssetPublisherUtil {
 			return;
 		}
 
-		AssetEntry assetEntry = assetEntries.get(0);
+		SubscriptionSender subscriptionSender = _getSubscriptionSender(
+			portletPreferences, assetEntries);
 
-		String fromName = getEmailFromName(
-			portletPreferences, assetEntry.getCompanyId());
-		String fromAddress = getEmailFromAddress(
-			portletPreferences, assetEntry.getCompanyId());
-
-		Map<Locale, String> localizedSubjectMap =
-			getEmailAssetEntryAddedSubjectMap(portletPreferences);
-		Map<Locale, String> localizedBodyMap = getEmailAssetEntryAddedBodyMap(
-			portletPreferences);
-
-		SubscriptionSender subscriptionSender = new SubscriptionSender();
-
-		subscriptionSender.setCompanyId(assetEntry.getCompanyId());
-		subscriptionSender.setContextAttributes(
-			"[$ASSET_ENTRIES$]",
-			ListUtil.toString(
-				assetEntries, _titleAccessor, StringPool.COMMA_AND_SPACE));
-		subscriptionSender.setFrom(fromAddress, fromName);
-		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
-		subscriptionSender.setLocalizedPortletTitleMap(
-			PortletConfigurationUtil.getPortletTitleMap(portletPreferences));
-		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
-		subscriptionSender.setMailId("asset_entry", assetEntry.getEntryId());
-		subscriptionSender.setPortletId(
-			AssetPublisherPortletKeys.ASSET_PUBLISHER);
-		subscriptionSender.setReplyToAddress(fromAddress);
+		if (subscriptionSender == null) {
+			return;
+		}
 
 		subscriptionSender.addRuntimeSubscribers(
 			user.getEmailAddress(), user.getFullName());
@@ -1899,6 +1876,46 @@ public class AssetPublisherUtil {
 		}
 
 		return xml;
+	}
+
+	private static SubscriptionSender _getSubscriptionSender(
+		PortletPreferences portletPreferences, List<AssetEntry> assetEntries) {
+
+		if (assetEntries.isEmpty()) {
+			return null;
+		}
+
+		AssetEntry assetEntry = assetEntries.get(0);
+
+		String fromName = getEmailFromName(
+			portletPreferences, assetEntry.getCompanyId());
+		String fromAddress = getEmailFromAddress(
+			portletPreferences, assetEntry.getCompanyId());
+
+		Map<Locale, String> localizedSubjectMap =
+			getEmailAssetEntryAddedSubjectMap(portletPreferences);
+		Map<Locale, String> localizedBodyMap = getEmailAssetEntryAddedBodyMap(
+			portletPreferences);
+
+		SubscriptionSender subscriptionSender = new SubscriptionSender();
+
+		subscriptionSender.setCompanyId(assetEntry.getCompanyId());
+		subscriptionSender.setContextAttributes(
+			"[$ASSET_ENTRIES$]",
+			ListUtil.toString(
+				assetEntries, _titleAccessor, StringPool.COMMA_AND_SPACE));
+		subscriptionSender.setFrom(fromAddress, fromName);
+		subscriptionSender.setHtmlFormat(true);
+		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
+		subscriptionSender.setLocalizedPortletTitleMap(
+			PortletConfigurationUtil.getPortletTitleMap(portletPreferences));
+		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
+		subscriptionSender.setMailId("asset_entry", assetEntry.getEntryId());
+		subscriptionSender.setPortletId(
+			AssetPublisherPortletKeys.ASSET_PUBLISHER);
+		subscriptionSender.setReplyToAddress(fromAddress);
+
+		return subscriptionSender;
 	}
 
 	private void _checkAssetEntries(

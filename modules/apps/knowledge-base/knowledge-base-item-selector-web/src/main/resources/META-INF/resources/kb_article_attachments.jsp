@@ -29,11 +29,6 @@ int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(cur, delta);
 int start = startAndEnd[0];
 int end = startAndEnd[1];
 
-String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
-String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-
-OrderByComparator<FileEntry> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
-
 long folderId = kbAttachmentItemSelectorViewDisplayContext.getAttachmentsFolderId();
 
 List portletFileEntries = null;
@@ -76,6 +71,11 @@ if (kbAttachmentItemSelectorViewDisplayContext.isSearch()) {
 	}
 }
 else {
+	String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
+	String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+	OrderByComparator<FileEntry> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
+
 	portletFileEntries = PortletFileRepositoryUtil.getPortletFileEntries(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED, start, end, orderByComparator);
 	portletFileEntriesCount = PortletFileRepositoryUtil.getPortletFileEntriesCount(scopeGroupId, folderId, WorkflowConstants.STATUS_APPROVED);
 }

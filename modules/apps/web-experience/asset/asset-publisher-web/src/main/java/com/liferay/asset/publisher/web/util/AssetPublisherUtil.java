@@ -29,14 +29,12 @@ import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.kernel.util.AssetEntryQueryProcessor;
-import com.liferay.asset.publisher.web.background.task.AssetPublisherNotificationBackgroundTaskExecutor;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.display.context.AssetEntryResult;
 import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -62,11 +60,11 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -96,6 +94,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.StrictPortletPreferencesImpl;
+import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
 import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil;
 import com.liferay.sites.kernel.util.SitesUtil;
@@ -105,7 +104,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -1818,6 +1816,21 @@ public class AssetPublisherUtil {
 				new Long[assetCategoryIdsList.size()]));
 	}
 
+	private static List<AssetEntry> _filterAssetEntries(
+			long userId, List<AssetEntry> assetEntries)
+		throws PortalException {
+
+		List<AssetEntry> filteredAssetEntries = new ArrayList<>();
+
+		for (AssetEntry assetEntry : assetEntries) {
+			if (_hasPermission(userId, assetEntry)) {
+				filteredAssetEntries.add(assetEntry);
+			}
+		}
+
+		return filteredAssetEntries;
+	}
+
 	private static List<AssetEntry> _filterAssetTagNamesAssetEntries(
 			List<AssetEntry> assetEntries, String[] assetTagNames)
 		throws Exception {
@@ -1874,6 +1887,54 @@ public class AssetPublisherUtil {
 		return xml;
 	}
 
+	private static boolean _hasPermission(long userId, AssetEntry assetEntry)
+		throws PortalException {
+
+		User user = _userLocalService.getUser(userId);
+
+		try {
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(user);
+
+			return AssetEntryPermission.contains(
+				permissionChecker, assetEntry, ActionKeys.VIEW);
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
+		}
+	}
+
+	private static void _notifySubscribers(
+			List<AssetEntry> assetEntries,
+			com.liferay.portal.kernel.model.PortletPreferences
+				portletPreferencesModel)
+		throws PortalException {
+
+		List<Subscription> subscriptions =
+			_subscriptionLocalService.getSubscriptions(
+				portletPreferencesModel.getCompanyId(),
+				com.liferay.portal.kernel.model.PortletPreferences.class.
+					getName(),
+				AssetPublisherUtil.getSubscriptionClassPK(
+					portletPreferencesModel.getPlid(),
+					portletPreferencesModel.getPortletId()));
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.fromXML(
+				portletPreferencesModel.getCompanyId(),
+				portletPreferencesModel.getOwnerId(),
+				portletPreferencesModel.getOwnerType(),
+				portletPreferencesModel.getPlid(),
+				portletPreferencesModel.getPortletId(),
+				portletPreferencesModel.getPreferences());
+
+		for (Subscription subscription : subscriptions) {
+			notifySubscriber(
+				subscription.getUserId(), portletPreferences,
+				_filterAssetEntries(subscription.getUserId(), assetEntries));
+		}
+	}
+
 	private void _checkAssetEntries(
 			com.liferay.portal.kernel.model.PortletPreferences
 				portletPreferencesModel)
@@ -1907,19 +1968,12 @@ public class AssetPublisherUtil {
 			return;
 		}
 
-		String taskExecutorName =
-			AssetPublisherNotificationBackgroundTaskExecutor.class.getName();
-
-		Map<String, Serializable> taskContextMap = new HashMap<>();
-
 		long[] notifiedAssetEntryIds = GetterUtil.getLongValues(
 			portletPreferences.getValues("notifiedAssetEntryIds", null));
 
 		ArrayList<AssetEntry> newAssetEntries = new ArrayList<>();
 
-		for (int i = 0; i < assetEntries.size(); i++) {
-			AssetEntry assetEntry = assetEntries.get(i);
-
+		for (AssetEntry assetEntry : assetEntries) {
 			if (!ArrayUtil.contains(
 					notifiedAssetEntryIds, assetEntry.getEntryId())) {
 
@@ -1927,15 +1981,20 @@ public class AssetPublisherUtil {
 			}
 		}
 
-		taskContextMap.put("assetEntries", newAssetEntries);
+		_notifySubscribers(newAssetEntries, portletPreferencesModel);
 
-		taskContextMap.put("companyId", layout.getCompanyId());
-		taskContextMap.put("portletPreferences", portletPreferencesModel);
+		try {
+			portletPreferences.setValues(
+				"notifiedAssetEntryIds",
+				StringUtil.split(
+					ListUtil.toString(
+						assetEntries, AssetEntry.ENTRY_ID_ACCESSOR)));
 
-		BackgroundTaskManagerUtil.addBackgroundTask(
-			portletPreferencesModel.getOwnerId(), layout.getGroupId(),
-			taskExecutorName, taskExecutorName, taskContextMap,
-			new ServiceContext());
+			portletPreferences.store();
+		}
+		catch (IOException | PortletException e) {
+			throw new PortalException(e);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

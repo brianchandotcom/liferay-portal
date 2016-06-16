@@ -246,38 +246,6 @@ public class AssetPublisherUtil {
 		catch (PortletException pe) {
 			throw new SystemException(pe);
 		}
-
-		String taskExecutorName =
-			AssetPublisherNotificationBackgroundTaskExecutor.class.getName();
-
-		Map<String, Serializable> taskContextMap = new HashMap<>();
-
-		ArrayList<AssetEntry> assetEntries = new ArrayList<>();
-
-		assetEntries.add(assetEntry);
-
-		taskContextMap.put("assetEntries", assetEntries);
-
-		taskContextMap.put("companyId", themeDisplay.getCompanyId());
-
-		long plid = themeDisplay.getRefererPlid();
-
-		if (plid == 0) {
-			plid = themeDisplay.getPlid();
-		}
-
-		com.liferay.portal.kernel.model.PortletPreferences
-			portletPreferencesModel =
-				_portletPreferencesLocalService.getPortletPreferences(
-					PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId);
-
-		taskContextMap.put("portletPreferences", portletPreferencesModel);
-
-		BackgroundTaskManagerUtil.addBackgroundTask(
-			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-			taskExecutorName, taskExecutorName, taskContextMap,
-			new ServiceContext());
 	}
 
 	public static void addUserAttributes(

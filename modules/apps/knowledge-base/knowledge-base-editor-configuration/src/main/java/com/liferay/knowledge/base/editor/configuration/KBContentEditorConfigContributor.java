@@ -71,6 +71,14 @@ public class KBContentEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
+		boolean allowBrowseDocuments = GetterUtil.getBoolean(
+			inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:allowBrowseDocuments"));
+
+		if (!allowBrowseDocuments) {
+			return;
+		}
+
 		Map<String, String> fileBrowserParamsMap =
 			(Map<String, String>)inputEditorTaglibAttributes.get(
 				"liferay-ui:input-editor:fileBrowserParams");

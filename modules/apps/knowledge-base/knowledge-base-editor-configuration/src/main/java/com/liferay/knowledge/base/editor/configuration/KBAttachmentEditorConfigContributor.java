@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = EditorConfigContributor.class
 )
-public class KBContentEditorConfigContributor
+public class KBAttachmentEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override

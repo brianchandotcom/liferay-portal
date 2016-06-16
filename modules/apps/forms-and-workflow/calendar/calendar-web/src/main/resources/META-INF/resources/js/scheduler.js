@@ -418,7 +418,7 @@ AUI.add(
 							name = CalendarUtil.getCalendarName(name, calendarResourceName);
 						}
 
-						return name; 
+						return name;
 					},
 
 					_afterColorChange: function(event) {

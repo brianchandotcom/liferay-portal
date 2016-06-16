@@ -41,6 +41,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.xml.Namespace;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.wsrp.constants.WSRPPortletKeys;
 import com.liferay.wsrp.consumer.portlet.ConsumerFriendlyURLMapper;
 import com.liferay.wsrp.consumer.portlet.ConsumerPortlet;
 import com.liferay.wsrp.exception.NoSuchConsumerPortletException;
@@ -514,13 +516,9 @@ public class WSRPConsumerPortletLocalServiceImpl
 
 		portlet.setCompanyId(companyId);
 		portlet.setPortletId(portletId);
-/**
 
-		PortletApp portletApp = portletLocalService.getPortletApp(
-			ClpSerializer.getServletContextName());
+		portlet.setPortletApp(_consumerPortlet.getPortletApp());
 
-		portlet.setPortletApp(portletApp);
-**/
 		portlet.setPortletName(portletId);
 		portlet.setDisplayName(portletId);
 
@@ -551,7 +549,9 @@ public class WSRPConsumerPortletLocalServiceImpl
 		}
 
 		if (portletDescription != null) {
-			addPortletExtraInfo(portlet, portletApp, portletDescription, name);
+			addPortletExtraInfo(
+				portlet, _consumerPortlet.getPortletApp(), portletDescription,
+				name);
 
 			portlet.setActive(true);
 		}
@@ -677,6 +677,11 @@ public class WSRPConsumerPortletLocalServiceImpl
 
 	private static final Map<String, Portlet> _portletsPool =
 		new ConcurrentHashMap<>();
+
+	@ServiceReference(
+		filterString = "(javax.portlet.name=" + WSRPPortletKeys.WSRP_CONSUMER + ")"
+	)
+	private Portlet _consumerPortlet;
 
 	private Class<ConsumerPortlet> _consumerPortletClass;
 	private final Map<Long, Tuple> _failedWSRPConsumerPortlets =

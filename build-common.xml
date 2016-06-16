@@ -127,15 +127,13 @@
 	<propertycopy from="app.server.${app.server.type}.temp.dir" name="app.server.temp.dir" />
 	<propertycopy from="app.server.${app.server.type}.work.dir" name="app.server.work.dir" />
 
-	<if>
-		<or>
-			<equals arg1="${app.server.type}" arg2="glassfish" />
-			<equals arg1="${app.server.type}" arg2="websphere" />
-		</or>
-		<then>
-			<propertycopy from="app.server.${app.server.type}.portal.war.name" name="app.server.portal.war.name" />
-		</then>
-	</if>
+	<condition property="app.server.portal.war.name" value="${app.server.glassfish.portal.war.name}">
+		<equals arg1="${app.server.type}" arg2="glassfish" />
+	</condition>
+
+	<condition property="app.server.portal.war.name" value="${app.server.websphere.portal.war.name}">
+		<equals arg1="${app.server.type}" arg2="websphere" />
+	</condition>
 
 	<property name="liferay.home" value="${app.server.parent.dir}" />
 

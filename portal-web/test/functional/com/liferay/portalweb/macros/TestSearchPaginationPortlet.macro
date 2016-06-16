@@ -1,0 +1,15 @@
+<definition>
+	<command name="search50Results">
+		<execute function="KeyPress#keyDown" locator1="xpath=(//select//option[2])" value1="\SHIFT" />
+
+		<execute function="KeyPress#keyUp" locator1="xpath=(//select//option[51])" value1="\SHIFT" />
+
+		<execute function="Click" locator1="Button#SEARCH" />
+
+		<execute function="AssertTextEquals" locator1="TestSearchPagination#SEARCH_RESULTS" value1="Showing 1 - 20 of 50 results." />
+
+		<execute function="Click" locator1="Pagination#NEXT_LINK" />
+
+		<execute function="AssertTextEquals" locator1="TestSearchPagination#SEARCH_RESULTS" value1="Showing 21 - 40 of 50 results." />
+	</command>
+</definition>

@@ -146,6 +146,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 								className="<%= MBMessage.class.getName() %>"
 								classPK="<%= message.getMessageId() %>"
 								contentTitle="<%= message.getSubject() %>"
+								message=""
 								reportedUserId="<%= message.getUserId() %>"
 							/>
 						</c:if>

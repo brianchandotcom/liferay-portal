@@ -15,10 +15,6 @@
 		<path location="${project.dir.native}" />
 	</pathconvert>
 
-	<pathconvert dirsep="/" property="project.dir.unix">
-		<path location="${project.dir.native}" />
-	</pathconvert>
-
 	<property name="sdk.dir" value="${project.dir}/tools/sdk" />
 
 	<property name="test.properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
@@ -96,18 +92,6 @@
 	<taskdef classname="com.tonicsystems.jarjar.JarJarTask" classpath="${project.dir}/lib/development/jarjar.jar" name="jarjar" />
 
 	<import file="build-common-ivy.xml" />
-
-	<property location="${project.dir}" name="project.location.absolute.native" />
-
-	<pathconvert property="project.location.absolute" targetos="unix">
-		<path location="${project.location.absolute.native}" />
-	</pathconvert>
-
-	<propertycopy
-		from="project.location.absolute"
-		name="project.dir"
-		override="true"
-	/>
 
 	<property name="doc.dir" value="${project.dir}/api" />
 

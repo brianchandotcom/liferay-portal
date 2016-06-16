@@ -4,6 +4,8 @@
 	<property name="portlet.plugins.includes" value="test-search-pagination-portlet" />
 
 	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 

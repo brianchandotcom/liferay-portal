@@ -215,19 +215,16 @@ public class VerifyPermission extends VerifyProcess {
 				ResourcePermissionLocalServiceUtil.dynamicQuery(dynamicQuery);
 
 			for (ResourcePermission resourcePermission : resourcePermissions) {
-				ResourcePermission groupResourcePermission = null;
+				ResourcePermission groupResourcePermission =
+					ResourcePermissionLocalServiceUtil.
+						fetchResourcePermission(
+							resourcePermission.getCompanyId(),
+							Group.class.getName(),
+							resourcePermission.getScope(),
+							resourcePermission.getPrimKey(),
+							resourcePermission.getRoleId());
 
-				try {
-					groupResourcePermission =
-						ResourcePermissionLocalServiceUtil.
-							getResourcePermission(
-								resourcePermission.getCompanyId(),
-								Group.class.getName(),
-								resourcePermission.getScope(),
-								resourcePermission.getPrimKey(),
-								resourcePermission.getRoleId());
-				}
-				catch (Exception e) {
+				if (groupResourcePermission == null) {
 					ResourcePermissionLocalServiceUtil.setResourcePermissions(
 						resourcePermission.getCompanyId(),
 						Group.class.getName(), resourcePermission.getScope(),

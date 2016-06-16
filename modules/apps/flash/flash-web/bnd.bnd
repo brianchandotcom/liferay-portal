@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Flash Web
+Bundle-SymbolicName: com.liferay.flash.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Web-ContextPath: /flash-web

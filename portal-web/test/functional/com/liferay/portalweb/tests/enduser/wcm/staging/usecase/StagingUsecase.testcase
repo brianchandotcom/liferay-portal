@@ -3449,6 +3449,7 @@
 		<property name="app.server.bundles.size" value="1" />
 		<property name="cluster.enabled" value="true" />
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
+		<property name="portal.release" value="true" />
 		<property name="test.name.skip.portal.instance" value="StagingUsecase#StagingRemoteDMViaGlobalScope" />
 
 		<execute macro="Navigator#openURL" />

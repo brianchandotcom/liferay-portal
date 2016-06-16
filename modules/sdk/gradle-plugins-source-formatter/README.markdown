@@ -7,30 +7,34 @@ Liferay Source Formatter tool.
 
 To use the plugin, include it in your build script:
 
-    buildscript {
-        dependencies {
-            classpath group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "1.0.11"
-        }
+```gradle
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "1.0.11"
+	}
 
-        repositories {
-            maven {
-                url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
-            }
-        }
-    }
+	repositories {
+		maven {
+			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
 
-    apply plugin: "com.liferay.source.formatter"
+apply plugin: "com.liferay.source.formatter"
+```
 
 The plugin automatically resolves the Liferay Source Formatter library as a
 dependency, therefore, you have to configure a repository hosting the library
 and its transitive dependency. One repository that hosts them all is the Liferay
 CDN:
 
-    repositories {
-        maven {
-            url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
-        }
-    }
+```gradle
+repositories {
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+```
 
 ## Tasks
 
@@ -76,9 +80,11 @@ a dependency to the latest released version of Liferay Source Formatter. It is
 possible to override this setting and use a specific version of the tool by
 manually adding a dependency to the `sourceFormatter` configuration:
 
-    dependencies {
-        sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.231"
-    }
+```gradle
+dependencies {
+	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.231"
+}
+```
 
 ### System Properties
 
@@ -93,4 +99,6 @@ It is possible to set the default values of the `formatCurrentBranch`,
 For example, run the following Bash command to format only the unstaged files in
 the project:
 
-    ./gradlew formatSource -DformatSource.format.local.changes=true
+```bash
+./gradlew formatSource -DformatSource.format.local.changes=true
+```

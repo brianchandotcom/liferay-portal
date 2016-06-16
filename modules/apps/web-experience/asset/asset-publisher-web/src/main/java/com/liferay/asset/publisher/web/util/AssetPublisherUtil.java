@@ -1822,10 +1822,22 @@ public class AssetPublisherUtil {
 
 		List<AssetEntry> filteredAssetEntries = new ArrayList<>();
 
-		for (AssetEntry assetEntry : assetEntries) {
-			if (_hasPermission(userId, assetEntry)) {
-				filteredAssetEntries.add(assetEntry);
+		User user = _userLocalService.getUser(userId);
+
+		try {
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(user);
+
+			for (AssetEntry assetEntry : assetEntries) {
+				if (AssetEntryPermission.contains(
+						permissionChecker, assetEntry, ActionKeys.VIEW)) {
+
+					filteredAssetEntries.add(assetEntry);
+				}
 			}
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
 		}
 
 		return filteredAssetEntries;
@@ -1885,23 +1897,6 @@ public class AssetPublisherUtil {
 		}
 
 		return xml;
-	}
-
-	private static boolean _hasPermission(long userId, AssetEntry assetEntry)
-		throws PortalException {
-
-		User user = _userLocalService.getUser(userId);
-
-		try {
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user);
-
-			return AssetEntryPermission.contains(
-				permissionChecker, assetEntry, ActionKeys.VIEW);
-		}
-		catch (Exception e) {
-			throw new PortalException(e);
-		}
 	}
 
 	private void _checkAssetEntries(

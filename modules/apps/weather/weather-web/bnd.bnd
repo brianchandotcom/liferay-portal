@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Weather Web
+Bundle-SymbolicName: com.liferay.weather.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Web-ContextPath: /weather-web

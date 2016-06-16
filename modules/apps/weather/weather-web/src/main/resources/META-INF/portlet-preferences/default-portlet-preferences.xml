@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<portlet-preferences>
+	<preference>
+		<name>fahrenheit</name>
+		<value>true</value>
+	</preference>
+	<preference>
+		<name>zips</name>
+		<value>90210</value>
+		<value>Chicago</value>
+		<value>Frankfurt, Germany</value>
+		<value>Rome, Italy</value>
+	</preference>
+</portlet-preferences>

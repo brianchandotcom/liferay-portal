@@ -4537,7 +4537,7 @@
 
 		<execute macro="WorkflowAsset#previewViewContent">
 			<var name="fieldLabel" value="Attachment" />
-			<var name="fieldValue" value="Document 1 Title" />
+			<var name="fieldValue" value="Document_1.txt" />
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">

@@ -89,7 +89,9 @@ public class KBContentEditorConfigContributor
 				fileBrowserParamsMap.get("resourcePrimKey"));
 		}
 
-		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
+		if (resourcePrimKey == 0) {
+			return;
+		}
 
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
@@ -97,23 +99,19 @@ public class KBContentEditorConfigContributor
 		desiredItemSelectorReturnTypes.add(new UploadableFileReturnType());
 		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
 
-		if (resourcePrimKey != 0) {
-			itemSelectorCriteria.add(
-				getKBAttachmentItemSelectorCriterion(
-					resourcePrimKey, desiredItemSelectorReturnTypes));
-		}
+		ItemSelectorCriterion kbAttachmentsItemSelectorCriterion =
+			getKBAttachmentItemSelectorCriterion(
+				resourcePrimKey, desiredItemSelectorReturnTypes);
 
-		itemSelectorCriteria.add(
-			getImageItemSelectorCriterion(desiredItemSelectorReturnTypes));
+		ItemSelectorCriterion imageItemSelectorCriterion =
+			getImageItemSelectorCriterion(desiredItemSelectorReturnTypes);
 
-		itemSelectorCriteria.add(getURLItemSelectorCriterion());
+		ItemSelectorCriterion urlItemSelectorCriterion =
+			getURLItemSelectorCriterion();
 
-		if (resourcePrimKey != 0) {
-			itemSelectorCriteria.add(
-				getUploadItemSelectorCriterion(
-					themeDisplay, requestBackedPortletURLFactory,
-					resourcePrimKey));
-		}
+		ItemSelectorCriterion uploadItemSelectorCriterion =
+			getUploadItemSelectorCriterion(
+				resourcePrimKey, themeDisplay, requestBackedPortletURLFactory);
 
 		String namespace = GetterUtil.getString(
 			inputEditorTaglibAttributes.get(
@@ -123,8 +121,8 @@ public class KBContentEditorConfigContributor
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, namespace + name + "selectItem",
-			itemSelectorCriteria.toArray(
-				new ItemSelectorCriterion[itemSelectorCriteria.size()]));
+			kbAttachmentsItemSelectorCriterion, imageItemSelectorCriterion,
+			urlItemSelectorCriterion, uploadItemSelectorCriterion);
 
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
@@ -162,9 +160,8 @@ public class KBContentEditorConfigContributor
 	}
 
 	protected ItemSelectorCriterion getUploadItemSelectorCriterion(
-		ThemeDisplay themeDisplay,
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
-		long resourcePrimKey) {
+		long resourcePrimKey, ThemeDisplay themeDisplay,
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 		PortletURL portletURL = requestBackedPortletURLFactory.createActionURL(
 			KBPortletKeys.KNOWLEDGE_BASE_ADMIN);

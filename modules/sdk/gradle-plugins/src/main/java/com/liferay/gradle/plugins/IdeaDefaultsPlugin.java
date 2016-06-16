@@ -100,7 +100,7 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 
 		IdeaModuleIml ideaModuleIml = ideaModule.getIml();
 
-		Closure<Void> closure = new Closure<Void>(null) {
+		Closure<Void> closure = new Closure<Void>(project) {
 
 			@SuppressWarnings("unused")
 			public void doCall(XmlProvider xmlProvider) throws Exception {

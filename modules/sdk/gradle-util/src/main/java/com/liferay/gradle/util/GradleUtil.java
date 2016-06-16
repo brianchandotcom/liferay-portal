@@ -51,6 +51,7 @@ import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.util.PatternFilterable;
+import org.gradle.api.tasks.util.PatternSet;
 
 /**
  * @author Andrea Di Giorgi
@@ -224,24 +225,19 @@ public class GradleUtil {
 	}
 
 	public static FileTree getFilteredFileTree(
-		FileTree fileTree, final String[] excludes, final String[] includes) {
+		FileTree fileTree, String[] excludes, String[] includes) {
 
-		Closure<Void> closure = new Closure<Void>(null) {
+		PatternFilterable patternFilterable = new PatternSet();
 
-			@SuppressWarnings("unused")
-			public void doCall(PatternFilterable patternFilterable) {
-				if (ArrayUtil.isNotEmpty(excludes)) {
-					patternFilterable.setExcludes(Arrays.asList(excludes));
-				}
+		if (ArrayUtil.isNotEmpty(excludes)) {
+			patternFilterable.setExcludes(Arrays.asList(excludes));
+		}
 
-				if (ArrayUtil.isNotEmpty(includes)) {
-					patternFilterable.setIncludes(Arrays.asList(includes));
-				}
-			}
+		if (ArrayUtil.isNotEmpty(includes)) {
+			patternFilterable.setIncludes(Arrays.asList(includes));
+		}
 
-		};
-
-		return fileTree.matching(closure);
+		return fileTree.matching(patternFilterable);
 	}
 
 	public static Project getProject(Project rootProject, File projectDir) {

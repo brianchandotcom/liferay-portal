@@ -171,7 +171,7 @@ public class LiferayThemePlugin implements Plugin<Project> {
 
 		artifacts.add(
 			Dependency.ARCHIVES_CONFIGURATION, warFile,
-			new Closure<Void>(null) {
+			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
 				public void doCall(

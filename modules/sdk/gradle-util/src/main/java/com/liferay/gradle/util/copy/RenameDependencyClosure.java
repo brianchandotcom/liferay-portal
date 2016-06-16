@@ -39,7 +39,7 @@ public class RenameDependencyClosure extends Closure<String> {
 	public RenameDependencyClosure(
 		Project project, String... configurationNames) {
 
-		super(null);
+		super(project);
 
 		_project = project;
 		_configurationNames = configurationNames;

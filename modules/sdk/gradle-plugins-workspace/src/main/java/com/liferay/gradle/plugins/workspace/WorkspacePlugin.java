@@ -67,7 +67,7 @@ public class WorkspacePlugin implements Plugin<Settings> {
 		}
 
 		gradle.beforeProject(
-			new Closure<Void>(null) {
+			new Closure<Void>(settings) {
 
 				@SuppressWarnings("unused")
 				public void doCall(Project project) {

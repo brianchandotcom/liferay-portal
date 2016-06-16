@@ -548,7 +548,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 				}
 
 			},
-			new Closure<Void>(null) {
+			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
 				public void doCall(CopySpec copySpec) {

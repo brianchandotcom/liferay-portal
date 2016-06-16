@@ -97,7 +97,7 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 				"liferay-plugin-package.properties file.");
 
 		replaceRegexTask.setReplacement(
-			new Closure<String>(null) {
+			new Closure<String>(project) {
 
 				@SuppressWarnings("unused")
 				public String doCall(String group) {

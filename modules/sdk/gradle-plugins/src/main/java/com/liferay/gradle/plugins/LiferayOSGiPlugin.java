@@ -178,11 +178,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	protected void addDeployedFile(
 		final AbstractArchiveTask abstractArchiveTask, boolean lazy) {
 
-		Project project = abstractArchiveTask.getProject();
+		final Project project = abstractArchiveTask.getProject();
 
 		Task task = GradleUtil.getTask(
-			abstractArchiveTask.getProject(),
-			LiferayBasePlugin.DEPLOY_TASK_NAME);
+			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
 
 		if (!(task instanceof Copy)) {
 			return;
@@ -205,12 +204,12 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		copy.from(
 			sourcePath,
-			new Closure<Void>(null) {
+			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
 				public void doCall(CopySpec copySpec) {
 					copySpec.rename(
-						new Closure<String>(null) {
+						new Closure<String>(project) {
 
 							public String doCall(String fileName) {
 								return getDeployedFileName(abstractArchiveTask);
@@ -714,7 +713,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTaskCleanDependsOn(Delete delete) {
-		Closure<Set<String>> closure = new Closure<Set<String>>(null) {
+		Project project = delete.getProject();
+
+		Closure<Set<String>> closure = new Closure<Set<String>>(project) {
 
 			@SuppressWarnings("unused")
 			public Set<String> doCall(Delete delete) {

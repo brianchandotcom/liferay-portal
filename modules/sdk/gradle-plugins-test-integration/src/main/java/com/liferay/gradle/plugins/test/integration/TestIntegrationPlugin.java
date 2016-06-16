@@ -412,7 +412,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 		TaskExecutionGraph taskExecutionGraph = gradle.getTaskGraph();
 
-		Closure<Void> closure = new Closure<Void>(null) {
+		Closure<Void> closure = new Closure<Void>(gradle) {
 
 			@SuppressWarnings("unused")
 			public void doCall(TaskExecutionGraph taskExecutionGraph) {
@@ -549,7 +549,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		final TestIntegrationTomcatExtension testIntegrationTomcatExtension,
 		final StartTestableTomcatTask startTestableTomcatTask) {
 
-		Closure<Task> closure = new Closure<Task>(null) {
+		Closure<Task> closure = new Closure<Task>(test.getProject()) {
 
 			@SuppressWarnings("unused")
 			public Task doCall(Test test) {

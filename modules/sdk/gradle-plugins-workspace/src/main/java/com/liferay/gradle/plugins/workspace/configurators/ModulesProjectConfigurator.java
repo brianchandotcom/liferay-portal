@@ -145,7 +145,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 		copySpec.into(
 			"osgi/modules",
-			new Closure<Void>(null) {
+			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
 				public void doCall(CopySourceSpec copySourceSpec) {

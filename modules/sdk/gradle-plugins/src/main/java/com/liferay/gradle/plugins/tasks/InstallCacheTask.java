@@ -178,7 +178,7 @@ public class InstallCacheTask extends DefaultTask {
 		final Charset charset = charsetToolkit.getCharset();
 
 		project.ant(
-			new Closure<Void>(null) {
+			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
 				public void doCall(AntBuilder antBuilder) {

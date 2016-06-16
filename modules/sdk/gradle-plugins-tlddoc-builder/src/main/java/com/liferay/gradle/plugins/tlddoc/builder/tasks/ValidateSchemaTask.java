@@ -71,7 +71,7 @@ public class ValidateSchemaTask extends SourceTask {
 		args.put("fullchecking", isFullChecking());
 		args.put("lenient", isLenient());
 
-		Closure<Void> closure = new Closure<Void>(null) {
+		Closure<Void> closure = new Closure<Void>(antBuilder) {
 
 			@SuppressWarnings("unused")
 			public void doCall() {

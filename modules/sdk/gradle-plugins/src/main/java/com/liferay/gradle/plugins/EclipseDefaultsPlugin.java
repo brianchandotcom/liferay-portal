@@ -52,7 +52,7 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 
 		FileContentMerger fileContentMerger = eclipseClasspath.getFile();
 
-		Closure<Void> closure = new Closure<Void>(null) {
+		Closure<Void> closure = new Closure<Void>(project) {
 
 			@SuppressWarnings("unused")
 			public void doCall(Classpath classpath) {

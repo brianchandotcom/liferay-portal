@@ -26,8 +26,6 @@ import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.JavaSource;
 import com.thoughtworks.qdox.model.Type;
 
-import groovy.lang.Closure;
-
 import java.io.File;
 
 import java.net.URL;
@@ -632,18 +630,17 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 		Project project = getProject();
 
-		Closure<Void> closure = new Closure<Void>(null) {
+		project.copy(
+			new Action<CopySpec>() {
 
-			@SuppressWarnings("unused")
-			public void doCall(CopySpec copySpec) {
-				copySpec.from(getSourceDir());
-				copySpec.include("**/*Mojo.java");
-				copySpec.into(preparedSourceDir);
-			}
+				@Override
+				public void execute(CopySpec copySpec) {
+					copySpec.from(getSourceDir());
+					copySpec.include("**/*Mojo.java");
+					copySpec.into(preparedSourceDir);
+				}
 
-		};
-
-		project.copy(closure);
+			});
 
 		JavaDocBuilder javaDocBuilder = new JavaDocBuilder();
 

@@ -231,7 +231,7 @@ public class FileUtil {
 		Project project, final File destinationFile, final String duplicate,
 		final boolean update, final String[][] filesets) {
 
-		Closure<Void> closure = new Closure<Void>(null) {
+		Closure<Void> closure = new Closure<Void>(project) {
 
 			@SuppressWarnings("unused")
 			public void doCall(AntBuilder antBuilder) {
@@ -459,7 +459,7 @@ public class FileUtil {
 
 		project.delete(destinationFile, tmpFile);
 
-		Closure<Void> closure = new Closure<Void>(null) {
+		Closure<Void> closure = new Closure<Void>(project) {
 
 			@SuppressWarnings("unused")
 			public void doCall(AntBuilder antBuilder) {
@@ -535,7 +535,7 @@ public class FileUtil {
 	private static void _invokeAntMethodClasspath(
 		final AntBuilder antBuilder, final String path) {
 
-		Closure<Void> closure = new Closure<Void>(null) {
+		Closure<Void> closure = new Closure<Void>(antBuilder) {
 
 			@SuppressWarnings("unused")
 			public void doCall() {
@@ -576,7 +576,7 @@ public class FileUtil {
 
 		args.put("update", update);
 
-		Closure<Void> closure = new Closure<Void>(null) {
+		Closure<Void> closure = new Closure<Void>(antBuilder) {
 
 			@SuppressWarnings("unused")
 			public void doCall() {
@@ -596,7 +596,7 @@ public class FileUtil {
 
 		Map<String, File> args = Collections.singletonMap("file", file);
 
-		Closure<Void> closure = new Closure<Void>(null) {
+		Closure<Void> closure = new Closure<Void>(antBuilder) {
 
 			@SuppressWarnings("unused")
 			public void doCall() {
@@ -625,7 +625,7 @@ public class FileUtil {
 		args.put("maxParentLevels", 99);
 		args.put("property", property);
 
-		Closure<Void> closure = new Closure<Void>(null) {
+		Closure<Void> closure = new Closure<Void>(antBuilder) {
 
 			@SuppressWarnings("unused")
 			public void doCall() {

@@ -218,7 +218,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			});
 
 		copy.into(
-			new Closure<Void>(null) {
+			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
 				public File doCall() {
@@ -255,6 +255,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		final Download downloadBundleTask,
 		final WorkspaceExtension workspaceExtension) {
 
+		final Project project = abstractCopyTask.getProject();
+
 		abstractCopyTask.dependsOn(downloadBundleTask);
 
 		abstractCopyTask.from(
@@ -262,8 +264,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public FileCollection call() throws Exception {
-					Project project = abstractCopyTask.getProject();
-
 					File dir = downloadBundleTask.getDest();
 
 					URL url = (URL)downloadBundleTask.getSrc();
@@ -284,7 +284,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				}
 
 			},
-			new Closure<Void>(null) {
+			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
 				public void doCall(CopySpec copySpec) {
@@ -294,12 +294,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			});
 
 		abstractCopyTask.from(
-			new Closure<Void>(null) {
+			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
 				public FileCollection doCall() {
-					Project project = abstractCopyTask.getProject();
-
 					Map<String, Object> args = new HashMap<>();
 
 					args.put("dir", workspaceExtension.getConfigsDir());
@@ -314,7 +312,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				}
 
 			},
-			new Closure<Void>(null) {
+			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
 				public void doCall(CopySpec copySpec) {

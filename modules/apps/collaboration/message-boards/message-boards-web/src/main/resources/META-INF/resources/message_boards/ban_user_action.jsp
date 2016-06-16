@@ -23,15 +23,16 @@ MBBan ban = (MBBan)row.getObject();
 %>
 
 <c:if test="<%= MBPermission.contains(permissionChecker, scopeGroupId, ActionKeys.BAN_USER) %>">
-	<portlet:actionURL name="/message_boards/ban_user" var="unbanUserURL">
-		<portlet:param name="<%= Constants.CMD %>" value="unban" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="banUserId" value="<%= String.valueOf(ban.getBanUserId()) %>" />
-	</portlet:actionURL>
+	<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+		<portlet:actionURL name="/message_boards/ban_user" var="unbanUserURL">
+			<portlet:param name="<%= Constants.CMD %>" value="unban" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="banUserId" value="<%= String.valueOf(ban.getBanUserId()) %>" />
+		</portlet:actionURL>
 
-	<liferay-ui:icon
-		iconCssClass="icon-ok-sign"
-		message="unban-this-user"
-		url="<%= unbanUserURL %>"
-	/>
+		<liferay-ui:icon
+			message="unban-this-user"
+			url="<%= unbanUserURL %>"
+		/>
+	</liferay-ui:icon-menu>
 </c:if>

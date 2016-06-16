@@ -15,10 +15,6 @@
 		<path location="${project.dir.native}" />
 	</pathconvert>
 
-	<pathconvert dirsep="/" property="project.dir.unix">
-		<path location="${project.dir.native}" />
-	</pathconvert>
-
 	<property name="sdk.dir" value="${project.dir}/tools/sdk" />
 
 	<property name="test.properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
@@ -97,18 +93,6 @@
 
 	<import file="build-common-ivy.xml" />
 
-	<property location="${project.dir}" name="project.location.absolute.native" />
-
-	<pathconvert property="project.location.absolute" targetos="unix">
-		<path location="${project.location.absolute.native}" />
-	</pathconvert>
-
-	<propertycopy
-		from="project.location.absolute"
-		name="project.dir"
-		override="true"
-	/>
-
 	<property name="doc.dir" value="${project.dir}/api" />
 
 	<propertycopy from="app.server.${app.server.type}.version" name="app.server.version" silent="true" />
@@ -127,15 +111,13 @@
 	<propertycopy from="app.server.${app.server.type}.temp.dir" name="app.server.temp.dir" />
 	<propertycopy from="app.server.${app.server.type}.work.dir" name="app.server.work.dir" />
 
-	<if>
-		<or>
-			<equals arg1="${app.server.type}" arg2="glassfish" />
-			<equals arg1="${app.server.type}" arg2="websphere" />
-		</or>
-		<then>
-			<propertycopy from="app.server.${app.server.type}.portal.war.name" name="app.server.portal.war.name" />
-		</then>
-	</if>
+	<condition property="app.server.portal.war.name" value="${app.server.glassfish.portal.war.name}">
+		<equals arg1="${app.server.type}" arg2="glassfish" />
+	</condition>
+
+	<condition property="app.server.portal.war.name" value="${app.server.websphere.portal.war.name}">
+		<equals arg1="${app.server.type}" arg2="websphere" />
+	</condition>
 
 	<property name="liferay.home" value="${app.server.parent.dir}" />
 
@@ -359,31 +341,22 @@ Error-Prone was automatically installed. Please rerun your task.
 		</then>
 	</if>
 
-	<if>
-		<not>
-			<isset property="env.ANT_OPTS" />
-		</not>
-		<then>
-			<fail>
-.
+	<fail message=".${line.separator}Please set the environment variable ANT_OPTS to the recommended value of${line.separator}&quot;-Xmx2048m -XX:MaxPermSize=512m&quot;.">
+		<condition>
+			<not>
+				<isset property="env.ANT_OPTS" />
+			</not>
+		</condition>
+	</fail>
 
-Please set the environment variable ANT_OPTS to the recommended value of
-"-Xmx2048m -XX:MaxPermSize=512m".
-			</fail>
-		</then>
-	</if>
-
-	<if>
+	<condition property="jdk.7.home" value="${env.JAVA_HOME}">
 		<and>
 			<not>
 				<isset property="jdk.7.home" />
 			</not>
 			<equals arg1="${java.specification.version}" arg2="1.6" />
 		</and>
-		<then>
-			<property name="jdk.7.home" value="${env.JAVA_HOME}" />
-		</then>
-	</if>
+	</condition>
 
 	<property name="whip.agent" value="-javaagent:${project.dir}/${junit.whip.jar}=${junit.whip.includes};${junit.whip.excludes}" />
 

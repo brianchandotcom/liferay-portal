@@ -15,7 +15,7 @@
 package com.liferay.sync.engine.service;
 
 import com.liferay.sync.encryptor.SyncEncryptor;
-import com.liferay.sync.engine.documentlibrary.util.ServerEventUtil;
+import com.liferay.sync.engine.document.library.util.ServerEventUtil;
 import com.liferay.sync.engine.model.ModelListener;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncAccountModelListener;

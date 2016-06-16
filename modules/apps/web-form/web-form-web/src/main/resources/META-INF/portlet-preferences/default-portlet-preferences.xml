@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<portlet-preferences>
+	<preference>
+		<name>description</name>
+		<value>Your input is valuable to us. Please send us your suggestions.</value>
+	</preference>
+	<preference>
+		<name>fieldLabel1</name>
+		<value>Name</value>
+	</preference>
+	<preference>
+		<name>fieldLabel2</name>
+		<value>Rating</value>
+	</preference>
+	<preference>
+		<name>fieldLabel3</name>
+		<value>Comments</value>
+	</preference>
+	<preference>
+		<name>fieldOptions2</name>
+		<value>Excellent,Good,Satisfactory,Poor</value>
+	</preference>
+	<preference>
+		<name>fieldType1</name>
+		<value>text</value>
+	</preference>
+	<preference>
+		<name>fieldType2</name>
+		<value>options</value>
+	</preference>
+	<preference>
+		<name>fieldType3</name>
+		<value>textarea</value>
+	</preference>
+	<preference>
+		<name>saveToDatabase</name>
+		<value>true</value>
+	</preference>
+	<preference>
+		<name>subject</name>
+		<value>Suggestions</value>
+	</preference>
+	<preference>
+		<name>title</name>
+		<value>Suggestions</value>
+	</preference>
+</portlet-preferences>

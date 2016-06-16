@@ -12,15 +12,16 @@
  * details.
  */
 
-package com.liferay.webform.portlet;
+package com.liferay.web.form.web.portlet;
 
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.expando.kernel.model.ExpandoRow;
-import com.liferay.expando.kernel.service.ExpandoRowLocalServiceUtil;
-import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
-import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
+import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.mail.kernel.model.MailMessage;
-import com.liferay.mail.kernel.service.MailServiceUtil;
+import com.liferay.mail.kernel.service.MailService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -48,8 +49,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.webform.util.PortletPropsValues;
-import com.liferay.webform.util.WebFormUtil;
+import com.liferay.web.form.web.configuration.WebFormGroupServiceConfiguration;
+import com.liferay.web.form.web.constants.WebFormPortletKeys;
+import com.liferay.web.form.web.util.WebFormUtil;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -63,9 +65,16 @@ import javax.mail.internet.InternetAddress;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletPreferences;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Weisser
@@ -73,7 +82,33 @@ import javax.portlet.ResourceResponse;
  * @author Alberto Montero
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
+@Component(
+	configurationPid = "com.liferay.web.form.web.configuration.WebFormConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	property = {
+		"com.liferay.portlet.css-class-wrapper=web-form-portlet",
+		"com.liferay.portlet.display-category=category.tools",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.icon=/icons/web-form.png",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=Web Form",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.copy-request-parameters=true",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + WebFormPortletKeys.WEB_FORM,
+		"javax.portlet.portlet-info.keywords=Web Form",
+		"javax.portlet.portlet-info.short-title=Web Form",
+		"javax.portlet.portlet-info.title=Web Form",
+		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/default-portlet-preferences.xml",
+		"javax.portlet.resource-bundle=contnt.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
 public class WebFormPortlet extends MVCPortlet {
 
 	public void deleteData(
@@ -96,7 +131,7 @@ public class WebFormPortlet extends MVCPortlet {
 			"databaseTableName", StringPool.BLANK);
 
 		if (Validator.isNotNull(databaseTableName)) {
-			ExpandoTableLocalServiceUtil.deleteTable(
+			_expandoTableLocalService.deleteTable(
 				themeDisplay.getCompanyId(), WebFormUtil.class.getName(),
 				databaseTableName);
 		}
@@ -200,7 +235,8 @@ public class WebFormPortlet extends MVCPortlet {
 
 			if (saveToFile) {
 				String fileName = WebFormUtil.getFileName(
-					themeDisplay, portletId);
+					themeDisplay, portletId,
+					_webFormGroupServiceConfiguration.dataRootDir());
 
 				fileSuccess = saveFile(fieldsMap, fileName);
 			}
@@ -253,12 +289,19 @@ public class WebFormPortlet extends MVCPortlet {
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_webFormGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
+			WebFormGroupServiceConfiguration.class, properties);
+	}
+
 	protected void appendFieldLabels(
 		Map<String, String> fieldsMap, StringBundler sb) {
 
 		for (String fieldLabel : fieldsMap.keySet()) {
 			sb.append(getCSVFormattedValue(fieldLabel));
-			sb.append(PortletPropsValues.CSV_SEPARATOR);
+			sb.append(_webFormGroupServiceConfiguration.csvSeparator());
 		}
 
 		sb.setIndex(sb.index() - 1);
@@ -273,7 +316,7 @@ public class WebFormPortlet extends MVCPortlet {
 			String fieldValue = fieldsMap.get(fieldLabel);
 
 			sb.append(getCSVFormattedValue(fieldValue));
-			sb.append(PortletPropsValues.CSV_SEPARATOR);
+			sb.append(_webFormGroupServiceConfiguration.csvSeparator());
 		}
 
 		sb.setIndex(sb.index() - 1);
@@ -319,7 +362,7 @@ public class WebFormPortlet extends MVCPortlet {
 			fieldLabels.add(fieldLabel);
 
 			sb.append(getCSVFormattedValue(localizedfieldLabel));
-			sb.append(PortletPropsValues.CSV_SEPARATOR);
+			sb.append(_webFormGroupServiceConfiguration.csvSeparator());
 		}
 
 		sb.setIndex(sb.index() - 1);
@@ -327,19 +370,19 @@ public class WebFormPortlet extends MVCPortlet {
 		sb.append(CharPool.NEW_LINE);
 
 		if (Validator.isNotNull(databaseTableName)) {
-			List<ExpandoRow> rows = ExpandoRowLocalServiceUtil.getRows(
+			List<ExpandoRow> rows = _expandoRowLocalService.getRows(
 				themeDisplay.getCompanyId(), WebFormUtil.class.getName(),
 				databaseTableName, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			for (ExpandoRow row : rows) {
 				for (String fieldName : fieldLabels) {
-					String data = ExpandoValueLocalServiceUtil.getData(
+					String data = _expandoValueLocalService.getData(
 						themeDisplay.getCompanyId(),
 						WebFormUtil.class.getName(), databaseTableName,
 						fieldName, row.getClassPK(), StringPool.BLANK);
 
 					sb.append(getCSVFormattedValue(data));
-					sb.append(PortletPropsValues.CSV_SEPARATOR);
+					sb.append(_webFormGroupServiceConfiguration.csvSeparator());
 				}
 
 				sb.setIndex(sb.index() - 1);
@@ -389,14 +432,14 @@ public class WebFormPortlet extends MVCPortlet {
 
 		WebFormUtil.checkTable(companyId, databaseTableName, preferences);
 
-		long classPK = CounterLocalServiceUtil.increment(
+		long classPK = _counterLocalService.increment(
 			WebFormUtil.class.getName());
 
 		try {
 			for (String fieldLabel : fieldsMap.keySet()) {
 				String fieldValue = fieldsMap.get(fieldLabel);
 
-				ExpandoValueLocalServiceUtil.addValue(
+				_expandoValueLocalService.addValue(
 					companyId, WebFormUtil.class.getName(), databaseTableName,
 					fieldLabel, classPK, fieldValue);
 			}
@@ -451,8 +494,8 @@ public class WebFormPortlet extends MVCPortlet {
 			}
 
 			InternetAddress fromAddress = new InternetAddress(
-				WebFormUtil.getEmailFromAddress(preferences, companyId),
-				WebFormUtil.getEmailFromName(preferences, companyId));
+				_webFormGroupServiceConfiguration.emailFromAddress(),
+				_webFormGroupServiceConfiguration.emailFromName());
 			String subject = preferences.getValue("subject", StringPool.BLANK);
 			String body = getMailBody(fieldsMap);
 
@@ -464,7 +507,7 @@ public class WebFormPortlet extends MVCPortlet {
 
 			mailMessage.setTo(toAddresses);
 
-			MailServiceUtil.sendEmail(mailMessage);
+			_mailService.sendEmail(mailMessage);
 
 			return true;
 		}
@@ -480,6 +523,39 @@ public class WebFormPortlet extends MVCPortlet {
 		throws Exception {
 
 		CaptchaUtil.serveImage(resourceRequest, resourceResponse);
+	}
+
+	@Reference(unbind = "-")
+	protected void setCounterLocalService(
+		CounterLocalService counterLocalService) {
+
+		_counterLocalService = counterLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setExpandoRowLocalService(
+		ExpandoRowLocalService expandoRowLocalService) {
+
+		_expandoRowLocalService = expandoRowLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setExpandoTableLocalService(
+		ExpandoTableLocalService expandoTableLocalService) {
+
+		_expandoTableLocalService = expandoTableLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setExpandoValueLocalService(
+		ExpandoValueLocalService expandoValueLocalService) {
+
+		_expandoValueLocalService = expandoValueLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMailService(MailService mailService) {
+		_mailService = mailService;
 	}
 
 	protected Set<String> validate(
@@ -511,7 +587,7 @@ public class WebFormPortlet extends MVCPortlet {
 				continue;
 			}
 
-			if (!PortletPropsValues.VALIDATION_SCRIPT_ENABLED) {
+			if (!_webFormGroupServiceConfiguration.validationScriptEnable()) {
 				continue;
 			}
 
@@ -533,5 +609,13 @@ public class WebFormPortlet extends MVCPortlet {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(WebFormPortlet.class);
+
+	private static CounterLocalService _counterLocalService;
+	private static ExpandoRowLocalService _expandoRowLocalService;
+	private static ExpandoTableLocalService _expandoTableLocalService;
+	private static ExpandoValueLocalService _expandoValueLocalService;
+	private static MailService _mailService;
+
+	private WebFormGroupServiceConfiguration _webFormGroupServiceConfiguration;
 
 }

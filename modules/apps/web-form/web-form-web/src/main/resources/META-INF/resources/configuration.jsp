@@ -23,8 +23,8 @@ boolean requireCaptcha = GetterUtil.getBoolean(portletPreferences.getValue("requ
 String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 
 boolean sendAsEmail = GetterUtil.getBoolean(portletPreferences.getValue("sendAsEmail", StringPool.BLANK));
-String emailFromName = WebFormUtil.getEmailFromName(portletPreferences, company.getCompanyId());
-String emailFromAddress = WebFormUtil.getEmailFromAddress(portletPreferences, company.getCompanyId());
+String emailFromName = webFormGroupServiceConfiguration.emailFromName();
+String emailFromAddress = webFormGroupServiceConfiguration.emailFromAddress();
 String emailAddress = portletPreferences.getValue("emailAddress", StringPool.BLANK);
 String subject = portletPreferences.getValue("subject", StringPool.BLANK);
 
@@ -97,7 +97,7 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 			<aui:fieldset cssClass="handle-data" label="file">
 				<aui:input name="preferences--saveToFile--" type="checkbox" value="<%= saveToFile %>" />
 
-				<liferay-ui:message arguments="<%= HtmlUtil.escape(WebFormUtil.getFileName(themeDisplay, portletResource)) %>" key="form-data-will-be-saved-to-x" />
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(WebFormUtil.getFileName(themeDisplay, portletResource, webFormGroupServiceConfiguration.dataRootDir())) %>" key="form-data-will-be-saved-to-x" />
 			</aui:fieldset>
 		</liferay-ui:panel>
 
@@ -237,7 +237,7 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 
 		webFields.delegate(['change', 'click', 'keydown'], toggleOptions, 'select');
 
-		<c:if test="<%= PortletPropsValues.VALIDATION_SCRIPT_ENABLED %>">
+		<c:if test="<%= validationScriptEnable %>">
 			var toggleValidationOptions = function(event) {
 				this.next().toggle();
 			};

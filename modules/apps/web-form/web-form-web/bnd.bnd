@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Web Form Web
+Bundle-SymbolicName: com.liferay.web.form.web
+Bundle-Version: 1.0.0
+Import-Package:\
+	!org.apache.xmlbeans.*,\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Web-ContextPath: /web-form-web
+-includeresource: @rhino-[0-9]*.jar

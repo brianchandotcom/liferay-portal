@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.webform.action;
+package com.liferay.web.form.web.portlet.action;
 
 import com.liferay.expando.kernel.exception.ColumnNameException;
 import com.liferay.expando.kernel.exception.DuplicateColumnNameException;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
@@ -26,7 +27,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.webform.util.WebFormUtil;
+import com.liferay.web.form.web.constants.WebFormPortletKeys;
+import com.liferay.web.form.web.util.WebFormUtil;
 
 import java.util.HashSet;
 import java.util.List;
@@ -41,13 +43,21 @@ import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jorge Ferrer
  * @author Alberto Montero
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
-public class ConfigurationActionImpl extends DefaultConfigurationAction {
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + WebFormPortletKeys.WEB_FORM},
+	service = ConfigurationAction.class
+)
+public class WebFormConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
 	public String getJspPath(HttpServletRequest request) {

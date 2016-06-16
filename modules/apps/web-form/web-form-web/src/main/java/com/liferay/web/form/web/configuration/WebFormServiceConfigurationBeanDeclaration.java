@@ -12,22 +12,22 @@
  * details.
  */
 
-package com.liferay.webform.util;
+package com.liferay.web.form.web.configuration;
+
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
-public interface PortletPropsKeys {
+@Component
+public class WebFormServiceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
-	public static final String CSV_SEPARATOR = "csv.separator";
-
-	public static final String DATA_ROOT_DIR = "data.root.dir";
-
-	public static final String EMAIL_FROM_ADDRESS = "email.from.address";
-
-	public static final String EMAIL_FROM_NAME = "email.from.name";
-
-	public static final String VALIDATION_SCRIPT_ENABLED =
-		"validation.script.enabled";
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return WebFormGroupServiceConfiguration.class;
+	}
 
 }

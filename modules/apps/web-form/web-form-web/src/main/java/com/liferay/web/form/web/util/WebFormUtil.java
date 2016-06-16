@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.webform.util;
+package com.liferay.web.form.web.util;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.expando.kernel.exception.NoSuchTableException;
@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -108,26 +107,12 @@ public class WebFormUtil {
 		return expandoTable;
 	}
 
-	public static String getEmailFromAddress(
-		PortletPreferences preferences, long companyId) {
-
-		return PortalUtil.getEmailFromAddress(
-			preferences, companyId, PortletPropsValues.EMAIL_FROM_ADDRESS);
-	}
-
-	public static String getEmailFromName(
-		PortletPreferences preferences, long companyId) {
-
-		return PortalUtil.getEmailFromName(
-			preferences, companyId, PortletPropsValues.EMAIL_FROM_NAME);
-	}
-
 	public static String getFileName(
-		ThemeDisplay themeDisplay, String portletId) {
+		ThemeDisplay themeDisplay, String portletId, String dataRootDir) {
 
 		StringBuffer sb = new StringBuffer(8);
 
-		sb.append(PortletPropsValues.DATA_ROOT_DIR);
+		sb.append(dataRootDir);
 		sb.append(StringPool.FORWARD_SLASH);
 		sb.append(themeDisplay.getScopeGroupId());
 		sb.append(StringPool.FORWARD_SLASH);

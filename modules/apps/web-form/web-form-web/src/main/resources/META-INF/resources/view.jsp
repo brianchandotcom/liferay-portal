@@ -42,7 +42,7 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 		<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 		<liferay-ui:error key="error" message="an-error-occurred-while-sending-the-form-information" />
 
-		<c:if test='<%= PortletPropsValues.VALIDATION_SCRIPT_ENABLED && SessionErrors.contains(renderRequest, "validationScriptError") %>'>
+		<c:if test='<%= validationScriptEnable && SessionErrors.contains(renderRequest, "validationScriptError") %>'>
 			<liferay-util:include page="/script_error.jsp" />
 		</c:if>
 
@@ -62,7 +62,7 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 			String fieldValidationErrorMessage = portletPreferences.getValue("fieldValidationErrorMessage" + i, StringPool.BLANK);
 		%>
 
-			<c:if test="<%= PortletPropsValues.VALIDATION_SCRIPT_ENABLED %>">
+			<c:if test="<%= validationScriptEnable %>">
 				<liferay-ui:error key='<%= "error" + fieldLabel %>' message="<%= fieldValidationErrorMessage %>" />
 
 				<c:if test="<%= Validator.isNotNull(fieldValidationScript) %>">
@@ -182,7 +182,7 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 
 					function fieldValidationFunction<%= i %>(currentFieldValue, fieldsMap) {
 						<c:choose>
-							<c:when test="<%= PortletPropsValues.VALIDATION_SCRIPT_ENABLED && Validator.isNotNull(fieldValidationScript) %>">
+							<c:when test="<%= validationScriptEnable && Validator.isNotNull(fieldValidationScript) %>">
 								<%= fieldValidationScript %>
 							</c:when>
 							<c:otherwise>

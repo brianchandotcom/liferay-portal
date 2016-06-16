@@ -142,7 +142,7 @@ boolean ignoreRequestValue = (index != formFieldsIndex);
 		</c:when>
 	</c:choose>
 
-	<c:if test="<%= PortletPropsValues.VALIDATION_SCRIPT_ENABLED %>">
+	<c:if test="<%= validationScriptEnable %>">
 		<c:choose>
 			<c:when test="<%= !fieldsEditingDisabled %>">
 				<div class="validation">

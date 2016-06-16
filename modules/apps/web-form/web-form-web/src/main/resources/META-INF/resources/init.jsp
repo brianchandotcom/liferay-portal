@@ -27,6 +27,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.expando.kernel.exception.ColumnNameException" %><%@
 page import="com.liferay.expando.kernel.exception.DuplicateColumnNameException" %><%@
 page import="com.liferay.portal.kernel.captcha.CaptchaTextException" %><%@
+page import="com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
@@ -41,8 +42,8 @@ page import="com.liferay.portal.kernel.util.PrefsParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.webform.util.PortletPropsValues" %><%@
-page import="com.liferay.webform.util.WebFormUtil" %>
+page import="com.liferay.web.form.web.configuration.WebFormGroupServiceConfiguration" %><%@
+page import="com.liferay.web.form.web.util.WebFormUtil" %>
 
 <%@ page import="javax.portlet.ActionRequest" %>
 
@@ -51,6 +52,10 @@ page import="com.liferay.webform.util.WebFormUtil" %>
 <portlet:defineObjects />
 
 <%
+WebFormGroupServiceConfiguration webFormGroupServiceConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(WebFormGroupServiceConfiguration.class, themeDisplay.getCompanyId());
+
+boolean validationScriptEnable = webFormGroupServiceConfiguration.validationScriptEnable();
+
 String currentURL = PortalUtil.getCurrentURL(request);
 
 String portletResource = ParamUtil.getString(request, "portletResource");

@@ -2074,7 +2074,7 @@
 
 		<execute macro="CalendarNavigator#gotoConfiguration" />
 
-		<execute macro="CalendarConfiguration#editTimeZonePacific" />
+		<execute macro="CalendarConfiguration#editTimeZoneUTC" />
 
 		<execute macro="CalendarConfiguration#save" />
 
@@ -2091,8 +2091,8 @@
 		<execute macro="CalendarEvent#setDatesToday" />
 
 		<execute macro="CalendarEvent#setTimes">
-			<var name="endDateTime" value="10:00 AM" />
-			<var name="startDateTime" value="09:00 AM" />
+			<var name="endDateTime" value="03:00 PM" />
+			<var name="startDateTime" value="02:00 PM" />
 		</execute>
 
 		<execute macro="CalendarEvent#publish" />
@@ -2106,15 +2106,15 @@
 		</execute>
 
 		<execute macro="CalendarScheduler#viewEventTimesViaDialogBox">
-			<var name="endDateTime" value="10:00am" />
-			<var name="startDateTime" value="9:00am" />
+			<var name="endDateTime" value="3:00pm" />
+			<var name="startDateTime" value="2:00pm" />
 		</execute>
 
 		<execute macro="CalendarScheduler#gotoDetailsViaDialogBox" />
 
 		<execute macro="CalendarEvent#viewTimesViaDetails">
-			<var name="endDateTime" value="10:00 AM" />
-			<var name="startDateTime" value="09:00 AM" />
+			<var name="endDateTime" value="03:00 PM" />
+			<var name="startDateTime" value="02:00 PM" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -2126,8 +2126,8 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewTimes">
-			<var name="endDateTime" value="10:00 AM" />
-			<var name="startDateTime" value="09:00 AM" />
+			<var name="endDateTime" value="03:00 PM" />
+			<var name="startDateTime" value="02:00 PM" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -2149,15 +2149,15 @@
 		</execute>
 
 		<execute macro="CalendarScheduler#viewEventTimesViaDialogBox">
-			<var name="endDateTime" value="pm" />
-			<var name="startDateTime" value="pm" />
+			<var name="endDateTime" value="am" />
+			<var name="startDateTime" value="am" />
 		</execute>
 
 		<execute macro="CalendarScheduler#gotoDetailsViaDialogBox" />
 
 		<execute macro="CalendarEvent#viewTimesViaDetails">
-			<var name="endDateTime" value="PM" />
-			<var name="startDateTime" value="PM" />
+			<var name="endDateTime" value="AM" />
+			<var name="startDateTime" value="AM" />
 		</execute>
 	</command>
 

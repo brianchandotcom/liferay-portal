@@ -17,6 +17,12 @@
 		</if>
 	</command>
 
+	<command name="editTimeZoneUTC">
+		<execute macro="CalendarConfiguration#disableGlobalTimeZone" />
+
+		<execute function="Select" locator1="CalendarConfiguration#USER_SETTINGS_TIME_ZONE_SELECT" value1="(UTC) Coordinated Universal Time" />
+	</command>
+
 	<command name="enableGlobalTimeZone">
 		<execute function="Check" locator1="CalendarConfiguration#USER_SETTINGS_GLOBAL_TIME_ZONE_CHECKBOX" />
 	</command>

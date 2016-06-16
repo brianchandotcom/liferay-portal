@@ -626,7 +626,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATION_PERMISSIONS_VIEW" />
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="Portal Content Reviewer" />
 		</execute>
 
@@ -638,7 +638,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_UPDATE" />
 			<var name="permissionDefinitionValue" value="Update" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="Portal Content Reviewer" />
 		</execute>
 
@@ -813,7 +813,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATION_PERMISSIONS_VIEW" />
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="Portal Content Reviewer" />
 		</execute>
 
@@ -825,7 +825,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_COMPLETE_FORM" />
 			<var name="permissionDefinitionValue" value="Complete Form" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="Portal Content Reviewer" />
 		</execute>
 
@@ -1014,7 +1014,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATION_PERMISSIONS_VIEW" />
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="Portal Content Reviewer" />
 		</execute>
 
@@ -1026,7 +1026,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_UPDATE" />
 			<var name="permissionDefinitionValue" value="Update" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="Portal Content Reviewer" />
 		</execute>
 
@@ -1209,7 +1209,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATION_PERMISSIONS_VIEW" />
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="KaleoRegRole Name" />
 		</execute>
 
@@ -1221,7 +1221,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_SUBMIT" />
 			<var name="permissionDefinitionValue" value="Submit" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="KaleoRegRole Name" />
 		</execute>
 
@@ -1233,7 +1233,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_VIEW" />
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="KaleoRegRole Name" />
 		</execute>
 
@@ -1407,7 +1407,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATION_PERMISSIONS_VIEW" />
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="KaleoRegRole Name" />
 		</execute>
 
@@ -8098,7 +8098,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATION_PERMISSIONS_VIEW" />
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="${role1Name}" />
 		</execute>
 
@@ -8110,7 +8110,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_SUBMIT" />
 			<var name="permissionDefinitionValue" value="Submit" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="${role1Name}" />
 		</execute>
 
@@ -8122,7 +8122,7 @@
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_VIEW" />
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_APPLICATIONS_KALEO_FORMS" />
-			<var name="permissionNavigationValue" value="Kaleo Forms" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
 			<var name="roleName" value="${role1Name}" />
 		</execute>
 

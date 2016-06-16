@@ -15,8 +15,8 @@
 package com.liferay.knowledge.base.item.selector.web.display.context;
 
 import com.liferay.knowledge.base.constants.KBPortletKeys;
-import com.liferay.knowledge.base.item.selector.criterion.KnowlegeBaseAttachmentItemSelectorCriterion;
-import com.liferay.knowledge.base.item.selector.web.KnowlegeBaseAttachmentItemSelectorView;
+import com.liferay.knowledge.base.item.selector.criterion.KBAttachmentItemSelectorCriterion;
+import com.liferay.knowledge.base.item.selector.web.KBAttachmentItemSelectorView;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,19 +35,15 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Roberto Díaz
  */
-public class KnowlegeBaseAttachmentItemSelectorViewDisplayContext {
+public class KBAttachmentItemSelectorViewDisplayContext {
 
-	public KnowlegeBaseAttachmentItemSelectorViewDisplayContext(
-		KnowlegeBaseAttachmentItemSelectorCriterion
-			knowlegeBaseAttachmentItemSelectorCriterion,
-		KnowlegeBaseAttachmentItemSelectorView
-			knowlegeBaseAttachmentItemSelectorView,
+	public KBAttachmentItemSelectorViewDisplayContext(
+		KBAttachmentItemSelectorCriterion kbAttachmentItemSelectorCriterion,
+		KBAttachmentItemSelectorView kbAttachmentItemSelectorView,
 		String itemSelectedEventName, boolean search, PortletURL portletURL) {
 
-		_knowlegeBaseAttachmentItemSelectorCriterion =
-			knowlegeBaseAttachmentItemSelectorCriterion;
-		_knowlegeBaseAttachmentItemSelectorView =
-			knowlegeBaseAttachmentItemSelectorView;
+		_kbAttachmentItemSelectorCriterion = kbAttachmentItemSelectorCriterion;
+		_kbAttachmentItemSelectorView = kbAttachmentItemSelectorView;
 		_itemSelectedEventName = itemSelectedEventName;
 		_search = search;
 		_portletURL = portletURL;
@@ -55,7 +51,7 @@ public class KnowlegeBaseAttachmentItemSelectorViewDisplayContext {
 
 	public long getAttachmentsFolderId() throws PortalException {
 		KBArticle kbArticle = KBArticleLocalServiceUtil.getLatestKBArticle(
-			_knowlegeBaseAttachmentItemSelectorCriterion.getResourcePrimKey(),
+			_kbAttachmentItemSelectorCriterion.getResourcePrimKey(),
 			WorkflowConstants.STATUS_APPROVED);
 
 		return kbArticle.getAttachmentsFolderId();
@@ -65,10 +61,10 @@ public class KnowlegeBaseAttachmentItemSelectorViewDisplayContext {
 		return _itemSelectedEventName;
 	}
 
-	public KnowlegeBaseAttachmentItemSelectorCriterion
-		getKnowlegeBaseAttachmentItemSelectorCriterion() {
+	public KBAttachmentItemSelectorCriterion
+		getKBAttachmentItemSelectorCriterion() {
 
-		return _knowlegeBaseAttachmentItemSelectorCriterion;
+		return _kbAttachmentItemSelectorCriterion;
 	}
 
 	public PortletURL getPortletURL(
@@ -86,7 +82,7 @@ public class KnowlegeBaseAttachmentItemSelectorViewDisplayContext {
 	}
 
 	public String getTitle(Locale locale) {
-		return _knowlegeBaseAttachmentItemSelectorView.getTitle(locale);
+		return _kbAttachmentItemSelectorView.getTitle(locale);
 	}
 
 	public PortletURL getUploadURL(
@@ -100,8 +96,7 @@ public class KnowlegeBaseAttachmentItemSelectorViewDisplayContext {
 		portletURL.setParameter(
 			"resourcePrimKey",
 			String.valueOf(
-				_knowlegeBaseAttachmentItemSelectorCriterion.
-					getResourcePrimKey()));
+				_kbAttachmentItemSelectorCriterion.getResourcePrimKey()));
 
 		return portletURL;
 	}
@@ -111,10 +106,9 @@ public class KnowlegeBaseAttachmentItemSelectorViewDisplayContext {
 	}
 
 	private final String _itemSelectedEventName;
-	private final KnowlegeBaseAttachmentItemSelectorCriterion
-		_knowlegeBaseAttachmentItemSelectorCriterion;
-	private final KnowlegeBaseAttachmentItemSelectorView
-		_knowlegeBaseAttachmentItemSelectorView;
+	private final KBAttachmentItemSelectorCriterion
+		_kbAttachmentItemSelectorCriterion;
+	private final KBAttachmentItemSelectorView _kbAttachmentItemSelectorView;
 	private final PortletURL _portletURL;
 	private final boolean _search;
 

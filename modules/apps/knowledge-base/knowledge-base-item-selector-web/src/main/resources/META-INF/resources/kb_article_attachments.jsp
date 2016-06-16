@@ -17,9 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-KnowlegeBaseAttachmentItemSelectorViewDisplayContext knowlegeBaseAttachmentItemSelectorViewDisplayContext = (KnowlegeBaseAttachmentItemSelectorViewDisplayContext)request.getAttribute(KnowlegeBaseAttachmentItemSelectorView.KB_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
+KBAttachmentItemSelectorViewDisplayContext kbAttachmentItemSelectorViewDisplayContext = (KBAttachmentItemSelectorViewDisplayContext)request.getAttribute(KBAttachmentItemSelectorView.KB_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 
-KnowlegeBaseAttachmentItemSelectorCriterion knowlegeBaseAttachmentItemSelectorCriterion = knowlegeBaseAttachmentItemSelectorViewDisplayContext.getKnowlegeBaseAttachmentItemSelectorCriterion();
+KBAttachmentItemSelectorCriterion kbAttachmentItemSelectorCriterion = kbAttachmentItemSelectorViewDisplayContext.getKBAttachmentItemSelectorCriterion();
 
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_CUR);
 int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM, SearchContainer.DEFAULT_DELTA);
@@ -34,12 +34,12 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 OrderByComparator<FileEntry> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
 
-long folderId = knowlegeBaseAttachmentItemSelectorViewDisplayContext.getAttachmentsFolderId();
+long folderId = kbAttachmentItemSelectorViewDisplayContext.getAttachmentsFolderId();
 
 List portletFileEntries = null;
 int portletFileEntriesCount = 0;
 
-if (knowlegeBaseAttachmentItemSelectorViewDisplayContext.isSearch()) {
+if (kbAttachmentItemSelectorViewDisplayContext.isSearch()) {
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 	searchContext.setEnd(end);
@@ -82,15 +82,15 @@ else {
 %>
 
 <liferay-item-selector:repository-entry-browser
-	desiredItemSelectorReturnTypes="<%= knowlegeBaseAttachmentItemSelectorCriterion.getDesiredItemSelectorReturnTypes() %>"
+	desiredItemSelectorReturnTypes="<%= kbAttachmentItemSelectorCriterion.getDesiredItemSelectorReturnTypes() %>"
 	emptyResultsMessage='<%= LanguageUtil.get(resourceBundle, "there-are-no-knowledge-base-attachments") %>'
-	itemSelectedEventName="<%= knowlegeBaseAttachmentItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
-	portletURL="<%= knowlegeBaseAttachmentItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
+	itemSelectedEventName="<%= kbAttachmentItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
+	portletURL="<%= kbAttachmentItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	repositoryEntries="<%= portletFileEntries %>"
 	repositoryEntriesCount="<%= portletFileEntriesCount %>"
 	showDragAndDropZone="<%= false %>"
-	tabName="<%= knowlegeBaseAttachmentItemSelectorViewDisplayContext.getTitle(locale) %>"
-	uploadURL="<%= knowlegeBaseAttachmentItemSelectorViewDisplayContext.getUploadURL(liferayPortletResponse) %>"
+	tabName="<%= kbAttachmentItemSelectorViewDisplayContext.getTitle(locale) %>"
+	uploadURL="<%= kbAttachmentItemSelectorViewDisplayContext.getUploadURL(liferayPortletResponse) %>"
 />
 
 <%!

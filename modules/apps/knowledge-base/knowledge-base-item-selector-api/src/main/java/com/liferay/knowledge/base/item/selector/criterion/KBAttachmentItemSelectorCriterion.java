@@ -19,13 +19,13 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
 /**
  * @author Roberto Díaz
  */
-public class KnowlegeBaseAttachmentItemSelectorCriterion
+public class KBAttachmentItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
 
-	public KnowlegeBaseAttachmentItemSelectorCriterion() {
+	public KBAttachmentItemSelectorCriterion() {
 	}
 
-	public KnowlegeBaseAttachmentItemSelectorCriterion(long resourcePrimKey) {
+	public KBAttachmentItemSelectorCriterion(long resourcePrimKey) {
 		_resourcePrimKey = resourcePrimKey;
 	}
 

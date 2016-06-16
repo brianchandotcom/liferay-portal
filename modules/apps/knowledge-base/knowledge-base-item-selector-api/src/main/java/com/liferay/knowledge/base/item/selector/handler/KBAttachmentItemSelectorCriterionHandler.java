@@ -16,7 +16,7 @@ package com.liferay.knowledge.base.item.selector.handler;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.knowledge.base.item.selector.criterion.KnowlegeBaseAttachmentItemSelectorCriterion;
+import com.liferay.knowledge.base.item.selector.criterion.KBAttachmentItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -26,15 +26,15 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-public class KnowlegeBaseAttachmentItemSelectorCriterionHandler
+public class KBAttachmentItemSelectorCriterionHandler
 	extends BaseItemSelectorCriterionHandler
-		<KnowlegeBaseAttachmentItemSelectorCriterion> {
+		<KBAttachmentItemSelectorCriterion> {
 
 	@Override
-	public Class<KnowlegeBaseAttachmentItemSelectorCriterion>
+	public Class<KBAttachmentItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
 
-		return KnowlegeBaseAttachmentItemSelectorCriterion.class;
+		return KBAttachmentItemSelectorCriterion.class;
 	}
 
 	@Activate

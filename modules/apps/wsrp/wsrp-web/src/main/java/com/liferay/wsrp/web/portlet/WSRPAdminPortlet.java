@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wsrp.admin.portlet;
+package com.liferay.wsrp.web.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.wsrp.constants.WSRPPortletKeys;
 import com.liferay.wsrp.model.WSRPConsumer;
 import com.liferay.wsrp.model.WSRPConsumerPortlet;
 import com.liferay.wsrp.model.WSRPProducer;
@@ -37,12 +38,40 @@ import com.liferay.wsrp.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletRequest;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
-public class AdminPortlet extends MVCPortlet {
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=WSRP Admin",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.copy-request-parameters=true",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/admin/view.jsp",
+		"javax.portlet.name=" + WSRPPortletKeys.WSRP_ADMIN,
+		"javax.portlet.portlet-info.keywords=WSRP",
+		"javax.portlet.portlet-info.short-title=WSRP",
+		"javax.portlet.portlet-info.title=WSRP",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
+public class WSRPAdminPortlet extends MVCPortlet {
 
 	public void deleteWSRPConsumer(
 			ActionRequest actionRequest, ActionResponse actionResponse)

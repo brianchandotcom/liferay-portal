@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.DeleteMenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -76,6 +78,7 @@ import java.util.UUID;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -166,7 +169,11 @@ public class DefaultWikiListPagesDisplayContext
 
 		addMoveMenuItem(menuItems, wikiPage);
 
+		addChildPageMenuItem(menuItems, wikiPage);
+
 		addSubscriptionMenuItem(menuItems, wikiPage);
+
+		addPrintPageMenuItem(menuItems, wikiPage);
 
 		addDeleteMenuItem(menuItems, wikiPage);
 
@@ -379,6 +386,39 @@ public class DefaultWikiListPagesDisplayContext
 		searchContainer.setResults(results);
 	}
 
+	protected void addChildPageMenuItem(
+			List<MenuItem> menuItems, WikiPage wikiPage)
+		throws PortalException {
+
+		if (!WikiNodePermissionChecker.contains(
+				_wikiRequestHelper.getPermissionChecker(), wikiPage.getNodeId(),
+				ActionKeys.ADD_PAGE)) {
+
+			return;
+		}
+
+		URLMenuItem urlMenuItem = new URLMenuItem();
+
+		urlMenuItem.setKey(WikiUIItemKeys.ADD_CHILD_PAGE);
+		urlMenuItem.setLabel("add-child-page");
+
+		LiferayPortletResponse liferayPortletResponse =
+			_wikiRequestHelper.getLiferayPortletResponse();
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("mvcRenderCommandName", "/wiki/edit_page");
+		portletURL.setParameter("redirect", _wikiRequestHelper.getCurrentURL());
+		portletURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
+		portletURL.setParameter("title", StringPool.BLANK);
+		portletURL.setParameter("editTitle", "1");
+		portletURL.setParameter("parentTitle", wikiPage.getTitle());
+
+		urlMenuItem.setURL(portletURL.toString());
+
+		menuItems.add(urlMenuItem);
+	}
+
 	protected void addCopyMenuItem(List<MenuItem> menuItems, WikiPage wikiPage)
 		throws PortalException {
 
@@ -579,6 +619,47 @@ public class DefaultWikiListPagesDisplayContext
 		urlMenuItem.setURL(url);
 
 		menuItems.add(urlMenuItem);
+	}
+
+	protected void addPrintPageMenuItem(
+			List<MenuItem> menuItems, WikiPage wikiPage)
+		throws PortalException {
+
+		try {
+			JavaScriptMenuItem javascriptMenuItem = new JavaScriptMenuItem();
+
+			javascriptMenuItem.setKey(WikiUIItemKeys.PRINT);
+			javascriptMenuItem.setLabel("print");
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("window.open('");
+
+			LiferayPortletResponse liferayPortletResponse =
+				_wikiRequestHelper.getLiferayPortletResponse();
+
+			PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+			WikiNode wikiNode = wikiPage.getNode();
+
+			portletURL.setParameter("mvcRenderCommandName", "/wiki/view");
+			portletURL.setParameter("nodeName", wikiNode.getName());
+			portletURL.setParameter("title", wikiPage.getTitle());
+			portletURL.setParameter("viewMode", Constants.PRINT);
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+			sb.append(portletURL.toString());
+
+			sb.append("', '', 'directories=0,height=480,left=80,location=1,");
+			sb.append("menubar=1,resizable=1,scrollbars=yes,status=0,");
+			sb.append("toolbar=0,top=180,width=640');");
+
+			javascriptMenuItem.setOnClick(sb.toString());
+
+			menuItems.add(javascriptMenuItem);
+		}
+		catch (WindowStateException wse) {
+		}
 	}
 
 	protected void addSubscriptionMenuItem(

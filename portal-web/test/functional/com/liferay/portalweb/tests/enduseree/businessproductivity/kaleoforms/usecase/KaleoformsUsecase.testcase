@@ -4522,7 +4522,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="${kfProcessName}" />
-			<var name="workflowAssetType" value="Uploaded Definition" />
+			<var name="workflowAssetType" value="Kaleo Forms Process" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -6043,7 +6043,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Uploaded Definition" />
+			<var name="workflowAssetType" value="Kaleo Forms Process" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 

@@ -13,7 +13,9 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command description="This is a test case for LPS-65608." name="SearchAndPagination" priority="4">
+	<command name="SearchAndPagination" priority="4">
+		<description message="This is a use case for LPS-65608." />
+
 		<execute macro="Page#add">
 			<var name="pageName" value="Test Search Pagination Page" />
 		</execute>

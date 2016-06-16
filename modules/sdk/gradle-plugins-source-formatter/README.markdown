@@ -42,7 +42,7 @@ The plugin adds one task to your project:
 
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
-`formatSource` | - | [`FormatSourceTask`](#formatsourcetask) | Runs Liferay Source Formatter to format the project files.
+`formatSource` | \- | [`FormatSourceTask`](#formatsourcetask) | Runs Liferay Source Formatter to format the project files.
 
 ### FormatSourceTask
 

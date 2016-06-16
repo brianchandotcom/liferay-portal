@@ -1,0 +1,54 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%
+User topUser = UserLocalServiceUtil.fetchUserById(statsUser.getUserId());
+%>
+
+<c:if test="<%= topUser != null %>">
+	<liferay-ui:search-container-column-text>
+		<liferay-ui:user-portrait
+				cssClass="user-icon-lg"
+				userId="<%= statsUser.getUserId() %>"
+		/>
+	</liferay-ui:search-container-column-text>
+
+	<%
+	String[] ranks = MBUtil.getUserRank(mbGroupServiceSettings, themeDisplay.getLanguageId(), statsUser);
+	%>
+
+	<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+		<c:if test="<%= Validator.isNotNull(ranks[0]) %>">
+			<h5 class="text-default"><liferay-ui:message key="rank" />: <%= HtmlUtil.escape(ranks[0]) %></h5>
+		</c:if>
+
+		<h4 title="<%= topUser.getFullName() %>">
+			<%= topUser.getFullName() %>
+		</h4>
+
+		<span class="h5 text-default">
+			<liferay-ui:message key="posts" />:<%= statsUser.getMessageCount() %>
+		</span>
+
+		<span class="h5 text-default">
+			<liferay-ui:message key="join-date" />: <%= dateFormatDate.format(topUser.getCreateDate()) %>
+		</span>
+
+		<span class="h5 text-default">
+			<liferay-ui:message key="last-post-date" />: <%= dateFormatDate.format(statsUser.getLastPostDate()) %>
+		</span>
+	</liferay-ui:search-container-column-text>
+</c:if>

@@ -189,6 +189,10 @@
 			font-weight: bold;
 			margin-right: 1em;
 		}
+
+		.list-group-item-content span.h5 {
+			margin-right: 12px;
+		}
 	}
 
 	.views {
@@ -235,10 +239,6 @@
 
 	.thread-actions {
 		float: right;
-	}
-
-	.thread-user-rank {
-		display: block;
 	}
 
 	.thread-priority {

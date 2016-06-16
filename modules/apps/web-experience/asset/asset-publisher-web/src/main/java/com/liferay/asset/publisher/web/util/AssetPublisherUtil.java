@@ -1904,37 +1904,6 @@ public class AssetPublisherUtil {
 		}
 	}
 
-	private static void _notifySubscribers(
-			List<AssetEntry> assetEntries,
-			com.liferay.portal.kernel.model.PortletPreferences
-				portletPreferencesModel)
-		throws PortalException {
-
-		List<Subscription> subscriptions =
-			_subscriptionLocalService.getSubscriptions(
-				portletPreferencesModel.getCompanyId(),
-				com.liferay.portal.kernel.model.PortletPreferences.class.
-					getName(),
-				AssetPublisherUtil.getSubscriptionClassPK(
-					portletPreferencesModel.getPlid(),
-					portletPreferencesModel.getPortletId()));
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.fromXML(
-				portletPreferencesModel.getCompanyId(),
-				portletPreferencesModel.getOwnerId(),
-				portletPreferencesModel.getOwnerType(),
-				portletPreferencesModel.getPlid(),
-				portletPreferencesModel.getPortletId(),
-				portletPreferencesModel.getPreferences());
-
-		for (Subscription subscription : subscriptions) {
-			notifySubscriber(
-				subscription.getUserId(), portletPreferences,
-				_filterAssetEntries(subscription.getUserId(), assetEntries));
-		}
-	}
-
 	private void _checkAssetEntries(
 			com.liferay.portal.kernel.model.PortletPreferences
 				portletPreferencesModel)
@@ -1981,7 +1950,20 @@ public class AssetPublisherUtil {
 			}
 		}
 
-		_notifySubscribers(newAssetEntries, portletPreferencesModel);
+		List<Subscription> subscriptions =
+			_subscriptionLocalService.getSubscriptions(
+				portletPreferencesModel.getCompanyId(),
+				com.liferay.portal.kernel.model.PortletPreferences.class.
+					getName(),
+				AssetPublisherUtil.getSubscriptionClassPK(
+					portletPreferencesModel.getPlid(),
+					portletPreferencesModel.getPortletId()));
+
+		for (Subscription subscription : subscriptions) {
+			notifySubscriber(
+				subscription.getUserId(), portletPreferences,
+				_filterAssetEntries(subscription.getUserId(), newAssetEntries));
+		}
 
 		try {
 			portletPreferences.setValues(

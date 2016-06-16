@@ -108,6 +108,7 @@ import java.util.Map;
 @ProviderType
 public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
+	@Override
 	public FileEntry addAttachment(
 			long userId, long resourcePrimKey, String fileName,
 			InputStream inputStream, String mimeType)

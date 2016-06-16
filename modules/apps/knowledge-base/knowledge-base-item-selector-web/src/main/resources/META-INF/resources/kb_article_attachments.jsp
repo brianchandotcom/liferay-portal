@@ -83,7 +83,7 @@ else {
 
 <liferay-item-selector:repository-entry-browser
 	desiredItemSelectorReturnTypes="<%= kbAttachmentItemSelectorCriterion.getDesiredItemSelectorReturnTypes() %>"
-	emptyResultsMessage='<%= LanguageUtil.get(resourceBundle, "there-are-no-knowledge-base-attachments") %>'
+	emptyResultsMessage='<%= LanguageUtil.get(resourceBundle, "there-are-no-attachments") %>'
 	itemSelectedEventName="<%= kbAttachmentItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	portletURL="<%= kbAttachmentItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	repositoryEntries="<%= portletFileEntries %>"

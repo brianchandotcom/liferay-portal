@@ -188,7 +188,7 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			Group liveGroup = StagingUtil.getLiveGroup(group.getGroupId());
 
 			if (liveGroup != null) {
-				_liveGroupURL = _groupURLProvider.getGroupURL(
+				_liveGroupURL = _groupURLProvider.getLiveGroupURL(
 					liveGroup, _portletRequest);
 			}
 		}

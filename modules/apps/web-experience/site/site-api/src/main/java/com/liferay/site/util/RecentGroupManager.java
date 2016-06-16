@@ -41,14 +41,20 @@ public class RecentGroupManager {
 	}
 
 	public void addRecentGroup(HttpServletRequest request, long groupId) {
+		long liveGroupId = _getLiveGroupId(groupId);
+
+		if (liveGroupId <= 0) {
+			return;
+		}
+
 		String value = _getRecentGroupsValue(request);
 
 		List<Long> groupIds = ListUtil.fromArray(
 			ArrayUtil.toLongArray(StringUtil.split(value, 0L)));
 
-		groupIds.remove(groupId);
+		groupIds.remove(liveGroupId);
 
-		groupIds.add(0, groupId);
+		groupIds.add(0, liveGroupId);
 
 		_setRecentGroupsValue(request, StringUtil.merge(groupIds));
 	}
@@ -84,6 +90,20 @@ public class RecentGroupManager {
 	@Reference(unbind = "-")
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
+	}
+
+	private long _getLiveGroupId(long groupId) {
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return 0;
+		}
+
+		if (!group.isStagedRemotely() && group.isStagingGroup()) {
+			return group.getLiveGroupId();
+		}
+
+		return groupId;
 	}
 
 	private String _getRecentGroupsValue(HttpServletRequest request) {

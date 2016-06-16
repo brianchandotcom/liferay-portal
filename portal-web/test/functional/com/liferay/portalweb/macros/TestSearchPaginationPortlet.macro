@@ -1,8 +1,20 @@
 <definition>
 	<command name="search50Results">
-		<execute function="KeyPress#keyDown" locator1="xpath=(//select//option[2])" value1="\SHIFT" />
+		<var method="TestPropsUtil#get('browser.type')" name="browserType" />
 
-		<execute function="KeyPress#keyUp" locator1="xpath=(//select//option[51])" value1="\SHIFT" />
+		<if>
+			<equals arg1="${browserType}" arg2="firefox" />
+			<then>
+				<execute function="MouseDown" locator1="xpath=(//select//option[2])" />
+
+				<execute function="MouseUp" locator1="xpath=(//select//option[52])" />
+			</then>
+			<else>
+				<execute function="KeyPress#keyDown" locator1="xpath=(//select//option[2])" value1="\SHIFT" />
+
+				<execute function="KeyPress#keyUp" locator1="xpath=(//select//option[51])" value1="\SHIFT" />
+			</else>
+		</if>
 
 		<execute function="Click" locator1="Button#SEARCH" />
 

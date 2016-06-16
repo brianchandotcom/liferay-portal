@@ -57,8 +57,6 @@
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="AlloyEditor#TITLE_FIELD" value1="${kbTemplateTitle}" />
-
-		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
 		<execute function="AssertTextEquals" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbTemplateContent}" />
 	</command>
 </definition>

@@ -1270,6 +1270,8 @@ public class AssetPublisherUtil {
 			List<AssetEntry> assetEntries)
 		throws PortalException {
 
+		assetEntries = _filterAssetEntries(userId, assetEntries);
+
 		if (!getEmailAssetEntryAddedEnabled(portletPreferences) ||
 			assetEntries.isEmpty()) {
 
@@ -1956,8 +1958,7 @@ public class AssetPublisherUtil {
 
 		for (Subscription subscription : subscriptions) {
 			notifySubscriber(
-				subscription.getUserId(), portletPreferences,
-				_filterAssetEntries(subscription.getUserId(), newAssetEntries));
+				subscription.getUserId(), portletPreferences, assetEntries);
 		}
 
 		try {

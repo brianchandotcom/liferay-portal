@@ -342,7 +342,7 @@ Error-Prone was automatically installed. Please rerun your task.
 	</if>
 
 	<fail message=".${line.separator}Please set the environment variable ANT_OPTS to the recommended value of${line.separator}&quot;-Xmx2048m -XX:MaxPermSize=512m&quot;.">
-		<condition property="env.ANT_OPTS">
+		<condition>
 			<not>
 				<isset property="env.ANT_OPTS" />
 			</not>

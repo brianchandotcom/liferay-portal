@@ -17,20 +17,29 @@ package com.liferay.wsrp.consumer.portlet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.BaseFriendlyURLMapper;
+import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.wsrp.constants.WSRPPortletKeys;
 
 import java.util.Map;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael Young
+ * @author Peter Fellwock
  */
+@Component(
+	property = {"javax.portlet.name=" + WSRPPortletKeys.WSRP_CONSUMER},
+	service = FriendlyURLMapper.class
+)
 public class ConsumerFriendlyURLMapper extends BaseFriendlyURLMapper {
 
 	@Override

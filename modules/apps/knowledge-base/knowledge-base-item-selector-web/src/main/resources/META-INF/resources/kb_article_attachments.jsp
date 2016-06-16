@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-KBAttachmentItemSelectorViewDisplayContext kbAttachmentItemSelectorViewDisplayContext = (KBAttachmentItemSelectorViewDisplayContext)request.getAttribute(KBAttachmentItemSelectorView.KB_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
+KBAttachmentItemSelectorViewDisplayContext kbAttachmentItemSelectorViewDisplayContext = (KBAttachmentItemSelectorViewDisplayContext)request.getAttribute(KBAttachmentItemSelectorView.KB_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 
 KBAttachmentItemSelectorCriterion kbAttachmentItemSelectorCriterion = kbAttachmentItemSelectorViewDisplayContext.getKBAttachmentItemSelectorCriterion();
 

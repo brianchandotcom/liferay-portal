@@ -17,6 +17,8 @@
 <%@ include file="/wiki/init.jsp" %>
 
 <%
+WikiEngineRenderer wikiEngineRenderer = (WikiEngineRenderer)request.getAttribute(WikiWebKeys.WIKI_ENGINE_RENDERER);
+
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
@@ -66,7 +68,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 			<liferay-ui:message key="format" />
 		</th>
 		<td class="table-cell">
-			<liferay-ui:message key='<%= "wiki.formats." + wikiPage.getFormat() %>' />
+			<%= wikiEngineRenderer.getFormatLabel(wikiPage.getFormat(), themeDisplay.getLocale()) %>
 		</td>
 	</tr>
 	<tr>

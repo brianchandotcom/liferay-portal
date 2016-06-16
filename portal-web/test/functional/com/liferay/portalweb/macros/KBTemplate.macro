@@ -6,8 +6,8 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="${kbTemplateTitle}" />
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${kbTemplateContent}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbTemplateTitle}" />
+		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbTemplateContent}" />
 		<execute macro="PortletEntry#publish" />
 	</command>
 
@@ -56,9 +56,9 @@
 			<var name="kbTemplateTitle" value="${kbTemplateTitle}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="" />
+		<execute function="AssertTextEquals" locator1="AlloyEditor#TITLE_FIELD" value1="${kbTemplateTitle}" />
 
 		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
-		<execute function="AssertTextEquals" locator1="CKEditor#BODY" value1="${kbTemplateContent}" />
+		<execute function="AssertTextEquals" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbTemplateContent}" />
 	</command>
 </definition>

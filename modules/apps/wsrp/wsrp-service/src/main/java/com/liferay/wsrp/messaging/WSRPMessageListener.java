@@ -16,8 +16,10 @@ package com.liferay.wsrp.messaging;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.HotDeployMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -30,16 +32,25 @@ import com.liferay.wsrp.util.ExtensionHelperUtil;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Shuyang Zhou
+ * @author Peter Fellwock
  */
-public class WSRPHotDeployMessageListener extends HotDeployMessageListener {
+@Component(
+	immediate = true, property = {"destination.name=" + DestinationNames.WSRP},
+	service = MessageListener.class
+)
+public class WSRPMessageListener extends HotDeployMessageListener {
 
-	public WSRPHotDeployMessageListener(String... servletContextNames) {
+	public WSRPMessageListener(String... servletContextNames) {
 		super(servletContextNames);
 	}
 
-	public void afterPropertiesSet() {
+	@Activate
+	protected void activate() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
@@ -67,7 +78,7 @@ public class WSRPHotDeployMessageListener extends HotDeployMessageListener {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		WSRPHotDeployMessageListener.class);
+		WSRPMessageListener.class);
 
 	private ServiceTracker<MBeanServer, MBeanServer> _serviceTracker;
 

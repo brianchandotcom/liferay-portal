@@ -50,7 +50,7 @@
 			<isset var="kbTemplateTitle" />
 			<then>
 				<execute macro="KBArticle#_gotoAddArticleViaTemplate">
-					<var name="kbTemplateTitle" value="${kbTemplateTitle" />
+					<var name="kbTemplateTitle" value="${kbTemplateTitle}" />
 				</execute>
 			</then>
 			<else>

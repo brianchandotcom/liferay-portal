@@ -162,63 +162,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			"(objectClass=" + FriendlyURLMapper.class.getName() + ")");
 
 		_serviceTracker = registry.trackServices(
-			filter,
-			new ServiceTrackerCustomizer<FriendlyURLMapper, List<String>>() {
-
-				@Override
-				public List<String> addingService(
-					ServiceReference<FriendlyURLMapper> serviceReference) {
-
-					Object value = serviceReference.getProperty(
-						"javax.portlet.name");
-
-					List<String> portletNames = new ArrayList<>();
-
-					if (value instanceof String) {
-						String portletName = (String)value;
-
-						String rootPortletId =
-							PortletConstants.getRootPortletId(portletName);
-
-						_friendlyUrlMapperPortletNames.add(rootPortletId);
-
-						portletNames.add(rootPortletId);
-					}
-					else if (value instanceof String[]) {
-						for (String portletName : (String[])value) {
-							String rootPortletId =
-								PortletConstants.getRootPortletId(portletName);
-
-							_friendlyUrlMapperPortletNames.add(rootPortletId);
-
-							portletNames.add(rootPortletId);
-						}
-					}
-
-					return portletNames;
-				}
-
-				@Override
-				public void modifiedService(
-					ServiceReference<FriendlyURLMapper> serviceReference,
-					List<String> portletNames) {
-
-					removedService(serviceReference, portletNames);
-
-					addingService(serviceReference);
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<FriendlyURLMapper> serviceReference,
-					List<String> portletNames) {
-
-					for (String portletId : portletNames) {
-						_friendlyUrlMapperPortletNames.remove(portletId);
-					}
-				}
-
-			});
+			filter, new FriendlyURLMapperServiceTrackerCustomizer());
 
 		_serviceTracker.open();
 	}
@@ -2652,5 +2596,62 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	private final List<String> _friendlyUrlMapperPortletNames =
 		new ArrayList<>();
 	private ServiceTracker<FriendlyURLMapper, List<String>> _serviceTracker;
+
+	private class FriendlyURLMapperServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<FriendlyURLMapper, List<String>> {
+
+		@Override
+		public List<String> addingService(
+			ServiceReference<FriendlyURLMapper> serviceReference) {
+
+			Object value = serviceReference.getProperty("javax.portlet.name");
+
+			List<String> portletNames = new ArrayList<>();
+
+			if (value instanceof String) {
+				String portletName = (String)value;
+
+				String rootPortletId = PortletConstants.getRootPortletId(
+					portletName);
+
+				_friendlyUrlMapperPortletNames.add(rootPortletId);
+
+				portletNames.add(rootPortletId);
+			}
+			else if (value instanceof String[]) {
+				for (String portletName : (String[])value) {
+					String rootPortletId = PortletConstants.getRootPortletId(
+						portletName);
+
+					_friendlyUrlMapperPortletNames.add(rootPortletId);
+
+					portletNames.add(rootPortletId);
+				}
+			}
+
+			return portletNames;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<FriendlyURLMapper> serviceReference,
+			List<String> portletNames) {
+
+			removedService(serviceReference, portletNames);
+
+			addingService(serviceReference);
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<FriendlyURLMapper> serviceReference,
+			List<String> portletNames) {
+
+			for (String portletId : portletNames) {
+				_friendlyUrlMapperPortletNames.remove(portletId);
+			}
+		}
+
+	}
 
 }

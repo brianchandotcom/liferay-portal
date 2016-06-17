@@ -12,15 +12,24 @@
  * details.
  */
 
-package com.liferay.wsrp.admin.messaging;
+package com.liferay.wsrp.consumer.messaging;
+
+import org.osgi.service.component.annotations.Component;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.wsrp.service.WSRPConsumerPortletLocalServiceUtil;
 
 /**
  * @author Mika Koivisto
+ * @author Peter Fellwock
  */
+@Component(
+	immediate = true, property = {"destination.name=" + DestinationNames.WSRP},
+	service = MessageListener.class
+)
 public class WSRPConsumerPortletCheckEventMessageListener
 	extends BaseMessageListener {
 

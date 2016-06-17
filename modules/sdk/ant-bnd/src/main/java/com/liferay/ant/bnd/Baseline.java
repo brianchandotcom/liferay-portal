@@ -167,7 +167,9 @@ public abstract class Baseline {
 					}
 				}
 
-				generatePackageInfo(info, delta, warnings);
+				if (!generatePackageInfo(info, delta, warnings)) {
+					warnings = "PACKAGE ADDED";
+				}
 
 				if (((!_reportDiff || _reportOnlyDirtyPackages) &&
 					 warnings.equals("-")) ||
@@ -338,14 +340,14 @@ public abstract class Baseline {
 			"==========", "==========");
 	}
 
-	protected void generatePackageInfo(Info info, Delta delta, String warnings)
+	protected boolean generatePackageInfo(Info info, Delta delta, String warnings)
 		throws Exception {
 
 		File packageDir = new File(
 			_sourceDir, info.packageName.replace('.', File.separatorChar));
 
 		if (!_forcePackageInfo && !packageDir.exists()) {
-			return;
+			return true;
 		}
 
 		packageDir.mkdirs();
@@ -357,7 +359,11 @@ public abstract class Baseline {
 				packageInfoFile.delete();
 			}
 
-			return;
+			return true;
+		}
+
+		if (!packageInfoFile.exists()) {
+			return false;
 		}
 
 		FileOutputStream fileOutputStream = new FileOutputStream(
@@ -368,6 +374,8 @@ public abstract class Baseline {
 		fileOutputStream.write(content.getBytes());
 
 		fileOutputStream.close();
+
+		return true;
 	}
 
 	protected String getShortDelta(Delta delta) {

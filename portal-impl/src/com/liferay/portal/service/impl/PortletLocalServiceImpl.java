@@ -454,8 +454,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		for (String portletName : _friendlyURLMapperRootPortletIds) {
 			Portlet portlet = _portletsMap.get(portletName);
 
-			if (!portlet.isActive() || !portlet.isInclude() ||
-				!portlet.isReady() || portlet.isUndeployedPortlet()) {
+			if ((portlet == null) || !portlet.isActive() ||
+				!portlet.isInclude() || !portlet.isReady() ||
+				portlet.isUndeployedPortlet()) {
 
 				continue;
 			}

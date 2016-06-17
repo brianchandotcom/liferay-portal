@@ -1397,10 +1397,9 @@
 	<command name="viewSourceURLPG">
 		<var name="key_kbArticleSourceURL" value="${kbArticleSourceURL}" />
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		<var name="key_kbTool" value="Edit" />
 
-		<execute function="Click" locator1="KnowledgeBase#DISPLAY_ACTIONS_BUTTON" />
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="CKEditor#SOURCE_URL" value1="${kbArticleSourceURL}" />
 	</command>

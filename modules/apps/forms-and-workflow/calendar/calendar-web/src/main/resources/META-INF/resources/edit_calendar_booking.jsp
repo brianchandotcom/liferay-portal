@@ -635,6 +635,8 @@ while (manageableCalendarsIterator.hasNext()) {
 
 	syncCalendarsMap();
 
+	var intervalSelectorUpdated = false;
+
 	var intervalSelector = new Liferay.IntervalSelector(
 		{
 			endDatePicker: Liferay.component('<portlet:namespace />endTimeDatePicker'),
@@ -644,14 +646,76 @@ while (manageableCalendarsIterator.hasNext()) {
 		}
 	);
 
+	intervalSelector.get('endDatePicker').after(
+		'selectionChange',
+		function() {
+			updatePlaceholderSchedulerEventEndDate();
+		}
+	);
+
+	intervalSelector.get('endTimePicker').after(
+		'selectionChange',
+		function() {
+			updatePlaceholderSchedulerEventEndDate();
+		}
+	);
+
+	intervalSelector.get('startDatePicker').after(
+		'selectionChange',
+		function() {
+			updatePlaceholderSchedulerEventStartDate();
+		}
+	);
+
+	intervalSelector.get('startTimePicker').after(
+		'selectionChange',
+		function() {
+			updatePlaceholderSchedulerEventStartDate();
+		}
+	);
+
+	function updatePlaceholderSchedulerEventEndDate() {
+		var endDate = intervalSelector.get('endDatePicker').getDate();
+		var endTime = intervalSelector.get('endTimePicker').getTime();
+
+		endDate.setHours(endTime.getHours());
+		endDate.setMinutes(endTime.getMinutes());
+
+		updatePlaceholderSchedulerEvent('endDate', endDate);
+	}
+
+	function updatePlaceholderSchedulerEventStartDate() {
+		var startDate = intervalSelector.get('startDatePicker').getDate();
+		var startTime = intervalSelector.get('startTimePicker').getTime();
+
+		startDate.setHours(startTime.getHours());
+		startDate.setMinutes(startTime.getMinutes());
+
+		updatePlaceholderSchedulerEvent('startDate', startDate);
+	}
+
+	function updatePlaceholderSchedulerEvent(eventDateType, eventDate) {
+		intervalSelectorUpdated = true;
+
+		window.<portlet:namespace />placeholderSchedulerEvent.set(eventDateType, eventDate);
+
+		intervalSelectorUpdated = false;
+
+		scheduler.syncEventsUI();
+	}
+
 	window.<portlet:namespace />placeholderSchedulerEvent = new Liferay.SchedulerEvent(
 		{
 			after: {
 				endDateChange: function(event) {
-					Liferay.DatePickerUtil.syncUI(event.currentTarget, intervalSelector);
+					if (!intervalSelectorUpdated) {
+						Liferay.DatePickerUtil.syncUI(event.currentTarget, intervalSelector);
+					}
 				},
 				startDateChange: function(event) {
-					Liferay.DatePickerUtil.syncUI(event.currentTarget, intervalSelector);
+					if (!intervalSelectorUpdated) {
+						Liferay.DatePickerUtil.syncUI(event.currentTarget, intervalSelector);
+					}
 				}
 			},
 			borderColor: '#000',

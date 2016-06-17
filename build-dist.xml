@@ -1838,15 +1838,6 @@ wrapper.java.additional.11="-Dfile.encoding=UTF-8"]]></replacevalue>
 	<target name="unzip-weblogic">
 		<if>
 			<not>
-				<equals arg1="${app.server.weblogic.major.version}" arg2="12" />
-			</not>
-			<then>
-				<fail>Weblogic ${app.server.weblogic.major.version} is unsupported.</fail>
-			</then>
-		</if>
-
-		<if>
-			<not>
 				<available file="${app.server.parent.dir}/${app.server.weblogic.zip.name}" />
 			</not>
 			<then>

@@ -219,6 +219,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--FOLDER_DESCRIPTIVE-->
+<tr>
+	<td>FOLDER_DESCRIPTIVE_FOLDER_NAME</td>
+	<td>//ul[contains(@class,'descriptive')]//a[contains(.,'${key_kbFolderName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_DESCRIPTIVE_AUTHOR_NAME</td>
+	<td>//ul[contains(@class,'descriptive')]//h5[contains(.,'${key_userName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--FOLDER_TABLE-->
 <tr>
 	<td>FOLDER_TABLE_ACTIONS_BUTTON_GENERIC</td>

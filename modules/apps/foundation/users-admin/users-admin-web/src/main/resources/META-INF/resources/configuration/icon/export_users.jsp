@@ -16,7 +16,13 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-portlet:resourceURL id="/users_admin/export_users" var="exportURL" />
+<%
+int status = GetterUtil.getInteger(request.getAttribute(UsersAdminWebKeys.STATUS), WorkflowConstants.STATUS_APPROVED);
+%>
+
+<liferay-portlet:resourceURL id="/users_admin/export_users" var="exportURL">
+	<liferay-portlet:param name="status" value="<%= String.valueOf(status) %>" />
+</liferay-portlet:resourceURL>
 
 <liferay-ui:icon
 	message="export-users"

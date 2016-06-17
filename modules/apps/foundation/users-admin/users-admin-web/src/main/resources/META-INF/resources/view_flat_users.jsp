@@ -57,6 +57,8 @@ else if (navigation.equals("inactive")) {
 	searchTerms.setStatus(WorkflowConstants.STATUS_INACTIVE);
 }
 
+request.setAttribute(UsersAdminWebKeys.STATUS, status);
+
 portletURL.setParameter("navigation", navigation);
 portletURL.setParameter("status", String.valueOf(status));
 

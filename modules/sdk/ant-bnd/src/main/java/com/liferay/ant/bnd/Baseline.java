@@ -167,7 +167,7 @@ public abstract class Baseline {
 					}
 				}
 
-				if (!generatePackageInfo(info, delta, warnings)) {
+				if (!generatePackageInfo(info, delta)) {
 					warnings = "PACKAGE ADDED";
 				}
 
@@ -340,8 +340,7 @@ public abstract class Baseline {
 			"==========", "==========");
 	}
 
-	protected boolean generatePackageInfo(
-			Info info, Delta delta, String warnings)
+	protected boolean generatePackageInfo(Info info, Delta delta)
 		throws Exception {
 
 		File packageDir = new File(

@@ -810,9 +810,9 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	@Override
-	public boolean isActive() {
+	public boolean isActiveGroup() {
 		if (!isStagingGroup()) {
-			return super.isActive();
+			return this.isActive();
 		}
 
 		Group liveGroup = getLiveGroup();

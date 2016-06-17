@@ -934,7 +934,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ADD_DOCUMENT_CHECKBOX</td>
-	<td>//input[contains(@value,'documentlibraryADD_DOCUMENT')]</td>
+	<td>//input[contains(@value,'document.libraryADD_DOCUMENT')]</td>
 	<td></td>
 </tr>
 <tr>

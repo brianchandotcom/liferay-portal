@@ -25,8 +25,8 @@ apply plugin: "com.liferay.source.formatter"
 
 The plugin automatically resolves the Liferay Source Formatter library as a
 dependency, therefore, you have to configure a repository hosting the library
-and its transitive dependency. One repository that hosts them all is the Liferay
-CDN:
+and its transitive dependencies. One repository that hosts them all is the
+Liferay CDN:
 
 ```gradle
 repositories {

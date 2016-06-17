@@ -205,7 +205,20 @@ if (portletTitleBasedNavigation) {
 						<div>
 
 							<%
-							wikiEngineRenderer.renderEditPageHTML(selectedFormat, pageContext, node, wikiPage);
+							try {
+								wikiEngineRenderer.renderEditPageHTML(selectedFormat, pageContext, node, wikiPage);
+							}
+							catch (WikiFormatException wfe) {
+							%>
+
+								<div class="alert alert-danger">
+									<liferay-ui:message key="the-format-of-this-page-is-not-supported-the-page-content-will-be-shown-unformatted" />
+								</div>
+
+								<aui:input name="content" type="textarea" value="<%= wikiPage.getContent() %>" />
+
+							<%
+							}
 							%>
 
 						</div>
@@ -278,6 +291,14 @@ if (portletTitleBasedNavigation) {
 									%>
 
 										<aui:option label="<%= wikiEngineRenderer.getFormatLabel(format, locale) %>" selected="<%= selectedFormat.equals(format) %>" value="<%= format %>" />
+
+									<%
+									}
+
+									if (!formats.contains(selectedFormat)) {
+									%>
+
+										<aui:option label="<%= selectedFormat %>" selected="<%= true %>" value="<%= selectedFormat %>" />
 
 									<%
 									}

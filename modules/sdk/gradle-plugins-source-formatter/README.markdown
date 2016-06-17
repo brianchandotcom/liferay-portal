@@ -51,6 +51,8 @@ so all its properties and methods, like [`args`](https://docs.gradle.org/current
 and [`maxHeapSize`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:maxHeapSize)
 are available.
 
+#### Task Properties
+
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 `autoFix` | boolean | false | If `true`, automatically fixes source formatting errors.

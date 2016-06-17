@@ -1950,7 +1950,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 
 		args.put("dir", portalRootDir);
-		args.put("include", "**/*.gradle");
+		args.put(
+			"includes",
+			Arrays.asList("**/*.gradle", "**/sdk/*/README.markdown"));
 
 		updateFileVersionsTask.match(regex, project.fileTree(args));
 	}

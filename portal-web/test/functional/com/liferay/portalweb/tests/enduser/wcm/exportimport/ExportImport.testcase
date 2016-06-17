@@ -893,7 +893,7 @@
 		</execute>
 	</command>
 
-<!-- LRQA-26034 -->
+	<!-- LRQA-26034 -->
 
 	<!--command name="ExportImportWSRPUnitConverter" priority="3">
 		<property name="portlet.plugins.includes" value="wsrp-portlet" />

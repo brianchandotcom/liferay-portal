@@ -451,7 +451,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	public List<Portlet> getFriendlyURLMapperPortlets() {
 		List<Portlet> portlets = new ArrayList<>();
 
-		for (String portletName : _friendlyUrlMapperPortletNames) {
+		for (String portletName : _friendlyURLMapperRootPortletIds) {
 			Portlet portlet = _portletsMap.get(portletName);
 
 			if (!portlet.isActive() || !portlet.isInclude() ||
@@ -2593,7 +2593,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	private static final Map<ClassLoader, Configuration>
 		_propertiesConfigurations = new ConcurrentHashMap<>();
 
-	private final List<String> _friendlyUrlMapperPortletNames =
+	private final List<String> _friendlyURLMapperRootPortletIds =
 		new ArrayList<>();
 	private ServiceTracker<FriendlyURLMapper, List<String>> _serviceTracker;
 
@@ -2614,7 +2614,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				String rootPortletId = PortletConstants.getRootPortletId(
 					portletName);
 
-				_friendlyUrlMapperPortletNames.add(rootPortletId);
+				_friendlyURLMapperRootPortletIds.add(rootPortletId);
 
 				portletNames.add(rootPortletId);
 			}
@@ -2623,7 +2623,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					String rootPortletId = PortletConstants.getRootPortletId(
 						portletName);
 
-					_friendlyUrlMapperPortletNames.add(rootPortletId);
+					_friendlyURLMapperRootPortletIds.add(rootPortletId);
 
 					portletNames.add(rootPortletId);
 				}
@@ -2648,7 +2648,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			List<String> portletNames) {
 
 			for (String portletId : portletNames) {
-				_friendlyUrlMapperPortletNames.remove(portletId);
+				_friendlyURLMapperRootPortletIds.remove(portletId);
 			}
 		}
 

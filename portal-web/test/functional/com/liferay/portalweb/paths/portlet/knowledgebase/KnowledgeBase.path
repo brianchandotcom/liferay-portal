@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>KB_TOOLS</td>
+	<td>//div[@class='kb-tools']//span[contains(.,'${key_kbTool}')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -160,12 +165,12 @@
 </tr>
 <tr>
 	<td>DISPLAY_CONTENT</td>
-	<td>//div[contains(@class,'panel-body')]//p</td>
+	<td>//div[contains(@class,'kb-entity-body')]//p</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_TITLE</td>
-	<td>//div[contains(@class,'panel-body')]/h1</td>
+	<td>//h3[@class='header-title']//span</td>
 	<td></td>
 </tr>
 <tr>

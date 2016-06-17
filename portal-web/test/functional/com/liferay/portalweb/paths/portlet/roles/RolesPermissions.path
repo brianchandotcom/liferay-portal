@@ -636,7 +636,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS_VIEW</td>
-	<td>//input[@value='1_WAR_kaleoformsportletVIEW']</td>
+	<td>//input[contains(@value,'KaleoFormsAdminPortletVIEW')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -646,13 +646,13 @@
 </tr>
 <!--SITE_ADMIN_CONTENT_KALEO_FORMS_RESOURCE_PERMISSIONS-->
 <tr>
-	<td>SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_ALL_CHECKBOX</td>
+	<td>SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_ALL_CHECKBOX</td>
 	<td>xpath=(//input[contains(@name,'allRowIds')])[2]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_ALL_CHECKBOX</td>
-	<td>xpath=(//input[contains(@name,'allRowIds')])[2]</td>
+	<td>SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_ALL_CHECKBOX</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[3]</td>
 	<td></td>
 </tr>
 <tr>

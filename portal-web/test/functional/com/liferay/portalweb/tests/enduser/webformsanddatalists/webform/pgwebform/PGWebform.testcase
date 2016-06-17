@@ -245,13 +245,13 @@
 			<var name="wfInformationTitle" value="Feed Back" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@class,'form-group')]/label[contains(@for,'webformportlet')])[1]" value1="Test 1" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@class,'form-group')]/label[contains(@for,'WebFormPortlet')])[1]" value1="Test 1" />
 		<execute function="AssertElementPresent" locator1="xpath=(//fieldset/div/div[contains(@class,'form-group')]/input[@type='text'])[1]" />
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@class,'form-group')]/label[contains(@for,'webformportlet')])[2]" value1="Test 2" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@class,'form-group')]/label[contains(@for,'WebFormPortlet')])[2]" value1="Test 2" />
 		<execute function="AssertElementPresent" locator1="xpath=(//fieldset/div/div[contains(@class,'form-group')]/input[@type='text'])[2]" />
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@class,'form-group')]/label[contains(@for,'webformportlet')])[3]" value1="Rate Us!" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@class,'form-group')]/label[contains(@for,'WebFormPortlet')])[3]" value1="Rate Us!" />
 		<execute function="AssertElementPresent" locator1="//div[contains(@class,'checkbox')]//input[@type='checkbox']" />
-		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@class,'form-group')]/label[contains(@for,'webformportlet')])[4]" value1="Additional Comments" />
+		<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@class,'form-group')]/label[contains(@for,'WebFormPortlet')])[4]" value1="Additional Comments" />
 		<execute function="AssertElementPresent" locator1="//fieldset/div/div[contains(@class,'form-group')]/textarea" />
 	</command>
 

@@ -42,7 +42,7 @@
 </tr>
 <tr>
 	<td>FORM_FIELDS_FIELD_HEADER</td>
-	<td>//div[contains(.,'${key_wfFieldName}')]/label[contains(@for,'webformportlet')]</td>
+	<td>//div[contains(.,'${key_wfFieldName}')]/label[contains(@for,'WebFormPortlet')]</td>
 	<td></td>
 </tr>
 <tr>

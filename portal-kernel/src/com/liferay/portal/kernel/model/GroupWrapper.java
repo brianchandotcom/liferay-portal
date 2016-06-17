@@ -324,6 +324,11 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
+	public boolean isActiveGroup() {
+		return _group.isActiveGroup();
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _group.isCachedModel();
 	}

@@ -631,11 +631,6 @@
 <!--SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[contains(@name,'allRowIds')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_PERMISSIONS_ALL_CHECKBOX</td>
 	<td>//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>

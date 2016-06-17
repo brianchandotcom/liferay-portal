@@ -15,7 +15,7 @@
 package com.liferay.sync.engine.model;
 
 import com.liferay.sync.engine.SyncEngine;
-import com.liferay.sync.engine.documentlibrary.util.ServerEventUtil;
+import com.liferay.sync.engine.document.library.util.ServerEventUtil;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.session.SessionManager;

@@ -14,10 +14,10 @@
 
 package com.liferay.sync.engine.service;
 
-import com.liferay.sync.engine.documentlibrary.event.Event;
-import com.liferay.sync.engine.documentlibrary.util.FileEventManager;
-import com.liferay.sync.engine.filesystem.Watcher;
-import com.liferay.sync.engine.filesystem.util.WatcherManager;
+import com.liferay.sync.engine.document.library.event.Event;
+import com.liferay.sync.engine.document.library.util.FileEventManager;
+import com.liferay.sync.engine.file.system.Watcher;
+import com.liferay.sync.engine.file.system.util.WatcherManager;
 import com.liferay.sync.engine.model.ModelListener;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;

@@ -16,11 +16,11 @@ package com.liferay.sync.engine;
 
 import com.j256.ormlite.support.ConnectionSource;
 
-import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
-import com.liferay.sync.engine.documentlibrary.util.ServerEventUtil;
-import com.liferay.sync.engine.filesystem.SyncWatchEventProcessor;
-import com.liferay.sync.engine.filesystem.Watcher;
-import com.liferay.sync.engine.filesystem.util.WatcherManager;
+import com.liferay.sync.engine.document.library.util.FileEventUtil;
+import com.liferay.sync.engine.document.library.util.ServerEventUtil;
+import com.liferay.sync.engine.file.system.SyncWatchEventProcessor;
+import com.liferay.sync.engine.file.system.Watcher;
+import com.liferay.sync.engine.file.system.util.WatcherManager;
 import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;

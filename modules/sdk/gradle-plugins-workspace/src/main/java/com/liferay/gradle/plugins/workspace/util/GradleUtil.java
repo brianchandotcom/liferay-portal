@@ -19,8 +19,9 @@ import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
-import org.gradle.api.internal.DynamicObject;
-import org.gradle.api.internal.DynamicObjectUtil;
+import java.lang.reflect.Method;
+
+import org.gradle.api.GradleException;
 
 /**
  * @author Andrea Di Giorgi
@@ -34,19 +35,33 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 	}
 
 	public static Object getProperty(Object object, String name) {
-		DynamicObject dynamicObject = DynamicObjectUtil.asDynamicObject(object);
+		try {
+			Class<?> clazz = object.getClass();
 
-		if (!dynamicObject.hasProperty(name)) {
-			return null;
+			Method hasPropertyMethod = clazz.getMethod(
+				"hasProperty", String.class);
+
+			boolean hasProperty = (boolean)hasPropertyMethod.invoke(
+				object, name);
+
+			if (!hasProperty) {
+				return null;
+			}
+
+			Method getPropertyMethod = clazz.getMethod(
+				"getProperty", String.class);
+
+			Object value = getPropertyMethod.invoke(object, name);
+
+			if ((value instanceof String) && Validator.isNull((String)value)) {
+				value = null;
+			}
+
+			return value;
 		}
-
-		Object value = dynamicObject.getProperty(name);
-
-		if ((value instanceof String) && Validator.isNull((String)value)) {
-			value = null;
+		catch (ReflectiveOperationException roe) {
+			throw new GradleException("Unable to get property", roe);
 		}
-
-		return value;
 	}
 
 	public static boolean getProperty(

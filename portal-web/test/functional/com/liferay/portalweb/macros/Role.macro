@@ -490,6 +490,13 @@
 					</then>
 				</elseif>
 				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_KALEO_FORMS" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS" />
+						<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
+					</then>
+				</elseif>
+				<elseif>
 					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_MESSAGE_BOARDS" />
 					<then>
 						<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_MESSAGE_BOARDS" />

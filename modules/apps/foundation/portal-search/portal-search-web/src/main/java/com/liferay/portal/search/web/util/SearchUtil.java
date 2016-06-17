@@ -96,7 +96,7 @@ public class SearchUtil {
 								entryGroup.getParentGroupId());
 						}
 
-						if (!entryGroup.isActive()) {
+						if (!entryGroup.isActiveGroup()) {
 							totalRows--;
 
 							continue;

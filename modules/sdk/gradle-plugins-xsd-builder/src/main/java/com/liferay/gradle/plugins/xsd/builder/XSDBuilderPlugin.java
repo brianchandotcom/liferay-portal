@@ -135,6 +135,7 @@ public class XSDBuilderPlugin implements Plugin<Project> {
 
 		javaCompile.setClasspath(
 			GradleUtil.getConfiguration(project, CONFIGURATION_NAME));
+		javaCompile.setDescription("Compiles the generated Java types.");
 
 		File tmpBinDir = new File(
 			project.getBuildDir(), buildXSDTask.getName() + "/bin");
@@ -171,6 +172,9 @@ public class XSDBuilderPlugin implements Plugin<Project> {
 
 		javaExec.setClasspath(
 			GradleUtil.getConfiguration(project, CONFIGURATION_NAME));
+		javaExec.setDescription(
+			"Invokes the XMLBeans Schema Compiler in order to generate Java " +
+				"types from XML Schema.");
 		javaExec.setMain("org.apache.xmlbeans.impl.tool.SchemaCompiler");
 
 		TaskInputs taskInputs = javaExec.getInputs();

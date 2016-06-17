@@ -860,6 +860,12 @@ AUI.add(
 						if (Lang.isValue(label) && Lang.isNode(labelNode)) {
 							labelNode.html('&nbsp;' + A.Escape.html(label));
 
+							var fieldDefinition = instance.getFieldDefinition();
+
+							if (fieldDefinition.required) {
+								labelNode.append(TPL_REQUIRED_MARK);
+							}
+
 							labelNode.prepend(inputNode);
 						}
 

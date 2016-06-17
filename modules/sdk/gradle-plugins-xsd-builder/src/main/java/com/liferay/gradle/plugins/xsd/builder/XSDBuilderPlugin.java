@@ -99,7 +99,8 @@ public class XSDBuilderPlugin implements Plugin<Project> {
 		final BuildXSDTask buildXSDTask = GradleUtil.addTask(
 			project, BUILD_XSD_TASK_NAME, BuildXSDTask.class);
 
-		buildXSDTask.setDescription("Generates XMLBeans bindings.");
+		buildXSDTask.setDescription(
+			"Generates XMLBeans bindings and compiles them in a JAR file.");
 		buildXSDTask.setDestinationDir(project.file("lib"));
 		buildXSDTask.setGroup(BasePlugin.BUILD_GROUP);
 		buildXSDTask.setInputDir("xsd");

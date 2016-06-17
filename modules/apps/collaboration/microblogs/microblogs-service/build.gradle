@@ -9,7 +9,6 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.portal.dao.orm.custom.sql", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
-	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
 	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"

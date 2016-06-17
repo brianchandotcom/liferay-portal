@@ -60,6 +60,47 @@
 	<td>//ul[@role='menubar']//a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ARTICLE_DESCRIPTIVE-->
+<tr>
+	<td>ARTICLE_DESCRIPTIVE_ARTICLE_TITLE</td>
+	<td>//ul[contains(@class,'descriptive')]//a[contains(.,'${key_kbArticleTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_DESCRIPTIVE_ARTICLE_AUTHOR</td>
+	<td>//li[contains(.,'${key_kbArticleTitle}')]//h5[contains(.,'${key_userName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_DESCRIPTIVE_ARTICLE_CHECKBOX</td>
+	<td>//li[contains(.,'${key_kbArticleTitle}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_DESCRIPTIVE_ARTICLE_PRIORITY</td>
+	<td>//li[contains(.,'${key_kbArticleTitle}')]//span[contains(.,'Priority')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_DESCRIPTIVE_ARTICLE_STATUS</td>
+	<td>//li[contains(.,'${key_kbArticleTitle}')]//span[contains(@class,'status')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_DESCRIPTIVE_ARTICLE_TITLE_GENERIC</td>
+	<td>//ul[contains(@class,'descriptive')]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ARTICLE_TABLE-->
 <tr>
 	<td>ARTICLE_TABLE_ARTICLE_ACTIONS</td>

@@ -761,10 +761,9 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewPendingTasks">
+		<execute macro="Workflow#viewTaskAssignedToMyRoles">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -1149,10 +1148,9 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewPendingTasks">
+		<execute macro="Workflow#viewTaskAssignedToMyRoles">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 

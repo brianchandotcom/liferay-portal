@@ -620,7 +620,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_BOOKMARKS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX</td>
-	<td>//input[contains(@value,'bookmarkswebACCESS_IN_CONTROL_PANEL')]</td>
+	<td>//input[contains(@value,'BookmarksAdminPortletACCESS_IN_CONTROL_PANEL')]</td>
 	<td></td>
 </tr>
 <tr>

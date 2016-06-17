@@ -61,7 +61,7 @@ public class XSDBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					configureTaskBuildXSD(project);
+					configureTasksBuildXSD(project);
 				}
 
 			});
@@ -204,21 +204,6 @@ public class XSDBuilderPlugin implements Plugin<Project> {
 			taskOutputs.getFiles());
 	}
 
-	protected void configureTaskBuildXSD(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			BuildXSDTask.class,
-			new Action<BuildXSDTask>() {
-
-				@Override
-				public void execute(BuildXSDTask buildXSDTask) {
-					configureTaskBuildXSD(buildXSDTask);
-				}
-
-			});
-	}
-
 	protected void configureTaskBuildXSDForWarPlugin(
 		final BuildXSDTask buildXSDTask) {
 
@@ -240,6 +225,21 @@ public class XSDBuilderPlugin implements Plugin<Project> {
 				public File call() throws Exception {
 					return new File(
 						getWebAppDir(buildXSDTask.getProject()), "WEB-INF/xsd");
+				}
+
+			});
+	}
+
+	protected void configureTasksBuildXSD(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildXSDTask.class,
+			new Action<BuildXSDTask>() {
+
+				@Override
+				public void execute(BuildXSDTask buildXSDTask) {
+					configureTaskBuildXSD(buildXSDTask);
 				}
 
 			});

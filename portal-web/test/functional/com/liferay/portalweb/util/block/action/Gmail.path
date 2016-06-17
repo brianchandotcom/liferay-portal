@@ -204,6 +204,11 @@
 </tr>
 <!--GMAIL_HTML_MODE_MESSAGE-->
 <tr>
+	<td>GMAIL_HTML_MODE_MESSAGE_SHOW_QUOTED_TEXT_LINK</td>
+	<td>//a[contains(.,'- Show quoted text -')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GMAIL_HTML_MODE_MESSAGE_FROM</td>
 	<td>//table[4]//table[1]//tr[1]/td[1]</td>
 	<td></td>

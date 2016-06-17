@@ -268,9 +268,16 @@ while (manageableCalendarsIterator.hasNext()) {
 						}
 
 						CalendarResource curCalendarResource = curCalendar.getCalendarResource();
+
+						String calendarName = curCalendar.getName(locale);
+						String calendarResourceName = curCalendarResource.getName(locale);
+
+						if (!calendarName.equals(calendarResourceName)) {
+							calendarName = calendarResourceName + StringPool.SPACE + StringPool.DASH + StringPool.SPACE + calendarName;
+						}
 					%>
 
-						<aui:option selected="<%= curCalendar.getCalendarId() == calendarId %>" value="<%= curCalendar.getCalendarId() %>"><%= HtmlUtil.escape(curCalendarResource.getName(locale) + StringPool.SPACE + StringPool.DASH + StringPool.SPACE + curCalendar.getName(locale)) %></aui:option>
+						<aui:option selected="<%= curCalendar.getCalendarId() == calendarId %>" value="<%= curCalendar.getCalendarId() %>"><%= HtmlUtil.escape(calendarName) %></aui:option>
 
 					<%
 					}

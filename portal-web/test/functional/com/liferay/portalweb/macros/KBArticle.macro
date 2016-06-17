@@ -638,7 +638,7 @@
 		<if>
 			<isset var="hasChildArticle" />
 			<then>
-				<execute function="AssertClick" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_TITLE_LINK" value1="${kbArticleTitle}" />
+				<execute function="AssertClick" locator1="KnowledgeBase#ARTICLE_DESCRIPTIVE_ARTICLE_TITLE" value1="${kbArticleTitle}" />
 			</then>
 			<else>
 				<execute function="AssertClick" locator1="KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE" value1="${kbArticleTitle}" />
@@ -770,7 +770,7 @@
 	<command name="selectArticleCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
-		<execute function="Check" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_CHECKBOX" />
+		<execute function="Check" locator1="KnowledgeBase#ARTICLE_DESCRIPTIVE_ARTICLE_CHECKBOX" />
 	</command>
 
 	<command name="selectAttachmentCP">
@@ -903,7 +903,7 @@
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
 
 		<execute function="Type" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_PRIORITY" value1="${kbPriority}" />
-		<execute function="Check" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_CHECKBOX" />
+		<execute function="Check" locator1="KnowledgeBase#ARTICLE_DESCRIPTIVE_ARTICLE_CHECKBOX" />
 		<execute function="Click" locator1="KnowledgeBase#MENUBAR_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#SAVE" value1="Save" />
 		<execute macro="Alert#viewSuccessMessage" />

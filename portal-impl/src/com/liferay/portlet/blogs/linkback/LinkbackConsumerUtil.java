@@ -19,8 +19,24 @@ package com.liferay.portlet.blogs.linkback;
  */
 public class LinkbackConsumerUtil {
 
+	public static void addNewTrackback(
+		long commentId, String url, String entryURL) {
+
+		_linkbackConsumer.addNewTrackback(commentId, url, entryURL);
+	}
+
 	public static LinkbackConsumer getLinkbackConsumer() {
 		return _linkbackConsumer;
+	}
+
+	public static void verifyNewTrackbacks() {
+		_linkbackConsumer.verifyNewTrackbacks();
+	}
+
+	public static void verifyTrackback(
+		long commentId, String url, String entryURL) {
+
+		_linkbackConsumer.verifyTrackback(commentId, url, entryURL);
 	}
 
 	private static final LinkbackConsumer _linkbackConsumer =

@@ -202,6 +202,14 @@
 		<var name="key_gmailAssetType" value="${gmailAssetType}" />
 
 		<execute function="AssertTextEquals" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_TITLE" value1="${gmailMessageTitle}" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_SHOW_QUOTED_TEXT_LINK" />
+			<then>
+				<execute function="Click" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_SHOW_QUOTED_TEXT_LINK" />
+			</then>
+		</if>
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_GREETING" value1="${gmailMessageBody}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY" value1="${gmailMessageBody}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_CLOSING" value1="${gmailMessageBody}" />

@@ -469,7 +469,6 @@
 
 		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Delete" />
 
-		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute macro="Alert#viewSuccessMessage" />

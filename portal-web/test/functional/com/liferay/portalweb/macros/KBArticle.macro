@@ -484,8 +484,10 @@
 
 	<command name="editCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		<var name="key_rowEntry" value="${kbArticleTitle}" />
 
-		<execute function="Click" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_ACTIONS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
@@ -567,11 +569,13 @@
 
 	<command name="gotoCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		<var name="key_rowEntry" value="${kbArticleTitle}" />
 
 		<execute function="AssertTextEquals#assertValue" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_PRIORITY" value1="${kbPriority}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE" value1="${kbArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_AUTHOR" value1="${kbAuthor}" />
-		<execute function="Click" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_ACTIONS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
 	</command>
 
@@ -677,8 +681,10 @@
 
 	<command name="moveArticleCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		<var name="key_rowEntry" value="${kbArticleTitle}" />
 
-		<execute function="AssertClick" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_ACTIONS" value1="Actions" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${kbArticleTitle}" />
@@ -1029,9 +1035,11 @@
 
 	<command name="viewAttachmentCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		<var name="key_rowEntry" value="${kbArticleTitle}" />
 
-		<execute function="Click" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_ACTIONS" />
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="EDIT" />
 
 		<execute function="AssertClick" locator1="KnowledgeBaseArticle#ATTACHMENTS_HEADER_COLLAPSED" value1="Attachments" />
 		<execute function="AssertElementPresent" locator1="KnowledgeBaseArticle#ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER" />
@@ -1046,11 +1054,14 @@
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Child Articles for ${kbArticleTitle}." />
 
 		<var name="key_kbArticleTitle" value="${kbChildArticleTitle}" />
+		<var name="key_rowEntry" value="${kbArticleTitle}" />
 
 		<execute function="AssertTextEquals#assertValue" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_PRIORITY" value1="${kbPriority}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE" value1="${kbChildArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_AUTHOR" value1="${kbAuthor}" />
-		<execute function="Click" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_ACTIONS" />
+
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#VIEW" value1="View" />
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#TITLE" value1="${kbChildArticleTitle}" />
@@ -1197,9 +1208,11 @@
 
 	<command name="viewKBArticleWithAttachmentCP">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		<var name="key_rowEntry" value="${kbArticleTitle}" />
 
-		<execute function="AssertClick" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_ACTIONS" value1="Actions" />
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${kbArticleTitle}" />
@@ -1386,8 +1399,9 @@
 	<command name="viewSourceURLCP">
 		<var name="key_kbArticleSourceURL" value="${kbArticleSourceURL}" />
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		<var name="key_rowEntry" value="${kbArticleTitle}" />
 
-		<execute function="Click" locator1="KnowledgeBase#ARTICLE_TABLE_ARTICLE_ACTIONS" />
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 

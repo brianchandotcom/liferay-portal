@@ -343,7 +343,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 								{
 									id: '<%= randomNamespace %>',
 									message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
-									type: 'error'
+									type: 'danger'
 								}
 							);
 						},
@@ -383,7 +383,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 									{
 										id: '<%= randomNamespace %>',
 										message: errorKey,
-										type: 'error'
+										type: 'danger'
 									}
 								);
 							}

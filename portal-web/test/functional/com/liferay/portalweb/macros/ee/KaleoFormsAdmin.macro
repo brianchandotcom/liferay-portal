@@ -9,7 +9,7 @@
 
 		<var name="key_iframeTitle" value="Field Set" />
 
-		<execute function="AssertTextEquals" locator1="IFrame#IFRAME_TITLE" value1="Field Set" />
+		<execute function="AssertTextEquals" locator1="IFrame#IFRAME_TITLE" value1="New Field Set" />
 
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 

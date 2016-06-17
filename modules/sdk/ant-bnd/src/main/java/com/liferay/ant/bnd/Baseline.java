@@ -340,7 +340,8 @@ public abstract class Baseline {
 			"==========", "==========");
 	}
 
-	protected boolean generatePackageInfo(Info info, Delta delta, String warnings)
+	protected boolean generatePackageInfo(
+			Info info, Delta delta, String warnings)
 		throws Exception {
 
 		File packageDir = new File(

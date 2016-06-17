@@ -401,7 +401,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 
 				var html = window[editorName].getHTML();
 
-				Liferay.Util.toggleDisabled('#' + editorName.replace('Body', 'Button'), (html === ''));
+				Liferay.Util.toggleDisabled('#' + editorName.replace('Body', 'Button'), html === '');
 
 				<%= randomNamespace %>showEl(formId);
 			}

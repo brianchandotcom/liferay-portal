@@ -325,20 +325,25 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 
 				var commentButtonList = form.find('.btn-comment');
 
+				var cmd = form.fm('<%= randomNamespace %><%= Constants.CMD %>').val();
+
+				var dataType = cmd === '<%= Constants.ADD %>' || cmd === '<%= Constants.UPDATE %>' ? 'json' : null;
+
 				form.ajaxSubmit(
 					{
 						beforeSubmit: function() {
 							Util.toggleDisabled(commentButtonList, true);
 						},
+						dataType: dataType,
 						complete: function() {
 							Util.toggleDisabled(commentButtonList, false);
 						},
 						error: function() {
 							<%= randomNamespace %>showStatusMessage(
 								{
-									id: <%= randomNamespace %>,
+									id: '<%= randomNamespace %>',
 									message: '<%= UnicodeLanguageUtil.get(resourceBundle, "your-request-failed-to-complete") %>',
-									type: 'error'
+									type: 'danger'
 								}
 							);
 						},
@@ -376,9 +381,9 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 
 								<%= randomNamespace %>showStatusMessage(
 									{
-										id: <%= randomNamespace %>,
+										id: '<%= randomNamespace %>',
 										message: errorKey,
-										type: 'error'
+										type: 'danger'
 									}
 								);
 							}
@@ -396,7 +401,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 
 				var html = window[editorName].getHTML();
 
-				Liferay.Util.toggleDisabled('#' + editorName.replace('Body', 'Button'), (html === ''));
+				Liferay.Util.toggleDisabled('#' + editorName.replace('Body', 'Button'), html === '');
 
 				<%= randomNamespace %>showEl(formId);
 			}

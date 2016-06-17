@@ -60,7 +60,7 @@ public class MatchQueryTranslatorImpl implements MatchQueryTranslator {
 		org.apache.lucene.search.Query query = createQuery(
 			matchQueryType, matchQuery.getField(), value);
 
-		if (query instanceof PhraseQuery && matchQuery.getSlop() != null) {
+		if ((query instanceof PhraseQuery) && (matchQuery.getSlop() != null)) {
 			PhraseQuery phraseQuery = (PhraseQuery)query;
 
 			phraseQuery.setSlop(matchQuery.getSlop());

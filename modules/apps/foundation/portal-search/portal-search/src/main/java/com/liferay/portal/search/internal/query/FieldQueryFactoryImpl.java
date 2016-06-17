@@ -48,9 +48,10 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(
 	immediate = true,
 	property = {
-		"full.text.exact.match.boost=2.0", "full.text.proximity.slop=50",
+		"full.text.exact.match.boost=2.0", "full.text.proximity.slop=50"
 	},
-	service = FieldQueryFactory.class)
+	service = FieldQueryFactory.class
+)
 public class FieldQueryFactoryImpl implements FieldQueryFactory {
 
 	@Override
@@ -103,8 +104,7 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 			_fullTextExactMatchBoost);
 
 		_fullTextProximitySlop = GetterUtil.getInteger(
-			properties.get("full.text.proximity.slop"),
-			_fullTextProximitySlop);
+			properties.get("full.text.proximity.slop"), _fullTextProximitySlop);
 	}
 
 	protected Query createPhraseMatchQuery(String field, String value) {
@@ -126,16 +126,6 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		return matchQuery;
 	}
 
-	protected Query createTokenQuery(String field, String value) {
-		Query query = createPhraseMatchQuery(field, value);
-
-		if (query != null) {
-			return query;
-		}
-
-		return createQueryForSubstringSearch(field, value);
-	}
-
 	protected Query createQueryForFullTextExactMatch(
 		String field, String value) {
 
@@ -148,7 +138,7 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		return matchQuery;
 	}
 
-	protected Query doCreateQueryForFullTextProximity(
+	protected Query createQueryForFullTextProximity(
 		String field, String value) {
 
 		MatchQuery matchQuery = new MatchQuery(field, value);
@@ -160,9 +150,7 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		return matchQuery;
 	}
 
-	protected Query createQueryForFullTextScoring(
-		String field, String value) {
-
+	protected Query createQueryForFullTextScoring(String field, String value) {
 		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
 
 		booleanQueryImpl.add(
@@ -173,15 +161,14 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 			BooleanClauseOccur.SHOULD);
 
 		booleanQueryImpl.add(
-			doCreateQueryForFullTextProximity(field, value),
+			createQueryForFullTextProximity(field, value),
 			BooleanClauseOccur.SHOULD);
 
 		List<String> phrases = getEmbeddedPhrases(value);
 
 		for (String phrase : phrases) {
 			booleanQueryImpl.add(
-				createPhraseMatchQuery(field, phrase),
-				BooleanClauseOccur.MUST);
+				createPhraseMatchQuery(field, phrase), BooleanClauseOccur.MUST);
 		}
 
 		return booleanQueryImpl;
@@ -197,9 +184,7 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		return createQueryForFullTextScoring(field, value);
 	}
 
-	protected Query createQueryForSubstringSearch(
-		String field, String value) {
-
+	protected Query createQueryForSubstringSearch(String field, String value) {
 		value = StringUtil.replace(value, CharPool.PERCENT, StringPool.BLANK);
 
 		if (value.length() == 0) {
@@ -212,6 +197,16 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		}
 
 		return new WildcardQueryImpl(new QueryTermImpl(field, value));
+	}
+
+	protected Query createTokenQuery(String field, String value) {
+		Query query = createPhraseMatchQuery(field, value);
+
+		if (query != null) {
+			return query;
+		}
+
+		return createQueryForSubstringSearch(field, value);
 	}
 
 	protected List<String> getEmbeddedPhrases(String value) {

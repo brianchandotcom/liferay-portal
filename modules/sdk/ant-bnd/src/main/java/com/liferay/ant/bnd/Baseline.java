@@ -167,13 +167,20 @@ public abstract class Baseline {
 					}
 				}
 
-				if (!generatePackageInfo(info, delta)) {
-					warnings = "PACKAGE ADDED";
+				boolean correctPackageInfo = generatePackageInfo(info, delta);
+
+				if (!correctPackageInfo) {
+					if (delta == Delta.ADDED) {
+						warnings = "PACKAGE ADDED, MISSING PACKAGEINFO";
+					}
+					else if (delta == Delta.REMOVED) {
+						warnings = "PACKAGE REMOVED, UNNECESSARY PACKAGEINFO";
+					}
 				}
 
 				if (((!_reportDiff || _reportOnlyDirtyPackages) &&
 					 warnings.equals("-")) ||
-					(_reportOnlyDirtyPackages && (delta == Delta.REMOVED))) {
+					(_reportOnlyDirtyPackages && correctPackageInfo)) {
 
 					continue;
 				}
@@ -343,39 +350,42 @@ public abstract class Baseline {
 	protected boolean generatePackageInfo(Info info, Delta delta)
 		throws Exception {
 
+		boolean correct = true;
+
 		File packageDir = new File(
 			_sourceDir, info.packageName.replace('.', File.separatorChar));
 
 		if (!_forcePackageInfo && !packageDir.exists()) {
-			return true;
+			return correct;
 		}
 
 		File packageInfoFile = new File(packageDir, "packageinfo");
 
 		if (delta == Delta.REMOVED) {
 			if (packageInfoFile.exists()) {
+				correct = false;
+
 				packageInfoFile.delete();
 			}
+		}
+		else {
+			if (!packageInfoFile.exists()) {
+				correct = false;
+			}
 
-			return true;
+			packageDir.mkdirs();
+
+			FileOutputStream fileOutputStream = new FileOutputStream(
+				packageInfoFile);
+
+			String content = "version " + info.suggestedVersion;
+
+			fileOutputStream.write(content.getBytes());
+
+			fileOutputStream.close();
 		}
 
-		if (!packageInfoFile.exists()) {
-			return false;
-		}
-
-		packageDir.mkdirs();
-
-		FileOutputStream fileOutputStream = new FileOutputStream(
-			packageInfoFile);
-
-		String content = "version " + info.suggestedVersion;
-
-		fileOutputStream.write(content.getBytes());
-
-		fileOutputStream.close();
-
-		return true;
+		return correct;
 	}
 
 	protected String getShortDelta(Delta delta) {

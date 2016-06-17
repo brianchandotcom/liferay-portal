@@ -90,6 +90,12 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.portlet.PortletBagFactory;
 import com.liferay.portlet.UndeployedPortlet;
+import com.liferay.registry.Filter;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.util.ContentUtil;
 
 import java.net.URL;
@@ -106,6 +112,7 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PreferencesValidator;
@@ -145,6 +152,21 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		}
 
 		portletCategory.merge(newPortletCategory.getRootCategory());
+	}
+
+	@Override
+	public void afterPropertiesSet() {
+		super.afterPropertiesSet();
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter(
+			"(objectClass=" + FriendlyURLMapper.class.getName() + ")");
+
+		_serviceTracker = registry.trackServices(
+			filter, new FriendlyURLMapperServiceTrackerCustomizer());
+
+		_serviceTracker.open();
 	}
 
 	@Override
@@ -363,6 +385,13 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void destroy() {
+		super.destroy();
+
+		_serviceTracker.close();
+	}
+
+	@Override
 	@Skip
 	public void destroyPortlet(Portlet portlet) {
 		_portletsMap.remove(portlet.getRootPortletId());
@@ -423,21 +452,20 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Override
 	@Skip
 	public List<Portlet> getFriendlyURLMapperPortlets() {
-		List<Portlet> portlets = new ArrayList<>();
+		List<Portlet> portlets = new ArrayList<>(
+			_friendlyURLMapperRootPortletIds.size());
 
-		for (Portlet portlet : getPortlets()) {
-			if (!portlet.isActive() || !portlet.isInclude() ||
+		for (String rootPortletId : _friendlyURLMapperRootPortletIds) {
+			Portlet portlet = _portletsMap.get(rootPortletId);
+
+			if ((portlet == null) || !portlet.isActive() ||
+				!portlet.isInclude() ||
 				!portlet.isReady() || portlet.isUndeployedPortlet()) {
 
 				continue;
 			}
 
-			FriendlyURLMapper friendlyURLMapper =
-				portlet.getFriendlyURLMapperInstance();
-
-			if (friendlyURLMapper != null) {
-				portlets.add(portlet);
-			}
+			portlets.add(portlet);
 		}
 
 		return portlets;
@@ -2569,5 +2597,72 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		new ConcurrentHashMap<>();
 	private static final Map<ClassLoader, Configuration>
 		_propertiesConfigurations = new ConcurrentHashMap<>();
+
+	private final List<String> _friendlyURLMapperRootPortletIds =
+		new CopyOnWriteArrayList<>();
+	private ServiceTracker<FriendlyURLMapper, String[]> _serviceTracker;
+
+	private class FriendlyURLMapperServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<FriendlyURLMapper, String[]> {
+
+		@Override
+		public String[] addingService(
+			ServiceReference<FriendlyURLMapper> serviceReference) {
+
+			Object propertyValue = serviceReference.getProperty(
+				"javax.portlet.name");
+
+			if (propertyValue == null) {
+				return null;
+			}
+
+			if (propertyValue instanceof String) {
+				String portletId = (String)propertyValue;
+
+				String rootPortletId = PortletConstants.getRootPortletId(
+					portletId);
+
+				_friendlyURLMapperRootPortletIds.add(rootPortletId);
+
+				return new String[] {portletId};
+			}
+
+			if (propertyValue instanceof String[]) {
+				String[] portletIds = (String[])propertyValue;
+
+				for (String portletId : portletIds) {
+					String rootPortletId = PortletConstants.getRootPortletId(
+						portletId);
+
+					_friendlyURLMapperRootPortletIds.add(rootPortletId);
+				}
+
+				return portletIds;
+			}
+
+			return null;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<FriendlyURLMapper> serviceReference,
+			String[] rootPortletIds) {
+
+			removedService(serviceReference, rootPortletIds);
+
+			addingService(serviceReference);
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<FriendlyURLMapper> serviceReference,
+			String[] rootPortletIds) {
+
+			for (String rootPortletId : rootPortletIds) {
+				_friendlyURLMapperRootPortletIds.remove(rootPortletId);
+			}
+		}
+
+	}
 
 }

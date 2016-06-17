@@ -111,7 +111,7 @@
 		</while>
 	</command>
 
-	<command name="viewFolderTableCP">
+	<command name="viewFolderNameCP">
 		<var name="key_kbFolderName" value="${kbFolderName}" />
 
 		<execute function="AssertTextEquals" locator1="KnowledgeBase#FOLDER_DESCRIPTIVE_FOLDER_NAME" value1="${kbFolderName}" />

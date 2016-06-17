@@ -58,7 +58,7 @@
 	<command name="gotoCP">
 		<var name="key_kbFolderName" value="${kbFolderName}" />
 
-		<execute function="AssertClick" locator1="KnowledgeBase#FOLDER_TABLE_FOLDER_NAME" value1="${kbFolderName}" />
+		<execute function="AssertClick" locator1="KnowledgeBase#FOLDER_DESCRIPTIVE_FOLDER_NAME" value1="${kbFolderName}" />
 
 		<var method="StringUtil#upperCase('${key_kbFolderName}')" name="folderBreadcrumbUpperCase" />
 
@@ -114,6 +114,6 @@
 	<command name="viewFolderTableCP">
 		<var name="key_kbFolderName" value="${kbFolderName}" />
 
-		<execute function="AssertTextEquals" locator1="KnowledgeBase#FOLDER_TABLE_FOLDER_NAME" value1="${kbFolderName}" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBase#FOLDER_DESCRIPTIVE_FOLDER_NAME" value1="${kbFolderName}" />
 	</command>
 </definition>

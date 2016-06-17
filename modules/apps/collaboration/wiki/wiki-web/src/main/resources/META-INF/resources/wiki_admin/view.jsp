@@ -189,12 +189,14 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 								<%
 								Date lastPostDate = node.getLastPostDate();
 
-								String lastPostDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - lastPostDate.getTime(), true);
+								String lastPostDateDescription = (lastPostDate != null) ? LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - lastPostDate.getTime(), true) : StringPool.BLANK;
 								%>
 
-								<h5 class="text-default">
-									<liferay-ui:message arguments="<%= new String[] {lastPostDateDescription} %>" key="last-post-x-ago" />
-								</h5>
+								<c:if test="<%= Validator.isNotNull(lastPostDateDescription) %>">
+									<h5 class="text-default">
+										<liferay-ui:message arguments="<%= new String[] {lastPostDateDescription} %>" key="last-post-x-ago" />
+									</h5>
+								</c:if>
 
 								<h4>
 									<aui:a href="<%= rowURL.toString() %>">

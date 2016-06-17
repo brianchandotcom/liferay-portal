@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.search.query.FieldQueryFactory;
 import com.liferay.portal.kernel.search.query.QueryPreProcessConfiguration;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -33,7 +34,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -42,7 +45,12 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = FieldQueryFactory.class)
+@Component(
+	immediate = true,
+	property = {
+		"full.text.exact.match.boost=2.0", "full.text.proximity.slop=50",
+	},
+	service = FieldQueryFactory.class)
 public class FieldQueryFactoryImpl implements FieldQueryFactory {
 
 	@Override
@@ -87,6 +95,18 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		return createTokenQuery(field, value);
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_fullTextExactMatchBoost = GetterUtil.getFloat(
+			properties.get("full.text.exact.match.boost"),
+			_fullTextExactMatchBoost);
+
+		_fullTextProximitySlop = GetterUtil.getInteger(
+			properties.get("full.text.proximity.slop"),
+			_fullTextProximitySlop);
+	}
+
 	protected Query createPhraseMatchQuery(String field, String value) {
 		if (!isPhrase(value)) {
 			return null;
@@ -123,7 +143,7 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 
 		matchQuery.setType(MatchQuery.Type.PHRASE);
 
-		matchQuery.setBoost(_FULL_TEXT_EXACT_MATCH_BOOST);
+		matchQuery.setBoost(_fullTextExactMatchBoost);
 
 		return matchQuery;
 	}
@@ -135,7 +155,7 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 
 		matchQuery.setType(MatchQuery.Type.PHRASE);
 
-		matchQuery.setSlop(_FULL_TEXT_PROXIMITY_SLOP);
+		matchQuery.setSlop(_fullTextProximitySlop);
 
 		return matchQuery;
 	}
@@ -263,11 +283,9 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		}
 	}
 
-	private static final float _FULL_TEXT_EXACT_MATCH_BOOST = 2.0f;
-
-	private static final int _FULL_TEXT_PROXIMITY_SLOP = 50;
-
 	private KeywordTokenizer _defaultKeywordTokenizer;
+	private volatile float _fullTextExactMatchBoost = 2.0f;
+	private volatile int _fullTextProximitySlop = 50;
 	private KeywordTokenizer _keywordTokenizer;
 
 	@Reference(

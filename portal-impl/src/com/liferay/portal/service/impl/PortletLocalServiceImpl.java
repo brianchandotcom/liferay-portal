@@ -112,6 +112,7 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PreferencesValidator;
@@ -153,6 +154,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		portletCategory.merge(newPortletCategory.getRootCategory());
 	}
 
+	@Override
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();
 
@@ -382,6 +384,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		return portlet;
 	}
 
+	@Override
 	public void destroy() {
 		super.destroy();
 
@@ -449,14 +452,15 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Override
 	@Skip
 	public List<Portlet> getFriendlyURLMapperPortlets() {
-		List<Portlet> portlets = new ArrayList<>();
+		List<Portlet> portlets = new ArrayList<>(
+			_friendlyURLMapperRootPortletIds.size());
 
-		for (String portletName : _friendlyURLMapperRootPortletIds) {
-			Portlet portlet = _portletsMap.get(portletName);
+		for (String rootPortletId : _friendlyURLMapperRootPortletIds) {
+			Portlet portlet = _portletsMap.get(rootPortletId);
 
 			if ((portlet == null) || !portlet.isActive() ||
-				!portlet.isInclude() || !portlet.isReady() ||
-				portlet.isUndeployedPortlet()) {
+				!portlet.isInclude() ||
+				!portlet.isReady() || portlet.isUndeployedPortlet()) {
 
 				continue;
 			}
@@ -2595,50 +2599,56 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		_propertiesConfigurations = new ConcurrentHashMap<>();
 
 	private final List<String> _friendlyURLMapperRootPortletIds =
-		new ArrayList<>();
-	private ServiceTracker<FriendlyURLMapper, List<String>> _serviceTracker;
+		new CopyOnWriteArrayList<>();
+	private ServiceTracker<FriendlyURLMapper, String[]> _serviceTracker;
 
 	private class FriendlyURLMapperServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<FriendlyURLMapper, List<String>> {
+		implements ServiceTrackerCustomizer<FriendlyURLMapper, String[]> {
 
 		@Override
-		public List<String> addingService(
+		public String[] addingService(
 			ServiceReference<FriendlyURLMapper> serviceReference) {
 
-			Object value = serviceReference.getProperty("javax.portlet.name");
+			Object propertyValue = serviceReference.getProperty(
+				"javax.portlet.name");
 
-			List<String> portletNames = new ArrayList<>();
+			if (propertyValue == null) {
+				return null;
+			}
 
-			if (value instanceof String) {
-				String portletName = (String)value;
+			if (propertyValue instanceof String) {
+				String portletId = (String)propertyValue;
 
 				String rootPortletId = PortletConstants.getRootPortletId(
-					portletName);
+					portletId);
 
 				_friendlyURLMapperRootPortletIds.add(rootPortletId);
 
-				portletNames.add(rootPortletId);
+				return new String[] {portletId};
 			}
-			else if (value instanceof String[]) {
-				for (String portletName : (String[])value) {
+
+			if (propertyValue instanceof String[]) {
+				String[] portletIds = (String[])propertyValue;
+
+				for (String portletId : portletIds) {
 					String rootPortletId = PortletConstants.getRootPortletId(
-						portletName);
+						portletId);
 
 					_friendlyURLMapperRootPortletIds.add(rootPortletId);
-
-					portletNames.add(rootPortletId);
 				}
+
+				return portletIds;
 			}
 
-			return portletNames;
+			return null;
 		}
 
 		@Override
 		public void modifiedService(
 			ServiceReference<FriendlyURLMapper> serviceReference,
-			List<String> portletNames) {
+			String[] rootPortletIds) {
 
-			removedService(serviceReference, portletNames);
+			removedService(serviceReference, rootPortletIds);
 
 			addingService(serviceReference);
 		}
@@ -2646,10 +2656,10 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		@Override
 		public void removedService(
 			ServiceReference<FriendlyURLMapper> serviceReference,
-			List<String> portletNames) {
+			String[] rootPortletIds) {
 
-			for (String portletId : portletNames) {
-				_friendlyURLMapperRootPortletIds.remove(portletId);
+			for (String rootPortletId : rootPortletIds) {
+				_friendlyURLMapperRootPortletIds.remove(rootPortletId);
 			}
 		}
 

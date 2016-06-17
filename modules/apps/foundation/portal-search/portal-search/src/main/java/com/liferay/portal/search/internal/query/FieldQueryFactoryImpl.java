@@ -76,7 +76,7 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 			BooleanQueryImpl booleanQuery = new BooleanQueryImpl();
 
 			for (String token : tokens) {
-				Query tokenQuery = createTokenQuery(field, token, like);
+				Query tokenQuery = createTokenQuery(field, token);
 
 				booleanQuery.add(tokenQuery, BooleanClauseOccur.SHOULD);
 			}
@@ -84,7 +84,7 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 			return booleanQuery;
 		}
 
-		return createTokenQuery(field, value, like);
+		return createTokenQuery(field, value);
 	}
 
 	protected Query createPhraseMatchQuery(String field, String value) {
@@ -106,7 +106,7 @@ public class FieldQueryFactoryImpl implements FieldQueryFactory {
 		return matchQuery;
 	}
 
-	protected Query createTokenQuery(String field, String value, boolean like) {
+	protected Query createTokenQuery(String field, String value) {
 		Query query = createPhraseMatchQuery(field, value);
 
 		if (query != null) {

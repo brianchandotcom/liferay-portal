@@ -4,7 +4,12 @@
 	<var name="userPasswordReminderAnswer" value="test" />
 
 	<command name="_signIn">
-		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+		<if>
+			<condition function="IsElementNotPresent" locator1="TextInput#EMAIL_ADDRESS" />
+			<then>
+				<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+			</then>
+		</if>
 
 		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
 		<execute function="Type" locator1="TextInput#PASSWORD" value1="${userPassword}" />

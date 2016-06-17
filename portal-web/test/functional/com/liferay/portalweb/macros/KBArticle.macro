@@ -37,8 +37,9 @@
 	</command>
 
 	<command name="addChildPGViaKBDisplay">
-		<execute function="Click" locator1="KnowledgeBase#DISPLAY_ACTIONS_BUTTON" />
-		<execute function="AssertClick" locator1="MenuItem#ADD_CHILD_ARTICLE" value1="Add Child Article" />
+		<var name="key_kbTool" value="Add Child" />
+
+		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Add Child Article" />
 
 		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitle}" />
 		<execute function="Type#typeEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${kbArticleContent}" />
@@ -464,7 +465,10 @@
 	</command>
 
 	<command name="deletePGViaKBDisplay">
-		<execute function="Click" locator1="KnowledgeBase#DISPLAY_ACTIONS_BUTTON" />
+		<var name="key_kbTool" value="Delete" />
+
+		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Delete" />
+
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 	</command>
@@ -518,8 +522,9 @@
 	</command>
 
 	<command name="editPGViaKBDisplay">
-		<execute function="Click" locator1="KnowledgeBase#DISPLAY_ACTIONS_BUTTON" />
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<var name="key_kbTool" value="Edit" />
+
+		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="A new version is created automatically if this content is modified." />
 		<execute function="Type#typeEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${kbArticleTitleEdit}" />
@@ -686,9 +691,9 @@
 
 	<command name="moveArticleViaKBDisplayPG">
 		<var name="key_kbArticleTitle" value="${kbArticleTitle}" />
+		<var name="key_kbTool" value="Move" />
 
-		<execute function="AssertClick" locator1="KnowledgeBase#DISPLAY_ACTIONS_BUTTON" value1="Actions" />
-		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
+		<execute function="AssertClick" locator1="KnowledgeBase#KB_TOOLS" value1="Move" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#H3_HEADER" value1="${kbArticleTitle}" />
 		<execute function="AssertTextEquals" locator1="PGKnowledgebasedisplayMoveArticle#CURRENT_PARENT_TITLE_LABEL" value1="Current Parent" />

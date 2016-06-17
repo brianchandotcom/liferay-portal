@@ -198,7 +198,7 @@
 <!--COMMENTS-->
 <tr>
 	<td>COMMENTS</td>
-	<td>//div[@class='panel-toggle' and contains(.,'Comments')]</td>
+	<td>//div[@class='panel-toggle' and contains(.,'Comment')]</td>
 	<td></td>
 </tr>
 <tr>

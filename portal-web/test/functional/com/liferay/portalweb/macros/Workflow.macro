@@ -36,7 +36,7 @@
 			</then>
 		</if>
 
-		<for list="Blogs Entry,Calendar Event,Comments,Message Boards Message,Page Revision,Wiki Page" param="workflowResourceValue">
+		<for list="Blogs Entry,Calendar Event,Comment,Message Boards Message,Page Revision,Wiki Page" param="workflowResourceValue">
 			<var name="key_rowEntry" value="${workflowResourceValue}" />
 
 			<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />

@@ -3,7 +3,7 @@
 	<property name="testray.main.component.name" value="Workflow" />
 
 	<var name="portletName" value="Page Comments" />
-	<var name="workflowAssetType" value="Comments" />
+	<var name="workflowAssetType" value="Comment" />
 
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />
@@ -18,7 +18,7 @@
 
 		<execute macro="Workflow#configureWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
-			<var name="workflowResourceValue" value="Comments" />
+			<var name="workflowResourceValue" value="Comment" />
 		</execute>
 
 		<execute macro="Page#add">

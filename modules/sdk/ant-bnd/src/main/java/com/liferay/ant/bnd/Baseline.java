@@ -351,8 +351,6 @@ public abstract class Baseline {
 			return true;
 		}
 
-		packageDir.mkdirs();
-
 		File packageInfoFile = new File(packageDir, "packageinfo");
 
 		if (delta == Delta.REMOVED) {
@@ -366,6 +364,8 @@ public abstract class Baseline {
 		if (!packageInfoFile.exists()) {
 			return false;
 		}
+
+		packageDir.mkdirs();
 
 		FileOutputStream fileOutputStream = new FileOutputStream(
 			packageInfoFile);

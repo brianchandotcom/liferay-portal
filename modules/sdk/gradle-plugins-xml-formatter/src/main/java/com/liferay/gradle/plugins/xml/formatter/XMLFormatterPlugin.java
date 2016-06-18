@@ -104,10 +104,10 @@ public class XMLFormatterPlugin implements Plugin<Project> {
 		return formatXMLTask;
 	}
 
-	protected void configureTaskFormatXMLClasspath(
-		FormatXMLTask formatXMLTask, FileCollection fileCollection) {
+	protected void configureTaskFormatXML(
+		FormatXMLTask formatXMLTask, FileCollection classpath) {
 
-		formatXMLTask.setClasspath(fileCollection);
+		formatXMLTask.setClasspath(classpath);
 	}
 
 	protected void configureTaskFormatXMLForJavaPlugin(
@@ -133,7 +133,7 @@ public class XMLFormatterPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTasksFormatXML(
-		Project project, final Configuration xmlFormatterConfiguration) {
+		Project project, final FileCollection classpath) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -143,8 +143,7 @@ public class XMLFormatterPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(FormatXMLTask formatXMLTask) {
-					configureTaskFormatXMLClasspath(
-						formatXMLTask, xmlFormatterConfiguration);
+					configureTaskFormatXML(formatXMLTask, classpath);
 				}
 
 			});

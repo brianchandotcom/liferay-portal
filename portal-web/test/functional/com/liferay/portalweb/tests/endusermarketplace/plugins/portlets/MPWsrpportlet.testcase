@@ -1,4 +1,4 @@
-<definition component-name="portal-plugins-deployment">
+<definition component-name="portal-legacy">
 	<property name="testray.main.component.name" value="Plugin Installer" />
 
 	<set-up>

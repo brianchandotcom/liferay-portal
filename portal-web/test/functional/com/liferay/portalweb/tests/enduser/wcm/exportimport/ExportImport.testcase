@@ -893,7 +893,9 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportWSRPUnitConverter" priority="3">
+	<!-- LRQA-26034 -->
+
+	<!--command name="ExportImportWSRPUnitConverter" priority="3">
 		<property name="portlet.plugins.includes" value="wsrp-portlet" />
 
 		<execute macro="ProductMenu#gotoControlPanelApps">
@@ -994,7 +996,7 @@
 			<var name="targetValue" value="1.0" />
 			<var name="unitType" value="Length" />
 		</execute>
-	</command>
+	</command-->
 
 	<command name="ImportCorruptedFile" priority="5">
 		<property name="portal.acceptance" value="true" />

@@ -990,8 +990,8 @@
 			<var name="panelHeading" value="Password Syntax Checking" />
 		</execute>
 
-		<execute function="Check" locator1="Checkbox#ENABLE_SYNTAX_CHECKING" />
-		<execute function="Uncheck" locator1="Checkbox#ALLOW_DICTIONARY_WORDS" />
+		<execute function="Check#checkToggleSwitch" locator1="Checkbox#ENABLE_SYNTAX_CHECKING" />
+		<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#ALLOW_DICTIONARY_WORDS" />
 		<execute function="Type" locator1="TextInput#MINIMUM_ALPHA_NUMERIC" value1="0" />
 		<execute function="Type" locator1="TextInput#MINIMUM_LENGTH" value1="0" />
 		<execute function="Type" locator1="TextInput#MINIMUM_LOWER_CASE" value1="0" />

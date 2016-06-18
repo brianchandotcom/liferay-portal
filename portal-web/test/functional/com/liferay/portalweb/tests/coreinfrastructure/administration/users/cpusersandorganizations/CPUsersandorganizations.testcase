@@ -106,6 +106,12 @@
 			<var name="orgType" value="Organization" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
 		<execute macro="Suborganization#addCP">
 			<var name="orgName" value="Organization Name" />
 			<var name="orgType" value="Organization" />
@@ -122,9 +128,8 @@
 		<execute macro="Organization#viewSubOrganizationCP">
 			<var name="orgName" value="Organization Name" />
 			<var name="orgType" value="Organization" />
-			<var name="suborganizationCount" value="1 Suborganization" />
 			<var name="suborgName" value="Sub Organization Name" />
-			<var name="suborgType" value="Regular Organization" />
+			<var name="suborgType" value="Organization" />
 		</execute>
 	</command>
 

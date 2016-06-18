@@ -519,13 +519,19 @@
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 
-		<for list="usersn2,usersn4" param="userScreenName">
+		<execute macro="UsersAndOrganizationsNavigator#gotoOrganizations" />
+
+		<var name="key_orgName" value="Organization Name 1" />
+
+		<execute function="Click" locator1="CPUsersandorganizations#ORGANIZATION_TABLE_NAME" />
+
+		<for list="usersn1,usersn3,usersn5" param="userScreenName">
 			<var name="key_userScreenName" value="${userScreenName}" />
 
 			<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		</for>
 
-		<for list="usersn1,usersn3,usersn5" param="userScreenName">
+		<for list="usersn2,usersn4" param="userScreenName">
 			<var name="key_userScreenName" value="${userScreenName}" />
 
 			<execute function="AssertTextNotPresent" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />

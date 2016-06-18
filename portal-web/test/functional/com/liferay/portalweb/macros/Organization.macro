@@ -723,7 +723,6 @@
 		<var name="key_orgName" value="${orgName}" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_SUBORGANIZATION_COUNT" value1="${suborganizationCount}" />
 		<execute function="AssertClick" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 
 		<var name="key_suborgName" value="${suborgName}" />

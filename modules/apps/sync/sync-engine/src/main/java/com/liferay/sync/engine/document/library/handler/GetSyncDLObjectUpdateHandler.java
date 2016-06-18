@@ -628,6 +628,27 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 	}
 
 	protected void processSyncFile(SyncFile targetSyncFile) {
+		String event = targetSyncFile.getEvent();
+
+		SyncFile sourceSyncFile = SyncFileService.fetchSyncFile(
+			targetSyncFile.getRepositoryId(), getSyncAccountId(),
+			targetSyncFile.getTypePK());
+
+		if (event.equals(SyncFile.EVENT_DELETE) ||
+			event.equals(SyncFile.EVENT_TRASH)) {
+
+			if (sourceSyncFile != null) {
+				try {
+					deleteFile(sourceSyncFile, targetSyncFile);
+				}
+				catch (Exception e) {
+					_logger.error(e.getMessage(), e);
+				}
+			}
+
+			return;
+		}
+
 		SyncFile parentSyncFile = SyncFileService.fetchSyncFile(
 			targetSyncFile.getRepositoryId(), getSyncAccountId(),
 			targetSyncFile.getParentFolderId());
@@ -646,10 +667,6 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				FileUtil.getSanitizedFileName(
 					targetSyncFile.getName(), targetSyncFile.getExtension()));
 
-			SyncFile sourceSyncFile = SyncFileService.fetchSyncFile(
-				targetSyncFile.getRepositoryId(), getSyncAccountId(),
-				targetSyncFile.getTypePK());
-
 			if (isIgnoredFilePath(sourceSyncFile, filePathName) ||
 				((sourceSyncFile != null) &&
 				 (sourceSyncFile.getModifiedTime() ==
@@ -665,8 +682,6 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			targetSyncFile.setFilePathName(filePathName);
 			targetSyncFile.setState(SyncFile.STATE_IN_PROGRESS);
 
-			String event = targetSyncFile.getEvent();
-
 			if (event.equals(SyncFile.EVENT_ADD) ||
 				event.equals(SyncFile.EVENT_GET)) {
 
@@ -676,13 +691,6 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				else {
 					addFile(targetSyncFile, filePathName);
 				}
-			}
-			else if (event.equals(SyncFile.EVENT_DELETE)) {
-				if (sourceSyncFile == null) {
-					return;
-				}
-
-				deleteFile(sourceSyncFile, targetSyncFile);
 			}
 			else if (event.equals(SyncFile.EVENT_MOVE)) {
 				if (sourceSyncFile == null) {
@@ -720,13 +728,6 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 					addFile(targetSyncFile, filePathName);
 				}
-			}
-			else if (event.equals(SyncFile.EVENT_TRASH)) {
-				if (sourceSyncFile == null) {
-					return;
-				}
-
-				deleteFile(sourceSyncFile, targetSyncFile);
 			}
 			else if (event.equals(SyncFile.EVENT_UPDATE)) {
 				if (sourceSyncFile == null) {

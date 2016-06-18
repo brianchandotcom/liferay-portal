@@ -1,0 +1,175 @@
+<definition component-name="portal-staging-ee">
+	<property name="portal.release" value="true" />
+	<property name="testray.main.component.name" value="Staging" />
+
+	<var name="siteName" value="Site Name" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="User#logoutAndLoginPG">
+					<var name="userLoginEmailAddress" value="test@liferay.com" />
+					<var name="userLoginFullName" value="Test Test" />
+				</execute>
+
+				<execute macro="Role#tearDownCP" />
+
+				<execute macro="Site#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="StagingRemoteDMViaGlobalScope" priority="3">
+		<property name="app.server.bundles.size" value="1" />
+		<property name="cluster.enabled" value="true" />
+		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
+		<property name="test.name.skip.portal.instance" value="StagingUsecase#StagingRemoteDMViaGlobalScope" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Page#assertNodePortPG">
+			<var name="nodePort" value="8080" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Site Settings" />
+		</execute>
+
+		<var name="siteID" value="siteID" />
+
+		<execute function="Copy" locator1="SitesEditSite#SITE_ID" value1="siteID" />
+
+		<execute macro="User#logoutPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="User#loginPG">
+			<var name="nodePort" value="9080" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#assertNodePortPG">
+			<var name="nodePort" value="9080" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:9080" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute function="Pause" locator1="3000" />
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.jpg" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="siteScopeName" value="Global" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:9080" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPublishing">
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPublishing">
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="nodePort" value="9080" />
+			<var name="remotePort" value="8080" />
+			<var name="remoteStaging" value="true" />
+			<var name="siteID" value="${siteID}" />
+			<var name="siteName" value="Global" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesPublishing">
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#publishCustomPublication" />
+
+		<execute macro="User#logoutPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Page#assertNodePortPG">
+			<var name="nodePort" value="8080" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Global" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMNavigator#gotoDocumentCP">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#viewCP">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+	</command>
+</definition>

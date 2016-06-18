@@ -115,7 +115,7 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTasksFormatSource(
-		Project project, final Configuration sourceFormatterConfiguration) {
+		Project project, final FileCollection classpath) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -125,8 +125,7 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(FormatSourceTask formatSourceTask) {
-					configureTaskFormatSource(
-						formatSourceTask, sourceFormatterConfiguration);
+					configureTaskFormatSource(formatSourceTask, classpath);
 				}
 
 			});

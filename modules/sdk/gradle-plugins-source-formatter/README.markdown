@@ -10,7 +10,7 @@ To use the plugin, include it in your build script:
 ```gradle
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "1.0.11"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "1.0.12"
 	}
 
 	repositories {
@@ -25,8 +25,8 @@ apply plugin: "com.liferay.source.formatter"
 
 The plugin automatically resolves the Liferay Source Formatter library as a
 dependency, therefore, you have to configure a repository hosting the library
-and its transitive dependency. One repository that hosts them all is the Liferay
-CDN:
+and its transitive dependencies. One repository that hosts them all is the
+Liferay CDN:
 
 ```gradle
 repositories {
@@ -49,15 +49,23 @@ Name | Depends On | Type | Description
 Tasks of type `FormatSourceTask` extend [`JavaExec`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html),
 so all its properties and methods, like [`args`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:args(java.lang.Iterable))
 and [`maxHeapSize`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:maxHeapSize)
-are available.
+are available. They also have the following properties set by default:
+
+Property Name | Default Value
+------------- | -------------
+[`args`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:args) | Source Formatter command line arguments
+[`classpath`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:classpath) | [`project.configurations.sourceFormatter`](#liferay-source-formatter-dependency)
+[`main`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:main) | "com.liferay.source.formatter.SourceFormatter"
+
+#### Task Properties
 
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 `autoFix` | boolean | false | If `true`, automatically fixes source formatting errors.
 `baseDir` | File |  | The Source Formatter base directory. *(Read-only)*
-`baseDirName` | String | ./ | The name of the Source Formatter base directory, relative to the project directory.
+`baseDirName` | String | "./" | The name of the Source Formatter base directory, relative to the project directory.
 `copyrightFile` | File | | The file containing the copyright header enforced by Source Formatter. *(Read-only)*
-`copyrightFileName` | String | copyright.txt | The name of the file containing the copyright header enforced by Source Formatter, relative to the project directory.
+`copyrightFileName` | String | "copyright.txt" | The name of the file containing the copyright header enforced by Source Formatter, relative to the project directory.
 `files` | List\<File> | | The list of files to format. *(Read-only)*
 `fileNames` | List\<String> | null | The file names to format, relative to the project directory. If `null`, all files contained in `baseDir` will be formatted.
 `formatCurrentBranch` | boolean | false | If `true`, formats only the files contained in `baseDir` that are added or modified in the current Git branch.
@@ -73,7 +81,7 @@ Property Name | Type | Default Value | Description
 There are additional configurations related to the Source Formatter, which can
 aid in your usage of the plugin.
 
-### Source Formatter Dependency
+### Liferay Source Formatter Dependency
 
 By default, the plugin creates a configuration called `sourceFormatter` and adds
 a dependency to the latest released version of Liferay Source Formatter. It is

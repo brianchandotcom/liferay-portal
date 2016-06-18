@@ -1,6 +1,26 @@
+import com.liferay.gradle.plugins.tasks.ReplaceRegexTask
+
+task updateReadme(type: ReplaceRegexTask)
+
 dependencies {
 	compile gradleApi()
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.26"
 
 	provided group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.230"
+}
+
+updateReadme {
+	match(/group: "com\.liferay", name: "com\.liferay\.gradle\.plugins\.source\.formatter", version: "(\d.+)"/, "README.markdown")
+
+	onlyIf {
+		!project.version.endsWith("-SNAPSHOT")
+	}
+
+	replacement = {
+		project.version
+	}
+}
+
+uploadArchives {
+	dependsOn updateReadme
 }

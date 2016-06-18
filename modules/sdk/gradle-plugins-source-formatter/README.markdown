@@ -75,7 +75,7 @@ Property Name | Type | Default Value | Description
 There are additional configurations related to the Source Formatter, which can
 aid in your usage of the plugin.
 
-### Source Formatter Dependency
+### Liferay Source Formatter Dependency
 
 By default, the plugin creates a configuration called `sourceFormatter` and adds
 a dependency to the latest released version of Liferay Source Formatter. It is

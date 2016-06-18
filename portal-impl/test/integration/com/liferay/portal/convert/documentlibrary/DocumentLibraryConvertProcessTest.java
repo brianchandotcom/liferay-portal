@@ -113,11 +113,9 @@ public class DocumentLibraryConvertProcessTest {
 
 	@Before
 	public void setUp() throws Exception {
-		PropsValues.DL_STORE_IMPL = _CLASS_NAME_FILE_SYSTEM_STORE;
+		_sourceStore = _storeFactory.getStore(_CLASS_NAME_FILE_SYSTEM_STORE);
 
-		_sourceStore = _storeFactory.getStore(PropsValues.DL_STORE_IMPL);
-
-		_storeFactory.setStore(PropsValues.DL_STORE_IMPL);
+		_storeFactory.setStore(_CLASS_NAME_FILE_SYSTEM_STORE);
 
 		_group = GroupTestUtil.addGroup();
 

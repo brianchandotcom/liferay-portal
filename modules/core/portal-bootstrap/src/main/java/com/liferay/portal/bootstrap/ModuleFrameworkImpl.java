@@ -69,11 +69,13 @@ import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -406,9 +408,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		_setUpPrerequisiteFrameworkServices(_framework.getBundleContext());
 
-		_setUpInitialBundles();
+		Set<Bundle> initialBundles = _setUpInitialBundles();
 
-		_startDynamicBundles();
+		_startDynamicBundles(initialBundles);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Started the OSGi framework");
@@ -1012,7 +1014,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
-	private void _setUpInitialBundles() throws Exception {
+	private Set<Bundle> _setUpInitialBundles() throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Starting initial bundles");
 		}
@@ -1132,6 +1134,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 
+		Bundle[] initialBundles = bundleContext.getBundles();
+
 		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
 			FrameworkStartLevel.class);
 
@@ -1217,6 +1221,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			FrameworkWiring.class);
 
 		frameworkWiring.refreshBundles(hostBundles);
+
+		return new HashSet<>(Arrays.asList(initialBundles));
 	}
 
 	private void _setUpPrerequisiteFrameworkServices(
@@ -1244,7 +1250,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
-	private void _startDynamicBundles() throws Exception {
+	private void _startDynamicBundles(Set<Bundle> installedBundles)
+		throws Exception {
+
 		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
 			FrameworkStartLevel.class);
 
@@ -1271,8 +1279,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		BundleContext bundleContext = _framework.getBundleContext();
 
 		for (Bundle bundle : bundleContext.getBundles()) {
-			if ((bundle.getState() != Bundle.INSTALLED) &&
-				(bundle.getState() != Bundle.RESOLVED)) {
+			if (installedBundles.contains(bundle) ||
+				((bundle.getState() != Bundle.INSTALLED) &&
+				 (bundle.getState() != Bundle.RESOLVED))) {
 
 				continue;
 			}

@@ -78,6 +78,10 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<execute macro="Page#localizedPG">
+			<var name="pageLocale" value="Display the page in English (United States)" />
+		</execute>
+
 		<execute macro="Page#addChild">
 			<var name="page" value="Public Pages" />
 			<var name="pageName" value="Home" />

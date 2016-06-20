@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.ip.geocoder.sample.web.constants;
+package com.liferay.ip.geocoder.sample.web.internal.constants;
 
 /**
  * @author Andrea Di Giorgi

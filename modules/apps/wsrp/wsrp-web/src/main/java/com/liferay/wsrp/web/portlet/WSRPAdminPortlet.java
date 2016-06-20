@@ -30,9 +30,9 @@ import com.liferay.wsrp.constants.WSRPPortletKeys;
 import com.liferay.wsrp.model.WSRPConsumer;
 import com.liferay.wsrp.model.WSRPConsumerPortlet;
 import com.liferay.wsrp.model.WSRPProducer;
-import com.liferay.wsrp.service.WSRPConsumerLocalServiceUtil;
-import com.liferay.wsrp.service.WSRPConsumerPortletLocalServiceUtil;
-import com.liferay.wsrp.service.WSRPProducerLocalServiceUtil;
+import com.liferay.wsrp.service.WSRPConsumerLocalService;
+import com.liferay.wsrp.service.WSRPConsumerPortletLocalService;
+import com.liferay.wsrp.service.WSRPProducerLocalService;
 import com.liferay.wsrp.util.MarkupCharacterSetsUtil;
 import com.liferay.wsrp.util.WebKeys;
 
@@ -42,6 +42,7 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -80,7 +81,7 @@ public class WSRPAdminPortlet extends MVCPortlet {
 		long wsrpConsumerId = ParamUtil.getLong(
 			actionRequest, "wsrpConsumerId");
 
-		WSRPConsumerLocalServiceUtil.deleteWSRPConsumer(wsrpConsumerId);
+		_wSRPConsumerLocalService.deleteWSRPConsumer(wsrpConsumerId);
 	}
 
 	public void deleteWSRPConsumerPortlet(
@@ -90,7 +91,7 @@ public class WSRPAdminPortlet extends MVCPortlet {
 		long wsrpConsumerPortletId = ParamUtil.getLong(
 			actionRequest, "wsrpConsumerPortletId");
 
-		WSRPConsumerPortletLocalServiceUtil.deleteWSRPConsumerPortlet(
+		_wSRPConsumerPortletLocalService.deleteWSRPConsumerPortlet(
 			wsrpConsumerPortletId);
 	}
 
@@ -101,7 +102,7 @@ public class WSRPAdminPortlet extends MVCPortlet {
 		long wsrpProducerId = ParamUtil.getLong(
 			actionRequest, "wsrpProducerId");
 
-		WSRPProducerLocalServiceUtil.deleteWSRPProducer(wsrpProducerId);
+		_wSRPProducerLocalService.deleteWSRPProducer(wsrpProducerId);
 	}
 
 	public void restartConsumer(
@@ -198,7 +199,7 @@ public class WSRPAdminPortlet extends MVCPortlet {
 		long wsrpConsumerId = ParamUtil.getLong(
 			actionRequest, "wsrpConsumerId");
 
-		WSRPConsumerLocalServiceUtil.restartConsumer(wsrpConsumerId);
+		_wSRPConsumerLocalService.restartConsumer(wsrpConsumerId);
 	}
 
 	protected void doUpdateServiceDescription(
@@ -208,7 +209,7 @@ public class WSRPAdminPortlet extends MVCPortlet {
 		long wsrpConsumerId = ParamUtil.getLong(
 			actionRequest, "wsrpConsumerId");
 
-		WSRPConsumerLocalServiceUtil.updateServiceDescription(wsrpConsumerId);
+		_wSRPConsumerLocalService.updateServiceDescription(wsrpConsumerId);
 	}
 
 	protected void doUpdateWSRPConsumer(
@@ -236,13 +237,13 @@ public class WSRPAdminPortlet extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				WSRPConsumer.class.getName(), actionRequest);
 
-			WSRPConsumerLocalServiceUtil.addWSRPConsumer(
+			_wSRPConsumerLocalService.addWSRPConsumer(
 				themeDisplay.getCompanyId(), adminPortletId, name, url,
 				forwardCookies, forwardHeaders, markupCharacterSets,
 				serviceContext);
 		}
 		else {
-			WSRPConsumerLocalServiceUtil.updateWSRPConsumer(
+			_wSRPConsumerLocalService.updateWSRPConsumer(
 				wsrpConsumerId, adminPortletId, name, url, forwardCookies,
 				forwardHeaders, markupCharacterSets);
 		}
@@ -265,11 +266,11 @@ public class WSRPAdminPortlet extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				WSRPConsumerPortlet.class.getName(), actionRequest);
 
-			WSRPConsumerPortletLocalServiceUtil.addWSRPConsumerPortlet(
+			_wSRPConsumerPortletLocalService.addWSRPConsumerPortlet(
 				wsrpConsumerId, name, portletHandle, serviceContext);
 		}
 		else {
-			WSRPConsumerPortletLocalServiceUtil.updateWSRPConsumerPortlet(
+			_wSRPConsumerPortletLocalService.updateWSRPConsumerPortlet(
 				wsrpConsumerPortletId, name);
 		}
 	}
@@ -310,7 +311,7 @@ public class WSRPAdminPortlet extends MVCPortlet {
 		String registrationHandle = ParamUtil.getString(
 			actionRequest, "registrationHandle");
 
-		WSRPConsumerLocalServiceUtil.registerWSRPConsumer(
+		_wSRPConsumerLocalService.registerWSRPConsumer(
 			wsrpConsumerId, adminPortletId, registrationProperties,
 			registrationHandle);
 	}
@@ -333,14 +334,40 @@ public class WSRPAdminPortlet extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				WSRPProducer.class.getName(), actionRequest);
 
-			WSRPProducerLocalServiceUtil.addWSRPProducer(
+			_wSRPProducerLocalService.addWSRPProducer(
 				themeDisplay.getUserId(), name, version, portletIds,
 				serviceContext);
 		}
 		else {
-			WSRPProducerLocalServiceUtil.updateWSRPProducer(
+			_wSRPProducerLocalService.updateWSRPProducer(
 				wsrpProducerId, name, version, portletIds);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setWSRPConsumerLocalService(
+		WSRPConsumerLocalService wSRPConsumerLocalService) {
+
+		_wSRPConsumerLocalService = wSRPConsumerLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWSRPConsumerPortletLocalService(
+		WSRPConsumerPortletLocalService wSRPConsumerPortletLocalService) {
+
+		_wSRPConsumerPortletLocalService = wSRPConsumerPortletLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWSRPProducerLocalService(
+		WSRPProducerLocalService wSRPProducerLocalService) {
+
+		_wSRPProducerLocalService = wSRPProducerLocalService;
+	}
+
+	private static WSRPConsumerLocalService _wSRPConsumerLocalService;
+	private static WSRPConsumerPortletLocalService
+		_wSRPConsumerPortletLocalService;
+	private static WSRPProducerLocalService _wSRPProducerLocalService;
 
 }

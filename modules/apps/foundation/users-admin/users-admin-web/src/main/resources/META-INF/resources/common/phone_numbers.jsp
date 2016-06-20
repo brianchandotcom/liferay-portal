@@ -86,13 +86,6 @@ else {
 			<div class="row-fields">
 				<aui:input name='<%= "phoneId" + phonesIndex %>' type="hidden" value="<%= phone.getPhoneId() %>" />
 
-				<aui:select label="" name="bztest">
-					<aui:option selected="true" value="">Select an Option</aui:option>
-					<aui:option value="1">Option 1</aui:option>
-					<aui:option value="2">Option 2</aui:option>
-					<aui:option value="3">Option 3</aui:option>
-				</aui:select>
-
 				<aui:input fieldParam='<%= "phoneNumber" + phonesIndex %>' id='<%= "phoneNumber" + phonesIndex %>' inlineField="<%= true %>" name="number" />
 
 				<aui:input fieldParam='<%= "phoneExtension" + phonesIndex %>' id='<%= "phoneExtension" + phonesIndex %>' inlineField="<%= true %>" name="extension" />

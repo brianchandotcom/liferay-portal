@@ -25,17 +25,3 @@
 	showParentGroups="<%= siteNavigationBreadcrumbDisplayContext.isShowParentGroups() %>"
 	showPortletBreadcrumb="<%= siteNavigationBreadcrumbDisplayContext.isShowPortletBreadcrumb() %>"
 />
-
-<aui:form method="post" name="fmr">
-	<aui:select label="" name="sampleDropdownr">
-		<aui:option selected="true" value="">Select an Option</aui:option>
-		<aui:option value="1">Option 1</aui:option>
-		<aui:option value="2">Option 2</aui:option>
-		<aui:option value="3">Option 3</aui:option>
-
-		<aui:validator name="required" />
-		<aui:validator name="min">2</aui:validator>
-	</aui:select>
-
-	<aui:button type="submit" value="Save"></aui:button>
-</aui:form>

@@ -1277,10 +1277,6 @@
 		<field name="password" type="String" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.Phone">
-		<field name="bztest" type="int">
-			<validator name="min">2</validator>
-			<validator name="required" />
-		</field>
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="phoneId" type="long" />

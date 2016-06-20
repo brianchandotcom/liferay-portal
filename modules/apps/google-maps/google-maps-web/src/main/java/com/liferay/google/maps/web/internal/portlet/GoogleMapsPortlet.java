@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.google.maps.web.portlet;
+package com.liferay.google.maps.web.internal.portlet;
 
-import com.liferay.google.maps.web.constants.GoogleMapsPortletKeys;
+import com.liferay.google.maps.web.internal.constants.GoogleMapsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;

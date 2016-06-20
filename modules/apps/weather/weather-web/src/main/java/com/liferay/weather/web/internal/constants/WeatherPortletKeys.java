@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.weather.web.constants;
+package com.liferay.weather.web.internal.constants;
 
 /**
  * @author Peter Fellwock

@@ -14,13 +14,13 @@
 
 package com.liferay.wsrp.consumer.messaging;
 
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.wsrp.service.WSRPConsumerPortletLocalServiceUtil;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Mika Koivisto

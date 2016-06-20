@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.google.docs.migration;
+package com.liferay.document.library.google.docs.internal.migration;
 
 /**
  * @author Iván Zaera

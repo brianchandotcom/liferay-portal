@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.document.library.google.docs.configuration.configurator;
+package com.liferay.document.library.google.docs.internal.configuration.configurator;
 
 import com.liferay.document.library.ddm.DLFileEntryMetadataDDMPermissionSupport;
-import com.liferay.document.library.google.docs.migration.LegacyGoogleDocsMigration;
-import com.liferay.document.library.google.docs.util.GoogleDocsDLFileEntryTypeHelper;
+import com.liferay.document.library.google.docs.internal.migration.LegacyGoogleDocsMigration;
+import com.liferay.document.library.google.docs.internal.util.GoogleDocsDLFileEntryTypeHelper;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;

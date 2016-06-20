@@ -1,0 +1,31 @@
+Bundle-Name: Liferay WSRP Service
+Bundle-SymbolicName: com.liferay.wsrp.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.wsrp.axis,\
+	com.liferay.wsrp.bind,\
+	com.liferay.wsrp.client,\
+	com.liferay.wsrp.jmx,\
+	com.liferay.wsrp.messaging,\
+	com.liferay.wsrp.model.impl,\
+	com.liferay.wsrp.proxy,\
+	com.liferay.wsrp.service.base,\
+	com.liferay.wsrp.service.impl,\
+	com.liferay.wsrp.service.persistence.impl,\
+	com.liferay.wsrp.servlet,\
+	com.liferay.wsrp.servlet.filters,\
+	com.liferay.wsrp.util
+Import-Package:\
+	!junit.framework.*,\
+	\
+	!junit.textui.*,\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Web-ContextPath: /wsrp-consumer
+-includeresource:\
+	@bcprov-jdk16-1.46.jar,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/axis/*.class,\
+	@com.liferay.util.java-*.jar!/com/liferay/util/portlet/PortletProps.class,\
+	@opensaml-1.1.jar,\
+	@wss4j-1.5.12.jar

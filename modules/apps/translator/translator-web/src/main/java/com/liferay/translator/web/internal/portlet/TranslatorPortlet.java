@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.translator.web.portlet;
+package com.liferay.translator.web.internal.portlet;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorException;
@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.translator.web.configuration.TranslatorConfiguration;
-import com.liferay.translator.web.model.Translation;
-import com.liferay.translator.web.util.TranslatorUtil;
+import com.liferay.translator.web.internal.model.Translation;
+import com.liferay.translator.web.internal.util.TranslatorUtil;
 
 import java.io.IOException;
 

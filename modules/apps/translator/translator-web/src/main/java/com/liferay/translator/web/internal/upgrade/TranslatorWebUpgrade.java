@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.translator.web.upgrade;
+package com.liferay.translator.web.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
-import com.liferay.translator.web.constants.TranslatorPortletKeys;
+import com.liferay.translator.web.internal.constants.TranslatorPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

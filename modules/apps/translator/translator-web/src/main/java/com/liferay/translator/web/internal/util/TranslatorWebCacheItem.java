@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.translator.web.util;
+package com.liferay.translator.web.internal.util;
 
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslator;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
-import com.liferay.translator.web.model.Translation;
+import com.liferay.translator.web.internal.model.Translation;
 
 /**
  * @author Brian Wing Shun Chan

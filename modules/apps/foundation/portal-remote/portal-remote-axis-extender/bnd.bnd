@@ -23,6 +23,7 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
+-fixupmessages: "Version for package org\.apache\.axis...";is:=ignore
 -includeresource:\
 	@axis-wsdl4j-[0-9]*.jar,\
 	@com.liferay.util.java-[0-9]*.jar!/com/liferay/util/axis/*.class,\

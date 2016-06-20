@@ -25,8 +25,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.unit.converter.web.model.UnitConverter" %><%@
-page import="com.liferay.unit.converter.web.util.UnitConverterUtil" %>
+page import="com.liferay.unit.converter.web.internal.model.UnitConverter" %><%@
+page import="com.liferay.unit.converter.web.internal.util.UnitConverterUtil" %>
 
 <%@ page import="javax.portlet.WindowState" %>
 

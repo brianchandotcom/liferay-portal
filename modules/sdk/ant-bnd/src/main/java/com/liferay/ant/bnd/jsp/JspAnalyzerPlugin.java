@@ -33,6 +33,8 @@ import aQute.lib.env.Header;
 
 import aQute.lib.io.IO;
 import aQute.lib.strings.Strings;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -436,11 +438,19 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 				continue;
 			}
 
-			try {
-				Jar classPathJar = new Jar(entry, resource.openInputStream());
+			try (ByteArrayOutputStream byteArrayOutputStream =
+					new ByteArrayOutputStream()){
 
-				if (containsTLD(analyzer, classPathJar, root, uri)) {
-					return true;
+				resource.write(byteArrayOutputStream);
+
+				try (InputStream inputStream = new ByteArrayInputStream(
+						byteArrayOutputStream.toByteArray())) {
+
+					Jar classPathJar = new Jar(entry, inputStream);
+
+					if (containsTLD(analyzer, classPathJar, root, uri)) {
+						return true;
+					}
 				}
 			}
 			catch (Exception e) {
